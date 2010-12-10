@@ -1,0 +1,605 @@
+1.090 beta 5
+- Total rewrite intiated.
+
+1.082 beta 4
+- Editor was cleaning up inline styles and tag attributes. Fixed.
+- HTML code was not converted back from entities.Fixed.
+- Layout B was off in the calculations.
+- Permission check for uploading files trapped the check for submitting articles. 
+- Saving article titles with single quotes caused errors in saving global_tags.
+- rating downloads were allowed for guests.fixed.
+- Moved selection of themes to theme-block-type.
+- Errors in creating topics when uploading from DL manager.
+- DL manager root categories did not follow custom sorting order.
+- Added settings to change the type of wysiwyg editor for Downloads.
+- Added option to turn block on and off in the block editing screen.
+- Sitemap items were cleared out when custom menus changed.
+- Showing linktree option for articles fetched wrong variable.
+- CSS errors for IE6 in DL manager frontpage. 
+- TP assumed tp_news permission on non-admins, causing saving to fail.
+- Print article rendered BBC articles wrong.
+- BBC articles did not convert entities.
+- Articles were not following options for frame/title/none visibility settings.
+- Added taglinks in forum as well, adjustments on layout.
+- Child categories were hidden if parent category was empty of articles. TP Admin.
+- RSS block did not interpret image tag in RSS feeds properly.
+- Wrong logic in frontpanel display routine.
+- Printing PHP articles wasn't working.
+- cleaned up the article layouts.
+- posting screen preview hung becasue of added TP layers.
+- textarea/form tags broke TP admin form tags.
+- A extraneous comma was casing problems in IE when Mootools scrolling of shouts were selected.
+- Added back old scroller code for Shoutbox.
+- Removed the "more" smilies when in Post screen.
+- Article array wasn't filled for main section of blocks.
+- padding differences between panels corrected.
+- Create new tags was not working from editing articles.
+- Category of single page was not set, making it show layout options from frontpage instead.
+
+1.070 beta3 
+- Module frontpage was showing even when category was to be fetched. fixed.
+- article blocktype and category listing was missing. Fixed.
+- categories were missing in menu item listing.Fixed.
+- catlist could not be edited. Fixed.
+- articles/categories were not showing "shortname" in menu block. Fixed.
+- edit menuitem rendered wrong navigation menu, articles/categories not using "shortname". Fixed. 
+- Hidden titles, date, view fields on frontpage articles => was missing default settings. Fixed.
+- Added check if forumposts array were actually filled.
+- Missing old "tpmodule" type of block. Fixed.
+- article categories did not reset panel setings when set to off, meaning always following blocks instead. Fixed.
+- Shoutbox now use Mootools for scrolling, several options added.
+- Menubox has support for multiple menus. Simple alternative styles for menus added. Menu converted to a CSS list for customization
+- TP news now fetches news dynamically from the tp.net boards
+- added Global tags
+- added auto-resize for Download manager
+- TPshoutbox admin pageindex was not working.
+- added new WYSIWYG, added new image upload function tied to editor
+- removed saving of upshrink values into db, only cookie-based
+- avatar removal in forumposts were placed wrongly in the array, causing multiple errors.
+- BBC articles with code tags gave errors.
+- WAP templates was reffering to old "frontbar" instead of "frontpanel".
+- Modules section lacked a defintion for admin layer.
+- Menu manager missing menu ID for addmenuitem link.
+- scripturl error in TPBlocks.template
+- errors with show 50 altests shouts.
+- DL manager did not carry over sorting on multiple pages
+- Changed the css in sitemapblock to use normal classes like windowbg/windowbg3 etc. 
+- Added support to fetch a menu or all menus
+- Added support for articles to use own visibilty settings on frontpage or not.
+- Closed panels in WAP/WAP2/IMODE
+- Deleting a category did not reset its articles correctly.
+- The extra TP layer for hooks was loaded for quick.reply and quick-modify actions.Fixed.
+- language visibility options for blocks was not working correctly.
+- Print template referred to non-existing variable.
+- featured article showed even when it should not, due to an faulty double-check. 
+- Upload screen in TP Downloads manager had a wrong defined db query. 
+- Calculation errors on the block layouts 2,3 and 4 columns.
+- Added option to force height on blocks. Bigger content will get a scrollbar.
+- Missing code did not save the option for allowed membergroups on blocks.
+- added search in articles
+- added searc in Download Manager
+- added permission to create topic + allowed boards to post in
+- added shortcuts to manage DL manager permissions - only for members with "manage_permissions" permission.
+- TP Download tempaltes changed. Added introduction text, recent and most downloaded+weekly.
+- Many smaller errors fixed, Shouts showing in profile again.
+
+1.059 beta 2 11.10.2008
+- moved upshrinkpanel to right of navigation
+- fixed wrong images for upshrink links
+- added extra option for category layout: pure links
+
+1.059 beta 2 2.10.2008
+- added option to turn off avatars in forum posts on frontpage
+- errors with show_social bookmarks option on frontpage
+- language option for blocks is now dependant upon block being shown somewhere first.
+	
+1.059 beta 2 22.09.2008
+- copy languages from modules that didn't exist caused errors
+- added ajax to article editing screen
+- upshinked blocks were hidden if user had upshrinked, and block was not allowed to upshrink.Fixed.
+- shouts would not return to original page when using queryless mode in SMF. Set to go to forum in those cases.
+- dl manager new uploaded file did not save.
+- dl manager item screenshot did not overflow correctly in IE.
+- Block upshrink did not change to correct image. Fixed.
+
+1.059 beta 2 06.09.2008
+- article categories didn't show panels correctly(it took it from whatever last article was in that category)
+- added visual options(panels options at least) to article categories
+- BBC articles didn't show intro-text in category listings
+- removed the "article options" from edit article section, obsolete since options/article editing is on same page.
+- corrected errors on article type when creating new HTML article
+- corrected errors with modules not defining all xml items
+- error with missing css file in modules
+- article with no category did not throw an error.
+- added 4 soscial bookmarks links: digg, del.icio.us, faceboook and technorati(will need a interface at some point)
+- added option to articles about following category panel settings.
+- hidden or non-existant articles now show error message again.
+- fixed errors with foreign charachters in non-utf8 installations.
+
+1.058 beta 2 24.08.2008
+- fixed errors with "articletype"
+- missing forum button in Babylon theme
+- fixed upshrinked blocks not being saved upshrink value
+- fixed errors with showing articles for block-access
+- fixed errors in modules screen
+
+1.057 beta 2 22.08.2008
+- modules table had specified engine, halted on older mysql
+- error with menu manager block fixed
+- error with category ID fething on-existant numbers
+- Boards for editing-block-access screen were missing
+- added option to display on all boards only
+- fixed TPshout/TPadvShout missing upshrink images on non-default themes
+- fixed delete-all not working on TPAdvShoutbox
+- added support for multiple pages in admin - articles. Changed the layout.
+- removed choice for Whizzywig
+
+1.056 beta 2 15.07.2008
+- entities not saved/shown properly when editing articles/blocks
+- article "type" field was not set all the time
+- frontpage article type was not set for single page
+- missing global'ing certain variables
+- switching from php to html article was not saved
+
+1.055 beta 2 05.07.2008
+- corrected errors with wysiwyg folder- it was missing!
+- corrected missing language string + section for frontpanel settings
+- fixed frontpage layout options not saving properly
+
+1.054 beta 2 05.07.2008
+- Fixed errors with article creation.
+- added back intro text for PHP and BBC articles.
+- fixed code rendered wrong in editing blocks
+- merged visual options for article with editing screen
+- merged locations screen with blockedi screen
+- converted to showing all blocks on one page
+- editing a block can now return to original link, or to all blocks
+- updated modules table with 2 new fields.
+- added notice about type of block change, will need to save the block first
+
+1.053 beta 2 20.06.2008
+- Fixed textarea being rendered as part of the edit form, in editing PHP articles and blocks.
+- Fixed errors upon article creation
+
+1.053 beta 2 15.05.2008
+- changed wrong type of db field inside update section of tp_install.php
+- fixed panel settings not saving, horizontal width not working
+- fixed "forum" option for block visibility
+- fixed article submissions errors
+- fixed downloads always caching
+- fixed download re-uploading(because of the caching)
+- fixed error in TPortal.php around categories
+- value9 wasn't added in fresh install of TP Advanced Shoutbox.
+- moved upshrinkpanel to under the copyright
+
+1.052 beta 1 04.04.2008
+- added support for custom headers code in articles without theme/template code
+- adjusted to beta status
+
+1.050 alpha 28.03.2008
+- fixed the upshrink images, now TP checks if the theme has images/tinyportal, if not fallback to default
+- fixed that sitemap blocktype made several category items highlighted
+- fixed array errors when importing modules
+- removed frontblock visible options - no use for them
+- fixed errors from TPadmin - blocks screen
+
+
+1.049 alpha 21.03.2008
+- default blocks didn't show on fresh install
+- errors with undefined variables in TPadmin
+- correct language not loaded for permissions
+- permissions from modules did not show its strings, admin permission did not work
+- subscriptongroups feature not 100% removed
+- removed excessive shout language strings
+
+1.048 alpha 11.03.2008
+- transferred Shoutbox to TP modules
+- fixed top and bottom blocks edit screen not showing correct tabs
+- added uploading and install of new modules
+- added permant option in theme-changer block
+- moved link to block visible options furhter up, added link on block overview
+- added notice about panels being turned off
+- added option to hide upshrinks, added upshrinks symbols for all panels
+
+1.0.47 alpha 12.02.2008
+- fixed a typo making center panel not showing up
+- specifed blocks not showing in posting screens. Fixed.
+- recent topics rendered long headlines outside of the block. Fixed.
+- more work on tpmodule function
+
+1.0.46 alpha 24.01.2008
+- cleaned short titles for strange charachters
+- added support for imode on frontpage
+- fixed numerous issues with articles and category layouts
+- added ajax to several buttons in tpadmin screens
+- added upshrink to bbc buttons/ smilies in shoutbox
+- added sidebar for caegories on root level in Download manager
+- added abilty to set width of left/rightbar width in every article
+- fixed the bug that kept the edit screen of shoutbox editing.  
+
+1.0.45 alpha 28.12.2007
+- errors in admin articles/categories corrected.
+- corrected errors in shoutbox
+- added horisontal columns 2,3 and 4 in block layouts
+- added tabs on top of edit blocks
+- search in articles
+- added support for shortname on download categories in DL manager
+- added support for external links in DL manager
+
+1.0.4 alpha 25.11.2007
+- corrected errors in frontpage layout
+- corrected errors in upload icons and creating bbc article
+- added missing modifications in Subs-Post.php
+
+1.0.4 alpha 23.11.2007
+- added support for 5th article layout
+- added options for each category
+- imported article added
+- bbc type article added
+- each category noew have their own article layout, category layout, article count and sorting
+- added inital support for labels and presets of article settings.
+- added setting for turning off shoutbox features 
+- added ability to upload icons and illustrations
+- show child categories inside a category
+
+1.0.3 alpha 01.11.2007
+- added multiple article layouts
+- changed so copyright don't show twice
+- fixed so logging don't happen when articles don't exist etc. 
+- changed the article fetching calls to only fetch introtext when introtext is to be used
+- added change to highlight the admin tab when in tpadmin too
+- added sorting options to a article category (date, author, psotion, id) and ascending/descending
+- added frontpage sorting the same way
+- added new way of showing previous/next/dropdown for articles
+- generic function for fetching articles in a category: 
+    callable through parameters: category ID, current article(for highlighting), output as array or displayed, 
+    display a list or dropdown with next/prev links, sorting order/direction.
+- new icons
+- editing a single category has its own screen now
+- adding support for number of articles shown per category
+- added smilies/quick-edit/"whisper" feature to shoutbox + permissions, thanks to Stormlrd
+
+1.0 alpha 1 14.10.2007
+- corrections of article realted errors
+- add print article option
+
+1.0 alpha 1 11.10.2007
+- added sticky articles, thats are shown after featured, but before the rest
+- added inital feature to lock article for further editing
+- changed article admin layout
+- added support for infinite levels of article categories
+
+
+1.0 alpha 1 04.10.2007
+- moved first-time access from panels to blocks in panels&blocks
+- new layout on the articles
+- rudimentary support for blockcode format
+- image verification error sorted
+
+1.0 alpha 1 22.07.2007
+- added CAPTCHA to article comments
+
+1.0 alpha 1 18.07.2007
+- fixed the preview/quote/xml errors, when the fucntions freezed.
+- corrected a few more inconsistencies around which panel you are "in" when editing blocks
+- added "lower" panel
+
+1.0 alpha 1 17.07.2007
+- removed addblock inside the panel section where no panel was defined.
+
+1.0 alpha 1 13.07.2007
+- fixed subitem errors in DL manager
+- added own language file for TPdlmanager.php
+
+1.0 alpha 1 06.07.2007
+- fixed some typos in mod files and Tportal.php
+- frontblocks were not showing after/before articles
+
+1.0 alpha 1 04.07.2007
+- counting of top and bottom blocks not working
+- changed DL manager no-access screen. Guests get a login screen instead.
+- changed SMF redirect to go to forum page instead of frontpage
+- added option to hide author in categorybox blocktype
+- xml errors don't halt page output anymore
+- links to categories (for guests) goes to proper boardindex now, not TP frontpage
+- fixed a bug that showed ALL articles in recent articles module block
+- added article options in tpmodule block in edit-block screen
+- recent topics blocktype did not always save "usescrolling" value. Fixed.
+- index.php?action= would cause a blank content page. Corrected, it should go to Boardindex when "action" is empty.
+
+1.0 alpha 1 - 30.06.2007
+- fixed errors related to panels in admin
+- fixed errors related to article categories
+- added/changed block icons, thanks to Xarcell
+
+1.0 alpha 1 - 20.06.2007
+- changed the need for modifying index.template, now using layers
+- removed support for modding SMF from earlier TP versions
+- fixed install files for typos and errors
+
+1.0 alpha 1 - 16.06.2007
+- moved around tpadmin sections
+- changed sectionnames
+- added subscription groups
+- added a new section called "portal"
+
+1.0 alpha 1 - 30.05.2007
+- added top and bottom panel
+- added flow of blocks: horisontal, vertical and grid
+- split up TPortalBlocks.template into TPBlocks.template and TPBlockLayout.template
+- downloads can be attached to another item for multiple files per DL item
+- added option to edit own files in DL manager
+- option to re-upload file
+- file count on DL manager only counts own files, not x levels deep
+- added option to hide panels when in search and calendar screen too.
+- added option to hide panels in custom actions
+- added options to NOT show a block in a section, reverse of show ONLY in a section
+- single edit block now returns to itself, not edit blocks screen
+- added option to turn off all tempaltes, letting the article supply all html by itself
+- added option to specify preset looks for a block
+
+0.9.8 revision 2
+- fixed problems with html in articles and html/article blocks.
+- fixed issue with showing languages twice in edit block screen
+- fixed confusion on visibilty options for article
+- menu manager save shortname rather than just id number for articles
+- changed whizzypic.php to using proper authentication of user.
+
+0.9.8 revision 1
+- fixed wrong references to shoutbox entries in Profile - Portal Summary
+- fixed wrong showing category tabs in admin - tinyportal - clist screen
+- removed to obsolete reference to $col in Download Manager Admin
+- reference to non-existing $txt['tp-panels2'] removed.
+- INSERT for blocks table did not have var1, var2 specified by integer.(thanks to JPDeni)
+- typos for loadLanguage calls.
+- edited credits (thanks to Lesmond)
+- added fix for form/textarea code inside the editor textarea being mixed up.
+- article links showed just page= if no shortname were supplied.
+- support for SMF 1.1.2 added
+
+0.9.8
+- re-arranged frontpage options(thanks to Nokonium)
+- add check for non-numeric values for menu position
+- the order of membergroups in DL manager is now alphabetic
+- dl manager admin show just main categories on main screen, not childs too.
+- changed the order of comments/views/ratings etc. on articles.
+- added a height of 20ex on recent topics blocks, that will create scrollbar if the content goes beyond.
+- corrected $whichbar in TPortal.php bug.
+- removed line-height in TPortal.template.Caused issues with overlapping text.
+- added support for utf-8 in all forms
+- newsblock is hidden if no news is shown
+- Moved shouts to a new table called xxx_tp_shoutbox
+- frontpage has its own visual options now
+- new panels section and moved all panel settings
+- when options to hide panels profile/memberlist/pm was on, dynamic blocks did not work there. Fixed. 
+- added buttons to move blocks down and up
+
+0.9.7 - 091206
+- the editor choice displayed wrong for members
+- undefined varibale in submitting article screen
+- undefined variable in TPortal.php
+- shoutbox container width was not set
+
+0.9.7 - 241106beta
+- article categories now show parent category(if any) in the linktree.
+
+0.9.7 - 191106beta
+- article without a category had no category value throwing an error in some cases.
+- double quotes in article titles were being removed. fixed.
+- pagination routine improved for glitches on pages below 4-5
+- frontpage forum-posts now consider permissions on boards.
+- featured article was not fetched when it was the oldest article. Fixed.
+
+
+0.9.7beta (db changes!)
+- added WYSIWYG to DL manager edit screens
+- ditched TinyMCE in favor of FCKEditor
+- added frontblocks coming first or last , mixed with the other options.
+- enhanced TPortalblocks.template, moved edit link
+- ManagePermissions.php mod code changed
+- fixed a missing value for category=none in TPortalAdmin.template
+- added a setting to hide edit links under articles
+
+0.9.6beta
+- added utf8 support
+- centralized wysiwyg code, thanks to Feline
+- dynamic blocks show even if panel is hidden in forum
+- timestamp no longer shows for downloads when downloading.
+
+
+0.9.5beta3
+- moved the userbox options to userbox, statsbox options stays in statsbox
+- corrected the sitemap code to match the link better - to make the correct menu active
+- colors for sitemap exchanged with suggestions from Max
+- page indexing should now work better in "short" mode again. Thats the 1.. 5 6 7..12 modus.
+- wrong link on preview/edit icons in Dl Admin
+- more hardcoded language strings moved to language files - modules section
+- TPortal_init now checks if its already loaded. It was loading twice sometimes.
+- WYSIWYG editor do not load for scriptbox now, only bbc/htmlbox.
+
+0.9.5beta
+- Dl manager main page..categories did not list subfolders files.
+- added a "check all" to all membergroup screens.
+- changed some of the block type names. catmenu=>menubox etc.
+- index.template code was added twice during fresh install
+- changed several hardcoded strings
+- added helptext for setting blocktype when creating a block
+- added session checks on tpadmin forms
+- reduced increasing db queries on settings page. Was increasing by 1 for each added theme. Converted to one single sql query.
+- blocks upshrinked state is saved for guests as well
+- both profile and admin screens now reflects modules being on/off. If a module is off, it will not show among the links in either.
+- Help page present with button in SMF 1.0.x
+- Help tabs showed no text. Wrong mod file code.
+- added credits in tp settings
+- fixed error in install file
+- help screen shows full for admin/tp admin, others just the "portal" text
+- DL manager did not update "last access" column
+- fixed error in Profile.php mod instructions
+- more checks on empty or non-existing variables.
+- dl manager fixes/enhancements
+- more erros on Profile.php mod code
+
+changelog 0.9.2-5
+- added support to create empty dl manager items
+- added a new screen for DL admin; "ftp", read files not assigned in the database.
+- added uploading of additional picture on DL Manager upload screen.First "recent items" show the picture.
+- added setting for rating-number or rating-"stars". Using blue gif format squares that resize after fontsize.
+- added setting for max rating. Possible range 3-100.(note that prior ratings do NOT update if max is changed!)
+- added settings for hiding the bars when in profile, memberlist and pm.
+- shoutbox now record IP
+- shoutbox-admin page has pages for older shouts, member filter and IP filter
+- added extended profile sections, to view portal functions for a member
+- rss feed improvements, added styles to title,body and image. Support for Image tag.Support for titles only display.
+- added tabs for SMF help pages + TP help pages
+- articles/dlmanager files overview page in profile. Editing them also is possible from here.
+- edit a file in dlmanager now always updates the physical filesize upon saving.
+- added option to edit own articles. Articles will have "edit article" link for own articles.
+- added option to upload new screenshot in edit item - dl manager. Also added a preview link.
+- edit dl item now goes back to same screen.
+- finished the category blocktype: it now shows all articles ina category, by title as a listing.
+- added frame-only option to blocks
+- articles can have a fixed theme, override any other theme option, including ;theme=xx
+- all modules can have a fixed theme
+- added block access level 2 to display the block only on certain areas:
+		action=xx,board=xx,tp section=xx,language=xx,page=xx,cat=xx
+- added highlight for comments in articles made by admin or the owner of article.
+
+
+
+changelog v0.9.1
+- added comments and rating on articles. Ratings on downloads.
+- added support for FCKeditor
+- TinyMCE has options for showing only userID files, groupID or everything
+- changed dates to reflect users timezone on sorting
+- support for 3 editors
+- new blocktype: sitemap takes what modules are on and any menu manager item that is checked to be in sitemap
+- new blocktype: admin, show all possible permissions in TP
+- new blocktype: article in a block. obeys all options, except for left/right and show on top.Also do not show comments.
+- added empty templates/source files for 3 planned modules for 0.9/1.0: teampage, gallery and linkmanager
+- added visual options for DL manager
+- added category tabs, and new admin tab for setting which categories get displayed.
+
+changelog 0.9
+- added category icons inside articles, added option of displaying all articles in a list
+- new WYSIWYG called TinyMCE.
+- changed fetching of boardnews routine, 5 boards to check for news.
+- fixed flood/security bug in shoutbox
+- added language specific block titles
+- added colors in shoutbox for members
+- added module options dl manager in blocktype "module"
+- added "latest uploads" in dl manager
+- fixed the icon listbox not showing which icon were selected. DL Manager
+- added on/off icon inside the article
+- dl manager: category drop-down list sorts by childcategories
+- multiple "layouts" for frontpage/category view added
+- edit article now has "preview" link, on/off button have been copied into edit article as well and PHP articles are indicated as such in titles.
+- "edit article" show up for those with permission underneath each article.
+- added option to show x latest shouts. The number is settable in shoutbox settings.
+
+Changelog 0.8.1beta
+
+- fixed userbox options giving errors
+- changed "preview" used in querystring to "tptest" instead. Clashed with SMF preview
+- tp_prefix is now just set 2 places: in TPortal.php and in the manual install file.
+- added more stats in userblock
+- added upshrink to blocks, remembers the state for members
+- < and > in php articles are escaped.
+- who page show what people are doing in TP. Only the main sections yet.
+- a download manager module is added.
+- members cannot submit articles just by direct link anymore.
+- TportalBlocks is now included at a earlier stage in TPortal.php. No need to add that code in index.template.
+- option to hide all blocks for admin to correct errors. Add a ";noblocks" to the end of the site link.
+- icons made by grafixjones added to tpadmin section menu.
+- added confirmation on deleting blocks.
+- userblock links to login screen for guests now, instead of just the profile page(which doesn't exist).
+- install/upgrade script now use just the theme styles.
+- userblock is expanded link to "show own posts"
+- right bar off+ no blocks give error with "rblock"
+- Change theme in theme selector block takes you to the same page.
+- errors in tp_install.php corrected.
+- html tags/php tags are not allowed in block titles anymore.
+- added option to allow guest-shouts
+- removed the part "submitarticle" in linktree when submitting articles.
+- added a submit button next each block item in "edit blokcs"
+- added new wysiwyg editor called Whizzywig. also a image browser is included.
+
+Changelog 0.74beta
+- number of articles shown on frontpage is wrong.corrected.
+- added news section in tpadmin
+
+Changelog 0.73beta
+- added call to TPortal_init in Error.php to get rid of error messages(..)
+- fixed error in linktree if article has no category
+- added php article type
+- enhanced install/upgrade routines. Added a manual install file that can be run stand-alone.
+- language files updated.
+
+
+
+Changelog 0.72beta
+- added linktree to all TPortal sections
+- corrected more small errors.
+
+
+Changelog 0.71beta
+- menu-items sorts correctly, added a new field to the variables table, SMALLINT default -2
+- upshrink does not show when bar is not visible.
+- added upshrink for the top..if the top is present.
+- removed extranous sql-calls
+- centerbar also can be hidden in forum
+- recycle board does not show up in "recent topics"
+- menu items have now 4 "positions", and will be indented accordingly in the block.
+- added header and spacer types in menu manager.
+- &%... in menu input filtered.
+- added "frontpage settings". it was getting crowded in "general settings"
+- removed status column in blocks manager and menu manager. on/off buttons indicate status now.
+- Added 2 types to blocks. "ssi" with direct link to SSI.php functions and "module" for any module function.
+- added quick-boxes for recentbox and ssibox.Shown underneath the corresponding block in blocks listing.
+- dl manager implemented.
+- front blocks feature. Setting to show only frontblocks on frontpage.
+- changed WYSIWYG editor to FCKEditor for now. Seems to work better.
+- added hidden div for articles within a category. Expand on pressing the category.
+- RSS block added. blocks table expanded to use cache for rss block type.visible TEXT(cached file),
+    var1 INT (lastdate) , var2 INT(interval)
+- added WYISWYG editor to the intro text as well
+
+
+Changelog v0.6beta-0.7beta.
+- added submission, group acces for submission
+- fixed division by zero error when frontpage_limit was 0 or below 0. Set to at least 1.
+- added settable prefix for tables. Now in a variable - $tp_prefix. Defined on top in TPortal.php,TPortalAdmin.php and TPmodules.
+- all strings now in language files.
+- added icon support for categories.
+- added "full page shoutbox".
+
+
+Changelog TinyPortal v0.5beta
+
+- changed Leftbar and Rightbar to just call Sidebar(xx)
+- added check on sidebar to change some of the built-in blocks title to a link
+- added link to profile for shouts by members
+- Title for frontpage was not showing in browser.
+- Fixed author not showing on new article.
+- "read more" actually show the whole page.
+- Sorted out single page display versus articles in a category.
+- featured article shows first , and is shown when admin option "single page on frontpage" is chosen.
+- "pages" counts correct now.
+- permissions for all blocks added.
+- added 2 new fields to articles - frame and approved
+- added option for articles to be without frame.
+- added builtin blocks for recent topics, php style and just a non-BBC parsed html block.
+- left side and right side don't show if no blocks are on.
+- Changed "x comment" on forum news to "read more" , and added "x comment" after "write comment" , where its more logical.
+- Added option of showing guest the newsboard, even if its closed for guests.
+- added option of going straight to forum, category view or page view overrides it.
+- various error messages fixed.
+- Size of edit blocks changed, blocks are set OFF default upon creation.
+- added preview of blocks, testing html/php style.
+- changed edit article-list to show categories. Category-based article-list added. Ability to set article to "off".
+- New articles is initially set to "off".
+- fixed errors from Edit articles section.
+- Changing theme from theme-box is permanent for members.
+- Added "menu manager", allowing custom links as well as link to categories and articles, all mixed.
+- changed shoutbox to only accept bold/italic/underline+ parsed smileys.
+- Added overflow to shoutbox, IE broke the layout if overflow'ed.
+

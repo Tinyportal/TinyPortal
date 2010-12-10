@@ -1,0 +1,29 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Online Users Box
+</name>
+
+<author>
+Bloc
+</author>
+
+<version>
+0.1
+</version>
+
+<date>
+23.may.2008
+</date>
+
+<code>
+	echo '
+	<span class="smalltext">' , ssi_logOnline() , '</span>';
+</code>
+
+<description>
+Show users currently online - using the built-in SSI function.
+</description>

@@ -1,0 +1,51 @@
+/* Pretty simple stylesheet for CSS: adjust font-family, color, background-color to taste */
+body
+{
+	font-size: small; 
+	margin:0; 
+	padding:0 5px; 
+	font-family: Verdana,sans-serif; /* adjust to taste */
+	color:black;                               /* adjust to taste */
+	background: white;                         /* adjust to taste */
+}
+
+h1,h2,h3,h4,h5,h6 
+{	
+	margin-top:.5em; 
+	margin-bottom:.1em; 
+	font-family:Verdana,sans-serif;          /* adjust to taste */
+	color:darkred;                           /* adjust to taste */
+}
+table 
+{
+	font-size:100%
+} /* Fixes IE inheritance failure */
+th, td 
+{
+	vertical-align:top;
+}
+a 
+{
+	color:darkgreen; 
+	text-decoration:none
+} /* adjust to taste */
+a:hover
+{ 
+	color:white; 
+	background-color:darkgreen; 
+	text-decoration:none;
+}
+pre, code 
+{
+	color:black; background-color:white; font-size:8pt
+}
+p {margin-top:.3em; margin-bottom:.7em}
+ul {list-style-type:disc}
+li {margin-bottom:.3em}
+hr {color:darkred; background-color:darkred} /* adjust to taste */
+h1 {margin-top:0}
+/* Tidy up tables pasted in from MS Word */
+.MsoNormalTable, .MsoTableGrid {width:auto !important; border-collapse: collapse!important;}
+.MsoNormalTable *, .MsoTableGrid * {width:auto !important; padding:.5em !important; margin:0 !important; }
+
+/* Public domain: found at http://www.unverse.net/whizzery/simple.css */

@@ -1,0 +1,61 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Classic Recent Topics
+</name>
+
+<author>
+Bloc
+</author>
+
+<version>
+0.1
+</version>
+
+<date>
+02.sept.2007
+</date>
+
+<code>
+//Start Here ...
+    // is it a number?
+	//if(!is_numeric($context['TPortal']['recentboxnum']))
+	// Change 15 in the next line to whatever number of recent posts you want to show
+		$context['TPortal']['recentboxnum']='15';
+
+	// leave out the recycle board, if any
+	if(isset($modSettings['recycle_board']))
+		$bb=array($modSettings['recycle_board']);
+	else
+		$bb=array();
+
+	$what=ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'], $bb, $output_method = 'array');
+	// Output the topics
+	$counter=1; $cmax=count($what);
+	echo '
+	<div style="width: 100%; overflow: auto; height: 30ex;">';
+	foreach($what as $w){
+		echo '
+		<div class="smalltext"><a href="'.$w['href'].'">'.$w['short_subject'].'</a></div>
+		<div class="smalltext">', $txt[525], ' <b>', $w['poster']['link'], '</b></div>
+		<div class="smalltext">';
+		if(!$w['new'])
+			echo '<a href="'.$w['href'].'"><img border="0" src="'.$settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
+
+		echo '['.$w['time'].']
+		</div>';
+
+		if($counter != $cmax)
+			echo '<hr />';
+		$counter++;
+	}
+	echo '
+	</div>';
+</code>
+
+<description>
+The older classic recent topics news from TP v0.9.8.
+</description>

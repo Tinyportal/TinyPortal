@@ -1,0 +1,33 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+News Box
+</name>
+
+<author>
+Bloc
+</author>
+
+<version>
+0.1
+</version>
+
+<date>
+02.sept.2007
+</date>
+
+<code>
+	global $context, $settings;
+
+	// Show a random news item? (or you could pick one from news_lines...)
+	if (!empty($settings['enable_news']))
+		echo '
+	<div class="tp_newsblock">', $context['random_news_line'], '</div>';
+</code>
+
+<description>
+Show random news from the SMF news.
+</description>

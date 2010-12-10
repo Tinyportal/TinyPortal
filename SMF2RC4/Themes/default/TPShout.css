@@ -1,0 +1,57 @@
+/*
+Version: 1.0 beta5; TPshout.css
+For use with SMF v1.1.x
+*/
+
+.tp_shoutupper
+{
+	background: url(images/tinyportal/shout_arrow.png) no-repeat bottom left;
+	margin: 0 5px 0 0;
+	text-align: right;
+	padding: 0;
+	height: 20px;
+}
+.tp_shoutavatar
+{	
+	margin: 0 5px 0 0;
+	overflow: hidden;
+}
+.tp_shoutbody
+{
+	background: #fff;
+	border: solid 1px #888;
+	border-top: none;
+	line-height: 1.3em;
+	margin: 0 5px 8px 0;
+	padding: 8px;
+	font-size: 0.9em;
+	overflow: auto;
+}
+.tp_shoutcontainer
+{
+}
+.tp_shoutmember,
+.tp_shoutavatar img
+{
+	font-weight: bold;
+	float: left;
+}
+.tp_shoutmember
+{
+}
+.tp_shoutavatar .avy2 img
+{
+	width: 30px;
+	max-height: 100%;
+	margin: 0 6px 0 0;
+	float: left;
+	background: white;
+	border: solid 1px #aaa;
+	padding: 1px;
+}
+.tp_shoutavatar h4
+{
+	font-size: 1.1em;
+	margin: 5px 0 5px 0;
+
+}
