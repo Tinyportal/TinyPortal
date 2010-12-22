@@ -612,10 +612,10 @@ function TPmodules()
 		if($artu==-1 && !get_magic_quotes_gpc())
 			$artbb = addslashes($artbb);
 
-		 tp_query("INSERT INTO " . $tp_prefix . "articles (date,body,intro,useintro,category,frontpage,subject,authorID,author,frame,approved,off,options,parse,comments,comments_var,views,rating,voters,ID_THEME,shortname,fileimport,type)
+        $request = tp_query("INSERT INTO " . $tp_prefix . "articles (date,body,intro,useintro,category,frontpage,subject,authorID,author,frame,approved,off,options,parse,comments,comments_var,views,rating,voters,ID_THEME,shortname,fileimport,type)
 			VALUES('$artd','$artbb','$arti','$artu','$artc','$artf','$arts','$nameb','$name','$artframe','$artpp','0','$artoptions',0,0,'',0,'','',0,'','$artimp', '$arttype')", __FILE__, __LINE__);
 
-		$newitem = tpdb_insert_id();
+		$newitem = tpdb_insert_id($request);
 		// put this into submissions - id and type
 		$title=$arts;
 		$now=$artd;

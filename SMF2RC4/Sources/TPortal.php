@@ -1838,7 +1838,7 @@ function doTPfrontpage()
 					'subject' => html_entity_decode($row['subject']),
 					'shortname' => $row['shortname']!='' ?$row['shortname'] : $row['id'] ,
 					'category' => $row['category'],
-					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
+					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['real_name'].'</a>',
 				);
 			}
 			tpdb_free_result($request);
