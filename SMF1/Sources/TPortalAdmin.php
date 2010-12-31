@@ -1354,7 +1354,7 @@ function do_articles()
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'],array('date','id','author_id' , 'type','subject','parse'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=submission;sort=' . $sort , $start, $context['TPortal']['total_submissions'], 15);
 		$request = tp_query("
-			SELECT	art.id,art.date,art.frontpage, art.category, art.authorID, IFNULL(mem.real_name, art.author) as author, art.subject,
+			SELECT	art.id,art.date,art.frontpage, art.category, art.authorID, IFNULL(mem.realName, art.author) as author, art.subject,
 			art.approved,art.sticky,art.type, art.featured,art.locked, art.off, art.parse as pos	
 			FROM " . $tp_prefix . "articles AS art
 			LEFT JOIN " . $db_prefix . "members AS mem ON (art.authorID = mem.ID_MEMBER)

@@ -3545,12 +3545,12 @@ function template_blocks()
 								<tr class="windowbg">
 									<td colspan="9" align="center">
 										<select name="blockbody' .$lblock['id']. '">';
-						if(isset($context['TPortal']['article_categories']) && count($context['TPortal']['article_categories'])>0)
+						if(isset($context['TPortal']['catnames']) && count($context['TPortal']['catnames'])>0)
 						{
-							foreach($context['TPortal']['article_categories'] as $cats)
+							foreach($context['TPortal']['catnames'] as $cat => $val)
 							{
 								echo '
-											<option value="'.$cats['id'].'" ' , $lblock['body']==$cats['id'] ? ' selected' : '' ,' >'.html_entity_decode($cats['name']).'</option>';
+											<option value="'.$cat.'" ' , $lblock['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($val).'</option>';
 							}
 						}
 						echo '

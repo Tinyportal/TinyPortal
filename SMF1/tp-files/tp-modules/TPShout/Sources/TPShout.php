@@ -192,16 +192,16 @@ if(isset($_POST['tp-shout-url']))
             redirectexit(strip_tags($_POST['tp-shout-url']),false,true);
 
         // Build the name with color for user, otherwise strip guests name of html tags.
-        $shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_POST['tp-shout-name']);
+        $shout_name = ($context['user']['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'"' : strip_tags($_POST['tp-shout-name']);
         if(!empty($context['TPortal']['usercolor']))
             $shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
-        $shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
+        $shout_name .= ($context['user']['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
         
         $shout_time=time();
         
         // register the IP and userID, if any
         $ip=$user_info['ip'];
-        $memID = $user_info['id'];
+        $memID = $context['user']['id'];
         
         if($shout!='')
             tp_query("INSERT INTO " . $tp_prefix . "shoutbox (value1,value2,value3,type,value4, value5) 
@@ -501,6 +501,7 @@ function tpshout_fetch($render = true, $limit=1, $swap=false)
 		$ns=array();
 		while($row = tpdb_fetch_assoc($request))
 		{
+            $row['value1'] = stripslashes($row['value1']);
 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="&nbsp;" />');
 			$ns[] = template_singleshout($row);
 		}

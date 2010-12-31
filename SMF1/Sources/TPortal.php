@@ -1762,7 +1762,7 @@ function doTPfrontpage()
    // any cat listings from blocks?
     if(isset($test_catbox) && $fetchtitles!='')
 	{
-		$request =  tp_query("SELECT art.id, art.subject, art.date, art.category, art.authorID, art.shortname
+		$request =  tp_query("SELECT art.id, art.subject, art.date, art.category, art.authorID, art.shortname,
 		IFNULL(mem.realName,art.author) as realName FROM " . $tp_prefix . "articles AS art
 		LEFT JOIN " . $db_prefix . "members AS mem ON (art.authorID = mem.ID_MEMBER) 
 		WHERE " . 	$fetchtitles . "
