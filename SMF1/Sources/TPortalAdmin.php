@@ -457,7 +457,7 @@ function do_subaction($tpsub)
 
 function do_blocks()
 {
-	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$user_info,$db_prefix;
+	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$user_info,$db_prefix, $modSettings;
 
 	// prefix of the TP tables
 	$tp_prefix=$settings['tp_prefix'];
@@ -589,7 +589,7 @@ function do_blocks()
 			$acc2=explode(",",$row['access2']);
 			$context['TPortal']['blockedit'] = $row;
 			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
-			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES);
+			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES, $modSettings['global_character_set']);
 			unset($context['TPortal']['blockedit']['access2']);
 			$context['TPortal']['blockedit']['access2']=array(
 				'action' => array(),

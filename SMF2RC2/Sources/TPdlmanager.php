@@ -957,7 +957,7 @@ function TPortalDLManager()
 						'icon' => $ico,
 						'date' => $row['created'],
 						'filesize' => $fs,
-						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : strip_tags($row['ingress']),
+						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : html_entity_decode($row['ingress']),
 					);
 				}
 				tpdb_free_result($request);

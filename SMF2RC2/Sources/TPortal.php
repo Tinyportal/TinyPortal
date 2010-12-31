@@ -1696,6 +1696,9 @@ function doTPfrontpage()
 	$mygroups = $user_info['groups'];
 	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
 
+    if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
+		$access = '1';
+        
 	// get the blocks
 	$request =  tp_query("SELECT * FROM 
 		" . $tp_prefix . "blocks 
@@ -1838,7 +1841,7 @@ function doTPfrontpage()
 					'subject' => html_entity_decode($row['subject']),
 					'shortname' => $row['shortname']!='' ?$row['shortname'] : $row['id'] ,
 					'category' => $row['category'],
-					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
+					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['real_name'].'</a>',
 				);
 			}
 			tpdb_free_result($request);
@@ -2050,7 +2053,7 @@ function doTPblocks()
 			if($can_manage)
 				$can_edit = false; 
 
-			$body=html_entity_decode($row['body'],ENT_QUOTES);
+			$body=html_entity_decode($row['body'],ENT_QUOTES, $modSettings['global_character_set']);
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],

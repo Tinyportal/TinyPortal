@@ -334,7 +334,7 @@ function do_subaction($tpsub)
 
 function do_blocks()
 {
-	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$user_info,$db_prefix;
+	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$user_info,$db_prefix, $modSettings;
 
 	// prefix of the TP tables
 	$tp_prefix=$settings['tp_prefix'];
@@ -466,7 +466,7 @@ function do_blocks()
 			$acc2=explode(",",$row['access2']);
 			$context['TPortal']['blockedit'] = $row;
 			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
-			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES);
+			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES, $modSettings['global_character_set']);
 			unset($context['TPortal']['blockedit']['access2']);
 			$context['TPortal']['blockedit']['access2']=array(
 				'action' => array(),
@@ -2414,16 +2414,16 @@ function do_postchecks()
 						if($_POST['tp_block_type']==10)
 							$value= tp_convertphp($value);
 
-						$request =mysql_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where);
+						$request = tp_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where);
 					}
 					elseif($setting == 'title')
 					{
-						$request =tp_query("UPDATE " . $tp_prefix . "blocks SET title = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where , __FILE__, __LINE__);
+						$request = tp_query("UPDATE " . $tp_prefix . "blocks SET title = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where , __FILE__, __LINE__);
 					}
 					elseif($setting == 'body_mode' || $setting == 'body_choice' || $setting == 'body_pure')
 						$go='';
 					else
-						$request =tp_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value).  "' WHERE id = " . $where , __FILE__, __LINE__);
+						$request = tp_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value).  "' WHERE id = " . $where , __FILE__, __LINE__);
 				}
 				elseif(substr($what,0,8) == 'tp_group')
 					$tpgroups[] = substr($what,8);
