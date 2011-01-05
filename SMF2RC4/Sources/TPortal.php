@@ -1398,9 +1398,12 @@ function doTPfrontpage()
 			return array();
 
 		// do some conversion
-		if($catsort == 'date') { $catsort = 'poster_time'; } 
-		elseif($catsort == 'authorID') { $catsort = 'id_member'; } 
-		elseif($catsort == 'parse' || $catsort == 'id') { $catsort = 'id_msg'; } 
+		if($catsort == 'date')
+            $catsort = 'poster_time'; 
+		elseif($catsort == 'authorID')
+            $catsort = 'id_member'; 
+		elseif($catsort == 'parse' || $catsort == 'id')
+            $catsort = 'id_msg'; 
 		else
 			$catsort = 'poster_time'; 
 
@@ -1537,7 +1540,9 @@ function doTPfrontpage()
 		}
 
 		// which should we select
-		$aposts = array(); $mposts = array(); $a=0;
+		$aposts = array(); 
+        $mposts = array();
+        $a=0;
 		foreach($posts as $ab => $val)
 		{
 			if(($a==$start || $a>$start) && $a<($start+$max))
@@ -1599,7 +1604,8 @@ function doTPfrontpage()
 				)
 			);
 
-		unset($posts); $posts = array();
+		unset($posts); 
+        $posts = array();
 
 		// insert the forumposts into $posts
 		if(is_resource($request) && tpdb_num_rows($request)>0)
@@ -1666,8 +1672,9 @@ function doTPfrontpage()
 				tpdb_free_result($request);
 			}
 		}	
-		$total = count($posts); $col1 = ceil($total/2);
-		$col2 = $total - $col1; $counter=0;
+		$total = count($posts); 
+        $col1 = ceil($total/2);
+		$col2 = $total - $col1;
 		$counter = 0;
 		
 		// divide it
@@ -1695,7 +1702,10 @@ function doTPfrontpage()
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
 	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
-
+    
+    if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
+		$access = '1';
+        
 	// get the blocks
 	$request =  tp_query("SELECT * FROM 
 		" . $tp_prefix . "blocks 
@@ -1705,8 +1715,8 @@ function doTPfrontpage()
 		ORDER BY pos,id ASC ", __FILE__, __LINE__);
 
 	$count = array('front' => 0); 
-	$fetch_articles=array(); 
-    	$fetch_article_titles = array();
+	$fetch_articles = array(); 
+    $fetch_article_titles = array();
 	$panels = array(4 => 'front');
     
 	if (tpdb_num_rows($request) > 0)
@@ -2050,7 +2060,7 @@ function doTPblocks()
 			if($can_manage)
 				$can_edit = false; 
 
-			$body=html_entity_decode($row['body'],ENT_QUOTES);
+			$body=html_entity_decode($row['body'],ENT_QUOTES, $modSettings['global_character_set']);
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],

@@ -2414,18 +2414,18 @@ function do_postchecks()
 					{
 						// PHP block?
 						if($_POST['tp_block_type']==10)
-							$value= tp_convertphp($value);
+							$value = tp_convertphp($value);
 
-						$request =mysql_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where);
+						$request = tp_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where);
 					}
 					elseif($setting == 'title')
 					{
-						$request =tp_query("UPDATE " . $tp_prefix . "blocks SET title = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where , __FILE__, __LINE__);
+						$request = tp_query("UPDATE " . $tp_prefix . "blocks SET title = '" . mysql_real_escape_string($value) .  "' WHERE id = " . $where , __FILE__, __LINE__);
 					}
 					elseif($setting == 'body_mode' || $setting == 'body_choice' || $setting == 'body_pure')
 						$go='';
 					else
-						$request =tp_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value).  "' WHERE id = " . $where , __FILE__, __LINE__);
+						$request = tp_query("UPDATE " . $tp_prefix . "blocks SET " . $setting . " = '" . mysql_real_escape_string($value).  "' WHERE id = " . $where , __FILE__, __LINE__);
 				}
 				elseif(substr($what,0,8) == 'tp_group')
 					$tpgroups[] = substr($what,8);

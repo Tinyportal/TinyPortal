@@ -954,7 +954,7 @@ function TPortalDLManager()
 						'icon' => $ico,
 						'date' => $row['created'],
 						'filesize' => $fs,
-						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : strip_tags($row['ingress']),
+						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : html_entity_decode($row['ingress']),
 					);
 				}
 				tpdb_free_result($request);
@@ -2065,7 +2065,7 @@ function TPortalDLAdmin()
 					else
 						$value=htmlentities($_POST['dladmin_text'.$id.'_pure'], ENT_QUOTES);
 				}
-				tp_query("UPDATE " . $tp_prefix . "dlmanager SET description = '" . mysql_real_escape_string($value) . "' WHERE id=". $id, __FILE__, __LINE__);
+				tp_query("UPDATE " . $tp_prefix . "dlmanager SET description = '" . mysql_real_escape_string(stripslashes($value)) . "' WHERE id=". $id, __FILE__, __LINE__);
 			}
 		}
 		elseif(substr($what,0,14)=='dladmin_delete'){
