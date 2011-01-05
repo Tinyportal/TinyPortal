@@ -425,7 +425,7 @@ function template_modules()
 			echo '
 						<tr class="windowbg2">
 							<td valign="top">
-								<a href="', $scripturl, '?action=tpmod;', $mod['subquery'], '=show"><strong>',$mod['title'],'</strong></a>
+								<a href="', $scripturl, '?action=tpmod;', $mod['subquery'], '"><strong>',$mod['title'],'</strong></a>
 								(<a href="', $scripturl, '?action=tpmod;', $mod['subquery'], '=admin">Admin</a>)<br />
 							</td>
 							<td valign="top">

@@ -158,7 +158,7 @@ if(isset($_GET['shout']))
 		tpshout_admin();
 	elseif($_GET['shout'] == 'save' && !isset($_POST['tp-shout-url']))
 		redirectexit();
-	elseif(substr($_GET['shout'],0,4) == 'show')
+	else
 	{
 		$number = substr($_GET['shout'],4);
 		if(!is_numeric($number))
