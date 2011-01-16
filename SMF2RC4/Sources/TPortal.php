@@ -868,9 +868,9 @@ function doTPpage()
 
 						$what = '<h2>' . html_entity_decode($article['subject']) . ' </h2>'.html_entity_decode($article['body'],ENT_QUOTES);
 						$pwhat = 'echo \'<h2>\' . html_entity_decode($article[\'subject\']) . \'</h2>\';' . html_entity_decode($article['body'],ENT_QUOTES);
-						if($row['type']=='php')
+						if($article['type']=='php')
 							$context['TPortal']['printbody'] = eval($pwhat);
-						elseif($row['type']=='bbc')
+						elseif($article['type']=='bbc')
 							$context['TPortal']['printbody'] = parse_bbc($what);
 						else
 							$context['TPortal']['printbody'] = $what;

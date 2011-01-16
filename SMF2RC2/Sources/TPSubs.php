@@ -198,7 +198,7 @@ function tp_getbuttons()
 
 	$buts = array();
 	
-	if($context['TPortal']['show_download']==1)
+	if(isset($context['TPortal']['show_download']) && $context['TPortal']['show_download'] == 1)
 		$buts['downloads'] = array(
 						'title' => $txt['tp-downloads'],
 						'href' => $scripturl . '?action=tpmod;dl',

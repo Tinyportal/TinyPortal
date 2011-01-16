@@ -33,7 +33,7 @@ function template_main()
 
 		if(!empty($context['TPortal']['dl_introtext']))
 			echo '
-			<div class="windowbg2" style="padding: 1em;">' . $context['TPortal']['dl_introtext'] . '</div>';
+			<div class="windowbg2" style="padding: 1em;">' . parse_bbc($context['TPortal']['dl_introtext']) . '</div>';
 
 		if(!empty($context['TPortal']['featured']))
 		{
