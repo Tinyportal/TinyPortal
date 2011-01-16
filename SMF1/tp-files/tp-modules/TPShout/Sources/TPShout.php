@@ -488,7 +488,7 @@ function tpshout_fetch($render = true, $limit=1, $swap=false)
 		loadtemplate('TPShout');
 	
 	$scrolldirection = array('vert' => 'v', 'horiz' => 'h');
-	$request =  tp_query("SELECT s.*, IFNULL(mem.realName, s.value3) as realName,
+	$request =  tp_query("SELECT s.*, IFNULL(s.value3, mem.realName) as realName,
 	mem.avatar,	IFNULL(a.ID_ATTACH, 0) AS ID_ATTACH, a.filename, a.attachmentType
 	FROM " . $tp_prefix . "shoutbox as s 
 	LEFT JOIN " . $db_prefix . "members AS mem ON (mem.ID_MEMBER = s.value5)
