@@ -33,6 +33,7 @@ function TPcheckAdminAreas()
 			}
 		}
 	}
+    return $context['TPortal']['allow_admin'];
 }
 
 function TPsetupAdminAreas()

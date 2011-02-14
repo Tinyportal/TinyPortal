@@ -159,7 +159,7 @@ function TPortal_recentbox()
 				<a href="'.$w['href'].'" title="' . $w['subject'] . '">' . $w['short_subject'].'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
-				echo $coun. ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
+				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
 
 			echo '<br /><span class="smalltext">['.$w['time'].']</span>
 			</li>';

@@ -1692,7 +1692,7 @@ function doTPfrontpage()
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
-				'title' => strip_tags(html_entity_decode($row['title'])),
+				'title' => strip_tags(html_entity_decode($row['title']), '<center>'),
 				'type' => $blocktype[$row['type']],
 				'body' => $body ,
 				'visible' => $row['visible'],

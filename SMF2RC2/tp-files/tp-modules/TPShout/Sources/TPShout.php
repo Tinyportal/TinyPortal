@@ -479,7 +479,7 @@ function tpshout_fetch($render = true, $limit=1, $swap=false)
 		loadtemplate('TPShout');
 	
 	$scrolldirection = array('vert' => 'v', 'horiz' => 'h');
-	$request =  tp_query("SELECT s.*, IFNULL(mem.real_name, s.value3) as realName,
+	$request =  tp_query("SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
 	mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 	FROM " . $tp_prefix . "shoutbox as s 
 	LEFT JOIN " . $db_prefix . "members AS mem ON (mem.id_member = s.value5)
@@ -495,10 +495,7 @@ function tpshout_fetch($render = true, $limit=1, $swap=false)
 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="&nbsp;" />');
 			$ns[] = template_singleshout($row);
 		}
-		if($context['TPortal']['shoutbox_usescroll']>0)
-			$nshouts .= implode("", array_reverse($ns));
-		else
-			$nshouts .= implode("", $ns);
+		$nshouts .= implode("", $ns);
 		
 		$nshouts .='</div>';
 

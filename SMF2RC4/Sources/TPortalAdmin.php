@@ -2099,7 +2099,7 @@ function do_postchecks()
 
 			$request = tp_query("INSERT INTO " . $tp_prefix . "variables 
 			(value1, value2, value3, type ,value4, value5, subtype,value7, value8, subtype2, value9) 
-			VALUES('" . strip_tags($name) . "','".$parent."','','category','',0,'','',0,'','')", __FILE__, __LINE__);
+			VALUES('" . strip_tags($name) . "','".$parent."','','category','',0,'','catlayout=1|layout=1',0,'','')", __FILE__, __LINE__);
 			$go = tpdb_insert_id($request);
 			redirectexit('action=tpadmin;sa=categories;cu='.$go);
 		}
