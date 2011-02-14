@@ -617,4 +617,5 @@ $txt['tp-pub_start'] = 'from';
 $txt['tp-pub_end'] = 'until';
 
 $txt['tp-notset'] = '- not set -';
+$txt['reset_custom_template_layout'] = '(To reset custom layout, clear all text below and save)';
 ?>

@@ -2401,7 +2401,7 @@ function TPortal_panel($side)
 			case 'onlinebox':
 				$mp='<a class="subject"  href="'.$scripturl.'?action=who">'.$block['title'].'</a>';
 				$block['title']=$mp;
-				if($block['var1']=='')
+				if($block['var1'] == 0)
 					$context['TPortal']['useavataronline'] = 0;
 				else
 					$context['TPortal']['useavataronline'] = 1;

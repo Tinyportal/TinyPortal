@@ -1725,6 +1725,7 @@ function template_editcategory()
 </div>';
 
 			echo '<br style="clear: both;" />
+                                    <h4>', $txt['reset_custom_template_layout'] ,'</h4>
 									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' .htmlspecialchars($mg['value9']). '</textarea>
 								</td>
 							</tr>
