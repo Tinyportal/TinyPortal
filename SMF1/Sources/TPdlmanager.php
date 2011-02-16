@@ -417,9 +417,14 @@ function TPortalDLManager()
 	$context['page_title']=$txt['tp-downloads'];
 	$context['TPortal']['dl_title'] = $txt['tp-mainpage'];
 
-	// load the dlmanager frontpage
-	if($context['TPortal']['dlaction']=='')
-	{
+    // load the dlmanager frontpage
+    if($context['TPortal']['dlaction']=='')
+    {
+        if($context['TPortal']['dl_wysiwyg'] == 'bbc')
+            $context['TPortal']['dl_introtext'] = parse_bbc($context['TPortal']['dl_introtext']);
+        else
+            $context['TPortal']['dl_introtext'] = html_entity_decode($context['TPortal']['dl_introtext']);
+
 		$context['TPortal']['dlcats'] = array();
 		$context['TPortal']['dlcatchilds'] = array();
 
@@ -2218,7 +2223,7 @@ function TPortalDLAdmin()
 			$go=1;
 		}
 		elseif($what=='tp_dl_introtext'){
-			tp_query("UPDATE " . $tp_prefix . "settings SET value = ' ". htmlentities($value,ENT_QUOTES)."' WHERE name='dl_introtext'", __FILE__, __LINE__);
+			tp_query("UPDATE " . $tp_prefix . "settings SET value = ' ". htmlentities($value, ENT_QUOTES) ."' WHERE name='dl_introtext'", __FILE__, __LINE__);
 			$go=1;
 		}
 	
