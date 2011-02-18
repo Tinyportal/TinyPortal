@@ -2303,7 +2303,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $output_method
 			LEFT JOIN {$db_prefix}members AS mem ON (mem.ID_MEMBER = m.ID_MEMBER)" . (!$user_info['is_guest'] ? "
 			LEFT JOIN {$db_prefix}log_topics AS lt ON (lt.ID_TOPIC = t.ID_TOPIC AND lt.ID_MEMBER = $ID_MEMBER)
 			LEFT JOIN {$db_prefix}log_mark_read AS lmr ON (lmr.ID_BOARD = b.ID_BOARD AND lmr.ID_MEMBER = $ID_MEMBER)" : '') . "
-			LEFT JOIN {$db_prefix}attachments AS a ON (a.id_member = m.id_member)
+			LEFT JOIN {$db_prefix}attachments AS a ON (a.id_member = mem.id_member)
 		WHERE t.ID_LAST_MSG >= " . ($modSettings['maxMsgID'] - 35 * min($num_recent, 5)) . "
 			AND t.ID_LAST_MSG = m.ID_MSG
 			AND b.ID_BOARD = t.ID_BOARD" . (empty($exclude_boards) ? '' : "
