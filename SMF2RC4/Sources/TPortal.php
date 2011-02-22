@@ -677,6 +677,7 @@ function doTPpage()
 					// allowed and all is well, go on with it.
 					$context['TPortal']['article'] = $article;
 
+                    $context['TPortal']['article']['rating'] = array_sum(explode(',', $context['TPortal']['article']['rating']));
 					$context['TPortal']['article']['avatar']  = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($article['avatar']) . '" alt="&nbsp;" />');
 				
 					// update views
@@ -2025,7 +2026,8 @@ function doTPblocks()
 	$context['TPortal']['hide_frontbar_forum']=0;
 	$count = array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0); 
 	
-	$fetch_articles=array(); $fetch_article_titles = array();
+	$fetch_articles=array(); 
+    $fetch_article_titles = array();
 
 	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
 	if (tpdb_num_rows($request) > 0)
