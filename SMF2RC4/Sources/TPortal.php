@@ -43,7 +43,11 @@ function TPortal_init()
 	setupTPsettings();
 	fetchTPhooks();
     doModules();
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> e17385e66a5fb32e3abebfe7b899c75f86d415d1
 	// set up the layers, but not for certain actions
 	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer']))
 		$context['template_layers'][] = $context['TPortal']['hooks']['tp_layer'];
@@ -1591,10 +1595,10 @@ function doTPfrontpage()
 					
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="&nbsp;" />');
 					
-				$row['body'] = html_entity_decode($row['body'],ENT_QUOTES);
-				$row['intro'] = html_entity_decode($row['intro'],ENT_QUOTES);
-				$row['subject'] = html_entity_decode($row['subject']);
-				$row['category_name'] = html_entity_decode($row['category_name']);
+    				$row['body'] = html_entity_decode($row['body'],ENT_QUOTES);
+    				$row['intro'] = html_entity_decode($row['intro'],ENT_QUOTES);
+    				$row['subject'] = html_entity_decode($row['subject']);
+    				$row['category_name'] = html_entity_decode($row['category_name']);
 					// we need some trick to put featured/sticky on top
 					$sortdate = $row['date'];
 					if($row['sticky']==1)
