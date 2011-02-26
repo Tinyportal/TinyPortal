@@ -42,6 +42,7 @@ function TPortal_init()
 
 	setupTPsettings();
 	fetchTPhooks();
+    doModules();
 
 	// set up the layers, but not for certain actions
 	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer']))
@@ -76,75 +77,6 @@ function TPortal_init()
 		$temp=array_shift($context['linktree']);
 		$t=array_shift($context['linktree']);
 		array_unshift($context['linktree'],$temp);
-	}
-	
-	// fetch any block render hooks and notifications from tpmodules
-	$context['TPortal']['tpmodules'] = array(
-		'blockrender' => array(),
-		'adminhook' => array(),
-		'frontsection' => array(),
-		'globaltag' => array(),
-		);
-	$context['TPortal']['modulepermissions'] = array('tp_settings','tp_blocks','tp_articles','tp_alwaysapproved','tp_submithtml','tp_submitbbc','tp_editownarticle');
-
-	$request =  tp_query("SELECT id,modulename,blockrender,autoload_run,adminhook, frontsection,permissions,globaltags FROM " . $tp_prefix . "modules WHERE active=1", __FILE__, __LINE__);
-	if(tpdb_num_rows($request)>0)
-	{
-		while($row=tpdb_fetch_assoc($request))
-		{
-			if(!empty($row['permissions']))
-			{
-				$all = explode(",",$row['permissions']);
-				foreach($all as $one)
-				{
-					$real = explode("|",$one);
-					$context['TPortal']['modulepermissions'][] = $real[0];
-					unset($real);
-				}
-			}
-			if(!empty($row['blockrender']))
-				$context['TPortal']['tpmodules']['blockrender'][$row['id']] = array(
-						'id' => $row['id'],
-						'name' => $row['modulename'],
-						'function' => $row['blockrender'],
-						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-				);
-			if(!empty($row['frontsection']))
-				$context['TPortal']['tpmodules']['frontsection'][$row['id']] = array(
-						'id' => $row['id'],
-						'name' => $row['modulename'],
-						'function' => $row['frontsection'],
-						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-					);
-			if(!empty($row['globaltags']))
-				$context['TPortal']['tpmodules']['globaltags'][$row['id']] = array(
-						'id' => $row['id'],
-						'name' => $row['modulename'],
-						'function' => $row['globaltags'],
-						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-					);
-		}
-		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']))
-		{
-			if(!empty($row['adminhook']))
-			{
-				$perms=explode(",", $row['permissions']);
-				for($a=0 ; $a < sizeof($perms) ; $a++)
-				{
-					$pr=explode("|",$perms[$a]);
-					// admin permission?
-					if($pr[1]==1)
-					{
-						if (allowedTo($pr[0]))
-						{
-							require_once($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']);
-							$context['TPortal']['tpmodules']['adminhook'][$row['id']] = call_user_func($row['adminhook']);
-						}
-					}
-				}
-			}
-		}
-		tpdb_free_result($request);
 	}
 
 	// determine the blocks
@@ -674,6 +606,8 @@ function doTPpage()
 					$article['intro'] = html_entity_decode($article['intro'], ENT_QUOTES);
 					$article['subject'] = html_entity_decode($article['subject']);
 					$article['value1'] = html_entity_decode($article['value1']);
+                    // Add ratings together
+                    $article['rating'] = array_sum(explode(',', $article['rating']));
 					// allowed and all is well, go on with it.
 					$context['TPortal']['article'] = $article;
 
@@ -1053,9 +987,10 @@ function doTPcat()
 							$row['body'] = html_entity_decode($row['body'],ENT_QUOTES);
 							$row['intro'] = html_entity_decode($row['intro'],ENT_QUOTES);
 							$row['subject'] = html_entity_decode($row['subject']);
-
+							// Add the rating together
+							$row['rating'] = array_sum(explode(',', $row['rating']));
 							// expand the vislaoptions
-							$row['visual_options'] = explode(",", $row['options']);
+							$row['visual_options'] = explode(',', $row['options']);
 							$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="&nbsp;" />');
 							
 							if($counter == 0)
@@ -1398,9 +1333,12 @@ function doTPfrontpage()
 			return array();
 
 		// do some conversion
-		if($catsort == 'date') { $catsort = 'poster_time'; } 
-		elseif($catsort == 'authorID') { $catsort = 'id_member'; } 
-		elseif($catsort == 'parse' || $catsort == 'id') { $catsort = 'id_msg'; } 
+		if($catsort == 'date')
+            $catsort = 'poster_time'; 
+		elseif($catsort == 'authorID')
+            $catsort = 'id_member'; 
+		elseif($catsort == 'parse' || $catsort == 'id')
+            $catsort = 'id_msg'; 
 		else
 			$catsort = 'poster_time'; 
 
@@ -1537,7 +1475,9 @@ function doTPfrontpage()
 		}
 
 		// which should we select
-		$aposts = array(); $mposts = array(); $a=0;
+		$aposts = array(); 
+        $mposts = array();
+        $a=0;
 		foreach($posts as $ab => $val)
 		{
 			if(($a==$start || $a>$start) && $a<($start+$max))
@@ -1599,7 +1539,8 @@ function doTPfrontpage()
 				)
 			);
 
-		unset($posts); $posts = array();
+		unset($posts); 
+        $posts = array();
 
 		// insert the forumposts into $posts
 		if(is_resource($request) && tpdb_num_rows($request)>0)
@@ -1666,8 +1607,9 @@ function doTPfrontpage()
 				tpdb_free_result($request);
 			}
 		}	
-		$total = count($posts); $col1 = ceil($total/2);
-		$col2 = $total - $col1; $counter=0;
+		$total = count($posts); 
+        $col1 = ceil($total/2);
+		$col2 = $total - $col1;
 		$counter = 0;
 		
 		// divide it
@@ -1708,8 +1650,8 @@ function doTPfrontpage()
 		ORDER BY pos,id ASC ", __FILE__, __LINE__);
 
 	$count = array('front' => 0); 
-	$fetch_articles=array(); 
-    	$fetch_article_titles = array();
+	$fetch_articles = array();
+	$fetch_article_titles = array();
 	$panels = array(4 => 'front');
     
 	if (tpdb_num_rows($request) > 0)
@@ -1751,7 +1693,7 @@ function doTPfrontpage()
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
-				'title' => strip_tags(html_entity_decode($row['title'])),
+				'title' => strip_tags(html_entity_decode($row['title']), '<center>'),
 				'type' => $blocktype[$row['type']],
 				'body' => $body ,
 				'visible' => $row['visible'],
@@ -2018,7 +1960,8 @@ function doTPblocks()
 	$context['TPortal']['hide_frontbar_forum']=0;
 	$count = array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0); 
 	
-	$fetch_articles=array(); $fetch_article_titles = array();
+	$fetch_articles=array();
+	$fetch_article_titles = array();
 
 	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
 	if (tpdb_num_rows($request) > 0)
@@ -2743,6 +2686,79 @@ function TP_blockgrids()
 	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<td width="33%" valign="top" style="padding-bottom: 5px;">', 'after' => '</td></tr>');
 	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<tr><td width="33%" valign="top" style="padding-right: 5px;padding-bottom: 5px;">', 'after' => '</td>');
 	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<td width="33%" valign="top" style="padding-bottom: 5px;">', 'after' => '</td></tr>');
+}
+
+function doModules() {
+	global $context, $boarddir;
+    
+    // fetch any block render hooks and notifications from tpmodules
+	$context['TPortal']['tpmodules'] = array(
+		'blockrender' => array(),
+		'adminhook' => array(),
+		'frontsection' => array(),
+		'globaltag' => array(),
+		);
+	$context['TPortal']['modulepermissions'] = array('tp_settings','tp_blocks','tp_articles','tp_alwaysapproved','tp_submithtml','tp_submitbbc','tp_editownarticle');
+
+	$request =  tp_query("SELECT id,modulename,blockrender,autoload_run,adminhook, frontsection,permissions,globaltags FROM " . $tp_prefix . "modules WHERE active=1", __FILE__, __LINE__);
+	if(tpdb_num_rows($request)>0)
+	{
+		while($row=tpdb_fetch_assoc($request))
+		{
+			if(!empty($row['permissions']))
+			{
+				$all = explode(",",$row['permissions']);
+				foreach($all as $one)
+				{
+					$real = explode("|",$one);
+					$context['TPortal']['modulepermissions'][] = $real[0];
+					unset($real);
+				}
+			}
+			if(!empty($row['blockrender']))
+				$context['TPortal']['tpmodules']['blockrender'][$row['id']] = array(
+						'id' => $row['id'],
+						'name' => $row['modulename'],
+						'function' => $row['blockrender'],
+						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
+				);
+			if(!empty($row['frontsection']))
+				$context['TPortal']['tpmodules']['frontsection'][$row['id']] = array(
+						'id' => $row['id'],
+						'name' => $row['modulename'],
+						'function' => $row['frontsection'],
+						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
+					);
+			if(!empty($row['globaltags']))
+				$context['TPortal']['tpmodules']['globaltags'][$row['id']] = array(
+						'id' => $row['id'],
+						'name' => $row['modulename'],
+						'function' => $row['globaltags'],
+						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
+					);
+		}
+		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']))
+		{
+			if(!empty($row['adminhook']))
+			{
+				$perms=explode(",", $row['permissions']);
+				for($a=0 ; $a < sizeof($perms) ; $a++)
+				{
+					$pr=explode("|",$perms[$a]);
+					// admin permission?
+					if($pr[1]==1)
+					{
+						if (allowedTo($pr[0]))
+						{
+							require_once($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']);
+							$context['TPortal']['tpmodules']['adminhook'][$row['id']] = call_user_func($row['adminhook']);
+						}
+					}
+				}
+			}
+		}
+		tpdb_free_result($request);
+	}    
 }
 
 // TPortal leftblocks
