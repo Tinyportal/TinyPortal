@@ -16,7 +16,7 @@ $txt['tphelp_plugins']= 'Plugins';
 $txt['tphelp_introduction_main']= '
 <h2 class="tphelp">&nbsp; Introduction To TinyPortal</h2>
 <p class="tphelp">
-<a href="http://tinyportal.net" target="_blank">TinyPortal</a> (TP) is a magnificent modification of <a href=http://simplemachines.org" target="_blank">Simple Machines Forum</a> (SMF). It will turn your simple SMF forum into a fully operational portal. It will expand your SMF forum with Frontpage options, Articles, Panels filled with Blocks, and Plugins, with an on-going list of Module add-ons to choose from.</p>
+<a href="http://tinyportal.co.uk" target="_blank">TinyPortal</a> (TP) is a magnificent modification of <a href=http://simplemachines.org" target="_blank">Simple Machines Forum</a> (SMF). It will turn your simple SMF forum into a fully operational portal. It will expand your SMF forum with Frontpage options, Articles, Panels filled with Blocks, and Plugins, with an on-going list of Module add-ons to choose from.</p>
 
 <p class="tphelp">Developed to work seamlessly with SMF, it uses many of its internal functions and is therefore more secure. There is no need for 2 admin interfaces, memberbases, or themes to manage as with other portals. Tiny Portal will operate on a single software system. The best way to put it: "TinyPortal" is an extension of the "Simple Machines Forum", not 2 different integrated softwares.</p>
 
@@ -33,7 +33,7 @@ $txt['tphelp_introduction_main']= '
 <p class="tphelp">- <b class="tphelp">Modules</b>: are enhancements to TinyPortal written by various developers that add new abilities to the overall functions of the site. Examples of a module would be: File Manager, Gallery Manager, and Chat.</p>
 <p class="tphelp">- <b class="tphelp">Plugins</b>: are modifications to existing TinyPortal features or modules that extend its abilities. For example, if someone made a modification to add a WYSIWYG editor that can be used in articles or blocks.</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="http://docs.tinyportal.net/index.php?board=8.0" target="_blank"><b class="tphelp">Documentation</b></a>.</div>';
+<div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="http://www.doc.tinyportal.co.uk/index.php?board=8.0" target="_blank"><b class="tphelp">Documentation</b></a>.</div>';
 
 $txt['tphelp_articles_main']= '
 <h2 class="tphelp">&nbsp; Articles</h2>
@@ -53,7 +53,7 @@ Assuming you have permissions to write articles you\'ll often find the links to 
 
 <p class="tphelp">Through the use of plugins, other article options may be added. You will find any of the changes/settings located in your "<span style="color: #ff0000;">Profile > TinyPortal > Articles > Settings</span>".</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://docs.tinyportal.net/index.php?board=9.0" target="_blank"><b class="tphelp">Article Documentation</b></a>.</div>
+<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://www.doc.tinyportal.co.uk/index.php?board=9.0" target="_blank"><b class="tphelp">Article Documentation</b></a>.</div>
 ';
 
 $txt['tphelp_frontpage_main']= '
@@ -69,7 +69,7 @@ $txt['tphelp_frontpage_main']= '
 <p class="tphelp">When it comes to the frontpage, the user just doesn\'t have any direct options. However the user does has some indirect options available in the panels and blocks...</p> 
 <p class="tphelp">Assuming the admin has given you or your membergroup permission to do so, a block or panel can be collapsed and ignored. This is an On-The-Fly setting often located within the header/title of the block(for blocks) or below the copyright(for panels), controlled by a little image/icon.</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://docs.tinyportal.net/index.php?board=22.0" target="_blank"><b class="tphelp">Frontpage Documentation</b></a>.</div>
+<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://www.doc.tinyportal.co.uk/index.php?board=22.0" target="_blank"><b class="tphelp">Frontpage Documentation</b></a>.</div>
 ';
 
 
@@ -82,7 +82,7 @@ $txt['tphelp_panels_main']= '
 <b class="tphelp">User</b>:
 <p class="tphelp">Assuming the admin has given you or your membergroup permission to do so, each panel can be collapsed and ignored. This is an On-The-Fly setting on the frontpage of the site, often controlled by little images/icons located below the copyright...</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://docs.tinyportal.net/index.php?board=28.0" target="_blank"><b class="tphelp">Panel Documentation</b></a>.</div>
+<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://www.doc.tinyportal.co.uk/index.php?board=28.0" target="_blank"><b class="tphelp">Panel Documentation</b></a>.</div>
 ';
 
 $txt['tphelp_blocks_main']= '
@@ -97,10 +97,10 @@ $txt['tphelp_blocks_main']= '
 
 <p class="tphelp">NOTE: Some members or membergroups can moderate/edit a block, if the admin has given permission to do so. To edit a block, simply click an image/icon which is often located in the header/title of the block.</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://docs.tinyportal.net/index.php?board=31.0" target="_blank"><b class="tphelp">Block Documentation</b></a>.
+<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://www.doc.tinyportal.co.uk/index.php?board=31.0" target="_blank"><b class="tphelp">Block Documentation</b></a>.
 </div>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">For code snippets by the TP community, please browse our <a href="http://www.tinyportal.net/smf/index.php?board=46.0"><b class="tphelp">Code Snippets</b></a>.</div>';
+<div class="information" style="margin-top: 1em; padding: 2ex;">For code snippets by the TP community, please browse our <a href="http://www.tinyportal.co.uk/index.php?board=46.0"><b class="tphelp">Code Snippets</b></a>.</div>';
 
 $txt['tphelp_modules_main']= '<h2 class="tphelp">&nbsp; Modules</h2>
 
@@ -116,10 +116,10 @@ $txt['tphelp_modules_main']= '<h2 class="tphelp">&nbsp; Modules</h2>
 <b class="tphelp">User</b>:
 <p class="tphelp">User options & use depends on the module and its various abilities. While some modules may add new features to the site and for the admin, may not always add something extra for the user.</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://docs.tinyportal.net/index.php?board=35.0" target="_blank"><b class="tphelp">Module Documentation</b></a>.
+<div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For FAQ, please browse our <a href="http://www.doc.tinyportal.co.uk/index.php?board=35.0" target="_blank"><b class="tphelp">Module Documentation</b></a>.
 </div>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">For modules by the TP community, please browse our <a href="http://www.tinyportal.net/index.php?board=130.0"><b class="tphelp">Module Board</b></a>.</div>
+<div class="information" style="margin-top: 1em; padding: 2ex;">For modules by the TP community, please browse our <a href="http://www.tinyportal.co.uk/index.php?board=130.0"><b class="tphelp">Module Board</b></a>.</div>
 ';
 
 $txt['tphelp_plugins_main']= '
@@ -132,8 +132,7 @@ $txt['tphelp_plugins_main']= '
 <b class="tphelp">User</b>:
 <p class="tphelp">User options & use depends on the plugin and its various abilities. While some plugins may add enhancements or additional options to existing features or modules for the admin, may not alway add something extra for the user.</p>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="http://docs.tinyportal.net/smf/index.php?board=85.0" target="_blank"><b class="tphelp">Documentation</b></a>.
-</div>
-';
+<div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="http://www.doc.tinyportal.co.uk/smf/index.php?board=85.0" target="_blank"><b class="tphelp">Documentation</b></a>.
+</div>';
 
 ?>
