@@ -42,12 +42,8 @@ function TPortal_init()
 
 	setupTPsettings();
 	fetchTPhooks();
-    doModules();
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> e17385e66a5fb32e3abebfe7b899c75f86d415d1
+	doModules();
+ 
 	// set up the layers, but not for certain actions
 	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer']))
 		$context['template_layers'][] = $context['TPortal']['hooks']['tp_layer'];
