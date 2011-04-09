@@ -1,31 +1,28 @@
 <?php
-/******************************************************************************
-* TPShout.php                                                                 *
-*******************************************************************************
-* TP version: 1.0 RC1                                                                                                      *
-* Software Version:           SMF 2.0                                                                                      *
-* Software by:                Bloc (http://www.tinyportal.net)                                                      *
-* Copyright 2005-2010 by:     Bloc (bloc@tinyportal.net)         *
-* Support, News, Updates at:  http://www.tinyportal.net                   *
-*******************************************************************************/
+/****************************************************************************
+* TPShout.php                                                               *
+*****************************************************************************
+* TP version: 1.0 RC1														*
+* Software Version:				SMF 2.0										*
+* Founder:						Bloc (http://www.blocweb.net)				*
+* Developer:					IchBin (ichbin@ichbin.us)					*
+* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Support, News, Updates at:  	http://www.tinyportal.net					*
+*****************************************************************************/
 
 if (!defined('SMF'))
 	die('Hacking attempt...');
 	
-
-global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $ID_MEMBER, $boarddir, $boardurl, $options, $sourcedir;
+global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $smcFunc, $modSettings, $options;
 
 // set version for databse updates.
-$shoutboxversion='101';
+$shoutboxversion = '101';
 
-$shoutboxtemplate='111';
-
-$tp_prefix = $settings['tp_prefix'];
+$shoutboxtemplate = '111';
 
 // check if it needs updating...
 if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $context['TPortal']['shoutbox_version']) || !isset($context['TPortal']['shoutbox_version']))
 	shoutbox_update();
-
 
 	// bbc code for shoutbox
 	$context['html_headers'] .= '
@@ -160,9 +157,9 @@ if(isset($_GET['shout']))
 		redirectexit();
 	else
 	{
-		$number = substr($_GET['shout'],4);
+		$number = substr($_GET['shout'], 4);
 		if(!is_numeric($number))
-			$number=10;
+			$number = 10;
 		tpshout_bigscreen(false, $number);
 	}
 }
@@ -175,21 +172,25 @@ if(isset($_POST['tp-shout-url']))
 		// Check the session id.
 		checkSession('post');
 		
-		$oldshout=strip_tags(substr($_POST['tp_shout'],0,300));
+		$oldshout = strip_tags(substr($_POST['tp_shout'], 0, 300));
 		$shout = $oldshout;
 		
 		// collect the color for shoutbox
-		$request= tp_query("SELECT grp.online_color as onlineColor FROM (" . $db_prefix . "members as m, " . $db_prefix . "membergroups as grp)
-			WHERE m.id_group=grp.id_group
-			AND id_member=". $context['user']['id'] . " LIMIT 1", __FILE__, __LINE__);
-		if(tpdb_num_rows($request)>0)
+		$request= $smcFunc['db_query']('', '
+			SELECT grp.online_color as onlineColor
+			FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
+			WHERE m.id_group = grp.id_group
+			AND id_member = {int:user} LIMIT 1',
+			array('user' => $context['user']['id'])
+		);
+		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$row=tpdb_fetch_row($request);
-			$context['TPortal']['usercolor']=$row[0];
-			tpdb_free_result($request);
+			$row = $smcFunc['db_fetch_row']($request);
+			$context['TPortal']['usercolor'] = $row[0];
+			$smcFunc['db_free_result']($request);
 		}
         if(empty($_POST['tp-shout-name']) || $user_info['is_guest'] && !$context['TPortal']['guest_shout'])
-            redirectexit(strip_tags($_POST['tp-shout-url']),false,true);
+            redirectexit(strip_tags($_POST['tp-shout-url']), false, true);
 
         // Build the name with color for user, otherwise strip guests name of html tags.
         $shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_POST['tp-shout-name']);
@@ -197,36 +198,38 @@ if(isset($_POST['tp-shout-url']))
             $shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
         $shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
         
-        $shout_time=time();
+        $shout_time = time();
         
         // register the IP and userID, if any
-        $ip=$user_info['ip'];
+        $ip = $user_info['ip'];
         $memID = $user_info['id'];
         
-        if($shout!='')
-            tp_query("INSERT INTO " . $tp_prefix . "shoutbox (value1,value2,value3,type,value4, value5) 
-                        VALUES('". mysql_real_escape_string($shout)."','".$shout_time."','".mysql_real_escape_string($shout_name)."','shoutbox','".$ip."',".$memID.")", __FILE__, __LINE__);
+        if($shout != '')
+            $smcFunc['db_insert']('INSERT',
+				'{db_prefix}tp_shoutbox',
+				array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string','value4' => 'string', 'value5' => 'int'),
+                array($shout, $shout_time, $shout_name, 'shoutbox', $ip, $memID),
+				array('id')
+			);
     }
 	// if using mod rewrite, go to forum
 	if(!empty($modSettings['queryless_urls']))
 		redirectexit('action=forum');
 	else
-		redirectexit(strip_tags($_POST['tp-shout-url']),false,true);
+		redirectexit(strip_tags($_POST['tp-shout-url']), false, true);
 }
 
 function tpshout_admin()
 {
-
-	global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $ID_MEMBER, $boarddir, $boardurl, $options, $sourcedir;
+	global $db_prefix, $context, $scripturl, $txt, $smcFunc;
 	
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
 
-	$tp_prefix = $settings['tp_prefix'];
 	if(isset($_GET['p']) && is_numeric($_GET['p']))
-		$tpstart=$_GET['p'];
+		$tpstart = $_GET['p'];
 	else
-		$tpstart=0;
+		$tpstart = 0;
 
 	loadtemplate('TPShout');
 	loadlanguage('TPShout');
@@ -234,102 +237,175 @@ function tpshout_admin()
 	$context['template_layers'][] = 'subtab';
 	loadlanguage('TPortalAdmin');
 
-	TPadminIndex('shout',true);
+	TPadminIndex('shout', true);
 	$context['current_action'] = 'admin';
 
 	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks']))
 	{
-		$go=0;
+		$go = 0;
 		foreach ($_POST as $what => $value) 
 		{
 			// from shoutbox admin
-			if($what=='tp_shoutbox_smile')
+			if($what == 'tp_shoutbox_smile')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='".$value."' WHERE name='show_shoutbox_smile'", __FILE__, __LINE__);
-				$go=1;
+				$smcFunc['db_query']('', '
+				 	UPDATE {db_prefix}tp_settings 
+					SET value = '.$value.' 
+					WHERE name = {string:name}',
+					array('name' => 'show_shoutbox_smile')
+				);
+				$go = 1;
 			}
-			elseif($what=='tp_shoutbox_icons')
+			elseif($what == 'tp_shoutbox_icons')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='show_shoutbox_icons'", __FILE__, __LINE__);
-				$go=1;
+				$smcFunc['db_query']('', '
+				 	UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'show_shoutbox_icons')
+				);
+				$go = 1;
 			}
-			elseif($what=='tp_shoutbox_height')
+			elseif($what == 'tp_shoutbox_height')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_height'", __FILE__, __LINE__);
-				$go=1;
+				$smcFunc['db_query']('', '
+				 	UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'shoutbox_height')
+				);
+				$go = 1;
 			}
-			elseif($what=='tp_show_profile_shouts')
+			elseif($what == 'tp_show_profile_shouts')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='profile_shouts_hide'", __FILE__, __LINE__);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'profile_shouts_hide')
+				);
 			}
-			elseif($what=='tp_shoutbox_limit')
+			elseif($what == 'tp_shoutbox_limit')
 			{
 				if(!is_numeric($value))
-					$value=10;
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_limit'", __FILE__, __LINE__);
-				$go=1;
+					$value = 10;
+				$smcFunc['db_query']('', '
+				 	UPDATE {db_prefix}tp_settings 
+			 		SET value = '. $value .' 
+		 			WHERE name = {string:limit}',
+			 		array('name' => 'shoutbox_limit')
+			 	);
+				$go = 1;
 			}
-			elseif($what=='tp_shoutbox_usescroll')
+			elseif($what == 'tp_shoutbox_usescroll')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_usescroll'", __FILE__, __LINE__);
-				$go=1;
+		 		$smcFunc['db_query']('', '
+	 				UPDATE {db_prefix}tp_settings 
+				 	SET value = '. $value .' 
+				 	WHERE name = {string:name}',
+				 	array('name' => 'shoutbox_usescroll')
+				 );
+				$go = 1;
 			}
-			elseif($what=='tp_shoutbox_scrollduration')
+			elseif($what == 'tp_shoutbox_scrollduration')
 			{
-				if($value>6000)
-					$value=6000;
-				elseif($value<500)
-					$value=500;
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_scrollduration'", __FILE__, __LINE__);
-				$go=1;
+				if($value > 6000)
+					$value = 6000;
+				elseif($value < 500)
+					$value = 500;
+			 	$smcFunc['db_query']('', '
+		 			UPDATE {db_prefix}tp_settings 
+				 	SET value = '. $value .' 
+				 	WHERE name = {string:name}',
+			 		array('name' => 'shoutbox_scrollduration')
+				);
+				$go = 1;
 			}
-			elseif($what=='tp_shoutbox_scrolldirection')
+			elseif($what == 'tp_shoutbox_scrolldirection')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_scrolldirection'", __FILE__, __LINE__);
-				$go=1;
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'shoutbox_scrolldirection')
+				);
+				$go = 1;
 			}
 			elseif($what=='tp_shoutbox_scrolleasing')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_scrolleasing'", __FILE__, __LINE__);
-				$go=1;
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'shoutbox_scrolleasing')
+				);
+				$go = 1;
 			}
-			elseif($what=='tp_shoutbox_scrolldelay')
+			elseif($what == 'tp_shoutbox_scrolldelay')
 			{
-				if($value>6000)
-					$value=6000;
-				elseif($value<500)
-					$value=500;
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='shoutbox_scrolldelay'", __FILE__, __LINE__);
-				$go=1;
+				if($value > 6000)
+					$value = 6000;
+				elseif($value < 500)
+					$value = 500;
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'shoutbox_scrolldelay')
+				);
+				$go = 1;
 			}
 			// from shoutbox
-			elseif($what=='tp_showshouts')
+			elseif($what == 'tp_showshouts')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='show_shoutbox_archive'", __FILE__, __LINE__);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = '. $value .' 
+					WHERE name = {string:name}',
+					array('name' => 'show_shoutbox_archive')
+				);
 			}
-			elseif(substr($what,0,16)=='tp_shoutbox_item')
+			elseif(substr($what, 0, 16) == 'tp_shoutbox_item')
 			{
-				$val=substr($what,16);
-				 tp_query("UPDATE " . $tp_prefix . "shoutbox SET value1='". htmlspecialchars($value,ENT_QUOTES). "' WHERE id=" .$val, __FILE__, __LINE__);
-				$go=2;
+				$val = substr($what, 16);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_shoutbox 
+					SET value1 = {string:val1}
+					WHERE id = {int:val}',
+					array('val1' => htmlspecialchars($value, ENT_QUOTES, $context['character_set']), 'val' => $val)
+				);
+				$go = 2;
 			}
-			elseif(substr($what,0,18)=='tp_shoutbox_remove')
+			elseif(substr($what, 0, 18) == 'tp_shoutbox_remove')
 			{
-				$val=substr($what,18);
-				 tp_query("DELETE FROM " . $tp_prefix . "shoutbox WHERE id=$val", __FILE__, __LINE__);
-				$go=2;
+				$val = substr($what, 18);
+				$smcFunc['db_query']('', '
+					DELETE FROM {db_prefix}tp_shoutbox 
+					WHERE id = {int:shout}',
+					array('shout' => $val)
+				);
+				$go = 2;
 			}
-			elseif($what=='tp_shoutsdelall' && $value=='ON')
+			elseif($what == 'tp_shoutsdelall' && $value == 'ON')
 			{
-				 tp_query("DELETE FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox'", __FILE__, __LINE__);
-				$go=2;
+				$smcFunc['db_query']('', '
+					DELETE FROM {db_prefix}tp_shoutbox 
+					WHERE type = {string:type}',
+					array('type' => 'shoutbox')
+				);
+				$go = 2;
 			}
-			elseif($what=='tp_guest_shout')
+			elseif($what == 'tp_guest_shout')
 			{
-				 tp_query("UPDATE " . $tp_prefix . "settings SET value='$value' WHERE name='guest_shout'", __FILE__, __LINE__);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val} 
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'guest_shout')
+				);
 			}
 		}
-		if($go==1)
+		if($go == 1)
 			redirectexit('action=tpmod;shout=admin;settings');
 		else
 			redirectexit('action=tpmod;shout=admin');
@@ -338,60 +414,103 @@ function tpshout_admin()
 	// get latest shouts for admin section
 	// check that a member has been filtered
 	if(isset($_GET['u']))
-		$memID=$_GET['u'];
+		$memID = $_GET['u'];
 	// check that a IP has been filtered
 	if(isset($_GET['ip']))
-		$ip=$_GET['ip'];
+		$ip = $_GET['ip'];
 	if(isset($_GET['s']))
-		$single=$_GET['s'];
+		$single = $_GET['s'];
 
-	$context['TPortal']['admin_shoutbox_items']=array();
+	$context['TPortal']['admin_shoutbox_items'] = array();
 
 	if(isset($memID))
 	{
-		$request =  tp_query("SELECT COUNT(*) FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value5=$memID AND value7=0", __FILE__, __LINE__);
-		$weh=tpdb_fetch_row($request);
-		tpdb_free_result($request);
-		$allshouts=$weh[0];
-		$context['TPortal']['admin_shoutbox_items_number']=$allshouts;
+		$request =  $smcFunc['db_query']('', '
+			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type} 
+			AND value5 = {int:val5} 
+			AND value7 = {int:val7}',
+			array('type' => 'shoutbox', 'val5' => $memID, 'val7' => 0)
+		);
+		$weh = $smcFunc['db_fetch_row']($request);
+		$smcFunc['db_free_result']($request);
+		$allshouts = $weh[0];
+		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
 		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
-		$request =  tp_query("SELECT * FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value5=$memID AND value7=0 ORDER BY value2 DESC LIMIT $tpstart,10", __FILE__, __LINE__);
+		$request = $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type} 
+			AND value5 = {int:val5} 
+			AND value7 = {int:val7} 
+			ORDER BY value2 DESC LIMIT {int:start},10',
+			array('type' => 'shoutbox', 'val5'=> $memID, 'val7' => 0, 'start' => $tpstart)
+		);
 	}
 	elseif(isset($ip))
 	{
-		$request =  tp_query("SELECT COUNT(*) FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value4='$ip' AND value7=0", __FILE__, __LINE__);
-		$weh=tpdb_fetch_row($request);
-		tpdb_free_result($request);
-		$allshouts=$weh[0];
-		$context['TPortal']['admin_shoutbox_items_number']=$allshouts;
+		$request =  $smcFunc['db_query']('', '
+			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type}
+			AND value4 = {string:val4} 
+			AND value7 = {int:val7}',
+			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0)
+		);
+		$weh = $smcFunc['db_fetch_row']($request);
+		$smcFunc['db_free_result']($request);
+		$allshouts = $weh[0];
+		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
 		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
-		$request =  tp_query("SELECT * FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value4='$ip' AND value7=0 ORDER BY value2 DESC LIMIT $tpstart,10", __FILE__, __LINE__);
+		$request =  $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type}
+			AND value4 = {string:val4} 
+			AND value7 = {int:val7} 
+			ORDER BY value2 DESC LIMIT {int:start}, 10',
+			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0, 'start' => $tpstart)
+		);
 	}
 	elseif(isset($single))
 	{
 		// check session
 		checkSession('get');
-		$context['TPortal']['shoutbox_pageindex']='';
-		$request =  tp_query("SELECT * FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value7=0 AND id=".$single, __FILE__, __LINE__);
+		$context['TPortal']['shoutbox_pageindex'] = '';
+		$request = $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type} 
+			AND value7 = {int:val7} 
+			AND id = {int:shout}',
+			array('type' => 'shoutbox', 'val7' => 0, 'shout' => $single)
+		);
 	}
 	else
 	{
-		$request =  tp_query("SELECT COUNT(*) FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value7=0", __FILE__, __LINE__);
-		$weh=tpdb_fetch_row($request);
-		tpdb_free_result($request);
-		$allshouts=$weh[0];
-		$context['TPortal']['admin_shoutbox_items_number']=$allshouts;
+		$request = $smcFunc['db_query']('', '
+			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type} 
+			AND value7 = {int:val7}',
+			array('type' => 'shoutbox', 'val7' => 0)
+		);
+		$weh = $smcFunc['db_fetch_row']($request);
+		$smcFunc['db_free_result']($request);
+		$allshouts = $weh[0];
+		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
 		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpmod;shout=admin', $tpstart, $allshouts, 10,true);
-		$request =  tp_query("SELECT * FROM " . $tp_prefix . "shoutbox WHERE type='shoutbox' AND value7=0 ORDER BY value2 DESC LIMIT $tpstart,10", __FILE__, __LINE__);
+		$request = $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_shoutbox 
+			WHERE type = {string:type} 
+			AND value7 = {int:val7} 
+			ORDER BY value2 DESC LIMIT {int:start}, 10',
+			array('type' => 'shoutbox', 'val7' => 0, 'start' => $tpstart)
+		);
 	}
 
-	if(tpdb_num_rows($request)>0)
+	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while ($row = tpdb_fetch_assoc($request))
 		{
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],
-				'body' => html_entity_decode($row['value1'],ENT_QUOTES),
+				'body' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
 				'poster' => $row['value3'],
 				'timestamp' => $row['value2'],
 				'time' => timeformat($row['value2']),
@@ -404,7 +523,7 @@ function tpshout_admin()
 				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpmod;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
 		}
-		tpdb_free_result($request);
+		$smcFunc['db_free_result']($request);
 	}
 
 
@@ -423,7 +542,7 @@ function tpshout_admin()
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpmod' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
 			),
 		);
-		$context['admin_header']['tp_shout']=$txt['tp_shout'];
+		$context['admin_header']['tp_shout'] = $txt['tp_shout'];
 	}
 	// on settings screen?
 	if(isset($_GET['settings']))
@@ -439,68 +558,73 @@ function tpshout_admin()
 function tpshout_bigscreen($state, $number = 10)
 {
 
-	global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $ID_MEMBER, $boarddir, $boardurl, $options, $sourcedir;
+	global $context;
 	
-	$tp_prefix = $settings['tp_prefix'];
 	loadtemplate('TPShout');
 
 	$context['TPortal']['rendershouts'] = tpshout_fetch(false, $number);
-	TP_setThemeLayer('tpshout','TPShout','tpshout_bigscreen');
+	TP_setThemeLayer('tpshout', 'TPShout', 'tpshout_bigscreen');
 	$context['page_title'] = 'Shoutbox';
 }
 // fetch all the shouts for output
-function tpshout_fetch($render = true, $limit=1, $swap=false)
+function tpshout_fetch($render = true, $limit = 1, $swap = false)
 {
-    global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $ID_MEMBER, $boarddir, $boardurl, $options, $sourcedir;
-
-	$tp_prefix = $settings['tp_prefix'];
+    global $db_prefix, $context, $smcFunc, $scripturl, $txt, $user_info, $modSettings;
 
 	// get x number of shouts
 	$context['TPortal']['profile_shouts_hide'] = empty($context['TPortal']['profile_shouts_hide']) ? '0' : '1';
 	$context['TPortal']['usercolor']='';
 	// collect the color for shoutbox
-	$request= tp_query("SELECT grp.online_color as onlineColor FROM (" . $db_prefix . "members as m, " . $db_prefix . "membergroups as grp)
+	$request= $smcFunc['db_query']('', '
+		SELECT grp.online_color as onlineColor 
+		FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
 		WHERE m.id_group = grp.id_group
-		AND id_member=" . $context['user']['id'] ." LIMIT 1", __FILE__, __LINE__);
-	if(tpdb_num_rows($request)>0){
-		$row=tpdb_fetch_row($request);
-		$context['TPortal']['usercolor']=$row[0];
-		tpdb_free_result($request);
+		AND id_member = {int:user} LIMIT 1',
+		array('user' => $context['user']['id'])
+	);
+	if($smcFunc['db_num_rows']($request) > 0){
+		$row = $smcFunc['db_fetch_row']($request);
+		$context['TPortal']['usercolor'] = $row[0];
+		$smcFunc['db_free_result']($request);
 	}
 
-	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit==1)
+	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit == 1)
 		$limit=$context['TPortal']['shoutbox_limit'];
 
 	// don't fetch more than a hundred - save the poor server! :D
 	$nshouts = '';
-	if($limit>100) $limit=100;
+	if($limit > 100)
+		$limit = 100;
 	
 	if($render)
 		loadtemplate('TPShout');
 	
 	$scrolldirection = array('vert' => 'v', 'horiz' => 'h');
-	$request =  tp_query("SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
-	mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
-	FROM " . $tp_prefix . "shoutbox as s 
-	LEFT JOIN " . $db_prefix . "members AS mem ON (mem.id_member = s.value5)
-	LEFT JOIN " . $db_prefix . "attachments AS a ON (a.id_member = s.value5 and a.attachment_type!=3)
-	WHERE s.value7=0
-	ORDER BY s.value2 DESC LIMIT ". $limit, __FILE__, __LINE__);
-	if (tpdb_num_rows($request) > 0)
+	$request =  $smcFunc['db_query']('', '
+		SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
+			mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+		FROM {db_prefix}tp_shoutbox as s 
+		LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = s.value5)
+		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = s.value5 and a.attachment_type!=3)
+		WHERE s.value7 = {int:val7}
+		ORDER BY s.value2 DESC LIMIT {int:limit}',
+		array('val7' => 0, 'limit' => $limit)
+	);
+	if ($smcFunc['db_num_rows']($request) > 0)
 	{
 		$nshouts= $txt['tp-last'].' '.$limit.' '.$txt['tp-shouts'].'<br /><br /><div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
-		$ns=array();
-		while($row = tpdb_fetch_assoc($request))
+		$ns = array();
+		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="&nbsp;" />');
 			$ns[] = template_singleshout($row);
 		}
-		$nshouts .= implode("", $ns);
+		$nshouts .= implode('', $ns);
 		
 		$nshouts .='</div>';
 
-		$context['TPortal']['shoutbox']=$nshouts;
-		tpdb_free_result($request);
+		$context['TPortal']['shoutbox'] = $nshouts;
+		$smcFunc['db_free_result']($request);
 	}
    // include the scolling code if shoutbox is set to scroll
 	// its from a block, render it
@@ -510,9 +634,9 @@ function tpshout_fetch($render = true, $limit=1, $swap=false)
 		return $nshouts;
 }
 
-function shout_bcc_code($collapse=true) 
+function shout_bcc_code($collapse = true) 
 {
-    global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $ID_MEMBER, $boarddir, $boardurl, $options, $sourcedir;
+    global $db_prefix, $context, $scripturl, $txt, $settings, $options;
 
 	loadLanguage('Post');
 	
@@ -732,7 +856,7 @@ function shout_smiley_code()
 	$settings['smileys_url'] = $modSettings['smileys_url'] . '/' . $user_info['smiley_set'];
 }
 
-function print_shout_smileys($collapse=true) 
+function print_shout_smileys($collapse = true) 
 {
   global $context, $txt, $settings, $options;
   
@@ -757,7 +881,7 @@ else
 		{
 			foreach ($smiley_row['smileys'] as $smiley)
 			{
-				if($sm_counter==5 && $collapse)
+				if($sm_counter == 5 && $collapse)
 					echo '
 			<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
 
@@ -776,14 +900,11 @@ else
 	</div>';
 }
 
-
-
 // show a dedicated frontpage
 function tpshout_frontpage()
 {
-    global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $ID_MEMBER, $boarddir, $boardurl, $options, $sourcedir;
+    global  $context;
 
-	$tp_prefix = $settings['tp_prefix'];
 	loadtemplate('TPShout');
 	loadlanguage('TPShout');
 
@@ -797,11 +918,9 @@ function tpshout_frontpage()
 }
 function shoutbox_update()
 {
-	global $settings;
-	
-	$tp_prefix = $settings['tp_prefix'];
+	global $smcFunc;
 
-	$settings_array=array(
+	$settings_array = array(
 	 'shoutbox_height' => '120' ,
 	 'shoutbox_limit' => '5' ,
 	 'guest_shout' => '0' ,
@@ -818,22 +937,40 @@ function shoutbox_update()
  	);
 	$updates=0;
 	foreach($settings_array as $what => $val){
-		$sjekk=tp_query("SELECT * FROM " . $tp_prefix . "settings WHERE name='$what'");
-		if(tpdb_num_rows($sjekk)<1){
-			tp_query("INSERT INTO " . $tp_prefix . "settings (name,value) VALUES ( '$what', '$val')");
+		$sjekk = $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_settings 
+			WHERE name = {string:name}',
+			array('name' => $what)
+		);
+		if($smcFunc['db_num_rows']($sjekk) < 1){
+			$smcFunc['db_query']('INSERT',
+				'{db_prefix}tp_settings',
+				array('name' => 'string', 'value' => 'string'),
+				array($what, $val),
+				array('id')
+			);
 		}
 		else
 		{
 			if($what == 'shoutbox_version')
-				tp_query("UPDATE " . $tp_prefix . "settings SET value='$val' WHERE name='$what'");
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val} 
+					WHERE name = {string:name}',
+					array('val' => $val, 'name' => $what)
+				);
 				
-			tpdb_free_result($sjekk);
+			$smcFunc['db_free_result']($sjekk);
 		}
 	}
 	// update profile section
-	tp_query("UPDATE " . $tp_prefix . "modules SET profile='tpshout_profile' WHERE modulename LIKE 'TPshout'");
+	$smcFunc['db_query']('', '
+		UPDATE {db_prefix}tp_modules 
+		SET profile = {string:prof}` 
+		WHERE modulename LIKE {string:mod}',
+		array('prof' => 'tpshout_profile', 'mod' => 'TPshout')
+	);
 
 	return;
 }
-
 ?>

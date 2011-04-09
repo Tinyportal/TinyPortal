@@ -1,17 +1,17 @@
 <?php
-/******************************************************************************
-* TPcommon.php                                                                   *
-*******************************************************************************
-* TP version: 1.0 RC1                                                                                                      *
-* Software Version:           SMF 2.0                                                                                      *
-* Software by:                Bloc (http://www.tinyportal.net)                                                      *
-* Copyright 2005-2010 by:     Bloc (bloc@tinyportal.net)                                                         *
-* Support, News, Updates at:  http://www.tinyportal.net                   *
-*******************************************************************************/
+/****************************************************************************
+* TPcommon.php																*
+*****************************************************************************
+* TP version: 1.0 RC1														*
+* Software Version:				SMF 2.0										*
+* Founder:						Bloc (http://www.blocweb.net)				*
+* Developer:					IchBin (ichbin@ichbin.us)					*
+* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Support, News, Updates at:  	http://www.tinyportal.net					*
+****************************************************************************/
 
 if (!defined('SMF'))
 	die('Hacking attempt...');
-
 
 function tp_rating_init()
 {
@@ -37,53 +37,54 @@ function tp_rating_init()
 	});	
 	</script>';
 }
+
 function tp_createthumb($picture, $width, $height, $thumb)
 {
 	// find out how big the picture is
-	list($src_width,$src_height)=getimagesize($picture);
+	list($src_width, $src_height) = getimagesize($picture);
 
 	// if the desired width > original, keep it
-	if($width>$src_width)
+	if($width > $src_width)
 	{
-		$width=$src_width;
-		$height=$src_height;
+		$width = $src_width;
+		$height = $src_height;
 	}
 
-	if($src_width>$src_height)
+	if($src_width > $src_height)
 	{
-		$ratio=$height/$src_height;
-		$nheight=$height;
-		$nwidth=$src_width*$ratio;
+		$ratio = $height / $src_height;
+		$nheight = $height;
+		$nwidth = $src_width * $ratio;
 	}
-	elseif($src_width<$src_height)
+	elseif($src_width < $src_height)
 	{
-		$ratio=$width/$src_width;
-		$nwidth=$width;
-		$nheight=$src_height*$ratio;
+		$ratio = $width / $src_width;
+		$nwidth = $width;
+		$nheight = $src_height * $ratio;
 	}
 	else
 	{
-		$nheight=$height;
-		$nwidth=$width;
+		$nheight = $height;
+		$nwidth = $width;
 	}
 	$dest = ImageCreateTrueColor($width, $height);
 	$dest2 = ImageCreateTrueColor($nwidth, $nheight);
 	
 	// determine format
-	$format=strtolower(substr($picture,strlen($picture)-3,3));
-	if(!in_array($format, array('jpg','gif','png')))
+	$format = strtolower(substr($picture, strlen($picture)-3, 3));
+	if(!in_array($format, array('jpg', 'gif', 'png')))
 		return;
 
 	// go ahead
 	if($format == 'jpg')
-		$source= imagecreatefromjpeg($picture);
+		$source = imagecreatefromjpeg($picture);
 	elseif($format == 'gif')
-		$source= imagecreatefromgif($picture);
+		$source = imagecreatefromgif($picture);
 	elseif($format == 'png')
-		$source= imagecreatefrompng($picture);
+		$source = imagecreatefrompng($picture);
 	
-	imagecopyresampled ($dest2, $source, 0 , 0, 0, 0, $nwidth , $nheight , $src_width , $src_height );
-	imagecopymerge ($dest, $dest2, 0 , 0, 0, 0, $nwidth , $nheight,100 );
+	imagecopyresampled ($dest2, $source, 0 , 0, 0, 0, $nwidth, $nheight, $src_width, $src_height);
+	imagecopymerge ($dest, $dest2, 0, 0, 0, 0, $nwidth, $nheight, 100);
 	
 	if($format == 'jpg')
 		imagejpeg($dest, $thumb, 85);
@@ -117,20 +118,25 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
     // imgcreatetruecolor. No url! $img must be a truecolor image. 
 
     // Attempt to calibrate the parameters to Photoshop: 
-    if ($amount > 500)    $amount = 500; 
+    if ($amount > 500)
+		$amount = 500; 
     $amount = $amount * 0.016; 
-    if ($radius > 50)    $radius = 50; 
+    if ($radius > 50)
+		$radius = 50; 
     $radius = $radius * 2; 
-    if ($threshold > 255)    $threshold = 255; 
+    if ($threshold > 255)
+		$threshold = 255; 
      
     $radius = abs(round($radius));     // Only integers make sense. 
     if ($radius == 0) { 
-        return $img; imagedestroy($img); break;        } 
-    $w = imagesx($img); $h = imagesy($img); 
+        return $img; 
+		imagedestroy($img); 
+		break;        } 
+    $w = imagesx($img); 
+	$h = imagesy($img); 
     $imgCanvas = imagecreatetruecolor($w, $h); 
     $imgBlur = imagecreatetruecolor($w, $h); 
      
-
     // Gaussian blur matrix: 
     //                         
     //    1    2    1         
@@ -142,10 +148,10 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
 
     if (function_exists('imageconvolution')) { // PHP >= 5.1  
             $matrix = array(  
-            array( 1, 2, 1 ),  
-            array( 2, 4, 2 ),  
-            array( 1, 2, 1 )  
-        );  
+				array( 1, 2, 1 ),  
+				array( 2, 4, 2 ),  
+				array( 1, 2, 1 )  
+        	);  
         imagecopy ($imgBlur, $img, 0, 0, 0, 0, $w, $h); 
         imageconvolution($imgBlur, $matrix, 16, 0);  
     }  
@@ -167,8 +173,8 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
     if($threshold>0){ 
         // Calculate the difference between the blurred pixels and the original 
         // and set the pixels 
-        for ($x = 0; $x < $w-1; $x++)    { // each row
-            for ($y = 0; $y < $h; $y++)    { // each pixel 
+        for ($x = 0; $x < $w-1; $x++) { // each row
+            for ($y = 0; $y < $h; $y++) { // each pixel 
                      
                 $rgbOrig = ImageColorAt($img, $x, $y); 
                 $rOrig = (($rgbOrig >> 16) & 0xFF); 
@@ -198,13 +204,13 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
                 if (($rOrig != $rNew) || ($gOrig != $gNew) || ($bOrig != $bNew)) { 
                         $pixCol = ImageColorAllocate($img, $rNew, $gNew, $bNew); 
                         ImageSetPixel($img, $x, $y, $pixCol); 
-                    } 
+                } 
             } 
         } 
     } 
     else{ 
-        for ($x = 0; $x < $w; $x++)    { // each row 
-            for ($y = 0; $y < $h; $y++)    { // each pixel 
+        for ($x = 0; $x < $w; $x++) { // each row 
+            for ($y = 0; $y < $h; $y++) { // each pixel 
                 $rgbOrig = ImageColorAt($img, $x, $y); 
                 $rOrig = (($rgbOrig >> 16) & 0xFF); 
                 $gOrig = (($rgbOrig >> 8) & 0xFF); 
@@ -233,7 +239,7 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
     imagedestroy($imgCanvas); 
     imagedestroy($imgBlur); 
      return $simg; 
-} 
+}
 
 function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
 {
@@ -249,21 +255,21 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 	$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 
 	$filesize = filesize($_FILES[$what]['tmp_name']);
-	if($filesize>(1024*$maxsize))
+	if($filesize > (1024 * $maxsize))
 	{
 		unlink($_FILES[$what]['tmp_name']);
 		fatal_error('File is too large. Max allowed is '.$maxsize.' Kb.');
 	}
 
 	// check the extension
-	$allowed=explode(',',$exts);
-	$match=false;
+	$allowed = explode(',', $exts);
+	$match = false;
 	foreach($allowed as $extension => $value)
 	{
-		$ext='.'.$value;
-		$extlen=strlen($ext);
-		if(strtolower(substr($name, strlen($name)-$extlen, $extlen))==strtolower($ext))
-			$match=true;
+		$ext = '.'.$value;
+		$extlen = strlen($ext);
+		if(strtolower(substr($name, strlen($name)-$extlen, $extlen)) == strtolower($ext))
+			$match = true;
 	}
 	if(!$match)
 	{
@@ -273,10 +279,10 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 
 	// check that no other file exists with same name
 	if(file_exists($boarddir.'/'.$destdir.'/'.$name))
-		$name= time().$name;
+		$name = time().$name;
 	
 	// add prefix
-	$sname=$prefix.$name;
+	$sname = $prefix.$name;
 
 	if(move_uploaded_file($_FILES[$what]['tmp_name'],$boarddir.'/'.$destdir.'/'.$sname))
 		return $sname;
@@ -286,7 +292,7 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 
 function tp_groups()
 {
-	global $context, $db_prefix, $txt;
+	global $context, $db_prefix, $txt, $smcFunc;
 
 	// get all membergroups for permissions
 	$grp = array();
@@ -294,22 +300,24 @@ function tp_groups()
 		'id' => '-1',
 		'name' => $txt['tp-guests'],
 		'posts' => '-1'
-		);
+	);
 	$grp[] = array(
 		'id' => '0',
 		'name' => $txt['tp-ungroupedmembers'],
 		'posts' => '-1'
-		);
+	);
 
-	$request =  tp_query("
-	SELECT * FROM " . $db_prefix . "membergroups WHERE 1 ORDER BY id_group", __FILE__, __LINE__);
+	$request =  $smcFunc['db_query']('', '
+		SELECT * FROM {db_prefix}membergroups 
+		WHERE 1 ORDER BY id_group'
+	);
 	while ($row = tpdb_fetch_assoc($request))
 	{
 		$grp[] = array(
 			'id' => $row['id_group'],
 			'name' => $row['group_name'],
 			'posts' => $row['min_posts']
-			);
+		);
 	}
 	return $grp;
 }

@@ -80,7 +80,7 @@
                <modification format="boardmod" type="file">SMF2RC3/tinyportal200rc3b.mod</modification>
                <database>SMF2RC3/tp_upgrade.php</database>
         </upgrade>        
-       <install for="2.0 RC4">
+       <install for="2.0 RC4, 2.0 RC5">
 				<redirect url="">Installed!</redirect>
                 <require-dir name="SMF2RC4/Themes" destination="$boarddir" />
                 <require-dir name="common/Themes" destination="$boarddir" />
@@ -92,10 +92,10 @@
                <modification format="boardmod" type="file">SMF2RC4/tinyportal200rc4.mod</modification>
                <database>SMF2RC3/tp_upgrade.php</database>
         </install>
- 		<uninstall for="2.0 RC4">
+ 		<uninstall for="2.0 RC4, 2.0 RC5">
                 <modification format="boardmod" type="file" reverse="true">SMF2RC4/tinyportal200rc4.mod</modification>
         </uninstall>
-        <upgrade for="2.0 RC4" from="1.098, 1.099, 1.100, 1.101">
+        <upgrade for="2.0 RC4, 2.0 RC5" from="1.098, 1.099, 1.100, 1.101">
 				<redirect url="">Upgraded!</redirect>
                 <require-dir name="SMF2RC4/Themes" destination="$boarddir" />
                 <require-dir name="common/Themes" destination="$boarddir" />
