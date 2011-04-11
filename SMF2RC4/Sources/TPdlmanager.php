@@ -101,9 +101,9 @@ function TPortalDLManager()
 			}
 		}
 		// a file it is
-		$title = isset($_POST['tp-dluploadtitle']) ? strip_tags($_POST['tp-dluploadtitle']) : '-no title-';
+		$title = isset($_POST['tp-dluploadtitle']) ? strip_tags($_POST['tp-dluploadtitle']) : $txt['tp-no_title'];
 		if($title == '')
-			$title = '-no title-';
+			$title = $txt['tp-no_title'];
 		$text = isset($_POST['tp_dluploadtext']) ? $_POST['tp_dluploadtext'] : '';
 		$category = isset($_POST['tp-dluploadcat']) ? (int) $_POST['tp-dluploadcat'] : 0;
 		// a screenshot?
@@ -480,10 +480,10 @@ function TPortalDLManager()
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON (dlcat.id = dlm.category)
 				WHERE dlm.type = {string:type}
-				AND dlm.category IN ({string:cat})
+				AND dlm.category IN ({array_int:cat})
 				AND dlm.author_id = mem.id_member
 				ORDER BY dlm.created DESC LIMIT 6',
-				array('type' => 'dlitem', 'cat' => implode(',', $mycats))
+				array('type' => 'dlitem', 'cat' => $mycats)
 			);
 
 			if($smcFunc['db_num_rows']($request) > 0)
@@ -538,7 +538,7 @@ function TPortalDLManager()
 				AND dlm.category IN ({string:cat})
 				AND dlm.author_id = mem.id_member
 				ORDER BY dlm.downloads DESC LIMIT 10',
-				array('type' => 'dlitem', 'cat' => implode(',', $mycats))
+				array('type' => 'dlitem', 'cat' => $mycats)
 			);
 
 			if($smcFunc['db_num_rows']($request) > 0)
@@ -588,7 +588,7 @@ function TPortalDLManager()
 				AND data.week = {int:week}
 				AND dlm.author_id = mem.id_member
 				ORDER BY data.downloads DESC LIMIT 10',
-				array('type' => 'dlitem', 'cat' => implode(',' , $mycats), 'yr' => $year, 'week' => $week)
+				array('type' => 'dlitem', 'cat' => $mycats, 'yr' => $year, 'week' => $week)
 			);
 
 			if($smcFunc['db_num_rows']($request) > 0)

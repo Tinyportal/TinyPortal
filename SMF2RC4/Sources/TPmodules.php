@@ -720,12 +720,30 @@ function TPmodules()
 				'body' => 'string',
 				'intro' => 'string',
 				'useintro' => 'int',
-				'category' => 'int', 'frontpage' => 'int', 'subject' => 'string', 'author_id' => 'int', 'author' => 'string', 'frame' => 'string', 'approved' => 'int', 'off' => 'int', 'options' => 'string', 'parse' => 'int', 'comments' => 'int', 'comments_var' => 'string', 'views' => 'int', 'rating' => 'string', 'voters' => 'string', 'id_theme' => 'int', 'shortname' => 'string', 'fileimport' => 'string', 'type' => 'string'),
+				'category' => 'int', 
+                'frontpage' => 'int', 
+                'subject' => 'string', 
+                'author_id' => 'int', 
+                'author' => 'string', 
+                'frame' => 'string', 
+                'approved' => 'int', 
+                'off' => 'int', 
+                'options' => 'string', 
+                'parse' => 'int', 
+                'comments' => 'int', 
+                'comments_var' => 'string', 
+                'views' => 'int', 
+                'rating' => 'string', 
+                'voters' => 'string', 
+                'id_theme' => 'int', 
+                'shortname' => 'string', 
+                'fileimport' => 'string', 
+                'type' => 'string'),
 			array($artd, $artbb, $arti, $artu, $artc, $artf, $arts, $nameb, $name, $artframe, $artpp, '0', $artoptions, 0, 0, '', 0, '', '', 0, '', $artimp, $arttype),
 			array('id')
 		);
 
-		$newitem = $smcFunc['db_insert_id']($request);
+		$newitem = $smcFunc['db_insert_id']('{db_prefix}tp_articles', 'id');
 		// put this into submissions - id and type
 		$title = $arts;
 		$now = $artd;

@@ -1398,7 +1398,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		if(!$single)
 			$code = '
 		<div class="article_title' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg' : '') .'" style="margin: 0 0 3px 0; padding: 1em;">
-			<div><span style="font-size: 90%; letter-spacing: 1px;">{article_shortdate}</span> &nbsp;<strong style="font-size: 105%;">{article_title}</strong></div>
+			<div><strong style="font-size: 105%;">{article_title}</strong></div>
 			<div class="catlayout6_text">
 				{article_text}
 			</div><br />

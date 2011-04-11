@@ -16,7 +16,7 @@ if (!defined('SMF'))
 // TinyPortal init
 function TPortal_init()
 {
-	global $maintenance, $db_prefix, $context, $scripturl,$txt , $user_info, $settings , $modSettings, $boarddir, $boardurl, $sourcedir, $forum_version;
+	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir;
 
 	$context['tportal']['now'] = time();
 
@@ -308,13 +308,13 @@ function TP_loadTheme()
 function setupTPsettings()
 {
 	global $maintenance, $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
-	global $modSettings,  $boarddir, $boardurl, $sourcedir, $forum_version, $smcFunc;
+	global $modSettings,  $boarddir, $boardurl, $sourcedir, $smcFunc;
 
 	$context['TPortal']['always_loaded'] = array();
 
 	// get the settings
 	$request =  $smcFunc['db_query']('', '
-		SELECT name,value FROM {db_prefix}tp_settings', array()
+		SELECT name, value FROM {db_prefix}tp_settings', array()
 	);
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
@@ -346,7 +346,7 @@ function setupTPsettings()
 	}	
 	if(isset($context['TPortal']['sitemap_items']))
 	{
-		$context['TPortal']['sitemap'] = explode(',',$context['TPortal']['sitemap_items']);
+		$context['TPortal']['sitemap'] = explode(',', $context['TPortal']['sitemap_items']);
 	}
 	// yet another special case: category list
 	$context['TPortal']['category_list'] = array();
@@ -406,7 +406,7 @@ function setupTPsettings()
 		$context['page_title'] = $context['TPortal']['frontpage_title'];
 
 	if(isset($_GET['action']) && $_GET['action'] == 'tpadmin')
-		$context['page_title'] = $context['forum_name'] . ' - TP Admin';
+		$context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
 
 	// start of things
 	$context['TPortal']['mystart'] = 0;
@@ -453,8 +453,8 @@ function setupTPsettings()
 
 function fetchTPhooks()
 {
-	global $maintenance, $db_prefix, $context, $scripturl, $txt, $smcFunc;
-	global $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir, $forum_version;
+	global $db_prefix, $context, $scripturl, $txt, $smcFunc;
+	global $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir;
 
 	// any hooks for where we are at?
 	$what_board = isset($context['current_board']) ? $context['current_board'] : 0;
@@ -1064,7 +1064,7 @@ function doTPcat()
 						$context['TPortal']['category']['options']['catlayout'] = 1;
 					$now = time();
 					$request =  $smcFunc['db_query']('', '
-						SELECT art.id, IF(art.useintro>0, art.intro, art.body) AS body,
+						SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 							art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
 							art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
 							art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type, art.global_tag,
@@ -1072,7 +1072,7 @@ function doTPcat()
 							IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 						FROM {db_prefix}tp_articles AS art
 						LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member) 
-						LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
+						LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
 						WHERE art.category = {int:cat} 
 						AND ((art.pub_start = 0 AND art.pub_end = 0) 
 						OR (art.pub_start !=0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
@@ -1099,8 +1099,8 @@ function doTPcat()
 						while($row = $smcFunc['db_fetch_assoc']($request))
 						{
 							// fix old articles
-							$row['body'] = html_entity_decode($row['body'],ENT_QUOTES, $context['character_set']);
-							$row['intro'] = html_entity_decode($row['intro'],ENT_QUOTES, $context['character_set']);
+							$row['body'] = html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
+							$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']);
 							$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
 							// Add the rating together
 							$row['rating'] = array_sum(explode(',', $row['rating']));
@@ -1251,10 +1251,6 @@ function doTPfrontpage()
 	global $db_prefix, $context, $scripturl,$txt, $user_info, $settings;
 	global $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
 
-	
-	if(!isset($modSettings['global_character_set']))
-		$modSettings['global_character_set'] = '';
-
 	// check we aren't in any other section
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
 		return;
@@ -1325,7 +1321,7 @@ function doTPfrontpage()
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total, $max);
 
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, IF(art.useintro>0, art.intro, art.body) AS body,
+			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
@@ -1345,9 +1341,9 @@ function doTPfrontpage()
 			AND art.category > 0
 			AND art.approved = 1 
 			AND (art.frontpage = 1 OR art.featured = 1) 
-			ORDER BY art.featured DESC, art.sticky DESC, art.{string:catsort} {string:catorder}
+			ORDER BY art.featured DESC, art.sticky DESC, art.'.$catsort.' '. $catsort_order .'
 			LIMIT {int:start}, {int:max}',
-			array('catsort' => $catsort, 'catorder' => $catsort_order, 'start' => $start, 'max' => $max)
+			array('start' => $start, 'max' => $max)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -1801,8 +1797,8 @@ function doTPfrontpage()
 	}
 
 	// collect up frontblocks
-	$blocks=array('front' => '');
-	$blocktype=array('no','userbox','newsbox','statsbox','searchbox','html',
+	$blocks = array('front' => '');
+	$blocktype = array('no','userbox','newsbox','statsbox','searchbox','html',
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
@@ -1818,9 +1814,8 @@ function doTPfrontpage()
 		SELECT * FROM {db_prefix}tp_blocks 
 		WHERE off = 0 
 		AND bar = 4
-		AND {string:access}
-		ORDER BY pos,id ASC',
-		array('access' => $access)
+		AND '. $access .'
+		ORDER BY pos,id ASC'
 	);
 
 	$count = array('front' => 0); 

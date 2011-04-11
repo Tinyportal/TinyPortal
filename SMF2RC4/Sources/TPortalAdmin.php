@@ -57,9 +57,9 @@ function TPortalAdmin()
 		$context['TPortal']['frontpage_visualopts_admin']['nolayer'] = 1;
 	foreach($w as $r)
 	{
-		if(substr($r,0,5) == 'sort_')
+		if(substr($r, 0, 5) == 'sort_')
 			$context['TPortal']['frontpage_visualopts_admin']['sort'] = substr($r, 5);
-		elseif(substr($r,0,10) == 'sortorder_')
+		elseif(substr($r ,0, 10) == 'sortorder_')
 			$context['TPortal']['frontpage_visualopts_admin']['sortorder'] = substr($r, 10);
 	}
 
@@ -3398,10 +3398,7 @@ function do_postchecks()
 					UPDATE {db_prefix}tp_blocks 
 					SET body = {string:body}
 					WHERE id = {int:blockid}',
-					array(
-						'body' => implode(',', $themebox),
-						'blockid' => $where,
-					)
+					array('body' => implode(',', $themebox), 'blockid' => $where,)
 				);
 
 			// anything from PHP block?
@@ -3664,7 +3661,7 @@ function do_postchecks()
 				}
 			}
 			// if this was a new article
-			if($_POST['tp_article_approved']==1 && $_POST['tp_article_off']==0)
+			if($_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0)
 				tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0) , $where);
 			
 			$smcFunc['db_query']('', '
@@ -3885,7 +3882,7 @@ function get_articles()
 	
 	$request = $smcFunc['db_query']('', '
 		SELECT id, subject, shortname FROM {db_prefix}tp_articles 
-		WHERE approved=1 AND off=0');
+		WHERE approved = 1 AND off = 0');
 		
 	if($smcFunc['db_num_rows']($request) > 0)
 	{

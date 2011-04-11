@@ -32,7 +32,6 @@ function TPsetupAdminAreas()
 {
 	global $db_prefix, $context, $scripturl, $smcFunc;
 
-	$tp_prefix = $db_prefix . 'tp_';
 	// any from modules?
 	$request = $smcFunc['db_query']('', '
 		SELECT modulename, subquery, permissions, languages 
@@ -88,7 +87,7 @@ function TPsetupAdminAreas()
 
 function TP_addPerms()
 {
-	global $db_prefix, $tp_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
+	global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
 	
 	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 
 		'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 
@@ -125,11 +124,6 @@ function TP_addPerms()
 function TPcollectPermissions()
 {
 	global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
-
-	// prefix of the TP tables
-	$tp_prefix = $db_prefix.'tp_';
-
-	$settings['tp_prefix'] = $tp_prefix;
 
 	$context['TPortal']['permissonlist'] = array();
 	// first, the built-in permissions
@@ -440,9 +434,7 @@ function TPparseModfile($file , $returnarray)
 
 function TP_article_categories($use_sorted = false)
 {
-	global $smcFunc, $scripturl, $db_prefix, $user_info, $context, $settings , $tp_prefix, $txt;
-
-	$tp_prefix = $settings['tp_prefix'];
+	global $smcFunc, $scripturl, $db_prefix, $user_info, $context, $settings, $txt;
 
 	$context['TPortal']['caticons'] = array();
 	$context['TPortal']['catnames'] = array();
@@ -682,8 +674,6 @@ function chainCMP($a, $b)
 function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $display = 'list', $order = 'date', $sort = 'desc')
 {
 	global $smcFunc, $db_prefix, $settings, $txt, $scripturl;
-	
-	$tp_prefix = $settings['tp_prefix'];
 
 	// if category is not a number, return
 	if(!is_numeric($category))
@@ -1035,8 +1025,6 @@ function TPsshowgtags($id, $prefix, $itemid, $onlytags = false)
 	global $user_info, $board_info, $db_prefix, $sourcedir, $boardurl;
 	global $boarddir, $txt, $settings, $context, $smcFunc;
 
-	$tp_prefix = $db_prefix . 'tp_';
-
 	$gtags = array();
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables 
@@ -1104,10 +1092,8 @@ function TPget_globaltags($tags, $itemid)
 {
 	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
 
-	$tp_prefix = $db_prefix . 'tp_';
-
 	$taglinks = array();
-	$tagarray = explode(",", $tags);
+	$tagarray = explode(',', $tags);
 	// search the variable table for tags matching
 	$searchtag = 'AND (subtype = \'' . implode('\' OR subtype = \'', $tagarray) . '\')';
 	
@@ -1152,8 +1138,6 @@ function TP_getallmenus()
 {
 	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
 
-	$tp_prefix = $settings['tp_prefix'];
-
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables 
 		WHERE type = {string:type} 
@@ -1189,8 +1173,6 @@ function TP_getallmenus()
 function TP_getmenu($menu_id)
 {
 	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
-
-	$tp_prefix = $settings['tp_prefix'];
 
 	// get menubox items
 	$menu = array();
@@ -1414,8 +1396,6 @@ function tp_collectArticleAttached($art)
 {
 	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
 
-	$tp_prefix = $settings['tp_prefix'];
-
 	// get attached images
 	$context['TPortal']['illustrations'] = array();
 	$context['TPortal']['illustrations_align'] = array();
@@ -1472,11 +1452,6 @@ function TP_fetchprofile_areas()
 {
 	global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
 
-	// prefix of the TP tables
-	$tp_prefix = $db_prefix.'tp_';
-
-	$settings['tp_prefix'] = $tp_prefix;
-
 	$areas = array(
 		'tp_summary' => array('name' => 'tp_summary', 'permission' => 'profile_view_any'),
 		'tp_articles' => array('name' => 'tp_articles', 'permission' => 'tp_articles'),
@@ -1506,11 +1481,6 @@ function TP_fetchprofile_areas()
 function TP_fetchprofile_areas2($memID)
 {
 	global $db_prefix, $context, $scripturl, $txt, $settings, $user_info, $smcFunc;
-
-	// prefix of the TP tables
-	$tp_prefix = $db_prefix.'tp_';
-
-	$settings['tp_prefix'] = $tp_prefix;
 
 	if (!$user_info['is_guest'] && (($context['user']['is_owner'] && allowedTo('profile_view_own')) || allowedTo(array('profile_view_any', 'moderate_forum', 'manage_permissions','tp_dlmanager','tp_blocks','tp_articles','tp_gallery','tp_linkmanager'))))
 	{
@@ -1933,9 +1903,6 @@ function get_blockaccess($what, $front = false, $whichbar)
 
 	$mylang = $user_info['language'];
 	$show = false;
-	// prefix of the TP tables
-	$tp_prefix = $db_prefix.'tp_';
-	$settings['tp_prefix'] = $tp_prefix;
 
 	// if empty return
 	if($what=='')
@@ -2527,7 +2494,6 @@ function tp_recordevent($date, $id_member, $textvariable, $link, $description, $
 {
 	global $smcFunc, $settings;
 
-	$tp_prefix = $settings['tp_prefix'];
 	$request = $smcFunc['db_insert']('insert', 
 		'{db_prefix}tp_events',
 		array('id_member' => 'int', 'date' => 'int', 'textvariable' => 'string', 'link' => 'string', 
@@ -2817,7 +2783,6 @@ function art_recentitems($max = 5, $type = 'date' ){
 
 	global $context, $settings, $db_prefix, $txt, $settings, $smcFunc;
 
-	$tp_prefix = $db_prefix.'tp_';
 	$now = forum_time();
 	$data = array();
 	$orderby = '';
@@ -2897,7 +2862,6 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 	// empty?
 	if(sizeof($mycats) > 0)
 	{
-		$tp_prefix = $settings['tp_prefix'];
 		$context['TPortal']['dlrecenttp'] = array();
 		// decide what to sort from
 		$sortstring = '';
@@ -2920,10 +2884,8 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
 				AND dlm.author_id = mem.id_member
-				{string:sort} LIMIT {int:limit}',
-				array(
-					'type' => 'dlitem', 'cat' => implode(',', $mycats), 'sort' => $sortstring, 'limit' => $number,
-				)
+				{raw:sort} LIMIT {int:limit}',
+				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);
 		else	
 			$request = $smcFunc['db_query']('', '
@@ -2933,12 +2895,10 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
-				AND dlm.category IN ({string:cat})
+				AND dlm.category IN ({array_int:cat})
 				AND dlm.author_id = mem.id_member
 				{raw:sort} LIMIT {int:limit}',
-				array(
-					'type' => 'dlitem', 'cat' => implode(',', $mycats), 'sort' => $sortstring, 'limit' => $number,
-				)
+				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -3012,14 +2972,6 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 function dl_getcats()
 {
 	global $context, $settings, $db_prefix, $txt, $smcFunc;
-
-	if(isset($settings['tp_prefix']))
-			$tp_prefix = $settings['tp_prefix'];
-	else
-	{
-		$tp_prefix = $db_prefix.'tp_';
-		$settings['tp_prefix'] = $tp_prefix;
-	}
 
 	$context['TPortal']['dl_allowed_cats'] = array();
 	$request =  $smcFunc['db_query']('','
