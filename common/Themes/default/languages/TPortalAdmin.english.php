@@ -358,19 +358,21 @@ $txt['tp-newcatmenu'] = 'Use dropdown style';
 
 // Credits...
 $txt['tp-credit1'] = '
-<h4>Developer</h4> 
+<h4>Founder</h4> 
 Bjoern "Bloc" Kristiansen
-<br><br>
+<br /><br />
+<h4>Developer</h4>
+Brad "IchBin" Grow
+<br /><br />
 <h4>TP Team</h4>
-JPDeni, Ianedres, Freddy888,
-Ken, Lesmond, ZTN, ZarPrime, Renegd98, 
-Crip, Agridoc and lurkalot.
-<br><br>
+Ianedres, Freddy888, Ken, Lesmond, ZarPrime, Renegd98, Crip, Agridoc, and lurkalot.
+<br /><br />
 <h4>TP Friends</h4>
-Xarcell, Fussilet,nokonium, StormLrd, RebelRose, Ray, Max, Thurnok, Dragooon, eld^kar, PhilH, Maya, Moocat, Rasyr, gerrymo, BorgBOB, redone, Aku, Anunlike, Tuxie, deniz, feline, and eeek.';
+ZTN, JPDeni, Xarcell, G6, Fussilet, nokonium, StormLrd, RebelRose, Ray, Max, Thurnok, Dragooon, eld^kar, PhilH, Maya, Moocat, Rasyr, gerrymo, BorgBOB, redone, Aku, Anunlike, Tuxie, deniz, feline, and eeek.';
 
-$txt['tp-creditack2'] = 'Much thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
-The TinyPortal project have had much help from the following people listed below- thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!';
+$txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
+The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
+ Thank you Bloc for allowing the TP Team to continue your work.';
 $txt['tp-credits'] = 'Credits';
 
 // Panels admin

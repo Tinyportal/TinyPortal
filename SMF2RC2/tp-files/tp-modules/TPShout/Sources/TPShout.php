@@ -966,7 +966,7 @@ function shoutbox_update()
 	// update profile section
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_modules 
-		SET profile = {string:prof}` 
+		SET profile = {string:prof}
 		WHERE modulename LIKE {string:mod}',
 		array('prof' => 'tpshout_profile', 'mod' => 'TPshout')
 	);

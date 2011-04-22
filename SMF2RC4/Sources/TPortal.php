@@ -36,6 +36,9 @@ function TPortal_init()
 	// include the common files.
 	require_once($sourcedir.'/TPSubs.php');
 
+	if(loadlanguage('TPortal') == false)
+		loadlanguage('TPortal', 'english');
+		
 	setupTPsettings();
 	fetchTPhooks();
 	doModules();
@@ -46,8 +49,6 @@ function TPortal_init()
 
 	loadtemplate('TPsubs');
 	loadtemplate('TPBlockLayout');
-	if(loadlanguage('TPortal') == false)
-		loadlanguage('TPortal', 'english');
 
 	$context['TPortal']['membergroups'] = $user_info['groups'];
 
