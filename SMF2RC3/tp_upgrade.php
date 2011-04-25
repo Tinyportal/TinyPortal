@@ -1,6 +1,6 @@
 <?php
 /****************************************************************************
-* tp_upgrade.php																*
+* tp_upgrade.php															*
 *****************************************************************************
 * TP version: 1.0 RC1														*
 * Software Version:				SMF 2.0										*
@@ -11,6 +11,9 @@
 ****************************************************************************/
 
 global $settings, $scripturl, $boarddir, $context, $smcFunc, $db_prefix, $modSettings;
+
+$manual = false;
+$render = '';
 
 if(!defined('SMF') && file_exists('SSI.php'))
 {
@@ -23,9 +26,6 @@ elseif(!defined('SMF'))
 // Make sure we have all the $smcFunc stuff
 if (!array_key_exists('db_create_table', $smcFunc))
     db_extend('packages');
-
-$manual = false;
-$render = '';
 
 // old empty blocks needs "actio=all"
 $convertblocks = false;
@@ -541,7 +541,7 @@ $settings_array = array(
     'uselangoption' => '0',
 );
 $updates = 0;
-$bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottombar' => 'bottompanel');
+$bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
 $barskey = array_keys($bars);
 
 foreach($settings_array as $what => $val)
@@ -581,7 +581,7 @@ foreach($settings_array as $what => $val)
 	}
     elseif($smcFunc['db_num_rows']($request) > 0 && in_array($what, $barskey)) {
         $row = $smcFunc['db_fetch_row']($request);
-        $val = $row[0];
+        $val = $row[2];
         $smcFunc['db_query']('', '
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
@@ -660,32 +660,30 @@ if($smcFunc['db_num_rows']($request) > 0)
 else
 {
 	$newmod = array(
-		'var' => array(
-			'version' => '1.0',
-			'modulename' => 'TPShout',	// must be exactly equal to the folder.
-			'title' => 'TP Simple Shout', 
-			'subquery' => 'shout',	// the subcall that let TP knows which module is running.
-			'autoload_run' => 'TPShout.php',
-			'autoload_admin' => 'TPShout.php',
-			'autorun' => '',
-			'autorun_admin' => '',
-			'db' => '', 
-			'permissions' => 'tp_can_admin_shout|1',	//permiss
-			'active' => 1, 
-			'languages' => 'english',
-			'blockrender' => 'tpshout_fetch',
-			'adminhook' => 'tpshout_adminhook',
-			'logo' => 'tpshoutbox.png',
-			'tpversion' => '1.0',
-			'smfversion' => '1.1.x',
-			'description' => '[b]TP Simple Shoutbox[/b] is the original shoutbox from v0.9 series of TinyPortal, now converted to a TP module. It allows shout in BBC format, scrolling of shouts, insert of BBC codes and smilies and an admin interface to delete or modify shouts.<br />	',
-			'author' => 'IchBin',
-			'email' => 'ichbin@ichbin.us',
-			'website' => 'http://www.tinyportal.net',
-			'profile' => 'tpshout_profile',
-			'frontsection' => 'tpshout_frontpage',
-			'globaltags' => '',
-		),
+		'version' => '1.0',
+		'modulename' => 'TPShout',	// must be exactly equal to the folder.
+		'title' => 'TP Simple Shout', 
+		'subquery' => 'shout',	// the subcall that let TP knows which module is running.
+		'autoload_run' => 'TPShout.php',
+		'autoload_admin' => 'TPShout.php',
+		'autorun' => '',
+		'autorun_admin' => '',
+		'db' => '', 
+		'permissions' => 'tp_can_admin_shout|1',	//permiss
+		'active' => 1, 
+		'languages' => 'english',
+		'blockrender' => 'tpshout_fetch',
+		'adminhook' => 'tpshout_adminhook',
+		'logo' => 'tpshoutbox.png',
+		'tpversion' => '1.0',
+		'smfversion' => '1.1.x',
+		'description' => '[b]TP Simple Shoutbox[/b] is the original shoutbox from v0.9 series of TinyPortal, now converted to a TP module. It allows shout in BBC format, scrolling of shouts, insert of BBC codes and smilies and an admin interface to delete or modify shouts.<br />	',
+		'author' => 'IchBin',
+		'email' => 'ichbin@ichbin.us',
+		'website' => 'http://www.tinyportal.net',
+		'profile' => 'tpshout_profile',
+		'frontsection' => 'tpshout_frontpage',
+		'globaltags' => '',
 	);
 
 	require_once($sourcedir . '/Subs-Post.php');
@@ -821,8 +819,15 @@ if(isset($convertaccess))
 
 $render .= '</ul>		
 		<hr><p>TinyPortal\'s table structure is now installed/updated. </p>
-		<b>Thank you for trying out TinyPortal!</b>
-		<div style="padding-top: 3em; text-align: center;"><a style="font-size: 1.1em; " href="javascript:void(0);" onclick="document.getElementById(\'hidemenow\').style.display = \'none\'; return false;">Remove this window</a></div>
+		<b>Thank you for trying out TinyPortal!</b>';
+		
+if (!$manual)
+	$render .= '
+		<div style="padding-top: 3em; text-align: center;">
+			<a style="font-size: 1.1em; " href="javascript:void(0);" onclick="document.getElementById(\'hidemenow\').style.display = \'none\'; return false;">Remove this window</a>
+		</div>';
+		
+$render .= '
 	</div></div>';
 
 if($manual)

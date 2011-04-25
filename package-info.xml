@@ -1,216 +1,161 @@
 <?xml version="1.0"?>
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
-        <name>TinyPortal</name>
-        <id>bloc:tinyportal</id>
-        <type>modification</type>
-        <version>1.102</version>
-        <install for="1.0.6-1.0.99">
-                <readme type="inline">
-					TinyPortal will no longer support SMF 1.0x versions, as it now depends on many features not present in SMF 1.0.x. We urge you to upgrade your forum to v1.1 if you like to install TP.
-				</readme>
-       </install>
-        <install for="1.1, 1.1.1-1.1.99">
-				<redirect url="">Installed!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF1.1.x</readme>
- 				<modification format="boardmod" type="file">SMF1/tinyportal1090.mod</modification>
-               <code>SMF1/tp_install.php</code>
-       </install>
-		<uninstall for="1.1, 1.1.1-1.1.99">
-                <modification format="boardmod" type="file" reverse="true">SMF1/tinyportal1090.mod</modification>
-        </uninstall>
-       <install for="2.0 RC2">
-				<redirect url="">Installed!</redirect>
-                <require-dir name="SMF2RC2/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF2RC2/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF2RC2/tp-files" destination="$boarddir" />
-                <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC2</readme>
-               <modification format="boardmod" type="file">SMF2RC2/tinyportal200rc2.mod</modification>
-               <database>SMF2RC2/tp_upgrade.php</database>
-        </install>
- 		<uninstall for="2.0 RC2">
-                <modification format="boardmod" type="file" reverse="true">SMF2RC2/tinyportal200rc2.mod</modification>
-        </uninstall>
-       <upgrade for="2.0 RC2" from="1.098, 1.099, 1.100, 1.101">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF2RC2/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF2RC2/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF2RC2/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF2.0 RC2</readme>
-               <modification format="boardmod" type="file">SMF2RC2/tinyportal200rc2b.mod</modification>
-               <database>SMF2RC2/tp_upgrade.php</database>
-        </upgrade>
+    <name>TinyPortal</name>
+    <id>bloc:tinyportal</id>
+    <type>modification</type>
+    <version>1.102</version>
+    <install for="1.0.6-1.0.99">
+        <readme type="inline">
+			TinyPortal will no longer support SMF 1.0x versions, as it now depends on many features not present in SMF 1.0.x. We urge you to upgrade your forum to v1.1 if you like to install TP.
+		</readme>
+	</install>
+    <install for="1.1, 1.1.1-1.1.99">
+		<redirect url="">Installed!</redirect>
+		<require-dir name="SMF1/Themes" destination="$boarddir" />
+		<require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+		<require-dir name="common/tp-downloads" destination="$boarddir" />
+		<require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+		<readme type="inline">Installing TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<modification format="boardmod" type="file">SMF1/tinyportal1090.mod</modification>
+		<code>SMF1/tp_install.php</code>
+	</install>
+	<uninstall for="1.1, 1.1.1-1.1.99">
+		<modification format="boardmod" type="file" reverse="true">SMF1/tinyportal1090.mod</modification>
+	</uninstall>        
+	<install for="2.0 RC4, 2.0 RC5">
+		<redirect url="">Installed!</redirect>
+        <require-dir name="SMF2RC4/Themes" destination="$boarddir" />
+        <require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF2RC4/Sources" destination="$boarddir" />
+        <require-dir name="common/tp-downloads" destination="$boarddir" />
+        <require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF2RC2/tp-files" destination="$boarddir" />
+        <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC4</readme>
+       <modification format="boardmod" type="file">SMF2RC4/tinyportal200rc4.mod</modification>
+       <database>SMF2RC3/tp_upgrade.php</database>
+    </install>
+	<uninstall for="2.0 RC4, 2.0 RC5">
+		<modification format="boardmod" type="file" reverse="true">SMF2RC4/tinyportal200rc4.mod</modification>
+    </uninstall>
+    <upgrade for="2.0 RC4, 2.0 RC5" from="1.098, 1.099, 1.100, 1.101">
+		<redirect url="">Upgraded!</redirect>
+		<require-dir name="SMF2RC4/Themes" destination="$boarddir" />
+		<require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF2RC4/Sources" destination="$boarddir" />
+		<require-dir name="common/tp-downloads" destination="$boarddir" />
+		<require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF2RC4/tp-files" destination="$boarddir" />
+		<readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC3</readme>
+		<modification format="boardmod" type="file">SMF2RC4/tinyportal200rc4.mod</modification>
+		<database>SMF2RC3/tp_upgrade.php</database>
+    </upgrade>
 
-       <install for="2.0 RC3">
-				<redirect url="">Installed!</redirect>
-                <require-dir name="SMF2RC2/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF2RC2/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF2RC2/tp-files" destination="$boarddir" />
-                <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC3</readme>
-               <modification format="boardmod" type="file">SMF2RC3/tinyportal200rc3.mod</modification>
-               <database>SMF2RC3/tp_upgrade.php</database>
-        </install>
- 		<uninstall for="2.0 RC3">
-                <modification format="boardmod" type="file" reverse="true">SMF2RC3/tinyportal200rc3.mod</modification>
-        </uninstall>
-       <upgrade for="2.0 RC3" from="1.098, 1.099, 1.100, 1.101">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF2RC2/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF2RC2/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF2RC2/tp-files" destination="$boarddir" />
-                <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC3</readme>
-               <modification format="boardmod" type="file">SMF2RC3/tinyportal200rc3b.mod</modification>
-               <database>SMF2RC3/tp_upgrade.php</database>
-        </upgrade>        
-       <install for="2.0 RC4, 2.0 RC5">
-				<redirect url="">Installed!</redirect>
-                <require-dir name="SMF2RC4/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF2RC4/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF2RC2/tp-files" destination="$boarddir" />
-                <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC4</readme>
-               <modification format="boardmod" type="file">SMF2RC4/tinyportal200rc4.mod</modification>
-               <database>SMF2RC3/tp_upgrade.php</database>
-        </install>
- 		<uninstall for="2.0 RC4, 2.0 RC5">
-                <modification format="boardmod" type="file" reverse="true">SMF2RC4/tinyportal200rc4.mod</modification>
-        </uninstall>
-        <upgrade for="2.0 RC4, 2.0 RC5" from="1.098, 1.099, 1.100, 1.101">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF2RC4/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF2RC4/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF2RC4/tp-files" destination="$boarddir" />
-                <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 RC3</readme>
-               <modification format="boardmod" type="file">SMF2RC4/tinyportal200rc4.mod</modification>
-               <database>SMF2RC3/tp_upgrade.php</database>
-        </upgrade>
-	
-		<upgrade from="0.96, 0.97, 0.98, 0.981, 0.982, 0.983">
-                <readme type="inline">Please un-install TinyPortal 0.6-0.9.x before installing the new TinyPortal 1.0. You will NOT loose any data, and everything will work as before. After un-installing(removing the modifications to SMF files only) you can then re-install TP v1.0 and it will pick and use the old data. Note that TP no longer need to use custom TP themes, it will use SMF themes just fine..but you WILL need to add the extra "forum" button/tab to the theme.</readme>
-		</upgrade>
-        <upgrade for="1.0.5-1.0.99">
-               <readme type="inline">
-					TinyPortal will no longer support SMF 1.0x versions, as it now depends on many features not present in SMF 1.0.x. We urge you to upgrade your forum to v1.1 if you like to install v1.0 of TP.
-			</readme>
-       </upgrade>
+	<upgrade from="0.96, 0.97, 0.98, 0.981, 0.982, 0.983">
+		<readme type="inline">Please un-install TinyPortal 0.6-0.9.x before installing the new TinyPortal 1.0. You will NOT loose any data, and everything will work as before. After un-installing(removing the modifications to SMF files only) you can then re-install TP v1.0 and it will pick and use the old data. Note that TP no longer need to use custom TP themes, it will use SMF themes just fine..but you WILL need to add the extra "forum" button/tab to the theme.</readme>
+	</upgrade>
+    <upgrade for="1.0.5-1.0.99">
+		<readme type="inline">
+			TinyPortal will no longer support SMF 1.0x versions, as it now depends on many features not present in SMF 1.0.x. We urge you to upgrade your forum to v1.1 if you like to install v1.0 of TP.
+		</readme>
+   </upgrade>
 
-		<upgrade for="1.1, 1.1.1-1.1.99" from="1.00, 1.01">
-				<redirect url="">Upgraded!</redirect>
-				<require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                 <modification format="boardmod" type="file">SMF1/tinyportal1010-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.02">
-				<redirect url="">Upgraded!</redirect>
-				<require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                 <modification format="boardmod" type="file">SMF1/tinyportal1020-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.03, 1.04, 1.041, 1.048">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                 <modification format="boardmod" type="file">SMF1/tinyportal1048-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.049, 1.050, 1.051, 1.052, 1.053, 1.054, 1.0.55, 1.0.56">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                <modification format="boardmod" type="file">SMF1/tinyportal1050-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.0.57,1.058, 1.059, 1.060, 1.061, 1.070, 1.071, 1.072, 1.073, 1.074">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                <modification format="boardmod" type="file">SMF1/tinyportal1056-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.075">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                <modification format="boardmod" type="file">SMF1/tinyportal1075-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.076, 1.077, 1.0.78, 1.079, 1.080">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                <modification format="boardmod" type="file">SMF1/tinyportal1080-1090.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-        <upgrade for="1.1, 1.1.1-1.1.99" from="1.081, 1.082, 1.083, 1.084, 1.085, 1.090, 1.091, 1.092, 1.093, 1.094, 1.095, 1.098, 1.099, 1.100, 1.101">
-				<redirect url="">Upgraded!</redirect>
-                <require-dir name="SMF1/Themes" destination="$boarddir" />
-                <require-dir name="common/Themes" destination="$boarddir" />
-				<require-dir name="SMF1/Sources" destination="$boarddir" />
-                <require-dir name="common/tp-downloads" destination="$boarddir" />
-                <require-dir name="common/tp-images" destination="$boarddir" />
-				<require-dir name="SMF1/tp-files" destination="$boarddir" />
-                <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
-                <modification format="boardmod" type="file">SMF1/tinyportal11b.mod</modification>
-                <code>SMF1/tp_install.php</code>
-       </upgrade>
-   </package-info>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.00, 1.01">
+		<redirect url="">Upgraded!</redirect>
+		<require-dir name="SMF1/Themes" destination="$boarddir" />
+		<require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+		<require-dir name="common/tp-downloads" destination="$boarddir" />
+		<require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		 <modification format="boardmod" type="file">SMF1/tinyportal1010-1090.mod</modification>
+		<code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.02">
+		<redirect url="">Upgraded!</redirect>
+		<require-dir name="SMF1/Themes" destination="$boarddir" />
+		<require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+		<require-dir name="common/tp-downloads" destination="$boarddir" />
+		<require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<modification format="boardmod" type="file">SMF1/tinyportal1020-1090.mod</modification>
+		<code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.03, 1.04, 1.041, 1.048">
+		<redirect url="">Upgraded!</redirect>
+		<require-dir name="SMF1/Themes" destination="$boarddir" />
+		<require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+		<require-dir name="common/tp-downloads" destination="$boarddir" />
+		<require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<modification format="boardmod" type="file">SMF1/tinyportal1048-1090.mod</modification>
+		<code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.049, 1.050, 1.051, 1.052, 1.053, 1.054, 1.0.55, 1.0.56">
+		<redirect url="">Upgraded!</redirect>
+        <require-dir name="SMF1/Themes" destination="$boarddir" />
+        <require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+        <require-dir name="common/tp-downloads" destination="$boarddir" />
+        <require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+        <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+        <modification format="boardmod" type="file">SMF1/tinyportal1050-1090.mod</modification>
+        <code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.0.57,1.058, 1.059, 1.060, 1.061, 1.070, 1.071, 1.072, 1.073, 1.074">
+		<redirect url="">Upgraded!</redirect>
+		<require-dir name="SMF1/Themes" destination="$boarddir" />
+		<require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+		<require-dir name="common/tp-downloads" destination="$boarddir" />
+		<require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<modification format="boardmod" type="file">SMF1/tinyportal1056-1090.mod</modification>
+		<code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.075">
+		<redirect url="">Upgraded!</redirect>
+        <require-dir name="SMF1/Themes" destination="$boarddir" />
+        <require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+        <require-dir name="common/tp-downloads" destination="$boarddir" />
+        <require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+        <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+        <modification format="boardmod" type="file">SMF1/tinyportal1075-1090.mod</modification>
+		<code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.076, 1.077, 1.0.78, 1.079, 1.080">
+		<redirect url="">Upgraded!</redirect>
+	    <require-dir name="SMF1/Themes" destination="$boarddir" />
+	    <require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+	    <require-dir name="common/tp-downloads" destination="$boarddir" />
+	    <require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+	    <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+	    <modification format="boardmod" type="file">SMF1/tinyportal1080-1090.mod</modification>
+        <code>SMF1/tp_install.php</code>
+	</upgrade>
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.081, 1.082, 1.083, 1.084, 1.085, 1.090, 1.091, 1.092, 1.093, 1.094, 1.095, 1.098, 1.099, 1.100, 1.101">
+		<redirect url="">Upgraded!</redirect>
+        <require-dir name="SMF1/Themes" destination="$boarddir" />
+        <require-dir name="common/Themes" destination="$boarddir" />
+		<require-dir name="SMF1/Sources" destination="$boarddir" />
+        <require-dir name="common/tp-downloads" destination="$boarddir" />
+        <require-dir name="common/tp-images" destination="$boarddir" />
+		<require-dir name="SMF1/tp-files" destination="$boarddir" />
+        <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+        <modification format="boardmod" type="file">SMF1/tinyportal11b.mod</modification>
+        <code>SMF1/tp_install.php</code>
+	</upgrade>
+</package-info>
