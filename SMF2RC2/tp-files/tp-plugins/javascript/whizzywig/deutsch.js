@@ -1,32 +1,72 @@
-<HTML>
-<HEAD>
-<TITLE>404 Not Found</TITLE>
-</HEAD>
-<BODY>
-<H1>Not Found</H1>
-The requested document was not found on this server.
-<P>
-<HR>
-<ADDRESS>
-Web Server at unverse.net
-</ADDRESS>
-</BODY>
-</HTML>
-
-<!--
-   - Unfortunately, Microsoft has added a clever new
-   - "feature" to Internet Explorer. If the text of
-   - an error's message is "too small", specifically
-   - less than 512 bytes, Internet Explorer returns
-   - its own error message. You can turn that off,
-   - but it's pretty tricky to find switch called
-   - "smart error messages". That means, of course,
-   - that short error messages are censored by default.
-   - IIS always returns error messages that are long
-   - enough to make Internet Explorer happy. The
-   - workaround is pretty simple: pad the error
-   - message with a big comment like this to push it
-   - over the five hundred and twelve bytes minimum.
-   - Of course, that's exactly what you're reading
-   - right now.
-   -->
+//Language file for whizzywig.js - German = Deutsch (Deutsche Sonderzeichen nach ISO-8859-1)
+language = new Array();
+language['editor not available for your browser']  = "Editor ist für Ihren Browser leider nicht verfügbar";
+language['Bold']  = "fett";
+language['Italic']  = "kursiv";
+language['Underline']  = "unterstrichen";
+language['Left']  = "linksbündig";
+language['Center']  = "zentriert";
+language['Right']  = "rechtsbündig";
+language['Number']  = "numerierte Liste";
+language['Bullet']  = "Liste";
+language['Indent']  = "einrücken rechts";
+language['Outdent']  = "einrücken links";
+language['Undo']  = "rückgängig";
+language['Redo']  = "wiederherstellen";
+language['Color']  = "Textfarbe";
+language['Hilite']  = "Textmarker-Effekt";
+language['Rule']  = "horizontale Linie";
+language['Link']  = "Hyperlink einfügen";
+language['Image']  = "Bild einfügen";
+language['Table']  = "Tabelle einfügen";
+language['Clean']  = "Office-Attribute entfernen";
+language['Html']  = "HTML anzeigen";
+language['Spellcheck']  = "Rechtschreibung";
+language['Select some text first'] = "Wählen Sie zuerst Text aus";
+language['Insert']  = "einfügen";
+language['Add row above']  = "Zeile oberhalb einfügen";
+language['Add row below']  = "Zeile unterhalb einfügen";
+language['Delete row']  = "Zeile löschen";
+language['Add column before']  = "Spalte unterhalb einfügen";
+language['Add column after']  = "Spalte oberhalb einfügen";
+language['click below or enter a']  = "Klicken Sie unten oder wählen Sie (online) einen ";
+language['color name']  = "Farbnamen";
+language['Delete column']  = "Spalte löschen";
+language['Choose style']  = "Format wählen";
+language['Paragraph']  = "Standard-Absatz";
+language['Heading']  = "Überschrift";
+language['Address']  = "Adresse";
+language['Big']  = "Zeichen größer";
+language['Small']  = "Zeichen kleiner";
+language['large']  = "LARGE";
+language['Fixed width']  = "Feste Breite";
+language['Font'] = "Schrift";
+language['Font size']  = "Schrift Größe";
+language['Browse']  = "Browser";
+language['OK']  = "OK";
+language['Cancel']  = "Abbrechen";
+language['Hide HTML']  = "HTML verstecken";
+language['Image address (URL)']  = "Bild-Adresse (URL)";
+language['Link address (URL)']  = "Link-Adresse (URL)";
+language['to display if image unavailable']  = "zeigen wenn Bild nicht verfügbar";
+language['Alternate text']  = "Alternativer Text";
+language['Align']  = "Ausrichtung";
+language['normal']  = "normal";
+language['left']  = "links";
+language['right']  = "rechts";
+language['inside']  = "innen ";
+language['Border']  = "Rahmen";
+language['Margin']  = "Rand";
+language['Rows'] = "Zeilen";
+language['Columns'] = "Spalten";
+language['Border width'] = "Rahmenstärke";
+language['Insert Table'] = "OK";
+language['No header row'] = "Ohne Überschrift";
+language['Include header row'] = "Mit Überschrift";
+language['Insert Image'] = "OK";
+language['ieSpell is not installed on your computer.']  = "ieSpell ist nicht auf Ihrem PC installiert.";
+language['Click [OK] to go to download page.']  = "Klick auf [OK] um zur Downloadseite zu gelangen.";
+language['Click [OK] for instructions to download and install']  = "Klick auf [OK] für Anweisungen zu Download und Installation";
+language['SpellBound on your computer.'] = "SpellBound auf dem benutzten Computer.";
+language['If you already have it, click [Cancel] then right']  = "Wenn Sie es schon haben, klicken Sie nun auf [Abbrechen] dann rechts";
+language["click in the edit area and select 'Check Spelling'."]  = "Klicken Sie in die Bearbeitungsumgebung und wählen 'Rechtschreibung'";

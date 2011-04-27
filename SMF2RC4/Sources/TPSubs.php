@@ -218,7 +218,7 @@ function tp_getbuttons()
 
 	$buts = array();
 	
-	if(isset($context['TPortal']['show_download']) && $context['TPortal']['show_download'] == 1)
+	if(!empty($context['TPortal']['show_download']))
 		$buts['downloads'] = array(
 			'title' => $txt['tp-downloads'],
 			'href' => $scripturl . '?action=tpmod;dl',
@@ -1811,15 +1811,15 @@ function tp_renderarticle($intro = '')
 	{
 		if($context['TPortal']['article']['rendertype'] == 'php')
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
+		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
+			echo parse_bbc($context['TPortal']['article']['body']);
 		elseif($context['TPortal']['article']['rendertype'] == 'import')
 		{
 			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport']))
 				echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
 			else
 				include($context['TPortal']['article']['fileimport']);
-		}
-		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
-			echo parse_bbc($context['TPortal']['article']['body']);
+		}			
 		else
 			echo $context['TPortal']['article']['body'];
 	}
@@ -2390,7 +2390,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 		{
 			$context['TPortal']['admmodules'][] = $row;
 		}
-		tpdb_free_result($result);
+		$smcFunc['db_free_result']($result);
 	}
 	if (allowedTo('tp_blocks'))
 	{

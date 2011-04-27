@@ -230,7 +230,7 @@ function template_tpshout_shoutblock()
 		if(!empty($context['TPortal']['show_shoutbox_smile']))
 			print_shout_smileys();
 		echo '
-		<input style="margin-top: 4px;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" />';
+		<input style="margin-top: 4px;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" tabindex="', $context['tabindex']++, '" />';
 	}
 	if($context['user']['is_guest'] && $context['TPortal']['guest_shout'])
 		echo '<br />

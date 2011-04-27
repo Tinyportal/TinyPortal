@@ -343,7 +343,7 @@ foreach ($tables as $table => $col) {
                     ALTER TABLE {db_prefix}{raw:table}
                     CHANGE {raw:name} {raw:name} {raw:type}
                     CHARACTER SET uft8 COLLATE uft8_general_ci',
-                    array('table' => $table, 'name' => $column['nam'], 'type' => $column['type'])
+                    array('table' => $table, 'name' => $column['name'], 'type' => $column['type'])
                 );
             }
         }

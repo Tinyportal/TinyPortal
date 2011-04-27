@@ -292,7 +292,7 @@ function tpshout_admin()
 				$smcFunc['db_query']('', '
 				 	UPDATE {db_prefix}tp_settings 
 			 		SET value = '. $value .' 
-		 			WHERE name = {string:limit}',
+		 			WHERE name = {string:name}',
 			 		array('name' => 'shoutbox_limit')
 			 	);
 				$go = 1;
@@ -506,7 +506,7 @@ function tpshout_admin()
 
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
-		while ($row = tpdb_fetch_assoc($request))
+		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],

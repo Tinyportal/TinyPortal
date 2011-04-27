@@ -1002,18 +1002,18 @@ function template_panels()
 									<span class="middletext">'.$txt['tp-blockheight'].':</span>
 									<input name="tp_blockheight_'.$panl.'" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['blockheight_'.$panl], '">
 							
-			<div style="overflow: hidden; padding: 5px;">';
+									<div style="overflow: hidden; padding: 5px;">';
 		
 			foreach($types as $blo => $bl)
 				echo '
-			<div style="float: left; width: 160px; height: 100px; margin: 5px;">
-				<div class="smalltext" style="padding: 4px 0;"><input name="tp_panelstyle_'.$panl.'" type="radio" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '><span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
-				</div>' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
-				' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
-			</div>';
-			
+										<div style="float: left; width: 160px; height: 100px; margin: 5px;">
+											<div class="smalltext" style="padding: 4px 0;">
+												<input name="tp_panelstyle_'.$panl.'" type="radio" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '><span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
+											</div>' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
+											' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
+										</div>';
 			echo '
-			</div>
+									</div>
 		
 								</td>
 							</tr>';
@@ -2173,9 +2173,6 @@ function template_editarticle($type = '')
 				else
 					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" style="width: 60%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '"></td></tr>' ;
 
-
-				if($mg['articletype']!='import')
-				{
 					echo '
 						<br />
 						</td>
@@ -2186,9 +2183,7 @@ function template_editarticle($type = '')
 							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'
 							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
 						</td>
-					</tr>';
-				}
-				echo '
+					</tr>
 					<tr class="windowbg2 error">
 						<td class="left" valign="top" align="right">'.$txt['tp-status'].':</td>
 						<td valign="top">

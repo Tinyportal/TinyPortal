@@ -901,6 +901,15 @@ function doTPpage()
 						$pwhat = 'echo \'<h2>\' . html_entity_decode($article[\'subject\'], ENT_QUOTES, $context[\'character_set\']) . \'</h2>\';' . html_entity_decode($article['body'], ENT_QUOTES, $context['character_set']);
 						if($article['type'] == 'php')
 							$context['TPortal']['printbody'] = eval($pwhat);
+						elseif($article['type'] == 'import')
+						{
+							if(!file_exists($boarddir. '/' . $article['fileimport']))
+								echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
+							else
+								include($article['fileimport']);
+								
+							$context['TPortal']['printbody'] = '';
+						}							
 						elseif($article['type'] == 'bbc')
 							$context['TPortal']['printbody'] = parse_bbc($what);
 						else
@@ -1443,8 +1452,8 @@ function doTPfrontpage()
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
-				WHERE t.id_board=b.id_board
-				AND t.id_board IN({array_int:board})
+				WHERE t.id_board = b.id_board
+				AND t.id_board IN({string:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {string:questnews}' : '') . '
 				ORDER BY t.id_first_msg DESC
 				LIMIT {int:max}',
@@ -1457,12 +1466,12 @@ function doTPfrontpage()
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
-				WHERE t.id_board=b.id_board
-				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : '{array_int:topics}') .')
+				WHERE t.id_board = b.id_board
+				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : '{string:topics}') .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {string:guestnews}' : '') . '
 				ORDER BY t.id_first_msg DESC',
 				array(
-					'fronttopics' => $context['TPortal']['frontpage_topics'],
+					'topics' => $context['TPortal']['frontpage_topics'],
 					'guestnews' => $user_info['query_see_board']
 				)
 			);
@@ -1487,7 +1496,7 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject,  
-				' . ($context['TPortal']['frontpage_limit_len'] > 0 ? "LEFT(m.body," . $context['TPortal']['frontpage_limit_len'] . ") as body" : "m.body") . ', 
+				' . ($context['TPortal']['frontpage_limit_len'] > 0 ? 'LEFT(m.body,' . $context['TPortal']['frontpage_limit_len'] . ') as body' : 'm.body') . ', 
 				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views,t.num_replies as replies, t.locked,
@@ -1500,10 +1509,10 @@ function doTPfrontpage()
 			WHERE t.id_first_msg IN ({array_int:posts})
 			AND m.id_msg = t.id_first_msg
 			GROUP BY t.id_first_msg
-			ORDER BY m.{string:catsort} DESC
+			ORDER BY m.{raw:catsort} DESC
 			LIMIT {int:start}, {int:max}',
 			array(
-				'posts' => implode(', ', $posts),
+				'posts' => $posts,
 				'catsort' => $catsort,
 				'start' => $start,
 				'max' => $max,
@@ -1609,7 +1618,7 @@ function doTPfrontpage()
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
 				WHERE t.id_board = b.id_board
 				AND t.id_first_msg = m.id_msg
-				AND t.id_board IN({int:board})
+				AND t.id_board IN({string:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC
 				LIMIT {int:max}',
@@ -1619,7 +1628,7 @@ function doTPfrontpage()
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
-				WHERE t.id_board=b.id_board
+				WHERE t.id_board = b.id_board
 				AND t.id_first_msg = m.id_msg
 				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
@@ -1655,12 +1664,12 @@ function doTPfrontpage()
 			// Find the thumbs.
 			$request =  $smcFunc['db_query']('', '
 				SELECT id_thumb FROM {db_prefix}attachments
-				WHERE id_msg IN ({string:posts}) 
+				WHERE id_msg IN ({array_int:posts}) 
 				AND id_thumb > 0',
-				array('posts' => implode(',', $mposts))
+				array('posts' => $mposts)
 			);
 
-			if($smcFunc['db_num_rows']($request)>0)
+			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 					$thumbs[] = $row['id_thumb'];
@@ -1671,11 +1680,11 @@ function doTPfrontpage()
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total + count($posts), $max);
 
 		// ok we got the post ids now, fetch each one, forum first
-		if(count($mposts)>0)
+		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, 
-				' , ($context['TPortal']['frontpage_limit_len'] > 0 ? 'LEFT(m.body,' . $context['TPortal']['frontpage_limit_len'] . ') as body' : 'm.body') , ', 
-				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
+				' . ($context['TPortal']['frontpage_limit_len'] > 0 ? 'LEFT(m.body,' . $context['TPortal']['frontpage_limit_len'] . ') as body' : 'm.body') . ', 
+				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views, t.num_replies as replies, t.locked,
 				IFNULL(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename
@@ -1688,7 +1697,7 @@ function doTPfrontpage()
 				AND m.id_msg = t.id_first_msg
 				GROUP BY t.id_first_msg
 				ORDER BY date DESC, thumb.id_attach ASC',
-				array('posts' => implode(',', $mposts))
+				array('posts' => $mposts)
 			);
 
 		$context['TPortal']['category'] = array(
@@ -1709,8 +1718,9 @@ function doTPfrontpage()
         $posts = array();
 
 		// insert the forumposts into $posts
-		if(is_resource($request) && $smcFunc['db_num_rows']($request)>0)
+		if(is_resource($request) && $smcFunc['db_num_rows']($request) > 0)
 		{
+
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				// some needed addons
@@ -1720,7 +1730,7 @@ function doTPfrontpage()
 				if(!isset($context['TPortal']['frontpage_visopts'])) 
 					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');				
 				
-				$row['visual_options'] = explode(",", $context['TPortal']['frontpage_visopts']);
+				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
 				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar'], ENT_QUOTES, $context['character_set']) . '" alt="&nbsp;" />');
 
@@ -1732,30 +1742,30 @@ function doTPfrontpage()
 			$smcFunc['db_free_result']($request);
 		}
 		// next up is articles
-		if(count($aposts)>0)
+		if(count($aposts) > 0)
 		{
 			$request =  $smcFunc['db_query']('', '
-				SELECT art.id, IF(art.useintro>0, art.intro, art.body) AS body,
+				SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 					art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name,
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
-					art.fileimport, art.topic, art.illustration,art.type as rendertype ,art.global_tag,
+					art.fileimport, art.topic, art.illustration, art.type as rendertype, art.global_tag,
 					IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 				FROM {db_prefix}tp_articles AS art
 				LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category) 
 				LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
-				WHERE art.id IN ({string:artid})
+				WHERE art.id IN ({array_string:artid})
 				ORDER BY art.featured desc, art.sticky desc, art.' . $catsort .' ' . $catsort_order,
-				array('artid' => implode(', ', $aposts))
+				array('artid' => $aposts)
 			);
-			if($smcFunc['db_num_rows']($request)>0)
+			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					// expand the vislaoptions
-					$row['visual_options'] = explode(",", $row['options']);
+					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
 					
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar'], ENT_QUOTES, $context['character_set']) . '" alt="&nbsp;" />');
@@ -1766,10 +1776,10 @@ function doTPfrontpage()
     				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES, $context['character_set']);
 					// we need some trick to put featured/sticky on top
 					$sortdate = $row['date'];
-					if($row['sticky']==1)
+					if($row['sticky'] == 1)
 						$sortdate = $row['date'] + $year;
-					if($row['featured']==1)
-						$sortdate = $row['date'] + $year+$year;
+					if($row['featured'] == 1)
+						$sortdate = $row['date'] + $year + $year;
 					
 					$posts[$sortdate.'0' . sprintf("%06s", $row['id'])] = $row;
 				}
@@ -1777,7 +1787,7 @@ function doTPfrontpage()
 			}
 		}	
 		$total = count($posts); 
-        $col1 = ceil($total/2);
+        $col1 = ceil($total / 2);
 		$col2 = $total - $col1;
 		$counter = 0;
 		
@@ -1789,7 +1799,7 @@ function doTPfrontpage()
 		{
 			if($counter == 0)
 				$context['TPortal']['category']['featured'] = $row;
-			elseif($counter < $col1 && $counter>0)
+			elseif($counter < $col1 && $counter > 0)
 				$context['TPortal']['category']['col1'][] = $row;
 			elseif($counter > $col1 || $counter == $col1)
 				$context['TPortal']['category']['col2'][] = $row;

@@ -316,7 +316,7 @@ function tp_notifyComments($memberlist, $message2, $subject)
 				$txt['notify_boardsUnsubscribe'] . ': ' . $scripturl . '?action=notifyboard;board=' . $board . ".0\n\n" .
 				$txt[130], null, 't' . $topic);
 	}
-	tpdb_free_result($members);
+	$smcFunc['db_free_result']($members);
 }
 
 /* ******************************************************************************************************************** */
@@ -721,7 +721,7 @@ function do_blocks()
 					'editgroups' => $row['editgroups']
 				);
 
-			tpdb_free_result($request);
+			$smcFunc['db_free_result']($request);
 		}
 	}
 	get_articles();
@@ -1286,7 +1286,7 @@ function do_articles()
 					WHERE id = {int:varid} LIMIT 1',
 					array('varid' => $ccat)
 				);
-				if($smcFunc['db_num_rows']($request)>0)
+				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']);
@@ -1297,7 +1297,7 @@ function do_articles()
 						if(isset($b[1]))
 							$row[$b[0]] = $b[1];
 					}
-					tpdb_free_result($request);
+					$smcFunc['db_free_result']($request);
 					$check = array('layout', 'catlayout', 'toppanel', 'bottompanel', 'leftpanel', 'rightpanel', 'upperpanel', 'lowerpanel', 'showchild');
 					foreach($check as $c => $ch)
 					{
@@ -1315,8 +1315,10 @@ function do_articles()
 					array('type' => 'category')
 				);
 				
-				$context['TPortal']['editcats']=array(); $allsorted=array(); $alcats = array();
-				if($smcFunc['db_num_rows']($request)>0)
+				$context['TPortal']['editcats'] = array();
+				$allsorted = array();
+				$alcats = array();
+				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					while ($row = $smcFunc['db_fetch_assoc']($request))
 					{
@@ -1325,7 +1327,7 @@ function do_articles()
 						$allsorted[$row['id']] = $row;
 						$alcats[] = $row['id'];
 					}
-					tpdb_free_result($request);
+					$smcFunc['db_free_result']($request);
 					if(count($allsorted) > 1)
 						$context['TPortal']['editcats'] = chain('id', 'parent', 'name', $allsorted);
 					else
@@ -1345,7 +1347,9 @@ function do_articles()
 			array('type' => 'category')
 		);
 		
-		$context['TPortal']['editcats']=array(); $allsorted=array(); $alcats = array();
+		$context['TPortal']['editcats'] = array();
+		$allsorted = array();
+		$alcats = array();
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
@@ -1356,7 +1360,7 @@ function do_articles()
 				$alcats[] = $row['id'];
 			}
 			$smcFunc['db_free_result']($request);
-			if(count($allsorted)>1)
+			if(count($allsorted) > 1)
 				$context['TPortal']['editcats'] = chain('id', 'parent', 'name', $allsorted);
 			else
 				$context['TPortal']['editcats'] = $allsorted;
@@ -1404,7 +1408,7 @@ function do_articles()
 		$show_submission = true;
 	}
 	// single article?
-	if(isset($_GET['sa']) && substr($_GET['sa'],0,11) == 'editarticle')
+	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle')
 	{
 		TPadd_linktree($scripturl.'?action=tpadmin;sa='.$_GET['sa'], $txt['tp-editarticle']);
 		$whatarticle = substr($_GET['sa'],11);
@@ -1477,7 +1481,7 @@ function do_articles()
 			array('type' => 'category', 'whereval' => isset($where) ? 'AND var.value2=' . $where : '')
 		);
 		
-		if($smcFunc['db_num_rows']($request)>0)
+		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$context['TPortal']['basecats'] = isset($where) ? array($where) : array('0', '9999');
 			$cats = array();
@@ -1613,12 +1617,12 @@ function do_articles()
 		
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$context['TPortal']['editarticle']= $smcFunc['db_fetch_assoc']($request);
+			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
 			$context['TPortal']['editarticle']['body'] = html_entity_decode($context['TPortal']['editarticle']['body'],ENT_QUOTES, $context['character_set']);
 			$context['TPortal']['editarticle']['intro'] = html_entity_decode($context['TPortal']['editarticle']['intro'],ENT_QUOTES, $context['character_set']);
 			$context['TPortal']['editarticle']['subject'] = html_entity_decode($context['TPortal']['editarticle']['subject'], ENT_COMPAT, $context['character_set']);
 			
-			tpdb_free_result($request);
+			$smcFunc['db_free_result']($request);
 		}
 		// fetch the WYSIWYG value
 		$request = $smcFunc['db_query']('', '
@@ -1753,7 +1757,7 @@ function do_articles()
 				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
 				$context['TPortal']['arts'][] = $row;
 			}
-			tpdb_free_result($request);
+			$smcFunc['db_free_result']($request);
 		}
 	}
 	$context['html_headers'] .= '
@@ -2293,7 +2297,7 @@ function do_postchecks()
 			}
 			return 'permissions';
 		}
-		// settings and frontpage
+		// block permissions overview
 		elseif($from == 'blockoverview')
 		{
 			checkSession('post');
@@ -2306,7 +2310,7 @@ function do_postchecks()
 				{
 					// get the id
 					$bid = substr($what, 12);
-					if(!is_array($block[$bid]))
+					if(!isset($block[$bid]))
 						$block[$bid] = array();
 
 					if($value != 'control' && !in_array($value, $block[$bid]))
@@ -3182,7 +3186,7 @@ function do_postchecks()
 					);
 					if($smcFunc['db_num_rows']($request)>0)
 					{
-						$cp = tpdb_fetch_assoc($request);
+						$cp = $smcFunc['db_fetch_assoc']($request);
 						$smcFunc['db_free_result']($request);
 					}
 				}
