@@ -1,6 +1,6 @@
 <?php
-// Version: 1.0 beta5; TPprofile
-// For use with SMF v2.0 RC3
+// Version: TinyPortal 1.0; TPprofile
+// For use with SMF v2.0
 
 function template_tp_summary()
 {

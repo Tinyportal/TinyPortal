@@ -1,5 +1,5 @@
 <?php
-// Version: TP 1.0 RC2; TPsubs
+// Version: TinyPortal 1.0; TPsubs
 // For use with SMF v2.0
 
 // TPortal searchblock

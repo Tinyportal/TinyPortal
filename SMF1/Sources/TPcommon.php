@@ -1,17 +1,17 @@
 <?php
-/******************************************************************************
-* TPcommon.php                                                                   *
-*******************************************************************************
-* TP version: 1.0 RC1                                                                                                      *
-* Software Version:           SMF 1.1.x                                                                                   *
-* Software by:                Bloc (http://www.tinyportal.net)                                                      *
-* Copyright 2005-2010 by:     Bloc (bloc@tinyportal.net)                                                         *
-* Support, News, Updates at:  http://www.tinyportal.net                   *
-*******************************************************************************/
+/****************************************************************************
+* TPcommon.php																*
+*****************************************************************************
+* TP version: 1.0 RC1														*
+* Software Version:				SMF 1.1.x									*
+* Founder:						Bloc (http://www.blocweb.net)				*
+* Developer:					IchBin (ichbin@ichbin.us)					*
+* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Support, News, Updates at:  	http://www.tinyportal.net					*
+****************************************************************************/
 
 if (!defined('SMF'))
 	die('Hacking attempt...');
-
 
 function tp_rating_init()
 {

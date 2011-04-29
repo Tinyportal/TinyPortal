@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0 beta5; TPwireless
+// Version: TinyPortal 1.0; TPwireless
 // For use with SMF v1.1.x
 
 function template_wap2_tp_frontpage()

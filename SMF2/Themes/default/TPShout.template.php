@@ -1,6 +1,6 @@
 <?php
-// Version: 1.0 beta5; TPShout
-// For use with SMF v2.0 RC3
+// Version: TinyPortal 1.0; TPShout
+// For use with SMF v2.0
 
 function template_tpshout_above()
 {

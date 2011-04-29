@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0 beta5; TPortal
+// Version: TinyPortal 1.0; TPortal
 // For use with SMF v1.1.x
 
 function template_main()

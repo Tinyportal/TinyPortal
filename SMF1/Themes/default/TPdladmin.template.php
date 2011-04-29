@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0 beta5; TPdladmin
+// Version: TinyPortal 1.0; TPdladmin
 // For use with SMF v1.1.x
 
 function template_main()

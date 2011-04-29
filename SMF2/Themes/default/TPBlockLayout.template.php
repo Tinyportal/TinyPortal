@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0 beta5; TPBlockLayout
+// Version: TinyPortal 1.0; TPBlockLayout
 // For use with SMF v2.0
 
 function template_tp_above()
