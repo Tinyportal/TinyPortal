@@ -2614,7 +2614,7 @@ function TP_blockgrids()
 }
 
 function doModules() {
-	global $context, $boarddir;
+	global $context, $boarddir, $tp_prefix;
     
     // fetch any block render hooks and notifications from tpmodules
 	$context['TPortal']['tpmodules'] = array(
