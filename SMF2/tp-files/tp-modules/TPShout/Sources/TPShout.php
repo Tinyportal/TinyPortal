@@ -372,7 +372,7 @@ function tpshout_admin()
 					UPDATE {db_prefix}tp_shoutbox 
 					SET value1 = {string:val1}
 					WHERE id = {int:val}',
-					array('val1' => htmlspecialchars($value, ENT_QUOTES, $context['character_set']), 'val' => $val)
+					array('val1' => $smcFunc['htmlspecialchars']($value, ENT_QUOTES), 'val' => $val)
 				);
 				$go = 2;
 			}
@@ -569,7 +569,7 @@ function tpshout_bigscreen($state, $number = 10)
 // fetch all the shouts for output
 function tpshout_fetch($render = true, $limit = 1, $swap = false)
 {
-    global $db_prefix, $context, $smcFunc, $scripturl, $txt, $user_info, $modSettings;
+    global $db_prefix, $context, $smcFunc, $scripturl, $txt, $user_info, $modSettings, $smcFunc;
 
 	// get x number of shouts
 	$context['TPortal']['profile_shouts_hide'] = empty($context['TPortal']['profile_shouts_hide']) ? '0' : '1';
@@ -616,7 +616,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 		$ns = array();
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
-			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="&nbsp;" />');
+			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode('', $ns);

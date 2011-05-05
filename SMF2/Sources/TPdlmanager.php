@@ -133,17 +133,6 @@ function TPortalDLManager()
 
 		$status = 'normal';
 
-		// and the screenshot
-		if($shot)
-		{
-			$shotname = $_FILES['tp_dluploadpic']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
-			$sname = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $sname);
-			$t = time();
-			$sname = $t.$sname;
-		}
-
 		if(!isset($_POST['tp-dluploadnot']))
 		{
 			// check the size
@@ -194,12 +183,16 @@ function TPortalDLManager()
 
 			if($shot)
 			{
-				move_uploaded_file($_FILES['tp_dluploadpic']['tmp_name'],$boarddir.'/tp-images/dlmanager/'.$sname);
-                chmod($boarddir.'/tp-images/dlmanager/'.$sname, 0644);
+				$sfile = 'tp_dluploadpic';
+				$uid = $context['user']['id'].'uid';
+				$dim = '1800';
+				$suf = 'jpg,gif,png';
+				$dest = 'tp-images/dlmanager';
+				$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 				$screenshot = $sname;
-				tp_createthumb('tp-images/dlmanager/'.$sname, $context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], 'tp-images/dlmanager/thumb/'.$sname);
-				tp_createthumb('tp-images/dlmanager/'.$sname, $context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], 'tp-images/dlmanager/listing/'.$sname);
-				tp_createthumb('tp-images/dlmanager/'.$sname, $context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], 'tp-images/dlmanager/thumbs/single/'.$sname);
+				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
+				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
+				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
 			}
 			else
 			{
@@ -232,7 +225,7 @@ function TPortalDLManager()
 				array('name' => 'string', 'description' => 'string', 'icon' => 'string', 'category' => 'int', 'type' => 'string', 'downloads' => 'int', 'views' => 'int',
 			 		'file' => 'string', 'created' => 'int', 'last_access' => 'int', 'filesize' => 'int', 'parent' => 'int', 'access' => 'string', 'link' => 'string',
 					 'author_id' => 'int', 'screenshot' => 'string', 'rating' => 'string', 'voters' => 'string', 'subitem' => 'int'),
-				array($title, htmlentities($text, ENT_QUOTES, $context['character_set']), $icon, $category, 'dlitem', 0, 1, $name, $now, $now, $dlfilesize, 0, '', '', $context['user']['id'], $screenshot, '', '', 0),
+				array($title, $smcFunc['htmlspecialchars']($text, ENT_QUOTES), $icon, $category, 'dlitem', 0, 1, $name, $now, $now, $dlfilesize, 0, '', '', $context['user']['id'], $screenshot, '', '', 0),
 				array('id')
 			);
 
@@ -2316,19 +2309,19 @@ function TPortalDLAdmin()
 
 		if($shot)
 		{
-			$sid = $_POST['tp_dluploadpic_editID'];
-			$shotname = $_FILES['tp_dluploadpic_edit']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
-			$sname = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $sname);
-			$sname = time().$sname;
-			$success2 = move_uploaded_file($_FILES['tp_dluploadpic_edit']['tmp_name'],$boarddir.'/tp-images/dlmanager/'.$sname);
-
-			tp_createthumb($boarddir.'/tp-images/dlmanager/'.$sname,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $boarddir.'/tp-images/dlmanager/thumb/'.$sname);
-			tp_createthumb($boarddir.'/tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $boarddir.'/tp-images/dlmanager/listing/'.$sname);
-			tp_createthumb($boarddir.'/tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $boarddir.'/tp-images/dlmanager/single/'.$sname);
-			
+			$sid = $_POST['tp_dluploadpic_editID'];		
+			$sfile = 'tp_dluploadpic_edit';
+			$uid = $context['user']['id'].'uid';
+			$dim = '1800';
+			$suf = 'jpg,gif,png';
+			$dest = 'tp-images/dlmanager';
+			$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 			$screenshot = $sname;
+			
+			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
+			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
+			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
+			
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_dlmanager 
 				SET screenshot = {string:ss} 
@@ -2776,7 +2769,7 @@ function TPortalDLAdmin()
 				UPDATE {db_prefix}tp_settings 
 				SET value = {string:val} 
 				WHERE name = {string:name}',
-				array('val' => htmlentities($value, ENT_QUOTES, $context['character_set']), 'name' => 'dl_intotext')
+				array('val' => $smcFunc['htmlspecialchars']($value, ENT_QUOTES), 'name' => 'dl_intotext')
 			);
 			$go = 1;
 		}
@@ -3390,49 +3383,49 @@ function TPortalDLAdmin()
 	loadlanguage('TPmodules');
 	loadlanguage('TPortalAdmin');
 
-		// setup admin tabs according to subaction
-			$context['admin_area'] = 'tp_dlmanager';
-			$context['admin_tabs'] = array(
-				'title' => $txt['tp-dlheader1'],
-				'help' => $txt['tp-dlheader2'],
-				'description' => $txt['tp-dlheader3'],
-				'tabs' => array(),
-			);
-			if (allowedTo('tp_dlmanager'))
-			{
-				$context['TPortal']['subtabs'] = array(
-					'admin' => array(
-						'text' => 'tp-dltabs4',
-						'url' => $scripturl . '?action=tpmod;dl=admin',
-						'active' => substr($context['TPortal']['dlsub'], 0, 5) == 'admin' && $context['TPortal']['dlsub'] != 'adminsettings' && $context['TPortal']['dlsub'] != 'adminaddcat' && $context['TPortal']['dlsub'] != 'adminftp' && $context['TPortal']['dlsub'] != 'adminsubmission',
-					),
-					'settings' => array(
-						'text' => 'tp-dltabs1',
-						'url' => $scripturl . '?action=tpmod;dl=adminsettings',
-						'active' => $context['TPortal']['dlsub'] == 'adminsettings',
-					),
-					'addcategory' => array(
-						'text' => 'tp-dltabs2',
-						'url' => $scripturl . '?action=tpmod;dl=adminaddcat',
-						'active' => $context['TPortal']['dlsub'] == 'adminaddcat',
-					),
-					'upload' => array(
-						'text' => 'tp-dltabs3',
-						'url' => $scripturl . '?action=tpmod;dl=upload',
-						'active' => $context['TPortal']['dlsub'] == 'upload',
-					),
-					'submissions' => array(
-						'text' => 'tp-dlsubmissions' ,
-						'url' => $scripturl . '?action=tpmod;dl=adminsubmission',
-						'active' => $context['TPortal']['dlsub'] == 'adminsubmission',
-					),
-					'ftp' => array(
-						'text' => 'tp-dlftp',
-						'url' => $scripturl . '?action=tpmod;dl=adminftp',
-						'active' => $context['TPortal']['dlsub'] == 'adminftp',
-					),
-				);
-			}
+	// setup admin tabs according to subaction
+	$context['admin_area'] = 'tp_dlmanager';
+	$context['admin_tabs'] = array(
+		'title' => $txt['tp-dlheader1'],
+		'help' => $txt['tp-dlheader2'],
+		'description' => $txt['tp-dlheader3'],
+		'tabs' => array(),
+	);
+	if (allowedTo('tp_dlmanager'))
+	{
+		$context['TPortal']['subtabs'] = array(
+			'admin' => array(
+				'text' => 'tp-dltabs4',
+				'url' => $scripturl . '?action=tpmod;dl=admin',
+				'active' => substr($context['TPortal']['dlsub'], 0, 5) == 'admin' && $context['TPortal']['dlsub'] != 'adminsettings' && $context['TPortal']['dlsub'] != 'adminaddcat' && $context['TPortal']['dlsub'] != 'adminftp' && $context['TPortal']['dlsub'] != 'adminsubmission',
+			),
+			'settings' => array(
+				'text' => 'tp-dltabs1',
+				'url' => $scripturl . '?action=tpmod;dl=adminsettings',
+				'active' => $context['TPortal']['dlsub'] == 'adminsettings',
+			),
+			'addcategory' => array(
+				'text' => 'tp-dltabs2',
+				'url' => $scripturl . '?action=tpmod;dl=adminaddcat',
+				'active' => $context['TPortal']['dlsub'] == 'adminaddcat',
+			),
+			'upload' => array(
+				'text' => 'tp-dltabs3',
+				'url' => $scripturl . '?action=tpmod;dl=upload',
+				'active' => $context['TPortal']['dlsub'] == 'upload',
+			),
+			'submissions' => array(
+				'text' => 'tp-dlsubmissions' ,
+				'url' => $scripturl . '?action=tpmod;dl=adminsubmission',
+				'active' => $context['TPortal']['dlsub'] == 'adminsubmission',
+			),
+			'ftp' => array(
+				'text' => 'tp-dlftp',
+				'url' => $scripturl . '?action=tpmod;dl=adminftp',
+				'active' => $context['TPortal']['dlsub'] == 'adminftp',
+			),
+		);
+	}
 	$context['template_layers'][] = 'tpadm';
 	$context['template_layers'][] = 'subtab';
 	loadlanguage('TPortalAdmin');

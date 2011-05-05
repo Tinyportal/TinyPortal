@@ -151,7 +151,7 @@ function TPmodules()
 			$row = $smcFunc['db_fetch_row']($request);
 			$num_comments = $row[0] + 1;
 			$smcFunc['db_free_result']($request);
-			$title = htmlentities(strip_tags($_POST['tp_article_comment_title']), $context['character_set']);
+			$title = $smcFunc['htmlspecialchars'](strip_tags($_POST['tp_article_comment_title']));
 			$comment = substr($_POST['tp_article_bodytext'], 0, 65536);
 
 			require_once($sourcedir.'/Subs-Post.php');

@@ -14,7 +14,7 @@ function template_tpshout_below()
 
 function template_tpshout_bigscreen()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir;
+	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir, $smcFunc;
 
 	$shouts = $context['TPortal']['rendershouts'];
 
@@ -41,7 +41,7 @@ function template_tpshout_bigscreen()
 	echo '
 			<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 10px; margin: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >
 				<input type="hidden" name="tp-shout-name" value="'.$context['user']['name'].'" />
-				<input name="tp-shout-url" type="hidden" value="'. htmlspecialchars($tp_where).'" />
+				<input name="tp-shout-url" type="hidden" value="'. $smcFunc['htmlspecialchars']($tp_where).'" />
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 			</form>
 		</div>
@@ -190,13 +190,13 @@ function template_tpshout_admin_settings()
 function template_tpshout_shoutblock()
 {
 
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir;
+	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir, $smcFunc;
 
 	// Show the shoutbox, takes settings from tpadmin
-	$tp_where=$_SERVER['QUERY_STRING'];
+	$tp_where = $_SERVER['QUERY_STRING'];
 
 	if(!isset($context['TPortal']['shoutbox']))
-		$context['TPortal']['shoutbox']='';
+		$context['TPortal']['shoutbox'] = '';
 
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
@@ -241,7 +241,7 @@ function template_tpshout_shoutblock()
 
 	echo '
 		<br /><a href="' , $scripturl , '?action=tpmod;shout=show50">' . $txt['tp-showlatest'] . '</a>
-		<input name="tp-shout-url" type="hidden" value="'. htmlspecialchars($tp_where).'" />
+		<input name="tp-shout-url" type="hidden" value="'. $smcFunc['htmlspecialchars']($tp_where).'" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 	</form>';
 

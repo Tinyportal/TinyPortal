@@ -4,7 +4,7 @@
 
 function template_main()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boardurl;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boardurl, $smcFunc;
 
 	if(isset($context['TPortal']['subaction'])){
 		switch($context['TPortal']['subaction']){
@@ -129,11 +129,11 @@ function template_main()
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
-					TP_bbcbox('TPadmin3','blockbody' .$context['TPortal']['blockedit']['id'], htmlspecialchars($context['TPortal']['blockedit']['body']));
+					TP_bbcbox('TPadmin3','blockbody' .$context['TPortal']['blockedit']['id'], $smcFunc['htmlspecialchars']($context['TPortal']['blockedit']['body']));
 				}
 				elseif($context['TPortal']['blockedit']['type']=='10')
 				{
-					echo $txt['tp-body'].' <br /><textarea style="width: 94%;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" rows=15 cols=40 wrap="auto">' .htmlspecialchars($context['TPortal']['blockedit']['body']). '</textarea>';
+					echo $txt['tp-body'].' <br /><textarea style="width: 94%;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" rows=15 cols=40 wrap="auto">' .$smcFunc['htmlspecialchars']($context['TPortal']['blockedit']['body']). '</textarea>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='12'){
 					// check to see if it is numeric

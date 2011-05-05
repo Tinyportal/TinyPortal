@@ -1606,9 +1606,9 @@ function tpdb_free_result($request)
 }
 function tp_sanitize($value, $strict = false)
 {
-	global $context;
+	global $smcFunc;
 	
-	return htmlentities(strip_tags($value), ENT_QUOTES);
+	return $smcFunc['htmlspecialchars'](strip_tags($value), ENT_QUOTES);
 }
 
 function get_perm($perm, $moderate = '')
@@ -2141,14 +2141,14 @@ function characterData($parser, $data)
 function endElement($parser, $tagName)
 {
 	// This function is used when an end-tag is encountered.
-	global $context, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
+	global $context, $smcFunc, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
 
 	// RSS/RDF feeds
 	if ($tagName == "ITEM")
 	{
 		echo '
 		<div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
-		printf("<a href='%s'>%s</a>", trim($link),htmlspecialchars(trim($title), ENT_QUOTES, $context['character_set']));
+		printf("<a href='%s'>%s</a>", trim($link),$smcFunc['htmlspecialchars'](trim($title), ENT_QUOTES));
 		echo '
 		</div>';
 		if(!$context['TPortal']['rss_notitles'])
@@ -2573,7 +2573,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $output_method
 				'name' => $row['posterName'],
 				'href' => empty($row['ID_MEMBER']) ? '' : $scripturl . '?action=profile;u=' . $row['ID_MEMBER'],
 				'link' => empty($row['ID_MEMBER']) ? $row['posterName'] : '<a href="' . $scripturl . '?action=profile;u=' . $row['ID_MEMBER'] . '">' . $row['posterName'] . '</a>',
-				'avatar' => $row['avy'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '') : (stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avy'], ENT_QUOTES, $context['character_set']) . '" alt="" class="recent_avatar" border="0" />')
+				'avatar' => $row['avy'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '') : (stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avy'], ENT_QUOTES) . '" alt="" class="recent_avatar" border="0" />')
 			),
 			'subject' => $row['subject'],
 			'short_subject' => shorten_subject($row['subject'], 25),
@@ -3148,7 +3148,7 @@ function tp_addcopy($buffer)
 {
 	global $context;
 
-	$string = '<a target="_blank" href="http://custom.simplemachines.org/mods/index.php?mod=97" title="TinyPortal">TinyPortal 1.0 RC1</a> |  <a href="http://www.blocweb.net" target="_blank"> &copy; 2005-2010 BlocWeb</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal 1.0 RC1</a> |  <a href="http://www.blocweb.net" target="_blank"> &copy; 2005-2010 BlocWeb</a>';
 
 	if (empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
 		return $buffer;

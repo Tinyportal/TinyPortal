@@ -696,7 +696,14 @@ function template_main()
 					</td>
 				<tr>
 					<td valign="top" class="windowbg2" colspan="2">
-						<br /><textarea  rows="40" cols="10" style="width: 90%;" name="dladmin_text'.$cat['id'].'" id="dladmin_text'.$cat['id'].'" wrap="on">'.$cat['description'].'</textarea>';
+						<br />';
+						
+				if($context['TPortal']['dl_wysiwyg'] == 'html')
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text');
+				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
+					TP_bbcbox('dl_useredit','dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES));
+				else
+					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
 
 			echo '
 					</td>

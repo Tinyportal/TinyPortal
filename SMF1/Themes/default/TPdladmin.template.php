@@ -407,19 +407,24 @@ function template_main()
 		if($cat['file']=='- empty item -' || $cat['file']=='- empty item - ftp'){
 			if($cat['file']=='- empty item - ftp')
 				echo '<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
-			echo '<select size="1" name="dladmin_file'.$cat['id'].'">';
-			foreach($context['TPortal']['tp-downloads'] as $file){
-				if($cat['file']=='- empty item - ftp'){
+			echo '
+				<select size="1" name="dladmin_file'.$cat['id'].'">
+					<option value="">' . $txt['tp-noneicon'] . '</option>';
+			foreach($context['TPortal']['tp-downloads'] as $file)
+			{
+				if($cat['file']=='- empty item - ftp')
+				{
 					// check the file against
 					if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
-		  				echo '<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].'Kb</option>';
+		  				echo '
+			  		<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].'Kb</option>';
 				}
 				else
-	  				echo '<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].'Kb</option>';
-
+	  				echo '
+		  			<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].'Kb</option>';
 			}
 			echo '
-					</select>';
+				</select>';
 		}
 		else
 			echo '<input name="dladmin_file'.$cat['id'].'" type="text" style="margin-bottom: 0.5em" value="'.$cat['file'].'">';
@@ -499,7 +504,7 @@ function template_main()
 		foreach($context['TPortal']['admuploadcats'] as $ucats)
 		{
 			echo '
-						<option value="'.$ucats['id'].'" ', $ucats['id']==abs($cat['category']) ? 'selected' : '' ,'>'. str_repeat("-",$ucats['indent']) .' '.$ucats['name'].'</option>';
+						<option value="'.$ucats['id'].'" ', $ucats['id']==abs($cat['category']) ? 'selected' : '' ,'>', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
 		}
 		echo '
 					</select>

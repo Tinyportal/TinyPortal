@@ -1601,9 +1601,7 @@ function do_articles()
 	}
 	// ok, fetch single article
 	if(isset($whatarticle))
-	{
-		$context['character_set'] = empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'ISO-8859-1' : $txt['lang_character_set']) : $modSettings['global_character_set'];
-		
+	{	
 		$request = $smcFunc['db_query']('', '
 			SELECT	art.*, IFNULL(mem.real_name, art.author) as realName, art.author_id as authorID,
 				art.type as articletype, art.id_theme as ID_THEME 
@@ -2383,7 +2381,7 @@ function do_postchecks()
 							SET value = {string:title} 
 							WHERE name = {string:name} LIMIT 1',
 							array(
-								'title' => htmlentities($clean, ENT_QUOTES, $context['character_set']),
+								'title' => $smcFunc['htmlspecialchars']($clean, ENT_QUOTES),
 								'name' => 'frontpage_title',
 							)
 						);
@@ -2895,7 +2893,7 @@ function do_postchecks()
 				elseif($what == 'tp_article_cat')
 					$straycat = $value;
 				elseif($what == 'tp_article_new')
-					$straynewcat = htmlentities($value, ENT_QUOTES, $context['character_set']);
+					$straynewcat = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
 			}	
 			// update
 			if(isset($straycat) && sizeof($ccats) > 0)
@@ -2959,7 +2957,7 @@ function do_postchecks()
 				
 			if(!empty($_POST['tp_menu_title']))
 			{
-				$mtitle = htmlentities(strip_tags($_POST['tp_menu_title']),ENT_QUOTES, $context['character_set']);
+				$mtitle = $smcFunc['htmlspecialchars'](strip_tags($_POST['tp_menu_title']), ENT_QUOTES);
 				$smcFunc['db_insert']('INSERT', 
 					'{db_prefix}tp_variables',
 					array('value1' => 'string', 'type' => 'string'),
@@ -2976,7 +2974,7 @@ function do_postchecks()
 			isAllowedTo('tp_blocks');
 				
 			$mid = $_POST['tp_menu_menuid'];
-			$mtitle = htmlentities(strip_tags($_POST['tp_menu_title']),ENT_QUOTES, $context['character_set']);
+			$mtitle = $smcFunc['htmlspecialchars'](strip_tags($_POST['tp_menu_title']), ENT_QUOTES);
 			if($mtitle == '')
 				$mtitle = $txt['tp-no_title'];
 			
@@ -3224,7 +3222,7 @@ function do_postchecks()
 						$cp['type'],
 						$cp['frame'],
 						$title,
-						htmlentities($cp['body'], ENT_QUOTES, $context['character_set']),
+						$smcFunc['htmlspecialchars']($cp['body'], ENT_QUOTES),
 						$cp['access'], 
 						$panel, 
 						0, 
@@ -3259,7 +3257,7 @@ function do_postchecks()
 					),
 					array(
 						$type, 'theme', $title, 
-						htmlentities($body, ENT_QUOTES, $context['character_set']), 
+						$smcFunc['htmlspecialchars']($body, ENT_QUOTES), 
 						'-1,0,1', $panel, 0, 1, 1, 0, 0, '', 'actio=allpages', '',
 					),
 					array('id')

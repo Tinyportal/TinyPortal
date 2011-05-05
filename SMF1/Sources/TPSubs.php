@@ -2810,7 +2810,7 @@ function tp_addcopy($buffer)
 {
 	global $context;
 
-	$string = '<a target="_blank" href="http://custom.simplemachines.org/mods/index.php?mod=97" title="TinyPortal">TinyPortal 1.0 RC1</a> |  <a href="http://www.blocweb.net" target="_blank"> &copy; 2005-2010 BlocWeb</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal 1.0 RC1</a> |  <a href="http://www.blocweb.net" target="_blank"> &copy; 2005-2010 BlocWeb</a>';
 
 	if (empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
 		return $buffer;

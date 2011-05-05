@@ -1256,7 +1256,7 @@ function template_artsettings()
 // frontpage settings
 function template_frontpage()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 		echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
@@ -1427,7 +1427,7 @@ function template_frontpage()
 	<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>';
 
 			echo '<br style="clear: both;" />
-									<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' .htmlspecialchars($context['TPortal']['frontpage_template']). '</textarea>
+									<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' .$smcFunc['htmlspecialchars']($context['TPortal']['frontpage_template']). '</textarea>
 					</td>
 					</tr>
 					<tr class="windowbg2">
@@ -1561,7 +1561,7 @@ function template_categories()
 // edit category
 function template_editcategory()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 		
 		$mg = $context['TPortal']['editcategory'];
 		echo '
@@ -1721,7 +1721,7 @@ function template_editcategory()
 
 			echo '<br style="clear: both;" />
                                     <h4>', $txt['reset_custom_template_layout'] ,'</h4>
-									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' .htmlspecialchars($mg['value9']). '</textarea>
+									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' .$smcFunc['htmlspecialchars']($mg['value9']). '</textarea>
 								</td>
 							</tr>
 							<tr class="windowbg">
@@ -2124,7 +2124,7 @@ function template_strays()
 // edit/add single article
 function template_editarticle($type = '')
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 	$tpmonths=array(' ','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 	$mg = $context['TPortal']['editarticle'];
@@ -2162,9 +2162,9 @@ function template_editarticle($type = '')
 				
 				if($mg['articletype']=='php')
 					echo '
-							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , htmlentities($mg['body']), '</textarea><br />';
+							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $smcFunc['htmlspecialchars']($mg['body']), '</textarea><br />';
 				elseif($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-					TPwysiwyg('tp_article_body', htmlspecialchars($mg['body']), true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
+					TPwysiwyg('tp_article_body', $smcFunc['htmlspecialchars']($mg['body']), true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
 				elseif($context['TPortal']['use_wysiwyg']==0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
@@ -2400,7 +2400,7 @@ function template_editarticle($type = '')
 						<td valign="top" colspan="2">';
 					
 					if($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-						TPwysiwyg('tp_article_intro', htmlspecialchars($mg['intro']), true,'qup_tp_article_intro', true, false);
+						TPwysiwyg('tp_article_intro', $smcFunc['htmlspecialchars']($mg['intro']), true,'qup_tp_article_intro', true, false);
 					else
 						echo '
 							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
@@ -2414,7 +2414,7 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td valign="top" colspan="2">'.$txt['tp-introtext'].'</td>
 					</tr><tr class="windowbg2"><td colspan="2">
-						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.htmlspecialchars($mg['intro']).'</textarea>
+						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$smcFunc['htmlspecialchars']($mg['intro']).'</textarea>
 					</td></tr>';
 				}
 
@@ -2759,7 +2759,7 @@ function template_addblock()
 // edit single block
 function template_blockedit()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 
 	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
@@ -2856,7 +2856,7 @@ function template_blockedit()
 				{
 					echo '
 						</td><td class="right">
-						<textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , htmlentities($context['TPortal']['blockedit']['body']), '</textarea>
+						<textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $smcFunc['htmlspecialchars']($context['TPortal']['blockedit']['body']), '</textarea>
 						<p><div class="tborder" style="padding: 1em;"><p style="padding: 0 0 5px 0; margin: 0;">' , $txt['tp-blockcodes'] , ':</p>
 							<select name="tp_blockcode" id="tp_blockcode" size="8" style="margin-bottom: 5px; width: 100%" onchange="changeSnippet(this.selectedIndex);">
 								<option value="0" selected="selected">' , $txt['tp-none-'] , '</option>';

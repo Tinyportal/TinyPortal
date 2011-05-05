@@ -129,16 +129,6 @@ function TPortalDLManager()
 
 		$status = 'normal';
 
-		// and the screenshot
-		if($shot){
-			$shotname=$_FILES['tp_dluploadpic']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
-			$sname = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $sname);
-			$t=time();
-			$sname = $t.$sname;
-		}
-
 		if(!isset($_POST['tp-dluploadnot'])){
 			// check the size
 			$dlfilesize = filesize($_FILES['tp-dluploadfile']['tmp_name']);
@@ -184,12 +174,16 @@ function TPortalDLManager()
 
 			if($shot)
 			{
-				move_uploaded_file($_FILES['tp_dluploadpic']['tmp_name'],$boarddir.'/tp-images/dlmanager/'.$sname);
-                chmod($boarddir.'/tp-images/dlmanager/'.$sname, 0644);
+				$sfile = 'tp_dluploadpic';
+				$uid = $context['user']['id'].'uid';
+				$dim = '1800';
+				$suf = 'jpg,gif,png';
+				$dest = 'tp-images/dlmanager';
+				$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 				$screenshot = $sname;
-				tp_createthumb('tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], 'tp-images/dlmanager/thumb/'.$sname);
-				tp_createthumb('tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], 'tp-images/dlmanager/listing/'.$sname);
-				tp_createthumb('tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], 'tp-images/dlmanager/thumbs/single/'.$sname);
+				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
+				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
+				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
 			}
 			else{
 				if(isset($_POST['tp_dluploadpic_link']))
@@ -1963,19 +1957,18 @@ function TPortalDLAdmin()
 			$shot=false;
 
 		if($shot){
-			$sid=$_POST['tp_dluploadpic_editID'];
-			$shotname=$_FILES['tp_dluploadpic_edit']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
-			$sname = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $sname);
-			$sname=time().$sname;
-			$success2=move_uploaded_file($_FILES['tp_dluploadpic_edit']['tmp_name'],$boarddir.'/tp-images/dlmanager/'.$sname);
-
-			tp_createthumb($boarddir.'/tp-images/dlmanager/'.$sname,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $boarddir.'/tp-images/dlmanager/thumb/'.$sname);
-			tp_createthumb($boarddir.'/tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $boarddir.'/tp-images/dlmanager/listing/'.$sname);
-			tp_createthumb($boarddir.'/tp-images/dlmanager/'.$sname ,$context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $boarddir.'/tp-images/dlmanager/single/'.$sname);
-			
+			$sid = $_POST['tp_dluploadpic_editID'];		
+			$sfile = 'tp_dluploadpic_edit';
+			$uid = $context['user']['id'].'uid';
+			$dim = '1800';
+			$suf = 'jpg,gif,png';
+			$dest = 'tp-images/dlmanager';
+			$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 			$screenshot = $sname;
+			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
+			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
+			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
+			
 			tp_query("UPDATE " . $tp_prefix . "dlmanager SET screenshot='$screenshot' WHERE id=$sid", __FILE__, __LINE__);
 			$uploaded=true;
 		}

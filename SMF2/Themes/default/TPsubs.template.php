@@ -422,7 +422,7 @@ function TPortal_userbox()
 // TPortal themebox
 function TPortal_themebox()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $user_info;
+	global $context, $settings, $options, $scripturl, $txt, $modSettings, $user_info, $smcFunc;
 
 	$what = explode(',', $context['TPortal']['themeboxbody']);
 	$temaid = array();
@@ -430,7 +430,7 @@ function TPortal_themebox()
 	$temapaths = array();
 	foreach($what as $wh => $wht)
 	{
-		$all=explode('|', $wht);	
+		$all = explode('|', $wht);	
 		if($all[0] > -1)
 		{
 			$temaid[] = $all[0];
@@ -440,7 +440,7 @@ function TPortal_themebox()
 	}
 	
 	if(isset($context['TPortal']['querystring']))
-		$tp_where = htmlspecialchars(strip_tags($context['TPortal']['querystring']));
+		$tp_where = $smcFunc['htmlspecialchars'](strip_tags($context['TPortal']['querystring']));
 	else
 		$tp_where = 'action=forum';
 
@@ -463,7 +463,7 @@ function TPortal_themebox()
 			</select><br />' , $context['user']['is_logged'] ?
 			'<input type="checkbox" value=";permanent" onfocus="realtheme()" /> '. $txt['tp-permanent']. '<br />' : '' , '
 			<input style="margin: 5px 0px 5px 10px;" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" />
- 			<input type="hidden" value="'.htmlspecialchars($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
+ 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
  			<div style="text-align: center; width: 95%; overflow: hidden;">
 				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen"  />
 			</div>
