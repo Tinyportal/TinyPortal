@@ -312,7 +312,7 @@ function template_singleshout($row)
 							<div class="tp_shoutavatar">
 							<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
 							' . (allowedTo('tp_shoutbox') ? '<div style="float: right; margin-bottom: 3px;"><a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a></div>' : '') . '
-								<h4><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . strip_tags($row['realName']) . '</a></h4>
+								<h4>' . $row['realName'] . '</h4>
 								<div class="smalltext">'. timeformat($row['value2']).'</div>	
 							</div> 
 							<div class="tp_shoutupper"></div>

@@ -1258,7 +1258,7 @@ function checkTPaction()
 // do the frontpage
 function doTPfrontpage()
 {
-	global $db_prefix, $context, $scripturl,$txt, $user_info, $settings;
+	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
 	global $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
 
 	// check we aren't in any other section
