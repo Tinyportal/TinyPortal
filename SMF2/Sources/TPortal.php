@@ -1595,11 +1595,9 @@ function doTPfrontpage()
 			ORDER BY art.featured DESC, art.sticky desc, art.date DESC'
 		);
 
-		$articles_total = 0;
 		$posts = array();
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$articles_total = $smcFunc['db_num_rows']($request);
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				if($row['sticky'] == 1)
@@ -1610,7 +1608,8 @@ function doTPfrontpage()
 				$posts[$row['date'].'_' . sprintf("%06s", $row['id'])] = 'a_' . $row['id'];
 			}
 			$smcFunc['db_free_result']($request);
-		}	
+		}
+
 		// Find the post ids.
 		if($context['TPortal']['front_type'] == 'forum_articles')
 			$request =  $smcFunc['db_query']('', '
@@ -1641,6 +1640,10 @@ function doTPfrontpage()
 				$posts[$row['date'].'_' . sprintf("%06s", $row['ID_FIRST_MSG'])] = 'm_' . $row['ID_FIRST_MSG'];
 			$smcFunc['db_free_result']($request);
 		}
+
+		// Sort the articles/posts before grabing the limit, otherwise they are out of order
+		ksort($posts, SORT_NUMERIC);
+		$posts = array_reverse($posts);
 
 		// which should we select
 		$aposts = array(); 
@@ -1677,7 +1680,7 @@ function doTPfrontpage()
 			}
 		}
 		// make the pageindex!
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total + count($posts), $max);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
 
 		// ok we got the post ids now, fetch each one, forum first
 		if(count($mposts) > 0)
@@ -1727,6 +1730,7 @@ function doTPfrontpage()
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
 				$row['boardnews'] = 1;
+				
 				if(!isset($context['TPortal']['frontpage_visopts'])) 
 					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');				
 				
