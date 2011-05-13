@@ -239,23 +239,7 @@ function template_news()
 	</div>
 		';
 }
-function template_tpcredits()
-{
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
-		echo '
-<div class="tborder">
-	<div class="cat_bar"><h3 class="catbg">' . $txt['tp-credits'] . '</h3></div>
-	<p class="description">' , $txt['tp-creditack2']  , '</p>
-	<div class="windowbg2">
-		<span class="topslice"><span></span></span>
-		<div class="content" style="line-height: 1.6em; padding: 0 1em;">
-						'.$txt['tp-credit1'].'
-		</div>
-		<span class="botslice"><span></span></span>
-	</div>
-</div>';
-}
 // submissions
 function template_submission()
 {

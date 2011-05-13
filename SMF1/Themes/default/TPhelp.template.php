@@ -4,6 +4,16 @@
 
 function template_main()
 {
+	global $context;
+
+	if ($context['TPortal']['subaction'] == 'credits')
+		template_tpcredits();
+	else
+		template_tphelp();
+}
+
+function template_tphelp()
+{
 	global $context, $settings, $options, $txt, $scripturl, $modSettings;
 
 		echo '
@@ -47,4 +57,25 @@ function template_main()
 	</div>';
 }
 
+function template_tpcredits()
+{
+	global $context, $txt;
+
+	echo '
+	<table class="admintable">
+		<caption class="catbg">' . $txt['tp-credits'] . '</caption>
+		<thead>
+			<tr>
+				<th class="windowbg3 smalltext">' , $txt['tp-creditack2']  , '</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="windowbg2" id="credits">
+					'.$txt['tp-credit1'].'
+				</td>
+			</tr>
+		</tbody>
+	</table>';
+}
 ?>

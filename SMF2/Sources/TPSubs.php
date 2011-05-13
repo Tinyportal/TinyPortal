@@ -2272,12 +2272,6 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'href' => $scripturl . '?action=tpadmin;sa=news',
 				'is_selected' => $tpsub == 'news',
 			),
-			'credits' => array(
-				'title' => $txt['tp-credits'],
-				'description' => $txt['tp-creditsdesc1'],
-				'href' => $scripturl . '?action=tpadmin;sa=credits',
-				'is_selected' => $tpsub == 'credits',
-			),
 		);
 	}
 	if (allowedTo('tp_settings'))
@@ -3146,11 +3140,11 @@ function get_grps($save = true, $noposts = true)
 }
 function tp_addcopy($buffer)
 {
-	global $context;
+	global $context, $scripturl;
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal 1.0 RC1</a> |  <a href="http://www.blocweb.net" target="_blank"> &copy; 2005-2010 BlocWeb</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits">&copy; 2005-2011</a>';
 
-	if (empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
+	if (SMF == 'SSI' || empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
 		return $buffer;
 
 	$find = array(

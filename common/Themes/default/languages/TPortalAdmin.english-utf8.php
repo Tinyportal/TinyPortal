@@ -355,25 +355,6 @@ $txt['tp-showuserbox2']='Display these items in the userbox:';
 $txt['tp-oldcatmenu'] = 'Use flat menu style';
 $txt['tp-newcatmenu'] = 'Use dropdown style';
 
-// Credits...
-$txt['tp-credit1'] = '
-<h4>Founder</h4> 
-Bjoern "Bloc" Kristiansen
-<br /><br />
-<h4>Developer</h4>
-Brad "IchBin" Grow
-<br /><br />
-<h4>TP Team</h4>
-Ianedres, Freddy888, Ken, Lesmond, ZarPrime, Renegd98, Crip, Agridoc, and lurkalot.
-<br /><br />
-<h4>TP Friends</h4>
-ZTN, JPDeni, Xarcell, G6, Fussilet, nokonium, StormLrd, RebelRose, Ray, Max, Thurnok, Dragooon, eld^kar, PhilH, Maya, Moocat, Rasyr, gerrymo, BorgBOB, redone, Aku, Anunlike, Tuxie, deniz, feline, and eeek.';
-
-$txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
-The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
- Thank you Bloc for allowing the TP Team to continue your work.';
-$txt['tp-credits'] = 'Credits';
-
 // Panels admin
 $txt['tp-panelwidth'] = 'Width of this panel';
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block(use 00px or 00%)';

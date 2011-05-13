@@ -240,40 +240,17 @@ function template_news()
 	<div class="windowbg">
 		<span class="topslice"><span></span></span>
 		<div style="padding: 1em; text-align: center;">
-			Your TP installation is now updated to the latest version: v1.0 Release Candidate 1.
+			Your TP installation is now updated to the latest version: v1.0 Release Candidate 1.1.
 		</div>
 		<span class="botslice"><span></span></span>
 	</div>
 	<div style="padding: 1em; line-height: 1.6em;">
-			TinyPortal is no longer maintained at http://www.tinyportal.net, but can be downloaded from the
-			<a style="text-decoration: underline;" href="http://custom.simplemachines.org/mods/index.php?mod=97">SMF modsite</a>. 
-			<br>There is also a support forum for TP users run by former tinyportal.net team members at
-			<a href="http://www.tinyportal.co.uk/index.php">www.tinyportal.co.uk</a>
-			<hr><em>- Bloc</em>
+			TinyPortal is now maintained at http://www.tinyportal.net, and can be downloaded from the
+			<a style="text-decoration: underline;" href="http://custom.simplemachines.org/mods/index.php?mod=97">SMF modsite</a>.
 	</div>
 		';
 }
-function template_tpcredits()
-{
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
-		echo '
-		<table class="admintable">
-			<caption class="catbg">' . $txt['tp-credits'] . '</caption>
-			<thead>
-				<tr>
-					<th class="windowbg3 smalltext">' , $txt['tp-creditack2']  , '</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td class="windowbg2" id="credits">
-						'.$txt['tp-credit1'].'
-					</td>
-				</tr>
-			</tbody>
-		</table>';
-}
 // submissions
 function template_submission()
 {

@@ -30,4 +30,13 @@ function TPhelp_init()
 
 }
 
+// Credits page entrance
+function TPCredits()
+{
+	tp_hidebars();
+	// a switch to make it clear what is "forum" and not
+	$context['TPortal']['not_forum'] = false;
+	loadlanguage('TPhelp');
+	loadtemplate('TPhelp');
+}
 ?>

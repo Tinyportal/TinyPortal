@@ -48,4 +48,11 @@ function TPhelp_init()
 	loadlanguage('TPortalAdmin');
 }
 
+function TPCredits()
+{
+	tp_hidebars();
+	$context['TPortal']['not_forum'] = false;
+	loadLanguage('TPhelp');
+	loadtemplate('TPhelp');
+}
 ?>

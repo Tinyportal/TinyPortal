@@ -1052,6 +1052,11 @@ function TPmodules()
 				fatal_error($txt['tp-notallowed']);
 		}
 	}
+	elseif($tpsub == 'credits')
+	{
+		require_once( $sourcedir .'/TPhelp.php');
+		TPCredits();
+	}	
 	else
 			redirectexit('action=forum');
 }

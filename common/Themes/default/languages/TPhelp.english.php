@@ -135,4 +135,22 @@ $txt['tphelp_plugins_main']= '
 <div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="http://www.doc.tinyportal.co.uk/smf/index.php?board=85.0" target="_blank"><b class="tphelp">Documentation</b></a>.
 </div>';
 
+// Credits...
+$txt['tp-credit1'] = '
+<h4>Founder</h4> 
+Bjoern "Bloc" Kristiansen
+<br /><br />
+<h4>Developer</h4>
+Brad "IchBin" Grow
+<br /><br />
+<h4>TP Team</h4>
+Agridoc, Crip, Freddy888, Ianedres, Ken, Lesmond, lurkalot, Renegd98, and ZarPrime.
+<br /><br />
+<h4>TP Friends</h4>
+Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, gerrymo, JPDeni, Max, Maya, Moocat, nokonium, PhilH, Rasyr, Ray, RebelRose, redone, StormLrd, Thurnok, Tuxie, Xarcell, and Zetan.';
+
+$txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
+The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
+ Thank you Bloc for allowing the TP Team to continue your work.';
+$txt['tp-credits'] = 'Credits';
 ?>

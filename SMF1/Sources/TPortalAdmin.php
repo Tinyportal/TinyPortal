@@ -160,12 +160,6 @@ function TPortalAdmin()
 				'href' => $scripturl . '?action=tpadmin;sa=news',
 				'is_selected' => $tpsub == 'news',
 				),
-					'credits' => array(
-					'title' => $txt['tp-credits'],
-					'description' => $txt['tp-creditsdesc1'],
-					'href' => $scripturl . '?action=tpadmin;sa=credits',
-					'is_selected' => $tpsub == 'credits',
-				),
 			);
 		}
 	}
