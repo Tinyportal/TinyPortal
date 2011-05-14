@@ -311,7 +311,7 @@ function tp_groups()
 		SELECT * FROM {db_prefix}membergroups 
 		WHERE 1 ORDER BY id_group'
 	);
-	while ($row = tpdb_fetch_assoc($request))
+	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
 		$grp[] = array(
 			'id' => $row['id_group'],
