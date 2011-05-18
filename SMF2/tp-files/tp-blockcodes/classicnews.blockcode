@@ -21,19 +21,22 @@ Bloc
 
 <code>
 global $context, $modSettings;
-$context['TPortal']['recentboxnum']='15';
+$context['TPortal']['recentboxnum'] = '15';
 
 if(isset($modSettings['recycle_board']))
-	$bb=$modSettings['recycle_board'];
+	$bb = $modSettings['recycle_board'];
 
-$what=ssi_recentTopics($context['TPortal']['recentboxnum'], NULL, NULL, 'array');
-$counter=1; $cmax=count($what);
+$what = ssi_recentTopics($context['TPortal']['recentboxnum'], NULL, NULL, 'array');
+$counter=1;
+$cmax = count($what);
+
 echo '
 <div style="width: 100%; overflow: auto; height: 30ex;">';
+
 foreach($what as $w)
 {
 	echo '
-	<div class="smalltext"><a href="'.$w['href'].'">'.$w['short_subject'].'</a></div>
+	<div class="smalltext"><a href="'.$w['href'].'">' . $w['short_subject'] . '</a></div>
 	<div class="smalltext">', $txt['by'], ' <b>', $w['poster']['link'], '</b></div>
 	<div class="smalltext">';
 	if(!$w['new'])

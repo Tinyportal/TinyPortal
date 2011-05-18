@@ -577,8 +577,20 @@ function fetchTPhooks()
 function doTPpage()
 {
 	global $db_prefix, $context, $scripturl, $txt, $user_info;
-	global $settings , $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
-
+	global $settings, $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
+	
+	// Set the avatar height/width
+	if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
+	{
+		$avatar_width = !empty($modSettings['avatar_max_width_external']) ? ' width="' . $modSettings['avatar_max_width_external'] . '"' : '';
+		$avatar_height = !empty($modSettings['avatar_max_height_external']) ? ' height="' . $modSettings['avatar_max_height_external'] . '"' : '';
+	}
+	else
+	{
+		$avatar_width = '';
+		$avatar_height = '';
+	}
+	
 	// check validity and fetch it
 	if(!empty($_GET['page']))
 	{

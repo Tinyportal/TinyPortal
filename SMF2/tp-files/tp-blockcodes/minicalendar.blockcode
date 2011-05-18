@@ -20,13 +20,13 @@ Bloc
 </date>
 
 <code>
-global $scripturl;
+global $scripturl, $smcFunc;
 
 $now = mktime();
 $today = date('j',$now);
 $year = date("Y",$now);
 $month = date("n",$now);
-$days = array($today=>array(NULL,NULL,'<a class="smalltext" style="color: steelblue; font-weight: bold; border: solid 1px black; background-color: white; padding: 0px 4px 0px 4px;" href="'.$scripturl.'?action=calendar;sa=post;month='.$month.';year='.$year.';day='.$today.'" target="_self">'.$today.'</a>'));
+$days = array($today => array(NULL, NULL, '<a class="smalltext" style="color: steelblue; font-weight: bold; border: solid 1px black; background-color: white; padding: 0px 4px 0px 4px;" href="'.$scripturl.'?action=calendar;sa=post;month='.$month.';year='.$year.';day='.$today.'" target="_self">'.$today.'</a>'));
 
 $day_name_length = 3;
 $month_href = $scripturl . '?action=calendar';
@@ -40,49 +40,56 @@ $first_of_month = gmmktime(0,0,0,$month,1,$year);
 
 $day_names = array(); //generate all the day names according to the current locale
 for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400) //January 4, 1970 was a Sunday
-$day_names[$n] = ucfirst(gmstrftime('%A',$t)); //%A means full textual day name
+	$day_names[$n] = ucfirst(gmstrftime('%A',$t)); //%A means full textual day name
 
-list($month, $year, $month_name, $weekday) = explode(',',gmstrftime('%m,%Y,%B,%w',$first_of_month));
+list($month, $year, $month_name, $weekday) = explode(',', gmstrftime('%m,%Y,%B,%w', $first_of_month));
 $weekday = ($weekday + 7 - $first_day) % 7; //adjust for $first_day
-$title   = htmlentities(ucfirst($month_name)).' '.$year;  //note that some locales don't capitalize month and day names
+$title   = $smcFunc['htmlentities'](ucfirst($month_name)).' '.$year;  //note that some locales don't capitalize month and day names
 
 //Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
-@list($p, $pl) = each($pn); @list($n, $nl) = each($pn); //previous and next links, if applicable
-if($p) $p = '<span class="smalltext">'.($pl ? '<a href="'.htmlspecialchars($pl).'">'.$p.'</a>' : $p).'</span> ';
-if($n) $n = ' <span class="smalltext">'.($nl ? '<a href="'.htmlspecialchars($nl).'">'.$n.'</a>' : $n).'</span>';
+@list($p, $pl) = each($pn);
+@list($n, $nl) = each($pn); //previous and next links, if applicable
+if($p) 
+	$p = '<span class="smalltext">'.($pl ? '<a href="'.htmlspecialchars($pl).'">'.$p.'</a>' : $p).'</span> ';
+if($n) 
+	$n = ' <span class="smalltext">'.($nl ? '<a href="'.htmlspecialchars($nl).'">'.$n.'</a>' : $n).'</span>';
 $calendar = '<table>'."\n".
 '<caption >'.$p.($month_href ? '<a href="'.htmlspecialchars($month_href).'">'.$title.'</a>' : $title).$n."</caption>\n<tr>";
 
 if($day_name_length){ #if the day names should be shown ($day_name_length > 0)
-//if day_name_length is >3, the full name of the day will be printed
-foreach($day_names as $d)
-$calendar .= '<th class="smalltext" abbr="'.htmlentities($d).'">'.htmlentities($day_name_length < 4 ? substr($d,0,$day_name_length) : $d).'</th>';
-$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
+	//if day_name_length is >3, the full name of the day will be printed
+	foreach($day_names as $d)
+		$calendar .= '<th class="smalltext" abbr="'.htmlentities($d).'">'.htmlentities($day_name_length < 4 ? substr($d,0,$day_name_length) : $d).'</th>';
+		
+	$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
 }
 
-if($weekday > 0) $calendar .= '<td class="smalltext" colspan="'.$weekday.'"> </td>'; //initial 'empty' days
+if($weekday > 0) 
+	$calendar .= '<td class="smalltext" colspan="'.$weekday.'"> </td>'; //initial 'empty' days
 for($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $day++,$weekday++){
-if($weekday == 7){
-$weekday   = 0; #start a new week
-$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
+	if($weekday == 7){
+		$weekday   = 0; #start a new week
+		$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
+	}
+	if(isset($days[$day]) and is_array($days[$day])){
+		@list($link, $classes, $content) = $days[$day];
+		if(is_null($content))  
+			$content  = $day;
+		$calendar .= '<td "'.($classes ? ' class="'.htmlspecialchars($classes).'">' : '>').
+		($link ? '<a href="'.htmlspecialchars($link).'">'.$content.'</a>' : $content).'</td>';
+	}
+	else 
+	{
+		$calendar .= "<td class=\"smalltext\" style=\"padding-right:4px;\"><a";
+		if(((($weekday+$first_day) % 7)==0)||((($weekday+$first_day) % 7)==6))
+		{
+			$calendar .= ' style="color:#C00000;"';
+		}
+		$calendar .= " href=\"".$scripturl."?action=calendar;sa=post;month=".$month.";year=".$year.";day=".$day."\" target=\"_self\">$day</a></td>";
+	}
 }
-if(isset($days[$day]) and is_array($days[$day])){
-@list($link, $classes, $content) = $days[$day];
-if(is_null($content))  $content  = $day;
-$calendar .= '<td "'.($classes ? ' class="'.htmlspecialchars($classes).'">' : '>').
-($link ? '<a href="'.htmlspecialchars($link).'">'.$content.'</a>' : $content).'</td>';
-}
-else 
-{
-$calendar .= "<td class=\"smalltext\" style=\"padding-right:4px;\"><a";
-if(((($weekday+$first_day) % 7)==0)||((($weekday+$first_day) % 7)==6))
-{
-$calendar .= ' style="color:#C00000;"';
-}
-$calendar .= " href=\"".$scripturl."?action=calendar;sa=post;month=".$month.";year=".$year.";day=".$day."\" target=\"_self\">$day</a></td>";
-}
-}
-if($weekday != 7) $calendar .= '<td class="smalltext" colspan="'.(7-$weekday).'"> </td>'; //remaining "empty" days
+if($weekday != 7) 
+	$calendar .= '<td class="smalltext" colspan="'.(7-$weekday).'"> </td>'; //remaining "empty" days
 
 echo $calendar."</tr>\n</table>\n";
 </code>

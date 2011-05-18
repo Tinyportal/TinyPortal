@@ -513,6 +513,18 @@ function doTPpage()
 
 	$tp_prefix = $settings['tp_prefix'];
 
+	// Set the avatar height/width
+	if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
+	{
+		$avatar_width = !empty($modSettings['avatar_max_width_external']) ? ' width="' . $modSettings['avatar_max_width_external'] . '"' : '';
+		$avatar_height = !empty($modSettings['avatar_max_height_external']) ? ' height="' . $modSettings['avatar_max_height_external'] . '"' : '';
+	}
+	else
+	{
+		$avatar_width = '';
+		$avatar_height = '';
+	}
+	
 	// check validity and fetch it
 	if(!empty($_GET['page']))
 	{

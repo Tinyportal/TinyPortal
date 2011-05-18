@@ -26,14 +26,18 @@ Ianedres
 global $db_prefix, $context, $smcFunc;
 
 // Count males in database
-$result = tp_query("SELECT COUNT(*) AS male FROM " . $db_prefix . "members WHERE gender = 1");
-$row	= tpdb_fetch_assoc($result);
-$male = $row["male"];
+$result = $smcFunc['db_query']('', '
+	SELECT COUNT(*) AS male 
+	FROM {db_prefix}members WHERE gender = 1');
+$row	= $smcFunc['db_fetch_assoc']($result);
+$male = $row['male'];
 
 // Count females in database
-$result = tp_query("SELECT COUNT(*) AS female FROM ".$db_prefix."members WHERE gender = 2");
-$row = tpdb_fetch_assoc($result);
-$female = $row["female"];
+$result = $smcFunc['db_query']('', '
+	SELECT COUNT(*) AS female 
+	FROM {db_prefix}members WHERE gender = 2');
+$row = $smcFunc['db_fetch_assoc']($result);
+$female = $row['female'];
 
 // Find percentages; does not calculate unspecified members
 $total = $male + $female;
@@ -49,7 +53,7 @@ $female_percentage	= $female / $total;
 echo "<div class=\"member_chart\"><img src=\"http://chart.apis.google.com/chart?cht=p3&chd=t:" . $male_percentage . "," . $female_percentage . "&chs=250x100&chl=Male|Female&chtt=Male/Female+Ratio\" /></div>";
 
 // Free database resource
-tpdb_free_result($result);
+$smcFunc['db_free_result']($result);
 </code>
 
 <description>

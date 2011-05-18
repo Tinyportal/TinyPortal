@@ -20,21 +20,22 @@ Bloc
 </date>
 
 <code>
-global $settings, $db_prefix, $scripturl, $txt, $modSettings;
+global $settings, $db_prefix, $scripturl, $txt, $modSettings, $smcFunc;
 
 // set the limit
 $limit = 1;
 
-$tp_prefix = $db_prefix . 'tp_';
-
-$request =  tp_query("SELECT s.*, IFNULL(mem.real_name, s.value3) as realName,
-mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
-FROM " . $tp_prefix . "shoutbox as s 
-LEFT JOIN " . $db_prefix . "members AS mem ON (mem.id_member = s.value5)
-LEFT JOIN " . $db_prefix . "attachments AS a ON (a.id_member = s.value5 and a.attachment_type!=3)
-WHERE s.value7=0 
-ORDER BY s.value2 DESC LIMIT ". $limit, __FILE__, __LINE__);
-if (tpdb_num_rows($request) > 0)
+$request =  $smcFunc['db_query]('', '
+				SELECT s.*, IFNULL(mem.real_name, s.value3) as realName,
+					mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+				FROM {db_prefix}tp_shoutbox as s 
+				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = s.value5)
+				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = s.value5 and a.attachment_type != 3)
+				WHERE s.value7 = 0 
+				ORDER BY s.value2 DESC LIMIT {int:limit}',
+				array('limit' => $limit)
+			);
+if ($smcFunc['db_num_rows']($request) > 0)
 {
 	$nshouts= '<div>';
 	$ns=array();
@@ -59,7 +60,7 @@ if (tpdb_num_rows($request) > 0)
 	$nshouts .='</div>';
 
 	echo $nshouts;
-	tpdb_free_result($request);
+	$smcFunc['dbdb_free_result']($request);
 }
 </code>
 
