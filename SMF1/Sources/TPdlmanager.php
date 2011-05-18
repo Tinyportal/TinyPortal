@@ -90,6 +90,15 @@ function TPortalDLManager()
 		// skip the uplaod checks etc . if just an empty item
 		if(!isset($_POST['tp-dluploadnot']))
 		{
+			// check if uploaded quick-list picture 
+			if(isset($_FILES['qup_tp_dluploadtext']) && file_exists($_FILES['qup_tp_dluploadtext']['tmp_name']))
+			{
+				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
+				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'].'uid');
+				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+				redirectexit('action=tpmod;dl='. $item_id);
+			}
+			
 			// check that nothing happended
 			if(!file_exists($_FILES['tp-dluploadfile']['tmp_name']) || !is_uploaded_file($_FILES['tp-dluploadfile']['tmp_name']))
 				fatal_error($txt['tp-dluploadfailure']);

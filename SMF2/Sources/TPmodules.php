@@ -1067,7 +1067,6 @@ function tp_profile_summary($memID)
 	global $txt, $context, $db_prefix, $settings, $smcFunc;
 
 	$context['page_title'] = $txt['tpsummary'];
-	$tp_prefix = $settings['tp_prefix'];
 	$max_art = 0;
 	// get all articles written by member
 	$request =  $smcFunc['db_query']('', '
@@ -1103,7 +1102,6 @@ function tp_profile_articles($memID)
 	global $txt, $user_profile, $context, $db_prefix, $settings, $scripturl;
 
 	$context['page_title'] = $txt['articlesprofile'];
-	$tp_prefix = $settings['tp_prefix'];
 
 	if(isset($context['TPortal']['mystart']))
 		$start = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
@@ -1266,8 +1264,6 @@ function tp_profile_download($memID)
 	// is dl manager on?
 	if($context['TPortal']['show_download']==0)
 		fatal_error($txt['tp-dlmanageroff']);
-
-	$tp_prefix = $settings['tp_prefix'];
 
 	if(isset($context['TPortal']['mystart']))
 		$start = $context['TPortal']['mystart'];
@@ -1479,8 +1475,6 @@ function tpshout_profile($memID)
     global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
 
 	$context['page_title'] = $txt['shoutboxprofile'] ;
-
-	$tp_prefix = $settings['tp_prefix'];
 
 	if(isset($context['TPortal']['mystart']))
 		$start = $context['TPortal']['mystart'];

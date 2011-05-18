@@ -586,7 +586,7 @@ function template_main()
 					foreach($context['TPortal']['admuploadcats'] as $ucats)
 					{
 							echo '
-						<option value="'.$ucats['id'].'">'. str_repeat("-",$ucats['indent']) .' '.$ucats['name'].'</option>';
+						<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
 					}
 				}
 				else
@@ -660,7 +660,7 @@ function template_main()
 						if($ucats['id']!=$cat['id'])
 						{
 							echo '
-						<option value="'.$ucats['id'].'" ', $ucats['id']==$cat['parent'] ? 'selected' : '' ,'>'. str_repeat("-",$ucats['indent']) .' '.$ucats['name'].'</option>';
+						<option value="'.$ucats['id'].'" ', $ucats['id']==$cat['parent'] ? 'selected' : '' ,'>', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
 						}
 					}
 				}
@@ -750,7 +750,7 @@ function template_main()
 		foreach($context['TPortal']['admuploadcats'] as $ucats)
 		{
 			echo '
-			     		<option value="'.$ucats['id'].'">', isset($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
+			     		<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
 		}
 		echo '
 					</select>

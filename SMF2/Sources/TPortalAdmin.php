@@ -2829,7 +2829,7 @@ function do_postchecks()
 						$smcFunc['db_free_result']($request);
 						if($row['value2'] == $where)
 							$smcFunc['db_query']('', '
-								UPDATE {tp_prefix|variables 
+								UPDATE {db_prefix}tp_variables 
 								SET value2 = {string:val2} 
 								WHERE id = {int:varid} LIMIT 1',
 								array('val2' => '0', 'varid' => $value)

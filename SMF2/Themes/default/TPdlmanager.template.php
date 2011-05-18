@@ -436,7 +436,7 @@ function template_main()
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
 			echo '
-									<option value="'.$ucats['id'].'">', isset($ucats['indent']) ? str_repeat("-",$ucats['indent']) : ''  , ' ' . $ucats['name'].'</option>';
+									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
 		}
 		echo '				</select>
 							</td>
@@ -817,7 +817,7 @@ function template_main()
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
 			echo '
-							<option value="'.$ucats['id'].'" ', $ucats['id']==abs($cat['category']) ? 'selected' : '' ,'>'. str_repeat("-",$ucats['indent']) .' '.$ucats['name'].'</option>';
+							<option value="'.$ucats['id'].'" ', $ucats['id']==abs($cat['category']) ? 'selected' : '' ,'>', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
 		}
 		echo '
 						</select>
