@@ -16,7 +16,8 @@ if (!defined('SMF'))
 // TinyPortal module entrance
 function TPmodules()
 {
-	global $db_prefix, $settings, $modSettings, $context, $scripturl,$txt , $user_info , $sourcedir, $boardurl,$ID_MEMBER, $boarddir;
+	global $db_prefix, $settings, $modSettings, $context, $scripturl, $txt;
+	global $func, $user_info, $sourcedir, $boardurl, $ID_MEMBER, $boarddir;
 
 	$tp_prefix=$settings['tp_prefix'];
 
@@ -142,7 +143,7 @@ function TPmodules()
 			$row=tpdb_fetch_row($request);
 			$num_comments=$row[0]+1;
 			tpdb_free_result($request);
-			$title = htmlentities(strip_tags($_POST['tp_article_comment_title']));
+			$title = $func['htmlspecialchars'](strip_tags($_POST['tp_article_comment_title']));
 			$comment = substr($_POST['tp_article_bodytext'],0,65536);
 
 			require_once($sourcedir.'/Subs-Post.php');
@@ -435,11 +436,11 @@ function TPmodules()
 			while($row=tpdb_fetch_assoc($request))
 			{
 				if($row['type']=='bbc')
-					$row['body']=doUBBC(html_entity_decode($row['body']));
+					$row['body']=doUBBC(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
 				elseif($row['type']=='php')
 					$row['body']='[PHP]';
 				else
-					$row['body']=strip_tags(html_entity_decode($row['body']));
+					$row['body']=strip_tags(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
 
 				$row['subject'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
 				$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
@@ -486,12 +487,12 @@ function TPmodules()
 					'hour' => date("G",$row['date']),
 					'minute' => date("i",$row['date']),
 					),
-				'body' => html_entity_decode($row['body']),
-				'intro' => html_entity_decode($row['intro']),
+				'body' => html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']),
+				'intro' => html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']),
 				'useintro' => $row['useintro'],
 				'category' => $row['category'],
 				'frontpage' => $row['frontpage'],
-				'subject' => html_entity_decode($row['subject']),
+				'subject' => html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']),
 				'authorID' => $row['authorID'],
 				'author' => $row['author'],
 				'frame' => !empty($row['frame']) ? $row['frame'] : 'theme',

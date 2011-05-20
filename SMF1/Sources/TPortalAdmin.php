@@ -584,7 +584,7 @@ function do_blocks()
 			$acc2=explode(",",$row['access2']);
 			$context['TPortal']['blockedit'] = $row;
 			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
-			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES, $modSettings['global_character_set']);
+			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES, $context['character_set']);
 			unset($context['TPortal']['blockedit']['access2']);
 			$context['TPortal']['blockedit']['access2']=array(
 				'action' => array(),
@@ -1126,7 +1126,7 @@ function do_articles()
 				if(tpdb_num_rows($request)>0)
 				{
 					$row = tpdb_fetch_assoc($request);
-					$row['value1'] = html_entity_decode($row['value1']);
+					$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']);
 					$o = explode("|",$row['value7']);
 					foreach($o as $t => $opt)
 					{
@@ -1155,7 +1155,7 @@ function do_articles()
 					while ($row = tpdb_fetch_assoc($request))
 					{
 						$row['indent'] = 0;
-						$row['name'] = html_entity_decode($row['name']);
+						$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
 						$allsorted[$row['id']] = $row;
 						$alcats[] = $row['id'];
 					}
@@ -1182,7 +1182,7 @@ function do_articles()
 			while ($row = tpdb_fetch_assoc($request))
 			{
 				$row['indent'] = 0;
-				$row['name'] = html_entity_decode($row['name']);
+				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
 				$allsorted[$row['id']] = $row;
 				$alcats[] = $row['id'];
 			}
@@ -1309,7 +1309,7 @@ function do_articles()
 			$context['TPortal']['cats']=array(); $sorted=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['name'] = html_entity_decode($row['name']);
+				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
 				$sorted[$row['id']] = $row;
 				$cats[] = $row['id'];
 			}
@@ -1362,7 +1362,7 @@ function do_articles()
 			$context['TPortal']['arts_submissions']=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject']);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
 				$context['TPortal']['arts_submissions'][] = $row;
 			}
 			tpdb_free_result($request);
@@ -1390,7 +1390,7 @@ function do_articles()
 			$context['TPortal']['arts_nocat']=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject']);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
 				$context['TPortal']['arts_nocat'][] = $row;
 			}
 			tpdb_free_result($request);
@@ -1408,9 +1408,9 @@ function do_articles()
 		if(tpdb_num_rows($request)>0)
 		{
 			$context['TPortal']['editarticle']= tpdb_fetch_assoc($request);
-			$context['TPortal']['editarticle']['body'] = html_entity_decode($context['TPortal']['editarticle']['body'],ENT_QUOTES, $modSettings['global_character_set']);
-			$context['TPortal']['editarticle']['intro'] = html_entity_decode($context['TPortal']['editarticle']['intro'],ENT_QUOTES, $modSettings['global_character_set']);
-			$context['TPortal']['editarticle']['subject'] = html_entity_decode($context['TPortal']['editarticle']['subject'], ENT_COMPAT, $modSettings['global_character_set']);
+			$context['TPortal']['editarticle']['body'] = html_entity_decode($context['TPortal']['editarticle']['body'], ENT_QUOTES, $context['character_set']);
+			$context['TPortal']['editarticle']['intro'] = html_entity_decode($context['TPortal']['editarticle']['intro'], ENT_QUOTES, $context['character_set']);
+			$context['TPortal']['editarticle']['subject'] = html_entity_decode($context['TPortal']['editarticle']['subject'], ENT_QUOTES, $context['character_set']);
 			
 			tpdb_free_result($request);
 		}
@@ -1515,7 +1515,7 @@ function do_articles()
 			$context['TPortal']['arts']=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject']);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
 				$context['TPortal']['arts'][] = $row;
 			}
 			tpdb_free_result($request);
@@ -1805,7 +1805,7 @@ function do_news($tpsub = 'overview')
 
 function do_postchecks()
 {
-	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$userinfo,$db_prefix, $sourcedir;
+	global $context, $txt, $settings, $boardurl, $scripturl, $boarddir, $userinfo, $db_prefix, $sourcedir, $func;
 
 	// prefix of the TP tables
 	$tp_prefix = $db_prefix.'tp_';
@@ -2010,7 +2010,7 @@ function do_postchecks()
 						}
 					}
 					if($from == 'settings' && $what == 'tp_frontpage_title')
-						tp_query("UPDATE " . $tp_prefix . "settings SET value = '" . htmlentities($clean, ENT_QUOTES) . "' WHERE name='frontpage_title' LIMIT 1", __FILE__, __LINE__);
+						tp_query("UPDATE " . $tp_prefix . "settings SET value = '" . $func['htmlspecialchars']($clean, ENT_QUOTES) . "' WHERE name='frontpage_title' LIMIT 1", __FILE__, __LINE__);
 					else
 					{
 						if(isset($clean))
@@ -2296,7 +2296,7 @@ function do_postchecks()
 				elseif($what == 'tp_article_cat')
 					$straycat = $value;
 				elseif($what == 'tp_article_new')
-					$straynewcat = htmlentities($value,ENT_QUOTES);
+					$straynewcat = $func['htmlspecialchars']($value,ENT_QUOTES);
 			}	
 			// update
 			if(isset($straycat) && sizeof($ccats)>0)
@@ -2346,7 +2346,7 @@ function do_postchecks()
 				
 			if(!empty($_POST['tp_menu_title']))
 			{
-				$mtitle = htmlentities(strip_tags($_POST['tp_menu_title']),ENT_QUOTES);
+				$mtitle = $func['htmlspecialchars'](strip_tags($_POST['tp_menu_title']),ENT_QUOTES);
 				tp_query("INSERT INTO " . $tp_prefix . "variables (value1,type) VALUES('" . $mtitle . "','menus')", __FILE__, __LINE__);
 				redirectexit('action=tpadmin;sa=menubox');
 			}
@@ -2358,7 +2358,7 @@ function do_postchecks()
 			isAllowedTo('tp_blocks');
 				
 			$mid = $_POST['tp_menu_menuid'];
-			$mtitle = htmlentities(strip_tags($_POST['tp_menu_title']),ENT_QUOTES);
+			$mtitle = $func['htmlspecialchars'](strip_tags($_POST['tp_menu_title']),ENT_QUOTES);
 			if($mtitle=='')
 				$mtitle = $txt['tp-no_title'];
 			
@@ -2450,7 +2450,7 @@ function do_postchecks()
 				elseif(substr($what,0,5) == 'title')
 				{
 					$where = strip_tags(substr($what,5));
-					$request =tp_query("UPDATE " . $tp_prefix . "blocks SET title = '" . htmlentities($value, ENT_QUOTES) . "' WHERE id = " . $where , __FILE__, __LINE__);
+					$request =tp_query("UPDATE " . $tp_prefix . "blocks SET title = '" . $func['htmlspecialchars']($value, ENT_QUOTES) . "' WHERE id = " . $where , __FILE__, __LINE__);
 				}
 				elseif(substr($what,0,9) == 'blockbody')
 				{
@@ -2494,12 +2494,12 @@ function do_postchecks()
 			if(isset($cp))
 				$request = tp_query("INSERT INTO " . $tp_prefix . "blocks 
 			(type,frame,title,body,access,bar,pos,off,visible,var1,var2,lang,access2,editgroups)
-			VALUES(" . $cp['type'] . ", '" . $cp['frame'] . "', '" . $title . "', '" . htmlentities($cp['body'],ENT_QUOTES) . "','" . $cp['access'] . "', 
+			VALUES(" . $cp['type'] . ", '" . $cp['frame'] . "', '" . $title . "', '" . $func['htmlspecialchars']($cp['body'],ENT_QUOTES) . "','" . $cp['access'] . "', 
 			" . $panel .", 0, 1,1," . $cp['var1'] . "," . $cp['var2'] . ",'" . $cp['lang'] . "','" . $cp['access2'] . "','" . $cp['editgroups'] . "') " , __FILE__, __LINE__);
 			else
 				$request = tp_query("INSERT INTO " . $tp_prefix . "blocks 
 			(type,frame,title,body,access,bar,pos,off,visible,var1,var2,lang,access2,editgroups)
-			VALUES(" . $type . ", 'theme', '" . $title . "', '" . htmlentities($body, ENT_QUOTES) . "', '-1,0,1', " . $panel .", 0, 1,1,0,0,'','actio=allpages','') " , __FILE__, __LINE__);
+			VALUES(" . $type . ", 'theme', '" . $title . "', '" . $func['htmlspecialchars']($body, ENT_QUOTES) . "', '-1,0,1', " . $panel .", 0, 1,1,0,0,'','actio=allpages','') " , __FILE__, __LINE__);
 
 			$where = tpdb_insert_id($request);	
 			if(!empty($where))
@@ -2699,7 +2699,7 @@ function do_postchecks()
 						}
 						
 						$newvalue = tp_convertphp($value);
-						tp_query("UPDATE " . $tp_prefix . "articles SET " . $setting . " = '" . htmlentities($newvalue,ENT_QUOTES) . "' WHERE id='" . $where  . "' LIMIT 1", __FILE__, __LINE__);
+						tp_query("UPDATE " . $tp_prefix . "articles SET " . $setting . " = '" . $func['htmlspecialchars']($newvalue,ENT_QUOTES) . "' WHERE id='" . $where  . "' LIMIT 1", __FILE__, __LINE__);
 					}
 					elseif(in_array($setting, array('day','month','year','minute','hour','timestamp')))
 					{

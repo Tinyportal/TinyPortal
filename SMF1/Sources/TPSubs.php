@@ -995,7 +995,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use=1, $showc
 	</script>';
 	if($showchoice)
 		echo '
-	<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'.html_entity_decode($body).'</textarea>';
+	<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'.html_entity_decode($body, ENT_QUOTES, $context['character_set']).'</textarea>';
 
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
@@ -1542,7 +1542,9 @@ function tpdb_free_result($request)
 }
 function tp_sanitize($value, $strict=false)
 {
-	return htmlentities(strip_tags($value),ENT_QUOTES);
+	global $func;
+	
+	return $func['htmlspecialchars'](strip_tags($value),ENT_QUOTES);
 }
 
 function get_perm($perm, $moderate = '')
@@ -1753,7 +1755,7 @@ function tp_renderarticle($intro = '')
 	else
 	{
 		if($context['TPortal']['article']['rendertype']=='php')
-			eval(tp_convertphp(html_entity_decode($context['TPortal']['article']['body'], ENT_QUOTES),true));
+			eval(tp_convertphp(html_entity_decode($context['TPortal']['article']['body'], ENT_QUOTES, $context['character_set']),true));
 		elseif($context['TPortal']['article']['rendertype']=='import')
 		{
 			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport']))
@@ -2087,14 +2089,14 @@ function endElement($parser, $tagName)
 {
 
 	// This function is used when an end-tag is encountered.
-	global $context, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
+	global $context, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created, $func;
 
 	// RSS/RDF feeds
 	if ($tagName == "ITEM")
 	{
 		echo '
 <div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
-		printf("<a href='%s'>%s</a>", trim($link),htmlspecialchars(trim($title)));
+		printf("<a href='%s'>%s</a>", trim($link),$func['htmlspecialchars'](trim($title)));
 		echo '
 </div>';
 		if(!$context['TPortal']['rss_notitles'])
@@ -2333,7 +2335,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $output_method
 				'name' => $row['posterName'],
 				'href' => empty($row['ID_MEMBER']) ? '' : $scripturl . '?action=profile;u=' . $row['ID_MEMBER'],
 				'link' => empty($row['ID_MEMBER']) ? $row['posterName'] : '<a href="' . $scripturl . '?action=profile;u=' . $row['ID_MEMBER'] . '">' . $row['posterName'] . '</a>',
-				'avatar' => $row['avy'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '') : (stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avy']) . '" alt="" class="recent_avatar" border="0" />')
+				'avatar' => $row['avy'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '') : (stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $func['htmlspecialchars']($row['avy']) . '" alt="" class="recent_avatar" border="0" />')
 			),
 			'subject' => $row['subject'],
 			'short_subject' => shorten_subject($row['subject'], 25),
