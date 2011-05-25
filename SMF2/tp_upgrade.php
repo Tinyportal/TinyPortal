@@ -342,7 +342,7 @@ foreach ($tables as $table => $col) {
                 $smcFunc['db_query']('', '
                     ALTER TABLE {db_prefix}{raw:table}
                     CHANGE {raw:name} {raw:name} {raw:type}
-                    CHARACTER SET uft8 COLLATE uft8_general_ci',
+                    CHARACTER SET utf8 COLLATE utf8_general_ci',
                     array('table' => $table, 'name' => $column['name'], 'type' => $column['type'])
                 );
             }
