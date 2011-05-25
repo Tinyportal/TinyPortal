@@ -1723,7 +1723,7 @@ function template_editcategory()
 										<td><input type="checkbox" name="tp_category_toppanel" value="1"' , !empty($mg['toppanel']) ? ' checked="checked"' : '' ,' />', $txt['tp-displaytoppanel'] ,'</td>
 										<td><input type="checkbox" name="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />', $txt['tp-displaybottompanel'] ,'<td/>
 									</tr><tr class="windowbg2">
-										<td><input type="checkbox" name="tp_category_upperpanel" value="1"' , !empty($mg['upperpanel']) ? ' checked="checked"' : '' ,' />', $txt['tp-displayupperpanel'] ,'</td>
+										<td><input type="checkbox" name="tp_category_centerpanel" value="1"' , !empty($mg['centerpanel']) ? ' checked="checked"' : '' ,' />', $txt['tp-displayupperpanel'] ,'</td>
 										<td><input type="checkbox" name="tp_category_lowerpanel" value="1"' , !empty($mg['lowerpanel']) ? ' checked="checked"' : '' ,' />', $txt['tp-displaylowerpanel'] ,'</td>
 									</tr><tr class="windowbg2">
 									</tr></table>
