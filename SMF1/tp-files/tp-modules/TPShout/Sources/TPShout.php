@@ -207,11 +207,7 @@ if(isset($_POST['tp-shout-url']))
             tp_query("INSERT INTO " . $tp_prefix . "shoutbox (value1,value2,value3,type,value4, value5) 
                         VALUES('". mysql_real_escape_string($shout)."','".$shout_time."','".mysql_real_escape_string($shout_name)."','shoutbox','".$ip."',".$memID.")", __FILE__, __LINE__);
     }
-	// if using mod rewrite, go to forum
-	if(!empty($modSettings['queryless_urls']))
-		redirectexit('action=forum');
-	else
-		redirectexit(strip_tags($_POST['tp-shout-url']),false,true);
+	redirectexit(strip_tags($_POST['tp-shout-url']),false,true);
 }
 
 function tpshout_admin()
@@ -230,11 +226,10 @@ function tpshout_admin()
 
 	loadtemplate('TPShout');
 	loadlanguage('TPShout');
-	$context['template_layers'][] = 'tpadm';
 	$context['template_layers'][] = 'subtab';
 	loadlanguage('TPortalAdmin');
 
-	TPadminIndex('shout',true);
+	adminIndex('shout',true);
 	$context['current_action'] = 'admin';
 
 	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks']))
