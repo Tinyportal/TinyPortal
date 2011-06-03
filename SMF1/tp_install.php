@@ -26,7 +26,7 @@ if(empty($db_prefix))
 	$render .='
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v1.0 RC1 for SMF1.1.x</title>
+		<title>TinyPortal - v1.0 for SMF1.1.x</title>
 		 <link rel="stylesheet" type="text/css" href="Themes/default/style.css" />
 	</head><body> ';
 	$manual=true;
@@ -38,7 +38,7 @@ $render='';
 $tp_prefix = $db_prefix.'tp_';
 
 $render =	'<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; height: 500px; border: solid 2px #222;background: white;">
-<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade v1.0 RC1 for SMF 1.1.x &copy;2004-2010</div>
+<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade v1.0 for SMF 1.1.x &copy;2004-2011</div>
 	<div class="middletext" style="padding: 1em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.5em;">';
 
@@ -99,7 +99,7 @@ $settings_array=array(
  'front_type' => 'forum_articles' ,
  'showforumfirst' => '0' ,
  'allow_guestnews' => '1' ,
- 'version' => '1100' ,
+ 'version' => '1104' ,
  'use_wysiwyg' => '1' ,
  'allowed_membergroups' => '' ,
  'approved_membergroups' => '' ,

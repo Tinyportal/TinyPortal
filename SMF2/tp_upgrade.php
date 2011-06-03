@@ -2,7 +2,7 @@
 /****************************************************************************
 * tp_upgrade.php															*
 *****************************************************************************
-* TP version: 1.0 RC1														*
+* TP version: 1.0 RC2														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -42,13 +42,13 @@ if ($manual)
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v1.0 RC1 for SMF2.0</title>
+		<title>TinyPortal - v1.0 RC2 for SMF2.0</title>
 		 <link rel="stylesheet" type="text/css" href="Themes/default/style.css" />
 	</head><body>';
 
 
 $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; height: 500px; border: solid 2px #222;background: white;">
-<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.0 for SMF 2.0 &copy;2004-2011</div>
+<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.0 RC2 for SMF 2.0 &copy;2004-2011</div>
 	<div class="middletext" style="padding: 1em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.5em;">';
 
@@ -315,7 +315,7 @@ foreach ($tables as $table => $col) {
         foreach ($col['columns'] as $column) {
         	$smcFunc['db_add_column']('{db_prefix}' . $table, $column);
             
-            // If utf8 is set alter column to be utf if text or tinytext.
+            // If utf8 is set alter column to be utf8 if text or tinytext.
             if ($utf8 && in_array($column['type'], array('text', 'tinytext', 'longtext'))) {
                 $smcFunc['db_query']('', '
                     ALTER TABLE {db_prefix}{raw:table}
@@ -371,7 +371,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF VERSION HERE
-    'version' => '1102',
+    'version' => '1104',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',

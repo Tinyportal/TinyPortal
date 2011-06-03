@@ -4,7 +4,7 @@
     <name>TinyPortal</name>
     <id>bloc:tinyportal</id>
     <type>modification</type>
-    <version>1.102</version>
+    <version>1.104</version>
     <install for="1.0.6-1.0.99">
         <readme type="inline">
 			TinyPortal will no longer support SMF 1.0x versions, as it now depends on many features not present in SMF 1.0.x. We urge you to upgrade your forum to v1.1 if you like to install TP.
@@ -18,7 +18,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Installing TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<readme type="inline">Installing TinyPortal v1.0 RC2 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</install>
@@ -33,7 +33,7 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF2/tp-files" destination="$boarddir" />
-        <readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 Final, RC4, or RC5</readme>
+        <readme type="inline">Installing TinyPortal v1.0 RC2 for SMF2.0 Final, RC4, or RC5</readme>
        <modification format="boardmod" type="file">SMF2/tinyportal200.mod</modification>
        <database>SMF2/tp_upgrade.php</database>
     </install>
@@ -48,7 +48,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF2/tp-files" destination="$boarddir" />
-		<readme type="inline">Installing TinyPortal v1.0 RC1 for SMF2.0 Final, RC4, or RC5</readme>
+		<readme type="inline">Installing TinyPortal v1.0 RC2 for SMF2.0 Final, RC4, or RC5</readme>
 		<modification format="boardmod" type="file">SMF2/tinyportal200.mod</modification>
 		<database>SMF2/tp_upgrade.php</database>
     </upgrade>
@@ -70,7 +70,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
 		 <modification format="boardmod" type="file">SMF1/tinyportal1010-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -82,7 +82,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1020-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -94,7 +94,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1048-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -106,7 +106,7 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
         <modification format="boardmod" type="file">SMF1/tinyportal1050-1090.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -118,7 +118,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1056-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -130,7 +130,7 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
         <modification format="boardmod" type="file">SMF1/tinyportal1075-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -142,7 +142,7 @@
 	    <require-dir name="common/tp-downloads" destination="$boarddir" />
 	    <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-	    <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+	    <readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
 	    <modification format="boardmod" type="file">SMF1/tinyportal1080-1090.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -154,7 +154,7 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC1 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC2 for SMF1.1.x</readme>
         <modification format="boardmod" type="file">SMF1/tinyportal11b.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
