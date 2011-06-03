@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPortal.php																*
 *****************************************************************************
-* TP version: 1.0 RC1														*
+* TP version: 1.0 RC2														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -534,8 +534,8 @@ function fetchTPhooks()
 
 	$request2 =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables 
-		WHERE type IN ({string:type})',
-		array('type' => implode("','" ,$types))
+		WHERE type IN ({array_string:type})',
+		array('type' => $types)
 	);
 	
 	$context['TPortal']['submitcheck'] = array('articles' => 0, 'uploads' => 0);
@@ -2169,7 +2169,7 @@ function doTPblocks()
 		AND ' . $access2 . '
 		AND ' . $access . '
 		' . $lang . '
-		ORDER BY bar,pos,id ASC',
+		ORDER BY bar, pos, id ASC',
 		array('off' => 0, 'bar' => 4)
 	);
 

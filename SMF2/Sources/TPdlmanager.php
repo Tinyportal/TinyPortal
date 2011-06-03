@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPdlmanager.php															*
 *****************************************************************************
-* TP version: 1.0 RC1														*
+* TP version: 1.0 RC2														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -219,7 +219,8 @@ function TPortalDLManager()
 			// get the category access
 			$request = $smcFunc['db_query']('', '
 				SELECT access FROM {db_prefix}tp_dlmanager WHERE id = {int:cat}',
-				array('cat' => $category));
+				array('cat' => $category)
+			);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_assoc']($request);
@@ -552,7 +553,7 @@ function TPortalDLManager()
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
-				AND dlm.category IN ({string:cat})
+				AND dlm.category IN ({array_string:cat})
 				AND dlm.author_id = mem.id_member
 				ORDER BY dlm.downloads DESC LIMIT 10',
 				array('type' => 'dlitem', 'cat' => $mycats)
@@ -599,7 +600,7 @@ function TPortalDLManager()
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
-				AND dlm.category IN ({string:cat})
+				AND dlm.category IN ({array_string:cat})
 				AND data.item = dlm.id
 				AND data.year = {int:yr}
 				AND data.week = {int:week}
@@ -2229,10 +2230,12 @@ function TPortalDLAdmin()
 			);
 			// round up the access groups.
 			// check which has the group
-			$grp=array(); $grp2=array(); $grp3=array();
-			$grp=tp_fetchpermissions(array('tp_dlmanager'));
-			$grp2=tp_fetchpermissions(array('tp_dlupload'));
-			$grp3=tp_fetchpermissions(array('tp_dlcreatetopic'));
+			$grp = array(); 
+			$grp2 = array(); 
+			$grp3 = array();
+			$grp = tp_fetchpermissions(array('tp_dlmanager'));
+			$grp2 = tp_fetchpermissions(array('tp_dlupload'));
+			$grp3 = tp_fetchpermissions(array('tp_dlcreatetopic'));
 			
 			if (allowedTo('manage_permissions'))
 			{
@@ -2419,436 +2422,436 @@ function TPortalDLAdmin()
 			$myid = $sid;
 			$go = 2;
 		}
-	// get all values from forms
-	foreach($_POST as $what => $value)
-	{
-		if(substr($what,0,12)=='dladmin_name')
+		// get all values from forms
+		foreach($_POST as $what => $value)
 		{
-			$id = substr($what, 12);
-			// no html here
-			$value = strip_tags($value);
-			if(empty($value))
-				$value = '-no title-';
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET name = {string:name} 
-				WHERE id = {int:item}',
-				array('name' => $value, 'item' => $id)
-			);
-		}
-		elseif(substr($what, 0, 12) == 'dladmin_icon')
-		{
-			$id = substr($what, 12);
-			if($value != '')
+			if(substr($what,0,12)=='dladmin_name')
 			{
-				$val = $boardurl.'/tp-downloads/icons/'.$value;
+				$id = substr($what, 12);
+				// no html here
+				$value = strip_tags($value);
+				if(empty($value))
+					$value = '-no title-';
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_dlmanager 
-					SET icon = {string:icon} 
+					SET name = {string:name} 
 					WHERE id = {int:item}',
-					array('icon' => $val, 'item' => $id)
+					array('name' => $value, 'item' => $id)
 				);
 			}
-		}
-		elseif(substr($what, 0, 12) == 'dladmin_text')
-		{
-			$id = substr($what, 12);
-			if(is_numeric($id))
+			elseif(substr($what, 0, 12) == 'dladmin_icon')
 			{
-				if(isset($_POST['dladmin_text'.$id.'_pure']) && isset($_POST['dladmin_text'.$id.'_choice']))
+				$id = substr($what, 12);
+				if($value != '')
 				{
-					if($_POST['dladmin_text'.$id.'_choice'] == 1)
-						$value = $_POST['dladmin_text'.$id];
-					else
-						$value = $_POST['dladmin_text'.$id.'_pure'];
+					$val = $boardurl.'/tp-downloads/icons/'.$value;
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_dlmanager 
+						SET icon = {string:icon} 
+						WHERE id = {int:item}',
+						array('icon' => $val, 'item' => $id)
+					);
 				}
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
-					SET description = {string:desc} 
-					WHERE id = {int:item}',
-					array('desc' => $value, 'item' => $id)
-				);
 			}
-		}
-		elseif(substr($what, 0, 14) == 'dladmin_delete')
-		{
-			$id = substr($what, 14);
+			elseif(substr($what, 0, 12) == 'dladmin_text')
+			{
+				$id = substr($what, 12);
+				if(is_numeric($id))
+				{
+					if(isset($_POST['dladmin_text'.$id.'_pure']) && isset($_POST['dladmin_text'.$id.'_choice']))
+					{
+						if($_POST['dladmin_text'.$id.'_choice'] == 1)
+							$value = $_POST['dladmin_text'.$id];
+						else
+							$value = $_POST['dladmin_text'.$id.'_pure'];
+					}
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_dlmanager 
+						SET description = {string:desc} 
+						WHERE id = {int:item}',
+						array('desc' => $value, 'item' => $id)
+					);
+				}
+			}
+			elseif(substr($what, 0, 14) == 'dladmin_delete')
+			{
+				$id = substr($what, 14);
+					$request = $smcFunc['db_query']('', '
+						SELECT * FROM {db_prefix}tp_dlmanager 
+						WHERE id = {int:item}',
+						array('item' => $id)
+					);
+					if($smcFunc['db_num_rows']($request) > 0)
+					{
+						$row = $smcFunc['db_fetch_assoc']($request);
+						if ($row['type'] == 'dlitem')
+						{
+							$category = $row['category'];
+							if ($category > 0)
+							{
+								$smcFunc['db_query']('', '
+									UPDATE {db_prefix}tp_dlmanager 
+									SET downloads = downloads - 1 
+									WHERE id = {int:cat} LIMIT 1',
+									array('cat' => $category)
+								);
+							}
+							// delete both screenshot and file
+							if(!empty($row['file']) && file_exists($boarddir.'/tp-downloads/'.$row['file']))
+							{
+								$succ = unlink($boarddir.'/tp-downloads/'.$row['file']);
+								if(!$succ)
+									$err = 'Unable to delete the actual file, but the item was deleted. ('.$row['file'].')';
+							}
+							if(!empty($row['screenshot']) && file_exists($boarddir.'/'.$row['screenshot']))
+							{
+								$succ2 = unlink($boarddir.'/'.$row['screenshot']);
+								if(!$succ2)
+									$err .= '<br />Unable to delete the actual screenshot, but the item was deleted. ('.$row['screenshot'].')';
+							}
+	
+						}
+						$smcFunc['db_free_result']($request);
+					}
+				$smcFunc['db_query']('', '
+					DELETE FROM {db_prefix}tp_dlmanager 
+					WHERE id = {int:item}',
+					array('item' => $id)
+				);
+				if(isset($err))
+					fatal_error($err);
+				redirectexit('action=tpmod;dl=admincat'.$category);
+			}
+			elseif(substr($what, 0, 15) == 'dladmin_approve' && $value == 'ON')
+			{
+				$id = abs(substr($what, 15));
 				$request = $smcFunc['db_query']('', '
-					SELECT * FROM {db_prefix}tp_dlmanager 
+					SELECT category FROM {db_prefix}tp_dlmanager 
 					WHERE id = {int:item}',
 					array('item' => $id)
 				);
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
-					$row = $smcFunc['db_fetch_assoc']($request);
-					if ($row['type'] == 'dlitem')
-					{
-						$category = $row['category'];
-						if ($category > 0)
-						{
-							$smcFunc['db_query']('', '
-								UPDATE {db_prefix}tp_dlmanager 
-								SET downloads = downloads - 1 
-								WHERE id = {int:cat} LIMIT 1',
-								array('cat' => $category)
-							);
-						}
-						// delete both screenshot and file
-						if(!empty($row['file']) && file_exists($boarddir.'/tp-downloads/'.$row['file']))
-						{
-							$succ = unlink($boarddir.'/tp-downloads/'.$row['file']);
-							if(!$succ)
-								$err = 'Unable to delete the actual file, but the item was deleted. ('.$row['file'].')';
-						}
-						if(!empty($row['screenshot']) && file_exists($boarddir.'/'.$row['screenshot']))
-						{
-							$succ2 = unlink($boarddir.'/'.$row['screenshot']);
-							if(!$succ2)
-								$err .= '<br />Unable to delete the actual screenshot, but the item was deleted. ('.$row['screenshot'].')';
-						}
-
-					}
+					$row = $smcFunc['db_fetch_row']($request);
+					$newcat = abs($row[0]);
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_dlmanager 
+						SET category = {int:cat} 
+						WHERE id = {int:item}',
+						array('cat' => $newcat, 'item' => $id)
+					);
+					$smcFunc['db_query']('', '
+						DELETE FROM {db_prefix}tp_variables 
+						WHERE type = {string:type} 
+						AND value5 = {int:val5}',
+						array('type' => 'dl_not_approved', 'val5' => $id)
+					);
 					$smcFunc['db_free_result']($request);
 				}
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}tp_dlmanager 
-				WHERE id = {int:item}',
-				array('item' => $id)
-			);
-			if(isset($err))
-				fatal_error($err);
-			redirectexit('action=tpmod;dl=admincat'.$category);
-		}
-		elseif(substr($what, 0, 15) == 'dladmin_approve' && $value == 'ON')
-		{
-			$id = abs(substr($what, 15));
-			$request = $smcFunc['db_query']('', '
-				SELECT category FROM {db_prefix}tp_dlmanager 
-				WHERE id = {int:item}',
-				array('item' => $id)
-			);
-			if($smcFunc['db_num_rows']($request) > 0)
+			}
+			elseif(substr($what, 0, 16) == 'dl_admin_approve' && $value == 'ON')
 			{
-				$row = $smcFunc['db_fetch_row']($request);
-				$newcat = abs($row[0]);
+				$id = abs(substr($what, 16));
+				$request = $smcFunc['db_query']('', '
+					SELECT category FROM {db_prefix}tp_dlmanager 
+					WHERE id = {int:item}',
+					array('item' => $id)
+				);
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					$row = $smcFunc['db_fetch_row']($request);
+					$newcat = abs($row[0]);
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_dlmanager 
+						SET category = {int:cat} 
+						WHERE id = {int:item}',
+						array('cat' => $newcat, 'item' => $id)
+					);
+					$smcFunc['db_query']('', '
+						DELETE FROM {db_prefix}tp_variables 
+						WHERE type = {string:type} 
+						AND value5 = {int:val5}',
+						array('type' => 'dl_not_approved', 'val5' => $id)
+					);
+					$smcFunc['db_free_result']($request);
+				}
+			}
+			elseif(substr($what, 0, 16) == 'dladmin_category')
+			{
+				$id = substr($what, 16);
+				// update, but not on negative values :)
+				if($value>0)
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_dlmanager 
+						SET category = {int:cat} 
+						WHERE id = {int:item}',
+						array('cat' => $value, 'item' => $id)
+					);
+			}
+			elseif(substr($what, 0, 14) == 'dladmin_parent')
+			{
+				$id = substr($what, 14);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_dlmanager 
-					SET category = {int:cat} 
+					SET parent = {int:parent}
 					WHERE id = {int:item}',
-					array('cat' => $newcat, 'item' => $id)
+					array('parent' => $value, 'item' => $id)
 				);
-				$smcFunc['db_query']('', '
-					DELETE FROM {db_prefix}tp_variables 
-					WHERE type = {string:type} 
-					AND value5 = {int:val5}',
-					array('type' => 'dl_not_approved', 'val5' => $id)
-				);
-				$smcFunc['db_free_result']($request);
 			}
-		}
-		elseif(substr($what, 0, 16) == 'dl_admin_approve' && $value == 'ON')
-		{
-			$id = abs(substr($what, 16));
-			$request = $smcFunc['db_query']('', '
-				SELECT category FROM {db_prefix}tp_dlmanager 
-				WHERE id = {int:item}',
-				array('item' => $id)
-			);
-			if($smcFunc['db_num_rows']($request) > 0)
+			elseif(substr($what, 0, 15) == 'dladmin_subitem')
 			{
-				$row = $smcFunc['db_fetch_row']($request);
-				$newcat = abs($row[0]);
+				$id = substr($what, 15);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_dlmanager 
-					SET category = {int:cat} 
+					SET subitem = {int:sub}
 					WHERE id = {int:item}',
-					array('cat' => $newcat, 'item' => $id)
+					array('sub' => $value, 'item' => $id)
 				);
-				$smcFunc['db_query']('', '
-					DELETE FROM {db_prefix}tp_variables 
-					WHERE type = {string:type} 
-					AND value5 = {int:val5}',
-					array('type' => 'dl_not_approved', 'val5' => $id)
-				);
-				$smcFunc['db_free_result']($request);
 			}
-		}
-		elseif(substr($what, 0, 16) == 'dladmin_category')
-		{
-			$id = substr($what, 16);
-			// update, but not on negative values :)
-			if($value>0)
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
-					SET category = {int:cat} 
-					WHERE id = {int:item}',
-					array('cat' => $value, 'item' => $id)
-				);
-		}
-		elseif(substr($what, 0, 14) == 'dladmin_parent')
-		{
-			$id = substr($what, 14);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET parent = {int:parent}
-				WHERE id = {int:item}',
-				array('parent' => $value, 'item' => $id)
-			);
-		}
-		elseif(substr($what, 0, 15) == 'dladmin_subitem')
-		{
-			$id = substr($what, 15);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET subitem = {int:sub}
-				WHERE id = {int:item}',
-				array('sub' => $value, 'item' => $id)
-			);
-		}
-		elseif(substr($what, 0, 11) == 'tp_dlcatpos')
-		{
-			$id = substr($what, 11);
-			if(!empty($_POST['admineditcatval']))
+			elseif(substr($what, 0, 11) == 'tp_dlcatpos')
 			{
-				$myid = $_POST['admineditcatval'];
-				$go = 4;
-			}
-
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET downloads = {int:down}
-				WHERE id = {int:item}',
-				array('down' => $value, 'item' => $id)
-			);
-		}
-		elseif(substr($what, 0, 18) == 'dladmin_screenshot')
-		{
-			$id = substr($what, 18);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET screenshot = {string:ss} 
-				WHERE id = {int:item}',
-				array('ss' => $value, 'item' => $id)
-			);
-		}
-		elseif(substr($what, 0, 12) == 'dladmin_link')
-		{
-			$id = substr($what, 12);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET link = {string:link} 
-				WHERE id = {int:item}',
-				array('link' => $value, 'item' => $id)
-			);
-		}
-		elseif(substr($what, 0, 12) == 'dladmin_file' && !isset($new_upload))
-		{
-			$id = substr($what, 12);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET file = {string:file}
-				WHERE id = {int:item}',
-				array('file' => $value, 'item' => $id)
-			);
-			$myid = $id;
-			$go = 2;
-		}
-		elseif(substr($what, 0, 12) == 'dladmin_size' && !isset($new_upload))
-		{
-			$id = substr($what, 12);
-			// check the actual size
-			$name = $_POST['dladmin_file'.$id];
-			$value = filesize($boarddir.'/tp-downloads/'.$name);
-			if(!is_numeric($value))
-				$value = 0;
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET filesize = {int:size}
-				WHERE id = {int:item}',
-				array('size' => $value, 'item' => $id)
-			);
-		}
-		// from settings in DLmanager
-		elseif($what=='tp_dl_allowed_types')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_allowed_types')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_usescreenshot')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_usescreenshot')
-			);
-			$go = 1;
-		}
-		elseif(substr($what, 0, 20) == 'tp_dl_screenshotsize')
-		{
-			// which one
-			$who = substr($what, 20);
-			$result = $smcFunc['db_query']('', '
-				SELECT value FROM {db_prefix}tp_settings 
-				WHERE name = {string:name} LIMIT 1',
-				array('name' => 'dl_screenshotsizes')
-			);
-			$row = $smcFunc['db_fetch_assoc']($result);
-			$smcFunc['db_free_result']($result);
-			$all = explode(',', $row['value']);
-			$all[$who] = $value;
-			$newval = implode(',', $all);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $newval, 'name' => 'dl_screenshotsizes')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_showfeatured')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_showfeatured')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_wysiwyg')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name= {string:name}',
-				array('val' => $value, 'name' => 'dl_wysiwyg')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_showrecent')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_showlatest')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_showstats')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_showstats')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_showcategorytext')
-		{
-			$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_settings 
-			SET value = {string:val}
-			WHERE name = {string:name}',
-			array('val' => $value, 'name' => 'dl_showcategorylist')
-		);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_featured')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_featured')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_introtext')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val} 
-				WHERE name = {string:name}',
-				array('val' => $smcFunc['htmlspecialchars']($value, ENT_QUOTES), 'name' => 'dl_intotext')
-			);
-			$go = 1;
-		}
+				$id = substr($what, 11);
+				if(!empty($_POST['admineditcatval']))
+				{
+					$myid = $_POST['admineditcatval'];
+					$go = 4;
+				}
 	
-		elseif($what == 'tp_dluploadsize')
-		{
-			$smcFunc['db_query']('', '
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_dlmanager 
+					SET downloads = {int:down}
+					WHERE id = {int:item}',
+					array('down' => $value, 'item' => $id)
+				);
+			}
+			elseif(substr($what, 0, 18) == 'dladmin_screenshot')
+			{
+				$id = substr($what, 18);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_dlmanager 
+					SET screenshot = {string:ss} 
+					WHERE id = {int:item}',
+					array('ss' => $value, 'item' => $id)
+				);
+			}
+			elseif(substr($what, 0, 12) == 'dladmin_link')
+			{
+				$id = substr($what, 12);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_dlmanager 
+					SET link = {string:link} 
+					WHERE id = {int:item}',
+					array('link' => $value, 'item' => $id)
+				);
+			}
+			elseif(substr($what, 0, 12) == 'dladmin_file' && !isset($new_upload))
+			{
+				$id = substr($what, 12);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_dlmanager 
+					SET file = {string:file}
+					WHERE id = {int:item}',
+					array('file' => $value, 'item' => $id)
+				);
+				$myid = $id;
+				$go = 2;
+			}
+			elseif(substr($what, 0, 12) == 'dladmin_size' && !isset($new_upload))
+			{
+				$id = substr($what, 12);
+				// check the actual size
+				$name = $_POST['dladmin_file'.$id];
+				$value = filesize($boarddir.'/tp-downloads/'.$name);
+				if(!is_numeric($value))
+					$value = 0;
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_dlmanager 
+					SET filesize = {int:size}
+					WHERE id = {int:item}',
+					array('size' => $value, 'item' => $id)
+				);
+			}
+			// from settings in DLmanager
+			elseif($what=='tp_dl_allowed_types')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_allowed_types')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_usescreenshot')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_usescreenshot')
+				);
+				$go = 1;
+			}
+			elseif(substr($what, 0, 20) == 'tp_dl_screenshotsize')
+			{
+				// which one
+				$who = substr($what, 20);
+				$result = $smcFunc['db_query']('', '
+					SELECT value FROM {db_prefix}tp_settings 
+					WHERE name = {string:name} LIMIT 1',
+					array('name' => 'dl_screenshotsizes')
+				);
+				$row = $smcFunc['db_fetch_assoc']($result);
+				$smcFunc['db_free_result']($result);
+				$all = explode(',', $row['value']);
+				$all[$who] = $value;
+				$newval = implode(',', $all);
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $newval, 'name' => 'dl_screenshotsizes')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_showfeatured')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_showfeatured')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_wysiwyg')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name= {string:name}',
+					array('val' => $value, 'name' => 'dl_wysiwyg')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_showrecent')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_showlatest')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_showstats')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_showstats')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_showcategorytext')
+			{
+				$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_settings 
 				SET value = {string:val}
 				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_max_upload_size')
+				array('val' => $value, 'name' => 'dl_showcategorylist')
 			);
-			$go = 1;
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_featured')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_featured')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_introtext')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val} 
+					WHERE name = {string:name}',
+					array('val' => $smcFunc['htmlspecialchars']($value, ENT_QUOTES), 'name' => 'dl_intotext')
+				);
+				$go = 1;
+			}
+		
+			elseif($what == 'tp_dluploadsize')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_max_upload_size')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_approveonly')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_approve')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dlallowupload')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_allow_upload')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_fileprefix')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dl_fileprefix')
+				);
+				$go = 1;
+			}
+			elseif($what == 'tp_dltheme')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings 
+					SET value = {string:val}
+					WHERE name = {string:name}',
+					array('val' => $value, 'name' => 'dlmanager_theme')
+				);
+				$go = 1;
+			}
 		}
-		elseif($what == 'tp_dl_approveonly')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_approve')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dlallowupload')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_allow_upload')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dl_fileprefix')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_fileprefix')
-			);
-			$go = 1;
-		}
-		elseif($what == 'tp_dltheme')
-		{
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dlmanager_theme')
-			);
-			$go = 1;
-		}
-   }
-	// if we came from useredit screen..
-	if(isset($_POST['dl_useredit']))
-	   redirectexit('action=tpmod;dl=useredit'.$_POST['dl_useredit']);
-	
-	if(!empty($newgo))
-		$go = $newgo;
-	// guess not, admin screen then
-	if($go == 1)
-	   redirectexit('action=tpmod;dl=adminsettings');
-	elseif($go == 2)
-	   redirectexit('action=tpmod;dl=adminitem'.$myid);
-	elseif($go == 3)
-	   redirectexit('action=tpmod;dl=admineditcat'.$myid);
-	elseif($go == 4)
-	   redirectexit('action=tpmod;dl=admincat'.$myid);
-}
+		// if we came from useredit screen..
+		if(isset($_POST['dl_useredit']))
+		   redirectexit('action=tpmod;dl=useredit'.$_POST['dl_useredit']);
+		
+		if(!empty($newgo))
+			$go = $newgo;
+		// guess not, admin screen then
+		if($go == 1)
+			redirectexit('action=tpmod;dl=adminsettings');
+		elseif($go == 2)
+			redirectexit('action=tpmod;dl=adminitem'.$myid);
+		elseif($go == 3)
+			redirectexit('action=tpmod;dl=admineditcat'.$myid);
+		elseif($go == 4)
+			redirectexit('action=tpmod;dl=admincat'.$myid);
+	}
 	// ****************
 
 	TP_dlgeticons();
@@ -3061,7 +3064,7 @@ function TPortalDLAdmin()
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
-					'description' => html_entity_decode($row['description'], ENT_QUOTES. $context['character_set']),
+					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
 					'downloads' => $row['downloads'],
 					'sshot' => $row['screenshot'],
 					'link' => $row['link'],
@@ -3327,7 +3330,7 @@ function TPortalDLAdmin()
 				'file' => $row['file'],
 				'views' => $row['views'],
 				'authorID' => $row['author_id'],
-				'description' => html_entity_decode($row['description'],ENT_QUOTES, $context['character_set']),
+				'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
 				'filesize' => (substr($row['file'],14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
@@ -3582,7 +3585,7 @@ function dlupdatefilecount($category, $total = true)
 	$request = $smcFunc['db_query']('', '
 		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager 
 		WHERE category = {int:cat} 
-		AND type = {string:item}',
+		AND type = {string:type}',
 		array('cat' => $category, 'type' => 'dlitem')
 	);
 	$result = $smcFunc['db_fetch_row']($request);

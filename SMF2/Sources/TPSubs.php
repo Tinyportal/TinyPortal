@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPSubs.php																*
 *****************************************************************************
-* TP version: 1.0 RC1														*
+* TP version: 1.0 RC2														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -36,7 +36,7 @@ function TPsetupAdminAreas()
 	$request = $smcFunc['db_query']('', '
 		SELECT modulename, subquery, permissions, languages 
 		FROM {db_prefix}tp_modules 
-		WHERE active={int:active}',
+		WHERE active = {int:active}',
 		array(
 			'active' => 1
 		)
@@ -1270,9 +1270,7 @@ function tp_fetchpermissions($perms)
 			WHERE p.add_deny = {int:deny}
 			AND p.id_group IN (0, -1)
 			AND p.permission IN ({array_string:tag})',
-			array(
-				'deny' => 1, 'tag' => $perms,
-			)
+			array('deny' => 1, 'tag' => $perms)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -1292,9 +1290,7 @@ function tp_fetchpermissions($perms)
 			FROM {db_prefix}membergroups as m
 			WHERE m.min_posts = {int:minpost}
 			ORDER BY m.group_name ASC',
-			array(
-				'minpost' => -1
-			)
+			array('minpost' => -1)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{

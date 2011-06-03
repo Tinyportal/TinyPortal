@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPmodules.php																*
 *****************************************************************************
-* TP version: 1.0 RC1														*
+* TP version: 1.0 RC2														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -214,8 +214,8 @@ function TPmodules()
         	SELECT COUNT(var.value1)
         	FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
 			WHERE var.type = {string:type}
-			' . ((!$showall || $mylast==0) ? 'AND var.value4>'.$mylast : '') .'
-			AND art.id=var.value5',
+			' . ((!$showall || $mylast == 0) ? 'AND var.value4 > '.$mylast : '') .'
+			AND art.id = var.value5',
 			array('type' => 'article_comment')
 		);
 		$check = $smcFunc['db_fetch_row']($request);
@@ -522,7 +522,7 @@ function TPmodules()
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				if($row['type'] == 'bbc')
-					$row['body']=doUBBC(html_entity_decode($row['body'], $context['character_set']));
+					$row['body'] = doUBBC(html_entity_decode($row['body'], $context['character_set']));
 				elseif($row['type'] == 'php')
 					$row['body'] = '[PHP]';
 				else
@@ -627,7 +627,7 @@ function TPmodules()
 
 		$mystart = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
-		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'],array('date', 'id', 'subject'))) ? $_GET['sort'] : 'date';
+		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('date', 'id', 'subject'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;sa=myarticles;sort=' . $sort, $mystart, $allmy, 15);
 		
 		$context['TPortal']['subaction'] = 'myarticles';
@@ -1074,7 +1074,7 @@ function tp_profile_summary($memID)
 		WHERE author_id = {int:author}',
 		array('author' => $memID)
 	);
-	$result=$smcFunc['db_fetch_row']($request);
+	$result = $smcFunc['db_fetch_row']($request);
 	$max_art = $result[0];
 	$smcFunc['db_free_result']($request);
 
@@ -1158,7 +1158,7 @@ function tp_profile_articles($memID)
 			art.author_id as authorID, art.category, art.locked	
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{string:sorting} DESC LIMIT {int:start}, 10',
+		ORDER BY art.{raw:sorting} DESC LIMIT {int:start}, 10',
 		array('auth' => $memID, 'sort' => $sorting, 'start' => $start)
 	);
 	

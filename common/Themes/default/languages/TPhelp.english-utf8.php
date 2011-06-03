@@ -16,7 +16,7 @@ $txt['tphelp_plugins']= 'Plugins';
 $txt['tphelp_introduction_main']= '
 <h2 class="tphelp">&nbsp; Introduction To TinyPortal</h2>
 <p class="tphelp">
-<a href="http://tinyportal.co.uk" target="_blank">TinyPortal</a> (TP) is a magnificent modification of <a href=http://simplemachines.org" target="_blank">Simple Machines Forum</a> (SMF). It will turn your simple SMF forum into a fully operational portal. It will expand your SMF forum with Frontpage options, Articles, Panels filled with Blocks, and Plugins, with an on-going list of Module add-ons to choose from.</p>
+<a href="http://www.tinyportal.net" target="_blank">TinyPortal</a> (TP) is a magnificent modification of <a href=http://simplemachines.org" target="_blank">Simple Machines Forum</a> (SMF). It will turn your simple SMF forum into a fully operational portal. It will expand your SMF forum with Frontpage options, Articles, Panels filled with Blocks, and Plugins, with an on-going list of Module add-ons to choose from.</p>
 
 <p class="tphelp">Developed to work seamlessly with SMF, it uses many of its internal functions and is therefore more secure. There is no need for 2 admin interfaces, memberbases, or themes to manage as with other portals. Tiny Portal will operate on a single software system. The best way to put it: "TinyPortal" is an extension of the "Simple Machines Forum", not 2 different integrated softwares.</p>
 
@@ -152,5 +152,5 @@ Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, ge
 $txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
 The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
  Thank you Bloc for allowing the TP Team to continue your work.';
-$txt['tp-credits'] = 'Credits';
+$txt['tp-credits'] = 'TinyPortal 1.0 RC2 - Credits';
 ?>

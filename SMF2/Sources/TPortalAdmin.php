@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPortalAdmin.php															*
 *****************************************************************************
-* TP version: 1.0 RC1														*
+* TP version: 1.0 RC2														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -1476,9 +1476,9 @@ function do_articles()
 			SELECT DISTINCT var.id as id, var.value1 as name, var.value2 as parent 
 			FROM {db_prefix}tp_variables AS var
 			WHERE var.type = {string:type}
-			{string:whereval}
+			'. isset($where) ? 'AND var.value2 = {int:val2}' : ''.'
 			ORDER BY parent, id DESC',
-			array('type' => 'category', 'whereval' => isset($where) ? 'AND var.value2=' . $where : '')
+			array('type' => 'category', 'val2' => $where)
 		);
 		
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1543,7 +1543,7 @@ function do_articles()
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE art.approved = {int:approved}
-			ORDER BY art.{string:col} {string:sort}
+			ORDER BY art.{raw:col} {string:sort}
 			LIMIT {int:start}, 15',
 			array(
 				'approved' => 0,

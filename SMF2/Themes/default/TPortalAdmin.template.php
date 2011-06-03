@@ -226,7 +226,7 @@ function template_news()
 	<div class="windowbg">
 		<span class="topslice"><span></span></span>
 		<div style="padding: 1em; text-align: center;">
-			Your TP installation is now updated to the latest version: v1.0 Release Candidate 1.1.
+			Future news and updates will be placed here as time permits. Thanks!
 		</div>
 		<span class="botslice"><span></span></span>
 	</div>
