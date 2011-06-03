@@ -3061,7 +3061,7 @@ function TPortalDLAdmin()
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
-					'description' => html_entity_decode($row['description'], ENT_QUOTES. $context['character_set']),
+					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
 					'downloads' => $row['downloads'],
 					'sshot' => $row['screenshot'],
 					'link' => $row['link'],
