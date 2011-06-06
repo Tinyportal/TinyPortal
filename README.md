@@ -1,4 +1,4 @@
-[TinyPortal](http://www.tinyportal.co.uk/) - Portal Mod for SMF
+[TinyPortal](http://www.tinyportal.net/) - Portal Mod for SMF
 ==================================================
 
 What is TinyPortal?
@@ -17,11 +17,11 @@ What you need to install TinyPortal
 SMF version must be 1.1.x or SMF2.x.
 2. Zip files are provided for install both on the 
 [Simple Machines Site](http://custom.simplemachines.org/mods/index.php?mod=97) and the 
-[TinyPortal Site](http://www.tinyportal.co.uk/index.php?action=tpmod;dl=cat61).
+[TinyPortal Site](http://www.tinyportal.net/index.php?action=tpmod;dl=cat61).
 
 
 Questions?
 ----------
 
 If you have any questions, please feel free to ask on the
-[TinyPortal Support forum](http://www.tinyportal.co.uk)
+[TinyPortal Support forum](http://www.tinyportal.net)
