@@ -654,8 +654,8 @@ function TPortalDLManager()
 		// fetch the categories, the number of files
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon, a.link AS shortname, a.description AS description,
-				a.name AS name,a.id AS id,a.parent AS parent,
-	  			if (a.id = b.category, count(*), 0) AS files,b.category AS subchild
+				a.name AS name, a.id AS id, a.parent AS parent,
+	  			if (a.id = b.category, count(*), 0) AS files, b.category AS subchild
 			FROM ({db_prefix}tp_dlmanager AS a)
 			LEFT JOIN {db_prefix}tp_dlmanager AS b ON (a.id = b.category)
 			WHERE a.type = {string:type}
@@ -2776,11 +2776,13 @@ function TPortalDLAdmin()
 			}
 			elseif($what == 'tp_dl_introtext')
 			{
+				if ($context['TPortal']['dl_wysiwyg'] == 'html')
+					$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_settings 
 					SET value = {string:val} 
 					WHERE name = {string:name}',
-					array('val' => $smcFunc['htmlspecialchars']($value, ENT_QUOTES), 'name' => 'dl_intotext')
+					array('val' => trim($value), 'name' => 'dl_introtext')
 				);
 				$go = 1;
 			}

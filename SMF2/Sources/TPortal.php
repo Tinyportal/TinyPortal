@@ -329,6 +329,10 @@ function setupTPsettings()
 		$smcFunc['db_free_result']($request);
 	}
 	
+	// Download intro text needs to be checked if BBC or HTML
+	if ($context['TPortal']['dl_wysiwyg'] != 'bbc')
+		$context['TPortal']['dl_introtext'] = html_entity_decode($context['TPortal']['dl_introtext'], ENT_QUOTES, $context['character_set']);
+		
 	// setup the userbox settings
 	$userbox = explode(',', $context['TPortal']['userbox_options']);
 	foreach($userbox as $u => $val)
