@@ -1097,7 +1097,7 @@ function addDefaults()
 				'value4' => '',
 				'value5' => -2,
 				'subtype' => '',
-				'value7' => '',
+				'value7' => 'catlayout=1|layout=1',
 				'value8' => '',
 				'subtype2' => 0,
 				'value9' => '',
@@ -1110,7 +1110,7 @@ function addDefaults()
 				'value4' => '',
 				'value5' => -2,
 				'subtype' => '',
-				'value7' => '',
+				'value7' => 'catlayout=1|layout=1',
 				'value8' => '',
 				'subtype2' => 0,
 				'value9' => '',
@@ -1130,7 +1130,7 @@ function addDefaults()
 			),
 		);
 		
-		$smcFunc['db_insert']('IGNORE',
+		$smcFunc['db_insert']('ignore',
 			'{db_prefix}tp_variables',
 			array(
 				'value1' => 'string',

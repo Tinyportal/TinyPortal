@@ -1476,16 +1476,17 @@ function do_articles()
 			SELECT DISTINCT var.id as id, var.value1 as name, var.value2 as parent 
 			FROM {db_prefix}tp_variables AS var
 			WHERE var.type = {string:type}
-			'. isset($where) ? 'AND var.value2 = {int:val2}' : ''.'
+			{string:whereval}
 			ORDER BY parent, id DESC',
-			array('type' => 'category', 'val2' => $where)
+			array('type' => 'category', 'whereval' => isset($where) ? 'AND var.value2 = ' . $where : '')
 		);
 		
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$context['TPortal']['basecats'] = isset($where) ? array($where) : array('0', '9999');
 			$cats = array();
-			$context['TPortal']['cats'] = array(); $sorted=array();
+			$context['TPortal']['cats'] = array(); 
+			$sorted = array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
@@ -1520,7 +1521,7 @@ function do_articles()
 			SELECT id, approved 
 			FROM {db_prefix}tp_articles 
 			WHERE FIND_IN_SET(id, {array_int:ids})',
-			array('ids' => implode(',', $ids))
+			array('ids' => $ids)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -1528,7 +1529,7 @@ function do_articles()
 			{
 				
 			}
-			$smcFunc['db_free_result']($request2);
+			$smcFunc['db_free_result']($request);
 		}
 
 		// check if we have any start values
@@ -1543,7 +1544,7 @@ function do_articles()
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE art.approved = {int:approved}
-			ORDER BY art.{raw:col} {string:sort}
+			ORDER BY art.{raw:col} {raw:sort}
 			LIMIT {int:start}, 15',
 			array(
 				'approved' => 0,
@@ -1660,9 +1661,9 @@ function do_articles()
 		$request = $smcFunc['db_query']('', '
 			SELECT	art.category as id, COUNT(art.id) as files 
 			FROM {db_prefix}tp_articles as art
-			WHERE art.category IN ({string:cat})
+			WHERE art.category IN ({array_int:cat})
 			GROUP BY art.category',
-			array('cat' => implode(',', $cats))
+			array('cat' => $cats)
 		);
 		
 		$context['TPortal']['cats_count'] = array();
@@ -3054,11 +3055,11 @@ function do_postchecks()
 				$request = $smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles 
 					SET approved = {int:approved}, category = {int:cat} 
-					WHERE id IN (array_int:artid)',
+					WHERE id IN ({array_int:artid})',
 					array(
 						'approved' => 1,
 						'cat' => !empty($newcategory) ? $newcategory : $category,
-						'artid' => implode(',' ,$ccats),
+						'artid' => $ccats,
 					)
 				);
 				$request = $smcFunc['db_query']('', '

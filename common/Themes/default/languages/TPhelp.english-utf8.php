@@ -144,7 +144,7 @@ Bjoern "Bloc" Kristiansen
 Brad "IchBin" Grow
 <br /><br />
 <h4>TP Team</h4>
-Agridoc, Crip, Freddy888, Ianedres, Ken, Lesmond, lurkalot, Renegd98, and ZarPrime.
+Agridoc, Crip, Freddy, Ianedres, Ken, Lesmond, lurkalot, Renegd98, WillyP, and ZarPrime.
 <br /><br />
 <h4>TP Friends</h4>
 Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, gerrymo, JPDeni, Max, Maya, Moocat, nokonium, PhilH, Rasyr, Ray, RebelRose, redone, StormLrd, Thurnok, Tuxie, Xarcell, and Zetan.';
