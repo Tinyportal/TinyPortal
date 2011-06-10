@@ -56,7 +56,7 @@ function template_tp_articles()
 			foreach($context['TPortal']['profile_articles'] as $art){
 				echo '
 			<tr class="windowbg2">
-				<td><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['off']==1 ? '<i>' : '' , htmlspecialchars_decode($art['subject']), $art['off']==1 ? '</i>' : '' , $art['approved']==0 ? ')' : '' ,  '</td>
+				<td><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['off']==1 ? '<i>' : '' , htmlspecialchars_decode($art['subject'], ENT_QUOTES, $context['characer_set']), $art['off']==1 ? '</i>' : '' , $art['approved']==0 ? ')' : '' ,  '</td>
 				<td align="center" class="smalltext" nowrap="nowrap">',$art['date'],'</td>
 				<td align="center">',$art['views'],'</td>
 				<td nowrap="nowrap">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ') </td>
@@ -148,7 +148,7 @@ if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['
 	foreach($context['TPortal']['profile_uploads'] as $art){
 		echo '
 			<tr class="windowbg2">
-				<td><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , htmlspecialchars_decode($art['name']), $art['approved']==0 ? ')' : '' ,  '</td>
+				<td><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , htmlspecialchars_decode($art['name'], ENT_QUOTES, $context['characer_set']), $art['approved']==0 ? ')' : '' ,  '</td>
 				<td align="center" class="smalltext" nowrap="nowrap">',$art['created'],'</td>
 				<td align="center">',$art['views'],'</td>
 				<td nowrap="nowrap">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ') </td>

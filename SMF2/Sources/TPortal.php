@@ -1470,7 +1470,7 @@ function doTPfrontpage()
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
 				WHERE t.id_board = b.id_board
 				AND t.id_board IN({string:board})
-				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {string:questnews}' : '') . '
+				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {string:guestnews}' : '') . '
 				ORDER BY t.id_first_msg DESC
 				LIMIT {int:max}',
 				array(

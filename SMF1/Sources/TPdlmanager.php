@@ -219,7 +219,7 @@ function TPortalDLManager()
 				$acc = '';
 			$request =tp_query("INSERT INTO " . $tp_prefix . "dlmanager
 						(name, description, icon, category, type, downloads, views, file, created, last_access, filesize, parent, access, link,authorID,screenshot,rating,voters,subitem )
-			VALUES ('". $title . "', '". $func['htmlspecialchars']($text,ENT_QUOTES)."', '".$icon."' , ".$category.", 'dlitem', 0, 1, '".$name."', ".$now.", ".$now.", ".$dlfilesize.", 0, '', '', ".$context['user']['id'].", '".$screenshot."','','',0)", __FILE__, __LINE__);
+			VALUES ('". $title . "', '". $func['htmlspecialchars']($text, ENT_QUOTES)."', '".$icon."' , ".$category.", 'dlitem', 0, 1, '".$name."', ".$now.", ".$now.", ".$dlfilesize.", 0, '', '', ".$context['user']['id'].", '".$screenshot."','','',0)", __FILE__, __LINE__);
 			$newitem = tpdb_insert_id($request);
 			
 			// record the event

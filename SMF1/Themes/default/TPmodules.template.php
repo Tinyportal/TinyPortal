@@ -78,7 +78,7 @@ function template_main()
 							<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
 				{
-					TP_bbcbox('TPadmin3','tp_article_body'. $mg['id'], htmlspecialchars_decode( $mg['body']));
+					TP_bbcbox('TPadmin3','tp_article_body'. $mg['id'], htmlspecialchars_decode( $mg['body'], ENT_QUOTES, $context['characer_set']));
 				}
 				else
 					echo $txt['tp-importarticle'] , '</td><td><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
@@ -104,7 +104,7 @@ function template_main()
 							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
 				{
-					TP_bbcbox('TPadmin3','tp_article_intro'. $mg['id'], htmlspecialchars_decode( $mg['intro']));
+					TP_bbcbox('TPadmin3','tp_article_intro'. $mg['id'], htmlspecialchars_decode( $mg['intro'], ENT_QUOTES, $context['characer_set']));
 				}
 	
 				echo '
@@ -132,11 +132,11 @@ function template_main()
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
-					TP_bbcbox('TPadmin3','blockbody' .$context['TPortal']['blockedit']['id'], htmlspecialchars($context['TPortal']['blockedit']['body']));
+					TP_bbcbox('TPadmin3','blockbody' .$context['TPortal']['blockedit']['id'], htmlspecialchars($context['TPortal']['blockedit']['body'], ENT_QUOTES, $context['characer_set']));
 				}
 				elseif($context['TPortal']['blockedit']['type']=='10')
 				{
-					echo $txt['tp-body'].' <br /><textarea style="width: 94%;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" rows=15 cols=40 wrap="auto">' .htmlspecialchars($context['TPortal']['blockedit']['body']). '</textarea>';
+					echo $txt['tp-body'].' <br /><textarea style="width: 94%;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" rows=15 cols=40 wrap="auto">' .htmlspecialchars($context['TPortal']['blockedit']['body'], ENT_QUOTES, $context['characer_set']). '</textarea>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='12'){
 					// check to see if it is numeric
@@ -373,10 +373,10 @@ function template_main()
 					
 					if($art['off']==0 && $art['approved']==1)
 						echo '
-						<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>';
+						<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject'], ENT_QUOTES, $context['characer_set']) . '</a>';
 					else
 						echo '
-					' . html_entity_decode($art['subject']);
+					' . html_entity_decode($art['subject'], ENT_QUOTES, $context['characer_set']);
 
 					echo '
 					</div>';
