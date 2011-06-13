@@ -3079,11 +3079,11 @@ function tp_addcopy($buffer)
 		return $buffer;
 
 	$find = array(
-		', Simple Machines LLC</a>',
+		'Simple Machines</a>',
 		'class="copywrite"',
 	);
 	$replace = array(
-		', Simple Machines LLC</a><br />' . $string,
+		'Simple Machines</a><br />' . $string,
 		'class="copywrite" style="line-height: 1;"',
 	);
 
