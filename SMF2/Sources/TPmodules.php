@@ -1158,7 +1158,7 @@ function tp_profile_articles($memID)
 			art.author_id as authorID, art.category, art.locked	
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sorting} DESC LIMIT {int:start}, 10',
+		ORDER BY art.{raw:sort} DESC LIMIT {int:start}, 10',
 		array('auth' => $memID, 'sort' => $sorting, 'start' => $start)
 	);
 	
@@ -1291,7 +1291,9 @@ function tp_profile_download($memID)
 	// get all not approved uploads
 	$request = $smcFunc['db_query']('', '
 		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
-		WHERE author_id = {int:auth} AND type = {string:type} AND category < 0',
+		WHERE author_id = {int:auth} 
+		AND type = {string:type} 
+		AND category < 0',
 		array('auth' => $memID, 'type' => 'dlitem')
 	);
 	$result = $smcFunc['db_fetch_row']($request);
