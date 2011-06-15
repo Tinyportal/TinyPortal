@@ -18,11 +18,11 @@ function TPcheckAdminAreas()
 	global $db_prefix, $context, $scripturl, $txt, $settings;
 
 	TPcollectPermissions();
-	if(sizeof($context['TPortal']['permissonlist'])>0)
+	if(sizeof($context['TPortal']['permissonlist']) > 0)
 	{
 		foreach($context['TPortal']['permissonlist'] as $prm)
 		{
-			if(sizeof($prm['perms'])>0)
+			if(sizeof($prm['perms']) > 0)
 			{
 				foreach(array_keys($prm['perms']) as $k => $val)
 				{
@@ -34,7 +34,7 @@ function TPcheckAdminAreas()
 			}
 		}
 	}
-    return $context['TPortal']['allow_admin'];
+    return $context['TPortal']['allow_admin'] = false;
 }
 
 function TPsetupAdminAreas()

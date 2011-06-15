@@ -522,11 +522,11 @@ function TPmodules()
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				if($row['type'] == 'bbc')
-					$row['body'] = doUBBC(html_entity_decode($row['body'], $context['character_set']));
+					$row['body'] = doUBBC(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
 				elseif($row['type'] == 'php')
 					$row['body'] = '[PHP]';
 				else
-					$row['body'] = strip_tags(html_entity_decode($row['body'], $context['character_set']));
+					$row['body'] = strip_tags(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
 
 				$row['subject'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
 				$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
@@ -578,12 +578,12 @@ function TPmodules()
 					'hour' => date("G",$row['date']),
 					'minute' => date("i",$row['date']),
 				),
-				'body' => html_entity_decode($row['body'], $context['character_set']),
-				'intro' => html_entity_decode($row['intro'], $context['character_set']),
+				'body' => html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']),
+				'intro' => html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']),
 				'useintro' => $row['useintro'],
 				'category' => $row['category'],
 				'frontpage' => $row['frontpage'],
-				'subject' => html_entity_decode($row['subject'], $context['character_set']),
+				'subject' => html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']),
 				'authorID' => $row['author_id'],
 				'author' => $row['author'],
 				'frame' => !empty($row['frame']) ? $row['frame'] : 'theme',
@@ -701,7 +701,7 @@ function TPmodules()
 		$artbb = $_POST['tp_article_body'];
 		$artu = isset($_POST['tp_article_useintro']) ? $_POST['tp_article_useintro'] : 0;
 		$arti = isset($_POST['tp_article_intro']) ? $_POST['tp_article_intro'] : '';
-		$artc = $_POST['tp_article_category'];
+		$artc = !empty($_POST['tp_article_category']) ? $_POST['tp_article_category'] : 0;
 		$artf = $_POST['tp_article_frontpage'];
 		$artframe = 'theme';
 		$artoptions = 'date,title,author,linktree,top,cblock,rblock,lblock,tblock,lbblock,views,rating,ratingallow,avatar';

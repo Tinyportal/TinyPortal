@@ -306,7 +306,7 @@ function tpshout_admin()
 			elseif(substr($what,0,16)=='tp_shoutbox_item')
 			{
 				$val=substr($what,16);
-				 tp_query("UPDATE " . $tp_prefix . "shoutbox SET value1='". htmlspecialchars($value, ENT_QUOTES, $context['characer_set']). "' WHERE id=" .$val, __FILE__, __LINE__);
+				 tp_query("UPDATE " . $tp_prefix . "shoutbox SET value1='". htmlspecialchars($value, ENT_QUOTES, $context['character_set']). "' WHERE id=" .$val, __FILE__, __LINE__);
 				$go=2;
 			}
 			elseif(substr($what,0,18)=='tp_shoutbox_remove')
@@ -387,7 +387,7 @@ function tpshout_admin()
 		{
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],
-				'body' => html_entity_decode($row['value1'], ENT_QUOTES, $context['characer_set']),
+				'body' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
 				'poster' => $row['value3'],
 				'timestamp' => $row['value2'],
 				'time' => timeformat($row['value2']),
@@ -498,7 +498,7 @@ function tpshout_fetch($render = true, $limit=1, $swap=false)
 		while($row = tpdb_fetch_assoc($request))
 		{
             $row['value1'] = stripslashes($row['value1']);
-			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar'], ENT_QUOTES, $context['characer_set']) . '" alt="&nbsp;" />');
+			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar'], ENT_QUOTES, $context['character_set']) . '" alt="&nbsp;" />');
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode("", $ns);

@@ -131,7 +131,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext');
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','tp_dl_introtext', htmlspecialchars_decode($context['TPortal']['dl_introtext'], ENT_QUOTES, $context['characer_set']));
+					TP_bbcbox('dl_admin','tp_dl_introtext', htmlspecialchars_decode($context['TPortal']['dl_introtext'], ENT_QUOTES));
 				else
 					echo '<textarea name="tp_dl_introtext" style="width: 99%; height: 300px;">'.$context['TPortal']['dl_introtext'].'</textarea>';
 			
@@ -359,7 +359,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text');
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], htmlspecialchars_decode($cat['description'], ENT_QUOTES, $context['characer_set']));
+					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], htmlspecialchars_decode($cat['description'], ENT_QUOTES));
 				else
 					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'.$cat['description'].'</textarea>';
 
@@ -615,11 +615,11 @@ function template_main()
 					<br />';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES, $context['characer_set']), true,'qup_dladmin_text');
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES, $context['character_set']), true,'qup_dladmin_text');
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES, $context['characer_set']));
+					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES, $context['character_set']));
 				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'], ENT_QUOTES, $context['characer_set']).'</textarea>';
+					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'], ENT_QUOTES, $context['character_set']).'</textarea>';
 
 			
 				TPsshowgtags('dladmin_cattags', 'dladmin_cattags', $cat['id']);

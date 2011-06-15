@@ -44,7 +44,7 @@ for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400) //January 4, 1970 was a 
 
 list($month, $year, $month_name, $weekday) = explode(',', gmstrftime('%m,%Y,%B,%w', $first_of_month));
 $weekday = ($weekday + 7 - $first_day) % 7; //adjust for $first_day
-$title   = $smcFunc['htmlentities'](ucfirst($month_name)).' '.$year;  //note that some locales don't capitalize month and day names
+$title   = $smcFunc['htmlspecialchars'](ucfirst($month_name)).' '.$year;  //note that some locales don't capitalize month and day names
 
 //Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
 @list($p, $pl) = each($pn);

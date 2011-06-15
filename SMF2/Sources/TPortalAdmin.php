@@ -1510,9 +1510,10 @@ function do_articles()
 			WHERE type = {string:type}',
 			array('type' => 'art_not_approved')
 		);
+		$ids = array();
 		if($smcFunc['db_num_rows']($request2) > 0)
 		{
-			$ids = array();
+			
 			while($row = $smcFunc['db_fetch_assoc']($request2))
 				$ids[$row['id']] = $row['value5'];
 			$smcFunc['db_free_result']($request2);
@@ -1520,7 +1521,7 @@ function do_articles()
 		$request = $smcFunc['db_query']('', '
 			SELECT id, approved 
 			FROM {db_prefix}tp_articles 
-			WHERE FIND_IN_SET(id, {array_int:ids})',
+			WHERE FIND_IN_SET(id, "{array_int:ids}")',
 			array('ids' => $ids)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -3257,9 +3258,7 @@ function do_postchecks()
 						'editgroups' => 'string',
 					),
 					array(
-						$type, 'theme', $title, 
-						$smcFunc['htmlspecialchars']($body, ENT_QUOTES), 
-						'-1,0,1', $panel, 0, 1, 1, 0, 0, '', 'actio=allpages', '',
+						$type, 'theme', $title, $body, '-1,0,1', $panel, 0, 1, 1, 0, 0, '', 'actio=allpages', '',
 					),
 					array('id')
 				);

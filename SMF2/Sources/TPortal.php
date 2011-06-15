@@ -247,8 +247,8 @@ function TP_loadTheme()
 		else
 			$request =  $smcFunc['db_query']('', '
 				SELECT id_theme FROM {db_prefix}tp_articles 
-				WHERE shortname = {int:page}',
-				array('page' => $pag)
+				WHERE shortname = {string:short}',
+				array('short' => $pag)
 			);
 
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1982,8 +1982,10 @@ function doTPfrontpage()
 			AND art.category > 0
 			AND art.approved = 1'
 		);
+		if (!$context['TPortal']['blockarticle_titles']){
+			$context['TPortal']['blockarticle_titles'] = array();
+		}
 
-		$context['TPortal']['blockarticle_titles'] = array();
 		if ($smcFunc['db_num_rows']($request) > 0)
 		{
 			while($row = $smcFunc['db_fetch_assoc']($request))
