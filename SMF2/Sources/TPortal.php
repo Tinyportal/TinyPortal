@@ -1469,13 +1469,12 @@ function doTPfrontpage()
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
 				WHERE t.id_board = b.id_board
-				AND t.id_board IN({string:board})
-				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {string:guestnews}' : '') . '
+				AND t.id_board IN({raw:board})
+				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
 				LIMIT {int:max}',
 				array(
 					'board' => $context['TPortal']['SSI_board'],
-					'guestnews' => $user_info['query_see_board'],
 					'max' => $totalmax)
 			);
 		else
@@ -1483,12 +1482,11 @@ function doTPfrontpage()
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
 				WHERE t.id_board = b.id_board
-				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : '{string:topics}') .')
-				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {string:guestnews}' : '') . '
+				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? 0 : '{raw:topics}') .')
+				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC',
 				array(
-					'topics' => $context['TPortal']['frontpage_topics'],
-					'guestnews' => $user_info['query_see_board']
+					'topics' => $context['TPortal']['frontpage_topics']
 				)
 			);
 
