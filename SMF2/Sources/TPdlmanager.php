@@ -878,9 +878,7 @@ function TPortalDLManager()
 					// if a guest, make them login/register
 					if($context['user']['is_guest'])
 					{
-						$context['description']=$txt['tp-needtoregister'];
-						loadtemplate('Login');
-						$context['sub_template'] = 'login';
+						redirectexit('action=login');;
 					}
 					else
 						redirectexit('action=tpmod;dl');

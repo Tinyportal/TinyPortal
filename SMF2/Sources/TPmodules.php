@@ -228,7 +228,7 @@ function TPmodules()
 			FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
 			LEFT JOIN {db_prefix}members as memb ON (art.author_id = memb.ID_MEMBER)
 			LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
-			LEFT JOIN {db_prefix}tp_data as log ON (log.value = art.id AND log.type = 1 AND log.ID_MEMBER = $ID_MEMBER)
+			LEFT JOIN {db_prefix}tp_data as log ON (log.value = art.id AND log.type = 1 AND log.ID_MEMBER = '.$context['user']['id'].')
 			WHERE var.type = {string:type}
 			AND art.id = var.value5
 			' . ((!$showall || $mylast == 0 ) ? 'AND var.value4 > {int:last}' : '') .'
@@ -1099,7 +1099,7 @@ function tp_profile_summary($memID)
 // articles and comments made by the member
 function tp_profile_articles($memID)
 {
-	global $txt, $user_profile, $context, $db_prefix, $settings, $scripturl;
+	global $txt, $user_profile, $context, $db_prefix, $settings, $scripturl, $smcFunc;
 
 	$context['page_title'] = $txt['articlesprofile'];
 

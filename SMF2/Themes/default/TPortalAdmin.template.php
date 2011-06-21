@@ -3423,10 +3423,12 @@ function template_blocks()
 						<td>', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
 							<input name="pos' .$lblock['id']. '" type="text" size="2" value="' .($n*10). '">
 							<a name="block' .$lblock['id']. '"></a>';
-					echo '<input class="tpbut" title="'.$txt['tp-sortdown'].'" type="image" name="addpos' .$lblock['id']. '" src="' .$settings['tp_images_url']. '/TPsort_down.gif" value="' .(($n*10)+11). '" onClick="javascript: submit();">';
+					echo '
+						<a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.gif" value="' .(($n*10)+11). '" /></a>';
 
 					if($n>0)
-						echo ' <input class="tpbut" title="'.$txt['tp-sortup'].'" type="image" name="subpos' .$lblock['id']. '" src="' .$settings['tp_images_url']. '/TPsort_up.gif" value="' .(($n*10)-11). '" onClick="javascript: submit();">';
+						echo '
+						<a class="tpbut" title="'.$txt['tp-sortup'].'"  href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';subpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_up.gif" value="' .(($n*10)-11). '" /></a>';
 
 					echo '
 						</td>
