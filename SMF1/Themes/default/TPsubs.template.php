@@ -89,7 +89,7 @@ function TPortal_recentbox()
 		<ul class="middletext" style="line-height: 1.5em; ' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
 		foreach($what as $wi => $w){
 			echo '
-			<li style="margin: 0; list-style: none; line-height: 1.5em; padding: 4px 0;"><a href="'.$w['href'].'" title="' . $w['subject'] . '">'.$w['short_subject'].'</a> ', $txt['by'], ' ', $w['poster']['link'];
+			<li style="margin: 0; list-style: none; line-height: 1.5em; padding: 4px 0;"><a href="'.$w['href'].'" title="' . $w['subject'] . '">'.$w['short_subject'].'</a> ', $txt[525], ' ', $w['poster']['link'];
 			if(!$w['new'])
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
 
@@ -110,7 +110,7 @@ function TPortal_recentbox()
 			echo '
 			<li>
 				<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($w['poster']['avatar']) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $w['poster']['avatar'] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a><br />
-				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b><br />';
+				 ', $txt[525], ' <b>', $w['poster']['link'],'</b><br />';
 			if(!$w['new'])
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
 

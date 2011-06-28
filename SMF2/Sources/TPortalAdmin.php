@@ -119,7 +119,7 @@ function TPortalAdmin()
 		}
 		do_subaction($tpsub);
 	}
-	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']))
+	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos']))
 	{
 		$context['TPortal']['subaction'] = $tpsub = 'blocks';
 		do_blocks($tpsub);
@@ -373,6 +373,30 @@ function do_blocks()
 			$smcFunc['db_free_result']($request);
 		}
 	}
+	// Move the block up or down in the panel list of blocks
+	if(isset($_GET['addpos']))
+	{
+		checksession('get');
+		$what = is_numeric($_GET['addpos']) ? $_GET['addpos'] : 0;
+		$request = $smcFunc['db_query']('', '
+			UPDATE {db_prefix}tp_blocks 
+			SET pos = (pos + 11) 
+			WHERE id = {int:blockid}',
+			array('blockid' => $what)
+		);
+		redirectexit('action=tpadmin;sa=blocks');
+	}
+	if(isset($_GET['subpos']))
+	{
+		checksession('get');
+		$what = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;	
+		$request = $smcFunc['db_query']('', '
+			UPDATE {db_prefix}tp_blocks SET pos = (pos - 11) 
+			WHERE id = {int:blockid}',
+			array('blockid' => $what)
+		);
+		redirectexit('action=tpadmin;sa=blocks');
+	}	
 	// change the on/off
 	if(isset($_GET['blockon']))
 	{
