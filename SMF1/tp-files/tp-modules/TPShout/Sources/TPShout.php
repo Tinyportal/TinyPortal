@@ -824,20 +824,20 @@ function shoutbox_update()
  	);
 	$updates=0;
 	foreach($settings_array as $what => $val){
-		$sjekk=tp_query("SELECT * FROM " . $tp_prefix . "settings WHERE name='$what'");
+		$sjekk=tp_query("SELECT * FROM " . $tp_prefix . "settings WHERE name='$what'", __FILE__, __LINE__);
 		if(tpdb_num_rows($sjekk)<1){
-			tp_query("INSERT INTO " . $tp_prefix . "settings (name,value) VALUES ( '$what', '$val')");
+			tp_query("INSERT INTO " . $tp_prefix . "settings (name,value) VALUES ( '$what', '$val')", __FILE__, __LINE__);
 		}
 		else
 		{
 			if($what == 'shoutbox_version')
-				tp_query("UPDATE " . $tp_prefix . "settings SET value='$val' WHERE name='$what'");
+				tp_query("UPDATE " . $tp_prefix . "settings SET value='$val' WHERE name='$what'", __FILE__, __LINE__);
 				
 			tpdb_free_result($sjekk);
 		}
 	}
 	// update profile section
-	tp_query("UPDATE " . $tp_prefix . "modules SET profile='tpshout_profile' WHERE modulename LIKE 'TPshout'");
+	tp_query("UPDATE " . $tp_prefix . "modules SET profile='tpshout_profile' WHERE modulename LIKE 'TPshout'", __FILE__, __LINE__);
 
 	return;
 }
