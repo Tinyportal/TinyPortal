@@ -2789,7 +2789,7 @@ function do_postchecks()
 				SET value = {string:val} 
 				WHERE name = {string:name} LIMIT 1',
 				array(
-					'val' => $catname,
+					'val' => $catnames,
 					'name' => 'cat_list',
 				)
 			);
