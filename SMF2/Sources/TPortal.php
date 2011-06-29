@@ -1631,7 +1631,7 @@ function doTPfrontpage()
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
 				WHERE t.id_board = b.id_board
 				AND t.id_first_msg = m.id_msg
-				AND t.id_board IN({string:board})
+				AND t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC
 				LIMIT {int:max}',

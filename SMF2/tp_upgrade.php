@@ -313,7 +313,7 @@ foreach ($tables as $table => $col) {
             );
         }
         foreach ($col['columns'] as $column) {
-        	$smcFunc['db_add_column']('{db_prefix}' . $table, $column);
+        	$smcFunc['db_add_column']($smfprefix . $table, $column);
             
             // If utf8 is set alter column to be utf8 if text or tinytext.
             if ($utf8 && in_array($column['type'], array('text', 'tinytext', 'longtext'))) {

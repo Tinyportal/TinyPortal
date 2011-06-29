@@ -2752,7 +2752,7 @@ function do_postchecks()
 					$allowed = "/[^a-zA-Z0-9_]/";
 					$value = preg_replace($allowed, '', $value); 
 					if(!empty($value))
-						$smcFunc['db_query']('REPLACE', 
+						$smcFunc['db_insert']('REPLACE', 
 							'{db_prefix}tp_variables',
 							array('value1' => 'string', 'type' => 'string'),
 							array($value,'globaltag'),
@@ -2943,7 +2943,7 @@ function do_postchecks()
 					WHERE id IN ({array_int:artid})',
 					array(
 						'cat' => !empty($newcategory) ? $newcategory : $category,
-						'artid' => implode(',' ,$ccats),
+						'artid' => $ccats,
 					)
 				);
 			}
@@ -3093,7 +3093,7 @@ function do_postchecks()
 					AND value5 IN ({array_int:val5})',
 					array(
 						'type' => 'art_not_approved',
-						'val5' => implode(',' ,$ccats),
+						'val5' => $ccats,
 					)
 				);
 			}

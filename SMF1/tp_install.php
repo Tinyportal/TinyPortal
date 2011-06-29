@@ -77,7 +77,7 @@ else
 		$convertmodule=true;
 	if($row['value']<1090)
 		$convertaccess=true;
-	itpdb_free_result($request);
+	itpdb_free_result($result);
 }
 
 $settings_array=array(
