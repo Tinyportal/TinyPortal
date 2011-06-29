@@ -29,12 +29,13 @@ function TPcheckAdminAreas()
 					if(!empty($context['TPortal']['adminlist'][$val]) && allowedTo($val))
 					{
 						$context['allow_admin'] = true;
+						return true;
 					}
 				}
 			}
 		}
 	}
-    return $context['TPortal']['allow_admin'] = false;
+    return false;
 }
 
 function TPsetupAdminAreas()

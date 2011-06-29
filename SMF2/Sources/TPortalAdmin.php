@@ -1654,7 +1654,7 @@ function do_articles()
 			WHERE subtype2 = {int:subtype}  
 			AND type = {string:type} LIMIT 1',
 			array(
-				'subtype' => $whatarticle, 'type' => 'editorschoice',
+				'subtype' => $whatarticle, 'type' => 'editorchoice',
 			)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2813,7 +2813,7 @@ function do_postchecks()
 				SET value = {string:val} 
 				WHERE name = {string:name} LIMIT 1',
 				array(
-					'val' => $catname,
+					'val' => $catnames,
 					'name' => 'cat_list',
 				)
 			);
@@ -3448,7 +3448,7 @@ function do_postchecks()
 			}
 			redirectexit('action=tpadmin;blockedit='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
-		// settings and frontpage
+		// Editing an article?
 		elseif(substr($from, 0, 11) == 'editarticle')
 		{
 			checkSession('post');
@@ -3481,7 +3481,7 @@ function do_postchecks()
 					UPDATE {db_prefix}tp_articles 
 					SET illustration = {string:ill} 
 					WHERE id = {int:artid} LIMIT 1',
-					array('ill' => 's_' . $value, 'artid' => $where)
+					array('ill' => 's_' . $name, 'artid' => $where)
 				);
 			}
 			// check if uploadad picture 
@@ -3674,6 +3674,12 @@ function do_postchecks()
 								AND value5 = {int:val5}',
 								array('type' => 'art_not_approved', 'val5' => $where)
 							);
+						else
+							$smcFunc['db_insert']('replace',
+								'{db_prefix}tp_variables',
+								array('type' => 'string', 'value5' => 'int'),
+								array('art_not_approved', $where)
+							);						
 					}
 					else
 					{

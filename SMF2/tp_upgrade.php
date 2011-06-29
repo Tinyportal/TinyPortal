@@ -303,6 +303,8 @@ foreach ($tables as $table => $col) {
 			articleChanges();
 		elseif ($table == 'tp_dlmanager')
 			updateDownLoads();
+		elseif ($table == 'tp_data')
+			dataTableChanges();
 				
         // If utf8 is set alter table to use utf8 character set.
         if ($utf8) {
@@ -640,6 +642,8 @@ if($convertblocks)
 // Add the default for blocks and articles settings here
 addDefaults();
 
+// Add the changes for articles
+articleUpdates();
 
 // make sure TPShout is available
 $request = $smcFunc['db_query']('', '
@@ -854,6 +858,13 @@ function checkColumn($table, $col, $action)
 	}	
 }
 
+function updateDownLoads()
+{
+	// Update old column names
+	checkColumn('tp_dlmanager', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
+	$render .= '<li>Updated old columns in downloads table</li>';
+}
+
 function articleChanges()
 {
 	global $smcFunc, $render;
@@ -861,8 +872,18 @@ function articleChanges()
 	checkColumn('tp_articles', 'ID_THEME', 'CHANGE `ID_THEME` `id_theme` smallint(6) default 0 NOT NULL');
 	checkColumn('tp_articles', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
 	checkColumn('tp_articles', 'body', 'CHANGE `body` `body` LONGTEXT NULL');
-	$render .= '<li>Updated old columns in articles table</li>';
-	
+	$render .= '<li>Updated old columns in articles table</li>';		
+}
+function dataTableChanges()
+{
+	// Update old column names
+	checkColumn('tp_data', 'ID_MEMBER', 'CHANGE `ID_MEMBER` `id_member` int default 0 NOT NULL');
+	$render .= '<li>Updated old columns in data table</li>';	
+}
+
+function articleUpdates()
+{
+	global $smcFunc, $render;
 	// change to types
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_articles 
@@ -903,9 +924,8 @@ function articleChanges()
 			);
 			$render .='<li>Update featured article</li>';
 		}
-	}		
+	}	
 }
-
 function addDefaults()
 {
 	global $smcFunc, $render;
@@ -1150,13 +1170,7 @@ function addDefaults()
 		);
 		$smcFunc['db_free_result']($request);		
 		$render .= '<li>Added some sample values to the variables table</li>';
-	}			
-		
+	}					
 }
 
-function updateDownLoads()
-{
-	// Update old column names
-	checkColumn('tp_dlmanager', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
-}
 ?>
