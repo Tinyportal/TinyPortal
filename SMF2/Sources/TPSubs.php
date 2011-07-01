@@ -985,7 +985,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		</script>';
 	if($showchoice)
 		echo '
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'.html_entity_decode($body, ENT_QUOTES, $context['character_set']).'</textarea>';
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
 
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
@@ -1113,7 +1113,7 @@ function TPget_globaltags($tags, $itemid)
 		{
 			$taglinks[] = array(
 				'href' => $row['value1'],
-				'title' => html_entity_decode($row['value2'], ENT_QUOTES, $context['character_set']),
+				'title' => $row['value2'],
 				'icon' => $row['value3'],
 				'type' => $row['value3'],
 				'itemid' => $row['subtype2'],
@@ -1537,9 +1537,7 @@ function tp_renderglobaltags($taglinks, $norender = false)
 
 function tp_sanitize($value, $strict = false)
 {
-	global $smcFunc;
-	
-	return $smcFunc['htmlspecialchars'](strip_tags($value), ENT_QUOTES);
+	return strip_tags($value);
 }
 
 function get_perm($perm, $moderate = '')

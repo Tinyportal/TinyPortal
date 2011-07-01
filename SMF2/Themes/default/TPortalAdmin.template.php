@@ -2549,7 +2549,8 @@ function template_editarticle($type = '')
 					</tr>
 
 					<tr class="windowbg">
-						<td class="left" valign="top" align="right">'.$txt['tp-assigntags'].'</td><td>' , !empty($mg['id']) ? TPsshowgtags('tparticle_itemtags', 'tparticle_itemtags',$mg['id']) : '' ,'</td>
+						<td class="left" valign="top" align="right">'.$txt['tp-assigntags'].'</td>
+						<td>' , TPsshowgtags('tparticle_itemtags', 'tparticle_itemtags', !empty($mg['id']) ? $mg['id'] : 0) ,'</td>
 					</tr>
 				</table>
 

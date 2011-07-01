@@ -234,7 +234,7 @@ function TPortalDLManager()
 				array('name' => 'string', 'description' => 'string', 'icon' => 'string', 'category' => 'int', 'type' => 'string', 'downloads' => 'int', 'views' => 'int',
 			 		'file' => 'string', 'created' => 'int', 'last_access' => 'int', 'filesize' => 'int', 'parent' => 'int', 'access' => 'string', 'link' => 'string',
 					 'author_id' => 'int', 'screenshot' => 'string', 'rating' => 'string', 'voters' => 'string', 'subitem' => 'int'),
-				array($title, $smcFunc['htmlspecialchars']($text, ENT_QUOTES), $icon, $category, 'dlitem', 0, 1, $name, $now, $now, $dlfilesize, 0, '', '', $context['user']['id'], $screenshot, '', '', 0),
+				array($title, $text, $icon, $category, 'dlitem', 0, 1, $name, $now, $now, $dlfilesize, 0, '', '', $context['user']['id'], $screenshot, '', '', 0),
 				array('id')
 			);
 
@@ -400,7 +400,7 @@ function TPortalDLManager()
 					{
 						$context['TPortal']['attachitems'][] = array(
 							'id' => $ilist['id'],
-							'name' => html_entity_decode($ilist['name'], ENT_QUOTES, $context['character_set']),
+							'name' => $ilist['name'],
 						);
 					}
 					$smcFunc['db_free_result']($itemlist);
@@ -425,7 +425,7 @@ function TPortalDLManager()
 					{
 						$context['TPortal']['attachitems'][] = array(
 							'id' => $ilist['id'],
-							'name' => html_entity_decode($ilist['name'], ENT_QUOTES, $context['character_set']),
+							'name' => $ilist['name'],
 						);
 					}
 					$smcFunc['db_free_result']($itemlist);
@@ -528,9 +528,9 @@ function TPortalDLManager()
 
 					$context['TPortal']['dl_last_added'][] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
+						'name' => $row['name'],
 						'category' => $row['category'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
@@ -573,7 +573,7 @@ function TPortalDLManager()
 
 					$context['TPortal']['dl_most_downloaded'][] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
+						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
@@ -633,7 +633,7 @@ function TPortalDLManager()
 
 					$context['TPortal']['dl_week_downloaded'][] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
+						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
@@ -674,9 +674,9 @@ function TPortalDLManager()
 				{
 					$context['TPortal']['dlcats'][$row['id']] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
+						'name' => $row['name'],
 						'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'access' => $row['access'],
 						'icon' => $row['icon'],
 						'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
@@ -756,8 +756,8 @@ function TPortalDLManager()
 							
 						$context['TPortal']['featured'] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'name' => $row['name'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
@@ -914,7 +914,7 @@ function TPortalDLManager()
 						'id' => $row['id'],
 						'name' => $row['name'],
 						'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'access' => $row['access'],
 						'icon' => $row['icon'],
 						'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
@@ -1035,7 +1035,7 @@ function TPortalDLManager()
 						'icon' => $ico,
 						'date' => $row['created'],
 						'filesize' => $fs,
-						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : html_entity_decode($row['ingress'], ENT_QUOTES, $context['character_set']),
+						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : $row['ingress'],
 					);
 				}
 				$smcFunc['db_free_result']($request);
@@ -1148,7 +1148,7 @@ function TPortalDLManager()
 					$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
 				$context['TPortal']['dlitem'][] = array(
 					'id' => $row['id'],
-					'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
+					'name' => $row['name'],
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'description' => '',
@@ -1290,7 +1290,7 @@ function TPortalDLManager()
 						
 						$fdata[] = array(
 							'id' => $frow['id'],
-							'name' => html_entity_decode($frow['name'], ENT_QUOTES, $context['character_set']),
+							'name' => $frow['name'],
 							'file' => $frow['file'],
 							'href' => $scripturl.'?action=tpmod;dl=get'.$frow['id'],
 							'href2' => $scripturl.'?action=tpmod;dl=item'.$frow['id'],
@@ -1338,8 +1338,8 @@ function TPortalDLManager()
 							
 					$context['TPortal']['dlitem'][] = array(
 					'id' => $row['id'],
-					'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
-					'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'name' => $row['name'],
+					'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'href' => $scripturl.'?action=tpmod;dl=get'.$row['id'],
@@ -1531,7 +1531,7 @@ function TPdlresults()
 		{
 			$row['name'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['name']);
 			$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
-			$row['body'] = strip_tags(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
+			$row['body'] = strip_tags($row['body']);
 
 			$context['TPortal']['dlsearchresults'][] = array(
 				'id' => $row['id'],
@@ -2106,7 +2106,7 @@ function TPortalDLAdmin()
 				$itemid = $value;
 				// insert new one
 				$href = '?action=tpmod;dl=item'.$itemid;
-				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="taglink">' . html_entity_decode($title[0]). '</span>';
+				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="taglink">' . $title[0] . '</span>';
 				if(!empty($tag))
 				{
 					$smcFunc['db_query']('INSERT', 
@@ -2774,8 +2774,6 @@ function TPortalDLAdmin()
 			}
 			elseif($what == 'tp_dl_introtext')
 			{
-				if ($context['TPortal']['dl_wysiwyg'] == 'html')
-					$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_settings 
 					SET value = {string:val} 
@@ -3003,7 +3001,7 @@ function TPortalDLAdmin()
 					'icon' => $brow['icon'],
 					'access' => $brow['access'],
 					'parent' => $brow['parent'],
-					'description' => html_entity_decode($brow['description'], ENT_QUOTES, $context['character_set']),
+					'description' => $brow['description'],
 					'shortname' => $brow['link'],
 					'items' => $items,
 					'submitted' => $sitems,
@@ -3064,7 +3062,7 @@ function TPortalDLAdmin()
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => $row['description'],
 					'downloads' => $row['downloads'],
 					'sshot' => $row['screenshot'],
 					'link' => $row['link'],
@@ -3104,7 +3102,7 @@ function TPortalDLAdmin()
 					'shortname' => $row['link'],
 					'access' => $row['access'],
 					'parent' => $row['parent'],
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => $row['description'],
 					'items' => $items,
 					'submitted' => $sitems,
 					'total' => ($items + $sitems),
@@ -3215,7 +3213,7 @@ function TPortalDLAdmin()
 					'name' => $row['name'],
 					'access' => $row['access'],
 					'shortname' => $row['link'],
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => $row['description'],
 					'icon' => $row['icon'],
 					'parent' => $row['parent'],
 				);
@@ -3324,13 +3322,13 @@ function TPortalDLAdmin()
 
 			$context['TPortal']['dl_admitems'][] = array(
 				'id' => $row['id'],
-				'name' => html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']),
+				'name' => $row['name'],
 				'icon' => $row['icon'],
 				'category' => $row['category'],
 				'file' => $row['file'],
 				'views' => $row['views'],
 				'authorID' => $row['author_id'],
-				'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+				'description' => $row['description'],
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
 				'filesize' => (substr($row['file'],14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
@@ -3531,7 +3529,7 @@ function TPortalDLUser($item)
 			'file' => $row['file'],
 			'views' => $row['views'],
 			'authorID' => $row['author_id'],
-			'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+			'description' => $row['description'],
 			'created' => timeformat($row['created']),
 			'last_access' => timeformat($row['last_access']),
 			'filesize' => (substr($row['file'], 14) != '- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',

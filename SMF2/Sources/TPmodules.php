@@ -151,7 +151,7 @@ function TPmodules()
 			$row = $smcFunc['db_fetch_row']($request);
 			$num_comments = $row[0] + 1;
 			$smcFunc['db_free_result']($request);
-			$title = $smcFunc['htmlspecialchars'](strip_tags($_POST['tp_article_comment_title']));
+			$title = strip_tags($_POST['tp_article_comment_title']);
 			$comment = substr($_POST['tp_article_bodytext'], 0, 65536);
 
 			require_once($sourcedir.'/Subs-Post.php');
@@ -522,11 +522,11 @@ function TPmodules()
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				if($row['type'] == 'bbc')
-					$row['body'] = doUBBC(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
+					$row['body'] = doUBBC($row['body']);
 				elseif($row['type'] == 'php')
 					$row['body'] = '[PHP]';
 				else
-					$row['body'] = strip_tags(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
+					$row['body'] = strip_tags($row['body']);
 
 				$row['subject'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
 				$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
@@ -578,12 +578,12 @@ function TPmodules()
 					'hour' => date("G",$row['date']),
 					'minute' => date("i",$row['date']),
 				),
-				'body' => html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']),
-				'intro' => html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']),
+				'body' => $row['body'],
+				'intro' => $row['intro'],
 				'useintro' => $row['useintro'],
 				'category' => $row['category'],
 				'frontpage' => $row['frontpage'],
-				'subject' => html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']),
+				'subject' => $row['subject'],
 				'authorID' => $row['author_id'],
 				'author' => $row['author'],
 				'frame' => !empty($row['frame']) ? $row['frame'] : 'theme',

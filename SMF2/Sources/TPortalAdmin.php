@@ -576,7 +576,7 @@ function do_blocks()
 			$acc2 = explode(',', $row['access2']);
 			$context['TPortal']['blockedit'] = $row;
 			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
-			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES, $context['character_set']);
+			$context['TPortal']['blockedit']['body'] = $row['body'];
 			unset($context['TPortal']['blockedit']['access2']);
 			$context['TPortal']['blockedit']['access2'] = array(
 				'action' => array(),
@@ -1313,7 +1313,7 @@ function do_articles()
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					$row = $smcFunc['db_fetch_assoc']($request);
-					$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']);
+					$row['value1'] = $row['value1'];
 					$o = explode('|', $row['value7']);
 					foreach($o as $t => $opt)
 					{
@@ -1347,7 +1347,7 @@ function do_articles()
 					while ($row = $smcFunc['db_fetch_assoc']($request))
 					{
 						$row['indent'] = 0;
-						$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
+						$row['name'] = $row['name'];
 						$allsorted[$row['id']] = $row;
 						$alcats[] = $row['id'];
 					}
@@ -1379,7 +1379,7 @@ function do_articles()
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['indent'] = 0;
-				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
+				$row['name'] = $row['name'];
 				$allsorted[$row['id']] = $row;
 				$alcats[] = $row['id'];
 			}
@@ -1513,7 +1513,7 @@ function do_articles()
 			$sorted = array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
+				$row['name'] = $row['name'];
 				$sorted[$row['id']] = $row;
 				$cats[] = $row['id'];
 			}
@@ -1584,7 +1584,7 @@ function do_articles()
 			$context['TPortal']['arts_submissions']=array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+				$row['subject'] = $row['subject'];
 				$context['TPortal']['arts_submissions'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1619,7 +1619,7 @@ function do_articles()
 			$context['TPortal']['arts_nocat'] = array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+				$row['subject'] = $row['subject'];
 				$context['TPortal']['arts_nocat'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1642,9 +1642,6 @@ function do_articles()
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
-			$context['TPortal']['editarticle']['body'] = html_entity_decode($context['TPortal']['editarticle']['body'],ENT_QUOTES, $context['character_set']);
-			$context['TPortal']['editarticle']['intro'] = html_entity_decode($context['TPortal']['editarticle']['intro'],ENT_QUOTES, $context['character_set']);
-			$context['TPortal']['editarticle']['subject'] = html_entity_decode($context['TPortal']['editarticle']['subject'], ENT_COMPAT, $context['character_set']);
 			
 			$smcFunc['db_free_result']($request);
 		}
@@ -1778,7 +1775,7 @@ function do_articles()
 			$context['TPortal']['arts']=array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+				$row['subject'] = $row['subject'];
 				$context['TPortal']['arts'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -2407,7 +2404,7 @@ function do_postchecks()
 							SET value = {string:title} 
 							WHERE name = {string:name} LIMIT 1',
 							array(
-								'title' => $smcFunc['htmlspecialchars']($clean, ENT_QUOTES),
+								'title' => $clean,
 								'name' => 'frontpage_title',
 							)
 						);
@@ -2919,7 +2916,7 @@ function do_postchecks()
 				elseif($what == 'tp_article_cat')
 					$straycat = $value;
 				elseif($what == 'tp_article_new')
-					$straynewcat = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
+					$straynewcat = $value;
 			}	
 			// update
 			if(isset($straycat) && sizeof($ccats) > 0)
@@ -2983,7 +2980,7 @@ function do_postchecks()
 				
 			if(!empty($_POST['tp_menu_title']))
 			{
-				$mtitle = $smcFunc['htmlspecialchars'](strip_tags($_POST['tp_menu_title']), ENT_QUOTES);
+				$mtitle = strip_tags($_POST['tp_menu_title']);
 				$smcFunc['db_insert']('INSERT', 
 					'{db_prefix}tp_variables',
 					array('value1' => 'string', 'type' => 'string'),
@@ -3000,7 +2997,7 @@ function do_postchecks()
 			isAllowedTo('tp_blocks');
 				
 			$mid = $_POST['tp_menu_menuid'];
-			$mtitle = $smcFunc['htmlspecialchars'](strip_tags($_POST['tp_menu_title']), ENT_QUOTES);
+			$mtitle = strip_tags($_POST['tp_menu_title']);
 			if($mtitle == '')
 				$mtitle = $txt['tp-no_title'];
 			
@@ -3248,7 +3245,7 @@ function do_postchecks()
 						$cp['type'],
 						$cp['frame'],
 						$title,
-						$smcFunc['htmlspecialchars']($cp['body'], ENT_QUOTES),
+						$cp['body'],
 						$cp['access'], 
 						$panel, 
 						0, 
@@ -3742,7 +3739,7 @@ function do_postchecks()
 						$itemid = $value;
 						// insert new one
 						$href = '?page='.$itemid;
-						$subject = '<div  class="taglink">' . html_entity_decode($title[0], ENT_QUOTES, $context['character_set']). '</div>';
+						$subject = '<div  class="taglink">' . $title[0]. '</div>';
 						if(!empty($tag))
 						{
 							$smcFunc['db_insert']('INSERT', 
@@ -3776,13 +3773,13 @@ function do_postchecks()
 						$smcFunc['db_insert']('REPLACE',
 							'{db_prefix}tp_variables',
 							array('value1' => 'string', 'type' => 'string'),
-							array('$value','globaltag'),
+							array($value, 'globaltag'),
 							array('id')
 						);
 						
 						// insert new one
 						$href = '?page='.$itemid;
-						$subject = '<span style="background: url('.$settings['tp_images_url'].'/glyph_article.png) no-repeat;" class="taglink">' . html_entity_decode($title[0], ENT_QUOTES, $context['character_set']). '</span>';
+						$subject = '<span style="background: url('.$settings['tp_images_url'].'/glyph_article.png) no-repeat;" class="taglink">' . $title[0] . '</span>';
 						if(!empty($tag))
 						{
 							$smcFunc['db_insert']('INSERT',
