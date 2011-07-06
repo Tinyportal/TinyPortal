@@ -3224,7 +3224,7 @@ function TPortalDLAdmin()
 	elseif(substr($admsub, 0, 6) == 'delcat')
 	{
 		$context['TPortal']['dl_title'] = '<a href="'.$scripturl.'?action=tpmod;dl=admin">'.$txt['tp-dladmin'].'</a>';
-		$cat=substr($admsub, 6);
+		$cat = substr($admsub, 6);
 		// delete category and all item it's in
 		$request = $smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}tp_dlmanager 
@@ -3235,7 +3235,7 @@ function TPortalDLAdmin()
 		$request = $smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}tp_dlmanager 
 			WHERE id = {int:cat} LIMIT 1',
-			array('item' => $cat)
+			array('cat' => $cat)
 		);
 		redirectexit('action=tpmod;dl=admin');
 	}

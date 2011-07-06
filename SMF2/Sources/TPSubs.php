@@ -1720,7 +1720,7 @@ function tp_renderarticle($intro = '')
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro))
 	{
 		if($context['TPortal']['article']['rendertype'] == 'php')
-			eval(tp_convertphp($context['TPortal']['article']['introtext'], true));
+			eval(tp_convertphp($context['TPortal']['article']['intro'], true));
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
 			if(!WIRELESS)
