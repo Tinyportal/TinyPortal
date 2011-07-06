@@ -1409,7 +1409,7 @@ function template_frontpage()
 	<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>';
 
 			echo '<br style="clear: both;" />
-									<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' .$smcFunc['htmlspecialchars']($context['TPortal']['frontpage_template']). '</textarea>
+									<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' . $context['TPortal']['frontpage_template'] . '</textarea>
 					</td>
 					</tr>
 					<tr class="windowbg2">
@@ -1703,7 +1703,7 @@ function template_editcategory()
 
 			echo '<br style="clear: both;" />
                                     <h4>', $txt['reset_custom_template_layout'] ,'</h4>
-									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' .$smcFunc['htmlspecialchars']($mg['value9']). '</textarea>
+									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' . $mg['value9'] . '</textarea>
 								</td>
 							</tr>
 							<tr class="windowbg">
@@ -2133,7 +2133,7 @@ function template_editarticle($type = '')
 						<td class="left" valign="top" align="right" width="20%">
 							' , $mg['id']==0 ? '' : '<a href="'.$scripturl.'?page='.$mg['id'].';tpreview">['.$txt['tp-preview'].']</a>' , $txt['tp-title'] , ':
 						</td>
-						<td valign="top" width="80%"><input style="width: 92%;" name="tp_article_subject" type="text" value="'.htmlspecialchars_decode($mg['subject']).'"></td>
+						<td valign="top" width="80%"><input style="width: 92%;" name="tp_article_subject" type="text" value="'. $mg['subject'] .'"></td>
 					</tr>
 					<tr class="windowbg2">
 						<td class="left" valign="top" align="right" width="20%">'.$txt['tp-shortname_article'].'&nbsp;</td>
@@ -2144,14 +2144,14 @@ function template_editarticle($type = '')
 				
 				if($mg['articletype']=='php')
 					echo '
-							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $smcFunc['htmlspecialchars']($mg['body']), '</textarea><br />';
+							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' ,  $mg['body'] , '</textarea><br />';
 				elseif($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-					TPwysiwyg('tp_article_body', $smcFunc['htmlspecialchars']($mg['body']), true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
+					TPwysiwyg('tp_article_body', $mg['body'] , true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
 				elseif($context['TPortal']['use_wysiwyg']==0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
-					TP_bbcbox('TPadmin3','tp_article_body', htmlspecialchars_decode(strip_tags($mg['body'])));
+					TP_bbcbox('TPadmin3','tp_article_body', strip_tags($mg['body']));
 				else
 					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" style="width: 60%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '"></td></tr>' ;
 
@@ -2382,7 +2382,7 @@ function template_editarticle($type = '')
 						<td valign="top" colspan="2">';
 					
 					if($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-						TPwysiwyg('tp_article_intro', $smcFunc['htmlspecialchars']($mg['intro']), true,'qup_tp_article_intro', true, false);
+						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', true, false);
 					else
 						echo '
 							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
@@ -2396,7 +2396,7 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td valign="top" colspan="2">'.$txt['tp-introtext'].'</td>
 					</tr><tr class="windowbg2"><td colspan="2">
-						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$smcFunc['htmlspecialchars']($mg['intro']).'</textarea>
+						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
 					</td></tr>';
 				}
 
@@ -2839,7 +2839,7 @@ function template_blockedit()
 				{
 					echo '
 						</td><td class="right">
-						<textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $smcFunc['htmlspecialchars']($context['TPortal']['blockedit']['body']), '</textarea>
+						<textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' ,  $context['TPortal']['blockedit']['body'] , '</textarea>
 						<p><div class="tborder" style="padding: 1em;"><p style="padding: 0 0 5px 0; margin: 0;">' , $txt['tp-blockcodes'] , ':</p>
 							<select name="tp_blockcode" id="tp_blockcode" size="8" style="margin-bottom: 5px; width: 100%" onchange="changeSnippet(this.selectedIndex);">
 								<option value="0" selected="selected">' , $txt['tp-none-'] , '</option>';
