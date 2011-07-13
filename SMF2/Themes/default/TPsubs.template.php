@@ -1913,14 +1913,14 @@ function article_comments($render = true)
 			{
 				if ($context['use_graphic_library'])
 					$code .= '
-							<img src="' . $context['verification_image_href'] . '" alt="' . $txt['visual_verification_description'] . '" style="margin: 0 5px 5px 5px;" id="verificiation_image" />';
+							<img src="' . $context['verification_image_href'] . '" alt="' . $txt['tp-visual_verification_description'] . '" style="margin: 0 5px 5px 5px;" id="verificiation_image" />';
 				else
 					$code .= '
-							<img src="' . $context['verification_image_href'] . ';letter=1" alt="' . $txt['visual_verification_description'] . '" id="verificiation_image_1" />
-							<img src="' . $context['verification_image_href'] . ';letter=2" alt="' . $txt['visual_verification_description'] . '" id="verificiation_image_2" />
-							<img src="' . $context['verification_image_href'] . ';letter=3" alt="' . $txt['visual_verification_description'] . '" id="verificiation_image_3" />
-							<img src="' . $context['verification_image_href'] . ';letter=4" alt="' . $txt['visual_verification_description'] . '" id="verificiation_image_4" />
-							<img src="' . $context['verification_image_href'] . ';letter=5" alt="' . $txt['visual_verification_description'] . '" id="verificiation_image_5" />';
+							<img src="' . $context['verification_image_href'] . ';letter=1" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_1" />
+							<img src="' . $context['verification_image_href'] . ';letter=2" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_2" />
+							<img src="' . $context['verification_image_href'] . ';letter=3" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_3" />
+							<img src="' . $context['verification_image_href'] . ';letter=4" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_4" />
+							<img src="' . $context['verification_image_href'] . ';letter=5" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_5" />';
 				
 				$code .= '
 							<br /><input type="text" style="margin: 0 5px 5px 5px;" name="visual_verification_code" size="6" maxlength="6" tabindex="' . $context['tabindex']++ . '" />

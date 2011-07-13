@@ -195,8 +195,14 @@ $sourcedir/Subs.php
 		$buttons['tpadmin']['sub_buttons'] = tp_getbuttons();
 
 </add before>
-
-
+<search for>
+    elseif ($context['current_action'] == 'register2')
+        $current_action = 'register';
+</search for>
+<add after>
+	elseif (isset($_GET['topic']) || isset($_GET['board']))
+		$current_action = 'forum';
+</add after>
 <search for>
 function redirectexit($setLocation = '', $refresh = false)
 </search for>
