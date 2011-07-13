@@ -682,8 +682,8 @@ function doTPpage()
 					$request =  $smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_articles 
 						SET views = views + 1 
-						WHERE ' , is_numeric($page) ? '{int:page}' : '{string:page}' , ' LIMIT 1',
-						array('page' => $pag)
+						WHERE ' . (is_numeric($page) ? '{int:page}' : '{string:page}') . ' LIMIT 1',
+						array('page' => $page)
 					);
 					
 					// fetch and update last access by member(to log which comment is new)

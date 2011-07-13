@@ -196,8 +196,8 @@ $sourcedir/Subs.php
 
 </add before>
 <search for>
-    elseif ($context['current_action'] == 'register2')
-        $current_action = 'register';
+	elseif ($context['current_action'] == 'register2')
+		$current_action = 'register';
 </search for>
 <add after>
 	elseif (isset($_GET['topic']) || isset($_GET['board']))
