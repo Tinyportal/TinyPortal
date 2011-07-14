@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/"> 
+  
+	<id>bloc:tinyportal</id>
+    <version>1.104</version>
+    
+	<file name="$boarddir/index.php">
+		<operation>
+			<search position="before"><![CDATA[require_once($sourcedir . '/Security.php');]]></search>
+			<add><![CDATA[// TinyPortal include
+require_once($sourcedir . '/TPortal.php');]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[	// Is the forum in maintenance mode? (doesn't apply to administrators.)]]></search>
+			<add><![CDATA[	// TinyPortal
+	TPortal_init();
+
+]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[		// Action and board are both empty... BoardIndex!
+		if (empty($board) && empty($topic))
+		{
+			require_once($sourcedir . '/BoardIndex.php');
+			return 'BoardIndex';
+		}]]></search>
+			<add><![CDATA[		// first..if the action is set, but empty, don't go any further
+		if (isset($_REQUEST['action']) && $_REQUEST['action']=='')
+		{
+			require_once($sourcedir . '/BoardIndex.php');
+			return 'BoardIndex';
+		}
+
+		// Action and board are both empty... maybe the portal page?
+		if (empty($board) && empty($topic) && $settings['TPortal_front_type']!='boardindex')
+		{
+			require_once($sourcedir . '/TPortal.php');
+			return 'TPortal';
+		}
+		if (empty($board) && empty($topic) && $settings['TPortal_front_type']=='boardindex' && (isset($_GET['cat']) || isset($_GET['page'])))
+		{
+			require_once($sourcedir . '/TPortal.php');
+			return 'TPortal';
+		}
+		// Action and board are still both empty...and no portal startpage - BoardIndex!
+		elseif (empty($board) && empty($topic) && $settings['TPortal_front_type']=='boardindex')
+		{
+			require_once($sourcedir . '/BoardIndex.php');
+			return 'BoardIndex';
+		}]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[		'.xml' => array('News.php', 'ShowXmlFeed'),]]></search>
+			<add><![CDATA[		'tpadmin' => array('TPortalAdmin.php', 'TPortalAdmin'),
+		'forum' => array('BoardIndex.php', 'BoardIndex'),
+		'tpmod' => array('TPmodules.php', 'TPmodules'),]]></add>
+		</operation>		
+	</file>
+	<file name="$sourcedir/Load.php">
+		<operation>
+			<search position="before"><![CDATA[	$settings = $themeData[0];]]></search>
+			<add><![CDATA[	if (!empty($context['TPortal']['front_type'])){
+		$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
+	}]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[	// Start the linktree off empty..
+	$context['linktree'] = array();]]></search>
+			<add><![CDATA[	// Start the linktree off empty..not quite, have to insert forum
+	$context['linktree'] = array(array('url' => $scripturl . '?action=forum', 'name' => 'Forum'));]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[		// Build up the linktree.
+		$context['linktree'] = array_merge(
+			$context['linktree'],
+			array(array(
+				'url' => $scripturl . '#c' . $board_info['cat']['id'],
+				'name' => $board_info['cat']['name']
+			)),]]></search>
+			<add><![CDATA[		// Build up the linktree (adding TPortal forum index)
+		$context['linktree'] = array_merge(
+			$context['linktree'],
+			array(array(
+				'url' => $scripturl . '?action=forum#' . $board_info['cat']['id'],
+				'name' => $board_info['cat']['name']
+			)),]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[	// The theme is the forum's default.
+	else
+		$id_theme = $modSettings['theme_guests'];]]></search>
+			<add><![CDATA[
+	// TinyPortal
+	$newtheme=TP_loadTheme();
+	if($newtheme!=$id_theme && $newtheme>0)
+		$id_theme=$newtheme;
+	// end TinyPortal]]></add>
+		</operation>				
+	</file>
+	
+	<file name="$sourcedir/Subs.php">
+		<operation>
+			<search position="after"><![CDATA[			'help' => array(]]></search>
+			<add><![CDATA[			'forum' => array(
+				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
+				'href' => $scripturl . '?action=forum',
+				'show' => true,
+			),]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[			'help' => array(
+				'title' => $txt['help'],
+				'href' => $scripturl . '?action=help',
+				'show' => true,
+				'sub_buttons' => array(]]></search>
+			<add><![CDATA[					'tphelp' => array(
+						'title' => 'TinyPortal',
+						'href' => $scripturl . '?action=tpmod;sa=help',
+						'show' => true,
+					),]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[			'calendar' => array(]]></search>
+			<add><![CDATA[			'tpadmin' => array(
+				'title' => 'TinyPortal',
+				'href' => $scripturl . '?action=tpadmin',
+				'show' =>  TPcheckAdminAreas(),
+				'sub_buttons' => array(
+				),
+			),]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[		// Now we put the buttons in the context so the theme can use them.]]></search>
+			<add><![CDATA[
+		// tinyportal //
+		$buttons['tpadmin']['sub_buttons'] = tp_getbuttons();
+
+]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[function redirectexit($setLocation = '', $refresh = false)]]></search>
+			<add><![CDATA[function redirectexit($setLocation = '', $refresh = false, $tp_not = false)]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[	// Put the session ID in.
+	if (defined('SID') && SID != '')]]></search>
+			<add><![CDATA[	// TinyPortal
+	if ($setLocation == $scripturl && !$tp_not && !empty($context['TPortal']['redirectforum']))
+		$setLocation .= '?action=forum';
+	// end
+	
+]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Security.php">
+		<operation>
+			<search position="before"><![CDATA[// Require a user who is logged in. (not a guest.)
+function is_not_guest($message = '')
+{
+	global $user_info, $txt, $context, $scripturl;]]></search>
+			<add><![CDATA[
+	// TinyPortal
+	TPortal_init();]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Errors.php">
+		<operation>
+			<search position="before"><![CDATA[	// We don't have $txt yet, but that's okay...
+	if (empty($txt))
+		die($error);]]></search>
+			<add><![CDATA[
+	// TinyPortal
+	if(!isset($context['tp_prefix']))
+		TPortal_init();
+	// end]]></add>
+		</operation>
+	</file>
+	
+	<file name="$boarddir/SSI.php">
+		<operation>
+			<search position="before"><![CDATA[require_once($sourcedir . '/Security.php');]]></search>
+			<add><![CDATA[require_once($sourcedir . '/TPortal.php');]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/QueryString.php">
+		<operation>
+			<search position="after"><![CDATA[	// If $scripturl is set to nothing, or the SID is not defined (SSI?) just quit.]]></search>
+			<add><![CDATA[	// A better place
+	if (function_exists('tp_addcopy'))
+		$buffer = tp_addcopy($buffer);
+
+]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[		// Let's do something special for session ids!
+		if (defined('SID') && SID != '')
+			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html?' . SID . '\$2\"'", $buffer);
+		else
+			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html\$2\"'", $buffer);]]></search>
+			<add><![CDATA[		// Let's do something special for session ids!
+		if (defined('SID') && SID != '')
+			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html?' . SID . '\$2\"'", $buffer);
+		else
+			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html\$2\"'", $buffer);]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Subs-Editor.php">
+		<operation>
+			<search position="replace"><![CDATA[function theme_postbox($msg)
+{
+	global $context;
+
+	return template_control_richedit($context['post_box_name']);
+}]]></search>
+			<add><![CDATA[function theme_postbox($msg, $from_tp = false)
+{
+	global $context;
+
+	return template_control_richedit($context['post_box_name'], $from_tp);
+}]]></add>
+		</operation>
+	</file>
+	
+	<file name="$sourcedir/Profile.php">
+		<operation>
+			<search position="after"><![CDATA[	// Do some cleaning ready for the menu function.
+	$context['password_areas'] = array();]]></search>
+			<add><![CDATA[
+	// TinyPortal
+	require_once($sourcedir. '/TPmodules.php');
+	tp_getprofileareas($profile_areas);
+
+]]></add>
+		</operation>
+	</file>
+	
+</modification>

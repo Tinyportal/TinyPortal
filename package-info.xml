@@ -29,11 +29,11 @@
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF2/tp-files" destination="$boarddir" />
         <readme type="inline">Installing TinyPortal v1.0 RC2 for SMF2.0 Final, RC4, or RC5</readme>
-       <modification format="boardmod" type="file">SMF2/tinyportal200.mod</modification>
-       <database>SMF2/tp_upgrade.php</database>
+		<modification>SMF2/install.xml</modification>
+		<database>SMF2/tp_upgrade.php</database>
     </install>
 	<uninstall for="2.0 - 2.99.99">
-		<modification format="boardmod" type="file" reverse="true">SMF2/tinyportal200.mod</modification>
+		<modification reverse="true">SMF2/install.xml</modification>
     </uninstall>
     <upgrade for="2.0 - 2.99.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103">
 		<redirect url="">Upgraded!</redirect>
