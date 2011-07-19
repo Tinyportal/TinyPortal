@@ -507,7 +507,7 @@ function TPmodules()
 			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 100) as body, a.author_id as authorID, a.type, m.real_name as realName
 			FROM {db_prefix}tp_articles AS a
 			LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
-			WHERE {string:query}
+			WHERE {raw:query}
 			AND ((a.pub_start = 0 AND a.pub_end = 0) 
 			OR (a.pub_start != 0 AND a.pub_start < '.$now.' AND a.pub_end = 0) 
 			OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > '.$now.') 
@@ -522,7 +522,7 @@ function TPmodules()
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				if($row['type'] == 'bbc')
-					$row['body'] = doUBBC($row['body']);
+					$row['body'] = parse_bbc($row['body']);
 				elseif($row['type'] == 'php')
 					$row['body'] = '[PHP]';
 				else
