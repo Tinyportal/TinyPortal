@@ -235,7 +235,7 @@ function template_tpshout_shoutblock()
 	if($context['user']['is_guest'] && allowedTo('tp_can_shout'))
 		echo '<br />
 		<input style="margin-top: 4px;" size="20" class="smalltext" type="text" name="tp-shout-name" value="'.$txt['tp-guest'].'" />';
-	else if(allowedTo('tp_can_shout'))
+	else
 		echo '
 		<input type="hidden" name="tp-shout-name" value="'.$context['user']['name'].'" />';
 
