@@ -1411,8 +1411,8 @@ function tp_getprofileareas(&$data)
 			'any' => 'profile_view_any',
 		),
 		'subsections' => array(
-			'articles' => array($txt['tp-articles'], 'profile_view_any'),
-			'settings' => array($txt['tp-settings'], 'profile_view_any'),
+			'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
+			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
 
