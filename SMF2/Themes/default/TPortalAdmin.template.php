@@ -2008,7 +2008,9 @@ function template_strays()
 										' , $context['TPortal']['sort']=='locked' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on locked" /> ' : '' , '<a title="Sort on locked" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=locked"><img src="' . $settings['tp_images_url'] . '/TPlock1.gif" alt="" /></a>
 									</td>
 									<td width="15%" colspan="3"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type">' , $txt['tp-type'] , '</a></td>
-								</tr>';
+								</tr>
+							</thead>
+							<tbody>';
 			
 		if(!empty($context['TPortal']['pageindex']))
 			echo '
@@ -3669,6 +3671,5 @@ function template_blocks()
 	</form>';
 	
 }
-
 
 ?>
