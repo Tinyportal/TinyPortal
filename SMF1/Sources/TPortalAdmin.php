@@ -584,7 +584,7 @@ function do_blocks()
 			$acc2=explode(",",$row['access2']);
 			$context['TPortal']['blockedit'] = $row;
 			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
-			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES, $context['character_set']);
+			$context['TPortal']['blockedit']['body'] = html_entity_decode($row['body'], ENT_NOQUOTES);
 			unset($context['TPortal']['blockedit']['access2']);
 			$context['TPortal']['blockedit']['access2']=array(
 				'action' => array(),
@@ -1126,7 +1126,7 @@ function do_articles()
 				if(tpdb_num_rows($request)>0)
 				{
 					$row = tpdb_fetch_assoc($request);
-					$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']);
+					$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES);
 					$o = explode("|",$row['value7']);
 					foreach($o as $t => $opt)
 					{
@@ -1155,7 +1155,7 @@ function do_articles()
 					while ($row = tpdb_fetch_assoc($request))
 					{
 						$row['indent'] = 0;
-						$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
+						$row['name'] = html_entity_decode($row['name'], ENT_QUOTES);
 						$allsorted[$row['id']] = $row;
 						$alcats[] = $row['id'];
 					}
@@ -1182,7 +1182,7 @@ function do_articles()
 			while ($row = tpdb_fetch_assoc($request))
 			{
 				$row['indent'] = 0;
-				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
+				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES);
 				$allsorted[$row['id']] = $row;
 				$alcats[] = $row['id'];
 			}
@@ -1309,7 +1309,7 @@ function do_articles()
 			$context['TPortal']['cats']=array(); $sorted=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES, $context['character_set']);
+				$row['name'] = html_entity_decode($row['name'], ENT_QUOTES);
 				$sorted[$row['id']] = $row;
 				$cats[] = $row['id'];
 			}
@@ -1362,7 +1362,7 @@ function do_articles()
 			$context['TPortal']['arts_submissions']=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
 				$context['TPortal']['arts_submissions'][] = $row;
 			}
 			tpdb_free_result($request);
@@ -1390,7 +1390,7 @@ function do_articles()
 			$context['TPortal']['arts_nocat']=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
 				$context['TPortal']['arts_nocat'][] = $row;
 			}
 			tpdb_free_result($request);
@@ -1408,9 +1408,9 @@ function do_articles()
 		if(tpdb_num_rows($request)>0)
 		{
 			$context['TPortal']['editarticle']= tpdb_fetch_assoc($request);
-			$context['TPortal']['editarticle']['body'] = html_entity_decode($context['TPortal']['editarticle']['body'], ENT_QUOTES, $context['character_set']);
-			$context['TPortal']['editarticle']['intro'] = html_entity_decode($context['TPortal']['editarticle']['intro'], ENT_QUOTES, $context['character_set']);
-			$context['TPortal']['editarticle']['subject'] = html_entity_decode($context['TPortal']['editarticle']['subject'], ENT_QUOTES, $context['character_set']);
+			$context['TPortal']['editarticle']['body'] = html_entity_decode($context['TPortal']['editarticle']['body'], ENT_QUOTES);
+			$context['TPortal']['editarticle']['intro'] = html_entity_decode($context['TPortal']['editarticle']['intro'], ENT_QUOTES);
+			$context['TPortal']['editarticle']['subject'] = html_entity_decode($context['TPortal']['editarticle']['subject'], ENT_QUOTES);
 			
 			tpdb_free_result($request);
 		}
@@ -1515,7 +1515,7 @@ function do_articles()
 			$context['TPortal']['arts']=array();
 			while ($row = tpdb_fetch_assoc($request))
 			{
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
 				$context['TPortal']['arts'][] = $row;
 			}
 			tpdb_free_result($request);

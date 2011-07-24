@@ -578,10 +578,10 @@ function doTPpage()
 					{
 						$article['type'] = $article['rendertype'] = 'html'; 
 					}
-					$article['body'] = html_entity_decode($article['body'], ENT_QUOTES, $context['character_set']);
-					$article['intro'] = html_entity_decode($article['intro'], ENT_QUOTES, $context['character_set']);
-					$article['subject'] = html_entity_decode($article['subject'], ENT_QUOTES, $context['character_set']);
-					$article['value1'] = html_entity_decode($article['value1'], ENT_QUOTES, $context['character_set']);
+					$article['body'] = html_entity_decode($article['body'], ENT_QUOTES);
+					$article['intro'] = html_entity_decode($article['intro'], ENT_QUOTES);
+					$article['subject'] = html_entity_decode($article['subject'], ENT_QUOTES);
+					$article['value1'] = html_entity_decode($article['value1'], ENT_QUOTES);
                     // Add ratings together
                     $article['rating'] = array_sum(explode(',', $article['rating']));
 					// allowed and all is well, go on with it.
@@ -640,7 +640,7 @@ function doTPpage()
 						{
 							$context['TPortal']['article']['comment_posts'][] = array(
 								'id' => $row['id'],
-								'subject' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
+								'subject' => html_entity_decode($row['value1'], ENT_QUOTES),
 								'text' => parse_bbc($row['value2']),
 								'timestamp' => $row['value4'],
 								'date' => timeformat($row['value4']),
@@ -740,7 +740,7 @@ function doTPpage()
 							$context['TPortal']['article']['others'] = array();
 							while($row = tpdb_fetch_assoc($request))
 							{
-								$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+								$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
 								if($row['id'] == $context['TPortal']['article']['id'])
 									$row['selected'] = 1;
 
@@ -776,8 +776,8 @@ function doTPpage()
 							redirectexit();
 						
 
-						$what = '<h2>' . html_entity_decode($article['subject'], ENT_QUOTES, $context['character_set']) . ' </h2>'.html_entity_decode($article['body'], ENT_QUOTES, $context['character_set']);
-						$pwhat = 'echo \'<h2>\' . html_entity_decode($article[\'subject\'], ENT_QUOTES, $context[\'character_set\']) . \'</h2>\';' . html_entity_decode($article['body'], ENT_QUOTES, $context['character_set']);
+						$what = '<h2>' . html_entity_decode($article['subject'], ENT_QUOTES) . ' </h2>'.html_entity_decode($article['body'], ENT_QUOTES);
+						$pwhat = 'echo \'<h2>\' . html_entity_decode($article[\'subject\'], ENT_QUOTES) . \'</h2>\';' . html_entity_decode($article['body'], ENT_QUOTES);
 						if($row['type']=='php')
 							$context['TPortal']['printbody'] = eval($pwhat);
 						elseif($row['type']=='bbc')
@@ -820,7 +820,7 @@ function doTPpage()
 							{
 								$parents[]=array(
 									'id' => $allcats[$parent]['id'],
-									'name' => html_entity_decode($allcats[$parent]['value1'], ENT_QUOTES, $context['character_set']),
+									'name' => html_entity_decode($allcats[$parent]['value1'], ENT_QUOTES),
 									'shortname' => !empty($allcats[$parent]['value8']) ? $allcats[$parent]['value8'] : $allcats[$parent]['id'],
 								);
 								$parent=$allcats[$parent]['value2'];
@@ -949,9 +949,9 @@ function doTPcat()
 						while($row = tpdb_fetch_assoc($request))
 						{
 							// fix old articles
-							$row['body'] = html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
-							$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']);
-							$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
+							$row['body'] = html_entity_decode($row['body'], ENT_QUOTES);
+							$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES);
+							$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
 							// Add the rating together
 							$row['rating'] = array_sum(explode(',', $row['rating']));
 							// expand the vislaoptions
@@ -981,7 +981,7 @@ function doTPcat()
 					{
 						while($row = tpdb_fetch_assoc($request))
 						{
-							$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']);
+							$row['value1'] = html_entity_decode($row['value1'], ENT_QUOTES);
 							// get any children
 							if($row['value2'] == $cat)
 								$context['TPortal']['category']['children'][] = $row;
@@ -1023,7 +1023,7 @@ function doTPcat()
 					{
 						$parents[]=array(
 							'id' => $allcats[$parent],
-							'name' => html_entity_decode($allcats[$parent]['value1'], ENT_QUOTES, $context['character_set']),
+							'name' => html_entity_decode($allcats[$parent]['value1'], ENT_QUOTES),
 							'shortname' => !empty($allcats[$parent]['value8']) ? $allcats[$parent]['value8'] : $allcats[$parent]['id'],
 						);
 						$parent=$allcats[$parent]['value2'];
@@ -1045,10 +1045,10 @@ function doTPcat()
 						{
 							$context['TPortal']['clist'][] = array(
 									'id' => $value,
-									'name' => html_entity_decode($allcats[$value]['value1'], ENT_QUOTES, $context['character_set']),
+									'name' => html_entity_decode($allcats[$value]['value1'], ENT_QUOTES),
 									'selected' => $value == $cat ? true : false,
 									);
-							$txt['catlist'. $value] = html_entity_decode($allcats[$value]['value1'], ENT_QUOTES, $context['character_set']);
+							$txt['catlist'. $value] = html_entity_decode($allcats[$value]['value1'], ENT_QUOTES);
 						}
 					}
 					$context['TPortal']['show_catlist'] = sizeof($context['TPortal']['clist'])>0 ? true : false;
@@ -1199,10 +1199,10 @@ function doTPfrontpage()
 				$row['visual_options'] = explode(",", $row['options']);
 				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $func['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
 				
-				$row['body'] = html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
-				$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']);
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
-				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES, $context['character_set']);
+				$row['body'] = html_entity_decode($row['body'], ENT_QUOTES);
+				$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
+				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES);
 				if($counter == 0)
 					$context['TPortal']['category']['featured'] = $row;
 				elseif($counter < $col1 )
@@ -1246,10 +1246,10 @@ function doTPfrontpage()
 
 			$row = tpdb_fetch_assoc($request);
 			// expand the vislaoptions
-				$row['body'] = html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
-				$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']);
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
-				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES, $context['character_set']);
+				$row['body'] = html_entity_decode($row['body'], ENT_QUOTES);
+				$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
+				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES);
 			$row['visual_options'] = explode(",", $row['options']);
 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $func['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
 
@@ -1541,10 +1541,10 @@ function doTPfrontpage()
 					
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $func['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
 					
-				$row['body'] = html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
-				$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']);
-				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']);
-				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES, $context['character_set']);
+				$row['body'] = html_entity_decode($row['body'], ENT_QUOTES);
+				$row['intro'] = html_entity_decode($row['intro'], ENT_QUOTES);
+				$row['subject'] = html_entity_decode($row['subject'], ENT_QUOTES);
+				$row['category_name'] = html_entity_decode($row['category_name'], ENT_QUOTES);
 					// we need some trick to put featured/sticky on top
 					$sortdate = $row['date'];
 					if($row['sticky']==1)
@@ -1636,13 +1636,13 @@ function doTPfrontpage()
 				$can_edit = false; 
 
 			if($row['type']==5 || $row['type']==11)
-				$body=html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
+				$body=html_entity_decode($row['body'], ENT_QUOTES);
 			else
 				$body=$row['body'];
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
-				'title' => strip_tags(html_entity_decode($row['title'], ENT_QUOTES, $context['character_set']), '<center>'),
+				'title' => strip_tags(html_entity_decode($row['title'], ENT_QUOTES), '<center>'),
 				'type' => $blocktype[$row['type']],
 				'body' => $body ,
 				'visible' => $row['visible'],
@@ -1691,10 +1691,10 @@ function doTPfrontpage()
 		{
 			while($article = tpdb_fetch_assoc($request))
 			{
-				$article['body'] = html_entity_decode($article['body'], ENT_QUOTES, $context['character_set']);
-				$article['intro'] = html_entity_decode($article['intro'], ENT_QUOTES, $context['character_set']);
-				$article['subject'] = html_entity_decode($article['subject'], ENT_QUOTES, $context['character_set']);
-				$article['value1'] = html_entity_decode($article['value1'], ENT_QUOTES, $context['character_set']);
+				$article['body'] = html_entity_decode($article['body'], ENT_QUOTES);
+				$article['intro'] = html_entity_decode($article['intro'], ENT_QUOTES);
+				$article['subject'] = html_entity_decode($article['subject'], ENT_QUOTES);
+				$article['value1'] = html_entity_decode($article['value1'], ENT_QUOTES);
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 
@@ -1729,7 +1729,7 @@ function doTPfrontpage()
 			{
 				$context['TPortal']['blockarticle_titles'][$row['category']][$row['date'].'_'.$row['id']] = array(
 					'id' => $row['id'],
-					'subject' => html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']),
+					'subject' => html_entity_decode($row['subject'], ENT_QUOTES),
 					'shortname' => $row['shortname']!='' ?$row['shortname'] : $row['id'] ,
 					'category' => $row['category'],
 					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
@@ -1772,7 +1772,7 @@ function doTPfrontpage()
 					$context['TPortal']['menu'][$row['subtype2']][] = array(
 						'id' => $row['id'],
 						'menuID' => $row['subtype2'],
-						'name' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
+						'name' => html_entity_decode($row['value1'], ENT_QUOTES),
 						'pos' => $menupos,
 						'type' => $mtype,
 						'IDtype' => $idtype,
@@ -1795,7 +1795,7 @@ function doTPfrontpage()
 			{
 				$context['TPortal']['menurender'][$row['id']] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
+						'name' => html_entity_decode($row['value1'], ENT_QUOTES),
 						);
 			}
 			tpdb_free_result($request);
@@ -1944,11 +1944,11 @@ function doTPblocks()
 			if($can_manage)
 				$can_edit = false; 
 
-			$body=html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']);
+			$body=html_entity_decode($row['body'], ENT_QUOTES);
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
-				'title' => strip_tags(html_entity_decode($row['title'], ENT_QUOTES, $context['character_set'])),
+				'title' => strip_tags(html_entity_decode($row['title'], ENT_QUOTES)),
 				'type' => isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type'],
 				'body' => $body ,
 				'visible' => $row['visible'],
@@ -1996,9 +1996,9 @@ function doTPblocks()
 		{
 			while($article = tpdb_fetch_assoc($request))
 			{
-				$article['subject'] = html_entity_decode($article['subject'], ENT_QUOTES, $context['character_set']);
-				$article['value1'] = html_entity_decode($article['value1'], ENT_QUOTES, $context['character_set']);
-				$article['body'] = html_entity_decode($article['body'], ENT_QUOTES, $context['character_set']);
+				$article['subject'] = html_entity_decode($article['subject'], ENT_QUOTES);
+				$article['value1'] = html_entity_decode($article['value1'], ENT_QUOTES);
+				$article['body'] = html_entity_decode($article['body'], ENT_QUOTES);
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 
@@ -2041,7 +2041,7 @@ function doTPblocks()
 			{
 				$context['TPortal']['blockarticle_titles'][$row['category']][$row['date'].'_'.$row['id']] = array(
 					'id' => $row['id'],
-					'subject' => html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']),
+					'subject' => html_entity_decode($row['subject'], ENT_QUOTES),
 					'shortname' => $row['shortname']!='' ?$row['shortname'] : $row['id'] ,
 					'category' => $row['category'],
 					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
@@ -2084,7 +2084,7 @@ function doTPblocks()
 					$context['TPortal']['menu'][$row['subtype2']][] = array(
 						'id' => $row['id'],
 						'menuID' => $row['subtype2'],
-						'name' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
+						'name' => html_entity_decode($row['value1'], ENT_QUOTES),
 						'pos' => $menupos,
 						'type' => $mtype,
 						'IDtype' => $idtype,
@@ -2107,7 +2107,7 @@ function doTPblocks()
 			{
 				$context['TPortal']['menurender'][$row['id']] = array(
 						'id' => $row['id'],
-						'name' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
+						'name' => html_entity_decode($row['value1'], ENT_QUOTES),
 						);
 			}
 			tpdb_free_result($request);

@@ -436,11 +436,11 @@ function TPmodules()
 			while($row=tpdb_fetch_assoc($request))
 			{
 				if($row['type']=='bbc')
-					$row['body']=doUBBC(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
+					$row['body']=doUBBC(html_entity_decode($row['body'], ENT_QUOTES));
 				elseif($row['type']=='php')
 					$row['body']='[PHP]';
 				else
-					$row['body']=strip_tags(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
+					$row['body']=strip_tags(html_entity_decode($row['body'], ENT_QUOTES));
 
 				$row['subject'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
 				$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
@@ -487,12 +487,12 @@ function TPmodules()
 					'hour' => date("G",$row['date']),
 					'minute' => date("i",$row['date']),
 					),
-				'body' => html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']),
-				'intro' => html_entity_decode($row['intro'], ENT_QUOTES, $context['character_set']),
+				'body' => html_entity_decode($row['body'], ENT_QUOTES),
+				'intro' => html_entity_decode($row['intro'], ENT_QUOTES),
 				'useintro' => $row['useintro'],
 				'category' => $row['category'],
 				'frontpage' => $row['frontpage'],
-				'subject' => html_entity_decode($row['subject'], ENT_QUOTES, $context['character_set']),
+				'subject' => html_entity_decode($row['subject'], ENT_QUOTES),
 				'authorID' => $row['authorID'],
 				'author' => $row['author'],
 				'frame' => !empty($row['frame']) ? $row['frame'] : 'theme',

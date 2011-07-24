@@ -996,7 +996,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use=1, $showc
 	</script>';
 	if($showchoice)
 		echo '
-	<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'.html_entity_decode($body, ENT_QUOTES, $context['character_set']).'</textarea>';
+	<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'.html_entity_decode($body, ENT_QUOTES).'</textarea>';
 
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
@@ -1756,7 +1756,7 @@ function tp_renderarticle($intro = '')
 	else
 	{
 		if($context['TPortal']['article']['rendertype']=='php')
-			eval(tp_convertphp(html_entity_decode($context['TPortal']['article']['body'], ENT_QUOTES, $context['character_set']),true));
+			eval(tp_convertphp(html_entity_decode($context['TPortal']['article']['body'], ENT_QUOTES),true));
 		elseif($context['TPortal']['article']['rendertype']=='import')
 		{
 			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport']))

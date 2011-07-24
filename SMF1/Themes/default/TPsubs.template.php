@@ -360,7 +360,7 @@ function TPortal_themebox()
 	}
 	
 	if(isset($context['TPortal']['querystring']))
-		$tp_where=htmlspecialchars(strip_tags($context['TPortal']['querystring']), ENT_QUOTES, $context['character_set']);
+		$tp_where=htmlspecialchars(strip_tags($context['TPortal']['querystring']), ENT_QUOTES);
 	else
 		$tp_where='action=forum';
 
@@ -382,7 +382,7 @@ function TPortal_themebox()
 			</select><br />' , $context['user']['is_logged'] ?
 			'<input type="checkbox" value=";permanent" onfocus="realtheme()" /> '. $txt['tp-permanent']. '<br />' : '' , '
 			<input style="margin: 5px 0px 5px 10px;" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" />
- 			<input type="hidden" value="'.htmlspecialchars($scripturl . '?'.$tp_where.'theme='.$settings['theme_id'], ENT_QUOTES, $context['character_set']).'" name="jumpurl3" />
+ 			<input type="hidden" value="'.htmlspecialchars($scripturl . '?'.$tp_where.'theme='.$settings['theme_id'], ENT_QUOTES).'" name="jumpurl3" />
  			<div style="text-align: center; width: 95%; overflow: hidden;">
 				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen"  />
 			</div>
@@ -1645,7 +1645,7 @@ function article_globaltags($render=true)
 			<ul>';
 		foreach($taglinks as $tag)
 				$code .= '
-				<li><a href="' . $scripturl . $tag['href'] . '"' . ($tag['type']=='tparticle_itemtags' && $tag['itemid']==$context['TPortal']['article']['id'] ? ' class="selected"' : '') . '>' . strip_tags(html_entity_decode($tag['title'], ENT_QUOTES, $context['character_set']), '<a>') . '</a></li>';
+				<li><a href="' . $scripturl . $tag['href'] . '"' . ($tag['type']=='tparticle_itemtags' && $tag['itemid']==$context['TPortal']['article']['id'] ? ' class="selected"' : '') . '>' . strip_tags(html_entity_decode($tag['title'], ENT_QUOTES), '<a>') . '</a></li>';
 
 		$code .= '
 			</ul>';

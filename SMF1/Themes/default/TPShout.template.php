@@ -41,7 +41,7 @@ function template_tpshout_bigscreen()
 	echo '
 			<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 10px; margin: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >
 				<input type="hidden" name="tp-shout-name" value="'.$context['user']['name'].'" />
-				<input name="tp-shout-url" type="hidden" value="'. htmlspecialchars($tp_where, ENT_QUOTES, $context['character_set']).'" />
+				<input name="tp-shout-url" type="hidden" value="'. htmlspecialchars($tp_where, ENT_QUOTES).'" />
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 			</form>
 		</div>
@@ -241,7 +241,7 @@ function template_tpshout_shoutblock()
 
 	echo '
 		<br /><a href="' , $scripturl , '?action=tpmod;shout=show50">' . $txt['tp-showlatest'] . '</a>
-		<input name="tp-shout-url" type="hidden" value="'. htmlspecialchars($tp_where, ENT_QUOTES, $context['character_set']).'" />
+		<input name="tp-shout-url" type="hidden" value="'. htmlspecialchars($tp_where, ENT_QUOTES).'" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 	</form>';
 
@@ -317,7 +317,7 @@ function template_singleshout($row)
 							</div> 
 							<div class="tp_shoutupper"></div>
 							<div class="tp_shoutbody">
-							' . (parse_bbc(censorText(strip_tags(html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']))),true)) . '
+							' . (parse_bbc(censorText(strip_tags(html_entity_decode($row['value1'], ENT_QUOTES))),true)) . '
 							</div>
 						</div>
 				</div>';

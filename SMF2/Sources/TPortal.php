@@ -1371,8 +1371,8 @@ function doTPfrontpage()
 				'col2' => array(),
 				'options' => array(
 					'catlayout' => $context['TPortal']['frontpage_catlayout'],
-					)
-				);
+				)
+			);
 
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
@@ -1424,8 +1424,8 @@ function doTPfrontpage()
 				'col2' => array(),
 				'options' => array(
 					'catlayout' => $context['TPortal']['frontpage_catlayout'],
-					)
-				);
+				)
+			);
 
 			$row = $smcFunc['db_fetch_assoc']($request);
 			// expand the vislaoptions
