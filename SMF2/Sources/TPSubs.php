@@ -1720,7 +1720,10 @@ function tp_renderarticle($intro = '')
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro))
 	{
 		if($context['TPortal']['article']['rendertype'] == 'php')
-			eval(tp_convertphp($context['TPortal']['article']['intro'], true));
+		{
+			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
+			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
 			if(!WIRELESS)

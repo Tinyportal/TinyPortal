@@ -1396,7 +1396,7 @@ function doTPfrontpage()
 	elseif($context['TPortal']['front_type'] == 'single_page')
 	{
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, IF(art.useintro>0, art.intro, art.body) AS body,
+			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
