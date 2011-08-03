@@ -3068,7 +3068,7 @@ function do_postchecks()
 							'type' => 'string',
 						),
 						array($straynewcat, '0', 'category'),
-						array()
+						array('id')
 					);
 
 					$newcategory = $smcFunc['db_insert_id']('{db_prefix}tp_variables', 'id');
@@ -3675,7 +3675,8 @@ function do_postchecks()
 							$smcFunc['db_insert']('replace',
 								'{db_prefix}tp_variables',
 								array('type' => 'string', 'value5' => 'int'),
-								array('art_not_approved', $where)
+								array('art_not_approved', $where),
+								array('id')
 							);						
 					}
 					else

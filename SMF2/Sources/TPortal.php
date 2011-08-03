@@ -682,7 +682,7 @@ function doTPpage()
 					$request =  $smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_articles 
 						SET views = views + 1 
-						WHERE ' . (is_numeric($page) ? '{int:page}' : '{string:page}') . ' LIMIT 1',
+						WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}') . ' LIMIT 1',
 						array('page' => $page)
 					);
 					
