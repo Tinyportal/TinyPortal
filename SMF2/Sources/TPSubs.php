@@ -1242,7 +1242,8 @@ function TP_getmenu($menu_id)
 function tp_fetchpermissions($perms)
 {
 	global $scripturl, $context, $settings, $txt, $db_prefix, $smcFunc;
-
+	
+	$perm = array();
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
@@ -1259,7 +1260,7 @@ function tp_fetchpermissions($perms)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$perms[$row['permission']][$row['ID_GROUP']] = $row['ID_GROUP'];
+				$perm[$row['permission']][$row['ID_GROUP']] = $row['ID_GROUP'];
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1276,11 +1277,11 @@ function tp_fetchpermissions($perms)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$perms[$row['permission']][$row['id_group']] = $row['id_group'];
+				$perm[$row['permission']][$row['id_group']] = $row['id_group'];
 			}
 			$smcFunc['db_free_result']($request);
 		}
-		return $perms;
+		return $perm;
 	}
 	else
 	{
