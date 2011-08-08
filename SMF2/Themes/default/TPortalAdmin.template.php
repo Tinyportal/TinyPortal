@@ -1385,7 +1385,9 @@ function template_frontpage()
 				$context['TPortal']['frontpage_template'] = '
 	<span class="upperframe"><span></span></span>
 	<div class="roundframe">
-		<h3 class="titlebg"><span class="left"></span>{article_shortdate} {article_title} </h3>
+		<div class="title_bar">
+			<h3 class="titlebg"><span class="left"></span>{article_shortdate} {article_title} </h3>
+		</div>
 		<div style="padding: 0; overflow: hidden;">
 			{article_avatar}
 			<div class="article_info">
@@ -1678,7 +1680,9 @@ function template_editcategory()
 			if(empty($mg['value9']))
 				$mg['value9'] = '
 <div class="tparticle">
-	<h3 class="catbg"><span class="left"></span>{article_shortdate} {article_title} {article_category}</h3>
+	<div class="cat_bar">
+		<h3 class="catbg"><span class="left"></span>{article_shortdate} {article_title} {article_category}</h3>
+	</div>
 	<div class="windowbg2">
 		<span class="topslice"><span></span></span>
 		<div class="content">
