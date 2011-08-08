@@ -1402,7 +1402,6 @@ function template_frontpage()
 			{article_bookmark}
 			{article_boardnews}
 			{article_moreauthor}
-			{article_bookmark}
 			{article_morelinks}
 			{article_globaltags}
 			{article_comments}
