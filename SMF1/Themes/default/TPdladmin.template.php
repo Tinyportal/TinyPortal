@@ -615,11 +615,11 @@ function template_main()
 					<br />';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES, $context['character_set']), true,'qup_dladmin_text');
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true,'qup_dladmin_text');
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES, $context['character_set']));
+					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], html_entity_decode($cat['description'], ENT_QUOTES));
 				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'], ENT_QUOTES, $context['character_set']).'</textarea>';
+					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'], ENT_QUOTES).'</textarea>';
 
 			
 				TPsshowgtags('dladmin_cattags', 'dladmin_cattags', $cat['id']);

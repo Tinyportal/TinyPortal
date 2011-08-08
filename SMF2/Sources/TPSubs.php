@@ -760,8 +760,8 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 
 function tp_cleantitle($text)
 {
-	$tmp = strtr($text, 'Å Å½Å¡Å¾Å¸Ã€ÃÃ‚ÃƒÃ„Ã…Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃŽÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¶Ã¸Ã¹ÃºÃ»Ã¼Ã½Ã¿', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$tmp = strtr($tmp, array('Ãž' => 'TH', 'Ã¾' => 'th', 'Ã' => 'DH', 'Ã°' => 'dh', 'ÃŸ' => 'ss', 'Å’' => 'OE', 'Å“' => 'oe', 'Ã†' => 'AE', 'Ã¦' => 'ae', 'Âµ' => 'u'));
+	$tmp = strtr($text, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+	$tmp = strtr($tmp, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 	$cleaned = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $tmp);
 	return $cleaned;
 }
@@ -1242,7 +1242,8 @@ function TP_getmenu($menu_id)
 function tp_fetchpermissions($perms)
 {
 	global $scripturl, $context, $settings, $txt, $db_prefix, $smcFunc;
-
+	
+	$perm = array();
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
@@ -1259,7 +1260,7 @@ function tp_fetchpermissions($perms)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$perms[$row['permission']][$row['ID_GROUP']] = $row['ID_GROUP'];
+				$perm[$row['permission']][$row['ID_GROUP']] = $row['ID_GROUP'];
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1276,11 +1277,11 @@ function tp_fetchpermissions($perms)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$perms[$row['permission']][$row['id_group']] = $row['id_group'];
+				$perm[$row['permission']][$row['id_group']] = $row['id_group'];
 			}
 			$smcFunc['db_free_result']($request);
 		}
-		return $perms;
+		return $perm;
 	}
 	else
 	{
@@ -1720,7 +1721,10 @@ function tp_renderarticle($intro = '')
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro))
 	{
 		if($context['TPortal']['article']['rendertype'] == 'php')
-			eval(tp_convertphp($context['TPortal']['article']['intro'], true));
+		{
+			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
+			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
 			if(!WIRELESS)
@@ -2729,10 +2733,10 @@ function art_recentitems($max = 5, $type = 'date' ){
 			FROM {db_prefix}tp_articles as art 
 			WHERE art.off = {int:off} and art.approved = {int:approved} 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-				OR (art.pub_start != 0 AND art.pub_start < {now} AND art.pub_end = 0) 
-				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > {now}) 
-				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > {now} AND art.pub_start < {now}))
-			ORDER BY {string:orderby} DESC LIMIT {int:limit}',
+				OR (art.pub_start != 0 AND art.pub_start < '. $now .' AND art.pub_end = 0) 
+				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '. $now .') 
+				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '. $now .' AND art.pub_start < '. $now .'))
+			ORDER BY {raw:orderby} DESC LIMIT {int:limit}',
 			array(
 				'off' => 0, 'approved' => 1, 'orderby' => $orderby, 'limit' => $max,
 			)
@@ -2741,7 +2745,7 @@ function art_recentitems($max = 5, $type = 'date' ){
 	if($smcFunc['db_num_rows']($request) > 0){
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
-			$rat = explode(",", $row['rating']);
+			$rat = explode(',', $row['rating']);
 			$rating_votes = count($rat);
 			if($row['rating'] == '')
 				$rating_votes = 0;

@@ -3075,7 +3075,7 @@ function do_postchecks()
 							'type' => 'string',
 						),
 						array($straynewcat, '0', 'category'),
-						array()
+						array('id')
 					);
 
 					$newcategory = $smcFunc['db_insert_id']('{db_prefix}tp_variables', 'id');
@@ -3553,7 +3553,7 @@ function do_postchecks()
 					elseif(in_array($setting, array('body', 'intro')))
 					{
 						// in case of HTML article we need to check it
-						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice']))
+						if(isset($_POST['tp_article_body_pure']) && !empty($_POST['tp_article_body_choice']))
 						{
 							if($_POST['tp_article_body_choice'] == 0)
 							{
@@ -3682,7 +3682,8 @@ function do_postchecks()
 							$smcFunc['db_insert']('replace',
 								'{db_prefix}tp_variables',
 								array('type' => 'string', 'value5' => 'int'),
-								array('art_not_approved', $where)
+								array('art_not_approved', $where),
+								array('id')
 							);						
 					}
 					else

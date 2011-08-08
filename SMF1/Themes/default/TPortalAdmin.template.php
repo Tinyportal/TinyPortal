@@ -564,7 +564,7 @@ function template_menubox()
 						foreach($context['TPortal']['editcats'] as $bmg)
 						{
 							if($lbox['IDtype']==$bmg['id']) 
-								echo html_entity_decode($bmg['name'], ENT_QUOTES, $context['character_set']);
+								echo html_entity_decode($bmg['name'], ENT_QUOTES);
 						}
 					}
 					elseif($lbox['type']=='arti'){
@@ -572,7 +572,7 @@ function template_menubox()
 						foreach($context['TPortal']['edit_articles'] as $bmg)
 						{
 							if($lbox['IDtype']==$bmg['id'])
-								echo html_entity_decode($bmg['subject'], ENT_QUOTES, $context['character_set']);
+								echo html_entity_decode($bmg['subject'], ENT_QUOTES);
 						}
 					}
 					elseif($lbox['type']=='head'){
@@ -710,7 +710,7 @@ function template_addmenu()
 								<select size="1" name="tp_menu_category">';
 				foreach($context['TPortal']['editcats'] as $bmg){
 					echo '
-							<option value="', $bmg['id'] ,'">'. str_repeat("-",($bmg['indent'])) .' '. html_entity_decode($bmg['name'], ENT_QUOTES, $context['character_set']).'</option>';
+							<option value="', $bmg['id'] ,'">'. str_repeat("-",($bmg['indent'])) .' '. html_entity_decode($bmg['name'], ENT_QUOTES).'</option>';
 				}
 			}
 			//  (article)
@@ -720,7 +720,7 @@ function template_addmenu()
 			if(count($context['TPortal']['edit_articles'])>0){
 				foreach($context['TPortal']['edit_articles'] as $bmg){
 					echo '
-									<option value="', empty($bmg['shortname']) ? $bmg['id'] : $bmg['shortname'] ,'"> '.html_entity_decode($bmg['subject'], ENT_QUOTES, $context['character_set']).'</option>';
+									<option value="', empty($bmg['shortname']) ? $bmg['id'] : $bmg['shortname'] ,'"> '.html_entity_decode($bmg['subject'], ENT_QUOTES).'</option>';
 				}
 			}
 			else
@@ -836,7 +836,7 @@ function template_linkmanager()
 		if(count($context['TPortal']['editcats'])>0){
 			foreach($context['TPortal']['editcats'] as $bmg){
  				echo '
- 								<option value="',  $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='cats' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,' > '. html_entity_decode($bmg['name'], ENT_QUOTES, $context['character_set']).'</option>';
+ 								<option value="',  $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='cats' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,' > '. html_entity_decode($bmg['name'], ENT_QUOTES).'</option>';
 			}
 		}
 		else
@@ -850,7 +850,7 @@ function template_linkmanager()
 		if(count($context['TPortal']['edit_articles'])>0){
 			foreach($context['TPortal']['edit_articles'] as $bmg){
  				echo '
- 								<option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='arti' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject'], ENT_QUOTES, $context['character_set']).'</option>';
+ 								<option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='arti' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject'], ENT_QUOTES).'</option>';
 			}
 		}
 		else
@@ -1162,7 +1162,7 @@ function template_clist()
 							<input name="tp_clist'.$ta.'" type="checkbox" value="'.$ta.'"';
 			if(in_array($ta,$clist))
 				echo ' checked';
-			echo '>'.html_entity_decode($val, ENT_QUOTES, $context['character_set']).'<br />';
+			echo '>'.html_entity_decode($val, ENT_QUOTES).'<br />';
 		}
 		echo '<br /><input type="checkbox" onclick="invertAll(this, this.form, \'tp_clist\');" />'.$txt['tp-checkall'].'
 						</td>
@@ -1413,7 +1413,7 @@ function template_frontpage()
 </div>';
 
 			echo '<br style="clear: both;" />
-									<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' .htmlspecialchars($context['TPortal']['frontpage_template'], ENT_QUOTES, $context['character_set']). '</textarea>
+									<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' .htmlspecialchars($context['TPortal']['frontpage_template'], ENT_QUOTES). '</textarea>
 					</td>
 					</tr>
 					<tr class="windowbg2">
@@ -1563,7 +1563,7 @@ function template_editcategory()
 						<table class="formtable">
 							<tr class="windowbg">
 								<td class="left" style="width: 20%;" valign="top">'.$txt['tp-name']. ':</td>
-								<td class="right"><input size="40" name="tp_category_value1" style="width: 90%;" type="text" value="' ,html_entity_decode($mg['value1'], ENT_QUOTES, $context['character_set']), '"></td>
+								<td class="right"><input size="40" name="tp_category_value1" style="width: 90%;" type="text" value="' ,html_entity_decode($mg['value1'], ENT_QUOTES), '"></td>
 							</tr>
 							<tr class="windowbg2">
 								<td class="left" valign="top">'.$txt['tp-parent']. '</td>
@@ -1574,7 +1574,7 @@ function template_editcategory()
 			{
 				if($parent['id']!= $mg['id'])
 					echo '
-										<option value="' . $parent['id'] . '"' , $parent['id']==$mg['value2'] ? ' selected="selected"' : '' , '>' , str_repeat("-",$parent['indent']) ,' ' , html_entity_decode($parent['name'], ENT_QUOTES, $context['character_set']) , '</option>'; 
+										<option value="' . $parent['id'] . '"' , $parent['id']==$mg['value2'] ? ' selected="selected"' : '' , '>' , str_repeat("-",$parent['indent']) ,' ' , html_entity_decode($parent['name'], ENT_QUOTES) , '</option>'; 
 			}
 			echo '
 									</select>
@@ -1703,7 +1703,7 @@ function template_editcategory()
 
 			echo '<br style="clear: both;" />
                                     <h4>', $txt['reset_custom_template_layout'] ,'</h4>
-									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' .htmlspecialchars($mg['value9'], ENT_QUOTES, $context['character_set']). '</textarea>
+									<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' .htmlspecialchars($mg['value9'], ENT_QUOTES). '</textarea>
 								</td>
 							</tr>
 							<tr class="windowbg">
@@ -2127,7 +2127,7 @@ function template_editarticle($type = '')
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
 		<table class="admintable">
-			<caption class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . ' &#171;' . (html_entity_decode($context['TPortal']['categoryNAME'], ENT_QUOTES, $context['character_set'])) . '&#187;' : $txt['tp-editarticle']. ' &#171;' . html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) . '&#187;' , ' </caption>
+			<caption class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . ' &#171;' . (html_entity_decode($context['TPortal']['categoryNAME'], ENT_QUOTES)) . '&#187;' : $txt['tp-editarticle']. ' &#171;' . html_entity_decode($mg['subject'], ENT_QUOTES) . '&#187;' , ' </caption>
 			<tbody>
 				<tr class="windowbg2">
 					<td class="tborder" style="padding: 0; border: none;">
@@ -2149,9 +2149,9 @@ function template_editarticle($type = '')
 				
 				if($mg['articletype']=='php')
 					echo '
-							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , htmlentities($mg['body'], ENT_QUOTES, $context['character_set']), '</textarea><br />';
+							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , htmlspecialchars($mg['body'], ENT_QUOTES), '</textarea><br />';
 				elseif($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-					TPwysiwyg('tp_article_body', htmlspecialchars($mg['body'], ENT_QUOTES, $context['character_set']), true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
+					TPwysiwyg('tp_article_body', htmlspecialchars($mg['body'], ENT_QUOTES), true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
 				elseif($context['TPortal']['use_wysiwyg']==0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
@@ -2279,7 +2279,7 @@ function template_editarticle($type = '')
 						<td valign="top" colspan="2">';
 					
 					if($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-						TPwysiwyg('tp_article_intro', htmlspecialchars($mg['intro'], ENT_QUOTES, $context['character_set']), true,'qup_tp_article_intro', true, false);
+						TPwysiwyg('tp_article_intro', htmlspecialchars($mg['intro'], ENT_QUOTES), true,'qup_tp_article_intro', true, false);
 					else
 						echo '
 							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
@@ -2293,7 +2293,7 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td valign="top" colspan="2">'.$txt['tp-introtext'].'</td>
 					</tr><tr class="windowbg2"><td colspan="2">
-						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.htmlspecialchars($mg['intro'], ENT_QUOTES, $context['character_set']).'</textarea>
+						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.htmlspecialchars($mg['intro'], ENT_QUOTES).'</textarea>
 					</td></tr>';
 				}
 
@@ -2735,7 +2735,7 @@ function template_blockedit()
 				{
 					echo '
 						</td><td class="right">
-						<textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , htmlentities($context['TPortal']['blockedit']['body'], ENT_QUOTES, $context['character_set']), '</textarea>
+						<textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , htmlspecialchars($context['TPortal']['blockedit']['body'], ENT_QUOTES), '</textarea>
 						<p><div class="tborder" style="padding: 1em;"><p style="padding: 0 0 5px 0; margin: 0;">' , $txt['tp-blockcodes'] , ':</p>
 							<select name="tp_blockcode" id="tp_blockcode" size="8" style="margin-bottom: 5px; width: 100%" onchange="changeSnippet(this.selectedIndex);">
 								<option value="0" selected="selected">' , $txt['tp-none-'] , '</option>';
@@ -2890,7 +2890,7 @@ function template_blockedit()
 				echo $txt['tp-showarticle'],'</td><td class="right">
 				<select name="tp_block_body">';
 				foreach($context['TPortal']['edit_articles'] as $art => $article ){
-					echo '<option value="'.$article['id'].'" ' , $context['TPortal']['blockedit']['body']==$article['id'] ? ' selected="selected"' : '' ,' >'.html_entity_decode($article['subject'], ENT_QUOTES, $context['character_set']).'</option>';
+					echo '<option value="'.$article['id'].'" ' , $context['TPortal']['blockedit']['body']==$article['id'] ? ' selected="selected"' : '' ,' >'.html_entity_decode($article['subject'], ENT_QUOTES).'</option>';
 				}
 				echo '</select>';
 			}
@@ -2935,7 +2935,7 @@ function template_blockedit()
 				echo $txt['tp-showcategory'],'</td><td class="right">
 				<select name="tp_block_body">';
 				foreach($context['TPortal']['catnames'] as $cat => $catname){
-					echo '<option value="'.$cat.'" ' , $context['TPortal']['blockedit']['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($catname, ENT_QUOTES, $context['character_set']).'</option>';
+					echo '<option value="'.$cat.'" ' , $context['TPortal']['blockedit']['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($catname, ENT_QUOTES).'</option>';
 				}
 				echo '</select><br /><br /><br />';
 				echo $txt['tp-catboxheight'].'
@@ -3052,7 +3052,7 @@ function template_blockedit()
 
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang){
 				if($lang!=$context['user']['language'] && $lang!='')
-					echo '<input name="tp_lang_'.$lang.'" type="text" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES, $context['character_set']) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES, $context['character_set']) , '"> '. $lang.'<br />';
+					echo '<input name="tp_lang_'.$lang.'" type="text" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '"> '. $lang.'<br />';
 			}
 
 			echo '
@@ -3131,7 +3131,7 @@ function template_blockedit()
 				foreach($context['TPortal']['edit_articles'] as $bb)
 				{
 					echo '
-										<input type="checkbox" name="articletype' , $a , '" value="'.$bb['id'].'" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['access2']['page']) ? 'checked="checked"' : '' , '>'.html_entity_decode($bb['subject'], ENT_QUOTES, $context['character_set']).'<br />';
+										<input type="checkbox" name="articletype' , $a , '" value="'.$bb['id'].'" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['access2']['page']) ? 'checked="checked"' : '' , '>'.html_entity_decode($bb['subject'], ENT_QUOTES).'<br />';
 					$a++;
 				}
 				echo '
@@ -3320,7 +3320,7 @@ function template_blocks()
 
 					echo '
 						</td>
-						<td colspan="2"><input name="title' .$lblock['id']. '" type="text" size="20" value="' .html_entity_decode($newtitle, ENT_QUOTES, $context['character_set']). '"></td>
+						<td colspan="2"><input name="title' .$lblock['id']. '" type="text" size="20" value="' .html_entity_decode($newtitle, ENT_QUOTES). '"></td>
 						<td>
 							<select size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
@@ -3507,7 +3507,7 @@ function template_blocks()
 										<select name="blockbody' .$lblock['id']. '">';
 						foreach($context['TPortal']['edit_articles'] as $article){
 							echo '
-											<option value="'.$article['id'].'" ' ,$lblock['body']==$article['id'] ? ' selected' : '' ,' >'. html_entity_decode($article['subject'], ENT_QUOTES, $context['character_set']).'</option>';
+											<option value="'.$article['id'].'" ' ,$lblock['body']==$article['id'] ? ' selected' : '' ,' >'. html_entity_decode($article['subject'], ENT_QUOTES).'</option>';
 						}
 						echo '
 										</select>
@@ -3528,7 +3528,7 @@ function template_blocks()
 							foreach($context['TPortal']['catnames'] as $cat => $val)
 							{
 								echo '
-											<option value="'.$cat.'" ' , $lblock['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($val, ENT_QUOTES, $context['character_set']).'</option>';
+											<option value="'.$cat.'" ' , $lblock['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($val, ENT_QUOTES).'</option>';
 							}
 						}
 						echo '

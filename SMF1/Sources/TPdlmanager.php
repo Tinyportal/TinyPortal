@@ -427,7 +427,7 @@ function TPortalDLManager()
         if($context['TPortal']['dl_wysiwyg'] == 'bbc')
             $context['TPortal']['dl_introtext'] = parse_bbc($context['TPortal']['dl_introtext']);
         else
-            $context['TPortal']['dl_introtext'] = html_entity_decode($context['TPortal']['dl_introtext'], ENT_QUOTES, $context['character_set']);
+            $context['TPortal']['dl_introtext'] = html_entity_decode($context['TPortal']['dl_introtext'], ENT_QUOTES);
 
 		$context['TPortal']['dlcats'] = array();
 		$context['TPortal']['dlcatchilds'] = array();
@@ -480,7 +480,7 @@ function TPortalDLManager()
 					'id' => $row['id'],
 					'name' => $row['name'],
 					'category' => $row['category'],
-					'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES)))) : html_entity_decode($row['description'], ENT_QUOTES),
 					'file' => $row['file'],
 					'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
@@ -617,7 +617,7 @@ function TPortalDLManager()
 							'id' => $row['id'],
 							'name' => $row['name'],
 							'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES)))) : html_entity_decode($row['description'], ENT_QUOTES),
 							'access' => $row['access'],
 							'icon' => $row['icon'],
 							'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
@@ -693,7 +693,7 @@ function TPortalDLManager()
 						$context['TPortal']['featured'] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES)))) : html_entity_decode($row['description'], ENT_QUOTES),
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
@@ -850,7 +850,7 @@ function TPortalDLManager()
 							'id' => $row['id'],
 							'name' => $row['name'],
 							'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES)))) : html_entity_decode($row['description'], ENT_QUOTES),
 							'access' => $row['access'],
 							'icon' => $row['icon'],
 							'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
@@ -963,7 +963,7 @@ function TPortalDLManager()
 						'icon' => $ico,
 						'date' => $row['created'],
 						'filesize' => $fs,
-						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : html_entity_decode($row['ingress'], ENT_QUOTES, $context['character_set']),
+						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : html_entity_decode($row['ingress'], ENT_QUOTES),
 					);
 				}
 				tpdb_free_result($request);
@@ -1232,7 +1232,7 @@ function TPortalDLManager()
 						$context['TPortal']['dlitem'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES, $context['character_set'])))) : html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+						'description' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags(html_entity_decode($row['description'], ENT_QUOTES)))) : html_entity_decode($row['description'], ENT_QUOTES),
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=get'.$row['id'],
@@ -1396,7 +1396,7 @@ function TPdlresults()
 		{
 			$row['name'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['name']);
 			$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
-			$row['body']=strip_tags(html_entity_decode($row['body'], ENT_QUOTES, $context['character_set']));
+			$row['body']=strip_tags(html_entity_decode($row['body'], ENT_QUOTES));
 
 			$context['TPortal']['dlsearchresults'][]=array(
 				'id' => $row['id'],
@@ -2392,7 +2392,7 @@ function TPortalDLAdmin()
 					'icon' => $brow['icon'],
 					'access' => $brow['access'],
 					'parent' => $brow['parent'],
-					'description' => html_entity_decode($brow['description'], ENT_QUOTES, $context['character_set']),
+					'description' => html_entity_decode($brow['description'], ENT_QUOTES),
 					'shortname' => $brow['link'],
 					'items' => $items,
 					'submitted' => $sitems,
@@ -2441,7 +2441,7 @@ function TPortalDLAdmin()
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => html_entity_decode($row['description'], ENT_QUOTES),
 					'downloads' => $row['downloads'],
 					'sshot' => $row['screenshot'],
 					'link' => $row['link'],
@@ -2474,7 +2474,7 @@ function TPortalDLAdmin()
 					'shortname' => $row['link'],
 					'access' => $row['access'],
 					'parent' => $row['parent'],
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => html_entity_decode($row['description'], ENT_QUOTES),
 					'items' => $items,
 					'submitted' => $sitems,
 					'total' => ($items + $sitems),
@@ -2560,7 +2560,7 @@ function TPortalDLAdmin()
 					'name' => $row['name'],
 					'access' => $row['access'],
 					'shortname' => $row['link'],
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => html_entity_decode($row['description'], ENT_QUOTES),
 					'icon' => $row['icon'],
 					'parent' => $row['parent'],
 				);
@@ -2647,7 +2647,7 @@ function TPortalDLAdmin()
 					'file' => $row['file'],
 					'views' => $row['views'],
 					'authorID' => $row['authorID'],
-					'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+					'description' => html_entity_decode($row['description'], ENT_QUOTES),
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
 					'filesize' => (substr($row['file'],14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file'])/1024) : '0' ,
@@ -2828,7 +2828,7 @@ function TPortalDLUser($item)
 				'file' => $row['file'],
 				'views' => $row['views'],
 				'authorID' => $row['authorID'],
-				'description' => html_entity_decode($row['description'], ENT_QUOTES, $context['character_set']),
+				'description' => html_entity_decode($row['description'], ENT_QUOTES),
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
 				'filesize' => (substr($row['file'],14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file'])/1024) : '0' ,
