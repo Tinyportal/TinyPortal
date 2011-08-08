@@ -1161,12 +1161,19 @@ function do_articles()
 			$strays=true;
 			$cu = '';
 		}
-		if($what >0)
-			$request = $smcFunc['db_query']('', '
+		if($what > 0) 
+		{
+			$smcFunc['db_query']('', '
 				DELETE FROM {db_prefix}tp_articles 
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
+			$smcFunc['db_query']('', '
+				DELETE FROM {db_prefix}tp_variables
+				WHERE value5 = {int:artid}',
+				array('artid' => $what)
+			);
+		}
 
 		redirectexit('action=tpadmin' . (!empty($cu) ? ';cu='.$cu : '') . (isset($strays) ? ';sa=strays'.$cu : ';sa=articles'));
 	}
