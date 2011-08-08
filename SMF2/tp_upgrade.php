@@ -984,7 +984,7 @@ function addDefaults()
 				'var4' => 0,
 			),
 			'search' =>array(
-				'type' => 2,
+				'type' => 4,
 				'frame' => 'theme',
 				'title' => 'Search',
 				'body' => '',
