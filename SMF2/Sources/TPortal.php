@@ -18,8 +18,11 @@ function TPortal_init()
 {
 	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir;
 
-	$context['tportal']['now'] = time();
-
+	$settings['tp_smfversion'] = '1';
+	$context['TPortal'] = array();
+	$context['TPortal']['now'] = time();
+	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
+	
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['fixed_width']))
 		return;
@@ -28,17 +31,15 @@ function TPortal_init()
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
 		return;
 
+	// Grab the SSI for its functionality
 	require_once($boarddir. '/SSI.php');
 	
-	$settings['tp_smfversion'] = '1';
-	$context['TPortal'] = array();
-	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
-	// include the common files.
+	// Include a ton of functions.
 	require_once($sourcedir.'/TPSubs.php');
 
 	if(loadlanguage('TPortal') == false)
 		loadlanguage('TPortal', 'english');
-		
+
 	setupTPsettings();
 	fetchTPhooks();
 	doModules();
@@ -626,9 +627,9 @@ function doTPpage()
                     LEFT JOIN {db_prefix}tp_variables as var ON (var.id = art.category)
                     WHERE '. $pag .'
                     AND ((art.pub_start = 0 AND art.pub_end = 0)
-                    OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0)
-                    OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].')
-                    OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+                    OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
+                    OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
+                    OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
                     LIMIT 1',
                     array('page' => $page)
                 );
@@ -1093,9 +1094,9 @@ function doTPcat()
 						LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
 						WHERE art.category = {int:cat} 
 						AND ((art.pub_start = 0 AND art.pub_end = 0) 
-						OR (art.pub_start !=0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-						OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-						OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+						OR (art.pub_start !=0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+						OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+						OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 						AND art.off = 0 
 						AND art.approved = 1 
 						ORDER BY art.sticky desc, art.'.$catsort.' '.$catsort_order.'
@@ -1162,9 +1163,9 @@ function doTPcat()
 						SELECT COUNT(*) FROM {db_prefix}tp_articles as art 
 						WHERE art.category = {int:cat} 
 						AND ((art.pub_start = 0 AND art.pub_end = 0) 
-						OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-						OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-						OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+						OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+						OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+						OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 						AND art.off = 0 AND art.approved = 1',
 						array('cat' => $category['id'])
 					);
@@ -1315,9 +1316,9 @@ function doTPfrontpage()
 			' . $artgroups . '
 			AND art.category > 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.approved = 1 
 			AND art.frontpage = 1'
 		);
@@ -1348,9 +1349,9 @@ function doTPfrontpage()
 			WHERE art.off = 0 
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.category > 0
 			AND art.approved = 1 
 			AND (art.frontpage = 1 OR art.featured = 1) 
@@ -1409,9 +1410,9 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
 			WHERE art.off = 0 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.featured = 1
 			AND art.approved = 1 
 			LIMIT 1'
@@ -1579,9 +1580,9 @@ function doTPfrontpage()
 			AND var.id = art.category
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.category > 0
 			AND art.approved = 1 
 			AND (art.frontpage = 1 OR art.featured = 1)
@@ -1905,9 +1906,9 @@ function doTPfrontpage()
 			WHERE ' . $fetchart.' 
 			AND art.off = 0 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.category > 0
 			AND art.approved = 1 
 			AND art.category > 0 AND art.category < 9999'
@@ -1939,9 +1940,9 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member) 
 			WHERE ' . 	$fetchtitles . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.off = 0
 			AND art.category > 0
 			AND art.approved = 1'
@@ -2228,9 +2229,9 @@ function doTPblocks()
 			WHERE ' . $fetchart. '
 			AND art.off = 0 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.approved = 1 
 			AND art.category > 0 AND art.category < 9999'
 		);
@@ -2273,9 +2274,9 @@ function doTPblocks()
 			WHERE  '. 	$fetchtitles . '
 			AND art.off = 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['tportal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['tportal']['now'].' AND art.pub_start < '.$context['tportal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
 			AND art.approved = 1'
 		);
 
