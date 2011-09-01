@@ -789,8 +789,8 @@ function doTPpage()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET comments = {int:com} 
-							WHERE i= {int:artid}',
-							array('com' => $count, 'artid' => $article['id'])
+							WHERE id = {int:artid}',
+							array('com' => $ccount, 'artid' => $article['id'])
 						);
 
 					// the frontblocks should not display here

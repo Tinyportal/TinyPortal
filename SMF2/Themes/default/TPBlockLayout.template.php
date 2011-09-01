@@ -17,7 +17,7 @@ function template_tp_above()
 	</div>';	
 
 	echo '
-	<table cellpadding="0" cellspacing="0" width="100%" style="margin: 0; padding: 0; table-layout: fixed; clear: both;">
+	<table cellpadding="0" cellspacing="0" width="100%" style="margin: 0; padding: 0; clear: both;">
 		<tr>';
 
 	// TinyPortal integrated bars

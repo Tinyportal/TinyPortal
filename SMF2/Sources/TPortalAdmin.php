@@ -1507,9 +1507,9 @@ function do_articles()
 			SELECT DISTINCT var.id as id, var.value1 as name, var.value2 as parent 
 			FROM {db_prefix}tp_variables AS var
 			WHERE var.type = {string:type}
-			{string:whereval}
+			' . (isset($where) ? 'AND var.value2 = {int:whereval}' : '') . '
 			ORDER BY parent, id DESC',
-			array('type' => 'category', 'whereval' => isset($where) ? 'AND var.value2 = ' . $where : '')
+			array('type' => 'category', 'whereval' => $where)
 		);
 		
 		if($smcFunc['db_num_rows']($request) > 0)
