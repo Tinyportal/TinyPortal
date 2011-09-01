@@ -779,12 +779,12 @@ function TP_permaTheme($theme)
 			'theme' => $theme, 'mem_id' => $me,
 		)
 	);
+	
 	if(isset($context['TPortal']['querystring']))
-	{
 		$tp_where = str_replace(array(';permanent'), array(''), $context['TPortal']['querystring']);
-	}
 	else
 		$tp_where = 'action=forum;';
+	
 	redirectexit($tp_where);
 }
 
