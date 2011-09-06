@@ -17,16 +17,16 @@ if (!defined('SMF'))
 function TPortal_init()
 {
 	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir;
+	
+	// has init been run before? if so return!
+	if(isset($context['TPortal']['fixed_width']))
+		return;
 
 	$settings['tp_smfversion'] = '1';
 	$context['TPortal'] = array();
 	$context['TPortal']['now'] = time();
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 	
-	// has init been run before? if so return!
-	if(isset($context['TPortal']['fixed_width']))
-		return;
-
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
 		return;
