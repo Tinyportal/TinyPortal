@@ -69,7 +69,6 @@ function TPortalAdmin()
 	TPadd_linktree($scripturl.'?action=tpadmin', 'TP Admin');
 		
 	// some GET values set up
-	$tpart = isset($_GET['apage']) ? $_GET['apage'] : 0;
 	$context['TPortal']['tpstart'] = isset($_GET['tpstart']) ? $_GET['tpstart'] : 0;
 
 	// a switch to make it clear what is "forum" and not
@@ -267,7 +266,9 @@ function TPortalAdmin()
 				'active' => $tpsub == 'blocks' && isset($_GET['overview']),
 			),
 		);
+	// TP Admin menu layer
 	$context['template_layers'][] = 'tpadm';
+	// Shows subtab layer above for admin submenu links
 	$context['template_layers'][] = 'subtab';
 	loadTemplate('TPortalAdmin');
 	loadlanguage('TPortalAdmin');
@@ -1386,7 +1387,6 @@ function do_articles()
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['indent'] = 0;
-				$row['name'] = $row['name'];
 				$allsorted[$row['id']] = $row;
 				$alcats[] = $row['id'];
 			}
@@ -1509,7 +1509,7 @@ function do_articles()
 			WHERE var.type = {string:type}
 			' . (isset($where) ? 'AND var.value2 = {int:whereval}' : '') . '
 			ORDER BY parent, id DESC',
-			array('type' => 'category', 'whereval' => $where)
+			array('type' => 'category', 'whereval' => isset($where) ? $where : '')
 		);
 		
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1520,7 +1520,6 @@ function do_articles()
 			$sorted = array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['name'] = $row['name'];
 				$sorted[$row['id']] = $row;
 				$cats[] = $row['id'];
 			}
@@ -1591,7 +1590,6 @@ function do_articles()
 			$context['TPortal']['arts_submissions']=array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['subject'] = $row['subject'];
 				$context['TPortal']['arts_submissions'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1626,7 +1624,6 @@ function do_articles()
 			$context['TPortal']['arts_nocat'] = array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['subject'] = $row['subject'];
 				$context['TPortal']['arts_nocat'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1714,7 +1711,9 @@ function do_articles()
 		array('type' => 'category')
 	);
 	
-	$context['TPortal']['allcats']=array(); $allsorted=array();
+	$context['TPortal']['allcats'] = array();
+	$allsorted = array();
+	
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while ($row = $smcFunc['db_fetch_assoc']($request))
@@ -1782,7 +1781,6 @@ function do_articles()
 			$context['TPortal']['arts']=array();
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['subject'] = $row['subject'];
 				$context['TPortal']['arts'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
