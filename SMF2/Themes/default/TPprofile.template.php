@@ -93,17 +93,18 @@ function template_tp_articles()
 						';
 		if(!empty($context['TPortal']['allow_wysiwyg']))
 			echo '<table cellpadding="8">
-							<tr>
-								<td valign="top" align="right">'.$txt['tp-wysiwygchoice'].':</td>
-								<td>
-									<input name="tpwysiwyg" type="radio" value="0" ' , ($context['TPortal']['selected_member_choice'] =='0' || $context['TPortal']['selected_member_choice'] == '1') ? 'checked' : '' , '> '.$txt['tp-no'].'<br />
-									<input name="tpwysiwyg" type="radio" value="2" ' , $context['TPortal']['selected_member_choice'] =='2' ? 'checked' : '' , '> '.$txt['tp-fckeditor'].'<br />
-								</td>
-							</tr>';
-
-	echo '				<tr>
-					<td colspan="2" align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send"></td>
-				</tr></table>
+					<tr>
+						<td valign="top" align="right">'.$txt['tp-wysiwygchoice'].':</td>
+						<td>
+							<input name="tpwysiwyg" type="radio" value="0" ' , ($context['TPortal']['selected_member_choice'] =='0' || $context['TPortal']['selected_member_choice'] == '1') ? 'checked' : '' , '> '.$txt['tp-no'].'<br />
+							<input name="tpwysiwyg" type="radio" value="2" ' , $context['TPortal']['selected_member_choice'] =='2' ? 'checked' : '' , '> '.$txt['tp-fckeditor'].'<br />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send"></td>
+					</tr>
+				</table>';
+			echo '
 		</form>';
 
 

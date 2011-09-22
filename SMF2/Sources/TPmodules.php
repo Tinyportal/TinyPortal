@@ -290,7 +290,7 @@ function TPmodules()
 		 	);
 			}
 			elseif($what == 'tpwysiwyg' && $item == 0)
-				 $smcFunc['db_query']('INSERT', 
+				 $smcFunc['db_insert']('INSERT', 
 				 	'{db_prefix}tp_data',
 					 array('type' => 'int', 'id_member' => 'int', 'value' => 'int'),
 					 array(2, $mem, $value),
@@ -299,7 +299,7 @@ function TPmodules()
 
 		}
 		// go back to profile page
-		redirectexit('action=profile;u='.$mem.';sa=tparticles;settings');
+		redirectexit('action=profile;u='.$mem.';area=tparticles;sa=settings');
 	}
 	// edit or deleting a comment?
 	elseif((substr($tpsub, 0, 11) == 'killcomment' || substr($tpsub, 0, 11) == 'editcomment') && $context['user']['is_logged'])

@@ -1321,7 +1321,6 @@ function do_articles()
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					$row = $smcFunc['db_fetch_assoc']($request);
-					$row['value1'] = $row['value1'];
 					$o = explode('|', $row['value7']);
 					foreach($o as $t => $opt)
 					{
@@ -1355,7 +1354,6 @@ function do_articles()
 					while ($row = $smcFunc['db_fetch_assoc']($request))
 					{
 						$row['indent'] = 0;
-						$row['name'] = $row['name'];
 						$allsorted[$row['id']] = $row;
 						$alcats[] = $row['id'];
 					}
@@ -1509,7 +1507,7 @@ function do_articles()
 			WHERE var.type = {string:type}
 			' . (isset($where) ? 'AND var.value2 = {int:whereval}' : '') . '
 			ORDER BY parent, id DESC',
-			array('type' => 'category', 'whereval' => isset($where) ? $where : '')
+			array('type' => 'category', 'whereval' => isset($where) ? $where : 0)
 		);
 		
 		if($smcFunc['db_num_rows']($request) > 0)

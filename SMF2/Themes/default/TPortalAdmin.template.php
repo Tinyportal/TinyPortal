@@ -2147,15 +2147,15 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td colspan="2" valign="top">';
 				
-				if($mg['articletype']=='php')
+				if($mg['articletype'] == 'php')
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' ,  $mg['body'] , '</textarea><br />';
-				elseif($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-					TPwysiwyg('tp_article_body', $mg['body'] , true,'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
-				elseif($context['TPortal']['use_wysiwyg']==0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
+				elseif($context['TPortal']['use_wysiwyg'] > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', isset($context['TPortal']['editorchoice']) ? $context['TPortal']['editorchoice'] : false);
+				elseif($context['TPortal']['use_wysiwyg'] == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
-				elseif($mg['articletype']=='bbc')
+				elseif($mg['articletype'] == 'bbc')
 					TP_bbcbox('TPadmin3','tp_article_body', strip_tags($mg['body']));
 				else
 					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" style="width: 60%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '"></td></tr>' ;
