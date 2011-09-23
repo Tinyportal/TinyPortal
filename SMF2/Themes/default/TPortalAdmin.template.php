@@ -2389,7 +2389,7 @@ function template_editarticle($type = '')
 						<td valign="top" colspan="2">';
 					
 					if($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, false);
+						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 					else
 						echo '
 							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
