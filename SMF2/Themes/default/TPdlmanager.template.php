@@ -10,6 +10,7 @@ function template_main()
 	if($context['TPortal']['show_download']==0 && !allowedTo('tp_dlmanager'))
 		fatal_error('Sorry, Download Manager is not active.');
 		echo '
+<div class="dl_container">
     <div class="title_bar">
 	   <h3 class="titlebg">',  $txt['tp-downloads'], '	</h3>
     </div>
@@ -920,6 +921,8 @@ function template_main()
 		echo '
 		</div>';
 	}
+	echo '
+</div>';
 }
 
 ?>
