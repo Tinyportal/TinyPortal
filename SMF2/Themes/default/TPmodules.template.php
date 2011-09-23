@@ -65,12 +65,14 @@ function template_main()
 				<tr class="windowbg2">
 					<td colspan="2" valign="top">';
 
+				$use_wysiwyg = (int) $context['TPortal']['use_wysiwyg'];
+					
 				if($mg['articletype']=='php')
 					echo '
 						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
-				elseif($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-					TPwysiwyg('tp_article_body'.$mg['id'], $mg['body'], true,'qup_tp_article_body');
-				elseif($context['TPortal']['use_wysiwyg']==0 && $mg['articletype']=='' )
+				elseif($use_wysiwyg > 0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
+					TPwysiwyg('tp_article_body'.$mg['id'], $mg['body'], true,'qup_tp_article_body', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				elseif($use_wysiwyg == 0 && $mg['articletype']=='' )
 					echo '
 							<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
@@ -95,7 +97,7 @@ function template_main()
 					echo '
 						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
 				elseif($context['TPortal']['use_wysiwyg']>0 && $mg['articletype']=='' )
-						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro');
+						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['use_wysiwyg']==0 && $mg['articletype']=='' )
 					echo '
 							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
@@ -125,7 +127,7 @@ function template_main()
 					<br />';
 				if($context['TPortal']['blockedit']['type']=='11')
 				{
-					TPwysiwyg('blockbody' .$context['TPortal']['blockedit']['id'], $context['TPortal']['blockedit']['body'], true,'qup_blockbody');
+					TPwysiwyg('blockbody' .$context['TPortal']['blockedit']['id'], $context['TPortal']['blockedit']['body'], true, 'qup_blockbody', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
@@ -445,7 +447,7 @@ function template_submitarticle()
 				<td colspan="2" valign="top" >'.$txt['tp-artbodytext'].' <br />';
 
 			if($context['TPortal']['use_wysiwyg']>0 && !isset($context['TPortal']['submitbbc']))
-				TPwysiwyg('tp_article_body', '', true,'qup_tp_article_body');
+				TPwysiwyg('tp_article_body', '', true,'qup_tp_article_body', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 			elseif($context['TPortal']['use_wysiwyg']==0 && !isset($context['TPortal']['submitbbc']))
 				echo '
 					<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
@@ -454,7 +456,7 @@ function template_submitarticle()
 			
 			echo '<br />' . $txt['tp-artintrotext']. '<br />';
 			if($context['TPortal']['use_wysiwyg']>0 && !isset($context['TPortal']['submitbbc']))
-				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro');
+				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 			elseif($context['TPortal']['use_wysiwyg']==0 && !isset($context['TPortal']['submitbbc']))
 				echo '
 					<textarea name="tp_article_intro" id="tp_article_intro" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';

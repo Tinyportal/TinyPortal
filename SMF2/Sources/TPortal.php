@@ -2837,8 +2837,6 @@ function tp_setupUpshrinks()
 			// check that we are not in admin section
 			if((isset($_GET['action']) && $_GET['action'] == 'tpadmin') && ((isset($_GET['sa']) && $_GET['sa'] == 'settings') || !isset($_GET['sa'])))
 				$in_admin = true;
-			if(!isset($in_admin))
-				$context['TPortal']['use_wysiwyg'] = $context['TPortal']['usersettings']['wysiwyg'];
 		}
 	}
 	// get the cookie for upshrinks

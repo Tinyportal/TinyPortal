@@ -969,8 +969,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	{
 		echo '
 		<b>' . $txt['tp-usewysiwyg'] . '</b>
-		<input ' , $use==1 ? 'checked' : '' , ' value="1" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_on(\''.$textarea.'\');"> ' . $txt['tp-yes'] .' 
-		<input ' , $use==0 ? 'checked' : '' , ' value="0" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_off(\''.$textarea.'\');"> ' . $txt['tp-no'] .' 
+		<input ' , $use > 0 ? 'checked' : '' , ' value="1" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_on(\''.$textarea.'\');"> ' . $txt['tp-yes'] .' 
+		<input ' , $use == 0 ? 'checked' : '' , ' value="0" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_off(\''.$textarea.'\');"> ' . $txt['tp-no'] .' 
 		<br /><br />';
 	}
 
@@ -985,7 +985,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		</script>';
 	if($showchoice)
 		echo '
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
 
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
