@@ -266,7 +266,7 @@ function template_main()
 	
 				$details[] = $dlitem['views'] . ' ' . $txt['tp-views'];
 				$details[] = $dlitem['downloads'] . ' ' . $txt['tp-downloads'];
-				$det2[] = $txt['tp-created'] . ' ' . timeformat($dlitem['date_last']);
+				$det2[] = $txt['tp-itemlastdownload'] . ' ' . timeformat($dlitem['date_last']);
 				$det2[] = $dlitem['author'];
 				echo '
 					<div class="itemdetails smalltext">' , implode(" | ",$details) , '<br />' , implode(" | ",$det2) , '</div>
