@@ -3549,7 +3549,7 @@ function do_postchecks()
 					elseif(in_array($setting, array('body', 'intro')))
 					{
 						// in case of HTML article we need to check it
-						if(isset($_POST['tp_article_body_pure']) && !empty($_POST['tp_article_body_choice']))
+						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice']))
 						{
 							if($_POST['tp_article_body_choice'] == 0)
 							{

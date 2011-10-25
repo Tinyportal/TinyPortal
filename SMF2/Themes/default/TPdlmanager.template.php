@@ -10,6 +10,7 @@ function template_main()
 	if($context['TPortal']['show_download']==0 && !allowedTo('tp_dlmanager'))
 		fatal_error('Sorry, Download Manager is not active.');
 		echo '
+<div class="dl_container">
     <div class="title_bar">
 	   <h3 class="titlebg">',  $txt['tp-downloads'], '	</h3>
     </div>
@@ -265,7 +266,7 @@ function template_main()
 	
 				$details[] = $dlitem['views'] . ' ' . $txt['tp-views'];
 				$details[] = $dlitem['downloads'] . ' ' . $txt['tp-downloads'];
-				$det2[] = $txt['tp-created'] . ' ' . timeformat($dlitem['date_last']);
+				$det2[] = $txt['tp-itemlastdownload'] . ' ' . timeformat($dlitem['date_last']);
 				$det2[] = $dlitem['author'];
 				echo '
 					<div class="itemdetails smalltext">' , implode(" | ",$details) , '<br />' , implode(" | ",$det2) , '</div>
@@ -920,6 +921,8 @@ function template_main()
 		echo '
 		</div>';
 	}
+	echo '
+</div>';
 }
 
 ?>

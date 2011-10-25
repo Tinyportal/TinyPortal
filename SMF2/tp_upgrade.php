@@ -10,7 +10,7 @@
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 ****************************************************************************/
 
-global $settings, $scripturl, $boarddir, $context, $smcFunc, $db_prefix, $modSettings;
+global $smcFunc, $db_prefix, $modSettings, $existing_tables;
 
 $manual = false;
 $render = '';
@@ -31,10 +31,8 @@ if (!array_key_exists('db_create_table', $smcFunc))
 $convertblocks = false;
 // Grab the tables so we can check if they exist
 $existing_tables = $smcFunc['db_list_tables'](false, '%tp%');
-
 // Are we using UTF8 or not?
 $utf8 = !empty($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8';
-
 // Why $dp_prefix has the database name prepended in it I don't know. Stripping off the stuff we don't need.
 $smf_prefix = trim(strstr($db_prefix, '.'), '.');
 
@@ -57,7 +55,7 @@ $tables = array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'type', 'type' => 'tinyint', 'size' => 4, 'default' => 0,),
-            array('name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => 0,),
+            array('name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => 0, 'old_name' => 'ID_MEMBER'),
             array('name' => 'value', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'item', 'type' => 'int', 'size' => 11, 'default' => 0,),
         ),
@@ -128,7 +126,7 @@ $tables = array(
             array('name' => 'category', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'frontpage', 'type' => 'tinyint', 'size' => 4, 'default' => 1,),
             array('name' => 'subject', 'type' => 'text',),
-            array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
+            array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0, 'old_name' => 'authorID'),
             array('name' => 'author', 'type' => 'text',),
             array('name' => 'frame', 'type' => 'tinytext',),
             array('name' => 'approved', 'type' => 'tinyint', 'size' => 4, 'default' => 1,),
@@ -140,7 +138,7 @@ $tables = array(
             array('name' => 'views', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'rating', 'type' => 'text',),
             array('name' => 'voters', 'type' => 'text',),
-            array('name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
+            array('name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => 0, 'old_name' => 'ID_THEME'),
             array('name' => 'shortname', 'type' => 'tinytext',),
             array('name' => 'sticky', 'type' => 'tinyint', 'size' => 4, 'default' => 0,),
             array('name' => 'fileimport', 'type' => 'text'),
@@ -175,7 +173,7 @@ $tables = array(
             array('name' => 'parent', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'access', 'type' => 'text',),
             array('name' => 'link', 'type' => 'text',),
-            array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
+            array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0, 'old_name' => 'authorID'),
             array('name' => 'screenshot', 'type' => 'text',),
             array('name' => 'rating', 'type' => 'text',),
             array('name' => 'voters', 'type' => 'text',),
@@ -294,7 +292,7 @@ $tables = array(
 );
 
 foreach ($tables as $table => $col) {
-    if (in_array($smf_prefix . $table, $existing_tables)) {
+    if (in_array($manual ? $smf_prefix . $table : $db_prefix . $table, $existing_tables)) {
         $render .= '
         <li>'. $table .' already exists. Updating table if necessary.</li>';
         
@@ -315,7 +313,8 @@ foreach ($tables as $table => $col) {
             );
         }
         foreach ($col['columns'] as $column) {
-        	$smcFunc['db_add_column']($smfprefix . $table, $column);
+			if (!isset($column['old_name']) || !$smcFunc['db_change_column']($db_prefix . $table, $column['old_name'], $column))
+				$smcFunc['db_add_column']('{db_prefix}' . $table, $column);
             
             // If utf8 is set alter column to be utf8 if text or tinytext.
             if ($utf8 && in_array($column['type'], array('text', 'tinytext', 'longtext'))) {
@@ -860,6 +859,7 @@ function checkColumn($table, $col, $action)
 
 function updateDownLoads()
 {
+	global $render;
 	// Update old column names
 	checkColumn('tp_dlmanager', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
 	$render .= '<li>Updated old columns in downloads table</li>';
@@ -876,6 +876,7 @@ function articleChanges()
 }
 function dataTableChanges()
 {
+	global $render;
 	// Update old column names
 	checkColumn('tp_data', 'ID_MEMBER', 'CHANGE `ID_MEMBER` `id_member` int default 0 NOT NULL');
 	$render .= '<li>Updated old columns in data table</li>';	

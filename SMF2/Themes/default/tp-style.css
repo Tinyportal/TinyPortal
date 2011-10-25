@@ -1788,3 +1788,7 @@ div.useravatar img
 	min-width: 100%;
 	margin: 0.25em 0 1em 0;
 }
+.dl_container {
+	width: 100%;
+	clear: both;
+}

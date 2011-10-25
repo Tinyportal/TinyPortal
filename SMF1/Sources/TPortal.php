@@ -39,7 +39,6 @@ function TPortal_init()
 	require_once($sourcedir.'/TPSubs.php');
 	$context['session_var'] = 'sesc';
 	$modSettings['global_character_set'] = 'utf-8';
-	$modSettings['custom_avatar_url'] = '';
 
 	setupTPsettings();
 	fetchTPhooks();
