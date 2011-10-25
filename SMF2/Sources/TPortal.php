@@ -170,7 +170,6 @@ function TPortal_init()
 	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2')))
 		tp_hidebars('all');
 
-/*
 	// are we allowed to tag boards? include any
 	if(!empty($_GET['topic']) && empty($_GET['action']))
 	{
@@ -188,7 +187,7 @@ function TPortal_init()
 			$context['template_layers'][] = 'TPtagboardsOnly';
 		$context['template_layers'][] = 'TPtagboardsGeneral';
 	}
-*/
+
 	// are we on search page? then add TP search options as well!
 	if($context['TPortal']['action'] == 'search')
 		$context['template_layers'][] = 'TPsearch';
@@ -1765,6 +1764,7 @@ function doTPfrontpage()
 					// expand the vislaoptions
 					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
+					$row['rating'] = array_sum(explode(',', $row['rating']));
 					
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
