@@ -456,7 +456,7 @@ function template_submitarticle()
 			
 			echo '<br />' . $txt['tp-artintrotext']. '<br />';
 			if($context['TPortal']['use_wysiwyg']>0 && !isset($context['TPortal']['submitbbc']))
-				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, false);
 			elseif($context['TPortal']['use_wysiwyg']==0 && !isset($context['TPortal']['submitbbc']))
 				echo '
 					<textarea name="tp_article_intro" id="tp_article_intro" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
