@@ -127,7 +127,11 @@ function template_main()
 					<br />';
 				if($context['TPortal']['blockedit']['type']=='11')
 				{
-					TPwysiwyg('blockbody' .$context['TPortal']['blockedit']['id'], $context['TPortal']['blockedit']['body'], true, 'qup_blockbody', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+					if($context['TPortal']['use_wysiwyg'] && !empty($context['TPortal']['usersettings']['wysiwyg']))
+						TPwysiwyg('blockbody' .$context['TPortal']['blockedit']['id'], $context['TPortal']['blockedit']['body'], true, 'qup_blockbody', 2, false);
+					else
+						echo '
+					<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="blockbody'.$context['TPortal']['blockedit']['id'].'_pure" id="blockbody'.$context['TPortal']['blockedit']['id'].'_pure">'. $context['TPortal']['blockedit']['body'] .'</textarea><br />';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
