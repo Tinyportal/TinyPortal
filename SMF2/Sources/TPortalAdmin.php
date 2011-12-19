@@ -3553,7 +3553,10 @@ function do_postchecks()
 						{
 							if($_POST['tp_article_body_choice'] == 0)
 							{
-								$value = $_POST['tp_article_body_pure'];
+								if ($setting == 'body')
+									$value = $_POST['tp_article_body_pure'];
+								elseif ($setting == 'intro')
+									$value = $_POST['tp_article_intro'];
 							}
 							
 							// save the choice too

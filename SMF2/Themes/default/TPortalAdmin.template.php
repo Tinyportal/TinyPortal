@@ -2147,14 +2147,15 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td colspan="2" valign="top">';
 						
-				$use_wysiwyg = (int) $context['TPortal']['use_wysiwyg'];
+				$tp_use_wysiwyg = (int) $context['TPortal']['use_wysiwyg'];
+				$user_wysiwyg = (int) $context['TPortal']['usersettings']['wysiwyg'];
 				
 				if($mg['articletype'] == 'php')
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' ,  $mg['body'] , '</textarea><br />';
-				elseif($use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
-					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
-				elseif($use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+				elseif($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', isset($user_wysiwyg) ? $user_wysiwyg : 0);
+				elseif($tp_use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype'] == 'bbc')
@@ -2388,8 +2389,8 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td valign="top" colspan="2">';
 					
-					if($context['TPortal']['use_wysiwyg']>0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
-						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, false);
+					if($tp_use_wysiwyg > 0 && $user_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', isset($user_wysiwyg) ? $user_wysiwyg : 0, false);
 					else
 						echo '
 							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';

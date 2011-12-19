@@ -980,7 +980,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			buttonPath = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/btn/";
 			cssFile = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/simple.css";
 			makeWhizzyWig("'.$textarea.'", "all");
-			' , $use==0 ? '
+			' , $use == 0 ? '
 			toggle_tpeditor_off(\''.$textarea.'\');' : '' , '
 		</script>';
 	if($showchoice)
