@@ -127,7 +127,7 @@ function template_main()
 					'.$txt['tp-dlintrotext'].' '; 
 				
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext');
+					TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox('dl_admin','tp_dl_introtext', $context['TPortal']['dl_introtext']);
 				else
@@ -356,7 +356,7 @@ function template_main()
 					<br />';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text');
+					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], $cat['description']);
 				else
@@ -616,7 +616,7 @@ function template_main()
 					<br />';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text');
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES));
 				else
@@ -713,7 +713,7 @@ function template_main()
 					<br /><br /><b>'.$txt['tp-body'].':</b><br />';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('newdladmin_text', '', true,'qup_dladmin_text');
+					TPwysiwyg('newdladmin_text', '', true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox('dl_admin','newdladmin_text', '');
 				else

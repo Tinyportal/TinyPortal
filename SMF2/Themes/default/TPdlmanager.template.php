@@ -447,7 +447,7 @@ function template_main()
 							<td class="windowbg">';
 
 		if($context['TPortal']['dl_wysiwyg']== 'html')
-			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext',1,false);
+			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, false);
 		elseif($context['TPortal']['dl_wysiwyg']=='bbc')
 			TP_bbcbox('tp_dlupload','tp_dluploadtext', '');
 		else
@@ -713,7 +713,7 @@ function template_main()
 						<br />';
 						
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text');
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox('dl_useredit','dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES));
 				else

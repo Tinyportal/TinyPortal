@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPShout.php																*
 *****************************************************************************
-* TP version: 1.0 RC2														*
+* TP version: 1.0 RC3														*
 * Software Version:				SMF 1.x										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*

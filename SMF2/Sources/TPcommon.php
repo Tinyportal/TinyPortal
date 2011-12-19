@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPcommon.php																*
 *****************************************************************************
-* TP version: 1.0 RC2														*
+* TP version: 1.0 RC3														*
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
@@ -131,7 +131,8 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
     if ($radius == 0) { 
         return $img; 
 		imagedestroy($img); 
-		break;        } 
+		break;
+	} 
     $w = imagesx($img); 
 	$h = imagesy($img); 
     $imgCanvas = imagecreatetruecolor($w, $h); 
@@ -238,7 +239,7 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
     } 
     imagedestroy($imgCanvas); 
     imagedestroy($imgBlur); 
-     return $simg; 
+    return $simg; 
 }
 
 function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')

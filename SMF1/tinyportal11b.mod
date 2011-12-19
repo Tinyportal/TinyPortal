@@ -7,7 +7,7 @@ TinyPortal
 </version>
 
 <mod info>
-TinyPortal v1
+TinyPortal 1.0 RC3
 </mod info>
 
 <author>
