@@ -38,7 +38,7 @@ function template_tp_above()
 
 	}
 	echo '		
-			<td align="left" valign="top" ' , $context['browser']['is_ie'] ? 'width="100%"' : '' ,  '>
+			<td align="left" valign="top" width="100%">
 				<div id="tpcontentHeader">';
   
 	if($context['TPortal']['centerpanel']==1)
