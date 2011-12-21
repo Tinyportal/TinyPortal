@@ -131,6 +131,13 @@ require_once($sourcedir . '/TPortal.php');]]></add>
 			),]]></add>
 		</operation>
 		<operation>
+			<search position="before"><![CDATA[	elseif ($context['current_action'] == 'groups' && $context['allow_moderation_center'])
+		$current_action = 'moderate';]]></search>
+			<add><![CDATA[
+	elseif (isset($_GET['board']) || isset($_GET['topic']))
+		$current_action = 'forum';]]></add>
+		</operation>
+		<operation>
 			<search position="after"><![CDATA[		// Now we put the buttons in the context so the theme can use them.]]></search>
 			<add><![CDATA[
 		// tinyportal //
