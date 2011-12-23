@@ -1404,7 +1404,6 @@ function template_frontpage()
 			{article_moreauthor}
 			{article_morelinks}
 			{article_globaltags}
-			{article_comments}
 		</div>
 	</div>	
 	<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>';
