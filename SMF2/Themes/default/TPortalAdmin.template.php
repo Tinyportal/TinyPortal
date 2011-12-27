@@ -2146,14 +2146,13 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td colspan="2" valign="top">';
 						
-				$tp_use_wysiwyg = (int) $context['TPortal']['use_wysiwyg'];
-				$user_wysiwyg = (int) $context['TPortal']['usersettings']['wysiwyg'];
+				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 				
 				if($mg['articletype'] == 'php')
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' ,  $mg['body'] , '</textarea><br />';
 				elseif($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
-					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', isset($user_wysiwyg) ? $user_wysiwyg : 0);
+					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
 				elseif($tp_use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
@@ -2388,8 +2387,8 @@ function template_editarticle($type = '')
 					<tr class="windowbg2">
 						<td valign="top" colspan="2">';
 					
-					if($tp_use_wysiwyg > 0 && $user_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
-						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', isset($user_wysiwyg) ? $user_wysiwyg : 0, false);
+					if($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
 					else
 						echo '
 							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
@@ -2829,7 +2828,7 @@ function template_blockedit()
 						echo '
 						</td><td class="right">';
 						if($context['TPortal']['use_wysiwyg']>0)
-							TPwysiwyg('tp_block_body', $context['TPortal']['blockedit']['body'], true,'qup_blockbody',1,false);
+							TPwysiwyg('tp_block_body', $context['TPortal']['blockedit']['body'], true, 'qup_blockbody', 1, false);
 						else
 							echo $txt['tp-body'] , ' <br /><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
 				}

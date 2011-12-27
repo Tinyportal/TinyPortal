@@ -211,7 +211,7 @@ function TPortal_init()
 	if(isset($article_error))
 		fatal_error($txt['tp-articlenotexist']);
 
-	// let a module take ovr
+	// let a module take over
 	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
 	{
 		// let the modoule take over
@@ -2731,7 +2731,7 @@ function tp_setupUpshrinks()
 
 	$context['tp_panels'] = array();
 	if(isset($_COOKIE['tp_panels'])){
-		$shrinks=explode(",",$_COOKIE['tp_panels']);
+		$shrinks = explode(',', $_COOKIE['tp_panels']);
 		foreach($shrinks as $sh => $val)
 			$context['tp_panels'][] = $val;
 	}
@@ -2823,21 +2823,25 @@ function tp_setupUpshrinks()
 			}
 			$smcFunc['db_free_result']($result);
 		}
-		if($context['TPortal']['use_wysiwyg'] > 0)
-			$context['TPortal']['allow_wysiwyg'] = true;
-		else
-			$context['TPortal']['allow_wysiwyg'] = false;
-
-		if(isset($context['TPortal']['usersettings']['wysiwyg']))
+		$context['TPortal']['use_wysiwyg'] = (int) $context['TPortal']['use_wysiwyg'];
+		$context['TPortal']['show_wysiwyg'] = 0;
+		
+		if ($context['TPortal']['use_wysiwyg'] > 0)
 		{
-			// if its 0 the no-one can choose it
-			if($context['TPortal']['use_wysiwyg'] == '0')
-				$context['TPortal']['usersettings']['wysiwyg'] = '0';
-
-			// check that we are not in admin section
-			if((isset($_GET['action']) && $_GET['action'] == 'tpadmin') && ((isset($_GET['sa']) && $_GET['sa'] == 'settings') || !isset($_GET['sa'])))
-				$in_admin = true;
+			$context['TPortal']['allow_wysiwyg'] = true;
+			if (isset($context['TPortal']['usersettings']['wysiwyg'])) {
+				$context['TPortal']['show_wysiwyg'] = (int) $context['TPortal']['usersettings']['wysiwyg'];
+			}
 		}
+		else
+		{
+			$context['TPortal']['show_wysiwyg'] = $context['TPortal']['use_wysiwyg'];
+			$context['TPortal']['allow_wysiwyg'] = false;
+		}
+
+		// check that we are not in admin section
+		if((isset($_GET['action']) && $_GET['action'] == 'tpadmin') && ((isset($_GET['sa']) && $_GET['sa'] == 'settings') || !isset($_GET['sa'])))
+			$in_admin = true;
 	}
 	// get the cookie for upshrinks
 	$context['TPortal']['upshrinkblocks'] = array();
