@@ -74,12 +74,6 @@ function TPortalAdmin()
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = true;
 
-	// admin can see all uploaded images as well as thsoe who manage articles
-	if($context['user']['is_admin'] || allowedTo('tp_articles'))
-		$imgdir = '/tp-images/Image';
-	else
-		$imgdir = '/tp-images/Image';
-
 	// get all membergroups	
 	tp_groups();
 
@@ -143,27 +137,6 @@ function TPortalAdmin()
 		$context['TPortal']['subaction'] = $tpsub = 'overview';	
 		do_news($tpsub);
 	}
-
-	// admin can see all uploaded images as well as thsoe who manage articles
-	if($context['user']['is_admin'] || allowedTo('tp_articles'))
-		$imgdir = '/tp-images/Image';
-	else
-		$imgdir = '/tp-images/Image';
-
-	// get all membergroups	
-	tp_groups();
-
-	// get the layout shcemes
-	get_catlayouts();
-	
-	if(isset($_GET['id']))
-		$context['TPortal']['subaction_id'] = $_GET['id'];
-
-	// check POST values
-	$return = do_postchecks();
-	
-	if(!empty($return))
-		redirectexit('action=tpadmin;sa=' . $return);	
 
 	// done with all POST values, go to the correct screen	
 	$context['TPortal']['subtabs'] = '';
