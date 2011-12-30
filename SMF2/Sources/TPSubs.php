@@ -1100,11 +1100,9 @@ function TPget_globaltags($tags, $itemid)
 	$request = $smcFunc['db_query']('', '
 		SELECT DISTINCT value1, value2, value3, subtype2 
 		FROM {db_prefix}tp_variables 
-		WHERE type = {string:type} {string:search} 
+		WHERE type = {string:type} {raw:search} 
 		ORDER BY value1 ASC',
-		array(
-			'type' => 'globaltag_item', 'search' => $searchtag,
-		)
+		array('type' => 'globaltag_item', 'search' => $searchtag,)
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0)
