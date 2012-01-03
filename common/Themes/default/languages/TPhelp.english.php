@@ -147,7 +147,13 @@ Brad "IchBin" Grow
 Agridoc, Crip, Freddy, Ianedres, Ken, Lesmond, lurkalot, Renegd98, WillyP, and ZarPrime.
 <br /><br />
 <h4>TP Friends</h4>
-Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, gerrymo, JPDeni, Max, Maya, Moocat, nokonium, PhilH, Rasyr, Ray, RebelRose, redone, StormLrd, Thurnok, Tuxie, Xarcell, and Zetan.';
+Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, gerrymo, JPDeni, Max, Maya, Moocat, nokonium, PhilH, Rasyr, Ray, RebelRose, redone, StormLrd, Thurnok, Tuxie, Xarcell, and Zetan.
+<br /><br />
+<h4>Beta Testers</h4>
+For those who relentlessy find bugs, give feedback, and drive the developer crazy.
+<br /><br />
+<h4>Language Translators</h4>
+Thank you for efforts in making TinyPortal available around the globe.';
 
 $txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
 The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
