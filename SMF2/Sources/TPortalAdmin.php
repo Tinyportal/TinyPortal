@@ -3521,6 +3521,20 @@ function do_postchecks()
 					}
 					elseif(in_array($setting, array('body', 'intro')))
 					{
+						// If we came from WYSIWYG then turn it back into BBC regardless.
+						if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body']))
+						{
+							require_once($sourcedir . '/Subs-Editor.php');
+							$_REQUEST['tp_article_body'] = html_to_bbc($_REQUEST['tp_article_body']);
+							// We need to unhtml it now as it gets done shortly.
+							$_REQUEST['tp_article_body'] = un_htmlspecialchars($_REQUEST['tp_article_body']);
+							// We need this for everything else.
+							if($setting == 'body')
+								$value = $_POST['tp_article_body'] = $_REQUEST['tp_article_body'];
+							elseif ($settings == 'intro')
+								$value = $_POST['tp_article_intro'] = $_REQUEST['tp_article_intro'];
+						}
+						
 						// in case of HTML article we need to check it
 						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice']))
 						{
