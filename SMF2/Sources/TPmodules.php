@@ -132,7 +132,7 @@ function TPmodules()
 			if ($_SESSION['visual_errors'] > 3 && isset($_SESSION['visual_verification_code']))
 				unset($_SESSION['visual_verification_code']);
 
-			fatal_lang_error('visual_verification_failed', false);
+			fatal_lang_error('error_wrong_verification_code', false);
 		}
 		elseif (isset($_SESSION['visual_errors']))
 			unset($_SESSION['visual_errors']);
