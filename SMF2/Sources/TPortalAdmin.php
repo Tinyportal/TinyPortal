@@ -2109,10 +2109,10 @@ function do_postchecks()
 					);
 				}
 			}
-			elseif(substr($what, 0, 22) == 'tpadmin_topictags_xyzx' && !empty($value))
+			elseif(substr($what, 0, 22) == 'xyzx_tpadmin_topictags' && !empty($value))
 			{
 				// create the tag as well
-				$itemid = substr($what, 22);
+				$itemid = (int) substr($what, 23);
 				$allowed = "/[^a-zA-Z0-9_]/";
 				$value = preg_replace($allowed, '', $value);
 				$tag = $value;
