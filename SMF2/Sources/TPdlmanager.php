@@ -591,8 +591,8 @@ function TPortalDLManager()
 			}
 			// fetch most downloaded this week
 			$now = time();
-			$week = date("W",$now);
-			$year = date("Y",$now);
+			$week = (int) date("W",$now);
+			$year = (int) date("Y",$now);
 			$request = $smcFunc['db_query']('', '
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views, 
 					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
@@ -806,8 +806,8 @@ function TPortalDLManager()
 
 		// fetch most downloaded this week
 		$now = time();
-		$week = date("W",$now);
-		$year = date("Y",$now);
+		$week = (int) date("W",$now);
+		$year = (int) date("Y",$now);
 		$request = $smcFunc['db_query']('', '
 			SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 			dlcat.name AS catname, mem.real_name as realName
@@ -1373,8 +1373,8 @@ function TPortalDLManager()
 			// update the views and last access!
 			$views++;
 			$now = time();
-			$year = date("Y",$now);
-			$week = date("W",$now);	
+			$year = (int) date("Y",$now);
+			$week = (int) date("W",$now);	
 			// update weekly views
 			$req=$smcFunc['db_query']('', '
 				SELECT id FROM {db_prefix}tp_dldata 
@@ -1743,8 +1743,8 @@ function TPdownloadme()
 	if($show == 1 || allowedTo('tp_dlmanager'))
 	{
 		$now = time();
-		$year = date("Y",$now);
-		$week = date("W",$now);	
+		$year = (int) date("Y",$now);
+		$week = (int) date("W",$now);	
 
 		// update weekly views
 		$req = $smcFunc['db_query']('', '
