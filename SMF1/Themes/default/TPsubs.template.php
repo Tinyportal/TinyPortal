@@ -1767,7 +1767,7 @@ function article_morelinks($render=true)
 			<ul>';
 			foreach($context['TPortal']['article']['others'] as $art)
 				$code .= '
-				<li' . (isset($art['selected']) ? ' class="selected"' : '') . '><a href="' . $scripturl . '?page=' . (!empty($art['shortname']) ? $art['shortname'] : $art['id']) . '">' . html_entity_decode($art['subject'], ENT_QUOTES, $context['character_set']) . '</a></li>';
+				<li' . (isset($art['selected']) ? ' class="selected"' : '') . '><a href="' . $scripturl . '?page=' . (!empty($art['shortname']) ? $art['shortname'] : $art['id']) . '">' . html_entity_decode($art['subject'], ENT_QUOTES) . '</a></li>';
 			$code .= '
 			</ul>
 		</div>';

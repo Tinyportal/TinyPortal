@@ -510,7 +510,7 @@ function tpshout_admin()
 		{
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],
-				'body' => html_entity_decode($row['value1'], ENT_QUOTES, $context['character_set']),
+				'body' => html_entity_decode($row['value1'], ENT_QUOTES),
 				'poster' => $row['value3'],
 				'timestamp' => $row['value2'],
 				'time' => timeformat($row['value2']),
