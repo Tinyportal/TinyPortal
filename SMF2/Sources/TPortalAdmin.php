@@ -3409,7 +3409,7 @@ function do_postchecks()
 					UPDATE {db_prefix}tp_blocks 
 					SET body = {string:body}
 					WHERE id = {int:blockid}',
-					array('body' => addslashes($newval['code']), 'blockid' => $where)
+					array('body' => $newval['code'], 'blockid' => $where)
 				);
 			}
 
