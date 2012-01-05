@@ -1025,6 +1025,10 @@ function TPsshowgtags($id, $prefix, $itemid, $onlytags = false)
 	global $user_info, $board_info, $db_prefix, $sourcedir, $boardurl;
 	global $boarddir, $txt, $settings, $context, $smcFunc;
 
+	// This is to deal with a bug in SMF where $board is not an id but an array.
+	if(is_array($itemid))
+		$itemid = (int) $itemid['id'];
+		
 	$gtags = array();
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables 
