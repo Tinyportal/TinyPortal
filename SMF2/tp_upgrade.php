@@ -371,8 +371,8 @@ if($row['value'] < 1090)
 $smcFunc['db_free_result']($request);
 
 $settings_array = array(
-    // KEEP TRACK OF VERSION HERE
-    'version' => '1104',
+    // KEEP TRACK OF INTERNAL VERSION HERE
+    'version' => '1105',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
@@ -612,7 +612,7 @@ if($convertblocks)
 		UPDATE {db_prefix}tp_blocks 
 		SET access2 = {string:access2} 
 		WHERE access2 = ""',
-		array('access2' => 'actio-allpages')
+		array('access2' => 'actio=allpages')
 	);
 	$render .= '<li>Updated old blocks</li>';
 }
