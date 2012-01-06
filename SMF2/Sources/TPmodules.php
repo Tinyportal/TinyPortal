@@ -1247,7 +1247,7 @@ function tp_profile_articles($memID)
 	}
 	else
 	{
-		$context['TPortal']['selected_member_choice'] = $context['TPortal']['use_wysiwyg'];
+		$context['TPortal']['selected_member_choice'] = 0;
 		$context['TPortal']['selected_member_choice_id'] = 0;
 	}
 	$context['TPortal']['selected_member'] = $memID;

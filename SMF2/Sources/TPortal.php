@@ -2824,7 +2824,7 @@ function tp_setupUpshrinks()
 			$smcFunc['db_free_result']($result);
 		}
 		$context['TPortal']['use_wysiwyg'] = (int) $context['TPortal']['use_wysiwyg'];
-		$context['TPortal']['show_wysiwyg'] = 0;
+		$context['TPortal']['show_wysiwyg'] = $context['TPortal']['use_wysiwyg'];
 		
 		if ($context['TPortal']['use_wysiwyg'] > 0)
 		{
