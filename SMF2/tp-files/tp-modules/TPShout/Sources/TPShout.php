@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 *****************************************************************************/
 
@@ -81,9 +81,9 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
         // ]]></script>';
 
 	if(file_exists($settings['theme_dir'].'/TPShout.css'))
-		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/TPShout.css?fin11" />';
+		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/TPShout.css?fin20" />';
 	else
-		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/TPShout.css?fin11" />';
+		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/TPShout.css?fin20" />';
 	
 	if($context['TPortal']['shoutbox_usescroll']>0)
 		$context['html_headers'] .= '

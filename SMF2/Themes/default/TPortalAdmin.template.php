@@ -618,7 +618,7 @@ function template_menubox()
 				if($mbox['id']==0)
 					echo '
 						<tr class="windowbg2">
-							<td class="windowbg" colspan="4">Internal</td>
+							<td class="windowbg" colspan="4">' . $txt['tp-internal'] . '</td>
 							<td class="windowbg" colspan="5"><a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=0"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPedit.gif" alt="'.$txt['tp-edit'].'"  /></a>
 							</td>
 						</tr>';
@@ -644,8 +644,7 @@ function template_menubox()
 			</tbody>
 			<tfoot>
 				<tr class="windowbg2">
-					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
-					</td>
+					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></td>
 				</tr>
 			</tfoot>
 		</table>
@@ -1148,13 +1147,13 @@ function template_clist()
 					<tr class="windowbg2">
 						<td align="right" width="45%" valign="top">'.$txt['tp-clist'].'</td>
 						<td>';
-		$clist=explode(',',$context['TPortal']['cat_list']);
+		$clist = explode(',',$context['TPortal']['cat_list']);
 		echo '
 							<input name="tp_clist-1" type="hidden" value="-1">';
 		foreach($context['TPortal']['catnames'] as $ta => $val){
 			echo '
 							<input name="tp_clist'.$ta.'" type="checkbox" value="'.$ta.'"';
-			if(in_array($ta,$clist))
+			if(in_array($ta, $clist))
 				echo ' checked';
 			echo '>'.html_entity_decode($val).'<br />';
 		}
@@ -2282,10 +2281,10 @@ function template_editarticle($type = '')
 				echo '
 							<select size="1" name="tp_article_pubstartyear"><option value="0">' . $txt['tp-notset'] . '</option>';
 				
-				$now=date("Y",time())+1;
-				for($a=2004; $a<$now+2; $a++)
+				$now = date("Y",time())+1;
+				for($a = 2004; $a < $now + 2; $a++)
 					echo '
-								<option value="'.$a.'" ' , $year==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $year == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select>';
 				// hours
@@ -2293,15 +2292,15 @@ function template_editarticle($type = '')
 							<select size="1" name="tp_article_pubstarthour">';
 				for($a=0; $a<24;$a++)
 					echo '
-								<option value="'.$a.'" ' , $hour==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $hour == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select>';
 				// minutes
 				echo ' <b>:</b>
 							<select size="1" name="tp_article_pubstartminute">';
-				for($a=0; $a<60;$a++)
+				for($a = 0; $a < 60; $a++)
 					echo '
-								<option value="'.$a.'" ' , $minute==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $minute == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select><br>';
 							
@@ -2318,41 +2317,41 @@ function template_editarticle($type = '')
 
 				for($a=1; $a<32;$a++)
 					echo '
-								<option value="'.$a.'" ' , $day==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $day == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select>';
 				// month
 				echo '
 							<select size="1" name="tp_article_pubendmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-				for($a=1; $a<13; $a++)
+				for($a = 1; $a < 13; $a++)
 					echo '
-								<option value="'.$a.'" ' , $month==$a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
+								<option value="'.$a.'" ' , $month == $a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
 				echo '
 							</select>';
 				// year
 				echo '
 							<select size="1" name="tp_article_pubendyear"><option value="0">' . $txt['tp-notset'] . '</option>';
 				
-				$now=date("Y",time())+1;
-				for($a=2004; $a<$now+2; $a++)
+				$now = date("Y",time())+1;
+				for($a = 2004; $a < $now + 2; $a++)
 					echo '
-								<option value="'.$a.'" ' , $year==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $year == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select>';
 				// hours
 				echo ' -
 							<select size="1" name="tp_article_pubendhour">';
-				for($a=0; $a<24;$a++)
+				for($a = 0; $a < 24; $a++)
 					echo '
-								<option value="'.$a.'" ' , $hour==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $hour == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select>';
 				// minutes
 				echo ' <b>:</b>
 							<select size="1" name="tp_article_pubendminute">';
-				for($a=0; $a<60;$a++)
+				for($a = 0; $a < 60; $a++)
 					echo '
-								<option value="'.$a.'" ' , $minute==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+								<option value="'.$a.'" ' , $minute == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 				echo '
 							</select>
 							</div>
@@ -2371,14 +2370,14 @@ function template_editarticle($type = '')
 				{
 					if($cats['id']<9999 && $cats['id']>0)
 						echo '
-								<option value="'.$cats['id'].'" ', $cats['id']==$mg['category'] ? 'selected' : '' ,'>'. str_repeat("-", isset($cats['indent']) ? $cats['indent'] : 0) .' '.$cats['name'].'</option>';
+								<option value="'.$cats['id'].'" ', $cats['id'] == $mg['category'] ? 'selected' : '' ,'>'. str_repeat("-", isset($cats['indent']) ? $cats['indent'] : 0) .' '.$cats['name'].'</option>';
 				}
 				echo '
 							</select>
 							<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>
 						</td>
 			     	</tr>';
-				if($mg['articletype']=='php' || $mg['articletype']=='' || $mg['articletype']=='html')
+				if($mg['articletype'] == 'php' || $mg['articletype'] == '' || $mg['articletype'] == 'html')
 				{
 					echo '
 					<tr class="windowbg2">
@@ -2396,7 +2395,7 @@ function template_editarticle($type = '')
 						</td>
 			     	</tr>';
 				}
-				elseif($mg['articletype']=='bbc' || $mg['articletype']=='import')
+				elseif($mg['articletype'] == 'bbc' || $mg['articletype'] == 'import')
 				{
 					echo '
 					<tr class="windowbg2">
@@ -2449,8 +2448,8 @@ function template_editarticle($type = '')
 							</td>
 					</tr>';
 				// set options for an article...
-				$opts=array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','globaltags','nofrontsetting');
-				$tmp=explode(',',$mg['options']); 
+				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','globaltags','nofrontsetting');
+				$tmp = explode(',',$mg['options']); 
 				$options=array();
 				foreach($tmp as $tp => $val){
 					if(substr($val,0,11)=='rblockwidth')
@@ -2469,7 +2468,7 @@ function template_editarticle($type = '')
 				echo '
 							<table cellpadding="5" cellspacing="5" width="100%">
 								<tr class="titlebg2">
-									<th colspan="2">Details</th>
+									<th colspan="2">' . $txt['tp-details'] . '</th>
 								</tr><tr class="windowbg2">
 									<td valign="top">
 										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[1].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>  '.$txt['tp-articleoptions1'].'<br />
@@ -2489,7 +2488,7 @@ function template_editarticle($type = '')
 									</td>
 								</tr>
 								<tr class="titlebg2">
-									<th colspan="2">Panels</th>
+									<th colspan="2">' . $txt['tp-panels'] . '</th>
 								</tr>
 								<tr class="windowbg2">
 									<td colspan="2">
@@ -2510,7 +2509,7 @@ function template_editarticle($type = '')
 										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[11].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[11]]) ? 'checked' : '' , '>  '.$txt['tp-articleoptions11'].'<br />
 									</td>
 								</tr><tr class="titlebg2">
-									<th colspan="2">Others</th>
+									<th colspan="2">' . $txt['tp-others'] . '</th>
 								</tr><tr class="windowbg2">
 									<td valign="top">
 										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[20].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>  '.$txt['tp-articleoptions20'].'<br />
@@ -2729,7 +2728,7 @@ function template_addblock()
 										<input type="radio" name="tp_addblock" value="mb_' . $bc['id']. '"  />' . $bc['title'].' [' . $panels[$bc['bar']] . ']
 									</div>';
 
-					echo '								</td>
+					echo '		</td>
 							</tr>
 						</table>
 					</td>
@@ -3192,7 +3191,7 @@ function template_blockedit()
 					echo '
 							<table class="admintable windowbg2">
 								<tr class="windowbg2">
-									<td width="50%" valign="top"><h4>Actions:</h4>
+									<td width="50%" valign="top"><h4>' . $txt['tp-actions'] . ':</h4>
 											<input name="actiontype1" type="checkbox" value="allpages" ' ,in_array('allpages',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '>'.$txt['tp-allpages'].'<br /><br />
 											<input name="actiontype2" type="checkbox" value="frontpage" ' ,in_array('frontpage',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '>'.$txt['tp-frontpage'].'<br />
 											<input name="actiontype3" type="checkbox" value="forumall" ' ,in_array('forumall',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '>'.$txt['tp-forumall'].'<br />
@@ -3243,7 +3242,7 @@ function template_blockedit()
 				}
 				echo '
 									</div></td>
-									<td valign="top"><h4>Articles:</h4><div class="tp_largelist">';
+									<td valign="top"><h4>' . $txt['tp-articles'] . ':</h4><div class="tp_largelist">';
 				$a=1;
 				foreach($context['TPortal']['edit_articles'] as $bb)
 				{
@@ -3255,7 +3254,7 @@ function template_blockedit()
 									</div></td>
 								</tr>
 								<tr class="windowbg2">
-									<td valign="top"><h4>Article categories:</h4><div class="tp_largelist">';
+									<td valign="top"><h4>' . $txt['tp-artcat'] . ':</h4><div class="tp_largelist">';
 				$a=1;
 				if(isset($context['TPortal']['article_categories']))
 				{	
@@ -3268,7 +3267,7 @@ function template_blockedit()
 				}
 				echo '
 									</div></td>
-									<td valign="top"><h4>Languages:</h4>';
+									<td valign="top"><h4>' . $txt['tp-lang'] . ':</h4>';
 				
 				// alert if the settings is off, supply link if allowed
 				if(empty($context['TPortal']['uselangoption']))
@@ -3288,7 +3287,7 @@ function template_blockedit()
 								</tr>
 								<tr class="windowbg2">
 									<td>
-									<h4>DL manager:</h4><div class="tp_largelist">';
+									<h4>' . $txt['tp-dlmanager'] . ':</h4><div class="tp_largelist">';
 				$a=1;
 				
 				if(!empty($context['TPortal']['dlcats']))

@@ -166,5 +166,4 @@ function template_category()
 	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'] , '</div>';
 }
 
-
 ?>

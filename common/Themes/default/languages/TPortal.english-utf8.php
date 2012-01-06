@@ -294,4 +294,5 @@ $txt['tp-showlatest'] = 'Show 50 latest';
 $txt['tp-expired-start'] = 'The article is currently not published!';
 $txt['tp-expired-start2'] = ' until ';
 
+$txt['tp-nomodule'] = 'No output from module.';
 ?>

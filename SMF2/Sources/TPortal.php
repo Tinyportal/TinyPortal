@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 ****************************************************************************/
 
@@ -219,7 +219,7 @@ function TPortal_init()
 		if(function_exists($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']))
 			call_user_func($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']);
 		else
-			echo 'No output from module.';
+			echo $txt['tp-nomodule'];
 	}
 }
 
@@ -2322,7 +2322,7 @@ function doTPblocks()
 					if($mtype == 'cats')
 					{
 						if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
-							$icon=$context['TPortal']['article_categories']['icon'][$idtype];
+							$icon = $context['TPortal']['article_categories']['icon'][$idtype];
 					}
 					if($mtype == 'head')
 					{
@@ -2677,7 +2677,7 @@ function TPortal_panel($side)
 				if($grid_entry > 0)
 				{
 					for($a = $grid_entry; $a < $grid_recycle; $a++)
-						echo TP_blockgrid(0, 0, $a, $side, $a ==($grid_recycle-1) ? true : false, $grid_selected,true);
+						echo TP_blockgrid(0, 0, $a, $side, $a == ($grid_recycle-1) ? true : false, $grid_selected,true);
 
 				}
 			}
@@ -2954,7 +2954,7 @@ function doModules() {
 			if(!empty($row['adminhook']))
 			{
 				$perms = explode(',', $row['permissions']);
-				for($a=0; $a < sizeof($perms); $a++)
+				for($a = 0; $a < sizeof($perms); $a++)
 				{
 					$pr = explode('|',$perms[$a]);
 					// admin permission?

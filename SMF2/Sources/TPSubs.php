@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 ****************************************************************************/
 
@@ -60,7 +60,7 @@ function TPsetupAdminAreas()
 			$perms = explode(',', $row['permissions']);
 			$setperm = array();
 			$admin_set = false;
-			for($a=0; $a < sizeof($perms); $a++)
+			for($a = 0; $a < sizeof($perms); $a++)
 			{
 				$pr = explode('|', $perms[$a]);
 				$setperm[$pr[0]] = $pr[1];
@@ -107,7 +107,7 @@ function TP_addPerms()
 		{
 			$perms = explode(',', $row['permissions']);
 			$setperm = array();
-			for($a=0; $a < sizeof($perms); $a++)
+			for($a = 0; $a < sizeof($perms); $a++)
 			{
 				$pr = explode('|', $perms[$a]);
 				$setperm[$pr[0]] = $pr[1];
@@ -462,7 +462,7 @@ function TP_article_categories($use_sorted = false)
 	);
 	if($smcFunc['db_num_rows']($request2) > 0)
 	{
-		while($row=$smcFunc['db_fetch_assoc']($request2))
+		while($row = $smcFunc['db_fetch_assoc']($request2))
 		{
 			$total[$row['category']] = $row['files'];
 		}
@@ -517,7 +517,7 @@ function TP_article_categories($use_sorted = false)
 				'upperpanel' => '0' ,
 				'lowerpanel' => '0',
 			);
-			$opts = explode("|" , $row['value7']);
+			$opts = explode('|' , $row['value7']);
 			foreach($opts as $op => $val)
 			{
 				if(substr($val,0,7) == 'layout=')
@@ -724,13 +724,13 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 	else
 	{
 		$art = array();
-		$i=0;
+		$i = 0;
 		$curr = 0;
 		foreach($articles as $rt)
 		{
 			$art[$i] = '<a href="' . $rt['href']. '">'.$rt['subject'].'</a>';
 			if($rt['selected'])
-				$curr=$i;
+				$curr = $i;
 			$i++;
 		}
 		if($curr > 0)
@@ -930,9 +930,9 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 	);
 
 	if(createPost($msgOptions, $topicOptions, $posterOptions))
-		$topi=$topicOptions['id'];
+		$topi = $topicOptions['id'];
 	else
-		$topi=0;
+		$topi = 0;
 
 	return $topi;
 }
@@ -3077,7 +3077,7 @@ function tp_addcopy($buffer)
 {
 	global $context, $scripturl;
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits">&copy; 2005-2011</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits">&copy; 2005-2012</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
 		return $buffer;

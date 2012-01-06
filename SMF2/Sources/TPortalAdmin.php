@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 *****************************************************************************/
 
@@ -587,7 +587,7 @@ function do_blocks()
 				$context['TPortal']['blockedit']['langfiles'] = array();
 				$lang = explode('|', $context['TPortal']['blockedit']['lang']);
 				$num = count($lang);
-				for($i = 0; $i < $num; $i=$i+2)
+				for($i = 0; $i < $num; $i = $i + 2)
 				{
 					$context['TPortal']['blockedit']['langfiles'][$lang[$i]] = $lang[$i+1];
 				}
@@ -727,7 +727,7 @@ function do_blocks()
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
 
 	$context['html_headers'] .= '
-	<script language="JavaScript" type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
+	<script language="JavaScript" type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin20"></script>
 	<script language="JavaScript" type="text/javascript">
 		function getXMLHttpRequest()
 		{
@@ -3878,7 +3878,7 @@ function get_catlayouts()
 
 function get_boards()
 {
-	global $context, $db_prefix, $user_info, $smcFunc;
+	global $context, $user_info, $smcFunc;
 
 	$context['TPortal']['boards'] = array();
 	$request = $smcFunc['db_query']('', '
@@ -3899,7 +3899,7 @@ function get_boards()
 function get_articles()
 {
 
-	global $context, $db_prefix, $smcFunc;
+	global $context, $smcFunc;
 
 	$context['TPortal']['edit_articles'] = array();
 	
@@ -3919,7 +3919,7 @@ function get_articles()
 function get_catnames()
 {
 
-	global $context, $db_prefix, $user_info, $smcFunc;
+	global $context, $user_info, $smcFunc;
 
 	$context['TPortal']['catnames'] = array();
 	

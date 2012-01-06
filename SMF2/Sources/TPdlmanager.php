@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 ****************************************************************************/
 
@@ -1097,7 +1097,7 @@ function TPortalDLManager()
 		$context['TPortal']['dlitem'] = array();
 		$start = 0;
 		if(isset($_GET['p']) && !is_numeric($_GET['p']))
-			fatal_error('Attempt to specify a non-integer value!');
+			fatal_error($txt['tp-dlnonint']);
 		elseif(isset($_GET['p']) && is_numeric($_GET['p']))
 			$start = $_GET['p'];
 
@@ -1321,8 +1321,8 @@ function TPortalDLManager()
 				foreach($rat as $mm => $mval)
 					$total = $total+$mval;
 
-				if($rating_votes>0 && $total>0)
-					$rating_average=floor($total/$rating_votes);
+				if($rating_votes > 0 && $total > 0)
+					$rating_average = floor($total/$rating_votes);
 				else
 					$rating_average=0;
 
@@ -1423,9 +1423,7 @@ function TPortalDLManager()
 	if (WIRELESS)
 	{
 		loadTemplate('TPwireless');
-		if($context['TPortal']['dlaction'] == '')
-			$what = 'main';
-		elseif($context['TPortal']['dlaction'] == 'item' || $context['TPortal']['dlaction']=='cat')
+		if($context['TPortal']['dlaction'] == 'item' || $context['TPortal']['dlaction']=='cat')
 			$what = $context['TPortal']['dlaction'];
 		else
 			$what = 'main';
@@ -2499,13 +2497,13 @@ function TPortalDLAdmin()
 							{
 								$succ = unlink($boarddir.'/tp-downloads/'.$row['file']);
 								if(!$succ)
-									$err = 'Unable to delete the actual file, but the item was deleted. ('.$row['file'].')';
+									$err = $txt['tp-dlfilenotdel'] . ' ('.$row['file'].')';
 							}
 							if(!empty($row['screenshot']) && file_exists($boarddir.'/'.$row['screenshot']))
 							{
 								$succ2 = unlink($boarddir.'/'.$row['screenshot']);
 								if(!$succ2)
-									$err .= '<br />Unable to delete the actual screenshot, but the item was deleted. ('.$row['screenshot'].')';
+									$err .= '<br />' . $txt['tp-dlssnotdel'] . ' ('.$row['screenshot'].')';
 							}
 	
 						}
@@ -3359,7 +3357,7 @@ function TPortalDLAdmin()
 				$smcFunc['db_free_result']($request);
 			}
 			else
-				$context['TPortal']['admcurrent']['member'] = '-guest-';
+				$context['TPortal']['admcurrent']['member'] = '-' . $txt['guest_title'] . '-';
 		}
 		// check to see if its child
 		$parents = array();
@@ -3559,7 +3557,7 @@ function TPortalDLUser($item)
 			$smcFunc['db_free_result']($request);
 		}
 		else
-			$context['TPortal']['admcurrent']['member'] = '-guest-';
+			$context['TPortal']['admcurrent']['member'] = '-' . $txt['guest_title'] . '-';
 		// add to the linktree
 		TPadd_linktree($scripturl.'?action=tpmod;dl=useredit'.$item , $txt['tp-useredit'].': '.$itemname);
 		$context['TPortal']['dlaction'] = 'useredit';

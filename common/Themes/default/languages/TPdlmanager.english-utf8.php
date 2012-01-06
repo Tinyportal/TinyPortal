@@ -144,6 +144,10 @@ $txt['tp-dlusecategorytext'] = 'Show category descriptions inside file listings?
 $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dlwysiwyg'] = 'Show text-editor?';
 
-
 $txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tpmod;dl=adminsettings">settings screen</a>?';
+
+$txt['tp-dlnonint'] = 'Sorry, you attempted to specify a non-integer value!';
+$txt['tp-dlfilenotdel'] = 'Unable to delete the actual file, but the item was deleted.';
+$txt['tp-dlssnotdel'] = 'Unable to delete the actual screenshot, but the item was deleted.';
+$txt['tp-dlnotuploaded'] = 'File was not uploaded.';
 ?>

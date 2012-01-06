@@ -74,7 +74,7 @@ function template_main()
 					TPwysiwyg('tp_article_body'.$mg['id'], $mg['body'], true,'qup_tp_article_body', $tp_use_wysiwyg);
 				elseif($tp_use_wysiwyg == 0 && $mg['articletype']=='' )
 					echo '
-							<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
+						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
 				{
 					TP_bbcbox('TPadmin3','tp_article_body'. $mg['id'], $mg['body']);
@@ -255,7 +255,7 @@ function template_main()
 			break;
 		case 'searcharticle':
 			echo '
-		<form accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
+		<form accept-charset="', $context['character_set'], '" name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
 			<div class="tborder" style="margin: auto;">
                 <div class="cat_bar">
 				    <h3 class="catbg3" style="font-size: 1em;">' , $txt['tp-searcharticles2'] , '</h3>
@@ -326,7 +326,7 @@ function template_main()
 					</div>
 			</form>
 			';
-			$bb=1;
+			$bb = 1;
 			foreach($context['TPortal']['searchresults'] as $res)
 			{
 				echo '
@@ -380,7 +380,7 @@ function template_main()
 					echo '
 						</div>';
 					
-					if($art['off']==0 && $art['approved']==1)
+					if($art['off'] == 0 && $art['approved'] == 1)
 						echo '
 						<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>';
 					else

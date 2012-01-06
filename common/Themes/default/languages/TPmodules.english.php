@@ -31,4 +31,6 @@ $txt['tp-commentreplies'] = 'Replies in article comments';
 $txt['tp-commentnew'] = 'New comments in articles';
 $txt['tp-showall'] = 'Show all comments';
 
+$txt['tp-noguestcomments'] = 'Sorry, guests are not allowed to comment';
+$txt['tp-noadmincomments'] = 'Sorry, you are not allowed to edit or delete comments';
 ?>

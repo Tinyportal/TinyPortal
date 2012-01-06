@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 ****************************************************************************/
 
@@ -248,7 +248,7 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 
 	// check that nothing happended
 	if(!file_exists($_FILES[$what]['tmp_name']) || !is_uploaded_file($_FILES[$what]['tmp_name']))
-		fatal_error('File was not uploaded.');
+		fatal_error($txt['tp-dlnotuploaded']);
 	// process the file
 	$filename=$_FILES[$what]['name'];
 	$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
@@ -259,7 +259,7 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 	if($filesize > (1024 * $maxsize))
 	{
 		unlink($_FILES[$what]['tmp_name']);
-		fatal_error('File is too large. Max allowed is '.$maxsize.' Kb.');
+		fatal_error($txt['tp-dlmaxerror'] . $maxsize.' Kb.');
 	}
 
 	// check the extension
@@ -275,7 +275,7 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 	if(!$match)
 	{
 		unlink($_FILES[$what]['tmp_name']);
-		fatal_error('File has the wrong extension. Only '.$exts.' extensions are allowed.');
+		fatal_error($txt['tp-dlallowedtypes'] . ': ' . $exts);
 	}
 
 	// check that no other file exists with same name

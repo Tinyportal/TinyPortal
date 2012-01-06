@@ -600,4 +600,11 @@ $txt['tp-pub_end'] = 'until';
 
 $txt['tp-notset'] = '- not set -';
 $txt['reset_custom_template_layout'] = '(To reset custom layout, clear all text below and save)';
+
+$txt['tp-internal'] = 'Internal';
+$txt['tp-details'] = 'Details';
+$txt['tp-others'] = 'Others';
+$txt['tp-artcat'] = 'Article categories';
+$txt['tp-lang'] = 'Languages';
+$txt['tp-dlmanager'] = 'DL manager';
 ?>

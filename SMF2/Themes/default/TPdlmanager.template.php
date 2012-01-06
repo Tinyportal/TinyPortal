@@ -6,9 +6,10 @@ function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl;
 
-	// if dl manager is off, throw a error screen.
+	// if dl manager is off, throw a error screen but don't log it.
 	if($context['TPortal']['show_download']==0 && !allowedTo('tp_dlmanager'))
-		fatal_error('Sorry, Download Manager is not active.');
+		fatal_error($txt['tp-dlmanageroff'], false);
+		
 		echo '
 <div class="dl_container">
     <div class="title_bar">
@@ -447,7 +448,7 @@ function template_main()
 							<td class="windowbg">';
 
 		if($context['TPortal']['dl_wysiwyg']== 'html')
-			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, false);
+			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext', $context['TPortal']['show_wysiwyg'], false);
 		elseif($context['TPortal']['dl_wysiwyg']=='bbc')
 			TP_bbcbox('tp_dlupload','tp_dluploadtext', '');
 		else
@@ -713,7 +714,7 @@ function template_main()
 						<br />';
 						
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', $context['TPortal']['show_wysiwyg']);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox('dl_useredit','dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES));
 				else

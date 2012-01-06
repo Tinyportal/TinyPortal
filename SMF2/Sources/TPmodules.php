@@ -6,7 +6,7 @@
 * Software Version:				SMF 2.0										*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2011 by:     	The TinyPortal Team							*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
 * Support, News, Updates at:  	http://www.tinyportal.net					*
 ****************************************************************************/
 
@@ -123,7 +123,7 @@ function TPmodules()
 		checkSession('post');
 
 		if ($user_info['is_guest'])
-			fatal_error('guest not allowed');
+			fatal_error($txt['tp-noguestcomments']);
 
 		// Check whether the visual verification code was entered correctly.
 		if ($context['TPortal']['articles_comment_captcha'] && (empty($_REQUEST['visual_verification_code']) || strtoupper($_REQUEST['visual_verification_code']) !== $_SESSION['visual_verification_code']))
@@ -307,7 +307,7 @@ function TPmodules()
 		// check that you indeed can edit or delete
 		$comment = substr($tpsub, 11);
 		if(!is_numeric($comment))
-			fatal_error('Not allowed.');
+			fatal_error($txt['tp-noadmincomments']);
 
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_variables 
@@ -1505,7 +1505,7 @@ function tpshout_profile($memID)
 		SELECT * FROM {db_prefix}tp_shoutbox
 		WHERE value5 = {int:val5}
 		AND type = {string:type}
-		ORDER BY {string:sort} DESC LIMIT {int:start}, 10',
+		ORDER BY {raw:sort} DESC LIMIT {int:start}, 10',
 		array('val5' => $memID, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start)
 	);
 	if($smcFunc['db_num_rows']($request) > 0){
