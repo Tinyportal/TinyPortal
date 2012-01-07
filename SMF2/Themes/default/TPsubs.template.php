@@ -991,7 +991,7 @@ function template_tperror_above()
 }
 function template_notpublished()
 {
-	global $contex;
+	global $context;
 	echo '
 <div style="padding-bottom: 4px;">
 	<span class="clear upperframe"><span></span></span>
