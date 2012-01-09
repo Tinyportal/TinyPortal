@@ -572,11 +572,7 @@ function TPortal_ssi()
        global $context;
        echo '
 	<div style="padding: 5px;" class="smalltext">';
-       if($context['TPortal']['ssifunction'] == 'recentpoll')
-           ssi_recentPoll();
-       elseif($context['TPortal']['ssifunction'] == 'toppoll')
-           ssi_topPoll();
-       elseif($context['TPortal']['ssifunction'] == 'topboards')
+       if($context['TPortal']['ssifunction'] == 'topboards')
            ssi_topBoards();
        elseif($context['TPortal']['ssifunction'] == 'topposters')
            ssi_topPoster(5);

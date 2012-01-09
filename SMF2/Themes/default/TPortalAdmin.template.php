@@ -2903,8 +2903,6 @@ function template_blockedit()
 						echo '
 						</td><td class="right">';
 					echo '<input name="tp_block_body" type="radio" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '>' .$txt['tp-none-'];
-					echo '<br /><input name="tp_block_body" type="radio" value="recentpoll" ' , $context['TPortal']['blockedit']['body']=='recentpoll' ? 'checked' : '' , '>'.$txt['tp-ssi-recentpoll'];
-					echo '<br /><input name="tp_block_body" type="radio" value="toppoll" ' , $context['TPortal']['blockedit']['body']=='toppoll' ? 'checked' : '' , '>'.$txt['tp-ssi-toppoll'];
 					echo '<br /><input name="tp_block_body" type="radio" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '>'.$txt['tp-ssi-topboards'];
 					echo '<br /><input name="tp_block_body" type="radio" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '>'.$txt['tp-ssi-topposters'];
 					echo '<br /><input name="tp_block_body" type="radio" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '>'.$txt['tp-ssi-topreplies'];
