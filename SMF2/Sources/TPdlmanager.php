@@ -1764,7 +1764,7 @@ function TPdownloadme()
 			);
 		}
 		else
-			$smcFunc['db_query']('INSERT',
+			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_dldata',
 				array('week' => 'int', 'year' => 'int', 'downloads' => 'int', 'item' => 'int'),
 				array($week, $year, 1, $item),
