@@ -600,6 +600,7 @@ function do_blocks()
 			get_langfiles();
 			get_boards();
 			get_articles();
+			tp_getDLcats();
 
 			$context['TPortal']['edit_categories'] = array();
 			
@@ -3336,6 +3337,10 @@ function do_postchecks()
 					$access[] = 'tpcat=' . $value;
 				elseif(substr($what, 0, 8) == 'langtype')
 					$access[] = 'tlang=' . $value;
+				elseif(substr($what, 0, 9) == 'dlcattype')
+					$access[] = 'dlcat=' . $value;
+				elseif(substr($what, 0, 9) == 'tpmodtype')
+					$access[] = 'tpmod=' . $value;
 				elseif(substr($what, 0, 9) == 'custotype' && !empty($value))
 				{
 					$items = explode(',', $value);

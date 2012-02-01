@@ -3119,4 +3119,51 @@ function tp_convertphp($code, $reverse = false)
 		return $code;
 	}
 }
+
+function tp_getDLcats()
+{
+	global $context, $smcFunc;
+	
+	$context['TPortal']['dlcats'] = array();
+	$request =  $smcFunc['db_query']('', '
+		SELECT id, name 
+		FROM {db_prefix}tp_dlmanager 
+		WHERE type = {string:dlcat}',
+		array('dlcat' => 'dlcat')
+	);
+	$count = 0;
+	if ($smcFunc['db_num_rows']($request) > 0)
+	{
+		while($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$context['TPortal']['dlcats'][$count] = array('id' => $row['id'], 'name' => $row['name']);
+			$count++;
+		}
+		$smcFunc['db_free_result']($request);
+	}
+}
+
+function tp_getTPmodules()
+{
+	global $context, $smcFunc;
+	
+	$context['TPortal']['tpmods'] = array();
+	$request =  $smcFunc['db_query']('', '
+		SELECT title, subquery 
+		FROM {db_prefix}tp_modules 
+		WHERE active = {int:act}',
+		array('act' => 1)
+	);
+	$count = 0;
+	if ($smcFunc['db_num_rows']($request) > 0)
+	{
+		while($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$context['TPortal']['tpmods'][$count] = array('title' => $row['title'], 'subquery' => $row['subquery']);
+			$count++;
+		}
+		$smcFunc['db_free_result']($request);
+	}
+}
+
 ?>

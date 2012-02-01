@@ -2108,6 +2108,15 @@ function doTPblocks()
 		$sqlarray[] = 'topic=' . $_GET['topic'];
 		$sqlarray[] = 'actio=forumall';
 	}
+	if(!empty($_GET['dl']))
+	{
+		if(substr($_GET['dl'], 0, 3) == 'cat')
+			$sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
+	}
+	if(isset($_GET['shout']))
+	{
+		$sqlarray[] = 'tpmod=shout';
+	}
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))
 		$sqlarray[] = 'actio=frontpage';

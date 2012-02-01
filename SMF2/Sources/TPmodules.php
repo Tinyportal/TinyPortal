@@ -662,6 +662,7 @@ function TPmodules()
 		{
 			isAllowedTo('tp_submitbbc');
 			$context['TPortal']['submitbbc'] = 1;
+
 			$context['html_headers'] .= '
 				<script language="JavaScript" type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
 		}
