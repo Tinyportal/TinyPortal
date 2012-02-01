@@ -257,7 +257,7 @@ function TPmodules()
 		}
 
 		// construct the pages
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tpmod;sa=showcomments', $tpstart, $check[0], 15);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tpmod;area=showcomments', $tpstart, $check[0], 15);
 		$context['TPortal']['unreadcomments'] = true;
 		$context['TPortal']['showall'] = $showall;
 		$context['TPortal']['subaction'] = 'showcomments';
@@ -1210,7 +1210,7 @@ function tp_profile_articles($memID)
 	}
 	// construct pageindexes
 	if($max > 0)
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;sa=tparticles;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tparticles;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
 	else
 		$context['TPortal']['pageindex'] = '';
 
@@ -1361,7 +1361,7 @@ function tp_profile_download($memID)
 	}
 	// construct pageindexes
 	if($max > 0)
-		$context['TPortal']['pageindex']=TPageIndex($scripturl.'?action=profile;sa=tpdownload;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
+		$context['TPortal']['pageindex']=TPageIndex($scripturl.'?action=profile;area=tpdownload;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
 	else
 		$context['TPortal']['pageindex'] = '';
 }
@@ -1451,6 +1451,7 @@ function tp_articles($memID)
 {
 	global $txt, $context;
 
+	TP_article_categories();
 	loadtemplate('TPprofile');
 	$context['page_title'] = $txt['articlesprofile'];
 	tp_profile_articles($memID);
@@ -1523,7 +1524,7 @@ function tpshout_profile($memID)
 	}
 	// construct pageindexes
 	if($max > 0)
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;sa=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '10', true);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '10', true);
 	else
 		$context['TPortal']['pageindex'] = '';
 	
