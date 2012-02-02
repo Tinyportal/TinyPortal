@@ -29,7 +29,7 @@ function template_main()
 			case 'editarticle':
 				$mg=$context['TPortal']['editarticle'];
 				echo '
-		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
+		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 			<table width="100%" cellspacing="1" cellpadding="5" class="bordercolor">
 				<tr class="windowbg2">
 					<td valign="top" colspan="2" class="titlebg">
@@ -77,7 +77,7 @@ function template_main()
 						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
 				{
-					TP_bbcbox('TPadmin3','tp_article_body'. $mg['id'], $mg['body']);
+					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else
 					echo $txt['tp-importarticle'] , '</td><td><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
@@ -91,7 +91,8 @@ function template_main()
 					<input name="tp_article_useintro'.$mg['id'].'" type="hidden" value="-1">';
 
 
-				
+				echo '
+				<br />' . $txt['tp-artintrotext']. '<br />';
 
 				if($mg['articletype']=='php')
 					echo '
@@ -103,7 +104,8 @@ function template_main()
 							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
 				{
-					TP_bbcbox('TPadmin3','tp_article_intro'. $mg['id'], $mg['intro']);
+					echo '
+					<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 80%; height: 200px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
 				}
 	
 				echo '
@@ -116,7 +118,7 @@ function template_main()
 				break;
 			case 'editblock':
 				echo '
-		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=saveblock'.$context['TPortal']['blockedit']['id'].'" method="post">
+		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=saveblock'.$context['TPortal']['blockedit']['id'].'" method="post" onsubmit="submitonce(this);">
 			<table width="100%" cellspacing="1" cellpadding="5" class="bordercolor">
 				<tr class="catbg">
 					<td>'.$txt['tp-editblock'].'</td>
@@ -135,7 +137,7 @@ function template_main()
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
-					TP_bbcbox('TPadmin3','blockbody' .$context['TPortal']['blockedit']['id'], $context['TPortal']['blockedit']['body']);
+					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				elseif($context['TPortal']['blockedit']['type']=='10')
 				{
@@ -436,7 +438,7 @@ function template_submitarticle()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boardurl;
 
 	echo '
-	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=submitarticle2" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
+	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=submitarticle2" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				<input name="TPadmin_submit" type="hidden" value="set">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<table width="100%" cellspacing="1" cellpadding="5" class="bordercolor">
@@ -458,7 +460,7 @@ function template_submitarticle()
 				echo '
 					<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
 			elseif(isset($context['TPortal']['submitbbc']))
-				TP_bbcbox('TPadmin3','tp_article_body', '');
+				TP_bbcbox($context['TPortal']['editor_id']);
 			
 			echo '<br />' . $txt['tp-artintrotext']. '<br />';
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))

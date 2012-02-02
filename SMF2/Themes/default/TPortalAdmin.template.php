@@ -2156,7 +2156,7 @@ function template_editarticle($type = '')
 					echo '
 							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
 				elseif($mg['articletype'] == 'bbc')
-					TP_bbcbox('TPadmin3','tp_article_body', strip_tags($mg['body']));
+					TP_bbcbox($context['TPortal']['editor_id']);
 				else
 					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" style="width: 60%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '"></td></tr>' ;
 
@@ -2835,7 +2835,7 @@ function template_blockedit()
 				{
 						echo '
 						</td><td class="right">';
-					TP_bbcbox('tpadmin_news', 'tp_block_body' , $context['TPortal']['blockedit']['body']);
+					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else
 						echo $txt['tp-body'];

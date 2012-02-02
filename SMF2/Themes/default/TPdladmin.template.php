@@ -10,7 +10,7 @@ function template_main()
 	// setup the screen
 	echo '
 <div id="dl_adminbox">
-	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tpmod;dl=admin" enctype="multipart/form-data" method="post" >	';
+	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tpmod;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
 
 	if($context['TPortal']['dlsub']=='admin')
 	{
@@ -129,7 +129,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','tp_dl_introtext', $context['TPortal']['dl_introtext']);
+					TP_bbcbox($context['TPortal']['editor_id']);
 				else
 					echo '<textarea name="tp_dl_introtext" style="width: 99%; height: 300px;">'.$context['TPortal']['dl_introtext'].'</textarea>';
 			
@@ -358,7 +358,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], $cat['description']);
+					TP_bbcbox($context['TPortal']['editor_id']);
 				else
 					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'.$cat['description'].'</textarea>';
 

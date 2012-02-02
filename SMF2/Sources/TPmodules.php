@@ -261,7 +261,7 @@ function TPmodules()
 		$context['TPortal']['unreadcomments'] = true;
 		$context['TPortal']['showall'] = $showall;
 		$context['TPortal']['subaction'] = 'showcomments';
-		TPadd_linktree($scripturl.'?action=tpmod;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
+		TPadd_linktree($scripturl.'?action=tpmod;area=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
 		loadtemplate('TPmodules');
 	}
 	elseif($tpsub == 'savesettings' )
@@ -568,6 +568,13 @@ function TPmodules()
 			// can you edit your own then..?
 			isAllowedTo('tp_editownarticle');
 
+			// Add in BBC editor before we call in template so the headers are there
+			if($row['type'] == 'bbc')
+			{
+				$context['TPortal']['editor_id'] = 'tp_article_body' . $row['id'];
+				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($row['body'])); 			
+			}
+			
 			$context['TPortal']['editarticle'] = array(
 				'id' => $row['id'],
 				'date' => array(
@@ -662,9 +669,12 @@ function TPmodules()
 		{
 			isAllowedTo('tp_submitbbc');
 			$context['TPortal']['submitbbc'] = 1;
-
 			$context['html_headers'] .= '
 				<script language="JavaScript" type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
+			
+			// Add in BBC editor before we call in template so the headers are there
+			$context['TPortal']['editor_id'] = 'tp_article_body';
+			TP_prebbcbox($context['TPortal']['editor_id']); 							
 		}
 		else
 			isAllowedTo('tp_submithtml');
@@ -823,6 +833,13 @@ function TPmodules()
 		else
 			fatal_error($txt['tp-notablock']);
 
+		// Add in BBC editor before we call in template so the headers are there
+		if($context['TPortal']['blockedit']['type'] == '5')
+		{
+			$context['TPortal']['editor_id'] = 'blockbody' . $context['TPortal']['blockedit']['id'];
+			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body'])); 			
+		}
+		
 		if(loadlanguage('TPortalAdmin') == false)
 			loadlanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
@@ -859,6 +876,7 @@ function TPmodules()
 	// save a block?
 	elseif(substr($tpsub, 0, 9) == 'saveblock')
 	{
+		
 		$whatID = substr($tpsub, 9);
 		if(!is_numeric($whatID))
 			fatal_error($txt['tp-notablock']);
@@ -893,9 +911,21 @@ function TPmodules()
 						array('title' => $value, 'blockid' => $val)
 					);
 				}
-				elseif(substr($what, 0, 9) == 'blockbody')
-				{
-					$val = substr($what, 9);
+				elseif(substr($what, 0, 9) == 'blockbody' && substr($what, -4) != 'mode')
+				{	
+					// If we came from WYSIWYG then turn it back into BBC regardless.
+					if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what]))
+					{
+						require_once($sourcedir . '/Subs-Editor.php');
+						$_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
+						// We need to unhtml it now as it gets done shortly.
+						$_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
+						// We need this for everything else.
+						$value = $_POST[$what] = $_REQUEST[$what];
+					}
+					
+					$val = (int) substr($what, 9);
+					
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks 
 						SET body = {string:body} 
@@ -967,8 +997,18 @@ function TPmodules()
 							array('subject' => $value, 'artid' => $val)
 						);
 				}
-				elseif(substr($what, 0, 15) == 'tp_article_body')
+				elseif(substr($what, 0, 15) == 'tp_article_body' && substr($what, -4) != 'mode')
 				{
+					// If we came from WYSIWYG then turn it back into BBC regardless.
+					if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what]))
+					{
+						require_once($sourcedir . '/Subs-Editor.php');
+						$_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
+						// We need to unhtml it now as it gets done shortly.
+						$_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
+						// We need this for everything else.
+						$value = $_POST[$what] = $_REQUEST[$what];
+					}				
 					$val = substr($what, 15);
 					if(is_numeric($val) && $val > 0)
 						$smcFunc['db_query']('', '
@@ -991,7 +1031,7 @@ function TPmodules()
 				}
 				elseif(substr($what, 0, 16) == 'tp_article_intro')
 				{
-					$val = substr($what, 16);
+					$val = (int) substr($what, 16);
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_articles 
 						SET intro = {string:intro}

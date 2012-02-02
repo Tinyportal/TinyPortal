@@ -2934,30 +2934,29 @@ function dl_getcats()
 	}
 }
 
-function TP_bbcbox($form, $input, $body)
-{
-	global $context,$sourcedir, $settings, $txt;
-
-   require_once($sourcedir . '/Subs-Editor.php');
-
-   $editorOptions = array(
-      'id' => $input,
-      'value' => $body,
-      'preview_type' => 2,
-      'height' => '300px',
-      'width' => '92%',
-   );
-   create_control_richedit($editorOptions);
-
-   // Store the ID.
-   $box = $editorOptions['id'];	
-
+function TP_bbcbox($input)
+{	
    echo'<div id="tp_messbox"></div>';
    echo'<div id="tp_smilebox"></div>';
 
-   echo template_control_richedit($box, 'tp_messbox', 'tp_smilebox');
+   echo template_control_richedit($input, 'tp_messbox', 'tp_smilebox');
 }
 
+function TP_prebbcbox($id, $body = '')
+{
+	global $sourcedir;
+	
+	require_once($sourcedir . '/Subs-Editor.php');
+	
+	$editorOptions = array(
+		'id' => $id,
+		'value' => $body,
+		'preview_type' => 2,
+		'height' => '300px',
+		'width' => '100%',
+	);
+	create_control_richedit($editorOptions); 			
+}
 function tp_getblockstyles()
 {
 	return array(

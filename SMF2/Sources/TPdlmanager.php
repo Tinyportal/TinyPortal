@@ -26,7 +26,7 @@ function TPdlmanager_init()
 	{
 		// a switch to make it clear what is "forum" and not
 		$context['TPortal']['not_forum'] = true;
-
+	
 		$context['html_headers'] .= '<script language="JavaScript" type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
 	
 		// see if its admin section
@@ -382,6 +382,12 @@ function TPortalDLManager()
 			// check your permission for uploading
 			isAllowedTo('tp_dlupload');
 
+			// Add in BBC editor before we call in template so the headers are there
+			if($context['TPortal']['dl_wysiwyg'] == 'bbc')
+			{
+				$context['TPortal']['editor_id'] = 'tp_dluploadtext';
+				TP_prebbcbox($context['TPortal']['editor_id']); 			
+			}
 			TP_dlgeticons();
 			
 			// allow to attach this to another item
@@ -1870,7 +1876,7 @@ function TPdownloadme()
 function TPortalDLAdmin()
 {
 	global $txt, $scripturl, $db_prefix, $boarddir, $boardurl;
-	global $smcFunc, $modSettings, $context, $settings;
+	global $smcFunc, $modSettings, $context, $settings, $sourcedir;
 
 	// check permissions
 	if(isset($_POST['dl_useredit']))
@@ -1927,6 +1933,13 @@ function TPortalDLAdmin()
 		}
 		$smcFunc['db_free_result']($request);
 	}
+	
+	// Add in BBC editor before we call in template so the headers are there
+	if($context['TPortal']['dl_wysiwyg'] == 'bbc')
+	{
+		$context['TPortal']['editor_id'] = 'tp_dl_introtext';
+		TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['dl_introtext']); 			
+	}	
 	
 	// any items from the ftp screen?
 	if(!empty($_POST['ftpdlsend']))
@@ -2454,6 +2467,17 @@ function TPortalDLAdmin()
 				$id = substr($what, 12);
 				if(is_numeric($id))
 				{
+					// If we came from WYSIWYG then turn it back into BBC regardless.
+					if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what]))
+					{
+						require_once($sourcedir . '/Subs-Editor.php');
+						$_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
+						// We need to unhtml it now as it gets done shortly.
+						$_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
+						// We need this for everything else.
+						$value = $_POST[$what] = $_REQUEST[$what];
+
+					}					
 					if(isset($_POST['dladmin_text'.$id.'_pure']) && isset($_POST['dladmin_text'.$id.'_choice']))
 					{
 						if($_POST['dladmin_text'.$id.'_choice'] == 1)
@@ -2772,6 +2796,21 @@ function TPortalDLAdmin()
 			}
 			elseif($what == 'tp_dl_introtext')
 			{
+				if($context['TPortal']['dl_wysiwyg'] == 'bbc')
+				{
+					// If we came from WYSIWYG then turn it back into BBC regardless.
+					if (!empty($_REQUEST['tp_dl_introtext']) && isset($_REQUEST['tp_dl_introtext']))
+					{
+						require_once($sourcedir . '/Subs-Editor.php');
+						$_REQUEST['tp_dl_introtext'] = html_to_bbc($_REQUEST['tp_dl_introtext']);
+						// We need to unhtml it now as it gets done shortly.
+						$_REQUEST['tp_dl_introtext'] = un_htmlspecialchars($_REQUEST['tp_dl_introtext']);
+						// We need this for everything else.
+						$value = $_POST['tp_dl_introtext'] = $_REQUEST['tp_dl_introtext'];
+
+					}
+				}
+			
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_settings 
 					SET value = {string:val} 
@@ -3257,6 +3296,13 @@ function TPortalDLAdmin()
 			// is it actually a subitem?
 			if($row['subitem']>0)
 				redirectexit('action=tpmod;dl=adminitem'.$row['subitem']);
+
+			// Add in BBC editor before we call in template so the headers are there
+			if($context['TPortal']['dl_wysiwyg'] == 'bbc')
+			{
+				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
+				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']); 			
+			}			
 
 			// get all items for a list
 			$context['TPortal']['admitems'] = array();

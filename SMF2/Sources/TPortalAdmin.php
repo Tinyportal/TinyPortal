@@ -582,6 +582,13 @@ function do_blocks()
 					$context['TPortal']['blockedit']['access2']['custo'] = substr($svalue,6);
 			}
 
+			// Add in BBC editor before we call in template so the headers are there
+			if($context['TPortal']['blockedit']['type'] == '5')
+			{
+				$context['TPortal']['editor_id'] = 'tp_block_body';
+				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body'])); 			
+			}			
+			
 			if($context['TPortal']['blockedit']['lang'] != '')
 			{
 				$context['TPortal']['blockedit']['langfiles'] = array();
@@ -601,6 +608,7 @@ function do_blocks()
 			get_boards();
 			get_articles();
 			tp_getDLcats();
+			tp_getTPmodules();
 
 			$context['TPortal']['edit_categories'] = array();
 			
@@ -1471,6 +1479,12 @@ function do_articles()
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/icons/\' + name; 
 				}
 			// ]]></script>';
+		// Add in BBC editor before we call in template so the headers are there
+		if(substr($_GET['sa'], 11) == 'bbc')
+		{
+			$context['TPortal']['editor_id'] = 'tp_article_body';
+			TP_prebbcbox($context['TPortal']['editor_id']); 			
+		}			
 	}
 	// fetch categories and subcategories
 	if(!isset($show_nocategory))
@@ -1617,10 +1631,17 @@ function do_articles()
 		
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
-			
+			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);	
 			$smcFunc['db_free_result']($request);
 		}
+		
+		// Add in BBC editor before we call in template so the headers are there
+		if($context['TPortal']['editarticle']['articletype'] == 'bbc')
+		{
+			$context['TPortal']['editor_id'] = 'tp_article_body';
+			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['editarticle']['body'])); 			
+		}
+		
 		// fetch the WYSIWYG value
 		$request = $smcFunc['db_query']('', '
 			SELECT value1 FROM {db_prefix}tp_variables 

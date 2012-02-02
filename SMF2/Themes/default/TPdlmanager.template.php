@@ -417,7 +417,7 @@ function template_main()
 			<span class="topslice"><span></span></span>
 		 <table width="100%" border="0" cellspacing="0" cellpadding="8">
 			<tr class="windowbg"><td>
-				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tpmod;dl=upload" method="post" enctype="multipart/form-data">
+				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tpmod;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
@@ -426,7 +426,7 @@ function template_main()
 		echo '<div style="text-align: center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br />
 					<table class="formtable">
 						<tr>
-							<td class="left" style="width: 150px;">'.$txt['tp-dluploadtitle'].'</td>
+							<td class="left" style="width: 130px;">'.$txt['tp-dluploadtitle'].'</td>
 							<td class="windbg">
 								<input name="tp-dluploadtitle" type="text" value="-no title-" size="40">
 							</td>
@@ -450,7 +450,7 @@ function template_main()
 		if($context['TPortal']['dl_wysiwyg']== 'html')
 			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext', $context['TPortal']['show_wysiwyg'], false);
 		elseif($context['TPortal']['dl_wysiwyg']=='bbc')
-			TP_bbcbox('tp_dlupload','tp_dluploadtext', '');
+			TP_bbcbox($context['TPortal']['editor_id']);
 		else
 			echo '<textarea name="tp_dluploadtext" rows=5 cols=50 wrap="on"></textarea>';
 
@@ -716,7 +716,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', $context['TPortal']['show_wysiwyg']);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_useredit','dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES));
+					TP_bbcbox($context['TPortal']['editor_id']);
 				else
 					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
 
