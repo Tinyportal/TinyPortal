@@ -845,7 +845,7 @@ function template_TPtagboards_above()
 	echo '
 	<div class="tborder" style="margin-bottom: 3px;">
 		<div class="titlebg" style="padding: 4px;">' . $txt['tp-tagboards'] . '  ' , tp_hidepanel('tagpanel3',true) , '</div>
-		<div class="windowbg" style="padding: 4px;" id="tagpanel3" ' , in_array('tagpanel3',$context['tp_panels']) ? ' style="display: none;"' : '' , '>
+		<div class="windowbg" id="tagpanel3" style="padding: 4px; ' , (in_array('tagpanel3',$context['tp_panels'])) ? 'display: none;' : '' , '">
 				<form accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
 					<input type="hidden" name="sc" value="', $context['session_id'], '" />
 					<input name="TPtagboards" type="hidden" value="set">';
@@ -897,7 +897,7 @@ function template_TPtagtopics_above()
 		<div class="title_bar">
 			<h3 class="titlebg">' . $txt['tp-tagtopics'] . ' ' , tp_hidepanel('tagpanel4',true) , '</h3>
 		</div>
-		<div class="windowbg" style="padding: 4px;" id="tagpanel4" ' , in_array('tagpanel4', $context['tp_panels']) ? ' style="display: none;"' : '' , '>
+		<div class="windowbg" id="tagpanel4" style="padding: 4px; ' , (in_array('tagpanel4', $context['tp_panels'])) ? 'display: none;' : '' , '">
 				<form accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
 					<input type="hidden" name="sc" value="', $context['session_id'], '" />
 					<input name="TPtagtopics" type="hidden" value="set">';
