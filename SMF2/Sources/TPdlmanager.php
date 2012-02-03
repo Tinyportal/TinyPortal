@@ -1259,11 +1259,11 @@ function TPortalDLManager()
 		$item =	$context['TPortal']['item'] = $item;
 		$context['TPortal']['dlitem'] = array();
 		$request = $smcFunc['db_query']('', '
-			SELECT dl.* , dl.author_id as authorID, m.real_name as realName
-			FROM ({db_prefix}tp_dlmanager AS dl, {db_prefix}members AS m)
+			SELECT dl.*, dl.author_id as authorID, m.real_name as realName
+			FROM ({db_prefix}tp_dlmanager AS dl)
+			LEFT JOIN {db_prefix}members AS m ON (m.id_member = dl.author_id)
 			WHERE dl.type = {string:type}
 			AND dl.id = {int:item}
-			AND dl.author_id = m.id_member
 			LIMIT 1',
 			array('type' => 'dlitem', 'item' => $item)
 		);
