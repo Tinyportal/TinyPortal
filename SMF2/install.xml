@@ -106,7 +106,8 @@ require_once($sourcedir . '/TPortal.php');]]></add>
 				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
 				'href' => $scripturl . '?action=forum',
 				'show' => true,
-			),]]></add>
+			),
+			]]></add>
 		</operation>
 		<operation>
 			<search position="before"><![CDATA[			'help' => array(
@@ -114,7 +115,8 @@ require_once($sourcedir . '/TPortal.php');]]></add>
 				'href' => $scripturl . '?action=help',
 				'show' => true,
 				'sub_buttons' => array(]]></search>
-			<add><![CDATA[					'tphelp' => array(
+			<add><![CDATA[
+					'tphelp' => array(
 						'title' => 'TinyPortal',
 						'href' => $scripturl . '?action=tpmod;sa=help',
 						'show' => true,
@@ -128,7 +130,8 @@ require_once($sourcedir . '/TPortal.php');]]></add>
 				'show' =>  TPcheckAdminAreas(),
 				'sub_buttons' => array(
 				),
-			),]]></add>
+			),
+			]]></add>
 		</operation>
 		<operation>
 			<search position="before"><![CDATA[	elseif ($context['current_action'] == 'groups' && $context['allow_moderation_center'])
