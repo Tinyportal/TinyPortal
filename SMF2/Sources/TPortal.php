@@ -597,7 +597,6 @@ function doTPpage()
 		$page = tp_sanitize($_GET['page']);
 		if(!empty($page))
 		{
-			$now = time();
 			$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
 			if(allowedTo('tp_articles'))
 				$request =  $smcFunc['db_query']('', '
@@ -671,6 +670,8 @@ function doTPpage()
 						$article['type'] = $article['rendertype'] = 'html'; 
 					}
 
+					// shortname title
+					$article['shortname'] = un_htmlspecialchars($article['shortname']);
                     // Add ratings together
                     $article['rating'] = array_sum(explode(',', $article['rating']));
 					// allowed and all is well, go on with it.

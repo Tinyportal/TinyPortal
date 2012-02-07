@@ -3523,6 +3523,16 @@ function do_postchecks()
 							array('subject' => $value, 'artid' => $where)
 						);
 					}
+					elseif($setting == 'shortname')
+					{
+						$value = htmlspecialchars($value, ENT_QUOTES);
+						$smcFunc['db_query']('', '
+							UPDATE {db_prefix}tp_articles 
+							SET shortname = {string:shortname} 
+							WHERE id = {int:artid} LIMIT 1',
+							array('shortname' => $value, 'artid' => $where)
+						);
+					}
 					elseif($setting == 'category')
 					{
 						// for the event, get the allowed
