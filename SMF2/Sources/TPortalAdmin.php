@@ -3525,8 +3525,7 @@ function do_postchecks()
 					}
 					elseif($setting == 'shortname')
 					{
-						$value = str_replace(' ', '_', $value);
-						$value = htmlspecialchars($value, ENT_QUOTES);
+						$value = htmlspecialchars(str_replace(' ', '-', $value), ENT_QUOTES);
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET shortname = {string:shortname} 
