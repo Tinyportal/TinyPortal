@@ -1947,9 +1947,8 @@ function doTPfrontpage()
 			AND art.category > 0
 			AND art.approved = 1'
 		);
-		if (!$context['TPortal']['blockarticle_titles']){
-			$context['TPortal']['blockarticle_titles'] = array();
-		}
+
+		$context['TPortal']['blockarticle_titles'] = array();
 
 		if ($smcFunc['db_num_rows']($request) > 0)
 		{
