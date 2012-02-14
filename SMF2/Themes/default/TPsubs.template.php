@@ -1210,8 +1210,8 @@ function article_renders($type = 1, $single = false, $first = false)
 			$code = '
 <div style="margin-bottom: 5px; overflow: hidden;">
     ' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
-	   <h3' . $useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"' . '>{article_shortdate} {article_title} </h3>
-    ' . $useFrame ? '</div>' : '' . '
+	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_shortdate} {article_title} </h3>
+    ' . ($useFrame ? '</div>' : '') . '
 	<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2" ' : '') . '>
 		<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg' : '') . '">
 		' . (!$single ? '{article_avatar}' : '') .  '

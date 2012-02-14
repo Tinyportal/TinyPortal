@@ -85,7 +85,7 @@ $tables = array(
 			array('name' => 'pos', 'type' => 'int', 'size' => 11,),
 			array('name' => 'off', 'type' => 'tinyint', 'size' => 4, 'default' => 0,),
 			array('name' => 'visible', 'type' => 'text',),
-			array('name' => 'var1', 'type' => 'int', 	'size' => 11,),
+			array('name' => 'var1', 'type' => 'int', 'size' => 11,),
 			array('name' => 'var2', 'type' => 'int', 'size' => 11,),
 			array('name' => 'lang', 'type' => 'text',),
 			array('name' => 'access2', 'type' => 'text',),
