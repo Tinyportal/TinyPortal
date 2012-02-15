@@ -220,7 +220,8 @@ function template_wap2_tp_page()
 	if(!isset($context['TPortal']['article']))
 		return;
 
-	echo '<p class="titlebg">' . $context['linktree'][0]['name']  . '</p>';
+	if(!empty($context['linktree']))
+		echo '<p class="titlebg">' . $context['linktree'][0]['name']  . '</p>';
 
 	render_frontp(true);
 
@@ -239,7 +240,7 @@ function template_imode_tp_page()
 
 	echo '
 		<table border="0" cellspacing="0" cellpadding="0">
-	<tr><td class="titlebg">' . $context['linktree'][0]['name']  . '</td></tr>';
+	<tr><td class="titlebg"> '. (!empty($context['linktree']) ? $context['linktree'][0]['name'] : '')  . '</td></tr>';
 
 	render_frontp(true);
 
@@ -259,7 +260,7 @@ function template_wap_tp_page()
 
 	echo '
 	<card id="main" title="', $context['page_title'], '">
-		<p>' . $context['linktree'][0]['name']  . '</p>';
+		'. (!empty($context['linktree']) ? '<p>' . $context['linktree'][0]['name']  . '</p>' : '');
 
 	render_frontp(true);
 

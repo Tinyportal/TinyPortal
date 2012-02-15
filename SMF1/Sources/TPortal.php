@@ -2608,8 +2608,6 @@ function TP_blockgrid($block, $theme, $pos, $side, $last=false, $gridtype, $empt
 	// last..if its the last block,close the table
 	if($last)
 		echo '</table>';
-
-	return $code;
 }
 
 function TP_blockgrids()
