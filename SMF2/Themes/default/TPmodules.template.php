@@ -97,9 +97,9 @@ function template_main()
 				if($mg['articletype']=='php')
 					echo '
 						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
-				elseif($context['TPortal']['use_wysiwyg']>0 && $mg['articletype']=='' )
-						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro', $tp_use_wysiwyg);
-				elseif($context['TPortal']['use_wysiwyg']==0 && $mg['articletype']=='' )
+				elseif($tp_use_wysiwyg > 0 && $mg['articletype'] == 'html' )
+						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
+				elseif($tp_use_wysiwyg == 0 && $mg['articletype'] == '' )
 					echo '
 							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
 				elseif($mg['articletype']=='bbc')
