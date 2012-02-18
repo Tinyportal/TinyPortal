@@ -2221,12 +2221,7 @@ function TPortalDLAdmin()
 			}
 			elseif(substr($what, 0, 11) == 'tp_dlboards')
 			    $creategrp[] = $value;
-			elseif(substr($what, 0, 9) == 'dlmanager')
-			    $dlmanager_grp[] = $value;
-			elseif(substr($what,0,8) == 'dlupload')
-			    $dlupload_grp[] = $value;
-			elseif(substr($what, 0, 13) == 'dlcreatetopic')
-			    $dlcreatetopic_grp[] = $value;
+				
 		}
 		if(!empty($_POST['dlsettings']))
 		{
@@ -2237,45 +2232,6 @@ function TPortalDLAdmin()
 				WHERE name = {string:name}',
 				array('val' => $dlb, 'name' => 'dl_createtopic_boards')
 			);
-			// round up the access groups.
-			// check which has the group
-			$grp = array(); 
-			$grp2 = array(); 
-			$grp3 = array();
-			$grp = tp_fetchpermissions(array('tp_dlmanager'));
-			$grp2 = tp_fetchpermissions(array('tp_dlupload'));
-			$grp3 = tp_fetchpermissions(array('tp_dlcreatetopic'));
-			
-			if (allowedTo('manage_permissions'))
-			{
-				$smcFunc['db_query']('', '
-					DELETE FROM {db_prefix}permissions 
-					WHERE permission = {string:perm1} 
-					OR permission = {string:perm2}
-					OR permission = {string:perm3}',
-					array('perm1' => 'tp_dlmanager', 'perm2' => 'tp_dlupload', 'perm3' => 'tp_dlcreatetopic')
-				);
-				foreach($dlmanager_grp as $pr => $val)
-	  				$smcFunc['db_insert']('INSERT', 
-						'{db_prefix}permissions',
-						array('id_group' => 'int', 'permission' => 'string', 'add_deny' => 'int'),
-						array($val, 'tp_dlmanager', 1),
-						array('id_group')
-					);
-				foreach($dlupload_grp as $pr => $val)
-	  				$smcFunc['db_insert']('INSERT', 
-						'{db_prefix}permissions',
-						 array('id_group' => 'int', 'permission' => 'string', 'add_deny' => 'int'),
-						 array($val, 'tp_dlupload', 1),
-						 array('id_group'));
-				foreach($dlcreatetopic_grp as $pr => $val)
-	  				$smcFunc['db_insert']('INSERT', 
-						'{db_prefix}permissions',
-						array('id_group' => 'int', 'permission' => 'string', 'add_deny' => 'int'),
-						array($val, 'tp_dlcreatetopic', 1),
-						array('id_group')
-					);
-			}
 		}
 
 		if($groupset)

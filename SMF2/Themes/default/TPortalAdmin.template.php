@@ -66,11 +66,6 @@ function template_main()
 		$go = 'template_addblock';
 		$param = '';
 	}
-	elseif($go == 'template_permissions')
-	{
-		$go = 'template_perms';
-		$param = '';
-	}
 	else
 		$param = '';
 
@@ -80,65 +75,7 @@ function template_main()
 		</div>
 	</div>';
 }
-// permissions
-function template_perms()
-{
-	global $context, $settings, $txt, $boardurl, $scripturl;
 
-	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input name="tpadmin_form" type="hidden" value="perms">
-		<table class="admintable">
-			<caption class="catbg">' . $txt['tp-permissions'] . '</caption>
-			<thead>
-				<tr class="windowbg2">
-					<th class="information smalltext">' , $txt['tp-permdesc1'] , '</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="windowbg2">
-					<td class="tborder" style="padding: 0; border: none;">
-						<table class="formtable">';
-
-				if(allowedTo('manage_permissions'))
-				{
-					foreach($context['TPortal']['modulepermissions'] as $perm)
-					{
-						if(empty($txt['permissionname_'.$perm]))
-							$txt['permissionname_'.$perm] = $perm;
-
-						echo '
-				<tr class="windowbg">
-					<td colspan="2">
-						<h4 class="dl_perm">&quot;' , $txt['permissionname_'.$perm] , '&quot;</h4>
-				<div class="dl_perm" id="tp'.$perm.'">';
-
-					foreach($context['TPortal']['perm_all_groups'] as $allperm)
-						echo '
-					<div class="perm middletext">
-						<input type="checkbox" value="'.$allperm['id'].'" ' , isset($context['TPortal']['perm_groups'][$perm]) && in_array($allperm['id'],$context['TPortal']['perm_groups'][$perm]) ? 'checked="checked" ' : '' , 'name="'.$perm.'_perm_'.$allperm['id'].'" />'. $allperm['name'].'</div>';
-				
-					echo '</div>
-					</td></tr>';
-					}
-				}
-
-		echo '
-						</table>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr class="windowbg2">
-					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-	</form>';
-
-}
 // blocks overview
 function template_blockoverview()
 {

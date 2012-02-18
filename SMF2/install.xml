@@ -198,14 +198,6 @@ function is_not_guest($message = '')
 	
 	<file name="$sourcedir/QueryString.php">
 		<operation>
-			<search position="after"><![CDATA[	// If $scripturl is set to nothing, or the SID is not defined (SSI?) just quit.]]></search>
-			<add><![CDATA[	// A better place
-	if (function_exists('tp_addcopy'))
-		$buffer = tp_addcopy($buffer);
-
-]]></add>
-		</operation>
-		<operation>
 			<search position="replace"><![CDATA[		// Let's do something special for session ids!
 		if (defined('SID') && SID != '')
 			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html?' . SID . '\$2\"'", $buffer);
