@@ -249,9 +249,9 @@ function template_main()
 			<tr class="catbg">
 				<td colspan="2">'.$txt['tp-dlname'].'</td>
 				<td>'.$txt['tp-dlicon'].'</td>
-				<td>'.$txt['tp-dlfiles'].'</td>
-				<td>'.$txt['tp-dlsubmitted'].'</td>
-				<td colspan="3">'.$txt['tp-dledit'].'</td>
+				<td colspan="2">'.$txt['tp-dlviews'].'</td>
+				<td colspan="2">'.$txt['tp-dlfile'].'</td>
+				<td>'.$txt['tp-dlfilesize'].'</td>
 			</tr>';
 		if(isset($context['TPortal']['admcats']) && count($context['TPortal']['admcats'])>0)
 		{
@@ -274,14 +274,7 @@ function template_main()
 			</tr>';
 			}
 		}
-		echo '
-			<tr class="titlebg">
-				<td colspan="2">'.$txt['tp-dlname'].'</td>
-				<td>'.$txt['tp-dlicon'].'</td>
-				<td colspan="2">'.$txt['tp-dlviews'].'</td>
-				<td colspan="2">'.$txt['tp-dlfile'].'</td>
-				<td>'.$txt['tp-dlfilesize'].'</td>
-			</tr>';
+
 		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
 		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
@@ -506,7 +499,7 @@ function template_main()
 			<tr class="titlebg">
 				<td>'.$txt['tp-dlname'].'</td>
 				<td>'.$txt['tp-dlfilename'].'</td>
-				<td>&nbsp;</td>
+				<td>'.$txt['tp-created'].'</td>
 				<td>'.$txt['tp-uploadedby'].'</td>
 				<td>'.$txt['tp-dlfilesize'].'</td>
 			</tr>';
