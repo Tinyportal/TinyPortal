@@ -1,11 +1,14 @@
 <?php
-/**
- *
- * User: ichbin
- * Date: 2/17/12
- * Time: 10:03 PM
- *
- */
+/****************************************************************************
+* TPassimilate.php																*
+*****************************************************************************
+* TP version: 1.0 RC4														*
+* Software Version:				SMF 2.0										*
+* Founder:						Bloc (http://www.blocweb.net)				*
+* Developer:					IchBin (ichbin@ichbin.us)					*
+* Copyright 2005-2012 by:     	The TinyPortal Team							*
+* Support, News, Updates at:  	http://www.tinyportal.net					*
+****************************************************************************/
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
 

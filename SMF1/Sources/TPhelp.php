@@ -2,7 +2,7 @@
 /****************************************************************************
 * TPhelp.php																*
 *****************************************************************************
-* TP version: 1.0 RC3														*
+* TP version: 1.0 RC4														*
 * Software Version:				SMF 1.1.x									*
 * Founder:						Bloc (http://www.blocweb.net)				*
 * Developer:					IchBin (ichbin@ichbin.us)					*
