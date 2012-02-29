@@ -1,14 +1,21 @@
 <?php
-/****************************************************************************
-* tp_upgrade.php															*
-*****************************************************************************
-* TP version: 1.0 RC3														*
-* Software Version:				SMF 2.0										*
-* Founder:						Bloc (http://www.blocweb.net)				*
-* Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2012 by:     	The TinyPortal Team							*
-* Support, News, Updates at:  	http://www.tinyportal.net					*
-****************************************************************************/
+/**
+ * tp_upgrade.php
+ *
+ * @package TinyPortal
+ * @version 1.0 RC4
+ * @author IchBin - ichbin@ichbin.us
+ * @founder Bloc
+ * @license MPL 2.0
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 2.0
+ * (the "License"); you may not use this package except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Copyright (C) 2012 - The TinyPortal Team
+ *
+ */
 
 global $smcFunc, $db_prefix, $modSettings, $existing_tables;
 
@@ -726,51 +733,6 @@ else
 	);
 }
 
-
-/*
-// make sure TPGallery is available
-$request=itpdb_query("SELECT COUNT(*) FROM " . $tp_prefix . "modules WHERE modulename='TPgallery'");
-$row=itpdb_fetch_row($request);
-itpdb_free_result($request);
-
-if($row[0]==0)
-{
-	$newmod=array(
-	'version' => '1.0',
-	'name' => 'TPgallery',		// must be exactly equal to the folder.
-	'title' => 'TP Gallery', 
-	'subquery' => 'gallery',	// the subcall that let TP knows which module is running.
-	'sourcefile' => 'TPgallery.php',		// The main source file, entry for more source files.
-	'blockaccess' => '',		// 
-	'permissions' => 'tpgallery_admin|1,tpgallery_moderator|1,tpgallery_upload|0,tpgallery_comment|0,tpgallery_view|0',  //permiss 
-	'languages' => 'english',
-	'blockrender' => 'tpgallery_blockrender',
-	'adminhook' => 'tpgallery_adminhook',
-	'logo' => 'tpgallery.png',
-	'tpversion' => '1.0',
-	'smfversion' => '1.1.x',
-	'description' => '[b]TP Gallery[/b] is a new gallery for TP.',
-	'author' => 'Bloc',
-	'contact' => 'bloc@tinyportal.net',
-	'website' => 'http://www.tinyportal.net',
-	'profilehook' => 'tpgallery_profile',
-	'frontpagehook' => 'tpgallery_frontpage',
-	'globaltags' => 'tpgallery_globaltags',
-	);
-
-	require_once($sourcedir . '/Subs-Post.php');
-	preparsecode($newmod['description']);
-
-	// ok, insert this into modules table. 
-	itpdb_query("INSERT INTO " . $tp_prefix . "modules (version,modulename,title,subquery,autoload_run,autoload_admin,
-			autorun,autorun_admin,db,permissions,active,languages,blockrender,adminhook,logo,	tpversion,smfversion,	description,
-			author,	email, website, profile, frontsection, globaltags) 
-			VALUES('$newmod[version]',	'$newmod[name]',	'$newmod[title]','$newmod[subquery]','$newmod[sourcefile]','$newmod[sourcefile]',
-			'',	'',	'$newmod[blockaccess]',	'$newmod[permissions]',1,'$newmod[languages]',	'$newmod[blockrender]',	'$newmod[adminhook]',	'$newmod[logo]','$newmod[tpversion]',
-			'$newmod[smfversion]',	'$newmod[description]',	'$newmod[author]','$newmod[contact]', '$newmod[website]', '$newmod[profilehook]','$newmod[frontpagehook]','$newmod[globaltags]'
-			)");
-}
-*/
 // check if blocks access2 needs converting
 if(isset($convertaccess))
 {
