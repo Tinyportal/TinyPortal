@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/"> 
   
 	<id>bloc:tinyportal</id>
-    <version>1.105</version>
+    <version>1.106</version>
     
 	<file name="$boarddir/index.php">
 		<operation>
@@ -197,14 +197,6 @@ function is_not_guest($message = '')
 	</file>
 	
 	<file name="$sourcedir/QueryString.php">
-		<operation>
-			<search position="after"><![CDATA[	// If $scripturl is set to nothing, or the SID is not defined (SSI?) just quit.]]></search>
-			<add><![CDATA[	// A better place
-	if (function_exists('tp_addcopy'))
-		$buffer = tp_addcopy($buffer);
-
-]]></add>
-		</operation>
 		<operation>
 			<search position="replace"><![CDATA[		// Let's do something special for session ids!
 		if (defined('SID') && SID != '')

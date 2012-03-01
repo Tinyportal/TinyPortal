@@ -318,12 +318,6 @@ function tp_getbuttons()
 					'show' => true,
 					'active_button' => false,
 				),
-				'tppermissions' => array(
-					'title' => $txt['tp-permissions'],
-					'href' => $scripturl . '?action=tpadmin;sa=permissions',
-					'show' => true,
-					'active_button' => false,
-				),
 			),			
 		);
 	}
@@ -2228,13 +2222,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'description' => $txt['tp-frontpagedesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=frontpage',
 				'is_selected' => $tpsub == 'frontpage',
-			),
-			'permissions' => array(
-				'title' => $txt['tp-permissions'],
-				'description' => $txt['tp-permdesc1'],
-				'href' => $scripturl . '?action=tpadmin;sa=permissions',
-				'is_selected' => $tpsub == 'permissions',
-			),
+			), 
 		);
 	}
 	if (allowedTo('tp_articles'))
@@ -3077,40 +3065,7 @@ function get_grps($save = true, $noposts = true)
 	if($save)
 		return $context['TPmembergroups'];
 }
-function tp_addcopy($buffer)
-{
-	global $context, $scripturl;
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits">&copy; 2005-2012</a>';
-
-	if (SMF == 'SSI' || empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
-		return $buffer;
-
-	$find = array(
-		'Simple Machines</a>',
-		'class="copywrite"',
-	);
-	$replace = array(
-		'Simple Machines</a><br />' . $string,
-		'class="copywrite" style="line-height: 1;"',
-	);
-
-	if (!in_array($context['current_action'], array('post', 'post2')))
-	{
-		$finds[] = '[cutoff]';
-		$replaces[] = '';
-	}
-
-	$buffer = str_replace($find, $replace, $buffer);
-
-	if (strpos($buffer, $string) === false)
-	{
-		$string = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $string . '</div></body></html>';
-		$buffer = preg_replace('~</body>\s*</html>~', $string, $buffer);
-	}
-
-	return $buffer;
-}
 function tp_convertphp($code, $reverse = false)
 {
 

@@ -3,11 +3,11 @@ TinyPortal
 </id>
 
 <version>
-1.105
+1.106
 </version>
 
 <mod info>
-TinyPortal 1.0 RC3
+TinyPortal 1.0 RC4
 </mod info>
 
 <author>

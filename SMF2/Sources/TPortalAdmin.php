@@ -2288,39 +2288,7 @@ function do_postchecks()
 		$from = $_POST['tpadmin_form'];
 		//news
 		if($from == 'news')
-			return 'news';
-		// settings and frontpage
-		elseif($from == 'perms')
-		{
-			checkSession('post');
-			isAllowedTo('tp_settings');
-			
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}permissions 
-				WHERE permission IN ({array_string:perm})',
-				array(
-					'perm' => $context['TPortal']['modulepermissions'],
-				)
-			);
-
-			foreach($_POST as $what => $value)
-			{
-				$where = strpos($what, '_perm_');
-				if($where === false)
-					continue;
-				else
-				{
-					$perm = substr($what, 0, $where);
- 					$smcFunc['db_insert']('INSERT', 
-						'{db_prefix}permissions',
-						array('id_group' => 'int', 'permission' => 'string', 'add_deny' => 'int'),
-						array($value, $perm, 1),
-						array('id_group', 'permission')
-					);
-				}
-			}
-			return 'permissions';
-		}
+			return 'news';	
 		// block permissions overview
 		elseif($from == 'blockoverview')
 		{

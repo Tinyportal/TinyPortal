@@ -4,7 +4,7 @@
     <name>TinyPortal</name>
     <id>bloc:tinyportal</id>
     <type>modification</type>
-    <version>1.105</version>
+    <version>1.106</version>
     <install for="1.1, 1.1.1-1.1.99">
 		<redirect url="">Installed!</redirect>
 		<require-dir name="SMF1/Themes" destination="$boarddir" />
@@ -13,12 +13,50 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Installing TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+		<readme type="inline">Installing TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</install>
 	<uninstall for="1.1, 1.1.1-1.1.99">
+		<readme type="inline">Uninstalling TinyPortal v1.0 RC4 for SMF1.1.x. Warning! This Removes all files including downloads and images that were uploaded in TinyPortal.</readme>
 		<modification format="boardmod" type="file" reverse="true">SMF1/tinyportal1090.mod</modification>
+		<remove-file name="$sourcedir/TPcommon.php" />
+		<remove-file name="$sourcedir/TPdlmanager.php" />
+		<remove-file name="$sourcedir/TPhelp.php" />
+		<remove-file name="$sourcedir/TPmodules.php" />
+		<remove-file name="$sourcedir/TPoptions.php" />
+		<remove-file name="$sourcedir/TPortal.php" />
+		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSubs.php" />
+		<remove-file name="$themedir/TPBlockLayout.template.php" />
+		<remove-file name="$themedir/TPdladmin.template.php" />
+		<remove-file name="$themedir/TPdlmanager.template.php" />
+		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPmodules.template.php" />
+		<remove-file name="$themedir/TPortal.template.php" />
+		<remove-file name="$themedir/TPortalAdmin.template.php" />
+		<remove-file name="$themedir/TPprint.template.php" />
+		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPShout.template.php" />
+		<remove-file name="$themedir/TPsubs.template.php" />
+		<remove-file name="$themedir/TPwireless.template.php" />
+		<remove-file name="$themedir/TPShout.css" />
+		<remove-file name="$themedir/tp-style.css" />
+		<remove-file name="$languagedir/TPdlmanager.english" />
+		<remove-file name="$languagedir/TPdlmanager.english-uf8" />
+		<remove-file name="$languagedir/TPhelp.english" />
+		<remove-file name="$languagedir/TPhelp.english-uf8" />
+		<remove-file name="$languagedir/TPmodules.english" />
+		<remove-file name="$languagedir/TPmodules.english-uf8" />
+		<remove-file name="$languagedir/TPortal.english" />
+		<remove-file name="$languagedir/TPortal.english-uf8" />
+		<remove-file name="$languagedir/TPortalAdmin.english" />
+		<remove-file name="$languagedir/TPortalAdmin.english-uf8" />
+		<remove-file name="$languagedir/TPShout.english" />
+		<remove-file name="$languagedir/TPShout.english-uf8" />	
+		<remove-dir name="$boarddir/tp-files" />
+		<remove-dir name="$boarddir/tp-downloads" />
+		<remove-dir name="$boarddir/tp-images" />		
 	</uninstall>        
 	<install for="2.0 - 2.0.99">
 		<redirect url="">Installed!</redirect>
@@ -28,14 +66,55 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF2/tp-files" destination="$boarddir" />
-        <readme type="inline">Installing TinyPortal v1.0 RC3 for SMF2.0 Final, RC4, or RC5</readme>
+        <readme type="inline">Installing TinyPortal v1.0 RC4 for SMF2.0</readme>
 		<modification>SMF2/install.xml</modification>
 		<database>SMF2/tp_upgrade.php</database>
+		<code>SMF2/do_hooks.php</code>
     </install>
 	<uninstall for="2.0 - 2.0.99">
+		<readme type="inline">Uninstalling TinyPortal v1.0 RC4 for SMF2.0. Warning! This Removes all files including downloads and images that were uploaded in TinyPortal.</readme>
 		<modification reverse="true">SMF2/install.xml</modification>
+		<remove-file name="$sourcedir/TPassimilate.php" />
+		<remove-file name="$sourcedir/TPcommon.php" />
+		<remove-file name="$sourcedir/TPdlmanager.php" />
+		<remove-file name="$sourcedir/TPhelp.php" />
+		<remove-file name="$sourcedir/TPmodules.php" />
+		<remove-file name="$sourcedir/TPoptions.php" />
+		<remove-file name="$sourcedir/TPortal.php" />
+		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSubs.php" />
+		<remove-file name="$themedir/TPBlockLayout.template.php" />
+		<remove-file name="$themedir/TPdladmin.template.php" />
+		<remove-file name="$themedir/TPdlmanager.template.php" />
+		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPmodules.template.php" />
+		<remove-file name="$themedir/TPortal.template.php" />
+		<remove-file name="$themedir/TPortalAdmin.template.php" />
+		<remove-file name="$themedir/TPprint.template.php" />
+		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPShout.template.php" />
+		<remove-file name="$themedir/TPsubs.template.php" />
+		<remove-file name="$themedir/TPwireless.template.php" />
+		<remove-file name="$themedir/TPShout.css" />
+		<remove-file name="$themedir/tp-style.css" />
+		<remove-file name="$languagedir/TPdlmanager.english" />
+		<remove-file name="$languagedir/TPdlmanager.english-uf8" />
+		<remove-file name="$languagedir/TPhelp.english" />
+		<remove-file name="$languagedir/TPhelp.english-uf8" />
+		<remove-file name="$languagedir/TPmodules.english" />
+		<remove-file name="$languagedir/TPmodules.english-uf8" />
+		<remove-file name="$languagedir/TPortal.english" />
+		<remove-file name="$languagedir/TPortal.english-uf8" />
+		<remove-file name="$languagedir/TPortalAdmin.english" />
+		<remove-file name="$languagedir/TPortalAdmin.english-uf8" />
+		<remove-file name="$languagedir/TPShout.english" />
+		<remove-file name="$languagedir/TPShout.english-uf8" />	
+		<remove-dir name="$boarddir/tp-files" />
+		<remove-dir name="$boarddir/tp-downloads" />
+		<remove-dir name="$boarddir/tp-images" />
+		<code>SMF2/do_hooks.php</code>
     </uninstall>
-    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104">
+    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105">
 		<redirect url="">Upgraded!</redirect>
 		<require-dir name="SMF2/Themes" destination="$boarddir" />
 		<require-dir name="common/Themes" destination="$boarddir" />
@@ -43,7 +122,8 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF2/tp-files" destination="$boarddir" />
-		<readme type="inline">Installing TinyPortal v1.0 RC3 for SMF2.0 Final, RC4, or RC5</readme>
+		<readme type="inline">Installing TinyPortal v1.0 RC4 for SMF2.0</readme>
+		<code>SMF2/do_hooks.php</code>
     </upgrade>
 
 	<upgrade from="0.96, 0.97, 0.98, 0.981, 0.982, 0.983">
@@ -63,7 +143,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 		 <modification format="boardmod" type="file">SMF1/tinyportal1010-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -75,7 +155,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1020-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -87,7 +167,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1048-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -99,7 +179,7 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
         <modification format="boardmod" type="file">SMF1/tinyportal1050-1090.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -111,7 +191,7 @@
 		<require-dir name="common/tp-downloads" destination="$boarddir" />
 		<require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-		<readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+		<readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 		<modification format="boardmod" type="file">SMF1/tinyportal1056-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -123,7 +203,7 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
         <modification format="boardmod" type="file">SMF1/tinyportal1075-1090.mod</modification>
 		<code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -135,7 +215,7 @@
 	    <require-dir name="common/tp-downloads" destination="$boarddir" />
 	    <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-	    <readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+	    <readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 	    <modification format="boardmod" type="file">SMF1/tinyportal1080-1090.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
@@ -147,11 +227,11 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
         <modification format="boardmod" type="file">SMF1/tinyportal11b.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
-	<upgrade for="1.1, 1.1.1-1.1.99" from="1.102, 1.103, 1.104">
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.102, 1.103, 1.104, 1.105">
 		<redirect url="">Upgraded!</redirect>
         <require-dir name="SMF1/Themes" destination="$boarddir" />
         <require-dir name="common/Themes" destination="$boarddir" />
@@ -159,6 +239,6 @@
         <require-dir name="common/tp-downloads" destination="$boarddir" />
         <require-dir name="common/tp-images" destination="$boarddir" />
 		<require-dir name="SMF1/tp-files" destination="$boarddir" />
-        <readme type="inline">Upgrading TinyPortal v1.0 RC3 for SMF1.1.x</readme>
+        <readme type="inline">Upgrading TinyPortal v1.0 RC4 for SMF1.1.x</readme>
 	</upgrade>	
 </package-info>

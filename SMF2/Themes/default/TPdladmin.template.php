@@ -244,45 +244,14 @@ function template_main()
 
 				echo '
 				</select>
-                       </td></tr>';
-				if(allowedTo('manage_permissions'))
-				{
-					echo '
-				<tr class="windowbg">
-					<td colspan="2"><h3 class="titlebg2" style="padding: 5px 10px; margin: 0;">'.$txt['tp-dlperms'].'</h3>
-						<p class="windowbg2 smalltext">'.$txt['tp-dlperms2'].'</p>';
-					echo '<h4 class="dl_perm">&quot;' , $txt['permissionname_tp_dlmanager'] , '&quot;</h4>
-				', tp_hidepanel('dlm') , '
-				<div class="dl_perm" id="dlm" ' , in_array('dlm',$context['tp_panels']) ? ' style="display: none;"' : '' , '>';
-
-					foreach($context['TPortal']['perm_all_groups'] as $allperm)
-						echo '<div class="perm middletext"><input type="checkbox" value="'.$allperm['id'].'" ' , (isset($allperm['id'],$context['TPortal']['perm_groups']['tp_dlmanager']) && in_array($allperm['id'],$context['TPortal']['perm_groups']['tp_dlmanager'])) ? 'checked="checked" ' : '' , 'name="dlmanager'.$allperm['id'].'" /><span' , (isset($allperm['id'],$context['TPortal']['perm_groups']['tp_dlmanager']) && in_array($allperm['id'],$context['TPortal']['perm_groups']['tp_dlmanager'])) ? ' style="font-weight: bold;" ' : '' , '>'. $allperm['name'].'</span></div>';
-				
-					echo '</div><h4 class="dl_perm" >&quot;' , $txt['permissionname_tp_dlupload'] , '&quot;</h4>
-				', tp_hidepanel('dlu') , '
-				<div class="dl_perm" id="dlu" ' , in_array('dlu',$context['tp_panels']) ? ' style="display: none;"' : '' , '>';
-
-					foreach($context['TPortal']['perm_all_groups'] as $allperm)
-						echo '<div class="perm middletext"><input type="checkbox" value="'.$allperm['id'].'" ' , (isset($allperm['id'],$context['TPortal']['perm_groups']['tp_dlupload']) && in_array($allperm['id'],$context['TPortal']['perm_groups']['tp_dlupload'])) ? 'checked="checked" ' : '' , 'name="dlupload'.$allperm['id'].'" /><span' , (isset($allperm['id'],$context['TPortal']['perm_groups']['tp_dlupload']) && in_array($allperm['id'],$context['TPortal']['perm_groups']['tp_dlupload'])) ? ' style="font-weight: bold;" ' : '' , '>'. $allperm['name'].'</span></div>';
-
-					echo '</div><h4 class="dl_perm">&quot;' , $txt['permissionname_tp_dlcreatetopic'] , '&quot;</h4>
-				', tp_hidepanel('dlc') , '
-				<div class="dl_perm" id="dlc"  ' , in_array('dlc',$context['tp_panels']) ? ' style="display: none;"' : '' , '>';
-
-					foreach($context['TPortal']['perm_all_groups'] as $allperm)
-						echo '<div class="perm middletext"><input type="checkbox" value="'.$allperm['id'].'"  ' , (isset($allperm['id'],$context['TPortal']['perm_groups']['tp_dlcreatetopic']) && in_array($allperm['id'],$context['TPortal']['perm_groups']['tp_dlcreatetopic'])) ? 'checked="checked" ' : '' , 'name="dlcreatetopic'.$allperm['id'].'" /><span' , (isset($allperm['id'],$context['TPortal']['perm_groups']['tp_dlcreatetopic']) && in_array($allperm['id'],$context['TPortal']['perm_groups']['tp_dlcreatetopic'])) ? ' style="font-weight: bold;" ' : '' , '>'. $allperm['name'].'</span></div>';
-
-					echo '
-				</div>
-					</td></tr>';
-				}
-				echo '
-				<tr>
+				</td>
+			</tr>
+			<tr>
 				<td colspan="2" align="center" class="windowbg">
 					<input type="hidden" name="dlsettings" value="1" />
-					<input name="dlsend" type="submit" value="'.$txt['tp-submit'].'"></td>
-			</tr>
-			';
+					<input name="dlsend" type="submit" value="'.$txt['tp-submit'].'">
+				</td>
+			</tr>';
 	}
 	elseif(substr($context['TPortal']['dlsub'],0,8)=='admincat')
 	{
@@ -293,9 +262,9 @@ function template_main()
 			<tr class="catbg">
 				<td colspan="2">'.$txt['tp-dlname'].'</td>
 				<td>'.$txt['tp-dlicon'].'</td>
-				<td>'.$txt['tp-dlfiles'].'</td>
-				<td>'.$txt['tp-dlsubmitted'].'</td>
-				<td colspan="3">'.$txt['tp-dledit'].'</td>
+				<td colspan="2">'.$txt['tp-dlviews'].'</td>
+				<td colspan="2">'.$txt['tp-dlfile'].'</td>
+				<td>'.$txt['tp-dlfilesize'].'</td>
 			</tr>';
 		if(isset($context['TPortal']['admcats']) && count($context['TPortal']['admcats'])>0)
 		{
@@ -318,14 +287,7 @@ function template_main()
 			</tr>';
 			}
 		}
-		echo '
-			<tr class="titlebg">
-				<td colspan="2">'.$txt['tp-dlname'].'</td>
-				<td>'.$txt['tp-dlicon'].'</td>
-				<td colspan="2">'.$txt['tp-dlviews'].'</td>
-				<td colspan="2">'.$txt['tp-dlfile'].'</td>
-				<td>'.$txt['tp-dlfilesize'].'</td>
-			</tr>';
+
 		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
 		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
@@ -550,7 +512,7 @@ function template_main()
 			<tr class="titlebg">
 				<td>'.$txt['tp-dlname'].'</td>
 				<td>'.$txt['tp-dlfilename'].'</td>
-				<td>&nbsp;</td>
+				<td>'.$txt['tp-created'].'</td>
 				<td>'.$txt['tp-uploadedby'].'</td>
 				<td>'.$txt['tp-dlfilesize'].'</td>
 			</tr>';
