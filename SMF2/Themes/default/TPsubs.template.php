@@ -1681,7 +1681,7 @@ function article_options($render=true)
 			$code .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
 		// their own article?
-		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['authorID'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0')
+		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['authorID'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0')
 			$code .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
 		else

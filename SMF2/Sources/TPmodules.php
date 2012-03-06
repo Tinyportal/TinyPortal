@@ -568,6 +568,9 @@ function TPmodules()
 			// can you edit your own then..?
 			isAllowedTo('tp_editownarticle');
 
+			if($row['locked'] == 1)
+				fatal_error($txt['tp-articlelocked']);			
+			
 			// Add in BBC editor before we call in template so the headers are there
 			if($row['type'] == 'bbc')
 			{

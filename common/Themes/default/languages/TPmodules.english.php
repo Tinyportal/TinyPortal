@@ -33,4 +33,5 @@ $txt['tp-showall'] = 'Show all comments';
 
 $txt['tp-noguestcomments'] = 'Sorry, guests are not allowed to comment';
 $txt['tp-noadmincomments'] = 'Sorry, you are not allowed to edit or delete comments';
+$txt['tp-articlelocked'] = 'Sorry, this article has been locked for editing.';
 ?>
