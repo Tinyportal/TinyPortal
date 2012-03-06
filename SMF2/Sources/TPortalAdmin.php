@@ -1,15 +1,20 @@
 <?php
-/****************************************************************************
-* TPortalAdmin.php															*
-*****************************************************************************
-* TP version: 1.0 RC4														*
-* Software Version:				SMF 2.0										*
-* Founder:						Bloc (http://www.blocweb.net)				*
-* Developer:					IchBin (ichbin@ichbin.us)					*
-* Copyright 2005-2012 by:     	The TinyPortal Team							*
-* Support, News, Updates at:  	http://www.tinyportal.net					*
-*****************************************************************************/
-
+/**
+ * @package TinyPortal
+ * @version 1.0 RC4
+ * @author IchBin - ichbin@ichbin.us
+ * @founder Bloc
+ * @license MPL 2.0
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 2.0
+ * (the "License"); you may not use this package except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Copyright (C) 2012 - The TinyPortal Team
+ *
+ */
+ 
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
@@ -2283,7 +2288,7 @@ function do_postchecks()
 		$from = $_POST['tpadmin_form'];
 		//news
 		if($from == 'news')
-			return 'news';
+			return 'news';	
 		// block permissions overview
 		elseif($from == 'blockoverview')
 		{
