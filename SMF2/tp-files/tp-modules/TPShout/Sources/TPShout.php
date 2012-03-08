@@ -48,7 +48,7 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
                         document.cookie = "expandsmiley=" + (mode ? 1 : 0);';
         else
                 $context['html_headers'] .= '
-                        smf_setThemeOption("expand_header_smily", mode ? 1 : 0, null, "'. $context['session_id']. '");';
+                        smf_setThemeOption("expand_header_smiley", mode ? 1 : 0, null, "'. $context['session_id']. '");';
 
         $context['html_headers'] .= '
                         document.getElementById("expand_smiley").src = mode ? "'.$settings['tp_images_url'].'/TPcollapse.gif" : "'.$settings['tp_images_url'].'/TPexpand.gif";
