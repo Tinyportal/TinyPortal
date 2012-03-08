@@ -1605,6 +1605,7 @@ ul.recent_topics li
 {
 	padding: 4px;
 	line-height: 1.3em;
+	min-height: 0%;
 }
 .tp_halfgrid,
 .tp_halfgrid span.firsthalf,

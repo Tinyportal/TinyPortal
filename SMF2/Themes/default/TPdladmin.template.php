@@ -593,7 +593,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES));
+					TP_bbcbox($context['TPortal']['editor_id']);
 				else
 					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
 
@@ -690,7 +690,7 @@ function template_main()
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('newdladmin_text', '', true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox('dl_admin','newdladmin_text', '');
+					TP_bbcbox($context['TPortal']['editor_id']);
 				else
 					echo '<textarea name="newdladmin_text" style="width: 99%; height: 300px;"></textarea>';
 

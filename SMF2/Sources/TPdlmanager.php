@@ -1942,8 +1942,16 @@ function TPortalDLAdmin()
 	// Add in BBC editor before we call in template so the headers are there
 	if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 	{
-		$context['TPortal']['editor_id'] = 'tp_dl_introtext';
-		TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['dl_introtext']); 			
+		if ($context['TPortal']['dlsub'] == 'adminaddcat')
+		{
+			$context['TPortal']['editor_id'] = 'newdladmin_text';
+			TP_prebbcbox($context['TPortal']['editor_id']);
+		} 
+		else
+		{
+			$context['TPortal']['editor_id'] = 'tp_dl_introtext';
+			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['dl_introtext']);
+		}	
 	}	
 	
 	// any items from the ftp screen?
@@ -3217,6 +3225,12 @@ function TPortalDLAdmin()
 			}
 			$smcFunc['db_free_result']($request);
 		}
+		
+		if($context['TPortal']['dl_wysiwyg'] == 'bbc')
+		{
+			$context['TPortal']['editor_id'] = 'dladmin_text'.$context['TPortal']['admcats'][0]['id'];
+			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['admcats'][0]['description']);
+		}		
 	}
 	elseif(substr($admsub, 0, 6) == 'delcat')
 	{
