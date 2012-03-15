@@ -2222,7 +2222,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'description' => $txt['tp-frontpagedesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=frontpage',
 				'is_selected' => $tpsub == 'frontpage',
-			), 
+			),
 		);
 	}
 	if (allowedTo('tp_articles'))

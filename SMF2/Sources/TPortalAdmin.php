@@ -1524,36 +1524,6 @@ function do_articles()
 
 	if(isset($show_submission) && $context['TPortal']['total_submissions'] > 0)
 	{
-		// clean up notices
-		$request2 =  $smcFunc['db_query']('', '
-			SELECT id, value5 
-			FROM {db_prefix}tp_variables 
-			WHERE type = {string:type}',
-			array('type' => 'art_not_approved')
-		);
-		$ids = array();
-		if($smcFunc['db_num_rows']($request2) > 0)
-		{
-			
-			while($row = $smcFunc['db_fetch_assoc']($request2))
-				$ids[$row['id']] = $row['value5'];
-			$smcFunc['db_free_result']($request2);
-		}
-		$request = $smcFunc['db_query']('', '
-			SELECT id, approved 
-			FROM {db_prefix}tp_articles 
-			WHERE FIND_IN_SET(id, "{array_int:ids}")',
-			array('ids' => $ids)
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				
-			}
-			$smcFunc['db_free_result']($request);
-		}
-
 		// check if we have any start values
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
@@ -2288,7 +2258,7 @@ function do_postchecks()
 		$from = $_POST['tpadmin_form'];
 		//news
 		if($from == 'news')
-			return 'news';	
+			return 'news';
 		// block permissions overview
 		elseif($from == 'blockoverview')
 		{
