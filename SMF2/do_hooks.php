@@ -1,17 +1,20 @@
 <?php
 /**
- * do_hooks.php - Add or Remove hooks
- *
  * @package TinyPortal
- * @author IchBin
- * @copyright 2012 IchBin > TinyPortal.net
- * @license http://www.mozilla.org/MPL/2.0/ MPL
- *
- * @Thanks to Emanuele for the idea and code in this page.
- *
  * @version 1.0
+ * @author IchBin - http://www.tinyportal.net
+ * @founder Bloc
+ * @license MPL 2.0
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 2.0
+ * (the "License"); you may not use this package except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Copyright (C) 2012 - The TinyPortal Team
+ *
  */
-
+ 
 global $hooks, $mod_name;
 $hooks = array(
 	'integrate_pre_include' => '$sourcedir/TPassimilate.php',
