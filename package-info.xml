@@ -114,7 +114,7 @@
 		<remove-dir name="$boarddir/tp-images" />
 		<code>SMF2/do_hooks.php</code>
     </uninstall>
-    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105">
+    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105, 1.106">
 		<redirect url="">Upgraded!</redirect>
 		<require-dir name="SMF2/Themes" destination="$boarddir" />
 		<require-dir name="common/Themes" destination="$boarddir" />
@@ -231,7 +231,7 @@
         <modification format="boardmod" type="file">SMF1/tinyportal11b.mod</modification>
         <code>SMF1/tp_install.php</code>
 	</upgrade>
-	<upgrade for="1.1, 1.1.1-1.1.99" from="1.102, 1.103, 1.104, 1.105">
+	<upgrade for="1.1, 1.1.1-1.1.99" from="1.102, 1.103, 1.104, 1.105, 1.106">
 		<redirect url="">Upgraded!</redirect>
         <require-dir name="SMF1/Themes" destination="$boarddir" />
         <require-dir name="common/Themes" destination="$boarddir" />
