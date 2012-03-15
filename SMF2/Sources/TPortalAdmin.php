@@ -3396,7 +3396,7 @@ function do_postchecks()
 			checkSession('post');
 			isAllowedTo('tp_articles');
 			$w = array();
-			
+			$new = false;
 			$where = substr($from, 11);
 
 			if(empty($where))
@@ -3643,7 +3643,7 @@ function do_postchecks()
 								AND value5 = {int:val5}',
 								array('type' => 'art_not_approved', 'val5' => $where)
 							);
-						else
+						elseif ($new)
 							$smcFunc['db_insert']('replace',
 								'{db_prefix}tp_variables',
 								array('type' => 'string', 'value5' => 'int'),

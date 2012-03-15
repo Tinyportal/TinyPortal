@@ -938,7 +938,7 @@ function doTPpage()
 					}
 					// linktree?
 					if(!in_array('linktree', $context['TPortal']['article']['visual_options']))
-						$context['linktree'] = '';
+						$context['linktree'][0] = array('url' => '', 'name' => '');
 					else
 					{
 						// we need the categories for the linktree
