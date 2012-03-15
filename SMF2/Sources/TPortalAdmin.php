@@ -3414,7 +3414,7 @@ function do_postchecks()
 				$from = 'editarticle' . $where;
 			}
 			
-			// check if uploads are thre
+			// check if uploads are there
 			if(file_exists($_FILES['tp_article_illupload']['tmp_name']))
 			{
 				$name = TPuploadpicture('tp_article_illupload', '', '180', 'jpg,gif,png', 'tp-files/tp-articles/illustrations');

@@ -204,7 +204,7 @@ $txt['tp-bbcarticle'] = 'BBC type of article';
 $txt['tp-adminicons3'] = 'Icons to be used in articles and categories.';
 $txt['tp-adminicons4'] = 'Upload a new icon:';
 $txt['tp-adminicons7'] = 'Illustrative icons to be used in category layout 4.';
-$txt['tp-adminicons6'] = 'Upload a new illustration:<br /><span class="smalltext">NB! Images will be resized to 128x128 pixels.</span>';
+$txt['tp-adminicons6'] = 'Upload a new illustration:<br /><span class="smalltext">(Max-size: 500KB. Images resized to 128x128 px.)</span>';
 $txt['tp-adminicons5'] = 'Illustrations';
 $txt['tp-adminlabels'] = 'Labels';
 $txt['tp-adminlabels2'] = 'Manage the labels of articles, used in search.';
@@ -621,4 +621,5 @@ $txt['tp-others'] = 'Others';
 $txt['tp-artcat'] = 'Article categories';
 $txt['tp-lang'] = 'Languages';
 $txt['tp-dlmanager'] = 'DL manager';
+$txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 ?>
