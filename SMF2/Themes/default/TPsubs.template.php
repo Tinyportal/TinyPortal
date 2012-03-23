@@ -995,7 +995,10 @@ function template_tperror_above()
 {
 	global $context;
 
-	echo '<h3 class="titlebg"><span class="left"></span><span class="error">'.$context['TPortal']['tperror'].'</span></h3>';
+	echo '
+	<div class="title_bar">
+		<h3 class="titlebg"><span class="left"></span><span class="error">'.$context['TPortal']['tperror'].'</span></h3>
+	</div>';
 
 }
 function template_notpublished()

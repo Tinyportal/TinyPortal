@@ -1796,8 +1796,8 @@ div.useravatar img
 .editor {
 	height: 100px;
 	width: 635px;
-	max-width: 100%;
-	min-width: 100%;
+	max-width: 95%;
+	min-width: 90%;
 	margin: 0.25em 0 1em 0;
 }
 .dl_container {

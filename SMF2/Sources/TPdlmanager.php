@@ -2052,8 +2052,8 @@ function TPortalDLAdmin()
 		// get the items
 		$name = strip_tags($_POST['newdladmin_name']);
 		// no html here
-		if(empty($value))
-			$value = '-no title-';
+		if(empty($name))
+			$name = $txt['tp-dlnotitle'];
 
 		$text = $_POST['newdladmin_text'];
 		$parent = $_POST['newdladmin_parent'];

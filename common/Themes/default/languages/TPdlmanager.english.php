@@ -164,4 +164,5 @@ $txt['tp-dlnonint'] = 'Sorry, you attempted to specify a non-integer value!';
 $txt['tp-dlfilenotdel'] = 'Unable to delete the actual file, but the item was deleted.';
 $txt['tp-dlssnotdel'] = 'Unable to delete the actual screenshot, but the item was deleted.';
 $txt['tp-dlnotuploaded'] = 'File was not uploaded.';
+$txt['tp-dlnotitle'] '-no title-';
 ?>

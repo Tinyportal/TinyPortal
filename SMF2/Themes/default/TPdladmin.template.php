@@ -585,6 +585,7 @@ function template_main()
 		<table width="100%" cellspacing="1" cellpadding="7" class="tborder">
 			<tr>
 				<td valign="top" class="windowbg2">
+					' , $txt['tp-dluploadtitle'] , '<br />
 					<input style="width: 30ex;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
 					<br />' , $txt['tp-shortname'] , '<br />
 					<input style="width: 30ex;" name="dladmin_link'.$cat['id'].'" type="text" value="'.$cat['shortname'].'">
