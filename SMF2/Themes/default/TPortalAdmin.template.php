@@ -120,7 +120,7 @@ function template_blockoverview()
 
 					foreach($context['TPmembergroups'] as $grp)
 						echo '
-						<input type="checkbox" id="tpb'.$block['id'] . '-' . $grp.'" value="' . $grp['id'].'" ' , in_array($grp['id'],$block['access']) ? 'checked="checked" ' : '' , ' name="' . rand(10000,19999) .'tpblock'.$block['id'].'" />'. $grp['name'].'<br />';
+						<input type="checkbox" id="tpb' . $block['id'] . '" value="' . $grp['id'].'" ' , in_array($grp['id'],$block['access']) ? 'checked="checked" ' : '' , ' name="' . rand(10000,19999) .'tpblock'.$block['id'].'" />'. $grp['name'].'<br />';
 		
 					echo '
 					</div>
