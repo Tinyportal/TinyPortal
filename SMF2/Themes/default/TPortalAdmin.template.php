@@ -176,16 +176,11 @@ function template_news()
 	<div class="windowbg">
 		<span class="topslice"><span></span></span>
 		<div style="padding: 1em; text-align: center;">
-			Future news and updates will be placed here as time permits. Thanks!
-		</div>
-		<span class="botslice"><span></span></span>
-	</div>
-	<div style="padding: 1em; line-height: 1.6em;">
 			TinyPortal is now being maintained at <a href="http://www.tinyportal.net">www.tinyportal.net</a>, and can also be downloaded from the
 			<a style="text-decoration: underline;" href="http://custom.simplemachines.org/mods/index.php?mod=97">SMF modsite</a>. 
-			<hr><em>- IchBin</em>
-	</div>
-		';
+		</div>
+		<span class="botslice"><span></span></span>
+	</div>';
 }
 
 // submissions
