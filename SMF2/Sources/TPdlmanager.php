@@ -23,7 +23,8 @@ function TPdlmanager_init()
 	global $context, $settings, $sourcedir;
 
 	// load the needed strings
-	loadlanguage('TPdlmanager');
+	if(loadlanguage('TPdlmanager') == false)
+		loadlanguage('TPdlmanager', 'english');
 
 	require_once($sourcedir . '/TPcommon.php');
 	// get subaction
@@ -134,8 +135,8 @@ function TPortalDLManager()
 		{
 			// process the file
 			$filename = $_FILES['tp-dluploadfile']['name'];
-			$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$name = strtr($name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
+			$name = strtr($filename, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+			$name = strtr($name, array('ï¿½' => 'TH', 'ï¿½' => 'th', 'ï¿½' => 'DH', 'ï¿½' => 'dh', 'ï¿½' => 'ss', 'ï¿½' => 'OE', 'ï¿½' => 'oe', 'ï¿½' => 'AE', 'ï¿½' => 'ae', 'ï¿½' => 'u'));
 			$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 		}
 		else
@@ -2349,8 +2350,8 @@ function TPortalDLAdmin()
 		{
 			$sid = $_POST['tp_dluploadfile_editID'];
 			$shotname = $_FILES['tp_dluploadfile_edit']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
+			$sname = strtr($shotname, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+			$sname = strtr($sname, array('ï¿½' => 'TH', 'ï¿½' => 'th', 'ï¿½' => 'DH', 'ï¿½' => 'dh', 'ï¿½' => 'ss', 'ï¿½' => 'OE', 'ï¿½' => 'oe', 'ï¿½' => 'AE', 'ï¿½' => 'ae', 'ï¿½' => 'u'));
 			$sname = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $sname);
 			$sname = time().$sname;
 			// check the size
@@ -3406,9 +3407,12 @@ function TPortalDLAdmin()
 		// add to the linktree
 		TPadd_linktree($scripturl.'?action=tpmod;dl=adminitem'.$item , $itemname);
 	}
-	loadtemplate('TPdladmin');
-	loadlanguage('TPmodules');
-	loadlanguage('TPortalAdmin');
+	if(loadlanguage('TPdladmin') == false)
+		loadlanguage('TPdladmin', 'english');
+	if(loadlanguage('TPmodules') == false)
+		loadlanguage('TPmodules', 'english');
+	if(loadlanguage('TPortalAdmin') == false)
+		loadlanguage('TPortalAdmin', 'english');
 
 	// setup admin tabs according to subaction
 	$context['admin_area'] = 'tp_dlmanager';
@@ -3455,7 +3459,6 @@ function TPortalDLAdmin()
 	}
 	$context['template_layers'][] = 'tpadm';
 	$context['template_layers'][] = 'subtab';
-	loadlanguage('TPortalAdmin');
 	TPadminIndex('');
 	$context['current_action'] = 'admin';
 }
@@ -3585,9 +3588,14 @@ function TPortalDLUser($item)
 		TP_dluploadcats();
 		// get the icons
 		TP_dlgeticons();
-		loadtemplate('TPdlmanager');
-		loadlanguage('TPmodules');
-		loadlanguage('TPortalAdmin');
+
+		if(loadlanguage('TPdlmanager') == false)
+			loadlanguage('TPdlmanager', 'english');
+		if(loadlanguage('TPmodules') == false)
+			loadlanguage('TPmodules', 'english');
+		if(loadlanguage('TPortalAdmin') == false)
+			loadlanguage('TPortalAdmin', 'english');
+
 	}
 	else
 		redirectexit('action=tpmod;dl');

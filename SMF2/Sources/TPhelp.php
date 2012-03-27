@@ -28,7 +28,10 @@ function TPhelp_init()
 	tp_hidebars();
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = false;
-	loadlanguage('TPhelp');
+
+	if(loadlanguage('TPhelp') == false)
+		loadlanguage('TPhelp', 'english');
+
 	loadtemplate('TPhelp');
 
 	// setup menu items
@@ -50,14 +53,19 @@ function TPhelp_init()
 	}
 
 	$context['template_layers'][] = 'tpadm';
-	loadlanguage('TPortalAdmin');
+
+	if(loadlanguage('TPortalAdmin') == false)
+		loadlanguage('TPortalAdmin', 'english');
 }
 
 function TPCredits()
 {
 	tp_hidebars();
 	$context['TPortal']['not_forum'] = false;
-	loadLanguage('TPhelp');
+
+	if(loadlanguage('TPhelp') == false)
+		loadlanguage('TPhelp', 'english');
+
 	loadtemplate('TPhelp');
 }
 ?>

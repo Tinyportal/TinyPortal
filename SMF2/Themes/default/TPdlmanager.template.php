@@ -17,7 +17,7 @@
 
 function template_main()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl;
+	global $context, $settings, $txt, $scripturl, $modSettings, $boardurl;
 
 	// if dl manager is off, throw a error screen but don't log it.
 	if($context['TPortal']['show_download']==0 && !allowedTo('tp_dlmanager'))
@@ -593,10 +593,9 @@ function template_main()
 	}
 
 	// show the stats page...
-	if($context['TPortal']['dlaction']=='stats')
+	if($context['TPortal']['dlaction'] == 'stats')
 	{
-
-		$maxcount=10;
+		$maxcount = 10;
 	   echo '
 	<div class="tborder"">
         <div class="cat_bar">

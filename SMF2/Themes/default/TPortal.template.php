@@ -43,7 +43,7 @@ function template_main()
 
 function template_main_nolayer()
 {
-	global $context, $scripturl, $txt;
+	global $context;
 
 	tp_renderarticle($context['TPortal']['article']);
 }
@@ -51,7 +51,7 @@ function template_main_nolayer()
 // the frontpage template
 function template_frontpage()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context;
 
 	if($context['TPortal']['frontblock_type'] == 'first' || $context['TPortal']['front_type'] == 'frontblock')
 		echo '<div id="tpfrontpanel_top" style="margin: 0 0 4px 0; padding: 0;">', TPortal_panel('front'), '</div>';
@@ -92,7 +92,7 @@ function template_frontpage()
 // This is the template for single article
 function template_article($article, $single = false)
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context;
 
 	if ($single && $context['TPortal']['articles_comment_captcha'] && isset($context['verification_image_href']))
 	{
@@ -132,7 +132,7 @@ function template_article($article, $single = false)
 // the templates for article categories
 function template_category()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $scripturl;
 
 	if(!empty($context['TPortal']['clist']))
 	{

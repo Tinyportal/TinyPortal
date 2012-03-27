@@ -17,7 +17,7 @@
 
 function template_tp_above()
 {
-	global $context , $scripturl, $settings, $language , $txt, $options;
+	global $context;
 
 	if(!empty($context['TPortal']['upshrinkpanel']))
 		echo '
@@ -64,7 +64,7 @@ function template_tp_above()
 
 function template_tp_below()
 {
-	global $context , $scripturl, $settings, $language , $txt, $options;
+	global $context;
 
 	if($context['TPortal']['lowerpanel']==1)
 		echo '

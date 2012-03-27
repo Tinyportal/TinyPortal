@@ -219,7 +219,8 @@ function tp_getbuttons()
 {
 	global $scripturl, $txt, $context;
 
-	loadlanguage('TPortal');
+	if(loadlanguage('TPortal') == false)
+		loadlanguage('TPortal', 'english');
 
 	$buts = array();
 	
@@ -759,8 +760,8 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 
 function tp_cleantitle($text)
 {
-	$tmp = strtr($text, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$tmp = strtr($tmp, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
+	$tmp = strtr($text, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+	$tmp = strtr($tmp, array('ï¿½' => 'TH', 'ï¿½' => 'th', 'ï¿½' => 'DH', 'ï¿½' => 'dh', 'ï¿½' => 'ss', 'ï¿½' => 'OE', 'ï¿½' => 'oe', 'ï¿½' => 'AE', 'ï¿½' => 'ae', 'ï¿½' => 'u'));
 	$cleaned = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $tmp);
 	return $cleaned;
 }
@@ -2182,7 +2183,9 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 {
 	global $txt, $context, $scripturl, $sc, $modSettings, $user_info, $settings, $smcFunc;
 
-	loadlanguage('TPortalAdmin');
+	if(loadlanguage('TPortalAdmin') == false)
+		loadlanguage('TPortalAdmin', 'english');
+
 	if($module_admin)
 	{
 		// make sure tpadmin is still active

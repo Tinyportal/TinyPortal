@@ -1578,7 +1578,9 @@ function tpshout_profile($memID)
 	
 
 	loadtemplate('TPShout');
-	loadlanguage('TPShout');
+
+	if(loadlanguage('TPShout') == false)
+		loadlanguage('TPShout', 'english');
 
 	$context['sub_template'] = 'tpshout_profile';
 }

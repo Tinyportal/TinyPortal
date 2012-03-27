@@ -27,7 +27,7 @@ function template_main()
 
 function template_tpcredits()
 {
-	global $context, $txt, $scripturl;
+	global $txt;
 	
 	echo '
 	<div class="tborder">

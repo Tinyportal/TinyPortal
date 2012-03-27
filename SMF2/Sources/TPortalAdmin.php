@@ -23,8 +23,10 @@ function TPortalAdmin()
 {
 	global $smcFunc, $txt, $scripturl, $db_prefix, $user_info, $sourcedir, $modSettings, $context, $settings, $boardurl, $boarddir;
 
-	loadLanguage('TPortalAdmin');
-	loadLanguage('TPortal');
+	if(loadlanguage('TPortalAdmin') == false)
+		loadlanguage('TPortalAdmin', 'english');
+	if(loadlanguage('TPortal') == false)
+		loadlanguage('TPortal', 'english');
 
 	require_once($sourcedir . '/TPcommon.php');
 	require_once($sourcedir . '/Subs-Post.php');
@@ -95,7 +97,9 @@ function TPortalAdmin()
 	$return = do_postchecks();
 	
 	if(!empty($return))
-		redirectexit('action=tpadmin;sa=' . $return);	
+		redirectexit('action=tpadmin;sa=' . $return);
+
+	$tpsub = '';
 
 	if(isset($_GET['sa']))
 	{
@@ -249,7 +253,6 @@ function TPortalAdmin()
 	// Shows subtab layer above for admin submenu links
 	$context['template_layers'][] = 'subtab';
 	loadTemplate('TPortalAdmin');
-	loadlanguage('TPortalAdmin');
 	TPadminIndex($tpsub);
 }
 
@@ -2043,8 +2046,7 @@ function do_news($tpsub = 'overview')
 
 function do_postchecks()
 {
-	global $context, $txt, $settings, $boardurl, $scripturl, $boarddir, $userinfo;
-	global $smcFunc, $db_prefix, $sourcedir;
+	global $context, $txt, $settings, $boarddir, $smcFunc, $sourcedir;
 
 	// tag links from topics?
 	if(isset($_POST['tpadmin_topictags']))
@@ -3164,7 +3166,7 @@ function do_postchecks()
 				$body = '';
 
 			if(isset($cp))
-				$request = $smcFunc['db_insert']('INSERT', 
+				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_blocks',
 					array(
 						'type' => 'int',
@@ -3201,7 +3203,7 @@ function do_postchecks()
 					array('id')
 				); 
 			else
-				$request = $smcFunc['db_insert']('INSERT', 
+				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_blocks',
 					array(
 						'type' => 'int',
@@ -3247,7 +3249,17 @@ function do_postchecks()
 				if(substr($what, 0, 9) == 'tp_block_')
 				{
 					$setting = substr($what, 9);
-					
+					// If we came from WYSIWYG then turn it back into BBC regardless.
+					if (!empty($_REQUEST['tp_block_body_mode']) && isset($_REQUEST['tp_block_body']))
+					{
+						require_once($sourcedir . '/Subs-Editor.php');
+						$_REQUEST['tp_block_body'] = html_to_bbc($_REQUEST['tp_block_body']);
+						// We need to unhtml it now as it gets done shortly.
+						$_REQUEST['tp_block_body'] = un_htmlspecialchars($_REQUEST['tp_block_body']);
+						// We need this for everything else.
+						if($setting == 'body')
+							$value = $_POST['tp_block_body'] = $_REQUEST['tp_block_body'];
+					}
 					if($setting == 'body')
 					{
 						// PHP block?
@@ -3395,7 +3407,7 @@ function do_postchecks()
 		{
 			checkSession('post');
 			isAllowedTo('tp_articles');
-			$w = array();
+
 			$new = false;
 			$where = substr($from, 11);
 

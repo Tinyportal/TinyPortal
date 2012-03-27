@@ -2692,7 +2692,7 @@ function template_addblock()
 // edit single block
 function template_blockedit()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
+	global $context, $settings, $txt, $scripturl, $boardurl;
 
 
 	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
@@ -2700,7 +2700,7 @@ function template_blockedit()
 		$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
 		
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;" onsubmit="submitonce(this);">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="blockedit">
 		<input name="tpadmin_form_id" type="hidden" value="' . $context['TPortal']['blockedit']['id'] . '">
@@ -2815,6 +2815,7 @@ function template_blockedit()
 							snipp[0] = "";
 							snippAuthor[0] = "";
 							snippTitle[0] = "";';
+
 					$count=1;
 					foreach($context['TPortal']['blockcodes'] as $bc)
 					{
@@ -2826,7 +2827,7 @@ function template_blockedit()
 							$count++;
 					}
 					echo '
-					
+
 							setInnerHTML(document.getElementById("blockcodeinfo"), snippTitle[indx] + snipp[indx]);
 						}
 					</script>';
@@ -3288,14 +3289,13 @@ function template_blockedit()
 	// all the blocks
 function template_latestblocks()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
-
 	tp_latestblockcodes();
 }
+
 // all the blocks
 function template_blocks()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $txt, $scripturl;
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
@@ -3310,7 +3310,6 @@ function template_blocks()
 
 		$side=array('left','right','center','front','bottom','top','lower');
 		$sd=array('lb','rb','cb','fb','bb','tb','lob');
-
 
 		for($i=0 ; $i<7 ; $i++)
 		{

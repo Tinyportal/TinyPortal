@@ -17,7 +17,7 @@
 
 function template_wap2_tp_frontpage()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['category']))
 		return;
@@ -57,7 +57,7 @@ function template_wap2_tp_frontpage()
 
 function template_imode_tp_frontpage()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['category']))
 		return;
@@ -100,7 +100,7 @@ function template_imode_tp_frontpage()
 
 function template_wap_tp_frontpage()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['category']))
 		return;
@@ -180,7 +180,7 @@ function render_frontp($single = false)
 
 	if($single && !empty($context['TPortal']['article']['comment_posts']) && sizeof($context['TPortal']['article']['comment_posts'])>0)
 	{
-		$counter=1;
+		$counter = 1;
 		echo '
 		<p class="titlebg">'.$txt['tp-comments'].'</p>';
 		foreach($context['TPortal']['article']['comment_posts'] as $post)
@@ -228,7 +228,7 @@ function template_imode_tp()
 }
 function template_wap2_tp_page()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['article']))
 		return;
@@ -246,7 +246,7 @@ function template_wap2_tp_page()
 }
 function template_imode_tp_page()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['article']))
 		return;
@@ -266,7 +266,7 @@ function template_imode_tp_page()
 }
 function template_wap_tp_page()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['article']))
 		return;
@@ -286,7 +286,7 @@ function template_wap_tp_page()
 }
 function template_wap2_tp_cat()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['category']))
 		return;
@@ -328,7 +328,7 @@ function template_wap2_tp_cat()
 
 function template_imode_tp_cat()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['category']))
 		return;
@@ -372,7 +372,7 @@ function template_imode_tp_cat()
 
 function template_wap_tp_cat()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context, $txt, $scripturl;
 
 	if(!isset($context['TPortal']['category']))
 		return;
@@ -416,19 +416,18 @@ function template_wap_tp_cat()
 
 function template_wap2_tp_dl()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context;
 
 }
 function template_imode_tp_dl()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context;
 
 }
 function template_wap_tp_dl()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings;
+	global $context;
 
 }
-
 
 ?>

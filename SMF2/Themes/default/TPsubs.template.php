@@ -32,7 +32,7 @@ function TPortal_searchbox()
 // TPortal onlineblock
 function TPortal_onlinebox()
 {
-	global $context, $settings, $options, $txt;
+	global $context;
 
 	if($context['TPortal']['useavataronline'] == 1)
 		tpo_whos();
@@ -82,7 +82,7 @@ function tpo_whosOnline()
 }
 function progetAvatars($ids)
 {
-	global $user_info, $smcFunc, $settings, $modSettings, $scripturl;
+	global $user_info, $smcFunc, $modSettings, $scripturl;
 
 	$request = $smcFunc['db_query']('', '
 		SELECT
@@ -147,7 +147,7 @@ function TPortal_scriptbox()
 // TPortal recent topics block
 function TPortal_recentbox()
 {
-	global $scripturl, $context, $settings, $options, $txt, $modSettings;
+	global $scripturl, $context, $settings, $txt, $modSettings;
 
     // is it a number?
 	if(!is_numeric($context['TPortal']['recentboxnum']))
@@ -212,14 +212,11 @@ function TPortal_recentbox()
 // TPortal categories
 function TPortal_catmenu()
 {
-	global $context, $settings, $options , $scripturl, $boardurl;
+	global $context, $scripturl, $boardurl;
 
 	if(isset($context['TPortal']['menu'][$context['TPortal']['menuid']]) && !empty($context['TPortal']['menu'][$context['TPortal']['menuid']])){
 		echo '
 	<ul class="tp_catmenu">';
-		// we are on level 0
-		$level = 0;
-		$oldlevel = 0;
 		
 		foreach($context['TPortal']['menu'][$context['TPortal']['menuid']] as $cn)
 		{
@@ -290,7 +287,7 @@ function TPortal_sidebar()
 // Tportal userbox
 function TPortal_userbox()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings;
+	global $context, $settings, $scripturl, $txt;
 
 	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.gif" alt="" style="margin:0 4px 0 0;" />';
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.gif" alt="" style="margin:0 4px 0 0;" />';
@@ -435,7 +432,7 @@ function TPortal_userbox()
 // TPortal themebox
 function TPortal_themebox()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $user_info, $smcFunc;
+	global $context, $settings, $scripturl, $txt, $smcFunc;
 
 	$what = explode(',', $context['TPortal']['themeboxbody']);
 	$temaid = array();
@@ -526,7 +523,7 @@ function TPortal_newsbox()
 // TPortal stats box
 function TPortal_statsbox()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings;
+	global $context, $settings, $scripturl, $txt, $modSettings;
 
 	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.gif" alt=""  style="margin:0 4px 0 0;" />';
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.gif" alt="" style="margin:0 4px 0 0;" />';
@@ -602,7 +599,7 @@ function TPortal_ssi()
 // TPortal module
 function TPortal_module()
 {
-   global $context, $settings, $options, $scripturl, $txt, $modSettings;
+   global $context, $scripturl, $txt;
 
 	switch($context['TPortal']['moduleblock'])
 	{
@@ -709,7 +706,7 @@ function TPortal_rss()
 // Tportal sitemap menu
 function TPortal_sitemap()
 {
-    global $context, $settings, $options, $scripturl, $txt, $modSettings;
+    global $context, $settings, $scripturl, $txt;
 
 	$current = '';
     // check where we are
@@ -853,7 +850,7 @@ function template_TPsearch_below()
 
 function template_TPtagboards_above()
 {
-	global $context, $boardurl, $txt, $board, $scripturl;
+	global $context, $txt, $board, $scripturl;
 
 	echo '
 	<div class="tborder" style="margin-bottom: 3px;">
@@ -933,7 +930,7 @@ function template_TPtagtopics_below()
 
 function template_tpfrontpagetopics_above()
 {
-	global $context, $boardurl, $txt , $board, $scripturl;
+	global $context, $scripturl;
 
 	// not in wireless
 	if(WIRELESS)
@@ -964,7 +961,7 @@ function template_tpfrontpagetopics_below()
 // tag them topics!
 function template_TPtagtopicsGeneral_above()
 {
-	global $context, $boardurl, $txt , $topic, $scripturl;
+	global $txt , $topic;
 
 	// not in wireless
 	if(WIRELESS)
@@ -1036,7 +1033,7 @@ function template_tpnotify_below()
 // the TP tabs routine
 function template_tptabs_above() 
 {
-	global $txt, $context, $scripturl, $settings;
+	global $context;
 
 	if(!empty($context['TPortal']['tptabs']))
 	{
@@ -1053,13 +1050,13 @@ function template_tptabs_above()
 
 function template_tptabs_below() 
 {
-	global $txt, $context, $scripturl, $settings;
+	global $context;
 
 }
 
 function TPblock($block, $theme, $side, $double=false)
 {
-	global $context , $scripturl, $settings, $language, $txt;
+	global $context , $scripturl, $settings, $txt;
 
 	// setup a container that can be massaged through css
 	echo '
@@ -1182,7 +1179,7 @@ function TPblock($block, $theme, $side, $double=false)
 // and its built-in types..
 function article_renders($type = 1, $single = false, $first = false)
 {
-	global $context, $txt;
+	global $context;
 	$code = '';
 	// decide the header style, different for forumposts
     $useFrame = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
@@ -1509,7 +1506,7 @@ function article_date($render=true)
 
 function article_iconcolumn($render = true)
 {
-	global $context, $scripturl, $settings;
+	global $context, $settings;
 	
 	if(!empty($context['TPortal']['article']['avatar'])) 
 		$code = '
@@ -1530,7 +1527,7 @@ function article_iconcolumn($render = true)
 
 function article_picturecolumn($render = true)
 {
-	global $context, $scripturl, $settings, $boardurl;
+	global $context, $settings, $boardurl;
 	
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews'])) 
 		$code = '
@@ -1550,7 +1547,7 @@ function article_picturecolumn($render = true)
 
 function article_shortdate($render = true)
 {
-	global $context, $txt;
+	global $context;
 
 	if(in_array('date',$context['TPortal']['article']['visual_options']))
 		$code = '
@@ -1589,7 +1586,7 @@ function article_boardnews($render = true)
 
 function article_author($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(in_array('author', $context['TPortal']['article']['visual_options']))
 	{
@@ -1611,7 +1608,7 @@ function article_author($render = true)
 
 function article_views($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $txt, $context;
 	
 	if(in_array('views',$context['TPortal']['article']['visual_options']))
 		$code = '
@@ -1627,7 +1624,7 @@ function article_views($render = true)
 
 function article_title($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $context;
 	
 	if(in_array('title',$context['TPortal']['article']['visual_options']))
 	{
@@ -1649,7 +1646,7 @@ function article_title($render = true)
 
 function article_category($render=true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(!empty($context['TPortal']['article']['category_name']))
 	{
@@ -1671,7 +1668,7 @@ function article_category($render=true)
 
 function article_lead($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $context;
 	
 	if(in_array('lead',$context['TPortal']['article']['visual_options']))
 		$code = '
@@ -1687,7 +1684,7 @@ function article_lead($render = true)
 
 function article_options($render=true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	$code = '';
 	if(!isset($context['TPortal']['article']['boardnews']))
@@ -1723,8 +1720,6 @@ function article_options($render=true)
 
 function article_text($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
-	
 	$code = '
 	<div class="article_bodytext">' . tp_renderarticle() . '</div>';
 
@@ -1736,7 +1731,7 @@ function article_text($render = true)
 
 function article_rating($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $context;
 	
 	if(in_array('rating',$context['TPortal']['article']['visual_options']))
 	{
@@ -1758,7 +1753,7 @@ function article_rating($render = true)
 
 function article_moreauthor($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
@@ -1796,7 +1791,7 @@ function article_moreauthor($render = true)
 
 function article_avatar($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $context;
 	
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
@@ -1812,7 +1807,7 @@ function article_avatar($render = true)
 }
 function article_bookmark($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $settings, $context;
 	
 	if(in_array('social',$context['TPortal']['article']['visual_options']))
 		$code = '
@@ -1838,7 +1833,7 @@ function article_bookmark($render = true)
 
 function article_globaltags($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(!isset($context['TPortal']['article']['global_tag']))
 		return;
@@ -1968,7 +1963,7 @@ function article_comments($render = true)
 
 function article_morelinks($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(in_array('category',$context['TPortal']['article']['visual_options']))
 	{
@@ -2120,8 +2115,6 @@ function template_blockarticle()
 }
 function blockarticle_renders()
 {
-	global $context, $txt;
-
 	$code = '
 	<div class="blockarticle render1">
 		<div class="article_info">
@@ -2154,7 +2147,7 @@ function blockarticle_date($render = true)
 
 function blockarticle_author($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(in_array('author',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 	{
@@ -2176,7 +2169,7 @@ function blockarticle_author($render = true)
 
 function blockarticle_views($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $txt, $context;
 	
 	if(in_array('views',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 		$code = '
@@ -2192,8 +2185,6 @@ function blockarticle_views($render = true)
 
 function blockarticle_text($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
-	
 	$code = '
 	<div class="article_bodytext">' . tp_renderblockarticle() . '</div>';
 
@@ -2205,7 +2196,7 @@ function blockarticle_text($render = true)
 
 function blockarticle_moreauthor($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $context;
 	
 	if(in_array('avatar', $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 	{
@@ -2238,7 +2229,7 @@ function blockarticle_moreauthor($render = true)
 }
 function category_childs()
 {
-	global $context, $scripturl, $settings;
+	global $context, $scripturl;
 
 	echo '
 	<ul class="category_children">';
@@ -2254,7 +2245,7 @@ function category_childs()
 
 function template_subtab_above()
 {
-	global $context, $txt, $settings;
+	global $context, $txt;
 
 	if(sizeof($context['TPortal']['subtabs'])>1)
 	{
@@ -2333,7 +2324,7 @@ function template_tpadm_below()
 
 function template_tp_fatal_error()
 {
-	global $context, $settings, $options, $txt;
+	global $context, $txt;
 
 	echo '
 	<div id="fatal_error">
@@ -2420,7 +2411,7 @@ function tptimeformat($log_time, $show_today = true, $format)
 // Generate a strip of buttons.
 function tp_template_button_strip($button_strip, $direction = 'top', $strip_options = array())
 {
-	global $settings, $context, $txt, $scripturl;
+	global $context, $txt;
 
 	if (!is_array($strip_options))
 		$strip_options = array();

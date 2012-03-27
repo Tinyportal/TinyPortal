@@ -27,7 +27,7 @@ function template_tpshout_below()
 
 function template_tpshout_bigscreen()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir, $smcFunc;
+	global $context, $scripturl, $txt, $smcFunc;
 
 	$shouts = $context['TPortal']['rendershouts'];
 
@@ -64,9 +64,8 @@ function template_tpshout_bigscreen()
 
 function template_tpshout_admin()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir;
+	global $context, $scripturl, $txt;
 
-	
 	 echo '
 	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;shout=admin"  method="post" style="margin: 0px;">
 		<input name="TPadmin_blocks" type="hidden" value="set" />
@@ -123,7 +122,7 @@ function template_tpshout_admin()
 
 function template_tpshout_admin_settings()
 {
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir;
+	global $context, $scripturl, $txt;
 
 	echo '
 	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;shout=admin"  method="post" style="margin: 0px;">
@@ -203,7 +202,7 @@ function template_tpshout_admin_settings()
 function template_tpshout_shoutblock()
 {
 
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir, $smcFunc;
+	global $context, $scripturl, $txt, $smcFunc;
 
 	// Show the shoutbox, takes settings from tpadmin
 	$tp_where = $_SERVER['QUERY_STRING'];
@@ -262,7 +261,7 @@ function template_tpshout_shoutblock()
 function template_tpshout_frontpage()
 {
 
-	global $context, $settings, $options, $scripturl, $txt, $modSettings, $sourcedir;
+	global $context;
 
 	echo 'test';
 }
@@ -270,7 +269,7 @@ function template_tpshout_frontpage()
 function template_tpshout_profile()
 {
 
-	global $settings, $txt, $context, $scripturl;
+	global $settings, $txt, $context;
 
 	echo '
 	<div class="bordercolor" style="margin-left: 1ex;">

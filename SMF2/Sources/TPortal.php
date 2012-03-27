@@ -1445,7 +1445,7 @@ function doTPfrontpage()
 	elseif(in_array($context['TPortal']['front_type'], array('forum_only', 'forum_selected')))
 	{
 		$totalmax = 200;
-	
+
 		loadLanguage('Stats');
 		
 		// Find the post ids.
@@ -3016,6 +3016,7 @@ if(!function_exists('db_query'))
 {
 	function db_query($code)
 	{
+		global $smcFunc;
 		$smcFunc['db_query']($code);
 	}
 }

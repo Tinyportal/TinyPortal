@@ -17,7 +17,7 @@
 
 function template_main()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boardurl, $smcFunc;
+	global $context, $settings, $txt, $scripturl;
 
 	if(isset($context['TPortal']['subaction'])){
 		switch($context['TPortal']['subaction']){
@@ -448,7 +448,7 @@ function template_submitsuccess()
 
 function template_submitarticle()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boardurl;
+	global $context, $txt, $scripturl;
 
 	echo '
 	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=submitarticle2" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
@@ -504,7 +504,7 @@ function template_submitarticle()
 
 function template_updatelog()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boardurl;
+	global $context;
 
 	echo '<div class="tborder">' . $context['TPortal']['updatelog'] , '<hr /></div>';
 }
