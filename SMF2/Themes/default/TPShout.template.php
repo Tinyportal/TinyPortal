@@ -329,7 +329,7 @@ function template_singleshout($row)
 							</div> 
 							<div class="tp_shoutupper"></div>
 							<div class="tp_shoutbody">
-							' . (parse_bbc(censorText(strip_tags(html_entity_decode($row['value1']))),true)) . '
+							' . (parse_bbc(censorText($row['value1']),true)) . '
 							</div>
 						</div>
 				</div>';
