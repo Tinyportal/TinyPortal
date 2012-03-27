@@ -21,7 +21,7 @@ if (!defined('SMF'))
 // TinyPortal admin
 function TPortalAdmin()
 {
-	global $smcFunc, $txt, $scripturl, $db_prefix, $user_info, $sourcedir, $modSettings, $context, $settings, $boardurl, $boarddir;
+	global $scripturl, $sourcedir, $context;
 
 	if(loadlanguage('TPortalAdmin') == false)
 		loadlanguage('TPortalAdmin', 'english');
@@ -258,8 +258,7 @@ function TPortalAdmin()
 
 function tp_notifyComments($memberlist, $message2, $subject)
 {
-	global $board, $topic, $txt, $scripturl, $db_prefix, $language, $user_info;
-	global $modSettings, $sourcedir, $smcFunc;
+	global $board, $topic, $txt, $scripturl, $user_info, $modSettings, $sourcedir, $smcFunc;
 
 	require_once($sourcedir . '/Subs-Post.php');
 
@@ -305,8 +304,6 @@ function tp_notifyComments($memberlist, $message2, $subject)
 
 function do_subaction($tpsub)
 {
-	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$userinfo,$db_prefix;
-	
 	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')))
 		do_articles();
 	elseif(in_array($tpsub, array('blocks', 'panels')))
@@ -325,8 +322,7 @@ function do_subaction($tpsub)
 
 function do_blocks()
 {
-	global $context, $smcFunc, $txt, $settings, $boardurl, $scripturl;
-	global $boarddir, $user_info, $db_prefix;
+	global $context, $smcFunc, $txt, $settings, $scripturl;
 
 	isAllowedTo('tp_blocks');
 
@@ -803,7 +799,7 @@ function do_blocks()
 
 function do_menus()
 {
-	global $context, $txt, $settings, $boardurl, $scripturl, $boarddir, $userinfo, $db_prefix, $smcFunc;
+	global $context, $scripturl, $smcFunc;
 	
 	$mid = isset($_GET['mid']) && is_numeric($_GET['mid']) ? $_GET['mid'] : 0;
 	// first check any link stuff
@@ -989,8 +985,7 @@ function do_menus()
 // articles
 function do_articles()
 {
-	global $context, $txt, $settings, $boardurl, $scripturl, $boarddir, $userinfo;
-	global $db_prefix, $modSettings, $smcFunc;
+	global $context, $txt, $settings, $boardurl, $scripturl, $smcFunc;
 
 	// do an update of stray articles and categories
 	$acats = array();
@@ -1952,8 +1947,7 @@ function do_articles()
 
 function do_modules()
 {
-	global $context, $txt, $settings, $boardurl, $scripturl, $boarddir;
-	global $smcFunc, $userinfo, $db_prefix;
+	global $context, $txt, $scripturl, $smcFunc;
 	
 	isAllowedTo('tp_settings');
 	
@@ -2007,7 +2001,7 @@ function do_modules()
 
 function do_tags()
 {
-	global $context, $txt, $settings, $boardurl, $scripturl, $boarddir, $userinfo, $db_prefix;
+	global $context;
 	
 	isAllowedTo('tp_settings');
 	
@@ -2015,7 +2009,7 @@ function do_tags()
 
 function do_news($tpsub = 'overview')
 {
-	global $context,$txt,$settings,$boardurl,$scripturl,$boarddir,$userinfo,$db_prefix;
+	global $context, $txt, $scripturl;
 	
 	get_boards();
 	$context['TPortal']['SSI_boards'] = explode(',', $context['TPortal']['SSI_board']);
@@ -3869,7 +3863,7 @@ function get_catlayouts()
 
 function get_boards()
 {
-	global $context, $user_info, $smcFunc;
+	global $context, $smcFunc;
 
 	$context['TPortal']['boards'] = array();
 	$request = $smcFunc['db_query']('', '
@@ -3910,7 +3904,7 @@ function get_articles()
 function get_catnames()
 {
 
-	global $context, $user_info, $smcFunc;
+	global $context, $smcFunc;
 
 	$context['TPortal']['catnames'] = array();
 	

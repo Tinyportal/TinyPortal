@@ -21,8 +21,7 @@ if (!defined('SMF'))
 // TinyPortal module entrance
 function TPmodules()
 {
-	global $db_prefix, $settings, $modSettings, $context, $scripturl, $txt;
-    global $user_info, $sourcedir, $boardurl, $boarddir, $smcFunc;
+	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
 
 	$ID_MEMBER = $context['user']['id'];
 
@@ -1113,7 +1112,7 @@ function TPmodules()
 // profile summary
 function tp_profile_summary($memID)
 {
-	global $txt, $context, $db_prefix, $settings, $smcFunc;
+	global $txt, $context, $smcFunc;
 
 	$context['page_title'] = $txt['tpsummary'];
 	$max_art = 0;
@@ -1148,7 +1147,7 @@ function tp_profile_summary($memID)
 // articles and comments made by the member
 function tp_profile_articles($memID)
 {
-	global $txt, $user_profile, $context, $db_prefix, $settings, $scripturl, $smcFunc;
+	global $txt, $context, $scripturl, $smcFunc;
 
 	$context['page_title'] = $txt['articlesprofile'];
 
@@ -1306,7 +1305,7 @@ function tp_profile_articles($memID)
 
 function tp_profile_download($memID)
 {
-	global $txt, $user_profile, $db_prefix, $context, $settings, $scripturl, $smcFunc;
+	global $txt, $context, $scripturl, $smcFunc;
 
 	$context['page_title'] = $txt['downloadprofile'] ;
 
@@ -1524,7 +1523,7 @@ function tp_shoutb($memID)
 // fetch all the shouts for output
 function tpshout_profile($memID)
 {
-    global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
+    global $context, $scripturl, $txt, $smcFunc;
 
 	$context['page_title'] = $txt['shoutboxprofile'] ;
 

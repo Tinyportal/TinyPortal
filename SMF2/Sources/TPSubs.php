@@ -35,7 +35,7 @@ function TPcheckAdminAreas()
 
 function TPsetupAdminAreas()
 {
-	global $db_prefix, $context, $scripturl, $smcFunc;
+	global $context, $scripturl, $smcFunc;
 
 	// any from modules?
 	$request = $smcFunc['db_query']('', '
@@ -92,7 +92,7 @@ function TPsetupAdminAreas()
 
 function TP_addPerms()
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
+	global $smcFunc;
 	
 	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 
 		'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 
@@ -128,7 +128,7 @@ function TP_addPerms()
 
 function TPcollectPermissions()
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
+	global $context, $smcFunc;
 
 	$context['TPortal']['permissonlist'] = array();
 	// first, the built-in permissions
@@ -434,7 +434,7 @@ function TPparseModfile($file , $returnarray)
 
 function TP_article_categories($use_sorted = false)
 {
-	global $smcFunc, $scripturl, $db_prefix, $user_info, $context, $settings, $txt;
+	global $smcFunc, $context, $txt;
 
 	$context['TPortal']['caticons'] = array();
 	$context['TPortal']['catnames'] = array();
@@ -673,7 +673,7 @@ function chainCMP($a, $b)
 // some general functions making it possible to use in applications within TP
 function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $display = 'list', $order = 'date', $sort = 'desc')
 {
-	global $smcFunc, $db_prefix, $settings, $txt, $scripturl;
+	global $smcFunc, $scripturl;
 
 	// if category is not a number, return
 	if(!is_numeric($category))
@@ -768,7 +768,7 @@ function tp_cleantitle($text)
 
 function TP_permaTheme($theme)
 {
-	global $sourcedir, $context, $db_prefix, $smcFunc;
+	global $context, $smcFunc;
 	
 	$me = $context['user']['id'];
 	$request = $smcFunc['db_query']('', '
@@ -790,7 +790,7 @@ function TP_permaTheme($theme)
 
 function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 {
-	global $txt, $context, $settings, $scripturl;
+	global $context, $settings;
 
 	if($admin)
 	{
@@ -827,7 +827,7 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 
 function TP_notify($text)
 {
-	global $context, $settings, $scripturl;
+	global $context;
 
 	$context['TPortal']['tpnotify'] = $text;
 	if($context['user']['is_admin'])
@@ -839,7 +839,7 @@ function TP_notify($text)
 
 function TP_error($text)
 {
-	global $context, $settings, $scripturl;
+	global $context;
 
 	$context['TPortal']['tperror'] = $text;
 	$context['template_layers'][] = 'tperror';
@@ -847,7 +847,7 @@ function TP_error($text)
 
 function tp_renderbbc($message)
 {
-	global $context, $settings, $options, $txt, $modSettings;
+	global $context, $txt;
 
 	$descriptionEditorOptions = array(
 		'id' => 'description',
@@ -939,7 +939,7 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 
 function TPwysiwyg_setup()
 {
-	global $context, $boardurl, $user_info;
+	global $context, $boardurl;
 
 	$context['html_headers'] .= '
 	<script language="JavaScript" type="text/javascript" src="'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/whizzywig.js"></script>
@@ -961,7 +961,7 @@ function TPwysiwyg_setup()
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
 {
-	global $user_info, $board_info, $sourcedir , $boardurl, $boarddir, $context, $txt;
+	global $user_info, $boardurl, $boarddir, $context, $txt;
 
 	echo '
 	<div style="margin-top: 10px;">';
@@ -1022,8 +1022,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 }
 function TPsshowgtags($id, $prefix, $itemid, $onlytags = false)
 {
-	global $user_info, $board_info, $db_prefix, $sourcedir, $boardurl;
-	global $boarddir, $txt, $settings, $context, $smcFunc;
+	global $txt, $smcFunc;
 
 	// This is to deal with a bug in SMF where $board is not an id but an array.
 	if(is_array($itemid))
@@ -1094,7 +1093,7 @@ function TPsshowgtags($id, $prefix, $itemid, $onlytags = false)
 
 function TPget_globaltags($tags, $itemid)
 {
-	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
+	global $smcFunc;
 
 	$taglinks = array();
 	$tagarray = explode(',', $tags);
@@ -1129,7 +1128,7 @@ function TPget_globaltags($tags, $itemid)
 
 function TParticles_showbytag($tag)
 {
-	global $context,$scripturl,$db_prefix, $settings, $boardurl;
+	global $context;
 }
 
 function TParticles_showbymember($member)
@@ -1138,7 +1137,7 @@ function TParticles_showbymember($member)
 
 function TP_getallmenus()
 {
-	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
+	global $smcFunc;
 
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables 
@@ -1174,7 +1173,7 @@ function TP_getallmenus()
 
 function TP_getmenu($menu_id)
 {
-	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
+	global $scripturl, $smcFunc;
 
 	// get menubox items
 	$menu = array();
@@ -1243,7 +1242,7 @@ function TP_getmenu($menu_id)
 
 function tp_fetchpermissions($perms)
 {
-	global $scripturl, $context, $settings, $txt, $db_prefix, $smcFunc;
+	global $txt, $smcFunc;
 	
 	$perm = array();
 	if(is_array($perms))
@@ -1317,7 +1316,7 @@ function tp_fetchpermissions($perms)
 
 function tp_fetchboards()
 {
-	global $db_prefix, $smcFunc;
+	global $smcFunc;
 
 	// get all boards for board-spesific news
 	$request =  $smcFunc['db_query']('', '
@@ -1339,7 +1338,7 @@ function tp_fetchboards()
 
 function tp_hidepanel($id, $inline=false, $string = false, $margin='')
 {
-	global $txt, $context, $settings;
+	global $context, $settings;
 	
 	$what = '
 	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
@@ -1365,7 +1364,7 @@ function tp_hidepanel2($id, $id2, $alt)
 
 function tp_latestblockcodes()
 {
-	global $txt, $context;
+	global $context;
 
 	return;
 
@@ -1379,7 +1378,7 @@ function tp_latestblockcodes()
 
 function tp_latestmodules()
 {
-	global $txt, $context;
+	global $context;
 
 	return;
 
@@ -1393,7 +1392,7 @@ function tp_latestmodules()
 
 function tp_collectArticleAttached($art)
 {
-	global $context, $scripturl, $db_prefix, $settings, $boardurl, $smcFunc;
+	global $context, $smcFunc;
 
 	// get attached images
 	$context['TPortal']['illustrations'] = array();
@@ -1449,7 +1448,7 @@ function tp_collectArticleAttached($art)
 
 function TP_fetchprofile_areas()
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings, $smcFunc;
+	global $smcFunc;
 
 	$areas = array(
 		'tp_summary' => array('name' => 'tp_summary', 'permission' => 'profile_view_any'),
@@ -1479,7 +1478,7 @@ function TP_fetchprofile_areas()
 
 function TP_fetchprofile_areas2($memID)
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings, $user_info, $smcFunc;
+	global $context, $scripturl, $txt, $user_info, $smcFunc;
 
 	if (!$user_info['is_guest'] && (($context['user']['is_owner'] && allowedTo('profile_view_own')) || allowedTo(array('profile_view_any', 'moderate_forum', 'manage_permissions','tp_dlmanager','tp_blocks','tp_articles','tp_gallery','tp_linkmanager'))))
 	{
@@ -1519,7 +1518,7 @@ function TP_fetchprofile_areas2($memID)
 }
 function tp_renderglobaltags($taglinks, $norender = false)
 {
-	global $txt, $scripturl;
+	global $scripturl;
 
 	if(sizeof($taglinks) == 0)
 		return;
@@ -1576,7 +1575,7 @@ function tpsort($a, $b)
 // add to the linktree
 function TPadd_linktree($url,$name)
 {
-	global $context, $settings;
+	global $context;
 
 	$context['linktree'][] = array('url' => $url, 'name' => $name);
 }
@@ -1584,7 +1583,7 @@ function TPadd_linktree($url,$name)
 // strip the linktree
 function TPstrip_linktree()
 {
-	global $context, $settings, $scripturl;
+	global $context, $scripturl;
 
 	$context['linktree'] = array();
 	$context['linktree'][] = array('url' => $scripturl, 'name' => $context['forum_name']);
@@ -1593,8 +1592,7 @@ function TPstrip_linktree()
 // TinyPortal startpage
 function TPortal()
 {
-	global $txt, $scripturl, $db_prefix, $user_info, $sourcedir;
-	global $modSettings, $context, $settings;
+	global $context;
 
 	// For wireless, we use the Wireless template...
 	if (WIRELESS){
@@ -1710,7 +1708,6 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 
 function tp_renderarticle($intro = '')
 {
-
 	global $context, $txt, $scripturl, $boarddir;
 	
 	// just return if data is missing
@@ -1765,7 +1762,7 @@ function tp_renderarticle($intro = '')
 function tp_renderblockarticle()
 {
 
-	global $context, $txt, $scripturl, $boarddir;
+	global $context, $txt, $boarddir;
 	
 	// just return if data is missing
 	if(!isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]))
@@ -1834,7 +1831,7 @@ function tp_hidebars($what = 'all' )
 
 function get_blockaccess($what, $front = false, $whichbar)
 {
-	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $modSettings, $boardurl, $sourcedir;
+	global $context, $user_info;
 
 	$mylang = $user_info['language'];
 	$show = false;
@@ -2131,7 +2128,7 @@ function endElement($parser, $tagName)
 function TPparseRSS($override = '', $encoding = 0)
 {
 
-	global $context, $settings, $options, $scripturl, $txt, $modSettings;
+	global $context;
 
 	$backend = isset($context['TPortal']['rss']) ? $context['TPortal']['rss'] : '';
 	if($override != '')
@@ -2181,7 +2178,7 @@ function TPparseRSS($override = '', $encoding = 0)
 // Set up the administration sections.
 function TPadminIndex($tpsub = '', $module_admin = false)
 {
-	global $txt, $context, $scripturl, $sc, $modSettings, $user_info, $settings, $smcFunc;
+	global $txt, $context, $scripturl, $smcFunc;
 
 	if(loadlanguage('TPortalAdmin') == false)
 		loadlanguage('TPortalAdmin', 'english');
@@ -2340,7 +2337,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 
 function tp_collectArticleIcons()
 {
-	global $scripturl, $context, $settings, $db_prefix, $boarddir, $boardurl, $smcFunc;
+	global $context, $boarddir, $boardurl, $smcFunc;
 
 	// get all themes for selection
 	$context['TPthemes']  = array();
@@ -2417,7 +2414,7 @@ function tp_collectArticleIcons()
 
 function tp_recordevent($date, $id_member, $textvariable, $link, $description, $allowed, $eventid)
 {
-	global $smcFunc, $settings;
+	global $smcFunc;
 
 	$request = $smcFunc['db_insert']('insert', 
 		'{db_prefix}tp_events',
@@ -2446,8 +2443,7 @@ function tp_fatal_error($error)
 // Recent topic list:   [board] Subject by Poster	Date
 function tp_recentTopics($num_recent = 8, $exclude_boards = null, $output_method = 'echo')
 {
-	global $context, $settings, $scripturl, $txt, $db_prefix;
-	global $user_info, $modSettings, $func, $smcFunc;
+	global $context, $scripturl, $user_info, $modSettings, $smcFunc;
 
 	if ($exclude_boards === null && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] > 0)
 		$exclude_boards = array($modSettings['recycle_board']);
@@ -2518,7 +2514,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $output_method
 // Download an attachment.
 function tpattach()
 {
-	global $txt, $modSettings, $user_info, $scripturl, $context, $sourcedir, $topic, $smcFunc;
+	global $txt, $modSettings, $context, $smcFunc;
 
 	// Some defaults that we need.
 	$context['character_set'] = empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'ISO-8859-1' : $txt['lang_character_set']) : $modSettings['global_character_set'];
@@ -2713,7 +2709,7 @@ function tpattach()
 
 function art_recentitems($max = 5, $type = 'date' ){
 
-	global $context, $settings, $db_prefix, $txt, $settings, $smcFunc;
+	global $smcFunc;
 
 	$now = forum_time();
 	$data = array();
@@ -2775,7 +2771,7 @@ function art_recentitems($max = 5, $type = 'date' ){
 
 function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 {
-	global $boardurl, $context, $scripturl, $settings, $txt, $db_prefix, $smcFunc;
+	global $boardurl, $context, $scripturl, $smcFunc;
 
 	// collect all categories to search in
 	$mycats = array();
@@ -2903,7 +2899,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 
 function dl_getcats()
 {
-	global $context, $settings, $db_prefix, $txt, $smcFunc;
+	global $context, $smcFunc;
 
 	$context['TPortal']['dl_allowed_cats'] = array();
 	$request =  $smcFunc['db_query']('','
@@ -3031,7 +3027,7 @@ function tp_getblockstyles()
 
 function get_grps($save = true, $noposts = true)
 {
-	global $context, $db_prefix, $txt, $smcFunc;
+	global $context, $txt, $smcFunc;
 
 	// get all membergroups for permissions
 	$context['TPmembergroups'] = array();

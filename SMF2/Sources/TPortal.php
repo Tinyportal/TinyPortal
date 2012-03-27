@@ -21,7 +21,7 @@ if (!defined('SMF'))
 // TinyPortal init
 function TPortal_init()
 {
-	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir;
+	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir;
 	
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['fixed_width']))
@@ -231,8 +231,7 @@ function TPortal_init()
 
 function TP_loadTheme()
 {
-	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
-	global $modSettings, $boardurl, $sourcedir, $smcFunc;
+	global $sourcedir, $smcFunc;
 
 	require_once($sourcedir.'/TPSubs.php');
 
@@ -313,8 +312,7 @@ function TP_loadTheme()
 
 function setupTPsettings()
 {
-	global $maintenance, $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
-	global $modSettings,  $boarddir, $boardurl, $sourcedir, $smcFunc;
+	global $maintenance, $context, $txt, $settings, $smcFunc;
 
 	$context['TPortal']['always_loaded'] = array();
 
@@ -459,8 +457,7 @@ function setupTPsettings()
 
 function fetchTPhooks()
 {
-	global $db_prefix, $context, $scripturl, $txt, $smcFunc;
-	global $user_info, $settings, $modSettings, $boarddir, $boardurl, $sourcedir;
+	global $context, $smcFunc, $boarddir, $sourcedir;
 
 	// any hooks for where we are at?
 	$what_board = isset($context['current_board']) ? $context['current_board'] : 0;
@@ -581,8 +578,7 @@ function fetchTPhooks()
 
 function doTPpage()
 {
-	global $db_prefix, $context, $scripturl, $txt, $user_info;
-	global $settings, $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
+	global $context, $scripturl, $txt, $modSettings, $boarddir, $sourcedir, $smcFunc;
 	
 	// Set the avatar height/width
 	if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
@@ -1019,8 +1015,7 @@ function doTPcat()
 	if(isset($_GET['action']) && $_GET['action'] == 'manageboards')
 		return;
 	
-	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
-	global $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
+	global $context, $scripturl, $txt, $modSettings, $smcFunc;
 
 	// check validity and fetch it
 	if(!empty($_GET['cat']))
@@ -1267,8 +1262,7 @@ function checkTPaction()
 // do the frontpage
 function doTPfrontpage()
 {
-	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
-	global $modSettings, $boarddir, $boardurl, $sourcedir, $smcFunc;
+	global $context, $scripturl, $user_info, $modSettings, $smcFunc;
 
 	// check we aren't in any other section
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
@@ -2066,8 +2060,7 @@ function doTPfrontpage()
 // do the blocks
 function doTPblocks()
 {
-	global $db_prefix, $context, $scripturl,$txt , $user_info, $settings;
-	global $smcFunc, $modSettings, $ID_MEMBER, $boarddir, $boardurl, $sourcedir, $language;
+	global $context, $scripturl,$txt , $user_info, $smcFunc, $modSettings;
 
 	// setup the containers
 	$blocks = array('left' => '', 'right' => '', 'center' => '', 'front' => '', 'bottom' => '', 'top' => '' , 'lower' => '');
@@ -2418,7 +2411,7 @@ function doTPblocks()
 // TPortal side bar, left or right.
 function TPortal_panel($side)
 {
-	global $context, $scripturl, $settings, $language, $txt;
+	global $context, $scripturl, $settings;
 
 	if(function_exists('ctheme_tportal_panel'))
 	{
@@ -2740,8 +2733,7 @@ function TPortal_panel($side)
 
 function tp_setupUpshrinks()
 {	
-	global $db_prefix, $context, $scripturl, $txt, $user_info, $settings;
-	global $smcFunc, $modSettings, $boarddir, $boardurl, $sourcedir;
+	global $context, $settings, $smcFunc;
 
 	$context['tp_panels'] = array();
 	if(isset($_COOKIE['tp_panels'])){
@@ -2869,7 +2861,7 @@ function tp_setupUpshrinks()
 
 function TP_blockgrid($block, $theme, $pos, $side, $last=false, $gridtype, $empty = false)
 {
-	global $context, $scripturl, $settings, $language, $txt;
+	global $context;
 
 	// first, set the table, equal in all grids
 	if($pos == 0)

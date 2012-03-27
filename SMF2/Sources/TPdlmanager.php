@@ -48,8 +48,7 @@ function TPdlmanager_init()
 // TinyPortal DLmanager
 function TPortalDLManager()
 {
-	global $txt, $scripturl, $db_prefix, $user_info, $boarddir, $boardurl;
-	global $modSettings, $context, $settings, $smcFunc;
+	global $txt, $scripturl, $boarddir, $boardurl, $context, $settings, $smcFunc;
 
 	// assume its the frontpage initially
 	$context['TPortal']['dlaction'] = 'main';;
@@ -1450,8 +1449,7 @@ function TPortalDLManager()
 // searched the files?
 function TPdlresults()
 {
-	global $txt, $scripturl, $db_prefix, $modSettings, $context, $settings;
-	global $user_info, $smcFunc;
+	global $txt, $scripturl, $context, $user_info, $smcFunc;
 
 	$start = 0;
 
@@ -1568,7 +1566,7 @@ function TPdlsearch()
 // show some stats
 function TPdlstats()
 {
-	global $txt, $scripturl, $smcFunc, $db_prefix, $modSettings, $context, $settings;
+	global $scripturl, $smcFunc, $context;
 
 	$context['TPortal']['dl_scats'] = array();
 	$context['TPortal']['dl_sitems'] = array();
@@ -1694,7 +1692,7 @@ function TPdlstats()
 // download a file
 function TPdownloadme()
 {
-	global $txt, $smcFunc, $scripturl, $db_prefix, $modSettings, $context, $settings, $boarddir;
+	global $smcFunc, $modSettings, $context, $boarddir;
 
 	$item = $context['TPortal']['dlitem'];
 	$request = $smcFunc['db_query']('', '
@@ -1881,8 +1879,7 @@ function TPdownloadme()
 // TinyPortal DLmanager admin
 function TPortalDLAdmin()
 {
-	global $txt, $scripturl, $db_prefix, $boarddir, $boardurl;
-	global $smcFunc, $modSettings, $context, $settings, $sourcedir;
+	global $txt, $scripturl, $boarddir, $boardurl, $smcFunc, $context, $settings, $sourcedir;
 
 	// check permissions
 	if(isset($_POST['dl_useredit']))
@@ -2182,7 +2179,7 @@ function TPortalDLAdmin()
 				$tag = substr($what, 16);
 				$itemid = $value;
 				// insert new one
-				$href = '?action=tpmod;dl=cat'.$itemtag;
+				$href = '?action=tpmod;dl=cat'.$itemid;
 				$title = $title[0].' ['.strtolower($txt['tp-downloads']).'] ';
 				$smcFunc['db_query']('INSERT', 
 					'{db_prefix}tp_variables',
@@ -3465,7 +3462,7 @@ function TPortalDLAdmin()
 // edit screen for regular users
 function TPortalDLUser($item)
 {
-	global $txt, $scripturl, $db_prefix, $boarddir, $modSettings, $context, $settings, $smcFunc;
+	global $txt, $scripturl, $boarddir, $context, $smcFunc;
 
 	// check that it is indeed yours
 	$request = $smcFunc['db_query']('', '
@@ -3603,7 +3600,7 @@ function TPortalDLUser($item)
 
 function dlupdatefilecount($category, $total = true)
 {
-	global $scripturl, $db_prefix, $context, $settings, $smcFunc;
+	global $smcFunc;
 
 	// get all files in its own category first
 	$request = $smcFunc['db_query']('', '
@@ -3614,7 +3611,7 @@ function dlupdatefilecount($category, $total = true)
 	);
 	$result = $smcFunc['db_fetch_row']($request);
 	$r = $result[0];
-	$request = $smcFunc['db_query']('', '
+	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_dlmanager 
 		SET files = {int:file} 
 		WHERE id = {int:item}',
@@ -3650,7 +3647,7 @@ function TPDLgetname($oldname)
  }
 function TP_dluploadcats()
 {
-	global $scripturl, $db_prefix, $context, $settings, $smcFunc;
+	global $scripturl, $context, $smcFunc;
 
 	//first : fetch all allowed categories
 	$sorted = array();
@@ -3710,7 +3707,7 @@ function TP_dlgeticons()
 }
 function TP_dlftpfiles()
 {
-	global $scripturl, $context, $settings, $boarddir;
+	global $context, $boarddir;
 
 	$count = 1;
 	$sorted = array();

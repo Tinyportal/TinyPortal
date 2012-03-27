@@ -20,20 +20,20 @@ if (!defined('SMF'))
 
 function TPinstallExtra()
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings;
+	global $context;
 
 	// 
 }
 
 function TPinstallArticles()
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings;
+	global $context;
 
 
 }
 function TPinstallThemes()
 {
-	global $db_prefix, $context, $scripturl, $txt, $settings;
+	global $context;
 }
 
 

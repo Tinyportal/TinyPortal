@@ -111,7 +111,7 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
 ////  
 ////                  Unsharp Mask for PHP - version 2.1.1  
 ////  
-////    Unsharp mask algorithm by Torstein Hønsi 2003-07.  
+////    Unsharp mask algorithm by Torstein Hï¿½nsi 2003-07.  
 ////             thoensi_at_netcom_dot_no.  
 ////               Please leave this notice.  
 ////  
@@ -134,12 +134,12 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
      
     $radius = abs(round($radius));     // Only integers make sense. 
     if ($radius == 0) { 
-        return $img; 
-		imagedestroy($img); 
+        return $img;
+		imagedestroy($img);
 		break;
 	} 
-    $w = imagesx($img); 
-	$h = imagesy($img); 
+    $w = imagesx($img);
+	$h = imagesy($img);
     $imgCanvas = imagecreatetruecolor($w, $h); 
     $imgBlur = imagecreatetruecolor($w, $h); 
      
@@ -249,15 +249,15 @@ function UnsharpMask($simg, $amount, $radius, $threshold)
 
 function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
 {
-	global $context, $settings, $boardurl, $boarddir;
+	global $boarddir, $txt;
 
 	// check that nothing happended
 	if(!file_exists($_FILES[$what]['tmp_name']) || !is_uploaded_file($_FILES[$what]['tmp_name']))
 		fatal_error($txt['tp-dlnotuploaded']);
 	// process the file
 	$filename=$_FILES[$what]['name'];
-	$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$name = strtr($name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
+	$name = strtr($filename, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+	$name = strtr($name, array('ï¿½' => 'TH', 'ï¿½' => 'th', 'ï¿½' => 'DH', 'ï¿½' => 'dh', 'ï¿½' => 'ss', 'ï¿½' => 'OE', 'ï¿½' => 'oe', 'ï¿½' => 'AE', 'ï¿½' => 'ae', 'ï¿½' => 'u'));
 	$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 
 	$filesize = filesize($_FILES[$what]['tmp_name']);
