@@ -2,7 +2,7 @@
 /**
  * @package TinyPortal
  * @version 1.0
- * @author IchBin - ichbin@ichbin.us
+ * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
  *
@@ -18,7 +18,7 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 	
-global $db_prefix, $context, $scripturl, $txt, $user_info, $settings, $smcFunc, $modSettings, $options;
+global $context, $scripturl, $txt, $user_info, $settings, $smcFunc, $modSettings, $options;
 
 // set version for databse updates.
 $shoutboxversion = '101';
@@ -108,7 +108,7 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 		<script language="javascript" type="text/javascript">
 
 		/***********************************************
-		* Cross browser Marquee II- © Dynamic Drive (www.dynamicdrive.com)
+		* Cross browser Marquee II- ï¿½ Dynamic Drive (www.dynamicdrive.com)
 		* This notice MUST stay intact for legal use
 		* Visit http://www.dynamicdrive.com/ for this script and 100s more.
 		***********************************************/
@@ -177,7 +177,7 @@ if(isset($_POST['tp-shout-url']))
 		// Check the session id.
 		checkSession('post');
 		
-		$oldshout = strip_tags(substr($_POST['tp_shout'], 0, 300));
+		$oldshout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, 300));
 		$shout = $oldshout;
 		
 		// collect the color for shoutbox
@@ -574,13 +574,13 @@ function tpshout_bigscreen($state, $number = 10)
 // fetch all the shouts for output
 function tpshout_fetch($render = true, $limit = 1, $swap = false)
 {
-    global $db_prefix, $context, $smcFunc, $scripturl, $txt, $user_info, $modSettings, $smcFunc;
+    global $context, $scripturl, $txt, $modSettings, $smcFunc;
 
 	// get x number of shouts
 	$context['TPortal']['profile_shouts_hide'] = empty($context['TPortal']['profile_shouts_hide']) ? '0' : '1';
 	$context['TPortal']['usercolor']='';
 	// collect the color for shoutbox
-	$request= $smcFunc['db_query']('', '
+	$request = $smcFunc['db_query']('', '
 		SELECT grp.online_color as onlineColor 
 		FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
 		WHERE m.id_group = grp.id_group
@@ -603,8 +603,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 	
 	if($render)
 		loadtemplate('TPShout');
-	
-	$scrolldirection = array('vert' => 'v', 'horiz' => 'h');
+
 	$request =  $smcFunc['db_query']('', '
 		SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
 			mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
@@ -641,7 +640,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 
 function shout_bcc_code($collapse = true) 
 {
-    global $db_prefix, $context, $scripturl, $txt, $settings, $options;
+    global $context, $txt, $settings, $options;
 
 	loadLanguage('Post');
 	
@@ -811,7 +810,7 @@ function shout_bcc_code($collapse = true)
 
 function shout_smiley_code()
 {
-	global $context, $settings, $user_info, $txt, $modSettings, $db_prefix;
+	global $context, $settings, $user_info, $txt, $modSettings;
   
 	// Initialize smiley array...
 	$context['tp_smileys'] = array(
@@ -940,7 +939,7 @@ function shoutbox_update()
 	 'show_shoutbox_icons' => '1',
 		'profile_shouts_hide' => '0',
  	);
-	$updates=0;
+
 	foreach($settings_array as $what => $val){
 		$sjekk = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_settings 
