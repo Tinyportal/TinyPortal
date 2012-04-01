@@ -702,7 +702,7 @@ function doTPpage()
 						$row = $smcFunc['db_fetch_row']($request);
 						$last = $row[0];
 						$smcFunc['db_free_result']($request);
-						$request =  $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_data 
 							SET item = {int:item} 
 							WHERE id_member = {int:id_mem} 
@@ -718,7 +718,7 @@ function doTPpage()
 					else
 					{
 						$last = $now;
-						$request = $smcFunc['db_insert']('INSERT',
+						$smcFunc['db_insert']('INSERT',
 							'{db_prefix}tp_data',
 							array('type' => 'int', 'id_member' => 'int', 'value' => 'int', 'item' => 'int'),
 							array(1, $context['user']['id'], $article['id'], $now),
@@ -820,7 +820,7 @@ function doTPpage()
 					$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
 					'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
 
-					for($p=0; $p < 6; $p++)
+					for($p = 0; $p < 6; $p++)
 					{
 						$primary = $context['TPortal'][$all[$p]];
 						if(in_array($all2[$p], $context['TPortal']['article']['visual_options']))

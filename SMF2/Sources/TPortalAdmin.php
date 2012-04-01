@@ -2667,8 +2667,7 @@ function do_postchecks()
 		{
 			checkSession('post');
 			isAllowedTo('tp_settings');
-			
-			$mytags = array();
+
 			// first, remove all globaltags
 			$smcFunc['db_query']('', '
 				DELETE FROM {db_prefix}tp_variables 
@@ -2704,7 +2703,7 @@ function do_postchecks()
 			$name = !empty($_POST['tp_cat_name']) ? $_POST['tp_cat_name'] : $txt['tp-noname'];
 			$parent = !empty($_POST['tp_cat_parent']) ? $_POST['tp_cat_parent'] : '0';
 
-			$request = $smcFunc['db_insert']('INSERT', 
+			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_variables',
 				array(
 					'value1' => 'string',
@@ -3011,7 +3010,7 @@ function do_postchecks()
 					$newcategory = $smcFunc['db_insert_id']('{db_prefix}tp_variables', 'id');
 					$smcFunc['db_free_result']($request);
 				}
-				$request = $smcFunc['db_query']('', '
+				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles 
 					SET approved = {int:approved}, category = {int:cat} 
 					WHERE id IN ({array_int:artid})',
@@ -3021,7 +3020,7 @@ function do_postchecks()
 						'artid' => $ccats,
 					)
 				);
-				$request = $smcFunc['db_query']('', '
+				$smcFunc['db_query']('', '
 					DELETE FROM {db_prefix}tp_variables 
 					WHERE type = {string:type} 
 					AND value5 IN ({array_int:val5})',
@@ -3045,7 +3044,7 @@ function do_postchecks()
 				{
 					$where = substr($what, 3);
 					if(is_numeric($where))
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks 
 							SET pos = {int:pos} 
 							WHERE id = {int:blockid}',
@@ -3059,7 +3058,7 @@ function do_postchecks()
 				{
 					$where = substr($what, 6);
 					if(is_numeric($where))
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks 
 							SET pos = (pos + 11) 
 							WHERE id = {int:blockid}',
@@ -3072,7 +3071,7 @@ function do_postchecks()
 				{
 					$where = substr($what, 6);
 					if(is_numeric($where))
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks SET pos = (pos - 11) 
 							WHERE id = {int:blockid}',
 							array(
@@ -3083,7 +3082,7 @@ function do_postchecks()
 				elseif(substr($what, 0, 4) == 'type')
 				{
 					$where = substr($what, 4);
-					$request = $smcFunc['db_query']('', '
+					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks 
 						SET type = {int:type} 
 						WHERE id = {int:blockid}',
@@ -3096,7 +3095,7 @@ function do_postchecks()
 				elseif(substr($what, 0, 5) == 'title')
 				{
 					$where = strip_tags(substr($what, 5));
-					$request = $smcFunc['db_query']('', '
+					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks 
 						SET title = {string:title} 
 						WHERE id = {int:blockid}',
@@ -3109,7 +3108,7 @@ function do_postchecks()
 				elseif(substr($what, 0, 9) == 'blockbody')
 				{
 					$where = tp_sanitize(substr($what, 9));
-					$request = $smcFunc['db_query']('', '
+					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks 
 						SET body = {string:body} 
 						WHERE id = {int:blockid}',
@@ -3260,7 +3259,7 @@ function do_postchecks()
 						if($_POST['tp_block_type'] == 10)
 							$value = tp_convertphp($value);
 
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks 
 							SET '. $setting .' = {string:value} 
 							WHERE id = {int:blockid}',
@@ -3269,7 +3268,7 @@ function do_postchecks()
 					}
 					elseif($setting == 'title')
 					{
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks 
 							SET title = {string:title} 
 							WHERE id = {int:blockid}',
@@ -3279,14 +3278,14 @@ function do_postchecks()
 					elseif($setting == 'body_mode' || $setting == 'body_choice' || $setting == 'body_pure')
 						$go = '';
 					elseif($setting == 'frame')
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks 
 							SET frame = {string:val}
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
 					else
-						$request = $smcFunc['db_query']('', '
+						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks 
 							SET '. $setting .' = {raw:val}
 							WHERE id = {int:blockid}',
@@ -3343,7 +3342,7 @@ function do_postchecks()
 				}
 			}
 			// construct the access++
-			$request = $smcFunc['db_query']('', '
+			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_blocks 
 				SET	access2 = {string:acc2},
 					access = {string:acc},
@@ -3360,7 +3359,7 @@ function do_postchecks()
 			);
 			
 			if(isset($userbox))
-				$request = $smcFunc['db_query']('', '
+				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_settings 
 					SET value = {string:val} 
 					WHERE name = {string:name}',
@@ -3368,7 +3367,7 @@ function do_postchecks()
 				);
 
 			if(isset($themebox))
-				$request = $smcFunc['db_query']('', '
+				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_blocks 
 					SET body = {string:body}
 					WHERE id = {int:blockid}',
@@ -3408,7 +3407,7 @@ function do_postchecks()
 			if(empty($where))
 			{
 				// we need to create one first
-				$request = $smcFunc['db_insert']('INSERT',
+				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_articles',
 					array('date' => 'int'),
 					array(time()),
@@ -3542,7 +3541,7 @@ function do_postchecks()
 							{
 								$row = $smcFunc['db_fetch_assoc']($request);
 								$smcFunc['db_free_result']($request);
-								$request = $smcFunc['db_query']('', '
+								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_variables 
 									SET value1 = {string:val1}
 									WHERE subtype2 = {int:sub2} 

@@ -226,7 +226,7 @@ if(isset($_POST['tp-shout-url']))
 
 function tpshout_admin()
 {
-	global $db_prefix, $context, $scripturl, $txt, $smcFunc;
+	global $context, $scripturl, $txt, $smcFunc;
 	
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
@@ -594,7 +594,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 	}
 
 	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit == 1)
-		$limit=$context['TPortal']['shoutbox_limit'];
+		$limit = $context['TPortal']['shoutbox_limit'];
 
 	// don't fetch more than a hundred - save the poor server! :D
 	$nshouts = '';
@@ -616,7 +616,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 	);
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
-		$nshouts= $txt['tp-last'].' '.$limit.' '.$txt['tp-shouts'].'<br /><br /><div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
+		$nshouts = $txt['tp-last'].' '.$limit.' '.$txt['tp-shouts'].'<br /><br /><div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
 		$ns = array();
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
@@ -625,7 +625,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 		}
 		$nshouts .= implode('', $ns);
 		
-		$nshouts .='</div>';
+		$nshouts .= '</div>';
 
 		$context['TPortal']['shoutbox'] = $nshouts;
 		$smcFunc['db_free_result']($request);

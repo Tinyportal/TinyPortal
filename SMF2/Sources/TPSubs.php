@@ -403,8 +403,6 @@ function TPcollectSnippets()
 
 function TPparseModfile($file , $returnarray)
 {
-
-	
 	$file = strtr($file, array("\r" => ''));
 	$snippet = array();
 
@@ -479,7 +477,7 @@ function TP_article_categories($use_sorted = false)
 	);
 	if($smcFunc['db_num_rows']($request2) > 0)
 	{
-		while($row=$smcFunc['db_fetch_assoc']($request2))
+		while($row = $smcFunc['db_fetch_assoc']($request2))
 		{
 			$total2[$row['value2']] = $row['siblings'];
 		}
@@ -760,8 +758,8 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 
 function tp_cleantitle($text)
 {
-	$tmp = strtr($text, '������������������������������������������������������������', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$tmp = strtr($tmp, array('�' => 'TH', '�' => 'th', '�' => 'DH', '�' => 'dh', '�' => 'ss', '�' => 'OE', '�' => 'oe', '�' => 'AE', '�' => 'ae', '�' => 'u'));
+	$tmp = strtr($text, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+	$tmp = strtr($tmp, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 	$cleaned = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $tmp);
 	return $cleaned;
 }
@@ -771,7 +769,7 @@ function TP_permaTheme($theme)
 	global $context, $smcFunc;
 	
 	$me = $context['user']['id'];
-	$request = $smcFunc['db_query']('', '
+	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}members 
 		SET ID_THEME = {int:theme} 
 		WHERE id_member = {int:mem_id}',
@@ -901,9 +899,6 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 
 	$body = str_replace(array("<",">","\n","	"), array("&lt;","&gt;","<br>","&nbsp;"), $text);
 	preparsecode($body);
-
-	// Creating a new topic?
-	$newTopic = empty($_REQUEST['msg']) && empty($topic);
 
 	// Collect all parameters for the creation or modification of a post.
 	$msgOptions = array(
@@ -1125,7 +1120,6 @@ function TPget_globaltags($tags, $itemid)
 	return $taglinks;
 }
 
-
 function TParticles_showbytag($tag)
 {
 	global $context;
@@ -1336,7 +1330,7 @@ function tp_fetchboards()
 	return $boards;
 }
 
-function tp_hidepanel($id, $inline=false, $string = false, $margin='')
+function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 {
 	global $context, $settings;
 	
@@ -2416,7 +2410,7 @@ function tp_recordevent($date, $id_member, $textvariable, $link, $description, $
 {
 	global $smcFunc;
 
-	$request = $smcFunc['db_insert']('insert', 
+	$smcFunc['db_insert']('insert',
 		'{db_prefix}tp_events',
 		array(
 			'id_member' => 'int',

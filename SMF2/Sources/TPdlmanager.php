@@ -62,7 +62,7 @@ function TPortalDLManager()
 	// add visual options to thsi section
 	$context['TPortal']['dl_visual'] = array();
 	$dl_visual = explode(',',$context['TPortal']['dl_visual_options']);
-	$dv=array('left', 'right', 'center', 'lower', 'top', 'bottom');
+	$dv = array('left', 'right', 'center', 'lower', 'top', 'bottom');
 	foreach($dv as $v => $val)
 	{
 		if($context['TPortal'][$val.'panel'] == 1)
@@ -134,8 +134,8 @@ function TPortalDLManager()
 		{
 			// process the file
 			$filename = $_FILES['tp-dluploadfile']['name'];
-			$name = strtr($filename, '������������������������������������������������������������', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$name = strtr($name, array('�' => 'TH', '�' => 'th', '�' => 'DH', '�' => 'dh', '�' => 'ss', '�' => 'OE', '�' => 'oe', '�' => 'AE', '�' => 'ae', '�' => 'u'));
+			$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+			$name = strtr($name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 			$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 		}
 		else
@@ -2347,8 +2347,8 @@ function TPortalDLAdmin()
 		{
 			$sid = $_POST['tp_dluploadfile_editID'];
 			$shotname = $_FILES['tp_dluploadfile_edit']['name'];
-			$sname = strtr($shotname, '������������������������������������������������������������', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, array('�' => 'TH', '�' => 'th', '�' => 'DH', '�' => 'dh', '�' => 'ss', '�' => 'OE', '�' => 'oe', '�' => 'AE', '�' => 'ae', '�' => 'u'));
+			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+			$sname = strtr($sname, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 			$sname = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $sname);
 			$sname = time().$sname;
 			// check the size
