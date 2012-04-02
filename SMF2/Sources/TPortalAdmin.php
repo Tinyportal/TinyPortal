@@ -3242,19 +3242,20 @@ function do_postchecks()
 				if(substr($what, 0, 9) == 'tp_block_')
 				{
 					$setting = substr($what, 9);
-					// If we came from WYSIWYG then turn it back into BBC regardless.
-					if (!empty($_REQUEST['tp_block_body_mode']) && isset($_REQUEST['tp_block_body']))
-					{
-						require_once($sourcedir . '/Subs-Editor.php');
-						$_REQUEST['tp_block_body'] = html_to_bbc($_REQUEST['tp_block_body']);
-						// We need to unhtml it now as it gets done shortly.
-						$_REQUEST['tp_block_body'] = un_htmlspecialchars($_REQUEST['tp_block_body']);
-						// We need this for everything else.
-						if($setting == 'body')
-							$value = $_POST['tp_block_body'] = $_REQUEST['tp_block_body'];
-					}
+
 					if($setting == 'body')
 					{
+						// If we came from WYSIWYG then turn it back into BBC regardless.
+						if (!empty($_REQUEST['tp_block_body_mode']) && isset($_REQUEST['tp_block_body']))
+						{
+							require_once($sourcedir . '/Subs-Editor.php');
+							$_REQUEST['tp_block_body'] = html_to_bbc($_REQUEST['tp_block_body']);
+							// We need to unhtml it now as it gets done shortly.
+							$_REQUEST['tp_block_body'] = un_htmlspecialchars($_REQUEST['tp_block_body']);
+							// We need this for everything else.
+							$value = $_POST['tp_block_body'] = $_REQUEST['tp_block_body'];
+						}
+
 						// PHP block?
 						if($_POST['tp_block_type'] == 10)
 							$value = tp_convertphp($value);
