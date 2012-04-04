@@ -42,8 +42,8 @@ function TPortal_init()
 	// Include a ton of functions.
 	require_once($sourcedir.'/TPSubs.php');
 
-	if(loadlanguage('TPortal') == false)
-		loadlanguage('TPortal', 'english');
+	if(loadLanguage('TPortal') == false)
+		loadLanguage('TPortal', 'english');
 
 	setupTPsettings();
 	fetchTPhooks();
