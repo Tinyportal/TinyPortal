@@ -23,8 +23,8 @@ function TPdlmanager_init()
 	global $context, $settings, $sourcedir;
 
 	// load the needed strings
-	if(loadlanguage('TPdlmanager') == false)
-		loadlanguage('TPdlmanager', 'english');
+	if(loadLanguage('TPdlmanager') == false)
+		loadLanguage('TPdlmanager', 'english');
 
 	require_once($sourcedir . '/TPcommon.php');
 	// get subaction
@@ -3404,12 +3404,11 @@ function TPortalDLAdmin()
 		// add to the linktree
 		TPadd_linktree($scripturl.'?action=tpmod;dl=adminitem'.$item , $itemname);
 	}
-	if(loadlanguage('TPdladmin') == false)
-		loadlanguage('TPdladmin', 'english');
-	if(loadlanguage('TPmodules') == false)
-		loadlanguage('TPmodules', 'english');
-	if(loadlanguage('TPortalAdmin') == false)
-		loadlanguage('TPortalAdmin', 'english');
+	loadTemplate('TPdladmin');
+	if(loadLanguage('TPmodules') == false)
+		loadLanguage('TPmodules', 'english');
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
 
 	// setup admin tabs according to subaction
 	$context['admin_area'] = 'tp_dlmanager';
@@ -3586,12 +3585,11 @@ function TPortalDLUser($item)
 		// get the icons
 		TP_dlgeticons();
 
-		if(loadlanguage('TPdlmanager') == false)
-			loadlanguage('TPdlmanager', 'english');
-		if(loadlanguage('TPmodules') == false)
-			loadlanguage('TPmodules', 'english');
-		if(loadlanguage('TPortalAdmin') == false)
-			loadlanguage('TPortalAdmin', 'english');
+		loadTemplate('TPdlmanager');
+		if(loadLanguage('TPmodules') == false)
+			loadLanguage('TPmodules', 'english');
+		if(loadLanguage('TPortalAdmin') == false)
+			loadLanguage('TPortalAdmin', 'english');
 
 	}
 	else

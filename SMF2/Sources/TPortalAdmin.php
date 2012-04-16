@@ -23,10 +23,10 @@ function TPortalAdmin()
 {
 	global $scripturl, $sourcedir, $context;
 
-	if(loadlanguage('TPortalAdmin') == false)
-		loadlanguage('TPortalAdmin', 'english');
-	if(loadlanguage('TPortal') == false)
-		loadlanguage('TPortal', 'english');
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
+	if(loadLanguage('TPortal') == false)
+		loadLanguage('TPortal', 'english');
 
 	require_once($sourcedir . '/TPcommon.php');
 	require_once($sourcedir . '/Subs-Post.php');

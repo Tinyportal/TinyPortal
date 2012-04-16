@@ -219,8 +219,8 @@ function tp_getbuttons()
 {
 	global $scripturl, $txt, $context;
 
-	if(loadlanguage('TPortal') == false)
-		loadlanguage('TPortal', 'english');
+	if(loadLanguage('TPortal') == false)
+		loadLanguage('TPortal', 'english');
 
 	$buts = array();
 	
@@ -798,10 +798,10 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 		else
 			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin11" />';
 
-		if( loadlanguage('TPortalAdmin') == false)
+		if( loadLanguage('TPortalAdmin') == false)
 			loadlangauge('TPortalAdmin', 'english');
-		if(loadlanguage($template) == false)
-			loadlanguage($template, 'english');
+		if(loadLanguage($template) == false)
+			loadLanguage($template, 'english');
 
 		adminIndex('tportal');
 		$context['template_layers'][] = $layer;
@@ -810,8 +810,8 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 	else
 	{
 		loadtemplate($template);
-		if(loadlanguage($template) == false)
-			loadlanguage($template, 'english');
+		if(loadLanguage($template) == false)
+			loadLanguage($template, 'english');
 
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
 			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin11" />';
@@ -2174,8 +2174,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 {
 	global $txt, $context, $scripturl, $smcFunc;
 
-	if(loadlanguage('TPortalAdmin') == false)
-		loadlanguage('TPortalAdmin', 'english');
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
 
 	if($module_admin)
 	{

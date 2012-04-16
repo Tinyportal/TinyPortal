@@ -25,10 +25,10 @@ function TPmodules()
 
 	$ID_MEMBER = $context['user']['id'];
 
-	if(loadlanguage('TPmodules') == false)
-		loadlanguage('TPmodules', 'english');
-	if(loadlanguage('TPortalAdmin') == false)
-		loadlanguage('TPortalAdmin', 'english');
+	if(loadLanguage('TPmodules') == false)
+		loadLanguage('TPmodules', 'english');
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
 
 	// get subaction
 	$tpsub = '';
@@ -230,9 +230,9 @@ function TPmodules()
 			var.value5, var.value4, mem.real_name as realName,
 			' . ($user_info['is_guest'] ? '1' : '(IFNULL(log.item, 0) >= var.value4)') . ' AS isRead
 			FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
-			LEFT JOIN {db_prefix}members as memb ON (art.author_id = memb.ID_MEMBER)
+			LEFT JOIN {db_prefix}members as memb ON (art.author_id = memb.id_member)
 			LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
-			LEFT JOIN {db_prefix}tp_data as log ON (log.value = art.id AND log.type = 1 AND log.ID_MEMBER = '.$context['user']['id'].')
+			LEFT JOIN {db_prefix}tp_data as log ON (log.value = art.id AND log.type = 1 AND log.id_member = '.$context['user']['id'].')
 			WHERE var.type = {string:type}
 			AND art.id = var.value5
 			' . ((!$showall || $mylast == 0 ) ? 'AND var.value4 > {int:last}' : '') .'
@@ -619,8 +619,8 @@ function TPmodules()
 		else
 			fatal_error($txt['tp-notanarticlefound']);
 		
-		if(loadlanguage('TPortalAdmin') == false)
-			loadlanguage('TPortalAdmin', 'english');
+		if(loadLanguage('TPortalAdmin') == false)
+			loadLanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
 	}
 	// show own articles?
@@ -661,8 +661,8 @@ function TPmodules()
 			$smcFunc['db_free_result']($request2);
 		}
 		
-		if(loadlanguage('TPortalAdmin') == false)
-			loadlanguage('TPortalAdmin', 'english');
+		if(loadLanguage('TPortalAdmin') == false)
+			loadLanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
 	}
 	elseif(in_array($tpsub, array('submitarticle', 'addarticle_html', 'addarticle_bbc')))
@@ -847,8 +847,8 @@ function TPmodules()
 			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body'])); 			
 		}
 		
-		if(loadlanguage('TPortalAdmin') == false)
-			loadlanguage('TPortalAdmin', 'english');
+		if(loadLanguage('TPortalAdmin') == false)
+			loadLanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
 	}
 	// promoting topics
@@ -1299,8 +1299,8 @@ function tp_profile_articles($memID)
 		$context['TPortal']['selected_member_choice_id'] = 0;
 	}
 	$context['TPortal']['selected_member'] = $memID;
-	if(loadlanguage('TPortalAdmin') == false)
-		loadlanguage('TPortalAdmin', 'english');
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
 }
 
 function tp_profile_download($memID)
@@ -1578,8 +1578,8 @@ function tpshout_profile($memID)
 
 	loadtemplate('TPShout');
 
-	if(loadlanguage('TPShout') == false)
-		loadlanguage('TPShout', 'english');
+	if(loadLanguage('TPShout') == false)
+		loadLanguage('TPShout', 'english');
 
 	$context['sub_template'] = 'tpshout_profile';
 }

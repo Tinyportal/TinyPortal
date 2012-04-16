@@ -29,8 +29,8 @@ function TPhelp_init()
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = false;
 
-	if(loadlanguage('TPhelp') == false)
-		loadlanguage('TPhelp', 'english');
+	if(loadLanguage('TPhelp') == false)
+		loadLanguage('TPhelp', 'english');
 
 	loadtemplate('TPhelp');
 
@@ -54,8 +54,8 @@ function TPhelp_init()
 
 	$context['template_layers'][] = 'tpadm';
 
-	if(loadlanguage('TPortalAdmin') == false)
-		loadlanguage('TPortalAdmin', 'english');
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
 }
 
 function TPCredits()
@@ -63,8 +63,8 @@ function TPCredits()
 	tp_hidebars();
 	$context['TPortal']['not_forum'] = false;
 
-	if(loadlanguage('TPhelp') == false)
-		loadlanguage('TPhelp', 'english');
+	if(loadLanguage('TPhelp') == false)
+		loadLanguage('TPhelp', 'english');
 
 	loadtemplate('TPhelp');
 }
