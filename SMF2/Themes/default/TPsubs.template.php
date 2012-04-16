@@ -1647,15 +1647,17 @@ function article_title($render = true)
 function article_category($render=true)
 {
 	global $scripturl, $txt, $context;
-	
+
+	$catNameOrId = !empty($context['TPortal']['article']['category_shortname']) ? $context['TPortal']['article']['category_shortname'] : $context['TPortal']['article']['category'];
+
 	if(!empty($context['TPortal']['article']['category_name']))
 	{
 		if(isset($context['TPortal']['article']['boardnews']))
 			$code = '
-		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?board=' . $context['TPortal']['article']['category'] . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
+		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?board=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
 		else
 			$code = '
-		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?cat=' . $context['TPortal']['article']['category'] . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
+		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?cat=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
 	}
 	else
 		$code='';

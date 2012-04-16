@@ -1210,8 +1210,10 @@ function doTPcat()
 					// add to the linktree
 					foreach($parts as $parent)
 						TPadd_linktree($scripturl.'?cat='. $parent['shortname'] , $parent['name']);
-
-					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['id'] , $context['TPortal']['category']['value1']);
+					if(!empty($context['TPortal']['category']['shortname']))
+						TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['value8'], $context['TPortal']['category']['value1']);
+					else
+						TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['id'], $context['TPortal']['category']['value1']);
 
 					// check clist
 					$context['TPortal']['clist'] = array();
@@ -1335,7 +1337,7 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name,
+				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,art.global_tag,
@@ -1397,7 +1399,7 @@ function doTPfrontpage()
 	{
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name,
+				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,art.global_tag,
@@ -1743,7 +1745,7 @@ function doTPfrontpage()
 		{
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-					art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name,
+					art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
 					art.fileimport, art.topic, art.illustration, art.type as rendertype, art.global_tag,

@@ -37,6 +37,17 @@ function TPsetupAdminAreas()
 {
 	global $context, $scripturl, $smcFunc;
 
+	$context['admin_tabs']['custom_modules'] = array();
+	if (allowedTo('tp_dlmanager'))
+	{
+		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
+			'title' => 'TPdownloads',
+			'description' => '',
+			'href' => $scripturl . '?action=tpmod;dl=admin',
+			'is_selected' => isset($_GET['dl']),
+		);
+		$admin_set = true;
+	}
 	// any from modules?
 	$request = $smcFunc['db_query']('', '
 		SELECT modulename, subquery, permissions, languages 
@@ -49,17 +60,6 @@ function TPsetupAdminAreas()
 	
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
-		$context['admin_tabs']['custom_modules'] = array();
-		if (allowedTo('tp_dlmanager'))
-		{
-			$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
-				'title' => 'TPdownloads',
-				'description' => '',
-				'href' => $scripturl . '?action=tpmod;dl=admin',
-				'is_selected' => isset($_GET['dl']),
-			);
-			$admin_set = true;
-		}
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$perms = explode(',', $row['permissions']);
