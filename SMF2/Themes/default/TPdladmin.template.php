@@ -80,14 +80,6 @@ function template_main()
 
 			</tr><tr class="windowbg2">
 				<td align="right" width="35%">
-					'.$txt['tp-dlusefeatured'].' :
-				</td>
-				<td>
-					<input name="tp_dl_showfeatured" type="radio" value="1" ', $context['TPortal']['dl_showfeatured']=='1' ? 'checked' : '' ,'>'.$txt['tp-yes'].'&nbsp;&nbsp;
-					<input name="tp_dl_showfeatured" type="radio" value="0" ', $context['TPortal']['dl_showfeatured']=='0' ? 'checked' : '' ,'>'.$txt['tp-sayno'].'
-				</td>
-			</tr><tr class="windowbg2">
-				<td align="right" width="35%">
 					'.$txt['tp-dluselatest'].' :
 				</td>
 				<td>
@@ -121,11 +113,18 @@ function template_main()
 				</td>
 			</tr><tr class="windowbg2">
 				<td align="right" width="35%">
+					'.$txt['tp-dlusefeatured'].' :
+				</td>
+				<td>
+					<input name="tp_dl_showfeatured" type="radio" value="1" ', $context['TPortal']['dl_showfeatured']=='1' ? 'checked' : '' ,'>'.$txt['tp-yes'].'&nbsp;&nbsp;
+					<input name="tp_dl_showfeatured" type="radio" value="0" ', $context['TPortal']['dl_showfeatured']=='0' ? 'checked' : '' ,'>'.$txt['tp-sayno'].'
+				</td>
+			</tr><tr class="windowbg2">
+				<td align="right" width="35%">
 					'.$txt['tp-dlfeatured'].' :
 				</td>
 				<td>
-					<select name="tp_dl_featured" size="7">
-						<option value="">'.$txt['tp-none-'].'</option>';
+					<select name="tp_dl_featured" size="7">';
 
 				foreach($context['TPortal']['all_dlitems'] as $item)
 				{

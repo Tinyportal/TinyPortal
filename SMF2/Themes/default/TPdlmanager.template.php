@@ -50,7 +50,7 @@ function template_main()
 			echo '
 			<div class="windowbg2" style="padding: 1em;">' . parse_bbc($context['TPortal']['dl_introtext']) . '</div>';
 
-		if(!empty($context['TPortal']['featured']))
+		if(!empty($context['TPortal']['dl_showfeatured']))
 		{
 			echo '
         <div class="cat_bar">
