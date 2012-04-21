@@ -214,7 +214,6 @@ $txt['tp-dlhaverated'] = 'You have rated this file.';
 
 $txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the File manager';
 $txt['permissionname_tp_dlcreatetopic'] = 'Create Download topic';
-$txt['permissionname_tp_dlcreatetopic'] = 'Create Download topic';
 $txt['permissionhelp_tp_dlcreatetopic'] = 'Allows you to create a linked support topic, and also link the topic to the download. Uses pre-defined boards to choose from.';
 $txt['cannot_tp_dlcreatetopic'] = 'Sorry, you aren\'t allowed to create support topics.';
 
