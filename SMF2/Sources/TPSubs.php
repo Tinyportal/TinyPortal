@@ -38,7 +38,7 @@ function TPsetupAdminAreas()
 	global $context, $scripturl, $smcFunc;
 
 	$context['admin_tabs']['custom_modules'] = array();
-	if (allowedTo('tp_dlmanager'))
+	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download']))
 	{
 		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
 			'title' => 'TPdownloads',
@@ -2461,11 +2461,17 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $output_method
 			AND t.id_last_msg = m.id_msg
 			AND b.id_board = t.id_board' . (empty($exclude_boards) ? '' : '
 			AND b.id_board NOT IN ({string:exclude})').'
-			AND {query_see_board}
+			AND {query_see_board}' . ($modSettings['postmod_active'] ? '
+			AND t.approved = {int:is_approved}
+			AND m.approved = {int:is_approved}' : '') . '
 			AND ms.id_msg = t.id_first_msg
 		ORDER BY t.id_last_msg DESC
 		LIMIT {int:num_recent}',
-		array('exclude' => implode(', ', $exclude_boards), 'num_recent' => $num_recent)
+		array(
+			'exclude' => implode(', ', $exclude_boards),
+			'num_recent' => $num_recent,
+			'is_approved' => 1,
+		)
 	);
 
 	$posts = array();

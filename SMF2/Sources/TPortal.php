@@ -2075,7 +2075,7 @@ function doTPblocks()
 	// any action?
 	if(!empty($_GET['action']))
 	{
-		$sqlarray[] = 'actio=' . $_GET['action'];
+		$sqlarray[] = 'actio=' . preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
 		if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2')))
 			$sqlarray[] = 'actio=forumall';
 	}
@@ -2142,8 +2142,7 @@ function doTPblocks()
 	
 	// get the blocks
 	$request = $smcFunc['db_query']('', '
-		SELECT * FROM 
-		{db_prefix}tp_blocks 
+		SELECT * FROM {db_prefix}tp_blocks 
 		WHERE off = {int:off} 
 		AND bar != {int:bar}
 		AND ' . $access2 . '
