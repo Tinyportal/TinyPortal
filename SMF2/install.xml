@@ -105,7 +105,7 @@ require_once($sourcedir . '/TPortal.php');]]></add>
 			<add><![CDATA[			'forum' => array(
 				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
 				'href' => $scripturl . '?action=forum',
-				'show' => true,
+				'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
 			),
 			]]></add>
 		</operation>
