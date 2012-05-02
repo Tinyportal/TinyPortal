@@ -596,414 +596,412 @@ function doTPpage()
 	if(!empty($_GET['page']))
 	{
 		$page = tp_sanitize($_GET['page']);
-		if(!empty($page))
+		$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
+
+		if(allowedTo('tp_articles'))
+			$request =  $smcFunc['db_query']('', '
+				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1,
+					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
+					art.type as rendertype, IFNULL(mem.real_name,art.author) as realName, mem.avatar,
+					mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
+					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+				FROM {db_prefix}tp_articles as art
+				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
+				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
+				LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
+				WHERE '. $pag .'
+				LIMIT 1',
+				array('page' => $page)
+			);
+		else
+			$request =  $smcFunc['db_query']('', '
+				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1, var.value2,
+					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype,
+					IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
+					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+				FROM {db_prefix}tp_articles as art
+				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
+				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
+				LEFT JOIN {db_prefix}tp_variables as var ON (var.id = art.category)
+				WHERE '. $pag .'
+				AND ((art.pub_start = 0 AND art.pub_end = 0)
+				OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
+				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
+				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+				LIMIT 1',
+				array('page' => $page)
+			);
+		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
-			if(allowedTo('tp_articles'))
-				$request =  $smcFunc['db_query']('', '
-                    SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1,
-                        var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
-                        art.type as rendertype, IFNULL(mem.real_name,art.author) as realName, mem.avatar,
-                        mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-                        IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
-                    FROM {db_prefix}tp_articles as art
-                    LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
-                    LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
-                    LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
-                    WHERE '. $pag .'
-                    LIMIT 1',
-                    array('page' => $page)
-                );
-			else
-				$request =  $smcFunc['db_query']('', '
-                    SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1, var.value2,
-                        var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype,
-                        IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-                        IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
-                    FROM {db_prefix}tp_articles as art
-                    LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
-                    LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
-                    LEFT JOIN {db_prefix}tp_variables as var ON (var.id = art.category)
-                    WHERE '. $pag .'
-                    AND ((art.pub_start = 0 AND art.pub_end = 0)
-                    OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
-                    OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
-                    OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
-                    LIMIT 1',
-                    array('page' => $page)
-                );
-			if($smcFunc['db_num_rows']($request) > 0)
+			$article = $smcFunc['db_fetch_assoc']($request);
+			$valid = true;
+			$smcFunc['db_free_result']($request);
+			// if its not approved, say so.
+			if($article['approved'] == 0)
 			{
-				$article = $smcFunc['db_fetch_assoc']($request);
-				$valid = true;
-				$smcFunc['db_free_result']($request);
-				// if its not approved, say so.
-				if($article['approved'] == 0)
+				TP_error($txt['tp-notapproved']);
+				$shown = true;
+				if(!allowedTo('tp_articles'))
+					$valid = false;
+			}
+			// likewise for off.
+			if($article['off'] == 1)
+			{
+				if(!isset($shown))
+					TP_error($txt['tp-noton']);
+				$shown = true;
+				if(!allowedTo('tp_articles'))
+					$valid = false;
+			}
+			// and for no category
+			if($article['category'] < 1 || $article['category'] > 9999)
+			{
+				if(!isset($shown))
+					TP_error($txt['tp-nocategory']);
+				$shown = true;
+				if(!allowedTo('tp_articles'))
+					$valid = false;
+			}
+			if( get_perm($article['value3']) && $valid)
+			{
+				// compability towards old articles
+				if(empty($article['type']))
 				{
-					TP_error($txt['tp-notapproved']);
-					$shown = true;
-					if(!allowedTo('tp_articles'))
-						$valid = false;
+					$article['type'] = $article['rendertype'] = 'html';
 				}
-				// likewise for off.
-				if($article['off'] == 1)
-				{
-					if(!isset($shown))
-						TP_error($txt['tp-noton']);
-					$shown = true;
-					if(!allowedTo('tp_articles'))
-						$valid = false;
-				}
-				// and for no category
-				if($article['category'] < 1 || $article['category'] > 9999)
-				{
-					if(!isset($shown))
-						TP_error($txt['tp-nocategory']);
-					$shown = true;
-					if(!allowedTo('tp_articles'))
-						$valid = false;
-				}
-				if( get_perm($article['value3']) && $valid)
-				{	
-					// compability towards old articles
-					if(empty($article['type']))
-					{
-						$article['type'] = $article['rendertype'] = 'html'; 
-					}
 
-					// shortname title
-					$article['shortname'] = un_htmlspecialchars($article['shortname']);
-                    // Add ratings together
-                    $article['rating'] = array_sum(explode(',', $article['rating']));
-					// allowed and all is well, go on with it.
-					$context['TPortal']['article'] = $article;
+				// shortname title
+				$article['shortname'] = un_htmlspecialchars($article['shortname']);
+				// Add ratings together
+				$article['rating'] = array_sum(explode(',', $article['rating']));
+				// allowed and all is well, go on with it.
+				$context['TPortal']['article'] = $article;
 
-					$context['TPortal']['article']['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
-				
-					// update views
-					$request =  $smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_articles 
-						SET views = views + 1 
-						WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}') . ' LIMIT 1',
-						array('page' => $page)
+				$context['TPortal']['article']['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+
+				// update views
+				$request =  $smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_articles
+					SET views = views + 1
+					WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}') . ' LIMIT 1',
+					array('page' => $page)
+				);
+
+				// fetch and update last access by member(to log which comment is new)
+				$now = time();
+				$request = $smcFunc['db_query']('', '
+					SELECT item FROM {db_prefix}tp_data
+						WHERE id_member = {int:id_mem}
+						AND type = {int:type}
+						AND value = {int:val} LIMIT 1',
+						array('id_mem' => $context['user']['id'], 'type' => 1, 'val' => $article['id'])
 					);
-					
-					// fetch and update last access by member(to log which comment is new)
-					$now = time();
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					$row = $smcFunc['db_fetch_row']($request);
+					$last = $row[0];
+					$smcFunc['db_free_result']($request);
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_data
+						SET item = {int:item}
+						WHERE id_member = {int:id_mem}
+						AND type = {int:type}
+						AND value = {int:val}',
+						array(
+							'item' => $now,
+							'id_mem' => $context['user']['id'],
+							'type' => 1,
+							'val' => $article['id'])
+					);
+				}
+				else
+				{
+					$last = $now;
+					$smcFunc['db_insert']('INSERT',
+						'{db_prefix}tp_data',
+						array('type' => 'int', 'id_member' => 'int', 'value' => 'int', 'item' => 'int'),
+						array(1, $context['user']['id'], $article['id'], $now),
+						array('id')
+					);
+				}
+
+				require_once($sourcedir . '/TPcommon.php');
+
+				// ok, how manya rticles have this member posted?
+				$request =  $smcFunc['db_query']('', '
+					SELECT id FROM {db_prefix}tp_articles
+					WHERE author_id = {int:author}
+					AND off = 0',
+					array('author' => $context['TPortal']['article']['authorID'])
+				);
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
+					$smcFunc['db_free_result']($request);
+				}
+				else
+					$context['TPortal']['article']['countarticles'] = 0;
+
+				// fetch any comments
+				$request =  $smcFunc['db_query']('', '
+					SELECT var.* , IFNULL(mem.real_name,0) as realName,mem.avatar,
+						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+					FROM {db_prefix}tp_variables AS var
+					LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
+					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
+					WHERE var.type = {string:type}
+					AND var.value5 = {int:val5}
+					ORDER BY var.value4 ASC',
+					array('type' => 'article_comment', 'val5' => $article['id'])
+				);
+
+				$ccount = 0;
+				$newcount = 0;
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					$context['TPortal']['article']['comment_posts'] = array();
+					while($row = $smcFunc['db_fetch_assoc']($request))
+					{
+						$context['TPortal']['article']['comment_posts'][] = array(
+							'id' => $row['id'],
+							'subject' => $row['value1'],
+							'text' => parse_bbc($row['value2']),
+							'timestamp' => $row['value4'],
+							'date' => timeformat($row['value4']),
+							'posterID' => $row['value3'],
+							'poster' => $row['realName'],
+							'is_new' => ($row['value4']>$last) ? true : false ,
+							'avatar' => array(
+								'name' => &$row['avatar'],
+								'image' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />'),
+								'href' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'http://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
+								'url' => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'http://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
+							),
+						);
+						$ccount++;
+						if($row['value4'] > $last)
+							$newcount++;
+					}
+					$context['TPortal']['article_comments_new'] = $newcount;
+					$context['TPortal']['article_comments_count'] = $ccount;
+				}
+				// if the count differs, update it
+				if($ccount != $article['comments'])
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_articles
+						SET comments = {int:com}
+						WHERE id = {int:artid}',
+						array('com' => $ccount, 'artid' => $article['id'])
+					);
+
+				// the frontblocks should not display here
+				$context['TPortal']['frontpanel'] = 0;
+				// sort out the options
+				$context['TPortal']['article']['visual_options'] = explode(',', $article['options']);
+
+				// the custom widths
+				foreach ($context['TPortal']['article']['visual_options'] as $pt)
+				{
+					if(substr($pt, 0, 11) == 'lblockwidth')
+						$context['TPortal']['blockwidth_left'] = substr($pt, 11);
+					if(substr($pt, 0, 11) == 'rblockwidth')
+						$context['TPortal']['blockwidth_right'] = substr($pt, 11);
+				}
+				// check if no theme is to be applied
+				if(in_array('nolayer', $context['TPortal']['article']['visual_options']))
+				{
+					$context['template_layers'] = array('nolayer');
+					// add the headers!
+					$context['tp_html_headers'] .= $article['headers'];
+				}
+				// set bars on/off according to options, setting override
+				$all = array('showtop', 'centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
+				$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
+				'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
+
+				for($p = 0; $p < 6; $p++)
+				{
+					$primary = $context['TPortal'][$all[$p]];
+					if(in_array($all2[$p], $context['TPortal']['article']['visual_options']))
+						$secondary = 1;
+					else
+						$secondary = 0;
+
+					if($primary == '1')
+						$context['TPortal'][$all[$p]] = $secondary;
+				}
+				$ct = explode('|', $article['value7']);
+				$cat_opts = array();
+				foreach($ct as $cc => $val)
+				{
+					$ts = explode('=', $val);
+					if(isset($ts[0]) && isset($ts[1]))
+						$cat_opts[$ts[0]] = $ts[1];
+				}
+				// decide the template
+				if(isset($cat_opts['catlayout']) && $cat_opts['catlayout'] == 7)
+					$cat_opts['template'] = $article['value9'];
+
+				$context['TPortal']['article']['category_opts'] = $cat_opts;
+
+				// the article should follow panel settngs from category?
+				if(in_array('inherit', $context['TPortal']['article']['visual_options']))
+				{
+					// set bars on/off according to options, setting override
+					$all=array('upperpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
+					for($p = 0; $p < 5; $p++)
+					{
+						if(isset($cat_opts[$all[$p]]))
+							$context['TPortal'][$all[$p]] = $cat_opts[$all[$p]];
+					}
+				}
+
+				// should we supply links to articles in same category?
+				if(in_array('category', $context['TPortal']['article']['visual_options']))
+				{
 					$request = $smcFunc['db_query']('', '
-						SELECT item FROM {db_prefix}tp_data 
-							WHERE id_member = {int:id_mem} 
-							AND type = {int:type} 
-							AND value = {int:val} LIMIT 1',
-							array('id_mem' => $context['user']['id'], 'type' => 1, 'val' => $article['id'])
-						);
-					if($smcFunc['db_num_rows']($request) > 0)
-					{
-						$row = $smcFunc['db_fetch_row']($request);
-						$last = $row[0];
-						$smcFunc['db_free_result']($request);
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_data 
-							SET item = {int:item} 
-							WHERE id_member = {int:id_mem} 
-							AND type = {int:type} 
-							AND value = {int:val}',
-							array(
-								'item' => $now,
-							 	'id_mem' => $context['user']['id'],
-							 	'type' => 1,
-							 	'val' => $article['id'])
-						);
-					}
-					else
-					{
-						$last = $now;
-						$smcFunc['db_insert']('INSERT',
-							'{db_prefix}tp_data',
-							array('type' => 'int', 'id_member' => 'int', 'value' => 'int', 'item' => 'int'),
-							array(1, $context['user']['id'], $article['id'], $now),
-							array('id')
-						); 
-					}
-
-					require_once($sourcedir . '/TPcommon.php');
-
-					// ok, how manya rticles have this member posted?
-					$request =  $smcFunc['db_query']('', '
-						SELECT id FROM {db_prefix}tp_articles 
-						WHERE author_id = {int:author}
-						AND off = 0',
-						array('author' => $context['TPortal']['article']['authorID'])
+						SELECT id, subject, shortname
+						FROM {db_prefix}tp_articles
+						WHERE category = {int:cat}
+						AND off = 0
+						AND approved = 1',
+						array('cat' => $context['TPortal']['article']['category'])
 					);
 					if($smcFunc['db_num_rows']($request) > 0)
 					{
-						$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
-						$smcFunc['db_free_result']($request);
-					}
-					else
-						$context['TPortal']['article']['countarticles'] = 0;
-					
-					// fetch any comments
-					$request =  $smcFunc['db_query']('', '
-						SELECT var.* , IFNULL(mem.real_name,0) as realName,mem.avatar,
-							IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
-						FROM {db_prefix}tp_variables AS var 
-						LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
-						LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
-						WHERE var.type = {string:type}
-						AND var.value5 = {int:val5}
-						ORDER BY var.value4 ASC',
-						array('type' => 'article_comment', 'val5' => $article['id'])
-					);
-
-					$ccount = 0;
-					$newcount = 0;
-					if($smcFunc['db_num_rows']($request) > 0)
-					{
-						$context['TPortal']['article']['comment_posts'] = array();
+						$context['TPortal']['article']['others'] = array();
 						while($row = $smcFunc['db_fetch_assoc']($request))
 						{
-							$context['TPortal']['article']['comment_posts'][] = array(
-								'id' => $row['id'],
-								'subject' => $row['value1'],
-								'text' => parse_bbc($row['value2']),
-								'timestamp' => $row['value4'],
-								'date' => timeformat($row['value4']),
-								'posterID' => $row['value3'],
-								'poster' => $row['realName'],
-								'is_new' => ($row['value4']>$last) ? true : false ,
-								'avatar' => array(
-									'name' => &$row['avatar'],
-									'image' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />'),
-									'href' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'http://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
-									'url' => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'http://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
-								),
-							);
-							$ccount++;
-							if($row['value4'] > $last)
-								$newcount++;
+							if($row['id'] == $context['TPortal']['article']['id'])
+								$row['selected'] = 1;
+
+							$context['TPortal']['article']['others'][] = $row;
 						}
-						$context['TPortal']['article_comments_new'] = $newcount;
-						$context['TPortal']['article_comments_count'] = $ccount;
+						$smcFunc['db_free_result']($request);
 					}
-					// if the count differs, update it
-					if($ccount != $article['comments'])
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles 
-							SET comments = {int:com} 
-							WHERE id = {int:artid}',
-							array('com' => $ccount, 'artid' => $article['id'])
-						);
-
-					// the frontblocks should not display here
-					$context['TPortal']['frontpanel'] = 0;
-					// sort out the options
-					$context['TPortal']['article']['visual_options'] = explode(',', $article['options']);
-
-					// the custom widths
-					foreach ($context['TPortal']['article']['visual_options'] as $pt)
-					{
-						if(substr($pt, 0, 11) == 'lblockwidth')
-							$context['TPortal']['blockwidth_left'] = substr($pt, 11);
-						if(substr($pt, 0, 11) == 'rblockwidth')
-							$context['TPortal']['blockwidth_right'] = substr($pt, 11);
-					}
-					// check if no theme is to be applied
-					if(in_array('nolayer', $context['TPortal']['article']['visual_options']))
-					{
-						$context['template_layers'] = array('nolayer');
-						// add the headers!
-						$context['tp_html_headers'] .= $article['headers'];
-					}
-					// set bars on/off according to options, setting override
-					$all = array('showtop', 'centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-					$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
-					'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
-
-					for($p = 0; $p < 6; $p++)
-					{
-						$primary = $context['TPortal'][$all[$p]];
-						if(in_array($all2[$p], $context['TPortal']['article']['visual_options']))
-							$secondary = 1;
-						else
-							$secondary = 0;
-
-						if($primary == '1')
-							$context['TPortal'][$all[$p]] = $secondary;
-					}
-					$ct = explode('|', $article['value7']);
-					$cat_opts = array();
-					foreach($ct as $cc => $val)
-					{
-						$ts = explode('=', $val);
-						if(isset($ts[0]) && isset($ts[1]))
-							$cat_opts[$ts[0]] = $ts[1];
-					}
-					// decide the template
-					if(isset($cat_opts['catlayout']) && $cat_opts['catlayout'] == 7)
-						$cat_opts['template'] = $article['value9'];
-					
-					$context['TPortal']['article']['category_opts'] = $cat_opts;
-					
-					// the article should follow panel settngs from category?
-					if(in_array('inherit', $context['TPortal']['article']['visual_options']))
-					{
-						// set bars on/off according to options, setting override
-						$all=array('upperpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-						for($p = 0; $p < 5; $p++)
-						{
-							if(isset($cat_opts[$all[$p]]))
-								$context['TPortal'][$all[$p]] = $cat_opts[$all[$p]];
-						}
-					}
-							
-					// should we supply links to articles in same category?
-					if(in_array('category', $context['TPortal']['article']['visual_options']))
-					{
-						$request = $smcFunc['db_query']('', '
-							SELECT id, subject, shortname
-							FROM {db_prefix}tp_articles 
-							WHERE category = {int:cat}
-							AND off = 0 
-							AND approved = 1',
-							array('cat' => $context['TPortal']['article']['category'])
-						);
-						if($smcFunc['db_num_rows']($request) > 0)
-						{
-							$context['TPortal']['article']['others'] = array();
-							while($row = $smcFunc['db_fetch_assoc']($request))
-							{
-								if($row['id'] == $context['TPortal']['article']['id'])
-									$row['selected'] = 1;
-
-								$context['TPortal']['article']['others'][] = $row;
-							}
-							$smcFunc['db_free_result']($request);
-						}
-					}
-
-					// can we rate this article?
-					$context['TPortal']['article']['can_rate'] = in_array($context['user']['id'], explode(',', $article['voters'])) ? false : true;
-
-					// Generate a visual verification code for comments in the article.
-					if (!empty($context['TPortal']['articles_comment_captcha']))
-					{
-						$context['use_graphic_library'] = in_array('gd', get_loaded_extensions());
-						$context['verification_image_href'] = $scripturl . '?action=verificationcode;rand=' . md5(rand());
-
-						// Only generate a new code if one hasn't been set yet
-						// Skip I, J, L, O and Q.
-						$character_range = array_merge(range('A', 'H'), array('K', 'M', 'N', 'P'), range('R', 'Z'));
-
-						// Generate a new code.
-						$_SESSION['visual_verification_code'] = '';
-						for ($i = 0; $i < 5; $i++)
-							$_SESSION['visual_verification_code'] .= $character_range[array_rand($character_range)];
-					}
-
-					// are we rather printing this article and printing page is allowed?
-					if(isset($_GET['print']) && $context['TPortal']['print_articles'] == 1)
-					{
-						if(!isset($article['id']))
-							redirectexit();
-						
-						$what = '<h2>' . $article['subject'] . ' </h2>'. $article['body'];
-						$pwhat = 'echo \'<h2>\' . $article[\'subject\'] . \'</h2>\';' . $article['body'];
-						if($article['type'] == 'php')
-							$context['TPortal']['printbody'] = eval($pwhat);
-						elseif($article['type'] == 'import')
-						{
-							if(!file_exists($boarddir. '/' . $article['fileimport']))
-								echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-							else
-								include($article['fileimport']);
-								
-							$context['TPortal']['printbody'] = '';
-						}							
-						elseif($article['type'] == 'bbc')
-							$context['TPortal']['printbody'] = parse_bbc($what);
-						else
-							$context['TPortal']['printbody'] = $what;
-						
-						$context['TPortal']['print'] = '<a href="' .$scripturl . '?page='. $article['id'] . '"><strong>' . $txt['tp-printgoback'] . '</strong></a>';
-
-						loadtemplate('TPprint');
-						$context['template_layers'] = array('tp_print');
-						$context['sub_template'] = 'tp_print_body';	
-						tp_hidebars();
-					}
-					// linktree?
-					if(!in_array('linktree', $context['TPortal']['article']['visual_options']))
-						$context['linktree'][0] = array('url' => '', 'name' => '');
-					else
-					{
-						// we need the categories for the linktree
-						$allcats = array();
-						$request =  $smcFunc['db_query']('', '
-							SELECT * FROM {db_prefix}tp_variables 
-							WHERE type = {string:type}',
-							array('type' => 'category')
-						);
-						if($smcFunc['db_num_rows']($request) > 0)
-						{
-							while($row = $smcFunc['db_fetch_assoc']($request))
-								$allcats[$row['id']] = $row;
-
-							$smcFunc['db_free_result']($request);
-						}
-						
-						// setup the linkree
-						TPstrip_linktree();
-
-						// do the category have any parents?
-						$parents = array();
-						$parent = $context['TPortal']['article']['category'];
-						if(count($allcats) > 0)
-						{
-							while($parent !=0 && isset($allcats[$parent]['id']))
-							{
-								$parents[] = array(
-									'id' => $allcats[$parent]['id'],
-									'name' => $allcats[$parent]['value1'],
-									'shortname' => !empty($allcats[$parent]['value8']) ? $allcats[$parent]['value8'] : $allcats[$parent]['id'],
-								);
-								$parent = $allcats[$parent]['value2'];
-							}
-						}
-						// make the linktree
-						$parts = array_reverse($parents, TRUE);
-						// add to the linktree
-						foreach($parts as $parent)
-							TPadd_linktree($scripturl.'?cat='. $parent['shortname'], $parent['name']);
-
-						TPadd_linktree($scripturl.'?page='. (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']), $context['TPortal']['article']['subject']);
-					}
-
-					$context['page_title'] = $context['forum_name'] . ' - '. $context['TPortal']['article']['subject'];
-				
-					if (WIRELESS)
-					{
-						$context['TPortal']['single_article'] = true;
-						loadtemplate('TPwireless');
-						// decide what subtemplate
-						$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_page';
-					}
-				
 				}
-				if(allowedTo('tp_articles'))
+
+				// can we rate this article?
+				$context['TPortal']['article']['can_rate'] = in_array($context['user']['id'], explode(',', $article['voters'])) ? false : true;
+
+				// Generate a visual verification code for comments in the article.
+				if (!empty($context['TPortal']['articles_comment_captcha']))
 				{
-					$now = time();
-					if((!empty($article['pub_start']) && $article['pub_start'] > $now) || (!empty($article['pub_end']) && $article['pub_end'] < $now))
+					$context['use_graphic_library'] = in_array('gd', get_loaded_extensions());
+					$context['verification_image_href'] = $scripturl . '?action=verificationcode;rand=' . md5(rand());
+
+					// Only generate a new code if one hasn't been set yet
+					// Skip I, J, L, O and Q.
+					$character_range = array_merge(range('A', 'H'), array('K', 'M', 'N', 'P'), range('R', 'Z'));
+
+					// Generate a new code.
+					$_SESSION['visual_verification_code'] = '';
+					for ($i = 0; $i < 5; $i++)
+						$_SESSION['visual_verification_code'] .= $character_range[array_rand($character_range)];
+				}
+
+				// are we rather printing this article and printing page is allowed?
+				if(isset($_GET['print']) && $context['TPortal']['print_articles'] == 1)
+				{
+					if(!isset($article['id']))
+						redirectexit();
+
+					$what = '<h2>' . $article['subject'] . ' </h2>'. $article['body'];
+					$pwhat = 'echo \'<h2>\' . $article[\'subject\'] . \'</h2>\';' . $article['body'];
+					if($article['type'] == 'php')
+						$context['TPortal']['printbody'] = eval($pwhat);
+					elseif($article['type'] == 'import')
 					{
-						$context['tportal']['article_expired'] = $article['id']; 
-						$context['TPortal']['tperror'] = '<span class="error largetext">'.$txt['tp-expired-start'] . '</span><p>'. timeformat($article['pub_start']) . '&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;' . timeformat($article['pub_end']).'</p>';
+						if(!file_exists($boarddir. '/' . $article['fileimport']))
+							echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
+						else
+							include($article['fileimport']);
+
+						$context['TPortal']['printbody'] = '';
 					}
-				}	
-				return $article['id'];
+					elseif($article['type'] == 'bbc')
+						$context['TPortal']['printbody'] = parse_bbc($what);
+					else
+						$context['TPortal']['printbody'] = $what;
+
+					$context['TPortal']['print'] = '<a href="' .$scripturl . '?page='. $article['id'] . '"><strong>' . $txt['tp-printgoback'] . '</strong></a>';
+
+					loadtemplate('TPprint');
+					$context['template_layers'] = array('tp_print');
+					$context['sub_template'] = 'tp_print_body';
+					tp_hidebars();
+				}
+				// linktree?
+				if(!in_array('linktree', $context['TPortal']['article']['visual_options']))
+					$context['linktree'][0] = array('url' => '', 'name' => '');
+				else
+				{
+					// we need the categories for the linktree
+					$allcats = array();
+					$request =  $smcFunc['db_query']('', '
+						SELECT * FROM {db_prefix}tp_variables
+						WHERE type = {string:type}',
+						array('type' => 'category')
+					);
+					if($smcFunc['db_num_rows']($request) > 0)
+					{
+						while($row = $smcFunc['db_fetch_assoc']($request))
+							$allcats[$row['id']] = $row;
+
+						$smcFunc['db_free_result']($request);
+					}
+
+					// setup the linkree
+					TPstrip_linktree();
+
+					// do the category have any parents?
+					$parents = array();
+					$parent = $context['TPortal']['article']['category'];
+					if(count($allcats) > 0)
+					{
+						while($parent !=0 && isset($allcats[$parent]['id']))
+						{
+							$parents[] = array(
+								'id' => $allcats[$parent]['id'],
+								'name' => $allcats[$parent]['value1'],
+								'shortname' => !empty($allcats[$parent]['value8']) ? $allcats[$parent]['value8'] : $allcats[$parent]['id'],
+							);
+							$parent = $allcats[$parent]['value2'];
+						}
+					}
+					// make the linktree
+					$parts = array_reverse($parents, TRUE);
+					// add to the linktree
+					foreach($parts as $parent)
+						TPadd_linktree($scripturl.'?cat='. $parent['shortname'], $parent['name']);
+
+					TPadd_linktree($scripturl.'?page='. (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']), $context['TPortal']['article']['subject']);
+				}
+
+				$context['page_title'] = $context['forum_name'] . ' - '. $context['TPortal']['article']['subject'];
+
+				if (WIRELESS)
+				{
+					$context['TPortal']['single_article'] = true;
+					loadtemplate('TPwireless');
+					// decide what subtemplate
+					$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_page';
+				}
+
 			}
+			if(allowedTo('tp_articles'))
+			{
+				$now = time();
+				if((!empty($article['pub_start']) && $article['pub_start'] > $now) || (!empty($article['pub_end']) && $article['pub_end'] < $now))
+				{
+					$context['tportal']['article_expired'] = $article['id'];
+					$context['TPortal']['tperror'] = '<span class="error largetext">'.$txt['tp-expired-start'] . '</span><p>'. timeformat($article['pub_start']) . '&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;' . timeformat($article['pub_end']).'</p>';
+				}
+			}
+			return $article['id'];
 		}
 		else
-			tp_fatal_error($txt['tp-notexist']);
+			$article_error = true;
 	}
 	else
 		return;
@@ -1022,233 +1020,228 @@ function doTPcat()
 	{
 		$cat = tp_sanitize($_GET['cat']);
 		$catid = is_numeric($cat) ? 'id = {int:cat}' : 'value8 = {string:cat}';
-		if(!empty($cat))
+
+		// get the category first
+		$request =  $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_variables
+			WHERE '. $catid .' LIMIT 1',
+			array('cat' => $cat)
+		);
+		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			// get the category first
-			$request =  $smcFunc['db_query']('', '
-				SELECT * FROM {db_prefix}tp_variables 
-				WHERE '. $catid .' LIMIT 1',
-				array('cat' => $cat)
-			);
-			if($smcFunc['db_num_rows']($request) > 0)
+			$category = $smcFunc['db_fetch_assoc']($request);
+			$smcFunc['db_free_result']($request);
+			// check permission
+			if(get_perm($category['value3']))
 			{
-				$category = $smcFunc['db_fetch_assoc']($request);
-				$smcFunc['db_free_result']($request);
-				// check permission
-				if(get_perm($category['value3']))
+				// get the sorting from the category
+				$op = explode('|', $category['value7']);
+				$options = array();
+				foreach($op as $po => $val)
 				{
-					// get the sorting from the category
-					$op = explode('|', $category['value7']);
-					$options = array();
-					foreach($op as $po => $val)
-					{
-						$a = explode('=', $val);
-						if(isset($a[1]))
-							$options[$a[0]] = $a[1];
-					}
-					$catsort = isset($options['sort']) ? $options['sort'] : 'date';
-					if($catsort == 'authorID')
-						$catsort = 'author_id';
-					
-					$catsort_order = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
-					$max = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
-					$start = $context['TPortal']['mystart'];
+					$a = explode('=', $val);
+					if(isset($a[1]))
+						$options[$a[0]] = $a[1];
+				}
+				$catsort = isset($options['sort']) ? $options['sort'] : 'date';
+				if($catsort == 'authorID')
+					$catsort = 'author_id';
 
-					// some swapping to avoid compability issues
-					$options['catlayout'] = isset($options['catlayout']) ? $options['catlayout'] : 1;
-					
-					// make the template
-					if($options['catlayout'] == 7)
-						$context['TPortal']['frontpage_template'] = $category['value9'];
+				$catsort_order = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
+				$max = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
+				$start = $context['TPortal']['mystart'];
 
-					// allowed and all is well, go on with it.
-					$context['TPortal']['category'] = $category;
-					$context['TPortal']['category']['articles'] = array();
+				// some swapping to avoid compability issues
+				$options['catlayout'] = isset($options['catlayout']) ? $options['catlayout'] : 1;
 
-					// copy over the options as well
-					$context['TPortal']['category']['options'] = $options;
+				// make the template
+				if($options['catlayout'] == 7)
+					$context['TPortal']['frontpage_template'] = $category['value9'];
 
-					// set bars on/off according to options, setting override
-					$all = array('centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-					for($p = 0; $p < 5; $p++)
-					{
-						if(isset($options[$all[$p]]) && $context['TPortal'][$all[$p]] == 1)
-							$context['TPortal'][$all[$p]] = 1;
-						else
-							$context['TPortal'][$all[$p]] = 0;
-					}
+				// allowed and all is well, go on with it.
+				$context['TPortal']['category'] = $category;
+				$context['TPortal']['category']['articles'] = array();
 
-					// fallback value
-					if(!isset($context['TPortal']['category']['options']['catlayout']))
-						$context['TPortal']['category']['options']['catlayout'] = 1;
-					$now = time();
-					$request =  $smcFunc['db_query']('', '
-						SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-							art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
-							art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
-							art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type, art.global_tag,
-							IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-							IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
-						FROM {db_prefix}tp_articles AS art
-						LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member) 
-						LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
-						WHERE art.category = {int:cat} 
-						AND ((art.pub_start = 0 AND art.pub_end = 0) 
-						OR (art.pub_start !=0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-						OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-						OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
-						AND art.off = 0 
-						AND art.approved = 1 
-						ORDER BY art.sticky desc, art.'.$catsort.' '.$catsort_order.'
-						LIMIT {int:start}, {int:max}',
-						array(
-							'cat' => $category['id'],
-							'start' => $start,
-							'max' => $max,
-						)
-					);
-					
-					if($smcFunc['db_num_rows']($request) > 0)
-					{
-						$total = $smcFunc['db_num_rows']($request); 
-						$col1 = ceil($total / 2);
-						$col2 = $total - $col1;
-						$counter = 0;
-						$context['TPortal']['category']['col1'] = array(); $context['TPortal']['category']['col2'] = array();
-						while($row = $smcFunc['db_fetch_assoc']($request))
-						{
-							// Add the rating together
-							$row['rating'] = array_sum(explode(',', $row['rating']));
-							// expand the vislaoptions
-							$row['visual_options'] = explode(',', $row['options']);
-							$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
-							
-							if($counter == 0)
-								$context['TPortal']['category']['featured'] = $row;
-							elseif($counter < $col1 )
-								$context['TPortal']['category']['col1'][] = $row;
-							elseif($counter > $col1 || $counter == $col1)
-								$context['TPortal']['category']['col2'][] = $row;
+				// copy over the options as well
+				$context['TPortal']['category']['options'] = $options;
 
-							$counter++;						
-						}
-						$smcFunc['db_free_result']($request);
-					}
-					
-					// any children then?
-					$allcats = array();
-					$context['TPortal']['category']['children'] = array();
-					$request =  $smcFunc['db_query']('', '
-						SELECT cat.*, COUNT(art.id) as articlecount
-						FROM ({db_prefix}tp_variables as cat)
-						LEFT JOIN {db_prefix}tp_articles as art ON (art.category = cat.id)
-						WHERE cat.type = {string:type} GROUP BY art.category',
-						array('type' => 'category')
-					);
-					if($smcFunc['db_num_rows']($request) > 0)
-					{
-						while($row = $smcFunc['db_fetch_assoc']($request))
-						{
-							// get any children
-							if($row['value2'] == $cat)
-								$context['TPortal']['category']['children'][] = $row;
-							
-							$allcats[$row['id']] = $row;
-						}
-						$smcFunc['db_free_result']($request);
-					}
-					
-					// get how many articles in all
-					$request =  $smcFunc['db_query']('', '
-						SELECT COUNT(*) FROM {db_prefix}tp_articles as art 
-						WHERE art.category = {int:cat} 
-						AND ((art.pub_start = 0 AND art.pub_end = 0) 
-						OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-						OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-						OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
-						AND art.off = 0 AND art.approved = 1',
-						array('cat' => $category['id'])
-					);
-					if($smcFunc['db_num_rows']($request)>0)
-					{
-						$row = $smcFunc['db_fetch_row']($request);
-						$all_articles = $row[0];
-					}
+				// set bars on/off according to options, setting override
+				$all = array('centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
+				for($p = 0; $p < 5; $p++)
+				{
+					if(isset($options[$all[$p]]) && $context['TPortal'][$all[$p]] == 1)
+						$context['TPortal'][$all[$p]] = 1;
 					else
-						$all_articles = 0;
+						$context['TPortal'][$all[$p]] = 0;
+				}
 
-					// make the pageindex!
-					$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?cat=' . $cat, $start, $all_articles, $max);
+				// fallback value
+				if(!isset($context['TPortal']['category']['options']['catlayout']))
+					$context['TPortal']['category']['options']['catlayout'] = 1;
+				$now = time();
+				$request =  $smcFunc['db_query']('', '
+					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
+						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
+						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
+						art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type, art.global_tag,
+						IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
+						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+					FROM {db_prefix}tp_articles AS art
+					LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
+					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
+					WHERE art.category = {int:cat}
+					AND ((art.pub_start = 0 AND art.pub_end = 0)
+					OR (art.pub_start !=0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
+					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
+					OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+					AND art.off = 0
+					AND art.approved = 1
+					ORDER BY art.sticky desc, art.'.$catsort.' '.$catsort_order.'
+					LIMIT {int:start}, {int:max}',
+					array(
+						'cat' => $category['id'],
+						'start' => $start,
+						'max' => $max,
+					)
+				);
 
-					// setup the linkree
-					TPstrip_linktree();
-
-					// do the category have any parents?
-					$parents = array();
-					$parent = $context['TPortal']['category']['value2'];
-					// save the immediate for wireless
-					
-					if(WIRELESS)
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					$total = $smcFunc['db_num_rows']($request);
+					$col1 = ceil($total / 2);
+					$col2 = $total - $col1;
+					$counter = 0;
+					$context['TPortal']['category']['col1'] = array(); $context['TPortal']['category']['col2'] = array();
+					while($row = $smcFunc['db_fetch_assoc']($request))
 					{
-						if($context['TPortal']['category']['value2'] > 0)
-							$context['TPortal']['category']['catname'] =  $allcats[$context['TPortal']['category']['value2']]['value1'];
-						else
-							$context['TPortal']['category']['catname'] =  $txt['tp-frontpage'];
-					}
-					while($parent != 0)
-					{
-						$parents[] = array(
-							'id' => $allcats[$parent],
-							'name' => $allcats[$parent]['value1'],
-							'shortname' => !empty($allcats[$parent]['value8']) ? $allcats[$parent]['value8'] : $allcats[$parent]['id'],
-						);
-						$parent = $allcats[$parent]['value2'];
-					}
+						// Add the rating together
+						$row['rating'] = array_sum(explode(',', $row['rating']));
+						// expand the vislaoptions
+						$row['visual_options'] = explode(',', $row['options']);
+						$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
-					// make the linktree
-					$parts = array_reverse($parents, TRUE);
-					// add to the linktree
-					foreach($parts as $parent)
-						TPadd_linktree($scripturl.'?cat='. $parent['shortname'] , $parent['name']);
-					if(!empty($context['TPortal']['category']['shortname']))
-						TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['value8'], $context['TPortal']['category']['value1']);
-					else
-						TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['id'], $context['TPortal']['category']['value1']);
+						if($counter == 0)
+							$context['TPortal']['category']['featured'] = $row;
+						elseif($counter < $col1 )
+							$context['TPortal']['category']['col1'][] = $row;
+						elseif($counter > $col1 || $counter == $col1)
+							$context['TPortal']['category']['col2'][] = $row;
 
-					// check clist
-					$context['TPortal']['clist'] = array();
-					foreach(explode(',' , $context['TPortal']['cat_list']) as $cl => $value)
-					{
-						if(isset($allcats[$value]) && is_numeric($value))
-						{
-							$context['TPortal']['clist'][] = array(
-									'id' => $value,
-									'name' => $allcats[$value]['value1'],
-									'selected' => $value == $cat ? true : false,
-									);
-							$txt['catlist'. $value] = $allcats[$value]['value1'];
-						}
+						$counter++;
 					}
-					$context['TPortal']['show_catlist'] = sizeof($context['TPortal']['clist']) > 0 ? true : false;
-				
-					if (WIRELESS)
+					$smcFunc['db_free_result']($request);
+				}
+
+				// any children then?
+				$allcats = array();
+				$context['TPortal']['category']['children'] = array();
+				$request =  $smcFunc['db_query']('', '
+					SELECT cat.*, COUNT(art.id) as articlecount
+					FROM ({db_prefix}tp_variables as cat)
+					LEFT JOIN {db_prefix}tp_articles as art ON (art.category = cat.id)
+					WHERE cat.type = {string:type} GROUP BY art.category',
+					array('type' => 'category')
+				);
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					while($row = $smcFunc['db_fetch_assoc']($request))
 					{
-						$context['TPortal']['single_article'] = false;
-						loadtemplate('TPwireless');
-						// decide what subtemplate
-						$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_cat';
+						// get any children
+						if($row['value2'] == $cat)
+							$context['TPortal']['category']['children'][] = $row;
+
+						$allcats[$row['id']] = $row;
 					}
-					return $category['id'];
+					$smcFunc['db_free_result']($request);
+				}
+
+				// get how many articles in all
+				$request =  $smcFunc['db_query']('', '
+					SELECT COUNT(*) FROM {db_prefix}tp_articles as art
+					WHERE art.category = {int:cat}
+					AND ((art.pub_start = 0 AND art.pub_end = 0)
+					OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
+					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
+					OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+					AND art.off = 0 AND art.approved = 1',
+					array('cat' => $category['id'])
+				);
+				if($smcFunc['db_num_rows']($request)>0)
+				{
+					$row = $smcFunc['db_fetch_row']($request);
+					$all_articles = $row[0];
 				}
 				else
-					return;
+					$all_articles = 0;
+
+				// make the pageindex!
+				$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?cat=' . $cat, $start, $all_articles, $max);
+
+				// setup the linkree
+				TPstrip_linktree();
+
+				// do the category have any parents?
+				$parents = array();
+				$parent = $context['TPortal']['category']['value2'];
+				// save the immediate for wireless
+
+				if(WIRELESS)
+				{
+					if($context['TPortal']['category']['value2'] > 0)
+						$context['TPortal']['category']['catname'] =  $allcats[$context['TPortal']['category']['value2']]['value1'];
+					else
+						$context['TPortal']['category']['catname'] =  $txt['tp-frontpage'];
+				}
+				while($parent != 0)
+				{
+					$parents[] = array(
+						'id' => $allcats[$parent],
+						'name' => $allcats[$parent]['value1'],
+						'shortname' => !empty($allcats[$parent]['value8']) ? $allcats[$parent]['value8'] : $allcats[$parent]['id'],
+					);
+					$parent = $allcats[$parent]['value2'];
+				}
+
+				// make the linktree
+				$parts = array_reverse($parents, TRUE);
+				// add to the linktree
+				foreach($parts as $parent)
+					TPadd_linktree($scripturl.'?cat='. $parent['shortname'] , $parent['name']);
+				if(!empty($context['TPortal']['category']['shortname']))
+					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['value8'], $context['TPortal']['category']['value1']);
+				else
+					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['id'], $context['TPortal']['category']['value1']);
+
+				// check clist
+				$context['TPortal']['clist'] = array();
+				foreach(explode(',' , $context['TPortal']['cat_list']) as $cl => $value)
+				{
+					if(isset($allcats[$value]) && is_numeric($value))
+					{
+						$context['TPortal']['clist'][] = array(
+								'id' => $value,
+								'name' => $allcats[$value]['value1'],
+								'selected' => $value == $cat ? true : false,
+								);
+						$txt['catlist'. $value] = $allcats[$value]['value1'];
+					}
+				}
+				$context['TPortal']['show_catlist'] = sizeof($context['TPortal']['clist']) > 0 ? true : false;
+
+				if (WIRELESS)
+				{
+					$context['TPortal']['single_article'] = false;
+					loadtemplate('TPwireless');
+					// decide what subtemplate
+					$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_cat';
+				}
+				return $category['id'];
 			}
 			else
 				return;
-		
 		}
 		else
-			return;
+			$article_error = true;
 	}
 	else
 		return;
@@ -2062,7 +2055,7 @@ function doTPfrontpage()
 // do the blocks
 function doTPblocks()
 {
-	global $context, $scripturl,$txt , $user_info, $smcFunc, $modSettings;
+	global $context, $scripturl, $user_info, $smcFunc, $modSettings;
 
 	// setup the containers
 	$blocks = array('left' => '', 'right' => '', 'center' => '', 'front' => '', 'bottom' => '', 'top' => '' , 'lower' => '');
@@ -2078,21 +2071,6 @@ function doTPblocks()
 		$sqlarray[] = 'actio=' . preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
 		if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2')))
 			$sqlarray[] = 'actio=forumall';
-	}
-	// page?
-	if(!empty($_GET['page']))
-	{
-		if(!empty($context['shortID']))
-			$sqlarray[] = 'tpage=' . $context['shortID'];
-		else
-			$sqlarray[] = 'tpage=' . $_GET['page'];
-	}
-	if(!empty($_GET['cat']) && !isset($_GET['action']))
-	{
-		if(!empty($context['catshortID']))
-			$sqlarray[] = 'tpcat=' . $context['catshortID'];
-		else
-			$sqlarray[] = 'tpcat=' . $_GET['cat'];
 	}
 	if(!empty($_GET['board']))
 	{
@@ -2111,45 +2089,50 @@ function doTPblocks()
 	if(!empty($_GET['dl']))
 	{
 		if(substr($_GET['dl'], 0, 3) == 'cat')
-			$sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
+			$down = true;
 	}
-	if(isset($_GET['shout']))
-	{
-		$sqlarray[] = 'tpmod=shout';
-	}
+
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))
-		$sqlarray[] = 'actio=frontpage';
-	
+		$front = true;
+
 	$sqlarray[] = 'actio=allpages';
 
-	// any languages, but only if the option is set
-	if(!empty($context['TPortal']['uselangoption']))
-		$lang = 'AND FIND_IN_SET(\'tlang='.$user_info['language'].'\', access2)';
-	else
-		$lang = '';
-	
 	// set the location access
-	$access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
+	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
 
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
-	
+
 	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
 
 	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
 		$access = '1';
-	
+
 	// get the blocks
 	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_blocks 
-		WHERE off = {int:off} 
+		SELECT * FROM {db_prefix}tp_blocks
+		WHERE off = {int:off}
 		AND bar != {int:bar}
-		AND ' . $access2 . '
+		AND (' . (!empty($_GET['page']) ? 'FIND_IN_SET({string:page}, access2) OR ' : '') . '
+		' . (!empty($_GET['cat']) ? 'FIND_IN_SET({string:cat}, access2) OR ' : '') . '
+		' . (!empty($_GET['shout']) ? 'FIND_IN_SET({string:shout}, access2) OR ' : '') . '
+		' . (!empty($front) ? 'FIND_IN_SET({string:front}, access2) OR ' : '') . '
+		' . (!empty($down) ? 'FIND_IN_SET({string:down}, access2) OR ' : '') . '
+		' . (!empty($context['TPortal']['uselangoption']) ? 'FIND_IN_SET({string:lang}, access2) OR ' : '') . '
+		' . $access2 . ')
 		AND ' . $access . '
-		' . $lang . '
 		ORDER BY bar, pos, id ASC',
-		array('off' => 0, 'bar' => 4)
+		array(
+			'off' => 0,
+			'bar' => 4,
+			'lang' => 'tlang=' . $user_info['language'],
+			'page' => !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '',
+			'cat' => !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '',
+			'front' => 'actio=frontpage',
+			'down' => (!empty($down) ? 'dlcat=' . substr($_GET['dl'], 3) : ''),
+			'shout' => 'tpmod=shout',
+		)
 	);
 
 	$context['TPortal']['hide_frontbar_forum'] = 0;
