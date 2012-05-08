@@ -404,13 +404,6 @@ function setupTPsettings()
 			$smcFunc['db_free_result']($request);
 		}
 	}
-	// Set the page title.
-	$context['page_title'] = $context['forum_name'];
-	if(!empty($context['TPortal']['frontpage_title']))
-		$context['page_title'] = $context['TPortal']['frontpage_title'];
-
-	if(isset($_GET['action']) && $_GET['action'] == 'tpadmin')
-		$context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
 
 	// start of things
 	$context['TPortal']['mystart'] = 0;
@@ -440,6 +433,12 @@ function setupTPsettings()
 		$context['TPortal']['is_front'] = true;
 		$context['TPortal']['is_frontpage'] = true;
 	}
+
+	// Set the page title.
+	if($context['TPortal']['is_front'] && !empty($context['TPortal']['frontpage_title']))
+		$context['page_title'] = $context['TPortal']['frontpage_title'];
+	if(isset($_GET['action']) && $_GET['action'] == 'tpadmin')
+		$context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
 
 	// emergency - don't render any blocks :)
 	$noblocks = isset($_GET['noblocks']) ? true : false;
@@ -978,7 +977,7 @@ function doTPpage()
 					TPadd_linktree($scripturl.'?page='. (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']), $context['TPortal']['article']['subject']);
 				}
 
-				$context['page_title'] = $context['forum_name'] . ' - '. $context['TPortal']['article']['subject'];
+				$context['page_title'] = $context['TPortal']['article']['subject'];
 
 				if (WIRELESS)
 				{
@@ -1235,6 +1234,7 @@ function doTPcat()
 					// decide what subtemplate
 					$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_cat';
 				}
+				$context['page_title'] = $context['TPortal']['category']['value1'];
 				return $category['id'];
 			}
 			else
