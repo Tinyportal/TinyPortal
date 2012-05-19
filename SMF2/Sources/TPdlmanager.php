@@ -969,7 +969,7 @@ function TPortalDLManager()
 			$rows2 = $row[0];
 
 			$request = $smcFunc['db_query']('', '
-				SELECT dl.id, LEFT(dl.description, 200) as ingress,dl.name, dl.category, dl.file, 
+				SELECT dl.id, LEFT(dl.description, 400) as ingress,dl.name, dl.category, dl.file, 
 					dl.downloads, dl.views, dl.link, dl.created, dl.last_access, 
 					dl.author_id as authorID, dl.icon, dl.screenshot, dl.filesize, mem.real_name as realName 
 				FROM {db_prefix}tp_dlmanager as dl
