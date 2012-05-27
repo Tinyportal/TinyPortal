@@ -83,7 +83,39 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 
                         current_header_bbc = mode;
                 }
-        // ]]></script>';
+        // ]]></script>
+		<script type="text/javascript"><!-- // --><![CDATA[
+			function TPupdateShouts(action, shoutId)
+			{
+				var param = action;
+				if (param == "save")
+				{
+					var name = $("#tp-shout-name").val();
+					var shout = $("#tp_shout").val();
+					$("#tp_shout").val("");
+					param = param + ";tp-shout-name="+name+";tp_shout="+shout;
+				}
+				if (shoutId)
+					param = param + ";s=" + shoutId;
+				$.ajax({
+					type : "GET",
+					dataType: "html",
+					data: {'.$context['session_var'].': "'.$context['session_id'].'"},
+					url: "' . $scripturl. '?action=tpmod;shout=" + param,
+					beforeSend: function() {
+						$("#tp_loader").show();
+					},
+					complete: function(){
+						$("#tp_loader").hide();
+					},					
+					success: function(data) {
+						shoutHtml = $(".tp_shoutframe", $(data)).html();
+						$(".tp_shoutframe").html(shoutHtml);
+					}
+				});
+			}
+
+		// ]]></script>';
 
 	if(file_exists($settings['theme_dir'].'/TPShout.css'))
 		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/TPShout.css?fin20" />';
@@ -95,12 +127,12 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 		<style type="text/css">
 
 		#marqueecontainer{
-		position: relative;
-		width: 95%; /*marquee width */
-		height: '. $context['TPortal']['shoutbox_height'] . 'px; /*marquee height */
-		overflow: hidden;
-		padding: 2px;
-		padding-left: 4px;
+			position: relative;
+			width: 95%; /*marquee width */
+			height: '. $context['TPortal']['shoutbox_height'] . 'px; /*marquee height */
+			overflow: hidden;
+			padding: 2px;
+			padding-left: 4px;
 		}
 
 		</style>
@@ -158,8 +190,16 @@ if(isset($_GET['shout']))
 {
 	if($_GET['shout'] == 'admin')
 		tpshout_admin();
-	elseif($_GET['shout'] == 'save' && !isset($_POST['tp-shout-url']))
-		redirectexit();
+	elseif($_GET['shout'] == 'del')
+	{
+		deleteShout();
+		tpshout_bigscreen(false);
+	}
+	elseif($_GET['shout'] == 'save')
+	{
+		postShout();
+		tpshout_bigscreen(false);
+	}
 	else
 	{
 		$number = substr($_GET['shout'], 4);
@@ -169,17 +209,23 @@ if(isset($_GET['shout']))
 	}
 }
 
-// we got a shout!
-if(isset($_POST['tp-shout-url']))
+
+// Post the shout via ajax
+function postShout()
 {
-	 if(isset($_POST['tp_shout']))
-	 {
+	global $context, $smcFunc, $user_info;
+	
+	if(isset($_GET['tp_shout']))
+	{
 		// Check the session id.
-		checkSession('post');
+		checkSession('get');
 		
-		$oldshout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, 300));
+		if(empty($_GET['tp-shout-name']) || $user_info['is_guest'] && !$context['TPortal']['guest_shout'])
+			return;
+			
+		$oldshout = $smcFunc['htmlspecialchars'](substr($_GET['tp_shout'], 0, 300));
 		$shout = $oldshout;
-		
+
 		// collect the color for shoutbox
 		$request= $smcFunc['db_query']('', '
 			SELECT grp.online_color as onlineColor
@@ -194,34 +240,47 @@ if(isset($_POST['tp-shout-url']))
 			$context['TPortal']['usercolor'] = $row[0];
 			$smcFunc['db_free_result']($request);
 		}
-        if(empty($_POST['tp-shout-name']) || $user_info['is_guest'] && !$context['TPortal']['guest_shout'])
-            redirectexit(strip_tags($_POST['tp-shout-url']), false, true);
 
-        // Build the name with color for user, otherwise strip guests name of html tags.
-        $shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_POST['tp-shout-name']);
-        if(!empty($context['TPortal']['usercolor']))
-            $shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
-        $shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
-        
-        $shout_time = time();
-        
-        // register the IP and userID, if any
-        $ip = $user_info['ip'];
-        $memID = $user_info['id'];
-        
-        if($shout != '')
-            $smcFunc['db_insert']('INSERT',
+
+		// Build the name with color for user, otherwise strip guests name of html tags.
+		$shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_GET['tp-shout-name']);
+		if(!empty($context['TPortal']['usercolor']))
+			$shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
+		$shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
+
+		$shout_time = time();
+
+		// register the IP and userID, if any
+		$ip = $user_info['ip'];
+		$memID = $user_info['id'];
+
+		if($shout != '')
+			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_shoutbox',
 				array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string','value4' => 'string', 'value5' => 'int'),
-                array($shout, $shout_time, $shout_name, 'shoutbox', $ip, $memID),
+				array($shout, $shout_time, $shout_name, 'shoutbox', $ip, $memID),
 				array('id')
 			);
-    }
-	// if using mod rewrite, go to forum
-	if(!empty($modSettings['queryless_urls']))
-		redirectexit('action=forum');
-	else
-		redirectexit(strip_tags($_POST['tp-shout-url']), false, true);
+	}
+}
+
+// This is to delete a shout via ajax
+function deleteShout()
+{
+	global $context, $smcFunc;
+
+	// A copule of security checks
+	checkSession('get');
+	isAllowedTo('tp_can_admin_shout');
+
+	if(!empty($_GET['s']))
+	{
+		$smcFunc['db_query']('', '
+			DELETE FROM {db_prefix}tp_shoutbox
+			WHERE id = {int:id}',
+			array('id' => (int) $_GET['s'])
+		);
+	}
 }
 
 function tpshout_admin()
@@ -562,7 +621,6 @@ function tpshout_admin()
 }
 function tpshout_bigscreen($state, $number = 10)
 {
-
 	global $context;
 	
 	loadtemplate('TPShout');
@@ -616,7 +674,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 	);
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
-		$nshouts = $txt['tp-last'].' '.$limit.' '.$txt['tp-shouts'].'<br /><br /><div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
+		$nshouts = '<div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
 		$ns = array();
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{

@@ -31,7 +31,7 @@ function TPortal_init()
 	$context['TPortal'] = array();
 	$context['TPortal']['now'] = time();
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
-	
+
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
 		return;
