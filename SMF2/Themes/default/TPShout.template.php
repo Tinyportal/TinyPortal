@@ -164,13 +164,13 @@ function template_tpshout_admin_settings()
 					<td align="right">'.$txt['tp-shoutboxusescroll'].'</td>
 					<td>
 						<input name="tp_shoutbox_usescroll" type="radio" value="0" ' , $context['TPortal']['shoutbox_usescroll'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br />
-						<input name="tp_shoutbox_usescroll" type="radio" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-marquee'].'
+						<input name="tp_shoutbox_usescroll" type="radio" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
 					</td>
 				</tr>
 				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-shoutboxduration'].'</td>
 					<td>
-						<input type="text" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" /> ms
+						<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" />
 					</td>
 				</tr>
 
@@ -210,10 +210,11 @@ function template_tpshout_shoutblock()
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
 
-	if($context['TPortal']['shoutbox_usescroll']>'0')
-		echo '<div id="marqueecontainer" onmouseover="copyspeed=pausespeed" onmouseout="copyspeed=marqueespeed">
-				<div id="vmarquee" class="middletext" style="text-align: left;position: absolute; width: 98%;">'.$context['TPortal']['shoutbox'].'</div>
-			</div>';
+	if($context['TPortal']['shoutbox_usescroll'] > '0')
+		echo '
+		<marquee id="tp_marquee" behavior="scroll" direction="down" scrollamount="'. $context['TPortal']['shoutbox_scrollduration'] . '" height="'. $context['TPortal']['shoutbox_height'] . '">
+			<div class="tp_shoutframe">'.$context['TPortal']['shoutbox'].'</div>
+		</marquee>';
 	else
 		echo '
 	<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
