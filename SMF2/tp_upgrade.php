@@ -518,6 +518,7 @@ $settings_array = array(
     'guest_shout' => '0',
     'shoutbox_usescroll' => '0',
     'shoutbox_scrollduration' => '2000',
+	'shoutbox_refresh' => '0',
     'shoutbox_scrolldelay' => '1000',
     'shoutbox_scrolldirection' => 'vert',
     'shoutbox_scrolleasing' => 'Cubic',

@@ -30,12 +30,15 @@ $txt['tp-shoutboxheader'] = 'Managing Shoutbox';
 $txt['tp-shoutboxhelp'] = 'Help';
 $txt['tp-shoutboxdescription'] = '';
 $txt['tp-shoutboxduration'] = 'Speed for the scrolling (1 - 5)';
+$txt['tp-shout-autorefresh'] = 'Auto refresh (in seconds)<br /><h6 style="color: #CC0000;">Setting this too low can eat server resources</h6>';
 
 $txt['permissiongroup_tpshout'] = 'TP Shoutbox';
 $txt['permissiongroup_tpshoutbox'] = 'TP Shoutbox';
 $txt['permissiongroup_simple_tpshout'] = 'Manage Shoutbox';
 $txt['permissionname_tp_can_admin_shout'] = 'Manage Shoutbox';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows you to manage shouts.';
+$txt['permissionname_tp_can_shout'] = 'Can Post Shouts';
+$txt['permissionhelp_tp_can_shout'] = 'Allows a person to post in the shoutbox.';
 $txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage shouts.';
 $txt['tp-showlatest'] = 'Show 50 latest';
 $txt['by'] = 'by';
