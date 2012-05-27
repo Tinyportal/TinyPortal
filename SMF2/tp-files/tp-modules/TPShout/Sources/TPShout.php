@@ -84,7 +84,13 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
                         current_header_bbc = mode;
                 }
         // ]]></script>
-		<script type="text/javascript"><!-- // --><![CDATA[
+		<script type="text/javascript"><!-- // --><![CDATA[';
+		
+		if(!empty($context['TPortal']['shoutbox_refresh']))
+			$context['html_headers'] .= '
+			window.setInterval("TPupdateShouts(\'show\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');';
+			
+		$context['html_headers'] .= '
 			function TPupdateShouts(action, shoutId)
 			{
 				var param = action;
@@ -164,13 +170,12 @@ function postShout()
 {
 	global $context, $smcFunc, $user_info, $scripturl;
 	
-	if(isset($_GET['tp_shout']))
+	isAllowedTo('tp_can_shout');
+	
+	if(!empty($_GET['tp_shout']) && !empty($_GET['tp-shout-name']))
 	{
 		// Check the session id.
 		checkSession('get');
-		
-		if(empty($_GET['tp-shout-name']) || $user_info['is_guest'] && !$context['TPortal']['guest_shout'])
-			return;
 			
 		$oldshout = $smcFunc['htmlspecialchars'](substr($_GET['tp_shout'], 0, 300));
 		$shout = $oldshout;
@@ -334,7 +339,16 @@ function tpshout_admin()
 				);
 				$go = 1;
 			}
-
+			elseif($what == 'tp_shoutbox_refresh')
+			{
+			 	$smcFunc['db_query']('', '
+		 			UPDATE {db_prefix}tp_settings 
+				 	SET value = '. $value .' 
+				 	WHERE name = {string:name}',
+			 		array('name' => 'shoutbox_refresh')
+				);
+				$go = 1;
+			}
 			// from shoutbox
 			elseif($what == 'tp_showshouts')
 			{
@@ -374,15 +388,6 @@ function tpshout_admin()
 					array('type' => 'shoutbox')
 				);
 				$go = 2;
-			}
-			elseif($what == 'tp_guest_shout')
-			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'guest_shout')
-				);
 			}
 		}
 		if($go == 1)

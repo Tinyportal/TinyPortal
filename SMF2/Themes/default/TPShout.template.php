@@ -136,13 +136,6 @@ function template_tpshout_admin_settings()
 					<td class="tborder" style="padding: 0; border: none;">
 				<table class="multiplerow">
 				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-allowguestshout'].'</td>
-					<td>
-						<input name="tp_guest_shout" type="radio" value="1" ' , $context['TPortal']['guest_shout']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-						<input name="tp_guest_shout" type="radio" value="0" ' , $context['TPortal']['guest_shout']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'
-					</td>
-				</tr>
-				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-shoutbox_showsmile'].'</td>
 					<td>
 						<input name="tp_shoutbox_smile" type="radio" value="1" ' , $context['TPortal']['show_shoutbox_smile']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
@@ -173,10 +166,13 @@ function template_tpshout_admin_settings()
 						<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" />
 					</td>
 				</tr>
-
 				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-shoutboxlimit'].'</td>
 					<td><input size="6" name="tp_shoutbox_limit" type="text" value="' ,$context['TPortal']['shoutbox_limit'], '" /></td>
+				</tr>
+				<tr class="windowbg2">
+					<td align="right">'.$txt['tp-shout-autorefresh'].'</td>
+					<td><input size="6" name="tp_shoutbox_refresh" type="text" value="' ,$context['TPortal']['shoutbox_refresh'], '" /></td>
 				</tr>
 				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-show_profile_shouts'].'</td>
@@ -229,7 +225,7 @@ function template_tpshout_shoutblock()
 	echo '
 		<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >';
 
-	if(($context['TPortal']['guest_shout']) || (!$context['TPortal']['guest_shout'] && !$context['user']['is_guest']))
+	if(allowedTo('tp_can_shout'))
 	{
 		echo '
 		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 80%;margin-top: 1ex; height: 50px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
@@ -251,7 +247,7 @@ function template_tpshout_shoutblock()
 		
 	}
 	
-	if($context['user']['is_guest'] && $context['TPortal']['guest_shout'])
+	if($context['user']['is_guest'] && allowedTo('tp_can_shout'))
 		echo '<br />
 		<input style="margin-top: 4px;" id="tp-shout-name" size="20" class="smalltext" type="text" name="tp-shout-name" value="'.$txt['tp-guest'].'" />';
 	elseif($context['user']['is_logged'])
