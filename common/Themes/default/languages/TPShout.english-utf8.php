@@ -29,12 +29,7 @@ $txt['tp-show_profile_shouts'] = 'Hide shouts in the profile?';
 $txt['tp-shoutboxheader'] = 'Managing Shoutbox';
 $txt['tp-shoutboxhelp'] = 'Help';
 $txt['tp-shoutboxdescription'] = '';
-$txt['tp-shoutboxduration'] = 'Duration for the scrolling ( 500-6000 ms)';
-$txt['tp-shoutboxdelay'] = 'Delay between shouts for the scrolling ( 500-6000 ms)';
-$txt['tp-shoutboxdirection'] = 'Direction of scrolling';
-$txt['tp-shoutboxeasing'] = 'Scrolling effect';
-$txt['tp-scrollvert'] = 'Vertically';
-$txt['tp-scrollhoriz'] = 'Horisontally';
+$txt['tp-shoutboxduration'] = 'Speed for the scrolling (1 - 5)';
 
 $txt['permissiongroup_tpshout'] = 'TP Shoutbox';
 $txt['permissiongroup_tpshoutbox'] = 'TP Shoutbox';
@@ -43,8 +38,6 @@ $txt['permissionname_tp_can_admin_shout'] = 'Manage Shoutbox';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows you to manage shouts.';
 $txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage shouts.';
 $txt['tp-showlatest'] = 'Show 50 latest';
-$txt['tp-mootools'] = 'Yes, use Mootools version';
-$txt['tp-marquee'] = 'Yes, use marquee(from TP v0.9)';
 $txt['by'] = 'by';
 
 $txt['tp-allshouts'] = 'Show all shouts';

@@ -122,69 +122,18 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 	else
 		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/TPShout.css?fin20" />';
 	
-	if($context['TPortal']['shoutbox_usescroll']>0)
+	if($context['TPortal']['shoutbox_usescroll'] > 0)
 		$context['html_headers'] .= '
-		<style type="text/css">
-
-		#marqueecontainer{
-			position: relative;
-			width: 95%; /*marquee width */
-			height: '. $context['TPortal']['shoutbox_height'] . 'px; /*marquee height */
-			overflow: hidden;
-			padding: 2px;
-			padding-left: 4px;
-		}
-
-		</style>
-
-		<script language="javascript" type="text/javascript">
-
-		/***********************************************
-		* Cross browser Marquee II- � Dynamic Drive (www.dynamicdrive.com)
-		* This notice MUST stay intact for legal use
-		* Visit http://www.dynamicdrive.com/ for this script and 100s more.
-		***********************************************/
-
-		var delayb4scroll=1000 //Specify initial delay before marquee starts to scroll on page (2000=2 seconds)
-		var marqueespeed=' . (!empty($context['TPortal']['shoutbox_scrollspeed']) ? $context['TPortal']['shoutbox_scrollspeed'] : '1') . '
-		var pauseit=1 //Pause marquee onMousever (0=no. 1=yes)?
-
-		////NO NEED TO EDIT BELOW THIS LINE////////////
-
-		var copyspeed=marqueespeed
-		var pausespeed=(pauseit==0)? copyspeed: 0
-		var actualheight=\'\'
-
-		function scrollmarquee(){
-		if (parseInt(cross_marquee.style.top)>(actualheight*(-1)+8))
-		cross_marquee.style.top=parseInt(cross_marquee.style.top)-copyspeed+"px"
-		else
-		cross_marquee.style.top=parseInt(marqueeheight)+8+"px"
-		}
-
-		function initializemarquee(){
-		cross_marquee=document.getElementById("vmarquee")
-		if(cross_marquee == null)
-		   return
-		cross_marquee.style.top=0
-		marqueeheight=document.getElementById("marqueecontainer").offsetHeight
-		actualheight=cross_marquee.offsetHeight
-		if (window.opera || navigator.userAgent.indexOf("Netscape/7")!=-1){ //if Opera or Netscape 7x, add scrollbars to scroll and exit
-		cross_marquee.style.height=marqueeheight+"px"
-		cross_marquee.style.overflow="scroll"
-		return
-		}
-		setTimeout(\'lefttime=setInterval("scrollmarquee()",30)\', delayb4scroll)
-		}
-
-		if (window.addEventListener)
-		window.addEventListener("load", initializemarquee, false)
-		else if (window.attachEvent)
-		window.attachEvent("onload", initializemarquee)
-		else if (document.getElementById)
-		window.onload=initializemarquee
-	</script>';
-
+		<script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("marquee").marquee("tp_marquee").mouseover(function () {
+						$(this).trigger("stop");
+					}).mouseout(function () {
+						$(this).trigger("start");
+					});					
+				});
+		</script>';
 
 if(isset($_GET['shout']))
 {
@@ -213,7 +162,7 @@ if(isset($_GET['shout']))
 // Post the shout via ajax
 function postShout()
 {
-	global $context, $smcFunc, $user_info;
+	global $context, $smcFunc, $user_info, $scripturl;
 	
 	if(isset($_GET['tp_shout']))
 	{
@@ -373,10 +322,10 @@ function tpshout_admin()
 			}
 			elseif($what == 'tp_shoutbox_scrollduration')
 			{
-				if($value > 6000)
-					$value = 6000;
-				elseif($value < 500)
-					$value = 500;
+				if($value > 5)
+					$value = 5;
+				elseif($value < 1)
+					$value = 1;
 			 	$smcFunc['db_query']('', '
 		 			UPDATE {db_prefix}tp_settings 
 				 	SET value = '. $value .' 
@@ -385,40 +334,7 @@ function tpshout_admin()
 				);
 				$go = 1;
 			}
-			elseif($what == 'tp_shoutbox_scrolldirection')
-			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = '. $value .' 
-					WHERE name = {string:name}',
-					array('name' => 'shoutbox_scrolldirection')
-				);
-				$go = 1;
-			}
-			elseif($what=='tp_shoutbox_scrolleasing')
-			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = '. $value .' 
-					WHERE name = {string:name}',
-					array('name' => 'shoutbox_scrolleasing')
-				);
-				$go = 1;
-			}
-			elseif($what == 'tp_shoutbox_scrolldelay')
-			{
-				if($value > 6000)
-					$value = 6000;
-				elseif($value < 500)
-					$value = 500;
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = '. $value .' 
-					WHERE name = {string:name}',
-					array('name' => 'shoutbox_scrolldelay')
-				);
-				$go = 1;
-			}
+
 			// from shoutbox
 			elseif($what == 'tp_showshouts')
 			{
