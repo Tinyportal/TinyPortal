@@ -48,5 +48,7 @@ $txt['tp-marquee'] = 'Yes, use marquee(from TP v0.9)';
 $txt['by'] = 'by';
 
 $txt['tp-allshouts'] = 'Show all shouts';
+$txt['tp-shout-history'] = 'History';
+$txt['tp-shout-refresh'] = 'Refresh';
 
 ?>
