@@ -20,6 +20,9 @@ if (!defined('SMF'))
 	
 global $context, $scripturl, $txt, $user_info, $settings, $smcFunc, $modSettings, $options;
 
+if(loadLanguage('TPShout') == false)
+	loadLanguage('TPShout', 'english');
+
 // set version for databse updates.
 $shoutboxversion = '101';
 
@@ -91,32 +94,35 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 			window.setInterval("TPupdateShouts(\'show\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');';
 			
 		$context['html_headers'] .= '
+			var $j = jQuery.noConflict();
 			function TPupdateShouts(action, shoutId)
 			{
+				var d = new Date();
 				var param = action;
 				if (param == "save")
 				{
-					var name = $("#tp-shout-name").val();
-					var shout = $("#tp_shout").val();
-					$("#tp_shout").val("");
+					var name = $j("#tp-shout-name").val();
+					var shout = $j("#tp_shout").val();
+					$j("#tp_shout").val("");
 					param = param + ";tp-shout-name="+name+";tp_shout="+shout;
 				}
 				if (shoutId)
 					param = param + ";s=" + shoutId;
-				$.ajax({
+				$j.ajax({
 					type : "GET",
 					dataType: "html",
+					cache: false,
 					data: {'.$context['session_var'].': "'.$context['session_id'].'"},
 					url: "' . $scripturl. '?action=tpmod;shout=" + param,
 					beforeSend: function() {
-						$("#tp_loader").show();
+						$j("#tp_loader").show();
 					},
 					complete: function(){
-						$("#tp_loader").hide();
+						$j("#tp_loader").hide();
 					},					
 					success: function(data) {
-						shoutHtml = $(".tp_shoutframe", $(data)).html();
-						$(".tp_shoutframe").html(shoutHtml);
+						shoutHtml = $j(".tp_shoutframe", $j(data)).html();
+						$j(".tp_shoutframe").html(shoutHtml);
 					}
 				});
 			}
@@ -132,11 +138,11 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 		$context['html_headers'] .= '
 		<script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				$("marquee").marquee("tp_marquee").mouseover(function () {
-						$(this).trigger("stop");
+			$j(document).ready(function(){
+				$j("marquee").marquee("tp_marquee").mouseover(function () {
+						$j(this).trigger("stop");
 					}).mouseout(function () {
-						$(this).trigger("start");
+						$j(this).trigger("start");
 					});					
 				});
 		</script>';
@@ -148,12 +154,16 @@ if(isset($_GET['shout']))
 	elseif($_GET['shout'] == 'del')
 	{
 		deleteShout();
-		tpshout_bigscreen(false);
+		tpshout_bigscreen(true);
 	}
 	elseif($_GET['shout'] == 'save')
 	{
 		postShout();
-		tpshout_bigscreen(false);
+		tpshout_bigscreen(true);
+	}
+	elseif($_GET['shout'] == 'fetch')
+	{
+		tpshout_bigscreen(true);
 	}
 	else
 	{
@@ -250,7 +260,7 @@ function tpshout_admin()
 		$tpstart = 0;
 
 	loadtemplate('TPShout');
-	loadlanguage('TPShout');
+
 	$context['template_layers'][] = 'tpadm';
 	$context['template_layers'][] = 'subtab';
 	loadlanguage('TPortalAdmin');
@@ -917,7 +927,7 @@ function tpshout_frontpage()
     global  $context;
 
 	loadtemplate('TPShout');
-	loadlanguage('TPShout');
+
 
 //	$context['sub_template'] = 'tpshout_frontpage';
 	$context['page_title'] = 'Shoutbox frontpage';
