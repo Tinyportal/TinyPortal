@@ -97,7 +97,6 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 			var $j = jQuery.noConflict();
 			function TPupdateShouts(action, shoutId)
 			{
-				var d = new Date();
 				var param = action;
 				if (param == "save")
 				{
