@@ -47,7 +47,7 @@ function template_tpshout_bigscreen()
 	echo '
 			<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
 				<tr>
-					<td><div class="smalltext" id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div></td>
+					<td><div class="tp_shoutframe smalltext" id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div></td>
 				</tr>
 			</table>';
 
@@ -242,7 +242,7 @@ function template_tpshout_shoutblock()
 		<div>
 			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 			<input onclick="TPupdateShouts(\'save\'); return false;" style="padding: 6px; margin: 5px 10px 0;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" tabindex="', $context['tabindex']++, '" />
-			<a onclick="TPupdateShouts(\'show\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+			<a onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
 		</div>';
 		
 	}

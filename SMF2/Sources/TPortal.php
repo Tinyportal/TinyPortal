@@ -45,6 +45,10 @@ function TPortal_init()
 	if(loadLanguage('TPortal') == false)
 		loadLanguage('TPortal', 'english');
 
+	// Loading jquery from google. Load it only once!
+	$context['html_headers'] .= '
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>';		
+		
 	setupTPsettings();
 	fetchTPhooks();
 	doModules();
