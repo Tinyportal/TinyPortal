@@ -2074,7 +2074,7 @@ function endElement($parser, $tagName)
 	{
 		echo '
 		<div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
-		printf("<a href='%s'>%s</a>", trim($link),$smcFunc['htmlspecialchars'](trim($title), ENT_QUOTES));
+		printf("<a target='_blank' href='%s'>%s</a>", trim($link),$smcFunc['htmlspecialchars'](trim($title), ENT_QUOTES));
 		echo '
 		</div>';
 		if(!$context['TPortal']['rss_notitles'])
