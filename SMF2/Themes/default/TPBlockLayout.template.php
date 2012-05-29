@@ -58,8 +58,10 @@ function template_tp_above()
 		echo '
 				<div id="tpcenterbarHeader" style="' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 				' , TPortal_panel('center') , '
-				</div>';	
+				</div>';
 
+	echo '
+			</div>';
 }
 
 function template_tp_below()

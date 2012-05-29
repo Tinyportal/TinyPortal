@@ -1950,9 +1950,7 @@ function article_comments($render = true)
 			<div style="padding: 1ex;" class="windowbg"><em>' . $txt['tp-cannotcomment'] . '</em></div>';
 
 		$code .= '
-			</div>
-		</div>
-	</div>';
+			</div>';
 	}
 	else
 		$code .='';
