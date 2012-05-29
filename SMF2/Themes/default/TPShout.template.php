@@ -47,7 +47,7 @@ function template_tpshout_bigscreen()
 	echo '
 			<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
 				<tr>
-					<td><div class="tp_shoutframe smalltext" id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div></td>
+					<td><div class="smalltext" id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div></td>
 				</tr>
 			</table>';
 
@@ -197,7 +197,6 @@ function template_tpshout_admin_settings()
 
 function template_tpshout_shoutblock()
 {
-
 	global $context, $scripturl, $txt, $smcFunc, $settings;
 
 	if(!isset($context['TPortal']['shoutbox']))
@@ -334,9 +333,7 @@ function template_singleshout($row)
 								<div class="smalltext">'. timeformat($row['value2']).'</div>	
 							</div> 
 							<div class="tp_shoutupper"></div>
-							<div class="tp_shoutbody">
-							' . (parse_bbc(censorText($row['value1']),true)) . '
-							</div>
+							<div class="tp_shoutbody">' . $row['value1'] . '</div>
 						</div>
 				</div>';
 
