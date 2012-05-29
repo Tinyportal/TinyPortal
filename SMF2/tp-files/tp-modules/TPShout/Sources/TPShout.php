@@ -810,14 +810,15 @@ function shout_bcc_code($collapse = true)
 
 function shout_smiley_code()
 {
-	global $context, $settings, $user_info, $txt, $modSettings;
+	global $context, $settings, $user_info, $txt, $modSettings, $db_prefix, $smcFunc;
   
 	// Initialize smiley array...
 	$context['tp_smileys'] = array(
 		'postform' => array(),
 		'popup' => array(),
 	);
-
+	// Load smileys - don't bother to run a query if we're not using the database's ones anyhow.
+	if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none')
 		$context['tp_smileys']['postform'][] = array(
 			'smileys' => array(
 				array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
@@ -839,7 +840,34 @@ function shout_smiley_code()
 			),
 			'last' => true,
 		);
+	elseif ($user_info['smiley_set'] != 'none')
+	{
+		if (($temp = cache_get_data('posting_smileys', 480)) == null)
+		{
+			$request = $smcFunc['db_query']('', '
+			  SELECT code, filename, description, smiley_row, hidden
+				FROM {db_prefix}smileys
+				WHERE hidden IN ({int:val1}, {int:val2})
+				ORDER BY smiley_row, smiley_order',
+				array('val1' => 0,
+				      'val2' => 2)
+				);
 
+		while ($row = $smcFunc['db_fetch_assoc']($request))
+			{
+				$row['code'] = htmlspecialchars($row['code']);
+				$row['filename'] = htmlspecialchars($row['filename']);
+				$row['description'] = htmlspecialchars($row['description']);
+
+				$context['tp_smileys'][empty($row['hidden']) ? 'postform' : 'popup'][$row['smiley_row']]['smileys'][] = $row;
+			}
+			$smcFunc['db_free_result']($request);
+
+			cache_put_data('posting_smileys', $context['tp_smileys'], 480);
+		}
+		else
+			$context['tp_smileys'] = $temp;
+	}
 	// Clean house... add slashes to the code for javascript.
 	foreach (array_keys($context['tp_smileys']) as $location)
 	{
