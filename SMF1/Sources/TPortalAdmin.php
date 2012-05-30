@@ -728,7 +728,7 @@ function do_blocks()
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
 
 	$context['html_headers'] .= '
-	<script language="JavaScript" type="text/javascript">
+	<script type="text/javascript"><!-- // --><![CDATA[
 		function getXMLHttpRequest()
 		{
 			if (window.XMLHttpRequest)
@@ -780,7 +780,7 @@ function do_blocks()
 			var params = "?action=tpadmin;blockon=" + id + ";sesc='.$context['session_id'].'";
 			Ajax.send(params);
 		}
-	</script>';
+	// ]]></script>';
 
 }
 function do_menus()
@@ -1115,7 +1115,7 @@ function do_articles()
 				// get membergroups
 				get_grps();
 			$context['html_headers'] .= '
-			<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+			<script type="text/javascript"><!-- // --><![CDATA[
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name; 
@@ -1285,7 +1285,7 @@ function do_articles()
             'ID_THEME' => 0,
         );
 		$context['html_headers'] .= '
-			<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+			<script type="text/javascript"><!-- // --><![CDATA[
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name; 
@@ -1431,7 +1431,7 @@ function do_articles()
 			$context['TPortal']['editorchoice'] = 1;
 		
 		$context['html_headers'] .= '
-			<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+			<script type="text/javascript"><!-- // --><![CDATA[
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name; 
@@ -1527,8 +1527,8 @@ function do_articles()
 		}
 	}
 	$context['html_headers'] .= '
-	<script language="JavaScript" type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
-	<script language="JavaScript" type="text/javascript">
+	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
+	<script type="text/javascript"><!-- // --><![CDATA[
 		function getXMLHttpRequest()
 		{
 			if (window.XMLHttpRequest)
@@ -1710,7 +1710,7 @@ function do_articles()
 			var params = "?action=tpadmin;artfeat=" + id + ";sesc='.$context['session_id'].'";
 			Ajax.send(params);
 		}
-	</script>
+	// ]]></script>
 	';
 	if($context['TPortal']['subaction']=='artsettings')
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=artsettings', $txt['tp-settings']);

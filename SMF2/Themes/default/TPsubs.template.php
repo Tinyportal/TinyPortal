@@ -478,7 +478,7 @@ function TPortal_themebox()
 				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen"  />
 			</div>
 		</form>
-		<script type="text/javascript" language="Javascript">
+		<script type="text/javascript"><!-- // --><![CDATA[
 			var extra = \'\';
 			var themepath=new Array()';
          for($a=0 ; $a<(sizeof($temaid)); $a++){
@@ -503,7 +503,7 @@ function TPortal_themebox()
 			document.chosen.src= themepath[icon]
 			document.jumpurl1.jumpurl3.value = \'' . $scripturl . '?'. $tp_where.'theme=\' + icon 
        }
-		</script>';
+		// ]]></script>';
 	}
 	else
 		echo $txt['tp-nothemeschosen'];

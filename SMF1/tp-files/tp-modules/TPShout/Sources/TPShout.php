@@ -35,7 +35,7 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 
 	// bbc code for shoutbox
 	$context['html_headers'] .= '
-      <script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+      <script type="text/javascript"><!-- // --><![CDATA[
                 var current_header_smiley = ';
 		if(empty($options['expand_header_smiley']))
 			$context['html_headers'] .= 'false'; 
@@ -62,7 +62,7 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
                         current_header_smiley = mode;
                 }
         // ]]></script>
-		<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+		<script type="text/javascript"><!-- // --><![CDATA[
                 var current_header_bbc = ';
 		if(empty($options['expand_header_bbc']))
 			$context['html_headers'] .= 'false'; 
@@ -109,7 +109,7 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 
 		</style>
 
-		<script language="javascript" type="text/javascript">
+		<script type="text/javascript"><!-- // --><![CDATA[
 
 		/***********************************************
 		* Cross browser Marquee II- © Dynamic Drive (www.dynamicdrive.com)
@@ -155,7 +155,7 @@ if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $conte
 		window.attachEvent("onload", initializemarquee)
 		else if (document.getElementById)
 		window.onload=initializemarquee
-	</script>';
+	// ]]></script>';
 
 
 if(isset($_GET['shout']))
@@ -528,7 +528,7 @@ function shout_bcc_code($collapse=true)
 	loadLanguage('Post');
 	
 	echo '
-	<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+	<script type="text/javascript"><!-- // --><![CDATA[
 		function tp_bbc_highlight(something, mode)
 		{
 			something.style.backgroundImage = "url(" + smf_images_url + (mode ? "/bbc/bbc_hoverbg.gif)" : "/bbc/bbc_bg.gif)");

@@ -24,7 +24,7 @@ function tp_rating_init()
 
 	$context['html_headers'] .= '
 	<script type="text/javascript" src="' . $boardurl . '/tp-files/tp-plugins/javascript/mootools.js"></script>
-	<script language="JavaScript" type="text/javascript">
+	<script type="text/javascript"><!-- // --><![CDATA[
 	window.addEvent(\'domready\', function(){
 		// First Example
 		var el = $(\'myElement\'),
@@ -40,7 +40,7 @@ function tp_rating_init()
 			}
 		}).set(vote.value.toInt());
 	});	
-	</script>';
+	// ]]></script>';
 }
 
 function tp_createthumb($picture, $width, $height, $thumb)
