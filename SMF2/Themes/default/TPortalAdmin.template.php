@@ -2806,7 +2806,7 @@ function template_blockedit()
 						</div>
 						</p><br />
 					<div id="blockcodeinfo" class="description" >&nbsp;</div>
-					<script language="JavaScript" type="text/javascript">
+					<script type="text/javascript"><!-- // --><![CDATA[
 						function changeSnippet(indx)
 						{
 							var snipp = new Array();
@@ -2830,7 +2830,7 @@ function template_blockedit()
 
 							setInnerHTML(document.getElementById("blockcodeinfo"), snippTitle[indx] + snipp[indx]);
 						}
-					</script>';
+					// ]]></script>';
 				}			
 			}
 			elseif($context['TPortal']['blockedit']['type']=='12'){

@@ -2686,7 +2686,7 @@ function TPortal_panel($side)
 	// the upshrink routine for blocks
 	$tid = time();
 	echo '</div>
-			<script language="Javascript" type="text/javascript"><!--
+			<script type="text/javascript"><!-- // --><![CDATA[
 				function toggle( targetId )
 				{
 					var state = 0;
@@ -2710,7 +2710,7 @@ function TPortal_panel($side)
 
 					}
 				}
-			--></script>';
+			// ]]></script>';
 
 	return $code;
 }
@@ -2728,7 +2728,7 @@ function tp_setupUpshrinks()
 
 	// the generic panel upshrink code
 	$context['html_headers'] .= '
-	  <script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+	  <script type="text/javascript"><!-- // --><![CDATA[
 		' . (sizeof($context['tp_panels']) > 0 ? '
 		var tpPanels = new Array(\'' . (implode("','",$context['tp_panels'])) . '\');' : '
 		var tpPanels = new Array();') . '

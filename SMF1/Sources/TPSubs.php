@@ -661,7 +661,7 @@ function tp_renderbbc($message)
 		echo '
 			<tr>
 				<td valign="middle" colspan="2" class="windowbg2">
-					<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+					<script type="text/javascript"><!-- // --><![CDATA[
 						function bbc_highlight(something, mode)
 						{
 							something.style.backgroundImage = "url(" + smf_images_url + (mode ? "/bbc/bbc_hoverbg.gif)" : "/bbc/bbc_bg.gif)");
@@ -831,7 +831,7 @@ function tp_renderbbc($message)
 	if (!empty($context['smileys']['popup']))
 	{
 		echo '
-			<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+			<script type="text/javascript"><!-- // --><![CDATA[
 				var smileys = [';
 
 		foreach ($context['smileys']['popup'] as $smiley_row)
@@ -957,8 +957,8 @@ function TPwysiwyg_setup()
 	global $context, $boardurl, $user_info;
 
 	$context['html_headers'] .= '
- <script language="JavaScript" type="text/javascript" src="'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/whizzywig.js"></script>
-<script language="JavaScript" type="text/javascript">
+ <script type="text/javascript" src="'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/whizzywig.js"></script>
+<script type="text/javascript"><!-- // --><![CDATA[
 		function toggle_tpeditor_on(target)
 		{
 			document.getElementById(\'CONTROLS\' + target).style.display = \'\';
@@ -971,7 +971,7 @@ function TPwysiwyg_setup()
 			document.getElementById(\'whizzy\' + target).style.display = \'none\';
 			document.getElementById(target + \'_pure\').style.display = \'\';
 		}
-	</script>
+	// ]]></script>
  ';
 }
 
@@ -992,13 +992,13 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use=1, $showc
 
 	echo '
 	<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
-	<script language="JavaScript" type="text/javascript">
+	<script type="text/javascript"><!-- // --><![CDATA[
 		buttonPath = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/btn/";
 		cssFile = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/simple.css";
 		makeWhizzyWig("'.$textarea.'", "all");
 		' , $use==0 ? '
 		toggle_tpeditor_off(\''.$textarea.'\');' : '' , '
-	</script>';
+	// ]]></script>';
 	if($showchoice)
 		echo '
 	<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==1 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'.html_entity_decode($body, ENT_QUOTES).'</textarea>';

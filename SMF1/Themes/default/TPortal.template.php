@@ -99,7 +99,7 @@ function template_article($article, $single = false)
 	if ($single && $context['TPortal']['articles_comment_captcha'] && isset($context['verification_image_href']))
 	{
 		echo '
-<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
+<script type="text/javascript"><!-- // --><![CDATA[
 	function refreshImages()
 	{
 		// Make sure we are using a new rand code.

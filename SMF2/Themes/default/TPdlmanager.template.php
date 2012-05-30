@@ -175,7 +175,7 @@ function template_main()
 	</div>
 	<span class="lowerframe"><span></span></span>
 
-	<script language="Javascript" type="text/javascript">
+	<script type="text/javascript"><!-- // --><![CDATA[
 		function dlshowtab( target )
 		{
 			document.getElementById(\'dlrecent\').style.display= \'none\';
@@ -184,7 +184,7 @@ function template_main()
 			
 			document.getElementById(target).style.display= \'\';
 		}
-	</script>
+	// ]]></script>
 	<br />
 	
 	<div class="tp_half">
