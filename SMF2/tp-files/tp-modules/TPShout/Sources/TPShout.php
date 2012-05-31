@@ -32,10 +32,6 @@ $shoutboxtemplate = '111';
 if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $context['TPortal']['shoutbox_version']) || !isset($context['TPortal']['shoutbox_version']))
 	shoutbox_update();
 
-// check if it needs updating...
-if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $context['TPortal']['shoutbox_version']) || !isset($context['TPortal']['shoutbox_version']))
-	shoutbox_update();
-
 // bbc code for shoutbox
 $context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
@@ -111,7 +107,6 @@ if(isset($_GET['shout']))
 		tpshout_bigscreen(false, $number);
 	}
 }
-
 
 // Post the shout via ajax
 function postShout()
