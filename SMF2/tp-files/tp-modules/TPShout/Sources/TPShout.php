@@ -32,57 +32,6 @@ $shoutboxtemplate = '111';
 if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $context['TPortal']['shoutbox_version']) || !isset($context['TPortal']['shoutbox_version']))
 	shoutbox_update();
 
-<<<<<<< HEAD
-	// bbc code for shoutbox
-	$context['html_headers'] .= '
-      <script type="text/javascript"><!-- // --><![CDATA[
-                var current_header_smiley = ';
-		if(empty($options['expand_header_smiley']))
-			$context['html_headers'] .= 'false'; 
-		else 
-			$context['html_headers'] .= 'true';
-		
-		$context['html_headers'] .= '
-                function expandHeaderSmiley(mode)
-                {';
-
-        // Guests don't have theme options!!
-        if ($context['user']['is_guest'])
-                $context['html_headers'] .= '
-                        document.cookie = "expandsmiley=" + (mode ? 1 : 0);';
-        else
-                $context['html_headers'] .= '
-                        smf_setThemeOption("expand_header_smiley", mode ? 1 : 0, null, "'. $context['session_id']. '");';
-
-        $context['html_headers'] .= '
-                        document.getElementById("expand_smiley").src = mode ? "'.$settings['tp_images_url'].'/TPcollapse.gif" : "'.$settings['tp_images_url'].'/TPexpand.gif";
-
-                        document.getElementById("expandHeaderSmiley").style.display = mode ? "" : "none";
-
-                        current_header_smiley = mode;
-                }
-        // ]]></script>
-		<script type="text/javascript"><!-- // --><![CDATA[
-                var current_header_bbc = ';
-		if(empty($options['expand_header_bbc']))
-			$context['html_headers'] .= 'false'; 
-		else 
-			$context['html_headers'] .= 'true';
-		
-		$context['html_headers'] .= '
-                function expandHeaderBBC(mode)
-                {';
-
-        if ($context['user']['is_guest'])
-                $context['html_headers'] .= '
-                        document.cookie = "expandbbc=" + (mode ? 1 : 0);';
-        else
-                $context['html_headers'] .= '
-                        smf_setThemeOption("expand_header_bbc", mode ? 1 : 0, null, "'. $context['session_id']. '");';
-
-        $context['html_headers'] .= '
-                        document.getElementById("expand_bbc").src = mode ? "'.$settings['tp_images_url'].'/TPcollapse.gif" : "'.$settings['tp_images_url'].'/TPexpand.gif"';
-						
 // bbc code for shoutbox
 $context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
@@ -158,7 +107,6 @@ if(isset($_GET['shout']))
 		tpshout_bigscreen(false, $number);
 	}
 }
-
 
 // Post the shout via ajax
 function postShout()
