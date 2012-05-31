@@ -45,7 +45,13 @@ function TPmodules()
 
 	// for help pages
 	if(isset($_GET['p']))
-		$context['TPortal']['helpsection'] = $_GET['p'];
+	{
+		$helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');	
+		if(in_array($_GET['p'], $helpOptions))
+			$context['TPortal']['helpsection'] = $_GET['p'];
+		else
+			$context['TPortal']['helpsection'] = 'introduction';	
+	}
 	else
 		$context['TPortal']['helpsection'] = 'introduction';
 
