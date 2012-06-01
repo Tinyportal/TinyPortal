@@ -2209,6 +2209,9 @@ function TPortalDLAdmin()
 		$dlupload_grp = array();
 		$dlcreatetopic_grp = array();
 		
+		// Our settings array to send to updateTPSettings();
+		$changeArray = array();
+		
 		foreach ($_POST as $what => $value) 
 		{
 			if(substr($what, 0, 13) == 'dladmin_group')
@@ -2234,17 +2237,6 @@ function TPortalDLAdmin()
 			elseif(substr($what, 0, 11) == 'tp_dlboards')
 			    $creategrp[] = $value;
 		}
-		if(!empty($_POST['dlsettings']))
-		{
-			$dlb = implode(',', $creategrp);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val} 
-				WHERE name = {string:name}',
-				array('val' => $dlb, 'name' => 'dl_createtopic_boards')
-			);
-		}
-
 		if($groupset)
 		{
 			$dlaccess = implode(',', $admgrp);
@@ -2255,26 +2247,16 @@ function TPortalDLAdmin()
 				array('access' => $dlaccess, 'item' => $id)
 			);
 		}
+		
+		if(!empty($_POST['dlsettings']))
+			$changeArray['dl_createtopic_boards'] = implode(',', $creategrp);
+
 		if($dlset)
-		{
-	 		$dlaccess2 = implode(',', $dlgrp);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val} 
-				WHERE name = {string:name}',
-				array('val' => $dlaccess2, 'name' => 'dl_approve_groups')
-			);
-		}
+			$changeArray['dl_approve_groups'] = implode(',', $dlgrp);
+
 		if($visualset)
-		{
-			$dlvisual = implode(',', $visual);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val} 
-				WHERE name = {string:name}',
-				array('val' => $dlvisual, 'name' => 'dl_visual_options')
-			);
-		}
+			$changeArray['dl_visual_options'] = implode(',', $visual);
+
 		$go = 0;
 
 		if(!empty($_FILES['qup_dladmin_text']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name'])))
@@ -2661,22 +2643,12 @@ function TPortalDLAdmin()
 			// from settings in DLmanager
 			elseif($what=='tp_dl_allowed_types')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_allowed_types')
-				);
+				$changeArray['dl_allowed_types'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_usescreenshot')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_usescreenshot')
-				);
+				$changeArray['dl_usescreenshot'] = $value;
 				$go = 1;
 			}
 			elseif(substr($what, 0, 20) == 'tp_dl_screenshotsize')
@@ -2692,73 +2664,38 @@ function TPortalDLAdmin()
 				$smcFunc['db_free_result']($result);
 				$all = explode(',', $row['value']);
 				$all[$who] = $value;
-				$newval = implode(',', $all);
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $newval, 'name' => 'dl_screenshotsizes')
-				);
+
+				$changeArray['dl_screenshotsizes'] = implode(',', $all);
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_showfeatured')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_showfeatured')
-				);
+				$changeArray['dl_showfeatured'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_wysiwyg')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name= {string:name}',
-					array('val' => $value, 'name' => 'dl_wysiwyg')
-				);
+				$changeArray['dl_wysiwyg'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_showrecent')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_showlatest')
-				);
+				$changeArray['dl_showlatest'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_showstats')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_showstats')
-				);
+				$changeArray['dl_showstats'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_showcategorytext')
 			{
-				$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_settings 
-				SET value = {string:val}
-				WHERE name = {string:name}',
-				array('val' => $value, 'name' => 'dl_showcategorylist')
-			);
+				$changeArray['dl_showcategorylist'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_featured')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_featured')
-				);
+				$changeArray['dl_featured'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_introtext')
@@ -2774,70 +2711,42 @@ function TPortalDLAdmin()
 						$_REQUEST['tp_dl_introtext'] = un_htmlspecialchars($_REQUEST['tp_dl_introtext']);
 						// We need this for everything else.
 						$value = $_POST['tp_dl_introtext'] = $_REQUEST['tp_dl_introtext'];
-
 					}
 				}
-			
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array('val' => trim($value), 'name' => 'dl_introtext')
-				);
+				$changeArray['dl_introtext'] = trim($value);
 				$go = 1;
 			}
 		
 			elseif($what == 'tp_dluploadsize')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_max_upload_size')
-				);
+				$changeArray['dl_max_upload_size'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_approveonly')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_approve')
-				);
+				$changeArray['dl_approve'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dlallowupload')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_allow_upload')
-				);
+				$changeArray['dl_allow_upload'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_fileprefix')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dl_fileprefix')
-				);
+				$changeArray['dl_fileprefix'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dltheme')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val}
-					WHERE name = {string:name}',
-					array('val' => $value, 'name' => 'dlmanager_theme')
-				);
+				$changeArray['dlmanager_theme'] = $value;
 				$go = 1;
 			}
 		}
+		
+		// Update all the changes settings finally
+		updateTPSettings($changeArray);
+		
 		// if we came from useredit screen..
 		if(isset($_POST['dl_useredit']))
 		   redirectexit('action=tpmod;dl=useredit'.$_POST['dl_useredit']);

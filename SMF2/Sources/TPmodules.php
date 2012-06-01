@@ -879,11 +879,8 @@ function TPmodules()
 		if(substr($newstring, 0, 1) == ',')
 			$newstring = substr($newstring, 1);
 
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_settings 
-			SET value = {string:val} WHERE name = {string:name}',
-			array('val' => $newstring, 'name' => 'frontpage_topics')
-		);
+		updateTPSettings(array('frontpage_topics' => $newstring));
+
 		redirectexit('topic='. $t . '.0');
 	}
 	// save a block?

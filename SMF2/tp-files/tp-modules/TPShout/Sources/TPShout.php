@@ -241,40 +241,40 @@ function tpshout_admin()
 			else
 			{
 				$what = substr($what, 3);
-				if($what == 'shoutbox_refresh')
-				{
-					if(empty($value))
-						$value = '0';
-				}
-						
+				if($what == 'shoutbox_smile')
+					$changeArray['show_shoutbox_smile'] = $value;
+				if($what == 'shoutbox_icons')
+					$changeArray['show_shoutbox_icons'] = $value;
+				if($what == 'shoutbox_height')
+					$changeArray['shoutbox_height'] = $value;
+				if($what == 'shoutbox_usescroll')
+					$changeArray['shoutbox_usescroll'] = $value;
 				if($what == 'shoutbox_scrollduration')
 				{
 					if($value > 5)
 						$value = 5;
 					elseif($value < 1)
 						$value = 1;
+					$changeArray['shoutbox_scrollduration'] = $value;
 				}
-				if($what == 'shoutbox_limit')
+				if($what == 'shoutbox_limit') 
+				{
 					if(!is_numeric($value))
 						$value = 10;
+					$changeArray['shoutbox_limit'] = $value;
+				}				
+				if($what == 'shoutbox_refresh')
+				{
+					if(empty($value))
+						$value = '0';
+					$changeArray['shoutbox_refresh'] = $value;
+				}
 				if($what == 'show_profile_shouts')
-					$what = 'profile_shouts_hide';
-				if($what == 'shoutbox_icons')
-					$what = 'show_shoutbox_icons';
-				if($what == 'shoutbox_smile')
-					$what = 'show_shoutbox_smile';
-					
-				$smcFunc['db_query']('', '
-				 	UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array(
-						'name' => $what,
-						'val' => $value
-					)
-				);
+					$changeArray['profile_shouts_hide'] = $value;
 			}
 		}
+		updateTPSettings($changeArray);
+		
 		if(empty($go))
 			redirectexit('action=tpmod;shout=admin;settings');
 		else
