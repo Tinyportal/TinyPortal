@@ -3124,4 +3124,31 @@ function tp_getTPmodules()
 	}
 }
 
+function updateTPSettings($addSettings)
+{
+	global $context, $smcFunc;
+
+	if (empty($addSettings) || !is_array($addSettings))
+		return;
+
+	foreach ($addSettings as $variable => $value)
+	{
+		$smcFunc['db_query']('', '
+			UPDATE {db_prefix}tp_settings
+			SET value = {' . ($value === false || $value === true ? 'raw' : 'string') . ':value}
+			WHERE name = {string:variable}',
+			array(
+				'value' => $value === true ? 'value + 1' : ($value === false ? 'value - 1' : $value),
+				'variable' => $variable,
+			)
+		);
+		$context['TPortal'][$variable] = $value === true ? $context['TPortal'][$variable] + 1 : ($value === false ? $context['TPortal'][$variable] - 1 : $value);
+	}
+
+	// Clean out the cache and make sure the cobwebs are gone too.
+	cache_put_data('tpSettings', null, 90);
+
+	return;
+}
+
 ?>

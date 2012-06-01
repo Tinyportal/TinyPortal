@@ -29,7 +29,7 @@ function TPortal_init()
 
 	$settings['tp_smfversion'] = '1';
 	$context['TPortal'] = array();
-	$context['TPortal']['now'] = time();
+
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 
 	// go back on showing attachments..
@@ -50,6 +50,7 @@ function TPortal_init()
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>';		
 		
 	setupTPsettings();
+	$context['TPortal']['now'] = time();
 	fetchTPhooks();
 	doModules();
  
@@ -209,7 +210,7 @@ function TPortal_init()
 	}
 
 	// any modules needed to load then?
-	if(sizeof($context['TPortal']['always_loaded']) > 0)
+	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
 	{
 		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
 			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
@@ -278,7 +279,7 @@ function TP_loadTheme()
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$row=$smcFunc['db_fetch_row']($request);
+			$row = $smcFunc['db_fetch_row']($request);
 			$smcFunc['db_free_result']($request);
 			$request = $smcFunc['db_query']('', '
 				SELECT art.id_theme as ID_THEME, sett.value 
@@ -316,24 +317,31 @@ function TP_loadTheme()
 
 function setupTPsettings()
 {
-	global $maintenance, $context, $txt, $settings, $smcFunc;
+	global $maintenance, $context, $txt, $settings, $smcFunc, $modSettings;
 
 	$context['TPortal']['always_loaded'] = array();
 
-	// get the settings
-	$request =  $smcFunc['db_query']('', '
-		SELECT name, value FROM {db_prefix}tp_settings', array()
-	);
-	if ($smcFunc['db_num_rows']($request) > 0)
+	// Try to load it from the cache
+	if (($context['TPortal'] = cache_get_data('tpSettings', 90)) == null)
 	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
+		// get the settings
+		$request =  $smcFunc['db_query']('', '
+			SELECT name, value FROM {db_prefix}tp_settings', array()
+		);
+		if ($smcFunc['db_num_rows']($request) > 0)
 		{
-			$context['TPortal'][$row['name']] = $row['value'];
-			// ok, any module that like to load?
-			if(substr($row['name'], 0, 11) == 'load_module')
-				$context['TPortal']['always_loaded'][] = $row['value'];
+			while($row = $smcFunc['db_fetch_row']($request))
+			{
+				$context['TPortal'][$row[0]] = $row[1];
+				// ok, any module that like to load?
+				if(substr($row[0], 0, 11) == 'load_module')
+					$context['TPortal']['always_loaded'][] = $row[1];
+			}
+			$smcFunc['db_free_result']($request);
 		}
-		$smcFunc['db_free_result']($request);
+		
+		if (!empty($modSettings['cache_enable']))
+			cache_put_data('tpSettings', $context['TPortal'], 90);
 	}
 		
 	// setup the userbox settings
