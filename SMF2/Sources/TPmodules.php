@@ -1433,60 +1433,6 @@ function tp_pro_shoutbox()
 	$context['page_title'] = $txt['tp-shouts'];
 
 }
-// populate the profile
-function tp_getprofileareas(&$data)
-{
-	global $txt;
-	
-	$data['tp'] = array(
-		'title' => 'Tinyportal',
-		'areas' => array(),
-	);
-
-	$data['tp']['areas']['tpsummary'] = array(
-		'label' => $txt['tpsummary'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_summary',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
-
-	$data['tp']['areas']['tparticles'] = array(
-		'label' => $txt['articlesprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_articles',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-		'subsections' => array(
-			'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
-			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
-		),
-	);
-
-	$data['tp']['areas']['tpdownload'] = array(
-		'label' => $txt['downloadprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_download',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
-
-	$data['tp']['areas']['tpshoutbox'] = array(
-		'label' => $txt['shoutboxprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_shoutb',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
-}
 
 // Tinyportal
 function tp_summary($memID)
