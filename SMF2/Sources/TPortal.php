@@ -217,9 +217,11 @@ function TPortal_init()
 	}
 	tp_setupUpshrinks();
 
-	// finally..any errors?
-	if(isset($article_error))
+	// finally..any errors finding an article or category?
+	if(isset($context['art_error']) && $context['art_error'] == true)
 		fatal_error($txt['tp-articlenotexist']);
+	if(isset($context['cat_error']) && $context['cat_error'] == true)
+		fatal_error($txt['tp-categorynotexist']);
 
 	// let a module take over
 	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
@@ -1012,7 +1014,7 @@ function doTPpage()
 			return $article['id'];
 		}
 		else
-			$article_error = true;
+			$context['art_error'] = true;
 	}
 	else
 		return;
@@ -1036,7 +1038,7 @@ function doTPcat()
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_variables
 			WHERE '. $catid .' LIMIT 1',
-			array('cat' => $cat)
+			array('cat' => is_numeric($cat) ? (int) $cat : $cat)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -1253,7 +1255,7 @@ function doTPcat()
 				return;
 		}
 		else
-			$article_error = true;
+			$context['cat_error'] = true;
 	}
 	else
 		return;
