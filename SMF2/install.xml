@@ -28,12 +28,6 @@
 	</file>
 	<file name="$sourcedir/Load.php">
 		<operation>
-			<search position="before"><![CDATA[	$settings = $themeData[0];]]></search>
-			<add><![CDATA[	if (!empty($context['TPortal']['front_type'])){
-		$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
-	}]]></add>
-		</operation>
-		<operation>
 			<search position="replace"><![CDATA[	// Start the linktree off empty..
 	$context['linktree'] = array();]]></search>
 			<add><![CDATA[	// Start the linktree off empty..not quite, have to insert forum
@@ -61,9 +55,9 @@
 		$id_theme = $modSettings['theme_guests'];]]></search>
 			<add><![CDATA[
 	// TinyPortal
-	$newtheme=TP_loadTheme();
-	if($newtheme!=$id_theme && $newtheme>0)
-		$id_theme=$newtheme;
+	$newtheme = TP_loadTheme();
+	if($newtheme != $id_theme && $newtheme > 0)
+		$id_theme = $newtheme;
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>
@@ -82,18 +76,6 @@
 	// end
 	
 ]]></add>
-		</operation>
-	</file>
-	
-	<file name="$sourcedir/Security.php">
-		<operation>
-			<search position="before"><![CDATA[// Require a user who is logged in. (not a guest.)
-function is_not_guest($message = '')
-{
-	global $user_info, $txt, $context, $scripturl;]]></search>
-			<add><![CDATA[
-	// TinyPortal
-	TPortal_init();]]></add>
 		</operation>
 	</file>
 	

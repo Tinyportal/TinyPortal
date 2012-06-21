@@ -186,7 +186,7 @@ function addTPActions(&$actionArray)
 
 function whichTPAction()
 {
-	global $topic, $board, $sourcedir, $settings;
+	global $topic, $board, $sourcedir, $context;
 	
 	$theAction = false;
 	// first..if the action is set, but empty, don't go any further
@@ -196,18 +196,19 @@ function whichTPAction()
 		$theAction = 'BoardIndex';
 	}
 	// Action and board are both empty... maybe the portal page?
-	if (empty($board) && empty($topic) && $settings['TPortal_front_type']!='boardindex')
+	if (empty($board) && empty($topic) && $context['TPortal']['front_type'] != 'boardindex')
 	{
 		require_once($sourcedir . '/TPortal.php');
 		$theAction = 'TPortal';
 	}
-	if (empty($board) && empty($topic) && $settings['TPortal_front_type']=='boardindex' && (isset($_GET['cat']) || isset($_GET['page'])))
+	// If frontpage set to boardindex but it's an article or category
+	if (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex' && (isset($_GET['cat']) || isset($_GET['page'])))
 	{
 		require_once($sourcedir . '/TPortal.php');
 		$theAction = 'TPortal';
 	}
 	// Action and board are still both empty...and no portal startpage - BoardIndex!
-	elseif (empty($board) && empty($topic) && $settings['TPortal_front_type']=='boardindex')
+	elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex')
 	{
 		require_once($sourcedir . '/BoardIndex.php');
 		$theAction = 'BoardIndex';
