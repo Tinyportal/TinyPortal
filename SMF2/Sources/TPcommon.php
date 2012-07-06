@@ -251,6 +251,8 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 {
 	global $boarddir, $txt;
 
+	loadLanguage('TPdlmanager');
+
 	// check that nothing happended
 	if(!file_exists($_FILES[$what]['tmp_name']) || !is_uploaded_file($_FILES[$what]['tmp_name']))
 		fatal_error($txt['tp-dlnotuploaded']);

@@ -24,11 +24,11 @@ function template_main()
 		fatal_error($txt['tp-dlmanageroff'], false);
 		
 		echo '
-<div class="dl_container">
-    <div class="title_bar">
-	   <h3 class="titlebg">',  $txt['tp-downloads'], '	</h3>
-    </div>
-	<div>';
+	<div class="dl_container">
+		<div class="title_bar">
+			<h3 class="titlebg">',  $txt['tp-downloads'], '	</h3>
+		</div>
+		<div>';
 		$dlbuttons = array(
 			'frontdl' => array('text' => 'tp-downloads', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl', 'active' => $context['TPortal']['dlaction']==''),
 			'search' => array('text' => 'tp-search', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search', 'active' => $context['TPortal']['dlaction']=='search'),
@@ -36,12 +36,11 @@ function template_main()
 			'upload' => array('text' => 'tp-dlupload', 'image' => 'upload.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload', 'active' =>$context['TPortal']['dlaction']=='upload'),
 		);
 		echo '
-	<div style="text-align: right; padding: 5px 1em; overflow: hidden;" class="middletext">';
-		tp_template_button_strip($dlbuttons, 'right');
+		<div style="text-align: right; padding: 5px 1em; overflow: hidden;" class="middletext">';
+			tp_template_button_strip($dlbuttons, 'right');
 
 		echo '
-	</div>';
-			
+		</div>';
 
 	if($context['TPortal']['dlaction']=='' || $context['TPortal']['dlaction']=='cat')
 	{
@@ -53,23 +52,21 @@ function template_main()
 		if(!empty($context['TPortal']['dl_showfeatured']) && !empty($context['TPortal']['featured']))
 		{
 			echo '
-        <div class="cat_bar">
-            <h3 class="catbg">' . $txt['tp-dlfeatured'] . '</h3>
-        </div>
-		<div class="windowbg" style="overflow: hidden; padding: 1em;">'; 
+				<div class="cat_bar">
+					<h3 class="catbg">' . $txt['tp-dlfeatured'] . '</h3>
+				</div>
+				<div class="windowbg" style="overflow: hidden; padding: 1em;">'; 
 
 			if(!empty($context['TPortal']['featured']['sshot']))
 				 echo '
-			<div class="screenshot" style="margin: 4px 4px 4px 1em;float: right; width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$context['TPortal']['featured']['sshot'].') no-repeat;"></div>';
-			
-			echo '	
-			<h4 class="h4dl"><a href="' . $scripturl . '?action=tpmod;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
-			<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['authorID'].'">' . $context['TPortal']['featured']['author'].'</a></span>
-			<p>' . $context['TPortal']['featured']['description'] , '</p>
-		</div>';
+				<div class="screenshot" style="margin: 4px 4px 4px 1em;float: right; width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$context['TPortal']['featured']['sshot'].') no-repeat;"></div>';
+
+			echo '
+				<h4 class="h4dl"><a href="' . $scripturl . '?action=tpmod;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
+				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['authorID'].'">' . $context['TPortal']['featured']['author'].'</a></span>
+				<p>' . $context['TPortal']['featured']['description'] , '</p>
+			</div>';
 		}
-		echo '
-	</div>';
 
 		// render last added and most downloaded.
 		echo '
@@ -325,42 +322,43 @@ function template_main()
 			</div>
 			<div class="windowbg">
 				<div style="padding: 1em;">
-				<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
-					<li>'  , $txt['tp-dlfilesize'] , ': ', isset($dlitem['filesize']) ? $dlitem['filesize']: '' , '</li>
-					<li>'. $txt['tp-views']. ': ' . $dlitem['views'].' </li>
-					<li>'.$txt['tp-downloads'].': '.$dlitem['downloads'].' </li>
-					<li>' , $txt['tp-created'] . ': ' .  timeformat($dlitem['created']).'</li>
-					<li>' , $txt['tp-itemlastdownload'] , ': ' . timeformat($dlitem['date_last']).'</li>
-				</ul>	
-				<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $dlitem['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')</div>';
+					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
+						<li>'  , $txt['tp-dlfilesize'] , ': ', isset($dlitem['filesize']) ? $dlitem['filesize']: '' , '</li>
+						<li>'. $txt['tp-views']. ': ' . $dlitem['views'].' </li>
+						<li>'.$txt['tp-downloads'].': '.$dlitem['downloads'].' </li>
+						<li>' , $txt['tp-created'] . ': ' .  timeformat($dlitem['created']).'</li>
+						<li>' , $txt['tp-itemlastdownload'] , ': ' . timeformat($dlitem['date_last']).'</li>
+					</ul>	
+					<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $dlitem['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')</div>';
 
 			if($dlitem['can_rate'])
 			{
 				echo '
-				<form class="ratingoption" style="padding-left: 0;" name="tp_dlitem_rating" action="',$scripturl,'?action=tpmod;sa=rate_dlitem" method="post">
-					' , $txt['tp-ratedownload'] , ' 
-					<select size="1" name="tp_dlitem_rating">';
+					<form class="ratingoption" style="padding-left: 0;" name="tp_dlitem_rating" action="',$scripturl,'?action=tpmod;sa=rate_dlitem" method="post">
+						' , $txt['tp-ratedownload'] , ' 
+						<select size="1" name="tp_dlitem_rating">';
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--)
 				{
 					echo '
 							<option value="'.$u.'">'.$u.'</option>';
 				}
 				echo '
-					</select>
-					<input type="submit" name="tp_dlitem_rating_submit" value="',$txt['tp_rate'],'" />
-					<input name="tp_dlitem_type" type="hidden" value="dlitem_rating" />
-					<input name="tp_dlitem_id" type="hidden" value="'.$dlitem['id'].'" />
-					<input type="hidden" name="sc" value="', $context['session_id'], '" />
-				</form>
+						</select>
+						<input type="submit" name="tp_dlitem_rating_submit" value="',$txt['tp_rate'],'" />
+						<input name="tp_dlitem_type" type="hidden" value="dlitem_rating" />
+						<input name="tp_dlitem_id" type="hidden" value="'.$dlitem['id'].'" />
+						<input type="hidden" name="sc" value="', $context['session_id'], '" />
+					</form>
 				';
 			}
 			else
 				echo '
-				<div class="ratingoption"><em class="smalltext">'.$txt['tp-dlhaverated'].'</em></div>';
+					<div class="ratingoption"><em class="smalltext">'.$txt['tp-dlhaverated'].'</em></div>';
 				
-			echo '<hr />
-				<div class="post">' . $dlitem['description'] . '</div>
-				<p><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.gif" alt="'.$txt['tp-download'].'" /></a></p>';
+			echo '
+					<hr />
+					<div class="post">' . $dlitem['description'] . '</div>
+					<p><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.gif" alt="'.$txt['tp-download'].'" /></a></p>';
 			// render the text
 			if(isset($dlitem['global_tag']))
 			{
@@ -369,14 +367,15 @@ function template_main()
 				
 				if(!empty($taglinks))
 				{
-					echo '<hr />
-				<div class="middletext tp_morebox globaltags">
-					<h3>' , $txt['tp-showrelated'] , '</h3>';
+					echo '
+					<hr />
+					<div class="middletext tp_morebox globaltags">
+						<h3>' , $txt['tp-showrelated'] , '</h3>';
 					foreach($taglinks as $tag)
 						echo '
-					<a href="'.$scripturl.$tag['href'].'">'.$tag['title'].'</a>';
-					echo '
-				</div>';
+						<a href="'.$scripturl.$tag['href'].'">'.$tag['title'].'</a>';
+						echo '
+					</div>';
 				}
 				
 			}
@@ -385,26 +384,27 @@ function template_main()
 			if(isset($dlitem['subitem']) && is_array($dlitem['subitem']))
 			{
 				echo '
-				<div class="morefiles">
-					<h4>'.$txt['tp-dlmorefiles'].'</h4>
-					<div class="post">
-						<ul>';
+					<div class="morefiles">
+						<h4>'.$txt['tp-dlmorefiles'].'</h4>
+						<div class="post">
+							<ul>';
 				foreach($dlitem['subitem'] as $sub)
 				{
 					echo '
-							<li><a href="' , $sub['href'] , '"><b>', $sub['name'] ,'</b></a>&nbsp;&nbsp;<span class="smalltext">' , $sub['filesize'], ' / ', $sub['downloads'],' ',$txt['tp-downloads'],' / ', $sub['views'],' ',$txt['tp-views'],'</span></li>';
+								<li><a href="' , $sub['href'] , '"><b>', $sub['name'] ,'</b></a>&nbsp;&nbsp;<span class="smalltext">' , $sub['filesize'], ' / ', $sub['downloads'],' ',$txt['tp-downloads'],' / ', $sub['views'],' ',$txt['tp-views'],'</span></li>';
 				}
 				echo '
-						</ul>
-					</div>
-				</div>';
+							</ul>
+						</div>
+					</div>';
 			}
 		}
 		// any screenshot?
 		if(!empty($dlitem['sshot']))
 			 echo '
-				<br /><div style="width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$dlitem['sshot'].') no-repeat;"></div>';
+					<br /><div style="width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$dlitem['sshot'].') no-repeat;"></div>';
 		echo '
+				</div>
 			</div>
 			<span class="botslice"><span></span></span>
 			</div>
@@ -597,10 +597,10 @@ function template_main()
 	{
 		$maxcount = 10;
 	   echo '
-	<div class="tborder"">
-        <div class="cat_bar">
-            <h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-stats'].'</h3>
-        </div>
+	<div class="tborder">
+		<div class="cat_bar">
+			<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-stats'].'</h3>
+		</div>
 		<table width="100%" border="0" cellspacing="1" cellpadding="5" class="bordercolor">
 			<tr class="titlebg">
 				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatscats'].'</td>
@@ -618,19 +618,29 @@ function template_main()
 		if(isset($context['TPortal']['topcats']) && count($context['TPortal']['topcats'])>0){
 			foreach($context['TPortal']['topcats'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['items'].'</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">
+								'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['items'].'
+							</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
-		echo '</table>';
+		echo '
+					</table>';
 
 		echo '
 				</td>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" /></td><td class="windowbg" valign="top" width="50%">';
+				<td class="windowbg2">
+					<img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" />
+				</td>
+				<td class="windowbg" valign="top" width="50%">';
 
 		// top views
 		echo '<table width="100%" cellpadding="2" cellspacing="0">';
@@ -640,49 +650,70 @@ function template_main()
 		if(isset($context['TPortal']['topviews']) && count($context['TPortal']['topviews'])>0){
 			foreach($context['TPortal']['topviews'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['views'].'</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">'.$cats['link'].'</td>
+							<td>
+								<img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" />
+							</td>
+							<td  width="5%" style="padding-left: 2ex;">'.$cats['views'].'</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
-
-		echo '</table>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
 		echo '
-				</td></tr>
+					</table>';
+
+		echo '
+				</td>
+			</tr>
 			<tr class="titlebg">
 				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatsdls'].'</td>
 				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatssize'].'</td>
 			</tr>
-				<tr>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td><td class="windowbg" valign="top">';
+			<tr>
+				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td>
+				<td class="windowbg" valign="top">';
 
 		// top downloads
-		echo '<table width="100%" cellpadding="2" cellspacing="0">';
+		echo '
+					<table width="100%" cellpadding="2" cellspacing="0">';
 		$counter=0;
 		if(isset($context['TPortal']['topitems'][0]['downloads']))
 			$maxval=$context['TPortal']['topitems'][0]['downloads'];
 		if(isset($context['TPortal']['topitems']) && count($context['TPortal']['topitems'])>0){
 			foreach($context['TPortal']['topitems'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></td><td width="5%">'.$cats['downloads'].'</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">'.$cats['link'].'</td>
+							<td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></td>
+							<td width="5%">'.$cats['downloads'].'</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
-		echo '</table>';
+		echo '
+					</table>';
 
 		echo '
 				</td>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td><td class="windowbg" valign="top">';
+				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td>
+				<td class="windowbg" valign="top">';
 
 		// top filesize
-		echo '<table width="100%" cellpadding="2" cellspacing="0">';
+		echo '
+					<table width="100%" cellpadding="2" cellspacing="0">';
 		$counter=0;
 		if(isset($context['TPortal']['topsize'][0]['size']))
 			$maxval=$context['TPortal']['topsize'][0]['size'];
@@ -690,18 +721,27 @@ function template_main()
 		if(isset($context['TPortal']['topsize']) && count($context['TPortal']['topsize'])>0){
 			foreach($context['TPortal']['topsize'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></td><td width="5%">'. floor($cats['size']/1000).'kb</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">'.$cats['link'].'</td>
+							<td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></td>
+							<td width="5%">'. floor($cats['size']/1000).'kb</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
-		echo '</table>
+		echo '
+					</table>
 				</td>
 			</tr>
-		</table></div>';
+		</table>
+	</div>
+	</div>';
 	}
 
 	// how about user-editing?
@@ -865,40 +905,43 @@ function template_main()
 	{
 	   echo '
 		<div class="tborder">
-            <div class="cat_bar">
-                <h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
-            </div>
+			<div class="cat_bar">
+				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
+			</div>
 			<div class="windowbg">
 				<span class="topslice"><span></span></span>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td >
-						<form accept-charset="', $context['character_set'], '" name="dl_search" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
-							<table cellpadding="5" cellspacing="1" width="100%" >
-								<tr>
-									<td align="right">' , $txt['tp-search'] , ':</td>
-									<td width="70%"><input type="text" size="60" name="dl_search" id="dl_search"></td>
-								</tr>
-								<tr>
-									<td valign="top" align="right"></td>
-									<td width="70%">
-									<input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
-									<input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" align="center">
-										<input type="submit" value="' , $txt['tp-search'] , '">
-										<input type="hidden" name="sc" value="' , $context['session_id'] , '">
-									</td>
-								</tr>
-							</table>
-						</form>
-					</td>
-				</tr>
-			</table>
-			<span class="botslice"><span></span></span>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td >
+							<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
+								<table cellpadding="5" cellspacing="1" width="100%" >
+									<tr>
+										<td align="right">' , $txt['tp-search'] , ':</td>
+										<td class="input_td">
+											<input type="text" size="60" name="dl_search" id="dl_search" />
+										</td>
+									</tr>
+									<tr>
+										<td valign="top" align="right"></td>
+										<td  class="input_td">
+										<input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
+										<input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center">
+											<input type="submit" value="' , $txt['tp-search'] , '" />
+											<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+										</td>
+									</tr>
+								</table>
+							</form>
+						</td>
+					</tr>
+				</table>
+				<span class="botslice"><span></span></span>
 			</div>
+		</div>
 		</div>';
 	}
 
@@ -906,18 +949,19 @@ function template_main()
 	{
 		echo '
 		<div class="tborder">
-            <div class="cat_bar">
-                <h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
-                ' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;</h3>
-            </div>
-			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="dl_search" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
-					<div style="padding: 10px;" class="windowbg">
-						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br />
-						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
-						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-						<input type="submit" value="' , $txt['tp-send'] , '" />
-					</div>
+			<div class="cat_bar">
+				<h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
+					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;
+				</h3>
+			</div>
+			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
+				<div style="padding: 10px;" class="windowbg">
+					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br />
+					<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
+					<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
+					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+					<input type="submit" value="' , $txt['tp-send'] , '" />
+				</div>
 			</form>
 				';
 		$bb=1;
@@ -932,10 +976,11 @@ function template_main()
 			$bb++;	
 		}
 		echo '
+		</div>
 		</div>';
 	}
 	echo '
-</div>';
+	</div>';
 }
 
 ?>
