@@ -37,11 +37,10 @@ function template_main()
 		);
 		echo '
 		<div style="text-align: right; padding: 5px 1em; overflow: hidden;" class="middletext">';
-		tp_template_button_strip($dlbuttons, 'right');
+			tp_template_button_strip($dlbuttons, 'right');
 
 		echo '
 		</div>';
-			
 
 	if($context['TPortal']['dlaction']=='' || $context['TPortal']['dlaction']=='cat')
 	{
@@ -866,40 +865,43 @@ function template_main()
 	{
 	   echo '
 		<div class="tborder">
-            <div class="cat_bar">
-                <h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
-            </div>
+			<div class="cat_bar">
+				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
+			</div>
 			<div class="windowbg">
 				<span class="topslice"><span></span></span>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td >
-						<form accept-charset="', $context['character_set'], '" name="dl_search" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
-							<table cellpadding="5" cellspacing="1" width="100%" >
-								<tr>
-									<td align="right">' , $txt['tp-search'] , ':</td>
-									<td width="70%"><input type="text" size="60" name="dl_search" id="dl_search"></td>
-								</tr>
-								<tr>
-									<td valign="top" align="right"></td>
-									<td width="70%">
-									<input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
-									<input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" align="center">
-										<input type="submit" value="' , $txt['tp-search'] , '">
-										<input type="hidden" name="sc" value="' , $context['session_id'] , '">
-									</td>
-								</tr>
-							</table>
-						</form>
-					</td>
-				</tr>
-			</table>
-			<span class="botslice"><span></span></span>
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td >
+							<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
+								<table cellpadding="5" cellspacing="1" width="100%" >
+									<tr>
+										<td align="right">' , $txt['tp-search'] , ':</td>
+										<td class="input_td">
+											<input type="text" size="60" name="dl_search" id="dl_search" />
+										</td>
+									</tr>
+									<tr>
+										<td valign="top" align="right"></td>
+										<td  class="input_td">
+										<input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
+										<input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center">
+											<input type="submit" value="' , $txt['tp-search'] , '" />
+											<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+										</td>
+									</tr>
+								</table>
+							</form>
+						</td>
+					</tr>
+				</table>
+				<span class="botslice"><span></span></span>
 			</div>
+		</div>
 		</div>';
 	}
 
