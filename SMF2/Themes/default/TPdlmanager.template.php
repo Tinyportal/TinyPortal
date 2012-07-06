@@ -597,10 +597,10 @@ function template_main()
 	{
 		$maxcount = 10;
 	   echo '
-	<div class="tborder"">
-        <div class="cat_bar">
-            <h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-stats'].'</h3>
-        </div>
+	<div class="tborder">
+		<div class="cat_bar">
+			<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-stats'].'</h3>
+		</div>
 		<table width="100%" border="0" cellspacing="1" cellpadding="5" class="bordercolor">
 			<tr class="titlebg">
 				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatscats'].'</td>
@@ -618,19 +618,29 @@ function template_main()
 		if(isset($context['TPortal']['topcats']) && count($context['TPortal']['topcats'])>0){
 			foreach($context['TPortal']['topcats'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['items'].'</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">
+								'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['items'].'
+							</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
-		echo '</table>';
+		echo '
+					</table>';
 
 		echo '
 				</td>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" /></td><td class="windowbg" valign="top" width="50%">';
+				<td class="windowbg2">
+					<img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" />
+				</td>
+				<td class="windowbg" valign="top" width="50%">';
 
 		// top views
 		echo '<table width="100%" cellpadding="2" cellspacing="0">';
@@ -640,49 +650,70 @@ function template_main()
 		if(isset($context['TPortal']['topviews']) && count($context['TPortal']['topviews'])>0){
 			foreach($context['TPortal']['topviews'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['views'].'</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">'.$cats['link'].'</td>
+							<td>
+								<img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" />
+							</td>
+							<td  width="5%" style="padding-left: 2ex;">'.$cats['views'].'</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
-
-		echo '</table>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
 		echo '
-				</td></tr>
+					</table>';
+
+		echo '
+				</td>
+			</tr>
 			<tr class="titlebg">
 				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatsdls'].'</td>
 				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatssize'].'</td>
 			</tr>
-				<tr>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td><td class="windowbg" valign="top">';
+			<tr>
+				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td>
+				<td class="windowbg" valign="top">';
 
 		// top downloads
-		echo '<table width="100%" cellpadding="2" cellspacing="0">';
+		echo '
+					<table width="100%" cellpadding="2" cellspacing="0">';
 		$counter=0;
 		if(isset($context['TPortal']['topitems'][0]['downloads']))
 			$maxval=$context['TPortal']['topitems'][0]['downloads'];
 		if(isset($context['TPortal']['topitems']) && count($context['TPortal']['topitems'])>0){
 			foreach($context['TPortal']['topitems'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></td><td width="5%">'.$cats['downloads'].'</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">'.$cats['link'].'</td>
+							<td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></td>
+							<td width="5%">'.$cats['downloads'].'</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
-		echo '</table>';
+		echo '
+					</table>';
 
 		echo '
 				</td>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td><td class="windowbg" valign="top">';
+				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td>
+				<td class="windowbg" valign="top">';
 
 		// top filesize
-		echo '<table width="100%" cellpadding="2" cellspacing="0">';
+		echo '
+					<table width="100%" cellpadding="2" cellspacing="0">';
 		$counter=0;
 		if(isset($context['TPortal']['topsize'][0]['size']))
 			$maxval=$context['TPortal']['topsize'][0]['size'];
@@ -690,18 +721,27 @@ function template_main()
 		if(isset($context['TPortal']['topsize']) && count($context['TPortal']['topsize'])>0){
 			foreach($context['TPortal']['topsize'] as $cats){
 				if($counter<$maxcount){
-					echo '<tr><td width="60%">'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></td><td width="5%">'. floor($cats['size']/1000).'kb</td></tr>';
+					echo '
+						<tr>
+							<td width="60%">'.$cats['link'].'</td>
+							<td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></td>
+							<td width="5%">'. floor($cats['size']/1000).'kb</td>
+						</tr>';
 					$counter++;
 				}
 			}
 		}
 		else
-			echo '<tr><td>&nbsp;</td></tr>';
+			echo '
+						<tr><td>&nbsp;</td></tr>';
 
-		echo '</table>
+		echo '
+					</table>
 				</td>
 			</tr>
-		</table></div>';
+		</table>
+	</div>
+	</div>';
 	}
 
 	// how about user-editing?
@@ -909,18 +949,19 @@ function template_main()
 	{
 		echo '
 		<div class="tborder">
-            <div class="cat_bar">
-                <h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
-                ' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;</h3>
-            </div>
-			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="dl_search" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
-					<div style="padding: 10px;" class="windowbg">
-						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br />
-						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
-						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-						<input type="submit" value="' , $txt['tp-send'] , '" />
-					</div>
+			<div class="cat_bar">
+				<h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
+					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;
+				</h3>
+			</div>
+			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
+				<div style="padding: 10px;" class="windowbg">
+					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br />
+					<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
+					<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
+					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+					<input type="submit" value="' , $txt['tp-send'] , '" />
+				</div>
 			</form>
 				';
 		$bb=1;
@@ -935,6 +976,7 @@ function template_main()
 			$bb++;	
 		}
 		echo '
+		</div>
 		</div>';
 	}
 	echo '
