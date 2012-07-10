@@ -17,9 +17,12 @@
  
 global $hooks, $mod_name;
 $hooks = array(
-	'integrate_pre_include' => '$sourcedir/TPassimilate.php',
+	'integrate_pre_include' => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
 	'integrate_load_permissions' => 'tpAddPermissions',
 	'integrate_buffer' => 'tpAddCopy',
+	'integrate_menu_buttons' => 'tpAddMenuItems',
+	'integrate_actions' => 'addTPActions',
+	'integrate_profile_areas' => 'tpAddProfileMenu',
 );
 $mod_name = 'TinyPortal';
 

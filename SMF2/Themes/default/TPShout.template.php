@@ -136,13 +136,6 @@ function template_tpshout_admin_settings()
 					<td class="tborder" style="padding: 0; border: none;">
 				<table class="multiplerow">
 				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-allowguestshout'].'</td>
-					<td>
-						<input name="tp_guest_shout" type="radio" value="1" ' , $context['TPortal']['guest_shout']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-						<input name="tp_guest_shout" type="radio" value="0" ' , $context['TPortal']['guest_shout']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'
-					</td>
-				</tr>
-				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-shoutbox_showsmile'].'</td>
 					<td>
 						<input name="tp_shoutbox_smile" type="radio" value="1" ' , $context['TPortal']['show_shoutbox_smile']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
@@ -164,19 +157,22 @@ function template_tpshout_admin_settings()
 					<td align="right">'.$txt['tp-shoutboxusescroll'].'</td>
 					<td>
 						<input name="tp_shoutbox_usescroll" type="radio" value="0" ' , $context['TPortal']['shoutbox_usescroll'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br />
-						<input name="tp_shoutbox_usescroll" type="radio" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-marquee'].'
+						<input name="tp_shoutbox_usescroll" type="radio" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
 					</td>
 				</tr>
 				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-shoutboxduration'].'</td>
 					<td>
-						<input type="text" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" /> ms
+						<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" />
 					</td>
 				</tr>
-
 				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-shoutboxlimit'].'</td>
 					<td><input size="6" name="tp_shoutbox_limit" type="text" value="' ,$context['TPortal']['shoutbox_limit'], '" /></td>
+				</tr>
+				<tr class="windowbg2">
+					<td align="right">'.$txt['tp-shout-autorefresh'].'</td>
+					<td><input size="6" name="tp_shoutbox_refresh" type="text" value="' ,$context['TPortal']['shoutbox_refresh'], '" /></td>
 				</tr>
 				<tr class="windowbg2">
 					<td align="right">'.$txt['tp-show_profile_shouts'].'</td>
@@ -201,11 +197,7 @@ function template_tpshout_admin_settings()
 
 function template_tpshout_shoutblock()
 {
-
-	global $context, $scripturl, $txt, $smcFunc;
-
-	// Show the shoutbox, takes settings from tpadmin
-	$tp_where = $_SERVER['QUERY_STRING'];
+	global $context, $scripturl, $txt, $smcFunc, $settings;
 
 	if(!isset($context['TPortal']['shoutbox']))
 		$context['TPortal']['shoutbox'] = '';
@@ -213,10 +205,11 @@ function template_tpshout_shoutblock()
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
 
-	if($context['TPortal']['shoutbox_usescroll']>'0')
-		echo '<div id="marqueecontainer" onmouseover="copyspeed=pausespeed" onmouseout="copyspeed=marqueespeed">
-				<div id="vmarquee" class="middletext" style="text-align: left;position: absolute; width: 98%;">'.$context['TPortal']['shoutbox'].'</div>
-			</div>';
+	if($context['TPortal']['shoutbox_usescroll'] > '0')
+		echo '
+		<marquee id="tp_marquee" behavior="scroll" direction="down" scrollamount="'. $context['TPortal']['shoutbox_scrollduration'] . '" height="'. $context['TPortal']['shoutbox_height'] . '">
+			<div class="tp_shoutframe">'.$context['TPortal']['shoutbox'].'</div>
+		</marquee>';
 	else
 		echo '
 	<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
@@ -229,33 +222,41 @@ function template_tpshout_shoutblock()
 	</table>';
 
 	echo '
-		<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 0; margin: 8px 0 8px 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >';
+		<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >';
 
-	if(($context['TPortal']['guest_shout']) || (!$context['TPortal']['guest_shout'] && !$context['user']['is_guest']))
+	if(allowedTo('tp_can_shout'))
 	{
 		echo '
 		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 80%;margin-top: 1ex; height: 50px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
+		
 		if(!empty($context['TPortal']['show_shoutbox_smile']))
+		{
 			shout_smiley_code();
+			print_shout_smileys();
+		}
 		if(!empty($context['TPortal']['show_shoutbox_icons']))
 			shout_bcc_code();
-		if(!empty($context['TPortal']['show_shoutbox_smile']))
-			print_shout_smileys();
+			
 		echo '
-		<input style="margin-top: 4px;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" tabindex="', $context['tabindex']++, '" />';
+		<div>
+			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
+			<input onclick="TPupdateShouts(\'save\'); return false;" style="padding: 6px; margin: 5px 10px 0;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" tabindex="', $context['tabindex']++, '" />
+			<a onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+		</div>';
+		
 	}
-	if($context['user']['is_guest'] && $context['TPortal']['guest_shout'])
+	
+	if($context['user']['is_guest'] && allowedTo('tp_can_shout'))
 		echo '<br />
-		<input style="margin-top: 4px;" size="20" class="smalltext" type="text" name="tp-shout-name" value="'.$txt['tp-guest'].'" />';
+		<input style="margin-top: 4px;" id="tp-shout-name" size="20" class="smalltext" type="text" name="tp-shout-name" value="'.$txt['tp-guest'].'" />';
 	elseif($context['user']['is_logged'])
 		echo '
-		<input type="hidden" name="tp-shout-name" value="'.$context['user']['name'].'" />';
+		<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />';
 
 	echo '
-		<br /><a href="' , $scripturl , '?action=tpmod;shout=show50">' . $txt['tp-showlatest'] . '</a>
-		<input name="tp-shout-url" type="hidden" value="'. $smcFunc['htmlspecialchars']($tp_where).'" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-	</form>';
+	</form>
+	<div id="tp_loader" style="display: none; text-align: center; padding-top: 5px;"><img src="' . $settings['tp_images_url'] . '/ajax.gif" alt="" /></div>';
 
 }
 function template_tpshout_frontpage()
@@ -323,14 +324,16 @@ function template_singleshout($row)
 						<div class="tp_shoutcontainer">
 							<div class="tp_shoutavatar">
 							<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
-							' . (allowedTo('tp_shoutbox') ? '<div style="float: right; margin-bottom: 3px;"><a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a></div>' : '') . '
+							' . (allowedTo('tp_shoutbox') ? '
+								<div style="float: right; margin-bottom: 3px;">
+									<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+									<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
+								</div>' : '') . '
 								<h4>' . $row['realName'] . '</h4>
 								<div class="smalltext">'. timeformat($row['value2']).'</div>	
 							</div> 
 							<div class="tp_shoutupper"></div>
-							<div class="tp_shoutbody">
-							' . (parse_bbc(censorText($row['value1']),true)) . '
-							</div>
+							<div class="tp_shoutbody">' . $row['value1'] . '</div>
 						</div>
 				</div>';
 

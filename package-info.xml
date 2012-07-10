@@ -94,6 +94,7 @@
 		<remove-file name="$themedir/TPwireless.template.php" />
 		<remove-file name="$themedir/TPShout.css" />
 		<remove-file name="$themedir/tp-style.css" />
+		<remove-file name="$themedir/scripts/TPShout.js" />
 		<remove-file name="$languagedir/TPdlmanager.english" />
 		<remove-file name="$languagedir/TPdlmanager.english-uf8" />
 		<remove-file name="$languagedir/TPhelp.english" />

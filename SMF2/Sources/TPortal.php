@@ -29,9 +29,9 @@ function TPortal_init()
 
 	$settings['tp_smfversion'] = '1';
 	$context['TPortal'] = array();
-	$context['TPortal']['now'] = time();
+
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
-	
+
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
 		return;
@@ -45,7 +45,12 @@ function TPortal_init()
 	if(loadLanguage('TPortal') == false)
 		loadLanguage('TPortal', 'english');
 
+	// Loading jquery from google. Load it only once!
+	$context['html_headers'] .= '
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>';		
+		
 	setupTPsettings();
+	$context['TPortal']['now'] = time();
 	fetchTPhooks();
 	doModules();
  
@@ -205,16 +210,18 @@ function TPortal_init()
 	}
 
 	// any modules needed to load then?
-	if(sizeof($context['TPortal']['always_loaded']) > 0)
+	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
 	{
 		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
 			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
 	}
 	tp_setupUpshrinks();
 
-	// finally..any errors?
-	if(isset($article_error))
+	// finally..any errors finding an article or category?
+	if(isset($context['art_error']) && $context['art_error'] == true)
 		fatal_error($txt['tp-articlenotexist']);
+	if(isset($context['cat_error']) && $context['cat_error'] == true)
+		fatal_error($txt['tp-categorynotexist']);
 
 	// let a module take over
 	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
@@ -240,48 +247,77 @@ function TP_loadTheme()
 	// are we on a article? check it for custom theme
     if(isset($_GET['page']) && !isset($_GET['action']))
 	{
-		// fetch the custom theme if any
-		$pag = tp_sanitize($_GET['page']);
-		if(is_numeric($pag))
-			$request = $smcFunc['db_query']('', '
-				SELECT id_theme FROM {db_prefix}tp_articles 
-				WHERE id = {int:page}',
-				array('page' => $pag)
-			);
-		else
-			$request =  $smcFunc['db_query']('', '
-				SELECT id_theme FROM {db_prefix}tp_articles 
-				WHERE shortname = {string:short}',
-				array('short' => $pag)
-			);
-
-		if($smcFunc['db_num_rows']($request) > 0)
+		if (($theme = cache_get_data('tpArticleTheme', 120)) == null)
 		{
-			$row = $smcFunc['db_fetch_row']($request);
-			$theme = $row[0];
-			$smcFunc['db_free_result']($request);
+			// fetch the custom theme if any
+			$pag = tp_sanitize($_GET['page']);
+			if(is_numeric($pag))
+				$request = $smcFunc['db_query']('', '
+					SELECT id_theme FROM {db_prefix}tp_articles
+					WHERE id = {int:page}',
+					array('page' => $pag)
+				);
+			else
+				$request =  $smcFunc['db_query']('', '
+					SELECT id_theme FROM {db_prefix}tp_articles
+					WHERE shortname = {string:short}',
+					array('short' => $pag)
+				);
+
+			if($smcFunc['db_num_rows']($request) > 0)
+			{
+				$row = $smcFunc['db_fetch_row']($request);
+				$theme = $row[0];
+				$smcFunc['db_free_result']($request);
+			}
+
+			if (!empty($modSettings['cache_enable']))
+				cache_put_data('tpArticleTheme', $theme, 120);
 		}
     }
     // are we on frontpage? and it shows fetured article?
     elseif(!isset($_GET['page']) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
 	{
-		// fetch the custom theme if any
-		$request = $smcFunc['db_query']('', '
-			SELECT COUNT(*) FROM {db_prefix}tp_settings 
-			WHERE name = {string:name} 
-			AND value = {string:value}',
-			array('name' => 'front_type', 'value' => 'single_page')
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
+		if (($theme = cache_get_data('tpFrontTheme', 120)) == null)
 		{
-			$row=$smcFunc['db_fetch_row']($request);
-			$smcFunc['db_free_result']($request);
+			// fetch the custom theme if any
 			$request = $smcFunc['db_query']('', '
-				SELECT art.id_theme as ID_THEME, sett.value 
-				FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_settings AS sett) 
-				WHERE sett.name = {string:name} 
-				AND sett.value = art.id',
-				array('name' => 'featured_article')
+				SELECT COUNT(*) FROM {db_prefix}tp_settings
+				WHERE name = {string:name}
+				AND value = {string:value}',
+				array('name' => 'front_type', 'value' => 'single_page')
+			);
+			if($smcFunc['db_num_rows']($request) > 0)
+			{
+				$row = $smcFunc['db_fetch_row']($request);
+				$smcFunc['db_free_result']($request);
+				$request = $smcFunc['db_query']('', '
+					SELECT art.id_theme 
+					FROM {db_prefix}tp_articles AS art
+					WHERE featured = {int:feat}',
+					array('feat' => 1)
+				);
+				if($smcFunc['db_num_rows']($request) > 0)
+				{
+					$row = $smcFunc['db_fetch_row']($request);
+					$theme = $row[0];
+					$smcFunc['db_free_result']($request);
+				}
+			}
+			if (!empty($modSettings['cache_enable']))
+				cache_put_data('tpFrontTheme', $theme, 120);
+		}
+    }
+    // how about dlmanager, any custom theme there?
+    elseif(isset($_GET['action']) && $_GET['action'] == 'tpmod' && isset($_GET['dl']))
+	{
+		if (($theme = cache_get_data('tpDLTheme', 120)) == null)
+		{
+			// fetch the custom theme if any
+			$request =  $smcFunc['db_query']('', '
+				SELECT value FROM {db_prefix}tp_settings
+				WHERE name = {string:name}',
+				array('name' => 'dlmanager_theme')
 			);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
@@ -289,22 +325,8 @@ function TP_loadTheme()
 				$theme = $row[0];
 				$smcFunc['db_free_result']($request);
 			}
-		}
-    }
-    // how about dlmanager, any custom theme there?
-    elseif(isset($_GET['action']) && $_GET['action'] == 'tpmod' && isset($_GET['dl']))
-	{
-		// fetch the custom theme if any
-		$request =  $smcFunc['db_query']('', '
-			SELECT value FROM {db_prefix}tp_settings 
-			WHERE name = {string:name}',
-			array('name' => 'dlmanager_theme')
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			$row = $smcFunc['db_fetch_row']($request);
-			$theme = $row[0];
-			$smcFunc['db_free_result']($request);
+			if (!empty($modSettings['cache_enable']))
+				cache_put_data('tpDLTheme', $theme, 120);
 		}
     }
  	return $theme;
@@ -312,24 +334,31 @@ function TP_loadTheme()
 
 function setupTPsettings()
 {
-	global $maintenance, $context, $txt, $settings, $smcFunc;
+	global $maintenance, $context, $txt, $settings, $smcFunc, $modSettings;
 
 	$context['TPortal']['always_loaded'] = array();
 
-	// get the settings
-	$request =  $smcFunc['db_query']('', '
-		SELECT name, value FROM {db_prefix}tp_settings', array()
-	);
-	if ($smcFunc['db_num_rows']($request) > 0)
+	// Try to load it from the cache
+	if (($context['TPortal'] = cache_get_data('tpSettings', 90)) == null)
 	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
+		// get the settings
+		$request =  $smcFunc['db_query']('', '
+			SELECT name, value FROM {db_prefix}tp_settings', array()
+		);
+		if ($smcFunc['db_num_rows']($request) > 0)
 		{
-			$context['TPortal'][$row['name']] = $row['value'];
-			// ok, any module that like to load?
-			if(substr($row['name'], 0, 11) == 'load_module')
-				$context['TPortal']['always_loaded'][] = $row['value'];
+			while($row = $smcFunc['db_fetch_row']($request))
+			{
+				$context['TPortal'][$row[0]] = $row[1];
+				// ok, any module that like to load?
+				if(substr($row[0], 0, 11) == 'load_module')
+					$context['TPortal']['always_loaded'][] = $row[1];
+			}
+			$smcFunc['db_free_result']($request);
 		}
-		$smcFunc['db_free_result']($request);
+		
+		if (!empty($modSettings['cache_enable']))
+			cache_put_data('tpSettings', $context['TPortal'], 90);
 	}
 		
 	// setup the userbox settings
@@ -471,8 +500,8 @@ function fetchTPhooks()
 	if($what_board > 0)
 	{
 		$request2 =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
+			SELECT * FROM {db_prefix}tp_variables
+			WHERE type = {string:type}
 			AND	value1 = {string:val1}',
 			array('type' => 'layerhook', 'val1' => 'what_board')
 		);
@@ -552,7 +581,7 @@ function fetchTPhooks()
 			if(allowedTo('tp_dlmanager') && $context['TPortal']['show_download'] && $row['type'] == 'dl_not_approved')
 				$context['TPortal']['submitcheck']['uploads']++;
 
-			// something alwasy loads?
+			// something always loads?
 			if($row['value1'] == 'what_all' && $row['type'] == 'layerhook' && file_exists($sourcedir . '/' .$row['value2']))
 			{
 				require_once($sourcedir. '/' .$row['value2']);
@@ -1000,7 +1029,7 @@ function doTPpage()
 			return $article['id'];
 		}
 		else
-			$article_error = true;
+			$context['art_error'] = true;
 	}
 	else
 		return;
@@ -1024,7 +1053,7 @@ function doTPcat()
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_variables
 			WHERE '. $catid .' LIMIT 1',
-			array('cat' => $cat)
+			array('cat' => is_numeric($cat) ? (int) $cat : $cat)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -1241,7 +1270,7 @@ function doTPcat()
 				return;
 		}
 		else
-			$article_error = true;
+			$context['cat_error'] = true;
 	}
 	else
 		return;
@@ -2012,24 +2041,6 @@ function doTPfrontpage()
 			}
 			$smcFunc['db_free_result']($request);
 		}
-		// get menubox rendertypes
-		$context['TPortal']['menurender'] = array();
-		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} ORDER BY value5 ASC',
-			array('type' => 'menutype')
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				$context['TPortal']['menurender'][$row['id']] = array(
-						'id' => $row['id'],
-						'name' => $row['value1'],
-						);
-			}
-			$smcFunc['db_free_result']($request);
-		}
 	}
 
 	// check the panels
@@ -2336,24 +2347,6 @@ function doTPblocks()
 						'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
 					);
 				}
-			}
-			$smcFunc['db_free_result']($request);
-		}
-		// get menubox rendertypes
-		$context['TPortal']['menurender'] = array();
-		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} ORDER BY value5 ASC',
-			array('type' => 'menutype')
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				$context['TPortal']['menurender'][$row['id']] = array(
-					'id' => $row['id'],
-					'name' => $row['value1'],
-				);
 			}
 			$smcFunc['db_free_result']($request);
 		}

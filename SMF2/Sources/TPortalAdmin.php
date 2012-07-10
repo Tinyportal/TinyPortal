@@ -84,7 +84,7 @@ function TPortalAdmin()
 	// get all membergroups	
 	tp_groups();
 
-	// get the layout shcemes
+	// get the layout schemes
 	get_catlayouts();
 	
 	// get the caregories
@@ -2042,6 +2042,9 @@ function do_postchecks()
 {
 	global $context, $txt, $settings, $boarddir, $smcFunc, $sourcedir;
 
+	// If we have any setting changes add them to this array
+	$updateArray = array();
+	
 	// tag links from topics?
 	if(isset($_POST['tpadmin_topictags']))
 	{
@@ -2336,53 +2339,21 @@ function do_postchecks()
 						}
 					}
 					if($from == 'settings' && $what == 'tp_frontpage_title')
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_settings 
-							SET value = {string:title} 
-							WHERE name = {string:name} LIMIT 1',
-							array(
-								'title' => $clean,
-								'name' => 'frontpage_title',
-							)
-						);
+						$updateArray['frontpage_title'] = $clean;
 					else
 					{
 						if(isset($clean))
-							$smcFunc['db_query']('', '
-								UPDATE {db_prefix}tp_settings 
-								SET value = {string:val} 
-								WHERE name = {string:name} LIMIT 1',
-								array(
-									'val' => $clean,
-									'name' => $where,
-								)
-							);
+							$updateArray[$where] = $clean;
 					}
 				}
 			}
 			// check the frontpage visual setting..
 			if($from == 'frontpage')
 			{
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array(
-						'val' => implode(',', $w),
-						'name' => 'frontpage_visual',
-					)
-				);
-				// SSI boards
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array(
-						'val' => implode(',', $ssi),
-						'name' => 'SSI_board',
-					)
-				);
+				$updateArray['frontpage_visual'] = implode(',', $w);
+				$updateArray['SSI_board'] = implode(',', $ssi);
 			}
+			updateTPSettings($updateArray);
 			return $from;
 		}
 		// categories
@@ -2474,15 +2445,7 @@ function do_postchecks()
 			foreach($_POST as $what => $value)
 			{
 				if($what == 'tp_show_download')
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_settings 
-						SET value = {string:val} 
-						WHERE name = {string:name}',
-						array(
-							'val' => $value,
-							'name' => 'show_download',
-						)
-					);
+					$updateArray['show_download'] = $value;
 				elseif(substr($what, 0, 14) == 'tpmodule_state')
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_modules 
@@ -2494,6 +2457,8 @@ function do_postchecks()
 						)
 					);
 			}
+			updateTPSettings($updateArray);
+				
 			return $from;
 		}
 		// all the items
@@ -2539,17 +2504,11 @@ function do_postchecks()
 					elseif($value == 1 && !in_array($new, $all))
 						$all[] = $new;
 
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_settings 
-						SET value = {string:val}
-						WHERE name = {string:name}',
-						array(
-							'val' => implode(',', $all),
-							'name' => 'sitemap_items',
-						)
-					);
+					$updateArray['sitemap_items'] = implode(',', $all);
 				}
 			}
+			updateTPSettings($updateArray);
+				
 			redirectexit('action=tpadmin;sa=menubox;mid='. $_POST['tp_menuid']);
 		}
 		// all the menus
@@ -2740,16 +2699,11 @@ function do_postchecks()
 				$catnames = implode(',', $cats);
 			else
 				$catnames = '';
-
-			$smcFunc['db_query']('', 
-				'UPDATE {db_prefix}tp_settings 
-				SET value = {string:val} 
-				WHERE name = {string:name} LIMIT 1',
-				array(
-					'val' => $catnames,
-					'name' => 'cat_list',
-				)
-			);
+				
+			$updateArray['cat_list'] = $catnames;
+			
+			updateTPSettings($updateArray);
+				
 			return $from;
 		}
 
@@ -3360,12 +3314,7 @@ function do_postchecks()
 			);
 			
 			if(isset($userbox))
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array('val' => implode(',', $userbox), 'name' => 'userbox_options')
-				);
+				$updateArray['userbox_options'] = implode(',', $userbox);
 
 			if(isset($themebox))
 				$smcFunc['db_query']('', '
@@ -3394,6 +3343,8 @@ function do_postchecks()
 				$name = TPuploadpicture('qup_blockbody', $context['user']['id'].'uid');
 				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
 			}
+			updateTPSettings($updateArray);
+			
 			redirectexit('action=tpadmin;blockedit='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
 		// Editing an article?
