@@ -29,7 +29,7 @@ function template_main()
 			'frontdl' => array('text' => 'tp-downloads', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl', 'active' => $context['TPortal']['dlaction']==''),
 			'search' => array('text' => 'tp-search', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search', 'active' => $context['TPortal']['dlaction']=='search'),
 			'stats' => array('text' => 'tp-stats', 'image' => 'stats.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=stats', 'active' => $context['TPortal']['dlaction']=='stats'),
-			'upload' => array('text' => 'tp-dlupload', 'image' => 'upload.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload', 'active' =>$context['TPortal']['dlaction']=='upload'),
+			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'image' => 'upload.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload', 'active' =>$context['TPortal']['dlaction']=='upload'),
 		);
 		echo '
 	<table cellspacing="0" cellpadding="0" align="right" style="margin-right: 10px; margin-bottom: 8px;" class="middletext">';

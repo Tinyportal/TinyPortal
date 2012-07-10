@@ -25,6 +25,8 @@ function TPdlmanager_init()
 	// load the needed strings
 	loadlanguage('TPdlmanager');
 
+	$context['can_tp_dlupload'] = allowedTo('tp_dlupload');
+
 	require_once($sourcedir . '/TPcommon.php');
 	// get subaction
 	if(isset($context['TPortal']['dlsub'])){
