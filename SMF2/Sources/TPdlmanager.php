@@ -26,6 +26,8 @@ function TPdlmanager_init()
 	if(loadLanguage('TPdlmanager') == false)
 		loadLanguage('TPdlmanager', 'english');
 
+	$context['can_tp_dlupload'] = allowedTo('tp_dlupload');
+
 	require_once($sourcedir . '/TPcommon.php');
 	// get subaction
 	if(isset($context['TPortal']['dlsub']))
