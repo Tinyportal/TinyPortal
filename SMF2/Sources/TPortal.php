@@ -1972,7 +1972,8 @@ function doTPfrontpage()
 			AND art.approved = 1'
 		);
 
-		$context['TPortal']['blockarticle_titles'] = array();
+		if (!isset($context['TPortal']['blockarticle_titles']))
+			$context['TPortal']['blockarticle_titles'] = array();
 
 		if ($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -2282,7 +2283,9 @@ function doTPblocks()
 			AND art.approved = 1'
 		);
 
-		$context['TPortal']['blockarticle_titles'] = array();
+		if (!isset($context['TPortal']['blockarticle_titles']))
+			$context['TPortal']['blockarticle_titles'] = array();
+
 		if ($smcFunc['db_num_rows']($request) > 0)
 		{
 			while($row = $smcFunc['db_fetch_assoc']($request))

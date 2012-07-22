@@ -1724,9 +1724,9 @@ function doTPfrontpage()
 		AND art.category>0
 		AND art.approved=1", __FILE__, __LINE__);
 
-		if (!$context['TPortal']['blockarticle_titles']){
+		if (!isset($context['TPortal']['blockarticle_titles']))
 			$context['TPortal']['blockarticle_titles'] = array();
-		}
+
 		if (tpdb_num_rows($request) > 0)
 		{
 			while($row = tpdb_fetch_assoc($request))
