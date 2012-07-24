@@ -823,7 +823,7 @@ function TPortalDLManager()
 		$week = (int) date("W",$now);
 		$year = (int) date("Y",$now);
 		$request = $smcFunc['db_query']('', '
-			SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
+			SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 			dlcat.name AS catname, mem.real_name as realName
 			FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
 			LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id=dlm.category
@@ -833,7 +833,7 @@ function TPortalDLManager()
 			AND data.year = {int:year}
 			AND data.week = {int:week}
 			AND dlm.author_id = mem.id_member
-			ORDER BY data.downloads DESC LIMIT 10',
+			ORDER BY dlm.downloads DESC LIMIT 10',
 			array('type' => 'dlitem', 'cat' => $currentcat, 'year' => $year, 'week' => $week)
 		);
 
