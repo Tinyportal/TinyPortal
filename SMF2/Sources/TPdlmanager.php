@@ -3264,7 +3264,7 @@ function TPortalDLAdmin()
 				'last_access' => timeformat($row['last_access']),
 				'filesize' => (substr($row['file'],14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
 				'downloads' => $row['downloads'],
-				'sshot' => $sshot,
+				'sshot' => !empty($sshot) ? $sshot : '',
 				'screenshot' => $row['screenshot'],
 				'link' => $row['link'],
 				'href' => $scripturl.'?action=tpmod;dl=adminitem'.$row['id'],
