@@ -3243,10 +3243,13 @@ function TPortalDLAdmin()
 				}
 				$smcFunc['db_free_result']($fetch);
 			}
-			if(substr($row['screenshot'], 0, 10) == 'tp-images/')
-				$sshot = $boardurl.'/'.$row['screenshot'];
-			else
+			if (!empty($row['screenshot']))
+			{
+				if(substr($row['screenshot'], 0, 10) == 'tp-images/')
+					$sshot = $boardurl.'/'.$row['screenshot'];
+				else
 				$sshot = $boardurl.'/tp-images/dlmanager/listing/'.$row['screenshot'];
+			}
 
 			$context['TPortal']['dl_admitems'][] = array(
 				'id' => $row['id'],
