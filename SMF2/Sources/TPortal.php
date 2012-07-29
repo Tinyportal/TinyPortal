@@ -487,121 +487,85 @@ function fetchTPhooks()
 {
 	global $context, $smcFunc, $boarddir, $sourcedir;
 
-	// any hooks for where we are at?
-	$what_board = isset($context['current_board']) ? $context['current_board'] : 0;
-	$what_topic = isset($context['current_topic']) ? $context['current_topic'] : 0;
-	if($what_topic > 0)
-		$what_board = 0;
-	
-	$what_page = (isset($_GET['page']) && $context['current_action'] != 'help') ? $_GET['page'] : 0;
-	$what_cat = isset($_GET['cat']) ? $_GET['cat'] : 0;
-
 	// are we inside a board?
-	if($what_board > 0)
+	if (isset($context['current_topic']))
 	{
-		$request2 =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables
-			WHERE type = {string:type}
-			AND	value1 = {string:val1}',
-			array('type' => 'layerhook', 'val1' => 'what_board')
-		);
-		$param = $what_board;
+		$what = 'what_topic';
+		$param = $context['current_topic'];
 	}
 	// perhaps a topic then?
-	elseif($what_topic > 0)
+	elseif (isset($context['current_board']))
 	{
-		$request2 =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND	value1 = {string:val1}',
-			array('type' => 'layerhook', 'val1' => 'what_topic')
-		);
-		$param = $what_topic;
+		$what = 'what_board';
+		$param = $context['current_board'];
 	}
 	// alright, an article?
-	elseif($what_page > 0)
+	elseif (isset($_GET['page']) && $context['current_action'] != 'help')
 	{
-		$request2 =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND	value1 = {string:val1}',
-			array('type' => 'layerhook', 'val1' => 'what_page')
-		);
-		$param = $what_page;
+		$what = 'what_page';
+		$param = $_GET['page'];
 	}
 	// a category of articles?
-	elseif($what_cat > 0)
+	elseif (isset($_GET['cat']))
 	{
-		$request2 =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND	value1 = {string:val1}',
-			array('type' => 'layerhook', 'val1' =>'what_cat')
-		);
-		$param = $what_cat;
+		$what = 'what_cat';
+		$param = $_GET['cat'];
 	}
 	// guess neither..
 	else
-		$param = 0;
-
-	// do the actual hooks
-	if(!empty($request2) && $smcFunc['db_num_rows']($request2) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request2))
-		{
-			if(file_exists($sourcedir . '/' .$row['value2']))
-			{
-				require_once($sourcedir. '/' .$row['value2']);
-				if(function_exists($row['value3']))
-					call_user_func($row['value3'], $param);
-			}
-		}
-		$smcFunc['db_free_result']($request2);
-	}
+		$param = 0
 
 	// something should always load? + submissions
 	$types = array('layerhook', 'art_not_approved', 'dl_not_approved');
 
-	$request2 =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_variables 
+	$request2 = $smcFunc['db_query']('', '
+		SELECT *
+		FROM {db_prefix}tp_variables 
 		WHERE type IN ({array_string:type})',
-		array('type' => $types)
+		array(
+			'type' => $types
+		)
 	);
 	
 	$context['TPortal']['submitcheck'] = array('articles' => 0, 'uploads' => 0);
 
 	// do the actual hooks
-	if(!empty($request2) && $smcFunc['db_num_rows']($request2) > 0)
+	while ($row = $smcFunc['db_fetch_assoc']($request2))
 	{
-		while($row = $smcFunc['db_fetch_assoc']($request2))
+		if (isset($what) && $row['value1'] == $what && $row['type'] == 'layerhook' && file_exists($sourcedir . '/' .$row['value2']))
 		{
-			if(allowedTo('tp_articles') && $row['type'] == 'art_not_approved')
-				$context['TPortal']['submitcheck']['articles']++;
-			// check submission on dl manager, but only if its active
-			if(allowedTo('tp_dlmanager') && $context['TPortal']['show_download'] && $row['type'] == 'dl_not_approved')
-				$context['TPortal']['submitcheck']['uploads']++;
-
-			// something always loads?
-			if($row['value1'] == 'what_all' && $row['type'] == 'layerhook' && file_exists($sourcedir . '/' .$row['value2']))
+				require_once($sourcedir. '/' .$row['value2']);
+				if (function_exists($row['value3']))
+					call_user_func($row['value3'], $param);
+		}
+		if ($row['type'] == 'art_not_approved' && allowedTo('tp_articles'))
+			$context['TPortal']['submitcheck']['articles']++;
+		// check submission on dl manager, but only if its active
+		elseif ($row['type'] == 'dl_not_approved' && $context['TPortal']['show_download'] && allowedTo('tp_dlmanager'))
+			$context['TPortal']['submitcheck']['uploads']++;
+		// something alwasy loads?
+		elseif ($row['type'] == 'layerhook')
+		{
+			if ($row['value1'] == 'what_all' && file_exists($sourcedir . '/' . $row['value2']))
 			{
 				require_once($sourcedir. '/' .$row['value2']);
-				if(function_exists($row['value3']))
+				if (function_exists($row['value3']))
 					call_user_func($row['value3'], $param);
 			}
 			// something always loads?
-			if($row['value1'] == 'what_all_tpmodule' && $row['type'] == 'layerhook' && file_exists($boarddir . '/tp-files/tp-modules/' .$row['value2'].'/Sources/'.$row['value2']. '.php'))
+			elseif ($row['value1'] == 'what_all_tpmodule' && file_exists($boarddir . '/tp-files/tp-modules/' .$row['value2'] . '/Sources/' . $row['value2'] . '.php'))
 			{
 				// is it installed at all?
-				if(isset($context['TPortal'][$row['value4']]) && $context['TPortal'][$row['value4']] == 1)
+				if (isset($context['TPortal'][$row['value4']]) && $context['TPortal'][$row['value4']] == 1)
 				{
-					require_once($boarddir . '/tp-files/tp-modules/' .$row['value2'].'/Sources/'.$row['value2']. '.php');
-					if(function_exists($row['value3']))
+					require_once($boarddir . '/tp-files/tp-modules/' . $row['value2'] . '/Sources/' . $row['value2'] . '.php');
+					if (function_exists($row['value3']))
 						call_user_func($row['value3'], $param);
 				}
 			}
 		}
-		$smcFunc['db_free_result']($request2);
 	}
+	$smcFunc['db_free_result']($request2);
 }
 
 function doTPpage()
@@ -762,13 +726,8 @@ function doTPpage()
 					AND off = 0',
 					array('author' => $context['TPortal']['article']['authorID'])
 				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
-					$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
-					$smcFunc['db_free_result']($request);
-				}
-				else
-					$context['TPortal']['article']['countarticles'] = 0;
+				$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
+				$smcFunc['db_free_result']($request);
 
 				// fetch any comments
 				$request =  $smcFunc['db_query']('', '
