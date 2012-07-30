@@ -2506,7 +2506,7 @@ function template_articons()
 								<div class="tp_container">
 									<div class="tp_col8">' . $icon['image'] . '</div>
 									<div class="tp_col8"><input type="checkbox" name="articon'.$icon['id'].'" id="articon'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  />
-								<label style="vertical-align: top;"  for"articon'.$icon['id'].'">'.$txt['tp-remove'].'?</label>
+								<label style="vertical-align: top;"  for="articon'.$icon['id'].'">'.$txt['tp-remove'].'?</label>
 									</div>
 								</div>
 							</td></tr>';
@@ -2531,7 +2531,7 @@ function template_articons()
 				echo '	<tr' , $alt ? ' class="windowbg2"' : '' , '	><td></td><td>
 							<div class="tp_conainer">
 								<div class="tp_col8">' . $icon['image'] . '</div>
-								<div class="tp_col8"><input type="checkbox" name="artillustration'.$icon['id'].'" id="artillustration'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  /><label style="vertical-align: top;"  for"artiillustration'.$icon['id'].'">'.$txt['tp-remove'].'?</label>
+								<div class="tp_col8"><input type="checkbox" name="artillustration'.$icon['id'].'" id="artillustration'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  /><label style="vertical-align: top;"  for="artiillustration'.$icon['id'].'">'.$txt['tp-remove'].'?</label>
 								</div>
 							</div>
 							</td></tr>';
