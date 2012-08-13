@@ -17,6 +17,8 @@
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
 
+	loadLanguage('TPShout');
+
 	$permissionList['membergroup'] = array_merge(
 		array(
 			'tp_settings' => array(false, 'tp', 'tp'),
