@@ -1888,6 +1888,7 @@ function article_comments($render = true)
 			{
 				$code .= '
 				<div class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
+					<a id="comment'.$comment['id'].'"></a>
 					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
 						' . (($comment['is_new'] && $context['user']['is_logged']) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '

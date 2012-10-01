@@ -751,7 +751,7 @@ function doTPpage()
 					{
 						$context['TPortal']['article']['comment_posts'][] = array(
 							'id' => $row['id'],
-							'subject' => $row['value1'],
+							'subject' => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['value1'].'</a>',
 							'text' => parse_bbc($row['value2']),
 							'timestamp' => $row['value4'],
 							'date' => timeformat($row['value4']),
