@@ -45,10 +45,10 @@ function TPupdateShouts(action, shoutId)
 		cache: false,
 		url: smf_scripturl + "?action=tpmod;shout=" + param + ";" + tp_session_var + "=" + tp_session_id,
 		beforeSend: function() {
-			$j("#tp_loader").show();
+			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/ajax.gif");
 		},
 		complete: function(){
-			$j("#tp_loader").hide();
+			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/TPrefresh.png");
 		},					
 		success: function(data) {
 			shoutHtml = $j(".tp_shoutframe", $j(data)).html();

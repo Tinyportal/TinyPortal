@@ -23,7 +23,7 @@ global $context, $scripturl, $txt, $user_info, $settings, $smcFunc, $modSettings
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
 
-// set version for databse updates.
+// set version for database updates.
 $shoutboxversion = '101';
 
 $shoutboxtemplate = '111';
@@ -678,7 +678,7 @@ function shout_bcc_code($collapse = true)
 
 function shout_smiley_code()
 {
-	global $context, $settings, $user_info, $txt, $modSettings, $db_prefix, $smcFunc;
+	global $context, $settings, $user_info, $txt, $modSettings, $smcFunc;
   
 	// Initialize smiley array...
 	$context['tp_smileys'] = array(

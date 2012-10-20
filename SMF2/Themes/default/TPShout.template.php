@@ -197,7 +197,7 @@ function template_tpshout_admin_settings()
 
 function template_tpshout_shoutblock()
 {
-	global $context, $scripturl, $txt, $smcFunc, $settings;
+	global $context, $scripturl, $txt, $settings;
 
 	if(!isset($context['TPortal']['shoutbox']))
 		$context['TPortal']['shoutbox'] = '';
@@ -241,7 +241,7 @@ function template_tpshout_shoutblock()
 		<div>
 			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 			<input onclick="TPupdateShouts(\'save\'); return false;" style="padding: 6px; margin: 5px 10px 0;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" tabindex="', $context['tabindex']++, '" />
-			<a onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
 		</div>';
 		
 	}
@@ -255,8 +255,7 @@ function template_tpshout_shoutblock()
 
 	echo '
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-	</form>
-	<div id="tp_loader" style="display: none; text-align: center; padding-top: 5px;"><img src="' . $settings['tp_images_url'] . '/ajax.gif" alt="" /></div>';
+	</form>';
 
 }
 function template_tpshout_frontpage()
@@ -317,25 +316,25 @@ function template_tpshout_profile()
 
 function template_singleshout($row)
 {
-	global $scripturl,$context, $settings, $txt;
+	global $scripturl, $context, $settings, $txt;
 
 	$return = '
-				<div style="padding-bottom: 5px;">
-						<div class="tp_shoutcontainer">
-							<div class="tp_shoutavatar">
-							<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
-							' . (allowedTo('tp_shoutbox') ? '
-								<div style="float: right; margin-bottom: 3px;">
-									<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
-									<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
-								</div>' : '') . '
-								<h4>' . $row['realName'] . '</h4>
-								<div class="smalltext">'. timeformat($row['value2']).'</div>	
-							</div> 
-							<div class="tp_shoutupper"></div>
-							<div class="tp_shoutbody">' . $row['value1'] . '</div>
-						</div>
-				</div>';
+			<div style="padding-bottom: 5px;">
+				<div class="tp_shoutcontainer">
+					<div class="tp_shoutavatar">
+						<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
+						' . (allowedTo('tp_shoutbox') ? '
+						<div style="float: right; margin-bottom: 3px;">
+							<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+							<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
+						</div>' : '') . '
+						<h4>' . $row['realName'] . '</h4>
+						<div class="smalltext">'. timeformat($row['value2']).'</div>
+					</div>
+					<div class="tp_shoutupper"></div>
+					<div class="tp_shoutbody">' . $row['value1'] . '</div>
+				</div>
+			</div>';
 
 	return $return;
 }
