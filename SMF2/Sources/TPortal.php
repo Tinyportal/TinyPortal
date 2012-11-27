@@ -1744,7 +1744,7 @@ function doTPfrontpage()
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
 				{
-					// expand the vislaoptions
+					// expand the visual options
 					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
 					$row['rating'] = array_sum(explode(',', $row['rating']));
