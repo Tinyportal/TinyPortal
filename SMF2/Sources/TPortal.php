@@ -72,18 +72,16 @@ function TPortal_init()
 		$context['shortID'] = doTPpage();
 	elseif(isset($_GET['cat']))
 		$context['catshortID'] = doTPcat();
-	elseif(isset($_GET['action']))
-		checkTPaction();
 	else
 	{
 		if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
 			doTPfrontpage();
 	}
+
 	// check that we are going directly to forum
 	if(count($context['linktree']) > 1 && $settings['TPortal_front_type'] == 'boardindex')
 	{
 		$temp = array_shift($context['linktree']);
-		$t = array_shift($context['linktree']);
 		array_unshift($context['linktree'], $temp);
 	}
 
@@ -114,63 +112,8 @@ function TPortal_init()
 	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode']))
 		tp_hidebars('all');
 
-	// load both stylesheets to be sure all is in, but not if things aren't setup!
-	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/tp-style.css'))
-		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/tp-style.css?fin11" />';
-	else
-		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/tp-style.css?fin11" />
-	<style type="text/css">
-		.tp_half h3.titlebg
-		{
-			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat -10px -200px;
-		}
-		.tp_half h3.titlebg span.l
-		{
-			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 0 -200px;
-		}
-		.tp_half h3.titlebg span.r
-		{
-			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 100% -200px;
-		}
-
-		.tp_half h3.catbg
-		{
-			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat -10px -160px;
-		}
-		.tp_half h3.catbg span.l
-		{
-			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 0 -160px;
-		}
-		.tp_half h3.catbg span.r
-		{
-			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 100% -160px;
-		}
-	</style>';
-
-	if(!empty($context['TPortal']['padding']))
-		$context['html_headers'] .= '
-	<style type="text/css">
-		.block_leftcontainer, 
-		.block_rightcontainer, 
-		.block_centercontainer, 
-		.block_uppercontainer, 
-		.block_lowercontainer, 
-		.block_topcontainer, 
-		.block_bottomcontainer 
-		{
-			padding-bottom: ' . $context['TPortal']['padding'] . 'px;
-		}
-		#tpleftbarHeader
-		{
-			margin-right: ' . $context['TPortal']['padding'] . 'px;
-		}
-		#tprightbarHeader
-		{
-			margin-left: ' . $context['TPortal']['padding'] . 'px;
-		}
-	</style>';
+	// Load the stylesheet stuff
+	TP_loadCSS();
 
 	// if we are in permissions admin section, load all permissions
 	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
@@ -233,8 +176,71 @@ function TPortal_init()
 		else
 			echo $txt['tp-nomodule'];
 	}
+
 }
 
+function TP_loadCSS()
+{
+	global $context, $settings;
+
+	// load both stylesheets to be sure all is in, but not if things aren't setup!
+	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/tp-style.css'))
+		$context['html_headers'] .= '
+	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/tp-style.css?fin11" />';
+	else
+		$context['html_headers'] .= '
+	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/tp-style.css?fin11" />
+	<style type="text/css">
+		.tp_half h3.titlebg
+		{
+			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat -10px -200px;
+		}
+		.tp_half h3.titlebg span.l
+		{
+			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 0 -200px;
+		}
+		.tp_half h3.titlebg span.r
+		{
+			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 100% -200px;
+		}
+
+		.tp_half h3.catbg
+		{
+			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat -10px -160px;
+		}
+		.tp_half h3.catbg span.l
+		{
+			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 0 -160px;
+		}
+		.tp_half h3.catbg span.r
+		{
+			background: url('.$settings['images_url'].'/theme/main_block.png) no-repeat 100% -160px;
+		}
+	</style>';
+
+	if(!empty($context['TPortal']['padding']))
+		$context['html_headers'] .= '
+	<style type="text/css">
+		.block_leftcontainer,
+		.block_rightcontainer,
+		.block_centercontainer,
+		.block_uppercontainer,
+		.block_lowercontainer,
+		.block_topcontainer,
+		.block_bottomcontainer
+		{
+			padding-bottom: ' . $context['TPortal']['padding'] . 'px;
+		}
+		#tpleftbarHeader
+		{
+			margin-right: ' . $context['TPortal']['padding'] . 'px;
+		}
+		#tprightbarHeader
+		{
+			margin-left: ' . $context['TPortal']['padding'] . 'px;
+		}
+	</style>';
+}
 
 function TP_loadTheme()
 {
@@ -513,7 +519,7 @@ function fetchTPhooks()
 	}
 	// guess neither..
 	else
-		$param = 0
+		$param = 0;
 
 	// something should always load? + submissions
 	$types = array('layerhook', 'art_not_approved', 'dl_not_approved');
@@ -1236,18 +1242,12 @@ function doTPcat()
 	
 }
 
-// check stuff around action
-function checkTPaction()
-{
-	return;
-}
-
 // do the frontpage
 function doTPfrontpage()
 {
 	global $context, $scripturl, $user_info, $modSettings, $smcFunc;
 
-	// check we aren't in any other section
+	// check we aren't in any other section because 'cat' is used in SMF and TP
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
 		return;
 	
@@ -1744,7 +1744,7 @@ function doTPfrontpage()
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
 				{
-					// expand the visual options
+					// expand the vislaoptions
 					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
 					$row['rating'] = array_sum(explode(',', $row['rating']));

@@ -812,7 +812,7 @@ function TPortalDLManager()
 		else
 			$context['TPortal']['dlsort_way'] = $dlsort_way = 'desc';
 
-		$currentcat = (int) $context['TPortal']['dlcat'];
+		$currentcat = $context['TPortal']['dlcat'];
 		//fetch all  categories and its childs
 		$context['TPortal']['dlcats'] = array();
 		$context['TPortal']['dlcatchilds'] = array();
@@ -870,8 +870,8 @@ function TPortalDLManager()
 		}
 
 		// add x most recent and feature the last one
-		$context['TPortal']['dl_last_added'] = dl_recentitems(5, 'date', 'array', $currentcat);
-		$context['TPortal']['dl_most_downloaded'] = dl_recentitems(5, 'downloads', 'array', $currentcat);
+		$context['TPortal']['dl_last_added'] = dl_recentitems(5, 'date', 'array', $context['TPortal']['dlcat']);
+		$context['TPortal']['dl_most_downloaded'] = dl_recentitems(5, 'downloads', 'array', $context['TPortal']['dlcat']);
 
 		// do we have access then?
 		$request = $smcFunc['db_query']('', '

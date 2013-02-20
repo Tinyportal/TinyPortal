@@ -22,15 +22,13 @@ function TPcheckAdminAreas()
 {
 	global $context;
 
-	$return = false;
-
 	TPcollectPermissions();
 	foreach($context['TPortal']['adminlist'] as $adm => $val)
 	{
 		if(allowedTo($adm))
-			$return = true;
+			return true;
 	}
-	return $return;
+	return false;
 }
 
 function TPsetupAdminAreas()
@@ -1120,15 +1118,6 @@ function TPget_globaltags($tags, $itemid)
 	return $taglinks;
 }
 
-function TParticles_showbytag($tag)
-{
-	global $context;
-}
-
-function TParticles_showbymember($member)
-{
-}
-
 function TP_getallmenus()
 {
 	global $smcFunc;
@@ -1356,34 +1345,6 @@ function tp_hidepanel2($id, $id2, $alt)
 	return $what;
 }
 
-function tp_latestblockcodes()
-{
-	global $context;
-
-	return;
-
-	echo '
-	<div class="catbg" style="padding: 4px;">', $txt['tp-latestcodes'],' </div>
-	<div class="windowbg" id="latcodes" style="padding: 1em; ' , in_array('latcodes',$context['tp_panels']) ? ' display: none;' : '' , '">',
-	TPparseRSS('http://www.tinyportal.net/tplatestblockcodes.xml');
-	echo '
-	</div>';
-}
-
-function tp_latestmodules()
-{
-	global $context;
-
-	return;
-
-	echo '
-		<div class="catbg" style="padding: 4px;">',$txt['tp-latestmods'],' ' , tp_hidepanel('latmods2',true) , '</div>
-		<div class="windowbg" id="latmods2" style="padding: 1em; ' , in_array('latmods2',$context['tp_panels']) ? ' display: none;' : '' , '">',
-	TPparseRSS('http://www.tinyportal.net/tplatestmodules.xml');
-	echo '
-		</div>';
-}
-
 function tp_collectArticleAttached($art)
 {
 	global $context, $smcFunc;
@@ -1605,10 +1566,6 @@ function normalizeNewline($text)
 	return addslashes($text);
 }
 
-function tportal_version()
-{
-	return;
-}
 // Constructs a page list.
 function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 {

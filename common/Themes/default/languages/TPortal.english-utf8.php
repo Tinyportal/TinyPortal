@@ -280,7 +280,7 @@ $txt['tp-poster7'] = ' articles.';
 $txt['tp-toggle'] = 'Toggle panel';
 $txt['tp-addarticle']='Add';
 $txt['tp-none'] = '-none-';
-$txt['tp-notallowed'] = 'You are not allowed to access this section.';
+$txt['tp-notallowed'] = 'Sorry, you are not allowed to view this article.';
 $txt['tp-error'] = 'TP error';
 
 $txt['tp-publish'] = 'Promote to frontpage';

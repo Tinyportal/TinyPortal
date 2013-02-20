@@ -43,6 +43,7 @@ $txt['tp-last_access'] = 'Last access';
 $txt['tp-mainpage'] = 'Main';
 $txt['tp-name']='Name:';
 $txt['tp-needtoregister'] = 'You need to login to enter this section.';
+$txt['tp-notallowed'] = 'You are not allowed to access this section.';
 $txt['tp-notfound'] = 'The item/section was not found.';
 $txt['tp-sortby'] = 'Sort by';
 $txt['tp-useredit'] = 'Edit file';
