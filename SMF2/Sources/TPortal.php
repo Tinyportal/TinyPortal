@@ -244,7 +244,7 @@ function TP_loadCSS()
 
 function TP_loadTheme()
 {
-	global $sourcedir, $smcFunc;
+	global $sourcedir, $smcFunc, $modSettings;
 
 	require_once($sourcedir.'/TPSubs.php');
 
@@ -257,19 +257,22 @@ function TP_loadTheme()
 		{
 			// fetch the custom theme if any
 			$pag = tp_sanitize($_GET['page']);
-			if(is_numeric($pag))
+			if (is_numeric($pag))
+            {
 				$request = $smcFunc['db_query']('', '
 					SELECT id_theme FROM {db_prefix}tp_articles
 					WHERE id = {int:page}',
 					array('page' => $pag)
 				);
+            }
 			else
+            {
 				$request =  $smcFunc['db_query']('', '
 					SELECT id_theme FROM {db_prefix}tp_articles
 					WHERE shortname = {string:short}',
 					array('short' => $pag)
 				);
-
+            }
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
@@ -475,9 +478,6 @@ function setupTPsettings()
 	if(isset($_GET['action']) && $_GET['action'] == 'tpadmin')
 		$context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
 
-	// emergency - don't render any blocks :)
-	$noblocks = isset($_GET['noblocks']) ? true : false;
-
 	// if we are in maintance mode, just hide panels 
 	if (!empty($maintenance) && !allowedTo('admin_forum'))
 		tp_hidebars('all');
@@ -597,6 +597,7 @@ function doTPpage()
 		$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
 
 		if(allowedTo('tp_articles'))
+        {
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1,
 					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
@@ -611,7 +612,9 @@ function doTPpage()
 				LIMIT 1',
 				array('page' => $page)
 			);
+        }
 		else
+        {
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1, var.value2,
 					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype,
@@ -629,6 +632,8 @@ function doTPpage()
 				LIMIT 1',
 				array('page' => $page)
 			);
+        }
+        
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$article = $smcFunc['db_fetch_assoc']($request);
@@ -678,7 +683,7 @@ function doTPpage()
 				$context['TPortal']['article']['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 				// update views
-				$request =  $smcFunc['db_query']('', '
+				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles
 					SET views = views + 1
 					WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}') . ' LIMIT 1',
@@ -1071,8 +1076,8 @@ function doTPcat()
 				// fallback value
 				if(!isset($context['TPortal']['category']['options']['catlayout']))
 					$context['TPortal']['category']['options']['catlayout'] = 1;
-				$now = time();
-				$request =  $smcFunc['db_query']('', '
+                
+				$request = $smcFunc['db_query']('', '
 					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
@@ -1102,7 +1107,6 @@ function doTPcat()
 				{
 					$total = $smcFunc['db_num_rows']($request);
 					$col1 = ceil($total / 2);
-					$col2 = $total - $col1;
 					$counter = 0;
 					$context['TPortal']['category']['col1'] = array(); $context['TPortal']['category']['col2'] = array();
 					while($row = $smcFunc['db_fetch_assoc']($request))
@@ -1427,6 +1431,7 @@ function doTPfrontpage()
 		
 		// Find the post ids.
 		if($context['TPortal']['front_type'] == 'forum_only')
+        {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
@@ -1439,7 +1444,9 @@ function doTPfrontpage()
 					'board' => $context['TPortal']['SSI_board'],
 					'max' => $totalmax)
 			);
+        }
 		else
+        {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
@@ -1451,7 +1458,8 @@ function doTPfrontpage()
 					'topics' => $context['TPortal']['frontpage_topics']
 				)
 			);
-
+        }
+        
 		$posts = array();
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 			$posts[] = $row['ID_FIRST_MSG'];
@@ -1588,6 +1596,7 @@ function doTPfrontpage()
 
 		// Find the post ids.
 		if($context['TPortal']['front_type'] == 'forum_articles')
+        {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
@@ -1599,7 +1608,9 @@ function doTPfrontpage()
 				LIMIT {int:max}',
 				array('board' => $context['TPortal']['SSI_board'], 'max' => $totalmax)
 			);
+        }
 		else
+        {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
@@ -1609,7 +1620,8 @@ function doTPfrontpage()
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC'
 			);
-
+        }
+        
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
@@ -2639,7 +2651,6 @@ function TPortal_panel($side)
 		echo '</td></tr></table>';
 
 	// the upshrink routine for blocks
-	$tid = time();
 	echo '</div>
 			<script type="text/javascript"><!-- // --><![CDATA[
 				function toggle( targetId )
