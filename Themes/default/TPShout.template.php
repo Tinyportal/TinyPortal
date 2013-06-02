@@ -211,18 +211,17 @@ function template_tpshout_shoutblock()
 			<div class="tp_shoutframe">'.$context['TPortal']['shoutbox'].'</div>
 		</marquee>';
 	else
-		echo '
-	<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
+		echo '<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
 		<tr>
 			<td>
 			<div class="middletext" style="width: 99%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
-			<div class="tp_shoutframe">', $context['TPortal']['shoutbox'], '</div>
+			<div class="tp_shoutframe">'. $context['TPortal']['shoutbox']. '</div>
 			</div></td>
 		</tr>
 	</table>';
 
 	echo '
-		<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >';
+		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post">';
 
 	if(allowedTo('tp_can_shout'))
 	{

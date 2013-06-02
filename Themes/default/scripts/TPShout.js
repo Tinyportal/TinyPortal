@@ -35,7 +35,7 @@ function TPupdateShouts(action, shoutId)
 		var name = $j("#tp-shout-name").val();
 		var shout = $j("#tp_shout").val();
 		$j("#tp_shout").val("");
-		param = param + ";tp-shout-name="+name+";tp_shout="+shout;
+		param = param + ";tp-shout-name=" + name + ";tp_shout=" + shout;
 	}
 	if (shoutId)
 		param = param + ";s=" + shoutId;
@@ -51,7 +51,7 @@ function TPupdateShouts(action, shoutId)
 			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/TPrefresh.png");
 		},					
 		success: function(data) {
-			shoutHtml = $j(".tp_shoutframe", $j(data)).html();
+			var shoutHtml = $j(".tp_shoutframe", $j(data)).html();
 			$j(".tp_shoutframe").html(shoutHtml);
 			$j(".tp_shoutframe").parent().scrollTop(0);
 		}

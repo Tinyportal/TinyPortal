@@ -18,19 +18,10 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 	
-global $context, $scripturl, $txt, $user_info, $settings, $smcFunc, $modSettings, $options;
+global $context, $settings, $options;
 
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
-
-// set version for database updates.
-$shoutboxversion = '101';
-
-$shoutboxtemplate = '111';
-
-// check if it needs updating...
-if((isset($context['TPortal']['shoutbox_version']) && $shoutboxversion != $context['TPortal']['shoutbox_version']) || !isset($context['TPortal']['shoutbox_version']))
-	shoutbox_update();
 
 // bbc code for shoutbox
 $context['html_headers'] .= '
@@ -125,7 +116,7 @@ function postShout()
 		preparsecode($shout);
 
 		// collect the color for shoutbox
-		$request= $smcFunc['db_query']('', '
+		$request = $smcFunc['db_query']('', '
 			SELECT grp.online_color as onlineColor
 			FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
 			WHERE m.id_group = grp.id_group
@@ -165,9 +156,9 @@ function postShout()
 // This is to delete a shout via ajax
 function deleteShout()
 {
-	global $context, $smcFunc;
+	global $smcFunc;
 
-	// A copule of security checks
+	// A couple of security checks
 	checkSession('get');
 	isAllowedTo('tp_can_admin_shout');
 
@@ -436,13 +427,13 @@ function tpshout_bigscreen($state = false, $number = 10)
 	$context['page_title'] = 'Shoutbox';
 }
 // fetch all the shouts for output
-function tpshout_fetch($render = true, $limit = 1, $swap = false)
+function tpshout_fetch($render = true, $limit = 1)
 {
-    global $context, $scripturl, $txt, $modSettings, $smcFunc;
+    global $context, $scripturl, $modSettings, $smcFunc;
 
 	// get x number of shouts
 	$context['TPortal']['profile_shouts_hide'] = empty($context['TPortal']['profile_shouts_hide']) ? '0' : '1';
-	$context['TPortal']['usercolor']='';
+	$context['TPortal']['usercolor'] = '';
 	// collect the color for shoutbox
 	$request = $smcFunc['db_query']('', '
 		SELECT grp.online_color as onlineColor 
@@ -468,7 +459,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 	if($render)
 		loadtemplate('TPShout');
 
-	$request =  $smcFunc['db_query']('', '
+	$request2 =  $smcFunc['db_query']('', '
 		SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
 			mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 		FROM {db_prefix}tp_shoutbox as s 
@@ -478,11 +469,11 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 		ORDER BY s.value2 DESC LIMIT {int:limit}',
 		array('val7' => 0, 'limit' => $limit)
 	);
-	if ($smcFunc['db_num_rows']($request) > 0)
+	if ($smcFunc['db_num_rows']($request2) > 0)
 	{
 		$nshouts = '<div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
 		$ns = array();
-		while($row = $smcFunc['db_fetch_assoc']($request))
+		while($row = $smcFunc['db_fetch_assoc']($request2))
 		{
 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
@@ -493,7 +484,7 @@ function tpshout_fetch($render = true, $limit = 1, $swap = false)
 		$nshouts .= '</div>';
 
 		$context['TPortal']['shoutbox'] = $nshouts;
-		$smcFunc['db_free_result']($request);
+		$smcFunc['db_free_result']($request2);
 	}
    // include the scolling code if shoutbox is set to scroll
 	// its from a block, render it
@@ -777,7 +768,7 @@ function print_shout_smileys($collapse = true)
 	if (!empty($context['tp_smileys']['postform']))
 	{
 		// counter...
-		$sm_counter=0;
+		$sm_counter = 0;
 		// Show each row of smileys ;).
 		foreach ($context['tp_smileys']['postform'] as $smiley_row)
 		{
@@ -817,61 +808,5 @@ function tpshout_frontpage()
 	$context['TPortal']['rendershouts'] = tpshout_fetch(false, '30');
 	
 }
-function shoutbox_update()
-{
-	global $smcFunc;
 
-	$settings_array = array(
-	 'shoutbox_height' => '120' ,
-	 'shoutbox_limit' => '5' ,
-	 'guest_shout' => '0' ,
-	 'shoutbox_usescroll' => '0',
-	 'shoutbox_scrollduration' => '2000',
-	 'shoutbox_scrolldelay' => '1000',
-	 'shoutbox_scrolldirection' => 'vert',
-	 'shoutbox_scrolleasing' => 'Cubic',
-	 'show_shoutbox_archive' => '50',
-	 'shoutbox_version' => '101',
-	 'show_shoutbox_smile' => '1',
-	 'show_shoutbox_icons' => '1',
-		'profile_shouts_hide' => '0',
- 	);
-
-	foreach($settings_array as $what => $val){
-		$sjekk = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_settings 
-			WHERE name = {string:name}',
-			array('name' => $what)
-		);
-		if($smcFunc['db_num_rows']($sjekk) < 1){
-			$smcFunc['db_query']('INSERT',
-				'{db_prefix}tp_settings',
-				array('name' => 'string', 'value' => 'string'),
-				array($what, $val),
-				array('id')
-			);
-		}
-		else
-		{
-			if($what == 'shoutbox_version')
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_settings 
-					SET value = {string:val} 
-					WHERE name = {string:name}',
-					array('val' => $val, 'name' => $what)
-				);
-				
-			$smcFunc['db_free_result']($sjekk);
-		}
-	}
-	// update profile section
-	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_modules 
-		SET profile = {string:prof}
-		WHERE modulename LIKE {string:mod}',
-		array('prof' => 'tpshout_profile', 'mod' => 'TPshout')
-	);
-
-	return;
-}
 ?>
