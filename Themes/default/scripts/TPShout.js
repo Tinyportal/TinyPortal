@@ -30,30 +30,30 @@ var $j = jQuery.noConflict();
 function TPupdateShouts(action, shoutId)
 {
 	var param = action;
-	if (param == "save")
+	if (param === "save")
 	{
 		var name = $j("#tp-shout-name").val();
 		var shout = $j("#tp_shout").val();
 		$j("#tp_shout").val("");
-		param = param + ";tp-shout-name="+name+";tp_shout="+shout;
+		param = param + ";tp-shout-name=" + name + ";tp_shout=" + shout;
 	}
 	if (shoutId)
 		param = param + ";s=" + shoutId;
 	$j.ajax({
-		type : "GET",
-		dataType: "html",
-		cache: false,
-		url: smf_scripturl + "?action=tpmod;shout=" + param + ";" + tp_session_var + "=" + tp_session_id,
-		beforeSend: function() {
+        type : "GET",
+        dataType: "html",
+        cache: false,
+        url: smf_scripturl + "?action=tpmod;shout=" + param + ";" + tp_session_var + "=" + tp_session_id,
+        beforeSend: function() {
+			$j(".tp_shoutframe").hide();
 			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/ajax.gif");
-		},
-		complete: function(){
+        },
+        complete: function(){
 			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/TPrefresh.png");
-		},					
-		success: function(data) {
-			shoutHtml = $j(".tp_shoutframe", $j(data)).html();
-			$j(".tp_shoutframe").html(shoutHtml);
+        },
+        success: function(data) {
+			$j(".tp_shoutframe").html(data).fadeIn();
 			$j(".tp_shoutframe").parent().scrollTop(0);
-		}
-	});
+        }
+    });
 }

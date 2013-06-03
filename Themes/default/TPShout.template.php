@@ -32,7 +32,7 @@ function template_tpshout_bigscreen()
 	$shouts = $context['TPortal']['rendershouts'];
 
 	if(isset($context['TPortal']['querystring']))
-		$tp_where=$context['TPortal']['querystring'];
+		$tp_where = $context['TPortal']['querystring'];
 	else
 		$tp_where='';
 
@@ -212,17 +212,17 @@ function template_tpshout_shoutblock()
 		</marquee>';
 	else
 		echo '
-	<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
+    <table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
 		<tr>
 			<td>
 			<div class="middletext" style="width: 99%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
-			<div class="tp_shoutframe">', $context['TPortal']['shoutbox'], '</div>
+			<div class="tp_shoutframe">'. $context['TPortal']['shoutbox']. '</div>
 			</div></td>
 		</tr>
 	</table>';
 
 	echo '
-		<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >';
+		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post">';
 
 	if(allowedTo('tp_can_shout'))
 	{
@@ -337,6 +337,12 @@ function template_singleshout($row)
 			</div>';
 
 	return $return;
+}
+
+function template_tpshout_ajax() {
+	global $context;
+    echo '
+	<div class="smalltext" id="bigshout" style="width: 99%; height: 100%;">', $context['TPortal']['rendershouts'], '</div>';
 }
 
 ?>
