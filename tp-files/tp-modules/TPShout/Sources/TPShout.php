@@ -79,12 +79,12 @@ if(isset($_GET['shout']))
 	elseif($_GET['shout'] == 'del')
 	{
 		deleteShout();
-		tpshout_bigscreen(true);
+		tpshout_bigscreen(false);
 	}
 	elseif($_GET['shout'] == 'save')
 	{
 		postShout();
-		tpshout_bigscreen(true);
+		tpshout_bigscreen(false);
 	}
 	elseif($_GET['shout'] == 'fetch')
 	{
@@ -95,7 +95,7 @@ if(isset($_GET['shout']))
 		$number = substr($_GET['shout'], 4);
 		if(!is_numeric($number))
 			$number = 10;
-		tpshout_bigscreen(false, $number);
+		tpshout_bigscreen(true, $number);
 	}
 }
 
@@ -417,17 +417,23 @@ function tpshout_admin()
 
 }
 function tpshout_bigscreen($state = false, $number = 10)
-{
-	global $context;
-	
-	loadtemplate('TPShout');
+ {
+    global $context;
 
-	$context['TPortal']['rendershouts'] = tpshout_fetch($state, $number);
-	TP_setThemeLayer('tpshout', 'TPShout', 'tpshout_bigscreen');
-	$context['page_title'] = 'Shoutbox';
+    loadTemplate('TPShout');
+
+    if (!$state) {
+        $context['template_layers'] = array();
+        $context['sub_template'] = 'tpshout_ajax';
+        $context['TPortal']['rendershouts'] = tpshout_fetch($state, $number, true);
+    } else {
+        $context['TPortal']['rendershouts'] = tpshout_fetch(false, $number, false);
+        TP_setThemeLayer('tpshout', 'TPShout', 'tpshout_bigscreen');
+        $context['page_title'] = 'Shoutbox';
+    }
 }
 // fetch all the shouts for output
-function tpshout_fetch($render = true, $limit = 1)
+function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 {
     global $context, $scripturl, $modSettings, $smcFunc;
 
@@ -455,9 +461,8 @@ function tpshout_fetch($render = true, $limit = 1)
 	$nshouts = '';
 	if($limit > 100)
 		$limit = 100;
-	
-	if($render)
-		loadtemplate('TPShout');
+
+	loadTemplate('TPShout');
 
 	$request2 =  $smcFunc['db_query']('', '
 		SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
@@ -486,9 +491,9 @@ function tpshout_fetch($render = true, $limit = 1)
 		$context['TPortal']['shoutbox'] = $nshouts;
 		$smcFunc['db_free_result']($request2);
 	}
-   // include the scolling code if shoutbox is set to scroll
+
 	// its from a block, render it
-	if($render)
+	if($render && !$ajaxRequest)
 		template_tpshout_shoutblock();
 	else
 		return $nshouts;
@@ -796,17 +801,8 @@ function print_shout_smileys($collapse = true)
 // show a dedicated frontpage
 function tpshout_frontpage()
 {
-    global  $context;
-
 	loadtemplate('TPShout');
-
-//	$context['sub_template'] = 'tpshout_frontpage';
-	$context['page_title'] = 'Shoutbox frontpage';
-
-	$context['sub_template'] = 'tpshout_bigscreen';
-	$context['page_title'] = 'Shoutbox';
-	$context['TPortal']['rendershouts'] = tpshout_fetch(false, '30');
-	
+    tpshout_bigscreen(true);
 }
 
 ?>
