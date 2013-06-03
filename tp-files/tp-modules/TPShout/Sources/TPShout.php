@@ -286,15 +286,15 @@ function tpshout_admin()
 
 	if(isset($memID))
 	{
-		$request =  $smcFunc['db_query']('', '
+		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox 
 			WHERE type = {string:type} 
 			AND value5 = {int:val5} 
 			AND value7 = {int:val7}',
 			array('type' => 'shoutbox', 'val5' => $memID, 'val7' => 0)
 		);
-		$weh = $smcFunc['db_fetch_row']($request);
-		$smcFunc['db_free_result']($request);
+		$weh = $smcFunc['db_fetch_row']($shouts);
+		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
 		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
@@ -309,15 +309,15 @@ function tpshout_admin()
 	}
 	elseif(isset($ip))
 	{
-		$request =  $smcFunc['db_query']('', '
+		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox 
 			WHERE type = {string:type}
 			AND value4 = {string:val4} 
 			AND value7 = {int:val7}',
 			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0)
 		);
-		$weh = $smcFunc['db_fetch_row']($request);
-		$smcFunc['db_free_result']($request);
+		$weh = $smcFunc['db_fetch_row']($shouts);
+		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
 		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
@@ -345,14 +345,14 @@ function tpshout_admin()
 	}
 	else
 	{
-		$request = $smcFunc['db_query']('', '
+		$shouts = $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox 
 			WHERE type = {string:type} 
 			AND value7 = {int:val7}',
 			array('type' => 'shoutbox', 'val7' => 0)
 		);
-		$weh = $smcFunc['db_fetch_row']($request);
-		$smcFunc['db_free_result']($request);
+		$weh = $smcFunc['db_fetch_row']($shouts);
+		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
 		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpmod;shout=admin', $tpstart, $allshouts, 10,true);
@@ -387,7 +387,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($request);
 	}
 
-
+	$context['TPortal']['subtabs'] = '';
 	// setup menu items
 	if (allowedTo('tp_can_admin_shout'))
 	{
@@ -414,8 +414,8 @@ function tpshout_admin()
 	$context['page_title'] = 'Shoutbox admin';
 
 	tp_hidebars();
-
 }
+
 function tpshout_bigscreen($state = false, $number = 10)
  {
     global $context;
@@ -542,7 +542,7 @@ function shout_bcc_code($collapse = true)
 
 	$found_button = false;
 	// Here loop through the array, printing the images/rows/separators!
-	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0])>0)
+	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0)
 	{
 		foreach ($context['tp_bbc_tags'][0] as $image => $tag)
 		{
@@ -581,7 +581,7 @@ function shout_bcc_code($collapse = true)
 		echo '
 	<div style="display: inline;">';
 
-	$found_button = false;
+	$found_button1 = false;
 	// Here loop through the array, printing the images/rows/separators!
 	if(isset($context['tp_bbc_tags2'][0]) && count($context['tp_bbc_tags2'][0])>0)
 	{
@@ -594,7 +594,7 @@ function shout_bcc_code($collapse = true)
 				if (!empty($context['disabled_tags'][$tag['code']]))
 					continue;
 
-				$found_button = true;
+				$found_button1 = true;
 
 				// If there's no after, we're just replacing the entire selection in the post box.
 				if (!isset($tag['after']))
@@ -607,10 +607,10 @@ function shout_bcc_code($collapse = true)
 				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
 			}
 			// I guess it's a divider...
-			elseif ($found_button)
+			elseif ($found_button1)
 			{
 				echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-				$found_button = false;
+				$found_button1 = false;
 			}
 		}
 	}
@@ -635,7 +635,7 @@ function shout_bcc_code($collapse = true)
 					</select>';
 	echo '<br />';
 
-	$found_button = false;
+	$found_button2 = false;
 	// Print the bottom row of buttons!
 	if(isset($context['tp_bbc_tags'][1]) && count($context['tp_bbc_tags'][1])>0)
 	{
@@ -647,7 +647,7 @@ function shout_bcc_code($collapse = true)
 				if (!empty($context['shout_disabled_tags'][$tag['code']]))
 					continue;
 
-				$found_button = true;
+				$found_button2 = true;
 
 				// If there's no after, we're just replacing the entire selection in the post box.
 				if (!isset($tag['after']))
@@ -660,10 +660,10 @@ function shout_bcc_code($collapse = true)
 				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
 			}
 			// I guess it's a divider...
-			elseif ($found_button)
+			elseif ($found_button2)
 			{
 				echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-				$found_button = false;
+				$found_button2 = false;
 			}
 		}
 	}

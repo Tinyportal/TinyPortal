@@ -45,15 +45,15 @@ function TPupdateShouts(action, shoutId)
         cache: false,
         url: smf_scripturl + "?action=tpmod;shout=" + param + ";" + tp_session_var + "=" + tp_session_id,
         beforeSend: function() {
-                $j(".tp_shoutframe").hide();
-                $j("#tp_shout_refresh img").attr("src", tp_images_url + "/ajax.gif");
+			$j(".tp_shoutframe").hide();
+			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/ajax.gif");
         },
         complete: function(){
-                $j("#tp_shout_refresh img").attr("src", tp_images_url + "/TPrefresh.png");
+			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/TPrefresh.png");
         },
         success: function(data) {
-                $j(".tp_shoutframe").html(data).fadeIn();
-                $j(".tp_shoutframe").parent().scrollTop(0);
+			$j(".tp_shoutframe").html(data).fadeIn();
+			$j(".tp_shoutframe").parent().scrollTop(0);
         }
     });
 }
