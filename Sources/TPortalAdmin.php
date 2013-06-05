@@ -262,14 +262,12 @@ function tp_notifyComments($memberlist, $message2, $subject)
 
 	require_once($sourcedir . '/Subs-Post.php');
 
-	$message = $message2;
-
 	// Censor the subject and body...
 	censorText($subject);
-	censorText($message);
+	censorText($message2);
 
 	$subject = un_htmlspecialchars($subject);
-	$message = trim(un_htmlspecialchars(strip_tags(strtr(parse_bbc($message, false), array('<br />' => "\n", '</div>' => "\n", '</li>' => "\n", '&#91;' => '[', '&#93;' => ']')))));
+	$message = trim(un_htmlspecialchars(strip_tags(strtr(parse_bbc($message2, false), array('<br />' => "\n", '</div>' => "\n", '</li>' => "\n", '&#91;' => '[', '&#93;' => ']')))));
 
 	// Find the members with notification on for this board.
 	$tagquery = 'FIND_IN_SET(mem.id_member, "' . implode(',', $memberlist) .'")';
@@ -965,7 +963,6 @@ function do_menus()
 		{
 			$row['indent'] = 0;
 			$allsorted[$row['id']] = $row;
-			$alcats[] = $row['id'];
 		}
 		$smcFunc['db_free_result']($request);
 		if(count($allsorted) > 1)
@@ -1381,7 +1378,7 @@ function do_articles()
 				$context['TPortal']['editcats'] = $allsorted;
 		}
 		// get the filecount as well
-		if(count($alcats)>0)
+		if(count($alcats) > 0)
 		{
 			$request = $smcFunc['db_query']('', '
 				SELECT	art.category as id, COUNT(art.id) as files 
@@ -1426,7 +1423,7 @@ function do_articles()
 	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle')
 	{
 		TPadd_linktree($scripturl.'?action=tpadmin;sa='.$_GET['sa'], $txt['tp-editarticle']);
-		$whatarticle = substr($_GET['sa'],11);
+		$whatarticle = substr($_GET['sa'], 11);
 	}
 	// are we starting a new one?
 	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'addarticle_')
@@ -1963,7 +1960,7 @@ function do_modules()
 				'type' => 'globaltag'
 			)
 		);
-		if($smcFunc['db_num_rows']($request)>0)
+		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
@@ -2319,7 +2316,7 @@ function do_postchecks()
 					{
 						if(substr($what, 0, 20) == 'tp_frontpage_visual_')
 						{
-							$w[] = substr($what,20);
+							$w[] = substr($what, 20);
 							unset($clean);
 						}
 						elseif(substr($what, 0, 21) == 'tp_frontpage_usorting')
@@ -3755,7 +3752,6 @@ function do_postchecks()
 	else
 		return;
 }
-
 
 function get_langfiles()
 {

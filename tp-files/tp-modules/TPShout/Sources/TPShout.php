@@ -88,7 +88,7 @@ if(isset($_GET['shout']))
 	}
 	elseif($_GET['shout'] == 'fetch')
 	{
-		tpshout_bigscreen(true, $context['TPortal']['shoutbox_limit']);
+		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
 	else
 	{

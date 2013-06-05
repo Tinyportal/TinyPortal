@@ -2248,7 +2248,7 @@ function template_subtab_above()
 {
 	global $context, $txt;
 
-	if(sizeof($context['TPortal']['subtabs'])>1)
+	if(sizeof($context['TPortal']['subtabs']) > 1)
 	{
 		echo '
 		<div class="tborder" style="margin-bottom: 0.5em;">

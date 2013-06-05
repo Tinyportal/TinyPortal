@@ -48,9 +48,9 @@ function TPortal_init()
 	// Loading jquery from google. Load it only once!
 	$context['html_headers'] .= '
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>';		
-		
+	
+	// Add all the TP settings into ['TPortal']
 	setupTPsettings();
-	$context['TPortal']['now'] = time();
 	fetchTPhooks();
 	doModules();
  
@@ -60,8 +60,6 @@ function TPortal_init()
 
 	loadtemplate('TPsubs');
 	loadtemplate('TPBlockLayout');
-
-	$context['TPortal']['membergroups'] = $user_info['groups'];
 
 	// is the permanent theme option set?
 	if(isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged'])
@@ -87,7 +85,81 @@ function TPortal_init()
 
 	// determine the blocks
 	doTPblocks();
+	// determine which sidebars to hide
+	TP_whichHideBars();
+	// Load the stylesheet stuff
+	TP_loadCSS();
 
+	// if we are in permissions admin section, load all permissions
+	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
+		TPcollectPermissions();
+
+	// Show search/tag/frontpage topic layers?
+	TP_doLayers();
+
+	// any modules needed to load then?
+	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
+	{
+		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
+			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
+	}
+	// set cookie change for selected upshrinks 
+	tp_setupUpshrinks();
+
+	// finally..any errors finding an article or category?
+	if(isset($context['art_error']) && $context['art_error'] == true)
+		fatal_error($txt['tp-articlenotexist']);
+	if(isset($context['cat_error']) && $context['cat_error'] == true)
+		fatal_error($txt['tp-categorynotexist']);
+
+	// let a module take over
+	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
+	{
+		// let the module take over
+		require_once($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['sourcefile']);
+		if(function_exists($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']))
+			call_user_func($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']);
+		else
+			echo $txt['tp-nomodule'];
+	}
+
+}
+function TP_doLayers() {
+	global $context;
+		// are we allowed to tag boards? include any
+	if(!empty($_GET['topic']) && empty($_GET['action']))
+	{
+		if($context['TPortal']['tagtopics'] == 1 && allowedTo(array('tp_articles','tp_settings')))
+			$context['template_layers'][] = 'TPtagtopics';
+		elseif($context['TPortal']['tagtopics'] == 1 && !allowedTo(array('tp_articles','tp_settings')) && allowedTo('tp_tag'))
+			$context['template_layers'][] = 'TPtagtopicsOnly';
+		$context['template_layers'][] = 'TPtagtopicsGeneral';
+	}
+	elseif(!empty($_GET['board']) && empty($_GET['action']))
+	{
+		if($context['TPortal']['tagboards'] == 1 && allowedTo(array('tp_articles','tp_settings')))
+			$context['template_layers'][] = 'TPtagboards';
+		elseif($context['TPortal']['tagboards'] == 1 && !allowedTo(array('tp_articles','tp_settings')) && allowedTo('tp_tag'))
+			$context['template_layers'][] = 'TPtagboardsOnly';
+		$context['template_layers'][] = 'TPtagboardsGeneral';
+	}
+
+	// are we on search page? then add TP search options as well!
+	if($context['TPortal']['action'] == 'search')
+		$context['template_layers'][] = 'TPsearch';
+
+	// choosing topics for frontpage
+	if(!empty($_GET['topic']) && empty($_GET['action']))
+	{
+		if(allowedTo(array('tp_settings')))
+			$context['template_layers'][] = 'tpfrontpagetopics';
+	}
+}
+
+function TP_whichHideBars()
+{
+	global $context;
+	
 	// for some very large forum sections, give the option to hide bars
 	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile')
 		tp_hidebars('all');
@@ -111,72 +183,10 @@ function TPortal_init()
 	// finally..wap modes should not display the bars
 	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode']))
 		tp_hidebars('all');
-
-	// Load the stylesheet stuff
-	TP_loadCSS();
-
-	// if we are in permissions admin section, load all permissions
-	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
-		TPcollectPermissions();
-
+	
 	// maybe we are at the password pages?
 	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2')))
 		tp_hidebars('all');
-
-	// are we allowed to tag boards? include any
-	if(!empty($_GET['topic']) && empty($_GET['action']))
-	{
-		if($context['TPortal']['tagtopics']==1 && allowedTo(array('tp_articles','tp_settings')))
-			$context['template_layers'][] = 'TPtagtopics';
-		elseif($context['TPortal']['tagtopics']==1 && !allowedTo(array('tp_articles','tp_settings')) && allowedTo('tp_tag'))
-			$context['template_layers'][] = 'TPtagtopicsOnly';
-		$context['template_layers'][] = 'TPtagtopicsGeneral';
-	}
-	elseif(!empty($_GET['board']) && empty($_GET['action']))
-	{
-		if($context['TPortal']['tagboards']==1 && allowedTo(array('tp_articles','tp_settings')))
-			$context['template_layers'][] = 'TPtagboards';
-		elseif($context['TPortal']['tagboards']==1 && !allowedTo(array('tp_articles','tp_settings')) && allowedTo('tp_tag'))
-			$context['template_layers'][] = 'TPtagboardsOnly';
-		$context['template_layers'][] = 'TPtagboardsGeneral';
-	}
-
-	// are we on search page? then add TP search options as well!
-	if($context['TPortal']['action'] == 'search')
-		$context['template_layers'][] = 'TPsearch';
-
-	// choosing topics for frontpage
-	if(!empty($_GET['topic']) && empty($_GET['action']))
-	{
-		if(allowedTo(array('tp_settings')))
-			$context['template_layers'][] = 'tpfrontpagetopics';
-	}
-
-	// any modules needed to load then?
-	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
-	{
-		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
-			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
-	}
-	tp_setupUpshrinks();
-
-	// finally..any errors finding an article or category?
-	if(isset($context['art_error']) && $context['art_error'] == true)
-		fatal_error($txt['tp-articlenotexist']);
-	if(isset($context['cat_error']) && $context['cat_error'] == true)
-		fatal_error($txt['tp-categorynotexist']);
-
-	// let a module take over
-	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
-	{
-		// let the modoule take over
-		require_once($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['sourcefile']);
-		if(function_exists($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']))
-			call_user_func($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']);
-		else
-			echo $txt['tp-nomodule'];
-	}
-
 }
 
 function TP_loadCSS()
@@ -578,18 +588,16 @@ function doTPpage()
 {
 	global $context, $scripturl, $txt, $modSettings, $boarddir, $sourcedir, $smcFunc;
 	
+	$now = time();
 	// Set the avatar height/width
+	$avatar_width = '';
+	$avatar_height = '';
 	if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
 	{
 		$avatar_width = !empty($modSettings['avatar_max_width_external']) ? ' width="' . $modSettings['avatar_max_width_external'] . '"' : '';
 		$avatar_height = !empty($modSettings['avatar_max_height_external']) ? ' height="' . $modSettings['avatar_max_height_external'] . '"' : '';
 	}
-	else
-	{
-		$avatar_width = '';
-		$avatar_height = '';
-	}
-	
+
 	// check validity and fetch it
 	if(!empty($_GET['page']))
 	{
@@ -626,9 +634,9 @@ function doTPpage()
 				LEFT JOIN {db_prefix}tp_variables as var ON (var.id = art.category)
 				WHERE '. $pag .'
 				AND ((art.pub_start = 0 AND art.pub_end = 0)
-				OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
-				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
-				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+				OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
+				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 				LIMIT 1',
 				array('page' => $page)
 			);
@@ -1013,6 +1021,7 @@ function doTPcat()
 	
 	global $context, $scripturl, $txt, $modSettings, $smcFunc;
 
+	$now = time();
 	// check validity and fetch it
 	if(!empty($_GET['cat']))
 	{
@@ -1089,9 +1098,9 @@ function doTPcat()
 					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
 					WHERE art.category = {int:cat}
 					AND ((art.pub_start = 0 AND art.pub_end = 0)
-					OR (art.pub_start !=0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
-					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
-					OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+					OR (art.pub_start !=0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
+					OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 					AND art.off = 0
 					AND art.approved = 1
 					ORDER BY art.sticky desc, art.'.$catsort.' '.$catsort_order.'
@@ -1157,9 +1166,9 @@ function doTPcat()
 					SELECT COUNT(*) FROM {db_prefix}tp_articles as art
 					WHERE art.category = {int:cat}
 					AND ((art.pub_start = 0 AND art.pub_end = 0)
-					OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0)
-					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].')
-					OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+					OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
+					OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 					AND art.off = 0 AND art.approved = 1',
 					array('cat' => $category['id'])
 				);
@@ -1255,6 +1264,7 @@ function doTPfrontpage()
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
 		return;
 	
+	$now = time();
 	// set up visual options for frontpage
 	$context['TPortal']['visual_opts'] = explode(',', $context['TPortal']['frontpage_visual']);
 
@@ -1302,9 +1312,9 @@ function doTPfrontpage()
 			' . $artgroups . '
 			AND art.category > 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.approved = 1 
 			AND art.frontpage = 1'
 		);
@@ -1335,9 +1345,9 @@ function doTPfrontpage()
 			WHERE art.off = 0 
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
 			AND art.approved = 1 
 			AND (art.frontpage = 1 OR art.featured = 1) 
@@ -1396,9 +1406,9 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
 			WHERE art.off = 0 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.featured = 1
 			AND art.approved = 1 
 			LIMIT 1'
@@ -1570,9 +1580,9 @@ function doTPfrontpage()
 			AND var.id = art.category
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
 			AND art.approved = 1 
 			AND (art.frontpage = 1 OR art.featured = 1)
@@ -1901,9 +1911,9 @@ function doTPfrontpage()
 			WHERE ' . $fetchart.' 
 			AND art.off = 0 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
 			AND art.approved = 1 
 			AND art.category > 0 AND art.category < 9999'
@@ -1935,9 +1945,9 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member) 
 			WHERE ' . 	$fetchtitles . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.off = 0
 			AND art.category > 0
 			AND art.approved = 1'
@@ -2040,6 +2050,7 @@ function doTPblocks()
 {
 	global $context, $scripturl, $user_info, $smcFunc, $modSettings;
 
+	$now = time();
 	// setup the containers
 	$blocks = array('left' => '', 'right' => '', 'center' => '', 'front' => '', 'bottom' => '', 'top' => '' , 'lower' => '');
 	$blocktype = array('no', 'userbox', 'newsbox', 'statsbox', 'searchbox', 'html',
@@ -2203,9 +2214,9 @@ function doTPblocks()
 			WHERE ' . $fetchart. '
 			AND art.off = 0 
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.approved = 1 
 			AND art.category > 0 AND art.category < 9999'
 		);
@@ -2248,9 +2259,9 @@ function doTPblocks()
 			WHERE  '. 	$fetchtitles . '
 			AND art.off = 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$context['TPortal']['now'].' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].') 
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$context['TPortal']['now'].' AND art.pub_start < '.$context['TPortal']['now'].'))
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.approved = 1'
 		);
 
@@ -2809,7 +2820,7 @@ function tp_setupUpshrinks()
 	return;
 }
 
-function TP_blockgrid($block, $theme, $pos, $side, $last=false, $gridtype, $empty = false)
+function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $empty = false)
 {
 	global $context;
 
@@ -2946,20 +2957,5 @@ function TPortal_rightbar()
 {
 	TPortal_sidebar('right');
 }
-// compability
-if(!function_exists('doUBBC'))
-{
-	function doUBBC($code)
-	{
-		parse_bbc($code);
-	}
-}
-if(!function_exists('db_query'))
-{
-	function db_query($code)
-	{
-		global $smcFunc;
-		$smcFunc['db_query']($code);
-	}
-}
+
 ?>
