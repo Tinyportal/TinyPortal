@@ -46,5 +46,6 @@ $txt['by'] = 'by';
 $txt['tp-allshouts'] = 'Show all shouts';
 $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
+$txt['tp-shout-allow-links'] = 'Allow links to be posted?';
 
 ?>

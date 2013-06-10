@@ -83,6 +83,10 @@ if(isset($_GET['shout']))
 	}
 	elseif($_GET['shout'] == 'save')
 	{
+		if (empty($context['TPortal']['shout_allow_links'])) {
+			if (shoutHasLinks())
+				return;
+		}
 		postShout();
 		tpshout_bigscreen(false);
 	}
@@ -111,8 +115,7 @@ function postShout()
 		// Check the session id.
 		checkSession('get');
 		require_once($sourcedir . '/Subs-Post.php');	
-		$oldshout = $smcFunc['htmlspecialchars'](substr($_GET['tp_shout'], 0, 300));
-		$shout = $oldshout;
+		$shout = substr($_GET['tp_shout'], 0, 300);
 		preparsecode($shout);
 
 		// collect the color for shoutbox
@@ -129,7 +132,6 @@ function postShout()
 			$context['TPortal']['usercolor'] = $row[0];
 			$smcFunc['db_free_result']($request);
 		}
-
 
 		// Build the name with color for user, otherwise strip guests name of html tags.
 		$shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_GET['tp-shout-name']);
@@ -803,6 +805,21 @@ function tpshout_frontpage()
 {
 	loadtemplate('TPShout');
     tpshout_bigscreen(true);
+}
+
+function shoutHasLinks() {
+	global $context;
+	$shout = !empty($_GET['tp_shout']) ? $_GET['tp_shout'] : '';
+	$pattern = '@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
+	if (preg_match_all($pattern, $shout, $matches, PREG_PATTERN_ORDER)) {
+		loadTemplate('TPShout');
+		$context['TPortal']['shoutError'] = true;
+		$context['TPortal']['rendershouts'] = 'Links are not allowed!';
+		$context['template_layers'] = array();
+		$context['sub_template'] = 'tpshout_ajax';
+		return true;
+	}
+	return false;
 }
 
 ?>

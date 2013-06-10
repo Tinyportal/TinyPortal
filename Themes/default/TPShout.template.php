@@ -181,6 +181,13 @@ function template_tpshout_admin_settings()
 						<input name="tp_show_profile_shouts" type="radio" value="0" ' , $context['TPortal']['profile_shouts_hide'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
 					</td>
 				</tr>
+				<tr class="windowbg2">
+					<td align="right">'.$txt['tp-shout-allow-links'].'</td>
+					<td>
+					<input name="tp_shout_allow_links" type="radio" value="1" ' , $context['TPortal']['shout_allow_links'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+					<input name="tp_shout_allow_links" type="radio" value="0" ' , $context['TPortal']['shout_allow_links'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
+					</td>
+				</tr>
 				</table>
 					</td>
 				</tr>
@@ -341,8 +348,8 @@ function template_singleshout($row)
 
 function template_tpshout_ajax() {
 	global $context;
-    echo '
-	<div class="smalltext" id="bigshout" style="width: 99%; height: 100%;">', $context['TPortal']['rendershouts'], '</div>';
+	echo '
+	<div class="smalltext" id="'. !empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout' . '" style="width: 99%; height: 100%;">', $context['TPortal']['rendershouts'], '</div>';
 }
 
 ?>

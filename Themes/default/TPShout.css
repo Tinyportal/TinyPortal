@@ -66,3 +66,15 @@
 	margin: 5px 0 5px 0;
 
 }
+
+#shoutError {
+	border: 1px solid #CC0000;
+	padding: 3px;
+	background-color: #FF9999;
+	margin-top: 5px;
+}
+
+#bigshout {
+	height: 100%;
+	width: 99%;
+}
