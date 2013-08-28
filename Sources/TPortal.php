@@ -272,7 +272,7 @@ function TP_loadTheme()
 				$request = $smcFunc['db_query']('', '
 					SELECT id_theme FROM {db_prefix}tp_articles
 					WHERE id = {int:page}',
-					array('page' => $pag)
+					array('page' => (int) $pag)
 				);
             }
 			else
@@ -618,7 +618,7 @@ function doTPpage()
 				LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 				WHERE '. $pag .'
 				LIMIT 1',
-				array('page' => $page)
+				array('page' => is_numeric($page) ? (int) $page : $page)
 			);
         }
 		else
@@ -638,7 +638,7 @@ function doTPpage()
 				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 				LIMIT 1',
-				array('page' => $page)
+				array('page' => is_numeric($page) ? (int) $page : $page)
 			);
         }
         

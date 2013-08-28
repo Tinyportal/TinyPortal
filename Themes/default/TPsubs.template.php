@@ -471,7 +471,7 @@ function TPortal_themebox()
          }
          echo '
 			</select><br />' , $context['user']['is_logged'] ?
-			'<input type="checkbox" value=";permanent" onfocus="realtheme()" /> '. $txt['tp-permanent']. '<br />' : '' , '
+			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br />' : '' , '
 			<input style="margin: 5px 0px 5px 10px;" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" />
  			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
  			<div style="text-align: center; width: 95%; overflow: hidden;">
@@ -480,29 +480,31 @@ function TPortal_themebox()
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var extra = \'\';
-			var themepath=new Array()';
+			var themepath = new Array();';
          for($a=0 ; $a<(sizeof($temaid)); $a++){
 			 echo '
-			    themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif"
+			    themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
 				';
 		 }
 
 		echo '
-		 function jumpit(){
-                          window.location=document.jumpurl1.jumpurl3.value + extra
-                          return false
-                       }
-                   </script>
-					   <script type="text/javascript">
-       function realtheme()
-       {
-			extra = \';permanent\';
-       }
-        function check(icon)
-       {
-			document.chosen.src= themepath[icon]
-			document.jumpurl1.jumpurl3.value = \'' . $scripturl . '?'. $tp_where.'theme=\' + icon 
-       }
+			function jumpit()
+			{
+				window.location = document.jumpurl1.jumpurl3.value + extra;
+				return false;
+			}
+			function realtheme()
+			{
+				if (extra === ";permanent")
+					extra = "";
+				else
+					extra = ";permanent";
+			}
+			function check(icon)
+			{
+				document.chosen.src= themepath[icon]
+				document.jumpurl1.jumpurl3.value = \'' . $scripturl . '?'. $tp_where.'theme=\' + icon 
+			}
 		// ]]></script>';
 	}
 	else

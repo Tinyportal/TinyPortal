@@ -45,7 +45,7 @@
 		$context['linktree'] = array_merge(
 			$context['linktree'],
 			array(array(
-				'url' => $scripturl . '?action=forum#' . $board_info['cat']['id'],
+				'url' => $scripturl . '?action=forum#c' . $board_info['cat']['id'],
 				'name' => $board_info['cat']['name']
 			)),]]></add>
 		</operation>
