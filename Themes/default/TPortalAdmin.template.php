@@ -2118,10 +2118,25 @@ function template_editarticle($type = '')
 					</tr>
 					<tr class="windowbg2 error">
 						<td class="left" valign="top" align="right">'.$txt['tp-status'].':</td>
-						<td valign="top">
+						<td valign="top">';
+						
+					if (!empty($context['TPortal']['editing_article']))
+					{
+						// show checkboxes since we have these features aren't available until the article is saved.
+						echo '
 							<img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" border="0" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.gif" alt="'.$txt['tp-setfrontpage'].'"  />
 							<img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" border="0" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.gif" alt="'.$txt['tp-setsticky'].'"  />
-							<img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" border="0" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.gif" alt="'.$txt['tp-setlock'].'"  />
+							<img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" border="0" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.gif" alt="'.$txt['tp-setlock'].'"  />';
+					}
+					else
+					{
+						// Must be a new article, so lets show the check boxes instead.
+						echo '
+							<input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" />'. $txt['tp-setfrontpage']. '<br />
+							<input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" />'. $txt['tp-setsticky']. '<br />
+							<input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" />'. $txt['tp-setlock']. '';
+					}
+						echo '
 						</td>
 					</tr>
 					<tr class="windowbg2 error">
