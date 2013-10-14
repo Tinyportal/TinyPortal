@@ -1602,7 +1602,9 @@ function do_articles()
 		
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);	
+			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
+			$context['TPortal']['editing_article'] = true;
+			$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
 			$smcFunc['db_free_result']($request);
 		}
 		
@@ -1645,7 +1647,7 @@ function do_articles()
 			// ]]></script>';
 
 	}
-	// fetch articlecount for these
+	// fetch article count for these
 	if(isset($cats))
 	{
 		$request = $smcFunc['db_query']('', '

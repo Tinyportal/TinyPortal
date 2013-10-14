@@ -43,11 +43,7 @@ function TPortal_init()
 	require_once($sourcedir.'/TPSubs.php');
 
 	if(loadLanguage('TPortal') == false)
-		loadLanguage('TPortal', 'english');
-
-	// Loading jquery from google. Load it only once!
-	$context['html_headers'] .= '
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>';		
+		loadLanguage('TPortal', 'english');		
 	
 	// Add all the TP settings into ['TPortal']
 	setupTPsettings();
@@ -738,7 +734,7 @@ function doTPpage()
 
 				require_once($sourcedir . '/TPcommon.php');
 
-				// ok, how manya rticles have this member posted?
+				// ok, how many articles have this member posted?
 				$request =  $smcFunc['db_query']('', '
 					SELECT id FROM {db_prefix}tp_articles
 					WHERE author_id = {int:author}
@@ -748,6 +744,10 @@ function doTPpage()
 				$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
 				$smcFunc['db_free_result']($request);
 
+				// We'll use this in the template to allow comment box
+				if (allowedTo('tp_artcomment'))
+					$context['TPortal']['can_artcomment'] = true;			
+					
 				// fetch any comments
 				$request =  $smcFunc['db_query']('', '
 					SELECT var.* , IFNULL(mem.real_name,0) as realName,mem.avatar,
@@ -798,8 +798,8 @@ function doTPpage()
 						SET comments = {int:com}
 						WHERE id = {int:artid}',
 						array('com' => $ccount, 'artid' => $article['id'])
-					);
-
+						);
+				
 				// the frontblocks should not display here
 				$context['TPortal']['frontpanel'] = 0;
 				// sort out the options
