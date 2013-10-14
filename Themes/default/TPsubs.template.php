@@ -1817,13 +1817,13 @@ function article_bookmark($render = true)
 		$code = '
 	<div class="windowbg2" style="margin: 1px 0; padding-bottom: 1em;">
 		<div class="article_socialbookmark">
-			<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/twitter.gif" alt="Share on Twitter!" /></a>
-			<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img title="Digg this story!" src="' . $settings['tp_images_url'] . '/digg.gif" alt="Digg this story!" /></a>
-			<a href="http://del.icio.us/post?url=' . $scripturl.'?page=' . $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/delicious.gif" alt="Del.icio.us" title="Del.icio.us" /></a>
-			<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/facebook.gif" alt="Share on Facebook!" title="Share on Facebook!" /></a>
-			<a href="http://www.technorati.com/faves?add=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/technorati.gif" alt="Technorati" title="Technorati" /></a>
-			<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/reddit.gif" alt="Reddit" title="Reddit" /></a>
-			<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/stumble_upon_icon.gif" alt="StumbleUpon" title="Stumbleupon" /></a>
+			<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>
+			<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>
+			<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>
+			<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>
+			<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>
+			<a href="http://del.icio.us/post?url=' . $scripturl.'?page=' . $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>
+			<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/stumbleupon.png" alt="StumbleUpon" title="Stumbleupon" /></a>
 		</div>
 	</div>';
 	else
