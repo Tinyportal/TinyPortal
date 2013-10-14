@@ -132,8 +132,8 @@ function TPmodules()
 		// check the session
 		checkSession('post');
 
-		if ($user_info['is_guest'])
-			fatal_error($txt['tp-noguestcomments']);
+		if (!allowedTo('tp_artcomment'))
+			fatal_error($txt['tp-nocomments']);
 
 		// Check whether the visual verification code was entered correctly.
 		if ($context['TPortal']['articles_comment_captcha'] && (empty($_REQUEST['visual_verification_code']) || strtoupper($_REQUEST['visual_verification_code']) !== $_SESSION['visual_verification_code']))
@@ -162,7 +162,7 @@ function TPmodules()
 			$num_comments = $row[0] + 1;
 			$smcFunc['db_free_result']($request);
 			$title = strip_tags($_POST['tp_article_comment_title']);
-			$comment = substr($_POST['tp_article_bodytext'], 0, 65536);
+			$comment = substr($smcFunc['htmlspecialchars']($_POST['tp_article_bodytext']), 0, 65536);
 
 			require_once($sourcedir.'/Subs-Post.php');
 			preparsecode($comment);

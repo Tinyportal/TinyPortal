@@ -28,6 +28,7 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 			'tp_submithtml' => array(false, 'tp', 'tp'),
 			'tp_submitbbc' => array(false, 'tp', 'tp'),
 			'tp_editownarticle' => array(false, 'tp', 'tp'),
+			'tp_artcomment' => array(false, 'tp', 'tp'),
 			'tp_can_admin_shout' => array(false, 'tp', 'tp'),
 			'tp_can_shout' => array(false, 'tp', 'tp'),
 			'tp_dlmanager' => array(false, 'tp', 'tp'),

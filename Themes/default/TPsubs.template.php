@@ -1910,43 +1910,44 @@ function article_comments($render = true)
 		}
 		$code .= '
 			</div>';
-		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && $context['user']['is_logged'])
+			
+		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
 		{
-			$code .= '
-		<div class="windowbg" style="padding: 1em;">
-			<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
-					<div class="tp_col16">
-						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
-						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
-					</div>
-					<div class="tp_col16">';
-
-			if (!empty($context['TPortal']['articles_comment_captcha']))
-			{
-				if ($context['use_graphic_library'])
-					$code .= '
-							<img src="' . $context['verification_image_href'] . '" alt="' . $txt['tp-visual_verification_description'] . '" style="margin: 0 5px 5px 5px;" id="verificiation_image" />';
-				else
-					$code .= '
-							<img src="' . $context['verification_image_href'] . ';letter=1" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_1" />
-							<img src="' . $context['verification_image_href'] . ';letter=2" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_2" />
-							<img src="' . $context['verification_image_href'] . ';letter=3" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_3" />
-							<img src="' . $context['verification_image_href'] . ';letter=4" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_4" />
-							<img src="' . $context['verification_image_href'] . ';letter=5" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_5" />';
-				
 				$code .= '
-							<br /><input type="text" style="margin: 0 5px 5px 5px;" name="visual_verification_code" size="6" maxlength="6" tabindex="' . $context['tabindex']++ . '" />
-							<br />&nbsp;&nbsp;<a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" onclick="refreshImages(); return false;">' . $txt['tp-newcaptcha'] . '</a>';
-			}
+			<div class="windowbg" style="padding: 1em;">
+				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
+						<div class="tp_col16">
+							<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
+							<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
+						</div>
+						<div class="tp_col16">';
 
-			$code .= '
-					</div>
-					<br />&nbsp;<input id="tp_article_comment_submit" type="submit" value="' . $txt['tp-submit'] . '">
-					<input name="tp_article_type" type="hidden" value="article_comment">
-					<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
-					<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
-			</form>
-		</div>';
+				if (!empty($context['TPortal']['articles_comment_captcha']))
+				{
+					if ($context['use_graphic_library'])
+						$code .= '
+								<img src="' . $context['verification_image_href'] . '" alt="' . $txt['tp-visual_verification_description'] . '" style="margin: 0 5px 5px 5px;" id="verificiation_image" />';
+					else
+						$code .= '
+								<img src="' . $context['verification_image_href'] . ';letter=1" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_1" />
+								<img src="' . $context['verification_image_href'] . ';letter=2" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_2" />
+								<img src="' . $context['verification_image_href'] . ';letter=3" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_3" />
+								<img src="' . $context['verification_image_href'] . ';letter=4" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_4" />
+								<img src="' . $context['verification_image_href'] . ';letter=5" alt="' . $txt['tp-visual_verification_description'] . '" id="verificiation_image_5" />';
+					
+					$code .= '
+								<br /><input type="text" style="margin: 0 5px 5px 5px;" name="visual_verification_code" size="6" maxlength="6" tabindex="' . $context['tabindex']++ . '" />
+								<br />&nbsp;&nbsp;<a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" onclick="refreshImages(); return false;">' . $txt['tp-newcaptcha'] . '</a>';
+				}
+
+				$code .= '
+						</div>
+						<br />&nbsp;<input id="tp_article_comment_submit" type="submit" value="' . $txt['tp-submit'] . '">
+						<input name="tp_article_type" type="hidden" value="article_comment">
+						<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
+						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
+				</form>
+			</div>';
 		}
 		else
 			$code .= '
