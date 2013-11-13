@@ -103,10 +103,10 @@ function TPortal_init()
 	tp_setupUpshrinks();
 
 	// finally..any errors finding an article or category?
-	if(isset($context['art_error']) && $context['art_error'] == true)
-		fatal_error($txt['tp-articlenotexist']);
-	if(isset($context['cat_error']) && $context['cat_error'] == true)
-		fatal_error($txt['tp-categorynotexist']);
+	if(!empty($context['art_error']))
+		fatal_error($txt['tp-articlenotexist'], false);
+	if(!empty($context['cat_error']))
+		fatal_error($txt['tp-categorynotexist'], false);
 
 	// let a module take over
 	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
@@ -1258,7 +1258,7 @@ function doTPcat()
 // do the frontpage
 function doTPfrontpage()
 {
-	global $context, $scripturl, $user_info, $modSettings, $smcFunc;
+	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt;
 
 	// check we aren't in any other section because 'cat' is used in SMF and TP
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
@@ -1489,8 +1489,7 @@ function doTPfrontpage()
 			$catsort = 'poster_time'; 
 
 		$request =  $smcFunc['db_query']('', '
-			SELECT m.subject,  
-				' . ($context['TPortal']['frontpage_limit_len'] > 0 ? 'LEFT(m.body,' . $context['TPortal']['frontpage_limit_len'] . ') as body' : 'm.body') . ', 
+			SELECT m.subject, m.body,
 				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views,t.num_replies as replies, t.locked,
@@ -1534,6 +1533,20 @@ function doTPfrontpage()
 
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
+				$length = $context['TPortal']['frontpage_limit_len'];
+				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
+				{
+					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
+
+					// The first space or line break. (<br />, etc.)
+					$cutoff = max(strrpos($row['body'], ' '), strrpos($row['body'], '<'));
+
+					if ($cutoff !== false)
+						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
+
+					$row['body'] .= '... <p><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+				}
+
 				// some needed addons
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
@@ -1572,7 +1585,7 @@ function doTPfrontpage()
 		loadLanguage('Stats');
 		$year = 10000000;
 		$year2 = 100000000;
-		
+
 		$request =  $smcFunc['db_query']('', 
 		'SELECT art.id, art.date, art.sticky, art.featured
 			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var) 
@@ -1683,8 +1696,7 @@ function doTPfrontpage()
 		// ok we got the post ids now, fetch each one, forum first
 		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
-			SELECT m.subject, 
-				' . ($context['TPortal']['frontpage_limit_len'] > 0 ? 'LEFT(m.body,' . $context['TPortal']['frontpage_limit_len'] . ') as body' : 'm.body') . ', 
+			SELECT m.subject, m.body,
 				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views, t.num_replies as replies, t.locked,
@@ -1724,6 +1736,20 @@ function doTPfrontpage()
 
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
+				$length = $context['TPortal']['frontpage_limit_len'];
+				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
+				{
+					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
+
+					// The first space or line break. (<br />, etc.)
+					$cutoff = max(strrpos($row['body'], ' '), strrpos($row['body'], '<'));
+
+					if ($cutoff !== false)
+						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
+
+					$row['body'] .= '... <p><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+				}
+
 				// some needed addons
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
