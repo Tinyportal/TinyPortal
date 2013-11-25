@@ -21,7 +21,7 @@ if (!defined('SMF'))
 // TinyPortal init
 function TPortal_init()
 {
-	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir;
+	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings;
 	
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['fixed_width']))
@@ -44,7 +44,12 @@ function TPortal_init()
 
 	if(loadLanguage('TPortal') == false)
 		loadLanguage('TPortal', 'english');		
-	
+
+	// Load JQuery if it's not set (anticipated for SMF2.1)
+	if (!isset($modSettings['jquery_source']))
+		$context['html_headers'] .= '
+			<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>';
+
 	// Add all the TP settings into ['TPortal']
 	setupTPsettings();
 	fetchTPhooks();
@@ -118,8 +123,8 @@ function TPortal_init()
 		else
 			echo $txt['tp-nomodule'];
 	}
-
 }
+
 function TP_doLayers() {
 	global $context;
 		// are we allowed to tag boards? include any

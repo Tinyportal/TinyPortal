@@ -78,3 +78,7 @@
 	height: 100%;
 	width: 99%;
 }
+
+#shout_errors {
+	display: none;
+}

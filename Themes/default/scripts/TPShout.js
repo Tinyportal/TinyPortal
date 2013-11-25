@@ -59,6 +59,7 @@ function TPupdateShouts(action, shoutId)
 				$j(".tp_shoutframe").fadeIn();
 				$j(".tp_shout").val(shout);
 			} else {
+				$j("#shout_errors").hide();
 				$j(".tp_shoutframe").html(data).fadeIn();
 				$j(".tp_shoutframe").parent().scrollTop(0);
 				$j(".tp_shout").val("");
