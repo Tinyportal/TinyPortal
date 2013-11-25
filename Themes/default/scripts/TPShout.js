@@ -57,12 +57,12 @@ function TPupdateShouts(action, shoutId)
 			if (error.length > 0) {
 				$j("#shout_errors").html(error).show();
 				$j(".tp_shoutframe").fadeIn();
-				$j(".tp_shout").val(shout);
+				$j("#tp_shout").val(shout);
 			} else {
 				$j("#shout_errors").hide();
 				$j(".tp_shoutframe").html(data).fadeIn();
 				$j(".tp_shoutframe").parent().scrollTop(0);
-				$j(".tp_shout").val("");
+				$j("#tp_shout").val("");
 			}
 		}
 	});
