@@ -72,16 +72,20 @@ if($context['TPortal']['shoutbox_usescroll'] > 0)
 			});
 	</script>';
 
-if(isset($_GET['shout']))
+if(isset($_REQUEST['shout']))
 {
-	if($_GET['shout'] == 'admin')
+	$shoutAction = $_REQUEST['shout'];
+	
+	if($shoutAction == 'admin')
+	{
 		tpshout_admin();
-	elseif($_GET['shout'] == 'del')
+	}
+	elseif($shoutAction == 'del')
 	{
 		deleteShout();
 		tpshout_bigscreen(false);
 	}
-	elseif($_GET['shout'] == 'save')
+	elseif($shoutAction == 'save')
 	{
 		if (empty($context['TPortal']['shout_allow_links'])) {
 			if (shoutHasLinks())
@@ -90,13 +94,13 @@ if(isset($_GET['shout']))
 		postShout();
 		tpshout_bigscreen(false);
 	}
-	elseif($_GET['shout'] == 'fetch')
+	elseif($shoutAction == 'fetch')
 	{
 		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
 	else
 	{
-		$number = substr($_GET['shout'], 4);
+		$number = substr($shoutAction, 4);
 		if(!is_numeric($number))
 			$number = 10;
 		tpshout_bigscreen(true, $number);
@@ -110,12 +114,12 @@ function postShout()
 	
 	isAllowedTo('tp_can_shout');
 	
-	if(!empty($_GET['tp_shout']) && !empty($_GET['tp-shout-name']))
+	if(!empty($_POST['tp_shout']) && !empty($_POST['tp-shout-name']))
 	{
 		// Check the session id.
-		checkSession('get');
+		checkSession('post');
 		require_once($sourcedir . '/Subs-Post.php');	
-		$shout = substr($_GET['tp_shout'], 0, 300);
+		$shout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, 300));
 		preparsecode($shout);
 
 		// collect the color for shoutbox
@@ -134,7 +138,7 @@ function postShout()
 		}
 
 		// Build the name with color for user, otherwise strip guests name of html tags.
-		$shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_GET['tp-shout-name']);
+		$shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_POST['tp-shout-name']);
 		if(!empty($context['TPortal']['usercolor']))
 			$shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
 		$shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
@@ -161,15 +165,14 @@ function deleteShout()
 	global $smcFunc;
 
 	// A couple of security checks
-	checkSession('get');
+	checkSession('post');
 	isAllowedTo('tp_can_admin_shout');
-
-	if(!empty($_GET['s']))
+	if(!empty($_POST['s']))
 	{
 		$smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}tp_shoutbox
 			WHERE id = {int:id}',
-			array('id' => (int) $_GET['s'])
+			array('id' => (int) $_POST['s'])
 		);
 	}
 }
@@ -264,6 +267,8 @@ function tpshout_admin()
 				}
 				if($what == 'show_profile_shouts')
 					$changeArray['profile_shouts_hide'] = $value;
+				if($what == 'shout_allow_links')
+					$changeArray['shout_allow_links'] = $value;
 			}
 		}
 		updateTPSettings($changeArray);
@@ -809,7 +814,7 @@ function tpshout_frontpage()
 
 function shoutHasLinks() {
 	global $context;
-	$shout = !empty($_GET['tp_shout']) ? $_GET['tp_shout'] : '';
+	$shout = !empty($_POST['tp_shout']) ? $_POST['tp_shout'] : '';
 	$pattern = '@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
 	if (preg_match_all($pattern, $shout, $matches, PREG_PATTERN_ORDER)) {
 		loadTemplate('TPShout');

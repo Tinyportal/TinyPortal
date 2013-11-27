@@ -47,7 +47,7 @@ function template_tpshout_bigscreen()
 	echo '
 			<table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
 				<tr>
-					<td><div class="smalltext" id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div></td>
+					<td><div id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div></td>
 				</tr>
 			</table>';
 

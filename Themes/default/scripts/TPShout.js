@@ -29,21 +29,25 @@ function expandHeaderBBC(mode, is_guest, sessionId)
 var $j = jQuery.noConflict();
 function TPupdateShouts(action, shoutId)
 {
-	var param = action;
-	if (param === "save")
+	var params = "shout=" + action;
+	var name;
+	var shout;
+	if (action === "save")
 	{
-		var name = $j("#tp-shout-name").val();
-		var shout = $j("#tp_shout").val();
-		param = param + ";tp-shout-name=" + name + ";tp_shout=" + shout;
+		name = $j("#tp-shout-name").val();
+		shout = $j("#tp_shout").val();
+		params = "shout=" + action + "&tp-shout-name=" + name + "&tp_shout=" + shout;
 	}
-	if (shoutId)
-		param = param + ";s=" + shoutId;
+	if (shoutId) {
+		params = "shout=" + action + "&s=" + shoutId;
+	}
 	
 	$j.ajax({
-		type : "GET",
+		type : "POST",
 		dataType: "html",
 		cache: false,
-		url: smf_scripturl + "?action=tpmod;shout=" + param + ";" + tp_session_var + "=" + tp_session_id,
+		url: smf_scripturl + "?action=tpmod;shout",
+		data: params + "&" + tp_session_var + "=" + tp_session_id,
 		beforeSend: function() {
 			$j(".tp_shoutframe").hide();
 			$j("#tp_shout_refresh img").attr("src", tp_images_url + "/ajax.gif");
@@ -62,7 +66,7 @@ function TPupdateShouts(action, shoutId)
 				$j("#shout_errors").hide();
 				$j(".tp_shoutframe").html(data).fadeIn();
 				$j(".tp_shoutframe").parent().scrollTop(0);
-				if (param === "save") {
+				if (action === "save") {
 					$j("#tp_shout").val("");
 				}
 			}
