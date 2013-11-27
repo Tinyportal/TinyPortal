@@ -350,7 +350,7 @@ function template_singleshout($row)
 function template_tpshout_ajax() {
 	global $context;
 	echo '
-	<div class="smalltext" id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout') . '">'. $context['TPortal']['rendershouts']. '</div>';
+	<div id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout') . '">'. $context['TPortal']['rendershouts']. '</div>';
 }
 
 ?>
