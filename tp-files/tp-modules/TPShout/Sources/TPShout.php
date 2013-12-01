@@ -815,7 +815,7 @@ function tpshout_frontpage()
 function shoutHasLinks() {
 	global $context;
 	$shout = !empty($_POST['tp_shout']) ? $_POST['tp_shout'] : '';
-	$pattern = '@((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*(\?\S+)?)?)*)@';
+	$pattern = '~(?:https?|irc|ftp|file)://(?:www)?.*?\.(?:com|net|info|org)~i'; 
 	if (preg_match_all($pattern, $shout, $matches, PREG_PATTERN_ORDER)) {
 		loadTemplate('TPShout');
 		$context['TPortal']['shoutError'] = true;

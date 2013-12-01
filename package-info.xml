@@ -59,14 +59,7 @@
 		<code>do_hooks.php</code>
     </uninstall>
     <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105, 1.106, 1.107">
-		<redirect url="">Upgraded!</redirect>
-		<require-dir name="Themes" destination="$boarddir" />
-		<require-dir name="Sources" destination="$boarddir" />
-		<require-dir name="tp-downloads" destination="$boarddir" />
-		<require-dir name="tp-images" destination="$boarddir" />
-		<require-dir name="tp-files" destination="$boarddir" />
-		<readme type="inline">Installing TinyPortal v1.1 for SMF2.0</readme>
-		<code>do_hooks.php</code>
+		<readme type="inline">You must uninstall any previous version of TinyPortal before you can install TP 1.1 for SMF2.0</readme>
     </upgrade>
 
 </package-info>

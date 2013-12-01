@@ -79,19 +79,6 @@
 		</operation>
 	</file>
 	
-	<file name="$sourcedir/Errors.php">
-		<operation>
-			<search position="before"><![CDATA[	// We don't have $txt yet, but that's okay...
-	if (empty($txt))
-		die($error);]]></search>
-			<add><![CDATA[
-	// TinyPortal
-	if(!isset($context['tp_prefix']))
-		TPortal_init();
-	// end]]></add>
-		</operation>
-	</file>
-	
 	<file name="$boarddir/SSI.php">
 		<operation>
 			<search position="before"><![CDATA[require_once($sourcedir . '/Security.php');]]></search>
@@ -130,5 +117,4 @@
 }]]></add>
 		</operation>
 	</file>
-		
 </modification>
