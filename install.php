@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 1.0
+ * @version 1.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -13,7 +13,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2012 - The TinyPortal Team
+ * Copyright (C) 2014 - The TinyPortal Team
  *
  */
 
@@ -47,13 +47,13 @@ if ($manual)
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v1.0 for SMF2.0</title>
+		<title>TinyPortal - v1.1 for SMF2.0.x</title>
 		 <link rel="stylesheet" type="text/css" href="Themes/default/style.css" />
 	</head><body>';
 
 
 $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; height: 500px; border: solid 2px #222;background: white;">
-<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.0 for SMF 2.0 &copy;2004-2012</div>
+<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.1 for SMF 2.0.x</div>
 	<div class="middletext" style="padding: 1em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.5em;">';
 
@@ -680,8 +680,8 @@ else
 		'blockrender' => 'tpshout_fetch',
 		'adminhook' => 'tpshout_adminhook',
 		'logo' => 'tpshoutbox.png',
-		'tpversion' => '1.0',
-		'smfversion' => '1.1.x',
+		'tpversion' => '1.1',
+		'smfversion' => '2.0.x',
 		'description' => '[b]TP Simple Shoutbox[/b] is the original shoutbox from v0.9 series of TinyPortal, now converted to a TP module. It allows shout in BBC format, scrolling of shouts, insert of BBC codes and smilies and an admin interface to delete or modify shouts.<br />	',
 		'author' => 'IchBin',
 		'email' => 'ichbin@ichbin.us',

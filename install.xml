@@ -88,16 +88,12 @@
 	
 	<file name="$sourcedir/QueryString.php">
 		<operation>
-			<search position="replace"><![CDATA[		// Let's do something special for session ids!
-		if (defined('SID') && SID != '')
-			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html?' . SID . '\$2\"'", $buffer);
-		else
-			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?((?:board|topic)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html\$2\"'", $buffer);]]></search>
-			<add><![CDATA[		// Let's do something special for session ids!
-		if (defined('SID') && SID != '')
-			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html?' . SID . '\$2\"'", $buffer);
-		else
-			$buffer = preg_replace('/"' . preg_quote($scripturl, '/') . '\?((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"/e', "'\"' . \$scripturl . '/' . strtr('\$1', '&;=', '//,') . '.html\$2\"'", $buffer);]]></add>
+			<search position="replace"><![CDATA['\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#"]+?)(#[^"]*?)?"~']]></search>
+			<add><![CDATA['\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"~']]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA['\?((?:board|topic)=[^#"]+?)(#[^"]*?)?"~']]></search>
+			<add><![CDATA['\?((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"~']]></add>
 		</operation>
 	</file>
 	
