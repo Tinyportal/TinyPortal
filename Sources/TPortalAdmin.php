@@ -3566,7 +3566,7 @@ function do_postchecks()
 									UPDATE {db_prefix}tp_articles 
 									SET pub_end = {int:end}
 									WHERE id = {int:artid} LIMIT 1',
-									array('end' => 0, 'artid' => $where)
+									array('end' => $timestamp, 'artid' => $where)
 								);
 
 						$pubend = 1;

@@ -27,9 +27,7 @@ function TPortal_init()
 	if(isset($context['TPortal']['fixed_width']))
 		return;
 
-	$settings['tp_smfversion'] = '1';
 	$context['TPortal'] = array();
-
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 
 	// go back on showing attachments..
@@ -77,13 +75,6 @@ function TPortal_init()
 			doTPfrontpage();
 	}
 
-	// check that we are going directly to forum
-	if(count($context['linktree']) > 1 && $settings['TPortal_front_type'] == 'boardindex')
-	{
-		$temp = array_shift($context['linktree']);
-		array_unshift($context['linktree'], $temp);
-	}
-
 	// determine the blocks
 	doTPblocks();
 	// determine which sidebars to hide
@@ -96,7 +87,7 @@ function TPortal_init()
 		TPcollectPermissions();
 
 	// Show search/tag/frontpage topic layers?
-	TP_doLayers();
+	TP_doTagSearchLayers();
 
 	// any modules needed to load then?
 	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
@@ -125,7 +116,7 @@ function TPortal_init()
 	}
 }
 
-function TP_doLayers() {
+function TP_doTagSearchLayers() {
 	global $context;
 		// are we allowed to tag boards? include any
 	if(!empty($_GET['topic']) && empty($_GET['action']))
@@ -1021,7 +1012,7 @@ function doTPpage()
 function doTPcat()
 {
 	//return if not quite a category
-	if(isset($_GET['action']) && $_GET['action'] == 'manageboards')
+	if(isset($_GET['area']) && $_GET['area'] == 'manageboards')
 		return;
 	
 	global $context, $scripturl, $txt, $modSettings, $smcFunc;
