@@ -201,6 +201,7 @@ function tpshout_admin()
 	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks']))
 	{
 		$go = 0;
+		$changeArray = array();
 		foreach ($_POST as $what => $value) 
 		{
 
