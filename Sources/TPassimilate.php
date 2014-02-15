@@ -79,10 +79,16 @@ function tpAddCopy($buffer)
 function tpAddMenuItems(&$buttons)
 {
 	global $context, $scripturl, $txt;
-
+	
+	// If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
+	if (!isset($context['TPortal']))
+		return;
+		
 	// Set the forum button activated if needed.
 	if (isset($_GET['board']) || isset($_GET['topic']))
-			$context['current_action'] = 'forum';
+		$context['current_action'] = 'forum';
+	elseif (isset($_GET['sa'] && $_GET['sa'] == 'help'))
+		$context['current_action'] = 'help';
 				
 	$new_buttons = array();
 	foreach($buttons as $but => $val)
