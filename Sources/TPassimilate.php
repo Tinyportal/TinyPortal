@@ -87,7 +87,7 @@ function tpAddMenuItems(&$buttons)
 	// Set the forum button activated if needed.
 	if (isset($_GET['board']) || isset($_GET['topic']))
 		$context['current_action'] = 'forum';
-	elseif (isset($_GET['sa'] && $_GET['sa'] == 'help'))
+	elseif (isset($_GET['sa']) && $_GET['sa'] == 'help')
 		$context['current_action'] = 'help';
 				
 	$new_buttons = array();
