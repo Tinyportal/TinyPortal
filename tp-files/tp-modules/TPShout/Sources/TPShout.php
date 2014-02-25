@@ -30,24 +30,24 @@ $context['html_headers'] .= '
 		var tp_session_id = "' . $context['session_id'] . '";
 		var tp_session_var = "' . $context['session_var'] . '";
 		var current_header_smiley = ';
-	if(empty($options['expand_header_smiley']))
-		$context['html_headers'] .= 'false'; 
-	else 
-		$context['html_headers'] .= 'true';
+if(empty($options['expand_header_smiley']))
+	$context['html_headers'] .= 'false'; 
+else 
+	$context['html_headers'] .= 'true';
 
-	$context['html_headers'] .= '
-		var current_header_bbc = ';
-	if(empty($options['expand_header_bbc']))
-		$context['html_headers'] .= 'false'; 
-	else 
-		$context['html_headers'] .= 'true';			
-	$context['html_headers'] .= '
+$context['html_headers'] .= '
+	var current_header_bbc = ';
+if(empty($options['expand_header_bbc']))
+	$context['html_headers'] .= 'false'; 
+else 
+	$context['html_headers'] .= 'true';			
+$context['html_headers'] .= '
 	// ]]></script>
 	
 	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/TPShout.js?10"></script>';
 	
-	if(!empty($context['TPortal']['shoutbox_refresh']))
-		$context['html_headers'] .= '
+if(!empty($context['TPortal']['shoutbox_refresh']))
+	$context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
 		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
 	// ]]></script>';
@@ -71,6 +71,16 @@ if($context['TPortal']['shoutbox_usescroll'] > 0)
 				});					
 			});
 	</script>';
+if(!empty($context['TPortal']['shout_submit_returnkey']))
+	$context['html_headers'] .= '
+	<script type="text/javascript"><!-- // --><![CDATA[
+		$(document).ready(function() {
+			$("#tp_shout").keypress(function(event) {
+				if(event.which == 13 && !event.shiftKey)
+					TPupdateShouts("save");
+			});
+		});
+	// ]]></script>';	
 
 if(isset($_REQUEST['shout']))
 {
@@ -270,6 +280,10 @@ function tpshout_admin()
 					$changeArray['profile_shouts_hide'] = $value;
 				if($what == 'shout_allow_links')
 					$changeArray['shout_allow_links'] = $value;
+				if($what == 'shoutbox_layout')
+					$changeArray['shoutbox_layout'] = $value;
+				if($what == 'shout_submit_returnkey')
+					$changeArray['shout_submit_returnkey'] = $value;
 			}
 		}
 		updateTPSettings($changeArray);

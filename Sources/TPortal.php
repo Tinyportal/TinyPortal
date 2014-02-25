@@ -27,9 +27,15 @@ function TPortal_init()
 	if(isset($context['TPortal']['fixed_width']))
 		return;
 
+	if(loadLanguage('TPortal') == false)
+		loadLanguage('TPortal', 'english');		
+
 	$context['TPortal'] = array();
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 
+	// Add all the TP settings into ['TPortal']
+	setupTPsettings();
+	
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
 		return;
@@ -40,16 +46,12 @@ function TPortal_init()
 	// Include a ton of functions.
 	require_once($sourcedir.'/TPSubs.php');
 
-	if(loadLanguage('TPortal') == false)
-		loadLanguage('TPortal', 'english');		
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
 	if (!isset($modSettings['jquery_source']))
 		$context['html_headers'] .= '
 			<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>';
 
-	// Add all the TP settings into ['TPortal']
-	setupTPsettings();
 	fetchTPhooks();
 	doModules();
  

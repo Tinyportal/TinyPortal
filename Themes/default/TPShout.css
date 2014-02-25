@@ -82,3 +82,17 @@
 #shout_errors {
 	display: none;
 }
+
+/* for layout option 2 */
+.shout_options  img{
+	float: right;
+}
+
+.shout_date {
+	clear: both;
+}
+
+.shoutbody_layout1 {
+	border-bottom: 1px dotted #000;
+	padding: 5px 0;
+}

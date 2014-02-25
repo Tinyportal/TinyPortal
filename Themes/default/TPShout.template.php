@@ -134,68 +134,81 @@ function template_tpshout_admin_settings()
 			<tbody>
 				<tr>
 					<td class="tborder" style="padding: 0; border: none;">
-				<table class="multiplerow">
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shoutbox_showsmile'].'</td>
-					<td>
-						<input name="tp_shoutbox_smile" type="radio" value="1" ' , $context['TPortal']['show_shoutbox_smile']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-						<input name="tp_shoutbox_smile" type="radio" value="0" ' , $context['TPortal']['show_shoutbox_smile']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'
-					</td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shoutbox_showicons'].'</td>
-					<td>
-						<input name="tp_shoutbox_icons" type="radio" value="1" ' , $context['TPortal']['show_shoutbox_icons']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-						<input name="tp_shoutbox_icons" type="radio" value="0" ' , $context['TPortal']['show_shoutbox_icons']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'
-					</td>
-				</tr>
-				<tr class="windowbg2">
-					<td width="40%" align="right">'.$txt['tp-shoutboxheight'].'</td>
-					<td><input size="6" name="tp_shoutbox_height" type="text" value="' ,$context['TPortal']['shoutbox_height'], '" /></td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shoutboxusescroll'].'</td>
-					<td>
-						<input name="tp_shoutbox_usescroll" type="radio" value="0" ' , $context['TPortal']['shoutbox_usescroll'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br />
-						<input name="tp_shoutbox_usescroll" type="radio" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-					</td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shoutboxduration'].'</td>
-					<td>
-						<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" />
-					</td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shoutboxlimit'].'</td>
-					<td><input size="6" name="tp_shoutbox_limit" type="text" value="' ,$context['TPortal']['shoutbox_limit'], '" /></td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shout-autorefresh'].'</td>
-					<td><input size="6" name="tp_shoutbox_refresh" type="text" value="' ,$context['TPortal']['shoutbox_refresh'], '" /></td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-show_profile_shouts'].'</td>
-					<td>
-						<input name="tp_show_profile_shouts" type="radio" value="1" ' , $context['TPortal']['profile_shouts_hide'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-						<input name="tp_show_profile_shouts" type="radio" value="0" ' , $context['TPortal']['profile_shouts_hide'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
-					</td>
-				</tr>
-				<tr class="windowbg2">
-					<td align="right">'.$txt['tp-shout-allow-links'].'</td>
-					<td>
-					<input name="tp_shout_allow_links" type="radio" value="1" ' , $context['TPortal']['shout_allow_links'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
-					<input name="tp_shout_allow_links" type="radio" value="0" ' , $context['TPortal']['shout_allow_links'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
-					</td>
-				</tr>
-				</table>
+						<table class="multiplerow">
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shoutbox_showsmile'].'</td>
+								<td>
+									<input name="tp_shoutbox_smile" type="radio" value="1" ' , $context['TPortal']['show_shoutbox_smile']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+									<input name="tp_shoutbox_smile" type="radio" value="0" ' , $context['TPortal']['show_shoutbox_smile']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shoutbox_showicons'].'</td>
+								<td>
+									<input name="tp_shoutbox_icons" type="radio" value="1" ' , $context['TPortal']['show_shoutbox_icons']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+									<input name="tp_shoutbox_icons" type="radio" value="0" ' , $context['TPortal']['show_shoutbox_icons']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td width="40%" align="right">'.$txt['tp-shoutboxheight'].'</td>
+								<td><input size="6" name="tp_shoutbox_height" type="text" value="' ,$context['TPortal']['shoutbox_height'], '" /></td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shoutboxusescroll'].'</td>
+								<td>
+									<input name="tp_shoutbox_usescroll" type="radio" value="0" ' , $context['TPortal']['shoutbox_usescroll'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br />
+									<input name="tp_shoutbox_usescroll" type="radio" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shoutboxduration'].'</td>
+								<td>
+									<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" />
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shoutboxlimit'].'</td>
+								<td><input size="6" name="tp_shoutbox_limit" type="text" value="' ,$context['TPortal']['shoutbox_limit'], '" /></td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shout-autorefresh'].'</td>
+								<td><input size="6" name="tp_shoutbox_refresh" type="text" value="' ,$context['TPortal']['shoutbox_refresh'], '" /></td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-show_profile_shouts'].'</td>
+								<td>
+									<input name="tp_show_profile_shouts" type="radio" value="1" ' , $context['TPortal']['profile_shouts_hide'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+									<input name="tp_show_profile_shouts" type="radio" value="0" ' , $context['TPortal']['profile_shouts_hide'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-shout-allow-links'].'</td>
+								<td>
+									<input name="tp_shout_allow_links" type="radio" value="1" ' , $context['TPortal']['shout_allow_links'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+									<input name="tp_shout_allow_links" type="radio" value="0" ' , $context['TPortal']['shout_allow_links'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['shout_submit_returnkey'].'</td>
+								<td>
+									<input name="tp_shout_submit_returnkey" type="radio" value="1" ' , $context['TPortal']['shout_submit_returnkey'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+									<input name="tp_shout_submit_returnkey" type="radio" value="0" ' , $context['TPortal']['shout_submit_returnkey'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
+								</td>
+							</tr>
+							<tr class="windowbg2">
+								<td align="right">'.$txt['shoutbox_layout'].'</td>
+								<td>
+									<input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /> <img src="tp-images/icons/shout_layout1.png" alt="Layout 1"/>
+									<input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /> <img src="tp-images/icons/shout_layout2.png" alt="Layout 2"/>
+								</td>
+							</tr>
+						</table>
 					</td>
 				</tr>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
-					</td>
+					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></td>
 				</tr>
 			</tfoot>
 		</table>
@@ -325,26 +338,42 @@ function template_tpshout_profile()
 function template_singleshout($row)
 {
 	global $scripturl, $context, $settings, $txt;
+	
+	$layoutOptions = array();
 
-	$return = '
-			<div style="padding-bottom: 5px;">
-				<div class="tp_shoutcontainer">
-					<div class="tp_shoutavatar">
-						<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
-						' . (allowedTo('tp_can_admin_shout') ? '
-						<div style="float: right; margin-bottom: 3px;">
-							<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
-							<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
-						</div>' : '') . '
-						<h4>' . $row['realName'] . '</h4>
-						<div class="smalltext">'. timeformat($row['value2']).'</div>
-					</div>
-					<div class="tp_shoutupper"></div>
-					<div class="tp_shoutbody">' . $row['value1'] . '</div>
-				</div>
-			</div>';
+	$layoutOptions[] = '
+	<div style="padding-bottom: 5px;">
+		<div class="tp_shoutcontainer">
+			<div class="tp_shoutavatar">
+				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
+				' . (allowedTo('tp_can_admin_shout') ? '
+				<div style="float: right; margin-bottom: 3px;">
+					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
+				</div>' : '') . '
+				<h4>' . $row['realName'] . '</h4>
+				<div class="smalltext">'. timeformat($row['value2']).'</div>
+			</div>
+			<div class="tp_shoutupper"></div>
+			<div class="tp_shoutbody">' . $row['value1'] . '</div>
+		</div>
+	</div>';
 
-	return $return;
+	$layoutOptions[] = '
+	<div style="padding-bottom: 5px;">
+		<div class="tp_shoutcontainer">							
+				<div class="shout_options">
+				' . $row['realName'] . ':
+				' . (allowedTo('tp_can_admin_shout') ? '
+					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
+				</div> 
+				<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
+			<div class="shoutbody_layout1">' . $row['value1'] . '</div>
+		</div>
+	</div>';
+
+	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
 }
 
 function template_tpshout_ajax() {
