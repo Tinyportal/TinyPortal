@@ -32,20 +32,19 @@ function TPortal_init()
 
 	$context['TPortal'] = array();
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
-
+	
+	// Include a ton of functions.
+	require_once($sourcedir.'/TPSubs.php');
+	
 	// Add all the TP settings into ['TPortal']
 	setupTPsettings();
-	
+
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
 		return;
 
 	// Grab the SSI for its functionality
 	require_once($boarddir. '/SSI.php');
-	
-	// Include a ton of functions.
-	require_once($sourcedir.'/TPSubs.php');
-
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
 	if (!isset($modSettings['jquery_source']))
