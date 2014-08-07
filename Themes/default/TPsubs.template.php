@@ -929,37 +929,6 @@ function template_TPtagtopics_below()
 	return;
 }
 
-
-function template_tpfrontpagetopics_above()
-{
-	global $context, $scripturl;
-
-	// not in wireless
-	if(WIRELESS)
-		return;
-
-	echo '
-	<div style="text-align: right; overflow: hidden;">';
-	
-	if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics'])))
-		$tpbuttons = array(
-			'publish' => array('active' => true, 'text' => 'tp-publish', 'image' => 'admin_move.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']),
-		);
-	else
-		$tpbuttons = array(
-			'unpublish' => array('active' => true, 'text' => 'tp-unpublish', 'image' => 'admin_move.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']),
-		);
-
-	echo '<div class="align_right">' , tp_template_button_strip($tpbuttons, 'top'), '</div>';
-	
-	echo '
-	</div>';
-}
-function template_tpfrontpagetopics_below()
-{
-	return;
-}
-
 // tag them topics!
 function template_TPtagtopicsGeneral_above()
 {

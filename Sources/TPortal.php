@@ -117,9 +117,29 @@ function TPortal_init()
 	}
 }
 
-function TP_doTagSearchLayers() {
+function addPromoteButton(&$normal_buttons) 
+{
 	global $context;
-		// are we allowed to tag boards? include any
+	
+	// not in wireless
+	if(WIRELESS)
+		return;
+
+	if(allowedTo(array('tp_settings')))
+	{
+		if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics'])))
+			$normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'image' => 'admin_move.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+		else
+			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'image' => 'admin_move.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+	}
+}
+
+function TP_doTagSearchLayers() 
+{
+
+	global $context;
+	
+	// are we allowed to tag boards? include any
 	if(!empty($_GET['topic']) && empty($_GET['action']))
 	{
 		if($context['TPortal']['tagtopics'] == 1 && allowedTo(array('tp_articles','tp_settings')))
@@ -141,12 +161,6 @@ function TP_doTagSearchLayers() {
 	if($context['TPortal']['action'] == 'search')
 		$context['template_layers'][] = 'TPsearch';
 
-	// choosing topics for frontpage
-	if(!empty($_GET['topic']) && empty($_GET['action']))
-	{
-		if(allowedTo(array('tp_settings')))
-			$context['template_layers'][] = 'tpfrontpagetopics';
-	}
 }
 
 function TP_whichHideBars()
