@@ -119,7 +119,7 @@ function TPortal_init()
 
 function addPromoteButton(&$normal_buttons) 
 {
-	global $context;
+	global $context, $scripturl;
 	
 	// not in wireless
 	if(WIRELESS)
