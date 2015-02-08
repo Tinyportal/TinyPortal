@@ -1693,7 +1693,10 @@ function tp_renderarticle($intro = '')
 		if($context['TPortal']['article']['rendertype'] == 'php')
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
+		{
+			$context['TPortal']['article']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['article']['body']);
 			echo parse_bbc($context['TPortal']['article']['body']);
+		}
 		elseif($context['TPortal']['article']['rendertype'] == 'import')
 		{
 			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport']))
