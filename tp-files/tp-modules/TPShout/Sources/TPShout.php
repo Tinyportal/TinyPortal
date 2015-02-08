@@ -23,6 +23,7 @@ global $context, $settings, $options;
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
 
+
 // bbc code for shoutbox
 $context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
@@ -44,7 +45,7 @@ else
 $context['html_headers'] .= '
 	// ]]></script>
 	
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/TPShout.js?10"></script>';
+	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/TPShout.js?11"></script>';
 	
 if(!empty($context['TPortal']['shoutbox_refresh']))
 	$context['html_headers'] .= '
@@ -189,7 +190,7 @@ function deleteShout()
 
 function tpshout_admin()
 {
-	global $context, $scripturl, $txt, $smcFunc;
+	global $context, $scripturl, $txt, $smcFunc, $sourcedir;
 	
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
@@ -199,6 +200,7 @@ function tpshout_admin()
 	else
 		$tpstart = 0;
 
+	require_once($sourcedir . '/Subs-Post.php');	
 	loadtemplate('TPShout');
 
 	$context['template_layers'][] = 'tpadm';
@@ -237,11 +239,13 @@ function tpshout_admin()
 			elseif(substr($what, 0, 16) == 'tp_shoutbox_item')
 			{
 				$val = substr($what, 16);
+				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, 300));
+				preparsecode($bshout);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox 
 					SET value1 = {string:val1}
 					WHERE id = {int:val}',
-					array('val1' => $smcFunc['htmlspecialchars']($value, ENT_QUOTES), 'val' => $val)
+					array('val1' => $bshout, 'val' => $val)
 				);
 				$go = 2;
 			}			
@@ -486,23 +490,49 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	loadTemplate('TPShout');
 
-	$request2 =  $smcFunc['db_query']('', '
-		SELECT s.*, IFNULL(s.value3, mem.real_name) as realName,
-			mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
-		FROM {db_prefix}tp_shoutbox as s 
-		LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = s.value5)
-		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = s.value5 and a.attachment_type!=3)
+	$request =  $smcFunc['db_query']('', '
+		SELECT s.*
+			FROM {db_prefix}tp_shoutbox as s 
 		WHERE s.value7 = {int:val7}
 		ORDER BY s.value2 DESC LIMIT {int:limit}',
-		array('val7' => 0, 'limit' => $limit)
-	);
-	if ($smcFunc['db_num_rows']($request2) > 0)
+			array('val7' => 0, 'limit' => $limit)
+		);
+	
+	$fetched = array(); $members = array();
+	if($smcFunc['db_num_rows']($request)>0)
 	{
-		$nshouts = '<div id="allshouts'.(!$render ? '_big' : '').'" class="qscroller'.(!$render ? '_big' : '').'"></div><div class="hide'.(!$render ? '_big' : '').'">';
-		$ns = array();
+		while($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$fetched[] = $row;
+			if(!empty($row['value5']) && !in_array($row['value5'], $members))
+				$members[] = $row['value5'];
+		}
+		$smcFunc['db_free_result']($request);
+	}
+	$request2 =  $smcFunc['db_query']('', '
+		SELECT mem.id_member, mem.real_name as realName,
+			mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
+		FROM {db_prefix}members AS mem
+			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
+		WHERE mem.id_member IN(' . implode(",",$members) . ')'
+		);
+	$memberdata = array();
+	if($smcFunc['db_num_rows']($request2)>0)
+	{
 		while($row = $smcFunc['db_fetch_assoc']($request2))
 		{
 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
+			$memberdata[$row['id_member']] = $row;
+		}
+		$smcFunc['db_free_result']($request2);
+	}
+	if(count($fetched)>0)
+	{
+		$ns = array();
+		foreach($fetched as $b => $row)
+		{
+			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
+			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
 			$ns[] = template_singleshout($row);
 		}
@@ -511,7 +541,6 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		$nshouts .= '</div>';
 
 		$context['TPortal']['shoutbox'] = $nshouts;
-		$smcFunc['db_free_result']($request2);
 	}
 
 	// its from a block, render it
@@ -519,7 +548,6 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		template_tpshout_shoutblock();
 	else
 		return $nshouts;
-
 }
 
 function shout_bcc_code($collapse = true) 
@@ -828,6 +856,7 @@ function tpshout_frontpage()
 }
 
 function shoutHasLinks() {
+	
 	global $context;
 	$shout = !empty($_POST['tp_shout']) ? $_POST['tp_shout'] : '';
 	$pattern = '%^((https?://)|(www\.))([a-z0-9-].?)+(:[0-9]+)?(/.*)?$%i'; 
