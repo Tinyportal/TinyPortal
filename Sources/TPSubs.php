@@ -1657,7 +1657,7 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 
 function tp_renderarticle($intro = '')
 {
-	global $context, $txt, $scripturl, $boarddir;
+	global $context, $txt, $scripturl, $boarddir, $smcFunc;
 	
 	// just return if data is missing
 	if(!isset($context['TPortal']['article']))
@@ -1694,7 +1694,6 @@ function tp_renderarticle($intro = '')
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
 		{
-			$context['TPortal']['article']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['article']['body']);
 			echo parse_bbc($context['TPortal']['article']['body']);
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'import')

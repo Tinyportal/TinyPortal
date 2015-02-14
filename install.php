@@ -53,7 +53,7 @@ if ($manual)
 
 
 $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; height: 500px; border: solid 2px #222;background: white;">
-<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.1 for SMF 2.0.x</div>
+<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.109 for SMF 2.0.x</div>
 	<div class="middletext" style="padding: 1em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.5em;">';
 

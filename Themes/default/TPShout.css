@@ -17,7 +17,7 @@
 .tp_shoutupper
 {
 	background: url(images/tinyportal/shout_arrow.png) no-repeat bottom left;
-	margin: 0 5px 0 0;
+	margin: 0 ;
 	text-align: right;
 	padding: 0;
 	height: 15px;
@@ -33,7 +33,7 @@
 	border: solid 1px #888;
 	border-top: none;
 	line-height: 1.3em;
-	margin: 0 5px 8px 0;
+	margin: 0 5px 0px 0;
 	padding: 8px;
 	font-size: 0.9em;
 	overflow: auto;
@@ -103,12 +103,21 @@
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	-webkit-box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.3);
-	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.3);
+	-webkit-box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
+	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
 	padding: 1.5em 1em;
 	margin: 14px 10px 10px 0;
 	z-index: 4;
 	line-height: 1.5em;
+background: #ffffff; /* Old browsers */
+background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+border: solid 1px #999;
 }
 .bubble:before, .bubble:after {
 	content: ' ';
@@ -119,7 +128,15 @@
 .speech:before {
 	left: 10px;
 	top: -10px;
-	border: 10px solid;
+	border: 5px solid;
+	border-right: 5px solid;
+	border-color: transparent transparent #999 #999 ;
+	z-index: 1;
+}
+.speech:after {
+	left: 11px;
+	top: -8px;
+	border: 5px solid;
 	border-color: transparent transparent #fff #fff ;
 	z-index: 1;
 }

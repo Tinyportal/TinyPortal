@@ -244,7 +244,7 @@ function template_tpshout_shoutblock()
 	if(!$context['user']['is_guest'] && allowedTo('tp_can_shout'))
 	{
 		echo '
-		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post">
+		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >
 		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 80%;margin-top: 1ex; height: 50px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
 	
 		if(!empty($context['TPortal']['show_shoutbox_smile']))
@@ -256,11 +256,11 @@ function template_tpshout_shoutblock()
 			shout_bcc_code();
 			
 		echo '
-		<div id="shout_errors"></div>
-		<div>
-			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
-			<input onclick="TPupdateShouts(\'save\'); return false;" style="padding: 6px; margin: 5px 10px 0;" class="smalltext" type="submit" name="shout_send" value="'.$txt['shout!'].'" tabindex="', $context['tabindex']++, '" />
-			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+		<div id="shout_errors"></div><hr>
+		<div style="overflow: hidden;">
+			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
+			<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" />
+			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
 		</div>
 		<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -340,7 +340,7 @@ function template_singleshout($row)
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
 				<h4>' . $row['realName'] . '</h4>
-				<div class="smalltext">'. timeformat($row['value2']).'</div>
+				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
 			</div>
 			<div class="bubble speech">' . $row['value1'] . '</div>
 		</div>
