@@ -508,16 +508,18 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 				$members[] = $row['value5'];
 		}
 		$smcFunc['db_free_result']($request);
-	}
-	$request2 =  $smcFunc['db_query']('', '
+
+		$request2 =  $smcFunc['db_query']('', '
 		SELECT mem.id_member, mem.real_name as realName,
 			mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
 		FROM {db_prefix}members AS mem
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
 		WHERE mem.id_member IN(' . implode(",",$members) . ')'
 		);
+	}
+	
 	$memberdata = array();
-	if($smcFunc['db_num_rows']($request2)>0)
+	if(isset($request2) && $smcFunc['db_num_rows']($request2)>0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request2))
 		{
