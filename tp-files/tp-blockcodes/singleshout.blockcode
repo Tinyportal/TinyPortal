@@ -25,42 +25,58 @@ global $settings, $db_prefix, $scripturl, $txt, $modSettings, $smcFunc;
 // set the limit
 $limit = 1;
 
-$request =  $smcFunc['db_query]('', '
-				SELECT s.*, IFNULL(mem.real_name, s.value3) as realName,
-					mem.avatar,	IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
-				FROM {db_prefix}tp_shoutbox as s 
-				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = s.value5)
-				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = s.value5 and a.attachment_type != 3)
-				WHERE s.value7 = 0 
-				ORDER BY s.value2 DESC LIMIT {int:limit}',
-				array('limit' => $limit)
-			);
-if ($smcFunc['db_num_rows']($request) > 0)
+$request =  $smcFunc['db_query']('', 'SELECT s.* FROM {db_prefix}tp_shoutbox as s 	WHERE s.value7 = {int:val7}	ORDER BY s.value2 DESC LIMIT {int:limit}', array('val7' => 0, 'limit' => $limit));
+$fetched = array(); $members = array();
+if($smcFunc['db_num_rows']($request)>0)
 {
-	$nshouts= '<div>';
-	$ns=array();
-	while($row = tpdb_fetch_assoc($request))
+	while($row = $smcFunc['db_fetch_assoc']($request))
 	{
-		$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img align="middle" style="width: 30px; height: 30px; margin-right: 4px;" src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" border="0" />' : '') : (stristr($row['avatar'], 'http://') ? '<img align="middle" style="width: 30px; height: 30px; margin-right: 4px;"  src="' . $row['avatar'] . '" alt="" border="0" />' : '<img align="middle" style="width: 30px; height: 30px; margin-right: 4px;"  src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="" border="0" />');
-		$ns[] = '
-			<div style="padding-bottom: 5px;">
-				<div style="margin: 4px;">
-					<div style="padding: 3px; overflow: hidden; vertical-align: bottom;">
-						<div style="margin: 0 2px 2px 0; float: left;">' . $row['avatar'] . '</div> 
-						<span class="smalltext">'. timeformat($row['value2']).'</span>
-						<b style="display: block; margin-top: 1px;"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . strip_tags($row['realName']) . '</a> </b>
-					</div>
-					<div class="windowbg2" style="border-bottom: solid 1px #bbb; border-top: solid 1px #fff; padding: 5px;">
-						' . parse_bbc(censorText($row['value1'])) . '
-					</div>
-				</div>
-			</div>';
+		$fetched[] = $row;
+		if(!empty($row['value5']) && !in_array($row['value5'], $members))
+			$members[] = $row['value5'];
 	}
-	$nshouts .= implode("", $ns);
-	$nshouts .='</div>';
-
+	$smcFunc['db_free_result']($request);
+	$request2 =  $smcFunc['db_query']('', 'SELECT mem.id_member, mem.real_name as realName, mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType FROM {db_prefix}members AS mem LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3) WHERE mem.id_member IN(' . implode(",",$members) . ')');
+}
+$memberdata = array();
+if(isset($request2) && $smcFunc['db_num_rows']($request2)>0)
+{
+	while($row = $smcFunc['db_fetch_assoc']($request2))
+	{
+		$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="*"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="*" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="*" >');
+		$memberdata[$row['id_member']] = $row;
+	}
+	$smcFunc['db_free_result']($request2);
+}
+if(count($fetched)>0)
+{
+	$ns = array();
+	foreach($fetched as $b => $row)
+	{
+		$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
+		$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
+		$row['value1'] = parse_bbc(censorText($row['value1']), true);
+		$ns[] = asingleshout($row);
+	}
+	$nshouts .= implode('', $ns);
+	$nshouts .= '</div>';
 	echo $nshouts;
-	$smcFunc['dbdb_free_result']($request);
+}
+function asingleshout($row)
+{
+	global $scripturl, $context, $settings, $txt;
+	$return = '
+	<div style="padding-bottom: 5px;">
+		<div class="tp_shoutcontainer">
+			<div class="tp_shoutavatar">
+				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
+				<h4>' . $row['realName'] . '</h4>
+				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
+			</div>
+			<div class="bubble speech">' . $row['value1'] . '</div>
+		</div>
+	</div>';
+     return $return;
 }
 </code>
 
