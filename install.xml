@@ -88,12 +88,8 @@
 	
 	<file name="$sourcedir/QueryString.php">
 		<operation>
-			<search position="replace"><![CDATA['\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic)=[^#"]+?)(#[^"]*?)?"~']]></search>
-			<add><![CDATA['\?(?:' . SID . '(?:;|&|&amp;))((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"~']]></add>
-		</operation>
-		<operation>
-			<search position="replace"><![CDATA['\?((?:board|topic)=[^#"]+?)(#[^"]*?)?"~']]></search>
-			<add><![CDATA['\?((?:board|topic|page|cat)=[^#"]+?)(#[^"]*?)?"~']]></add>
+			<search position="replace"><![CDATA[?:board|topic)=]]></search>
+			<add><![CDATA[?:board|topic|page|cat)=]]></add>
 		</operation>
 	</file>
 	

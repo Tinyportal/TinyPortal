@@ -507,6 +507,8 @@ function setupTPsettings()
 	
 	// save the frontapge setting for SMF
 	$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
+	if(empty($context['page_title']))
+		$context['page_title'] = $context['forum_name'];
 }
 
 function fetchTPhooks()

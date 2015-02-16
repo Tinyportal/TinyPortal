@@ -6,7 +6,7 @@
     <type>modification</type>
     <version>1.109</version>
 
-	<install for="2.0.7 - 2.0.99">
+	<install for="2.0 - 2.0.99">
 		<redirect url="">Installed!</redirect>
         <require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
@@ -18,59 +18,7 @@
 		<database>install.php</database>
 		<code>do_hooks.php</code>
     </install>
-	<install for="2.0 - 2.0.6">
-		<redirect url="">Installed!</redirect>
-        <require-dir name="Themes" destination="$boarddir" />
-		<require-dir name="Sources" destination="$boarddir" />
-        <require-dir name="tp-downloads" destination="$boarddir" />
-        <require-dir name="tp-images" destination="$boarddir" />
-		<require-dir name="tp-files" destination="$boarddir" />
-        <readme type="inline">Installing TinyPortal v1.109 for SMF2.0</readme>
-		<modification>install_pre207.xml</modification>
-		<database>install.php</database>
-		<code>do_hooks.php</code>
-    </install>
-	<uninstall for="2.0 - 2.0.6">
-		<readme type="inline">Uninstalling TinyPortal v1.109 for SMF2.0</readme>
-		<modification reverse="true">install_pre207.xml</modification>
-		<remove-file name="$sourcedir/TPassimilate.php" />
-		<remove-file name="$sourcedir/TPcommon.php" />
-		<remove-file name="$sourcedir/TPdlmanager.php" />
-		<remove-file name="$sourcedir/TPhelp.php" />
-		<remove-file name="$sourcedir/TPmodules.php" />
-		<remove-file name="$sourcedir/TPortal.php" />
-		<remove-file name="$sourcedir/TPortalAdmin.php" />
-		<remove-file name="$sourcedir/TPSubs.php" />
-		<remove-file name="$themedir/TPBlockLayout.template.php" />
-		<remove-file name="$themedir/TPdladmin.template.php" />
-		<remove-file name="$themedir/TPdlmanager.template.php" />
-		<remove-file name="$themedir/TPhelp.template.php" />
-		<remove-file name="$themedir/TPmodules.template.php" />
-		<remove-file name="$themedir/TPortal.template.php" />
-		<remove-file name="$themedir/TPortalAdmin.template.php" />
-		<remove-file name="$themedir/TPprint.template.php" />
-		<remove-file name="$themedir/TPprofile.template.php" />
-		<remove-file name="$themedir/TPShout.template.php" />
-		<remove-file name="$themedir/TPsubs.template.php" />
-		<remove-file name="$themedir/TPwireless.template.php" />
-		<remove-file name="$themedir/TPShout.css" />
-		<remove-file name="$themedir/tp-style.css" />
-		<remove-file name="$themedir/scripts/TPShout.js" />
-		<remove-file name="$languagedir/TPdlmanager.english.php" />
-		<remove-file name="$languagedir/TPdlmanager.english-uf8.php" />
-		<remove-file name="$languagedir/TPhelp.english.php" />
-		<remove-file name="$languagedir/TPhelp.english-uf8.php" />
-		<remove-file name="$languagedir/TPmodules.english.php" />
-		<remove-file name="$languagedir/TPmodules.english-uf8.php" />
-		<remove-file name="$languagedir/TPortal.english.php" />
-		<remove-file name="$languagedir/TPortal.english-uf8.php" />
-		<remove-file name="$languagedir/TPortalAdmin.english.php" />
-		<remove-file name="$languagedir/TPortalAdmin.english-uf8.php" />
-		<remove-file name="$languagedir/TPShout.english.php" />
-		<remove-file name="$languagedir/TPShout.english-uf8.php" />
-		<code>do_hooks.php</code>
-    </uninstall>
-	<uninstall for="2.0.7 - 2.0.99">
+	<uninstall for="2.0 - 2.0.99">
 		<readme type="inline">Uninstalling TinyPortal v1.109 for SMF2.0</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />
@@ -110,18 +58,8 @@
 		<remove-file name="$languagedir/TPShout.english-uf8.php" />
 		<code>do_hooks.php</code>
     </uninstall>
-    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105, 1.106, 1.107">
+    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105, 1.106, 1.107, 1.108">
 		<readme type="inline" parsebbc="true">[size=18pt]You must uninstall any previous version of TinyPortal before you can install TP 1.109 for SMF2.0.x 
 		[br][color=red][b]Note:[/b] Make a backup of all your SMF and TP files before you uninstall. A previous version of TP 1.0 removed the downloads and images directory which will remove needed files for your site.[/color][/size]</readme>
     </upgrade>
-    <upgrade for="2.0 - 2.0.99" from="1.108">
-		<redirect url="">Installed the small update!</redirect>
-        <require-dir name="Themes" destination="$boarddir" />
-		<require-dir name="Sources" destination="$boarddir" />
-        <require-dir name="tp-downloads" destination="$boarddir" />
-        <require-dir name="tp-images" destination="$boarddir" />
-		<require-dir name="tp-files" destination="$boarddir" />
-        <readme type="inline">Updating to TinyPortal v1.109 for SMF2.0</readme>
-    </upgrade>
-
 </package-info>
