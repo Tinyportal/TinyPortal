@@ -48,6 +48,8 @@ if(isset($request2) && $smcFunc['db_num_rows']($request2)>0)
 	}
 	$smcFunc['db_free_result']($request2);
 }
+$nshouts = '';
+
 if(count($fetched)>0)
 {
 	$ns = array();

@@ -119,7 +119,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
 	border: solid 1px #999;
 	word-wrap: break-word;
-	word-break: break-all;
+	word-break: break-word;
 }
 .bubble:before, .bubble:after {
 	content: ' ';
