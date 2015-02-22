@@ -33,6 +33,9 @@ function TPortal_init()
 	$context['TPortal'] = array();
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 	
+	if(!isset($context['forum_name']))
+		$context['forum_name'] = '';
+
 	// Include a ton of functions.
 	require_once($sourcedir.'/TPSubs.php');
 	
