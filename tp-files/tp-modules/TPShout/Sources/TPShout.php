@@ -227,6 +227,22 @@ function tpshout_admin()
 				);
 				$go = 2;
 			}
+			elseif(substr($what, 0, 18) == 'tp_shoutbox_hidden')
+			{
+				$val = substr($what, 18);
+				if(!empty($_POST['tp_shoutbox_sticky'.$val]))
+					$value = '1';
+				else
+					$value = '';
+
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_shoutbox 
+					SET value6 = "' . $value . '"
+					WHERE id = {int:shout}',
+					array('shout' => $val)
+				);
+				$go = 2;
+			}
 			elseif($what == 'tp_shoutsdelall' && $value == 'ON')
 			{
 				$smcFunc['db_query']('', '
@@ -288,9 +304,11 @@ function tpshout_admin()
 					$changeArray['shoutbox_layout'] = $value;
 				if($what == 'shout_submit_returnkey')
 					$changeArray['shout_submit_returnkey'] = $value;
+				if($what == 'shoutbox_stitle')
+					$changeArray['shoutbox_stitle'] = $value;
 			}
 		}
-		updateTPSettings($changeArray);
+		updateTPSettings($changeArray, true);
 		
 		if(empty($go))
 			redirectexit('action=tpmod;shout=admin;settings');
@@ -490,15 +508,39 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	loadTemplate('TPShout');
 
+	$stickies = array(); $members = array();
+	$not_show = array();
 	$request =  $smcFunc['db_query']('', '
 		SELECT s.*
 			FROM {db_prefix}tp_shoutbox as s 
 		WHERE s.value7 = {int:val7}
+		AND s.value6 = 1
+		ORDER BY s.value2 DESC',
+			array('val7' => 0)
+		);
+	
+	if($smcFunc['db_num_rows']($request)>0)
+	{
+		while($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$stickies[] = $row;
+			if(!empty($row['value5']) && !in_array($row['value5'], $members))
+				$members[] = $row['value5'];
+			$not_show[] = $row['id'];
+		}
+		$smcFunc['db_free_result']($request);
+	}
+
+	// done with stickies, to the normal ones
+	$request =  $smcFunc['db_query']('', '
+		SELECT s.*
+			FROM {db_prefix}tp_shoutbox as s 
+		WHERE s.value7 = {int:val7}
+		AND s.id NOT IN(' . (count($not_show)>0 ? implode(",",$not_show) : "0") . ')
 		ORDER BY s.value2 DESC LIMIT {int:limit}',
 			array('val7' => 0, 'limit' => $limit)
 		);
 	
-	$fetched = array(); $members = array();
 	if($smcFunc['db_num_rows']($request)>0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
@@ -508,7 +550,9 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 				$members[] = $row['value5'];
 		}
 		$smcFunc['db_free_result']($request);
-
+	}
+	
+	if(count($members)>0)
 		$request2 =  $smcFunc['db_query']('', '
 		SELECT mem.id_member, mem.real_name as realName,
 			mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
@@ -516,7 +560,6 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
 		WHERE mem.id_member IN(' . implode(",",$members) . ')'
 		);
-	}
 	
 	$memberdata = array();
 	if(isset($request2) && $smcFunc['db_num_rows']($request2)>0)
@@ -543,6 +586,24 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		$nshouts .= '</div>';
 
 		$context['TPortal']['shoutbox'] = $nshouts;
+	}
+
+	$sshouts = '';
+	if(count($stickies)>0)
+	{
+		$ns = array();
+		foreach($stickies as $b => $row)
+		{
+			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
+			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
+			$row['value1'] = parse_bbc(censorText($row['value1']), true);
+			$ns[] = template_singleshout_sticky($row);
+		}
+		$sshouts .= implode('', $ns);
+		
+		$sshouts .= '</div>';
+
+		$context['TPortal']['shoutbox_sticky'] = $sshouts;
 	}
 
 	// its from a block, render it

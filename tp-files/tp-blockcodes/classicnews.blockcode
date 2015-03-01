@@ -20,7 +20,7 @@ Bloc
 </date>
 
 <code>
-global $context, $modSettings, $txt;
+global $context, $modSettings, $settings, $txt;
 $context['TPortal']['recentboxnum'] = '15';
 
 if(isset($modSettings['recycle_board']))

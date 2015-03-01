@@ -20,7 +20,7 @@ function template_tp_summary()
 	global $settings, $txt, $context, $scripturl;
 
 	echo '
-	<h3 class="titlebg"><span class="left"></span> '.$txt['tpsummary'].'</h3>
+	<div class="title_bar"><h3 class="titlebg">'.$txt['tpsummary'].'</h3></div>
 	<table width="100%" cellpadding="4" cellspacing="1" border="0" align="center" class="bordercolor">
 		<tr class="windowbg2">
 			<td>'.$txt['tpsummary_art'].'</td>
@@ -134,7 +134,9 @@ function template_tp_download()
 	global $settings, $txt, $context, $scripturl;
 
 	echo '
-<h3 class="titlebg"><span class="left"></span>'.$txt['downloadsprofile'].'</h3>
+<div class="title_bar">
+	<h3 class="titlebg">'.$txt['downloadsprofile'].'</h3>
+</div>
 	<div class="bordercolor">
 		<table width="100%" cellpadding="4" cellspacing="1" border="0">
 			<tr class="windowbg">

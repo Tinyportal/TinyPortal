@@ -3070,27 +3070,59 @@ function tp_getTPmodules()
 	}
 }
 
-function updateTPSettings($addSettings)
+function updateTPSettings($addSettings, $check = false)
 {
 	global $context, $smcFunc;
 
 	if (empty($addSettings) || !is_array($addSettings))
 		return;
 
-	foreach ($addSettings as $variable => $value)
+	if($check)
 	{
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_settings
-			SET value = {' . ($value === false || $value === true ? 'raw' : 'string') . ':value}
-			WHERE name = {string:variable}',
-			array(
-				'value' => $value === true ? 'value + 1' : ($value === false ? 'value - 1' : $value),
-				'variable' => $variable,
-			)
-		);
-		$context['TPortal'][$variable] = $value === true ? $context['TPortal'][$variable] + 1 : ($value === false ? $context['TPortal'][$variable] - 1 : $value);
-	}
+		foreach ($addSettings as $variable => $value)
+		{
+			$request = $smcFunc['db_query']('', 'SELECT value FROM {db_prefix}tp_settings	WHERE name = "' . $variable . '"');
 
+			if($smcFunc['db_num_rows']($request)==0)
+			{
+				$smcFunc['db_query']('', '
+					INSERT INTO {db_prefix}tp_settings
+					(name,value) VALUES({string:variable},{' . ($value === false || $value === true ? 'raw' : 'string') . ':value})',
+					array(
+						'value' => $value === true ? 'value + 1' : ($value === false ? 'value - 1' : $value),
+						'variable' => $variable,
+					)
+				);				
+			}
+			$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_settings
+					SET value = {' . ($value === false || $value === true ? 'raw' : 'string') . ':value}
+					WHERE name = {string:variable}',
+					array(
+						'value' => $value === true ? 'value + 1' : ($value === false ? 'value - 1' : $value),
+						'variable' => $variable,
+					)
+				);
+			
+			$context['TPortal'][$variable] = $value === true ? $context['TPortal'][$variable] + 1 : ($value === false ? $context['TPortal'][$variable] - 1 : $value);
+		}
+	}
+	else
+	{
+		foreach ($addSettings as $variable => $value)
+		{
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_settings
+				SET value = {' . ($value === false || $value === true ? 'raw' : 'string') . ':value}
+				WHERE name = {string:variable}',
+				array(
+					'value' => $value === true ? 'value + 1' : ($value === false ? 'value - 1' : $value),
+					'variable' => $variable,
+				)
+			);
+			$context['TPortal'][$variable] = $value === true ? $context['TPortal'][$variable] + 1 : ($value === false ? $context['TPortal'][$variable] - 1 : $value);
+		}
+	}
 	// Clean out the cache and make sure the cobwebs are gone too.
 	cache_put_data('tpSettings', null, 90);
 

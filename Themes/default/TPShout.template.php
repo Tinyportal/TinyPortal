@@ -83,25 +83,27 @@ function template_tpshout_admin()
 						</td>
 					</tr>';
 						
-						
-						
-	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts){
-		
+					
+	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts)
+	{	
 		echo '
 			<tr>
-		        <td width="30%" valign="top">
+		        <td class="' ,  !empty($admin_shouts['is_whisper']) ? 'windowbg2' : '' , '" width="30%" valign="top">
 					'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br />'.$admin_shouts['time'].'<br />
 					'. $admin_shouts['sort_member'].' <br /> '.$admin_shouts['sort_ip'].'<br />'.$admin_shouts['single'].'
 				</td>
-				<td valign="top" colspan="2">
-					<textarea style="vertical-align: middle; width: 99%;" rows="3" cols="40" wrap="auto" name="tp_shoutbox_item'.$admin_shouts['id'].'">' .html_entity_decode($admin_shouts['body']).'</textarea></td><td class="windowbg2" valign="top" width="100px" align="center"><strong>
-					<input style="vertical-align: middle;" name="tp_shoutbox_remove'.$admin_shouts['id'].'" type="checkbox" value="ON"> '.$txt['tp-remove'].'
-					</strong>
+				<td class="' ,  !empty($admin_shouts['is_whisper']) ? 'windowbg2' : '' , '"  valign="top" colspan="2">
+					<textarea style="vertical-align: middle; width: 99%;" rows="3" cols="40" wrap="auto" name="tp_shoutbox_item'.$admin_shouts['id'].'">' .html_entity_decode($admin_shouts['body']).'</textarea>
+				</td>
+				<td class="' ,  !empty($admin_shouts['is_whisper']) ? 'windowbg2' : '' , '"  valign="top" width="100px" align="center">
+					<input name="tp_shoutbox_hidden'.$admin_shouts['id'].'" type="hidden" value="1">
+					<input style="vertical-align: middle;" name="tp_shoutbox_sticky'.$admin_shouts['id'].'" type="checkbox" value="ON"' , !empty($admin_shouts['is_whisper']) ? ' checked="checked"' : '' , '> '.$txt['tp-sticky'].'<br><br><hr>
+					<strong><input style="vertical-align: middle;" name="tp_shoutbox_remove'.$admin_shouts['id'].'" type="checkbox" value="ON"> '.$txt['tp-remove'].'</strong>
 				</td>
 			</tr>';
 	}
 
-	echo '<tr class="windowbg">
+	echo '<tr>
 		     			<td colspan="2" align="left" class="normaltext">
 						<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong></td><td colspan="2" align="right" class="smalltext"><b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
 		     			</td>
@@ -112,7 +114,7 @@ function template_tpshout_admin()
 			</tbody>
 			<tfoot>
 				<tr>
-					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
+					<td class="windowbg"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
 					</td>
 				</tr>
 			</tfoot>
@@ -135,6 +137,12 @@ function template_tpshout_admin_settings()
 				<tr>
 					<td class="tborder" style="padding: 0; border: none;">
 						<table class="multiplerow">
+							<tr class="windowbg2">
+								<td align="right">'.$txt['tp-sticky-title'].'</td>
+								<td>
+									<input name="tp_shoutbox_stitle" type="text" value="' , !empty($context['TPortal']['shoutbox_stitle']) ? $context['TPortal']['shoutbox_stitle'] : '', '" />
+								</td>
+							</tr>
 							<tr class="windowbg2">
 								<td align="right">'.$txt['tp-shoutbox_showsmile'].'</td>
 								<td>
@@ -225,6 +233,11 @@ function template_tpshout_shoutblock()
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
 
+	if(!empty($context['TPortal']['shoutbox_sticky'])) 
+		echo '
+	' , !empty($context['TPortal']['shoutbox_stitle']) ? '<p style="margin-top: 0;"><strong>' . $context['TPortal']['shoutbox_stitle'] . '</strong></p>' : '' , '
+	<div>' . $context['TPortal']['shoutbox_sticky'] . '</div>';
+	
 	if($context['TPortal']['shoutbox_usescroll'] > '0')
 		echo '
 		<marquee id="tp_marquee" behavior="scroll" direction="down" scrollamount="'. $context['TPortal']['shoutbox_scrollduration'] . '" height="'. $context['TPortal']['shoutbox_height'] . '">
@@ -282,7 +295,7 @@ function template_tpshout_profile()
 
 	echo '
 	<div class="bordercolor" style="margin-left: 1ex;">
-		<h3 class="titlebg"><span class="left"></span>'.$txt['shoutboxprofile'].'</h3>
+		<div class="title_bar"><h3 class="titlebg">'.$txt['shoutboxprofile'].'</h3></div>
 		<table width="100%" cellpadding="4" cellspacing="1" border="0">
 			<tr class="windowbg">
 				<td colspan="6" class="smalltext" style="padding: 2ex;">'.$txt['shoutboxprofile2'].'</td>
@@ -360,6 +373,17 @@ function template_singleshout($row)
 		</div>
 	</div>';
 
+	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
+}
+
+function template_singleshout_sticky($row)
+{
+	global $scripturl, $context, $settings, $txt;
+	
+	$layoutOptions = array();
+
+	$layoutOptions[] = '
+	<div class="plainbox">' . $row['value1'] . '</div>';
 	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
 }
 

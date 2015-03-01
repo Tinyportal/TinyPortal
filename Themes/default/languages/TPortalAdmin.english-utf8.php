@@ -622,4 +622,7 @@ $txt['tp-artcat'] = 'Article categories';
 $txt['tp-lang'] = 'Languages';
 $txt['tp-dlmanager'] = 'DL manager';
 $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
+
+$txt['tp-sticky'] = 'Sticky';
+
 ?>

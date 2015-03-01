@@ -1035,7 +1035,7 @@ function doTPpage()
 function doTPcat()
 {
 	//return if not quite a category
-	if(isset($_GET['area']) && $_GET['area'] == 'manageboards')
+	if((isset($_GET['area']) && $_GET['area'] == 'manageboards') || isset($_GET['action']))
 		return;
 	
 	global $context, $scripturl, $txt, $modSettings, $smcFunc;
