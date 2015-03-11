@@ -235,9 +235,14 @@ function tpshout_admin()
 				else
 					$value = '';
 
+				if(!empty($_POST['tp_shoutbox_sticky_layout'.$val]) && is_numeric($_POST['tp_shoutbox_sticky_layout'.$val]))
+					$svalue = $_POST['tp_shoutbox_sticky_layout'.$val];
+				else
+					$svalue = '0';
+
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox 
-					SET value6 = "' . $value . '"
+					SET value6 = "' . $value . '",value8 = "' . $svalue . '"
 					WHERE id = {int:shout}',
 					array('shout' => $val)
 				);
@@ -250,6 +255,14 @@ function tpshout_admin()
 					WHERE type = {string:type}',
 					array('type' => 'shoutbox')
 				);
+				$go = 2;
+			}
+			elseif($what == 'tp_shoutsunstickall' && $value == 'ON')
+			{
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_shoutbox 
+					SET value6 = "0", value8 = "0"
+					WHERE 1');
 				$go = 2;
 			}
 			elseif(substr($what, 0, 16) == 'tp_shoutbox_item')
@@ -422,8 +435,8 @@ function tpshout_admin()
 				'ip' => $row['value4'],
 				'ID_MEMBER' => $row['value5'],
 				'sort_member' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;u='.$row['value5'].'">'.$txt['tp-allshoutsbymember'].'</a>', 
-				'is_whisper' => $row['value6'],
-				'whisper_who' => $row['value8'],
+				'sticky' => $row['value6'],
+				'sticky_layout' => $row['value8'],
 				'sort_ip' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;ip='.$row['value4'].'">'.$txt['tp-allshoutsbyip'].'</a>',
 				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpmod;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
@@ -515,7 +528,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			FROM {db_prefix}tp_shoutbox as s 
 		WHERE s.value7 = {int:val7}
 		AND s.value6 = 1
-		ORDER BY s.value2 DESC',
+		ORDER BY s.value8, s.value2 ASC',
 			array('val7' => 0)
 		);
 	

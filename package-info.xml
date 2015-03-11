@@ -18,7 +18,19 @@
 		<database>install.php</database>
 		<code>do_hooks.php</code>
     </install>
-	<uninstall for="2.0 - 2.0.99">
+	<install for="2.1 Beta 1">
+		<redirect url="">Installed!</redirect>
+        <require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="Sources" destination="$boarddir" />
+        <require-dir name="tp-downloads" destination="$boarddir" />
+        <require-dir name="tp-images" destination="$boarddir" />
+		<require-dir name="tp-files" destination="$boarddir" />
+        <readme type="inline">Installing TinyPortal v1.109 for SMF2.1</readme>
+		<modification>install21.xml</modification>
+		<database>install.php</database>
+		<code>do_hooks.php</code>
+    </install>
+	<uninstall for="2.0 - 2.0.99, 2.1 Beta 1">
 		<readme type="inline">Uninstalling TinyPortal v1.109 for SMF2.0</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />

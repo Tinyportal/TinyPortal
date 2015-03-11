@@ -193,6 +193,13 @@ function addTPActions(&$actionArray)
 	);
 }
 
+function tpSetDefaultAction()
+{
+	$tpAction = whichTPAction();
+	if (!empty($tpAction))
+		return $tpAction;
+}
+
 function whichTPAction()
 {
 	global $topic, $board, $sourcedir, $context;
