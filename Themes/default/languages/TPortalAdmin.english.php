@@ -623,7 +623,16 @@ $txt['tp-lang'] = 'Languages';
 $txt['tp-dlmanager'] = 'DL manager';
 $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 
+// new in 1.109
 $txt['tp-sticky'] = 'Sticky';
-$txt['tp-sticky-title'] = 'Use this title over the stickied shouts:';
+$txt['tp-sticky-title'] = 'Use this text over the stickied shouts (BBC allowed):';
+
+$txt['tp-sticky1'] = 'Information style';
+$txt['tp-sticky2'] = 'Normal style';
+$txt['tp-sticky3'] = 'Normal style + blue background';
+$txt['tp-sticky4'] = 'Normal style + yellow background';
+$txt['tp-sticky5'] = 'Normal style + red background';
+$txt['tp-sticky6'] = 'Normal style + green background';
+$txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
 
 ?>
