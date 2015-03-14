@@ -584,7 +584,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		}
 		$smcFunc['db_free_result']($request2);
 	}
-	if(count($fetched)>0)
+	if(!empty($fetched) && count($fetched)>0)
 	{
 		$ns = array();
 		foreach($fetched as $b => $row)
