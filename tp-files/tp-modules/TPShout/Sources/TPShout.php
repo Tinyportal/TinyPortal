@@ -195,6 +195,9 @@ function tpshout_admin()
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
 
+	if(!isset($context['tp_panels']))
+		$context['tp_panels'] = array();
+
 	if(isset($_GET['p']) && is_numeric($_GET['p']))
 		$tpstart = $_GET['p'];
 	else
@@ -521,35 +524,11 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	loadTemplate('TPShout');
 
-	$stickies = array(); $members = array();
-	$not_show = array();
+	$members = array();
 	$request =  $smcFunc['db_query']('', '
 		SELECT s.*
 			FROM {db_prefix}tp_shoutbox as s 
 		WHERE s.value7 = {int:val7}
-		AND s.value6 = 1
-		ORDER BY s.value8, s.value2 ASC',
-			array('val7' => 0)
-		);
-	
-	if($smcFunc['db_num_rows']($request)>0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$stickies[] = $row;
-			if(!empty($row['value5']) && !in_array($row['value5'], $members))
-				$members[] = $row['value5'];
-			$not_show[] = $row['id'];
-		}
-		$smcFunc['db_free_result']($request);
-	}
-
-	// done with stickies, to the normal ones
-	$request =  $smcFunc['db_query']('', '
-		SELECT s.*
-			FROM {db_prefix}tp_shoutbox as s 
-		WHERE s.value7 = {int:val7}
-		AND s.id NOT IN(' . (count($not_show)>0 ? implode(",",$not_show) : "0") . ')
 		ORDER BY s.value2 DESC LIMIT {int:limit}',
 			array('val7' => 0, 'limit' => $limit)
 		);
@@ -599,24 +578,6 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		$nshouts .= '</div>';
 
 		$context['TPortal']['shoutbox'] = $nshouts;
-	}
-
-	$sshouts = '';
-	if(count($stickies)>0)
-	{
-		$ns = array();
-		foreach($stickies as $b => $row)
-		{
-			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
-			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
-			$row['value1'] = parse_bbc(censorText($row['value1']), true);
-			$ns[] = template_singleshout_sticky($row);
-		}
-		$sshouts .= implode('', $ns);
-		
-		$sshouts .= '</div>';
-
-		$context['TPortal']['shoutbox_sticky'] = $sshouts;
 	}
 
 	// its from a block, render it
