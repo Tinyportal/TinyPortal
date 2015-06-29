@@ -23,7 +23,7 @@ function TPortal_searchbox()
 	echo '
 	<form accept-charset="', $context['character_set'], '" action="', $scripturl, '?action=search2" method="post" style="padding: 0; text-align: center; margin: 0; ">
 		<input type="text" name="search" value="" class="block_search" />
-		<input type="submit" name="submit" value="', $txt['search'], '" class="block_search_submit" /><br />
+		<input type="submit" name="submit" value="', $txt['search'], '" class="block_search_submit button_submit" /><br />
 		<br /><span class="smalltext"><a href="', $scripturl, '?action=search;advanced">', $txt['search_advanced'], '</a></span>
 		<input type="hidden" name="advanced" value="0" />
 	</form>';
@@ -303,7 +303,7 @@ function TPortal_userbox()
 	if ($context['user']['is_logged'])
 	{
 		echo '
-		<h4>', $txt['hello_member'], ' ', $context['user']['name'], '</h4>
+		<h4>', $context['user']['name'], '</h4>
 		<ul class="reset">';
 
 		// Only tell them about their messages if they can read their messages!
@@ -326,10 +326,10 @@ function TPortal_userbox()
 
 		if(isset($context['TPortal']['userbox']['unread']))
 			echo '
-			<li><a href="', $scripturl, '?action=unread">' .$bullet.$txt['tp-unread'].'</a></li>
+			<li><hr><a href="', $scripturl, '?action=unread">' .$bullet.$txt['tp-unread'].'</a></li>
 			<li><a href="', $scripturl, '?action=unreadreplies">'.$bullet.$txt['tp-replies'].'</a></li>
 			<li><a href="', $scripturl, '?action=profile;u='.$context['user']['id'].';area=showposts">'.$bullet.$txt['tp-showownposts'].'</a></li>
-			<li><a href="', $scripturl, '?action=tpmod;sa=showcomments">'.$bullet.$txt['tp-showcomments'].'</a></li>
+			<li><a href="', $scripturl, '?action=tpmod;sa=showcomments">'.$bullet.$txt['tp-showcomments'].'</a><hr></li>
 			';
 
 		// Is the forum in maintenance mode?
@@ -344,7 +344,7 @@ function TPortal_userbox()
 			<li>'.$bullet2.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
 		}
 		echo '
-			<li>' . $bullet2.$context['current_time'].'</li>';
+			<li>' . $bullet2.$context['current_time'].' <hr></li>';
 		
 		// admin parts etc.
          if(!isset($context['TPortal']['can_submit_article']))
@@ -422,9 +422,6 @@ function TPortal_userbox()
 		<div style="line-height: 1.4em;">', $txt['quick_login_dec'], '</div>
 		<br />';
 	}
-	if (!empty($context['user']['avatar']) && isset($context['TPortal']['userbox']['avatar']))
-		echo '<div class="useravatar">' , $context['user']['avatar']['image'] , '</div>';
-
 	echo '
 	</div>';
 }
@@ -471,11 +468,11 @@ function TPortal_themebox()
          }
          echo '
 			</select><br />' , $context['user']['is_logged'] ?
-			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br />' : '' , '
-			<input style="margin: 5px 0px 5px 10px;" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" />
+			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br />' : '' , '<br>
+			<input class="button_submit" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
  			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
  			<div style="text-align: center; width: 95%; overflow: hidden;">
-				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen"  />
+				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="width: 100%;" />
 			</div>
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
@@ -558,7 +555,7 @@ function TPortal_statsbox()
 		// add online users
 		echo '
 		<h5 class="online"><a href="'.$scripturl.'?action=who">'.$txt['online_users'].'</a></h5>
-		<div style="line-height: 1.3em;">';
+		<div class="tp_stats_users" style="line-height: 1.3em;">';
 		
 		$online = ssi_whosOnline('array');
 		echo  $bullet. $txt['tp-users'].': '.$online['num_users']. '<br />
@@ -729,7 +726,7 @@ function TPortal_sitemap()
 	<div class="tborder">
 		<ul class="tpsitemap">';
 	if($context['TPortal']['show_download'] == '1')
-		echo '<li><a class="windowbg2 tpsitemapheader" href="'.$scripturl.'?action=tpmod;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.gif" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
+		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tpmod;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.gif" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
 
 	if(!empty($context['TPortal']['sitemap']) && !empty($context['TPortal']['menu']))
 	{
@@ -738,15 +735,15 @@ function TPortal_sitemap()
 			foreach($main as $cn)
 			{
 				// check if we can find the link on current tpage
-				$catclass = 'windowbg';
+				$catclass = '';
 				if($cn['type'] == 'cats')
 				{
 					if(isset($_GET['cat']) && $cn['IDtype'] == $_GET['cat'])
-						$catclass = 'windowbg3 tpsitemapheader';
+						$catclass = 'tpsitemapheader';
 				}
 				elseif($cn['type'] == 'arti'){
 					if(isset($_GET['page']) && $cn['IDtype'] == $_GET['page'])
-						$catclass = 'windowbg3 tpsitemapheader';
+						$catclass = 'tpsitemapheader';
 				}
 				elseif($cn['type'] == 'link'){
 					if(!empty($context['TPortal']['querystring']))
@@ -755,7 +752,7 @@ function TPortal_sitemap()
 						$qs = $scripturl;
 
 					if($qs == $cn['IDtype'])
-						$catclass = 'windowbg3 tpsitemapheader';
+						$catclass = 'tpsitemapheader';
 				}
 
 				if($cn['sitemap'] == '1'){
@@ -1165,18 +1162,19 @@ function article_renders($type = 1, $single = false, $first = false)
 	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_shortdate} {article_title} </h3>
     ' . ($useFrame ? '</div>' : '') . '
 	<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2" ' : '') . '>
-		<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg' : '') . '">
-		' . (!$single ? '{article_avatar}' : '') .  '
+		<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? '' : '') . '">
+		' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
 			{article_author} 
 			{article_category}
 			{article_date} 
 			{article_views} 
 			{article_rating} 
 			{article_options} 
+			' . (!$single ? '</div>' : '') .  '
 		</div>
-		<div class="article_padding">{article_text}</div>
-		' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '<div class="article_padding">{article_bookmark}</div>' : '') . '
-		' . (isset($context['TPortal']['article']['boardnews']) ? '<div class="article_padding">{article_boardnews}</div>' : '') . '
+		<div class="article_padding article_text" style="clear: both;">{article_text}</div>
+		' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+		' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 		' . (!$single ? '<span class="botslice"><span></span></span>' : '') . '
 	</div>
 		' . ($single ? '
@@ -1539,7 +1537,7 @@ function article_boardnews($render = true)
 	if(!isset($context['TPortal']['article']['replies']))
 		return;
 
-	$code = '<div class=" tp_pad">
+	$code = '<div class="tp_pad">
 		<span class="article_boardnews">
 			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '.0">' . $context['TPortal']['article']['replies'] . ' ' . ($context['TPortal']['article']['replies'] == 1 ? $txt['ssi_comment'] : $txt['ssi_comments']) . '</a>';
 	if($context['TPortal']['article']['locked'] == 0)
@@ -1562,8 +1560,8 @@ function article_author($render = true)
 	if(in_array('author', $context['TPortal']['article']['visual_options']))
 	{
 		if($context['TPortal']['article']['dateRegistered'] > 1000)
-			$code = '
-		&nbsp;' . $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '">' . $context['TPortal']['article']['realName'] . '</a>';
+			$code = 
+		$txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '">' . $context['TPortal']['article']['realName'] . '</a>';
 		else
 			$code = '&nbsp;
 		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['realName'];

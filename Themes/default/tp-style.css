@@ -108,7 +108,11 @@
 }
 .article_padding, .tp_pad
 {
-	padding: 8px;
+	padding: 1em;
+}
+.tp_pad
+{
+	padding: 0 1em 0.5em 1em;
 }
 h2.author_h2
 {
@@ -127,10 +131,17 @@ h2.author_h2
 }
 .article_info
 {
-	padding: 4px 8px 4px 4px;
-	font-size: 0.9em;
+	padding: 1em 1em 0.75em 1em;
+	color: #888;
+	line-height: 1.6em;
+	border-bottom: solid 1px #ddd;
+	overflow: hidden;
 }
-
+.article_text 
+{
+	margin-bottom: 1em;
+	border-bottom: solid 1px #ddd;
+}
 ul.gtags li
 {
 	list-style: none;
@@ -189,9 +200,10 @@ h3.article_title span.article_shortdate span
 }
 .article_info span
 {
-	background: url(../../tp-images/icons/TPdivider.gif) no-repeat 0 50%;
-	padding-left: 8px;
+	border-right: solid 1px #888;
+	padding: 0;
 	padding-right: 5px; 
+	margin-right: 5px;
 }
 
 /* render 2 */
@@ -303,13 +315,15 @@ ul.tpsitemap li a.tpsitemapheader
 /* TP rss feed styles */
 .rss_title
 {
-	font-size: 1.2em;
+	font-size: 1.3em;
 	margin: 0 0 5px 0;
 	padding: 5px 0;
+	line-height: 1.5em;
 	border-bottom: solid 1px #999;
 }
 .rss_title_normal
 {
+	line-height: 1.5em;
 	font-size: 1em;
 	margin: 0;
 	padding: 2px 2px 2px 16px;
@@ -318,15 +332,16 @@ ul.tpsitemap li a.tpsitemapheader
 }
 .rss_date
 {
-	font-size: 0.8em;
+	font-size: 0.9em;
 	padding: 4px 0;
 	text-align: right;
 	color: #666;
+	font-style: italic;
 }
 .rss_body
 {
-	font-size: 0.9em;
-	margin-bottom: 2em;
+	font-size: 1.2em;
+	margin-bottom: 1em;
 	line-height: 1.4em;
 }
 .rss_image
@@ -336,9 +351,8 @@ ul.tpsitemap li a.tpsitemapheader
 .rss_body img
 {
 	vertical-align: middle; 
-	margin: 0 0 2px 0;
-	max-width: 95%;
-	height: 100%;
+	margin: 8px 0;
+	width: 100%;
 	border: solid 1px #888;
 	padding: 4px;
 	background: white;
@@ -664,6 +678,10 @@ ul.tp_recentblock, .tp_statsblock ul
 	padding: 0;
 	line-height: 1.3em;
 }
+.tp_statsblock ul, .tp_stats_users	
+{
+	padding-left: 2em;
+}
 ul.tp_recentblock li	
 {
 	line-height: 1.3em;
@@ -677,8 +695,8 @@ ul.tp_recentblock li
 }
 .tp_userblock h5, .tp_statsblock h5
 {
-	font-size: 1.1em;
-	padding: 5px 0 0 0;
+	font-size: 1.2em;
+	padding: 0;
 	margin: 0;
 }
 .tp_userblock ul
@@ -700,20 +718,20 @@ ul.tp_recentblock li
 }
 .tp_statsblock h5.mlist, .tp_statsblock h5.stats, .tp_statsblock h5.online
 {
-	padding: 10px 0 5px 25px;
+	padding: 5px 0 5px 25px;
 	margin-bottom: 5px;
 }
 .tp_statsblock h5.mlist
 {
-	background: url(images/icons/members.gif) no-repeat bottom left;
+	background: url(images/icons/members.gif) no-repeat 0 5px;
 }
 .tp_statsblock h5.stats
 {
-	background: url(images/stats_info.gif) no-repeat bottom left;
+	background: url(images/stats_info.gif) no-repeat 0 5px;
 }
 .tp_statsblock h5.online
 {
-	background: url(images/icons/online.gif) no-repeat bottom left;
+	background: url(images/icons/online.gif) no-repeat 0 5px;
 }
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li
@@ -1558,12 +1576,12 @@ span.tpavatar img
 }
 .avatar_single img
 {
-	height: 32px;
+	height: 28px;
 	float: left;
 	padding: 1px;
 	background: white;
 	border: solid 1px #aaa;
-	margin: 0 1.4em 4px 4px;
+	margin: 0 .75em 4px 0;
 }
 .tp_avatar, .tp_avatar_category
 {

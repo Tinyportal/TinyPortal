@@ -258,8 +258,8 @@ function template_tpshout_shoutblock()
 	if(!$context['user']['is_guest'] && allowedTo('tp_can_shout'))
 	{
 		echo '
-		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >
-		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 80%;margin-top: 1ex; height: 50px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
+		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
+		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 100%;margin-top: 1em; height: 80px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
 	
 		if(!empty($context['TPortal']['show_shoutbox_smile']))
 		{
@@ -273,7 +273,7 @@ function template_tpshout_shoutblock()
 		<div id="shout_errors"></div><hr>
 		<div style="overflow: hidden;">
 			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
-			<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" />
+			<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
 			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
 		</div>
 		<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />

@@ -52,10 +52,12 @@ if ($manual)
 	</head><body>';
 
 
-$render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; height: 500px; border: solid 2px #222;background: white;">
-<div style="margin: 0; padding: 8px;" class="catbg">Install/Upgrade TinyPortal v1.109 for SMF 2.0.x</div>
-	<div class="middletext" style="padding: 1em; overflow: auto;">
-		<ul class="normallist" style="line-height: 1.5em;">';
+$render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; background: white;
+-webkit-box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6);
+box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6);">
+<div style="margin: 0; padding: 0.5em 1em;" class="catbg">Install/Upgrade TinyPortal v1.110 for SMF 2.0.x</div>
+	<div class="middletext" style="padding: 2em; overflow: auto;">
+		<ul class="normallist" style="line-height: 1.7em;">';
 
 $tables = array(
     'tp_data' => array(
@@ -379,12 +381,12 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '1108',
+    'version' => '1110',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
-    'leftbar_width' => '170',
-    'rightbar_width' => '170',
+    'leftbar_width' => '200',
+    'rightbar_width' => '230',
     'fixed_width' => '0',
     'use_SSI' => '1',
     'frontpage_limit' => '5',
@@ -786,7 +788,7 @@ $render .= '</ul>
 if (!$manual)
 	$render .= '
 		<div style="padding-top: 3em; text-align: center;">
-			<a style="font-size: 1.1em; " href="javascript:void(0);" onclick="document.getElementById(\'hidemenow\').style.display = \'none\'; return false;">Remove this window</a>
+			<a class="button_submit" style="font-size: 1.2em; display: block; width: 250px; padding: 1em;" href="javascript:void(0);" onclick="document.getElementById(\'hidemenow\').style.display = \'none\'; return false;">Remove this window</a>
 		</div>';
 		
 $render .= '
