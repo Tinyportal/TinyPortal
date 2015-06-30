@@ -145,7 +145,7 @@ function template_overview()
 	global $context, $settings, $txt, $boardurl;
 
 	echo '
-	<div id="tp_overview">';
+	<div id="tp_overview" class="windowbg2">';
 		
 	if(is_array($context['admin_tabs']) && count($context['admin_tabs'])>0)
 	{

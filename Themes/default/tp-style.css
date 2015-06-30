@@ -202,8 +202,12 @@ h3.article_title span.article_shortdate span
 {
 	border-right: solid 1px #888;
 	padding: 0;
-	padding-right: 5px; 
+	padding-right: 10px; 
 	margin-right: 5px;
+}
+.article_info span:last-of-type
+{
+	border-right: none;
 }
 
 /* render 2 */
@@ -280,7 +284,11 @@ ul.category_children li
 	padding: 1em 0 0.2em 0;
 	margin: 0;
 }
-
+#tpadmin h3.titlebg , #tpadmin h3.catbg ,
+#tpadmin_content h3.titlebg , #tpadmin_content h3.catbg 
+{
+	clear: right;
+}
 
 /* TP specific classes */
 ul.tpsitemap
@@ -1754,7 +1762,6 @@ h3.h3dl
 }
 .dlpost
 {
-	border-top: dotted 2px #aaa;
 	padding-top: 5px;
 	margin-top: 10px;
 }

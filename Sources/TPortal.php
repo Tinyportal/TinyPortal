@@ -912,17 +912,12 @@ function doTPpage()
 				// Generate a visual verification code for comments in the article.
 				if (!empty($context['TPortal']['articles_comment_captcha']))
 				{
-					$context['use_graphic_library'] = in_array('gd', get_loaded_extensions());
-					$context['verification_image_href'] = $scripturl . '?action=verificationcode;rand=' . md5(rand());
-
-					// Only generate a new code if one hasn't been set yet
-					// Skip I, J, L, O and Q.
-					$character_range = array_merge(range('A', 'H'), array('K', 'M', 'N', 'P'), range('R', 'Z'));
-
-					// Generate a new code.
-					$_SESSION['visual_verification_code'] = '';
-					for ($i = 0; $i < 5; $i++)
-						$_SESSION['visual_verification_code'] .= $character_range[array_rand($character_range)];
+					require_once($sourcedir . '/Subs-Editor.php');
+					$verificationOptions = array(
+						'id' => 'post',
+					);
+					$context['require_verification'] = create_control_verification($verificationOptions);
+					$context['visual_verification_id'] = $verificationOptions['id'];
 				}
 
 				// are we rather printing this article and printing page is allowed?

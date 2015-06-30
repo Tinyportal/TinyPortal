@@ -195,6 +195,9 @@ function tpshout_admin()
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
 
+	if(!isset($context['tp_panels']))
+		$context['tp_panels'] = array();
+
 	if(isset($_GET['p']) && is_numeric($_GET['p']))
 		$tpstart = $_GET['p'];
 	else

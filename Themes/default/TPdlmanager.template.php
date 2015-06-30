@@ -30,14 +30,20 @@ function template_main()
 		</div>
 		<div>';
 		$dlbuttons = array(
-			'frontdl' => array('text' => 'tp-downloads', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl', 'active' => $context['TPortal']['dlaction']==''),
-			'search' => array('text' => 'tp-search', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search', 'active' => $context['TPortal']['dlaction']=='search'),
-			'stats' => array('text' => 'tp-stats', 'image' => 'stats.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=stats', 'active' => $context['TPortal']['dlaction']=='stats'),
-			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'image' => 'upload.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload', 'active' =>$context['TPortal']['dlaction']=='upload'),
+			'frontdl' => array('text' => 'tp-downloads', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl' ),
+			'search' => array('text' => 'tp-search', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search'),
+			'stats' => array('text' => 'tp-stats', 'image' => 'stats.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=stats'),
+			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'image' => 'upload.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload'),
 		);
+
+		if(in_array($context['TPortal']['dlaction'],array('frontdl','search','stats','upload')))
+			$dlbuttons[$context['TPortal']['dlaction']]['active'] = true;
+		else
+			$dlbuttons['frontdl']['active'] = true;
+
 		echo '
-		<div style="text-align: right; padding: 5px 1em; overflow: hidden;" class="middletext">';
-			tp_template_button_strip($dlbuttons, 'right');
+		<div style="overflow: hidden; margin: 0 0 0.5em 0;">';
+			template_button_strip($dlbuttons, 'right');
 
 		echo '
 		</div>';
@@ -70,10 +76,9 @@ function template_main()
 
 		// render last added and most downloaded.
 		echo '
-	<span class="upperframe"><span></span></span>
-	<div class="roundframe">
-        <div class="cat_bar">
-            <h3 class="catbg" style="font-size: 95%; font-weight: normal;">';
+		<span class="upperframe"><span></span></span>
+        <div class="roundframe">
+			<div class="">';
 		if($context['TPortal']['dl_showlatest']==1)
 			echo '
 			<a href="javascript: void(0); " onclick="dlshowtab(\'dlrecent\');"><b>' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</b></a>';
@@ -84,8 +89,11 @@ function template_main()
 			&nbsp;|&nbsp; <a href="javascript: void(0); " onclick="dlshowtab(\'dlpop\');">' , $txt['tp-mostpop'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a> ';
 		}
 		echo '
-		  </h3>
+			</div>
         </div>
+		<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>
+		<div class="windowbg2">
+			<span class="topslice"><span></span></span>
 		<div style="padding: 1em;">';
 	
 		if($context['TPortal']['dl_showlatest']==1)
@@ -169,8 +177,8 @@ function template_main()
 			</div>';
 		echo '
 		</div>
+		<span class="botslice"><span></span></span>
 	</div>
-	<span class="lowerframe"><span></span></span>
 
 	<script type="text/javascript"><!-- // --><![CDATA[
 		function dlshowtab( target )
@@ -184,8 +192,8 @@ function template_main()
 	// ]]></script>
 	<br />
 	
-	<div class="tp_half">
-		<h3 class="catbg"><span class="l"></span><span class="r"></span>'.$txt['tp-categories'] .'</h3>
+	<div class="cat_bar">
+		<h3 class="catbg">'.$txt['tp-categories'] .'</h3>
 	</div>	
 	<div class="windowbg">';
 
@@ -213,7 +221,7 @@ function template_main()
 				}
 			}
 			echo '
-			<div class="windowbg2 dlcategory"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
+			<div class="dlcategory"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
 				<div style="overflow: visible;">
 				<img style="float: left; margin: 0 10px 5px 0;" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
 					<div class="details">' ,	$dlcat['files']>0 ? $dlcat['files'].' '.$txt['tp-dlfiles'] : '0 '.$txt['tp-dlfiles'] , '</div>
@@ -223,7 +231,7 @@ function template_main()
 			</div>';
 			if(!empty($content))
 				echo '
-			<div class="dlcategory windowbg" style="padding-left: 5em;"><ul class="tp-subcategories">'.$content.'</ul></div>';
+			<div class="dlcategory" style="padding-left: 5em;"><ul class="tp-subcategories">'.$content.'</ul></div>';
 		}
 
 		// show any files?
@@ -231,7 +239,7 @@ function template_main()
 		{		
 			echo '
 		</div>
-		<div class="windowbg" style="padding: 0.5em 1em;">
+		<div style="padding: 0.5em 1em;">
 			<div style="overflow: hidden;">';
 				
 			if(!empty($context['TPortal']['sortlinks']))
@@ -253,7 +261,7 @@ function template_main()
 				echo '
 				<div class="dlitemgrid">
 					<h4 class="h4dl" style="padding-bottom: 0; font-size: 1.3em;"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>
-					<div class="windowbg2" style="float: right; padding: 0 2em; margin: 0 0 1em 0;">' , $dlitem['icon']!='' ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	</div>';
+					<div  style="float: left; padding: 1em 1em 1em 0; ">' , $dlitem['icon']!='' ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	</div>';
 
 				unset($details);
 				$details=array();
@@ -307,8 +315,10 @@ function template_main()
 		foreach($context['TPortal']['dlitem'] as $dlitem)
 		{
 			echo '
-			<div class="tp_half">
-				<h3 class="catbg"><span class="l"></span><span class="r"></span>
+			<div class="windowbg">
+				<span class="topslice"><span></span></span>
+				<div class="content">
+				<h4 class="h4dl">
 				<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
 			
 			// edit the file?
@@ -318,10 +328,7 @@ function template_main()
 				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tpmod;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 
 			echo '
-			</h3>
-			</div>
-			<div class="windowbg">
-				<div style="padding: 1em;">
+				</h4><hr>
 					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
 						<li>'  , $txt['tp-dlfilesize'] , ': ', isset($dlitem['filesize']) ? $dlitem['filesize']: '' , '</li>
 						<li>'. $txt['tp-views']. ': ' . $dlitem['views'].' </li>
@@ -357,8 +364,11 @@ function template_main()
 				
 			echo '
 					<hr />
-					<div class="post">' . $dlitem['description'] . '</div>
-					<p><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.gif" alt="'.$txt['tp-download'].'" /></a></p>';
+					<div class="post">
+						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.gif" alt="'.$txt['tp-download'].'" /></a></p>
+						' . $dlitem['description'] . '
+					</div>';
+
 			// render the text
 			if(isset($dlitem['global_tag']))
 			{
@@ -402,11 +412,11 @@ function template_main()
 		// any screenshot?
 		if(!empty($dlitem['sshot']))
 			 echo '
-					<br /><div style="width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$dlitem['sshot'].') no-repeat;"></div>';
+					<br /><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" /></div>';
 		echo '
+			<span class="botslice"><span></span></span>
 				</div>
 			</div>
-			<span class="botslice"><span></span></span>
 			</div>
 		</div>
 	</div>';

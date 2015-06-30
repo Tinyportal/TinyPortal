@@ -98,14 +98,6 @@ function template_tpshout_admin()
 				<td class="' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '"  valign="top" width="100px" align="center">
 					<input name="tp_shoutbox_hidden'.$admin_shouts['id'].'" type="hidden" value="1">
 					<input style="vertical-align: middle;" name="tp_shoutbox_sticky'.$admin_shouts['id'].'" type="checkbox" value="ON"' , !empty($admin_shouts['sticky']) ? ' checked="checked"' : '' , '> '.$txt['tp-sticky'].'<br>
-					<select style="vertical-align: middle;" name="tp_shoutbox_sticky_layout'.$admin_shouts['id'].'">
-						<option value=""', empty($admin_shouts['sticky_layout']) ? ' selected="selected"' : '' , '> '.$txt['tp-sticky1'].'</option>
-						<option value="1"', !empty($admin_shouts['sticky_layout']) && $admin_shouts['sticky_layout']== "1" ? ' selected="selected"' : '' , '> '.$txt['tp-sticky2'].'</option>
-						<option value="2"', !empty($admin_shouts['sticky_layout']) && $admin_shouts['sticky_layout']== "2" ? ' selected="selected"' : '' , '> '.$txt['tp-sticky3'].'</option>
-						<option value="3"', !empty($admin_shouts['sticky_layout']) && $admin_shouts['sticky_layout']== "3" ? ' selected="selected"' : '' , '> '.$txt['tp-sticky4'].'</option>
-						<option value="4"', !empty($admin_shouts['sticky_layout']) && $admin_shouts['sticky_layout']== "4" ? ' selected="selected"' : '' , '> '.$txt['tp-sticky5'].'</option>
-						<option value="5"', !empty($admin_shouts['sticky_layout']) && $admin_shouts['sticky_layout']== "5" ? ' selected="selected"' : '' , '> '.$txt['tp-sticky6'].'</option>
-					</select>
 					<br><br>
 					<hr>
 					<div style="text-align: right;"><strong><input style="vertical-align: middle;" name="tp_shoutbox_remove'.$admin_shouts['id'].'" type="checkbox" value="ON"> '.$txt['tp-remove'].'</strong></div>
@@ -116,7 +108,6 @@ function template_tpshout_admin()
 	echo '<tr>
 		     			<td colspan="2" align="left" class="normaltext">
 							<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
-							<input name="tp_shoutsunstickall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-unstickallshouts'].'</strong>
 						</td>
 						<td colspan="2" align="right" class="smalltext"><b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
 		     			</td>
@@ -364,7 +355,7 @@ function template_singleshout($row)
 					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
-				<h4>' . $row['realName'] . '</h4>
+				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['realName'] . '</a></h4>
 				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
 			</div>
 			<div class="bubble speech">' . $row['value1'] . '</div>
