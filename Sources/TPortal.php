@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2014 - The TinyPortal Team
+ * Copyright (C) 2015 - The TinyPortal Team
  *
  */
 
@@ -2428,6 +2428,7 @@ function TPortal_panel($side)
 
 	$code = '
 	<div class="tp_'.$side.'panel" style="overflow: hidden;">';
+	
 	// set the grid type
 	if($flow == 'grid')
 	{
@@ -2702,7 +2703,7 @@ function TPortal_panel($side)
 		echo '</td></tr></table>';
 
 	// the upshrink routine for blocks
-	echo '</div>
+	echo '
 			<script type="text/javascript"><!-- // --><![CDATA[
 				function toggle( targetId )
 				{

@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2014 - The TinyPortal Team
+ * Copyright (C) 2015 - The TinyPortal Team
  *
  */
 
@@ -625,7 +625,7 @@ $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 
 // new in 1.109
 $txt['tp-sticky'] = 'Sticky';
-$txt['tp-sticky-title'] = 'Use this text over the stickied shouts (BBC allowed):';
+$txt['tp-sticky-title'] = 'Place a fixed message or announcement at the top of the shoutbox (BBC allowed):';
 
 $txt['tp-sticky1'] = 'Information style';
 $txt['tp-sticky2'] = 'Normal style';
