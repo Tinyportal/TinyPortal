@@ -97,9 +97,6 @@ function template_tpshout_admin()
 				</td>
 				<td class="' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '"  valign="top" width="100px" align="center">
 					<input name="tp_shoutbox_hidden'.$admin_shouts['id'].'" type="hidden" value="1">
-					<input style="vertical-align: middle;" name="tp_shoutbox_sticky'.$admin_shouts['id'].'" type="checkbox" value="ON"' , !empty($admin_shouts['sticky']) ? ' checked="checked"' : '' , '> '.$txt['tp-sticky'].'<br>
-					<br><br>
-					<hr>
 					<div style="text-align: right;"><strong><input style="vertical-align: middle;" name="tp_shoutbox_remove'.$admin_shouts['id'].'" type="checkbox" value="ON"> '.$txt['tp-remove'].'</strong></div>
 				</td>
 			</tr>';
@@ -237,10 +234,9 @@ function template_tpshout_shoutblock()
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
 
-	if(!empty($context['TPortal']['shoutbox_sticky'])) 
-		echo '
-	' , !empty($context['TPortal']['shoutbox_stitle']) ? '<p style="margin-top: 0;">' . parse_bbc($context['TPortal']['shoutbox_stitle'],true) . '</p>' : '' , '
-	<div>' . $context['TPortal']['shoutbox_sticky'] . '</div><hr><br>';
+	if(!empty($context['TPortal']['shoutbox_stitle'])) 
+		echo 
+	'<p style="margin-top: 0;">' . parse_bbc($context['TPortal']['shoutbox_stitle'],true) . '</p><hr><br>';
 	
 	if($context['TPortal']['shoutbox_usescroll'] > '0')
 		echo '
@@ -252,9 +248,10 @@ function template_tpshout_shoutblock()
     <table cellpadding="0" align="center" width="100%" cellspacing="0" style="table-layout: fixed;">
 		<tr>
 			<td>
-			<div class="middletext" style="width: 99%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
-			<div class="tp_shoutframe">'. $context['TPortal']['shoutbox']. '</div>
-			</div></td>
+				<div class="middletext" style="width: 99%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
+					<div class="tp_shoutframe">'. $context['TPortal']['shoutbox']. '</div>
+				</div>
+			</td>
 		</tr>
 	</table>';
 
@@ -355,7 +352,7 @@ function template_singleshout($row)
 					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
-				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['realName'] . '</a></h4>
+				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></h4>
 				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
 			</div>
 			<div class="bubble speech">' . $row['value1'] . '</div>
@@ -364,54 +361,18 @@ function template_singleshout($row)
 	'1' => '	
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer">							
-				<div class="shout_options">
+			<div class="shout_options">
 				' . $row['realName'] . ':
 				' . (allowedTo('tp_can_admin_shout') ? '
-					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
-					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
-				</div> 
-				<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
+				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+				<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
+			</div> 
+			<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
 			<div class="shoutbody_layout1">' . $row['value1'] . '</div>
 		</div>
 	</div>',
 	);
 
-	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
-}
-
-function template_singleshout_sticky($row)
-{
-	global $scripturl, $context, $settings, $txt;
-	
-	if(!empty($row['value8']))
-		$layoutOptions = array(
-			'0' => '
-		<div style="padding-bottom: 5px;">
-			<div class="tp_shoutcontainer">
-				<div class="tp_shoutavatar">
-					<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
-					<h4 title="' . (timeformat($row['value2'])) . '">' . $row['realName'] . ' </h4>
-				</div>
-				<div class="bubble speech shout_stickybg' . $row['value8'] . '">' . $row['value1'] . '</div>
-			</div>
-		</div>',
-			'1' => '
-		<div style="padding-bottom: 5px;">
-			<div class="tp_shoutcontainer">
-				<div class="tp_shoutavatar">
-					<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
-					<h4 title="' . (timeformat($row['value2'])) . '">' . $row['realName'] . ' </h4>
-				</div>
-				<div class="bubble speech shout_stickybg' . $row['value8'] . '">' . $row['value1'] . '</div>
-			</div>
-		</div>',
-		);
-	else
-		$layoutOptions = array(
-		'0' => '<div class="plainbox">' . $row['value1'] . '</div>',
-		'1' => '<div class="plainbox">' . $row['value1'] . '</div>',
-	);
-	
 	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
 }
 

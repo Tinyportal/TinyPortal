@@ -406,8 +406,7 @@ function TPortal_userbox()
 	// Otherwise they're a guest - so politely ask them to register or login.
 	else{
 		echo '
-		<div style="line-height: 1.4em;">', $bullet , sprintf($txt['welcome_guest'], $txt['guest_title']), '
-		<br />', $bullet2, $context['current_time'], '</div>
+		<div style="line-height: 1.4em;">', $bullet , sprintf($txt['welcome_guest'], $txt['guest_title']), '<br />', $bullet2, $context['current_time'], '</div>
 		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
 			<input type="text" name="user" size="10" /> <input type="password" name="passwrd" size="10" /><br />
 			<select name="cookielength">

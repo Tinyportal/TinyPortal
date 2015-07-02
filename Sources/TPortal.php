@@ -2703,7 +2703,7 @@ function TPortal_panel($side)
 		echo '</td></tr></table>';
 
 	// the upshrink routine for blocks
-	echo '
+	echo '</div>
 			<script type="text/javascript"><!-- // --><![CDATA[
 				function toggle( targetId )
 				{
