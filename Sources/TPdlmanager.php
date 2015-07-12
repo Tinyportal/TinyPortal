@@ -1445,7 +1445,7 @@ function TPortalDLManager()
 		else
 			$what = 'main';
 
-		$context['sub_template'] = WIRELESS_PROTOCOL . '_tpdl_'. $what;
+		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_dl_'. $what;
 	}
 	else
 		loadTemplate('TPdlmanager');
