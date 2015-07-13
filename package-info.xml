@@ -19,7 +19,7 @@
 		<code>do_hooks.php</code>
     </install>
 	<uninstall for="2.0 - 2.0.99">
-		<readme type="inline">Uninstalling TinyPortal v1.110 for SMF2.0</readme>
+		<readme type="inline">Uninstalling TinyPortal v1.1 for SMF2.0</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
