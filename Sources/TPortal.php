@@ -89,6 +89,9 @@ function TPortal_init()
 	// if we are in permissions admin section, load all permissions
 	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
 		TPcollectPermissions();
+		
+	// Show search/tag/frontpage topic layers?
+	TP_doTagSearchLayers();
 
 	// any modules needed to load then?
 	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
