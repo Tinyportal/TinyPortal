@@ -160,13 +160,6 @@ function TP_doTagSearchLayers()
 	// are we on search page? then add TP search options as well!
 	if($context['TPortal']['action'] == 'search')
 		$context['template_layers'][] = 'TPsearch';
-
-	// choosing topics for frontpage
-	if(!empty($_GET['topic']) && empty($_GET['action']))
-	{
-		if(allowedTo(array('tp_settings')))
-			$context['template_layers'][] = 'tpfrontpagetopics';
-	}
 }
 
 function TP_whichHideBars()
