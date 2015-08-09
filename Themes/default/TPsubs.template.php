@@ -814,10 +814,24 @@ function template_nolayer_below()
 }
 
 // article search page 1
+
 function template_TPsearch_above()
 {
 	global $context, $txt, $scripturl;
 	
+	if($context['TPortal']['show_download']==0)
+	{
+		echo '
+	<div style="padding: 0 5px;">
+		<div class="cat_bar">
+			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
+		</div>
+		<div class="windowbg2">
+			<span class="topslice"><span></span></span>
+			<p style="margin: 0; padding: 0 1em;">
+				<a href="' . $scripturl. '?action=tpmod;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
+	}			
+	else
 
  echo '
 	<div style="padding: 0 5px;">
@@ -829,6 +843,7 @@ function template_TPsearch_above()
 			<p style="margin: 0; padding: 0 1em;">
 				<a href="' . $scripturl. '?action=tpmod;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
 				<a href="' . $scripturl. '?action=tpmod;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
+
 
 	// any others?
 	if(!empty($context['TPortal']['searcharray']) && count($context['TPortal']['searcharray']) > 0)
