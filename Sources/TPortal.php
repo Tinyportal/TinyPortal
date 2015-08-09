@@ -134,32 +134,17 @@ function addPromoteButton(&$normal_buttons)
 	}
 }
 
+
 function TP_doTagSearchLayers() 
 {
 
 	global $context;
 	
-	// are we allowed to tag boards? include any
-	if(!empty($_GET['topic']) && empty($_GET['action']))
-	{
-		if($context['TPortal']['tagtopics'] == 1 && allowedTo(array('tp_articles','tp_settings')))
-			$context['template_layers'][] = 'TPtagtopics';
-		elseif($context['TPortal']['tagtopics'] == 1 && !allowedTo(array('tp_articles','tp_settings')) && allowedTo('tp_tag'))
-			$context['template_layers'][] = 'TPtagtopicsOnly';
-		$context['template_layers'][] = 'TPtagtopicsGeneral';
-	}
-	elseif(!empty($_GET['board']) && empty($_GET['action']))
-	{
-		if($context['TPortal']['tagboards'] == 1 && allowedTo(array('tp_articles','tp_settings')))
-			$context['template_layers'][] = 'TPtagboards';
-		elseif($context['TPortal']['tagboards'] == 1 && !allowedTo(array('tp_articles','tp_settings')) && allowedTo('tp_tag'))
-			$context['template_layers'][] = 'TPtagboardsOnly';
-		$context['template_layers'][] = 'TPtagboardsGeneral';
-	}
-
 	// are we on search page? then add TP search options as well!
 	if($context['TPortal']['action'] == 'search')
 		$context['template_layers'][] = 'TPsearch';
+
+
 }
 
 function TP_whichHideBars()
