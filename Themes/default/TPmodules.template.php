@@ -273,7 +273,7 @@ function template_main()
 		<form accept-charset="', $context['character_set'], '" name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
 			<div class="tborder" style="margin: auto;">
                 <div class="cat_bar">
-				    <h3 class="catbg3" style="font-size: 1em;">' , $txt['tp-searcharticles2'] , '</h3>
+				    <h3 class="catbg">' , $txt['tp-searcharticles2'] , '</h3>
                 </div>
 				<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-searcharticleshelp'] , '</div>
 				<div style="padding: 10px;" class="windowbg">
