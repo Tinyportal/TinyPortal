@@ -1013,20 +1013,6 @@ function template_settings()
 								</td>
 							</tr>
 							<tr class="windowbg2">
-								<td class="left" valign="top">'.$txt['tp-tagtopics2'].'</td>
-								<td>
-									<input name="tp_tagtopics" type="radio" value="1" ' , $context['TPortal']['tagtopics']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-									<input name="tp_tagtopics" type="radio" value="0" ' , $context['TPortal']['tagtopics']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-								</td>
-							</tr>
-							<tr class="windowbg2">
-								<td class="left" valign="top">'.$txt['tp-tagboards2'].'</td>
-								<td>
-									<input name="tp_tagboards" type="radio" value="1" ' , $context['TPortal']['tagboards']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-									<input name="tp_tagboards" type="radio" value="0" ' , $context['TPortal']['tagboards']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-								</td>
-							</tr>
-							<tr class="windowbg2">
 								<td class="left" valign="top">'.$txt['tp-hideediticon'].'</td>
 								<td>
 									<input name="tp_blocks_edithide" type="radio" value="1" ' , $context['TPortal']['blocks_edithide']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
