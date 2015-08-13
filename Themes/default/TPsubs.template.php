@@ -1707,41 +1707,6 @@ function article_bookmark($render = true)
 		return $code;
 }
 
-function article_globaltags($render = true)
-{
-	global $scripturl, $txt, $context;
-	
-	if(!isset($context['TPortal']['article']['global_tag']))
-		return;
-
-	$taglinks = TPget_globaltags($context['TPortal']['article']['global_tag'] , $context['TPortal']['article']['id']);
-
-	if(in_array('globaltags', $context['TPortal']['article']['visual_options']) && !empty($taglinks))
-	{
-		$code = '
-	<h2 class="titlebg" style="padding: 0 1em;">' . $txt['tp-showrelated'] . '</h2>
-	<div class="windowbg2">';
-		
-		$code .= '
-		<ul style="margin: 0; padding: 1em 2em;">';
-		foreach($taglinks as $tag)
-				$code .= '
-			<li><a href="' . $scripturl . $tag['href'] . '"' . ($tag['type']=='tparticle_itemtags' && $tag['itemid']==$context['TPortal']['article']['id'] ? ' class="selected"' : '') . '>' . html_entity_decode($tag['title']).'</a></li>';
-
-		$code .= '
-		</ul>';
-		$code .= '
-	</div>';
-	}
-	else
-		$code='';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
-}
-
 function article_comments($render = true)
 {
 	global $scripturl, $txt, $settings, $context;

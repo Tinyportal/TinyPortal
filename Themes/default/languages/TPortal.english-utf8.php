@@ -27,7 +27,7 @@ $txt['tp-forum'] = 'Forum';
 $txt['tp-smfhelp'] = 'SMF';
 $txt['tp-tphelp'] = 'TinyPortal';
 $txt['tp-tpnews'] = 'News and Credits';
-$txt['tp-adminmodules1'] = 'Modules and Tags';
+$txt['tp-adminmodules1'] = 'Modules';
 
 // General Miscellious... //
 // Rev 89
@@ -232,7 +232,6 @@ $txt['tp-miscblocks'] = 'Menus';
 $txt['tp-quicklist'] = 'My Images Quicklist';
 $txt['tp-quicklist2'] = 'The images below are small thumbnails of the original pictures. By clicking them the  picture is inserted into the editor. Be sure to click in the editor to make it active
 before selecting any of the images.';
-$txt['tp-assigntags'] = 'Assign global tags:';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list: ';
 $txt['tp-tagitem'] = 'Download file(s)';
 $txt['tp-tagcategory'] = 'Download file(s)';

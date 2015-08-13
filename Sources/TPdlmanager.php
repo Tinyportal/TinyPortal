@@ -318,13 +318,6 @@ function TPortalDLManager()
 				else
 					redirectexit('action=tpmod;dl');
 		}
-		elseif($context['TPortal']['dlsub'] == 'tptag')
-		{
-				if(isset($context['TPortal']['myglobaltags']))
-					$context['TPortal']['dlaction'] = 'tptag';
-				else
-					redirectexit('action=tpmod;dl');
-		}
 		elseif(substr($context['TPortal']['dlsub'], 0, 4) == 'item')
 		{
 				$context['TPortal']['dlitem'] = substr($context['TPortal']['dlsub'], 4);
@@ -790,7 +783,6 @@ function TPortalDLManager()
 						'rating_votes' => $rating_votes,
 						'rating_average' => $rating_average,
 						'can_rate' => $can_rate,
-						'global_tag' => $row['global_tag'],
 					);
 				}
 				$smcFunc['db_free_result']($request);
@@ -1115,16 +1107,10 @@ function TPortalDLManager()
 		elseif(isset($_GET['p']) && is_numeric($_GET['p']))
 			$start = $_GET['p'];
 
-		if(is_array($context['TPortal']['myglobaltags']))
-			$tagquery = '(FIND_IN_SET(' . implode(', global_tag) OR FIND_IN_SET(', $context['TPortal']['myglobaltags']) . ', global_tag))';
-		else
-			$tagquery = 'global_tag LIKE '. $context['TPortal']['myglobaltags'];
-
 		// get total count
 		$request = $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_dlmanager 
 			WHERE type = {string:type}
-			AND '. $tagquery .'
 			AND subitem = {int:sub}',
 			array('type' => 'dlitem', 'sub' => 0)
 		);
@@ -1137,7 +1123,6 @@ function TPortalDLManager()
 				global_tag 
 			FROM {db_prefix}tp_dlmanager 
 			WHERE type = {string:type} 
-			AND '. $tagquery .' 
 			AND subitem = {int:sub} LIMIT {int:start}, 10',
 			array('type' => 'dlitem', 'sub' => 0, 'start' => $start)
 		);
@@ -1186,9 +1171,6 @@ function TPortalDLManager()
 		}
 		if(isset($context['TPortal']['mystart']))
 			$mystart = $context['TPortal']['mystart'];
-
-		// construct a pageindex
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;dl=tptag;tptag='.implode(",",$context['TPortal']['myglobaltags']) , $mystart , $rows2, 10);
 
 		$context['TPortal']['dlheader'] = '';
 	}
@@ -1509,8 +1491,6 @@ function TPdlresults()
 	else
 		$allowedcats[0] = -1;
 
-	$tagquery = 'FIND_IN_SET(d.category, "' . implode(',', $allowedcats) .'")';
-	
 	$context['TPortal']['dlsearchresults'] = array();
 	$context['TPortal']['dlsearchterm'] = $what;
 	
@@ -1519,7 +1499,6 @@ function TPdlresults()
 		SELECT COUNT(d.id)
 		FROM {db_prefix}tp_dlmanager AS d
 		WHERE '. $query .'
-		AND '. $tagquery .'
 		AND type = {string:type}',
 		array('type' => 'dlitem', 'what' => $what2)
 	);
@@ -1531,7 +1510,6 @@ function TPdlresults()
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		WHERE '. $query .'
-		AND '. $tagquery .'
 		AND type = {string:type}
 		ORDER BY d.created DESC LIMIT {int:start}, 15',
 		array('type' => 'dlitem', 'what' => $what2, 'start' => $start)

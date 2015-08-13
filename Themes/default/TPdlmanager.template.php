@@ -369,27 +369,6 @@ function template_main()
 						' . $dlitem['description'] . '
 					</div>';
 
-			// render the text
-			if(isset($dlitem['global_tag']))
-			{
-			
-				$taglinks = TPget_globaltags($dlitem['global_tag'],$dlitem['id']);
-				
-				if(!empty($taglinks))
-				{
-					echo '
-					<hr />
-					<div class="middletext tp_morebox globaltags">
-						<h3>' , $txt['tp-showrelated'] , '</h3>';
-					foreach($taglinks as $tag)
-						echo '
-						<a href="'.$scripturl.$tag['href'].'">'.$tag['title'].'</a>';
-						echo '
-					</div>';
-				}
-				
-			}
-
 			// any extra files attached?
 			if(isset($dlitem['subitem']) && is_array($dlitem['subitem']))
 			{

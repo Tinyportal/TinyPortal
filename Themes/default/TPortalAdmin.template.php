@@ -69,11 +69,6 @@ function template_main()
 		$go = 'template_blockoverview';
 		$param = '';
 	}
-	elseif($go == 'template_modules' && isset($_GET['tags']))
-	{
-		$go = 'template_tags';
-		$param = '';
-	}
 	elseif($go == 'template_blocks' && isset($_GET['addblock']))
 	{
 		$go = 'template_addblock';
@@ -368,55 +363,6 @@ function template_modules()
 							</td>
 						</tr>';
 		echo '
-				</table>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr class="windowbg2">
-					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
-					</td>
-				</tr>
-			</tfoot>
-		</table>
-	</form>';
-}
-	// the global tags
-function template_tags()
-{
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
-
-		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input name="tpadmin_form" type="hidden" value="tags">
-		<table class="admintable">
-			<caption class="catbg">' . $txt['tp-globaltags'] . '</caption>
-			<tbody>
-				<tr class="windowbg2">
-					<td class="tborder" style="padding: 0; border: none;">
-				<table class="multiplerow">
-					<tr class="windowbg2">
-						<td class="smalltext">'.$txt['tp-globaltagsdesc'].'</td>
-					</tr>
-					<tr class="windowbg2">
-						<td class="windowbg">';
-
-		if(sizeof($context['TPortal']['global_tags'])>0)
-		{
-			$count=0;
-			foreach($context['TPortal']['global_tags'] as $tag)
-			{
-				echo '
-				<input name="tp_tags'.$count.'" size="40" value="'.$tag['tag'].'" /><br />';
-				$count++;
-			}
-		}
-		echo '<hr />
-				<input name="tp_tags_blank" size="60" value="" /><br />
-				<span class="smalltext">' . $txt['tp-globaltagshelp']. '</span>
-						</td>
-					</tr>
 				</table>
 					</td>
 				</tr>
@@ -1333,7 +1279,6 @@ function template_frontpage()
 			{article_boardnews}
 			{article_moreauthor}
 			{article_morelinks}
-			{article_globaltags}
 		</div>
 	</div>	
 	<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>';
@@ -1626,7 +1571,6 @@ function template_editcategory()
 			<div class="article_padding">{article_moreauthor}</div>
 			<div class="article_padding">{article_bookmark}</div>
 			<div class="article_padding">{article_morelinks}</div>
-			<div class="article_padding">{article_globaltags}</div>
 			<div class="article_padding">{article_comments}</div>
 		</div>
 		<span class="botslice"><span></span></span>
@@ -2394,7 +2338,7 @@ function template_editarticle($type = '')
 							</td>
 					</tr>';
 				// set options for an article...
-				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','globaltags','nofrontsetting');
+				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','nofrontsetting');
 				$tmp = explode(',',$mg['options']); 
 				$options=array();
 				foreach($tmp as $tp => $val){
@@ -2472,9 +2416,6 @@ function template_editarticle($type = '')
 									<td>
 										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[23].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>  '.$txt['tp-showsociallinks'].'<br />
 									</td>
-									<td>
-										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[24].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[24]]) ? 'checked' : '' , '>  '.$txt['tp-showglobaltags'].'<br />
-									</td>
 								</tr><tr class="windowbg2">
 									<td colspan="2">
 										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[25].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[25]]) ? 'checked' : '' , '>  '.$txt['tp-useonfrontpage'].'<br />
@@ -2499,10 +2440,6 @@ function template_editarticle($type = '')
 						</td>
 					</tr>
 
-					<tr class="windowbg">
-						<td class="left" valign="top" align="right">'.$txt['tp-assigntags'].'</td>
-						<td>' , TPsshowgtags('tparticle_itemtags', 'tparticle_itemtags', !empty($mg['id']) ? $mg['id'] : 0) ,'</td>
-					</tr>
 				</table>
 
 					</td>

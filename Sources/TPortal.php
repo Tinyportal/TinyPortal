@@ -90,7 +90,7 @@ function TPortal_init()
 	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
 		TPcollectPermissions();
 		
-	// Show search/tag/frontpage topic layers?
+	// Show search/frontpage topic layers?
 	TP_doTagSearchLayers();
 
 	// any modules needed to load then?
@@ -417,35 +417,6 @@ function setupTPsettings()
 		'tp_block' => 'TPblock',
 	);
 	
-	// any tags specified?
-	if(!empty($_REQUEST['gtag']))
-	{
-		if(substr($_REQUEST['gtag'], 0, 1) == ',')
-			$_REQUEST['gtag'] = substr($_REQUEST['gtag'], 1);
-		if(substr($_REQUEST['gtag'], (strlen($_REQUEST['gtag']) - 1), 1) == ',')
-			$_REQUEST['gtag'] = substr($_REQUEST['gtag'], 0, strlen($_REQUEST['gtag']) - 1);
-
-		$context['TPortal']['myglobaltags'] = explode(',', $_REQUEST['tptag']);
-
-		$context['TPortal']['global_tags'] = array();
-		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:tag}',
-			array('tag' => 'globaltag')
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				$context['TPortal']['global_tags'][$row['value1']] = array(
-					'id' => $row['id'],
-					'tag' => $row['value1'],
-					'related' => $row['value2'],
-				);
-			}
-			$smcFunc['db_free_result']($request);
-		}
-	}
 
 	// start of things
 	$context['TPortal']['mystart'] = 0;
@@ -1085,7 +1056,7 @@ function doTPcat()
 					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
-						art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type, art.global_tag,
+						art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type,
 						IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 					FROM {db_prefix}tp_articles AS art
@@ -1330,7 +1301,7 @@ function doTPfrontpage()
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.illustration,art.type as rendertype ,art.global_tag,
+				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 			FROM {db_prefix}tp_articles AS art
@@ -1392,7 +1363,7 @@ function doTPfrontpage()
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.illustration,art.type as rendertype ,art.global_tag,
+				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 			FROM {db_prefix}tp_articles AS art
@@ -1772,7 +1743,7 @@ function doTPfrontpage()
 					art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
-					art.fileimport, art.topic, art.illustration, art.type as rendertype, art.global_tag,
+					art.fileimport, art.topic, art.illustration, art.type as rendertype,
 					IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 				FROM {db_prefix}tp_articles AS art
@@ -2892,13 +2863,12 @@ function doModules() {
 		'blockrender' => array(),
 		'adminhook' => array(),
 		'frontsection' => array(),
-		'globaltag' => array(),
 	);
 	$context['TPortal']['modulepermissions'] = array('tp_settings', 'tp_blocks', 'tp_articles', 'tp_alwaysapproved', 'tp_submithtml', 'tp_submitbbc', 'tp_editownarticle');
 
 	$request = $smcFunc['db_query']('', '
 		SELECT id, modulename, blockrender, autoload_run, adminhook, 
-		frontsection, permissions, globaltags 
+		frontsection, permissions
 		FROM {db_prefix}tp_modules WHERE active = {int:active}',
 		array('active' => 1)
 	);
@@ -2928,13 +2898,6 @@ function doModules() {
 					'id' => $row['id'],
 					'name' => $row['modulename'],
 					'function' => $row['frontsection'],
-					'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-				);
-			if(!empty($row['globaltags']))
-				$context['TPortal']['tpmodules']['globaltags'][$row['id']] = array(
-					'id' => $row['id'],
-					'name' => $row['modulename'],
-					'function' => $row['globaltags'],
 					'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
 				);
 		}
