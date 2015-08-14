@@ -2416,10 +2416,6 @@ function template_editarticle($type = '')
 									<td>
 										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[23].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>  '.$txt['tp-showsociallinks'].'<br />
 									</td>
-								</tr><tr class="windowbg2">
-									<td colspan="2">
-										<input style="vertical-align: middle;" name="tp_article_options_'.$opts[25].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[25]]) ? 'checked' : '' , '>  '.$txt['tp-useonfrontpage'].'<br />
-									</td>
 								</tr>
 							</table>
 							<hr /><input type="checkbox" onclick="invertAll(this, this.form, \'tp_article_options_\');" />'.$txt['tp-checkall'].'

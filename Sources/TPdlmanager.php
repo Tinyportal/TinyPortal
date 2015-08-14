@@ -2097,10 +2097,9 @@ function TPortalDLAdmin()
 		// remove old ones first
 		$smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND value3 = {string:val3} 
+			WHERE value3 = {string:val3} 
 			AND subtype2 = {int:sub}',
-			array('type' => 'globaltag_item', 'val3' => 'dladmin_itemtags', 'sub' => $itemid)
+			array('val3' => 'dladmin_itemtags', 'sub' => $itemid)
 		);
 		$alltags = array();
 		foreach($_POST as $what => $value)
@@ -2118,7 +2117,7 @@ function TPortalDLAdmin()
 					$smcFunc['db_query']('INSERT', 
 						'{db_prefix}tp_variables',
 						array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'value5' => 'int', 'subtype' => 'string', 'value7' => 'string', 'value8' => 'string', 'subtype2' => 'int'),
-						array($href, $tg, 'dladmin_itemtags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
+						array($href, $tg, 'dladmin_itemtags', '', 0, $tag, '', '', $itemid),
 						array('id')
 					);
 					$alltags[] = $tag;
@@ -2151,10 +2150,9 @@ function TPortalDLAdmin()
 		// remove old ones first
 		$smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND value3 = {string:val3} 
+			WHERE value3 = {string:val3} 
 			AND subtype2 = {int:sub}',
-			array('type' => 'globaltag_item', 'val3' => 'dladmin_cattags', 'sub' => $itemid));
+			array('val3' => 'dladmin_cattags', 'sub' => $itemid));
 		foreach($_POST as $what => $value)
 		{
 			// a tag from edit category
@@ -2168,7 +2166,7 @@ function TPortalDLAdmin()
 				$smcFunc['db_query']('INSERT', 
 					'{db_prefix}tp_variables',
 					array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'value5' => 'int', 'subtype' => 'string', 'value7' => 'string', 'value8' => 'string', 'subtype2' => 'int'), 
-					array($href, $title, 'dladmin_cattags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
+					array($href, $title, 'dladmin_cattags', '', 0, $tag, '', '', $itemid),
 					array('id')
 				);
 			}

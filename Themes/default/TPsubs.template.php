@@ -1086,7 +1086,6 @@ function article_renders($type = 1, $single = false, $first = false)
 		{article_moreauthor}
 		{article_bookmark}
 		{article_morelinks}
-		{article_globaltags}
 		{article_comments}' : '') . ' 
 </div>
 		';
@@ -1118,7 +1117,6 @@ function article_renders($type = 1, $single = false, $first = false)
 		{article_moreauthor}
 		{article_bookmark}
 		{article_morelinks}
-		{article_globaltags}
 		{article_comments}' : '') . ' 
 </div><br />
 		';
@@ -1149,7 +1147,6 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 			</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_globaltags}</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . ' 
 		</div>
 	</div>';
@@ -1188,7 +1185,6 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 			</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_globaltags}</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . ' 
 		</div>
 	</div>
@@ -1225,7 +1221,6 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 			</div>
 			{article_morelinks}
-			{article_globaltags}
 			{article_comments}' : '') . ' 
 		</div>
 	</div><br />';
@@ -1268,7 +1263,6 @@ function article_renders($type = 1, $single = false, $first = false)
 					</div>
 				</div>
 				{article_morelinks}
-				{article_globaltags}
 				{article_comments}' : '') . ' 
 			</div>
 			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="botslice"><span></span></span>' : '') . '
@@ -1310,7 +1304,6 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 			</div>
 			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2"' : '') . '>{article_morelinks}</div>
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2"' : '')  . '>{article_globaltags}</div>
 			<div class="article_padding">{article_comments}</div>
 		</div>';
 	}
@@ -1349,7 +1342,6 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 			</div>
 			{article_morelinks}
-			{article_globaltags}
 			{article_comments}' : '') . ' 
 		</div>
 	<span class="botslice"><span></span></span>
