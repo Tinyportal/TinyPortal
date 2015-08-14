@@ -1013,110 +1013,6 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	</div>';
 	}
 }
-function TPsshowgtags($id, $prefix, $itemid, $onlytags = false)
-{
-	global $txt, $smcFunc;
-
-	// This is to deal with a bug in SMF where $board is not an id but an array.
-	if(is_array($itemid))
-		$itemid = (int) $itemid['id'];
-		
-	$gtags = array();
-	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_variables 
-		WHERE type = {string:type}',
-		array(
-			'type' => 'globaltag',
-		)
-	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-			$gtags[] = array(
-				'id' => $row['id'],
-				'tag' => $row['value1'],
-				'related' => $row['value2'],
-			);
-		$smcFunc['db_free_result']($request);
-	}
-
-	$found = array();
-	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_variables 
-		WHERE type = {string:type}
-		AND value3 = {string:val3} 
-		AND subtype2 = {int:subtype}',
-		array('type' => 'globaltag_item', 'val3' => $id, 'subtype' => $itemid)
-	);
-	
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-			$found[] = $row['subtype']; // the tag
-
-		$smcFunc['db_free_result']($request);
-	}
-	
-	// just return the tags
-	if($onlytags)
-		return implode(",", $found);
-	elseif(!$onlytags)
-	{
-		// show all tags
-		echo '
-		<input type="hidden" name="'.$id.'" value="'.$itemid.'" />
-		<div style="padding: 8px; max-height: 200px; overflow: auto;" class="windowbg">
-			';
-		if(count($gtags) > 0)
-		{
-			echo '<ul class="gtags">';
-			foreach($gtags as $tag)
-			{
-				echo '
-					<li><input type="checkbox" value="'.$itemid.'" name="'.$prefix.'_'.$tag['tag'].'" ', in_array($tag['tag'],$found) ? 'checked="checked"' : '' , ' /> ' , $tag['tag'] , '</li>';
-			}
-			echo '</ul>';
-		}
-		echo '
-			' . $txt['tp-newtag'] .' <input type="input" value="" name="xyzx_'.$prefix.'_'.$itemid.'"  />
-		</div>';
-		return;
-	}
-}
-
-function TPget_globaltags($tags, $itemid)
-{
-	global $smcFunc;
-
-	$taglinks = array();
-	$tagarray = explode(',', $tags);
-	// search the variable table for tags matching
-	$searchtag = 'AND (subtype = \'' . implode('\' OR subtype = \'', $tagarray) . '\')';
-	
-	$request = $smcFunc['db_query']('', '
-		SELECT DISTINCT value1, value2, value3, subtype2 
-		FROM {db_prefix}tp_variables 
-		WHERE type = {string:type} {raw:search} 
-		ORDER BY value1 ASC',
-		array('type' => 'globaltag_item', 'search' => $searchtag,)
-	);
-
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$taglinks[] = array(
-				'href' => $row['value1'],
-				'title' => $row['value2'],
-				'icon' => $row['value3'],
-				'type' => $row['value3'],
-				'itemid' => $row['subtype2'],
-			);
-		}
-		$smcFunc['db_free_result']($request);
-	}
-	return $taglinks;
-}
 
 function TP_getallmenus()
 {
@@ -1470,26 +1366,6 @@ function TP_fetchprofile_areas2($memID)
 		$smcFunc['db_free_result']($request);
 	}
 
-}
-function tp_renderglobaltags($taglinks, $norender = false)
-{
-	global $scripturl;
-
-	if(sizeof($taglinks) == 0)
-		return;
-
-	$out = '
-	<ul class="article_gtags">';
-	foreach($taglinks as $tag)
-		$out .= '
-		<li><a href="' . $scripturl . $tag['href'] . '"' . (isset($tag['selected']) ? ' class="selected"' : '') . '>' . strip_tags($tag['title'],'<a>') . '</a></li>';
-
-	$out .= '
-	</ul>';
-	if($norender)
-		return $out;
-	else
-		echo $out;
 }
 
 function tp_sanitize($value, $strict = false)
@@ -2233,12 +2109,6 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'description' => $txt['tp-moduledesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=modules',
 				'is_selected' => $tpsub == 'modules' && !isset($_GET['import']) && !isset($_GET['tags']),
-			),
-				'tags' => array(
-				'title' => $txt['tp-tags'],
-				'description' => $txt['tp-tags2'],
-				'href' => $scripturl . '?action=tpadmin;sa=modules;tags',
-				'is_selected' => $tpsub == 'tags',
 			),
 		);
 	}
