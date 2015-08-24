@@ -156,7 +156,6 @@ $tables = array(
             array('name' => 'illustration', 'type' => 'text',),
             array('name' => 'headers', 'type' => 'text',),
             array('name' => 'type', 'type' => 'tinytext',),
-            array('name' => 'global_tag', 'type' => 'text',),
             array('name' => 'featured', 'type' => 'tinyint', 'size' => 4, 'default' => 0,),
             array('name' => 'pub_start', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'pub_end', 'type' => 'int', 'size' => 11, 'default' => 0,),
@@ -188,7 +187,6 @@ $tables = array(
             array('name' => 'voters', 'type' => 'text',),
             array('name' => 'subitem', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'files', 'type' => 'int', 'size' => 11, 'default' => 0,),
-            array('name' => 'global_tag', 'type' => 'text',),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -220,7 +218,6 @@ $tables = array(
             array('name' => 'website', 'type' => 'tinytext',),
             array('name' => 'profile', 'type' => 'tinytext',),
             array('name' => 'frontsection', 'type' => 'tinytext',),
-            array('name' => 'globaltags', 'type' => 'tinytext',),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -494,8 +491,6 @@ $settings_array = array(
     'dl_usescreenshot' => '1',
     'dl_screenshotsizes' => '80,80,200,200,800,800',
     'editorheight' => '400',
-    'tagboards' => '1',
-    'tagtopics' => '1',
     'blockheight_left' => '',
     'blockheight_right' => '',
     'blockheight_center' => '',
@@ -692,7 +687,6 @@ else
 		'website' => 'http://www.tinyportal.net',
 		'profile' => 'tpshout_profile',
 		'frontsection' => 'tpshout_frontpage',
-		'globaltags' => '',
 	);
 
 	require_once($sourcedir . '/Subs-Post.php');
@@ -725,7 +719,6 @@ else
 			'website' => 'string',
 			'profile' => 'string',
 			'frontsection' => 'string',
-			'globaltags' => 'string',
 		),
 		$newmod,
 		array('id')

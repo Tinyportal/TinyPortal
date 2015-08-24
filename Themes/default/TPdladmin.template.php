@@ -339,14 +339,6 @@ function template_main()
 	
 				echo '
 				</td>
-			</tr><tr class="windowbg">
-				<td align="right">' . $txt['tp-globaltags'] . ':</td>
-					<td>';
-
-				TPsshowgtags('dladmin_itemtags', 'dladmin_itemtags',$cat['id']);
-			
-				echo '
-				</td>
 			</tr><tr>
 				<td class="windowbg2" align="right">'.$txt['tp-dluploadicon'].'</td>
 				<td valign="top" class="windowbg2">
@@ -598,8 +590,6 @@ function template_main()
 					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
 
 			
-				TPsshowgtags('dladmin_cattags', 'dladmin_cattags', $cat['id']);
-
 				echo '
 				</td>
 				<td valign="top" class="windowbg2">

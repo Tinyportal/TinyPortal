@@ -114,11 +114,6 @@ function TPortalAdmin()
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = $_GET['sa'];
 		}
-		elseif(isset($_GET['tags']))
-		{
-			$tpsub = 'tags';
-			$context['TPortal']['subaction'] = $_GET['sa'];
-		}
 		do_subaction($tpsub);
 	}
 	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos']))
@@ -135,11 +130,6 @@ function TPortalAdmin()
 	{
 		$context['TPortal']['subaction'] = $tpsub = 'articles';
 		do_articles($tpsub);
-	}
-	elseif(isset($_GET['tags']) && $tpsub == 'modules')
-	{
-		$context['TPortal']['subaction'] = $tpsub = 'modules';
-		do_moduletags($tpsub);
 	}
 	else
 	{
@@ -275,10 +265,9 @@ function tp_notifyComments($memberlist, $message2, $subject)
 		SELECT mem.id_member, mem.email_address, 
 		FROM {db_prefix}members AS mem
 		AND mem.id_member != {int:mem_id}
-		AND {string:tag}
 		AND mem.is_activated = {int:active}',
 		array(
-			'mem_id' => $user_info['id'], 'tag' => $tagquery, 'active' => 1,
+			'mem_id' => $user_info['id'], 'active' => 1,
 		)
 	);
 	while ($rowmember = $smcFunc['db_fetch_assoc']($members))
@@ -306,7 +295,7 @@ function do_subaction($tpsub)
 		do_articles();
 	elseif(in_array($tpsub, array('blocks', 'panels')))
 		do_blocks();
-	elseif(in_array($tpsub, array('modules', 'tags')))
+	elseif(in_array($tpsub, array('modules')))
 		do_modules();
 	elseif(in_array($tpsub, array('menubox', 'addmenu')))
 		do_menus();
@@ -1443,7 +1432,7 @@ function do_articles()
             'frame' => 'theme',
             'approved' => 0,
             'off' => 1,
-            'options' => 'date,title,author,linktree,top,cblock,rblock,lblock,bblock,tblock,lbblock,category,catlist,comments,commentallow,commentupshrink,views,rating,ratingallow,avatar,inherit,social,globaltags,nofrontsetting',
+            'options' => 'date,title,author,linktree,top,cblock,rblock,lblock,bblock,tblock,lbblock,category,catlist,comments,commentallow,commentupshrink,views,rating,ratingallow,avatar,inherit,social,nofrontsetting',
             'parse' => 0,
             'comments' => 0,
             'comments_var' => '',
@@ -1459,7 +1448,6 @@ function do_articles()
             'illustration' => '',
             'headers' => '',
             'type' => substr($_GET['sa'],11),
-            'global_tag' => '',
             'featured' => 0,
             'realName' => $context['user']['name'],
             'authorID' => $context['user']['id'],
@@ -1951,32 +1939,6 @@ function do_modules()
 	
 	isAllowedTo('tp_settings');
 	
-	// tags maybe?
-	if(isset($_GET['tags']))
-	{
-		$context['TPortal']['global_tags'] = array();
-		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type}',
-			array(
-				'type' => 'globaltag'
-			)
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				$context['TPortal']['global_tags'][$row['value1']] = array(
-					'id' => $row['id'],
-					'tag' => $row['value1'],
-					'related' => $row['value2'],
-				);
-			}
-			$smcFunc['db_free_result']($request);
-		}
-	}
-	else
-	{
 		$context['TPortal']['adm_modules'] = array();
 		// fetch modules
 		$request = $smcFunc['db_query']('', '
@@ -1996,15 +1958,6 @@ function do_modules()
 			'state' => $context['TPortal']['show_download'],
 			'fieldname' => 'tp_show_download',
 		);
-	}
-}
-
-function do_tags()
-{
-	global $context;
-	
-	isAllowedTo('tp_settings');
-	
 }
 
 function do_news($tpsub = 'overview')
@@ -2044,211 +1997,6 @@ function do_postchecks()
 
 	// If we have any setting changes add them to this array
 	$updateArray = array();
-	
-	// tag links from topics?
-	if(isset($_POST['tpadmin_topictags']))
-	{
-		$itemid = $_POST['tpadmin_topictags'];
-		// get title
-		$request = $smcFunc['db_query']('', '
-			SELECT m.subject FROM {db_prefix}messages as m, {db_prefix}topics as t 
-			WHERE t.ID_TOPIC = {int:topicid} 
-			AND t.ID_FIRST_MSG = m.ID_MSG
-			LIMIT 1',
-			array('topicid' => $itemid)
-		);
-		$title = $smcFunc['db_fetch_row']($request);
-		$smcFunc['db_free_result']($request);
-		
-		// remove old ones first
-		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND value3 = {string:val3} 
-			AND subtype2 = {int:subtype2}',
-			array(
-				'type' => 'globaltag_item',
-				'val3' => 'tpadmin_topictags',
-				'subtype2' => $itemid,
-			)
-		);
-		foreach($_POST as $what => $value)
-		{
-			// a tag from edit items
-			if(substr($what, 0, 17) == 'tpadmin_topictags' && !empty($value))
-			{
-				$tag = substr($what, 18);
-				$itemid = $value;
-				// insert new one
-				$href = '?topic='.$itemid.'.0';
-				$subject = '<span style="background: url('.$settings['tp_images_url'].'/glyph_topic.png) no-repeat;" class="taglink">' . $title[0]. '</span>';
-				if(!empty($tag))
-				{
-					$smcFunc['db_insert']('insert', 
-						'{db_prefix}tp_variables',
-						array(
-							'value1' => 'string',
-							'value2' => 'string',
-							'value3' => 'string',
-							'type' => 'string',
-							'value4' => 'string',
-							'value5' => 'int',
-							'subtype' => 'string',
-							'value7' => 'string',
-							'value8' => 'string',
-							'subtype2'=> 'int'
-						),
-						array(
-							$href, $subject, 'tpadmin_topictags', 'globaltag_item', '', 0, $tag, '', '', $itemid
-						),
-						array('id')
-					);
-				}
-			}
-			elseif(substr($what, 0, 22) == 'xyzx_tpadmin_topictags' && !empty($value))
-			{
-				// create the tag as well
-				$itemid = (int) substr($what, 23);
-				$allowed = "/[^a-zA-Z0-9_]/";
-				$value = preg_replace($allowed, '', $value);
-				$tag = $value;
-				$smcFunc['db_insert']('REPLACE', 
-					'{db_prefix}tp_variables',
-					array('value1' => 'string', 'type' => 'string'),
-					array($value, 'globaltag'),
-					array('id')
-				);
-			
-				// insert new one
-				$href = '?topic='.$itemid.'.0';
-				$subject = '<span style="background: url('.$settings['tp_images_url'].'/glyph_topic.png) no-repeat;" class="taglink">' . $title[0]. '</span>';
-				if(!empty($tag))
-				{
-					$smcFunc['db_insert']('INSERT',
-						'{db_prefix}tp_variables',
-						array(
-							'value1' => 'string',
-							'value2' => 'string',
-							'value3' => 'string',
-							'type' => 'string',
-							'value4' => 'string',
-							'value5' => 'int',
-							'subtype' => 'string',
-							'value7' => 'string',
-							'value8' => 'string',
-							'subtype2'=> 'int'
-						),
-						array($href, $subject, 'tpadmin_topictags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
-						array('id')
-					); 
-				}
-			}
-		}
-		redirectexit('topic='.$itemid);
-	}
-	// tag links from boards?
-	if(isset($_POST['tpadmin_boardtags']))
-	{
-		$itemid = $_POST['tpadmin_boardtags'];
-		// get title
-		$request = $smcFunc['db_query']('', '
-			SELECT name 
-			FROM {db_prefix}boards 
-			WHERE ID_BOARD = {int:board} 
-			LIMIT 1',
-			array(
-				'board' => $itemid
-			)
-		);
-		$title = $smcFunc['db_fetch_row']($request);
-		$smcFunc['db_free_result']($request);
-		// remove old ones first
-		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
-			AND value3 = {string:val3}
-			AND subtype2 = {int:subtype2}',
-			array(
-				'type' => 'globaltag_item',
-				'val3' => 'tpadmin_boardtags',
-				'subtype2' => $itemid,
-			)
-		);
-		foreach($_POST as $what => $value)
-		{
-			// a tag from edit items
-			if(substr($what, 0, 17) == 'tpadmin_boardtags' && !empty($value))
-			{
-				$tag = substr($what, 18);
-				$itemid = $value;
-				// insert new one
-				$href = '?board='.$itemid.'.0';
-				$subject = '<div style="background: url('.$settings['tp_images_url'].'/glyph_board.png) no-repeat;" class="taglink">' . $title[0]. '</div>';
-				if(!empty($tag))
-				{
-					$smcFunc['db_insert']('INSERT',
-						'{db_prefix}tp_variables',
-						array(
-							'value1' => 'string',
-							'value2' => 'string',
-							'value3' => 'string',
-							'type' => 'string',
-							'value4' => 'string',
-							'value5' => 'int',
-							'subtype' => 'string',
-							'value7' => 'string',
-							'value8' => 'string',
-							'subtype2'=> 'int'
-						),
-						array($href, $subject, 'tpadmin_boardtags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
-						array('id')
-					);
-				}
-			}
-			elseif(substr($what, 0, 23) == 'xyzx_tpadmin_boardtags_' && !empty($value))
-			{
-				// create the tag as well
-				$itemid = substr($what, 23);
-				$allowed = "/[^a-zA-Z0-9_]/";
-				$value= preg_replace($allowed, '', $value);
-				$tag = $value;
-				$smcFunc['db_insert']('REPLACE', 
-					'{db_prefix}tp_variables',
-					array(
-						'value1' => 'string',
-						'type' => 'string',
-					),
-					array($value, 'globaltag'),
-					array('id')
-				);
-
-				// insert new one
-				$href = '?board='.$itemid.'.0';
-				$subject = '<span style="background: url('.$settings['tp_images_url'].'/glyph_board.png) no-repeat;" class="taglink">' . $title[0]. '</span>';
-				if(!empty($tag))
-				{
-					$smcFunc['db_insert']('INSERT',
-						'{db_prefix}tp_variables',
-						array(
-							'value1' => 'string',
-							'value2' => 'string',
-							'value3' => 'string',
-							'type' => 'string',
-							'value4' => 'string',
-							'value5' => 'int',
-							'subtype' => 'string',
-							'value7' => 'string',
-							'value8' => 'string',
-							'subtype2'=> 'int'
-						),
-						array($href, $subject, 'tpadmin_boardtags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
-						array('id')
-					);
-				}
-			}
-		}
-		redirectexit('board='.$itemid);
-	}
 	
 	// which screen do we come frm?
 	if(!empty($_POST['tpadmin_form']))
@@ -2620,39 +2368,7 @@ function do_postchecks()
 			}
 			redirectexit('action=tpadmin;linkedit='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
-		// modules
-		elseif($from == 'tags')
-		{
-			checkSession('post');
-			isAllowedTo('tp_settings');
-
-			// first, remove all globaltags
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}tp_variables 
-				WHERE type = {string:type}',
-				array(
-					'type' => 'globaltag'
-				)
-			);
-
-			foreach ($_POST as $what => $value) 
-			{
-				if(substr($what, 0, 7) == 'tp_tags')
-				{
-					// check the value, only letters and underscore allowed
-					$allowed = "/[^a-zA-Z0-9_]/";
-					$value = preg_replace($allowed, '', $value); 
-					if(!empty($value))
-						$smcFunc['db_insert']('REPLACE', 
-							'{db_prefix}tp_variables',
-							array('value1' => 'string', 'type' => 'string'),
-							array($value,'globaltag'),
-							array('id')
-						);
-				}
-			}
-			redirectexit('action=tpadmin;sa=modules;tags');
-		}
+		
 		// add a category
 		elseif($from == 'addcategory')
 		{
@@ -3631,124 +3347,6 @@ function do_postchecks()
 					'artid' => $where,
 				)
 			);
-
-			// tag links?
-			if(isset($_POST['tparticle_itemtags']))
-			{
-				$mytags = array();
-				$itemid = $_POST['tparticle_itemtags'];
-				// get title
-				$request =$smcFunc['db_query']('', '
-					SELECT subject FROM {db_prefix}tp_articles 
-					WHERE id = {int:artid} LIMIT 1',
-					array(
-						'artid' => $itemid
-					)
-				);
-				$title = $smcFunc['db_fetch_row']($request);
-				$smcFunc['db_free_result']($request);
-				// remove old ones first
-				$smcFunc['db_query']('', '
-					DELETE FROM {db_prefix}tp_variables 
-					WHERE type = {string:type} 
-					AND value3 = {string:val3} 
-					AND subtype2 = {int:sub2}',
-					array(
-						'type' => 'globaltag_item',
-						'val3' => 'tparticle_itemtags',
-						'sub2' => $itemid,
-					)
-				);
-				foreach($_POST as $what => $value)
-				{
-					// a tag from edit items
-					if(substr($what, 0, 18) == 'tparticle_itemtags' && !empty($value))
-					{
-						$tag = substr($what, 19);
-						$itemid = $value;
-						// insert new one
-						$href = '?page='.$itemid;
-						$subject = '<div  class="taglink">' . $title[0]. '</div>';
-						if(!empty($tag))
-						{
-							$smcFunc['db_insert']('INSERT', 
-								'{db_prefix}tp_variables',
-								array(
-									'value1' => 'string',
-									'value2' => 'string',
-									'value3' => 'string',
-									'type' => 'string',
-									'value4' => 'string',
-									'value5' => 'int',
-									'subtype' => 'string',
-									'value7' => 'string',
-									'value8' => 'string',
-									'subtype2'=> 'int'
-								),
-								array($href, $subject, 'tparticle_itemtags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
-								array('id')
-							);
-							
-							$mytags[] = $tag;
-						}
-					}
-					elseif(substr($what, 0, 24) == 'xyzx_tparticle_itemtags_' && !empty($value))
-					{
-						// create the tag as well
-						$itemid = substr($what, 24);
-						$allowed = "/[^a-zA-Z0-9_]/";
-						$value = preg_replace($allowed, '', $value);
-						$tag = $value;
-						$smcFunc['db_insert']('REPLACE',
-							'{db_prefix}tp_variables',
-							array('value1' => 'string', 'type' => 'string'),
-							array($value, 'globaltag'),
-							array('id')
-						);
-						
-						// insert new one
-						$href = '?page='.$itemid;
-						$subject = '<span style="background: url('.$settings['tp_images_url'].'/glyph_article.png) no-repeat;" class="taglink">' . $title[0] . '</span>';
-						if(!empty($tag))
-						{
-							$smcFunc['db_insert']('INSERT',
-						 		'{db_prefix}tp_variables',
-								array(
-									'value1' => 'string',
-									'value2' => 'string',
-									'value3' => 'string',
-									'type' => 'string',
-									'value4' => 'string',
-									'value5' => 'int',
-									'subtype' => 'string',
-									'value7' => 'string',
-									'value8' => 'string',
-									'subtype2'=> 'int'
-								),
-								array($href, $subject, 'tparticle_itemtags', 'globaltag_item', '', 0, $tag, '', '', $itemid),
-								array('id')
-							);
-							
-							$mytags[] = $tag;
-						}
-					}
-				}
-				// save it
-				if(count($mytags) > 0)
-					$taglist = implode(',', $mytags);
-				else 
-					$taglist = '';
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_articles 
-					SET global_tag = {string:tag} 
-					WHERE id = {int:artid} LIMIT 1',
-					array(
-						'tag' => $taglist,
-						'artid' => $where,
-					)
-				);
-			}
-			return $from;
 		}
 	}
 	else

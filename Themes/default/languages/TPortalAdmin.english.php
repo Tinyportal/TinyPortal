@@ -250,7 +250,6 @@ $txt['tp-articleoptions24'] = 'Use settings from category instead!';
 $txt['tp-editcategory'] = 'Edit';
 $txt['tp-showsociallinks'] = 'Show Social Bookmarks buttons';
 $txt['tp-noicon'] = '- Do not use a icon -';
-$txt['tp-showglobaltags'] = 'Show Global Tags';
 $txt['tp-editorheight'] = 'Height of WYSIWYG editor?';
 
 // Blocks admin...
@@ -432,12 +431,6 @@ $txt['tp-moduleset']='Module Manager Settings';
 $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-subquery'] = 'Query used';
 $txt['tp-installed'] = 'Installed';
-$txt['tp-tags'] = 'Tags';
-$txt['tp-tags2'] = 'Manage the global tags. "Tags" are instantly available in all modules that support them.';
-$txt['tp-globaltags'] = 'Global Tags';
-$txt['tp-globaltagsdesc'] = 'Global tags are containers you can assign to anything and will help with bring together many different sections with related information. Note it only works on the modules that support them.';
-$txt['tp-globaltagshelp'] = '<b>Add</b> more tags by entering a name. Only letters, no spaces allowed. <br /><b>Remove</b> tags by clearing the fields.';
-
 
 // News...
 $txt['tp-latest_news'] = 'News';
@@ -514,8 +507,6 @@ $txt['tp-title']='Title';
 $txt['tp-remove'] = 'Remove';
 $txt['tp-pos'] = 'Pos';
 $txt['tp-send']='Save';
-$txt['tp-tagtopics2'] = 'Tag topics with Global tags?';
-$txt['tp-tagboards2'] = 'Tag boards with Global tags?';
 $txt['tp-useonfrontpage'] = 'Override frontpage settings when displayed on frontpage?';
 
 $txt['tp-blocktype0'] = '- not set -';
