@@ -123,10 +123,6 @@ function TPortal_init()
 function addPromoteButton(&$normal_buttons) 
 {
 	global $context, $scripturl;
-	
-	// not in wireless
-	if(WIRELESS)
-		return;
 
 	if(allowedTo(array('tp_settings')))
 	{
