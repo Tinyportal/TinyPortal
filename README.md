@@ -25,7 +25,7 @@ License Information:
 
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License"); 
 you may not use this package except in compliance with the License. You may obtain a copy of the License at
-http://www.mozilla.org/MPL/
+https://www.mozilla.org/en-US/MPL/2.0/
 
 
 Questions?
