@@ -58,8 +58,5 @@
 		<remove-file name="$languagedir/TPShout.english-uf8.php" />
 		<code>do_hooks.php</code>
     </uninstall>
-    <upgrade for="2.0 - 2.0.99" from="1.098, 1.099, 1.100, 1.101, 1.102, 1.103, 1.104, 1.105, 1.106, 1.107, 1.108, 1.109, 1.110, 1.111">
-		<readme type="inline" parsebbc="true">[size=14pt]You must uninstall any previous version of TinyPortal before you can install TP 1.1 for SMF2.0.x 
-		[br][color=red][b]Note:[/b] Make a backup of all your SMF and TP files before you uninstall. A previous version of TP 1.0 removed the downloads and images directory which will remove needed files for your site.[/color][/size]</readme>
-    </upgrade>
+    
 </package-info>
