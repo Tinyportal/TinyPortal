@@ -102,7 +102,7 @@ function install_menu_button (&$buttons)
 
 function template_install_script ()
 {
-	global $boardurl, $context;
+	global $boardurl, $context, $mod_name;
 
 	echo '
 	<div class="tborder login"">
