@@ -1728,7 +1728,7 @@ function article_comments($render = true)
 						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 
 				// can we edit the comment or are the owner of it?
-				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'])
+				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
 					$code .= '
 						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div>';
 
