@@ -417,10 +417,13 @@ function template_wap_tp_cat()
 function template_wap2_tp_dl_cat() { return; }
 function template_wap2_tp_dl_item() { return; }
 function template_wap2_tp_dl() { return; }
+function template_wap2_tp_dl_main() { return; }
 function template_imode_tp_dl() { return; }
+function template_imode_tp_dl_main() { return; }
 function template_imode_tp_dl_item() { return; }
 function template_imode_tp_dl_cat() { return; }
 function template_wap_tp_dl() { return; }
+function template_wap_tp_dl_main() { return; }
 function template_wap_tp_dl_item() { return; }
 function template_wap_tp_dl_cat() { return; }
 
