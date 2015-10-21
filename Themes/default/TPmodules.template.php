@@ -288,6 +288,7 @@ function template_main()
 			';
 			break;
 		case 'showcomments':
+		if(!empty($context['TPortal']['showall'])){
 			echo '
 		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
 		<table cellpadding="5" cellspacing="1" class="bordercolor" width="100%">
@@ -298,6 +299,7 @@ function template_main()
 				<td>' . $txt['tp-commenter_time'] . '</td>
 				<td>' . $txt['tp-commenter'] . '</td>
 			</tr>';
+			
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
@@ -311,18 +313,53 @@ function template_main()
 				<td width="25%">' . $mes['time'] . '</td>
 				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></td>
 			</tr>';
-
-				if(!$context['TPortal']['showall'])
-					echo '
-			<tr><td colspan="5" class="titlebg" align="right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></td></tr>';
+		
 			}
-			else
-				echo '
-			<tr><td colspan="5" class="windowbg2">' . $txt['tp-nocomments'] . '</td></tr>';
+			echo '
+			<tr><td colspan="5" class="titlebg" align="right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></td></tr>';
+			
 			echo '
 		</table>
 		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
 		';
+		}
+		else
+		{
+			echo '
+		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
+		<table cellpadding="5" cellspacing="1" class="bordercolor" width="100%">
+			<tr><td colspan="5" class="titlebg">' . $txt['tp-commentnew'] . '</td></tr>
+			<tr class="catbg">
+				<td>' . $txt['tp-article'] . '</td>
+				<td>' . $txt['tp-author'] . '</td>
+				<td>' . $txt['tp-commenter_time'] . '</td>
+				<td>' . $txt['tp-commenter'] . '</td>
+			</tr>';
+			
+			if(!empty($context['TPortal']['artcomments']['new']))
+			{
+				foreach($context['TPortal']['artcomments']['new'] as $mes)
+					echo '
+			<tr class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
+				<td><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
+				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
+				</a><div class="smalltext"> ' , $mes['title'] , '</div>
+				</td>
+				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></td>
+				<td width="25%">' . $mes['time'] . '</td>
+				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></td>
+			</tr>';
+		
+			}
+			else
+				echo '
+					<tr><td colspan="5" class="windowbg2">' . $txt['tp-nocomments2'] . '</td></tr>';
+			echo '
+				<tr><td colspan="5" class="titlebg" align="right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></td></tr>';
+			echo '
+				</table>';
+			
+		} 
 			break;
 		case 'searcharticle2':
 			echo '

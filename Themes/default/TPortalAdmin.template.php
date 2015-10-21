@@ -1071,13 +1071,6 @@ function template_artsettings()
 								</td>
 							</tr>
 							<tr class="windowbg2">
-								<td class="left" valign="top">'.$txt['tp-article_captcha'].'</td>
-								<td class="right">
-									<input name="tp_articles_comment_captcha" type="radio" value="1" ' , $context['TPortal']['articles_comment_captcha']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].' 
-									<input name="tp_articles_comment_captcha" type="radio" value="0" ' , $context['TPortal']['articles_comment_captcha']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].' 
-								</td>
-							</tr>
-							<tr class="windowbg2">
 								<td class="left" valign="top">'.$txt['tp-hidearticle-link'].'</td>
 								<td class="right">
 									<input name="tp_hide_editarticle_link" type="radio" value="1" ' , $context['TPortal']['hide_editarticle_link']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
@@ -1992,7 +1985,7 @@ function template_editarticle($type = '')
 		$context['TPortal']['categoryNAME'] = '-' . $txt['tp-uncategorised'] . '-' ;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);">
+	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin;sa=editarticle'. $mg['id'].'" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);"> 
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
 		<table class="admintable">

@@ -1434,15 +1434,15 @@ function article_boardnews($render = true)
 	if(!isset($context['TPortal']['article']['replies']))
 		return;
 
-	$code = '<div class="tp_pad">
+	echo '<div class="tp_pad">
 		<span class="article_boardnews">
 			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '.0">' . $context['TPortal']['article']['replies'] . ' ' . ($context['TPortal']['article']['replies'] == 1 ? $txt['ssi_comment'] : $txt['ssi_comments']) . '</a>';
-	if($context['TPortal']['article']['locked'] == 0)
-		$code .= '
+	if($context['TPortal']['article']['locked'] == 0 && !$context['user']['is_guest'])
+		echo '
 			&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?action=post;topic=' . $context['TPortal']['article']['id'] . '.' . $context['TPortal']['article']['replies'] . ';num_replies=' . $context['TPortal']['article']['replies'] . '">' . $txt['ssi_write_comment']. '</a>';
 	
-	$code .= '
-		</span></div>';
+	echo '
+		</span></div>'; 
 
 	if($render)
 		echo $code; 
@@ -1559,27 +1559,27 @@ function article_options($render=true)
 	{
 		// give 'em a edit link? :)
 		if(allowedTo('tp_articles') && $context['TPortal']['hide_editarticle_link']=='0')
-			$code .= '
+			echo '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
 		// their own article?
 		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['authorID'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0')
-			$code .= '
+			echo '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
 		else
-			$code .= '';
+			echo '';
 		
 	}	
 	if($context['TPortal']['print_articles'] == 0 )
-		$code .= '';
+		echo '';
 	else
 	{
-		if(isset($context['TPortal']['article']['boardnews']))
-			$code .= '
+		if(isset($context['TPortal']['article']['boardnews']) && !$context['user']['is_guest'])
+			echo '
 		<span class="article_rating"><a href="' . $scripturl . '?action=printpage;topic=' . $context['TPortal']['article']['id'] . '">' . $txt['print_page'] . '</a></span>';
-		else
-			$code .= '
+		elseif (!$context['user']['is_guest'])
+			echo '
 		<span class="article_rating"><a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . ';print">' . $txt['tp-print'] . '</a></span>';
-	}
+	} 
 	if($render)
 		echo $code; 
 	else
@@ -1628,7 +1628,7 @@ function article_moreauthor($render = true)
 		$code = '
 	<div class="windowbg2">';
 		if($context['TPortal']['article']['dateRegistered']>1000)
-			$code .= '
+			echo '
 		<div class="article_authorinfo tp_pad">
 			<h2 class="author_h2">'.$txt['tp-authorinfo'].'</h2>
 			' . ( !empty($context['TPortal']['article']['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a>' : '') . '
@@ -1638,14 +1638,14 @@ function article_moreauthor($render = true)
 			</div>			
 		</div><br />';
 		else
-			$code .= '
+			echo '
 		<div class="article_authorinfo tp_pad">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
 			<div class="authortext">
 				<em>' . $context['TPortal']['article']['realName'] . $txt['tp-poster5'] .  '</em>
 			</div>			
 		</div>';
-		$code .= '
+		echo '
 	</div>';
 	}
 	else
@@ -1703,55 +1703,64 @@ function article_comments($render = true)
 {
 	global $scripturl, $txt, $settings, $context;
 	
-	$code = '';
 	if(in_array('comments', $context['TPortal']['article']['visual_options']))
 	{
-		$code = '
+		echo '
 	<h2 class="titlebg" style="padding: 0 1em;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
 		<div class="windowbg2" style="padding: 1em 2em;">';
 
 		$counter = 1;
-		if(isset($context['TPortal']['article']['comment_posts']))
+				if(isset($context['TPortal']['article']['comment_posts']))
 		{
 			foreach($context['TPortal']['article']['comment_posts'] as $comment)
 			{
-				$code .= '
-				<div class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
+				if ($comment['posterID'] == 0)
+					echo '
+				<div class="othercomment">
+						<a id="comment'.$comment['id'].'"></a>
+						<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
+						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].' '. $txt['on'] . ' ' . $comment['date'] . '</div>
+						' . (($comment['is_new'] && $context['user']['is_logged']) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br />';
+				else
+					echo '
+					<div class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
 					<a id="comment'.$comment['id'].'"></a>
 					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
-						' . (($comment['is_new'] && $context['user']['is_logged']) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
-						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['posterID'].'">'.$comment['poster'].'</a>
-							' . $txt['on'] . ' ' . $comment['date'] . '
-						</div>
-						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
+					' . (($comment['is_new'] && $context['user']['is_logged']) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+					<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['posterID'].'">'.$comment['poster'].'</a>
+					' . $txt['on'] . ' ' . $comment['date'] . '</div>
+					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br />';
 
-				// can we edit the comment or are the owner of it?
-				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
-					$code .= '
-						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div>';
 
-				$code .= '
+					// can we edit the comment or are the owner of it?
+				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])  
+					echo '
+						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div><br />';
+
+				echo '
 				</div>';
 			}
-		}
-		$code .= '
+		echo '
 			</div>';
+		}
+	}
 			
 		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
 		{
-				$code .= '
-			<div class="windowbg" style="padding: 1em;">
+				echo '
+			<div class="windowbg" style="margin-top: 10px; padding: 1em;">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
 ';
 
-				if (!empty($context['TPortal']['articles_comment_captcha']) )
+				if ($context['require_verification'])
 				{
 					loadtemplate('GenericControls');
-					$code .=  '
+					echo '
 								<div class="">
 									<span' . (!empty($context['post_error']['need_qr_verification']) ? ' class="error"' : ''). '>
 										<strong>' . $txt['verification'] . ':</strong>
@@ -1761,7 +1770,7 @@ function article_comments($render = true)
 
 				}
 
-				$code .= '
+				echo '
 						<br />&nbsp;<input id="tp_article_comment_submit" type="submit" value="' . $txt['tp-submit'] . '">
 						<input name="tp_article_type" type="hidden" value="article_comment">
 						<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
@@ -1770,19 +1779,12 @@ function article_comments($render = true)
 			</div>';
 		}
 		else
-			$code .= '
+			echo '
 			<div style="padding: 1ex;" class="windowbg"><em>' . $txt['tp-cannotcomment'] . '</em></div>';
 
-		$code .= '
+		echo '
 			</div>';
-	}
-	else
-		$code .='';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_morelinks($render = true)
@@ -1794,14 +1796,14 @@ function article_morelinks($render = true)
 		$code='';
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others']))
 		{
-			$code .= '
+			echo '
 	<h2 class="titlebg" style="padding: 0 1em;"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
 	<div class="windowbg2" style="overflow: hidden;">
 		<ul style="margin: 0; padding: 1em 2em;">';
 			foreach($context['TPortal']['article']['others'] as $art)
-				$code .= '
+				echo '
 			<li' . (isset($art['selected']) ? ' class="selected"' : '') . '><a href="' . $scripturl . '?page=' . (!empty($art['shortname']) ? $art['shortname'] : $art['id']) . '">' . html_entity_decode($art['subject']) . '</a></li>';
-			$code .= '
+			echo '
 		</ul>
 	</div>';
 		}
@@ -1831,15 +1833,15 @@ function render_rating($total, $votes, $id, $can_rate = false)
 	{
 		if($context['user']['is_logged'] && $can_rate)
 		{
-				$code .= '
+				echo '
 			<form action="' . $scripturl . '?action=tpmod;sa=rate_article" style="margin: 0; padding: 0; display: inline;" method="post">
 				<select size="1" name="tp_article_rating">';
 				
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--)
-					$code .= '
+					echo '
 					<option value="' . $u . '">' . $u . '</option>';
 
-				$code .= '
+				echo '
 				</select>
 				<input type="submit" name="tp_article_rating_submit" value="' . $txt['tp_rate'] . '">
 				<input name="tp_article_type" type="hidden" value="article_rating">
