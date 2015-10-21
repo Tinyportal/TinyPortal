@@ -885,21 +885,19 @@ function addDefaults()
 {
 	global $smcFunc, $render;
 
-	// add the module server
+	function addDefaults()
+{
+	global $smcFunc, $render;
+
+	// remove the module server
 	$result = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}package_servers 
+		DELETE FROM {db_prefix}package_servers
 		WHERE name = {string:name}',
-		array('name' => 'TinyPortal')
-	);
-	if($smcFunc['db_num_rows']($result) > 0)
-		$smcFunc['db_free_result']($result);
-	else
-		$result = $smcFunc['db_insert']('INSERT',
-			'{db_prefix}package_servers',
-			array('name' => 'text', 'url' => 'text'),
-			array('TinyPortal', 'http://www.tinyportal.net/tpmods'),
-			array('id_server')
-		);
+		array(
+			'name' => 'TinyPortal',
+		)
+	); 
+	
 	// Check for blocks in table, if none insert default blocks.
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_dlmanager LIMIT 1'

@@ -121,7 +121,6 @@ $txt['tp-forumposts_avatar'] = 'Show avatars in forumposts?';
 $txt['tp-addcategory']='Add category';
 $txt['tp-artarray'] = ' Show when viewing this article';
 $txt['tp-article']='Article';
-$txt['tp-article_captcha'] = 'Use visual verification for comments in articles?';
 $txt['tp-articleoff'] = 'Article is NOT active';
 $txt['tp-articleon'] = 'Article is active';
 $txt['tp-articleoptions'] = 'Viewing options:';

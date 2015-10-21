@@ -267,12 +267,12 @@ function TPmodules()
 		}
 
 		// construct the pages
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tpmod;area=showcomments', $tpstart, $check[0], 15);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tpmod;sa=showcomments', $tpstart, $check[0], 15);
 		$context['TPortal']['unreadcomments'] = true;
 		$context['TPortal']['showall'] = $showall;
 		$context['TPortal']['subaction'] = 'showcomments';
-		TPadd_linktree($scripturl.'?action=tpmod;area=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
-		loadtemplate('TPmodules');
+		TPadd_linktree($scripturl.'?action=tpmod;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
+		loadtemplate('TPmodules'); 
 	}
 	elseif($tpsub == 'savesettings' )
 	{

@@ -549,7 +549,7 @@ function fetchTPhooks()
 
 function doTPpage()
 {
-	global $context, $scripturl, $txt, $modSettings, $boarddir, $sourcedir, $smcFunc;
+	global $context, $scripturl, $txt, $modSettings, $boarddir, $sourcedir, $smcFunc, $user_info;
 	
 	$now = time();
 	// Set the avatar height/width
@@ -858,7 +858,8 @@ function doTPpage()
 				$context['TPortal']['article']['can_rate'] = in_array($context['user']['id'], explode(',', $article['voters'])) ? false : true;
 
 				// Generate a visual verification code for comments in the article.
-				if (!empty($context['TPortal']['articles_comment_captcha']))
+				$context['require_verification'] = !$user_info['is_mod'] && !$user_info['is_admin'] && !empty($modSettings['posts_require_captcha']) && ($user_info['posts'] < $modSettings['posts_require_captcha'] || ($user_info['is_guest'] && $modSettings['posts_require_captcha'] == -1));
+				if ($context['require_verification'])
 				{
 					require_once($sourcedir . '/Subs-Editor.php');
 					$verificationOptions = array(

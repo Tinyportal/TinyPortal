@@ -94,35 +94,6 @@ function template_article($article, $single = false)
 {
 	global $context;
 
-	if ($single && $context['TPortal']['articles_comment_captcha'] && isset($context['verification_image_href']))
-	{
-		echo '
-<script type="text/javascript"><!-- // --><![CDATA[
-	function refreshImages()
-	{
-		// Make sure we are using a new rand code.
-		var new_url = new String("', $context['verification_image_href'], '");
-		new_url = new_url.substr(0, new_url.indexOf("rand=") + 5);
-
-		// Quick and dirty way of converting decimal to hex
-		var hexstr = "0123456789abcdef";
-		for(var i=0; i < 32; i++)
-			new_url = new_url + hexstr.substr(Math.floor(Math.random() * 16), 1);';
-
-		if (isset($context['use_graphic_library']) && $context['use_graphic_library'])
-			echo '
-		document.getElementById("verification_image").src = new_url;';
-		else
-			echo '
-		document.getElementById("verification_image_1").src = new_url + ";letter=1";
-		document.getElementById("verification_image_2").src = new_url + ";letter=2";
-		document.getElementById("verification_image_3").src = new_url + ";letter=3";
-		document.getElementById("verification_image_4").src = new_url + ";letter=4";
-		document.getElementById("verification_image_5").src = new_url + ";letter=5";';
-		echo '
-	}
-// ]]></script>';
-	}
 	if(isset($context['tportal']['article_expired']))
 		template_notpublished();
 	
