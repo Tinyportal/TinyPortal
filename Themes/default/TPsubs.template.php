@@ -1359,15 +1359,10 @@ function article_date($render=true)
 	global $context;
 	
 	if(in_array('date',$context['TPortal']['article']['visual_options']))
-		$code = '
+	echo '
 		<span class="article_date"> ' . (timeformat($context['TPortal']['article']['date'])) . '</span>';
 	else
-		$code='';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
+		echo '';
 }
 
 function article_iconcolumn($render = true)
@@ -1375,20 +1370,15 @@ function article_iconcolumn($render = true)
 	global $context, $settings;
 	
 	if(!empty($context['TPortal']['article']['avatar'])) 
-		$code = '
+		echo '
 	<div style="overflow: hidden;">
 		' . $context['TPortal']['article']['avatar'] . '
 	</div>'; 
 	else
-		$code = '
+		echo '
 	<div style="overflow: hidden;">
 		<img src="' . $settings['tp_images_url'] . '/TPnoimage' . (isset($context['TPortal']['article']['boardnews']) ? '_forum' : '') . '.gif" alt="" />
 	</div>'; 
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_picturecolumn($render = true)
@@ -1396,19 +1386,15 @@ function article_picturecolumn($render = true)
 	global $context, $settings, $boardurl;
 	
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews'])) 
-		$code = '
+		echo '
 	<div style="width: 128px; height: 128px; background: top right url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ') no-repeat;"></div>'; 
 	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews'])) 
-		$code = '
+		echo '
 	<div style="width: 128px; height: 128px; background: top right url(' . $context['TPortal']['article']['illustration'] . ') no-repeat;"></div>'; 
 	else
-		$code = '
+		echo '
 	<div style="width: 128px; height: 128px; background: top right url(' . $settings['tp_images_url'] . '/TPno_illustration.gif) no-repeat;"></div>'; 
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_shortdate($render = true)
@@ -1416,15 +1402,10 @@ function article_shortdate($render = true)
 	global $context;
 
 	if(in_array('date',$context['TPortal']['article']['visual_options']))
-		$code = '
+		echo '
 		<span class="article_shortdate">' . tptimeformat($context['TPortal']['article']['date'], true, '%d %b %Y').' - </span>';
 	else
-		$code = '';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
+		echo '';
 }
 
 function article_boardnews($render = true)
@@ -1442,12 +1423,7 @@ function article_boardnews($render = true)
 			&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?action=post;topic=' . $context['TPortal']['article']['id'] . '.' . $context['TPortal']['article']['replies'] . ';num_replies=' . $context['TPortal']['article']['replies'] . '">' . $txt['ssi_write_comment']. '</a>';
 	
 	echo '
-		</span></div>'; 
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
+		</span></div>';
 }
 
 function article_author($render = true)
@@ -1457,19 +1433,12 @@ function article_author($render = true)
 	if(in_array('author', $context['TPortal']['article']['visual_options']))
 	{
 		if($context['TPortal']['article']['dateRegistered'] > 1000)
-			$code = 
-		$txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '">' . $context['TPortal']['article']['realName'] . '</a>';
+			echo '
+		'. $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '">' . $context['TPortal']['article']['realName'] . '</a>';
 		else
-			$code = '&nbsp;
+			echo '&nbsp;
 		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['realName'];
 	}
-	else
-		$code = '';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_views($render = true)
@@ -1477,15 +1446,11 @@ function article_views($render = true)
 	global $txt, $context;
 	
 	if(in_array('views',$context['TPortal']['article']['visual_options']))
-		$code = '
+		echo '
 		<span class="article_views">' . $context['TPortal']['article']['views'] . ' ' . $txt['tp-views'] . '</span>';
 	else
-		$code = '';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_title($render = true)
@@ -1495,19 +1460,12 @@ function article_title($render = true)
 	if(in_array('title',$context['TPortal']['article']['visual_options']))
 	{
 		if(isset($context['TPortal']['article']['boardnews']))
-			$code = '
+			echo '
 		<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '">' . $context['TPortal']['article']['subject'] . '</a>';
 		else
-			$code = '
+			echo '
 		<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' . $context['TPortal']['article']['subject'] . '</a>';
 	}
-	else
-		$code='';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_category($render=true)
@@ -1519,19 +1477,12 @@ function article_category($render=true)
 	if(!empty($context['TPortal']['article']['category_name']))
 	{
 		if(isset($context['TPortal']['article']['boardnews']))
-			$code = '
+			echo '
 		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?board=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
 		else
-			$code = '
+			echo '
 		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?cat=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
 	}
-	else
-		$code='';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_lead($render = true)
@@ -1539,22 +1490,18 @@ function article_lead($render = true)
 	global $context;
 	
 	if(in_array('lead',$context['TPortal']['article']['visual_options']))
-		$code = '
+		echo '
 	<div class="article_lead">' . tp_renderarticle('intro') . '</div>';
 	else
-		$code = '';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_options($render=true)
 {
 	global $scripturl, $txt, $context;
 	
-	$code = '';
+	echo '';
 	if(!isset($context['TPortal']['article']['boardnews']))
 	{
 		// give 'em a edit link? :)
@@ -1580,21 +1527,14 @@ function article_options($render=true)
 			echo '
 		<span class="article_rating"><a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . ';print">' . $txt['tp-print'] . '</a></span>';
 	} 
-	if($render)
-		echo $code; 
-	else
-		return $code;
+
 }
 
 function article_text($render = true)
 {
-	$code = '
+	echo '
 	<div class="article_bodytext">' . tp_renderarticle() . '</div>';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_rating($render = true)
@@ -1604,19 +1544,15 @@ function article_rating($render = true)
 	if(in_array('rating',$context['TPortal']['article']['visual_options']))
 	{
 		if(!empty($context['TPortal']['article']['voters']))
-			$code = '
+			echo '
 		<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], count(explode(',', $context['TPortal']['article']['voters'])), $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
 		else
-			$code = '
+			echo '
 		<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], 0, $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
 	}
 	else
-		$code='';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_moreauthor($render = true)
@@ -1625,7 +1561,7 @@ function article_moreauthor($render = true)
 	
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
-		$code = '
+		echo '
 	<div class="windowbg2">';
 		if($context['TPortal']['article']['dateRegistered']>1000)
 			echo '
@@ -1649,12 +1585,8 @@ function article_moreauthor($render = true)
 	</div>';
 	}
 	else
-		$code='';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_avatar($render = true)
@@ -1663,22 +1595,18 @@ function article_avatar($render = true)
 	
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
-		$code = (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
+		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
 	}
 	else
-		$code='';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 function article_bookmark($render = true)
 {
 	global $scripturl, $settings, $context;
 	
 	if(in_array('social',$context['TPortal']['article']['visual_options']))
-		$code = '
+		echo '
 	<div class="windowbg2" style="margin: 1px 0; padding-bottom: 1em;">
 		<div class="article_socialbookmark">
 			<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>
@@ -1691,12 +1619,8 @@ function article_bookmark($render = true)
 		</div>
 	</div>';
 	else
-		$code='';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function article_comments($render = true)
@@ -1793,7 +1717,7 @@ function article_morelinks($render = true)
 	
 	if(in_array('category',$context['TPortal']['article']['visual_options']))
 	{
-		$code='';
+		echo '';
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others']))
 		{
 			echo '
@@ -1809,12 +1733,8 @@ function article_morelinks($render = true)
 		}
 	}
 	else
-		$code = '';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function render_rating($total, $votes, $id, $can_rate = false)
@@ -1822,11 +1742,11 @@ function render_rating($total, $votes, $id, $can_rate = false)
 	global $txt, $context, $settings, $scripturl;
 	
 	if($total == 0 && $votes > 0)
-		$code = $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
 	elseif($total == 0 && $votes == 0)
-		$code = $txt['tp-ratingaverage'] . ' 0 (0 ' . $txt['tp-ratingvotes'] . ')';
+		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (0 ' . $txt['tp-ratingvotes'] . ')';
 	else
-		$code = $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+		echo ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
 
 	// can we rate it?
 	if($context['TPortal']['single_article'])
@@ -1851,11 +1771,11 @@ function render_rating($total, $votes, $id, $can_rate = false)
 		}
 		else
 		{
-			$code .=  (!$context['user']['is_guest']) ? '
+			echo ' '.  (!$context['user']['is_guest']) ? '
 				<em class="tp_article_rate smalltext">'. $txt['tp-dlhaverated'].'</em>' : '';
 		}
 	}	
-	return $code;
+
 }
 
 function tp_grids()
@@ -1941,7 +1861,7 @@ function template_blockarticle()
 }
 function blockarticle_renders()
 {
-	$code = '
+	echo ' 
 	<div class="blockarticle render1">
 		<div class="article_info">
 			{blockarticle_author} 
@@ -1952,7 +1872,6 @@ function blockarticle_renders()
 		<div class="article_padding">{blockarticle_moreauthor}</div>
 	</div>	
 		';
-	return $code;
 }
 
 function blockarticle_date($render = true)
@@ -1960,15 +1879,11 @@ function blockarticle_date($render = true)
 	global $context;
 	
 	if(in_array('date',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
-		$code = '
+		echo '
 		<span class="article_date"> ' . (timeformat($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['date'])) . '</span>';
 	else
-		$code='';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function blockarticle_author($render = true)
@@ -1978,19 +1893,15 @@ function blockarticle_author($render = true)
 	if(in_array('author',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 	{
 		if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['dateRegistered'] > 1000)
-			$code = '
+			echo '
 		<span class="article_author">' . $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['authorID'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '</a></span>';
 		else
-			$code = '
+			echo '
 		<span class="article_author">' . $txt['tp-by'] . ' ' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '</span>';
 	}
 	else
-		$code = '';
-
-	if($render)
-		echo $code; 
-	else
-		return $code;
+		echo '';
+		
 }
 
 function blockarticle_views($render = true)
@@ -1998,26 +1909,18 @@ function blockarticle_views($render = true)
 	global $txt, $context;
 	
 	if(in_array('views',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
-		$code = '
+		echo '
 		<span class="article_views">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['views'] . ' ' . $txt['tp-views'] . '</span>';
 	else
-		$code = '';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function blockarticle_text($render = true)
 {
-	$code = '
+	echo '
 	<div class="article_bodytext">' . tp_renderblockarticle() . '</div>';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 
 function blockarticle_moreauthor($render = true)
@@ -2027,7 +1930,7 @@ function blockarticle_moreauthor($render = true)
 	if(in_array('avatar', $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 	{
 		if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['dateRegistered'] > 1000)
-			$code = '
+			echo '
 		<div class="article_authorinfo">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
 			' . ( !empty($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['authorID'] . '" title="' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar'] . '</a>' : '') . '
@@ -2037,7 +1940,7 @@ function blockarticle_moreauthor($render = true)
 			</div>			
 		</div>';
 		else
-			$code = '
+			echo '
 		<div class="article_authorinfo">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
 			<div class="authortext">
@@ -2046,12 +1949,8 @@ function blockarticle_moreauthor($render = true)
 		</div>';
 	}
 	else
-		$code='';
+		echo '';
 
-	if($render)
-		echo $code; 
-	else
-		return $code;
 }
 function category_childs()
 {
