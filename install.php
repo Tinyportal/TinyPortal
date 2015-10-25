@@ -17,7 +17,7 @@
  *
  */
 
-global $smcFunc, $db_prefix, $modSettings, $existing_tables;
+global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl;
 
 $manual = false;
 $render = '';
@@ -34,13 +34,13 @@ elseif(!defined('SMF'))
 if (!array_key_exists('db_create_table', $smcFunc))
     db_extend('packages');
 
-// old empty blocks needs "actio=all"
+// old empty blocks needs "action=all"
 $convertblocks = false;
 // Grab the tables so we can check if they exist
 $existing_tables = $smcFunc['db_list_tables'](false, '%tp%');
 // Are we using UTF8 or not?
 $utf8 = !empty($modSettings['global_character_set']) && $modSettings['global_character_set'] === 'UTF-8';
-// Why $dp_prefix has the database name prepended in it I don't know. Stripping off the stuff we don't need.
+// Why $db_prefix has the database name prepended in it I don't know. Stripping off the stuff we don't need.
 $smf_prefix = trim(strstr($db_prefix, '.'), '.');
 
 if ($manual)
@@ -48,14 +48,13 @@ if ($manual)
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
 		<title>TinyPortal - v1.1 for SMF2.0.x</title>
-		 <link rel="stylesheet" type="text/css" href="Themes/default/style.css" />
+		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 
 
 $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; background: white;
--webkit-box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6);
-box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6);">
-<div style="margin: 0; padding: 0.5em 1em;" class="catbg">Install/Upgrade TinyPortal v1.110 for SMF 2.0.x</div>
+-webkit-box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6); box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6); border-radius: 12px 12px 0 0;">
+<div class="cat_bar"><h3 class="catbg">Install/Upgrade TinyPortal v1.110 for SMF 2.0.x<h3/></div>
 	<div class="middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -298,7 +297,7 @@ $tables = array(
 );
 
 foreach ($tables as $table => $col) {
-    if (in_array($manual ? $smf_prefix . $table : $db_prefix . $table, $existing_tables)) {
+    if (in_array($db_prefix . $table, $existing_tables)) { 
         $render .= '
         <li>'. $table .' already exists. Updating table if necessary.</li>';
         
@@ -378,7 +377,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '1110',
+    'version' => '1111',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
@@ -780,8 +779,8 @@ $render .= '</ul>
 		
 if (!$manual)
 	$render .= '
-		<div style="padding-top: 3em; text-align: center;">
-			<a class="button_submit" style="font-size: 1.2em; display: block; width: 250px; padding: 1em;" href="javascript:void(0);" onclick="document.getElementById(\'hidemenow\').style.display = \'none\'; return false;">Remove this window</a>
+		<div style="padding-top: 3em; padding-right: 50px; text-align: center;">
+			<a class="button_submit" style="font-size: 1.2em; display: block; width: 250px; padding: 1em;" href="'.$scripturl.'?action=tpadmin">Redirect to TP admin</a>
 		</div>';
 		
 $render .= '
@@ -796,9 +795,9 @@ else
 
 function checkColumn($table, $col, $action)
 {
-	global $render, $existing_tables, $smcFunc, $smf_prefix;
+	global $render, $existing_tables, $smcFunc, $db_prefix;
 	
-	if (in_array($smf_prefix . $table, $existing_tables))
+	if (in_array($db_prefix . $table, $existing_tables))
 	{
 		$columns = $smcFunc['db_list_columns']('{db_prefix}' . $table);
 		
@@ -882,10 +881,6 @@ function articleUpdates()
 	}	
 }
 function addDefaults()
-{
-	global $smcFunc, $render;
-
-	function addDefaults()
 {
 	global $smcFunc, $render;
 
