@@ -1985,7 +1985,7 @@ function template_editarticle($type = '')
 		$context['TPortal']['categoryNAME'] = '-' . $txt['tp-uncategorised'] . '-' ;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin;sa=editarticle'. $mg['id'].'" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);"> 
+	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);"> 
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
 		<table class="admintable">
