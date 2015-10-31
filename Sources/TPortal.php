@@ -184,12 +184,12 @@ function TP_loadCSS()
 	global $context, $settings;
 
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
-	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/tp-style.css'))
+	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/tp-style.css?fin11" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin11" />';
 	else
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/tp-style.css?fin11" />
+	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin11" />
 	<style type="text/css">
 		.tp_half h3.titlebg
 		{

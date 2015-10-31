@@ -84,8 +84,8 @@ function template_tp_print_above()
 		echo '
 		<link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/fonts-compat.css" />';
 	echo '
-		<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/tp-style.css?fin11" />
-		<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/tp-style.css?fin11" />';
+		<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin11" />
+		<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin11" />';
 
 	echo '
 	</head>

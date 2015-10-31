@@ -335,7 +335,7 @@ ul.tpsitemap li a.tpsitemapheader
 	font-size: 1em;
 	margin: 0;
 	padding: 2px 2px 2px 16px;
-	background: url(images/tinyportal/bullet1.png) no-repeat 0 5px;
+	background: url(../images/tinyportal/bullet1.png) no-repeat 0 5px;
 	border: none;
 }
 .rss_date
@@ -579,7 +579,7 @@ ul#tp_tabmenu li a:hover
 }
 .tabimage
 {
-	background: url(images/tinyportal/TPtabindicator.gif) no-repeat;
+	background: url(../images/tinyportal/TPtabindicator.gif) no-repeat;
 	font-weight: bold;
 }
 .notab
@@ -597,7 +597,7 @@ ul#tp_tabmenu li a:hover
 #tp_tabs_frame h4.forumpost
 {
 	padding-left: 24px;
-	background: url(../default/images/topic/normal_post.gif) 0 50% no-repeat;
+	background: url(../images/topic/normal_post.gif) 0 50% no-repeat;
 }
 #tp_tabs_frame h3
 {
@@ -626,7 +626,7 @@ ul#tp_child_articles
 }
 ul#tp_child_articles li
 {
-	background: url(images/tinyportal/TPboard.gif) no-repeat 0 50%;
+	background: url(../images/tinyportal/TPboard.gif) no-repeat 0 50%;
 	margin-left: 0;
 	padding: 5px 0 5px 20px;
 }
@@ -731,15 +731,15 @@ ul.tp_recentblock li
 }
 .tp_statsblock h5.mlist
 {
-	background: url(images/icons/members.gif) no-repeat 0 5px;
+	background: url(../images/icons/members.gif) no-repeat 0 5px;
 }
 .tp_statsblock h5.stats
 {
-	background: url(images/stats_info.gif) no-repeat 0 5px;
+	background: url(../images/stats_info.gif) no-repeat 0 5px;
 }
 .tp_statsblock h5.online
 {
-	background: url(images/icons/online.gif) no-repeat 0 5px;
+	background: url(../images/icons/online.gif) no-repeat 0 5px;
 }
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li
@@ -1161,15 +1161,15 @@ img.dl_icon
 }
 #fileitem #filesize
 {
-	background: url(images/tinyportal/glyph_filesize.png) 5px 0 no-repeat;
+	background: url(../images/tinyportal/glyph_filesize.png) 5px 0 no-repeat;
 }
 #fileitem #downloads
 {
-	background: url(images/tinyportal/glyph_docounter.png) 5px 0 no-repeat;
+	background: url(../images/tinyportal/glyph_docounter.png) 5px 0 no-repeat;
 }
 #fileitem #views
 {
-	background: url(images/tinyportal/glyph_views.png) 5px 0 no-repeat;
+	background: url(../images/tinyportal/glyph_views.png) 5px 0 no-repeat;
 }
 #fileitem #rating
 {
@@ -1178,7 +1178,7 @@ img.dl_icon
 }
 #fileitem #time
 {
-	background: url(images/tinyportal/glyph_time.png) 5px 0 no-repeat;
+	background: url(../images/tinyportal/glyph_time.png) 5px 0 no-repeat;
 	border: none;
 }
 .ratingoption
@@ -1193,7 +1193,7 @@ img.dl_icon
 {
 	padding: 2px 0 6px 20px;
 	margin: 0;
-	background: url(images/tinyportal/glyph_download.png) no-repeat;
+	background: url(../images/tinyportal/glyph_download.png) no-repeat;
 }
 .dl_most_downloaded
 {
@@ -1688,7 +1688,7 @@ h2.tphelp
 	margin: 0;
 	height: 28px;
 	font-weight: bold;
-	background: url(images/theme/main_block.png) no-repeat -10px -200px;
+	background: url(../images/theme/main_block.png) no-repeat -10px -200px;
 	padding-right: 0;
 }
 .tp_half h3.titlebg span.l
@@ -1697,7 +1697,7 @@ h2.tphelp
 	float: left;
 	width: 10px;
 	height: 28px;
-	background: url(images/theme/main_block.png) no-repeat 0 -200px;
+	background: url(../images/theme/main_block.png) no-repeat 0 -200px;
 }
 .tp_half h3.titlebg span.r
 {
@@ -1705,14 +1705,14 @@ h2.tphelp
 	float: right;
 	width: 10px;
 	height: 28px;
-	background: url(images/theme/main_block.png) no-repeat 100% -200px;
+	background: url(../images/theme/main_block.png) no-repeat 100% -200px;
 }
 
 .tp_half h3.catbg
 {
 	height: 28px;
 	font-weight: bold;
-	background: url(images/theme/main_block.png) no-repeat -10px -160px;
+	background: url(../images/theme/main_block.png) no-repeat -10px -160px;
 	padding-right: 0;
 }
 .tp_half h3.catbg span.l
@@ -1721,7 +1721,7 @@ h2.tphelp
 	float: left;
 	width: 10px;
 	height: 28px;
-	background: url(images/theme/main_block.png) no-repeat 0 -160px;
+	background: url(../images/theme/main_block.png) no-repeat 0 -160px;
 }
 .tp_half h3.catbg span.r
 {
@@ -1729,7 +1729,7 @@ h2.tphelp
 	float: right;
 	width: 10px;
 	height: 28px;
-	background: url(images/theme/main_block.png) no-repeat 100% -160px;
+	background: url(../images/theme/main_block.png) no-repeat 100% -160px;
 }
 h4.h4dl
 {
@@ -1801,7 +1801,7 @@ div.useravatar img
 }
 .textcomment
 {
-	background: url(images/tinyportal/shout_arrow.png) no-repeat;
+	background: url(../images/tinyportal/shout_arrow.png) no-repeat;
 	padding-top: 19px;
 }
 .textcomment .body
