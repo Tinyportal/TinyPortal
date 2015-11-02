@@ -359,9 +359,11 @@ function template_main()
 				';
 			}
 			else
+			{
+			if (!$context['user']['is_guest'])
 				echo '
 					<div class="ratingoption"><em class="smalltext">'.$txt['tp-dlhaverated'].'</em></div>';
-				
+			}
 			echo '
 					<hr />
 					<div class="post">
