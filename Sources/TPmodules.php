@@ -135,16 +135,7 @@ function TPmodules()
 		if (!allowedTo('tp_artcomment'))
 			fatal_error($txt['tp-nocomments']);
 
-		// Check whether the visual verification code was entered correctly.
-		if ($context['TPortal']['articles_comment_captcha'] && (empty($_REQUEST['visual_verification_code']) || strtoupper($_REQUEST['visual_verification_code']) !== $_SESSION['visual_verification_code']))
-		{
-			$_SESSION['visual_errors'] = isset($_SESSION['visual_errors']) ? $_SESSION['visual_errors'] + 1 : 1;
-			if ($_SESSION['visual_errors'] > 3 && isset($_SESSION['visual_verification_code']))
-				unset($_SESSION['visual_verification_code']);
-
-			fatal_lang_error('error_wrong_verification_code', false);
-		}
-		elseif (isset($_SESSION['visual_errors']))
+		if (isset($_SESSION['visual_errors']))
 			unset($_SESSION['visual_errors']);
 		 
 		$commenter = $context['user']['id'];

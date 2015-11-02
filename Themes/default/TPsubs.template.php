@@ -1687,7 +1687,6 @@ function article_comments($render = true)
 					echo '
 								<div class="">
 									<span' . (!empty($context['post_error']['need_qr_verification']) ? ' class="error"' : ''). '>
-										<strong>' . $txt['verification'] . ':</strong>
 									</span>
 									' . (template_control_verification($context['visual_verification_id'], 'all')). '
 								</div>';
@@ -1771,8 +1770,8 @@ function render_rating($total, $votes, $id, $can_rate = false)
 		}
 		else
 		{
-			echo ' '.  (!$context['user']['is_guest']) ? '
-				<em class="tp_article_rate smalltext">'. $txt['tp-dlhaverated'].'</em>' : '';
+			if (!$context['user']['is_guest'])
+			echo ' 	<em class="tp_article_rate smalltext">'. $txt['tp-dlhaverated'].'</em>';
 		}
 	}	
 
