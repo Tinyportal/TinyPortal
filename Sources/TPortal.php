@@ -857,18 +857,6 @@ function doTPpage()
 				// can we rate this article?
 				$context['TPortal']['article']['can_rate'] = in_array($context['user']['id'], explode(',', $article['voters'])) ? false : true;
 
-				// Generate a visual verification code for comments in the article.
-				$context['require_verification'] = !$user_info['is_mod'] && !$user_info['is_admin'] && !empty($modSettings['posts_require_captcha']) && ($user_info['posts'] < $modSettings['posts_require_captcha'] || ($user_info['is_guest'] && $modSettings['posts_require_captcha'] == -1));
-				if ($context['require_verification'])
-				{
-					require_once($sourcedir . '/Subs-Editor.php');
-					$verificationOptions = array(
-						'id' => 'post',
-					);
-					$context['require_verification'] = create_control_verification($verificationOptions);
-					$context['visual_verification_id'] = $verificationOptions['id'];
-				}
-
 				// are we rather printing this article and printing page is allowed?
 				if(isset($_GET['print']) && $context['TPortal']['print_articles'] == 1)
 				{

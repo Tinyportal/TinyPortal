@@ -1681,18 +1681,6 @@ function article_comments($render = true)
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
 ';
 
-				if ($context['require_verification'])
-				{
-					loadtemplate('GenericControls');
-					echo '
-								<div class="">
-									<span' . (!empty($context['post_error']['need_qr_verification']) ? ' class="error"' : ''). '>
-									</span>
-									' . (template_control_verification($context['visual_verification_id'], 'all')). '
-								</div>';
-
-				}
-
 				echo '
 						<br />&nbsp;<input id="tp_article_comment_submit" type="submit" value="' . $txt['tp-submit'] . '">
 						<input name="tp_article_type" type="hidden" value="article_comment">

@@ -19,6 +19,7 @@ global $hooks, $mod_name;
 $hooks = array(
 	'integrate_pre_include' => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
 	'integrate_load_permissions' => 'tpAddPermissions',
+	'integrate_load_illegal_guest_permissions' => 'tpAddIllegalPermissions', 
 	'integrate_buffer' => 'tpAddCopy',
 	'integrate_menu_buttons' => 'tpAddMenuItems',
 	'integrate_display_buttons' => 'addPromoteButton',
