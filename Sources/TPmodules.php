@@ -135,9 +135,6 @@ function TPmodules()
 		if (!allowedTo('tp_artcomment'))
 			fatal_error($txt['tp-nocomments']);
 
-		if (isset($_SESSION['visual_errors']))
-			unset($_SESSION['visual_errors']);
-		 
 		$commenter = $context['user']['id'];
 		$article = $_POST['tp_article_id'];
 

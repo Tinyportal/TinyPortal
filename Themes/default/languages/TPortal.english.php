@@ -57,7 +57,6 @@ $txt['tp-readmore'] = 'Read More';
 $txt['tp-submit'] = 'Send';
 $txt['tp-views'] = 'Views';
 $txt['tp-subject'] = 'Subject';
-$txt['tp-visual_verification_description'] = 'Not Defined Yet';
 $txt['tp-articlessubmitted'] = 'Articles';
 $txt['tp-articlenotexist'] = 'The article isn\'t active, hasn\'t been approved yet, or simply does not exist.';
 $txt['tp-categorynotexist'] = 'The category doesn\'t exist.';
