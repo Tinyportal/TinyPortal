@@ -566,6 +566,8 @@ function doTPpage()
 	{
 		$page = tp_sanitize($_GET['page']);
 		$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
+		
+		$_SESSION['login_url'] = $scripturl . '?page=' . $page; 
 
 		if(allowedTo('tp_articles'))
         {
