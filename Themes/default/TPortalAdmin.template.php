@@ -1699,7 +1699,7 @@ function template_articles()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="articles">
 		<table class="admintable">
-			<caption class="catbg">' , $txt['tp-articles'] , !empty($context['TPortal']['categoryNAME']) ? $txt['tp-incategory']. '<a href="' .$scripturl . '?action=tpadmin;sa=categories">&nbsp;<span style="font-weight: normal;">&#171;</span>' . $context['TPortal']['categoryNAME'].'<span style="font-weight: normal;">&#187;</span></a>' : '' ,  '</caption>
+			<caption class="catbg">' , $txt['tp-articles'] , !empty($context['TPortal']['categoryNAME']) ? $txt['tp-incategory']. ' ' . $context['TPortal']['categoryNAME'].' ' : '' ,  '</caption> 
 			<thead>
 				<tr class="windowbg2">
 					<th class="information smalltext" colspan="3">' , $txt['tp-helparticles'] , '</th>
@@ -1982,14 +1982,14 @@ function template_editarticle($type = '')
 	$tpmonths=array(' ','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 	$mg = $context['TPortal']['editarticle'];
 	if(!isset($context['TPortal']['categoryNAME']))
-		$context['TPortal']['categoryNAME'] = '-' . $txt['tp-uncategorised'] . '-' ;
+		$context['TPortal']['categoryNAME'] = $txt['tp-uncategorised'];
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);"> 
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
 		<table class="admintable">
-			<caption class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . ' &#171;' . (html_entity_decode($context['TPortal']['categoryNAME'])) . '&#187;' : $txt['tp-editarticle']. ' &#171;' . html_entity_decode($mg['subject']) . '&#187;' , ' </caption>
+			<caption class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['categoryNAME'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , ' </caption> 
 			<tbody>
 				<tr class="windowbg2">
 					<td class="windowbg3"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">

@@ -45,17 +45,17 @@
 		<remove-file name="$themedir/css/tp-style.css" />
 		<remove-file name="$themedir/scripts/TPShout.js" />
 		<remove-file name="$languagedir/TPdlmanager.english.php" />
-		<remove-file name="$languagedir/TPdlmanager.english-uf8.php" />
+		<remove-file name="$languagedir/TPdlmanager.english-utf8.php" />
 		<remove-file name="$languagedir/TPhelp.english.php" />
-		<remove-file name="$languagedir/TPhelp.english-uf8.php" />
+		<remove-file name="$languagedir/TPhelp.english-utf8.php" />
 		<remove-file name="$languagedir/TPmodules.english.php" />
-		<remove-file name="$languagedir/TPmodules.english-uf8.php" />
+		<remove-file name="$languagedir/TPmodules.english-utf8.php" />
 		<remove-file name="$languagedir/TPortal.english.php" />
-		<remove-file name="$languagedir/TPortal.english-uf8.php" />
+		<remove-file name="$languagedir/TPortal.english-utf8.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english.php" />
-		<remove-file name="$languagedir/TPortalAdmin.english-uf8.php" />
+		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
-		<remove-file name="$languagedir/TPShout.english-uf8.php" />
+		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<code>do_hooks.php</code>
     </uninstall>
     
