@@ -142,7 +142,7 @@ function template_category()
 	if(!empty($context['TPortal']['category']['children']))
 		category_childs();
 
-	render_template_layout($grid[$category['options']['layout']]['code'], 'category_');
+	render_template_layout($grid[$category['options']['catlayout']]['code'], 'category_');
 	
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
