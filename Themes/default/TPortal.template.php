@@ -130,8 +130,8 @@ function template_category()
 	$grid = tp_grids();
 
 	// fallback
-	if(!isset($category['options']['catlayout']))
-		$category['options']['catlayout']=1;
+	if(!isset($category['options']['layout']))
+		$category['options']['layout']=1;
 
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
@@ -142,7 +142,7 @@ function template_category()
 	if(!empty($context['TPortal']['category']['children']))
 		category_childs();
 
-	render_template_layout($grid[$category['options']['catlayout']]['code'], 'category_');
+	render_template_layout($grid[$category['options']['layout']]['code'], 'category_');
 	
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
