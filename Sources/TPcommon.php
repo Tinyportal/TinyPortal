@@ -20,63 +20,70 @@ if (!defined('SMF'))
 
 function tp_createthumb($picture, $width, $height, $thumb)
 {
-	// find out how big the picture is
-	list($src_width, $src_height) = getimagesize($picture);
 
-	// if the desired width > original, keep it
-	if($width > $src_width)
+	//code modified from http://www.akemapa.com/2008/07/10/php-gd-resize-transparent-image-png-gif/
+	//Check if GD extension is loaded
+	if (!extension_loaded('gd') && !extension_loaded('gd2'))
 	{
-		$width = $src_width;
-		$height = $src_height;
+		trigger_error("GD is not loaded", E_USER_WARNING);
+		return false;
 	}
 
-	if($src_width > $src_height)
+	//Get Image size info
+	$pictureInfo = getimagesize($picture);
+	switch ($pictureInfo[2])
 	{
-		$ratio = $height / $src_height;
-		$nheight = $height;
-		$nwidth = $src_width * $ratio;
+		case 1: $im = imagecreatefromgif($picture); break;
+		case 2: $im = imagecreatefromjpeg($picture);  break;
+		case 3: $im = imagecreatefrompng($picture); break;
+		default:  trigger_error('Unsupported filetype!', E_USER_WARNING);  break;
 	}
-	elseif($src_width < $src_height)
+
+	//If image dimension is smaller, do not resize
+	if ($pictureInfo[0] <= $width && $pictureInfo[1] <= $height)
 	{
-		$ratio = $width / $src_width;
-		$nwidth = $width;
-		$nheight = $src_height * $ratio;
+		$nHeight = $pictureInfo[1];
+		$nWidth = $pictureInfo[0];
 	}
 	else
 	{
-		$nheight = $height;
-		$nwidth = $width;
+		//yeah, resize it, but keep it proportional
+		if ($width/$pictureInfo[0] > $height/$pictureInfo[1]) {
+			$nWidth = $width;
+			$nHeight = $pictureInfo[1]*($width/$pictureInfo[0]);
+		}
+		else
+		{
+			$nWidth = $pictureInfo[0]*($height/$pictureInfo[1]);
+			$nHeight = $height;
+		}
 	}
-	$dest = ImageCreateTrueColor($width, $height);
-	$dest2 = ImageCreateTrueColor($nwidth, $nheight);
-	
-	// determine format
-	$format = strtolower(substr($picture, strlen($picture)-3, 3));
-	if(!in_array($format, array('jpg', 'gif', 'png')))
-		return;
 
-	// go ahead
-	if($format == 'jpg')
-		$source = imagecreatefromjpeg($picture);
-	elseif($format == 'gif')
-		$source = imagecreatefromgif($picture);
-	elseif($format == 'png')
-		$source = imagecreatefrompng($picture);
-	
-	imagecopyresampled ($dest2, $source, 0 , 0, 0, 0, $nwidth, $nheight, $src_width, $src_height);
-	imagecopymerge ($dest, $dest2, 0, 0, 0, 0, $nwidth, $nheight, 100);
-	
-	if($format == 'jpg')
-		imagejpeg($dest, $thumb, 85);
-	elseif($format == 'gif')
-		imagegif($dest, $thumb);
-	elseif($format == 'png')
-		imagepng($dest, $thumb);
+	$nWidth = round($nWidth);
+	$nHeight = round($nHeight);
 
-	// Free the memory.
-	imagedestroy($dest);
-	imagedestroy($dest2);
-	imagedestroy($source);
+	$newpicture = imagecreatetruecolor($nWidth, $nHeight);
+ 
+	/* Check if this image is PNG or GIF, then set if Transparent*/ 
+	if(($pictureInfo[2] == 1) OR ($pictureInfo[2]==3))
+	{
+		imagealphablending($newpicture, false);
+		imagesavealpha($newpicture,true);
+		$transparent = imagecolorallocatealpha($newpicture, 255, 255, 255, 127);
+		imagefilledrectangle($newpicture, 0, 0, $nWidth, $nHeight, $transparent);
+	}
+	imagecopyresampled($newpicture, $im, 0, 0, 0, 0, $nWidth, $nHeight, $pictureInfo[0], $pictureInfo[1]);
+
+	//Generate the file, and rename it to $thumb
+	switch ($pictureInfo[2])
+	{
+		case 1: imagegif($newpicture,$thumb); break;
+		case 2: imagejpeg($newpicture,$thumb);  break;
+		case 3: imagepng($newpicture,$thumb); break;
+		default:  trigger_error('Failed resize image!', E_USER_WARNING);  break;
+	}
+
+	return $thumb;
 }
 
 function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
