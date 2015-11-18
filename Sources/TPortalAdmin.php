@@ -260,7 +260,6 @@ function tp_notifyComments($memberlist, $message2, $subject)
 	$message = trim(un_htmlspecialchars(strip_tags(strtr(parse_bbc($message2, false), array('<br />' => "\n", '</div>' => "\n", '</li>' => "\n", '&#91;' => '[', '&#93;' => ']')))));
 
 	// Find the members with notification on for this board.
-	$tagquery = 'FIND_IN_SET(mem.id_member, "' . implode(',', $memberlist) .'")';
 	$members = $smcFunc['db_query']('', '
 		SELECT mem.id_member, mem.email_address, 
 		FROM {db_prefix}members AS mem
@@ -1939,7 +1938,7 @@ function do_modules()
 	
 	isAllowedTo('tp_settings');
 	
-		$context['TPortal']['adm_modules'] = array();
+	$context['TPortal']['adm_modules'] = array();
 		// fetch modules
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_modules 
@@ -1998,7 +1997,7 @@ function do_postchecks()
 	// If we have any setting changes add them to this array
 	$updateArray = array();
 	
-	// which screen do we come frm?
+	// which screen do we come from?
 	if(!empty($_POST['tpadmin_form']))
 	{
 		// get it
@@ -2368,7 +2367,6 @@ function do_postchecks()
 			}
 			redirectexit('action=tpadmin;linkedit='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
-		
 		// add a category
 		elseif($from == 'addcategory')
 		{
@@ -3347,6 +3345,8 @@ function do_postchecks()
 					'artid' => $where,
 				)
 			);
+
+			return $from;
 		}
 	}
 	else
