@@ -300,10 +300,15 @@ function TPortal_userbox()
 
 
 	// If the user is logged in, display stuff like their name, new messages, etc.
+	
 	if ($context['user']['is_logged'])
 	{
+		
+		if (!empty($context['user']['avatar']) &&  isset($context['TPortal']['userbox']['avatar']))
+			echo '
+				<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
 		echo '
-		<h4>', $context['user']['name'], '</h4>
+		<strong>', $context['user']['name'], '</strong>
 		<ul class="reset">';
 
 		// Only tell them about their messages if they can read their messages!
@@ -343,6 +348,7 @@ function TPortal_userbox()
 			<li>' .$bullet2.$txt['tp-loggedintime'] . '</li>
 			<li>'.$bullet2.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
 		}
+		if (isset($context['TPortal']['userbox']['time']))
 		echo '
 			<li>' . $bullet2.$context['current_time'].' <hr></li>';
 		
