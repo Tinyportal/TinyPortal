@@ -1,0 +1,83 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Top Posters with Avatar
+</name>
+
+<author>
+IchBin
+</author>
+
+<version>
+0.1
+</version>
+
+<date>
+11.Jan.2010
+</date>
+
+<code>
+global $smcFunc, $scripturl, $modSettings, $settings, $txt;
+
+// Height and width of avatar
+$width = '40px';
+$height = '100%';
+// Number of top posters displayed
+$topPoster = 8;
+
+	// Find the latest poster.
+	$request = $smcFunc['db_query']('', '
+		SELECT mem.id_member, mem.show_online, mem.real_name, mem.posts, mem.avatar, a.id_attach, a.attachment_type, a.filename
+			FROM ({db_prefix}members as mem)
+			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
+			WHERE show_online = 1 AND mem.is_activated = 1
+			ORDER BY posts DESC
+			LIMIT {int:limit}',
+			array('limit' => $topPoster)
+		);
+		
+	$users = array();
+	
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+	{
+		$users[] = array(
+			'id' => $row['id_member'],
+			'name' => $row['real_name'],
+			'href' => $scripturl . '?action=profile;u=' . $row['id_member'],
+			'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['real_name'] . '</a>',
+			'posts' => $row['posts'],
+			'show' => $row['show_online'],
+			'avatar' => array(
+	    		'image' => empty($row['avatar']) ? ($row['id_attach'] > 0 ? 'src="' . (empty($row['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" border="0" width="'.$width.'" height="'.$height.'" title="'.$row['real_name'].'" />' : '') : (stristr($row['avatar'], 'http://') ? 'src="' . $row['avatar'] . '" alt="" border="0" width="'.$width.'" height="'.$height.'" title="'.$row['real_name'].'" />' : 'src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="" border="0" width="'.$width.'" height="'.$height.'" title="'.$row['real_name'].'" />'),
+	    	),
+		);
+	}
+	
+	$smcFunc['db_free_result']($request);
+
+	// Output our array of users with avatar, posts, and name
+	echo '
+	<table cellpadding="0" cellspacing="8">';	
+	
+	foreach ($users as $user)
+	{
+		echo '
+		<tr>
+			<td>',empty($user['avatar']['image']) ? '<a href="'.$user['href'].'"><img src="'.$settings['tp_images_url'].'/TPguest.png" width="'.$width.'" height="'.$height.'" alt="" title="'.$user['name'].'" /></a>' : '<a href="'.$user['href'].'"><img '.$user['avatar']['image'].'</a>';
+		echo '
+			</td>
+			<td><h5 style="margin: 4px;">'.$user['link'].'</h5><h5 style="margin: 4px;">'. $user['posts'] .' '.$txt['posts'].'</h5></td>
+		</tr>';
+	}
+
+	echo '
+	</table>';
+
+</code>
+
+<description>
+This block will show the avatar, username, and post count of the Top Posters on your site. Edit block to change the configuration.
+</description>
