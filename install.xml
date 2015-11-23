@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/"> 
   
 	<id>bloc:tinyportal</id>
-    <version>1.111</version>
+    <version>1.2</version>
     
 	<file name="$boarddir/index.php">
 		<operation>
