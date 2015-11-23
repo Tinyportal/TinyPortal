@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 1.1
+ * @version 1.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -477,7 +477,6 @@ $settings_array = array(
     'frontpanel' => '1',
     'lowerpanel' => '1',
     'hide_lowerbar_forum' => '0',
-    'articles_comment_captcha' => '1',
     'print_articles' => '1',
     'article_layout' => '1',
     'article_layout_width' => '100%',
@@ -663,7 +662,7 @@ if($smcFunc['db_num_rows']($request) > 0)
 else
 {
 	$newmod = array(
-		'version' => '1.0',
+		'version' => '1.2',
 		'modulename' => 'TPShout',	// must be exactly equal to the folder.
 		'title' => 'TP Simple Shout', 
 		'subquery' => 'shout',	// the subcall that let TP knows which module is running.
