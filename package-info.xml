@@ -13,13 +13,13 @@
         <require-dir name="tp-downloads" destination="$boarddir" />
         <require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
-        <readme type="inline">Installing TinyPortal v1.1 for SMF2.0</readme>
+        <readme type="inline">Installing TinyPortal v1.2 for SMF2.0</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
     </install>
 	<uninstall for="2.0 - 2.0.99">
-		<readme type="inline">Uninstalling TinyPortal v1.1 for SMF2.0</readme>
+		<readme type="inline">Uninstalling TinyPortal v1.2 for SMF2.0</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
