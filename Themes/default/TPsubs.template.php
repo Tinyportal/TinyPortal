@@ -806,7 +806,7 @@ function template_nolayer_above()
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<meta name="keywords" content="Tinyportal, themes, Bloc" />
+		<meta name="keywords" content="' . $context['meta_keywords'] . '" />
 		<title>' , $context['page_title'] , '</title>
 		' , $context['tp_html_headers'] , '
 	</head>
@@ -815,7 +815,7 @@ function template_nolayer_above()
 
 function template_nolayer_below()
 {
-	echo '<small id="nolayer_copyright">',theme_copyright(),'<br />',tportal_version(),'</small>
+	echo '<small id="nolayer_copyright">',theme_copyright(),'</small>
 	</div></body></html>';
 }
 
