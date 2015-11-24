@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 1.2
+ * @version 1.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1800,20 +1800,44 @@ div.useravatar img
 	clear: both;
 	overflow: hidden;
 }
-.textcomment
-{
-	background: url(../images/tinyportal/shout_arrow.png) no-repeat;
-	padding-top: 19px;
-}
 .textcomment .body
 {
-	color: #444;
-	font-size: 0.9em;
-	line-height: 1.4em;
-	background: white;
-	padding: 1em;
-	border: solid 1px #8d8d8d;
-	border-top: none;
+	position: relative;
+	padding: 1.5em 1em;
+	margin: 14px 10px 10px 0;
+	background: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
+	border: #999 solid 1px;
+	word-wrap: break-word;
+	word-break: break-word;
+}
+
+.textcomment .body:after {
+	content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 10px 8px;
+border-color: #FFFFFF transparent;
+display: block;
+width: 0;
+z-index: 1;
+top: -8px;
+left: 16px;
+}
+.textcomment .body:before {
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 0 10px 8px;
+border-color: #999 transparent;
+display: block;
+width: 0;
+z-index: 0;
+top: -9px;
+left: 16px;
 }
 .othercomment .textcomment .body
 {
