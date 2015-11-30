@@ -155,13 +155,13 @@ function TPortal_recentbox()
 
 	// leave out the recycle board, if any
 	if(isset($modSettings['recycle_board']))
-		$bb = array($modSettings['recycle_board']);
+		$bb = $modSettings['recycle_board'];
 	else
-		$bb = array();
+		$bb = 0;
 
 	if($context['TPortal']['useavatar'] == 0)
 	{
-	$what = ssi_recentTopics($context['TPortal']['recentboxnum'], $bb, 'array');
+	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $output_method = 'array');
 
 		// Output the topics
 		echo '
@@ -185,7 +185,7 @@ function TPortal_recentbox()
 	}
 	else
 	{
-		$what = tp_recentTopics($context['TPortal']['recentboxnum'], $bb, 'array');
+		$what = tp_recentTopics($num_recent = $context['TPortal']['recentboxnum'], $exclude_boards = array($bb), 'array');
 
 		// Output the topics
 		$coun = 1;
