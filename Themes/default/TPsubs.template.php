@@ -1854,7 +1854,7 @@ function template_blockarticle()
 }
 function blockarticle_renders()
 {
-	echo ' 
+	$code = '
 	<div class="blockarticle render1">
 		<div class="article_info">
 			{blockarticle_author} 
@@ -1865,7 +1865,9 @@ function blockarticle_renders()
 		<div class="article_padding">{blockarticle_moreauthor}</div>
 	</div>	
 		';
+	return $code;
 }
+ 
 
 function blockarticle_date($render = true)
 {
