@@ -2716,6 +2716,8 @@ function tp_setupUpshrinks()
 			if($context['TPortal'][$side.'panel'] == 1)
 			{
 				// add to the panel
+				if($pan == 'Left')
+					$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tpbottom' . strtolower($pan) . 'barHeader', 'tpbottom' . strtolower($pan) . 'barContainer', strtolower($pan).'-tp-upshrink_description');
 				if($pan == 'Left' || $pan == 'Right')
 					$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', 'tp' . strtolower($pan) . 'barContainer', strtolower($pan).'-tp-upshrink_description');
 				else
