@@ -1861,27 +1861,17 @@ left: 16px;
 	width: 100%;
 	display: flex;
 }
-.tpleftbarContainer {
+#tpleftbarContainer, #tprightbarContainer, .HiddenLowercontainer, .HiddenUppercontainer {
 	float: left;
 }
 .tpcenterbarContainer {
-	float: left;
 	width: 100%;
-}
-.tprightbarContainer {
-	float: left;
 }
 .tpContent-show, #tpbottomleftbarContainer {
 	display: none;
 }
 .Blockstoggle_tpbottomleftbarHeader {
 	visibility: hidden;
-}
-.tpContent-hide {
-	display: block;
-}
-#tprightbarContainer {
-	width: 100% !important;
 }
 a.tptoggle, a.tptoggle:hover {
 	text-decoration: none;
@@ -1898,7 +1888,7 @@ a.tptoggle, a.tptoggle:hover {
 	.Blockstoggle_tpbottomleftbarHeader {
 		visibility: visible;
 	}
-	.tpContent-hide, .Blockstoggle_tpleftbarHeader {
+	.HiddenUppercontainer, .Blockstoggle_tpleftbarHeader {
 		display: none;
 	}
 	.tpcenterbarContainer {
@@ -1906,13 +1896,18 @@ a.tptoggle, a.tptoggle:hover {
 	}
 	.HiddenLowercontainer {
 		display: flex;
+		width: 100% !important;
+		float: none !important;
 	}
 	#tprightbarContainer, #tpbottomleftbarContainer {
-		width: 50% !important;
 		float: left;
 	}
-	.HiddenLowercontainer {
+	.tprightbottomContainer, .tpleftbottomContainer {
+		width: 50% !important;
+	}
+	.tpfull-width {
 		width: 100% !important;
+		float: none;
 	}
 }
 @media screen and (max-width: 480px) {
