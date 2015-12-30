@@ -1220,7 +1220,7 @@ function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 	global $context, $settings;
 	
 	$what = '
-	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" class="Blockstoggle_'.$id.'" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
+	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" class="tptoggle Blockstoggle_'.$id.'" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
 	</a>';
 	if($string)
@@ -1234,7 +1234,7 @@ function tp_hidepanel2($id, $id2, $alt)
 	global $txt, $context, $settings;
 	
 	$what = '
-	<a title="'.$txt[$alt].'" style="cursor: pointer;" class="Blockstoggle_'.$id.'" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
+	<a title="'.$txt[$alt].'" style="cursor: pointer;" class="tptoggle Blockstoggle_'.$id.'" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" alt="*" />
 	</a>';
 	
