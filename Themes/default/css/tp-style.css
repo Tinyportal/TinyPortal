@@ -1880,10 +1880,10 @@ left: 16px;
 .tpContent-hide {
 	display: block;
 }
-a.tptoggle, a.tptoggle:hover
-{
-	text-decoration: none;
+#tprightbarContainer {
+	width: 100% !important;
 }
+
 @media screen and (max-width: 767px) {
 	.tp_main
 	{
@@ -1908,6 +1908,9 @@ a.tptoggle, a.tptoggle:hover
 	#tprightbarContainer, #tpbottomleftbarContainer {
 		width: 50% !important;
 		float: left;
+	}
+	.HiddenLowercontainer {
+		width: 100% !important;
 	}
 }
 @media screen and (max-width: 480px) {
