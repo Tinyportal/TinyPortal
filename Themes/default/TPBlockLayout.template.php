@@ -36,7 +36,7 @@ function template_tp_above()
 	if($context['TPortal']['leftpanel']==1)
 	{
 		echo '
-		<div class="HiddenUppercontainer"', $context['TPortal']['leftpanel']==1 ? ' style="width:' .$context['TPortal']['rightbar_width']. 'px;"' : '', '>
+		<div class="HiddenUppercontainer"', $context['TPortal']['leftpanel']==1 ? ' style="width:' .$context['TPortal']['leftbar_width']. 'px;"' : '', '>
 			<div id="tpleftbarContainer" style="width:' , ($context['TPortal']['leftbar_width']) , 'px;' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' display: none;' : '' , '">
 				<div id="tpleftbarHeader" style="' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 				' , $context['TPortal']['useroundframepanels']==1 ?
