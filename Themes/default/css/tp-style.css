@@ -1880,7 +1880,10 @@ left: 16px;
 .tpContent-hide {
 	display: block;
 }
-
+a.tptoggle, a.tptoggle:hover
+{
+	text-decoration: none;
+}
 @media screen and (max-width: 767px) {
 	.tp_main
 	{
