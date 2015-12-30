@@ -1883,7 +1883,9 @@ left: 16px;
 #tprightbarContainer {
 	width: 100% !important;
 }
-
+a.tptoggle, a.tptoggle:hover {
+	text-decoration: none;
+}
 @media screen and (max-width: 767px) {
 	.tp_main
 	{
