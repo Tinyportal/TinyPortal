@@ -1854,3 +1854,68 @@ left: 16px;
 	width: 100%;
 	clear: both;
 }
+
+.tp_main
+{
+	box-sizing: border-box;
+	width: 100%;
+	display: flex;
+}
+#tpleftbarContainer, #tprightbarContainer, .HiddenLowercontainer, .HiddenUppercontainer {
+	float: left;
+}
+.tpcenterbarContainer {
+	width: 100%;
+}
+.tpContent-show, #tpbottomleftbarContainer {
+	display: none;
+}
+.Blockstoggle_tpbottomleftbarHeader {
+	visibility: hidden;
+}
+a.tptoggle, a.tptoggle:hover {
+	text-decoration: none;
+}
+@media screen and (max-width: 767px) {
+	.tp_main
+	{
+		width: 100%;
+		display: block;
+	}
+	.tpContent-show, #tpbottomleftbarContainer {
+		display: block;
+	}
+	.Blockstoggle_tpbottomleftbarHeader {
+		visibility: visible;
+	}
+	.HiddenUppercontainer, .Blockstoggle_tpleftbarHeader {
+		display: none;
+	}
+	.tpcenterbarContainer {
+		float: none;
+	}
+	.HiddenLowercontainer {
+		display: flex;
+		width: 100% !important;
+		float: none !important;
+	}
+	#tprightbarContainer, #tpbottomleftbarContainer {
+		float: left;
+	}
+	.tprightbottomContainer, .tpleftbottomContainer {
+		width: 50% !important;
+	}
+	.tpfull-width {
+		width: 100% !important;
+		float: none;
+	}
+}
+@media screen and (max-width: 480px) {
+	.HiddenLowercontainer {
+		display: block;
+	}
+	#tprightbarContainer, #tpbottomleftbarContainer {
+		width: 100% !important;
+		float: none;
+	}
+}
