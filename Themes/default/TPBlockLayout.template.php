@@ -75,7 +75,7 @@ function template_tp_below()
 
 	echo '
 			</div>
-			<div class="HiddenLowercontainer">';
+			<div class="HiddenLowercontainer"', $context['TPortal']['rightpanel']==1 ? ' style="width:' .$context['TPortal']['rightbar_width']. 'px;"' : '', '>';
 
 
 		// TinyPortal integrated bars
