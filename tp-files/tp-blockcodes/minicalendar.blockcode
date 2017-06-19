@@ -22,7 +22,7 @@ Bloc
 <code>
 global $scripturl, $smcFunc;
 
-$now = mktime();
+$now = time();
 $today = date('j',$now);
 $year = date("Y",$now);
 $month = date("n",$now);
