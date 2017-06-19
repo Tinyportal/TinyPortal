@@ -423,6 +423,7 @@ function TPortal_userbox()
 				<option value="-1" selected="selected">', $txt['forever'], '</option>
 			</select>
 			<input type="submit" value="', $txt['login'], '" />
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 		</form>
 		<div style="line-height: 1.4em;">', $txt['quick_login_dec'], '</div>
 		<br />';
