@@ -618,7 +618,7 @@ class chain
    var $parent_field;
    var $sort_field;
 
-   function chain($primary_field, $parent_field, $sort_field, $rows, $root_id, $maxlevel)
+   function __construct($primary_field, $parent_field, $sort_field, $rows, $root_id, $maxlevel)
    {
        $this->rows = $rows;
        $this->primary_field = $primary_field;
