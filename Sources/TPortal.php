@@ -2004,7 +2004,7 @@ function doTPblocks()
 
 	$now = time();
 	// setup the containers
-	$blocks = array('left' => '', 'right' => '', 'center' => '', 'front' => '', 'bottom' => '', 'top' => '' , 'lower' => '');
+	$blocks = array('left' => array(), 'right' => array(), 'center' => array(), 'front' => array(), 'bottom' => array(), 'top' => array() , 'lower' => array());
 	$blocktype = array('no', 'userbox', 'newsbox', 'statsbox', 'searchbox', 'html',
 		'onlinebox', 'themebox', 'oldshoutbox', 'catmenu', 'phpbox', 'scriptbox', 'recentbox',
 		'ssi', 'module', 'rss', 'sitemap', 'oldadmin', 'articlebox', 'categorybox', 'tpmodulebox');
@@ -2443,9 +2443,9 @@ function TPortal_panel($side)
 	if(!isset($context['TPortal'][$panelside][$side]))
 		$context['TPortal'][$panelside][$side] = array();
 
-	for ($i = 0, $n = count($context['TPortal'][$paneltype][$side]); $i < $n; $i += 1)
+	$n = count($context['TPortal'][$paneltype][$side]);
+	foreach ((array) $context['TPortal'][$panelside][$side] as $i => &$block)
 	{
-		$block = &$context['TPortal'][$panelside][$side][$i];
 		if(!isset($block['frame']))
 			continue;
 
