@@ -54,7 +54,7 @@ if ($manual)
 
 $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; background: white;
 -webkit-box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6); box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6); border-radius: 12px 12px 0 0;">
-<div class="cat_bar"><h3 class="catbg">Install/Upgrade TinyPortal v1.2 for SMF 2.0.x<h3/></div>
+<div class="cat_bar"><h3 class="catbg">Install/Upgrade TinyPortal v1.3 for SMF 2.0.x<h3/></div>
 	<div class="middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
