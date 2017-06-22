@@ -47,7 +47,7 @@ if ($manual)
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v1.2 for SMF2.0.x</title>
+		<title>TinyPortal - v1.3 for SMF2.0.x</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 
@@ -662,7 +662,7 @@ if($smcFunc['db_num_rows']($request) > 0)
 else
 {
 	$newmod = array(
-		'version' => '1.2',
+		'version' => '1.3',
 		'modulename' => 'TPShout',	// must be exactly equal to the folder.
 		'title' => 'TP Simple Shout', 
 		'subquery' => 'shout',	// the subcall that let TP knows which module is running.
@@ -677,7 +677,7 @@ else
 		'blockrender' => 'tpshout_fetch',
 		'adminhook' => 'tpshout_adminhook',
 		'logo' => 'tpshoutbox.png',
-		'tpversion' => '1.2',
+		'tpversion' => '1.3',
 		'smfversion' => '2.0.x',
 		'description' => '[b]TP Simple Shoutbox[/b] is the original shoutbox from v0.9 series of TinyPortal, now converted to a TP module. It allows shout in BBC format, scrolling of shouts, insert of BBC codes and smilies and an admin interface to delete or modify shouts.<br />	',
 		'author' => 'IchBin',
