@@ -52,7 +52,7 @@ function TPortal_init()
 	// Load JQuery if it's not set (anticipated for SMF2.1)
 	if (!isset($modSettings['jquery_source']))
 		$context['html_headers'] .= '
-			<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>';
+			<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>';
 
 	fetchTPhooks();
 	doModules();
@@ -1759,7 +1759,7 @@ function doTPfrontpage()
 	}
 
 	// collect up frontblocks
-	$blocks = array('front' => '');
+	$blocks = array('front' => array());
 	$blocktype = array('no','userbox','newsbox','statsbox','searchbox','html',
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
@@ -2444,7 +2444,8 @@ function TPortal_panel($side)
 		$context['TPortal'][$panelside][$side] = array();
 
 	$n = count($context['TPortal'][$paneltype][$side]);
-	foreach ((array) $context['TPortal'][$panelside][$side] as $i => &$block)
+	$context['TPortal'][$panelside][$side] = (array) $context['TPortal'][$panelside][$side];
+	foreach ($context['TPortal'][$panelside][$side] as $i => &$block)
 	{
 		if(!isset($block['frame']))
 			continue;
