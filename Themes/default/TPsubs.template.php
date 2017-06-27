@@ -57,9 +57,12 @@ function tpo_whos($buddy_only = false)
 		$times = array();
 		foreach($whos['users_online'] as $w => $wh)
 		{
+			// For reasons historical, SMF produces the timestamp as
+			// the timestamp followed by the user's name, so let's fix it.
+			$timestamp = (int) strtr($w, array($wh['username'] => ''));
 			$ids[] = $wh['id'];
 			$names[$wh['id']] = $wh['name'];
-			$times[$wh['id']] = timeformat($w);
+			$times[$wh['id']] = timeformat($timestamp);
 		}
 		$avy = progetAvatars($ids);
 		foreach($avy as $a => $av)
