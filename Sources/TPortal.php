@@ -52,7 +52,7 @@ function TPortal_init()
 	// Load JQuery if it's not set (anticipated for SMF2.1)
 	if (!isset($modSettings['jquery_source']))
 		$context['html_headers'] .= '
-			<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>';
+			<script src="'.TPortal_request_protocol().'://code.jquery.com/jquery-1.10.1.min.js"></script>';
 
 	fetchTPhooks();
 	doModules();
@@ -626,7 +626,7 @@ function doTPpage()
 				// allowed and all is well, go on with it.
 				$context['TPortal']['article'] = $article;
 
-				$context['TPortal']['article']['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+				$context['TPortal']['article']['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 				// update views
 				$smcFunc['db_query']('', '
@@ -721,9 +721,9 @@ function doTPpage()
 							'is_new' => ($row['value4']>$last) ? true : false ,
 							'avatar' => array(
 								'name' => &$row['avatar'],
-								'image' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />'),
-								'href' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'http://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
-								'url' => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'http://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
+								'image' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />'),
+								'href' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
+								'url' => $row['avatar'] == '' ? '' : (stristr($row['avatar'], TPortal_request_protocol().'://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
 							),
 						);
 						$ccount++;
@@ -1050,7 +1050,7 @@ function doTPcat()
 						$row['rating'] = array_sum(explode(',', $row['rating']));
 						// expand the vislaoptions
 						$row['visual_options'] = explode(',', $row['options']);
-						$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+						$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 						if($counter == 0)
 							$context['TPortal']['category']['featured'] = $row;
@@ -1301,7 +1301,7 @@ function doTPfrontpage()
 			{
 				// expand the vislaoptions
 				$row['visual_options'] = explode(',', $row['options']);
-				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 				
 				if($counter == 0)
 					$context['TPortal']['category']['featured'] = $row;
@@ -1353,7 +1353,7 @@ function doTPfrontpage()
 			$row = $smcFunc['db_fetch_assoc']($request);
 			// expand the vislaoptions
 			$row['visual_options'] = explode(',', $row['options']);
-			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 			$context['TPortal']['category']['featured'] = $row;
 			$smcFunc['db_free_result']($request);
@@ -1482,7 +1482,7 @@ function doTPfrontpage()
 				
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
-				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 				if(!empty($row['thumb_id']))
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
@@ -1501,6 +1501,7 @@ function doTPfrontpage()
 	}
 	elseif(in_array($context['TPortal']['front_type'], array('forum_articles', 'forum_selected_articles')))
 	{
+
 		// first, get all available
 		if(!$context['user']['is_admin'])
 			$artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
@@ -1655,11 +1656,9 @@ function doTPfrontpage()
 
 		unset($posts); 
         $posts = array();
-
 		// insert the forumposts into $posts
-		if(is_resource($request) && $smcFunc['db_num_rows']($request) > 0)
+		if($request && $smcFunc['db_num_rows']($request) > 0)
 		{
-
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$length = $context['TPortal']['frontpage_limit_len'];
@@ -1686,7 +1685,7 @@ function doTPfrontpage()
 				
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
-				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 				if(!empty($row['thumb_id']))
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
@@ -1723,7 +1722,7 @@ function doTPfrontpage()
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
 					$row['rating'] = array_sum(explode(',', $row['rating']));
 					
-					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 					// we need some trick to put featured/sticky on top
 					$sortdate = $row['date'];
@@ -1877,7 +1876,7 @@ function doTPfrontpage()
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 
-				$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+				$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 				
 				// sort out the options
 				$context['TPortal']['blockarticles'][$article['id']]['visual_options'] = array();
@@ -2190,7 +2189,7 @@ function doTPblocks()
 					$avatar_width = '';
 					$avatar_height = '';
 				}
-				$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />');
+				$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($article['avatar'], TPortal_request_protocol().'://') ? '<img src="' . $article['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />');
 				
 				// sort out the options
 				$context['TPortal']['blockarticles'][$article['id']]['visual_options'] = array();
@@ -2904,4 +2903,25 @@ function TPortal_rightbar()
 	TPortal_sidebar('right');
 }
 
+
+function TPortal_request_protocol()
+{
+	static $requestProtocol = null;
+
+	if(!is_null($requestProtocol))
+		return $requestProtocol;
+
+	$isSecure = false;
+	if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+		$isSecure = true;
+	}
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+		$isSecure = true;
+	}
+
+	$requestProtocol = $isSecure ? 'https' : 'http';
+
+	return $requestProtocol;
+
+}
 ?>
