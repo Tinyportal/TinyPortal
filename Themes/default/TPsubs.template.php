@@ -86,6 +86,7 @@ function tpo_whosOnline()
 function progetAvatars($ids)
 {
 	global $user_info, $smcFunc, $modSettings, $scripturl;
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	$request = $smcFunc['db_query']('', '
 		SELECT
@@ -100,11 +101,15 @@ function progetAvatars($ids)
 	$avy = array();
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-			$avy[$row['id_member']] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'http://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
-
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
+			if ($image_proxy_enabled && !empty($row['id_member']) && stripos($row['avatar'], 'http://') !== false) 
+				$avy[$row['id_member']] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
+			else
+				$avy[$row['id_member']] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="'. $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
+		}
 		$smcFunc['db_free_result']($request);
 	}
+
 	return $avy;
 }
 function TPortal_tpmodulebox($blockid)
@@ -152,7 +157,7 @@ function TPortal_recentbox()
 {
 	global $scripturl, $context, $settings, $txt, $modSettings;
 
-    // is it a number?
+	// is it a number?
 	if(!is_numeric($context['TPortal']['recentboxnum']))
 		$context['TPortal']['recentboxnum']='10';
 
@@ -194,6 +199,7 @@ function TPortal_recentbox()
 		$coun = 1;
 		echo '
 		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
+
 		foreach($what as $wi => $w)
 		{
 			echo '
@@ -1602,11 +1608,10 @@ function article_moreauthor($render = true)
 function article_avatar($render = true)
 {
 	global $scripturl, $context;
-	
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
-	{
 		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
-	}
 	else
 		echo '';
 

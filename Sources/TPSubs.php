@@ -1534,6 +1534,7 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 function tp_renderarticle($intro = '')
 {
 	global $context, $txt, $scripturl, $boarddir, $smcFunc;
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 	
 	// just return if data is missing
 	if(!isset($context['TPortal']['article']))
@@ -1567,7 +1568,9 @@ function tp_renderarticle($intro = '')
 	else
 	{
 		if($context['TPortal']['article']['rendertype'] == 'php')
+		{
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
+		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
 		{
 			echo parse_bbc($context['TPortal']['article']['body']);
@@ -1580,7 +1583,22 @@ function tp_renderarticle($intro = '')
 				include($context['TPortal']['article']['fileimport']);
 		}			
 		else
-			echo $context['TPortal']['article']['body'];
+		{
+			$post = $context['TPortal']['article']['body'];
+			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false)
+			{
+				$post = preg_replace_callback('/<img alt="([^"]+)".src="([^"]+)".style="([^"]+)".\/>/isU',
+					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
+						// Only encode those images which are http
+						if(stripos($matches[2], 'https://') !== false)
+							return '<img alt="'.$matches[1].'" src="'.$matches[2].'" style="'.$matches[3].'" />';
+						else
+							return '<img alt="'.$matches[1].'" src="'. $boardurl . '/proxy.php?request='.urlencode($matches[2]).'&hash=' . md5($matches[2] . $image_proxy_secret) .'" style="'.$matches[3].'" />';
+					},
+					$post);
+			}
+			echo $post;
+		}
 	}
 	echo '
 	</div>';
@@ -2256,6 +2274,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 {
 	global $context, $settings, $scripturl, $txt, $db_prefix, $user_info;
 	global $modSettings, $smcFunc;
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	if ($exclude_boards === null && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] > 0)
 		$exclude_boards = array($modSettings['recycle_board']);
@@ -2324,6 +2343,10 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 		censorText($row['subject']);
 		censorText($row['body']);
 
+		if ($image_proxy_enabled && !empty($row['avy']) && stripos($row['avy'], 'http://') !== false) 
+			$row['avy'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avy']) . '&hash=' . md5($row['avy'] . $image_proxy_secret) .'" alt="&nbsp;" />';
+		else
+			$row['avy'] = $row['avy'] == '' ? ( $row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '' ) : (stristr($row['avy'], 'https://' ) ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avy'], ENT_QUOTES) . '" alt="" class="recent_avatar" border="0" />');
 		
 		// Build the array.
 		$posts[] = array(
@@ -2339,7 +2362,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 				'name' => $row['poster_name'],
 				'href' => empty($row['id_member']) ? '' : $scripturl . '?action=profile;u=' . $row['id_member'],
 				'link' => empty($row['id_member']) ? $row['poster_name'] : '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['poster_name'] . '</a>',
-				'avatar' => $row['avy'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '') : (stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avy'], ENT_QUOTES) . '" alt="" class="recent_avatar" border="0" />')
+				'avatar' => $row['avy']
 			),
 			'subject' => $row['subject'],
 			'short_subject' => shorten_subject($row['subject'], 25),
