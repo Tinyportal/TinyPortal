@@ -1611,18 +1611,7 @@ function article_avatar($render = true)
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
-	{
-		// This is horrible, but I can't find where this is set
-		if ($image_proxy_enabled && !empty($context['TPortal']['article']['avatar']) && stripos($context['TPortal']['article']['avatar'], 'http://') !== false) {
-			if(preg_match('/<img[^>]+src="([^">]+)"/', $context['TPortal']['article']['avatar'],$matches)) {
-				if(is_array($matches) && !empty($matches[1])) {
-					$context['TPortal']['article']['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($matches[1]) . '&hash=' . md5($matches[1] . $image_proxy_secret) .'" alt="&nbsp;" />';
-				}
-			}
-		}
-		
 		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
-	}
 	else
 		echo '';
 
