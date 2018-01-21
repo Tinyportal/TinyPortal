@@ -1605,9 +1605,14 @@ function article_moreauthor($render = true)
 function article_avatar($render = true)
 {
 	global $scripturl, $context;
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
+		// This is horrible, but I can't find where this is set
+		if ($image_proxy_enabled && !empty($context['TPortal']['article']['avatar']) && stripos($context['TPortal']['article']['avatar'], 'http://') !== false) 
+			$context['TPortal']['article']['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($context['TPortal']['article']['avatar']) . '&hash=' . md5($context['TPortal']['article']['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
+		
 		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
 	}
 	else
