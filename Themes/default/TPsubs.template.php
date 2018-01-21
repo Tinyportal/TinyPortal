@@ -102,8 +102,8 @@ function progetAvatars($ids)
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			if ($image_proxy_enabled && !empty($avy[$row['id_member']]) && stripos($row['avatar'], 'http://') !== false) 
-				$avy[$row['id_member']] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($avy[$row['avatar']]) . '&hash=' . md5($avy[$row['avatar']] . $image_proxy_secret) .'" alt="&nbsp;" />';
+			if ($image_proxy_enabled && !empty($row['id_member']) && stripos($row['avatar'], 'http://') !== false) 
+				$avy[$row['id_member']] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 			else
 				$avy[$row['id_member']] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="'. $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
 		}
@@ -157,7 +157,7 @@ function TPortal_recentbox()
 {
 	global $scripturl, $context, $settings, $txt, $modSettings;
 
-    // is it a number?
+	// is it a number?
 	if(!is_numeric($context['TPortal']['recentboxnum']))
 		$context['TPortal']['recentboxnum']='10';
 
@@ -199,6 +199,7 @@ function TPortal_recentbox()
 		$coun = 1;
 		echo '
 		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
+
 		foreach($what as $wi => $w)
 		{
 			echo '
@@ -1612,8 +1613,13 @@ function article_avatar($render = true)
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
 		// This is horrible, but I can't find where this is set
-		if ($image_proxy_enabled && !empty($context['TPortal']['article']['avatar']) && stripos($context['TPortal']['article']['avatar'], 'http://') !== false) 
-			$context['TPortal']['article']['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($context['TPortal']['article']['avatar']) . '&hash=' . md5($context['TPortal']['article']['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
+		if ($image_proxy_enabled && !empty($context['TPortal']['article']['avatar']) && stripos($context['TPortal']['article']['avatar'], 'http://') !== false) {
+			if(preg_match('/<img[^>]+src="([^">]+)"/', $context['TPortal']['article']['avatar'],$matches)) {
+				if(is_array($matches) && !empty($matches[1])) {
+					$context['TPortal']['article']['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($matches[1]) . '&hash=' . md5($matches[1] . $image_proxy_secret) .'" alt="&nbsp;" />';
+				}
+			}
+		}
 		
 		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
 	}
