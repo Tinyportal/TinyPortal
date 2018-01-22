@@ -1608,7 +1608,6 @@ function article_moreauthor($render = true)
 function article_avatar($render = true)
 {
 	global $scripturl, $context;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
