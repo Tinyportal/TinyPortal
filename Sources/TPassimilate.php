@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.3
+ * @version 1.4
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2017 - The TinyPortal Team
+ * Copyright (C) 2018 - The TinyPortal Team
  *
  */
 
@@ -45,7 +45,7 @@ function tpAddCopy($buffer)
 {
 	global $context, $scripturl;
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.3">&copy; 2005-2017</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.4">&copy; 2005-2018</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
 		return $buffer;
