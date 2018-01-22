@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.3
+ * @version 1.4
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2017 - The TinyPortal Team
+ * Copyright (C) 2018 - The TinyPortal Team
  *
  */
 
@@ -1608,7 +1608,6 @@ function article_moreauthor($render = true)
 function article_avatar($render = true)
 {
 	global $scripturl, $context;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
