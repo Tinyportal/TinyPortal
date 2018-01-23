@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -957,7 +957,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	global $user_info, $boardurl, $boarddir, $context, $txt;
 
 	echo '
-	<div style="margin-top: 10px;">';
+	<div style="padding-top: 10px;">';
+
 	if($showchoice)
 	{
 		echo '
