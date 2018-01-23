@@ -2574,7 +2574,7 @@ function TPortal_panel($side)
 				$context['TPortal']['rss_notitles'] = $block['var2'];
 				$context['TPortal']['rss_utf8'] = $block['var1'];
 				$context['TPortal']['rsswidth'] = isset($block['var3']) ? $block['var3'] : '';
-				$context['TPortal']['rssmaxshown'] = isset($block['var4']) ? $block['var4'] : '20';
+				$context['TPortal']['rssmaxshown'] = !empty($block['var4']) ? $block['var4'] : '20';
 				break;
 			case 'categorybox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
