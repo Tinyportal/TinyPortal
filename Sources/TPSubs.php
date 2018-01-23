@@ -1919,9 +1919,8 @@ function endElement($parser, $tagName)
 {
 	// This function is used when an end-tag is encountered.
 	global $context, $smcFunc, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
-	// Initialise the number of RSS Feeds to show
-	static $numShown = 0; 
-
+	global $numShown; 
+	
 	// RSS/RDF feeds
 	if ( ( $tagName == "ITEM" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
 	{
@@ -1976,6 +1975,11 @@ function TPparseRSS($override = '', $encoding = 0)
 {
 
 	global $context;
+
+	// Initialise the number of RSS Feeds to show
+	global $numShown; 
+
+	$numShown = 0;
 
 	$backend = isset($context['TPortal']['rss']) ? $context['TPortal']['rss'] : '';
 	if($override != '')
