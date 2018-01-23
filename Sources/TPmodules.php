@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1302,7 +1302,7 @@ function tp_profile_download($memID)
 
 	// is dl manager on?
 	if($context['TPortal']['show_download']==0)
-		fatal_error($txt['tp-dlmanageroff']);
+      fatal_lang_error('tp-dlmanageroff', false);
 
 	if(isset($context['TPortal']['mystart']))
 		$start = $context['TPortal']['mystart'];

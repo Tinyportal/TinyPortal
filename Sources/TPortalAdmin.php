@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1996,7 +1996,34 @@ function do_postchecks()
 
 	// If we have any setting changes add them to this array
 	$updateArray = array();
-	
+	if($context['TPortal']['action'] && (isset($_GET['sa']) && $_GET['sa'] == 'settings')) {
+		    // get all the themes	
+            $context['TPallthem'] = array();
+			$request = $smcFunc['db_query']('', '
+				SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+				FROM {db_prefix}themes AS th
+				LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+				WHERE th.variable = {string:thvar}
+				AND tb.variable = {string:tbvar}
+				AND th.id_member = {int:id_member}
+				ORDER BY th.value ASC',
+				array(
+					'thvar' => 'name', 'tbvar' => 'images_url', 'id_member' => 0,
+				)
+			);
+			if($smcFunc['db_num_rows']($request) > 0)
+			{
+				while ($row = $smcFunc['db_fetch_assoc']($request))
+				{
+					$context['TPallthem'][] = array(
+						'id' => $row['ID_THEME'],
+						'path' => $row['path'],
+						'name' => $row['name']
+					);
+				}
+				$smcFunc['db_free_result']($request);
+			}
+	}			
 	// which screen do we come from?
 	if(!empty($_POST['tpadmin_form']))
 	{
@@ -2092,6 +2119,26 @@ function do_postchecks()
 						if(isset($clean))
 							$updateArray[$where] = $clean;
 					}
+					// START non responsive themes form			
+					if($from == 'settings') {						
+						if(substr($what, 0, 7) == 'tp_resp') {
+							
+							$postname = substr($what, 7);
+							if(!isset($themeschecked)) {
+						      $themeschecked = array();
+							}
+						    $themeschecked[] = $postname;					
+						    if(isset($themeschecked)) {
+				              $smcFunc['db_query']('', '
+				              UPDATE {db_prefix}tp_settings
+					          SET value = {string:value}
+					          WHERE name = {string:name}',
+					          array('value' => implode(',', $themeschecked), 'name' => 'resp',)
+				              );	
+					        }
+						}
+					}
+					// END  non responsive themes form							
 				}
 			}
 			// check the frontpage visual setting..
@@ -2906,6 +2953,7 @@ function do_postchecks()
 			$lang = array(); 
 			foreach($_POST as $what => $value)
 			{
+
 				// We have a empty post value just skip it
 				if(empty($value) && $value == '') {
 					continue;

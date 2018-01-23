@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1895,7 +1895,10 @@ function TPortalDLAdmin()
 
 	if($context['TPortal']['hidebars_admin_only'] == '1')
 		tp_hidebars();
-	
+	if($context['TPortal']['hidebars_admin_only'] == '0') {
+		tp_hidebars(left);
+		tp_hidebars(right);
+	}
 	// fetch membergroups so we can quickly set permissions
 	// dlmanager, dlupload, dlcreatetopic
 	$context['TPortal']['perm_all_groups'] = get_grps();

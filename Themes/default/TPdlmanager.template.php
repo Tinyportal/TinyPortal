@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -26,7 +26,7 @@ function template_main()
 		echo '
 	<div class="dl_container">
 		<div class="title_bar">
-			<h3 class="titlebg">',  $txt['tp-downloads'], '	</h3>
+			<h3 class="titlebg"> ',  $txt['tp-downloads'], '	</h3>
 		</div>
 		<div>';
 		$dlbuttons = array(
@@ -80,7 +80,7 @@ function template_main()
 		echo '
 		<span class="upperframe"><span></span></span>
         <div class="roundframe">
-			<div class="">';
+			<div>';
 		if($context['TPortal']['dl_showlatest']==1)
 			echo '
 			<a href="javascript: void(0); " onclick="dlshowtab(\'dlrecent\');"><b>' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</b></a>';
@@ -96,7 +96,7 @@ function template_main()
 		<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>
 		<div class="windowbg2">
 			<span class="topslice"><span></span></span>
-		<div style="padding: 1em;">';
+		    <div style="padding: 1em;">';
 	}
 
 		if($context['TPortal']['dl_showlatest']==1)
@@ -329,7 +329,7 @@ function template_main()
 	{
 		echo '
 	<div class="tborder">
-		<div >';
+		<div>';
 
 		foreach($context['TPortal']['dlitem'] as $dlitem)
 		{
@@ -412,10 +412,10 @@ function template_main()
 		// any screenshot?
 		if(!empty($dlitem['sshot']))
 			 echo '
-					<br /><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" /></div>';
+					<br /><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" />';
 		echo '
-			<span class="botslice"><span></span></span>
 				</div>
+			<span class="botslice"><span></span></span>				
 			</div>
 			</div>
 		</div>
@@ -432,31 +432,28 @@ function template_main()
 			fatal_error($txt['tp-adminonly']);
 
 	   echo '
-	 <div class="tborder">
+	 <div id="tpUpload" class="tborder padding-div">
         <div class="title_bar">
             <h4 class="titlebg">'.$txt['tp-dlupload'].'</h4>
         </div>
 		<div class="windowbg">
 			<span class="topslice"><span></span></span>
-		 <table width="100%" border="0" cellspacing="0" cellpadding="8">
-			<tr class="windowbg"><td>
+			  <div class="windowbg padding-div">
 				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tpmod;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
 			echo '<b>! '.$txt['tp-warnsubmission'].'</b><br />';
 
-		echo '<div style="text-align: center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br />
-					<table class="formtable">
-						<tr>
-							<td class="left" style="width: 130px;">'.$txt['tp-dluploadtitle'].'</td>
-							<td class="windbg">
-								<input name="tp-dluploadtitle" type="text" value="-no title-" size="40">
-							</td>
-						</tr><tr>
-							<td valign="top" align="right" class="windowbg">'.$txt['tp-dluploadcategory'].'</td>
-							<td class="windowbg">
-								<select size="1" name="tp-dluploadcat">';
+		echo '<div style="text-align:center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br />
+					<div class="formtable">
+							<div>
+							    '.$txt['tp-dluploadtitle'].'
+								<input style="width:97%;" name="tp-dluploadtitle" type="text" value="-no title-" size="40">
+							</div>
+							<div style="max-width:100%;"><br />
+							 '.$txt['tp-dluploadcategory'].'
+							 <select size="1" name="tp-dluploadcat" style="max-width:100%;">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
@@ -464,11 +461,9 @@ function template_main()
 									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
 		}
 		echo '				</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right" class="windowbg">'.$txt['tp-dluploadtext'].'</td>
-							<td class="windowbg">';
+							</div><br />
+							<div>
+							 '.$txt['tp-dluploadtext'].' ';
 
 		if($context['TPortal']['dl_wysiwyg']== 'html')
 			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext', $context['TPortal']['show_wysiwyg'], false);
@@ -477,11 +472,10 @@ function template_main()
 		else
 			echo '<textarea name="tp_dluploadtext" rows=5 cols=50 wrap="on"></textarea>';
 
-		echo '			</td>
-						</tr>
-						<tr>
-							<td height="40" align="right" class="windowbg">'.$txt['tp-dluploadfile'].'</td>
-							<td class="windowbg">';
+		echo '			</div>
+						<div>
+							 '.$txt['tp-dluploadfile'].'
+							';
 		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager'))
 			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file"> ('.$context['TPortal']['dl_allowed_types'].')';
 
@@ -503,20 +497,18 @@ function template_main()
 			if(empty($context['TPortal']['dl_createtopic_boards']))
 			{
 				echo '
-					</td></tr>
-					<tr>
-						<td height="40" valign="top" align="right" class="windbg2">'.$txt['tp-dlcreatetopic'].'</td>
-						<td class="windbg2">
-							<div class="information">' . $txt['tp-dlmissingboards'] . '</div>';
+					</div><br />
+					<div>
+						 '.$txt['tp-dlcreatetopic'].'
+						<div class="information">' . $txt['tp-dlmissingboards'] . '</div>';
 			}
 			else
 			{
 				echo '
-						</td></tr>
-						<tr>
-							<td height="40" valign="top" align="right" class="windbg2">'.$txt['tp-dlcreatetopic'].'</td>
-							<td class="windbg2">
-						<input type="checkbox" name="create_topic" /> ' . $txt['tp-dlcreatetopic'] . '<br />';
+						</div>
+						<div>
+							 '.$txt['tp-dlcreatetopic'].'
+						    <input type="checkbox" name="create_topic" /> ' . $txt['tp-dlcreatetopic'] . '<br />';
 
 				if(allowedTo('make_sticky') && !empty($modSettings['enableStickyTopics']))
 					echo '
@@ -543,12 +535,10 @@ function template_main()
 		// can you attach it?
 		if(!empty($context['TPortal']['attachitems']))
 		{
-			echo '		</td>
-						</tr>
-						<tr>
-							<td align="right" valign="top" class="windowbg">'.$txt['tp-dluploadattach'].'</td>
-							<td class="windowbg">
-								<select size="1" name="tp_dluploadattach">
+			echo '		</div>
+						<div>
+							 '.$txt['tp-dluploadattach'].'
+							 <select size="1" name="tp_dluploadattach">
 									<option value="0" selected>'.$txt['tp-none'].'</option>';
 			foreach($context['TPortal']['attachitems'] as $att)
 				echo '
@@ -557,11 +547,8 @@ function template_main()
 								</select>';
 		}
 		echo '
-							</td>
-						</tr>
-						<tr>
-							<td align="right" valign="top" class="windowbg">'.$txt['tp-dluploadicon'].'</td>
-							<td class="windowbg">
+							</div><br />
+							<div>'.$txt['tp-dluploadicon'].'
 								<select size="1" name="tp_dluploadicon" onchange="dlcheck(this.value)">
 									<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
 		// output the icons
@@ -572,28 +559,24 @@ function template_main()
 		echo '
 								</select>
 								<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.gif" alt="" />
-							</td>
-						</tr>
-						<tr>
-							<td align="right" class="windowbg">'.$txt['tp-dluploadpic'].'</td>
-							<td height="80" class="windowbg">
+							</div><br />
+							<div>
+							 '.$txt['tp-dluploadpic'].'
 								<input name="tp_dluploadpic" id="tp_dluploadpic" type="file" size="60">
 								<input name="tp-uploadcat" type="hidden" value="'.$context['TPortal']['dlitem'].'">
 								<input name="tp-uploaduser" type="hidden" value="'.$context['user']['id'].'">
-							</td>
-						<tr class="windowbg">
-							<td colspan="2" align="center">
+						    </div>
+						    <div class="windowbg">
+							  <div align="center" style="padding:1%;">
 								<input type="submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
-							</td>
-						</tr>
-					</table>
+							  </div>
+						    </div>
+					</div> 
 				</form>
-			</td>
-		</tr>
-	</table>
+			</div>	
 			<span class="botslice"><span></span></span>
 		</div>	
-	</div>
+	</div></div>
 	<script type="text/javascript">
 		function dlcheck(icon)
 		{
@@ -607,20 +590,20 @@ function template_main()
 	{
 		$maxcount = 10;
 	   echo '
-	<div class="tborder">
+	<div id="stats-page" class="tborder windowbg2">
 		<div class="cat_bar">
 			<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-stats'].'</h3>
 		</div>
-		<table width="100%" border="0" cellspacing="1" cellpadding="5" class="bordercolor">
-			<tr class="titlebg">
-				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatscats'].'</td>
-				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatsviews'].'</td>
-			</tr>
-			<tr>
-				<td class="windowbg2" ><img src="' .$settings['tp_images_url']. '/TPboard.gif" alt="" /></td><td class="windowbg" valign="top" width="50%">';
+		<div class="bordercolor padding-div">
+			<div class="titlebg padding-div">
+				<div>'.$maxcount.' '.$txt['tp-dlstatscats'].'</div>
+			</div>
+			<div style="width:100%;">
+			  <div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.gif" alt="" /></div>
+			  <div class="float-items" class="windowbg2" style="width:91%;">';
 
 		// top categories
-		echo '<table width="100%" cellpadding="2" cellspacing="0">';
+		echo '<div>';
 		$counter=0;
 		if(isset($context['TPortal']['topcats'][0]['items']))
 			$maxval=$context['TPortal']['topcats'][0]['items'];
@@ -629,31 +612,31 @@ function template_main()
 			foreach($context['TPortal']['topcats'] as $cats){
 				if($counter<$maxcount){
 					echo '
-						<tr>
-							<td width="60%">
-								'.$cats['link'].'</td><td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></td><td  width="5%" style="padding-left: 2ex;">'.$cats['items'].'
-							</td>
-						</tr>';
+							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></div>
+							<div class="float-items" style="width:15%;">'.$cats['items'].'</div>
+					        <p class="clearthefloat"></p>';
 					$counter++;
 				}
 			}
 		}
 		else
 			echo '
-						<tr><td>&nbsp;</td></tr>';
+						<div>&nbsp;</div>';
 
 		echo '
-					</table>';
+					</div>';
 
 		echo '
-				</td>
-				<td class="windowbg2">
-					<img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" />
-				</td>
-				<td class="windowbg" valign="top" width="50%">';
+				</div><p class="clearthefloat"></p></div>
+				<div class="titlebg padding-div">
+				  <div>'.$maxcount.' '.$txt['tp-dlstatsviews'].'</div>
+			    </div>
+				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" /></div>
+				<div class="float-items" class="windowbg2" style="width:91%;">';
 
 		// top views
-		echo '<table width="100%" cellpadding="2" cellspacing="0">';
+		echo '<div>';
 		$counter=0;
 		if(isset($context['TPortal']['topviews'][0]['views']))
 			$maxval=$context['TPortal']['topviews'][0]['views'];
@@ -661,38 +644,32 @@ function template_main()
 			foreach($context['TPortal']['topviews'] as $cats){
 				if($counter<$maxcount){
 					echo '
-						<tr>
-							<td width="60%">'.$cats['link'].'</td>
-							<td>
-								<img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" />
-							</td>
-							<td  width="5%" style="padding-left: 2ex;">'.$cats['views'].'</td>
-						</tr>';
+							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></div>
+							<div class="float-items" style="width="15%";">'.$cats['views'].'</div>
+					        <p class="clearthefloat"></p>';
 					$counter++;
 				}
 			}
 		}
 		else
 			echo '
-						<tr><td>&nbsp;</td></tr>';
+						<div>&nbsp;</div>';
 
 		echo '
-					</table>';
+					</div>';
 
 		echo '
-				</td>
-			</tr>
-			<tr class="titlebg">
-				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatsdls'].'</td>
-				<td colspan="2">'.$maxcount.' '.$txt['tp-dlstatssize'].'</td>
-			</tr>
-			<tr>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td>
-				<td class="windowbg" valign="top">';
+			</div><p class="clearthefloat"></p></div>
+			<div class="titlebg padding-div">
+				<div>'.$maxcount.' '.$txt['tp-dlstatsdls'].'</div>
+			</div>
+			<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></div>
+				<div class="windowbg2 float-items" style="width:91%;">';
 
 		// top downloads
 		echo '
-					<table width="100%" cellpadding="2" cellspacing="0">';
+					<div>';
 		$counter=0;
 		if(isset($context['TPortal']['topitems'][0]['downloads']))
 			$maxval=$context['TPortal']['topitems'][0]['downloads'];
@@ -700,30 +677,32 @@ function template_main()
 			foreach($context['TPortal']['topitems'] as $cats){
 				if($counter<$maxcount){
 					echo '
-						<tr>
-							<td width="60%">'.$cats['link'].'</td>
-							<td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></td>
-							<td width="5%">'.$cats['downloads'].'</td>
-						</tr>';
+							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></div>
+							<div class="float-items" style="width:15%;">'.$cats['downloads'].'</div>
+							<p class="clearthefloat"></p>';
 					$counter++;
 				}
 			}
 		}
 		else
 			echo '
-						<tr><td>&nbsp;</td></tr>';
+						<div>&nbsp;</div>';
 
 		echo '
-					</table>';
+					</div>';
 
 		echo '
-				</td>
-				<td class="windowbg2"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></td>
-				<td class="windowbg" valign="top">';
+				</div><p class="clearthefloat"></p></div>
+			<div class="titlebg padding-div">
+				<div>'.$maxcount.' '.$txt['tp-dlstatssize'].'</div>
+			</div>				
+				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></div>
+				<div class="windowbg2 float-items" style="width:91%;">';
 
 		// top filesize
 		echo '
-					<table width="100%" cellpadding="2" cellspacing="0">';
+					<div>';
 		$counter=0;
 		if(isset($context['TPortal']['topsize'][0]['size']))
 			$maxval=$context['TPortal']['topsize'][0]['size'];
@@ -732,24 +711,22 @@ function template_main()
 			foreach($context['TPortal']['topsize'] as $cats){
 				if($counter<$maxcount){
 					echo '
-						<tr>
-							<td width="60%">'.$cats['link'].'</td>
-							<td><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></td>
-							<td width="5%">'. floor($cats['size']/1000).'kb</td>
-						</tr>';
+							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></div>
+							<div class="float-items" style="width:15%;">'. floor($cats['size']/1000).'kb</div>
+							<p class="clearthefloat"></p>';
 					$counter++;
 				}
 			}
 		}
 		else
 			echo '
-						<tr><td>&nbsp;</td></tr>';
+						<div>&nbsp;</div>';
 
 		echo '
-					</table>
-				</td>
-			</tr>
-		</table>
+					</div>
+				</div><p class="clearthefloat"></p></div>
+		</div>
 	</div>
 	</div>';
 	}
@@ -761,18 +738,19 @@ function template_main()
 		{
 			echo '
 		<form accept-charset="', $context['character_set'], '" name="dl_useredit" action="'.$scripturl.'?action=tpmod;dl=admin" enctype="multipart/form-data" onsubmit="syncTextarea();" method="post">
-			<table width="100%" cellspacing="1" cellpadding="7" class="tborder">
-				<tr>
-					<td colspan="2" class="titlebg">'.$txt['tp-useredit'].'</td>
-				</tr>
-				<tr>
-					<td class="windowbg2" align="right" width="25%">
+			<div id="useredit-upfiles" class="tborder">
+					<div class="titlebg" style="padding:1%;">'.$txt['tp-useredit'].'</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">
 						<a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-preview'].']</a>
-						'.$txt['tp-dluploadtitle'].'</td>
-					<td valign="top" class="windowbg2"><input style="width: 30ex;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
-					</td>
-				<tr>
-					<td valign="top" class="windowbg2" colspan="2">
+						'.$txt['tp-dluploadtitle'].'
+					  </div>
+					  <div class="windowbg2 float-items" style="width:71%;">
+					    <input style="width: 97%;max-width: 100%;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
+					  </div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2" style="padding:1%;">
 						<br />';
 						
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
@@ -783,10 +761,10 @@ function template_main()
 					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
 
 			echo '
-					</td>
-				</tr><tr>
-					<td class="windowbg2" valign="top" align="right">'.$txt['tp-dluploadicon'].'</td>
-					<td valign="top" class="windowbg2">
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dluploadicon'].'</div>
+					  <div class="windowbg2 float-items" style="width:71%;">
 						<select size="1" name="dladmin_icon'.$cat['id'].'" onchange="dlcheck(this.value)">
 							<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
 
@@ -805,45 +783,52 @@ function template_main()
 								document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 							}
 						</script>
-					</td>
-				</tr><tr>
-					<td class="windowbg2" align="right">'.$txt['tp-dlviews'].':</td>
-					<td valign="top" class="windowbg2">'.$cat['views'].' / '.$cat['downloads'].'</td>
-				</tr><tr>
-					<td class="windowbg2" valign="top" align="right">'.$txt['tp-dlfilename'].'</td>
-					<td valign="top" class="windowbg2">'.$cat['file'].'
+					   </div><p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:50%;">'.$txt['tp-dlviews'].':</div>
+					  <div class="windowbg2 float-items" style="width:46%;">'.$cat['views'].' / '.$cat['downloads'].'</div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dlfilename'].'</div>
+					  <div class="windowbg2 float-items" style="width:71%;">'.$cat['file'].'
 						<br /><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a>
-					</td>
-				</tr>
-				<tr>
-					<td class="windowbg2" valign="top" align="right">'.$txt['tp-uploadnewfileexisting'].':</td>
-					<td class="windowbg2">
+					  </div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-uploadnewfileexisting'].':</div>
+					  <div class="windowbg2 float-items" style="width:71%;">
 						<input name="tp_dluploadfile_edit" style="width: 90%;" type="file" value="">
 						<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'">
-					</td>
-				</tr><tr>
-					<td class="windowbg2" align="right">&nbsp;</td>
-					<td valign="top" class="windowbg2">
-					'.($cat['filesize']*1024).' bytes
-					</td>
-				</tr><tr>
-				</tr><tr>
-					<td class="windowbg2" align="right">'.$txt['tp-uploadedby'].':</td>
-					<td valign="top" class="windowbg2">'.$context['TPortal']['admcurrent']['member'].'</td>
-				</tr>
-						' , $cat['approved']=='0' ? '
-				<tr>
-					<td class="windowbg2" align="right"><img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.gif" alt="'.$txt['tp-dlapprove'].'"  /> </td>
-					<td valign="top" class="windowbg2"><b>'.$txt['tp-dlnotapprovedyet'].'</b>
-					</td>' : '' , ' ';
+					  </div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">&nbsp;</div>
+					  <div class="windowbg2 float-items" style="width:71%;">'.($cat['filesize']*1024).' bytes</div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-uploadedby'].':</div>
+					  <div class="windowbg2 float-items" style="width:71%;">'.$context['TPortal']['admcurrent']['member'].'</div>
+					  <p class="clearthefloat"></p>
+					</div>
+					' , $cat['approved']=='0' ? ' 
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;"><img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.gif" alt="'.$txt['tp-dlapprove'].'"  /></div>
+					  <div class="windowbg2 float-items" style="width:71%;"><b>'.$txt['tp-dlnotapprovedyet'].'</b></div><p class="clearthefloat"></p></div>' : '' , ' ';
 		}
 		// any extra files?
 		if(isset($cat['subitem']) && sizeof($cat['subitem'])>0)
 		{
 			echo '
-				</tr><tr>
-					<td class="windowbg2" align="right">'.$txt['tp-dlmorefiles'].'</td>
-					<td class="windowbg2"><ul>	';
+					  
+					
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dlmorefiles'].'</div>
+					  <div class="windowbg2 float-items" style="width:71%;"><ul>	';
 			foreach($cat['subitem'] as $sub)
 			{
 				echo '<li><b><a href="' , $sub['href'], '">' , $sub['name'] , '</a></b> (',$sub['file'],')
@@ -851,16 +836,18 @@ function template_main()
 							&nbsp;&nbsp;<input style="vertical-align: middle;" name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
 							</li>';
 			}
-			echo '</ul>
-					</td>';
+			echo '</ul></div><p class="clearthefloat"></p></div>';
 		}
 		// no, but maybe it can be a additional file itself?
 		else
 		{
 			echo '
-				</tr><tr>
-					<td class="windowbg2" align="right"><b>'.$txt['tp-dlmorefiles2'].'</b></td>
-					<td class="windowbg2">
+					  
+					
+							
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;"><b>'.$txt['tp-dlmorefiles2'].'</b></div>
+					  <div class="windowbg2 float-items" style="width:71%;">
 						<select size="1" name="dladmin_subitem'.$cat['id'].'" style="margin-top: 4px;">
 							<option value="0" selected>'.$txt['tp-no'].'</option>';
 
@@ -868,14 +855,17 @@ function template_main()
 				echo '
 							<option value="'.$subs['id'].'">'.$txt['tp-yes'].', '.$subs['name'].'</option>';
 			echo '
-						</select></td>';
+						</select>
+				    </div><p class="clearthefloat"></p></div>';
 
 		}
 		// which category?
 		echo '
-				</tr><tr>
-					<td class="windowbg2" align="right">'.$txt['tp-dluploadcategory'].'</td>
-					<td class="windowbg2">
+					  
+							
+					<div class="windowbg2">
+					 <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dluploadcategory'].'</div>
+					 <div class="windowbg2 float-items" style="width:71%;">
 						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px;">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats)
@@ -885,73 +875,65 @@ function template_main()
 		}
 		echo '
 						</select>
-					 </td>
-				</tr>
-				<tr>
-					<td class="windowbg2" align="right">'.$txt['tp-uploadnewpic'].':</td>
-					<td class="windowbg2">
+					 </div>
+					 <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-uploadnewpic'].':</div>
+					  <div class="windowbg2 float-items" style="width:71%;">
 						<input name="tp_dluploadpic_edit" style="width: 90%;" type="file" value="">
 						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'">
-						</td>
-				</tr>
-				<tr>
-					<td class="windowbg2" valign="top" align="right">'.$txt['tp-uploadnewpicexisting'].':</td>
-					<td class="windowbg2">
-						<input name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br /><br />
-						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="windowbg">
+					  </div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg2">
+					  <div class="windowbg2 float-items" align="right" style="width:25%;word-break:break-all;">'.$txt['tp-uploadnewpicexisting'].':</div>
+					  <div class="windowbg2 float-items" style="width:71%;">
+						<input style="width:97%;" name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br /><br />
+						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
+				   	  </div>
+					  <p class="clearthefloat"></p>
+					</div>
+					<div class="windowbg" style="padding:1%;">
 						<input name="dlsend" type="submit" value="'.$txt['tp-submit'].'">
 						<input name="sc" type="hidden" value="'.$context['session_id'].'">
 						<input name="dl_useredit" type="hidden" value="'.$cat['id'].'">
-					</td>
-				</tr>
-			</table>
-		</form>';
+					</div>
+			</div>
+		</form></div>';
 	}
 
 	if($context['TPortal']['dlaction']=='search')
 	{
 	   echo '
-		<div class="tborder">
+		<div class="tborder" id="dlfiles-search">
 			<div class="cat_bar">
 				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
 			</div>
 			<div class="windowbg">
 				<span class="topslice"><span></span></span>
-				<table border="0" cellspacing="0" cellpadding="0">
-					<tr>
-						<td >
+				<div style="padding:2%;">
 							<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
-								<table cellpadding="5" cellspacing="1" width="100%" >
-									<tr>
-										<td align="right">' , $txt['tp-search'] , ':</td>
-										<td class="input_td">
+								<div>
+										<div>' , $txt['tp-search'] , ':</div>
+										<div class="input_td" style="padding-top:1%;padding-bottom:1%;">
 											<input type="text" size="60" name="dl_search" id="dl_search" />
-										</td>
-									</tr>
-									<tr>
-										<td valign="top" align="right"></td>
-										<td  class="input_td">
-										<input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
-										<input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
-										</td>
-									</tr>
-									<tr>
-										<td colspan="2" align="center">
+										</div>
+										<div align="right"></div>
+										<div class="input_td">
+										    <input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
+										    <input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
+										</div><br />
+										<div align="center">
 											<input type="submit" value="' , $txt['tp-search'] , '" />
 											<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-										</td>
-									</tr>
-								</table>
+										</div>
+								</div>
 							</form>
-						</td>
-					</tr>
-				</table>
+				</div>
 				<span class="botslice"><span></span></span>
 			</div>
-		</div>
+			</div>
 		</div>';
 	}
 
@@ -986,8 +968,8 @@ function template_main()
 			$bb++;	
 		}
 		echo '
-		</div>
-		</div>';
+	 </div>
+	</div>';
 	}
 	echo '
 	</div>';

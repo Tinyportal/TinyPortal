@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -54,13 +54,13 @@ function template_frontpage()
 	global $context;
 
 	if($context['TPortal']['frontblock_type'] == 'first' || $context['TPortal']['front_type'] == 'frontblock')
-		echo '<div id="tpfrontpanel_top" style="margin: 0 0 4px 0; padding: 0;">', TPortal_panel('front'), '</div>';
+		echo '<div id="tpfrontpanel_top" style="margin: 0 0 4px 0; padding: 0;">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 	
 	if(!isset($context['TPortal']['category']))
 	{
 		// check the frontblocks first
 		if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
-			echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '</div>';
+			echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 
 		return;
 	}
@@ -85,7 +85,7 @@ function template_frontpage()
 	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'] , '</div>';
 
 	if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
-		TPortal_panel('front');
+		echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 
 }
 

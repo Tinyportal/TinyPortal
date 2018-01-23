@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -14,7 +14,8 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
-
+// Responsive themes form
+$txt['tp-formres'] ='Select non responsive themes';
 // Navigation links called from source files
 $txt['tp-modules'] = 'Modules';
 $txt['tp-adminnews1'] = 'News';
@@ -575,7 +576,7 @@ $txt['tp_shout'] = 'Shoutbox';
 
 $txt['tp-rssblock-showavatar'] = 'Show avatars?';
 $txt['tp-rssblock-maxwidth'] = 'Max width of rss feed';
-$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 sets max to 20 )';
+$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed';
 
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';

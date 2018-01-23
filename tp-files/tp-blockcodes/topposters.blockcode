@@ -60,21 +60,19 @@ $topPoster = 8;
 
 	// Output our array of users with avatar, posts, and name
 	echo '
-	<table cellpadding="0" cellspacing="8">';	
+	<div>';	
 	
 	foreach ($users as $user)
 	{
 		echo '
-		<tr>
-			<td>',empty($user['avatar']['image']) ? '<a href="'.$user['href'].'"><img src="'.$settings['tp_images_url'].'/TPguest.png" width="'.$width.'" height="'.$height.'" alt="" title="'.$user['name'].'" /></a>' : '<a href="'.$user['href'].'"><img '.$user['avatar']['image'].'</a>';
+			<div style="width:25%;float:left;">',empty($user['avatar']['image']) ? '<a href="'.$user['href'].'"><img src="'.$settings['tp_images_url'].'/TPguest.png" width="'.$width.'" height="'.$height.'" alt="" title="'.$user['name'].'" /></a>' : '<a href="'.$user['href'].'"><img '.$user['avatar']['image'].'</a>';
 		echo '
-			</td>
-			<td><h5 style="margin: 4px;">'.$user['link'].'</h5><h5 style="margin: 4px;">'. $user['posts'] .' '.$txt['posts'].'</h5></td>
-		</tr>';
+			</div>
+			<div style="width:75%;float:left;"><h5 style="margin: 4px;">'.$user['link'].'</h5><h5 style="margin: 4px;">'. $user['posts'] .' '.$txt['posts'].'</h5></div><p style="clear:both;"></p>';
 	}
 
 	echo '
-	</table>';
+	</div>';
 
 </code>
 
