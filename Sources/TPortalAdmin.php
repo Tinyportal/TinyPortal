@@ -2953,10 +2953,12 @@ function do_postchecks()
 			$lang = array(); 
 			foreach($_POST as $what => $value)
 			{
-                                // We have a empty post value just skip it
-                                if(empty($value) && $value == '') {
-                                        continue;
-                                }
+
+				// We have a empty post value just skip it
+				if(empty($value) && $value == '') {
+					continue;
+				}
+
 				if(substr($what, 0, 9) == 'tp_block_')
 				{
 					$setting = substr($what, 9);
