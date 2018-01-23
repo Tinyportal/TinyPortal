@@ -2853,7 +2853,9 @@ function template_blockedit()
 					<input name="tp_block_var2" type="radio" value="0" ' , ($context['TPortal']['blockedit']['var2']=='0' || $context['TPortal']['blockedit']['var2']=='') ? ' checked' : '' ,'>'.$txt['tp-no'], '
 					</td></tr>
 						<tr class="windowbg2"><td class="left">' . $txt['tp-rssblock-maxwidth'].'</td><td class="right">
-					<input name="tp_block_var3" type="text" value="' , $context['TPortal']['blockedit']['var3'],'"><br />';
+					<input name="tp_block_var3" type="text" value="' , $context['TPortal']['blockedit']['var3'],'"><br />
+					<tr class="windowbg2"><td class="left">' . $txt['tp-rssblock-maxshown'].'</td><td class="right">
+					<input name="tp_block_var4" type="text" value="' , $context['TPortal']['blockedit']['var4'],'"><br />';
 			}
 			elseif($context['TPortal']['blockedit']['type']=='16'){
 				echo $txt['tp-sitemapmodules'].'</td><td class="right"><ul>';
@@ -2974,7 +2976,7 @@ function template_blockedit()
 			foreach($types as $blo => $bl)
 				echo '
 			<div style="float: left; width: 160px; height: 100px; margin: 5px;">
-				<div class="smalltext" style="padding: 4px 0;"><input name="tp_block_var4" type="radio" value="'.$blo.'" ' , $context['TPortal']['blockedit']['var4']==$blo ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var4']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
+				<div class="smalltext" style="padding: 4px 0;"><input name="tp_block_var5" type="radio" value="'.$blo.'" ' , $context['TPortal']['blockedit']['var5']==$blo ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
 				</div>' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
 				' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
 			</div>';

@@ -575,6 +575,7 @@ $txt['tp_shout'] = 'Shoutbox';
 
 $txt['tp-rssblock-showavatar'] = 'Show avatars?';
 $txt['tp-rssblock-maxwidth'] = 'Max width of rss feed';
+$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed';
 
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';

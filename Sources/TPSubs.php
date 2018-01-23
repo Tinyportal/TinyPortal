@@ -388,9 +388,9 @@ function TPcollectSnippets()
 				$snippet = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $file), array('name', 'author', 'version', 'date', 'description')); 
 				$codefiles[] = array(
 					'file' => substr($file, 0, strlen($file) - 10),
-					'name' => $snippet['name'],
-					'author' => $snippet['author'],
-					'text' => $snippet['description'],
+					'name' => isset($snippet['name']) ? $snippet['name'] : '',
+					'author' => isset($snippet['author']) ? $snippet['author'] : '',
+					'text' => isset($snippet['description']) ? $snippet['description'] : '',
 				);
 			}
 		}
@@ -976,8 +976,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			' , $use == 0 ? '
 			toggle_tpeditor_off(\''.$textarea.'\');' : '' , '
 		// ]]></script>';
-	if($showchoice)
-		echo '
+
+	echo '
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
 
 	// only if you can edit your own articles
@@ -1919,9 +1919,10 @@ function endElement($parser, $tagName)
 {
 	// This function is used when an end-tag is encountered.
 	global $context, $smcFunc, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
-
+	global $numShown; 
+	
 	// RSS/RDF feeds
-	if ($tagName == "ITEM")
+	if ( ( $tagName == "ITEM" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
 	{
 		echo '
 		<div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
@@ -1946,7 +1947,7 @@ function endElement($parser, $tagName)
 		$title = $description = $link = $insideitem = $curl = $content_encoded = $pubdate = false;
 	}
 	// ATOM feeds
-	elseif ($tagName == "ENTRY")
+	elseif ( ( $tagName == "ENTRY" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
 	{
 		echo '
 		<div class="rss_title">' . $link . $title.'</a>';
@@ -1974,6 +1975,11 @@ function TPparseRSS($override = '', $encoding = 0)
 {
 
 	global $context;
+
+	// Initialise the number of RSS Feeds to show
+	global $numShown; 
+
+	$numShown = 0;
 
 	$backend = isset($context['TPortal']['rss']) ? $context['TPortal']['rss'] : '';
 	if($override != '')
