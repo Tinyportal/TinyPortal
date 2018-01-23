@@ -388,9 +388,9 @@ function TPcollectSnippets()
 				$snippet = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $file), array('name', 'author', 'version', 'date', 'description')); 
 				$codefiles[] = array(
 					'file' => substr($file, 0, strlen($file) - 10),
-					'name' => $snippet['name'],
-					'author' => $snippet['author'],
-					'text' => $snippet['description'],
+					'name' => isset($snippet['name']) ? $snippet['name'] : '',
+					'author' => isset($snippet['author']) ? $snippet['author'] : '',
+					'text' => isset($snippet['description']) ? $snippet['description'] : '',
 				);
 			}
 		}
