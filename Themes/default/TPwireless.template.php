@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -63,8 +63,8 @@ function template_imode_tp_frontpage()
 		return;
 
 	echo '
-	<table border="0" cellspacing="0" cellpadding="0">
-	<tr><td class="titlebg">' . $context['linktree'][0]['name']  . '</td></tr>';
+	<div id="tpwap1" class="tpwap">
+	<div class="titlebg">' . $context['linktree'][0]['name']  . '</div>';
 
 	unset($context['TPortal']['article']);
 	if(!empty($context['TPortal']['category']['featured']))
@@ -93,9 +93,9 @@ function template_imode_tp_frontpage()
 	}
 	// additonal links etc.
 	echo '
-		<tr><td class="titlebg">', $txt['wireless_navigation'], '</td></tr>
-		<tr><td class="windowbg">[0] <a href="', $scripturl . '?action=forum;wap2" accesskey="0">' . $txt['tp-forum'], '</a></td></tr>
-	</table>';
+		<div class="titlebg">', $txt['wireless_navigation'], '</div>
+		<div class="windowbg">[0] <a href="', $scripturl . '?action=forum;wap2" accesskey="0">' . $txt['tp-forum'], '</a></div>
+	</div>';
 }
 
 function template_wap_tp_frontpage()
@@ -252,17 +252,17 @@ function template_imode_tp_page()
 		return;
 
 	echo '
-		<table border="0" cellspacing="0" cellpadding="0">
-	<tr><td class="titlebg"> '. (!empty($context['linktree']) ? $context['linktree'][0]['name'] : '')  . '</td></tr>';
+		<div id="tpwap2" class="tpwap">
+	     <div class="titlebg"> '. (!empty($context['linktree']) ? $context['linktree'][0]['name'] : '')  . '</div>';
 
 	render_frontp(true);
 
 	// additonal links etc.
 	echo '
-		<tr><td class="titlebg">', $txt['wireless_navigation'], '</td></tr>
-		<tr><td class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></td></tr>
-		<tr><td class="windowbg">[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></td></tr>
-	</table>';
+		<div class="titlebg">', $txt['wireless_navigation'], '</div>
+		<div class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></div>
+		<div class="windowbg">[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></div>
+	</div>';
 }
 function template_wap_tp_page()
 {
@@ -334,8 +334,8 @@ function template_imode_tp_cat()
 		return;
 
 	echo '
-		<table border="0" cellspacing="0" cellpadding="0">
-	<tr><td class="titlebg">' . $context['TPortal']['category']['catname'] . ' > ' . $context['TPortal']['category']['value1'] . '</td></tr>';
+		<div id="tpwap3" class="tpwap">
+	     <div class="titlebg">' . $context['TPortal']['category']['catname'] . ' > ' . $context['TPortal']['category']['value1'] . '</div>';
 
 	unset($context['TPortal']['article']);
 	if(!empty($context['TPortal']['category']['featured']))
@@ -364,10 +364,10 @@ function template_imode_tp_cat()
 	}
 	// additonal links etc.
 	echo '
-		<tr><td class="titlebg">', $txt['wireless_navigation'], '</td></tr>
-		<tr><td class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['category']['value2'] , ';wap2" accesskey="0">' , $context['TPortal']['category']['catname'], '</a></td></tr>
-		<tr><td class="windowbg">[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></td></tr>
-	</table>';
+		<div class="titlebg">', $txt['wireless_navigation'], '</div>
+		<div class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['category']['value2'] , ';wap2" accesskey="0">' , $context['TPortal']['category']['catname'], '</a></div>
+		<div class="windowbg">[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></div>
+	</div>';
 }
 
 function template_wap_tp_cat()

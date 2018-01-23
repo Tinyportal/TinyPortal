@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -199,7 +199,6 @@ function TPortal_recentbox()
 		$coun = 1;
 		echo '
 		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
-
 		foreach($what as $wi => $w)
 		{
 			echo '
@@ -487,7 +486,7 @@ function TPortal_themebox()
 			<input class="button_submit" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
  			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
  			<div style="text-align: center; width: 95%; overflow: hidden;">
-				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="width: 100%;" />
+				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" />
 			</div>
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
@@ -948,8 +947,51 @@ function TPblock($block, $theme, $side, $double=false)
 	global $context , $scripturl, $settings, $txt;
 
 	// setup a container that can be massaged through css
-	echo '
-	<div class="block_' . $side . 'container">';
+if ($block['type']=='ssi') {
+  if ($block['body']=='topboards') {
+	echo '<div class="block_' . $side . 'container" id="ssitopboards">';	
+  } elseif ($block['body']=='topposters') {
+	echo '<div class="block_' . $side . 'container" id="ssitopposters">';		
+  } elseif ($block['body']=='topreplies') {
+	echo '<div class="block_' . $side . 'container" id="ssitopreplies">';		
+  } elseif ($block['body']=='topviews') {
+	echo '<div class="block_' . $side . 'container" id="ssitopviews">';		
+  } elseif ($block['body']=='calendar') {
+	echo '<div class="block_' . $side . 'container" id="ssicalendar">';		
+  } else {
+	echo '<div class="block_' . $side . 'container" id="ssiblock">';		
+  } 
+} elseif ($block['type']=='module') {
+	if ($block['body']=='dl-stats') {
+	echo ' <div class="block_' . $side . 'container" id="module_dl-stats">';			
+	} elseif ($block['body']=='dl-stats2') {
+	echo ' <div class="block_' . $side . 'container" id="module_dl-stats2">';			
+	} elseif ($block['body']=='dl-stats3') {
+	echo ' <div class="block_' . $side . 'container" id="module_dl-stats3">';			
+	} elseif ($block['body']=='dl-stats4') {
+	echo '<div class="block_' . $side . 'container" id="module_dl-stats4">';			
+	} elseif ($block['body']=='dl-stats5') {
+	echo '<div class="block_' . $side . 'container" id="module_dl-stats5">';			
+	} elseif ($block['body']=='dl-stats6') {
+	echo '<div class="block_' . $side . 'container" id="module_dl-stats6">';			
+	} elseif ($block['body']=='dl-stats7') {
+	echo '<div class="block_' . $side . 'container" id="module_dl-stats7">';			
+	} elseif ($block['body']=='dl-stats8') {
+	echo '<div class="block_' . $side . 'container" id="module_dl-stats8">';			
+	} elseif ($block['body']=='dl-stats9') {
+	echo '<div class="block_' . $side . 'container" id="module_dl-stats9">';			
+	} else {
+	echo '<div class="block_' . $side . 'container" id="module_dlstats">';			
+	}
+} elseif ($block['type']=='html') {
+	echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+} elseif ($block['type']=='phpbox') {
+	echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+} elseif ($block['type']=='scriptbox') {
+	echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+} else {
+	echo '<div class="block_' . $side . 'container" id="block_' . $block['type'] . '">';	
+}
 	
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
@@ -1075,7 +1117,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	if($type == 1)
 	{       
 		$code = '
-<div style="margin-bottom: 5px; overflow: hidden;">
+<div style="overflow: hidden;">
     ' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_shortdate} {article_title} </h3>
     ' . ($useFrame ? '</div>' : '') . '
@@ -1678,9 +1720,9 @@ function article_comments($render = true)
 				echo '
 				</div>';
 			}
-		echo '
-			</div>';
 		}
+		echo '
+			</div></div>';		
 	}
 			
 		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
@@ -1700,12 +1742,10 @@ function article_comments($render = true)
 				</form>
 			</div>';
 		}
-		else
+
+	elseif (in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) 
 			echo '
 			<div style="padding: 1ex;" class="windowbg"><em>' . $txt['tp-cannotcomment'] . '</em></div>';
-
-		echo '
-			</div>';
 
 }
 
@@ -1859,12 +1899,13 @@ function template_blockarticle()
 }
 function blockarticle_renders()
 {
+
 	$code = '
 	<div class="blockarticle render1">
 		<div class="article_info">
-			{blockarticle_author} 
-			{blockarticle_date} 
-			{blockarticle_views} 
+			{blockarticle_author}
+			{blockarticle_date}
+			{blockarticle_views}
 		</div>
 		<div class="article_padding">{blockarticle_text}</div>
 		<div class="article_padding">{blockarticle_moreauthor}</div>
@@ -1872,7 +1913,6 @@ function blockarticle_renders()
 		';
 	return $code;
 }
- 
 
 function blockarticle_date($render = true)
 {
@@ -2030,7 +2070,7 @@ function template_tpadm_above()
 
 		}
 		echo '	
-			</ul>';
+			<div style="clear:both;"></div></ul>';
 	}
 
 	echo '
@@ -2041,10 +2081,11 @@ function template_tpadm_above()
 }
 
 function template_tpadm_below()
-{
+{	
 	echo '
 		
 	</div>';
+		
 	return;
 }
 
@@ -2160,9 +2201,9 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 
 	echo '
 		<div class="buttonlist', !empty($direction) ? ' align_' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>
-			<ul>',
+			<ul style="margin:0px;padding:5px 0px;">',
 				implode('', $buttons), '
-			</ul>
+			<p class="clearthefloat"></p></ul>
 		</div>';
 }
 ?>
