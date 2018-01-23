@@ -976,8 +976,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			' , $use == 0 ? '
 			toggle_tpeditor_off(\''.$textarea.'\');' : '' , '
 		// ]]></script>';
-	if($showchoice)
-		echo '
+
+	echo '
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
 
 	// only if you can edit your own articles
@@ -1919,9 +1919,11 @@ function endElement($parser, $tagName)
 {
 	// This function is used when an end-tag is encountered.
 	global $context, $smcFunc, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
+	// Initialise the number of RSS Feeds to show
+	static $numShown = 0; 
 
 	// RSS/RDF feeds
-	if ($tagName == "ITEM")
+	if ( ( $tagName == "ITEM" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
 	{
 		echo '
 		<div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
@@ -1946,7 +1948,7 @@ function endElement($parser, $tagName)
 		$title = $description = $link = $insideitem = $curl = $content_encoded = $pubdate = false;
 	}
 	// ATOM feeds
-	elseif ($tagName == "ENTRY")
+	elseif ( ( $tagName == "ENTRY" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
 	{
 		echo '
 		<div class="rss_title">' . $link . $title.'</a>';

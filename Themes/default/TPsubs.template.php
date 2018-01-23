@@ -957,11 +957,8 @@ function TPblock($block, $theme, $side, $double=false)
 		$types = tp_getblockstyles();
 
 	// check
-	if($block['var4'] == '')
-		$block['var4'] = 0;
-
-	if($block['var4'] == 0)
-		$block['var4'] = $context['TPortal']['panelstyle_'.$side];	
+	if ( ($block['var5'] == '') || ($block['var5'] == 0) )
+		$block['var5'] = $context['TPortal']['panelstyle_'.$side];	
 
 	// its a normal block..
 	if(in_array($block['frame'],array('theme', 'frame', 'title', 'none')))
@@ -972,7 +969,7 @@ function TPblock($block, $theme, $side, $double=false)
 		// show the frame and title
 		if ($theme || $block['frame'] == 'title')
 		{
-			echo $types[$block['var4']]['code_title_left'];
+			echo $types[$block['var5']]['code_title_left'];
 
 			if($block['visible'] == '' || $block['visible'] == '1')
 				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.gif" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
@@ -984,7 +981,7 @@ function TPblock($block, $theme, $side, $double=false)
 				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 8px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
 
 			echo $block['title'];
-			echo $types[$block['var4']]['code_title_right'];
+			echo $types[$block['var5']]['code_title_right'];
 		}
 		else
 		{
@@ -1001,7 +998,7 @@ function TPblock($block, $theme, $side, $double=false)
 		echo '
 		<div class="', (($theme || $block['frame'] == 'frame') ? 'tp_'.$side.'block_body' : ''), '"', in_array($block['id'],$context['TPortal']['upshrinkblocks']) ? ' style="display: none;"' : ''  , ' id="block'.$block['id'].'">';
 		if($theme || $block['frame'] == 'frame')	
-			echo $types[$block['var4']]['code_top'];
+			echo $types[$block['var5']]['code_top'];
 
 		$func = 'TPortal_' . $block['type'];
 		if (function_exists($func))
@@ -1023,7 +1020,7 @@ function TPblock($block, $theme, $side, $double=false)
 			echo '<div class="blockbody" style="overflow: auto;' , !empty($context['TPortal']['blockheight_'.$side]) ? 'height: '.$context['TPortal']['blockheight_'.$side].';' : '' , '">' , parse_bbc($block['body']) , '</div>';
 
 		if($theme || $block['frame'] == 'frame')	
-			echo $types[$block['var4']]['code_bottom'];
+			echo $types[$block['var5']]['code_bottom'];
 		echo '
 		</div>
 	</div>';
