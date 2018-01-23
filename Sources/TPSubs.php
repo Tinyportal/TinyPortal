@@ -2316,16 +2316,15 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = b.id_board AND lmr.id_member = {int:current_member})' : '') . '
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
 
-		WHERE t.id_last_msg >= {int:min_message_id}
-			' . (empty($exclude_boards) ? '' : '
-			AND b.id_board NOT IN ({array_int:exclude_boards})') . '
-
-			' . (empty($include_boards) ? '' : '
-			AND b.id_board IN ({array_int:include_boards})') . '
-
-			AND {query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
+		WHERE	{query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
 			AND t.approved = {int:is_approved}
 			AND m.approved = {int:is_approved}' : '') . '
+			
+			' . (empty($exclude_boards) ? '' : '
+			AND b.id_board NOT IN ({array_int:exclude_boards})') . '
+		
+			' . (empty($include_boards) ? '' : '
+			AND b.id_board IN ({array_int:include_boards})') . '
 
 		ORDER BY t.id_last_msg DESC
 		LIMIT ' . $num_recent,
@@ -2333,8 +2332,6 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			'current_member' => $user_info['id'],
 			'include_boards' => empty($include_boards) ? '' : $include_boards,
 			'exclude_boards' => empty($exclude_boards) ? '' : $exclude_boards,
-			'min_message_id' => $modSettings['maxMsgID'] - 35 * min($num_recent, 5),
-
 			'is_approved' => 1,
 		)
 	);

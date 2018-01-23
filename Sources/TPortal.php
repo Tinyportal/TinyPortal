@@ -627,7 +627,6 @@ function doTPpage()
 				// allowed and all is well, go on with it.
 				$context['TPortal']['article'] = $article;
 
-
 				if ($image_proxy_enabled && !empty($article['avatar']) && stripos($article['avatar'], 'http://') !== false) 
 					$context['TPortal']['article']['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($article['avatar']) . '&hash=' . md5($article['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
