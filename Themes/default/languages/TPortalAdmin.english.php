@@ -519,7 +519,7 @@ $txt['tp-blocktype6'] = 'Online';
 $txt['tp-blocktype7'] = 'Themes';
 $txt['tp-blocktype9'] = 'Menu';
 $txt['tp-blocktype10'] = 'PHP code';
-$txt['tp-blocktype11'] = 'HTML & Javascript code';
+ ( 0 sets max to 20 )$txt['tp-blocktype11'] = 'HTML & Javascript code';
 $txt['tp-blocktype12'] = 'Recent Topics';
 $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype14'] = 'Article / Download functions';
@@ -576,7 +576,7 @@ $txt['tp_shout'] = 'Shoutbox';
 
 $txt['tp-rssblock-showavatar'] = 'Show avatars?';
 $txt['tp-rssblock-maxwidth'] = 'Max width of rss feed';
-$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed';
+$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 sets max to 20 )';
 
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';
