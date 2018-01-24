@@ -542,7 +542,7 @@ $txt['tp-useoldsidebar'] = 'Use old sidebar for admin?';
 $txt['tp-helpsettings'] = 'Here you can tweak various general settings for the portal.';
 $txt['tp-helppanels'] = 'Blocks are located in panels, and each panel has its own set of settings.';
 $txt['tp-helpartsettings'] = 'Settings specially for articles.';
-$txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
+ ( 0 sets max to 20 )$txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
 $txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
 
 $txt['tp-assignnewauthor'] = 'Author ID(change to re-assign to another)';
@@ -577,7 +577,7 @@ $txt['tp_shout'] = 'Shoutbox';
 
 $txt['tp-rssblock-showavatar'] = 'Show avatars?';
 $txt['tp-rssblock-maxwidth'] = 'Max width of rss feed';
-$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed';
+$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 sets max to 20 )';
 
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';
