@@ -756,8 +756,8 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 
 function tp_cleantitle($text)
 {
-	$tmp = strtr($text, 'ÂŠÂŽÂšÂžÂŸÃ€ÃÃ‚ÃƒÃ„Ã…Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃŽÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¶Ã¸Ã¹ÃºÃ»Ã¼Ã½Ã¿', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$tmp = strtr($tmp, array('Ãž' => 'TH', 'Ã¾' => 'th', 'Ã' => 'DH', 'Ã°' => 'dh', 'ÃŸ' => 'ss', 'ÂŒ' => 'OE', 'Âœ' => 'oe', 'Ã†' => 'AE', 'Ã¦' => 'ae', 'Âµ' => 'u'));
+	$tmp = strtr($text, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+	$tmp = strtr($tmp, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 	$cleaned = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $tmp);
 	return $cleaned;
 }
@@ -935,21 +935,10 @@ function TPwysiwyg_setup()
 	global $context, $boardurl;
 
 	$context['html_headers'] .= '
-	<script type="text/javascript" src="'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/whizzywig.js"></script>
-	<script type="text/javascript"><!-- // --><![CDATA[
-		function toggle_tpeditor_on(target)
-		{
-			document.getElementById(\'CONTROLS\' + target).style.display = \'\';
-			document.getElementById(\'whizzy\' + target).style.display = \'\';
-			document.getElementById(target + \'_pure\').style.display = \'none\';
-		}
-		function toggle_tpeditor_off(target)
-		{
-			document.getElementById(\'CONTROLS\' + target).style.display = \'none\';
-			document.getElementById(\'whizzy\' + target).style.display = \'none\';
-			document.getElementById(target + \'_pure\').style.display = \'\';
-		}
-	// ]]></script>';
+		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
+
 }
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
@@ -957,28 +946,16 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	global $user_info, $boardurl, $boarddir, $context, $txt;
 
 	echo '
-	<div style="padding-top: 10px;">';
-
-	if($showchoice)
-	{
-		echo '
-		<b>' . $txt['tp-usewysiwyg'] . '</b>
-		<input ' , $use > 0 ? 'checked' : '' , ' value="1" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_on(\''.$textarea.'\');"> ' . $txt['tp-yes'] .' 
-		<input ' , $use == 0 ? 'checked' : '' , ' value="0" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_off(\''.$textarea.'\');"> ' . $txt['tp-no'] .' 
-		<br /><br />';
-	}
-
-	echo '
+	<div style="padding-top: 10px;">
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
 		<script type="text/javascript"><!-- // --><![CDATA[
-			buttonPath = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/btn/";
-			cssFile = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/simple.css";
-			makeWhizzyWig("'.$textarea.'", "all");
-			' , $use == 0 ? '
-			toggle_tpeditor_off(\''.$textarea.'\');' : '' , '
-		// ]]></script>';
-
-	echo '
+			// Replace the textarea #example with SCEditor
+			var textarea = document.getElementById(\''.$textarea.'\');
+			sceditor.create(textarea, {
+				format: \'xhtml\',
+				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\'
+			});
+		// ]]></script>
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
 
 	// only if you can edit your own articles
@@ -2317,14 +2294,13 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = b.id_board AND lmr.id_member = {int:current_member})' : '') . '
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
 
-
-		WHERE	{query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
+		WHERE  {query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
 			AND t.approved = {int:is_approved}
 			AND m.approved = {int:is_approved}' : '') . '
-			
+
 			' . (empty($exclude_boards) ? '' : '
 			AND b.id_board NOT IN ({array_int:exclude_boards})') . '
-		
+
 			' . (empty($include_boards) ? '' : '
 			AND b.id_board IN ({array_int:include_boards})') . '
 

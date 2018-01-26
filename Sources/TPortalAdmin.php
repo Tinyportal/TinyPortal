@@ -3158,6 +3158,9 @@ function do_postchecks()
 			$options = array();
 			foreach($_POST as $what => $value)
 			{
+				if($what == 'tp_article_intro_pure')
+					continue;
+
 				if(substr($what, 0, 11) == 'tp_article_' && !empty($where))
 				{
 					$setting = substr($what, 11);

@@ -1883,7 +1883,7 @@ function doTPfrontpage()
 				'access2' => $row['access2'],
 				'can_edit' => $can_edit,
 				'can_manage' => $can_manage,
-				);
+			);
 
 			$count[$panels[$row['bar']]]++;
 		}
