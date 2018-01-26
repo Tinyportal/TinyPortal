@@ -949,11 +949,11 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	<div style="padding-top: 10px;">
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
 		<script type="text/javascript"><!-- // --><![CDATA[
-			// Replace the textarea #example with SCEditor
 			var textarea = document.getElementById(\''.$textarea.'\');
 			sceditor.create(textarea, {
 				format: \'xhtml\',
-				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\'
+				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
+				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
 			});
 		// ]]></script>
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
