@@ -1833,166 +1833,29 @@ function category_col2()
 	}
 }
 
-function startElement($parser, $tagName, $attrs)
-{
-
-	// The function used when an element is encountered
-	global $insideitem, $tag;
-
-	if($insideitem)
-		$tag = $tagName;
-	elseif($tagName == "ITEM")
-		$insideitem = true;
-	elseif($tagName == "ENTRY")
-		$insideitem = true;
-	elseif($tagName == "IMAGE")
-		$insideitem = true;
-}
-
-function characterData($parser, $data)
-{
-	// The function used to parse all other data than tags
-	global $insideitem, $tag, $title, $description, $link;
-	global $tpimage, $tpbody, $curl, $content_encoded, $pubdate, $content, $created;
-
-	if ($insideitem)
-	{
-		switch ($tag)
-		{
-			case "TITLE":
-				$title .= $data;
-				break;
-			case "DESCRIPTION":
-				$description .= $data;
-				break;
-			case "LINK":
-				$link .= $data;
-				break;
-			case "IMAGE":
-				$tpimage .= $data;
-				break;
-			case "BODY":
-				$tpbody .= $data;
-				break;
-			case "URL":
-				$curl .= $data;
-				break;
-			case "CONTENT:ENCODED":
-				$content_encoded .= $data;
-				break;
-			case "CONTENT":
-				$content .= $data;
-				break;
-			case "PUBDATE":
-				$pubdate .= $data;
-				break;
-			case "CREATED":
-				$created .= $data;
-				break;
-		}
-	}
-}
-
-function endElement($parser, $tagName)
-{
-	// This function is used when an end-tag is encountered.
-	global $context, $smcFunc, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
-	global $numShown; 
-	
-	// RSS/RDF feeds
-	if ( ( $tagName == "ITEM" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
-	{
-		echo '
-		<div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
-		printf("<a target='_blank' href='%s'>%s</a>", trim($link),$smcFunc['htmlspecialchars'](trim($title), ENT_QUOTES));
-		echo '
-		</div>';
-		if(!$context['TPortal']['rss_notitles'])
-		{
-			if(!empty($pubdate))
-				echo '
-		<div class="rss_date">' . $pubdate . '</div>';
-			echo '
-		<div class="rss_body">';
-		if(!empty($content_encoded))
-			echo ($content_encoded); // Print out the live journal entry
-		else
-			echo ($description); // Print out the live journal entry
-		
-		echo '
-		</div>';
-		}
-		$title = $description = $link = $insideitem = $curl = $content_encoded = $pubdate = false;
-	}
-	// ATOM feeds
-	elseif ( ( $tagName == "ENTRY" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
-	{
-		echo '
-		<div class="rss_title">' . $link . $title.'</a>';
-		echo '
-		</div>';
-		if(!empty($created))
-			echo '
-		<div class="rss_date">' . $created . '</div>';
-		if(!$context['TPortal']['rss_notitles']){
-			echo '
-		<div class="rss_body">';
-		if(!empty($content))
-			echo ($content); // Print out the live journal entry
-		else
-			echo ($description); // Print out the live journal entry
-		
-		echo '
-		</div>';
-		}
-		$title = $description = $link = $insideitem = $curl = $content_encoded = $pubdate = $created = false;
-	}
-}
-
 function TPparseRSS($override = '', $encoding = 0)
 {
-
-	global $context;
+	global $context, $smcFunc;
 
 	// Initialise the number of RSS Feeds to show
-	global $numShown; 
-
 	$numShown = 0;
 
 	$backend = isset($context['TPortal']['rss']) ? $context['TPortal']['rss'] : '';
 	if($override != '')
 		$backend = $override;
 
-	// Now to the parsing itself. Starts by creating it:
-	if($encoding == 0)
-		$xml_parser = xml_parser_create('ISO-8859-1');
-	else
-		$xml_parser = xml_parser_create('UTF-8');
+	$xml = simplexml_load_file($backend);
+	if($xml !== false) {
+		foreach ($xml->channel->item as $v) {
+			if($numShown++ >= $context['TPortal']['rssmaxshown']) 
+				break;	
 
-	xml_set_element_handler($xml_parser, "startElement", "endElement");
-	xml_set_character_data_handler($xml_parser, "characterData");
+			printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
-	// Open the actual datafile:
-
-	$fp = fopen($backend, "r");
-    
-	$xmlerr = '';
-	// Run through it line by line and parse:
-	while ($data = fread($fp, 4096))
-	{
-		xml_parse($xml_parser, $data, feof($fp)) or $xmlerr = (sprintf("XML error: %s at line %d",
-		xml_error_string(xml_get_error_code($xml_parser)),
-		xml_get_current_line_number($xml_parser)));
-		if($xmlerr != '')
-			break;
+			if(!$context['TPortal']['rss_notitles'])
+				printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", $v->pubDate, $v->description);
+		}
 	}
-	// Close the datafile
-	fclose($fp);
-
-	// Free any memmory used
-	xml_parser_free($xml_parser);
-	if($xmlerr!='')
-		echo $xmlerr;
 }
 
 // Set up the administration sections.
