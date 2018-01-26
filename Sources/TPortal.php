@@ -182,7 +182,8 @@ function TP_whichHideBars()
 function TP_loadCSS()
 {
 	global $context, $settings;
-    $context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
+    
+	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
 	$context['html_headers'] .= '<!--[if lt IE 9]>'; 
 	$context['html_headers'] .= '
 	<style type="text/css">
@@ -246,21 +247,21 @@ function TP_loadTheme()
 			// fetch the custom theme if any
 			$pag = tp_sanitize($_GET['page']);
 			if (is_numeric($pag))
-            {
+			{
 				$request = $smcFunc['db_query']('', '
-					SELECT id_theme FROM {db_prefix}tp_articles
-					WHERE id = {int:page}',
-					array('page' => (int) $pag)
-				);
-            }
+						SELECT id_theme FROM {db_prefix}tp_articles
+						WHERE id = {int:page}',
+						array('page' => (int) $pag)
+					);
+			}
 			else
-            {
+			{
 				$request =  $smcFunc['db_query']('', '
-					SELECT id_theme FROM {db_prefix}tp_articles
-					WHERE shortname = {string:short}',
-					array('short' => $pag)
-				);
-            }
+						SELECT id_theme FROM {db_prefix}tp_articles
+						WHERE shortname = {string:short}',
+						array('short' => $pag)
+					);
+			}
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
@@ -279,21 +280,21 @@ function TP_loadTheme()
 		{
 			// fetch the custom theme if any
 			$request = $smcFunc['db_query']('', '
-				SELECT COUNT(*) FROM {db_prefix}tp_settings
-				WHERE name = {string:name}
-				AND value = {string:value}',
-				array('name' => 'front_type', 'value' => 'single_page')
-			);
+					SELECT COUNT(*) FROM {db_prefix}tp_settings
+					WHERE name = {string:name}
+					AND value = {string:value}',
+						array('name' => 'front_type', 'value' => 'single_page')
+				);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 				$request = $smcFunc['db_query']('', '
-					SELECT art.id_theme 
-					FROM {db_prefix}tp_articles AS art
-					WHERE featured = {int:feat}',
-					array('feat' => 1)
-				);
+						SELECT art.id_theme 
+						FROM {db_prefix}tp_articles AS art
+						WHERE featured = {int:feat}',
+							array('feat' => 1)
+					);
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					$row = $smcFunc['db_fetch_row']($request);
@@ -312,10 +313,10 @@ function TP_loadTheme()
 		{
 			// fetch the custom theme if any
 			$request =  $smcFunc['db_query']('', '
-				SELECT value FROM {db_prefix}tp_settings
-				WHERE name = {string:name}',
-				array('name' => 'dlmanager_theme')
-			);
+					SELECT value FROM {db_prefix}tp_settings
+					WHERE name = {string:name}',
+						array('name' => 'dlmanager_theme')
+				);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
@@ -411,9 +412,9 @@ function setupTPsettings()
 
    // any sorting taking place?
    if(isset($_GET['tpsort']))
-        $context['TPortal']['tpsort'] = $_GET['tpsort'];
+		$context['TPortal']['tpsort'] = $_GET['tpsort'];
    else
-        $context['TPortal']['tpsort'] = '';
+		$context['TPortal']['tpsort'] = '';
 
 	// if not in forum start off empty
 	$context['TPortal']['is_front'] = false;
