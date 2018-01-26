@@ -155,7 +155,7 @@ $txt['tp-credit1'] = '
 Bjorn "Bloc" Kristiansen
 <br /><br />
 <h4>Developers and Contributors</h4>
-Illori, lurkalot, allvip, Arantor, Brad "IchBin" Grow, Bloc.  
+Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, emanuele.
 <br /><br />
 <h4>TP Team</h4>
 Agridoc, Crip, Freddy, Ken, Lesmond, Renegd98, WillyP, and ZarPrime.
