@@ -955,9 +955,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
 			});
-		// ]]></script>
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
-
+		// ]]></script>';
+	
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
 	{
@@ -2157,7 +2156,8 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = b.id_board AND lmr.id_member = {int:current_member})' : '') . '
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
 
-		WHERE  {query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
+		WHERE	t.id_last_msg >= {int:min_message_id}
+			AND {query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
 			AND t.approved = {int:is_approved}
 			AND m.approved = {int:is_approved}' : '') . '
 
@@ -2173,6 +2173,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			'current_member' => $user_info['id'],
 			'include_boards' => empty($include_boards) ? '' : $include_boards,
 			'exclude_boards' => empty($exclude_boards) ? '' : $exclude_boards,
+			'min_message_id' => $modSettings['maxMsgID'] - 200 * min($num_recent, 5),
 
 			'is_approved' => 1,
 		)
