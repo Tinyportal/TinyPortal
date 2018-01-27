@@ -193,6 +193,7 @@ function template_tpshout_admin_settings()
 							<div class="windowbg2">
 								<div align="right" class="float-items" style="width:48%;">'.$txt['shout_submit_returnkey'].'</div>
 								<div class="float-items" style="width:48%;">
+									<input name="tp_shout_submit_returnkey" type="radio" value="2" ' , $context['TPortal']['shout_submit_returnkey'] == '2' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes-ctrl'].'
 									<input name="tp_shout_submit_returnkey" type="radio" value="1" ' , $context['TPortal']['shout_submit_returnkey'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
 									<input name="tp_shout_submit_returnkey" type="radio" value="0" ' , $context['TPortal']['shout_submit_returnkey'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'
 								</div>
