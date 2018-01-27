@@ -1815,12 +1815,19 @@ function TPdownloadme()
 
 		if (in_array(substr($real_filename, -4), array('.txt', '.css', '.htm', '.php', '.xml')))
 		{
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false)
-				$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\r\n", $buffer);');
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false)
-				$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\r", $buffer);');
-			else
-				$callback = create_function('$buffer', 'return preg_replace(\'~\r~\', "\r\n", $buffer);');
+			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false) {
+				$callback = function($buffer) {
+					return preg_replace('~[\r]?\n~', "\r\n", $buffer);
+				};
+			} elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false) {
+				$callback = function($buffer) {
+					return preg_replace('~[\r]?\n~', "\r", $buffer);
+				};
+			} else {
+				$callback = function($buffer) {
+					return preg_replace('~\r~', "\r\n", $buffer);
+				};
+			}
 		}
 
 		// Since we don't do output compression for files this large...
