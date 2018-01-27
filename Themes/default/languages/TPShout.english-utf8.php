@@ -48,6 +48,7 @@ $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tp-shout-allow-links'] = 'Allow links to be posted?';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
-$txt['shout_submit_returnkey'] = 'Submit Shout on enter key?';
+$txt['shout_submit_returnkey'] 	= 'Submit Shout on enter key?';
+$txt['tp-yes-ctrl'] = 'Yes with ctrl/cmd';
 
 ?>
