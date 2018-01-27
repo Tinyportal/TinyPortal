@@ -48,11 +48,8 @@ function TPupdateShouts(action, shoutId)
 		url: smf_scripturl + "?action=tpmod;shout",
 		data: params + "&" + tp_session_var + "=" + tp_session_id,
 		beforeSend: function() {
-			$(".tp_shoutframe").hide();
-			$("#tp_shout_refresh img").attr("src", tp_images_url + "/ajax.gif");
 		},
 		complete: function(){
-			$("#tp_shout_refresh img").attr("src", tp_images_url + "/TPrefresh.png");
 		},
 		success: function(data) {
 			var error = $($.parseHTML(data)).filter("#shoutError");
