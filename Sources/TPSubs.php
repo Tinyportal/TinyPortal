@@ -1845,16 +1845,32 @@ function TPparseRSS($override = '', $encoding = 0)
 
 	$xml = simplexml_load_file($backend);
 	if($xml !== false) {
-		foreach ($xml->channel->item as $v) {
-			if($numShown++ >= $context['TPortal']['rssmaxshown']) 
-				break;	
+		switch (strtolower($xml->getName())) {
+			case 'rss':
+				foreach ($xml->channel->item as $v) {
+					if($numShown++ >= $context['TPortal']['rssmaxshown']) 
+						break;	
 
-			printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
+					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
-			if(!$context['TPortal']['rss_notitles'])
-				printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", $v->pubDate, $v->description);
+					if(!$context['TPortal']['rss_notitles'])
+						printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", $v->pubDate, $v->description);
+				}
+				break;
+			case 'feed':
+				foreach ($xml->entry as $v) {
+					if($numShown++ >= $context['TPortal']['rssmaxshown']) 
+						break;	
+
+					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link['href']), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
+
+					if(!$context['TPortal']['rss_notitles'])
+						printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", isset($v->issued) ? $v->issued : $v->published, $v->summary);
+				}
+				break;
 		}
 	}
+
 }
 
 // Set up the administration sections.
