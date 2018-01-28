@@ -1357,7 +1357,6 @@ function TPortalDLManager()
 					'rating_votes' => $rating_votes,
 					'rating_average' => $rating_average,
 					'can_rate' => $can_rate,
-					'global_tag' => $row['global_tag'],
 				);
 				$author = $row['authorID'];
 				$parent_cat = $row['category'];

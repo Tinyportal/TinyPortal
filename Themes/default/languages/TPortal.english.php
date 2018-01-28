@@ -302,7 +302,7 @@ $txt['tp_modreports'] = 'Modreports:';
 $txt['tp-blockoverview'] = 'Block Access';
 $txt['tp-ungroupedmembers']='Ungrouped members';
 $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
-$txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . $context['forum_name'] . '</a>.';
+$txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . (!empty($context['forum_name']) ? $context['forum_name'] : '*') . '</a>.';
 $txt['tp-showlatest'] = 'Show 50 latest';
 
 $txt['tp-expired-start'] = 'The article is currently not published!';
