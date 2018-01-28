@@ -166,7 +166,9 @@ function TPortal_recentbox()
 	else
 		$bb = 0;
 
-	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $output_method = 'array');
+	$include_boards = null;
+
+	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $include_boards, $output_method = 'array');
 	if($context['TPortal']['useavatar'] == 0)
 	{
 		// Output the topics
