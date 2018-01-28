@@ -87,7 +87,6 @@ function progetAvatars($ids)
 {
 	global $user_info, $smcFunc, $modSettings, $scripturl;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
-
 	$request = $smcFunc['db_query']('', '
 		SELECT
 			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar,
@@ -167,10 +166,11 @@ function TPortal_recentbox()
 	else
 		$bb = 0;
 
+	$include_boards = null;
+
+	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $include_boards, $output_method = 'array');
 	if($context['TPortal']['useavatar'] == 0)
 	{
-	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $output_method = 'array');
-
 		// Output the topics
 		echo '
 		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll'] == 1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
@@ -193,8 +193,12 @@ function TPortal_recentbox()
 	}
 	else
 	{
-		$what = tp_recentTopics($num_recent = $context['TPortal']['recentboxnum'], $exclude_boards = array($bb), 'array');
-
+		foreach($what as $wi => $w)
+		{
+			$member_ids[] = $w['poster']['id'];
+		}
+		$avatars = progetAvatars($member_ids);
+		
 		// Output the topics
 		$coun = 1;
 		echo '
@@ -203,7 +207,7 @@ function TPortal_recentbox()
 		{
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
-					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($w['poster']['avatar']) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $w['poster']['avatar'] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
+					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
@@ -592,23 +596,24 @@ function TPortal_statsbox()
 // TPortal ssi box
 function TPortal_ssi()
 {
-       global $context;
-       echo '
-	<div style="padding: 5px;" class="smalltext">';
-       if($context['TPortal']['ssifunction'] == 'topboards')
-           ssi_topBoards();
-       elseif($context['TPortal']['ssifunction'] == 'topposters')
-           ssi_topPoster(5);
-       elseif($context['TPortal']['ssifunction'] == 'topreplies')
-           ssi_topTopicsReplies();
-       elseif($context['TPortal']['ssifunction'] == 'topviews')
-           ssi_topTopicsViews();
-       elseif($context['TPortal']['ssifunction'] == 'calendar')
-          ssi_todaysCalendar();
+	global $context;
+	echo '<div style="padding: 5px;" class="smalltext">';
+	if($context['TPortal']['ssifunction'] == 'toptopics')
+		ssi_topTopics();
+	elseif($context['TPortal']['ssifunction'] == 'topboards')
+		ssi_topBoards();
+	elseif($context['TPortal']['ssifunction'] == 'topposters')
+		ssi_topPoster(5);
+	elseif($context['TPortal']['ssifunction'] == 'topreplies')
+		ssi_topTopicsReplies();
+	elseif($context['TPortal']['ssifunction'] == 'topviews')
+		ssi_topTopicsViews();
+	elseif($context['TPortal']['ssifunction'] == 'calendar')
+		ssi_todaysCalendar();
 
-       echo '
-    </div>';
+	echo '</div>';
 }
+
 // TPortal module
 function TPortal_module()
 {
@@ -947,52 +952,54 @@ function TPblock($block, $theme, $side, $double=false)
 	global $context , $scripturl, $settings, $txt;
 
 	// setup a container that can be massaged through css
-if ($block['type']=='ssi') {
-  if ($block['body']=='topboards') {
-	echo '<div class="block_' . $side . 'container" id="ssitopboards">';	
-  } elseif ($block['body']=='topposters') {
-	echo '<div class="block_' . $side . 'container" id="ssitopposters">';		
-  } elseif ($block['body']=='topreplies') {
-	echo '<div class="block_' . $side . 'container" id="ssitopreplies">';		
-  } elseif ($block['body']=='topviews') {
-	echo '<div class="block_' . $side . 'container" id="ssitopviews">';		
-  } elseif ($block['body']=='calendar') {
-	echo '<div class="block_' . $side . 'container" id="ssicalendar">';		
-  } else {
-	echo '<div class="block_' . $side . 'container" id="ssiblock">';		
-  } 
-} elseif ($block['type']=='module') {
-	if ($block['body']=='dl-stats') {
-	echo ' <div class="block_' . $side . 'container" id="module_dl-stats">';			
-	} elseif ($block['body']=='dl-stats2') {
-	echo ' <div class="block_' . $side . 'container" id="module_dl-stats2">';			
-	} elseif ($block['body']=='dl-stats3') {
-	echo ' <div class="block_' . $side . 'container" id="module_dl-stats3">';			
-	} elseif ($block['body']=='dl-stats4') {
-	echo '<div class="block_' . $side . 'container" id="module_dl-stats4">';			
-	} elseif ($block['body']=='dl-stats5') {
-	echo '<div class="block_' . $side . 'container" id="module_dl-stats5">';			
-	} elseif ($block['body']=='dl-stats6') {
-	echo '<div class="block_' . $side . 'container" id="module_dl-stats6">';			
-	} elseif ($block['body']=='dl-stats7') {
-	echo '<div class="block_' . $side . 'container" id="module_dl-stats7">';			
-	} elseif ($block['body']=='dl-stats8') {
-	echo '<div class="block_' . $side . 'container" id="module_dl-stats8">';			
-	} elseif ($block['body']=='dl-stats9') {
-	echo '<div class="block_' . $side . 'container" id="module_dl-stats9">';			
+	if ($block['type']=='ssi') {
+		if ($block['body']=='toptopics') {
+			echo '<div class="block_' . $side . 'container" id="ssitoptopics">';	
+		} elseif ($block['body']=='topboards') {
+			echo '<div class="block_' . $side . 'container" id="ssitopboards">';	
+		} elseif ($block['body']=='topposters') {
+			echo '<div class="block_' . $side . 'container" id="ssitopposters">';		
+		} elseif ($block['body']=='topreplies') {
+			echo '<div class="block_' . $side . 'container" id="ssitopreplies">';		
+		} elseif ($block['body']=='topviews') {
+			echo '<div class="block_' . $side . 'container" id="ssitopviews">';		
+		} elseif ($block['body']=='calendar') {
+			echo '<div class="block_' . $side . 'container" id="ssicalendar">';		
+		} else {
+			echo '<div class="block_' . $side . 'container" id="ssiblock">';		
+		} 
+	} elseif ($block['type']=='module') {
+		if ($block['body']=='dl-stats') {
+			echo ' <div class="block_' . $side . 'container" id="module_dl-stats">';			
+		} elseif ($block['body']=='dl-stats2') {
+			echo ' <div class="block_' . $side . 'container" id="module_dl-stats2">';			
+		} elseif ($block['body']=='dl-stats3') {
+			echo ' <div class="block_' . $side . 'container" id="module_dl-stats3">';			
+		} elseif ($block['body']=='dl-stats4') {
+			echo '<div class="block_' . $side . 'container" id="module_dl-stats4">';			
+		} elseif ($block['body']=='dl-stats5') {
+			echo '<div class="block_' . $side . 'container" id="module_dl-stats5">';			
+		} elseif ($block['body']=='dl-stats6') {
+			echo '<div class="block_' . $side . 'container" id="module_dl-stats6">';			
+		} elseif ($block['body']=='dl-stats7') {
+			echo '<div class="block_' . $side . 'container" id="module_dl-stats7">';			
+		} elseif ($block['body']=='dl-stats8') {
+			echo '<div class="block_' . $side . 'container" id="module_dl-stats8">';			
+		} elseif ($block['body']=='dl-stats9') {
+			echo '<div class="block_' . $side . 'container" id="module_dl-stats9">';			
+		} else {
+			echo '<div class="block_' . $side . 'container" id="module_dlstats">';			
+		}
+	} elseif ($block['type']=='html') {
+		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+	} elseif ($block['type']=='phpbox') {
+		echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+	} elseif ($block['type']=='scriptbox') {
+		echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} else {
-	echo '<div class="block_' . $side . 'container" id="module_dlstats">';			
+		echo '<div class="block_' . $side . 'container" id="block_' . $block['type'] . '">';	
 	}
-} elseif ($block['type']=='html') {
-	echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
-} elseif ($block['type']=='phpbox') {
-	echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
-} elseif ($block['type']=='scriptbox') {
-	echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
-} else {
-	echo '<div class="block_' . $side . 'container" id="block_' . $block['type'] . '">';	
-}
-	
+
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
 	else
