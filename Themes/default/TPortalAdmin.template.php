@@ -2623,12 +2623,7 @@ function template_blockedit()
 			{
 				if($context['TPortal']['blockedit']['type']=='11')
 				{
-						echo '
-						</div><div>';
-						if($context['TPortal']['use_wysiwyg']>0)
-							TPwysiwyg('tp_block_body', $context['TPortal']['blockedit']['body'], true, 'qup_blockbody', 1, false);
-						else
-							echo $txt['tp-body'] , ' <br /><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
+					echo '</div><div>' ,  $txt['tp-body'] , ' <br /><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
