@@ -1564,15 +1564,20 @@ function tp_renderarticle($intro = '')
 			$post = $context['TPortal']['article']['body'];
 			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false)
 			{
-				$post = preg_replace_callback('/<img alt="([^"]+)".src="([^"]+)".style="([^"]+)".\/>/isU',
+				$post = preg_replace_callback("~<img([\w\W]+?)/>~",
 					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
-						// Only encode those images which are http
-						if(stripos($matches[2], 'https://') !== false)
-							return '<img alt="'.$matches[1].'" src="'.$matches[2].'" style="'.$matches[3].'" />';
-						else
-							return '<img alt="'.$matches[1].'" src="'. $boardurl . '/proxy.php?request='.urlencode($matches[2]).'&hash=' . md5($matches[2] . $image_proxy_secret) .'" style="'.$matches[3].'" />';
-					},
-					$post);
+						$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
+							function( $src ) use ( $boardurl, $image_proxy_secret ) {
+							// Only encode those images which are http
+							if(stripos($src[1], 'https://') !== false)
+								return ' src="'.$src[1].'"';
+							else
+								return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
+						},
+					$matches[0]);
+					return $matches[0];
+				},
+				$post);
 			}
 			echo $post;
 		}
