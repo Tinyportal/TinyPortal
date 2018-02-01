@@ -1566,17 +1566,16 @@ function tp_renderarticle($intro = '')
 			{       
 				$post = preg_replace_callback("~<img([\w\W]+?)/>~",
 					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
-						$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
-							function( $src ) use ( $boardurl, $image_proxy_secret ) {
-								// Only encode those images which are http
-								if(stripos($src[1], 'https://') !== false)
-									return ' src="'.$src[1].'"';
-								elseif (stripos($src[1], 'http://') !== false) 
-									return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
-								else
-									return $src[0];
-							},
-							$matches[0]);
+						if (stripos($matches[0], 'http://') !== false) { 
+							$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
+								function( $src ) use ( $boardurl, $image_proxy_secret ) {
+									if (stripos($src[1], 'http://') !== false) 
+										return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
+									else
+										return $src[0];
+								},
+								$matches[0]);
+						}
 						return $matches[0];
 					},
 				$post);
@@ -2482,11 +2481,11 @@ function art_recentitems($max = 5, $type = 'date' ){
 			$rating_votes = count($rat);
 			if($row['rating'] == '')
 				$rating_votes = 0;
-
 			$total = 0;
 			foreach($rat as $mm => $mval)
 			{
-				$total = $total + $mval;
+				if(is_numeric($mval)) 
+					$total = $total + $mval;
 			}
 			if($rating_votes > 0 && $total > 0)
 				$rating_average = floor($total / $rating_votes);
