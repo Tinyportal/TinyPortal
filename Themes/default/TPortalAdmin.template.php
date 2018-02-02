@@ -996,6 +996,7 @@ function template_settings()
 							</div>
 							<div class="windowbg2">
 								<div class="font-strong">'.$txt['tp-imageproxycheck'].'</div>
+								<div>'.$txt['tp-imageproxycheckdesc'].'</div>
 								<div>
 									<input name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].' 
 									<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
