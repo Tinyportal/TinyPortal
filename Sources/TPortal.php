@@ -69,7 +69,7 @@ function TPortal_init()
 		TP_permaTheme($_GET['theme']);
 	
 	// do after action
-	if(isset($_GET['page']))
+	if(isset($_GET['page']) && !isset($context['current_action']))
 		$context['shortID'] = doTPpage();
 	elseif(isset($_GET['cat']))
 		$context['catshortID'] = doTPcat();
