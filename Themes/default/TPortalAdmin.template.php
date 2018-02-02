@@ -909,13 +909,13 @@ function template_settings()
 					<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div>
 				</div>
 				<div class="windowbg2">
-						<div class="formtable padding-div">
+					<div class="formtable padding-div">
 						<!-- START non responsive themes form -->
 					        <div class="windowbg2">
 						       <div class="font-strong">'.$txt['tp-formres'].'</div>';
 						       $tm=explode(",",$context['TPortal']['resp']);
-							   echo '<input name="tp_resp" type="checkbox" value="0">Deselect all themes<br /><br /> ';								   
-				               foreach($context['TPallthem'] as $them) {
+						   echo '<input name="tp_resp" type="checkbox" value="0">'.$txt['tp-deselectthemes'].'<br /><br /> ';
+							foreach($context['TPallthem'] as $them) {
 					              echo '
 						          <img style="width: 35px; height: 35px;" alt="*" src="'.$them['path'].'/thumbnail.gif" /> 
 						          <input name="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';					

@@ -16,6 +16,7 @@
  */
 // Responsive themes form
 $txt['tp-formres'] ='Select non responsive themes';
+$txt['tp-deselectthemes'] ='Deselect all themes';
 // Navigation links called from source files
 $txt['tp-modules'] = 'Modules';
 $txt['tp-adminnews1'] = 'News';
@@ -433,6 +434,7 @@ $txt['tp-moduleset']='Module Manager Settings';
 $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-subquery'] = 'Query used';
 $txt['tp-installed'] = 'Installed';
+
 
 // News...
 $txt['tp-latest_news'] = 'News';
