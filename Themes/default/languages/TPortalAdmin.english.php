@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -14,7 +14,8 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
-
+// Responsive themes form
+$txt['tp-formres'] ='Select non responsive themes';
 // Navigation links called from source files
 $txt['tp-modules'] = 'Modules';
 $txt['tp-adminnews1'] = 'News';
@@ -113,6 +114,7 @@ $txt['tp-singlepage']='Featured article with frontpanel';
 $txt['tp-onlyforum']='Only forum-posts';
 $txt['tp-displaynews']='Display userinfo/news at the top';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor?';
+$txt['tp-imageproxycheck'] = 'Perform the final image proxy check?';
 $txt['tp-frontmodule'] = 'TP module';
 $txt['tp-nofrontmodule'] =  'No modules available.';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forumposts?';

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -72,17 +72,32 @@ if($context['TPortal']['shoutbox_usescroll'] > 0)
 				});					
 			});
 	</script>';
-if(!empty($context['TPortal']['shout_submit_returnkey']))
-	$context['html_headers'] .= '
-	<script type="text/javascript"><!-- // --><![CDATA[
+if(!empty($context['TPortal']['shout_submit_returnkey'])) {
+	if($context['TPortal']['shout_submit_returnkey'] == 1) {
+		$context['html_headers'] .= '
+		<script type="text/javascript"><!-- // --><![CDATA[
+			$(document).ready(function() {
+				$("#tp_shout").keypress(function(event) {
+					if(event.which == 13 && !event.shiftKey)
+						TPupdateShouts("save");
+				});
+			});
+		// ]]></script>';	
+	} else if($context['TPortal']['shout_submit_returnkey'] == 2) {
+		$context['html_headers'] .= '
+		<script type="text/javascript"><!-- // --><![CDATA[
 		$(document).ready(function() {
-			$("#tp_shout").keypress(function(event) {
-				if(event.which == 13 && !event.shiftKey)
-					TPupdateShouts("save");
+			$("#tp_shout").keydown(function (event) {
+				if((event.metaKey || event.ctrlKey) &&  event.keyCode == 13) {
+					TPupdateShouts(\'save\');
+					event.preventDefault();
+					return false;
+				}
 			});
 		});
-	// ]]></script>';	
-
+		// ]]></script>';	
+	}
+}
 if(isset($_REQUEST['shout']))
 {
 	$shoutAction = $_REQUEST['shout'];
@@ -581,8 +596,6 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		}
 		$nshouts .= implode('', $ns);
 		
-		$nshouts .= '</div>';
-
 		$context['TPortal']['shoutbox'] = $nshouts;
 	}
 

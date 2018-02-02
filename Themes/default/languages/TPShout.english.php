@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2014 - The TinyPortal Team
+ * Copyright (C) 2018 - The TinyPortal Team
  *
  */
 
@@ -49,5 +49,6 @@ $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tp-shout-allow-links'] = 'Allow links to be posted?';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
 $txt['shout_submit_returnkey'] = 'Submit Shout on enter key?';
+$txt['tp-yes-ctrl'] = 'Yes with ctrl/cmd';
 
 ?>

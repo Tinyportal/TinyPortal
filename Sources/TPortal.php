@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -69,7 +69,7 @@ function TPortal_init()
 		TP_permaTheme($_GET['theme']);
 	
 	// do after action
-	if(isset($_GET['page']))
+	if(isset($_GET['page']) && !isset($context['current_action']))
 		$context['shortID'] = doTPpage();
 	elseif(isset($_GET['cat']))
 		$context['catshortID'] = doTPcat();
@@ -182,7 +182,23 @@ function TP_whichHideBars()
 function TP_loadCSS()
 {
 	global $context, $settings;
-
+    
+	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
+	$context['html_headers'] .= '<!--[if lt IE 9]>'; 
+	$context['html_headers'] .= '
+	<style type="text/css">
+		  body {min-width:900px;}
+	</style>
+	'; 
+	$context['html_headers'] .= '<![endif]-->'; 
+	$context['html_headers'] .= '<!--[if lt IE 7]>'; 
+	$context['html_headers'] .= '
+	<style type="text/css">
+	      #centerContainer {float: left;}
+		  body {width:900px;}
+	</style>
+	'; 
+	$context['html_headers'] .= '<![endif]-->';	
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
@@ -231,21 +247,21 @@ function TP_loadTheme()
 			// fetch the custom theme if any
 			$pag = tp_sanitize($_GET['page']);
 			if (is_numeric($pag))
-            {
+			{
 				$request = $smcFunc['db_query']('', '
-					SELECT id_theme FROM {db_prefix}tp_articles
-					WHERE id = {int:page}',
-					array('page' => (int) $pag)
-				);
-            }
+						SELECT id_theme FROM {db_prefix}tp_articles
+						WHERE id = {int:page}',
+						array('page' => (int) $pag)
+					);
+			}
 			else
-            {
+			{
 				$request =  $smcFunc['db_query']('', '
-					SELECT id_theme FROM {db_prefix}tp_articles
-					WHERE shortname = {string:short}',
-					array('short' => $pag)
-				);
-            }
+						SELECT id_theme FROM {db_prefix}tp_articles
+						WHERE shortname = {string:short}',
+						array('short' => $pag)
+					);
+			}
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
@@ -257,28 +273,28 @@ function TP_loadTheme()
 				cache_put_data('tpArticleTheme', $theme, 120);
 		}
 	}
-    	// are we on frontpage? and it shows fetured article?
+	// are we on frontpage? and it shows fetured article?
 	elseif(!isset($_GET['page']) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
 	{
 		if (($theme = cache_get_data('tpFrontTheme', 120)) == null)
 		{
 			// fetch the custom theme if any
 			$request = $smcFunc['db_query']('', '
-				SELECT COUNT(*) FROM {db_prefix}tp_settings
-				WHERE name = {string:name}
-				AND value = {string:value}',
-				array('name' => 'front_type', 'value' => 'single_page')
-			);
+					SELECT COUNT(*) FROM {db_prefix}tp_settings
+					WHERE name = {string:name}
+					AND value = {string:value}',
+						array('name' => 'front_type', 'value' => 'single_page')
+				);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 				$request = $smcFunc['db_query']('', '
-					SELECT art.id_theme 
-					FROM {db_prefix}tp_articles AS art
-					WHERE featured = {int:feat}',
-					array('feat' => 1)
-				);
+						SELECT art.id_theme 
+						FROM {db_prefix}tp_articles AS art
+						WHERE featured = {int:feat}',
+							array('feat' => 1)
+					);
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					$row = $smcFunc['db_fetch_row']($request);
@@ -297,10 +313,10 @@ function TP_loadTheme()
 		{
 			// fetch the custom theme if any
 			$request =  $smcFunc['db_query']('', '
-				SELECT value FROM {db_prefix}tp_settings
-				WHERE name = {string:name}',
-				array('name' => 'dlmanager_theme')
-			);
+					SELECT value FROM {db_prefix}tp_settings
+					WHERE name = {string:name}',
+						array('name' => 'dlmanager_theme')
+				);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_row']($request);
@@ -396,9 +412,9 @@ function setupTPsettings()
 
    // any sorting taking place?
    if(isset($_GET['tpsort']))
-        $context['TPortal']['tpsort'] = $_GET['tpsort'];
+		$context['TPortal']['tpsort'] = $_GET['tpsort'];
    else
-        $context['TPortal']['tpsort'] = '';
+		$context['TPortal']['tpsort'] = '';
 
 	// if not in forum start off empty
 	$context['TPortal']['is_front'] = false;
@@ -713,12 +729,12 @@ function doTPpage()
 				{
 					$context['TPortal']['article']['comment_posts'] = array();
 					while($row = $smcFunc['db_fetch_assoc']($request))
-					{
-						
+					{						
 						if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
 							$avatar = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 						else
 							$avatar = '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />');
+
 
 						$context['TPortal']['article']['comment_posts'][] = array(
 							'id' => $row['id'],
@@ -1318,7 +1334,7 @@ function doTPfrontpage()
 			{
 				// expand the vislaoptions
 				$row['visual_options'] = explode(',', $row['options']);
-	
+
 				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
 					$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
@@ -1754,7 +1770,7 @@ function doTPfrontpage()
 					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
 					$row['rating'] = array_sum(explode(',', $row['rating']));
-					
+	
 					if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
 						$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 					else 
@@ -1868,7 +1884,7 @@ function doTPfrontpage()
 				'access2' => $row['access2'],
 				'can_edit' => $can_edit,
 				'can_manage' => $can_manage,
-				);
+			);
 
 			$count[$panels[$row['bar']]]++;
 		}
@@ -2231,7 +2247,7 @@ function doTPblocks()
 					$avatar_width = '';
 					$avatar_height = '';
 				}
-				
+
 				if ($image_proxy_enabled && !empty($article['avatar']) && stripos($article['avatar'], 'http://') !== false) 
 					$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $article['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($article['avatar']) . '&hash=' . md5($article['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
@@ -2383,8 +2399,17 @@ function TPortal_panel($side)
 
 	$panelside = $paneltype = ($side == 'front' ? 'frontblocks' : 'blocks');
 
-	$code = '
-	<div class="tp_'.$side.'panel" style="overflow: hidden;">';
+	// $code = '
+	// <div class="tp_'.$side.'panel" style="overflow: hidden;">';
+/* 
+$code outputs an empty div in every panel after the div that contains the panel blocks
+$code has no closing tag </div>
+and gets output by calling return $code; at the end of this function that make the div take the closing tag from TPBlockLayout.template.php. 
+Takes the closing tag of tptopbarHeader in the case of Top Panel Blocks, the closing tag of tpleftbarHeader in the case of Left Panel Blocks etc.
+Also I belive the code below is meant to be the closing tag but because is before return $code; then it's closing tptopbarHeader not $code div.
+[code]	// the upshrink routine for blocks
+	echo '</div>[/code]
+*/	
 	
 	// set the grid type
 	if($flow == 'grid')
@@ -2479,7 +2504,7 @@ function TPortal_panel($side)
 		elseif($flow == 'horiz4')
 			$wh = 25;
 
-		echo '<table cellpadding="0" cellspacing="0" width="100%"><tr><td valign="top" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px; ">';
+		echo '<div style="width:100%;"><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;float:left;">';
 	}
 	$flowmain = 0;
 	$flowsub = 0;
@@ -2487,6 +2512,7 @@ function TPortal_panel($side)
 	$flowcount = isset($context['TPortal'][$panelside][$side]) ? count($context['TPortal'][$panelside][$side]) : 0;
 	if(!isset($context['TPortal'][$panelside][$side]))
 		$context['TPortal'][$panelside][$side] = array();
+
 
 	$n = count($context['TPortal'][$paneltype][$side]);
 	$context['TPortal'][$panelside][$side] = (array) $context['TPortal'][$panelside][$side];
@@ -2602,7 +2628,7 @@ function TPortal_panel($side)
 			if($i == ($flowcount-1))
 				$pad=0;
 
-			echo '<div style="float: left; width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px; padding-bottom: '.$pad.'px;">'; 
+			echo '<div class="panelsColumnsHorizontally" style="float: left; width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px; padding-bottom: '.$pad.'px;">'; 
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 			echo '</div></div>';
 		}
@@ -2610,16 +2636,12 @@ function TPortal_panel($side)
 		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4')))
 		{
 			$pad = $context['TPortal']['padding'];
-			if($i == ($flowcount - 1))
-				$pad = 0;
 
-			if($flow == 'horiz2')
+			if($flow == 'horiz2') {
 				$wh = 50;
+			}
 			elseif($flow == 'horiz3')
 			{
-				if($i == ($flowcount - 1))
-					$wh = 34;
-				else			
 					$wh = 33;
 			}
 			elseif($flow == 'horiz4')
@@ -2629,7 +2651,10 @@ function TPortal_panel($side)
 			{
 				$flowsub = 0;
 				$flowmain++;
-				echo '</td><td valign="top" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;">';
+				if($flow == 'horiz2' && $flowmain == 1) {$pad = 0;}
+				elseif($flow == 'horiz3' && $flowmain == 2) {$pad = 0;$wh = 34;}
+                elseif($flow == 'horiz4' && $flowmain == 3) {$pad = 0;}				
+				echo '</div><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">'; 
 			}
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 		}
@@ -2659,11 +2684,11 @@ function TPortal_panel($side)
 		$flowsub++;
 	}
 	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4')))
-		echo '</td></tr></table>';
+		echo '</div><p class="clearthefloat"></p></div>';
 
 	// the upshrink routine for blocks
-	echo '</div>
-			<script type="text/javascript"><!-- // --><![CDATA[
+	// echo '</div>
+		echo '<script type="text/javascript"><!-- // --><![CDATA[
 				function toggle( targetId )
 				{
 					var state = 0;
@@ -2689,7 +2714,7 @@ function TPortal_panel($side)
 				}
 			// ]]></script>';
 
-	return $code;
+	// return $code;	
 }
 
 function tp_setupUpshrinks()
@@ -2826,7 +2851,7 @@ function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $em
 
 	// first, set the table, equal in all grids
 	if($pos == 0)
-		echo '<table cellpadding="0" cellspacing="0" width="100%">';
+		echo '<div style="width:100%;">';
 
 	if(isset($context['TPortal']['grid'][$gridtype][$pos]['doubleheight']))
 		$dh = true;
@@ -2841,7 +2866,7 @@ function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $em
 
 	// last..if its the last block,close the table
 	if($last)
-		echo '</table>';
+		echo '<p class="clearthefloat"></p></div>';
 
 }
 
@@ -2850,16 +2875,16 @@ function TP_blockgrids()
 	global $context;
 
 	$context['TPortal']['grid'] = array();
-	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<tr><td valign="top" colspan="3" style="padding-bottom: 5px;">', 'after' => '</td></tr>');
-	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<td width="33%" valign="top" style="padding-right: 5px;padding-bottom: 5px;">', 'after' => '</td>');
-	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<td width="33%" valign="top" style="padding-right: 5px;padding-bottom: 5px;">', 'after' => '</td>');
-	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<td width="33%" valign="top" style="padding-bottom: 5px;">', 'after' => '</td></tr>');
+	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="gridColumns" align="top" style="padding-bottom:5px;">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div><div class="gridColumns" align="top" style="width:32.3%;padding-right:0.7%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="gridColumns" align="top" style="width:32.3%;padding-right:0.7%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="gridColumns" align="top" style="width:34%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
 
-	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<tr><td width="33%" valign="top" rowspan="2" style="padding-right: 5px; padding-bottom: 5px;">', 'after' => '</td>', 'doubleheight' => true);
-	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<td width="33%" valign="top" style="padding-right: 5px;padding-bottom: 5px;">', 'after' => '</td>');
-	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<td width="33%" valign="top" style="padding-bottom: 5px;">', 'after' => '</td></tr>');
-	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<tr><td width="33%" valign="top" style="padding-right: 5px;padding-bottom: 5px;">', 'after' => '</td>');
-	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<td width="33%" valign="top" style="padding-bottom: 5px;">', 'after' => '</td></tr>');
+	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="gridC" align="top" style="width:32.3%;padding-right: 0.7%; padding-bottom: 5px;float:left;">', 'after' => '</div>', 'doubleheight' => true);
+	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="gridC" align="top" style="width:67%;padding-bottom: 5px;float:left;"><div class="gridColumns" align="top" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="gridColumns" align="top" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
 }
 
 function doModules() {

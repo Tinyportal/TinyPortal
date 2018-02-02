@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1357,7 +1357,6 @@ function TPortalDLManager()
 					'rating_votes' => $rating_votes,
 					'rating_average' => $rating_average,
 					'can_rate' => $can_rate,
-					'global_tag' => $row['global_tag'],
 				);
 				$author = $row['authorID'];
 				$parent_cat = $row['category'];
@@ -1815,12 +1814,19 @@ function TPdownloadme()
 
 		if (in_array(substr($real_filename, -4), array('.txt', '.css', '.htm', '.php', '.xml')))
 		{
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false)
-				$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\r\n", $buffer);');
-			elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false)
-				$callback = create_function('$buffer', 'return preg_replace(\'~[\r]?\n~\', "\r", $buffer);');
-			else
-				$callback = create_function('$buffer', 'return preg_replace(\'~\r~\', "\r\n", $buffer);');
+			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false) {
+				$callback = function($buffer) {
+					return preg_replace('~[\r]?\n~', "\r\n", $buffer);
+				};
+			} elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false) {
+				$callback = function($buffer) {
+					return preg_replace('~[\r]?\n~', "\r", $buffer);
+				};
+			} else {
+				$callback = function($buffer) {
+					return preg_replace('~\r~', "\r\n", $buffer);
+				};
+			}
 		}
 
 		// Since we don't do output compression for files this large...
@@ -1895,7 +1901,10 @@ function TPortalDLAdmin()
 
 	if($context['TPortal']['hidebars_admin_only'] == '1')
 		tp_hidebars();
-	
+	if($context['TPortal']['hidebars_admin_only'] == '0') {
+		tp_hidebars(left);
+		tp_hidebars(right);
+	}
 	// fetch membergroups so we can quickly set permissions
 	// dlmanager, dlupload, dlcreatetopic
 	$context['TPortal']['perm_all_groups'] = get_grps();

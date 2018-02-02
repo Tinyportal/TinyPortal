@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -20,7 +20,7 @@ $hooks = array(
 	'integrate_pre_include' => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
 	'integrate_load_permissions' => 'tpAddPermissions',
 	'integrate_load_illegal_guest_permissions' => 'tpAddIllegalPermissions', 
-	'integrate_buffer' => 'tpAddCopy',
+	'integrate_buffer' => 'tpAddCopy,tpImageRewrite',
 	'integrate_menu_buttons' => 'tpAddMenuItems',
 	'integrate_display_buttons' => 'addPromoteButton',
 	'integrate_actions' => 'addTPActions',

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -935,21 +935,10 @@ function TPwysiwyg_setup()
 	global $context, $boardurl;
 
 	$context['html_headers'] .= '
-	<script type="text/javascript" src="'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/whizzywig.js"></script>
-	<script type="text/javascript"><!-- // --><![CDATA[
-		function toggle_tpeditor_on(target)
-		{
-			document.getElementById(\'CONTROLS\' + target).style.display = \'\';
-			document.getElementById(\'whizzy\' + target).style.display = \'\';
-			document.getElementById(target + \'_pure\').style.display = \'none\';
-		}
-		function toggle_tpeditor_off(target)
-		{
-			document.getElementById(\'CONTROLS\' + target).style.display = \'none\';
-			document.getElementById(\'whizzy\' + target).style.display = \'none\';
-			document.getElementById(target + \'_pure\').style.display = \'\';
-		}
-	// ]]></script>';
+		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
+
 }
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
@@ -957,29 +946,17 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	global $user_info, $boardurl, $boarddir, $context, $txt;
 
 	echo '
-	<div style="margin-top: 10px;">';
-	if($showchoice)
-	{
-		echo '
-		<b>' . $txt['tp-usewysiwyg'] . '</b>
-		<input ' , $use > 0 ? 'checked' : '' , ' value="1" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_on(\''.$textarea.'\');"> ' . $txt['tp-yes'] .' 
-		<input ' , $use == 0 ? 'checked' : '' , ' value="0" type="radio" id="' . $textarea . '_choice" name="' . $textarea . '_choice" onchange="toggle_tpeditor_off(\''.$textarea.'\');"> ' . $txt['tp-no'] .' 
-		<br /><br />';
-	}
-
-	echo '
+	<div style="padding-top: 10px;">
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
 		<script type="text/javascript"><!-- // --><![CDATA[
-			buttonPath = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/btn/";
-			cssFile = "'.$boardurl.'/tp-files/tp-plugins/javascript/whizzywig/simple.css";
-			makeWhizzyWig("'.$textarea.'", "all");
-			' , $use == 0 ? '
-			toggle_tpeditor_off(\''.$textarea.'\');' : '' , '
+			var textarea = document.getElementById(\''.$textarea.'\');
+			sceditor.create(textarea, {
+				format: \'xhtml\',
+				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
+				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
+			});
 		// ]]></script>';
-
-	echo '
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;' , $use==2 ? 'display: none;' : '' , '" name="'.$textarea.'_pure" id="'.$textarea.'_pure">'. $body .'</textarea>';
-
+	
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
 	{
@@ -1586,19 +1563,25 @@ function tp_renderarticle($intro = '')
 		{
 			$post = $context['TPortal']['article']['body'];
 			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false)
-			{
-				$post = preg_replace_callback('/<img alt="([^"]+)".src="([^"]+)".style="([^"]+)".\/>/isU',
+			{       
+				$post = preg_replace_callback("~<img([\w\W]+?)/>~",
 					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
-						// Only encode those images which are http
-						if(stripos($matches[2], 'https://') !== false)
-							return '<img alt="'.$matches[1].'" src="'.$matches[2].'" style="'.$matches[3].'" />';
-						else
-							return '<img alt="'.$matches[1].'" src="'. $boardurl . '/proxy.php?request='.urlencode($matches[2]).'&hash=' . md5($matches[2] . $image_proxy_secret) .'" style="'.$matches[3].'" />';
+						if (stripos($matches[0], 'http://') !== false) { 
+							$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
+								function( $src ) use ( $boardurl, $image_proxy_secret ) {
+									if (stripos($src[1], 'http://') !== false) 
+										return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
+									else
+										return $src[0];
+								},
+								$matches[0]);
+						}
+						return $matches[0];
 					},
-					$post);
+				$post);
 			}
 			echo $post;
-		}
+		}	
 	}
 	echo '
 	</div>';
@@ -1855,166 +1838,45 @@ function category_col2()
 	}
 }
 
-function startElement($parser, $tagName, $attrs)
-{
-
-	// The function used when an element is encountered
-	global $insideitem, $tag;
-
-	if($insideitem)
-		$tag = $tagName;
-	elseif($tagName == "ITEM")
-		$insideitem = true;
-	elseif($tagName == "ENTRY")
-		$insideitem = true;
-	elseif($tagName == "IMAGE")
-		$insideitem = true;
-}
-
-function characterData($parser, $data)
-{
-	// The function used to parse all other data than tags
-	global $insideitem, $tag, $title, $description, $link;
-	global $tpimage, $tpbody, $curl, $content_encoded, $pubdate, $content, $created;
-
-	if ($insideitem)
-	{
-		switch ($tag)
-		{
-			case "TITLE":
-				$title .= $data;
-				break;
-			case "DESCRIPTION":
-				$description .= $data;
-				break;
-			case "LINK":
-				$link .= $data;
-				break;
-			case "IMAGE":
-				$tpimage .= $data;
-				break;
-			case "BODY":
-				$tpbody .= $data;
-				break;
-			case "URL":
-				$curl .= $data;
-				break;
-			case "CONTENT:ENCODED":
-				$content_encoded .= $data;
-				break;
-			case "CONTENT":
-				$content .= $data;
-				break;
-			case "PUBDATE":
-				$pubdate .= $data;
-				break;
-			case "CREATED":
-				$created .= $data;
-				break;
-		}
-	}
-}
-
-function endElement($parser, $tagName)
-{
-	// This function is used when an end-tag is encountered.
-	global $context, $smcFunc, $insideitem, $tag, $title, $description, $link, $tpimage, $curl, $content_encoded, $pubdate, $content, $created;
-	global $numShown; 
-	
-	// RSS/RDF feeds
-	if ( ( $tagName == "ITEM" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
-	{
-		echo '
-		<div class="rss_title' , $context['TPortal']['rss_notitles'] ? '_normal' : '' , '">';
-		printf("<a target='_blank' href='%s'>%s</a>", trim($link),$smcFunc['htmlspecialchars'](trim($title), ENT_QUOTES));
-		echo '
-		</div>';
-		if(!$context['TPortal']['rss_notitles'])
-		{
-			if(!empty($pubdate))
-				echo '
-		<div class="rss_date">' . $pubdate . '</div>';
-			echo '
-		<div class="rss_body">';
-		if(!empty($content_encoded))
-			echo ($content_encoded); // Print out the live journal entry
-		else
-			echo ($description); // Print out the live journal entry
-		
-		echo '
-		</div>';
-		}
-		$title = $description = $link = $insideitem = $curl = $content_encoded = $pubdate = false;
-	}
-	// ATOM feeds
-	elseif ( ( $tagName == "ENTRY" ) && ( $numShown++ < $context['TPortal']['rssmaxshown'] ) )
-	{
-		echo '
-		<div class="rss_title">' . $link . $title.'</a>';
-		echo '
-		</div>';
-		if(!empty($created))
-			echo '
-		<div class="rss_date">' . $created . '</div>';
-		if(!$context['TPortal']['rss_notitles']){
-			echo '
-		<div class="rss_body">';
-		if(!empty($content))
-			echo ($content); // Print out the live journal entry
-		else
-			echo ($description); // Print out the live journal entry
-		
-		echo '
-		</div>';
-		}
-		$title = $description = $link = $insideitem = $curl = $content_encoded = $pubdate = $created = false;
-	}
-}
-
 function TPparseRSS($override = '', $encoding = 0)
 {
-
-	global $context;
+	global $context, $smcFunc;
 
 	// Initialise the number of RSS Feeds to show
-	global $numShown; 
-
 	$numShown = 0;
 
 	$backend = isset($context['TPortal']['rss']) ? $context['TPortal']['rss'] : '';
 	if($override != '')
 		$backend = $override;
 
-	// Now to the parsing itself. Starts by creating it:
-	if($encoding == 0)
-		$xml_parser = xml_parser_create('ISO-8859-1');
-	else
-		$xml_parser = xml_parser_create('UTF-8');
+	$xml = simplexml_load_file($backend);
+	if($xml !== false) {
+		switch (strtolower($xml->getName())) {
+			case 'rss':
+				foreach ($xml->channel->item as $v) {
+					if($numShown++ >= $context['TPortal']['rssmaxshown']) 
+						break;	
 
-	xml_set_element_handler($xml_parser, "startElement", "endElement");
-	xml_set_character_data_handler($xml_parser, "characterData");
+					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
-	// Open the actual datafile:
+					if(!$context['TPortal']['rss_notitles'])
+						printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", $v->pubDate, $v->description);
+				}
+				break;
+			case 'feed':
+				foreach ($xml->entry as $v) {
+					if($numShown++ >= $context['TPortal']['rssmaxshown']) 
+						break;	
 
-	$fp = fopen($backend, "r");
-    
-	$xmlerr = '';
-	// Run through it line by line and parse:
-	while ($data = fread($fp, 4096))
-	{
-		xml_parse($xml_parser, $data, feof($fp)) or $xmlerr = (sprintf("XML error: %s at line %d",
-		xml_error_string(xml_get_error_code($xml_parser)),
-		xml_get_current_line_number($xml_parser)));
-		if($xmlerr != '')
-			break;
+					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link['href']), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
+
+					if(!$context['TPortal']['rss_notitles'])
+						printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", isset($v->issued) ? $v->issued : $v->published, $v->summary);
+				}
+				break;
+		}
 	}
-	// Close the datafile
-	fclose($fp);
 
-	// Free any memmory used
-	xml_parser_free($xml_parser);
-	if($xmlerr!='')
-		echo $xmlerr;
 }
 
 // Set up the administration sections.
@@ -2316,13 +2178,14 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = b.id_board AND lmr.id_member = {int:current_member})' : '') . '
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
 
-		WHERE	{query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
+		WHERE	t.id_last_msg >= {int:min_message_id}
+			AND {query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
 			AND t.approved = {int:is_approved}
 			AND m.approved = {int:is_approved}' : '') . '
-			
+
 			' . (empty($exclude_boards) ? '' : '
 			AND b.id_board NOT IN ({array_int:exclude_boards})') . '
-		
+
 			' . (empty($include_boards) ? '' : '
 			AND b.id_board IN ({array_int:include_boards})') . '
 
@@ -2332,6 +2195,8 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			'current_member' => $user_info['id'],
 			'include_boards' => empty($include_boards) ? '' : $include_boards,
 			'exclude_boards' => empty($exclude_boards) ? '' : $exclude_boards,
+			'min_message_id' => $modSettings['maxMsgID'] - 200 * min($num_recent, 5),
+
 			'is_approved' => 1,
 		)
 	);
@@ -2616,11 +2481,11 @@ function art_recentitems($max = 5, $type = 'date' ){
 			$rating_votes = count($rat);
 			if($row['rating'] == '')
 				$rating_votes = 0;
-
 			$total = 0;
 			foreach($rat as $mm => $mval)
 			{
-				$total = $total + $mval;
+				if(is_numeric($mval)) 
+					$total = $total + $mval;
 			}
 			if($rating_votes > 0 && $total > 0)
 				$rating_average = floor($total / $rating_votes);

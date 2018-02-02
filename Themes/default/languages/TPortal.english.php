@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -41,7 +41,7 @@ $txt['tp-profilesection'] = 'TinyPortal';
 $txt['tp_rate'] = 'Rate it!';
 $txt['tp-arenew'] = 'are new';
 $txt['tp-by'] = 'Written by';
-$txt['tp-cannotcomment'] = 'You don\'t have permmission to comment, or comments have been turned off for this article.';
+$txt['tp-cannotcomment'] = 'You don\'t have permission to comment, or comments have been turned off for this article.';
 $txt['tp-comments'] = 'Comments';
 $txt['tp-confirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-confirmcommentdelete'] = 'Are you sure you want to delete this comment?';
@@ -302,7 +302,7 @@ $txt['tp_modreports'] = 'Modreports:';
 $txt['tp-blockoverview'] = 'Block Access';
 $txt['tp-ungroupedmembers']='Ungrouped members';
 $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
-$txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . $context['forum_name'] . '</a>.';
+$txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . (!empty($context['forum_name']) ? $context['forum_name'] : '*') . '</a>.';
 $txt['tp-showlatest'] = 'Show 50 latest';
 
 $txt['tp-expired-start'] = 'The article is currently not published!';

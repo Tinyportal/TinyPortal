@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4
+ * @version 1.4R
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -36,47 +36,49 @@ function template_main()
 			case 'addsuccess':
 				echo '
 		<div class="tborder">
-			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-addsuccess'].'</div>
+			<div style="padding: 30px 10px 30px 10px;text-align:center;" class="windowbg">'.$txt['tp-addsuccess'].'</div>
 		</div>';
 				break;
 			case 'editarticle':
 				$mg=$context['TPortal']['editarticle'];
 				echo '
 		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
-			<table width="100%" cellspacing="1" cellpadding="5" class="bordercolor">
-				<tr class="windowbg2">
-					<td valign="top" colspan="2" class="titlebg">
+			<div id="users-editarticle" class="bordercolor users-area">
+				<div class="windowbg2">
+					<div class="titlebg" style="padding:1%;">
 						'.$txt['tp-editarticle'].' - ' ,$mg['subject'], '
-					</td>
-				</tr>';
+					</div>
+				</div>';
 				if($mg['locked']==1)
 				{
 					echo '
-				<tr class="windowbg2">
-					<td valign="top" colspan="2" class="windowbg2 error">
+				<div class="windowbg2">
+					<div class="windowbg2 error" style="padding:1%;">
 						'.$txt['tp-articlelocked'].' 
-					</td>
-				</tr>';
+					</div>
+				</div>';
 				}
 				if($mg['approved']==0)
 				{
 					echo '
-				<tr class="windowbg2">
-					<td valign="top" colspan="2" class="windowbg2 error">
+				<div class="windowbg2">
+					<div class="windowbg2 error" style="padding:1%;">
 						'.$txt['tp-notapproved'].' 
-					</td>
-				</tr>';
+					</div>
+				</div>';
 				}
 					echo '
-				<tr class="windowbg2">
-					<td valign="top" align="right" width="20%">
+				<div class="windowbg2" style="margin-top:1px;margin-bottom:1px;">
+					<div align="right" style="width:27%;" class="float-items">
 						<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>
-						'.$txt['tp-title'].'</td><td valign="top" width="80%">
+						'.$txt['tp-title'].'
+					</div>
+					<div style="width:69%;" class="float-items">
 						<input style="width: 92%;" name="tp_article_title'.$mg['id'].'" type="text" value="'.$mg['subject'].'">
-					</td>
-				</tr>
-				<tr class="windowbg2">
-					<td colspan="2" valign="top">';
+					</div><p class="clearthefloat"></p>
+				</div>
+				<div class="windowbg2" style="padding:1%;">
+					<div>';
 
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 					
@@ -93,12 +95,12 @@ function template_main()
 					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else
-					echo $txt['tp-importarticle'] , '</td><td><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
+					echo $txt['tp-importarticle'] , '</div><div><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
 			
 				if($context['TPortal']['allow_wysiwyg'] && $mg['articletype']=='html')
 					echo '
-					</td></tr>
-					<tr class="windowbg2"><td colspan="2">';
+					</div></div>
+					<div class="windowbg2"><div>';
 				else
 					echo '
 					<input name="tp_article_useintro'.$mg['id'].'" type="hidden" value="-1">';
@@ -122,22 +124,22 @@ function template_main()
 				}
 	
 				echo '
-				</td></tr>
-				<tr class="windowbg">
-					<td colspan="2" align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send"></td>
-				</tr>
-			</table>
+				</div></div>
+				<div class="windowbg">
+					<div align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send"></div>
+				</div>
+			</div>
 		</form>';
 				break;
 			case 'editblock':
 				echo '
 		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=saveblock'.$context['TPortal']['blockedit']['id'].'" method="post" onsubmit="submitonce(this);">
-			<table width="100%" cellspacing="1" cellpadding="5" class="bordercolor">
-				<tr class="catbg">
-					<td>'.$txt['tp-editblock'].'</td>
-				</tr>
-				<tr class="windowbg2">
-					<td valign="top" width="100%">
+			<div id="super-user" class="bordercolor">
+				<div class="catbg">
+					<div style="padding:1%;">'.$txt['tp-editblock'].' </div>
+				</div>
+				<div class="windowbg2" style="padding:1%;">
+					<div>
 					'.$txt['tp-title'].'<br /><input style="width: 94%" name="blocktitle' .$context['TPortal']['blockedit']['id']. '" type="text" value="' .$context['TPortal']['blockedit']['title']. '">
 					<br />';
 				if($context['TPortal']['blockedit']['type']=='11')
@@ -258,14 +260,14 @@ function template_main()
 						<input name="blockvisible' .$context['TPortal']['blockedit']['id']. '" type="radio" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '> '.$txt['tp-allowupshrink'].'<br />
 						<input name="blockvisible' .$context['TPortal']['blockedit']['id']. '" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '> '.$txt['tp-notallowupshrink'].'<br />
 
-					</td>
-			     </tr>';
+					</div>
+			     </div>';
 
 			echo '
-				<tr class="windowbg">
-					<td align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send"></td>
-				</tr>
-			</table>
+				<div class="windowbg">
+					<div align="center" style="padding:1%;"><input type="submit" value="'.$txt['tp-send'].'" name="send"></div>
+				</div>
+			</div>
 		</form>';
 			break;
 		case 'searcharticle':
@@ -290,74 +292,78 @@ function template_main()
 		case 'showcomments':
 		if(!empty($context['TPortal']['showall'])){
 			echo '
-		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
-		<table cellpadding="5" cellspacing="1" class="bordercolor" width="100%">
-			<tr><td colspan="5" class="titlebg">' . $txt['tp-commentnew'] . '</td></tr>
-			<tr class="catbg">
-				<td>' . $txt['tp-article'] . '</td>
-				<td>' . $txt['tp-author'] . '</td>
-				<td>' . $txt['tp-commenter_time'] . '</td>
-				<td>' . $txt['tp-commenter'] . '</td>
-			</tr>';
+		<div class="windowbg" style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
+		<div id="show-art-comm" class="bordercolor">
+			<div class="titlebg" style="padding:1%;">' . $txt['tp-commentnew'] . '</div>
+			<div class="catbg" style="word-break:break-all;">
+				<div class="float-items" style="width:27%;">' . $txt['tp-article'] . '</div>
+				<div class="float-items" style="width:20%;">' . $txt['tp-author'] . '</div>
+				<div class="float-items" style="width:25%;">' . $txt['tp-commenter_time'] . '</div>
+				<div class="float-items" style="width:20%;">' . $txt['tp-commenter'] . '</div>
+				<p class="clearthefloat"></p>
+			</div>';
 			
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
 					echo '
-			<tr class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
-				<td><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
+			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
+				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
 				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
-				</td>
-				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></td>
-				<td width="25%">' . $mes['time'] . '</td>
-				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></td>
-			</tr>';
+				</div>
+				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+				<div class="float-items" style="width:25%;">' . $mes['time'] . '</div>
+				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></div>
+			    <p class="clearthefloat"></p>
+			</div>';
 		
 			}
 			echo '
-			<tr><td colspan="5" class="titlebg" align="right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></td></tr>';
+			<div class="titlebg" align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>';
 			
 			echo '
-		</table>
+		</div>
 		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
 		';
 		}
 		else
 		{
 			echo '
-		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
-		<table cellpadding="5" cellspacing="1" class="bordercolor" width="100%">
-			<tr><td colspan="5" class="titlebg">' . $txt['tp-commentnew'] . '</td></tr>
-			<tr class="catbg">
-				<td>' . $txt['tp-article'] . '</td>
-				<td>' . $txt['tp-author'] . '</td>
-				<td>' . $txt['tp-commenter_time'] . '</td>
-				<td>' . $txt['tp-commenter'] . '</td>
-			</tr>';
+		<div class="windowbg" style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
+		<div id="latest-art-comm" class="bordercolor">
+			<div class="titlebg" style="padding:1%;">' . $txt['tp-commentnew'] . '</div>
+			<div class="catbg">
+				<div class="float-items" style="width:27%;">' . $txt['tp-article'] . '</div>
+				<div class="float-items" style="width:20%;">' . $txt['tp-author'] . '</div>
+				<div class="float-items" style="width:25%;">' . $txt['tp-commenter_time'] . '</div>
+				<div class="float-items" style="width:20%;">' . $txt['tp-commenter'] . '</div>
+				<p class="clearthefloat"></p>
+			</div>';
 			
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
 					echo '
-			<tr class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
-				<td><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
+			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
+				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
 				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
-				</td>
-				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></td>
-				<td width="25%">' . $mes['time'] . '</td>
-				<td width="10%"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></td>
-			</tr>';
+				</div>
+				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+				<div class="float-items" style="width:25%;">' . $mes['time'] . '</div>
+				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></div>
+				<p class="clearthefloat"></p>
+			</div>';
 		
 			}
 			else
 				echo '
-					<tr><td colspan="5" class="windowbg2">' . $txt['tp-nocomments2'] . '</td></tr>';
+					<div style="padding:1%;" class="windowbg2">' . $txt['tp-nocomments2'] . '</div>';
 			echo '
-				<tr><td colspan="5" class="titlebg" align="right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></td></tr>';
+				<div class="titlebg" align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>';
 			echo '
-				</table>';
+				</div>';
 			
 		} 
 			break;
@@ -491,16 +497,16 @@ function template_submitarticle()
 	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=submitarticle2" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				<input name="TPadmin_submit" type="hidden" value="set">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<table width="100%" cellspacing="1" cellpadding="5" class="bordercolor">
-			<tr class="windowbg2">
-				<td valign="top" colspan="2" class="titlebg"> '.$txt['tp-submitarticle'].' </td>
-			</tr>
-			<tr class="windowbg2">
-				<td valign="top" align="right">'.$txt['tp-arttitle'].' </td>
-				<td valign="top"><input style="width: 92%;" name="tp_article_title" type="text" value=""></td>
-			</tr>
-			<tr class="windowbg2">
-				<td colspan="2" valign="top" >'.$txt['tp-artbodytext'].' <br />';
+		<div id="users-addarticle" class="bordercolor">
+			<div class="windowbg2">
+				<div class="titlebg" style="padding:1%;">'.$txt['tp-submitarticle'].' </div>
+			</div>
+			<div class="windowbg2">
+				<div style="padding:1%;">'.$txt['tp-arttitle'].' </div>
+				<div style="padding:1%;"><input style="width: 92%;" name="tp_article_title" type="text" value=""></div>
+			</div>
+			<div class="windowbg2" style="padding:1%;">
+				<div>'.$txt['tp-artbodytext'].' <br />';
 			
 			$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 			
@@ -525,17 +531,18 @@ function template_submitarticle()
 					<input name="tp_article_frame" type="hidden" value="theme">
 					<input name="newarticle" type="hidden" value="1">
 					<input name="submittedarticle" type="hidden" value="', isset($context['TPortal']['submitbbc']) ? 'bbc' : 'html' , '">
-				</td>
-			</tr>
-			<tr class="windowbg">
-				<td colspan="2" align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send">
+				</div>
+			</div>
+			<div class="windowbg" style="padding:1%;">
+				<div align="center">
+				    <input type="submit" value="'.$txt['tp-send'].'" name="send">
 					<input name="tp_article_frontpage" type="hidden" value="0">
 					<input name="tp_article_date" type="hidden" value="',time(),'">
 					<input name="tp_article_category" type="hidden" value="">
 					<input name="tp_article_approved" type="hidden" value="0">
-				</td>
-			</tr>
-		</table>
+				</div>
+			</div>
+		</div>
 	</form>';
 }
 
