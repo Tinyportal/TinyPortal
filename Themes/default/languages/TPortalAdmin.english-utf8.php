@@ -114,6 +114,7 @@ $txt['tp-singlepage']='Featured article with frontpanel';
 $txt['tp-onlyforum']='Only forum-posts';
 $txt['tp-displaynews']='Display userinfo/news at the top';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor?';
+$txt['tp-imageproxycheck'] = 'Perform the final image proxy check?';
 $txt['tp-frontmodule'] = 'TP module';
 $txt['tp-nofrontmodule'] =  'No modules available.';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forumposts?';

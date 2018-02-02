@@ -136,7 +136,7 @@ function template_tp_below()
 		<p class="clearthefloat"></p></div>';	
 	echo '</div>';	
 
-	if ($image_proxy_enabled) {
+	if ($image_proxy_enabled && ( $context['TPortal']['imageproxycheck'] > 0 ) ) {
 		$post = ob_get_contents();
 
 		ob_clean();

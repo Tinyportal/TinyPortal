@@ -994,6 +994,13 @@ function template_settings()
 									<input name="tp_uselangoption" type="radio" value="0" ' , $context['TPortal']['uselangoption']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 								</div>
 							</div>
+							<div class="windowbg2">
+								<div class="font-strong">'.$txt['tp-imageproxycheck'].'</div>
+								<div>
+									<input name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].' 
+									<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div>
+							</div>
 						</div></div>
 				<div class="windowbg2">
 					<div class="windowbg3" style="padding:1%;"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
