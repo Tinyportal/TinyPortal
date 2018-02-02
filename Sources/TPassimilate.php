@@ -45,44 +45,48 @@ function tpAddCopy($buffer)
 {
 	global $context, $scripturl;
 
-$bodyid = '';
-$bclass = '';
+	$bodyid = '';
+	$bclass = '';
 
-// Dynamic body ID
-if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
-	$bodyid = "profilepage";		
-} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'pm') {
-	$bodyid = "pmpage";		
-} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'calendar') {
-	$bodyid = "calendarpage";	
-} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'mlist') {
-	$bodyid = "mlistpage";	
-} elseif (isset($context['TPortal']) && in_array($context['TPortal']['action'], array('search', 'search2'))) {
-	$bodyid = "searchpage";	
-} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'forum') {
-	$bodyid = "forumpage";	
-} elseif (isset($_GET['board']) && !isset($_GET['topic'])) {
-	$bodyid = "boardpage";
-} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
-	  $bodyid = "topicpage";		
-} elseif (isset($_GET['page'])) {
-	$bodyid = "page";		
-} elseif (isset($_GET['cat'])) {
-	$bodyid = "catpage";		
-} elseif (isset($context['TPortal']) && $context['TPortal']['is_frontpage']) {
-	$bodyid = "frontpage";	
-} else {$bodyid = "tpbody";} 
+	// Dynamic body ID
+	if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
+		$bodyid = "profilepage";		
+	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'pm') {
+		$bodyid = "pmpage";		
+	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'calendar') {
+		$bodyid = "calendarpage";	
+	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'mlist') {
+		$bodyid = "mlistpage";	
+	} elseif (isset($context['TPortal']) && in_array($context['TPortal']['action'], array('search', 'search2'))) {
+		$bodyid = "searchpage";	
+	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'forum') {
+		$bodyid = "forumpage";	
+	} elseif (isset($_GET['board']) && !isset($_GET['topic'])) {
+		$bodyid = "boardpage";
+	} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
+		  $bodyid = "topicpage";		
+	} elseif (isset($_GET['page'])) {
+		$bodyid = "page";		
+	} elseif (isset($_GET['cat'])) {
+		$bodyid = "catpage";		
+	} elseif (isset($context['TPortal']) && $context['TPortal']['is_frontpage']) {
+		$bodyid = "frontpage";	
+	} else {
+		$bodyid = "tpbody";
+	} 
 
-// Dynamic body classes
-  if (isset($_GET['board']) && !isset($_GET['topic'])) {
-	$bclass =  "boardpage board" . $_GET['board'];
-  } elseif (isset($_GET['board']) && isset($_GET['topic'])) {
-	$bclass =  "boardpage board" . $_GET['board'] . " " . "topicpage topic" . $_GET['topic'];	
-  } elseif (isset($_GET['page'])) {
-	$bclass =  "page" . $_GET['page'];	
-  } elseif (isset($_GET['cat'])) {
-	$bclass =  "cat" . $_GET['cat'];	
-  } else {$bclass =  "tpcontnainer";}
+	// Dynamic body classes
+	if (isset($_GET['board']) && !isset($_GET['topic'])) {
+		$bclass =  "boardpage board" . $_GET['board'];
+	} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
+		$bclass =  "boardpage board" . $_GET['board'] . " " . "topicpage topic" . $_GET['topic'];
+	} elseif (isset($_GET['page'])) {
+		$bclass =  "page" . $_GET['page'];	
+	} elseif (isset($_GET['cat'])) {
+		$bclass =  "cat" . $_GET['cat'];
+	} else {
+		$bclass =  "tpcontnainer";
+	}
 
 
 	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.4R">&copy; 2005-2018</a>';
@@ -290,6 +294,33 @@ function whichTPAction()
 		$theAction = 'BoardIndex';
 	}
 	return $theAction;
+}
+
+function tpImageRewrite($buffer)
+{
+	global $context;
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+
+	if ($image_proxy_enabled && ( $context['TPortal']['imageproxycheck'] > 0 ) ) {
+		if (!empty($buffer) && stripos($buffer, 'http://') !== false) {
+			$buffer = preg_replace_callback("~<img([\w\W]+?)/>~",
+				function( $matches ) use ( $boardurl, $image_proxy_secret ) {
+					if (stripos($matches[0], 'http://') !== false) {
+						$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
+							function( $src ) use ( $boardurl, $image_proxy_secret ) {
+								if (stripos($src[1], 'http://') !== false)
+									return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
+								else
+									return $src[0];
+							},
+							$matches[0]);
+					}
+					return $matches[0];
+				},
+				$buffer);
+		}
+	}
+	return $buffer;
 }
 
 ?>
