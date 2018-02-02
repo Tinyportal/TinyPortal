@@ -115,7 +115,7 @@ $txt['tp-onlyforum']='Only forum-posts';
 $txt['tp-displaynews']='Display userinfo/news at the top';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor?';
 $txt['tp-imageproxycheck'] = 'Perform the final image proxy check?';
-$txt['tp-imageproxycheckdesc'] = 'This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.';
+$txt['tp-imageproxycheckdesc'] = '( This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks. )';
 $txt['tp-frontmodule'] = 'TP module';
 $txt['tp-nofrontmodule'] =  'No modules available.';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forumposts?';
@@ -433,7 +433,6 @@ $txt['tp-moduleset']='Module Manager Settings';
 $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-subquery'] = 'Query used';
 $txt['tp-installed'] = 'Installed';
-
 
 // News...
 $txt['tp-latest_news'] = 'News';
