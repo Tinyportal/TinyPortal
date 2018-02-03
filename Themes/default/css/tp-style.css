@@ -2165,7 +2165,7 @@ box-sizing:border-box;
 /** screen smaller then 900px **/
 @media all and (min-width: 0px) and (max-width: 900px) {
 .tp_responsive #centerContainer {
-	overflow:visible!important;
+	overflow:scroll!important;
 }	
 .lrs.tp_responsive #mainContainer {
 	display: table;
