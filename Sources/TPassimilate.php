@@ -301,7 +301,7 @@ function tpImageRewrite($buffer)
 	global $context;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
-	if ($image_proxy_enabled && ( $context['TPortal']['imageproxycheck'] > 0 ) ) {
+	if ($image_proxy_enabled && ( array_key_exists('TPortal', $context) && $context['TPortal']['imageproxycheck'] > 0 ) ) {
 		if (!empty($buffer) && stripos($buffer, 'http://') !== false) {
 			$buffer = preg_replace_callback("~<img([\w\W]+?)/>~",
 				function( $matches ) use ( $boardurl, $image_proxy_secret ) {
