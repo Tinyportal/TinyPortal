@@ -2084,109 +2084,114 @@ box-sizing:border-box;
 
 /** screen smaller then 500px **/
 @media all and (min-width: 0px) and (max-width: 500px) {	
-.tp_responsive .article_picturecolumn {
-	width:100%!important;
-    float:none!important;
-    /* Picture + Article ON for articles*/
-}	
-.tp_responsive .panelsColumns,
-.tp_responsive .gridColumns,
-.tp_responsive .gridC  {
-	width:100%!important;
-	padding-right:0px!important;
-	/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
+	.tp_responsive .article_picturecolumn {
+		width:100%!important;
+		float:none!important;
+      /* Picture + Article ON for articles*/
+	}	
+	.tp_responsive .panelsColumns,
+	.tp_responsive .gridColumns,
+	.tp_responsive .gridC  {
+		width:100%!important;
+		padding-right:0px!important;
+		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
+	}
+	.tp_responsive .render4 {
+		margin: 4px 0 0 0px!important;
+	}
 }
-.tp_responsive .render4 {
-    margin: 4px 0 0 0px!important;
-}	
-}
+
 /** screen from 400px to 600px **/
 @media all and (min-width: 400px) and (max-width: 600px) {
-.tp_responsive .panelsColumns,
-.tp_responsive .panelsColumnsHorizontally {
-	width:50%!important;
+	.tp_responsive .panelsColumns,
+	.tp_responsive .panelsColumnsHorizontally {
+		width:50%!important;
+	}
 }
-}
+
 /** screen smaller then 400px **/
 @media all and (min-width: 0px) and (max-width: 400px) {	
-.tp_responsive .panelsColumns,
-.tp_responsive .panelsColumnsHorizontally {
-	width:100%!important;
-	 /* blocks in panels set to display horizontally or in columns (the default is vertically)*/	
-}
-.tp_responsive #left_admsection {
-    width: 100%;
-    float: none; 
-	 /* width and float for left toggle menu from pages like profile page */
-}
+	.tp_responsive .panelsColumns,
+	.tp_responsive .panelsColumnsHorizontally {
+		width:100%!important;
+		/* blocks in panels set to display horizontally or in columns (the default is vertically)*/	
+	}
+	.tp_responsive #left_admsection {
+		width: 100%;
+		float: none;
+		/* width and float for left toggle menu from pages like profile page */
+	}
 } 
-/********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
 
+/********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
 .lrs #centerContainer {
 	overflow:hidden; /* do not delete */
 }
 /** screen smaller then 500px **/
 @media all and (min-width: 0px) and (max-width: 500px) {
-.lrON.tp_responsive #tpleftbarContainer {
-	display: table-row-group;	
+	.lrON.tp_responsive #tpleftbarContainer {
+		display: table-row-group;	
+	}
+	.lrON.tp_responsive #tprightbarContainer {
+		display: table-footer-group;	
+	}
+	.tp_responsive #tpleftbarContainer,
+	.tp_responsive #tprightbarContainer {
+		width:100%!important;
+		float:none!important;
+	}
+	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
+	.tp_responsive #tprightbarContainer #tprightbarHeader {
+		padding: 0px;
+		margin: 0px;
+	}
 }
-.lrON.tp_responsive #tprightbarContainer {
-	display: table-footer-group;	
-}
-.tp_responsive #tpleftbarContainer,
-.tp_responsive #tprightbarContainer {
-	width:100%!important;
-    float:none!important;
-}
-.tp_responsive #tpleftbarContainer #tpleftbarHeader,
-.tp_responsive #tprightbarContainer #tprightbarHeader {
-	padding: 0px;
-    margin: 0px;
-}
-}
+
 /** screen from 500px to 900px **/
 @media all and (min-width: 500px) and (max-width: 900px) {
-.lrON.tp_responsive #tpleftbarContainer,
-.lrON.tp_responsive #tprightbarContainer {
-    float:none!important;	
+	.lrON.tp_responsive #tpleftbarContainer,
+	.lrON.tp_responsive #tprightbarContainer {
+		float:none!important;	
+	}
+	.lrON.tp_responsive #tpleftbarContainer {
+		display: table-cell;		
+	}
+	.lrON.tp_responsive #tprightbarContainer {
+		display: table-cell;	
+	}
+	.tp_responsive #tpleftbarContainer,
+	.tp_responsive #tprightbarContainer {
+		width:49%!important;
+		padding:0.5%;
+	}			
 }
-.lrON.tp_responsive #tpleftbarContainer {
-	display: table-cell;		
-}
-.lrON.tp_responsive #tprightbarContainer {
-    display: table-cell;	
-}
-.tp_responsive #tpleftbarContainer,
-.tp_responsive #tprightbarContainer {
-	width:49%!important;
-	padding:0.5%;	
-}			
-}
+
 /** screen smaller then 900px **/
 @media all and (min-width: 0px) and (max-width: 900px) {
-.tp_responsive #centerContainer {
-	overflow:scroll!important;
-}	
-.lrs.tp_responsive #mainContainer {
-	display: table;
-	width:100%; /* can be changed but not deleted
-	it must have a width in px or % because of display table */
-}	
-.lrs.tp_responsive #centerContainer {
-	display: table-caption;	
-}		 			
-.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-.tp_responsive.rightpanelOn #tprightbarContainer {
-    display: table-footer-group;
-}	
-.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-.tp_responsive.rightpanelOn #tprightbarContainer {
-    width: 100%!important;
-	float:none!important;
+	.tp_responsive #centerContainer {
+		overflow:scroll!important;
+	 	max-width:100%;
+	}	
+	.lrs.tp_responsive #mainContainer {
+		display: table;
+		width:100%; /* can be changed but not deleted
+	       it must have a width in px or % because of display table */
+	}	
+	.lrs.tp_responsive #centerContainer {
+		display: table-caption;	
+	}		 			
+	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
+	.tp_responsive.rightpanelOn #tprightbarContainer {
+		display: table-footer-group;
+	}	
+	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
+	.tp_responsive.rightpanelOn #tprightbarContainer {
+		width: 100%!important;
+		float:none!important;
+	}
+	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
+	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader{
+		padding: 0px;
+		margin: 0px;
+	}		
 }
-.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
-.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader{
-	padding: 0px;
-    margin: 0px;
-}		
-}	
