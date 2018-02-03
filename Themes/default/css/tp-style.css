@@ -2169,7 +2169,7 @@ box-sizing:border-box;
 /** screen smaller then 900px **/
 @media all and (min-width: 0px) and (max-width: 900px) {
 	.tp_responsive #centerContainer {
-		overflow:scroll!important;
+		overflow:hidden!important;
 	 	max-width:100%;
 
 		/* These are technically the same, but use both */
@@ -2187,7 +2187,12 @@ box-sizing:border-box;
 		-moz-hyphens: auto;
 		-webkit-hyphens: auto;
 		hyphens: auto;
-	}	
+	}
+
+	code.bbc_code {
+		white-space: normal !important;
+	}
+
 	.lrs.tp_responsive #mainContainer {
 		display: table;
 		width:100%; /* can be changed but not deleted
