@@ -193,11 +193,16 @@ function TPortal_recentbox()
 	}
 	else
 	{
+		$member_ids = array();
 		foreach($what as $wi => $w)
 		{
 			$member_ids[] = $w['poster']['id'];
 		}
-		$avatars = progetAvatars($member_ids);
+
+		if(!empty($member_ids)) 
+			$avatars = progetAvatars($member_ids);
+		else
+			$avatars = array();
 		
 		// Output the topics
 		$coun = 1;
