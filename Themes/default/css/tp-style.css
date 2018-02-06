@@ -2173,15 +2173,11 @@ box-sizing:border-box;
 	 	max-width:100%;
 	}
 
-	.tp_responsive #centerContainer a {
+	.inner a {
 		/* These are technically the same, but use both */
 		overflow-wrap: break-word;
 		word-wrap: break-word;
-
 		-ms-word-break: break-word;
-		/* This is the dangerous one in WebKit, as it breaks things wherever */
-		word-break: break-word;
-		/* Instead use this non-standard one: */
 		word-break: break-word;
 
 		/* Adds a hyphen where the word breaks, if supported (No Blink) */
