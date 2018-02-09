@@ -930,7 +930,7 @@ function doTPpage()
 
 				$context['page_title'] = $context['TPortal']['article']['subject'];
 
-				if (WIRELESS)
+				if (defined('WIRELESS') && WIRELESS)
 				{
 					$context['TPortal']['single_article'] = true;
 					loadtemplate('TPwireless');
@@ -1141,7 +1141,7 @@ function doTPcat()
 				$parent = $context['TPortal']['category']['value2'];
 				// save the immediate for wireless
 
-				if(WIRELESS)
+				if (defined('WIRELESS') && WIRELESS)
 				{
 					if($context['TPortal']['category']['value2'] > 0)
 						$context['TPortal']['category']['catname'] =  $allcats[$context['TPortal']['category']['value2']]['value1'];
@@ -1184,7 +1184,7 @@ function doTPcat()
 				}
 				$context['TPortal']['show_catlist'] = sizeof($context['TPortal']['clist']) > 0 ? true : false;
 
-				if (WIRELESS)
+				if (defined('WIRELESS') && WIRELESS)
 				{
 					$context['TPortal']['single_article'] = false;
 					loadtemplate('TPwireless');
@@ -2035,7 +2035,7 @@ function doTPfrontpage()
 	
 	$context['TPortal']['frontblocks'] = $blocks;
 
-	if (WIRELESS)
+	if (defined('WIRELESS') && WIRELESS)
 	{
 		$context['TPortal']['single_article'] = false;
 		loadtemplate('TPwireless');
