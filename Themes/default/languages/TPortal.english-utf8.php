@@ -49,6 +49,7 @@ $txt['tp-arthaverated'] = 'You have rated this article.';
 $txt['tp-delete'] = 'Delete';
 $txt['tp-editarticle']= 'Edit article';
 $txt['tp-editarticle2']='Edit options';
+$txt['tp-newcaptcha'] = 'Create a new image';
 $txt['tp-ratearticle'] = 'Give this article a rating of ';
 $txt['tp-ratingaverage'] = 'Rating: ';
 $txt['tp-ratingvotes'] = 'Rates';
@@ -312,4 +313,8 @@ $txt['tp-nomodule'] = 'No output from module.';
 // Permissions
 $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
+
+if(!array_key_exists('upshrink_description', $txt))
+	$txt['upshrink_description'] = 'Shrink or expand the header.';
+
 ?>

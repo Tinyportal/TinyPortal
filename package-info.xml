@@ -29,8 +29,8 @@
 		<database>install.php</database>
 		<code>do_hooks.php</code>
 	</install>
-	<uninstall for="2.0 - 2.1.99">
-		<readme type="inline">Uninstalling TinyPortal V1.5.0 for SMF2.x.x</readme>
+	<uninstall for="2.0 - 2.0.99">
+		<readme type="inline">Uninstalling TinyPortal V1.5.0 for SMF2.0.x</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
@@ -69,5 +69,45 @@
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<code>do_hooks.php</code>
     </uninstall>
-    
+    <uninstall for="2.1.* - 2.1.99">
+		<readme type="inline">Uninstalling TinyPortal V1.5.0 for SMF2.1.x</readme>
+		<modification reverse="true">install-2.1.xml</modification>
+		<remove-file name="$sourcedir/TPassimilate.php" />
+		<remove-file name="$sourcedir/TPcommon.php" />
+		<remove-file name="$sourcedir/TPdlmanager.php" />
+		<remove-file name="$sourcedir/TPhelp.php" />
+		<remove-file name="$sourcedir/TPmodules.php" />
+		<remove-file name="$sourcedir/TPortal.php" />
+		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSubs.php" />
+		<remove-file name="$themedir/TPBlockLayout.template.php" />
+		<remove-file name="$themedir/TPdladmin.template.php" />
+		<remove-file name="$themedir/TPdlmanager.template.php" />
+		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPmodules.template.php" />
+		<remove-file name="$themedir/TPortal.template.php" />
+		<remove-file name="$themedir/TPortalAdmin.template.php" />
+		<remove-file name="$themedir/TPprint.template.php" />
+		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPShout.template.php" />
+		<remove-file name="$themedir/TPsubs.template.php" />
+		<remove-file name="$themedir/TPwireless.template.php" />
+		<remove-file name="$themedir/css/TPShout.css" />
+		<remove-file name="$themedir/css/tp-style.css" />
+		<remove-file name="$themedir/scripts/TPShout.js" />
+		<remove-file name="$languagedir/TPdlmanager.english.php" />
+		<remove-file name="$languagedir/TPdlmanager.english-utf8.php" />
+		<remove-file name="$languagedir/TPhelp.english.php" />
+		<remove-file name="$languagedir/TPhelp.english-utf8.php" />
+		<remove-file name="$languagedir/TPmodules.english.php" />
+		<remove-file name="$languagedir/TPmodules.english-utf8.php" />
+		<remove-file name="$languagedir/TPortal.english.php" />
+		<remove-file name="$languagedir/TPortal.english-utf8.php" />
+		<remove-file name="$languagedir/TPortalAdmin.english.php" />
+		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
+		<remove-file name="$languagedir/TPShout.english.php" />
+		<remove-file name="$languagedir/TPShout.english-utf8.php" />
+		<code>do_hooks.php</code>
+    </uninstall>
+
 </package-info>

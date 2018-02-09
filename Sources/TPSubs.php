@@ -1455,7 +1455,7 @@ function TPortal()
 	global $context;
 
 	// For wireless, we use the Wireless template...
-	if (defined('WIRELESS') && WIRELESS)
+	if (defined('WIRELESS') && WIRELESS) {
 		loadTemplate('TPwireless');
 		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp';
 	}
