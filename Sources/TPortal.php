@@ -240,30 +240,25 @@ function TP_loadTheme()
 	$theme = 0;
 
 	// are we on a article? check it for custom theme
-	if(isset($_GET['page']) && !isset($_GET['action']))
-	{
-		if (($theme = cache_get_data('tpArticleTheme', 120)) == null)
-		{
+	if(isset($_GET['page']) && !isset($_GET['action'])) {
+		if (($theme = cache_get_data('tpArticleTheme', 120)) == null) {
 			// fetch the custom theme if any
 			$pag = tp_sanitize($_GET['page']);
-			if (is_numeric($pag))
-			{
+			if (is_numeric($pag)) {
 				$request = $smcFunc['db_query']('', '
 						SELECT id_theme FROM {db_prefix}tp_articles
 						WHERE id = {int:page}',
-						array('page' => (int) $pag)
-					);
+							array('page' => (int) $pag)
+						);
 			}
-			else
-			{
+			else {
 				$request =  $smcFunc['db_query']('', '
 						SELECT id_theme FROM {db_prefix}tp_articles
 						WHERE shortname = {string:short}',
-						array('short' => $pag)
-					);
+							array('short' => $pag)
+						);
 			}
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
+			if($smcFunc['db_num_rows']($request) > 0) {
 				$row = $smcFunc['db_fetch_row']($request);
 				$theme = $row[0];
 				$smcFunc['db_free_result']($request);
@@ -274,19 +269,16 @@ function TP_loadTheme()
 		}
 	}
 	// are we on frontpage? and it shows fetured article?
-	elseif(!isset($_GET['page']) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
-	{
-		if (($theme = cache_get_data('tpFrontTheme', 120)) == null)
-		{
+	elseif(!isset($_GET['page']) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+		if (($theme = cache_get_data('tpFrontTheme', 120)) == null) {
 			// fetch the custom theme if any
 			$request = $smcFunc['db_query']('', '
 					SELECT COUNT(*) FROM {db_prefix}tp_settings
 					WHERE name = {string:name}
 					AND value = {string:value}',
 						array('name' => 'front_type', 'value' => 'single_page')
-				);
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
+					);
+			if($smcFunc['db_num_rows']($request) > 0) {
 				$row = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 				$request = $smcFunc['db_query']('', '
@@ -294,9 +286,8 @@ function TP_loadTheme()
 						FROM {db_prefix}tp_articles AS art
 						WHERE featured = {int:feat}',
 							array('feat' => 1)
-					);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+						);
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_row']($request);
 					$theme = $row[0];
 					$smcFunc['db_free_result']($request);
@@ -410,10 +401,10 @@ function setupTPsettings()
 
 	$context['tp_html_headers'] = '';
 
-   // any sorting taking place?
-   if(isset($_GET['tpsort']))
+	// any sorting taking place?
+	if(isset($_GET['tpsort']))
 		$context['TPortal']['tpsort'] = $_GET['tpsort'];
-   else
+	else
 		$context['TPortal']['tpsort'] = '';
 
 	// if not in forum start off empty
@@ -425,6 +416,7 @@ function setupTPsettings()
 		// a switch to make it clear what is "forum" and not
 		$context['TPortal']['not_forum'] = true;
 	}
+
 	// are we actually on frontpage then?
 	if(!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action']))
 	{
@@ -560,7 +552,7 @@ function doTPpage()
 		$_SESSION['login_url'] = $scripturl . '?page=' . $page; 
 
 		if(allowedTo('tp_articles'))
-        {
+		{
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1,
 					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
@@ -573,11 +565,11 @@ function doTPpage()
 				LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 				WHERE '. $pag .'
 				LIMIT 1',
-				array('page' => is_numeric($page) ? (int) $page : $page)
-			);
-        }
+					array('page' => is_numeric($page) ? (int) $page : $page)
+				);
+		}
 		else
-        {
+		{
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1, var.value2,
 					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype,
@@ -593,9 +585,9 @@ function doTPpage()
 				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 				LIMIT 1',
-				array('page' => is_numeric($page) ? (int) $page : $page)
-			);
-        }
+					array('page' => is_numeric($page) ? (int) $page : $page)
+				);
+        	}
         
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
