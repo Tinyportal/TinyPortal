@@ -952,48 +952,46 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 	echo '
 			<script type="text/javascript"><!-- // --><![CDATA[
-	function imgurUpload(file) {
-		var headers = new Headers({
-			\'authorization\': \'Client-ID <your imgur client ID>\'
-		});
+		function tpImageUpload(file) {
+			var headers = new Headers({
+				\'authorization\': \'Client-ID <your imgur client ID>\'
+			});
 
-		var form = new FormData();
-		form.append(\'image\', file);
+			var form = new FormData();
+			form.append(\'image\', file);
 
-		return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
-			method: \'post\',
-			body: form,
-			dataType : \'json\',
-		}).then(function (res) {
-			console.log(res);
-			return res.json();
-		}).then(function(result) {
-			console.log(result);
-			if (result.success) {
-				return result.data;
-			}
-			throw \'Upload error\';
-		});
-	}
+			return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
+				method: \'post\',
+				body: form,
+				dataType : \'json\',
+			}).then(function (res) {
+				return res.json();
+			}).then(function(result) {
+				if (result.success) {
+					return result.data;
+				}
+				throw \'Upload error\';
+			});
+		}
 
-	var dragdropOptions = {
-	    // The allowed mime types that can be dropped on the editor
-	    allowedTypes: [\'image/jpeg\', \'image/png\'],
-	    handleFile: function (file, createPlaceholder) {
-		var placeholder = createPlaceholder();
+		var dragdropOptions = {
+		    // The allowed mime types that can be dropped on the editor
+		    allowedTypes: [\'image/jpeg\', \'image/png\'],
+		    handleFile: function (file, createPlaceholder) {
+			var placeholder = createPlaceholder();
 
-		imgurUpload(file).then(function (url) {
-		    // Replace the placeholder with the image HTML
-		    placeholder.insert(\'<img src=\' + url + \' />\');
-		}).catch(function () {
-		    // Error so remove the placeholder
-		    placeholder.cancel();
+			tpImageUpload(file).then(function (url) {
+			    // Replace the placeholder with the image HTML
+			    placeholder.insert(\'<img src=\' + url + \' />\');
+			}).catch(function () {
+			    // Error so remove the placeholder
+			    placeholder.cancel();
 
-		    alert(\'Problem uploading image.\');
-		});
-	    }
-	};
-	// ]]></script>';
+			    alert(\'Problem uploading image.\');
+			});
+		    }
+		};
+		// ]]></script>';
 	echo '
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
