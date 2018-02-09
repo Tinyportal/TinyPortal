@@ -937,20 +937,72 @@ function TPwysiwyg_setup()
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
 
 }
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
 {
-	global $user_info, $boardurl, $boarddir, $context, $txt;
+	global $user_info, $boardurl, $scripturl, $boarddir, $context, $txt;
 
 	echo '
 	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
+
+	echo '
+			<script type="text/javascript"><!-- // --><![CDATA[
+	function imgurUpload(file) {
+		var headers = new Headers({
+			\'authorization\': \'Client-ID <your imgur client ID>\'
+		});
+
+		var form = new FormData();
+		form.append(\'image\', file);
+
+		return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
+			method: \'post\',
+			body: form,
+			dataType : \'json\',
+		}).then(function (res) {
+			console.log(res);
+			return res.json();
+		}).then(function(result) {
+			console.log(result);
+			if (result.success) {
+				return result.data;
+			}
+			throw \'Upload error\';
+		});
+	}
+
+	var dragdropOptions = {
+	    // The allowed mime types that can be dropped on the editor
+	    allowedTypes: [\'image/jpeg\', \'image/png\'],
+	    handleFile: function (file, createPlaceholder) {
+		var placeholder = createPlaceholder();
+
+		imgurUpload(file).then(function (url) {
+		    // Replace the placeholder with the image HTML
+		    placeholder.insert(\'<img src=\' + url + \' />\');
+		}).catch(function () {
+		    // Error so remove the placeholder
+		    placeholder.cancel();
+
+		    alert(\'Problem uploading image.\');
+		});
+	    }
+	};
+	// ]]></script>';
+	echo '
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
 			sceditor.create(textarea, {
+				// Enable the drag and drop plugin
+				plugins: \'dragdrop\',
+				// Set the drag and drop plugin options
+				dragdrop: dragdropOptions,
+    
 				format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	

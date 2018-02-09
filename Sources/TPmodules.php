@@ -69,11 +69,10 @@ function TPmodules()
 	}
 
 	// fetch all extensions and compare
-	$result =  $smcFunc['db_query']('', '
-        SELECT modulename, autoload_run, subquery 
-        FROM {db_prefix}tp_modules WHERE active = {int:active}',
-        array('active' => 1)
-    );
+	$result =  $smcFunc['db_query']('', 'SELECT modulename, autoload_run, subquery 
+				FROM {db_prefix}tp_modules WHERE active = {int:active}',
+        				array('active' => 1)
+    	);
 	if($smcFunc['db_num_rows']($result) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($result))
@@ -83,7 +82,8 @@ function TPmodules()
 		}
 		$smcFunc['db_free_result']($result);
 	}
-	
+
+
 	// clear the linktree first
 	TPstrip_linktree();
 
@@ -1096,6 +1096,17 @@ function TPmodules()
 		require_once( $sourcedir .'/TPhelp.php');
 		TPCredits();
 	}	
+	elseif($tpsub == 'uploadimage') {
+		require_once($sourcedir. '/TPcommon.php');
+		$name = TPuploadpicture('image', $context['user']['id'].'uid');
+		tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+		$response['data'] = 'tp-images/'.$name;
+		$response['success'] = 'true';
+		header('Content-type: application/json');
+		echo json_encode($response);
+		// we want to just exit
+		die;
+	}
 	else
 			redirectexit('action=forum');
 }
