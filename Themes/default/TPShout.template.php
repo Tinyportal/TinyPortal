@@ -34,7 +34,7 @@ function template_tpshout_bigscreen()
 	if(isset($context['TPortal']['querystring']))
 		$tp_where = $context['TPortal']['querystring'];
 	else
-		$tp_where='';
+		$tp_where = '';
 
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
@@ -204,6 +204,7 @@ function template_tpshout_admin_settings()
 								<div class="float-items" style="width:48%;">
 									<div class="float-items" style="width:47%;"><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /> <img style="max-width: 80% !important;" src="tp-images/icons/shout_layout1.png" alt="Layout 1" align="right"/></div>
 									<div class="float-items" style="width:47%;"><input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /> <img style="max-width: 80% !important;" src="tp-images/icons/shout_layout2.png" alt="Layout 2" align="right"/></div>
+									<div class="float-items" style="width:47%;"><input name="tp_shoutbox_layout" type="radio" value="2" ' , $context['TPortal']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , ' /> <img style="max-width: 80% !important;" src="tp-images/icons/shout_layout2.png" alt="Layout 3" align="right"/></div>
 								    <p class="clearthefloat"></p>
 								</div>
 								<p class="clearthefloat"></p>
@@ -243,27 +244,55 @@ function template_tpshout_shoutblock()
 	if(!$context['user']['is_guest'] && allowedTo('tp_can_shout'))
 	{
 		echo '
-		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
-		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 100%;margin-top: 1em; height: 80px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
-	
-		if(!empty($context['TPortal']['show_shoutbox_smile']))
-		{
-			shout_smiley_code();
-			print_shout_smileys();
+		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>';
+
+		if(in_array($context['TPortal']['shoutbox_layout'], array( 0 , 1 ) ) ) {
+			echo '<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 100%;margin-top: 1em; height: 80px;"  tabindex="', $context['tabindex']++, '"></textarea><br />';
+
+			if(!empty($context['TPortal']['show_shoutbox_smile']))
+			{
+				shout_smiley_code();
+				print_shout_smileys();
+			}
+			if(!empty($context['TPortal']['show_shoutbox_icons'])) {
+				shout_bcc_code();
+			}
+			echo '
+			<div id="shout_errors"></div><hr>
+			<div style="overflow: hidden;">
+				<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
+				<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
+				<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+			</div>
+			<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
+			<input type="hidden" name="sc" value="', $context['session_id'], '" />
+		</form>';
 		}
-		if(!empty($context['TPortal']['show_shoutbox_icons']))
-			shout_bcc_code();
-			
-		echo '
-		<div id="shout_errors"></div><hr>
-		<div style="overflow: hidden;">
-			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
-			<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
-			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
-		</div>
-		<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-	</form>';
+		else {
+			echo '
+			<div id="shout_errors"></div>
+			<div class="shoutbox_layout2">
+				<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" style="margin-top: 1em"; src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
+				<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatleft" style="margin-top: 1em; padding-left: 0.5em;" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+				<textarea rows="1" class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="min-width: unset !important; width: 80%;margin-top: 1em; height: 100%;"  tabindex="', $context['tabindex']++, '"></textarea>
+				<input onclick="TPupdateShouts(\'save\'); return false;" style="float:right;margin-top: 1em;height:20px;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
+			<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
+			<input type="hidden" name="sc" value="', $context['session_id'], '" />
+			<div class="shoutbox_icons">';
+			if(!empty($context['TPortal']['show_shoutbox_smile']))
+			{
+				shout_smiley_code();
+				print_shout_smileys();
+			}
+			if(!empty($context['TPortal']['show_shoutbox_icons'])) {
+				shout_bcc_code();
+			}
+			echo '</div>
+			</div>
+		</form>';
+
+		}
+
 	}
 }
 function template_tpshout_frontpage()
@@ -330,35 +359,44 @@ function template_singleshout($row)
 	global $scripturl, $context, $settings, $txt;
 	
 	$layoutOptions = array(
-	 '0' => '
-	<div style="padding-bottom: 5px;">
-		<div class="tp_shoutcontainer">
-			<div class="tp_shoutavatar">
-				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
-				' . (allowedTo('tp_can_admin_shout') ? '
-				<div style="float: right; margin-bottom: 3px;">
-					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
-					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
-				</div>' : '') . '
-				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></h4>
-				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
+		 '0' => '
+		<div style="padding-bottom: 5px;">
+			<div class="tp_shoutcontainer">
+				<div class="tp_shoutavatar">
+					<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
+					' . (allowedTo('tp_can_admin_shout') ? '
+					<div style="float: right; margin-bottom: 3px;">
+						<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+						<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>
+					</div>' : '') . '
+					<h4><a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></h4>
+					<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
+				</div>
+				<div class="bubble speech">' . $row['value1'] . '</div>
 			</div>
-			<div class="bubble speech">' . $row['value1'] . '</div>
-		</div>
-	</div>',
-	'1' => '	
-	<div style="padding-bottom: 5px;">
-		<div class="tp_shoutcontainer">							
-			<div class="shout_options">
-				' . $row['realName'] . ':
-				' . (allowedTo('tp_can_admin_shout') ? '
-				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
-				<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
-			</div> 
-			<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
-			<div class="shoutbody_layout1">' . $row['value1'] . '</div>
-		</div>
-	</div>',
+		</div>',
+		'1' => '	
+		<div style="padding-bottom: 5px;">
+			<div class="tp_shoutcontainer">							
+				<div class="shout_options">
+					' . $row['realName'] . ':
+					' . (allowedTo('tp_can_admin_shout') ? '
+					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
+				</div> 
+				<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
+				<div class="shoutbody_layout1">' . $row['value1'] . '</div>
+			</div>
+		</div>',
+		'2' => '	
+			<div class="shoutbody_layout2">
+				<div class="shout_options">
+					' . (allowedTo('tp_can_admin_shout') ? '
+					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
+					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
+					' . $row['realName'] . ' : '. date('M. d Y - g:ia', $row['value2']).' ' . $row['value1'] . '
+				</div>
+			</div>',
 	);
 
 	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
@@ -368,8 +406,7 @@ function template_tpshout_ajax()
 {
 	
 	global $context;
-	echo '
-	<div id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout') . '">'. $context['TPortal']['rendershouts']. '</div>';
+	echo '<div id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout') . '">'. $context['TPortal']['rendershouts']. '</div>';
 }
 
 ?>
