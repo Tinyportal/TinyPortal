@@ -1069,6 +1069,13 @@ function template_artsettings()
 								</div><p class="clearthefloat"></p>
 							</div>
 							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-usedragdrop'].'</div>
+								<div class="float-items">
+									<input name="tp_use_dragdrop" type="radio" value="1" ' , $context['TPortal']['use_dragdrop'] == '1' ? 'checked' : '' , '> '.$txt['tp-yes'].' 
+									<input name="tp_use_dragdrop" type="radio" value="0" ' , $context['TPortal']['use_dragdrop'] == '0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
 								<div class="float-items">'.$txt['tp-hidearticle-link'].'</div>
 								<div class="float-items">
 									<input name="tp_hide_editarticle_link" type="radio" value="1" ' , $context['TPortal']['hide_editarticle_link']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'

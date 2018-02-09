@@ -933,12 +933,14 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 function TPwysiwyg_setup()
 {
 	global $context, $boardurl;
-
+	
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
-		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
+
+	if($context['TPortal']['use_dragdrop'])
+		$context['html_headers'] .= '<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>';
 
 }
 
@@ -950,54 +952,60 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	<div style="padding-top: 10px;">
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
 
-	echo '
-			<script type="text/javascript"><!-- // --><![CDATA[
-		function tpImageUpload(file) {
-			var form = new FormData();
-			form.append(\'image\', file);
+	if($context['TPortal']['use_dragdrop']) {
+		echo '<script type="text/javascript"><!-- // --><![CDATA[
+			function tpImageUpload(file) {
+				var form = new FormData();
+				form.append(\'image\', file);
 
-			return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
-				method: \'post\',
-				body: form,
-				dataType : \'json\',
-			}).then(function (res) {
-				return res.json();
-			}).then(function(result) {
-				if (result.success) {
-					return result.data;
-				}
-				throw \'Upload error\';
-			});
-		}
+				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
+					method: \'post\',
+					body: form,
+					dataType : \'json\',
+				}).then(function (res) {
+					return res.json();
+				}).then(function(result) {
+					if (result.success) {
+						return result.data;
+					}
+					throw \'Upload error\';
+				});
+			}
 
-		var dragdropOptions = {
-		    // The allowed mime types that can be dropped on the editor
-		    allowedTypes: [\'image/jpeg\', \'image/png\'],
-		    handleFile: function (file, createPlaceholder) {
-			var placeholder = createPlaceholder();
+			var dragdropOptions = {
+			    // The allowed mime types that can be dropped on the editor
+			    allowedTypes: [\'image/jpeg\', \'image/png\'],
+			    handleFile: function (file, createPlaceholder) {
+				var placeholder = createPlaceholder();
 
-			tpImageUpload(file).then(function (url) {
-			    // Replace the placeholder with the image HTML
-			    placeholder.insert(\'<img src=\' + url + \' />\');
-			}).catch(function () {
-			    // Error so remove the placeholder
-			    placeholder.cancel();
+				tpImageUpload(file).then(function (url) {
+				    // Replace the placeholder with the image HTML
+				    placeholder.insert(\'<img src=\' + url + \' />\');
+				}).catch(function () {
+				    // Error so remove the placeholder
+				    placeholder.cancel();
 
-			    alert(\'Problem uploading image.\');
-			});
-		    }
-		};
-		// ]]></script>';
+				    alert(\'Problem uploading image.\');
+				});
+			    }
+			};
+			// ]]></script>';
+	}
+
 	echo '
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
-			sceditor.create(textarea, {
+			sceditor.create(textarea, {';
+
+	if($context['TPortal']['use_dragdrop']) {
+		echo'
 				// Enable the drag and drop plugin
 				plugins: \'dragdrop\',
 				// Set the drag and drop plugin options
-				dragdrop: dragdropOptions,
-    
-				format: \'xhtml\',
+				dragdrop: dragdropOptions,';
+	}
+
+	echo '			format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
 			});
