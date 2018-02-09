@@ -27,7 +27,7 @@
 		<readme type="inline" parsebbc="true">Installing TinyPortal V1.5.0 for SMF2.1.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of TinyPortal Before Installing.[/size]</readme>
 		<modification>install-2.1.xml</modification>
 		<database>install.php</database>
-		<code>do_hooks.php</code>
+		<code>do_hooks-2.1.php</code>
 	</install>
 	<uninstall for="2.0 - 2.0.99">
 		<readme type="inline">Uninstalling TinyPortal V1.5.0 for SMF2.0.x</readme>
@@ -107,7 +107,7 @@
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
-		<code>do_hooks.php</code>
+		<code>do_hooks-2.1.php</code>
     </uninstall>
 
 </package-info>

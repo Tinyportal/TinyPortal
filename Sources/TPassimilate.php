@@ -89,18 +89,20 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a><br>
+	<a href="http://p.yusukekamiyamane.com/">Fugue Icons</a> | &copy; 2012 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License<br>
+	<a href="http://p.yusukekamiyamane.com/">Diagona Icons</a> | &copy; 2007 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || ( defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
 
 	$find = array(
-	    '<body>',
+		'<body>',
 		'Simple Machines</a>',
 		'class="copywrite"',
 	);
 	$replace = array(
-	    '<body id="' . $bodyid . '" class="' . $bclass . '">',
+		'<body id="' . $bodyid . '" class="' . $bclass . '">',
 		'Simple Machines</a><br />' . $string,
 		'class="copywrite" style="line-height: 1;"',
 	);
@@ -120,6 +122,17 @@ function tpAddCopy($buffer)
 	}
 
 	return $buffer;
+}
+
+// Adds TP copyright to the credits page
+function tpAddCopy2()
+{
+	global $context, $scripturl;
+
+	$context['copyrights']['mods']['tinyportal'] = '
+	<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a><br>
+	<a href="http://p.yusukekamiyamane.com/">Fugue Icons</a> | &copy; 2012 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License<br>
+	<a href="http://p.yusukekamiyamane.com/">Diagona Icons</a> | &copy; 2007 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License';
 }
 
 function tpAddIllegalPermissions()
