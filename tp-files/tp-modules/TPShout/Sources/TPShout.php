@@ -623,7 +623,6 @@ function shout_bcc_code($collapse = true)
 	// The below array makes it dead easy to add images to this page. Add it to the array and everything else is done for you!
 	$context['tp_bbc_tags'] = array();
 	$context['tp_bbc_tags2'] = array();
-
 	$removed_bbc = array ( 
 		'b' => 'bold',
 		'i' => 'italic',
@@ -631,25 +630,22 @@ function shout_bcc_code($collapse = true)
 		'quote' => 'bbc_quote',
 	);
 
+	$tmp = array();
 	foreach($removed_bbc as $k => $v) {
 		if(array_key_exists($v, $txt)) {
 			if($v == 'italic') {
-				$context['tp_bbc_tags'][] = array(
-					'italicize' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
+				$tmp = $tmp + array('italicize' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			} 
 			elseif($v == 'bold') {
-				$context['tp_bbc_tags'][] = array(
-					'bold' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
+				$tmp = $tmp + array( 'bold' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			}
 			else {
-				$context['tp_bbc_tags'][] = array(
-					$k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
+				$tmp = $tmp + array( $k => array ( 'code' => $k , 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			}
 		}
 	}
+
+	$context['tp_bbc_tags'][] = $tmp;
 
 	$removed_bbc = array ( 
 		'u' => 'underline',
@@ -659,32 +655,25 @@ function shout_bcc_code($collapse = true)
 		'move' => 'marquee',
 	);
 
+	$tmp = array();
 	foreach($removed_bbc as $k => $v) {
 		if(array_key_exists($v, $txt)) {
 			if($v == 'glow') {
-				$context['tp_bbc_tags2'][] = array(
-					$v => array('code' => $k, 'before' => '['.$k.'=red,2,300]', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
-
+				$tmp = $tmp + array( $v => array('code' => $k, 'before' => '['.$k.'=red,2,300]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			}
 			elseif($v == 'shadow') {
-				$context['tp_bbc_tags2'][] = array(
-					$v => array('code' => $k, 'before' => '['.$k.'=red,left]', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
-
+				$tmp = $tmp + array( $v => array('code' => $k, 'before' => '['.$k.'=red,left]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			}
 			elseif($v == 'marquee') {
-				$context['tp_bbc_tags2'][] = array(
-					$k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
+				$tmp = $tmp + array( $k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			}
 			else {
-				$context['tp_bbc_tags2'][] = array(
-					$v => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v])
-				);
+				$tmp = $tmp + array( $v => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
 			}
 		}
 	}
+	
+	$context['tp_bbc_tags2'][] = $tmp;
 
 	if($collapse)
 		echo '
