@@ -1252,7 +1252,7 @@ function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 	
 	$what = '
 	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
-		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
+		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
 	</a>';
 	if($string)
 		return $what;
@@ -1266,7 +1266,7 @@ function tp_hidepanel2($id, $id2, $alt)
 	
 	$what = '
 	<a title="'.$txt[$alt].'" style="cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
-		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" alt="*" />
+		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" alt="*" />
 	</a>';
 	
 	return $what;
@@ -2127,7 +2127,7 @@ function tp_collectArticleIcons()
 	{
 		while (false !== ($file = readdir($handle))) 
 		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPnoicon.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPnoicon.png' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
 				$context['TPortal']['articons']['icons'][] = array(
 					'id' => $count,
@@ -2147,7 +2147,7 @@ function tp_collectArticleIcons()
 	{
 		while (false !== ($file = readdir($handle))) 
 		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.png' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
 				if(substr($file, 0, 2) == 's_')
 					$context['TPortal']['articons']['illustrations'][] = array(
