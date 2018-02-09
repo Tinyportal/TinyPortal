@@ -953,10 +953,6 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	echo '
 			<script type="text/javascript"><!-- // --><![CDATA[
 		function tpImageUpload(file) {
-			var headers = new Headers({
-				\'authorization\': \'Client-ID <your imgur client ID>\'
-			});
-
 			var form = new FormData();
 			form.append(\'image\', file);
 
