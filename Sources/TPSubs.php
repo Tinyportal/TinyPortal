@@ -1012,7 +1012,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		// ]]></script>';
 	
 	// only if you can edit your own articles
-	if($upload && allowedTo('tp_editownarticle'))
+	if(!$context['TPortal']['use_dragdrop'] && $upload && allowedTo('tp_editownarticle'))
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
@@ -1037,12 +1037,12 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/thumbs/'.$im.'" class="tp-thumb" alt="" onclick=\'insHTML("<img src=\"'.$boardurl.'/tp-images/', substr($im,6) , '\" border=\"none\" alt=\"\" />")\' />';					
+				echo '<img src="' . $boardurl . '/tp-images/thumbs/' . $im . '" class="tp-thumb" alt="" onclick=\"this.src=\'' . $boardurl . '/tp-images/' . substr( $im, 6 ) . '\'" />';
 		}
 		echo '
-		</div>
-	</div>';
+		</div>';
 	}
+	echo '</div>';
 }
 
 function TP_getallmenus()
