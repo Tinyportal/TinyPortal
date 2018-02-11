@@ -148,6 +148,23 @@ top: -9px;
 left: 16px;
 }
 
+.shoutbox_datetime {
+	float: right;
+}
+
+.shout_options .shoutbox_datetime a {
+	/*display: none;*/
+	margin-right: 0.1em;
+}
+/*
+.shoutbox_datetime:hover {
+	display: none;
+}
+
+.shoutbox_datetime:hover .shout_options:after {
+	 display: block; 
+}
+*/
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
 
  /*.bubble {	background-color: #888; } 
