@@ -394,7 +394,7 @@ function template_singleshout($row)
 					' . (allowedTo('tp_can_admin_shout') ? '
 					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
-					' . $row['realName'] . ' : '. date('M. d Y - g:ia', $row['value2']).' ' . $row['value1'] . '
+					<b>' . $row['realName'] . '</b>: '. date('Y-m-d H:i:s', $row['value2']).' ' . $row['value1'] . '
 				</div>
 			</div>',
 	);
