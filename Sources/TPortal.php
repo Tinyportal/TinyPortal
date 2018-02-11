@@ -1345,60 +1345,22 @@ function doTPfrontpage()
 	$fetch_article_titles = array();
 	$panels = array(4 => 'front');
 
+	$test = array ( 
+		'articlebox' 	=> false, 
+		'themebox' 	=> false, 
+		'menubox'	=> false,
+		'catbox'	=> false
+	);
+
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
-			// some tests to minimize sql calls
-			if($row['type'] == 7)
-				$test_themebox = true;
-			elseif($row['type'] == 18)
-			{
-				$test_articlebox = true;
-				if(is_numeric($row['body']))
-					$fetch_articles[]=$row['body'];
-			}
-			elseif($row['type'] == 9)
-				$test_menubox = true;
-			elseif($row['type'] == 19)
-			{
-				$test_catbox = true;
-				if(is_numeric($row['body']))
-					$fetch_article_titles[] = $row['body'];
-			}
-			// for modules, include it now
-			elseif($row['type'] == 20)
-			{
-				if(!empty($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']) && file_exists($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']))
-					require_once($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']);
-			}
-			$can_edit = get_perm($row['editgroups'], '');
-			$can_manage = allowedTo('tp_blocks');
-			if($can_manage)
-				$can_edit = false; 
-
-			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
-				'frame' => $row['frame'],
-				'title' => strip_tags($row['title'], '<center>'),
-				'type' => $blocktype[$row['type']],
-				'body' => $row['body'],
-				'visible' => $row['visible'],
-				'var1' => $row['var1'],
-				'var2' => $row['var2'],
-				'var3' => $row['var3'],
-				'var4' => $row['var4'],
-				'var5' => $row['var5'],
-				'id' => $row['id'],
-				'lang' => $row['lang'],
-				'access2' => $row['access2'],
-				'can_edit' => $can_edit,
-				'can_manage' => $can_manage,
-			);
-
-			$count[$panels[$row['bar']]]++;
+			TPSetupPanel($row, $blocks, $panels, $count, $blocktype, $fetch_articles, $fetch_article_titles, $test);
 		}
 		$smcFunc['db_free_result']($request);
 	}
+
 	if(sizeof($fetch_articles) > 0)
 		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
 	else
@@ -1410,7 +1372,7 @@ function doTPfrontpage()
 		$fetchtitles = '';
 
 	// if a block displays an article
-	if(isset($test_articlebox) && $fetchart != '')
+	if($test['articlebox'] && $fetchart != '')
 	{
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
@@ -1453,7 +1415,7 @@ function doTPfrontpage()
 	}
 
 	// any cat listings from blocks?
-	if(isset($test_catbox) && $fetchtitles != '')
+	if($test['catbox'] && $fetchtitles != '')
 	{
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, art.subject, art.date, art.category, art.author_id as authorID, art.shortname,
@@ -1487,8 +1449,9 @@ function doTPfrontpage()
 			$smcFunc['db_free_result']($request);
 		}
 	}
+
 	// get menubox items
-	if(isset($test_menubox))
+	if($test['menubox'])
 	{
 		$context['TPortal']['menu'] = array();
 		$request =  $smcFunc['db_query']('', '
@@ -1647,78 +1610,41 @@ function doTPblocks()
 	);
 
 	$context['TPortal']['hide_frontbar_forum'] = 0;
-	$count = array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0); 
+
+	$panels	= array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
+	$count 	= array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0); 
 	
 	$fetch_articles = array();
 	$fetch_article_titles = array();
 
-	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
+	$test = array ( 
+		'articlebox' 	=> false, 
+		'themebox' 	=> false, 
+		'menubox'	=> false,
+		'catbox'	=> false
+	);
+
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
-			// some tests to minimize sql calls
-			if($row['type'] == 7)
-				$test_themebox = true;
-			elseif($row['type'] == 18)
-			{
-				$test_articlebox = true;
-				if(is_numeric($row['body']))
-					$fetch_articles[] = $row['body'];
-			}
-			elseif($row['type'] == 9 || $row['type'] == 16  )
-				$test_menubox = true;
-			elseif($row['type'] == 19)
-			{
-				$test_catbox = true;
-				if(is_numeric($row['body']))
-					$fetch_article_titles[] = $row['body'];
-			}
-			// for modules, include it now
-			elseif($row['type'] == 20)
-			{
-				if(!empty($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']) && file_exists($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']))
-					require_once($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']);
-			}
-			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
-			$can_manage = allowedTo('tp_blocks');
-			if($can_manage)
-				$can_edit = false; 
-
-			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
-				'frame' => $row['frame'],
-				'title' => strip_tags($row['title'], '<center>'),
-				'type' => isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type'],
-				'body' => $row['body'],
-				'visible' => $row['visible'],
-				'var1' => $row['var1'],
-				'var2' => $row['var2'],
-				'var3' => $row['var3'],
-				'var4' => $row['var4'],
-				'var5' => $row['var5'],
-				'id' => $row['id'],
-				'lang' => $row['lang'],
-				'access2' => $row['access2'],
-				'can_edit' => $can_edit,
-				'can_manage' => $can_manage,
-			);
-
-			$count[$panels[$row['bar']]]++;
+			$test = TPSetupPanel($row, $blocks, $panels, $count, $blocktype, $fetch_articles, $fetch_article_titles, $test);
 		}
 		$smcFunc['db_free_result']($request);
 	}
+
 	if(sizeof($fetch_articles) > 0)
 		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
 	else
 		$fetchart = '';
 
 	if(sizeof($fetch_article_titles) > 0)
-		$fetchtitles= '(art.category='. implode(' OR art.category=', $fetch_article_titles).')';
+		$fetchtitles = '(art.category='. implode(' OR art.category=', $fetch_article_titles).')';
 	else
 		$fetchtitles = '';
 
-    // if a block displays an article
-    if(isset($test_articlebox) && $fetchart != '')
+	// if a block displays an article
+	if($test['articlebox'] && $fetchart != '')
 	{
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
@@ -1771,8 +1697,8 @@ function doTPblocks()
 		}
 	}
 
-   // any cat listings from blocks?
-    if(isset($test_catbox) && $fetchtitles != '')
+   	// any cat listings from blocks?
+	if($test['catbox'] && $fetchtitles != '')
 	{
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, art.subject, art.date, art.category, art.author_id as authorID, art.shortname,
@@ -1804,9 +1730,10 @@ function doTPblocks()
 			}
 			$smcFunc['db_free_result']($request);
 		}
-    }
+	}
+
 	// get menubox items
-	if(isset($test_menubox))
+	if($test['menubox'])
 	{
 		$context['TPortal']['menu'] = array();
 		$request =  $smcFunc['db_query']('', '
@@ -3055,5 +2982,57 @@ function TPortal_articles($catsort, $catsort_order, $now, $max)
 	}
 }
 
+function TPSetupPanel($row, &$blocks, &$panels, &$count, $blocktype, &$fetch_articles, &$fetch_article_titles, &$test)
+{
+	global $context;
+
+	// some tests to minimize sql calls
+	if($row['type'] == 7) {
+		$test['themebox'] = true;
+	}
+	elseif($row['type'] == 18) {
+		$test['articlebox'] = true;
+		if(is_numeric($row['body']))
+			$fetch_articles[] = $row['body'];
+	}
+	elseif($row['type'] == 9 || $row['type'] == 16  ) {
+		$test['menubox'] = true;
+	} 
+	elseif($row['type'] == 19) {
+		$test['catbox'] = true;
+		if(is_numeric($row['body']))
+			$fetch_article_titles[] = $row['body'];
+	}
+	// for modules, include it now
+	elseif($row['type'] == 20) {
+		if(!empty($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']) && file_exists($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']))
+			require_once($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']);
+	}
+	$can_edit 	= !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
+	$can_manage 	= allowedTo('tp_blocks');
+	if($can_manage)
+		$can_edit = false; 
+
+	$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
+			'frame' => $row['frame'],
+			'title' => strip_tags($row['title'], '<center>'),
+			'type' => isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type'],
+			'body' => $row['body'],
+			'visible' => $row['visible'],
+			'var1' => $row['var1'],
+			'var2' => $row['var2'],
+			'var3' => $row['var3'],
+			'var4' => $row['var4'],
+			'var5' => $row['var5'],
+			'id' => $row['id'],
+			'lang' => $row['lang'],
+			'access2' => $row['access2'],
+			'can_edit' => $can_edit,
+			'can_manage' => $can_manage,
+			);
+
+	$count[$panels[$row['bar']]]++;
+
+}
 
 ?>
