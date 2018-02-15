@@ -1763,6 +1763,12 @@ function article_morelinks($render = true)
 function render_rating($total, $votes, $id, $can_rate = false)
 {
 	global $txt, $context, $settings, $scripturl;
+
+	if(!is_numeric($total))
+		$total = (int)$total;
+
+	if(!is_numeric($votes))
+		$votes = (int)$votes;
 	
 	if($total == 0 && $votes > 0)
 		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
