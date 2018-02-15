@@ -726,7 +726,7 @@ function do_blocks()
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
 
 	$context['html_headers'] .= '
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin20"></script>
+	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin150"></script>
 	<script type="text/javascript"><!-- // --><![CDATA[
 		function getXMLHttpRequest()
 		{
