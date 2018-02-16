@@ -305,7 +305,7 @@ function template_main()
 			
 				if(!empty($context['TPortal']['artcomments']['new']))
 				{
-					foreach($context['TPortal']['artcomments']['new'] as $mes)
+					foreach($context['TPortal']['artcomments']['new'] as $mes) {
 						echo '
 			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
 				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
@@ -328,8 +328,7 @@ function template_main()
 		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
 		';
 			}
-			else
-			{
+			else {
 				echo '
 		<div class="windowbg" style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
 		<div id="latest-art-comm" class="bordercolor">

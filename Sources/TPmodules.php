@@ -243,7 +243,7 @@ function TPmodules()
 		
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
+			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				$context['TPortal']['artcomments']['new'][] = array(
 				'page' => $row['value5'],	
 				'subject' => $row['subject'],	
@@ -268,8 +268,7 @@ function TPmodules()
 		TPadd_linktree( $scripturl.'?action=tpmod;sa=showcomments'.($showall ? ';showall' : ''), $txt['tp-showcomments'] );
 		loadtemplate( 'TPmodules' ); 
 	}
-	elseif($tpsub == 'savesettings')
-	{
+	elseif($tpsub == 'savesettings') {
 		// check the session
 		checkSession( 'post' );
 		if(isset($_POST['item']))

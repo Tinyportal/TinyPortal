@@ -114,7 +114,7 @@ function template_install_script()
 		</div>
 		<span class="upperframe"><span></span></span>
 		<div class="roundframe centertext">';
-	if(!isset($context['installation_done']))
+	if(!isset($context['installation_done'])) {
 		echo '
 			<strong>Please select the action you want to perform:</strong>
 			<div class="buttonlist">

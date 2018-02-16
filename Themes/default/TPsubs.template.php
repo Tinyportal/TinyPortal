@@ -539,7 +539,7 @@ function TPortal_statsbox()
 	echo'
 	<div class="tp_statsblock">';
 
-	if(isset($context['TPortal']['userbox']['stats']))
+	if(isset($context['TPortal']['userbox']['stats'])) {
 		// members stats
 		echo '
 		<h5 class="mlist"><a href="'.$scripturl.'?action=mlist">'.$txt['members'].'</a></h5>
@@ -547,7 +547,8 @@ function TPortal_statsbox()
 			<li>' . $bullet.$txt['total_members'].': ', isset($modSettings['memberCount']) ? $modSettings['memberCount'] : $modSettings['totalMembers'], '</li>
 			<li>' . $bullet.$txt['tp-latest'].': <a href="', $scripturl, '?action=profile;u=', $modSettings['latestMember'], '"><strong>', $modSettings['latestRealName'], '</strong></a></li>
 		</ul>';
-	if(isset($context['TPortal']['userbox']['stats_all']))
+	}
+	if(isset($context['TPortal']['userbox']['stats_all'])) {
 		// more stats
 		echo '
 		<h5 class="stats"><a href="'.$scripturl.'?action=stats">'.$txt['tp-stats'].'</a></h5>
@@ -1326,7 +1327,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	}
 	elseif($type == 6)
 	{
-		if(!$single)
+		if(!$single) {
 			$code = '
 		<div class="article_title' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg' : '').'" style="margin: 0 0 3px 0; padding: 1em;">
 			<div><strong style="font-size: 105%;">{article_title}</strong></div>
@@ -1334,7 +1335,8 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_text}
 			</div><br />
 		</div>';
-		else
+		}
+		else {
 			$code = '
 		<div class="tborder">
 			<div class="cat_bar">
@@ -1658,7 +1660,7 @@ function article_bookmark($render = true)
 {
 	global $scripturl, $settings, $context;
 	
-	if(in_array( 'social', $context['TPortal']['article']['visual_options'] ))
+	if(in_array( 'social', $context['TPortal']['article']['visual_options'] )) {
 		echo '
 	<div class="windowbg2" style="margin: 1px 0; padding-bottom: 1em;">
 		<div class="article_socialbookmark">
@@ -1988,7 +1990,8 @@ function blockarticle_moreauthor($render = true)
 				$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['posts'].$txt['tp-poster4'].timeformat( $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['lastLogin'] ).'.
 			</div>			
 		</div>';
-		else
+		}
+		else {
 			echo '
 		<div class="article_authorinfo">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
@@ -1996,6 +1999,7 @@ function blockarticle_moreauthor($render = true)
 				<em>' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'].$txt['tp-poster5'].'</em>
 			</div>			
 		</div>';
+		}
 	}
 	else
 		echo '';

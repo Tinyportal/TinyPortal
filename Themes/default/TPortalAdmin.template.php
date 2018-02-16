@@ -535,14 +535,15 @@ function template_menubox()
 
 			foreach($context['TPortal']['menus'] as $mbox)
 			{
-				if($mbox['id'] == 0)
+				if($mbox['id'] == 0) {
 					echo '
 						<div class="windowbg">
 							<div class="float-items" style="width:60%;">' . $txt['tp-internal'].'</div>
 							<div class="float-items" style="width:36%;"><a href="' . $scripturl.'?action=tpadmin;sa=menubox;mid=0"><img title="'.$txt['tp-edit'].'" border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="'.$txt['tp-edit'].'"  /></a></div>
 						    <p class="clearthefloat"></p>
 						</div>';
-				else					
+				}
+				else {					
 					echo '
 						<div class="windowbg2">
 							<div style="width:60%;" class="float-items">
@@ -1244,14 +1245,14 @@ function template_frontpage()
 						<div class="font-strong">'.$txt['tp-catlayouts'].'</div>
 					    <div>';
 
-			foreach($context['TPortal']['admin_layoutboxes'] as $box)
+			foreach($context['TPortal']['admin_layoutboxes'] as $box) {
 				echo '
 								<div style="float: left; width: 180px; height: 100px; margin: 4px;' , $context['TPortal']['frontpage_catlayout'] == $box['value'] ? ' font-weight: bold;' : '', '">
 									<input type="radio" name="tp_frontpage_catlayout" value="'.$box['value'].'"', $context['TPortal']['frontpage_catlayout'] == $box['value'] ? ' checked="checked"' : '', '>
 									'.$box['label'].'<br /><img style="margin: 4px 4px 4px 10px;" src="', $settings['tp_images_url'], '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" />
 								</div>';
-
-			if(empty($context['TPortal']['frontpage_template']))
+			}
+			if(empty($context['TPortal']['frontpage_template'])) {
 				$context['TPortal']['frontpage_template'] = '
 	<span class="upperframe"><span></span></span>
 	<div class="roundframe">
@@ -1522,14 +1523,15 @@ function template_editcategory()
 							<div class="windowbg2 padding-div">
 								<div class="font-strong">'.$txt['tp-articlelayouts'].':</div>
 								<div>';
-			foreach($context['TPortal']['admin_layoutboxes'] as $box)
+			foreach($context['TPortal']['admin_layoutboxes'] as $box) {
 				echo '
 								<div style="float: left; width: 180px; height: 100px; margin: 4px;' , $mg['catlayout'] == $box['value'] ? ' font-weight: bold;' : '', '">
 									<input type="radio" name="tp_category_catlayout" value="'.$box['value'].'"', $mg['catlayout'] == $box['value'] ? ' checked="checked"' : '', '>
 									'.$box['label'].'<br /><img style="margin: 4px 4px 4px 10px;" src="', $settings['tp_images_url'], '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" />
 								</div>';
+			}
 
-			if(empty($mg['value9']))
+			if(empty($mg['value9'])) {
 				$mg['value9'] = '
 <div class="tparticle">
 	<div class="cat_bar">
@@ -1595,10 +1597,8 @@ function template_editcategory()
 									<div style="max-height: 30em; overflow: auto;">';
 		// loop through and set membergroups
 		$tg = explode( ',', $mg['value3'] );
-		foreach($context['TPmembergroups'] as $g)
-		{
-			if($g['posts'] == '-1' && $g['id'] != '1')
-			{
+		foreach($context['TPmembergroups'] as $g) {
+			if($g['posts'] == '-1' && $g['id'] != '1') {
 				echo '<input name="tp_category_group_'.$g['id'].'" type="checkbox" value="'.$mg['id'].'"';
 				if(in_array( $g['id'], $tg ))
 					echo ' checked';

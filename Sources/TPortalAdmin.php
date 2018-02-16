@@ -139,7 +139,7 @@ function TPortalAdmin()
 
 	// done with all POST values, go to the correct screen	
 	$context['TPortal']['subtabs'] = '';
-	if(in_array( $tpsub, array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory') ))
+	if(in_array( $tpsub, array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory') )) {
 		$context['TPortal']['subtabs'] = array(
 			'categories' => array(
 				'lang' => true, 
@@ -196,7 +196,8 @@ function TPortalAdmin()
 				'active' => $tpsub == 'clist',
 			),
 		);
-	elseif(in_array( $tpsub, array('addcategory', 'categories', 'clist') ))
+	}
+	elseif(in_array( $tpsub, array('addcategory', 'categories', 'clist') )) {
 		$context['TPortal']['subtabs'] = array(
 			'categories' => array(
 				'lang' => true, 
@@ -217,7 +218,8 @@ function TPortalAdmin()
 				'active' => $tpsub == 'clist',
 			),
 		);
-	elseif(in_array( $tpsub, array('blocks', 'panels') ))
+	}
+	elseif(in_array( $tpsub, array('blocks', 'panels') )) {
 		$context['TPortal']['subtabs'] = array(
 			'blocks' => array(
 				'lang' => true, 
@@ -717,6 +719,7 @@ function do_blocks()
 					'loose' => $row['access2'] != '' ? true : false,
 					'editgroups' => $row['editgroups']
 				);
+			}
 
 			$smcFunc['db_free_result']($request);
 		}
@@ -2039,26 +2042,21 @@ function do_postchecks()
 			}
 	}			
 	// which screen do we come from?
-	if(!empty($_POST['tpadmin_form']))
-	{
+	if(!empty($_POST['tpadmin_form'])) {
 		// get it
 		$from = $_POST['tpadmin_form'];
 		//news
-		if($from == 'news')
-		{
-					return 'news';
+		if($from == 'news') {
+			return 'news';
 		}
 		// block permissions overview
-		elseif($from == 'blockoverview')
-		{
+		elseif($from == 'blockoverview') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_blocks' );
 			
 			$block = array();
-			foreach($_POST as $what => $value)
-			{
-				if(substr( $what, 5, 7 ) == 'tpblock')
-				{
+			foreach($_POST as $what => $value) {
+				if(substr( $what, 5, 7 ) == 'tpblock') {
 					// get the id
 					$bid = substr( $what, 12 );
 					if(!isset($block[$bid]))
@@ -2068,15 +2066,13 @@ function do_postchecks()
 						$block[$bid][] = $value;
 				}
 			}
-			foreach($block as $bl => $blo)
-			{
+			foreach($block as $bl => $blo) {
 				$request = $smcFunc['db_query']('', '
 					SELECT access FROM {db_prefix}tp_blocks 
 					WHERE id = {int:blockid}',
 					array('blockid' => $bl)
 				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$smcFunc['db_free_result']($request);
 					$request = $smcFunc['db_query']('', '
@@ -2091,21 +2087,17 @@ function do_postchecks()
 			}
 			return 'blocks;overview';
 		}
-		elseif(in_array( $from, array('settings', 'frontpage', 'artsettings', 'panels') ))
-		{
+		elseif(in_array( $from, array('settings', 'frontpage', 'artsettings', 'panels') )) {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_settings' );
 			$w = array();
 			$ssi = array();
-			foreach($_POST as $what => $value)
-			{
-				if(substr( $what, 0, 3 ) == 'tp_')
-				{
+			foreach($_POST as $what => $value) {
+				if(substr( $what, 0, 3 ) == 'tp_') {
 					$where = substr( $what, 3 );
 					$clean = $value;
 					// for frontpage, do some extra
-					if($from == 'frontpage')
-					{
+					if($from == 'frontpage') {
 						if(substr( $what, 0, 20 ) == 'tp_frontpage_visual_')
 						{
 							$w[] = substr( $what, 20 );
@@ -2128,10 +2120,10 @@ function do_postchecks()
 								$ssi[$value] = $value;
 						}
 					}
-					if($from == 'settings' && $what == 'tp_frontpage_title')
+					if($from == 'settings' && $what == 'tp_frontpage_title') {
 						$updateArray['frontpage_title'] = $clean;
-					else
-					{
+					}
+					else {
 						if(isset($clean))
 							$updateArray[$where] = $clean;
 					}
@@ -2145,12 +2137,12 @@ function do_postchecks()
 							}
 							$themeschecked[] = $postname;					
 							if(isset($themeschecked)) {
-							  $smcFunc['db_query']('', '
-				              UPDATE {db_prefix}tp_settings
-					          SET value = {string:value}
-					          WHERE name = {string:name}',
-							  array('value' => implode(',', $themeschecked), 'name' => 'resp',)
-							  );	
+								$smcFunc['db_query']('', '
+										UPDATE {db_prefix}tp_settings
+										SET value = {string:value}
+										WHERE name = {string:name}',
+										array('value' => implode(',', $themeschecked), 'name' => 'resp',)
+									);	
 							}
 						}
 					}
@@ -2158,8 +2150,7 @@ function do_postchecks()
 				}
 			}
 			// check the frontpage visual setting..
-			if($from == 'frontpage')
-			{
+			if($from == 'frontpage') {
 				$updateArray['frontpage_visual'] = implode( ',', $w );
 				$updateArray['SSI_board'] = implode( ',', $ssi );
 			}
@@ -2167,20 +2158,15 @@ function do_postchecks()
 			return $from;
 		}
 		// categories
-		elseif($from == 'categories')
-		{
+		elseif($from == 'categories') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_articles' );
 			
-			foreach($_POST as $what => $value)
-			{
-				if(substr( $what, 0, 3 ) == 'tp_')
-				{
+			foreach($_POST as $what => $value) {
+				if(substr( $what, 0, 3 ) == 'tp_') {
 					// for frontpage, do some extra
-					if($from == 'categories')
-					{
-						if(substr( $what, 0, 19 ) == 'tp_category_value2_')
-						{
+					if($from == 'categories') {
+						if(substr( $what, 0, 19 ) == 'tp_category_value2_') {
 							$where = tp_sanitize( substr( $what, 19 ) );
 							//make sure parent are not its own parent
 							$request = $smcFunc['db_query']('', '
@@ -2192,9 +2178,8 @@ function do_postchecks()
 							);
 							$row = $smcFunc['db_fetch_assoc']($request);
 							$smcFunc['db_free_result']($request);
-							if($row['value2'] == $where)
-							{
-															$smcFunc['db_query']('', '
+							if($row['value2'] == $where) {
+								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_variables 
 									SET value2 = {string:val2}
 									WHERE id = {string:varid} LIMIT 1',
@@ -2221,15 +2206,12 @@ function do_postchecks()
 			return $from;
 		}
 		// articles
-		elseif($from == 'articles')
-		{
+		elseif($from == 'articles') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_articles' );
 			
-			foreach($_POST as $what => $value)
-			{
-				if(substr( $what, 0, 14 ) == 'tp_article_pos')
-				{
+			foreach($_POST as $what => $value) {
+				if(substr( $what, 0, 14 ) == 'tp_article_pos') {
 					$where = tp_sanitize( substr( $what, 14 ) );
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
@@ -2248,16 +2230,15 @@ function do_postchecks()
 				return $from;
 		}
 		// modules
-		elseif($from == 'modules')
-		{
+		elseif($from == 'modules') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_settings' );
 			
-			foreach($_POST as $what => $value)
-			{
-				if($what == 'tp_show_download')
+			foreach($_POST as $what => $value) {
+				if($what == 'tp_show_download') {
 					$updateArray['show_download'] = $value;
-				elseif(substr( $what, 0, 14 ) == 'tpmodule_state')
+				}
+				elseif(substr( $what, 0, 14 ) == 'tpmodule_state') {
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_modules 
 						SET active = {int:active} 
@@ -2324,14 +2305,13 @@ function do_postchecks()
 			redirectexit( 'action=tpadmin;sa=menubox;mid='.$_POST['tp_menuid'] );
 		}
 		// all the menus
-		elseif($from == 'menus')
-		{
+		elseif($from == 'menus') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_blocks' );
 			
 			foreach($_POST as $what => $value)
 			{
-				if(substr( $what, 0, 12 ) == 'tp_menu_name')
+				if(substr( $what, 0, 12 ) == 'tp_menu_name') {
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_variables 
 						SET value1 = {string:val1} 
@@ -2345,8 +2325,7 @@ function do_postchecks()
 			}
 			redirectexit( 'action=tpadmin;sa=menubox' );
 		}
-		elseif($from == 'singlemenuedit')
-		{
+		elseif($from == 'singlemenuedit') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_blocks' );
 			
@@ -2424,9 +2403,8 @@ function do_postchecks()
 						)
 					);
 				}
-				elseif($what == 'tp_menu_sub')
-				{
-									$smcFunc['db_query']('', '
+				elseif($what == 'tp_menu_sub') {
+					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_variables
 						SET value4 = {string:val4}
 						WHERE id = {int:varid}',
@@ -2435,7 +2413,8 @@ function do_postchecks()
 							'varid' => $where,
 						)
 					);
-				elseif(substr( $what, 0, 15 ) == 'tp_menu_newlink')
+				}
+				elseif(substr( $what, 0, 15 ) == 'tp_menu_newlink') {
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_variables 
 						SET value2 =  
@@ -2920,7 +2899,7 @@ function do_postchecks()
 			else
 				$body = '';
 
-			if(isset($cp))
+			if(isset($cp)) {
 				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_blocks',
 					array(
@@ -2959,7 +2938,7 @@ function do_postchecks()
 				);
 			}
 			else {
-							$smcFunc['db_insert']('INSERT',
+				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_blocks',
 					array(
 						'type' => 'int',
@@ -2982,6 +2961,7 @@ function do_postchecks()
 					),
 					array('id')
 				);
+			}
 
 			$where = $smcFunc['db_insert_id']('{db_prefix}tp_blocks', 'id');	
 			if(!empty($where))
@@ -2990,8 +2970,7 @@ function do_postchecks()
 				redirectexit( 'action=tpadmin;sa=blocks' );
 		}
 		// from editing block
-		elseif($from == 'blockedit')
-		{
+		elseif($from == 'blockedit') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_blocks' );
 			
@@ -3163,16 +3142,14 @@ function do_postchecks()
 			redirectexit( 'action=tpadmin;blockedit='.$where.';'.$context['session_var'].'='.$context['session_id'] );
 		}
 		// Editing an article?
-		elseif(substr( $from, 0, 11 ) == 'editarticle')
-		{
+		elseif(substr( $from, 0, 11 ) == 'editarticle') {
 			checkSession( 'post' );
 			isAllowedTo( 'tp_articles' );
 
 			$new = false;
 			$where = substr( $from, 11 );
 
-			if(empty($where))
-			{
+			if(empty($where)) {
 				// we need to create one first
 				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_articles',
@@ -3187,8 +3164,7 @@ function do_postchecks()
 			}
 			
 			// check if uploads are there
-			if(file_exists( $_FILES['tp_article_illupload']['tmp_name'] ))
-			{
+			if(file_exists( $_FILES['tp_article_illupload']['tmp_name'] )) {
 				$name = TPuploadpicture( 'tp_article_illupload', '', '180', 'jpg,gif,png', 'tp-files/tp-articles/illustrations' );
 				tp_createthumb( 'tp-files/tp-articles/illustrations/'.$name, 128, 128, 'tp-files/tp-articles/illustrations/s_'.$name );
 				$smcFunc['db_query']('', '
@@ -3206,17 +3182,14 @@ function do_postchecks()
 			}
 			$options = array();
 			foreach($_POST as $what => $value) {
-				if($what == 'tp_article_intro_pure')
-				{
-									continue;
+				if($what == 'tp_article_intro_pure') {
+					continue;
 				}
 
-				if(substr( $what, 0, 11 ) == 'tp_article_' && !empty($where))
-				{
+				if(substr( $what, 0, 11 ) == 'tp_article_' && !empty($where)) {
 					$setting = substr( $what, 11 );
 					
-					if($setting == 'authorid')
-					{
+					if($setting == 'authorid') {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET author_id = {int:auth} 
@@ -3224,8 +3197,7 @@ function do_postchecks()
 							array('auth' => $value, 'artid' => $where)
 						);
 					}
-					elseif($setting == 'idtheme')
-					{
+					elseif($setting == 'idtheme') {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET id_theme = {int:id_theme} 
@@ -3233,8 +3205,7 @@ function do_postchecks()
 							array('id_theme' => $value, 'artid' => $where)
 						);
 					}
-					elseif($setting == 'subject')
-					{
+					elseif($setting == 'subject') {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET subject = {string:subject} 
@@ -3242,8 +3213,7 @@ function do_postchecks()
 							array('subject' => $value, 'artid' => $where)
 						);
 					}
-					elseif($setting == 'shortname')
-					{
+					elseif($setting == 'shortname') {
 						$value = htmlspecialchars( str_replace( ' ', '-', $value ), ENT_QUOTES );
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
@@ -3252,8 +3222,7 @@ function do_postchecks()
 							array('shortname' => $value, 'artid' => $where)
 						);
 					}
-					elseif($setting == 'category')
-					{
+					elseif($setting == 'category') {
 						// for the event, get the allowed
 						$request = $smcFunc['db_query']('', '
 							SELECT value3 FROM {db_prefix}tp_variables 
@@ -3261,8 +3230,7 @@ function do_postchecks()
 							array('varid' => $value)
 						);
 							
-						if($smcFunc['db_num_rows']($request) > 0)
-						{
+						if($smcFunc['db_num_rows']($request) > 0) {
 							$row = $smcFunc['db_fetch_assoc']($request);
 							$allowed = $row['value3'];
 							$smcFunc['db_free_result']($request);
@@ -3274,11 +3242,9 @@ function do_postchecks()
 							array('cat' => $value, 'artid' => $where)
 						);
 					}
-					elseif(in_array( $setting, array('body', 'intro') ))
-					{
+					elseif(in_array( $setting, array('body', 'intro') )) {
 						// If we came from WYSIWYG then turn it back into BBC regardless.
-						if(!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body']))
-						{
+						if(!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body'])) {
 							require_once($sourcedir.'/Subs-Editor.php');
 							$_REQUEST['tp_article_body'] = html_to_bbc( $_REQUEST['tp_article_body'] );
 							// We need to unhtml it now as it gets done shortly.
@@ -3291,10 +3257,8 @@ function do_postchecks()
 						}
 						
 						// in case of HTML article we need to check it
-						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice']))
-						{
-							if($_POST['tp_article_body_choice'] == 0)
-							{
+						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice'])) {
+							if($_POST['tp_article_body_choice'] == 0) {
 								if($setting == 'body')
 									$value = $_POST['tp_article_body_pure'];
 								elseif($setting == 'intro')
@@ -3308,8 +3272,7 @@ function do_postchecks()
 								AND type = {string:type} LIMIT 1',
 								array('sub2' => $where, 'type' => 'editorchoice')
 							);
-							if($smcFunc['db_num_rows']($request) > 0)
-							{
+							if($smcFunc['db_num_rows']($request) > 0) {
 								$row = $smcFunc['db_fetch_assoc']($request);
 								$smcFunc['db_free_result']($request);
 								$smcFunc['db_query']('', '
@@ -3321,7 +3284,7 @@ function do_postchecks()
 								);
 							}
 							else {
-															$smcFunc['db_insert']('INSERT',
+								$smcFunc['db_insert']('INSERT',
 									'{db_prefix}tp_variables',
 									array('value1' => 'string', 'type' => 'string', 'subtype2' => 'int'),
 									array($_POST['tp_article_body_choice'], 'editorchoice', $where),
@@ -3336,8 +3299,7 @@ function do_postchecks()
 							array('val' => $value, 'artid' => $where)
 						);
 					}
-					elseif(in_array( $setting, array('day', 'month', 'year', 'minute', 'hour', 'timestamp') ))
-					{
+					elseif(in_array( $setting, array('day', 'month', 'year', 'minute', 'hour', 'timestamp') )) {
 						$timestamp = mktime( $_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year'] );
 						if(!isset($savedtime))
 							$smcFunc['db_query']('', '
@@ -3348,17 +3310,17 @@ function do_postchecks()
 							);
 						$savedtime = 1;
 					}
-					elseif(in_array( $setting, array('pubstartday', 'pubstartmonth', 'pubstartyear', 'pubstartminute', 'pubstarthour', 'pub_start') ))
-					{
+					elseif(in_array( $setting, array('pubstartday', 'pubstartmonth', 'pubstartyear', 'pubstartminute', 'pubstarthour', 'pub_start') )) {
 						// are all zero? then skip
-						if(empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear']))
+						if(empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear'])) {
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles 
 									SET pub_start = {int:start}
 									WHERE id = {int:artid} LIMIT 1',
 									array('start' => 0, 'artid' => $where)
 								);
-						else
+						}
+						else {
 							$timestamp = mktime( $_POST['tp_article_pubstarthour'], $_POST['tp_article_pubstartminute'], 0, $_POST['tp_article_pubstartmonth'], $_POST['tp_article_pubstartday'], $_POST['tp_article_pubstartyear'] );
 							if(!isset($pubstart))
 								$smcFunc['db_query']('', '
@@ -3367,20 +3329,20 @@ function do_postchecks()
 									WHERE id = {int:artid} LIMIT 1',
 									array('start' => $timestamp, 'artid' => $where)
 								);
-
+						}
 						$pubstart = 1;
 					}
-					elseif(in_array( $setting, array('pubendday', 'pubendmonth', 'pubendyear', 'pubendminute', 'pubendhour', 'pub_start') ))
-					{
+					elseif(in_array( $setting, array('pubendday', 'pubendmonth', 'pubendyear', 'pubendminute', 'pubendhour', 'pub_start') )) {
 						// are all zero? then skip
-						if(empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear']))
+						if(empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear'])) {
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles 
 									SET pub_end = {int:end}
 									WHERE id = {int:artid} LIMIT 1',
 									array('end' => 0, 'artid' => $where)
 								);
-						else
+						}
+						else {
 							$timestamp = mktime( $_POST['tp_article_pubendhour'], $_POST['tp_article_pubendminute'], 0, $_POST['tp_article_pubendmonth'], $_POST['tp_article_pubendday'], $_POST['tp_article_pubendyear'] );
 							if(!isset($pubend))
 								$smcFunc['db_query']('', '
@@ -3389,47 +3351,45 @@ function do_postchecks()
 									WHERE id = {int:artid} LIMIT 1',
 									array('end' => $timestamp, 'artid' => $where)
 								);
-
+						}
 						$pubend = 1;
 					}
-					elseif(substr( $setting, 0, 8 ) == 'options_')
-					{
+					elseif(substr( $setting, 0, 8 ) == 'options_') {
 						if(substr( $setting, 0, 19 ) == 'options_lblockwidth' || substr( $setting, 0, 19 ) == 'options_rblockwidth')
 							$options[] = substr( $setting, 8 ).$value;
 						else
 							$options[] = substr( $setting, 8 );
 						
 					}
-					elseif(in_array( $setting, array('body_mode', 'intro_mode', 'illupload', 'body_pure', 'body_choice') ))
-					{
+					elseif(in_array( $setting, array('body_mode', 'intro_mode', 'illupload', 'body_pure', 'body_choice') )) {
 						// ignore it
 						continue;
 					}
-					elseif($setting == 'approved')
-					{
+					elseif($setting == 'approved') {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET approved = {int:approved} 
 							WHERE id = {int:artid} LIMIT 1',
 							array('approved' => $value, 'artid' => $where)
 						);
-						if($value == 1)
+						if($value == 1) {
 							$smcFunc['db_query']('', '
 								DELETE FROM {db_prefix}tp_variables 
 								WHERE type = {string:type} 
 								AND value5 = {int:val5}',
 								array('type' => 'art_not_approved', 'val5' => $where)
 							);
-						elseif($new)
+						}
+						elseif($new) {
 							$smcFunc['db_insert']('replace',
 								'{db_prefix}tp_variables',
 								array('type' => 'string', 'value5' => 'int'),
 								array('art_not_approved', $where),
 								array('id')
-							);						
+							);		
+						}				
 					}
-					else
-					{
+					else {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles 
 							SET '.$setting.' = {string:val}
@@ -3457,9 +3417,9 @@ function do_postchecks()
 		}
 	}
 	else {
-			return;
+		return;
 	}
-	}
+}
 
 function get_langfiles()
 {

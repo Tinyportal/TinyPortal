@@ -47,11 +47,12 @@ $context['html_headers'] .= '
 	
 	<script type="text/javascript" src="'. $settings['default_theme_url'].'/scripts/TPShout.js?11"></script>';
 	
-if(!empty($context['TPortal']['shoutbox_refresh']))
+if(!empty($context['TPortal']['shoutbox_refresh'])) {
 	$context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
-		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000.');
+		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 .');
 	// ]]></script>';
+}
 
 if(file_exists( $settings['theme_dir'].'/css/TPShout.css' ))
 	$context['html_headers'] .= '
@@ -60,7 +61,7 @@ else
 	$context['html_headers'] .= '
 	<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url'].'/css/TPShout.css?fin150" />';
 
-if($context['TPortal']['shoutbox_usescroll'] > 0)
+if($context['TPortal']['shoutbox_usescroll'] > 0) {
 	$context['html_headers'] .= '
 	<script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
 	<script type="text/javascript">

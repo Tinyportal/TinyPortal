@@ -210,7 +210,7 @@ function TP_loadCSS()
 		$context['html_headers'] .= '
 	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'].'/css/tp-style.css?fin150" />';
 
-	if(!empty($context['TPortal']['padding']))
+	if(!empty($context['TPortal']['padding'])) {
 		$context['html_headers'] .= '
 	<style type="text/css">
 		.block_leftcontainer,
@@ -233,7 +233,7 @@ function TP_loadCSS()
 		}
 	</style>';
 	}
-	}
+}
 
 function TP_loadTheme()
 {
@@ -2684,7 +2684,7 @@ function TPortal_forumArticles($catsort, $catsort_order, $start, $max, $now)
 	$context['TPortal']['pageindex'] = TPageIndex( $scripturl.'?frontpage', $start, count( $posts ), $max );
 
 	// ok we got the post ids now, fetch each one, forum first
-	if(count( $mposts ) > 0)
+	if(count( $mposts ) > 0) {
 		$request = $smcFunc['db_query']('', '
 				SELECT m.subject, m.body,
 				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
@@ -2762,8 +2762,7 @@ function TPortal_forumArticles($catsort, $catsort_order, $start, $max, $now)
 		$smcFunc['db_free_result']($request);
 	}
 	// next up is articles
-	if(count( $aposts ) > 0)
-	{
+	if(count( $aposts ) > 0) {
 		$request = $smcFunc['db_query']('', '
 				SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
@@ -2816,17 +2815,14 @@ function TPortal_forumArticles($catsort, $catsort_order, $start, $max, $now)
 	$all = array_reverse( $posts );
 
 	foreach($all as $p => $row) {
-		if($counter == 0)
-		{
-					$context['TPortal']['category']['featured'] = $row;
+		if($counter == 0) {
+			$context['TPortal']['category']['featured'] = $row;
 		}
-		elseif($counter < $col1 && $counter > 0)
-		{
-					$context['TPortal']['category']['col1'][] = $row;
+		elseif($counter < $col1 && $counter > 0) {
+			$context['TPortal']['category']['col1'][] = $row;
 		}
-		elseif($counter > $col1 || $counter == $col1)
-		{
-					$context['TPortal']['category']['col2'][] = $row;
+		elseif($counter > $col1 || $counter == $col1) {
+			$context['TPortal']['category']['col2'][] = $row;
 		}
 		$counter++;						
 	}

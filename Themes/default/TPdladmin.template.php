@@ -58,7 +58,7 @@ $clickme.click( function(e) {
 		{
 			foreach($context['TPortal']['admcats'] as $cat)
 			{
-				if($cat['parent'] == 0)
+				if($cat['parent'] == 0) {
 					echo '
 			<div class="windowbg addborder">
 				<div class="adm-pos float-items" style="width:14%;">
@@ -96,8 +96,7 @@ $clickme.click( function(e) {
 		echo '
 				<div align="center" class="windowbg" style="padding:1%;"><input name="dlsend" type="submit" value="'.$txt['tp-submit'].'"></div>';
 	} // Settings
-	elseif($context['TPortal']['dlsub'] == 'adminsettings')
-	{
+	elseif($context['TPortal']['dlsub'] == 'adminsettings') {
 		echo '
 		<div id="dl-settings" class="tborder">
 			<div class="titlebg" style="padding:1%;">
