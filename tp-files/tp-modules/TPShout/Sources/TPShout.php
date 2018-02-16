@@ -50,7 +50,7 @@ $context['html_headers'] .= '
 if(!empty($context['TPortal']['shoutbox_refresh'])) {
 	$context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
-		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000.');
+		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 .');
 	// ]]></script>';
 }
 
