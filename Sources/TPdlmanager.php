@@ -36,7 +36,7 @@ function TPdlmanager_init()
 		$context['TPortal']['not_forum'] = true;
 	
 		$context['html_headers'] .= '
-			<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
+			<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin150"></script>';
 	
 		// see if its admin section
 		if(substr($context['TPortal']['dlsub'], 0, 5) == 'admin' || $context['TPortal']['dlsub']=='submission')
@@ -892,22 +892,22 @@ function TPortalDLManager()
 			}
 	        $smcFunc['db_free_result']($request);
 	    }
-	    // nothing there, le them know
-	    else
+		// nothing there, le them know
+		else
 			redirectexit('action=tpmod;dl');
 
 		$request = $smcFunc['db_query']('', '
-			SELECT a.access AS access, a.icon AS icon,	a.link AS shortname, a.description AS description,
+				SELECT a.access AS access, a.icon AS icon,	a.link AS shortname, a.description AS description,
 				a.name AS name,	a.id AS id, a.parent AS parent, if (a.id = b.category, count(*), 0) AS files,
-		  		b.category AS subchild
-			FROM ({db_prefix}tp_dlmanager AS a)
-			LEFT JOIN {db_prefix}tp_dlmanager AS b
-		  		ON a.id = b.category
-			WHERE a.type = {string:type}
-			AND a.parent = {int:cat}
-		  	GROUP BY a.id
-		  	ORDER BY a.downloads ASC',
-			array('type' => 'dlcat', 'cat' => $currentcat));
+				b.category AS subchild
+				FROM ({db_prefix}tp_dlmanager AS a)
+				LEFT JOIN {db_prefix}tp_dlmanager AS b
+				ON a.id = b.category
+				WHERE a.type = {string:type}
+				AND a.parent = {int:cat}
+				GROUP BY a.id
+				ORDER BY a.downloads ASC',
+				array('type' => 'dlcat', 'cat' => $currentcat));
 		$context['TPortal']['dlchildren'] = array();
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
@@ -917,56 +917,56 @@ function TPortalDLManager()
 				if($show && $row['parent'] == $currentcat)
 				{
 					$context['TPortal']['dlcats'][] = array(
-						'id' => $row['id'],
-						'name' => $row['name'],
-						'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
-						'access' => $row['access'],
-						'icon' => $row['icon'],
-						'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
-						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
-						'files' => $row['files'],
-					);
+							'id' => $row['id'],
+							'name' => $row['name'],
+							'parent' => $row['parent'],
+							'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+							'access' => $row['access'],
+							'icon' => $row['icon'],
+							'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
+							'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
+							'files' => $row['files'],
+						);
 				}
 				elseif($show && $row['parent'] != $currentcat)
 				{
 					$context['TPortal']['dlchildren'][] = $row['id'];
 					$context['TPortal']['dlcatchilds'][] = array(
-						'id' => $row['id'],
-						'name' => $row['name'],
-						'parent' => $row['parent'],
-						'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
-						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
-						'files' => $row['files'],
-					);
+							'id' => $row['id'],
+							'name' => $row['name'],
+							'parent' => $row['parent'],
+							'href' => !empty($row['shortname']) ? $scripturl.'?action=tpmod;dl='.$row['shortname'] : $scripturl.'?action=tpmod;dl=cat'.$row['id'],
+							'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
+							'files' => $row['files'],
+						);
 				}
 			}
 			$smcFunc['db_free_result']($request);
 		}
 
 		// get any items in the category
-			$context['TPortal']['dlitem'] = array();
-			$start = 0;
-			if(isset($_GET['p']) && !is_numeric($_GET['p']))
-				fatal_error('Attempt to specify a non-integer value!');
-			elseif(isset($_GET['p']) && is_numeric($_GET['p']))
-				$start = $_GET['p'];
+		$context['TPortal']['dlitem'] = array();
+		$start = 0;
+		if(isset($_GET['p']) && !is_numeric($_GET['p']))
+			fatal_error('Attempt to specify a non-integer value!');
+		elseif(isset($_GET['p']) && is_numeric($_GET['p']))
+			$start = $_GET['p'];
 
-			// get total count
-			$request = $smcFunc['db_query']('', '
+		// get total count
+		$request = $smcFunc['db_query']('', '
 				SELECT COUNT(*) FROM {db_prefix}tp_dlmanager 
 				WHERE type = {string:type} 
 				AND category = {int:cat} 
 				AND subitem = {int:sub}',
 				array('type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0)
 			);
-			$row = $smcFunc['db_fetch_row']($request);
-			$rows2 = $row[0];
+		$row = $smcFunc['db_fetch_row']($request);
+		$rows2 = $row[0];
 
-			$request = $smcFunc['db_query']('', '
+		$request = $smcFunc['db_query']('', '
 				SELECT dl.id, LEFT(dl.description, 400) as ingress,dl.name, dl.category, dl.file, 
-					dl.downloads, dl.views, dl.link, dl.created, dl.last_access, 
-					dl.author_id as authorID, dl.icon, dl.screenshot, dl.filesize, mem.real_name as realName 
+				dl.downloads, dl.views, dl.link, dl.created, dl.last_access, 
+				dl.author_id as authorID, dl.icon, dl.screenshot, dl.filesize, mem.real_name as realName 
 				FROM {db_prefix}tp_dlmanager as dl
 				LEFT JOIN {db_prefix}members as mem ON (dl.author_id=mem.id_member)
 				WHERE dl.type = {string:type} 
@@ -976,52 +976,52 @@ function TPortalDLManager()
 				array('type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0, 'start' => $start)
 			);
 
-			if($smcFunc['db_num_rows']($request) > 0)
+		if($smcFunc['db_num_rows']($request) > 0)
+		{
+			// set up the sorting links
+			$context['TPortal']['sortlinks'] = '<span class="smalltext">' . $txt['tp-sortby'] . ': ';
+			$what = array('id', 'name', 'downloads', 'last_access', 'created', 'authorID');
+			foreach($what as $v)
 			{
-				// set up the sorting links
-				$context['TPortal']['sortlinks'] = '<span class="smalltext">' . $txt['tp-sortby'] . ': ';
-				$what = array('id', 'name', 'downloads', 'last_access', 'created', 'authorID');
-				foreach($what as $v)
+				if($context['TPortal']['dlsort'] == $v)
 				{
-					if($context['TPortal']['dlsort'] == $v)
-					{
-						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tpmod;dl=cat'.$currentcat.';dlsort='.$v.';';
-						if($context['TPortal']['dlsort_way'] == 'asc')
-							$context['TPortal']['sortlinks'] .= 'desc;p='.$start.'">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /></a> &nbsp;|&nbsp; ';
-						else
-							$context['TPortal']['sortlinks'] .= 'asc;p='.$start.'">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /></a> &nbsp;|&nbsp; ';
-					}
+					$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tpmod;dl=cat'.$currentcat.';dlsort='.$v.';';
+					if($context['TPortal']['dlsort_way'] == 'asc')
+						$context['TPortal']['sortlinks'] .= 'desc;p='.$start.'">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /></a> &nbsp;|&nbsp; ';
 					else
-						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tpmod;dl=cat'.$currentcat.';dlsort='.$v.';desc;p='.$start.'">'.$txt['tp-'.$v].'</a> &nbsp;|&nbsp; ';
+						$context['TPortal']['sortlinks'] .= 'asc;p='.$start.'">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /></a> &nbsp;|&nbsp; ';
 				}
-				$context['TPortal']['sortlinks'] = substr($context['TPortal']['sortlinks'], 0, strlen($context['TPortal']['sortlinks']) - 15);
-				$context['TPortal']['sortlinks'] .= '</span>';
+				else
+					$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tpmod;dl=cat'.$currentcat.';dlsort='.$v.';desc;p='.$start.'">'.$txt['tp-'.$v].'</a> &nbsp;|&nbsp; ';
+			}
+			$context['TPortal']['sortlinks'] = substr($context['TPortal']['sortlinks'], 0, strlen($context['TPortal']['sortlinks']) - 15);
+			$context['TPortal']['sortlinks'] .= '</span>';
 
-				while ($row = $smcFunc['db_fetch_assoc']($request))
+			while ($row = $smcFunc['db_fetch_assoc']($request))
+			{
+				if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
+					$decideshot = $boardurl. '/' . $row['screenshot']; 
+				else
+					$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot']; 
+
+				if($context['TPortal']['dl_fileprefix'] == 'K')
+					$fs = ceil($row['filesize'] / 1000).' Kb';
+				elseif($context['TPortal']['dl_fileprefix'] == 'M')
+					$fs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
+				elseif($context['TPortal']['dl_fileprefix']=='G')
+					$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
+
+				if($context['TPortal']['dl_usescreenshot'] == 1)
 				{
-					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
-							$decideshot = $boardurl. '/' . $row['screenshot']; 
+					if(!empty($row['screenshot'])) 
+						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
 					else
-						$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot']; 
+						$ico = '';	
+				}
+				else
+					$ico = $row['icon'];
 
-					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$fs = ceil($row['filesize'] / 1000).' Kb';
-					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$fs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
-					elseif($context['TPortal']['dl_fileprefix']=='G')
-						$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
-					
-					if($context['TPortal']['dl_usescreenshot'] == 1)
-					{
-						if(!empty($row['screenshot'])) 
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
-						else
-							$ico = '';	
-					}
-					else
-						$ico = $row['icon'];
-
-					$context['TPortal']['dlitem'][] = array(
+				$context['TPortal']['dlitem'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
 						'category' => $row['category'],
@@ -1043,20 +1043,20 @@ function TPortalDLManager()
 						'filesize' => $fs,
 						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : $row['ingress'],
 					);
-				}
-				$smcFunc['db_free_result']($request);
 			}
-			if(isset($context['TPortal']['mystart']))
-				$mystart = $context['TPortal']['mystart'];
+			$smcFunc['db_free_result']($request);
+		}
+		if(isset($context['TPortal']['mystart']))
+			$mystart = $context['TPortal']['mystart'];
 
-			$currsorting = '';
-			if(!empty($dlsort))
-				$currsorting .= ';dlsort='.$dlsort;
-			if(!empty($dlsort_way))
-				$currsorting .= ';'.$dlsort_way;
+		$currsorting = '';
+		if(!empty($dlsort))
+			$currsorting .= ';dlsort='.$dlsort;
+		if(!empty($dlsort_way))
+			$currsorting .= ';'.$dlsort_way;
 
-			// construct a pageindex
-			$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;dl=cat'.$currentcat.$currsorting, $mystart , $rows2, 10);
+		// construct a pageindex
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;dl=cat'.$currentcat.$currsorting, $mystart , $rows2, 10);
 
 		// check backwards for parents
 		$done = 0;
@@ -1224,7 +1224,7 @@ function TPortalDLManager()
 				);
 				$catparent=$context['TPortal']['cats'][$catparent]['parent'];
 			}
-			else{
+			else {
 				$catparent = 0;
 			}
 			if($catparent == 0)
@@ -1538,6 +1538,7 @@ function TPdlresults()
 	}
 	TPadd_linktree($scripturl.'?action=tpmod;dl=search' , $txt['tp-dlsearch']);
 }
+
 // searched the files?
 function TPdlsearch()
 {
@@ -1628,8 +1629,8 @@ function TPdlstats()
 		}
 		$smcFunc['db_free_result']($req);
 		// sort it
-    	if(sizeof($context['TPortal']['topcats']) > 1)
-		usort($context['TPortal']['topcats'], 'dlsort');
+		if(sizeof($context['TPortal']['topcats']) > 1)
+			usort($context['TPortal']['topcats'], 'dlsort');
 	}
 
 	// fetch all items
@@ -1641,6 +1642,7 @@ function TPdlstats()
 		WHERE type = {string:type}',
 		array('type' => 'dlitem')
 	);
+
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
@@ -2050,14 +2052,14 @@ function TPortalDLAdmin()
 		$parent = $_POST['newdladmin_parent'];
 		$icon = $boardurl.'/tp-downloads/icons/'.$_POST['newdladmin_icon'];
 		// special case, the access
-    	$dlgrp = array();
+		$dlgrp = array();
 		foreach ($_POST as $what => $value)
 		{
 			if(substr($what, 0, 16) == 'newdladmin_group')
 			{
 				$vv = substr($what,16);
 				if($vv != '-2')
-				    $dlgrp[] = $vv;
+					$dlgrp[] = $vv;
 			}
 		}
 		$access = implode(',', $dlgrp);
