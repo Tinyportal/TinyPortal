@@ -17,7 +17,7 @@
 
 $txt['tp-allshoutsbyip'] = 'All shouts by this IP';
 $txt['tp-allshoutsbymember'] = 'All shouts by this member';
-$txt['tp-tabs10']='Shoutbox';
+$txt['tp-tabs10'] = 'Shoutbox';
 $txt['tp-allowguestshout'] = 'Allow guest shouts?';
 $txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
 $txt['tp-shoutboxitems'] = 'Edit/Remove last shouts:';

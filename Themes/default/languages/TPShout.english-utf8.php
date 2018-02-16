@@ -17,7 +17,7 @@
 
 $txt['tp-allshoutsbyip'] = 'All shouts by this IP';
 $txt['tp-allshoutsbymember'] = 'All shouts by this member';
-$txt['tp-tabs10']='Shoutbox';
+$txt['tp-tabs10'] = 'Shoutbox';
 $txt['tp-allowguestshout'] = 'Allow guest shouts?';
 $txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
 $txt['tp-shoutboxitems'] = 'Edit/Remove last shouts:';
@@ -48,7 +48,7 @@ $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tp-shout-allow-links'] = 'Allow links to be posted?';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
-$txt['shout_submit_returnkey'] 	= 'Submit Shout on enter key?';
+$txt['shout_submit_returnkey'] = 'Submit Shout on enter key?';
 $txt['tp-yes-ctrl'] = 'Yes with ctrl/cmd';
 
 ?>

@@ -15,9 +15,10 @@
  *
  */
 
-function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
+function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
+{
 
-	loadLanguage('TPShout');
+	loadLanguage( 'TPShout' );
 
 	$permissionList['membergroup'] = array_merge(
 		array(
@@ -49,51 +50,51 @@ function tpAddCopy($buffer)
 	$bclass = '';
 
 	// Dynamic body ID
-	if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
+	if(isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
 		$bodyid = "profilepage";		
-	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'pm') {
+	} elseif(isset($context['TPortal']) && $context['TPortal']['action'] == 'pm') {
 		$bodyid = "pmpage";		
-	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'calendar') {
+	} elseif(isset($context['TPortal']) && $context['TPortal']['action'] == 'calendar') {
 		$bodyid = "calendarpage";	
-	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'mlist') {
+	} elseif(isset($context['TPortal']) && $context['TPortal']['action'] == 'mlist') {
 		$bodyid = "mlistpage";	
-	} elseif (isset($context['TPortal']) && in_array($context['TPortal']['action'], array('search', 'search2'))) {
+	} elseif(isset($context['TPortal']) && in_array( $context['TPortal']['action'], array('search', 'search2') )) {
 		$bodyid = "searchpage";	
-	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'forum') {
+	} elseif(isset($context['TPortal']) && $context['TPortal']['action'] == 'forum') {
 		$bodyid = "forumpage";	
-	} elseif (isset($_GET['board']) && !isset($_GET['topic'])) {
+	} elseif(isset($_GET['board']) && !isset($_GET['topic'])) {
 		$bodyid = "boardpage";
-	} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
+	} elseif(isset($_GET['board']) && isset($_GET['topic'])) {
 		  $bodyid = "topicpage";		
-	} elseif (isset($_GET['page'])) {
+	} elseif(isset($_GET['page'])) {
 		$bodyid = "page";		
-	} elseif (isset($_GET['cat'])) {
+	} elseif(isset($_GET['cat'])) {
 		$bodyid = "catpage";		
-	} elseif (isset($context['TPortal']) && $context['TPortal']['is_frontpage']) {
+	} elseif(isset($context['TPortal']) && $context['TPortal']['is_frontpage']) {
 		$bodyid = "frontpage";	
 	} else {
 		$bodyid = "tpbody";
 	} 
 
 	// Dynamic body classes
-	if (isset($_GET['board']) && !isset($_GET['topic'])) {
-		$bclass =  "boardpage board" . $_GET['board'];
-	} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
-		$bclass =  "boardpage board" . $_GET['board'] . " " . "topicpage topic" . $_GET['topic'];
-	} elseif (isset($_GET['page'])) {
-		$bclass =  "page" . $_GET['page'];	
-	} elseif (isset($_GET['cat'])) {
-		$bclass =  "cat" . $_GET['cat'];
+	if(isset($_GET['board']) && !isset($_GET['topic'])) {
+		$bclass = "boardpage board".$_GET['board'];
+	} elseif(isset($_GET['board']) && isset($_GET['topic'])) {
+		$bclass = "boardpage board".$_GET['board']." "."topicpage topic".$_GET['topic'];
+	} elseif(isset($_GET['page'])) {
+		$bclass = "page".$_GET['page'];	
+	} elseif(isset($_GET['cat'])) {
+		$bclass = "cat".$_GET['cat'];
 	} else {
-		$bclass =  "tpcontainer";
+		$bclass = "tpcontainer";
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a><br>
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="'.$scripturl.'?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a><br>
 	<a href="http://p.yusukekamiyamane.com/">Fugue Icons</a> | &copy; 2012 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License<br>
 	<a href="http://p.yusukekamiyamane.com/">Diagona Icons</a> | &copy; 2007 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License';
 
-	if (SMF == 'SSI' || empty($context['template_layers']) || ( defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
+	if(SMF == 'SSI' || empty($context['template_layers']) || (defined( 'WIRELESS' ) && WIRELESS) || strpos( $buffer, $string ) !== false)
 		return $buffer;
 
 	$find = array(
@@ -102,23 +103,23 @@ function tpAddCopy($buffer)
 		'class="copywrite"',
 	);
 	$replace = array(
-		'<body id="' . $bodyid . '" class="' . $bclass . '">',
-		'Simple Machines</a><br />' . $string,
+		'<body id="'.$bodyid.'" class="'.$bclass.'">',
+		'Simple Machines</a><br />'.$string,
 		'class="copywrite" style="line-height: 1;"',
 	);
 
-	if (!in_array($context['current_action'], array('post', 'post2')))
+	if(!in_array( $context['current_action'], array('post', 'post2') ))
 	{
 		$finds[] = '[cutoff]';
 		$replaces[] = '';
 	}
 
-	$buffer = str_replace($find, $replace, $buffer);
+	$buffer = str_replace( $find, $replace, $buffer );
 
-	if (strpos($buffer, $string) === false)
+	if(strpos( $buffer, $string ) === false)
 	{
-		$string = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $string . '</div></body></html>';
-		$buffer = preg_replace('~</body>\s*</html>~', $string, $buffer);
+		$string = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">'.$string.'</div></body></html>';
+		$buffer = preg_replace( '~</body>\s*</html>~', $string, $buffer );
 	}
 
 	return $buffer;
@@ -130,7 +131,7 @@ function tpAddCopy2()
 	global $context, $scripturl;
 
 	$context['copyrights']['mods']['tinyportal'] = '
-	<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a><br>
+	<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl.'?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a><br>
 	<a href="http://p.yusukekamiyamane.com/">Fugue Icons</a> | &copy; 2012 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License<br>
 	<a href="http://p.yusukekamiyamane.com/">Diagona Icons</a> | &copy; 2007 Yusuke Kamiyamane | These icons are licensed under a Creative Commons Attribution 3.0 License';
 }
@@ -139,7 +140,7 @@ function tpAddIllegalPermissions()
 {
 	global $context;
 	
-	if (empty($context['non_guest_permissions']))
+	if(empty($context['non_guest_permissions']))
 		$context['non_guest_permissions'] = array();
 	
 	$tp_illegal_perms = array(
@@ -157,7 +158,7 @@ function tpAddIllegalPermissions()
 		'tp_dlupload',
 		'tp_dlcreatetopic',
 	);
-	$context['non_guest_permissions'] = array_merge($context['non_guest_permissions'], $tp_illegal_perms);
+	$context['non_guest_permissions'] = array_merge( $context['non_guest_permissions'], $tp_illegal_perms );
 }
 
 function tpAddMenuItems(&$buttons)
@@ -165,13 +166,13 @@ function tpAddMenuItems(&$buttons)
 	global $context, $scripturl, $txt;
 	
 	// If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
-	if (!isset($context['TPortal']))
+	if(!isset($context['TPortal']))
 		return;
 		
 	// Set the forum button activated if needed.
-	if (isset($_GET['board']) || isset($_GET['topic']))
+	if(isset($_GET['board']) || isset($_GET['topic']))
 		$context['current_action'] = 'forum';
-	elseif (isset($_GET['sa']) && $_GET['sa'] == 'help')
+	elseif(isset($_GET['sa']) && $_GET['sa'] == 'help')
 		$context['current_action'] = 'help';
 				
 	$new_buttons = array();
@@ -183,7 +184,7 @@ function tpAddMenuItems(&$buttons)
 		{
 			$new_buttons['forum'] = array(
 				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-				'href' => $scripturl . '?action=forum',
+				'href' => $scripturl.'?action=forum',
 				'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
 			);		
 		}
@@ -192,7 +193,7 @@ function tpAddMenuItems(&$buttons)
 		{
 			$new_buttons['tpadmin'] = array(
 				'title' => $txt['tp-tphelp'],
-				'href' => $scripturl . '?action=tpadmin',
+				'href' => $scripturl.'?action=tpadmin',
 				'show' =>  TPcheckAdminAreas(),
 				'sub_buttons' => tp_getbuttons(),
 			);		
@@ -202,7 +203,7 @@ function tpAddMenuItems(&$buttons)
 			$new_buttons['help']['sub_buttons'] = array(
 				'tphelp' => array(
 					'title' => $txt['tp-tphelp'],
-					'href' => $scripturl . '?action=tpmod;sa=help',
+					'href' => $scripturl.'?action=tpmod;sa=help',
 					'show' => true,
 				),
 			);
@@ -283,27 +284,27 @@ function whichTPAction()
 	
 	$theAction = false;
 	// first..if the action is set, but empty, don't go any further
-	if (isset($_REQUEST['action']) && $_REQUEST['action']=='')
+	if(isset($_REQUEST['action']) && $_REQUEST['action'] == '')
 	{
-		require_once($sourcedir . '/BoardIndex.php');
+		require_once($sourcedir.'/BoardIndex.php');
 		$theAction = 'BoardIndex';
 	}
 	// Action and board are both empty... maybe the portal page?
-	if (empty($board) && empty($topic) && $context['TPortal']['front_type'] != 'boardindex')
+	if(empty($board) && empty($topic) && $context['TPortal']['front_type'] != 'boardindex')
 	{
-		require_once($sourcedir . '/TPortal.php');
+		require_once($sourcedir.'/TPortal.php');
 		$theAction = 'TPortal';
 	}
 	// If frontpage set to boardindex but it's an article or category
-	if (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex' && (isset($_GET['cat']) || isset($_GET['page'])))
+	if(empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex' && (isset($_GET['cat']) || isset($_GET['page'])))
 	{
-		require_once($sourcedir . '/TPortal.php');
+		require_once($sourcedir.'/TPortal.php');
 		$theAction = 'TPortal';
 	}
 	// Action and board are still both empty...and no portal startpage - BoardIndex!
-	elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex')
+	elseif(empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex')
 	{
-		require_once($sourcedir . '/BoardIndex.php');
+		require_once($sourcedir.'/BoardIndex.php');
 		$theAction = 'BoardIndex';
 	}
 	return $theAction;
@@ -314,23 +315,23 @@ function tpImageRewrite($buffer)
 	global $context;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
-	if ($image_proxy_enabled && ( array_key_exists('TPortal', $context) && $context['TPortal']['imageproxycheck'] > 0 ) ) {
-		if (!empty($buffer) && stripos($buffer, 'http://') !== false) {
-			$buffer = preg_replace_callback("~<img([\w\W]+?)/>~",
-				function( $matches ) use ( $boardurl, $image_proxy_secret ) {
-					if (stripos($matches[0], 'http://') !== false) {
-						$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
-							function( $src ) use ( $boardurl, $image_proxy_secret ) {
-								if (stripos($src[1], 'http://') !== false)
-									return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
+	if($image_proxy_enabled && (array_key_exists( 'TPortal', $context ) && $context['TPortal']['imageproxycheck'] > 0)) {
+		if(!empty($buffer) && stripos( $buffer, 'http://' ) !== false) {
+			$buffer = preg_replace_callback( "~<img([\w\W]+?)/>~",
+				function($matches) use ($boardurl, $image_proxy_secret) {
+					if(stripos( $matches[0], 'http://' ) !== false) {
+						$matches[0] = preg_replace_callback( "~src\=(?:\"|\')(.+?)(?:\"|\')~",
+							function($src) use ($boardurl, $image_proxy_secret) {
+								if(stripos( $src[1], 'http://' ) !== false)
+									return ' src="'.$boardurl.'/proxy.php?request='.urlencode( $src[1] ).'&hash='.md5( $src[1].$image_proxy_secret ).'"';
 								else
 									return $src[0];
 							},
-							$matches[0]);
+							$matches[0] );
 					}
 					return $matches[0];
 				},
-				$buffer);
+				$buffer );
 		}
 	}
 	return $buffer;

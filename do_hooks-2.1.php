@@ -31,31 +31,31 @@ $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
-	require_once(dirname(__FILE__) . '/SSI.php');
-elseif (!defined('SMF'))
+if(file_exists( dirname( __FILE__ ).'/SSI.php' ) && !defined( 'SMF' ))
+	require_once(dirname( __FILE__ ).'/SSI.php');
+elseif(!defined( 'SMF' ))
 	exit('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 
-if (SMF == 'SSI')
+if(SMF == 'SSI')
 {
 	// Let's start the main job
 	install_mod();
 	// and then let's throw out the template! :P
-	obExit(null, null, true);
+	obExit( null, null, true );
 }
 else
 {
 	setup_hooks();
 }
 
-function install_mod ()
+function install_mod()
 {
 	global $context, $mod_name;
 
 	$context['mod_name'] = $mod_name;
 	$context['sub_template'] = 'install_script';
-	$context['page_title_html_safe'] = 'Hook installer for: ' . $mod_name;
-	if (isset($_GET['action']))
+	$context['page_title_html_safe'] = 'Hook installer for: '.$mod_name;
+	if(isset($_GET['action']))
 		$context['uninstalling'] = $_GET['action'] == 'uninstall' ? true : false;
 	$context['html_headers'] .= '
 	<style type="text/css">
@@ -66,19 +66,19 @@ function install_mod ()
 	</style>';
 
 	// Sorry, only logged in admins...
-	isAllowedTo('admin_forum');
+	isAllowedTo( 'admin_forum' );
 
-	if (isset($context['uninstalling']))
+	if(isset($context['uninstalling']))
 		setup_hooks();
 }
 
-function setup_hooks ()
+function setup_hooks()
 {
 	global $context, $hooks;
 
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
-	foreach ($hooks as $hook => $function)
-		$integration_function($hook, $function);
+	foreach($hooks as $hook => $function)
+		$integration_function( $hook, $function );
 
 	$context['installation_done'] = true;
 }

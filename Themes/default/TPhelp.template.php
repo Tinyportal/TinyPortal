@@ -19,7 +19,7 @@ function template_main()
 {
 	global $context;
 
-	if ($context['TPortal']['subaction'] == 'credits')
+	if($context['TPortal']['subaction'] == 'credits')
 		template_tpcredits();
 	else
 		template_tphelp();
@@ -32,9 +32,9 @@ function template_tpcredits()
 	echo '
 	<div class="tborder">
 		<div class="cat_bar">
-			<h3 class="catbg">' . $txt['tp-credits'] . '</h3>
+			<h3 class="catbg">' . $txt['tp-credits'].'</h3>
 		</div>
-		<p class="description">' , $txt['tp-creditack2']  , '</p>
+		<p class="description">' , $txt['tp-creditack2'], '</p>
 		<div class="windowbg2">
 			<span class="topslice"><span></span></span>
 			<div class="content" style="line-height: 1.6em; padding: 0 1em;">
@@ -57,7 +57,7 @@ function template_tphelp()
 		</div>
 		<div style="padding: 1em;">';
 
-         // main tp help
+		 // main tp help
 		echo $txt['tphelp_'. $context['TPortal']['helpsection'] . '_main'];
 
 		echo '

@@ -31,7 +31,7 @@ function template_main()
 		if(!empty($context['TPortal']['article']['visual_options']['nolayer']))
 			template_nolayer();
 		else
-			template_article($context['TPortal']['article']);
+			template_article( $context['TPortal']['article'] );
 	}
 	// its a category?
 	elseif(isset($context['TPortal']['category']['id']))
@@ -45,7 +45,7 @@ function template_main_nolayer()
 {
 	global $context;
 
-	tp_renderarticle($context['TPortal']['article']);
+	tp_renderarticle( $context['TPortal']['article'] );
 }
 
 // the frontpage template
@@ -54,13 +54,13 @@ function template_frontpage()
 	global $context;
 
 	if($context['TPortal']['frontblock_type'] == 'first' || $context['TPortal']['front_type'] == 'frontblock')
-		echo '<div id="tpfrontpanel_top" style="margin: 0 0 4px 0; padding: 0;">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+		echo '<div id="tpfrontpanel_top" style="margin: 0 0 4px 0; padding: 0;">', TPortal_panel( 'front' ), '<p class="clearthefloat"></p></div>';
 	
 	if(!isset($context['TPortal']['category']))
 	{
 		// check the frontblocks first
 		if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
-			echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+			echo '<div id="tpfrontpanel_bottom">', TPortal_panel( 'front' ), '<p class="clearthefloat"></p></div>';
 
 		return;
 	}
@@ -73,19 +73,19 @@ function template_frontpage()
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
 		echo '
-	<div class="tp_pageindex_upper">' , $context['TPortal']['pageindex'] , '</div>';
+	<div class="tp_pageindex_upper">' , $context['TPortal']['pageindex'], '</div>';
 
 
 	// use a customised template or the built-in?
-	render_template_layout($grid[(!empty($front['options']['layout']) ? $front['options']['layout'] : $context['TPortal']['frontpage_layout'])]['code'], 'category_');
+	render_template_layout( $grid[(!empty($front['options']['layout']) ? $front['options']['layout'] : $context['TPortal']['frontpage_layout'])]['code'], 'category_' );
 	
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
 		echo '
-	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'] , '</div>';
+	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'], '</div>';
 
 	if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
-		echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+		echo '<div id="tpfrontpanel_bottom">', TPortal_panel( 'front' ), '<p class="clearthefloat"></p></div>';
 
 }
 
@@ -95,9 +95,11 @@ function template_article($article, $single = false)
 	global $context;
 
 	if(isset($context['tportal']['article_expired']))
-		template_notpublished();
+	{
+			template_notpublished();
+	}
 	
-	render_template(article_renders((!empty($article['category_opts']['catlayout']) ? $article['category_opts']['catlayout'] : 1) , true, true));
+	render_template( article_renders( (!empty($article['category_opts']['catlayout']) ? $article['category_opts']['catlayout'] : 1), true, true ) );
 }
 
 // the templates for article categories
@@ -108,20 +110,21 @@ function template_category()
 	if(!empty($context['TPortal']['clist']))
 	{
 		$buts = array();
-		foreach($context['TPortal']['clist'] as $cats)
-		{
+		foreach($context['TPortal']['clist'] as $cats) {
 			$buts[$cats['id']] = array(
-				'text' => 'catlist'. $cats['id'], 
+				'text' => 'catlist'.$cats['id'], 
 				'image' => 'blank.gif', 
 				'lang' => false, 
-				'url' => $scripturl . '?cat=' . $cats['id'],
+				'url' => $scripturl.'?cat='.$cats['id'],
 				'active' => false,
 			);
 			if($cats['selected'])
-				$buts[$cats['id']]['active'] = true;
+			{
+							$buts[$cats['id']]['active'] = true;
+			}
 
 		}
-		echo '<div style="overflow: hidden;">' , tp_template_button_strip($buts, 'top'), '</div>';
+		echo '<div style="overflow: hidden;">', tp_template_button_strip( $buts, 'top' ), '</div>';
 	}
 
 	$category = $context['TPortal']['category'];
@@ -131,23 +134,23 @@ function template_category()
 
 	// fallback
 	if(!isset($category['options']['layout']))
-		$category['options']['layout']=1;
+		$category['options']['layout'] = 1;
 
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
 		echo '
-	<div class="tp_pageindex_upper">' , $context['TPortal']['pageindex'] , '</div>';
+	<div class="tp_pageindex_upper">' , $context['TPortal']['pageindex'], '</div>';
 
 	// any child categories?
 	if(!empty($context['TPortal']['category']['children']))
 		category_childs();
 
-	render_template_layout($grid[$category['options']['layout']]['code'], 'category_');
+	render_template_layout( $grid[$category['options']['layout']]['code'], 'category_' );
 	
 	// any pageindex?
 	if(!empty($context['TPortal']['pageindex']))
 		echo '
-	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'] , '</div>';
+	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'], '</div>';
 }
 
 ?>
