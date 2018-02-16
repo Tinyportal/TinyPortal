@@ -733,7 +733,7 @@ function doTPpage()
 						if($image_proxy_enabled && !empty($row['avatar']) && stripos( $row['avatar'], 'http://' ) !== false) 
 							$avatar = '<img src="'.$boardurl.'/proxy.php?request='.urlencode( $row['avatar'] ).'&hash='.md5( $row['avatar'].$image_proxy_secret ).'" alt="&nbsp;" />';
 						else
-							$avatar = '' ? ($row['ID_ATTACH'] > 0 ? '<img src="'.(empty($row['attachmentType']) ? $scripturl.'?action=tpmod;sa=tpattach;attach='.$row['ID_ATTACH'].';type=avatar' : $modSettings['custom_avatar_url'].'/'.$row['filename']).'" alt="" class="avatar" border="0" />' : '') : (stristr( $row['avatar'], 'https://' ) ? '<img src="'.$row['avatar'].'"'.$avatar_width.$avatar_height.' alt="" class="avatar" border="0" />' : '<img src="'.$modSettings['avatar_url'].'/'.$smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES).'" alt="" class="avatar" border="0" />');
+							$avatar = $avatar == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="'.(empty($row['attachmentType']) ? $scripturl.'?action=tpmod;sa=tpattach;attach='.$row['ID_ATTACH'].';type=avatar' : $modSettings['custom_avatar_url'].'/'.$row['filename']).'" alt="" class="avatar" border="0" />' : '') : (stristr( $row['avatar'], 'https://' ) ? '<img src="'.$row['avatar'].'"'.$avatar_width.$avatar_height.' alt="" class="avatar" border="0" />' : '<img src="'.$modSettings['avatar_url'].'/'.$smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES).'" alt="" class="avatar" border="0" />');
 
 
 						$context['TPortal']['article']['comment_posts'][] = array(
