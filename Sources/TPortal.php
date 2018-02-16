@@ -2510,7 +2510,7 @@ function TPortal_forumPosts($catsort, $start, $max)
 
 function TPortal_forumArticles($catsort, $catsort_order, $start, $max, $now)
 {
-	global $smcFunc, $context, $txt, $scripturl;
+	global $smcFunc, $context, $txt, $scripturl, $user_info;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	// first, get all available
@@ -2831,7 +2831,7 @@ function TPortal_singlePage($now)
 
 function TPortal_articles($catsort, $catsort_order, $now, $max)
 {
-	global $smcFunc, $context, $txt, $scripturl;
+	global $smcFunc, $context, $txt, $scripturl, $user_info;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	// first, get all available
