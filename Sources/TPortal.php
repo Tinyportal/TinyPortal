@@ -1576,7 +1576,7 @@ function doTPblocks()
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
-			$test = TPSetupPanel($row, $blocks, $panels, $count, $blocktype, $fetch_articles, $fetch_article_titles, $test);
+			TPSetupPanel($row, $blocks, $panels, $count, $blocktype, $fetch_articles, $fetch_article_titles, $test);
 		}
 		$smcFunc['db_free_result']($request);
 	}
