@@ -50,7 +50,7 @@ $context['html_headers'] .= '
 if(!empty($context['TPortal']['shoutbox_refresh'])) {
 	$context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
-		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 .');
+		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000.');
 	// ]]></script>';
 }
 
@@ -504,15 +504,15 @@ function tpshout_bigscreen($state = false, $number = 10)
  {
 	global $context;
 
-	loadTemplate('TPShout');
+	loadTemplate( 'TPShout' );
 
-	if (!$state) {
+	if(!$state) {
 		$context['template_layers'] = array();
 		$context['sub_template'] = 'tpshout_ajax';
-		$context['TPortal']['rendershouts'] = tpshout_fetch($state, $number, true);
+		$context['TPortal']['rendershouts'] = tpshout_fetch( $state, $number, true );
 	} else {
-		$context['TPortal']['rendershouts'] = tpshout_fetch(false, $number, false);
-		TP_setThemeLayer('tpshout', 'TPShout', 'tpshout_bigscreen');
+		$context['TPortal']['rendershouts'] = tpshout_fetch( false, $number, false );
+		TP_setThemeLayer( 'tpshout', 'TPShout', 'tpshout_bigscreen' );
 		$context['page_title'] = 'Shoutbox';
 	}
 }
@@ -956,8 +956,8 @@ function print_shout_smileys($collapse = true)
 // show a dedicated frontpage
 function tpshout_frontpage()
 {
-	loadtemplate('TPShout');
-	tpshout_bigscreen(true);
+	loadtemplate( 'TPShout' );
+	tpshout_bigscreen( true );
 }
 
 function shoutHasLinks() {
