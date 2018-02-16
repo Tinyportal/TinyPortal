@@ -47,8 +47,8 @@ $txt['tp-confirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-confirmcommentdelete'] = 'Are you sure you want to delete this comment?';
 $txt['tp-arthaverated'] = 'You have rated this article.';
 $txt['tp-delete'] = 'Delete';
-$txt['tp-editarticle']= 'Edit article';
-$txt['tp-editarticle2']='Edit options';
+$txt['tp-editarticle'] = 'Edit article';
+$txt['tp-editarticle2'] = 'Edit options';
 $txt['tp-newcaptcha'] = 'Create a new image';
 $txt['tp-ratearticle'] = 'Give this article a rating of ';
 $txt['tp-ratingaverage'] = 'Rating: ';
@@ -75,7 +75,7 @@ $txt['tp-reporttomoderator'] = 'Report comment';
 $txt['tp-written'] = 'written';
 $txt['tp-noimportarticle'] = 'Sorry, the article could not be loaded.';
 $txt['tp-noname'] = '-no name-';
-$txt['tp-submitarticlebbc']='Write BBC article';
+$txt['tp-submitarticlebbc'] = 'Write BBC article';
 $txt['permissionname_tp_articles'] = 'Manage articles';
 $txt['permissionhelp_tp_articles'] = 'Allows you to manage articles, categories for articles and the catlist.';
 $txt['permissionname_tp_artcomment'] = 'Can comment on articles';
@@ -97,7 +97,7 @@ $txt['tp-permanent'] = 'Permanent?';
 $txt['tp-print'] = 'Print';
 $txt['tp-printgoback'] = 'Go back to article';
 $txt['tp-ratings'] = 'Ratings';
-$txt['tp_unapproved_members']='Unapproved: ';
+$txt['tp_unapproved_members'] = 'Unapproved: ';
 $txt['tp-acronymdays'] = 'd ';
 $txt['tp-acronymhours'] = 'h ';
 $txt['tp-acronymminutes'] = 'm ';
@@ -106,7 +106,7 @@ $txt['tp-incategory'] = ' in ';
 
 // Blocks... //
 // Rev 89
-$txt['tp-guest']='Guest';
+$txt['tp-guest'] = 'Guest';
 $txt['tp-guests'] = 'Guests';
 $txt['tp-itemviews'] = 'Views';
 $txt['tp-latest'] = 'Latest';
@@ -115,16 +115,16 @@ $txt['tp-mostonline'] = 'Online Ever';
 $txt['tp-mostonline-today'] = 'Online Today';
 $txt['tp-changetheme'] = 'Change';
 $txt['tp-nothemeschosen'] = 'No themes are chosen';
-$txt['tp-tools']='Tools';
+$txt['tp-tools'] = 'Tools';
 $txt['tp-total'] = 'Total';
-$txt['tp-unread']='Show unread';
-$txt['tp-pm']='PM: ';
-$txt['tp-pm2']='New: ';
-$txt['tp-replies']='Show replies';
+$txt['tp-unread'] = 'Show unread';
+$txt['tp-pm'] = 'PM: ';
+$txt['tp-pm2'] = 'New: ';
+$txt['tp-replies'] = 'Show replies';
 $txt['tp-showownposts'] = 'Show own posts';
 $txt['tp-showshouts'] = 'Show last';
 $txt['tp-stats'] = 'Stats';
-$txt['tp-submitarticle']='Write HTML article';
+$txt['tp-submitarticle'] = 'Write HTML article';
 $txt['tp-users'] = 'Users';
 $txt['permissionname_tp_blocks'] = 'Manage blocks';
 $txt['permissionhelp_tp_blocks'] = 'Allows you to manage blocks. Be careful with this permission as it allows creation of php blocks.';
@@ -161,7 +161,7 @@ $txt['downloadprofile'] = 'Uploaded files';
 $txt['galleryprofile'] = 'Gallery items';
 $txt['linksprofile'] = 'Submitted links';
 $txt['shoutboxprofile'] = 'View shouts';
-$txt['tp-category']='Category';
+$txt['tp-category'] = 'Category';
 $txt['tpsummary'] = 'Portal Summary';
 $txt['tpsummary_art'] = 'Total number of articles submitted:';
 $txt['tpsummary_dl'] = 'Total number of uploaded files:';
@@ -278,7 +278,7 @@ $txt['tp-poster6'] = 'The member has written ';
 $txt['tp-poster7'] = ' articles.';
 
 $txt['tp-toggle'] = 'Toggle panel';
-$txt['tp-addarticle']='Add';
+$txt['tp-addarticle'] = 'Add';
 $txt['tp-none'] = '-none-';
 $txt['tp-notallowed'] = 'Sorry, you are not allowed to view this article.';
 $txt['tp-error'] = 'TP error';
@@ -300,9 +300,9 @@ $txt['tp-nocategory'] = 'This article isn\'t assigned yet.';
 $txt['tp_modreports'] = 'Modreports:';
 
 $txt['tp-blockoverview'] = 'Block Access';
-$txt['tp-ungroupedmembers']='Ungrouped members';
+$txt['tp-ungroupedmembers'] = 'Ungrouped members';
 $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
-$txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . (!empty($context['forum_name']) ? $context['forum_name'] : '*') . '</a>.';
+$txt['whoall_forum'] = 'Viewing the board index of <a href="'.$scripturl.'">'.(!empty($context['forum_name']) ? $context['forum_name'] : '*').'</a>.';
 $txt['tp-showlatest'] = 'Show 50 latest';
 
 $txt['tp-expired-start'] = 'The article is currently not published!';
@@ -314,7 +314,7 @@ $txt['tp-nomodule'] = 'No output from module.';
 $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
 
-if(!array_key_exists('upshrink_description', $txt))
+if(!array_key_exists( 'upshrink_description', $txt ))
 	$txt['upshrink_description'] = 'Shrink or expand the header.';
 
 ?>

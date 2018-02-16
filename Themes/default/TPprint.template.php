@@ -23,7 +23,7 @@ function template_tp_print_above()
 <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
-		<title>', $txt['print_page'], ' - ', $context['page_title'] , '</title>
+		<title>', $txt['print_page'], ' - ', $context['page_title'], '</title>
 		<style type="text/css">
 			body
 			{
@@ -80,12 +80,12 @@ function template_tp_print_above()
 		Thus, in Internet Explorer 4, 5, and Opera 6 this will show fonts one size smaller than usual.
 		Note that this is affected by whether IE 6 is in standards compliance mode.. if not, it will also be big.
 		Standards compliance mode happens when you use xhtml... */
-	if ($context['browser']['needs_size_fix'])
+	if($context['browser']['needs_size_fix'])
 		echo '
 		<link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/fonts-compat.css" />';
 	echo '
-		<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin150" />
-		<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin150" />';
+		<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'].'/css/tp-style.css?fin150" />
+		<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'].'/css/tp-style.css?fin150" />';
 
 	echo '
 	</head>
@@ -106,7 +106,7 @@ function template_tp_print_below()
 	echo '
 			<br /><br />
 			<div align="center" class="smalltext">', theme_copyright(), '
-				<p>' , $context['TPortal']['print'] , '</p>
+				<p>' , $context['TPortal']['print'], '</p>
 			</div>
 	</body>
 </html>';
