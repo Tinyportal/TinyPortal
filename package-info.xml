@@ -4,7 +4,7 @@
     <name>TinyPortal</name>
     <id>bloc:tinyportal</id>
     <type>modification</type>
-    <version>1.4R</version>
+    <version>1.4.1</version>
 
 	<install for="2.0 - 2.0.99">
 		<redirect url="">Installed!</redirect>
@@ -13,13 +13,13 @@
         <require-dir name="tp-downloads" destination="$boarddir" />
         <require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
-        <readme type="inline" parsebbc="true">Installing TinyPortal v1.4R for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
+        <readme type="inline" parsebbc="true">Installing TinyPortal v1.4.1 for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
     </install>
 	<uninstall for="2.0 - 2.0.99">
-		<readme type="inline">Uninstalling TinyPortal v1.4R for SMF2.0.x</readme>
+		<readme type="inline">Uninstalling TinyPortal v1.4.1 for SMF2.0.x</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
