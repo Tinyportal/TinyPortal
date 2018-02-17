@@ -979,13 +979,15 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
 		<div class="titlebg" style="padding: 6px;">' , $txt['tp-quicklist'] , '</div>
 		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
-		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">';
+		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
+		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/thumbs/'.$im.'" class="tp-thumb" alt="" onclick=\'insHTML("<img src=\"'.$boardurl.'/tp-images/', substr($im,6) , '\" border=\"none\" alt=\"\" />")\' />';					
+				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';					
 		}
 		echo '
+		</div>
 		</div>
 	</div>';
 	}

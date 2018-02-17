@@ -1891,6 +1891,11 @@ box-sizing:border-box;
 	/*images in articles content*/
 } 
 
+.tpthumb img {
+	width: 200px;
+	padding: 5px;
+}
+
 /************* TP ADMIN STYLES ********************/
 #tpadmin_content {
 	background-color:#ffffff;
