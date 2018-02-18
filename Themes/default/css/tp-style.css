@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 1.4R
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1584,7 +1584,7 @@ span.tpavatar
 span.tpavatar img
 {
 	width: 35px;
-	height: 35px;
+	height: auto;
 }
 .avatar_single img
 {
@@ -1891,6 +1891,11 @@ box-sizing:border-box;
 	height: auto;
 	/*images in articles content*/
 } 
+
+.tpthumb img {
+	width: 200px;
+	padding: 5px;
+}
 
 /************* TP ADMIN STYLES ********************/
 #tpadmin_content {

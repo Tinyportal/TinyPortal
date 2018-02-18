@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4R
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1790,6 +1790,12 @@ function article_morelinks($render = true)
 function render_rating($total, $votes, $id, $can_rate = false)
 {
 	global $txt, $context, $settings, $scripturl;
+
+	if(!is_numeric($total))
+		$total = (int)$total;
+
+	if(!is_numeric($votes))
+		$votes = (int)$votes;
 	
 	if($total == 0 && $votes > 0)
 		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';

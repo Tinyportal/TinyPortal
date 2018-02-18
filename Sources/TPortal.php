@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4R
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -202,10 +202,10 @@ function TP_loadCSS()
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin11" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin141" />';
 	else
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin11" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin141" />';
 
 	if(!empty($context['TPortal']['padding']))
 		$context['html_headers'] .= '
@@ -729,12 +729,11 @@ function doTPpage()
 				{
 					$context['TPortal']['article']['comment_posts'] = array();
 					while($row = $smcFunc['db_fetch_assoc']($request))
-					{						
-						if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+					{
+						if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 							$avatar = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 						else
-							$avatar = '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />');
-
+							$avatar = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 						$context['TPortal']['article']['comment_posts'][] = array(
 							'id' => $row['id'],

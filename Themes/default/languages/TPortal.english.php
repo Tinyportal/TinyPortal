@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4R
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -229,8 +229,7 @@ $txt['tp-shout'] = 'Shout';
 $txt['tp-miscblocks'] = 'Menus';
 
 $txt['tp-quicklist'] = 'My Images Quicklist';
-$txt['tp-quicklist2'] = 'The images below are small thumbnails of the original pictures. By clicking them the  picture is inserted into the editor. Be sure to click in the editor to make it active
-before selecting any of the images.';
+$txt['tp-quicklist2'] = 'The images below are small thumbnails of the original pictures. By dragging them into the editor the picture is inserted into the editor.';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list: ';
 $txt['tp-tagitem'] = 'Download file(s)';
 $txt['tp-tagcategory'] = 'Download file(s)';
