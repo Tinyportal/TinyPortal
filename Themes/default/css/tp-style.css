@@ -1891,10 +1891,10 @@ box-sizing:border-box;
 	height: auto;
 	/*images in articles content*/
 } 
-
 .tpthumb img {
-	width: 200px;
-	padding: 5px;
+   max-width: 150px;
+   max-height: 150px;
+   padding: 5px;
 }
 
 /************* TP ADMIN STYLES ********************/
