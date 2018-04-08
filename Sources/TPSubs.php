@@ -997,7 +997,7 @@ function TPwysiwyg_setup()
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
 {
-	global $user_info, $boardurl, $boarddir, $context, $txt;
+	global $user_info, $boardurl, $boarddir, $context, $txt, $scripturl;
 
 	echo '
 	<div style="padding-top: 10px;">

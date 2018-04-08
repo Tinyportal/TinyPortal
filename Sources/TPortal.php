@@ -1664,6 +1664,9 @@ function doTPfrontpage()
 		// make the pageindex!
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
 
+		// Clear request so that the check further down works correctly
+		$request = false;
+
 		// ok we got the post ids now, fetch each one, forum first
 		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
@@ -1699,7 +1702,7 @@ function doTPfrontpage()
 		);
 
 		unset($posts); 
-        $posts = array();
+		$posts = array();
 		// insert the forumposts into $posts
 		if($request && $smcFunc['db_num_rows']($request) > 0)
 		{
