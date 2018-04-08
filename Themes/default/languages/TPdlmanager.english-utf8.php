@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -35,13 +35,13 @@ $txt['tp-dltabs1'] = 'Settings';
 $txt['tp-dltabs2'] = 'Add category';
 $txt['tp-dltabs3'] = 'Upload';
 $txt['tp-dltabs4'] = 'Admin';
-$txt['tp-dluploadfailure'] = 'The upload was not able to complete. This might happen because it took too long to upload or the file is bigger than the server will allow.<br /><br />Please consult your server administrator for more information. ';
+$txt['tp-dluploadfailure']='The upload was not able to complete. This might happen because it took too long to upload or the file is bigger than the server will allow.<br /><br />Please consult your server administrator for more information. ';
 $txt['tp-dluploadnotallowed'] = 'Sorry, uploading files is currently not allowed.';
 $txt['tp-downloads'] = 'Downloads';
 $txt['tp-id'] = 'ID';
 $txt['tp-last_access'] = 'Last access';
 $txt['tp-mainpage'] = 'Main';
-$txt['tp-name'] = 'Name:';
+$txt['tp-name']='Name:';
 $txt['tp-needtoregister'] = 'You need to login to enter this section.';
 $txt['tp-notallowed'] = 'You are not allowed to access this section.';
 $txt['tp-notfound'] = 'The item/section was not found.';
@@ -101,7 +101,7 @@ $txt['tp-dlattachloose'] = 'Detach it?';
 $txt['tp-dldelete'] = 'Delete?';
 $txt['tp-dledit'] = 'Edit/Delete';
 $txt['tp-dlfile'] = 'Filename / Uploader';
-$txt['tp-dlfilename'] = 'Filename:';
+$txt['tp-dlfilename']='Filename:';
 $txt['tp-dlfiles'] = 'Files';
 $txt['tp-dlfilesize'] = 'Filesize';
 $txt['tp-dlicon'] = 'Icon';
@@ -129,7 +129,7 @@ $txt['tp-rightbar'] = 'Show right panel';
 $txt['tp-sayno'] = 'No';
 $txt['tp-uploadnewfileexisting'] = 'Upload a new file <br /><span class="smalltext"> (the existing will be replaced!)</span>';
 $txt['tp-uploadnewpic'] = 'Upload a new picture<br /><span class="smalltext">(the existing will be replaced)</span>';
-$txt['tp-uploadnewpicexisting'] = 'Existing screenshot/picture';
+$txt['tp-uploadnewpicexisting']='Existing screenshot/picture';
 $txt['tp-shortname'] = 'Query title:';
 
 $txt['tp-topbar'] = 'Show top panel';
@@ -158,7 +158,7 @@ $txt['tp-dlusecategorytext'] = 'Show category descriptions inside file listings?
 $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dlwysiwyg'] = 'Show text-editor?';
 
-$txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="'.$scripturl.'?action=tpmod;dl=adminsettings">settings screen</a>?';
+$txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tpmod;dl=adminsettings">settings screen</a>?';
 
 $txt['tp-dlnonint'] = 'Sorry, you attempted to specify a non-integer value!';
 $txt['tp-dlfilenotdel'] = 'Unable to delete the actual file, but the item was deleted.';

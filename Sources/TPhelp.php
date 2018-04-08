@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -16,7 +16,7 @@
  */
 
 if (!defined('SMF'))
-		die('Hacking attempt...');
+        die('Hacking attempt...');
 
 // TinyPortal module entrance
 function TPhelp_init()
@@ -29,13 +29,13 @@ function TPhelp_init()
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = false;
 
-	if(loadLanguage( 'TPhelp' ) == false)
-		loadLanguage( 'TPhelp', 'english' );
+	if(loadLanguage('TPhelp') == false)
+		loadLanguage('TPhelp', 'english');
 
-	loadtemplate( 'TPhelp' );
+	loadtemplate('TPhelp');
 
 	// setup menu items
-	if(isset($_GET['p']) && in_array( $_GET['p'], $context['TPortal']['helptabs'] ))
+	if(isset($_GET['p']) && in_array($_GET['p'],$context['TPortal']['helptabs']))
 		$p = $_GET['p'];
 	else
 		$p = 'introduction';
@@ -45,17 +45,17 @@ function TPhelp_init()
 	foreach($context['TPortal']['helptabs'] as $tab)
 	{
 		$context['admin_tabs']['tinyportal'][$tab] = array(
-			'title' => $txt['tphelp_'.$tab],
+			'title' => $txt['tphelp_' . $tab],
 			'description' => '',
-			'href' => $scripturl.'?action=tpmod;sa=help;p='.$tab,
+			'href' => $scripturl . '?action=tpmod;sa=help;p=' . $tab,
 			'is_selected' => $p == $tab ? true : false,
 		);
 	}
 
 	$context['template_layers'][] = 'tpadm';
 
-	if(loadLanguage( 'TPortalAdmin' ) == false)
-		loadLanguage( 'TPortalAdmin', 'english' );
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
 }
 
 function TPCredits()
@@ -63,9 +63,9 @@ function TPCredits()
 	tp_hidebars();
 	$context['TPortal']['not_forum'] = false;
 
-	if(loadLanguage( 'TPhelp' ) == false)
-		loadLanguage( 'TPhelp', 'english' );
+	if(loadLanguage('TPhelp') == false)
+		loadLanguage('TPhelp', 'english');
 
-	loadtemplate( 'TPhelp' );
+	loadtemplate('TPhelp');
 }
 ?>

@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -82,13 +82,10 @@
 }
 
 /* for layout option 2 */
-.shout_options img{
+.shout_options  img{
 	float: right;
 }
 
-.shout_options img.smiley{
-	float: unset !important;
-}
 .shout_date {
 	clear: both;
 }
@@ -96,14 +93,6 @@
 .shoutbody_layout1 {
 	border-bottom: 1px dotted #000;
 	padding: 5px 0;
-}
-
-.shoutbody_layout2 {
-	padding: 5px 0;
-}
-
-.shoutbody_layout2:nth-child(odd){
-    background:#F0F8FF;
 }
 
 .bubble {
@@ -148,23 +137,6 @@ top: -9px;
 left: 16px;
 }
 
-.shoutbox_datetime {
-	float: right;
-}
-
-.shout_options .shoutbox_datetime a {
-	/*display: none;*/
-	margin-right: 0.1em;
-}
-/*
-.shoutbox_datetime:hover {
-	display: none;
-}
-
-.shoutbox_datetime:hover .shout_options:after {
-	 display: block; 
-}
-*/
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
 
  /*.bubble {	background-color: #888; } 

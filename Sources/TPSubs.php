@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.4.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -792,9 +792,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 	{
 		loadtemplate($template);
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin150" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin141" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin150" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin141" />';
 
 		if( loadLanguage('TPortalAdmin') == false)
 			loadlangauge('TPortalAdmin', 'english');
@@ -812,9 +812,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 			loadLanguage($template, 'english');
 
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin150" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin141" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin150" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin141" />';
 
 		$context['template_layers'][] = $layer;
 		$context['sub_template'] = $subtemplate;
@@ -933,138 +933,32 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 function TPwysiwyg_setup()
 {
 	global $context, $boardurl;
-	
+
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
 
-	if($context['TPortal']['use_dragdrop']) {
-		$context['html_headers'] .= '
-			<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
-			<script type="text/javascript"><!-- // --><![CDATA[
-			function detectIE() {
-				var ua = window.navigator.userAgent;
-
-				// Test values; Uncomment to check result ¿
-
-				// IE 10
-				// ua = \'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)\';
-
-				// IE 11
-				// ua = \'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko\';
-
-				// Edge 12 (Spartan)
-				// ua = \'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0\';
-
-				// Edge 13
-				// ua = \'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586\';
-
-				var msie = ua.indexOf(\'MSIE \');
-				if (msie > 0) {
-					// IE 10 or older => return version number
-					return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-				}
-
-				var trident = ua.indexOf(\'Trident/\');
-				if (trident > 0) {
-					// IE 11 => return version number
-					var rv = ua.indexOf(\'rv:\');
-					return parseInt(ua.substring(rv + 3, ua.indexOf(\'.\', rv)), 10);
-				}
-
-				var edge = ua.indexOf(\'Edge/\');
-				if (edge > 0) {
-					// Edge (IE 12+) => return version number
-					return parseInt(ua.substring(edge + 5, ua.indexOf(\'.\', edge)), 10);
-				}
-
-				// other browser
-				return false;
-			}
-			// Get IE or Edge browser version
-			var version = detectIE();
-
-			if (version === false) {
-				// Do nothing
-			} else {
-				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"><\/script>\');
-				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"><\/script>\');
-			}
-			// ]]></script>';
-	}
-
 }
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
 {
-	global $user_info, $boardurl, $scripturl, $boarddir, $context, $txt;
+	global $user_info, $boardurl, $boarddir, $context, $txt;
 
 	echo '
 	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
-
-	if($context['TPortal']['use_dragdrop']) {
-		echo '<script type="text/javascript"><!-- // --><![CDATA[
-			function tpImageUpload(file) {
-				var form = new FormData();
-				form.append(\'image\', file);
-
-				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
-					method: \'post\',
-					body: form,
-					dataType : \'json\',
-				}).then(function (res) {
-					return res.json();
-				}).then(function(result) {
-					if (result.success) {
-						return result.data;
-					}
-					throw \'Upload error\';
-				});
-			}
-
-			var dragdropOptions = {
-			    // The allowed mime types that can be dropped on the editor
-			    allowedTypes: [\'image/jpeg\', \'image/png\'],
-			    handleFile: function (file, createPlaceholder) {
-				var placeholder = createPlaceholder();
-
-				tpImageUpload(file).then(function (url) {
-				    // Replace the placeholder with the image HTML
-				    placeholder.insert(\'<img src=\' + url + \' />\');
-				}).catch(function () {
-				    // Error so remove the placeholder
-				    placeholder.cancel();
-
-				    alert(\'Problem uploading image.\');
-				});
-			    }
-			};
-			// ]]></script>';
-	}
-
-	echo '
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
-			sceditor.create(textarea, {';
-
-	if($context['TPortal']['use_dragdrop']) {
-		echo'
-				// Enable the drag and drop plugin
-				plugins: \'dragdrop\',
-				// Set the drag and drop plugin options
-				dragdrop: dragdropOptions,';
-	}
-
-	echo '			format: \'xhtml\',
+			sceditor.create(textarea, {
+				format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
 			});
 		// ]]></script>';
 	
 	// only if you can edit your own articles
-	if(!$context['TPortal']['use_dragdrop'] && $upload && allowedTo('tp_editownarticle'))
+	if($upload && allowedTo('tp_editownarticle'))
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
@@ -1085,16 +979,18 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
 		<div class="titlebg" style="padding: 6px;">' , $txt['tp-quicklist'] , '</div>
 		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
-		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">';
+		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
+		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="' . $boardurl . '/tp-images/thumbs/' . $im . '" class="tp-thumb" alt="" onclick=\"this.src=\'' . $boardurl . '/tp-images/' . substr( $im, 6 ) . '\'" />';
+				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';					
 		}
 		echo '
-		</div>';
+		</div>
+		</div>
+	</div>';
 	}
-	echo '</div>';
 }
 
 function TP_getallmenus()
@@ -1304,7 +1200,7 @@ function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 	
 	$what = '
 	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
-		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
+		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
 	</a>';
 	if($string)
 		return $what;
@@ -1318,7 +1214,7 @@ function tp_hidepanel2($id, $id2, $alt)
 	
 	$what = '
 	<a title="'.$txt[$alt].'" style="cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
-		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" alt="*" />
+		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" alt="*" />
 	</a>';
 	
 	return $what;
@@ -1507,7 +1403,7 @@ function TPortal()
 	global $context;
 
 	// For wireless, we use the Wireless template...
-	if (defined('WIRELESS') && WIRELESS) {
+	if (WIRELESS){
 		loadTemplate('TPwireless');
 		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp';
 	}
@@ -1543,7 +1439,7 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 		$start = max(0, (int) $start - ((int) $start % (int) $num_per_page));
 
 	// Wireless will need the protocol on the URL somewhere.
-	if (defined('WIRELESS') && WIRELESS)
+	if (WIRELESS)
 		$base_url .= ';' . WIRELESS_PROTOCOL;
 
 	$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';p=%d') . '">%s</a> ';
@@ -1631,18 +1527,18 @@ function tp_renderarticle($intro = '')
 		if($context['TPortal']['article']['rendertype'] == 'php')
 		{
 			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
-			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
-			if (defined('WIRELESS') && WIRELESS)
+			if(!WIRELESS)
 				echo parse_bbc($context['TPortal']['article']['intro']), '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 			else
 				echo parse_bbc($context['TPortal']['article']['intro']);
 		}
 		else
 		{
-			if (defined('WIRELESS') && WIRELESS)
+			if(!WIRELESS)
 				echo $context['TPortal']['article']['intro'], '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';'.WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 			else
 				echo $context['TPortal']['article']['intro'];
@@ -2179,7 +2075,7 @@ function tp_collectArticleIcons()
 	{
 		while (false !== ($file = readdir($handle))) 
 		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPnoicon.png' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPnoicon.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
 				$context['TPortal']['articons']['icons'][] = array(
 					'id' => $count,
@@ -2199,7 +2095,7 @@ function tp_collectArticleIcons()
 	{
 		while (false !== ($file = readdir($handle))) 
 		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.png' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
 				if(substr($file, 0, 2) == 's_')
 					$context['TPortal']['articons']['illustrations'][] = array(
