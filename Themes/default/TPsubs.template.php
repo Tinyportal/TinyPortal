@@ -534,12 +534,10 @@ function TPortal_themebox()
 // TPortal newsbox
 function TPortal_newsbox()
 {
-    global $context, $settings;
+	global $context;
 
 	// Show a random news item? (or you could pick one from news_lines...)
-	if (!empty($settings['enable_news']))
-	echo '
-	<div class="tp_newsblock">', $context['random_news_line'], '</div>';
+	echo '<div class="tp_newsblock">', $context['random_news_line'], '</div>';
 }
 
 // TPortal stats box
