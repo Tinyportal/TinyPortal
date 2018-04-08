@@ -404,6 +404,7 @@ $settings_array = array(
     'showforumfirst' => '0',
     'allow_guestnews' => '1',
     'use_wysiwyg' => '2',
+    'use_dragdrop' => '0',
     'imageproxycheck' => '1',
     'allowed_membergroups' => '',
     'approved_membergroups' => '',

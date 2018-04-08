@@ -939,6 +939,60 @@ function TPwysiwyg_setup()
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
 
+	if($context['TPortal']['use_dragdrop']) {
+		$context['html_headers'] .= '
+			<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
+			<script type="text/javascript"><!-- // --><![CDATA[
+			function detectIE() {
+				var ua = window.navigator.userAgent;
+
+				// Test values; Uncomment to check result ¿
+
+				// IE 10
+				// ua = \'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)\';
+
+				// IE 11
+				// ua = \'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko\';
+
+				// Edge 12 (Spartan)
+				// ua = \'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0\';
+
+				// Edge 13
+				// ua = \'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586\';
+
+				var msie = ua.indexOf(\'MSIE \');
+				if (msie > 0) {
+					// IE 10 or older => return version number
+					return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+				}
+
+				var trident = ua.indexOf(\'Trident/\');
+				if (trident > 0) {
+					// IE 11 => return version number
+					var rv = ua.indexOf(\'rv:\');
+					return parseInt(ua.substring(rv + 3, ua.indexOf(\'.\', rv)), 10);
+				}
+
+				var edge = ua.indexOf(\'Edge/\');
+				if (edge > 0) {
+					// Edge (IE 12+) => return version number
+					return parseInt(ua.substring(edge + 5, ua.indexOf(\'.\', edge)), 10);
+				}
+
+				// other browser
+				return false;
+			}
+			// Get IE or Edge browser version
+			var version = detectIE();
+
+			if (version === false) {
+				// Do nothing
+			} else {
+				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"><\/script>\');
+				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"><\/script>\');
+			}
+			// ]]></script>';
+	}
 }
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
@@ -957,8 +1011,67 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			});
 		// ]]></script>';
 	
+	if($context['TPortal']['use_dragdrop']) {
+		echo '<script type="text/javascript"><!-- // --><![CDATA[
+			function tpImageUpload(file) {
+				var form = new FormData();
+				form.append(\'image\', file);
+
+				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
+					method: \'post\',
+					body: form,
+					dataType : \'json\',
+				}).then(function (res) {
+					return res.json();
+				}).then(function(result) {
+					if (result.success) {
+						return result.data;
+					}
+					throw \'Upload error\';
+				});
+			}
+
+			var dragdropOptions = {
+			    // The allowed mime types that can be dropped on the editor
+			    allowedTypes: [\'image/jpeg\', \'image/png\'],
+			    handleFile: function (file, createPlaceholder) {
+				var placeholder = createPlaceholder();
+
+				tpImageUpload(file).then(function (url) {
+				    // Replace the placeholder with the image HTML
+				    placeholder.insert(\'<img src=\' + url + \' />\');
+				}).catch(function () {
+				    // Error so remove the placeholder
+				    placeholder.cancel();
+
+				    alert(\'Problem uploading image.\');
+				});
+			    }
+			};
+			// ]]></script>';
+	}
+
+	echo '
+		<script type="text/javascript"><!-- // --><![CDATA[
+			var textarea = document.getElementById(\''.$textarea.'\');
+			sceditor.create(textarea, {';
+		if($context['TPortal']['use_dragdrop']) {
+			echo'
+				// Enable the drag and drop plugin
+				plugins: \'dragdrop\',
+				// Set the drag and drop plugin options
+				dragdrop: dragdropOptions,';
+		}
+
+	echo '			format: \'xhtml\',
+				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
+				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
+			});
+		// ]]></script>';
+	
+
 	// only if you can edit your own articles
-	if($upload && allowedTo('tp_editownarticle'))
+	if(!$context['TPortal']['use_dragdrop'] && $upload && allowedTo('tp_editownarticle'))
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
@@ -991,6 +1104,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		</div>
 	</div>';
 	}
+
 }
 
 function TP_getallmenus()

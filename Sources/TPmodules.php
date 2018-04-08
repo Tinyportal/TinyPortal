@@ -1095,9 +1095,24 @@ function TPmodules()
 	{
 		require_once( $sourcedir .'/TPhelp.php');
 		TPCredits();
+	}
+	elseif($tpsub == 'uploadimage')
+	{
+		require_once(SOURCEDIR.'/TPcommon.php');
+		$name = TPuploadpicture( 'image', $context['user']['id'].'uid' );
+		tp_createthumb( 'tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name );
+		$response['data'] = 'tp-images/'.$name;
+		$response['success'] = 'true';
+		header( 'Content-type: application/json' );
+		echo json_encode( $response );
+		// we want to just exit
+		die;
 	}	
-	else
-			redirectexit('action=forum');
+	else 
+	{
+		redirectexit('action=forum');
+	}
+
 }
 
 // profile summary
