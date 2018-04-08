@@ -1947,6 +1947,11 @@ box-sizing:border-box;
 
 /************* TP ADMIN RESPONSIVE ********************/
 
+/* Responsive Youtube embed */
+.youtubecontainer {
+	max-width: 560px; 
+}
+
 .tp_responsive #tpadmin_content {
 	min-width:200px;
 }
