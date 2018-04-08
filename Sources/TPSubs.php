@@ -946,7 +946,7 @@ function TPwysiwyg_setup()
 			function detectIE() {
 				var ua = window.navigator.userAgent;
 
-				// Test values; Uncomment to check result ¿
+				// Test values; Uncomment to check result
 
 				// IE 10
 				// ua = \'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)\';
@@ -963,7 +963,7 @@ function TPwysiwyg_setup()
 				var msie = ua.indexOf(\'MSIE \');
 				if (msie > 0) {
 					// IE 10 or older => return version number
-					return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+					return parseInt(ua.substring(msie + 5, ua.indexOf(\'.\', msie)), 10);
 				}
 
 				var trident = ua.indexOf(\'Trident/\');
@@ -1001,16 +1001,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 	echo '
 	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
-		<script type="text/javascript"><!-- // --><![CDATA[
-			var textarea = document.getElementById(\''.$textarea.'\');
-			sceditor.create(textarea, {
-				format: \'xhtml\',
-				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
-				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
-			});
-		// ]]></script>';
-	
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
+
 	if($context['TPortal']['use_dragdrop']) {
 		echo '<script type="text/javascript"><!-- // --><![CDATA[
 			function tpImageUpload(file) {
