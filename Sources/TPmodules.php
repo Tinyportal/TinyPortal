@@ -1098,7 +1098,7 @@ function TPmodules()
 	}
 	elseif($tpsub == 'uploadimage')
 	{
-		require_once(SOURCEDIR.'/TPcommon.php');
+		require_once($sourcedir.'/TPcommon.php');
 		$name = TPuploadpicture( 'image', $context['user']['id'].'uid' );
 		tp_createthumb( 'tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name );
 		$response['data'] = 'tp-images/'.$name;
