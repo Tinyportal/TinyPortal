@@ -1063,7 +1063,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	
 
 	// only if you can edit your own articles
-	if(!$context['TPortal']['use_dragdrop'] && $upload && allowedTo('tp_editownarticle'))
+	if($upload && allowedTo('tp_editownarticle'))
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
