@@ -1025,7 +1025,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 			var dragdropOptions = {
 			    // The allowed mime types that can be dropped on the editor
-			    allowedTypes: [\'image/jpeg\', \'image/png\'],
+			    allowedTypes: [\'image/gif\', \'image/jpeg\', \'image/png\'],
 			    handleFile: function (file, createPlaceholder) {
 				var placeholder = createPlaceholder();
 
