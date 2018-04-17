@@ -1011,6 +1011,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
 					method: \'post\',
+					credentials: \'same-origin\',
 					body: form,
 					dataType : \'json\',
 				}).then(function (res) {
