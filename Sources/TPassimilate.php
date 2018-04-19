@@ -95,13 +95,13 @@ function tpAddCopy($buffer)
 		return $buffer;
 
 	$find = array(
-	    '<body>',
-		'Simple Machines</a>',
+		'<body>',
+		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>',
 		'class="copywrite"',
 	);
 	$replace = array(
-	    '<body id="' . $bodyid . '" class="' . $bclass . '">',
-		'Simple Machines</a><br />' . $string,
+		'<body id="' . $bodyid . '" class="' . $bclass . '">',
+		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string,
 		'class="copywrite" style="line-height: 1;"',
 	);
 
