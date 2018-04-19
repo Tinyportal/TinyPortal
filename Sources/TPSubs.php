@@ -937,8 +937,31 @@ function TPwysiwyg_setup()
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
-		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>
+		<style>
+			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
+			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
+		</style>';
 
+	$context['html_headers'] .= ' 
+		<script type="text/javascript"><!-- // --><![CDATA[
+			sceditor.command.set(\'floatleft\', {
+				exec: function() {
+					// this is set to the editor instance
+					this.wysiwygEditorInsertHtml(\'<div style="float:left;">\', \'</div>\');
+				},
+				txtExec: [\'<div style="float:left;">\', \'</div>\'],
+				tooltip: \'Insert float left div\'
+			});
+			sceditor.command.set(\'floatright\', {
+				exec: function() {
+					// this is set to the editor instance
+					this.wysiwygEditorInsertHtml(\'<div style="float:right;">\', \'</div>\');
+				},
+				txtExec: [\'<div style="float:right;">\', \'</div>\'],
+				tooltip: \'Insert float right div\'
+			});
+		// ]]></script>';
 	if($context['TPortal']['use_dragdrop']) {
 		$context['html_headers'] .= '
 			<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
@@ -1008,7 +1031,6 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			function tpImageUpload(file) {
 				var form = new FormData();
 				form.append(\'image\', file);
-
 				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
 					method: \'post\',
 					credentials: \'same-origin\',
@@ -1044,8 +1066,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			// ]]></script>';
 	}
 
-	echo '
-		<script type="text/javascript"><!-- // --><![CDATA[
+	echo '	<script type="text/javascript"><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
 			sceditor.create(textarea, {';
 		if($context['TPortal']['use_dragdrop']) {
@@ -1056,10 +1077,13 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				dragdrop: dragdropOptions,';
 		}
 
-	echo '			format: \'xhtml\',
+	echo '			toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
+		echo '		
+				format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
 			});
+
 		// ]]></script>';
 	
 
