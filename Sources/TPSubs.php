@@ -961,6 +961,15 @@ function TPwysiwyg_setup()
 				txtExec: [\'<div style="float:right;">\', \'</div>\'],
 				tooltip: \'Insert float right div\'
 			});
+			// Taken from SMF2.1 https://github.com/SimpleMachines/SMF2.1/blob/24a10ca4fcac45f0bd73b6185618217aaa531cd2/Themes/default/scripts/jquery.sceditor.smf.js#L289
+			sceditor.command.set( \'youtube\', {
+				exec: function (caller) {
+					var editor = this;
+					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
+						editor.insert(\'<div class="videocontainer"><div><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div></div>\');
+					});
+				},
+			});
 		// ]]></script>';
 	if($context['TPortal']['use_dragdrop']) {
 		$context['html_headers'] .= '
@@ -1077,7 +1086,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				dragdrop: dragdropOptions,';
 		}
 
-	echo '			toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
+	echo '			
+				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
 		echo '		
 				format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
