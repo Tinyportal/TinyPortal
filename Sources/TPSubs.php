@@ -966,7 +966,7 @@ function TPwysiwyg_setup()
 				exec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="videocontainer"><div><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div></div>\');
+						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>\');
 					});
 				},
 			});
