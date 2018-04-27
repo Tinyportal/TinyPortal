@@ -1956,7 +1956,7 @@ box-sizing:border-box;
 	}
 }
 
-@media only screen (min-width: 319px) and (max-width: 768px) {
+@media only screen and (min-width: 319px) and (max-width: 768px) {
 	.youtubecontainer {
         	width: 320px;
         	height: 180px;
