@@ -1950,20 +1950,21 @@ box-sizing:border-box;
 /* Responsive Youtube embed */
 @media only screen and (min-width: 769px) {
 	.youtubecontainer {
-		width: 640px;
-		height: 360px;
+        	width: 59vw;
+        	height: calc(59vw/1.77);
 		margin: 0 auto;
+		display: inline-block;
 	}
 }
 
-@media only screen and (min-width: 319px) and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
 	.youtubecontainer {
-        	width: 320px;
-        	height: 180px;
+        	width: 80vw;
+        	height: calc(80vw/1.77);
         	margin: 0 auto;
+		display: inline-block;
     	}
 }
-
 
 .youtubecontainer iframe {
 	display:block;
