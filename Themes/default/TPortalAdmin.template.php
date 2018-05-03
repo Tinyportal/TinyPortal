@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4.1
+ * @version 1.5.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1066,6 +1066,13 @@ function template_artsettings()
 								<div class="float-items">
 									<input name="tp_use_wysiwyg" type="radio" value="2" ' , ($context['TPortal']['use_wysiwyg']=='2' || $context['TPortal']['use_wysiwyg']=='1') ? 'checked' : '' , '> '.$txt['tp-yes'].' 
 									<input name="tp_use_wysiwyg" type="radio" value="0" ' , $context['TPortal']['use_wysiwyg']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-usedragdrop'].'</div>
+								<div class="float-items">
+									<input name="tp_use_dragdrop" type="radio" value="1" ' , $context['TPortal']['use_dragdrop'] == '1' ? 'checked' : '', '> '.$txt['tp-yes'].' 
+									<input name="tp_use_dragdrop" type="radio" value="0" ' , $context['TPortal']['use_dragdrop'] == '0' ? 'checked' : '', '> '.$txt['tp-no'].'
 								</div><p class="clearthefloat"></p>
 							</div>
 							<div class="windowbg2">

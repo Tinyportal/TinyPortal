@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 1.4.1
+ * @version 1.5.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1946,6 +1946,31 @@ box-sizing:border-box;
 }
 
 /************* TP ADMIN RESPONSIVE ********************/
+
+/* Responsive Youtube embed */
+@media only screen and (min-width: 769px) {
+	.youtubecontainer {
+        	width: 59vw;
+        	height: calc(59vw/1.77);
+		margin: 0 auto;
+		display: inline-block;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.youtubecontainer {
+        	width: 80vw;
+        	height: calc(80vw/1.77);
+        	margin: 0 auto;
+		display: inline-block;
+    	}
+}
+
+.youtubecontainer iframe {
+	display:block;
+	width:100%;
+	height:100%;
+}
 
 .tp_responsive #tpadmin_content {
 	min-width:200px;

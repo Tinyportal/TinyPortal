@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4.1
+ * @version 1.5.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -38,7 +38,7 @@ function template_tpcredits()
 		<div class="windowbg2">
 			<span class="topslice"><span></span></span>
 			<div class="content" style="line-height: 1.6em; padding: 0 1em;">
-							'.$txt['tp-credit1'].'
+				'.$txt['tp-credit1'].'
 			</div>
 			<span class="botslice"><span></span></span>
 		</div>

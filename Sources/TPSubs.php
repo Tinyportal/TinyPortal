@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4.1
+ * @version 1.5.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -792,9 +792,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 	{
 		loadtemplate($template);
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin141" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin150" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin141" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin150" />';
 
 		if( loadLanguage('TPortalAdmin') == false)
 			loadlangauge('TPortalAdmin', 'english');
@@ -812,9 +812,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 			loadLanguage($template, 'english');
 
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin141" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin150" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin141" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin150" />';
 
 		$context['template_layers'][] = $layer;
 		$context['sub_template'] = $subtemplate;
@@ -937,26 +937,172 @@ function TPwysiwyg_setup()
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
-		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>';
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>
+		<style>
+			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
+			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
+		</style>';
 
+	$context['html_headers'] .= ' 
+		<script type="text/javascript"><!-- // --><![CDATA[
+			sceditor.command.set(\'floatleft\', {
+				exec: function() {
+					// this is set to the editor instance
+					this.wysiwygEditorInsertHtml(\'<div style="float:left;">\', \'</div>\');
+				},
+				txtExec: [\'<div style="float:left;">\', \'</div>\'],
+				tooltip: \'Insert float left div\'
+			});
+			sceditor.command.set(\'floatright\', {
+				exec: function() {
+					// this is set to the editor instance
+					this.wysiwygEditorInsertHtml(\'<div style="float:right;">\', \'</div>\');
+				},
+				txtExec: [\'<div style="float:right;">\', \'</div>\'],
+				tooltip: \'Insert float right div\'
+			});
+			// Taken from SMF2.1 https://github.com/SimpleMachines/SMF2.1/blob/24a10ca4fcac45f0bd73b6185618217aaa531cd2/Themes/default/scripts/jquery.sceditor.smf.js#L289
+			sceditor.command.set( \'youtube\', {
+				exec: function (caller) {
+					var editor = this;
+					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
+						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+					});
+				},
+				txtExec: function (caller) {
+					var editor = this;
+					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
+						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+					});
+				},
+			});
+		// ]]></script>';
+	if($context['TPortal']['use_dragdrop']) {
+		$context['html_headers'] .= '
+			<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
+			<script type="text/javascript"><!-- // --><![CDATA[
+			function detectIE() {
+				var ua = window.navigator.userAgent;
+
+				// Test values; Uncomment to check result
+
+				// IE 10
+				// ua = \'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)\';
+
+				// IE 11
+				// ua = \'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko\';
+
+				// Edge 12 (Spartan)
+				// ua = \'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0\';
+
+				// Edge 13
+				// ua = \'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586\';
+
+				var msie = ua.indexOf(\'MSIE \');
+				if (msie > 0) {
+					// IE 10 or older => return version number
+					return parseInt(ua.substring(msie + 5, ua.indexOf(\'.\', msie)), 10);
+				}
+
+				var trident = ua.indexOf(\'Trident/\');
+				if (trident > 0) {
+					// IE 11 => return version number
+					var rv = ua.indexOf(\'rv:\');
+					return parseInt(ua.substring(rv + 3, ua.indexOf(\'.\', rv)), 10);
+				}
+
+				var edge = ua.indexOf(\'Edge/\');
+				if (edge > 0) {
+					// Edge (IE 12+) => return version number
+					return parseInt(ua.substring(edge + 5, ua.indexOf(\'.\', edge)), 10);
+				}
+
+				// other browser
+				return false;
+			}
+			// Get IE or Edge browser version
+			var version = detectIE();
+
+			if (version === false) {
+				// Do nothing
+			} else {
+				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"><\/script>\');
+				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"><\/script>\');
+			}
+			// ]]></script>';
+	}
 }
 
 function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
 {
-	global $user_info, $boardurl, $boarddir, $context, $txt;
+	global $user_info, $boardurl, $boarddir, $context, $txt, $scripturl;
 
 	echo '
 	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>
-		<script type="text/javascript"><!-- // --><![CDATA[
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
+
+	if($context['TPortal']['use_dragdrop']) {
+		echo '<script type="text/javascript"><!-- // --><![CDATA[
+			function tpImageUpload(file) {
+				var form = new FormData();
+				form.append(\'image\', file);
+				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
+					method: \'post\',
+					credentials: \'same-origin\',
+					body: form,
+					dataType : \'json\',
+				}).then(function (res) {
+					return res.json();
+				}).then(function(result) {
+					if (result.success) {
+						return result.data;
+					}
+					throw \'Upload error\';
+				});
+			}
+
+			var dragdropOptions = {
+			    // The allowed mime types that can be dropped on the editor
+			    allowedTypes: [\'image/gif\', \'image/jpeg\', \'image/png\'],
+			    handleFile: function (file, createPlaceholder) {
+				var placeholder = createPlaceholder();
+
+				tpImageUpload(file).then(function (url) {
+				    // Replace the placeholder with the image HTML
+				    placeholder.insert(\'<img src=\' + url + \' />\');
+				}).catch(function () {
+				    // Error so remove the placeholder
+				    placeholder.cancel();
+
+				    alert(\'Problem uploading image.\');
+				});
+			    }
+			};
+			// ]]></script>';
+	}
+
+	echo '	<script type="text/javascript"><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
-			sceditor.create(textarea, {
+			sceditor.create(textarea, {';
+		if($context['TPortal']['use_dragdrop']) {
+			echo'
+				// Enable the drag and drop plugin
+				plugins: \'dragdrop\',
+				// Set the drag and drop plugin options
+				dragdrop: dragdropOptions,';
+		}
+
+	echo '			
+				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
+		echo '		
 				format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
 			});
+
 		// ]]></script>';
 	
+
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
 	{
@@ -991,6 +1137,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		</div>
 	</div>';
 	}
+
 }
 
 function TP_getallmenus()

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.4.1
+ * @version 1.5.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -202,10 +202,10 @@ function TP_loadCSS()
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin141" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin150" />';
 	else
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin141" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin150" />';
 
 	if(!empty($context['TPortal']['padding']))
 		$context['html_headers'] .= '
@@ -1664,6 +1664,9 @@ function doTPfrontpage()
 		// make the pageindex!
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
 
+		// Clear request so that the check further down works correctly
+		$request = false;
+
 		// ok we got the post ids now, fetch each one, forum first
 		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
@@ -1699,7 +1702,7 @@ function doTPfrontpage()
 		);
 
 		unset($posts); 
-        $posts = array();
+		$posts = array();
 		// insert the forumposts into $posts
 		if($request && $smcFunc['db_num_rows']($request) > 0)
 		{
