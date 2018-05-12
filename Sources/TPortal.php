@@ -946,6 +946,10 @@ function doTPpage()
 				}
 
 			}
+			else
+			{
+				$context['art_error'] = true;
+			}
 			if(allowedTo('tp_articles'))
 			{
 				$now = time();
