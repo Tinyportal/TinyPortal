@@ -1,3 +1,3 @@
-/* SCEditor v2.1.2 | (C) 2017, Sam Clarke | sceditor.com/license */
+/* SCEditor v2.1.3 | (C) 2017, Sam Clarke | sceditor.com/license */
 
-!function(t){"use strict";var n=t.utils.extend;t.plugins.plaintext=function(){var t=!0;this.init=function(){var e=this.commands,i=this.opts;i&&i.plaintext&&i.plaintext.addButton&&(t=i.plaintext.enabled,e.pastetext=n(e.pastetext||{},{state:function(){return t?1:0},exec:function(){t=!t}}))},this.signalPasteRaw=function(n){if(t){if(n.html&&!n.text){var e=document.createElement("div");e.innerHTML=n.html,n.text=e.innerText}n.html=null}}}}(sceditor);
+!function(t){"use strict";var i=t.utils.extend;t.plugins.plaintext=function(){var e=!0;this.init=function(){var t=this.commands,n=this.opts;n&&n.plaintext&&n.plaintext.addButton&&(e=n.plaintext.enabled,t.pastetext=i(t.pastetext||{},{state:function(){return e?1:0},exec:function(){e=!e}}))},this.signalPasteRaw=function(t){if(e){if(t.html&&!t.text){var n=document.createElement("div");n.innerHTML=t.html,t.text=n.innerText}t.html=null}}}}(sceditor);

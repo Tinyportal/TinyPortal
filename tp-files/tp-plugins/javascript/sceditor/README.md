@@ -7,7 +7,7 @@
 
 A lightweight WYSIWYG BBCode and XHTML editor.
 
-![SCEditor demo](/demo.gif)
+[![SCEditor preview](https://cdn.rawgit.com/samclarke/SCEditor/49c696b8/preview.svg)](https://www.sceditor.com/)
 
 For more information visit [sceditor.com](http://www.sceditor.com/)
 
@@ -19,8 +19,8 @@ Include the SCEditor JavaScript:
 ```html
 <link rel="stylesheet" href="minified/themes/default.min.css" />
 <script src="minified/sceditor.min.js"></script>
-<script src="minified/plugins/bbcode.js"></script>
-<script src="minified/plugins/xhtml.js"></script>
+<script src="minified/formats/bbcode.js"></script>
+<script src="minified/formats/xhtml.js"></script>
 ```
 
 Then to convert a textarea into SCEditor, simply do:
@@ -29,7 +29,7 @@ Then to convert a textarea into SCEditor, simply do:
 var textarea = document.getElementById('id-of-textarea');
 
 sceditor.create(textarea, {
-	plugins: 'xhtml',
+	format: 'xhtml',
 	style: 'minified/themes/content/default.min.css'
 });
 ```
@@ -40,7 +40,7 @@ or for a BBCode WYSIWYG editor do:
 var textarea = document.getElementById('id-of-textarea');
 
 sceditor.create(textarea, {
-	plugins: 'bbcode',
+	format: 'bbcode',
 	style: 'minified/themes/content/default.min.css'
 });
 ```
