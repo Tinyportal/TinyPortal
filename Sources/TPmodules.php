@@ -1228,7 +1228,10 @@ function tp_profile_articles($memID)
 
 			$total = 0;
 			foreach($rat as $mm => $mval)
-				$total = $total + $mval;
+			{
+				if(is_numeric($mval)) 
+					$total = $total + $mval;
+			}
 
 			if($rating_votes > 0 && $total > 0)
 				$rating_average = floor($total / $rating_votes);
@@ -1381,7 +1384,10 @@ function tp_profile_download($memID)
 
 			$total = 0;
 			foreach($rat as $mm => $mval)
-				$total = $total + $mval;
+			{
+				if(is_numeric($mval)) 
+					$total = $total + $mval;
+			}
 
 			if($rating_votes > 0 && $total > 0)
 				$rating_average = floor($total / $rating_votes);
