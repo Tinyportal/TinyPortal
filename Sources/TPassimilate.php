@@ -168,6 +168,9 @@ function tpAddMenuItems(&$buttons)
 		
 		if($but == 'home')
 		{
+			if(!empty($context['TPortal']['standalone']))
+				$new_buttons['home']['href'] = $context['TPortal']['standalone'];
+
 			$new_buttons['forum'] = array(
 				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
 				'href' => $scripturl . '?action=forum',

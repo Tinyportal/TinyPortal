@@ -449,6 +449,16 @@ function setupTPsettings()
 	$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
 	if(empty($context['page_title']))
 		$context['page_title'] = $context['forum_name'];
+
+	if(empty($context['TPortal']['standalone'])) {
+		$request = $smcFunc['db_query']('', '
+			SELECT value
+			FROM {db_prefix}tp_settings 
+			WHERE name = \'standalone_mode\''
+		);
+		$context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
+		$smcFunc['db_free_result']($request);
+	}
 }
 
 function fetchTPhooks()
