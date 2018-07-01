@@ -16,6 +16,7 @@
  */
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
+  global $forum_version;
 
 	loadLanguage('TPShout');
 
@@ -37,6 +38,11 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 		),
 		$permissionList['membergroup']
 	);
+
+  // This is to get around there being no hook to call to remove guest permissions in SMF 2.0
+  if(strpos($forum_version, '2.0') !== false) {
+    tpAddIllegalPermissions();
+  }
 
 }
 
