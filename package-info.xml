@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
-    <name>TinyPortal</name>
-    <id>bloc:tinyportal</id>
-    <type>modification</type>
-    <version>1.5.1</version>
+	<name>TinyPortal</name>
+	<id>bloc:tinyportal</id>
+	<type>modification</type>
+	<version>1.5.1</version>
 
 	<install for="2.0 - 2.0.99">
 		<redirect url="">Installed!</redirect>
-        <require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
-        <require-dir name="tp-downloads" destination="$boarddir" />
-        <require-dir name="tp-images" destination="$boarddir" />
+		<require-dir name="tp-downloads" destination="$boarddir" />
+		<require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
-        <readme type="inline" parsebbc="true">Installing TinyPortal v1.5.1 for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
+		<readme type="inline" parsebbc="true">Installing TinyPortal v1.5.1 for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
-    </install>
+	</install>
 	<uninstall for="2.0 - 2.0.99">
 		<readme type="inline">Uninstalling TinyPortal v1.5.1 for SMF2.0.x</readme>
 		<modification reverse="true">install.xml</modification>
@@ -57,6 +57,60 @@
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<code>do_hooks.php</code>
-    </uninstall>
-    
+	</uninstall>
+	<install for="2.1.* - 2.1.99">
+		<redirect url="">Installed!</redirect>
+		<require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="tp-downloads" destination="$boarddir" />
+		<require-dir name="tp-images" destination="$boarddir" />
+		<require-dir name="tp-files" destination="$boarddir" />
+		<readme type="inline">Installing TinyPortal v1.5.1 for SMF2.1</readme>
+		<modification>install-2.xml</modification>
+		<database>install.php</database>
+		<code>do_hooks.php</code>
+	</install>
+	<uninstall for="2.1.* - 2.1.99">
+		<readme type="inline">Uninstalling TinyPortal v1.5.1 for SMF2.1</readme>
+		<modification reverse="true">install-2.xml</modification>
+		<remove-dir name="$boarddir/tp-files/tp-modules" />
+		<remove-dir name="$boarddir/tp-files/tp-blockcodes" />
+		<remove-dir name="$boarddir/tp-files/tp-plugins" />
+		<remove-dir name="$themedir/images/tinyportal" />
+		<remove-file name="$sourcedir/TPassimilate.php" />
+		<remove-file name="$sourcedir/TPcommon.php" />
+		<remove-file name="$sourcedir/TPdlmanager.php" />
+		<remove-file name="$sourcedir/TPhelp.php" />
+		<remove-file name="$sourcedir/TPmodules.php" />
+		<remove-file name="$sourcedir/TPortal.php" />
+		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSubs.php" />
+		<remove-file name="$themedir/TPBlockLayout.template.php" />
+		<remove-file name="$themedir/TPdladmin.template.php" />
+		<remove-file name="$themedir/TPdlmanager.template.php" />
+		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPmodules.template.php" />
+		<remove-file name="$themedir/TPortal.template.php" />
+		<remove-file name="$themedir/TPortalAdmin.template.php" />
+		<remove-file name="$themedir/TPprint.template.php" />
+		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPShout.template.php" />
+		<remove-file name="$themedir/TPsubs.template.php" />
+		<remove-file name="$themedir/css/TPShout.css" />
+		<remove-file name="$themedir/css/tp-style.css" />
+		<remove-file name="$themedir/scripts/TPShout.js" />
+		<remove-file name="$languagedir/TPdlmanager.english.php" />
+		<remove-file name="$languagedir/TPdlmanager.english-utf8.php" />
+		<remove-file name="$languagedir/TPhelp.english.php" />
+		<remove-file name="$languagedir/TPhelp.english-utf8.php" />
+		<remove-file name="$languagedir/TPmodules.english.php" />
+		<remove-file name="$languagedir/TPmodules.english-utf8.php" />
+		<remove-file name="$languagedir/TPortal.english.php" />
+		<remove-file name="$languagedir/TPortal.english-utf8.php" />
+		<remove-file name="$languagedir/TPortalAdmin.english.php" />
+		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
+		<remove-file name="$languagedir/TPShout.english.php" />
+		<remove-file name="$languagedir/TPShout.english-utf8.php" />
+		<code>do_hooks.php</code>
+	</uninstall>
 </package-info>

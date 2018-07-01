@@ -1550,7 +1550,7 @@ function TPortal()
 	global $context;
 
 	// For wireless, we use the Wireless template...
-	if (WIRELESS){
+	if (defined('WIRELESS') && WIRELESS ) {
 		loadTemplate('TPwireless');
 		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp';
 	}
@@ -1586,7 +1586,7 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 		$start = max(0, (int) $start - ((int) $start % (int) $num_per_page));
 
 	// Wireless will need the protocol on the URL somewhere.
-	if (WIRELESS)
+	if (defined('WIRELESS') && WIRELESS )
 		$base_url .= ';' . WIRELESS_PROTOCOL;
 
 	$base_link = '<a class="navPages" href="' . ($flexible_start ? $base_url : strtr($base_url, array('%' => '%%')) . ';p=%d') . '">%s</a> ';
@@ -1674,18 +1674,18 @@ function tp_renderarticle($intro = '')
 		if($context['TPortal']['article']['rendertype'] == 'php')
 		{
 			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
-			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
-			if(!WIRELESS)
+			if(defined('WIRELESS') && !WIRELESS)
 				echo parse_bbc($context['TPortal']['article']['intro']), '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 			else
 				echo parse_bbc($context['TPortal']['article']['intro']);
 		}
 		else
 		{
-			if(!WIRELESS)
+			if(defined('WIRELESS') && !WIRELESS)
 				echo $context['TPortal']['article']['intro'], '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';'.WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 			else
 				echo $context['TPortal']['article']['intro'];

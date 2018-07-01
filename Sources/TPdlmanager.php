@@ -1424,7 +1424,7 @@ function TPortalDLManager()
 		TPdlsearch();
 
 	// For wireless, we use the Wireless template...
-	if (WIRELESS)
+	if (defined('WIRELESS') && WIRELESS )
 	{
 		loadTemplate('TPwireless');
 		if($context['TPortal']['dlaction'] == 'item' || $context['TPortal']['dlaction']=='cat')
