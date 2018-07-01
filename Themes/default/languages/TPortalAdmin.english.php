@@ -631,7 +631,7 @@ $txt['tp-sticky5'] = 'Normal style + red background';
 $txt['tp-sticky6'] = 'Normal style + green background';
 $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
 
-$txt['tp-copywriteremoval'] = 'TinyPortal Copywrite Removal';
-$txt['tp-copywriteremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copywrite Notice';
+$txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
+$txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
 ?>

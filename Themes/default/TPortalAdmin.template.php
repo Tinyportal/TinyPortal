@@ -1003,9 +1003,9 @@ function template_settings()
 								<span class="smalltext">'.$txt['tp-imageproxycheckdesc'].'</span>
 							</div>
 							<div class="windowbg2">
-								<div class="font-strong">'.$txt['tp-copywriteremoval'].'</div>
-								<div><input style="width: 85%;" name="tp_copywriteremoval" type="text" value="' , !empty($context['TPortal']['copywriteremoval']) ? $context['TPortal']['copywriteremoval'] : '' , '"></div>
-								<div class="smalltext">' , $txt['tp-copywriteremovaldesc'] , '</div>
+								<div class="font-strong">'.$txt['tp-copyrightremoval'].'</div>
+								<div><input style="width: 85%;" name="tp_copyrightremoval" type="text" value="' , !empty($context['TPortal']['copyrightremoval']) ? $context['TPortal']['copyrightremoval'] : '' , '"></div>
+								<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
 							</div>
 						</div></div>
 				<div class="windowbg2">

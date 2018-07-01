@@ -548,7 +548,8 @@ $settings_array = array(
     'panelstyle_front' => '0',
     'admin_showblocks' => '1',
     'uselangoption' => '0',
-	'resp' => '0',
+    'resp' => '0',
+    'copyrightremoval' => '',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');

@@ -100,10 +100,10 @@ function tpAddCopy($buffer)
 		'class="copywrite"',
 	);
 
-	if(!empty($context['TPortal']['copywriteremoval'])) {
+	if(!empty($context['TPortal']['copyrightremoval'])) {
 		global $boardurl;
 		$tmpurl = parse_url($boardurl, PHP_URL_HOST);
-		if(sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copywriteremoval']) {
+		if(sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval']) {
 			return $buffer;
 		}
 	}
