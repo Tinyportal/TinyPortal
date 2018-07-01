@@ -81,7 +81,15 @@ function setup_hooks ()
 
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
 	foreach ($hooks as $hook => $function)
-		$integration_function($hook, $function);
+		if(strpos($function, ',') === false) {
+			$integration_function($hook, $function);
+		}
+		else {
+			$tmpFunc = explode(',', $function);
+			foreach($tmpFunc as $func) {
+				$integration_function($hook, $func);
+			}
+		}
 
 	$context['installation_done'] = true;
 }
