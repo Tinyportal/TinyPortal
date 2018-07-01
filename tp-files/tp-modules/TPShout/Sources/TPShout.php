@@ -611,7 +611,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 function shout_bcc_code($collapse = true) 
 {
-    global $context, $txt, $settings, $options;
+	global $context, $txt, $settings, $options, $forum_version;
 
 	loadLanguage('Post');
 	
@@ -626,24 +626,58 @@ function shout_bcc_code($collapse = true)
 	// The below array makes it dead easy to add images to this page. Add it to the array and everything else is done for you!
 	$context['tp_bbc_tags'] = array();
 	$context['tp_bbc_tags2'] = array();
-	$context['tp_bbc_tags'][] = array(
-		'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
-		'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
-		'img' => array('code' => 'img', 'before' => '[img]', 'after' => '[/img]', 'description' => $txt['image']),
-		'quote' => array('code' => 'quote', 'before' => '[quote]', 'after' => '[/quote]', 'description' => $txt['bbc_quote']),
+	$removed_bbc = array( 
+		'b' => 'bold',
+		'i' => 'italic',
+		'img' => 'image',
+		'quote' => 'bbc_quote',
 	);
-	$context['tp_bbc_tags2'][] = array(
-		'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $txt[ 'underline']),
-		'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $txt['strike']),
-		'glow' => array('code' => 'glow', 'before' => '[glow=red,2,300]', 'after' => '[/glow]', 'description' => $txt[ 'glow']),
-		'shadow' => array('code' => 'shadow', 'before' => '[shadow=red,left]', 'after' => '[/shadow]', 'description' => $txt[ 'shadow']),
-		'move' => array('code' => 'move', 'before' => '[move]', 'after' => '[/move]', 'description' => $txt[ 'marquee']),
+	$tmp = array();
+	foreach($removed_bbc as $k => $v) {
+		if(array_key_exists( $v, $txt )) {
+			if($v == 'italic') {
+				$tmp = $tmp + array('italicize' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			} 
+			elseif($v == 'bold') {
+				$tmp = $tmp + array('bold' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			else {
+				$tmp = $tmp + array($k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+		}
+	}
+	$context['tp_bbc_tags'][] = $tmp;
+	$removed_bbc = array( 
+		'u' => 'underline',
+		's' => 'strike',
+		'glow' => 'glow',
+		'shadow' => 'shadow',
+		'move' => 'marquee',
 	);
+	$tmp = array();
+	foreach($removed_bbc as $k => $v) {
+		if(array_key_exists( $v, $txt )) {
+			if($v == 'glow') {
+				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.'=red,2,300]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			elseif($v == 'shadow') {
+				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.'=red,left]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			elseif($v == 'marquee') {
+				$tmp = $tmp + array($k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			else {
+				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+		}
+	}
+	
+	$context['tp_bbc_tags2'][] = $tmp;
 	
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', $txt['upshrink_description'], '" style="margin-right: 5px; position: relative; top: 5px;" align="left" />
+		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 5px;" align="left" />
 	</a>
 <div id="shoutbox_bbc">';
 	else
@@ -870,7 +904,7 @@ function print_shout_smileys($collapse = true)
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', $txt['upshrink_description'], '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
+		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
 	</a>
 	<div id="shoutbox_smiley">
 		';
