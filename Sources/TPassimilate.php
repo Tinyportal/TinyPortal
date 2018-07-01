@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -89,7 +89,7 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.1">&copy; 2005-2018</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
 		return $buffer;
@@ -99,6 +99,15 @@ function tpAddCopy($buffer)
 		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>',
 		'class="copywrite"',
 	);
+
+	if(!empty($context['TPortal']['copywriteremoval'])) {
+		global $boardurl;
+		$tmpurl = parse_url($boardurl, PHP_URL_HOST);
+		if(sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copywriteremoval']) {
+			return $buffer;
+		}
+	}
+
 	$replace = array(
 		'<body id="' . $bodyid . '" class="' . $bclass . '">',
 		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string,

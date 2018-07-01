@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -436,7 +436,6 @@ $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-subquery'] = 'Query used';
 $txt['tp-installed'] = 'Installed';
 
-
 // News...
 $txt['tp-latest_news'] = 'News';
 $txt['tp-latest_news2'] = 'Latest News From: &nbsp; www.tinyportal.net';
@@ -631,5 +630,8 @@ $txt['tp-sticky4'] = 'Normal style + yellow background';
 $txt['tp-sticky5'] = 'Normal style + red background';
 $txt['tp-sticky6'] = 'Normal style + green background';
 $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
+
+$txt['tp-copywriteremoval'] = 'TinyPortal Copywrite Removal';
+$txt['tp-copywriteremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copywrite Notice';
 
 ?>

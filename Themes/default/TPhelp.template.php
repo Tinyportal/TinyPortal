@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
