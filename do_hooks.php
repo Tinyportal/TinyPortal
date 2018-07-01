@@ -29,8 +29,10 @@ $hooks = array(
 $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------
-define('SMF_INTEGRATION_SETTINGS', serialize(array(
-	'integrate_menu_buttons' => 'install_menu_button',)));
+global $forum_version;
+if(strpos($forum_version, '2.0') !== false) {
+	define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+}
 
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 	require_once(dirname(__FILE__) . '/SSI.php');
