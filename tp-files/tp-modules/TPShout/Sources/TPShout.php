@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -98,6 +98,7 @@ if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 		// ]]></script>';	
 	}
 }
+
 if(isset($_REQUEST['shout']))
 {
 	$shoutAction = $_REQUEST['shout'];
@@ -180,8 +181,22 @@ function postShout()
 		if($shout != '')
 			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_shoutbox',
-				array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string','value4' => 'string', 'value5' => 'int'),
-				array($shout, $shout_time, $shout_name, 'shoutbox', $ip, $memID),
+				array (
+              'value1' => 'string', 
+              'value2' => 'string', 
+              'value3' => 'string', 
+              'type' => 'string',
+              'value4' => 'string',
+              'value5' => 'int'
+        ),
+				array ( 
+              $shout,
+              $shout_time,
+              $shout_name,
+              'shoutbox',
+              $ip,
+              $memID
+        ),
 				array('id')
 			);
 	}
@@ -611,7 +626,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 function shout_bcc_code($collapse = true) 
 {
-    global $context, $txt, $settings, $options;
+	global $context, $txt, $settings, $option;
 
 	loadLanguage('Post');
 	
@@ -626,24 +641,58 @@ function shout_bcc_code($collapse = true)
 	// The below array makes it dead easy to add images to this page. Add it to the array and everything else is done for you!
 	$context['tp_bbc_tags'] = array();
 	$context['tp_bbc_tags2'] = array();
-	$context['tp_bbc_tags'][] = array(
-		'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
-		'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
-		'img' => array('code' => 'img', 'before' => '[img]', 'after' => '[/img]', 'description' => $txt['image']),
-		'quote' => array('code' => 'quote', 'before' => '[quote]', 'after' => '[/quote]', 'description' => $txt['bbc_quote']),
+	$removed_bbc = array( 
+		'b' => 'bold',
+		'i' => 'italic',
+		'img' => 'image',
+		'quote' => 'bbc_quote',
 	);
-	$context['tp_bbc_tags2'][] = array(
-		'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $txt[ 'underline']),
-		'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $txt['strike']),
-		'glow' => array('code' => 'glow', 'before' => '[glow=red,2,300]', 'after' => '[/glow]', 'description' => $txt[ 'glow']),
-		'shadow' => array('code' => 'shadow', 'before' => '[shadow=red,left]', 'after' => '[/shadow]', 'description' => $txt[ 'shadow']),
-		'move' => array('code' => 'move', 'before' => '[move]', 'after' => '[/move]', 'description' => $txt[ 'marquee']),
+	$tmp = array();
+	foreach($removed_bbc as $k => $v) {
+		if(array_key_exists( $v, $txt )) {
+			if($v == 'italic') {
+				$tmp = $tmp + array('italicize' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			} 
+			elseif($v == 'bold') {
+				$tmp = $tmp + array('bold' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			else {
+				$tmp = $tmp + array($k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+		}
+	}
+	$context['tp_bbc_tags'][] = $tmp;
+	$removed_bbc = array( 
+		'u' => 'underline',
+		's' => 'strike',
+		'glow' => 'glow',
+		'shadow' => 'shadow',
+		'move' => 'marquee',
 	);
+	$tmp = array();
+	foreach($removed_bbc as $k => $v) {
+		if(array_key_exists( $v, $txt )) {
+			if($v == 'glow') {
+				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.'=red,2,300]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			elseif($v == 'shadow') {
+				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.'=red,left]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			elseif($v == 'marquee') {
+				$tmp = $tmp + array($k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+			else {
+				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
+			}
+		}
+	}
+	
+	$context['tp_bbc_tags2'][] = $tmp;
 	
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', $txt['upshrink_description'], '" style="margin-right: 5px; position: relative; top: 5px;" align="left" />
+		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 5px;" align="left" />
 	</a>
 <div id="shoutbox_bbc">';
 	else
@@ -783,7 +832,7 @@ function shout_bcc_code($collapse = true)
 
 function shout_smiley_code()
 {
-	global $context, $settings, $user_info, $txt, $modSettings, $smcFunc;
+	global $context, $settings, $user_info, $txt, $modSettings, $smcFunc, $forum_version;
   
 	// Initialize smiley array...
 	$context['tp_smileys'] = array(
@@ -791,30 +840,55 @@ function shout_smiley_code()
 		'popup' => array(),
 	);
 	// Load smileys - don't bother to run a query if we're not using the database's ones anyhow.
-	if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none')
-		$context['tp_smileys']['postform'][] = array(
-			'smileys' => array(
-				array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
-				array('code' => ';)', 'filename' => 'wink.gif', 'description' => $txt['icon_wink']),
-				array('code' => ':D', 'filename' => 'cheesy.gif', 'description' => $txt['icon_cheesy']),
-				array('code' => ';D', 'filename' => 'grin.gif', 'description' => $txt['icon_grin']),
-				array('code' => '>:(', 'filename' => 'angry.gif', 'description' => $txt['icon_angry']),
-				array('code' => ':(', 'filename' => 'sad.gif', 'description' => $txt[ 'icon_sad']),
-				array('code' => ':o', 'filename' => 'shocked.gif', 'description' => $txt['icon_shocked']),
-				array('code' => '8)', 'filename' => 'cool.gif', 'description' => $txt[ 'icon_cool']),
-				array('code' => '???', 'filename' => 'huh.gif', 'description' => $txt['icon_huh']),
-				array('code' => '::)', 'filename' => 'rolleyes.gif', 'description' => $txt[ 'icon_rolleyes']),
-				array('code' => ':P', 'filename' => 'tongue.gif', 'description' => $txt['icon_tongue']),
-				array('code' => ':-[', 'filename' => 'embarrassed.gif', 'description' => $txt['icon_embarrassed']),
-				array('code' => ':-X', 'filename' => 'lipsrsealed.gif', 'description' => $txt['icon_lips']),
-				array('code' => ':-\\', 'filename' => 'undecided.gif', 'description' => $txt[ 'icon_undecided']),
-				array('code' => ':-*', 'filename' => 'kiss.gif', 'description' => $txt['icon_kiss']),
-				array('code' => ':\'(', 'filename' => 'cry.gif', 'description' => $txt['icon_cry'])
-			),
-			'last' => true,
-		);
-	elseif ($user_info['smiley_set'] != 'none')
-	{
+	if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none') {
+    if(strpos($forum_version, '2.1') === false) {
+      $context['tp_smileys']['postform'][] = array(
+        'smileys' => array(
+          array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
+          array('code' => ';)', 'filename' => 'wink.gif', 'description' => $txt['icon_wink']),
+          array('code' => ':D', 'filename' => 'cheesy.gif', 'description' => $txt['icon_cheesy']),
+          array('code' => ';D', 'filename' => 'grin.gif', 'description' => $txt['icon_grin']),
+          array('code' => '>:(', 'filename' => 'angry.gif', 'description' => $txt['icon_angry']),
+          array('code' => ':(', 'filename' => 'sad.gif', 'description' => $txt[ 'icon_sad']),
+          array('code' => ':o', 'filename' => 'shocked.gif', 'description' => $txt['icon_shocked']),
+          array('code' => '8)', 'filename' => 'cool.gif', 'description' => $txt[ 'icon_cool']),
+          array('code' => '???', 'filename' => 'huh.gif', 'description' => $txt['icon_huh']),
+          array('code' => '::)', 'filename' => 'rolleyes.gif', 'description' => $txt[ 'icon_rolleyes']),
+          array('code' => ':P', 'filename' => 'tongue.gif', 'description' => $txt['icon_tongue']),
+          array('code' => ':-[', 'filename' => 'embarrassed.gif', 'description' => $txt['icon_embarrassed']),
+          array('code' => ':-X', 'filename' => 'lipsrsealed.gif', 'description' => $txt['icon_lips']),
+          array('code' => ':-\\', 'filename' => 'undecided.gif', 'description' => $txt[ 'icon_undecided']),
+          array('code' => ':-*', 'filename' => 'kiss.gif', 'description' => $txt['icon_kiss']),
+          array('code' => ':\'(', 'filename' => 'cry.gif', 'description' => $txt['icon_cry'])
+        ),
+        'last' => true,
+      );
+    } 
+    else {
+      $context['tp_smileys']['postform'][] = array(
+        'smileys' => array(
+          array('code' => ':)', 'filename' => 'smiley.png', 'description' => $txt['icon_smiley']),
+          array('code' => ';)', 'filename' => 'wink.png', 'description' => $txt['icon_wink']),
+          array('code' => ':D', 'filename' => 'cheesy.png', 'description' => $txt['icon_cheesy']),
+          array('code' => ';D', 'filename' => 'grin.png', 'description' => $txt['icon_grin']),
+          array('code' => '>:(', 'filename' => 'angry.png', 'description' => $txt['icon_angry']),
+          array('code' => ':(', 'filename' => 'sad.png', 'description' => $txt[ 'icon_sad']),
+          array('code' => ':o', 'filename' => 'shocked.png', 'description' => $txt['icon_shocked']),
+          array('code' => '8)', 'filename' => 'cool.png', 'description' => $txt[ 'icon_cool']),
+          array('code' => '???', 'filename' => 'huh.png', 'description' => $txt['icon_huh']),
+          array('code' => '::)', 'filename' => 'rolleyes.png', 'description' => $txt[ 'icon_rolleyes']),
+          array('code' => ':P', 'filename' => 'tongue.png', 'description' => $txt['icon_tongue']),
+          array('code' => ':-[', 'filename' => 'embarrassed.png', 'description' => $txt['icon_embarrassed']),
+          array('code' => ':-X', 'filename' => 'lipsrsealed.png', 'description' => $txt['icon_lips']),
+          array('code' => ':-\\', 'filename' => 'undecided.png', 'description' => $txt[ 'icon_undecided']),
+          array('code' => ':-*', 'filename' => 'kiss.png', 'description' => $txt['icon_kiss']),
+          array('code' => ':\'(', 'filename' => 'cry.png', 'description' => $txt['icon_cry'])
+        ),
+        'last' => true,
+      );
+    }
+  }
+  elseif ($user_info['smiley_set'] != 'none') {
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
 		{
 			$request = $smcFunc['db_query']('', '
@@ -870,7 +944,7 @@ function print_shout_smileys($collapse = true)
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', $txt['upshrink_description'], '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
+		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.gif' : 'TPcollapse.gif', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
 	</a>
 	<div id="shoutbox_smiley">
 		';

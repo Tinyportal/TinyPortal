@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -46,7 +46,7 @@ if ($manual)
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v1.5.0 for SMF2.0.x</title>
+		<title>TinyPortal - v1.5.1 for SMF2.0.x</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 
@@ -60,7 +60,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";	
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/tp-delete_shout.gif" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v1.5.0 for SMF 2.0.x<h3/></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/tp-delete_shout.gif" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v1.5.1 for SMF 2.0.x<h3/></div>
 	<div class="middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -548,7 +548,8 @@ $settings_array = array(
     'panelstyle_front' => '0',
     'admin_showblocks' => '1',
     'uselangoption' => '0',
-	'resp' => '0',
+    'resp' => '0',
+    'copyrightremoval' => '',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');

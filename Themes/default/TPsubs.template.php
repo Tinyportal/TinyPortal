@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2194,7 +2194,7 @@ function tptimeformat($log_time, $show_today = true, $format)
 // Generate a strip of buttons.
 function tp_template_button_strip($button_strip, $direction = 'top', $strip_options = array())
 {
-	global $context, $txt;
+	global $context, $txt, $forum_version;
 
 	if (!is_array($strip_options))
 		$strip_options = array();
@@ -2203,9 +2203,14 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 	$buttons = array();
 	foreach ($button_strip as $key => $value)
 	{
-		if (!isset($value['test']) || !empty($context[$value['test']]))
-			$buttons[] = '
-				<li><a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a></li>';
+		if (!isset($value['test']) || !empty($context[$value['test']])) {
+			if(strstr($forum_version, '2.1')) { 
+				$buttons[] = '<a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a>';
+			}
+			else {
+				$buttons[] = '<li><a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a></li>';
+			}
+		}
 	}
 
 	// No buttons? No button strip either.

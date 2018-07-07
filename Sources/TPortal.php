@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -21,8 +21,33 @@ if (!defined('SMF'))
 // TinyPortal init
 function TPortal_init()
 {
-	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings;
-	
+	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version;
+
+  // Remove the ONLY_FULL_GROUP_BY and STRICT_TRANS_TABLES keep all the other sql_mode settings
+  if(strpos($forum_version, '2.1') !== false) {
+    global $smcFunc;
+    $modSettings['disableQueryCheck'] = true;
+    $sqlMode  = $smcFunc['db_query']('' , 
+      'SELECT @@sql_mode AS SQL_MODE;'
+    );
+    if($smcFunc['db_num_rows']($sqlMode) === 1) {
+      $sqlModeResult = $smcFunc['db_fetch_assoc']($sqlMode)['SQL_MODE'];
+      if(strpos($sqlModeResult, ',') !== false) {
+        $sqlModeResults = explode(',', $sqlModeResult);
+        foreach($sqlModeResults as $key => $value) {
+          if(in_array($value, array('ONLY_FULL_GROUP_BY', 'STRICT_TRANS_TABLES'))) {
+            unset($sqlModeResults[$key]);
+          }
+        }
+      }
+      $smcFunc['db_query']('',
+        'SET SESSION sql_mode = \''.implode(',', $sqlModeResults).'\';'
+      );
+    }
+    $smcFunc['db_free_result']($sqlMode);
+    $modSettings['disableQueryCheck'] = false;
+  }
+  
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['fixed_width']))
 		return;
@@ -449,6 +474,16 @@ function setupTPsettings()
 	$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
 	if(empty($context['page_title']))
 		$context['page_title'] = $context['forum_name'];
+
+	if(empty($context['TPortal']['standalone'])) {
+		$request = $smcFunc['db_query']('', '
+			SELECT value
+			FROM {db_prefix}tp_settings 
+			WHERE name = \'standalone_mode\''
+		);
+		$context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
+		$smcFunc['db_free_result']($request);
+	}
 }
 
 function fetchTPhooks()
@@ -937,7 +972,7 @@ function doTPpage()
 
 				$context['page_title'] = $context['TPortal']['article']['subject'];
 
-				if (WIRELESS)
+				if (defined('WIRELESS') && WIRELESS)
 				{
 					$context['TPortal']['single_article'] = true;
 					loadtemplate('TPwireless');
@@ -1152,7 +1187,7 @@ function doTPcat()
 				$parent = $context['TPortal']['category']['value2'];
 				// save the immediate for wireless
 
-				if(WIRELESS)
+				if (defined('WIRELESS') && WIRELESS)
 				{
 					if($context['TPortal']['category']['value2'] > 0)
 						$context['TPortal']['category']['catname'] =  $allcats[$context['TPortal']['category']['value2']]['value1'];
@@ -1195,7 +1230,7 @@ function doTPcat()
 				}
 				$context['TPortal']['show_catlist'] = sizeof($context['TPortal']['clist']) > 0 ? true : false;
 
-				if (WIRELESS)
+				if (defined('WIRELESS') && WIRELESS)
 				{
 					$context['TPortal']['single_article'] = false;
 					loadtemplate('TPwireless');
@@ -2049,7 +2084,7 @@ function doTPfrontpage()
 	
 	$context['TPortal']['frontblocks'] = $blocks;
 
-	if (WIRELESS)
+	if (defined('WIRELESS') && WIRELESS)
 	{
 		$context['TPortal']['single_article'] = false;
 		loadtemplate('TPwireless');

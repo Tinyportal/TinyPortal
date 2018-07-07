@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -29,8 +29,10 @@ $hooks = array(
 $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------
-define('SMF_INTEGRATION_SETTINGS', serialize(array(
-	'integrate_menu_buttons' => 'install_menu_button',)));
+global $forum_version;
+if(strpos($forum_version, '2.0') !== false) {
+	define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+}
 
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 	require_once(dirname(__FILE__) . '/SSI.php');
@@ -79,7 +81,15 @@ function setup_hooks ()
 
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
 	foreach ($hooks as $hook => $function)
-		$integration_function($hook, $function);
+		if(strpos($function, ',') === false) {
+			$integration_function($hook, $function);
+		}
+		else {
+			$tmpFunc = explode(',', $function);
+			foreach($tmpFunc as $func) {
+				$integration_function($hook, $func);
+			}
+		}
 
 	$context['installation_done'] = true;
 }

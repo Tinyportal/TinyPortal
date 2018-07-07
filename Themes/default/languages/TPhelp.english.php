@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -155,10 +155,10 @@ $txt['tp-credit1'] = '
 Bjorn "Bloc" Kristiansen
 <br /><br />
 <h4>Developers and Contributors</h4>
-Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, @rjen, emanuele.
+Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, emanuele.
 <br /><br />
 <h4>TP Team</h4>
-Agridoc, Crip, Freddy, Ken, Lesmond, Renegd98, WillyP, and ZarPrime.
+Agridoc, Crip, Freddy, Ken, Lesmond, Renegd98, WillyP, @rjen, wildenborch and ZarPrime.
 <br /><br />
 <h4>TP Friends</h4>
 Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, gerrymo, Ianedres, JPDeni, Max, Maya, Moocat, nokonium, PhilH, Rasyr, Ray, RebelRose, redone, StormLrd, Thurnok, Tuxie, Xarcell, and Zetan.
@@ -172,5 +172,5 @@ Thank you for efforts in making TinyPortal available around the globe.';
 $txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
 The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
  Thank you Bloc for allowing the TP Team to continue your work.';
-$txt['tp-credits'] = 'TinyPortal 1.5.0 - Credits';
+$txt['tp-credits'] = 'TinyPortal 1.5.1 - Credits';
 ?>

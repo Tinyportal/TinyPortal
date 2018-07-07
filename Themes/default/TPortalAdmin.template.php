@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1002,6 +1002,11 @@ function template_settings()
 								</div>
 								<span class="smalltext">'.$txt['tp-imageproxycheckdesc'].'</span>
 							</div>
+							<div class="windowbg2">
+								<div class="font-strong">'.$txt['tp-copyrightremoval'].'</div>
+								<div><input style="width: 85%;" name="tp_copyrightremoval" type="text" value="' , !empty($context['TPortal']['copyrightremoval']) ? $context['TPortal']['copyrightremoval'] : '' , '"></div>
+								<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
+							</div>
 						</div></div>
 				<div class="windowbg2">
 					<div class="windowbg3" style="padding:1%;"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -1985,7 +1990,7 @@ function template_editarticle($type = '')
 			<div class="windowbg2 padding-div">
 					<div class="windowbg2">
 						<div class="font-strong">' , $mg['id']==0 ? '' : '<a href="'.$scripturl.'?page='.$mg['id'].';tpreview">['.$txt['tp-preview'].']</a>' , $txt['tp-title'] , ':</div>
-						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. $mg['subject'] .'">
+						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. htmlentities($mg['subject'], ENT_QUOTES) .'">
 					</div>
 					<div class="windowbg2">
 						<div class="font-strong">'.$txt['tp-shortname_article'].'&nbsp;</div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -744,7 +744,10 @@ function TPortalDLManager()
 
 					$total = 0;
 					foreach($rat as $mm => $mval)
-						$total = $total + $mval;
+					{
+						if(is_numeric($mval)) 
+							$total = $total + $mval;
+					}
 
 					if($rating_votes > 0 && $total > 0)
 						$rating_average = floor($total / $rating_votes);
@@ -1315,7 +1318,10 @@ function TPortalDLManager()
 
 				$total = 0;
 				foreach($rat as $mm => $mval)
-					$total = $total+$mval;
+				{
+					if(is_numeric($mval)) 
+						$total = $total + $mval;
+				}
 
 				if($rating_votes > 0 && $total > 0)
 					$rating_average = floor($total/$rating_votes);
@@ -1418,7 +1424,7 @@ function TPortalDLManager()
 		TPdlsearch();
 
 	// For wireless, we use the Wireless template...
-	if (WIRELESS)
+	if (defined('WIRELESS') && WIRELESS )
 	{
 		loadTemplate('TPwireless');
 		if($context['TPortal']['dlaction'] == 'item' || $context['TPortal']['dlaction']=='cat')

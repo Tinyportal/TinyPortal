@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -16,6 +16,7 @@
  */
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
+  global $forum_version;
 
 	loadLanguage('TPShout');
 
@@ -37,6 +38,11 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 		),
 		$permissionList['membergroup']
 	);
+
+  // This is to get around there being no hook to call to remove guest permissions in SMF 2.0
+  if(strpos($forum_version, '2.0') !== false) {
+    tpAddIllegalPermissions();
+  }
 
 }
 
@@ -89,9 +95,9 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.0">&copy; 2005-2018</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.5.1">&copy; 2005-2018</a>';
 
-	if (SMF == 'SSI' || empty($context['template_layers']) || WIRELESS || strpos($buffer, $string) !== false)
+	if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
 
 	$find = array(
@@ -99,6 +105,15 @@ function tpAddCopy($buffer)
 		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>',
 		'class="copywrite"',
 	);
+
+	if(!empty($context['TPortal']['copyrightremoval'])) {
+		global $boardurl;
+		$tmpurl = parse_url($boardurl, PHP_URL_HOST);
+		if(sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval']) {
+			return $buffer;
+		}
+	}
+
 	$replace = array(
 		'<body id="' . $bodyid . '" class="' . $bclass . '">',
 		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string,
@@ -168,6 +183,9 @@ function tpAddMenuItems(&$buttons)
 		
 		if($but == 'home')
 		{
+			if(!empty($context['TPortal']['standalone']))
+				$new_buttons['home']['href'] = $context['TPortal']['standalone'];
+
 			$new_buttons['forum'] = array(
 				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
 				'href' => $scripturl . '?action=forum',

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.0
+ * @version 1.5.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2081,6 +2081,7 @@ function do_postchecks()
 			isAllowedTo('tp_settings');
 			$w = array();
 			$ssi = array();
+
 			foreach($_POST as $what => $value)
 			{
 				if(substr($what, 0, 3) == 'tp_')
@@ -2122,25 +2123,26 @@ function do_postchecks()
 					// START non responsive themes form			
 					if($from == 'settings') {						
 						if(substr($what, 0, 7) == 'tp_resp') {
-							
+
 							$postname = substr($what, 7);
 							if(!isset($themeschecked)) {
-						      $themeschecked = array();
+								$themeschecked = array();
 							}
-						    $themeschecked[] = $postname;					
-						    if(isset($themeschecked)) {
-				              $smcFunc['db_query']('', '
-				              UPDATE {db_prefix}tp_settings
-					          SET value = {string:value}
-					          WHERE name = {string:name}',
-					          array('value' => implode(',', $themeschecked), 'name' => 'resp',)
-				              );	
-					        }
+							$themeschecked[] = $postname;
+							if(isset($themeschecked)) {
+								$smcFunc['db_query']('', '
+									UPDATE {db_prefix}tp_settings
+									SET value = {string:value}
+									WHERE name = {string:name}',
+									array('value' => implode(',', $themeschecked), 'name' => 'resp',)
+								);
+							}
 						}
 					}
 					// END  non responsive themes form							
 				}
 			}
+
 			// check the frontpage visual setting..
 			if($from == 'frontpage')
 			{
@@ -3156,6 +3158,7 @@ function do_postchecks()
 				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
 			}
 			$options = array();
+
 			foreach($_POST as $what => $value)
 			{
 				if($what == 'tp_article_intro_pure')
