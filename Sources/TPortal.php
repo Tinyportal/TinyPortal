@@ -1506,7 +1506,6 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 			WHERE t.id_first_msg IN ({array_int:posts})
 			AND m.id_msg = t.id_first_msg
-			GROUP BY t.id_first_msg
 			ORDER BY m.{raw:catsort} DESC
 			LIMIT {int:start}, {int:max}',
 			array(
@@ -1709,11 +1708,11 @@ function doTPfrontpage()
 		// ok we got the post ids now, fetch each one, forum first
 		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
-			SELECT m.subject, m.body,
-				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
+			    SELECT m.subject, m.body,
+				COALESCE(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
+				COALESCE(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views, t.num_replies as replies, t.locked,
-				IFNULL(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename
+				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename
 				FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
 				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
@@ -1721,7 +1720,6 @@ function doTPfrontpage()
 				LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 				WHERE t.id_first_msg IN ({array_int:posts})
 				AND m.id_msg = t.id_first_msg
-				GROUP BY t.id_first_msg
 				ORDER BY date DESC, thumb.id_attach ASC',
 				array('posts' => $mposts)
 			);
