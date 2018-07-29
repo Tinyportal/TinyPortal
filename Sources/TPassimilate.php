@@ -164,56 +164,77 @@ function tpAddIllegalPermissions()
 
 function tpAddMenuItems(&$buttons)
 {
-	global $context, $scripturl, $txt;
-	
-	// If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
-	if (!isset($context['TPortal']))
-		return;
-		
-	// Set the forum button activated if needed.
-	if (isset($_GET['board']) || isset($_GET['topic']))
-		$context['current_action'] = 'forum';
-	elseif (isset($_GET['sa']) && $_GET['sa'] == 'help')
-		$context['current_action'] = 'help';
-				
-	$new_buttons = array();
-	foreach($buttons as $but => $val)
-	{
-		$new_buttons[$but] = $buttons[$but];
-		
-		if($but == 'home')
-		{
-			if(!empty($context['TPortal']['standalone']))
-				$new_buttons['home']['href'] = $context['TPortal']['standalone'];
+    global $smcFunc, $context, $scripturl, $txt;
 
-			$new_buttons['forum'] = array(
-				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-				'href' => $scripturl . '?action=forum',
-				'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
-			);		
-		}
-		
-		if($but == 'calendar')
-		{
-			$new_buttons['tpadmin'] = array(
-				'title' => $txt['tp-tphelp'],
-				'href' => $scripturl . '?action=tpadmin',
-				'show' =>  TPcheckAdminAreas(),
-				'sub_buttons' => tp_getbuttons(),
-			);		
-		}
-		if($but == 'help')
-		{
-			$new_buttons['help']['sub_buttons'] = array(
-				'tphelp' => array(
-					'title' => $txt['tp-tphelp'],
-					'href' => $scripturl . '?action=tpmod;sa=help',
-					'show' => true,
-				),
-			);
-		}
-	}
-	$buttons = $new_buttons;	
+    // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
+    if(!isset($context['TPortal'])) {
+        return;
+    }
+
+    // Set the forum button activated if needed.
+    if(isset($_GET['board']) || isset($_GET['topic'])) {
+        $context['current_action'] = 'forum';
+    }
+    elseif(isset($_GET['sa']) && $_GET['sa'] == 'help') {
+        $context['current_action'] = 'help';
+    }
+
+    // Add the forum button     
+    array_splice($buttons, array_search('home', array_keys($buttons), true) + 1, 0, array ( 
+            'forum' => array (
+                'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
+                'href' => $scripturl.'?action=forum',
+                'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
+            ),
+        )
+    );
+    // Add the admin button
+    array_splice($buttons, array_search('calendar', array_keys($buttons), true) + 1, 0, array ( 
+            'tpadmin' => array (
+                'title' => $txt['tp-tphelp'],
+                'href' => $scripturl.'?action=tpadmin',
+                'show' =>  TPcheckAdminAreas(),
+                'sub_buttons' => tp_getbuttons(),
+            ),
+        )
+    );
+    // Add the help
+    if(array_key_exists('help', $buttons)) {
+        $buttons['help']['sub_buttons'] = array(
+            'tphelp' => array(
+                'title' => $txt['tp-tphelp'],
+                'href' => $scripturl.'?action=tpmod;sa=help',
+                'show' => true,
+            ),
+        );
+    }
+
+
+    $request = $smcFunc['db_query']('', '
+        SELECT value1 AS name , value3 AS href FROM {db_prefix}tp_variables 
+        WHERE type = {string:type} 
+        AND value3 LIKE {string:mainmenu}',
+        array (
+            'type' => 'menubox', 
+            'mainmenu' => 'menu%'
+        )
+    );
+
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while($row = $smcFunc['db_fetch_assoc']($request)) {
+            // Add the admin button
+            array_splice($buttons, array_search('calendar', array_keys($buttons), true) + 1, 0, array ( 
+                    'tpbutton' => array (
+                        'title' => $row['name'],
+                        'href' => substr($row['href'], 4),
+                        'show' =>  true,
+                    ),
+                )
+            );
+        }
+        $smcFunc['db_free_result']($request);
+    }
+
 }
 
 function tpAddProfileMenu(&$profile_areas)

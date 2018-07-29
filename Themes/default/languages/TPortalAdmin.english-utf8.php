@@ -450,6 +450,7 @@ $txt['tp-subscriptiontab'] = '';
 $txt['tp-addmenuitem']='Add Menu Item';
 $txt['tp-addmenu'] = 'Add Menu';
 $txt['tp-header'] = 'Header';
+$txt['tp-menu'] = 'Menu';
 $txt['tp-editmenu'] = 'Edit menu item';
 $txt['tp-windowmenu'] = 'Open in a new window';
 $txt['tp-menumanager'] = 'Menu Manager';

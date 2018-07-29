@@ -858,11 +858,17 @@ function do_menus()
 			$mtype = substr($row['value3'], 0, 4);
 			$idtype = substr($row['value3'], 4);
 
-			if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac')
+
+			if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac' && $mtype != 'menu')
 			{
 				$mtype = 'link';
 				$idtype = $row['value3'];
 			}
+            else if( $mtype == 'menu' ) 
+            {
+				$idtype = substr($row['value3'], 4);
+            }
+
 			if($row['value2'] == '')
 				$newlink = '0';
 			else
@@ -2382,6 +2388,8 @@ function do_postchecks()
 						$idtype = 'head';
 					elseif($value == 'spac')
 						$idtype = 'spac';
+					elseif($value == 'menu')
+						$idtype = 'menu'.$_POST['tp_menu_link'];
 
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_variables 
@@ -2668,6 +2676,8 @@ function do_postchecks()
 				$mtype = 'head'.$mhead;
 			elseif($mtype == 'spac')
 				$mtype = 'spac';
+			elseif($mtype == 'menu')
+				$mtype = 'menu'.$mlink;
 			else
 				$mtype = $mlink;
 

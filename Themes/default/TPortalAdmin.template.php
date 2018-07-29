@@ -442,6 +442,8 @@ function template_menubox()
 						echo $txt['tp-header'];
 					elseif($lbox['type']=='spac')
 						echo $txt['tp-spacer'];
+					elseif($lbox['type']=='menu')
+						echo $txt['tp-menu'];
 					else
 						echo $txt['tp-link'];
 
@@ -478,6 +480,9 @@ function template_menubox()
 					}
 					elseif($lbox['type']=='spac'){
 						echo ' ';
+					}
+                    elseif($lbox['type']=='menu'){
+						echo $lbox['IDtype'];
 					}
 					else{
 						// its a link then.
@@ -597,6 +602,7 @@ function template_addmenu()
 								<input name="tp_menu_type" type="radio" value="link" > '.$txt['tp-link'].'<br />
 								<input name="tp_menu_type" type="radio" value="head" > '.$txt['tp-header'].'<br />
 								<input name="tp_menu_type" type="radio" value="spac" > '.$txt['tp-spacer'].'<br />
+								<input name="tp_menu_type" type="radio" value="menu" > '.$txt['tp-menu'].'<br />
 				   </div>
 				   <div class="float-items fullwidth-on-res-layout" style="width:26%;max-width:100%;">
 						  <div id="show-on-respnsive-layout"><strong>'.$txt['tp-item'].'</strong></div>';
@@ -677,6 +683,7 @@ function template_linkmanager()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
+
 		echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -706,6 +713,7 @@ function template_linkmanager()
 							<input name="tp_menu_type" type="radio" value="link" ' , $context['TPortal']['editmenuitem']['type']=='link' ? ' checked' : '' ,' > '.$txt['tp-link'].'<br />
 							<input name="tp_menu_type" type="radio" value="head" ' , $context['TPortal']['editmenuitem']['type']=='head' ? ' checked' : '' ,' > '.$txt['tp-header'].'<br />
 							<input name="tp_menu_type" type="radio" value="spac" ' , $context['TPortal']['editmenuitem']['type']=='spac' ? ' checked' : '' ,' > '.$txt['tp-spacer'].'<br />
+							<input name="tp_menu_type" type="radio" value="menu" ' , $context['TPortal']['editmenuitem']['type']=='menu' ? ' checked' : '' ,' > '.$txt['tp-menu'].'<br />
 					</div>
 					<div class="float-items" style="width:26%;max-width:100%;">
 					        <div id="show-on-respnsive-layout">'.$txt['tp-item'].'</div>';
@@ -738,7 +746,7 @@ function template_linkmanager()
 
 		echo '
 							</select><br /><div style="padding-bottom:5px;"></div>
-							<input style="max-width:100%;" name="tp_menu_link" type="text" value="' , ($context['TPortal']['editmenuitem']['type']=='link') ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , $context['TPortal']['editmenuitem']['type']!='link' ? ' ' : '' ,'>
+							<input style="max-width:100%;" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 						</div>
   						<div class="float-items" style="width:20%;max-width:100%;">
 							    <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
