@@ -705,21 +705,24 @@ function template_linkmanager()
 							<input name="tp_menu_name" type="text" size="20" value="'.$context['TPortal']['editmenuitem']['name'].'"><br /><br />
 							<input name="tp_menu_newlink" type="radio" value="0" ' , $context['TPortal']['editmenuitem']['newlink']=='0' ? ' checked' : '' , '>'.$txt['tp-nowindowmenu'].'<br />
 							<input name="tp_menu_newlink" type="radio" value="1" ' , $context['TPortal']['editmenuitem']['newlink']=='1' ? ' checked' : '' , '>'.$txt['tp-windowmenu'].'
-					</div>
+					</div>';
+        echo '
 					<div class="float-items" style="width:19%;">
 					        <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>
-							<input name="tp_menu_type" type="radio" value="cats"  ' , $context['TPortal']['editmenuitem']['type']=='cats' ? ' checked' : '' ,' > '.$txt['tp-category'].'<br />
-							<input name="tp_menu_type" type="radio" value="arti"  ' , $context['TPortal']['editmenuitem']['type']=='arti' ? ' checked' : '' ,' > '.$txt['tp-article'].'<br />
-							<input name="tp_menu_type" type="radio" value="link" ' , $context['TPortal']['editmenuitem']['type']=='link' ? ' checked' : '' ,' > '.$txt['tp-link'].'<br />
-							<input name="tp_menu_type" type="radio" value="head" ' , $context['TPortal']['editmenuitem']['type']=='head' ? ' checked' : '' ,' > '.$txt['tp-header'].'<br />
-							<input name="tp_menu_type" type="radio" value="spac" ' , $context['TPortal']['editmenuitem']['type']=='spac' ? ' checked' : '' ,' > '.$txt['tp-spacer'].'<br />
-							<input name="tp_menu_type" type="radio" value="menu" ' , $context['TPortal']['editmenuitem']['type']=='menu' ? ' checked' : '' ,' > '.$txt['tp-menu'].'<br />
+                            <select style="max-width:98%;" size="1" name="tp_menu_type" id="tp_menu_type">
+                                <option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
+                                <option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
+                                <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
+                                <option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
+                                <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>
+                                <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>
+                            </select>
 					</div>
 					<div class="float-items" style="width:26%;max-width:100%;">
 					        <div id="show-on-respnsive-layout">'.$txt['tp-item'].'</div>';
 		// (category)
 		echo '
-							<select style="max-width:98%;" size="1" name="tp_menu_category" ' , $context['TPortal']['editmenuitem']['type']!='cats' ? '' : '' ,'>';
+							<select style="max-width:98%;" size="1" id="tp_menu_category" name="tp_menu_category" ' , $context['TPortal']['editmenuitem']['type']!='cats' ? '' : '' ,'>';
 		if(count($context['TPortal']['editcats'])>0){
 			foreach($context['TPortal']['editcats'] as $bmg){
  				echo '
@@ -732,8 +735,8 @@ function template_linkmanager()
 
 		//  (article)
 		echo '
-							</select><br /><div style="padding-bottom:5px;"></div>
-							<select style="max-width:100%;" size="1" name="tp_menu_article" ' , $context['TPortal']['editmenuitem']['type']!='arti' ? ' ' : '' ,'>';
+							</select>
+							<select style="max-width:100%;" size="1" id="tp_menu_article" name="tp_menu_article" ' , $context['TPortal']['editmenuitem']['type']!='arti' ? ' ' : '' ,'>';
 		if(count($context['TPortal']['edit_articles'])>0){
 			foreach($context['TPortal']['edit_articles'] as $bmg){
  				echo '
@@ -745,8 +748,8 @@ function template_linkmanager()
 								<option value=""></option>';
 
 		echo '
-							</select><br /><div style="padding-bottom:5px;"></div>
-							<input style="max-width:100%;" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
+							</select>
+							<input style="max-width:100%;" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 						</div>
   						<div class="float-items" style="width:20%;max-width:100%;">
 							    <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
@@ -762,6 +765,52 @@ function template_linkmanager()
 				</div>
 		</div>
 	</form>';
+
+    echo 
+        '<script>
+            $(\'#tp_menu_type\').on(\'change\',function(){
+                switch($(this).val()){
+                    case "link":
+                        $("#tp_menu_link").show()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        break;
+                    case "menu":
+                        $("#tp_menu_link").show()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        break;
+                    case "spac":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        break;
+                    case "head":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        break;
+                    case "cats":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").show()
+                        $("#tp_menu_article").hide()
+                        break;
+                    case "arti":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").show()
+                        break;
+                    default:
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").show()
+                        $("#tp_menu_article").show()
+                }
+            });
+        $(function () {
+            $("#tp_menu_type").change();
+        });
+        </script>';
+
 }
 	// Panels
 function template_panels()
