@@ -703,8 +703,7 @@ function template_linkmanager()
 					<div class="float-items" style="width:27%;">
 					        <div id="show-on-respnsive-layout">'.$txt['tp-title'].'</div>
 							<input name="tp_menu_name" type="text" size="20" value="'.$context['TPortal']['editmenuitem']['name'].'"><br /><br />
-							<input name="tp_menu_newlink" type="radio" value="0" ' , $context['TPortal']['editmenuitem']['newlink']=='0' ? ' checked' : '' , '>'.$txt['tp-nowindowmenu'].'<br />
-							<input name="tp_menu_newlink" type="radio" value="1" ' , $context['TPortal']['editmenuitem']['newlink']=='1' ? ' checked' : '' , '>'.$txt['tp-windowmenu'].'
+
 					</div>';
         echo '
 					<div class="float-items" style="width:19%;">
@@ -752,11 +751,17 @@ function template_linkmanager()
 							<input style="max-width:100%;" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 						</div>
   						<div class="float-items" style="width:20%;max-width:100%;">
-							    <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
-        						<input name="tp_menu_sub" type="radio" value="0" ' , $context['TPortal']['editmenuitem']['sub']=='0' ? ' checked' : '' ,'>
-        						<input name="tp_menu_sub" type="radio" value="1" ' , $context['TPortal']['editmenuitem']['sub']=='1' ? ' checked' : '' ,'>
-        						<input name="tp_menu_sub" type="radio" value="2" ' , $context['TPortal']['editmenuitem']['sub']=='2' ? ' checked' : '' ,'>
-        						<input name="tp_menu_sub" type="radio" value="3" ' , $context['TPortal']['editmenuitem']['sub']=='3' ? ' checked' : '' ,'>
+                            <select style="max-width:98%;" size="1" name="tp_menu_newlink" id="tp_menu_newlink">
+                                <option value="0" ', $context['TPortal']['editmenuitem']['newlink']=='0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
+                                <option value="1" ', $context['TPortal']['editmenuitem']['newlink']=='1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
+                            </select>   
+                            <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
+                            <select style="max-width:98%;" size="1" name="tp_menu_sub" id="tp_menu_sub">
+                                <option value="0" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>0</option>
+                                <option value="1" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>1</option>
+                                <option value="2" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>2</option>
+                                <option value="3" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>3</option>
+                            </select>   
   						</div>
 						<p class="clearthefloat"></p>
 					</div>
@@ -766,44 +771,58 @@ function template_linkmanager()
 		</div>
 	</form>';
 
-    echo 
+    $context['insert_after_template'] =
         '<script>
             $(\'#tp_menu_type\').on(\'change\',function(){
                 switch($(this).val()){
                     case "link":
                         $("#tp_menu_link").show()
+                        $("#tp_menu_newlink").show()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
+                        $("#tp_menu_sub").hide()
                         break;
                     case "menu":
                         $("#tp_menu_link").show()
+                        $("#tp_menu_newlink").show()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
+                        $("#tp_menu_sub").hide()
                         break;
                     case "spac":
                         $("#tp_menu_link").hide()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
                         break;
                     case "head":
                         $("#tp_menu_link").hide()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
                         break;
                     case "cats":
                         $("#tp_menu_link").hide()
                         $("#tp_menu_category").show()
                         $("#tp_menu_article").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
                         break;
                     case "arti":
                         $("#tp_menu_link").hide()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").show()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
                         break;
                     default:
                         $("#tp_menu_link").hide()
+                        $("#tp_menu_newlink").hide()
                         $("#tp_menu_category").show()
                         $("#tp_menu_article").show()
+                        $("#tp_menu_sub").show()
                 }
             });
         $(function () {
