@@ -213,7 +213,8 @@ function tpAddMenuItems(&$buttons)
     $request = $smcFunc['db_query']('', '
         SELECT value1 AS name , value3 AS href FROM {db_prefix}tp_variables 
         WHERE type = {string:type} 
-        AND value3 LIKE {string:mainmenu}',
+        AND value3 LIKE {string:mainmenu}
+        AND value5 = 0',
         array (
             'type' => 'menubox', 
             'mainmenu' => 'menu%'
