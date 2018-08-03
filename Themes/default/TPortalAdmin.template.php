@@ -2326,7 +2326,7 @@ function template_editarticle($type = '')
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
 					else
 						echo '
-							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
+							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
 					echo '
 						</div>
 			     	</div>';
@@ -2338,7 +2338,7 @@ function template_editarticle($type = '')
 						<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					</div>
 					<div class="windowbg2">
-						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
+						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
 					</div>';
 				}
 
