@@ -398,23 +398,23 @@ function tpWhosOnline($actions)
             $smcFunc['db_free_result']($request);
         }
         if(!empty($article)) {
-            return sprintf($txt['tp-article'], $article['subject'], $actions['page'], $scripturl );
+            return sprintf($txt['tp-who-article'], $article['subject'], $actions['page'], $scripturl );
         }
         else {
-            return $txt['tp-articles'];
+            return $txt['tp-who-articles'];
         }
     }
 
     if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
-        return $txt['tp-downloads'];
+        return $txt['tp-who-downloads'];
     }
 
     if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['sa']) && $actions['sa'] == 'searcharticle2') {
-        return $txt['tp-article-search'];
+        return $txt['tp-who-article-search'];
     }
 
     if(isset($actions['action']) && $actions['action'] == 'forum') {
-        return $txt['tp-forum-index'];
+        return $txt['tp-who-forum-index'];
     }
 
 }
