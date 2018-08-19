@@ -370,14 +370,26 @@ function tpWhosOnline($actions)
     loadLanguage('TPortal');
 
     if(isset($actions['page'])) {
-        $request = $smcFunc['db_query']('', '
-            SELECT subject FROM {db_prefix}tp_articles
-            WHERE id = {int:id}
-            LIMIT 1',
-            array (
-                'id' => $actions['page'], 
-            )
-        );
+        if(is_numeric($actions['page'])) {
+            $request = $smcFunc['db_query']('', '
+                SELECT subject FROM {db_prefix}tp_articles
+                WHERE id = {int:id}
+                LIMIT 1',
+                array (
+                    'id' => $actions['page'], 
+                )
+            );
+        }
+        else {
+            $request = $smcFunc['db_query']('', '
+                SELECT subject FROM {db_prefix}tp_articles
+                WHERE shortname = {string:shortname}
+                LIMIT 1',
+                array (
+                    'shortname' => $actions['page'], 
+                )
+            );
+        }
         $article = array();
         if($smcFunc['db_num_rows']($request) > 0) {
             while($row = $smcFunc['db_fetch_assoc']($request)) {
