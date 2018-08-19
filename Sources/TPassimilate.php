@@ -409,7 +409,7 @@ function tpWhosOnline($actions)
         return $txt['tp-who-downloads'];
     }
 
-    if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['sa']) && $actions['sa'] == 'searcharticle2') {
+    if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['sa']) && ( $actions['sa'] == 'searcharticle' || $actions['sa'] == 'searcharticle2' )) {
         return $txt['tp-who-article-search'];
     }
 
