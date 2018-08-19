@@ -6,6 +6,13 @@
     <version>1.5.1</version>
     
 	<file name="$boarddir/index.php">
+        <operation>
+            <search position="replace"><![CDATA[writeLog();]]></search>
+            <add><![CDATA[
+        // Ignore Shouts
+        if(!isset($_GET['shout']))
+            writeLog();]]></add>
+        </operation>
 		<operation>
 			<search position="after"><![CDATA[	// Is the forum in maintenance mode? (doesn't apply to administrators.)]]></search>
 			<add><![CDATA[	// TinyPortal
