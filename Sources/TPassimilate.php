@@ -385,7 +385,7 @@ function tpWhosOnline($actions)
             }
             $smcFunc['db_free_result']($request);
         }
-        if(!empty($article) {
+        if(!empty($article)) {
             return sprintf($txt['tp-article'], $article['subject'], $actions['page'], $scripturl );
         }
         else {
