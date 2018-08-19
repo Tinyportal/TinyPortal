@@ -409,9 +409,14 @@ function tpWhosOnline($actions)
         return $txt['tp-downloads'];
     }
 
+    if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['sa']) && $actions['sa'] == 'searcharticle2') {
+        return $txt['tp-article-search'];
+    }
+
     if(isset($actions['action']) && $actions['action'] == 'forum') {
         return $txt['tp-forum-index'];
     }
+
 }
 
 ?>
