@@ -17,15 +17,17 @@
  
 global $hooks, $mod_name;
 $hooks = array(
-	'integrate_pre_include' => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
-	'integrate_load_permissions' => 'tpAddPermissions',
-	'integrate_load_illegal_guest_permissions' => 'tpAddIllegalPermissions', 
-	'integrate_buffer' => 'tpAddCopy,tpImageRewrite',
-	'integrate_menu_buttons' => 'tpAddMenuItems',
-	'integrate_display_buttons' => 'addPromoteButton',
-	'integrate_actions' => 'addTPActions',
-	'integrate_profile_areas' => 'tpAddProfileMenu',
+	'integrate_pre_include'                     => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
+	'integrate_load_permissions'                => 'tpAddPermissions',
+	'integrate_load_illegal_guest_permissions'  => 'tpAddIllegalPermissions', 
+	'integrate_buffer'                          => 'tpAddCopy,tpImageRewrite',
+	'integrate_menu_buttons'                    => 'tpAddMenuItems',
+	'integrate_display_buttons'                 => 'addPromoteButton',
+	'integrate_actions'                         => 'addTPActions',
+	'integrate_profile_areas'                   => 'tpAddProfileMenu',
+    'integrate_whos_online'                     => 'tpWhosOnline',
 );
+
 $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------

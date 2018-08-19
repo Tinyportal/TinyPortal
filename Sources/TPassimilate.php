@@ -16,7 +16,7 @@
  */
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
-  global $forum_version;
+    global $forum_version;
 
 	loadLanguage('TPShout');
 
@@ -361,6 +361,25 @@ function tpImageRewrite($buffer)
 		}
 	}
 	return $buffer;
+}
+
+function tpWhosOnline($actions)
+{
+    global $txt, $smcFunc;
+
+    loadLanguage('TPortal');
+
+    if(isset($actions['page'])) {
+        return $txt['tp-articles'];
+    }
+
+    if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
+        return $txt['tp-downloads'];
+    }
+
+    if(isset($actions['action']) && $actions['action'] == 'forum') {
+        return $txt['tp-forum-index'];
+    }
 }
 
 ?>

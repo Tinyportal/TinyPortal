@@ -312,4 +312,9 @@ $txt['tp-nomodule'] = 'No output from module.';
 // Permissions
 $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
+
+
+$txt['tp-forum-index']  = 'Viewing the Forum Index';
+$txt['tp-articles']     = 'Viewing Articles';
+$txt['tp-downloads']    = 'Viewing Downloads';
 ?>
