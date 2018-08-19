@@ -365,12 +365,32 @@ function tpImageRewrite($buffer)
 
 function tpWhosOnline($actions)
 {
-    global $txt, $smcFunc;
+    global $txt, $smcFunc, $scripturl;
 
     loadLanguage('TPortal');
 
     if(isset($actions['page'])) {
-        return $txt['tp-articles'];
+        $request = $smcFunc['db_query']('', '
+            SELECT subject FROM {db_prefix}tp_articles
+            WHERE id = {int:id}
+            LIMIT 1',
+            array (
+                'id' => $actions['page'], 
+            )
+        );
+        $article = array();
+        if($smcFunc['db_num_rows']($request) > 0) {
+            while($row = $smcFunc['db_fetch_assoc']($request)) {
+                $article = $row;
+            }
+            $smcFunc['db_free_result']($request);
+        }
+        if(!empty($article) {
+            return sprintf($txt['tp-article'], $article['subject'], $actions['page'], $scripturl );
+        }
+        else {
+            return $txt['tp-articles'];
+        }
     }
 
     if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
