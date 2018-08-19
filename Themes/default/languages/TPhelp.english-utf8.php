@@ -152,7 +152,7 @@ $txt['tphelp_plugins_main']= '
 // Credits...
 $txt['tp-credit1'] = '
 <h4>Founder</h4> 
-Bjoern "Bloc" Kristiansen
+Bjorn "Bloc" Kristiansen
 <br /><br />
 <h4>Developers and Contributors</h4>
 Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, emanuele.

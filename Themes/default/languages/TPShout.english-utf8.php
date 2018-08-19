@@ -36,9 +36,9 @@ $txt['permissiongroup_tpshout'] = 'TP Shoutbox';
 $txt['permissiongroup_tpshoutbox'] = 'TP Shoutbox';
 $txt['permissiongroup_simple_tpshout'] = 'Manage Shoutbox';
 $txt['permissionname_tp_can_admin_shout'] = 'Manage Shoutbox';
-$txt['permissionhelp_tp_can_admin_shout'] = 'Allows you to manage shouts.';
+$txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
 $txt['permissionname_tp_can_shout'] = 'Can Post Shouts';
-$txt['permissionhelp_tp_can_shout'] = 'Allows a person to post in the shoutbox.';
+$txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 $txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage shouts.';
 $txt['tp-showlatest'] = 'Show 50 latest';
 $txt['by'] = 'by';
@@ -48,7 +48,7 @@ $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tp-shout-allow-links'] = 'Allow links to be posted?';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
-$txt['shout_submit_returnkey'] 	= 'Submit Shout on enter key?';
+$txt['shout_submit_returnkey'] = 'Submit Shout on enter key?';
 $txt['tp-yes-ctrl'] = 'Yes with ctrl/cmd';
 
 ?>
