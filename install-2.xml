@@ -6,32 +6,12 @@
     <version>2.0</version>
     
 	<file name="$boarddir/index.php">
-		<operation>
-            <search position="replace"><![CDATA[writeLog();]]></search>
-            <add><![CDATA[
-        // Ignore Shouts
-        if(!isset($_GET['shout']))
-            writeLog();]]></add>
-        </operation>
         <operation>
 			<search position="after"><![CDATA[	// Is the forum in maintenance mode? (doesn't apply to administrators.)]]></search>
 			<add><![CDATA[	// TinyPortal
 	TPortal_init();
 
 ]]></add>
-		</operation>
-		<operation>
-			<search position="replace"><![CDATA[// No default action huh? then go to our good old BoardIndex.
-			else
-			{
-				require_once($sourcedir . '/BoardIndex.php');
-
-				return 'BoardIndex';
-			}]]></search>
-			<add><![CDATA[		$tpAction = whichTPAction();
-		if (!empty($tpAction))
-			return $tpAction;
-			]]></add>
 		</operation>
 	</file>
 	<file name="$sourcedir/Load.php">

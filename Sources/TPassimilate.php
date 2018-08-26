@@ -306,8 +306,8 @@ function addTPActions(&$actionArray)
 
 function whichTPAction()
 {
-	global $topic, $board, $sourcedir, $context;
-	
+	global $topic, $board, $sourcedir, $context, $forum_version;
+
 	$theAction = false;
 	// first..if the action is set, but empty, don't go any further
 	if (isset($_REQUEST['action']) && $_REQUEST['action']=='')
@@ -333,7 +333,15 @@ function whichTPAction()
 		require_once($sourcedir . '/BoardIndex.php');
 		$theAction = 'BoardIndex';
 	}
-	return $theAction;
+
+    // SMF 2.1 has a default action hook so less source edits
+    if(strpos($forum_version, '2.0') !== false) {
+        return $theAction;
+    }
+    else {
+        // We need to manually call the action as this function was called be default
+        call_user_func($theAction);
+    }
 }
 
 function tpImageRewrite($buffer)
@@ -417,6 +425,11 @@ function tpWhosOnline($actions)
         return $txt['tp-who-forum-index'];
     }
 
+}
+
+function tpStatsIgnore(&$no_stat_actions)
+{
+    $no_stat_actions = array_merge($no_stat_actions, array('shout'));
 }
 
 ?>
