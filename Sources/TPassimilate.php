@@ -427,9 +427,12 @@ function tpWhosOnline($actions)
 
 }
 
-function tpStatsIgnore(&$no_stat_actions)
+function tpStatsIgnore(&$no_stat_actions) 
 {
     $no_stat_actions = array_merge($no_stat_actions, array('shout'));
+
+	// We can also call init from here although it's not meant for this 
+	TPortal_init();
 }
 
 ?>
