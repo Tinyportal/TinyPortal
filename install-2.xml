@@ -35,13 +35,6 @@
 		</operation>
 	</file>
 	
-	<file name="$boarddir/SSI.php">
-		<operation>
-			<search position="before"><![CDATA[require_once($sourcedir . '/Security.php');]]></search>
-			<add><![CDATA[require_once($sourcedir . '/TPortal.php');]]></add>
-		</operation>
-	</file>
-	
 	<file name="$sourcedir/QueryString.php">
 		<operation>
 			<search position="replace"><![CDATA[?:board|topic)=]]></search>
@@ -49,33 +42,10 @@
 		</operation>
 	</file>
 	
-	<file name="$sourcedir/Subs-Editor.php">
-		<operation>
-			<search position="replace"><![CDATA[function theme_postbox($msg)
-{
-	global $context;
-
-	return template_control_richedit($context['post_box_name']);
-}]]></search>
-			<add><![CDATA[function theme_postbox($msg, $from_tp = false)
-{
-	global $context;
-
-	return template_control_richedit($context['post_box_name'], $from_tp);
-}]]></add>
-		</operation>
-	</file>
 	<file name="$themedir/index.template.php" error="skip">
 		<operation>
 			<search position="after"><![CDATA[<a href="', $scripturl, '?action=help">', $txt['help'], '</a>]]></search>
 			<add><![CDATA[<a href="', $scripturl, '?action=tpmod;sa=help">', $txt['tp-tphelp'], '</a> | ]]></add>
-		</operation>
-	</file>
-	<file name="$languagedir/Modifications.english.php">
-		<operation>
-			<search position="end" />
-			<add><![CDATA[
-$txt['tp-tphelp'] = 'TinyPortal';]]></add>
 		</operation>
 	</file>
 </modification>
