@@ -6,28 +6,6 @@
     <version>1.5.1</version>
 	<file name="$sourcedir/Load.php">
 		<operation>
-			<search position="replace"><![CDATA[	// Start the linktree off empty..
-	$context['linktree'] = array();]]></search>
-			<add><![CDATA[	// Start the linktree off empty..not quite, have to insert forum
-	$context['linktree'] = array(array('url' => $scripturl . '?action=forum', 'name' => 'Forum'));]]></add>
-		</operation>
-		<operation>
-			<search position="replace"><![CDATA[		// Build up the linktree.
-		$context['linktree'] = array_merge(
-			$context['linktree'],
-			array(array(
-				'url' => $scripturl . '#c' . $board_info['cat']['id'],
-				'name' => $board_info['cat']['name']
-			)),]]></search>
-			<add><![CDATA[		// Build up the linktree (adding TPortal forum index)
-		$context['linktree'] = array_merge(
-			$context['linktree'],
-			array(array(
-				'url' => $scripturl . '?action=forum#c' . $board_info['cat']['id'],
-				'name' => $board_info['cat']['name']
-			)),]]></add>
-		</operation>
-		<operation>
 			<search position="before"><![CDATA[	// The theme is the forum's default.
 	else
 		$id_theme = $modSettings['theme_guests'];]]></search>

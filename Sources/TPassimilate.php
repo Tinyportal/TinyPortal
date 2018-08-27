@@ -164,7 +164,7 @@ function tpAddIllegalPermissions()
 
 function tpAddMenuItems(&$buttons)
 {
-    global $smcFunc, $context, $scripturl, $txt;
+    global $smcFunc, $context, $scripturl, $txt, $forum_version;
 
     // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
     if(!isset($context['TPortal'])) {
@@ -177,6 +177,23 @@ function tpAddMenuItems(&$buttons)
     }
     elseif(isset($_GET['sa']) && $_GET['sa'] == 'help') {
         $context['current_action'] = 'help';
+    }
+
+    // This removes a edit in Load.php
+    if( (strpos($forum_version, '2.1') !== false) && (!empty($context['linktree'])) ) {
+        if (!empty($_GET)) {
+            array_splice($context['linktree'], 1, 0, array(
+                    array(
+                        'url'   => $scripturl . '?action=forum',
+                        'name'  => 'Forum'
+                    )
+                )
+            );
+        }
+
+        if (!empty($context['linktree'][2])) {
+            $context['linktree'][2]['url'] = str_replace('#', '?action=forum#', $context['linktree'][2]['url']);
+        }
     }
 
     // Add the forum button     
