@@ -228,6 +228,11 @@ h3.article_title span.article_shortdate span
 	text-align: center;
 	float: left;
 }
+.article_iconcolumn img
+{
+   max-width: 100%;
+   height: auto;
+}
 /* render 4 */
 .render4
 {
