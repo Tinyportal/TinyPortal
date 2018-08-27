@@ -54,7 +54,7 @@ $txt['tp-ratearticle'] = 'Give this article a rating of ';
 $txt['tp-ratingaverage'] = 'Rating: ';
 $txt['tp-ratingvotes'] = 'Rates';
 $txt['tp-readmore'] = 'Read More';
-$txt['tp-submit'] = 'Send';
+$txt['tp-submit'] = 'Save';
 $txt['tp-views'] = 'Views';
 $txt['tp-subject'] = 'Subject';
 $txt['tp-articlessubmitted'] = 'Articles';
@@ -77,21 +77,21 @@ $txt['tp-noimportarticle'] = 'Sorry, the article could not be loaded.';
 $txt['tp-noname'] = '-no name-';
 $txt['tp-submitarticlebbc']='Write BBC article';
 $txt['permissionname_tp_articles'] = 'Manage articles';
-$txt['permissionhelp_tp_articles'] = 'Allows you to manage articles, categories for articles and the catlist.';
+$txt['permissionhelp_tp_articles'] = 'Allows users to manage articles, categories for articles and the catlist.';
 $txt['permissionname_tp_artcomment'] = 'Can comment on articles';
-$txt['permissionhelp_tp_artcomment'] = 'Allows you to manage who can comment on articles.';
+$txt['permissionhelp_tp_artcomment'] = 'Allows users to manage who can comment on articles.';
 $txt['permissiongroup_tinyportal_submit'] = 'TinyPortal Articles';
 $txt['permissionname_tp_submithtml'] = 'Can submit HTML articles';
-$txt['permissionhelp_tp_submithtml'] = 'Allows you to write and submit HTML type of articles.';
+$txt['permissionhelp_tp_submithtml'] = 'Allows users to write and submit HTML type of articles.';
 $txt['cannot_tp_submithtml'] = 'Sorry, you aren\'t allowed to submit HTML articles.';
 $txt['permissionname_tp_submitbbc'] = 'Can submit BBC articles';
-$txt['permissionhelp_tp_submitbbc'] = 'Allows you to write and submit BBC type of articles.';
+$txt['permissionhelp_tp_submitbbc'] = 'Allows users to write and submit BBC type of articles.';
 $txt['cannot_tp_submitbbc'] = 'Sorry, you aren\'t allowed to submit BBC articles.';
 $txt['permissionname_tp_editownarticle'] = 'Can edit own articles';
-$txt['permissionhelp_tp_editownarticle'] = 'Allows you to edit your own articles.';
+$txt['permissionhelp_tp_editownarticle'] = 'Allows users to edit their own articles.';
 $txt['cannot_tp_editownarticle'] = 'Sorry, you aren\'t allowed to edit your article.';
 $txt['permissionname_tp_alwaysapproved'] = 'Submissions are always approved';
-$txt['permissionhelp_tp_alwaysapproved'] = 'Allows you to write articles that will be automatically approved.';
+$txt['permissionhelp_tp_alwaysapproved'] = 'Allows users to write articles that will be automatically approved.';
 $txt['cannot_tp_alwaysapproved'] = 'Article submission needs to be approved first.';
 $txt['tp-permanent'] = 'Permanent?';
 $txt['tp-print'] = 'Print';
@@ -127,14 +127,14 @@ $txt['tp-stats'] = 'Stats';
 $txt['tp-submitarticle']='Write HTML article';
 $txt['tp-users'] = 'Users';
 $txt['permissionname_tp_blocks'] = 'Manage blocks';
-$txt['permissionhelp_tp_blocks'] = 'Allows you to manage blocks. Be careful with this permission as it allows creation of php blocks.';
+$txt['permissionhelp_tp_blocks'] = 'Allows users to manage blocks. Be careful with this permission as it allows creation of PHP blocks.';
 $txt['cannot_tp_blocks'] = 'Sorry, you aren\'t allowed to manage blocks.';
 $txt['edit_description'] = 'Edit Block Contents';
 $txt['block-upshrink_description'] = 'Collapse or Expand Block';
 
 // Panels... //
 // Rev 89
-$txt['left-tp-upshrink_description'] = 'Left panel';
+$txt['left-tp-upshrink_description'] = 'Left Panel';
 $txt['right-tp-upshrink_description'] = 'Right Panel';
 $txt['upper-tp-upshrink_description'] = 'Upper Panel';
 $txt['lower-tp-upshrink_description'] = 'Lower Panel';
@@ -183,7 +183,7 @@ $txt['tp-prof_waitapproval2'] = 'articles waiting approval.';
 // News... //
 // Rev 89
 $txt['permissionname_tp_news'] = 'Can read TP news';
-$txt['permissionhelp_tp_news'] = 'Allows you to read news, install updates etc.';
+$txt['permissionhelp_tp_news'] = 'Allows users to read news, install updates etc.';
 $txt['cannot_tp_news'] = 'Sorry, you aren\'t allowed to fetch news.';
 
 // TP Settings... //
@@ -191,7 +191,7 @@ $txt['cannot_tp_news'] = 'Sorry, you aren\'t allowed to fetch news.';
 $txt['permissiongroup_tinyportal'] = 'TinyPortal';
 $txt['permissiongroup_simple_tinyportal'] = 'Manage TinyPortal';
 $txt['permissionname_tp_settings'] = 'Manage settings';
-$txt['permissionhelp_tp_settings'] = 'Allows you to manage settings and news for TP.';
+$txt['permissionhelp_tp_settings'] = 'Allows users to manage settings and news for TP.';
 $txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage settings.';
 $txt['tp_maintenace'] = 'Maintenance Mode';
 
@@ -201,7 +201,7 @@ $txt['tp-dluploaded'] = 'Uploads';
 $txt['tp-uploadedby'] = 'Uploaded by ';
 $txt['permissiongroup_tinyportal_dl'] = 'TinyPortal File manager';
 $txt['permissionname_tp_dlmanager'] = 'Manage Files';
-$txt['permissionhelp_tp_dlmanager'] = 'Allows you to visit and operate any part of the File manager admin screens.';
+$txt['permissionhelp_tp_dlmanager'] = 'Allows users to visit and operate any part of the File manager admin screens.';
 $txt['cannot_tp_dlmanager'] = 'Sorry, you aren\'t allowed to manage the File Manager module.';
 $txt['permissionname_tp_dlupload'] = 'Upload file';
 $txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the File manager';
@@ -215,7 +215,7 @@ $txt['tp-dlhaverated'] = 'You have rated this file.';
 
 $txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the File manager';
 $txt['permissionname_tp_dlcreatetopic'] = 'Create Download topic';
-$txt['permissionhelp_tp_dlcreatetopic'] = 'Allows you to create a linked support topic, and also link the topic to the download. Uses pre-defined boards to choose from.';
+$txt['permissionhelp_tp_dlcreatetopic'] = 'Allows users to create a linked support topic, and also link the topic to the download. Uses pre-defined boards to choose from.';
 $txt['cannot_tp_dlcreatetopic'] = 'Sorry, you aren\'t allowed to create support topics.';
 
 // Shoutbox... //
@@ -223,6 +223,10 @@ $txt['cannot_tp_dlcreatetopic'] = 'Sorry, you aren\'t allowed to create support 
 $txt['tp-shouts'] = 'Shouts:';
 $txt['shout!'] = 'Shout!';
 $txt['tp-shout'] = 'Shout';
+$txt['permissionname_tp_can_admin_shout'] = 'Manage Shoutbox';
+$txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
+$txt['permissionname_tp_can_shout'] = 'Can Post Shouts';
+$txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 
 // Menus... //
 // Rev 89
