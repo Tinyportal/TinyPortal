@@ -1429,32 +1429,7 @@ function template_editcategory()
 									</select>
 								</div>
 							</div>
-							<div class="windowbg" style="padding-left:1%;">
-								<div class="font-strong">'.$txt['tp-icon']. ':</div>
-								<div>';
-		tp_collectArticleIcons();
-		echo '
-							<select size="1" name="tp_category_value4" onchange="changeIcon(document.getElementById(\'tp-icon'.$mg['id'].'\'), this.value);">
-								<option value="">'.$txt['tp-noicon'].'</option>';
-			
-		foreach($context['TPortal']['articons']['icons'] as $ill)
-			echo '<option value="'.$ill['file'].'"' , $ill['file']==$mg['value4'] ? ' selected="selected"' : '' , '>'.$ill['file'].'</option>';
-
-		echo '			
-							</select><br /><img style="margin-top: 8px;" id="tp-icon'.$mg['id'].'" src="' . $boardurl . '/tp-files/tp-articles/icons/', empty($mg['value4']) ? 'TPnoicon.gif' : $mg['value4'] , '" alt="" />
-								</div>
-							</div>
-							<div class="windowbg2" style="padding-left:1%;padding-bottom:1%;">
-								<div class="font-strong"></div>
-								<div>
-									<a href="' . $scripturl . '?cat=' .$mg['id']. '">
-										<img title="" border="0" src="' .$settings['tp_images_url']. '/TPfilter.gif" alt=""  />
-									</a>
-									<a href="' . $scripturl . '?action=tpadmin;catdelete=' .$mg['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmcat1'].'  \n'.$txt['tp-confirmcat2'].'\')">
-										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.gif" alt="'.$txt['tp-delete'].'"  />
-									</a>
-								</div>
-							</div>
+					
 							<div class="windowbg" style="padding-left:1%;padding-bottom:1%;">
 								<div class="font-strong">'.$txt['tp-sorting']. ':</div>
 								<div>
@@ -2414,35 +2389,10 @@ function template_articons()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="articons">
 		<div id="article-icons-pictures" class="admintable admin-area">
-			<div class="catbg">' . $txt['tp-adminicons3'] . '</div>
+			<div class="catbg">' . $txt['tp-adminicons7'] . '</div>
 				<div class="windowbg2">
 						<div class="formtable">
 							<div class="windowbg2 padding-div">
-								<strong>'.$txt['tp-adminicons4'].'</strong>
-								<div style="padding-top:5px;"><input type="file" name="tp_article_newicon" /></div>
-							</div>';
-		$alt = true;		
-		if(count($context['TPortal']['articons']['icons'])>0)
-		{
-			foreach($context['TPortal']['articons']['icons'] as $icon)
-			{
-				echo '	<div' , $alt ? ' class="windowbg2"' : '' , ' >
-								<div class="tp_container" style="padding-left:1%;">
-									<div class="tp_col8">' . $icon['image'] . '</div>
-									<div class="tp_col8"><input type="checkbox" name="articon'.$icon['id'].'" id="articon'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  />
-								    <label style="vertical-align: top;"  for="articon'.$icon['id'].'">'.$txt['tp-remove'].'?</label>
-								    </div><p class="clearthefloat"></p>
-								</div>
-						</div>';
-				$alt = !$alt;
-			}
-		}
-		
-		echo '
-							<div class="titlebg padding-div">
-									'.$txt['tp-adminicons7'].'
-							</div>							
-							<div class="windowbg2 padding-div">								
 								<div style="padding-bottom:5px;">'.$txt['tp-adminicons6'].'</div>
 								<input type="file" name="tp_article_newillustration" />
 							</div>';
