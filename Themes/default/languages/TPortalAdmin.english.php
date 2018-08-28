@@ -414,7 +414,8 @@ $txt['tp-fixedwidth'] = 'Set fixed width:';
 $txt['tp-generalsettings'] = 'General Settings';
 $txt['tp-fixedwidth2'] = '( in pixels - Use 0 for 100% width )';
 $txt['tp-hidecollapse'] = 'Allow the panels to be collapsed?';
-$txt['tp-stars'] = 'Max rating:<br /><br />Display stars instead of numbers?';
+$txt['tp-maxrating'] = 'Max rating:';
+$txt['tp-stars'] = 'Display stars instead of numbers?';
 $txt['tp-themesavail']='Themes available in the themebox:';
 
 // Modules Admin
