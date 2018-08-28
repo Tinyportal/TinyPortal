@@ -872,7 +872,8 @@ function doTPpage()
 						FROM {db_prefix}tp_articles
 						WHERE category = {int:cat}
 						AND off = 0
-						AND approved = 1',
+						AND approved = 1
+						ORDER BY parse',
 						array('cat' => $context['TPortal']['article']['category'])
 					);
 					if($smcFunc['db_num_rows']($request) > 0)
