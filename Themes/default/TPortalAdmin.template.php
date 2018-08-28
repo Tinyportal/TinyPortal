@@ -911,7 +911,7 @@ function template_settings()
 				<div class="windowbg2">
 					<div class="formtable padding-div">
 						<!-- START non responsive themes form -->
-					        <div class="windowbg2">
+							<div class="windowbg2">
 						       <div class="font-strong">'.$txt['tp-formres'].'</div>';
 						       $tm=explode(",",$context['TPortal']['resp']);
 						   echo '<input name="tp_resp" type="checkbox" value="0">'.$txt['tp-deselectthemes'].'<br /><br /> ';
@@ -926,7 +926,8 @@ function template_settings()
 						       }
 						       echo'<br /><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
 					        </div>		
-						<!-- END non responsive themes form -->									
+						<!-- END non responsive themes form -->
+							<br><hr>
 							<div class="windowbg2">
 								<div class="font-strong">'.$txt['tp-frontpagetitle'].'</div>
 								<div><input style="width: 85%;" name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '"></div>
@@ -944,6 +945,7 @@ function template_settings()
 									<input name="tp_redirectforum" type="radio" value="0" ' , $context['TPortal']['redirectforum']=='0' ? 'checked' : '' , '> '.$txt['tp-redirectforum2'].'
 								</div>
 							</div>
+							<br><hr>
 							<div class="windowbg2">
 								<div class="font-strong">'.$txt['tp-useroundframepanels'].'</div>
 								<div>
@@ -965,14 +967,26 @@ function template_settings()
 									<input name="tp_blocks_edithide" type="radio" value="0" ' , $context['TPortal']['blocks_edithide']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 								</div>
 							</div>
-							<div class="windowbg2" style="border:1px solid #009;padding:5px;margin-top:5px;">
+							<div class="windowbg2" id="uselangoption">
+								<div class="font-strong">'.$txt['tp-uselangoption'].'</div>
+								<div>
+									<input name="tp_uselangoption" type="radio" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_uselangoption" type="radio" value="0" ' , $context['TPortal']['uselangoption']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div>
+							</div>
+							<br><hr>
+							<div class="windowbg2"">
+								<div class="font-strong">'.$txt['tp-maxrating'].'</div>
+								<div>
+									<input name="tp_maxstars" size="4" type="text" value="'.$context['TPortal']['maxstars'].'">
+								</div>
 								<div class="font-strong">'.$txt['tp-stars'].'</div>
 								<div>
-									<input name="tp_maxstars" size="4" type="text" value="'.$context['TPortal']['maxstars'].'"><br /><div>&nbsp;</div>
 									<input name="tp_showstars" type="radio" value="1" ' , $context['TPortal']['showstars']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 									<input name="tp_showstars" type="radio" value="0" ' , $context['TPortal']['showstars']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 								</div>
 							</div>
+							<br><hr>
 							<div class="windowbg2">
 								<div class="font-strong">'.$txt['tp-useoldsidebar'].'</div>
 								<div>
@@ -985,13 +999,6 @@ function template_settings()
 								<div>
 									<input name="tp_admin_showblocks" type="radio" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 									<input name="tp_admin_showblocks" type="radio" value="0" ' , $context['TPortal']['admin_showblocks']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-								</div>
-							</div>
-							<div class="windowbg2" id="uselangoption">
-								<div class="font-strong">'.$txt['tp-uselangoption'].'</div>
-								<div>
-									<input name="tp_uselangoption" type="radio" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-									<input name="tp_uselangoption" type="radio" value="0" ' , $context['TPortal']['uselangoption']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 								</div>
 							</div>
 							<div class="windowbg2">
