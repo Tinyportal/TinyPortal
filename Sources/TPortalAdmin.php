@@ -1277,11 +1277,6 @@ function do_articles()
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name; 
 				}
-
-				function changeIcon(node,name)
-				{
-					node.src = \'' . $boardurl . '/tp-files/tp-articles/icons/\' + name; 
-				}
 			// ]]></script>';
 
 				$request = $smcFunc['db_query']('', '
@@ -1461,11 +1456,6 @@ function do_articles()
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name; 
 				}
-
-				function changeIcon(node,name)
-				{
-					node.src = \'' . $boardurl . '/tp-files/tp-articles/icons/\' + name; 
-				}
 			// ]]></script>';
 		// Add in BBC editor before we call in template so the headers are there
 		if(substr($_GET['sa'], 11) == 'bbc')
@@ -1625,11 +1615,6 @@ function do_articles()
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name; 
-				}
-
-				function changeIcon(node,name)
-				{
-					node.src = \'' . $boardurl . '/tp-files/tp-articles/icons/\' + name; 
 				}
 			// ]]></script>';
 
@@ -2603,10 +2588,6 @@ function do_postchecks()
 		{
 			checkSession('post');
 			isAllowedTo('tp_articles');
-			
-			// any icons sent?
-			if(file_exists($_FILES['tp_article_newicon']['tmp_name']))
-				TPuploadpicture('tp_article_newicon', '', '300', 'jpg,gif,png', 'tp-files/tp-articles/icons');
 
 			if(file_exists($_FILES['tp_article_newillustration']['tmp_name']))
 			{
@@ -2617,9 +2598,7 @@ function do_postchecks()
 			// how about deleted?
 			foreach($_POST as $what => $value)
 			{
-				if(substr($what, 0, 7) == 'articon')
-					unlink($boarddir.'/tp-files/tp-articles/icons/'.$value);
-				elseif(substr($what, 0, 15) == 'artillustration')
+				if(substr($what, 0, 15) == 'artillustration')
 					unlink($boarddir.'/tp-files/tp-articles/illustrations/'.$value);
 			}
 			return $from;

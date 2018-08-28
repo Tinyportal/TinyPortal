@@ -432,7 +432,6 @@ function TP_article_categories($use_sorted = false)
 {
 	global $smcFunc, $context, $txt;
 
-	$context['TPortal']['caticons'] = array();
 	$context['TPortal']['catnames'] = array();
 	$context['TPortal']['categories_shortname'] = array();
 
@@ -579,7 +578,6 @@ function TP_article_categories($use_sorted = false)
 						'lowerpanel' => $options['lowerpanel'],
 					),
 				);
-				$context['TPortal']['caticons'][$row['id']]=$row['value4'];
 				$context['TPortal']['catnames'][$row['id']]=$row['value1'];
 				$context['TPortal']['categories_shortname'][$sorted[$row['id']]['shortname']]=$row['id'];
 			}
@@ -2215,29 +2213,11 @@ function tp_collectArticleIcons()
 
 	$count = 1;
 	$context['TPortal']['articons'] = array();
-	$context['TPortal']['articons']['icons'] = array();
 	$context['TPortal']['articons']['illustrations'] = array();
-	// first, icons
-	if($handle = opendir($boarddir.'/tp-files/tp-articles/icons')) 
-	{
-		while (false !== ($file = readdir($handle))) 
-		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPnoicon.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
-			{
-				$context['TPortal']['articons']['icons'][] = array(
-					'id' => $count,
-					'file' => $file,
-					'image' => '<img src="'.$boardurl.'/tp-files/tp-articles/icons/'.$file.'" alt="'.$file.'" />',
-				);
-			}
-		}
-		closedir($handle);
-	}
-	sort($context['TPortal']['articons']['icons']);
 
 	$count = 1;
 	$sorted2 = array();
-	// and illustrations
+	//illustrations/images
 	if ($handle = opendir($boarddir.'/tp-files/tp-articles/illustrations')) 
 	{
 		while (false !== ($file = readdir($handle))) 

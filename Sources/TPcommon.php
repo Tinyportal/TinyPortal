@@ -86,25 +86,25 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	return $thumb;
 }
 
-function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
+function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
 {
 	global $boarddir, $txt;
 
 	loadLanguage('TPdlmanager');
 
 	// check that nothing happended
-	if(!file_exists($_FILES[$what]['tmp_name']) || !is_uploaded_file($_FILES[$what]['tmp_name']))
+	if(!file_exists($_FILES[$widthhat]['tmp_name']) || !is_uploaded_file($_FILES[$widthhat]['tmp_name']))
 		fatal_error($txt['tp-dlnotuploaded']);
 	// process the file
-	$filename=$_FILES[$what]['name'];
+	$filename=$_FILES[$widthhat]['name'];
 	$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
 	$name = strtr($name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 	$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 
-	$filesize = filesize($_FILES[$what]['tmp_name']);
+	$filesize = filesize($_FILES[$widthhat]['tmp_name']);
 	if($filesize > (1024 * $maxsize))
 	{
-		unlink($_FILES[$what]['tmp_name']);
+		unlink($_FILES[$widthhat]['tmp_name']);
 		fatal_error($txt['tp-dlmaxerror'] . $maxsize.' Kb.');
 	}
 
@@ -120,7 +120,7 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 	}
 	if(!$match)
 	{
-		unlink($_FILES[$what]['tmp_name']);
+		unlink($_FILES[$widthhat]['tmp_name']);
 		fatal_error($txt['tp-dlallowedtypes'] . ': ' . $exts);
 	}
 
@@ -131,7 +131,7 @@ function TPuploadpicture($what, $prefix, $maxsize='1800', $exts='jpg,gif,png', $
 	// add prefix
 	$sname = $prefix.$name;
 
-	if(move_uploaded_file($_FILES[$what]['tmp_name'],$boarddir.'/'.$destdir.'/'.$sname))
+	if(move_uploaded_file($_FILES[$widthhat]['tmp_name'],$boarddir.'/'.$destdir.'/'.$sname))
 		return $sname;
 	else
 		return;
