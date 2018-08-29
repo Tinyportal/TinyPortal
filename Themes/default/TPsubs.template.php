@@ -1241,13 +1241,11 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '<div class="article_padding">{article_bookmark}</div>' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '<div class="article_padding">{article_boardnews}</div>' : '') . '
 			' . ($single ? '
+		</div>
+		<div>
 			<div class="tp_container">
-				<div class="tp_col8">	
-					{article_moreauthor}
-				</div>
-				<div class="tp_col8">
-					{article_bookmark}
-				</div>
+				{article_moreauthor}
+				{article_bookmark}
 			</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . ' 
@@ -1277,13 +1275,11 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 			' . ($single ? '
+		</div>
+		<div>
 			<div class="tp_container">
-				<div class="tp_col8">	
-					{article_moreauthor}
-				</div>
-				<div class="tp_col8">
-					{article_bookmark}
-				</div>
+				{article_moreauthor}
+				{article_bookmark}
 			</div>
 			{article_morelinks}
 			{article_comments}' : '') . ' 
@@ -1320,12 +1316,8 @@ function article_renders($type = 1, $single = false, $first = false)
 					' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 					' . ($single ? '
 				<div class="tp_container">
-					<div class="tp_col8">	
-						{article_moreauthor}
-					</div>
-					<div class="tp_col8">
-						{article_bookmark}
-					</div>
+					{article_moreauthor}
+					{article_bookmark}
 				</div>
 				{article_morelinks}
 				{article_comments}' : '') . ' 
@@ -1398,13 +1390,11 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '<div>{article_bookmark}</div>' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '<div class="article_padding">{article_boardnews}</div>' : '') . '
 			' . ($single ? '
+		</div>
+		<div>
 			<div class="tp_container">
-				<div class="tp_col8">	
-					{article_moreauthor}
-				</div>
-				<div class="tp_col8">
-					{article_bookmark}
-				</div>
+				{article_moreauthor}
+				{article_bookmark}
 			</div>
 			{article_morelinks}
 			{article_comments}' : '') . ' 
