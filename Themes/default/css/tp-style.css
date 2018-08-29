@@ -750,7 +750,7 @@ ul.tp_recentblock li
 ul.tp_catmenu, ul.tp_catmenu li
 {
 	margin: 0;
-	text-indent: -1em;
+	text-indent: -2em;
 	padding-left: 1em;
 	list-style: none;
 	line-height: 1.3em;
