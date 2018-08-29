@@ -214,7 +214,7 @@ h3.article_title span.article_shortdate span
 /* render 2 */
 .render2
 {
-	margin: 0 0 0 70px;
+	margin: 0 0 0 110px;
 }
 .render2 h2
 {
@@ -224,7 +224,7 @@ h3.article_title span.article_shortdate span
 }
 .article_iconcolumn
 {
-	width: 60px;
+	width: 100px;
 	text-align: center;
 	float: left;
 }
