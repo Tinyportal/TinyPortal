@@ -139,7 +139,7 @@ $tables = array(
             array('name' => 'intro', 'type' => 'text',),
             array('name' => 'useintro', 'type' => 'tinyint', 'size' => 4, 'default' => 1),
             array('name' => 'category', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
-            array('name' => 'frontpage', 'type' => 'tinyint', 'size' => 4, 'default' => 1,),
+            array('name' => 'frontpage', 'type' => 'tinyint', 'size' => 4, 'default' => 0,),
             array('name' => 'subject', 'type' => 'text',),
             array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0, 'old_name' => 'authorID'),
             array('name' => 'author', 'type' => 'text',),
