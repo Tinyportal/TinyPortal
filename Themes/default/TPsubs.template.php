@@ -251,7 +251,7 @@ function TPortal_catmenu()
 				if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
 					echo '
 			<img src="'.$boardurl.'/tp-images/icons/TPdivider2.gif" alt="" />&nbsp;';
-				elseif($context['TPortal']['menuvar1'] == '1' && $cn['sub'] == 0)
+				elseif($context['TPortal']['menuvar1'] == '1')
 					echo '
 			<img src="'.$boardurl.'/tp-images/icons/bullet3.gif" alt="" />';
 			
