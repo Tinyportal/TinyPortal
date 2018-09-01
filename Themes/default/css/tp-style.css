@@ -924,6 +924,10 @@ a.avatar img
 	padding-top: 0.7em;
 	text-align: center;
 }
+.article_socialbookmark a img
+{
+	padding-left: 5px;
+}
 .authorinfo h4
 {
 	padding: 0;
