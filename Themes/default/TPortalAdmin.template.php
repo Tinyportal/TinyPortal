@@ -1081,12 +1081,19 @@ function template_artsettings()
 								</div><p class="clearthefloat"></p>
 							</div>
 							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-editorheight'].'</div>
+								<div class="float-items">
+									<input name="tp_editorheight" type="text" size="4" value="' , $context['TPortal']['editorheight'] , '" /> 
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
 								<div class="float-items">'.$txt['tp-usedragdrop'].'</div>
 								<div class="float-items">
 									<input name="tp_use_dragdrop" type="radio" value="1" ' , $context['TPortal']['use_dragdrop'] == '1' ? 'checked' : '', '> '.$txt['tp-yes'].' 
 									<input name="tp_use_dragdrop" type="radio" value="0" ' , $context['TPortal']['use_dragdrop'] == '0' ? 'checked' : '', '> '.$txt['tp-no'].'
 								</div><p class="clearthefloat"></p>
 							</div>
+						<hr>
 							<div class="windowbg2">
 								<div class="float-items">'.$txt['tp-hidearticle-link'].'</div>
 								<div class="float-items">
@@ -1095,16 +1102,60 @@ function template_artsettings()
 								</div><p class="clearthefloat"></p>
 							</div>
 							<div class="windowbg2">
-								<div class="float-items">'.$txt['tp-editorheight'].'</div>
-								<div class="float-items">
-									<input name="tp_editorheight" type="text" size="4" value="' , $context['TPortal']['editorheight'] , '" /> 
-								</div><p class="clearthefloat"></p>
-							</div>
-							<div class="windowbg2">
 								<div class="float-items">'.$txt['tp-printarticles'].'&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPprint.gif" alt="" />&nbsp;</div>
 								<div class="float-items">
 									<input name="tp_print_articles" type="radio" value="1" ' , $context['TPortal']['print_articles']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 									<input name="tp_print_articles" type="radio" value="0" ' , $context['TPortal']['print_articles']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+						<hr>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-facebook'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_facebook" type="radio" value="1" ' , $context['TPortal']['hide_article_facebook']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_facebook" type="radio" value="0" ' , $context['TPortal']['hide_article_facebook']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-twitter'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_twitter" type="radio" value="1" ' , $context['TPortal']['hide_article_twitter']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_twitter" type="radio" value="0" ' , $context['TPortal']['hide_article_twitter']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-google'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_google" type="radio" value="1" ' , $context['TPortal']['hide_article_google']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_google" type="radio" value="0" ' , $context['TPortal']['hide_article_google']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-reddit'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_reddit" type="radio" value="1" ' , $context['TPortal']['hide_article_reddit']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_reddit" type="radio" value="0" ' , $context['TPortal']['hide_article_reddit']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-digg'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_digg" type="radio" value="1" ' , $context['TPortal']['hide_article_digg']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_digg" type="radio" value="0" ' , $context['TPortal']['hide_article_digg']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-delicious'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_delicious" type="radio" value="1" ' , $context['TPortal']['hide_article_delicious']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_delicious" type="radio" value="0" ' , $context['TPortal']['hide_article_delicious']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+								</div><p class="clearthefloat"></p>
+							</div>
+							<div class="windowbg2">
+								<div class="float-items">'.$txt['tp-hidearticle-stumbleupon'].'</div>
+								<div class="float-items">
+									<input name="tp_hide_article_stumbleupon" type="radio" value="1" ' , $context['TPortal']['hide_article_stumbleupon']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+									<input name="tp_hide_article_stumbleupon" type="radio" value="0" ' , $context['TPortal']['hide_article_stumbleupon']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 								</div><p class="clearthefloat"></p>
 							</div>
 						</div></div>

@@ -251,7 +251,7 @@ function TPortal_catmenu()
 				if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
 					echo '
 			<img src="'.$boardurl.'/tp-images/icons/TPdivider2.gif" alt="" />&nbsp;';
-				elseif($context['TPortal']['menuvar1'] == '1' && $cn['sub'] == 0)
+				elseif($context['TPortal']['menuvar1'] == '1')
 					echo '
 			<img src="'.$boardurl.'/tp-images/icons/bullet3.gif" alt="" />';
 			
@@ -1241,13 +1241,11 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '<div class="article_padding">{article_bookmark}</div>' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '<div class="article_padding">{article_boardnews}</div>' : '') . '
 			' . ($single ? '
+		</div>
+		<div>
 			<div class="tp_container">
-				<div class="tp_col8">	
-					{article_moreauthor}
-				</div>
-				<div class="tp_col8">
-					{article_bookmark}
-				</div>
+				{article_moreauthor}
+				{article_bookmark}
 			</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
 			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . ' 
@@ -1277,13 +1275,11 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 			' . ($single ? '
+		</div>
+		<div>
 			<div class="tp_container">
-				<div class="tp_col8">	
-					{article_moreauthor}
-				</div>
-				<div class="tp_col8">
-					{article_bookmark}
-				</div>
+				{article_moreauthor}
+				{article_bookmark}
 			</div>
 			{article_morelinks}
 			{article_comments}' : '') . ' 
@@ -1320,12 +1316,8 @@ function article_renders($type = 1, $single = false, $first = false)
 					' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 					' . ($single ? '
 				<div class="tp_container">
-					<div class="tp_col8">	
-						{article_moreauthor}
-					</div>
-					<div class="tp_col8">
-						{article_bookmark}
-					</div>
+					{article_moreauthor}
+					{article_bookmark}
 				</div>
 				{article_morelinks}
 				{article_comments}' : '') . ' 
@@ -1398,13 +1390,11 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '<div>{article_bookmark}</div>' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '<div class="article_padding">{article_boardnews}</div>' : '') . '
 			' . ($single ? '
+		</div>
+		<div>
 			<div class="tp_container">
-				<div class="tp_col8">	
-					{article_moreauthor}
-				</div>
-				<div class="tp_col8">
-					{article_bookmark}
-				</div>
+				{article_moreauthor}
+				{article_bookmark}
 			</div>
 			{article_morelinks}
 			{article_comments}' : '') . ' 
@@ -1669,18 +1659,42 @@ function article_bookmark($render = true)
 	global $scripturl, $settings, $context;
 	
 	if(in_array('social',$context['TPortal']['article']['visual_options']))
+	{
 		echo '
 	<div class="windowbg2" style="margin: 1px 0; padding-bottom: 1em;">
-		<div class="article_socialbookmark">
-			<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>
-			<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>
-			<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>
-			<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>
-			<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>
-			<a href="http://del.icio.us/post?url=' . $scripturl.'?page=' . $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>
-			<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/stumbleupon.png" alt="StumbleUpon" title="Stumbleupon" /></a>
+		<div class="article_socialbookmark">';
+		if ($context['TPortal']['hide_article_facebook']=='0')
+		{
+			echo '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
+		}
+		if ($context['TPortal']['hide_article_twitter']=='0')
+		{
+			echo '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
+		}
+		if ($context['TPortal']['hide_article_google']=='0')
+		{
+			echo '<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>';
+		}
+		if ($context['TPortal']['hide_article_reddit']=='0')
+		{
+			echo '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
+		}
+		if ($context['TPortal']['hide_article_digg']=='0')
+		{
+			echo '<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
+		}
+		if ($context['TPortal']['hide_article_delicious']=='0')
+		{
+			echo '<a href="http://del.icio.us/post?url=' . $scripturl.'?page=' . $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>';
+		}
+		if ($context['TPortal']['hide_article_stumbleupon']=='0')
+		{
+			echo '<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img src="' . $settings['tp_images_url'] . '/social/stumbleupon.png" alt="StumbleUpon" title="Stumbleupon" /></a>';
+		}
+			echo'
 		</div>
 	</div>';
+	}
 	else
 		echo '';
 

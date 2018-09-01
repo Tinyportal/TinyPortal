@@ -139,7 +139,7 @@ $tables = array(
             array('name' => 'intro', 'type' => 'text',),
             array('name' => 'useintro', 'type' => 'tinyint', 'size' => 4, 'default' => 1),
             array('name' => 'category', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
-            array('name' => 'frontpage', 'type' => 'tinyint', 'size' => 4, 'default' => 1,),
+            array('name' => 'frontpage', 'type' => 'tinyint', 'size' => 4, 'default' => 0,),
             array('name' => 'subject', 'type' => 'text',),
             array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0, 'old_name' => 'authorID'),
             array('name' => 'author', 'type' => 'text',),
@@ -384,7 +384,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '1111',
+    'version' => '152',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
@@ -450,6 +450,13 @@ $settings_array = array(
     'frontblock_type' => 'first',
     'rss_notitles' => '0',
     'hide_editarticle_link' => '0',
+	'hide_article_facebook' => '0',
+	'hide_article_twitter' => '0',
+	'hide_article_google' => '0',
+	'hide_article_reddit' => '0',
+	'hide_article_digg' => '0',
+	'hide_article_delicious' => '0',
+	'hide_article_stumbleupon' => '0',
     'hide_bottombar_forum' => '0',
     'hide_topbar_forum' => '0',
     'bottombar' => '1',
