@@ -452,4 +452,16 @@ function tpStatsIgnore(&$no_stat_actions)
 	TPortal_init();
 }
 
+function tpIntegrateRedirect(&$setLocation, &$refresh, &$permanent)
+{
+
+
+}
+
+function tpLoadTheme()
+{
+
+
+}
+
 ?>

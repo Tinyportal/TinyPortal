@@ -1730,6 +1730,34 @@ function do_articles()
 			$smcFunc['db_free_result']($request);
 		}
 	}
+
+    // get all themes for selection
+    $context['TPthemes'] = array();
+    $request = $smcFunc['db_query']('', '
+            SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+            FROM {db_prefix}themes AS th
+            LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+            WHERE th.variable = {string:thvar}
+            AND tb.variable = {string:tbvar}
+            AND th.id_member = {int:id_member}
+            ORDER BY th.value ASC',
+            array(
+                'thvar' => 'name', 'tbvar' => 'images_url', 'id_member' => 0,
+                )
+            );
+    if($smcFunc['db_num_rows']($request) > 0)
+    {
+        while ($row = $smcFunc['db_fetch_assoc']($request))
+        {
+            $context['TPthemes'][] = array(
+                    'id' => $row['ID_THEME'],
+                    'path' => $row['path'],
+                    'name' => $row['name']
+                    );
+        }
+        $smcFunc['db_free_result']($request);
+    }
+
 	$context['html_headers'] .= '
 	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
 	<script type="text/javascript"><!-- // --><![CDATA[

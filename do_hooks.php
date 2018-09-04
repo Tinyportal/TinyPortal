@@ -27,6 +27,8 @@ $hooks = array(
 	'integrate_profile_areas'                   => 'tpAddProfileMenu',
     'integrate_whos_online'                     => 'tpWhosOnline',
     'integrate_pre_log_stats'                   => 'tpStatsIgnore',
+    'integrate_redirect'                        => 'tpIntegrateRedirect',
+    'integrate_load_theme'                      => 'tpLoadTheme',
 );
 
 $mod_name = 'TinyPortal';
