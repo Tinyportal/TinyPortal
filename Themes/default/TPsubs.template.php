@@ -2074,7 +2074,7 @@ function template_tpadm_above()
 			<h3 class="catbg">' . $txt['tp-tpmenu'] .'</h3>
 		</div>
 		<span class="upperframe"><span></span></span>
-		<div class="roundframe">';
+		<div class="roundframe noup">';
 
 	
 	if(is_array($context['admin_tabs']) && count($context['admin_tabs']) > 0)
