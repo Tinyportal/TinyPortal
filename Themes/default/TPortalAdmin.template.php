@@ -747,10 +747,10 @@ function template_panels()
 		<input name="tpadmin_form" type="hidden" value="panels">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-panelsettings'] . '</h3></div>
 			<div id="panels-admin" class="admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-helppanels'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helppanels'] , '</div>
 
-			<div class="windowbg2 noup padding-div">
-				<div class="formtable">
+			<div class="windowbg2 noup">
+				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
 							<label for="field_name">', $txt['tp-hidebarsadminonly'], '</label>
@@ -936,7 +936,7 @@ function template_settings()
 		<input name="tpadmin_form" type="hidden" value="settings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings" class="admintable admin-area">
-			<div class="information smalltext noup" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div>
 				<div class="windowbg2 noup">
 					<div class="formtable padding-div">
 						<!-- START non responsive themes form -->
