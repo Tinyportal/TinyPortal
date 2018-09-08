@@ -598,10 +598,11 @@ function template_addmenu()
 					<dl class="settings">
 						<dt><label for="field_name"><h4>'.$txt['tp-sub_item'].':</h4><label>
 						</dt>
-						<dd><input name="tp_menu_sub" type="radio" value="0" checked>
-									<input name="tp_menu_sub" type="radio" value="1">
-									<input name="tp_menu_sub" type="radio" value="2">
-									<input name="tp_menu_sub" type="radio" value="3">
+						<dd>
+                            <input name="tp_menu_sub" type="radio" value="0" checked>
+							<input name="tp_menu_sub" type="radio" value="1">
+							<input name="tp_menu_sub" type="radio" value="2">
+							<input name="tp_menu_sub" type="radio" value="3">
 						</dd>
 					</dl>
 					<dl class="settings">
@@ -663,14 +664,14 @@ function template_linkmanager()
 		<div class="windowbg2 padding-div">
 					<dl class="settings">
 						<dt>
-                            <label for="field_name"><h4>'.$txt['tp-title'].':</h4><label>
+                            <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
 						</dt>
 						<dd>
                             <input name="tp_menu_name" type="text" size="40" value="'.$context['TPortal']['editmenuitem']['name'].'">
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
+						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
                         <dd>
                         <select style="max-width:98%;" size="1" name="tp_menu_type" id="tp_menu_type">
                             <option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
@@ -684,7 +685,7 @@ function template_linkmanager()
 					</dl>
 					<dl class="settings">
 						<dt>
-                            <label for="field_name"><h4>'.$txt['tp-item'].':</h4><label>
+                            <label for="tp_item"><h4>'.$txt['tp-item'].':</h4><label>
 						</dt>
 					<dd>';
 		// (category)
@@ -716,12 +717,17 @@ function template_linkmanager()
 					</dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-sub_item'].':</h4><label></dt>
+						<dt><label for="tp_menu_newlink"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
                         <dd>
                         <select style="max-width:98%;" size="1" name="tp_menu_newlink" id="tp_menu_newlink">
                             <option value="0" ', $context['TPortal']['editmenuitem']['newlink']=='0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
                             <option value="1" ', $context['TPortal']['editmenuitem']['newlink']=='1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
                         </select>   
+						</dd>
+						<dt>
+                            <label for="tp_menu_sub"><h4>'.$txt['tp-sub_item'].':</h4><label>
+                        </dt>
+                        <dd>
                         <select style="max-width:98%;" size="1" name="tp_menu_sub" id="tp_menu_sub">
                             <option value="0" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>0</option>
                             <option value="1" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>1</option>
@@ -730,15 +736,6 @@ function template_linkmanager()
                         </select>   
 						</dd>
 					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
-						</dt>
-						<dd><input name="tp_menu_newlink" type="radio" value="0" ' , $context['TPortal']['editmenuitem']['newlink']=='0' ? ' checked' : '' , '>'.$txt['tp-nowindowmenu'].'<br>
-							<input name="tp_menu_newlink" type="radio" value="1" ' , $context['TPortal']['editmenuitem']['newlink']=='1' ? ' checked' : '' , '>'.$txt['tp-windowmenu'].'
-						</dd>
-					</dl>					
-			
-
 				<div>
 					</div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -756,6 +753,9 @@ function template_linkmanager()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
+                        $(\'label[for="tp_menu_sub"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
+                        $(\'label[for="tp_item"]\').show();
                         break;
                     case "menu":
                         $("#tp_menu_link").show()
@@ -763,6 +763,9 @@ function template_linkmanager()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
+                        $(\'label[for="tp_menu_sub"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
+                        $(\'label[for="tp_item"]\').show();
                         break;
                     case "spac":
                         $("#tp_menu_link").hide()
@@ -770,6 +773,9 @@ function template_linkmanager()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').hide();
                         break;
                     case "head":
                         $("#tp_menu_link").hide()
@@ -777,6 +783,9 @@ function template_linkmanager()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').hide();
                         break;
                     case "cats":
                         $("#tp_menu_link").hide()
@@ -784,6 +793,9 @@ function template_linkmanager()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').show();
                         break;
                     case "arti":
                         $("#tp_menu_link").hide()
@@ -791,6 +803,9 @@ function template_linkmanager()
                         $("#tp_menu_article").show()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').show();
                         break;
                     default:
                         $("#tp_menu_link").hide()
@@ -798,6 +813,9 @@ function template_linkmanager()
                         $("#tp_menu_category").show()
                         $("#tp_menu_article").show()
                         $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').show();
                 }
             });
         $(function () {
