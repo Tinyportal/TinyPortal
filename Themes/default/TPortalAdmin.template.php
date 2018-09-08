@@ -143,7 +143,7 @@ function template_blockoverview()
 		
 					echo '
 					</div>
-					<br  /><input type="checkbox" onclick="invertAll(this, this.form, \'tpb'.$block['id'].'\');" />'.$txt['tp-checkall'],'<br><br>
+					<br><input type="checkbox" onclick="invertAll(this, this.form, \'tpb'.$block['id'].'\');" />'.$txt['tp-checkall'],'<br><br>
 				</div>';
 				}
 			}
