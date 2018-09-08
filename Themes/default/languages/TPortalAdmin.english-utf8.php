@@ -466,6 +466,7 @@ $txt['tp-suremenu']='Are you sure you want to delete this menu item?';
 $txt['tp-nowindowmenu'] = 'Same window';
 $txt['tp-link']='Link';
 $txt['tp-spacer'] = 'Spacer';
+$txt['tp-menu']='Menu';
 $txt['tp-item']='Item';
 $txt['tp-sitemap_on'] = 'Sitemap?';
 $txt['tp-showmenustyle'] = 'Menu style:';
