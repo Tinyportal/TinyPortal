@@ -443,7 +443,7 @@ function template_menubox()
 					}
 					else{
 						// its a link then.
-						echo $lbox['IDtype'];
+						echo '<span title="'.$lbox['IDtype'].'">'.$lbox['IDtype'].'</span>';
 					}
 
 					echo '
