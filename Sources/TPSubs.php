@@ -1121,7 +1121,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		}
 		echo '
 		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
-		<div class="titlebg" style="padding: 6px;">' , $txt['tp-quicklist'] , '</div>
+		<div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
 		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
 		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
 		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
@@ -2040,7 +2040,6 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 		$_GET['action'] = 'tpadmin';
 	}
 	$context['admin_tabs'] = array();
-	$context['admin_header']['tp_news'] = $txt['tp-adminnews1'];
 	$context['admin_header']['tp_settings'] = $txt['tp-adminheader1'];
 	$context['admin_header']['tp_articles'] = $txt['tp-articles'];
 	$context['admin_header']['tp_blocks'] = $txt['tp-adminpanels'];
@@ -2048,17 +2047,6 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	$context['admin_header']['tp_menubox'] = $txt['tp-menumanager'];
 	$context['admin_header']['custom_modules'] = $txt['custom_modules'];
 
-	if (allowedTo('tp_settings'))
-	{
-		$context['admin_tabs']['tp_news'] = array(
-			'news' => array(
-				'title' => $txt['tp-adminnews1'],
-				'description' => $txt['tp-adminnews2'],
-				'href' => $scripturl . '?action=tpadmin;sa=news',
-				'is_selected' => $tpsub == 'news',
-			),
-		);
-	}
 	if (allowedTo('tp_settings'))
 	{
 		$context['admin_tabs']['tp_settings'] = array(
