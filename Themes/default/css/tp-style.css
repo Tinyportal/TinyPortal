@@ -1953,6 +1953,30 @@ box-sizing:border-box;
 	padding: 0 0 4px 0;
 }
 
+/* AW Added these styles for 2.1 Curve to override new styles */
+.admintable .information {
+	margin: 0px;
+	border-radius: 0 0 0 0;
+}
+.admintable .windowbg {
+	box-shadow: none;
+	border-radius: 0;
+	border: none;
+	margin: 0 0 0 0 !important;
+}
+.admintable .windowbg2 {
+	box-shadow: none;
+	border-radius: 0;
+	border: none;
+	margin: 0 0 0 0 !important;
+}
+.admintable .windowbg3 {
+	box-shadow: none;
+	border-radius: 0;
+	border: none;
+	margin: 0 0 0 0 !important;
+}
+}
 /************* TP ADMIN RESPONSIVE ********************/
 
 /* Responsive Youtube embed */
