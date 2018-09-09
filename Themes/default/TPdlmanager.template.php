@@ -209,7 +209,7 @@ function template_main()
 			document.getElementById(target).style.display= \'\';
 		}
 	// ]]></script>
-	<br />
+	<br>
 	
 	<div class="cat_bar">
 		<h3 class="catbg">'.$txt['tp-categories'] .'</h3>
@@ -307,8 +307,8 @@ function template_main()
 				$det2[] = $txt['tp-itemlastdownload'] . ' ' . timeformat($dlitem['date_last']);
 				$det2[] = $dlitem['author'];
 				echo '
-					<div class="itemdetails smalltext">' , implode(" | ",$details) , '<br />' , implode(" | ",$det2) , '</div>
-				<br /><br />
+					<div class="itemdetails smalltext">' , implode(" | ",$details) , '<br>' , implode(" | ",$det2) , '</div>
+				<br><br>
 				</div>';
 			}
 
@@ -412,7 +412,7 @@ function template_main()
 		// any screenshot?
 		if(!empty($dlitem['sshot']))
 			 echo '
-					<br /><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" />';
+					<br><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" />';
 		echo '
 				</div>
 			<span class="botslice"><span></span></span>				
@@ -445,13 +445,13 @@ function template_main()
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
 			echo '<div style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br />
+		echo '<div style="text-align:center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br>
 					<div class="formtable padding-div">
 						<dl class="settings">
 							<dt>'.$txt['tp-dluploadtitle'].'
 							</dt>
 							<dd>
-								<input style="width:97%;" name="tp-dluploadtitle" type="text" value="-no title-" size="40"><br /><br />
+								<input style="width:97%;" name="tp-dluploadtitle" type="text" value="-no title-" size="40"><br><br>
 							</dd>
 							<dt>'.$txt['tp-dluploadcategory'].'
 							</dt>
@@ -462,7 +462,7 @@ function template_main()
 			echo '
 									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
 		}
-		echo '				</select><br />
+		echo '				</select><br>
 							</dd>
 						</dl>
 						<hr>
@@ -499,7 +499,7 @@ function template_main()
 			if(isset($_GET['ftp']))
 				echo '
 					<dt>
-					<b>'.$txt['tp-dlmakeitem2'].':</b><br />'.$context['TPortal']['tp-downloads'][$_GET['ftp']]['file'].';
+					<b>'.$txt['tp-dlmakeitem2'].':</b><br>'.$context['TPortal']['tp-downloads'][$_GET['ftp']]['file'].';
 					</dt>
 					<dd><input name="tp-dluploadnot" type="hidden" value="ON"><input name="tp-dlupload_ftpstray" type="hidden" value="'.$_GET['ftp'].'">
 					</dd>';
@@ -513,7 +513,7 @@ function template_main()
 			if(empty($context['TPortal']['dl_createtopic_boards']))
 			{
 				echo '
-					<br />
+					<br>
 					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
@@ -523,25 +523,25 @@ function template_main()
 			else
 			{
 				echo '
-					<br />
+					<br>
 					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
-					<dd><input type="checkbox" name="create_topic" /><br />
+					<dd><input type="checkbox" name="create_topic" /><br>
 					<dd>';
 
 				if(allowedTo('make_sticky') && !empty($modSettings['enableStickyTopics']))
 					echo '
 						<dt>'.$txt['tp-dlcreatetopic_sticky'].'
 						</dt>
-						<dd><input type="checkbox" name="create_topic_sticky" /><br />
+						<dd><input type="checkbox" name="create_topic_sticky" /><br>
 						</dd>';
 				if(allowedTo('announce_topic'))
 					echo '
 						<dt>'.$txt['tp-dlcreatetopic_announce'].'
 						</dt>
 						<dd>
-							<input type="checkbox" name="create_topic_announce" /><br />
+							<input type="checkbox" name="create_topic_announce" /><br>
 						</dd>';
 				
 				echo '
@@ -582,7 +582,7 @@ function template_main()
 						</select>';
 		}
 		echo '
-					<br />
+					<br>
 					</dd>
 				</dl>
 				<dl class="settings">
@@ -598,7 +598,7 @@ function template_main()
 
 		echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.gif" alt="" /><br />
+						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.gif" alt="" /><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dluploadpic'].'
@@ -792,7 +792,7 @@ function template_main()
 					  <p class="clearthefloat"></p>
 					</div>
 					<div class="windowbg2" style="padding:1%;">
-						<br />';
+						<br>';
 						
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', $context['TPortal']['show_wysiwyg']);
@@ -817,7 +817,7 @@ function template_main()
 
 			echo '
 						</select>
-						<br /><br /><img name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
+						<br><br><img name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
 						<script type="text/javascript">
 						function dlcheck(icon)
 							{
@@ -834,7 +834,7 @@ function template_main()
 					<div class="windowbg2">
 					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dlfilename'].'</div>
 					  <div class="windowbg2 float-items" style="width:71%;">'.$cat['file'].'
-						<br /><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a>
+						<br><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a>
 					  </div>
 					  <p class="clearthefloat"></p>
 					</div>
@@ -930,7 +930,7 @@ function template_main()
 					<div class="windowbg2">
 					  <div class="windowbg2 float-items" align="right" style="width:25%;word-break:break-all;">'.$txt['tp-uploadnewpicexisting'].':</div>
 					  <div class="windowbg2 float-items" style="width:71%;">
-						<input style="width:97%;" name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br /><br />
+						<input style="width:97%;" name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br><br>
 						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
 				   	  </div>
 					  <p class="clearthefloat"></p>
@@ -962,9 +962,9 @@ function template_main()
 										</div>
 										<div align="right"></div>
 										<div class="input_td">
-										    <input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
-										    <input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
-										</div><br />
+										    <input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br>
+										    <input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br>
+										</div><br>
 										<div align="center">
 											<input type="submit" value="' , $txt['tp-search'] , '" />
 											<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
@@ -989,7 +989,7 @@ function template_main()
 			</div>
 			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
 				<div style="padding: 10px;" class="windowbg">
-					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br />
+					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
 					<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
 					<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
 					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
