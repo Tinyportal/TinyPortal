@@ -534,8 +534,12 @@ function template_addmenu()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 		// new item?
-		if(!isset($_GET['fullmenu']))
-		{
+		if(!isset($_GET['fullmenu'])) {
+            // Just default this for now...
+            $context['TPortal']['editmenuitem']['sub']      = 0;
+            $context['TPortal']['editmenuitem']['newlink']  = '0';
+            $context['TPortal']['editmenuitem']['type']     = 'cats';
+
 			echo '
 	            <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
 		        <input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -605,7 +609,7 @@ function template_menucore()
                             <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
 						</dt>
 						<dd>
-                            <input name="tp_menu_name" type="text" size="40" value="'.$context['TPortal']['editmenuitem']['name'].'">
+                            <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 						</dd>
 					</dl>
 					<dl class="settings">
@@ -631,7 +635,7 @@ function template_menucore()
 		if(count($context['TPortal']['editcats'])>0){
 			foreach($context['TPortal']['editcats'] as $bmg){
  				echo '
- 								<option value="',  $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='cats' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,' > '. html_entity_decode($bmg['name']).'</option>';
+ 								<option value="',  $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] =='cats' && isset($context['TPortal']['editmenuitem']['IDtype']) && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,' > '. html_entity_decode($bmg['name']).'</option>';
 			}
 		}
 		else
@@ -640,11 +644,10 @@ function template_menucore()
 
 		//  (article)
 		echo '  </select>
-			    <select style="max-width:100%;" size="1" id="tp_menu_article" name="tp_menu_article" ' , $context['TPortal']['editmenuitem']['type']!='arti' ? ' ' : '' ,'>';
-		if(count($context['TPortal']['edit_articles'])>0){
+			    <select style="max-width:100%;" size="1" id="tp_menu_article" name="tp_menu_article" >';
+		if(count($context['TPortal']['edit_articles']) > 0 ) {
 			foreach($context['TPortal']['edit_articles'] as $bmg){
- 				echo '
- 							<option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='arti' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject']).'</option>';
+ 				echo '      <option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] == 'arti' && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject']).'</option>';
 			}
 		}
 		else
@@ -658,8 +661,8 @@ function template_menucore()
 						<dt><label for="tp_menu_newlink"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
                         <dd>
                         <select style="max-width:98%;" size="1" name="tp_menu_newlink" id="tp_menu_newlink">
-                            <option value="0" ', $context['TPortal']['editmenuitem']['newlink']=='0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
-                            <option value="1" ', $context['TPortal']['editmenuitem']['newlink']=='1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
+                            <option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
+                            <option value="1" ', $context['TPortal']['editmenuitem']['newlink'] == '1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
                         </select>   
 						</dd>
 						<dt>
@@ -667,10 +670,10 @@ function template_menucore()
                         </dt>
                         <dd>
                         <select style="max-width:98%;" size="1" name="tp_menu_sub" id="tp_menu_sub">
-                            <option value="0" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>0</option>
-                            <option value="1" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>1</option>
-                            <option value="2" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>2</option>
-                            <option value="3" ', $context['TPortal']['editmenuitem']['sub']=='0' ? 'selected' : '', '>3</option>
+                            <option value="0" ', $context['TPortal']['editmenuitem']['sub'] == '0' ? 'selected' : '', '>0</option>
+                            <option value="1" ', $context['TPortal']['editmenuitem']['sub'] == '1' ? 'selected' : '', '>1</option>
+                            <option value="2" ', $context['TPortal']['editmenuitem']['sub'] == '2' ? 'selected' : '', '>2</option>
+                            <option value="3" ', $context['TPortal']['editmenuitem']['sub'] == '3' ? 'selected' : '', '>3</option>
                         </select>   
 						</dd>
 					</dl>
