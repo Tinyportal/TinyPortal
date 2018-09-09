@@ -209,7 +209,7 @@ function template_main()
 			document.getElementById(target).style.display= \'\';
 		}
 	// ]]></script>
-	<br />
+	<br>
 	
 	<div class="cat_bar">
 		<h3 class="catbg">'.$txt['tp-categories'] .'</h3>
@@ -307,8 +307,8 @@ function template_main()
 				$det2[] = $txt['tp-itemlastdownload'] . ' ' . timeformat($dlitem['date_last']);
 				$det2[] = $dlitem['author'];
 				echo '
-					<div class="itemdetails smalltext">' , implode(" | ",$details) , '<br />' , implode(" | ",$det2) , '</div>
-				<br /><br />
+					<div class="itemdetails smalltext">' , implode(" | ",$details) , '<br>' , implode(" | ",$det2) , '</div>
+				<br><br>
 				</div>';
 			}
 
@@ -412,7 +412,7 @@ function template_main()
 		// any screenshot?
 		if(!empty($dlitem['sshot']))
 			 echo '
-					<br /><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" />';
+					<br><img src="'.$dlitem['bigshot'].'" style="max-width: 100%;" alt="" />';
 		echo '
 				</div>
 			<span class="botslice"><span></span></span>				
@@ -443,27 +443,31 @@ function template_main()
 				';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
-			echo '<b>! '.$txt['tp-warnsubmission'].'</b><br />';
+			echo '<div style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br />
-					<div class="formtable">
-							<div>
-							    '.$txt['tp-dluploadtitle'].'
-								<input style="width:97%;" name="tp-dluploadtitle" type="text" value="-no title-" size="40">
-							</div>
-							<div style="max-width:100%;"><br />
-							 '.$txt['tp-dluploadcategory'].'
-							 <select size="1" name="tp-dluploadcat" style="max-width:100%;">';
+		echo '<div style="text-align:center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br>
+					<div class="formtable padding-div">
+						<dl class="settings">
+							<dt>'.$txt['tp-dluploadtitle'].'
+							</dt>
+							<dd>
+								<input style="width:97%;" name="tp-dluploadtitle" type="text" value="-no title-" size="40"><br><br>
+							</dd>
+							<dt>'.$txt['tp-dluploadcategory'].'
+							</dt>
+							<dd><select size="1" name="tp-dluploadcat" style="max-width:100%;">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
 			echo '
 									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
 		}
-		echo '				</select>
-							</div><br />
-							<div>
-							 '.$txt['tp-dluploadtext'].' ';
+		echo '				</select><br>
+							</dd>
+						</dl>
+						<hr>
+							<div><b>'.$txt['tp-dluploadtext'].'</b><br><br></div>
+							<div>';
 
 		if($context['TPortal']['dl_wysiwyg']== 'html')
 			TPwysiwyg('tp_dluploadtext', '', true,'qup_tp_dluploadtext', $context['TPortal']['show_wysiwyg'], false);
@@ -473,106 +477,143 @@ function template_main()
 			echo '<textarea name="tp_dluploadtext" rows=5 cols=50 wrap="on"></textarea>';
 
 		echo '			</div>
-						<div>
-							 '.$txt['tp-dluploadfile'].'
-							';
+						<hr><br>
+						<dl class="settings">
+							<dt>'.$txt['tp-dluploadfile'].'<br>
+							 ('.$context['TPortal']['dl_allowed_types'].')
+							</dt>
+							<dd>';
 		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager'))
-			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file"> ('.$context['TPortal']['dl_allowed_types'].')';
+			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file"><br>
+							</dd>';
 
 		// file already uploaded?
 		if(allowedTo('tp_dlmanager') && !isset($_GET['ftp'])){
-			echo '<br /><input name="tp-dluploadnot" type="checkbox" value="ON"> '. $txt['tp-dlnoupload'];
+			echo '<dt>'. $txt['tp-dlnoupload'].'
+					</dt>
+					<dd>
+						<input name="tp-dluploadnot" type="checkbox" value="ON"><br>
+					</dd>';
 		}
 		elseif(allowedTo('tp_dlmanager') && isset($_GET['ftp'])){
 			if(isset($_GET['ftp']))
-				echo '<input name="tp-dluploadnot" type="hidden" value="ON"><input name="tp-dlupload_ftpstray" type="hidden" value="'.$_GET['ftp'].'">
-				<b>'.$txt['tp-dlmakeitem2'].':</b><br />' . $context['TPortal']['tp-downloads'][$_GET['ftp']]['file'];
+				echo '
+					<dt>
+					<b>'.$txt['tp-dlmakeitem2'].':</b><br>'.$context['TPortal']['tp-downloads'][$_GET['ftp']]['file'].';
+					</dt>
+					<dd><input name="tp-dluploadnot" type="hidden" value="ON"><input name="tp-dlupload_ftpstray" type="hidden" value="'.$_GET['ftp'].'">
+					</dd>';
 
 		}
 
 		// make a new topic too? 
-		if(allowedTo('tp_dlcreatetopic') || !empty($context['TPortal']['dl_create_topic']))
+		if(allowedTo('tp_dlcreatetopic') || !empty($context['TPortal']['dl_createtopic']))
 		{
 			$allowed=explode(",",$context['TPortal']['dl_createtopic_boards']);
 			if(empty($context['TPortal']['dl_createtopic_boards']))
 			{
 				echo '
-					</div><br />
-					<div>
-						 '.$txt['tp-dlcreatetopic'].'
-						<div class="information">' . $txt['tp-dlmissingboards'] . '</div>';
+					<br>
+					</dd>
+					<dt>'.$txt['tp-dlcreatetopic'].'
+					</dt>
+					<dd>'.$txt['tp-dlmissingboards'].'
+					</dd>';
 			}
 			else
 			{
 				echo '
-						</div>
-						<div>
-							 '.$txt['tp-dlcreatetopic'].'
-						    <input type="checkbox" name="create_topic" /> ' . $txt['tp-dlcreatetopic'] . '<br />';
+					<br>
+					</dd>
+					<dt>'.$txt['tp-dlcreatetopic'].'
+					</dt>
+					<dd><input type="checkbox" name="create_topic" /><br>
+					<dd>';
 
 				if(allowedTo('make_sticky') && !empty($modSettings['enableStickyTopics']))
 					echo '
-						<input type="checkbox" name="create_topic_sticky" /> ' . $txt['tp-dlcreatetopic_sticky'] . '<br />';
+						<dt>'.$txt['tp-dlcreatetopic_sticky'].'
+						</dt>
+						<dd><input type="checkbox" name="create_topic_sticky" /><br>
+						</dd>';
 				if(allowedTo('announce_topic'))
 					echo '
-						<input type="checkbox" name="create_topic_announce" /> ' . $txt['tp-dlcreatetopic_announce'] . '<br />';
+						<dt>'.$txt['tp-dlcreatetopic_announce'].'
+						</dt>
+						<dd>
+							<input type="checkbox" name="create_topic_announce" /><br>
+						</dd>';
 				
 				echo '
-									<select size="1" name="create_topic_board" style="margin: 3px;">';
+						<dt>'.$txt['tp-dlchooseboard'].'
+						</dt>
+						<dd>
+							<select size="1" name="create_topic_board" style="margin: 3px;">';
 				foreach($context['TPortal']['boards'] as $brd)
 				{
 					if(in_array($brd['id'],$allowed))
 						echo '
 										<option value="'.$brd['id'].'">', $brd['name'].'</option>';
 				}
-				echo '				</select> ', $txt['tp-dlchooseboard'], '
+				echo '		</select>
+						</dd>
+					</dl>
 				<div style="padding: 5px;">
 					<textarea name="create_topic_body" style="width: 100%; height: 200px;" rows=5 cols=50 wrap="on"></textarea>
-				</div>';
+				</div>
+				<dl class="settings">';
 			}
 		}
 		
 		// can you attach it?
 		if(!empty($context['TPortal']['attachitems']))
 		{
-			echo '		</div>
-						<div>
-							 '.$txt['tp-dluploadattach'].'
-							 <select size="1" name="tp_dluploadattach">
-									<option value="0" selected>'.$txt['tp-none'].'</option>';
+			echo '
+					<dt>	
+						'.$txt['tp-dluploadattach'].'
+					</dt>
+					<dd>
+						 <select size="1" name="tp_dluploadattach">
+							<option value="0" selected>'.$txt['tp-none'].'</option>';
 			foreach($context['TPortal']['attachitems'] as $att)
 				echo '
-									<option value="'.$att['id'].'">'.$att['name'].'</option>';
+							<option value="'.$att['id'].'">'.$att['name'].'</option>';
 			echo '
-								</select>';
+						</select>';
 		}
 		echo '
-							</div><br />
-							<div>'.$txt['tp-dluploadicon'].'
-								<select size="1" name="tp_dluploadicon" onchange="dlcheck(this.value)">
-									<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
+					<br>
+					</dd>
+				</dl>
+				<dl class="settings">
+					<dt>'.$txt['tp-dluploadicon'].'
+					</dt>
+					<dd>
+						<select size="1" name="tp_dluploadicon" onchange="dlcheck(this.value)">
+							<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
 		// output the icons
 		foreach($context['TPortal']['dlicons'] as $dlicon => $value)
 			echo '
-									<option value="'.$value.'">'.substr($value,0,strlen($value)-4).'</option>';
+							<option value="'.$value.'">'.substr($value,0,strlen($value)-4).'</option>';
 
 		echo '
-								</select>
-								<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.gif" alt="" />
-							</div><br />
-							<div>
-							 '.$txt['tp-dluploadpic'].'
-								<input name="tp_dluploadpic" id="tp_dluploadpic" type="file" size="60">
-								<input name="tp-uploadcat" type="hidden" value="'.$context['TPortal']['dlitem'].'">
-								<input name="tp-uploaduser" type="hidden" value="'.$context['user']['id'].'">
-						    </div>
-						    <div class="windowbg">
-							  <div align="center" style="padding:1%;">
-								<input type="submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
-							  </div>
-						    </div>
-					</div> 
-				</form>
+						</select>
+						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.gif" alt="" /><br>
+					</dd>
+					<dt>
+						'.$txt['tp-dluploadpic'].'
+					</dt>
+					<dd>
+						<input name="tp_dluploadpic" id="tp_dluploadpic" type="file" size="60">
+						<input name="tp-uploadcat" type="hidden" value="'.$context['TPortal']['dlitem'].'">
+						<input name="tp-uploaduser" type="hidden" value="'.$context['user']['id'].'">
+					</dd>
+				</dl>
+				<div style="padding:1%;">
+					<input type="submit" class="button button_submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
+				</div>
+			</div> 
+		</form>
 			</div>	
 			<span class="botslice"><span></span></span>
 		</div>	
@@ -751,7 +792,7 @@ function template_main()
 					  <p class="clearthefloat"></p>
 					</div>
 					<div class="windowbg2" style="padding:1%;">
-						<br />';
+						<br>';
 						
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', $context['TPortal']['show_wysiwyg']);
@@ -776,7 +817,7 @@ function template_main()
 
 			echo '
 						</select>
-						<br /><br /><img name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
+						<br><br><img name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
 						<script type="text/javascript">
 						function dlcheck(icon)
 							{
@@ -793,7 +834,7 @@ function template_main()
 					<div class="windowbg2">
 					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dlfilename'].'</div>
 					  <div class="windowbg2 float-items" style="width:71%;">'.$cat['file'].'
-						<br /><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a>
+						<br><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a>
 					  </div>
 					  <p class="clearthefloat"></p>
 					</div>
@@ -889,7 +930,7 @@ function template_main()
 					<div class="windowbg2">
 					  <div class="windowbg2 float-items" align="right" style="width:25%;word-break:break-all;">'.$txt['tp-uploadnewpicexisting'].':</div>
 					  <div class="windowbg2 float-items" style="width:71%;">
-						<input style="width:97%;" name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br /><br />
+						<input style="width:97%;" name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br><br>
 						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
 				   	  </div>
 					  <p class="clearthefloat"></p>
@@ -921,9 +962,9 @@ function template_main()
 										</div>
 										<div align="right"></div>
 										<div class="input_td">
-										    <input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br />
-										    <input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br />
-										</div><br />
+										    <input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br>
+										    <input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br>
+										</div><br>
 										<div align="center">
 											<input type="submit" value="' , $txt['tp-search'] , '" />
 											<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
@@ -948,7 +989,7 @@ function template_main()
 			</div>
 			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
 				<div style="padding: 10px;" class="windowbg">
-					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br />
+					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
 					<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
 					<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
 					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />

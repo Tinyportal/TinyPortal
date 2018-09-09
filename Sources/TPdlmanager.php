@@ -2052,6 +2052,7 @@ function TPortalDLAdmin()
 		if(empty($name))
 			$name = $txt['tp-dlnotitle'];
 
+		$link = $_POST['newdladmin_link'];
 		$text = $_POST['newdladmin_text'];
 		$parent = $_POST['newdladmin_parent'];
 		$icon = $boardurl.'/tp-downloads/icons/'.$_POST['newdladmin_icon'];
@@ -2090,7 +2091,7 @@ function TPortalDLAdmin()
 				'rating' => 'string',
 				'voters' => 'string',
 				'subitem' => 'int'),
-			array($name, $text, $icon, 0, 'dlcat', 0, 0, '', 0, 0, 0, $parent, $access, '', $context['user']['id'], '', '', '', 0),
+			array($name, $text, $icon, 0, 'dlcat', 0, 0, '', 0, 0, 0, $parent, $access, $link, $context['user']['id'], '', '', '', 0),
 			array('id')
 		);
 		$newcat = $smcFunc['db_insert_id']($request);
@@ -2645,6 +2646,11 @@ function TPortalDLAdmin()
 			elseif($what == 'tp_dl_usescreenshot')
 			{
 				$changeArray['dl_usescreenshot'] = $value;
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_createtopic')
+			{
+				$changeArray['dl_createtopic'] = $value;
 				$go = 1;
 			}
 			elseif(substr($what, 0, 20) == 'tp_dl_screenshotsize')

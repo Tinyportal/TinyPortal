@@ -30,12 +30,12 @@ $txt['tp-dlheader2'] = 'You can create categories here, edit each one with permi
 $txt['tp-dlheader3'] = 'Manage categories and items in the Download manager module';
 $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 $txt['tp-dlmaxerror2'] = 'Your file was';
-$txt['tp-dlsubmissions'] = 'submissions';
+$txt['tp-dlsubmissions'] = 'Submissions';
 $txt['tp-dltabs1'] = 'Settings';
 $txt['tp-dltabs2'] = 'Add category';
 $txt['tp-dltabs3'] = 'Upload';
 $txt['tp-dltabs4'] = 'Admin';
-$txt['tp-dluploadfailure']='The upload was not able to complete. This might happen because it took too long to upload or the file is bigger than the server will allow.<br /><br />Please consult your server administrator for more information. ';
+$txt['tp-dluploadfailure']='The upload was not able to complete. This might happen because it took too long to upload or the file is bigger than the server will allow.<br><br>Please consult your server administrator for more information. ';
 $txt['tp-dluploadnotallowed'] = 'Sorry, uploading files is currently not allowed.';
 $txt['tp-downloads'] = 'Downloads';
 $txt['tp-id'] = 'ID';
@@ -47,6 +47,8 @@ $txt['tp-notallowed'] = 'You are not allowed to access this section.';
 $txt['tp-notfound'] = 'The item/section was not found.';
 $txt['tp-sortby'] = 'Sort by';
 $txt['tp-useredit'] = 'Edit file';
+$txt['tp-dlcatedit'] = 'Edit category';
+$txt['tp-dlcatadd'] = 'Add category';
 
 // TPdlmanager template
 //  SVN Rev67
@@ -74,7 +76,8 @@ $txt['tp-recentuploads'] = 'Recent files';
 $txt['tp-recentuploads2'] = 'Latest file added:';
 $txt['tp-search'] = 'Search';
 $txt['tp-stats'] = 'Stats';
-$txt['tp-warnsubmission'] = ' Currently all uploaded files will need activation by an administrator.';
+$txt['tp-warnsubmission'] = 'Currently all uploaded files will need activation by an administrator.';
+$txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 $txt['tp-searcharea-descr'] = 'Search descriptions';
 $txt['tp-searcharea-name'] = 'Search titles';
 $txt['tp-dosubmit'] = 'Save';
@@ -127,8 +130,8 @@ $txt['tp-noneicon'] = 'None';
 $txt['tp-onlyftpstrays'] = 'Only showing files that do not have an entry in the dl manager:';
 $txt['tp-rightbar'] = 'Show right panel';
 $txt['tp-sayno'] = 'No';
-$txt['tp-uploadnewfileexisting'] = 'Upload a new file <br /><span class="smalltext"> (the existing will be replaced!)</span>';
-$txt['tp-uploadnewpic'] = 'Upload a new picture<br /><span class="smalltext">(the existing will be replaced)</span>';
+$txt['tp-uploadnewfileexisting'] = 'Upload a new file <br><span class="smalltext"> (the existing will be replaced!)</span>';
+$txt['tp-uploadnewpic'] = 'Upload a new picture<br><span class="smalltext">(the existing will be replaced)</span>';
 $txt['tp-uploadnewpicexisting']='Existing screenshot/picture';
 $txt['tp-shortname'] = 'Query title:';
 
