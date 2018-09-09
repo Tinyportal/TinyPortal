@@ -2664,7 +2664,7 @@ function do_postchecks()
 			isAllowedTo('tp_blocks');
 				
 			$mid = $_POST['tp_menu_menuid'];
-			$mtitle = strip_tags($_POST['tp_menu_title']);
+			$mtitle = strip_tags($_POST['tp_menu_name']);
 			if($mtitle == '')
 				$mtitle = $txt['tp-no_title'];
 			
