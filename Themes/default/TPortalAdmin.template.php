@@ -404,6 +404,8 @@ function template_menubox()
 						echo $txt['tp-header'];
 					elseif($lbox['type']=='spac')
 						echo $txt['tp-spacer'];
+					elseif($lbox['type']=='menu')
+						echo $txt['tp-menu'];
 					else
 						echo $txt['tp-link'];
 
@@ -440,6 +442,9 @@ function template_menubox()
 					}
 					elseif($lbox['type']=='spac'){
 						echo ' ';
+					}
+                    elseif($lbox['type']=='menu'){
+						echo $lbox['IDtype'];
 					}
 					else{
 						// its a link then.
@@ -525,164 +530,112 @@ function template_menubox()
 	// add menu
 function template_addmenu()
 {
+
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 		// new item?
-		if(!isset($_GET['fullmenu']))
-		{
-			echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input name="tpadmin_form" type="hidden" value="menuaddsingle">
-		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
-		<div id="new-item" class="admintable admin-area">
-			<div class="windowbg2 padding-div">
-				<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-title'].':</h4><label>
-						</dt>
-						<dd><input name="newmenu" type="hidden" value="1">
-							<input name="tp_menu_menuid" type="hidden" value="' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">
-							<input name="tp_menu_title" type="text" size="40" value=""><br>
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-type'].':</h4><label>
-						</dt>
-						<dd><input name="tp_menu_type" type="radio" value="cats" checked> '.$txt['tp-category'].'<br>
-								<input name="tp_menu_type" type="radio" value="arti" > '.$txt['tp-article'].'<br>
-								<input name="tp_menu_type" type="radio" value="link" > '.$txt['tp-link'].'<br>
-								<input name="tp_menu_type" type="radio" value="head" > '.$txt['tp-header'].'<br>
-								<input name="tp_menu_type" type="radio" value="spac" > '.$txt['tp-spacer'].'<br>
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-item'].':</h4><label>
-						</dt>
-						<dd>';
-			// (category)
-			if(count($context['TPortal']['editcats'])>0){
-				echo '
-								<select size="1" name="tp_menu_category" style="max-width:100%;">';
-				foreach($context['TPortal']['editcats'] as $bmg){
-					echo '
-							<option value="', $bmg['id'] ,'">'. str_repeat("-",($bmg['indent'])) .' '. html_entity_decode($bmg['name']).'</option>';
-				}
-			}
-			//  (article)
-			echo '
-								</select><br><div style="padding-bottom:5px;"></div>
-								<select size="1" name="tp_menu_article" style="max-width:100%;">';
-			if(count($context['TPortal']['edit_articles'])>0){
-				foreach($context['TPortal']['edit_articles'] as $bmg){
-					echo '
-									<option value="', empty($bmg['shortname']) ? $bmg['id'] : $bmg['shortname'] ,'"> '.html_entity_decode($bmg['subject']).'</option>';
-				}
-			}
-			else
-				echo '
-									<option value="">'.$txt['tp-none-'].'</option>';
+		if(!isset($_GET['fullmenu'])) {
+            // Just default this for now...
+            $context['TPortal']['editmenuitem']['sub']      = 0;
+            $context['TPortal']['editmenuitem']['newlink']  = '0';
+            $context['TPortal']['editmenuitem']['type']     = 'cats';
 
 			echo '
-								</select><br><div style="padding-bottom:5px;"></div>
-								<input name="tp_menu_link" type="text" value="" style="max-width:100%;">
+	            <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+		        <input type="hidden" name="sc" value="', $context['session_id'], '" />
+		        <input name="tpadmin_form" type="hidden" value="menuaddsingle">
+		        <div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
+				<dd><input name="newmenu" type="hidden" value="1">
+					<input name="tp_menu_menuid" type="hidden" value="' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">
+				</dd>';
 
-					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-sub_item'].':</h4><label>
-						</dt>
-						<dd><input name="tp_menu_sub" type="radio" value="0" checked>
-									<input name="tp_menu_sub" type="radio" value="1">
-									<input name="tp_menu_sub" type="radio" value="2">
-									<input name="tp_menu_sub" type="radio" value="3">
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
-						</dt>
-						<dd>
-							<input name="tp_menu_newlink" type="radio" value="0" checked>'.$txt['tp-nowindowmenu'].'<br>
-							<input name="tp_menu_newlink" type="radio" value="1">'.$txt['tp-windowmenu'].'
-						</dd>
-					</dl>					
-			
-
-				<div>
-						</div>
-					        <div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
-				        </div>
-		</div>
-	</form>';
+                template_menucore();
 		}
 		// full menu
-		else
-		{
+		else {
 			// get the menu ID
 			if(isset($_GET['mid']) && is_numeric($_GET['mid']))
-				$mid=$_GET['mid'];
+				$mid = $_GET['mid'];
 			else
-				$mid=0;
+				$mid = 0;
 
 			echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input name="tpadmin_form" type="hidden" value="menuadd">
-		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
-		<div id="add-menu" class="admintable admin-area">
-			<div class="windowbg2">
-				<div class="padding-div">
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-title'].'</h4><label>
-						</dt>
-						<dd><input name="tp_menu_title" type="text" size="40" value=""><br>
-						</dd>
-					</dl>
-				</div>
-				  <div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
-				</div>
-		</div>
-	</form>';
+            <form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+		        <input type="hidden" name="sc" value="', $context['session_id'], '" />
+		        <input name="tpadmin_form" type="hidden" value="menuadd">
+                <div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
+                <div id="add-menu" class="admintable admin-area">
+                    <div class="windowbg2">
+                        <div class="padding-div">
+                            <dl class="settings">
+                                <dt><label for="field_name"><h4>'.$txt['tp-title'].'</h4><label>
+                                </dt>
+                                <dd><input name="tp_menu_title" type="text" size="40" value=""><br>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+                    </div>
+                </div>
+            </form>';
 		}
 }
 	// edit menuitem
 function template_linkmanager()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+    global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
-		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+
+	echo '
+        <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="singlemenuedit">
 		<input name="tpadmin_form_id" type="hidden" value="'.$context['TPortal']['editmenuitem']['id'].'">
-		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-editmenu'].'</h3></div>
+        <div class="cat_bar"><h3 class="catbg">'.$txt['tp-editmenu'].'</h3></div>';
+
+    template_menucore();
+
+}
+
+function template_menucore()
+{
+    global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+
+    echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
-			<div class="windowbg2 padding-div">
+		<div class="windowbg2 padding-div">
 					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-title'].':</h4><label>
+						<dt>
+                            <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
 						</dt>
-						<dd><input name="tp_menu_name" type="text" size="40" value="'.$context['TPortal']['editmenuitem']['name'].'"><br>
+						<dd>
+                            <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-type'].':</h4><label>
-						</dt>
-						<dd><input name="tp_menu_type" type="radio" value="cats"  ' , $context['TPortal']['editmenuitem']['type']=='cats' ? ' checked' : '' ,' > '.$txt['tp-category'].'<br>
-							<input name="tp_menu_type" type="radio" value="arti"  ' , $context['TPortal']['editmenuitem']['type']=='arti' ? ' checked' : '' ,' > '.$txt['tp-article'].'<br>
-							<input name="tp_menu_type" type="radio" value="link" ' , $context['TPortal']['editmenuitem']['type']=='link' ? ' checked' : '' ,' > '.$txt['tp-link'].'<br>
-							<input name="tp_menu_type" type="radio" value="head" ' , $context['TPortal']['editmenuitem']['type']=='head' ? ' checked' : '' ,' > '.$txt['tp-header'].'<br>
-							<input name="tp_menu_type" type="radio" value="spac" ' , $context['TPortal']['editmenuitem']['type']=='spac' ? ' checked' : '' ,' > '.$txt['tp-spacer'].'<br>
-						</dd>
+						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
+                        <dd>
+                        <select style="max-width:98%;" size="1" name="tp_menu_type" id="tp_menu_type">
+                            <option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
+                            <option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
+                            <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
+                            <option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
+                            <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>
+                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>
+                        </select>
+                        </dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-item'].':</h4><label>
+						<dt>
+                            <label for="tp_item"><h4>'.$txt['tp-item'].':</h4><label>
 						</dt>
-						<dd>';
+					<dd>';
 		// (category)
-		echo '
-							<select style="max-width:98%;" size="1" name="tp_menu_category" ' , $context['TPortal']['editmenuitem']['type']!='cats' ? '' : '' ,'>';
+		echo '<select style="max-width:98%;" size="1" id="tp_menu_category" name="tp_menu_category" ' , $context['TPortal']['editmenuitem']['type']!='cats' ? '' : '' ,'>';
 		if(count($context['TPortal']['editcats'])>0){
 			foreach($context['TPortal']['editcats'] as $bmg){
  				echo '
- 								<option value="',  $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='cats' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,' > '. html_entity_decode($bmg['name']).'</option>';
+ 								<option value="',  $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] =='cats' && isset($context['TPortal']['editmenuitem']['IDtype']) && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,' > '. html_entity_decode($bmg['name']).'</option>';
 			}
 		}
 		else
@@ -690,51 +643,127 @@ function template_linkmanager()
  								<option value=""></option>';
 
 		//  (article)
-		echo '
-							</select><br><div style="padding-bottom:5px;"></div>
-							<select style="max-width:100%;" size="1" name="tp_menu_article" ' , $context['TPortal']['editmenuitem']['type']!='arti' ? ' ' : '' ,'>';
-		if(count($context['TPortal']['edit_articles'])>0){
+		echo '  </select>
+			    <select style="max-width:100%;" size="1" id="tp_menu_article" name="tp_menu_article" >';
+		if(count($context['TPortal']['edit_articles']) > 0 ) {
 			foreach($context['TPortal']['edit_articles'] as $bmg){
- 				echo '
- 								<option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type']=='arti' && $context['TPortal']['editmenuitem']['IDtype']==$bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject']).'</option>';
+ 				echo '      <option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] == 'arti' && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject']).'</option>';
 			}
 		}
 		else
-			echo '
-								<option value=""></option>';
+			echo '          <option value=""></option>';
 
-		echo '
-							</select><br><div style="padding-bottom:5px;"></div>
-							<input style="max-width:100%;" name="tp_menu_link" type="text" value="' , ($context['TPortal']['editmenuitem']['type']=='link') ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , $context['TPortal']['editmenuitem']['type']!='link' ? ' ' : '' ,'>
-						</dd>
+		echo '  </select>
+                    <input style="max-width:100%;" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
+					</dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-sub_item'].':</h4><label>
-						</dt>
-						<dd><input name="tp_menu_sub" type="radio" value="0" ' , $context['TPortal']['editmenuitem']['sub']=='0' ? ' checked' : '' ,'>
-        						<input name="tp_menu_sub" type="radio" value="1" ' , $context['TPortal']['editmenuitem']['sub']=='1' ? ' checked' : '' ,'>
-        						<input name="tp_menu_sub" type="radio" value="2" ' , $context['TPortal']['editmenuitem']['sub']=='2' ? ' checked' : '' ,'>
-        						<input name="tp_menu_sub" type="radio" value="3" ' , $context['TPortal']['editmenuitem']['sub']=='3' ? ' checked' : '' ,'>
+						<dt><label for="tp_menu_newlink"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
+                        <dd>
+                        <select style="max-width:98%;" size="1" name="tp_menu_newlink" id="tp_menu_newlink">
+                            <option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
+                            <option value="1" ', $context['TPortal']['editmenuitem']['newlink'] == '1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
+                        </select>   
+						</dd>
+						<dt>
+                            <label for="tp_menu_sub"><h4>'.$txt['tp-sub_item'].':</h4><label>
+                        </dt>
+                        <dd>
+                        <select style="max-width:98%;" size="1" name="tp_menu_sub" id="tp_menu_sub">
+                            <option value="0" ', $context['TPortal']['editmenuitem']['sub'] == '0' ? 'selected' : '', '>0</option>
+                            <option value="1" ', $context['TPortal']['editmenuitem']['sub'] == '1' ? 'selected' : '', '>1</option>
+                            <option value="2" ', $context['TPortal']['editmenuitem']['sub'] == '2' ? 'selected' : '', '>2</option>
+                            <option value="3" ', $context['TPortal']['editmenuitem']['sub'] == '3' ? 'selected' : '', '>3</option>
+                        </select>   
 						</dd>
 					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
-						</dt>
-						<dd><input name="tp_menu_newlink" type="radio" value="0" ' , $context['TPortal']['editmenuitem']['newlink']=='0' ? ' checked' : '' , '>'.$txt['tp-nowindowmenu'].'<br>
-							<input name="tp_menu_newlink" type="radio" value="1" ' , $context['TPortal']['editmenuitem']['newlink']=='1' ? ' checked' : '' , '>'.$txt['tp-windowmenu'].'
-						</dd>
-					</dl>					
-			
-
 				<div>
-
-
-
 					</div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 		</div>
 	</form>';
+
+    $context['insert_after_template'] =
+        '<script>
+            $(\'#tp_menu_type\').on(\'change\',function(){
+                switch($(this).val()){
+                    case "link":
+                        $("#tp_menu_link").show()
+                        $("#tp_menu_newlink").show()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        $("#tp_menu_sub").hide()
+                        $(\'label[for="tp_menu_sub"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
+                        $(\'label[for="tp_item"]\').show();
+                        break;
+                    case "menu":
+                        $("#tp_menu_link").show()
+                        $("#tp_menu_newlink").show()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        $("#tp_menu_sub").hide()
+                        $(\'label[for="tp_menu_sub"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
+                        $(\'label[for="tp_item"]\').show();
+                        break;
+                    case "spac":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').hide();
+                        break;
+                    case "head":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').hide();
+                        break;
+                    case "cats":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").show()
+                        $("#tp_menu_article").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').show();
+                        break;
+                    case "arti":
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_category").hide()
+                        $("#tp_menu_article").show()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').show();
+                        break;
+                    default:
+                        $("#tp_menu_link").hide()
+                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_category").show()
+                        $("#tp_menu_article").show()
+                        $("#tp_menu_sub").show()
+                        $(\'label[for="tp_menu_sub"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_item"]\').show();
+                }
+            });
+        $(function () {
+            $("#tp_menu_type").change();
+        });
+        </script>';
+
 }
 	// Panels
 function template_panels()
@@ -2366,7 +2395,7 @@ function template_editarticle($type = '')
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
 					else
 						echo '
-							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'.$mg['intro'].'</textarea>';
+							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
 					echo '
 						</div>';
 				}

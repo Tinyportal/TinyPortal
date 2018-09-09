@@ -858,11 +858,17 @@ function do_menus()
 			$mtype = substr($row['value3'], 0, 4);
 			$idtype = substr($row['value3'], 4);
 
-			if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac')
+
+			if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac' && $mtype != 'menu')
 			{
 				$mtype = 'link';
 				$idtype = $row['value3'];
 			}
+            else if( $mtype == 'menu' ) 
+            {
+				$idtype = substr($row['value3'], 4);
+            }
+
 			if($row['value2'] == '')
 				$newlink = '0';
 			else
@@ -1724,6 +1730,34 @@ function do_articles()
 			$smcFunc['db_free_result']($request);
 		}
 	}
+
+    // get all themes for selection
+    $context['TPthemes'] = array();
+    $request = $smcFunc['db_query']('', '
+            SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+            FROM {db_prefix}themes AS th
+            LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+            WHERE th.variable = {string:thvar}
+            AND tb.variable = {string:tbvar}
+            AND th.id_member = {int:id_member}
+            ORDER BY th.value ASC',
+            array(
+                'thvar' => 'name', 'tbvar' => 'images_url', 'id_member' => 0,
+                )
+            );
+    if($smcFunc['db_num_rows']($request) > 0)
+    {
+        while ($row = $smcFunc['db_fetch_assoc']($request))
+        {
+            $context['TPthemes'][] = array(
+                    'id' => $row['ID_THEME'],
+                    'path' => $row['path'],
+                    'name' => $row['name']
+                    );
+        }
+        $smcFunc['db_free_result']($request);
+    }
+
 	$context['html_headers'] .= '
 	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
 	<script type="text/javascript"><!-- // --><![CDATA[
@@ -2367,6 +2401,8 @@ function do_postchecks()
 						$idtype = 'head';
 					elseif($value == 'spac')
 						$idtype = 'spac';
+					elseif($value == 'menu')
+						$idtype = 'menu'.$_POST['tp_menu_link'];
 
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_variables 
@@ -2628,7 +2664,7 @@ function do_postchecks()
 			isAllowedTo('tp_blocks');
 				
 			$mid = $_POST['tp_menu_menuid'];
-			$mtitle = strip_tags($_POST['tp_menu_title']);
+			$mtitle = strip_tags($_POST['tp_menu_name']);
 			if($mtitle == '')
 				$mtitle = $txt['tp-no_title'];
 			
@@ -2647,6 +2683,8 @@ function do_postchecks()
 				$mtype = 'head'.$mhead;
 			elseif($mtype == 'spac')
 				$mtype = 'spac';
+			elseif($mtype == 'menu')
+				$mtype = 'menu'.$mlink;
 			else
 				$mtype = $mlink;
 

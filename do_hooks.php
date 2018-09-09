@@ -17,21 +17,30 @@
  
 global $hooks, $mod_name;
 $hooks = array(
-	'integrate_pre_include' => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
-	'integrate_load_permissions' => 'tpAddPermissions',
-	'integrate_load_illegal_guest_permissions' => 'tpAddIllegalPermissions', 
-	'integrate_buffer' => 'tpAddCopy,tpImageRewrite',
-	'integrate_menu_buttons' => 'tpAddMenuItems',
-	'integrate_display_buttons' => 'addPromoteButton',
-	'integrate_actions' => 'addTPActions',
-	'integrate_profile_areas' => 'tpAddProfileMenu',
+	'integrate_pre_include'                     => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
+	'integrate_load_permissions'                => 'tpAddPermissions',
+	'integrate_load_illegal_guest_permissions'  => 'tpAddIllegalPermissions', 
+	'integrate_buffer'                          => 'tpAddCopy,tpImageRewrite',
+	'integrate_menu_buttons'                    => 'tpAddMenuItems',
+	'integrate_display_buttons'                 => 'addPromoteButton',
+	'integrate_actions'                         => 'addTPActions',
+	'integrate_profile_areas'                   => 'tpAddProfileMenu',
+    'integrate_whos_online'                     => 'tpWhosOnline',
+    'integrate_pre_log_stats'                   => 'tpStatsIgnore',
+    'integrate_redirect'                        => 'tpIntegrateRedirect',
+    'integrate_load_theme'                      => 'tpLoadTheme',
 );
+
 $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------
 global $forum_version;
 if(strpos($forum_version, '2.0') !== false) {
 	define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+}
+else {
+    // We can use a hook of sorts for the default actions now
+    updateSettings(array('integrate_default_action' => 'whichTPAction'));
 }
 
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))

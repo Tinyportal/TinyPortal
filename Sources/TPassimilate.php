@@ -16,7 +16,7 @@
  */
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
-  global $forum_version;
+    global $forum_version;
 
 	loadLanguage('TPShout');
 
@@ -164,56 +164,95 @@ function tpAddIllegalPermissions()
 
 function tpAddMenuItems(&$buttons)
 {
-	global $context, $scripturl, $txt;
-	
-	// If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
-	if (!isset($context['TPortal']))
-		return;
-		
-	// Set the forum button activated if needed.
-	if (isset($_GET['board']) || isset($_GET['topic']))
-		$context['current_action'] = 'forum';
-	elseif (isset($_GET['sa']) && $_GET['sa'] == 'help')
-		$context['current_action'] = 'help';
-				
-	$new_buttons = array();
-	foreach($buttons as $but => $val)
-	{
-		$new_buttons[$but] = $buttons[$but];
-		
-		if($but == 'home')
-		{
-			if(!empty($context['TPortal']['standalone']))
-				$new_buttons['home']['href'] = $context['TPortal']['standalone'];
+    global $smcFunc, $context, $scripturl, $txt, $forum_version;
 
-			$new_buttons['forum'] = array(
-				'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-				'href' => $scripturl . '?action=forum',
-				'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
-			);		
-		}
-		
-		if($but == 'calendar')
-		{
-			$new_buttons['tpadmin'] = array(
-				'title' => $txt['tp-tphelp'],
-				'href' => $scripturl . '?action=tpadmin',
-				'show' =>  TPcheckAdminAreas(),
-				'sub_buttons' => tp_getbuttons(),
-			);		
-		}
-		if($but == 'help')
-		{
-			$new_buttons['help']['sub_buttons'] = array(
-				'tphelp' => array(
-					'title' => $txt['tp-tphelp'],
-					'href' => $scripturl . '?action=tpmod;sa=help',
-					'show' => true,
-				),
-			);
-		}
-	}
-	$buttons = $new_buttons;	
+    // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
+    if(!isset($context['TPortal'])) {
+        return;
+    }
+
+    // Set the forum button activated if needed.
+    if(isset($_GET['board']) || isset($_GET['topic'])) {
+        $context['current_action'] = 'forum';
+    }
+    elseif(isset($_GET['sa']) && $_GET['sa'] == 'help') {
+        $context['current_action'] = 'help';
+    }
+
+    // This removes a edit in Load.php
+    if( (strpos($forum_version, '2.1') !== false) && (!empty($context['linktree'])) ) {
+        if (!empty($_GET)) {
+            array_splice($context['linktree'], 1, 0, array(
+                    array(
+                        'url'   => $scripturl . '?action=forum',
+                        'name'  => 'Forum'
+                    )
+                )
+            );
+        }
+
+        if (!empty($context['linktree'][2])) {
+            $context['linktree'][2]['url'] = str_replace('#', '?action=forum#', $context['linktree'][2]['url']);
+        }
+    }
+
+    // Add the forum button     
+    array_splice($buttons, array_search('home', array_keys($buttons), true) + 1, 0, array ( 
+            'forum' => array (
+                'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
+                'href' => $scripturl.'?action=forum',
+                'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
+            ),
+        )
+    );
+    // Add the admin button
+    array_splice($buttons, array_search('calendar', array_keys($buttons), true) + 1, 0, array ( 
+            'tpadmin' => array (
+                'title' => $txt['tp-tphelp'],
+                'href' => $scripturl.'?action=tpadmin',
+                'show' =>  TPcheckAdminAreas(),
+                'sub_buttons' => tp_getbuttons(),
+            ),
+        )
+    );
+    // Add the help
+    if(array_key_exists('help', $buttons)) {
+        $buttons['help']['sub_buttons'] = array(
+            'tphelp' => array(
+                'title' => $txt['tp-tphelp'],
+                'href' => $scripturl.'?action=tpmod;sa=help',
+                'show' => true,
+            ),
+        );
+    }
+
+
+    $request = $smcFunc['db_query']('', '
+        SELECT value1 AS name , value3 AS href FROM {db_prefix}tp_variables 
+        WHERE type = {string:type} 
+        AND value3 LIKE {string:mainmenu}
+        AND value5 = 0',
+        array (
+            'type' => 'menubox', 
+            'mainmenu' => 'menu%'
+        )
+    );
+
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while($row = $smcFunc['db_fetch_assoc']($request)) {
+            // Add the admin button
+            array_splice($buttons, array_search('calendar', array_keys($buttons), true) + 1, 0, array ( 
+                    'tpbutton' => array (
+                        'title' => $row['name'],
+                        'href' => substr($row['href'], 4),
+                        'show' =>  true,
+                    ),
+                )
+            );
+        }
+        $smcFunc['db_free_result']($request);
+    }
+
 }
 
 function tpAddProfileMenu(&$profile_areas)
@@ -284,8 +323,8 @@ function addTPActions(&$actionArray)
 
 function whichTPAction()
 {
-	global $topic, $board, $sourcedir, $context;
-	
+	global $topic, $board, $sourcedir, $context, $forum_version;
+
 	$theAction = false;
 	// first..if the action is set, but empty, don't go any further
 	if (isset($_REQUEST['action']) && $_REQUEST['action']=='')
@@ -311,7 +350,15 @@ function whichTPAction()
 		require_once($sourcedir . '/BoardIndex.php');
 		$theAction = 'BoardIndex';
 	}
-	return $theAction;
+
+    // SMF 2.1 has a default action hook so less source edits
+    if(strpos($forum_version, '2.0') !== false) {
+        return $theAction;
+    }
+    else {
+        // We need to manually call the action as this function was called be default
+        call_user_func($theAction);
+    }
 }
 
 function tpImageRewrite($buffer)
@@ -339,6 +386,82 @@ function tpImageRewrite($buffer)
 		}
 	}
 	return $buffer;
+}
+
+function tpWhosOnline($actions)
+{
+    global $txt, $smcFunc, $scripturl;
+
+    loadLanguage('TPortal');
+
+    if(isset($actions['page'])) {
+        if(is_numeric($actions['page'])) {
+            $request = $smcFunc['db_query']('', '
+                SELECT subject FROM {db_prefix}tp_articles
+                WHERE id = {int:id}
+                LIMIT 1',
+                array (
+                    'id' => $actions['page'], 
+                )
+            );
+        }
+        else {
+            $request = $smcFunc['db_query']('', '
+                SELECT subject FROM {db_prefix}tp_articles
+                WHERE shortname = {string:shortname}
+                LIMIT 1',
+                array (
+                    'shortname' => $actions['page'], 
+                )
+            );
+        }
+        $article = array();
+        if($smcFunc['db_num_rows']($request) > 0) {
+            while($row = $smcFunc['db_fetch_assoc']($request)) {
+                $article = $row;
+            }
+            $smcFunc['db_free_result']($request);
+        }
+        if(!empty($article)) {
+            return sprintf($txt['tp-who-article'], $article['subject'], $actions['page'], $scripturl );
+        }
+        else {
+            return $txt['tp-who-articles'];
+        }
+    }
+
+    if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
+        return $txt['tp-who-downloads'];
+    }
+
+    if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['sa']) && ( $actions['sa'] == 'searcharticle' || $actions['sa'] == 'searcharticle2' )) {
+        return $txt['tp-who-article-search'];
+    }
+
+    if(isset($actions['action']) && $actions['action'] == 'forum') {
+        return $txt['tp-who-forum-index'];
+    }
+
+}
+
+function tpStatsIgnore(&$no_stat_actions) 
+{
+    $no_stat_actions = array_merge($no_stat_actions, array('shout'));
+
+	// We can also call init from here although it's not meant for this 
+	TPortal_init();
+}
+
+function tpIntegrateRedirect(&$setLocation, &$refresh, &$permanent)
+{
+
+
+}
+
+function tpLoadTheme()
+{
+
+
 }
 
 ?>

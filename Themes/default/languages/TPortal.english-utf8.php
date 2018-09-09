@@ -316,4 +316,10 @@ $txt['tp-nomodule'] = 'No output from module.';
 // Permissions
 $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
+
+$txt['tp-who-forum-index']      = 'Viewing the Forum Index';
+$txt['tp-who-articles']         = 'Viewing Articles';
+$txt['tp-who-article']          = 'Viewing the Article &quot;<a href="%3$s?page=%2$s">%1$s</a>&quot;.';
+$txt['tp-who-article-search']   = 'Searching Articles.';
+$txt['tp-who-downloads']        = 'Viewing Downloads';
 ?>

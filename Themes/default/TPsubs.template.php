@@ -304,7 +304,7 @@ function TPortal_sidebar()
 // Tportal userbox
 function TPortal_userbox()
 {
-	global $context, $settings, $scripturl, $txt;
+	global $context, $settings, $scripturl, $txt, $forum_version;
 
 	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.gif" alt="" style="margin:0 4px 0 0;" />';
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.gif" alt="" style="margin:0 4px 0 0;" />';
@@ -427,7 +427,13 @@ function TPortal_userbox()
 		</ul>';
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
-	else{
+	else if(strpos($forum_version, '2.1') !== false) {
+	    echo '
+			<ul class="floatleft welcome">
+				<li>', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '</li>
+			</ul>';	
+   	}
+    else {
 		echo '
 		<div style="line-height: 1.4em;">', $bullet , sprintf($txt['welcome_guest'], $txt['guest_title']), '<br>', $bullet2, $context['current_time'], '</div>
 		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
