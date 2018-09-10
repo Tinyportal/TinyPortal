@@ -2470,6 +2470,7 @@ function template_editarticle($type = '')
 				// article details options
 				echo '
 							<div class="title_bar"><h3 class="titlebg">' . $txt['tp-details'] . '</h3></div>
+							<br>
 							<dl class="settings">
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions1'], '</label><br>

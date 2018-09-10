@@ -2043,8 +2043,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	$context['admin_header']['tp_settings'] = $txt['tp-adminheader1'];
 	$context['admin_header']['tp_articles'] = $txt['tp-articles'];
 	$context['admin_header']['tp_blocks'] = $txt['tp-adminpanels'];
-	$context['admin_header']['tp_modules'] = $txt['tp-modules'];
 	$context['admin_header']['tp_menubox'] = $txt['tp-menumanager'];
+	$context['admin_header']['tp_modules'] = $txt['tp-modules'];
 	$context['admin_header']['custom_modules'] = $txt['custom_modules'];
 
 	if (allowedTo('tp_settings'))
@@ -2122,6 +2122,23 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
+	if (allowedTo('tp_blocks'))
+	{
+		$context['admin_tabs']['tp_menubox'] = array(
+			'menubox' => array(
+				'title' => $txt['tp-menumanager'],
+				'description' => '',
+				'href' => $scripturl . '?action=tpadmin;sa=menubox',
+				'is_selected' => in_array($tpsub, array('menubox','linkmanager')),
+			),
+			'addmenu' => array(
+				'title' => isset($_GET['mid']) ? $txt['tp-addmenuitem'] : $txt['tp-addmenu'],
+				'description' => '',
+				'href' => (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $scripturl . '?action=tpadmin;sa=addmenu;mid='.$_GET['mid'] : $scripturl . '?action=tpadmin;sa=addmenu;fullmenu',
+				'is_selected' => in_array($tpsub, array('addmenu')),
+			),
+		);
+	}
 	if (allowedTo('tp_settings'))
 	{
 		$context['admin_tabs']['tp_modules'] = array(
@@ -2146,23 +2163,6 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			$context['TPortal']['admmodules'][] = $row;
 		}
 		$smcFunc['db_free_result']($result);
-	}
-	if (allowedTo('tp_blocks'))
-	{
-		$context['admin_tabs']['tp_menubox'] = array(
-			'menubox' => array(
-				'title' => $txt['tp-menumanager'],
-				'description' => '',
-				'href' => $scripturl . '?action=tpadmin;sa=menubox',
-				'is_selected' => in_array($tpsub, array('menubox','linkmanager')),
-			),
-			'addmenu' => array(
-				'title' => isset($_GET['mid']) ? $txt['tp-addmenuitem'] : $txt['tp-addmenu'],
-				'description' => '',
-				'href' => (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $scripturl . '?action=tpadmin;sa=addmenu;mid='.$_GET['mid'] : $scripturl . '?action=tpadmin;sa=addmenu;fullmenu',
-				'is_selected' => in_array($tpsub, array('addmenu')),
-			),
-		);
 	}
 	TPsetupAdminAreas();
 	validateSession();
