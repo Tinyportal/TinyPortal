@@ -18,23 +18,6 @@
 		</operation>				
 	</file>
 	
-	<file name="$sourcedir/Subs.php">
-		<operation>
-			<search position="replace"><![CDATA[function redirectexit($setLocation = '', $refresh = false, $permanent = false)]]></search>
-			<add><![CDATA[function redirectexit($setLocation = '', $refresh = false, $permanent = false, $tp_not = false)]]></add>
-		</operation>
-		<operation>
-			<search position="after"><![CDATA[	// Put the session ID in.
-	if (defined('SID') && SID != '')]]></search>
-			<add><![CDATA[	// TinyPortal
-	if ($setLocation == $scripturl && !$tp_not && !empty($context['TPortal']['redirectforum']))
-		$setLocation .= '?action=forum';
-	// end
-	
-]]></add>
-		</operation>
-	</file>
-	
 	<file name="$sourcedir/QueryString.php">
 		<operation>
 			<search position="replace"><![CDATA[?:board|topic)=]]></search>
