@@ -454,7 +454,11 @@ function tpStatsIgnore(&$no_stat_actions)
 
 function tpIntegrateRedirect(&$setLocation, &$refresh, &$permanent)
 {
+    global $scripturl, $context;
 
+    if ($setLocation == $scripturl && !empty($context['TPortal']['redirectforum'])) {
+        $setLocation .= '?action=forum';
+    }
 
 }
 
