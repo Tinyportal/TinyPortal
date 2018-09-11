@@ -2036,8 +2036,7 @@ function doTPfrontpage()
 				{
 					$mtype = substr($row['value3'], 0, 4);
 					$idtype = substr($row['value3'], 4);
-					if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac')
-					{
+                    if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac') {
 						$mtype = 'link';
 						$idtype = $row['value3'];
 					}
@@ -2354,11 +2353,14 @@ function doTPblocks()
 				{
 					$mtype = substr($row['value3'], 0, 4);
 					$idtype = substr($row['value3'], 4);
-					if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac')
-					{
+					if($mtype == 'menu') {
+                        continue;
+                    }
+                    elseif($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac') {
 						$mtype = 'link';
 						$idtype = $row['value3'];
 					}
+
 					if($mtype == 'cats')
 					{
 						if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
