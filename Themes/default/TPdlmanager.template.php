@@ -53,7 +53,7 @@ function template_main()
 
 		if(!empty($context['TPortal']['dl_introtext']))
 			echo '
-			<div class="windowbg2" style="padding: 1em;">' . parse_bbc($context['TPortal']['dl_introtext']) . '</div>';
+			<div class="windowbg" style="padding: 1em; margin:0px 0px 4px;">' . parse_bbc($context['TPortal']['dl_introtext']) . '</div>';
 
 		if(!empty($context['TPortal']['dl_showfeatured']) && !empty($context['TPortal']['featured']))
 		{
@@ -61,7 +61,7 @@ function template_main()
 				<div class="cat_bar">
 					<h3 class="catbg">' . $txt['tp-dlfeatured'] . '</h3>
 				</div>
-				<div class="windowbg" style="overflow: hidden; padding: 1em;">'; 
+				<div class="windowbg2 noup" style="overflow: hidden; padding: 1em; margin:0px 0px 4px;">'; 
 
 			if(!empty($context['TPortal']['featured']['sshot']))
 				 echo '
@@ -69,13 +69,13 @@ function template_main()
 
 			echo '
 				<h4 class="h4dl"><a href="' . $scripturl . '?action=tpmod;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
-				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['authorID'].'">' . $context['TPortal']['featured']['author'].'</a></span>
+				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['authorID'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
 				<p>' . $context['TPortal']['featured']['description'] , '</p>
 			</div>';
 		}
 
 		// render last added and most downloaded.
-	if($context['TPortal']['dl_showlatest']==1 && ($context['TPortal']['dl_showstats']==1))
+	if($context['TPortal']['dl_showlatest']==1 || ($context['TPortal']['dl_showstats']==1))
 	{
 		echo '
 		<span class="upperframe"><span></span></span>
@@ -83,12 +83,12 @@ function template_main()
 			<div>';
 		if($context['TPortal']['dl_showlatest']==1)
 			echo '
-			<a href="javascript: void(0); " onclick="dlshowtab(\'dlrecent\');"><b>' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</b></a>';
+			<a href="javascript: void(0); " onclick="dlshowtab(\'dlrecent\');"><b>' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</b>';
 		if($context['TPortal']['dl_showstats']==1)
 		{	
 			echo '
-			 ' , $context['TPortal']['dl_showlatest']==1 ? '&nbsp;|&nbsp; ' : '' , '<a href="javascript: void(0);" onclick="dlshowtab(\'dlweekpop\');">' , $txt['tp-mostpopweek'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>
-			&nbsp;|&nbsp; <a href="javascript: void(0); " onclick="dlshowtab(\'dlpop\');">' , $txt['tp-mostpop'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a> ';
+			 ' , $context['TPortal']['dl_showlatest']==1 ? '&nbsp;|&nbsp; ' : '' , '<a href="javascript: void(0);" onclick="dlshowtab(\'dlweekpop\');"><b>' , $txt['tp-mostpopweek'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</b></a>
+			&nbsp;|&nbsp; <a href="javascript: void(0); " onclick="dlshowtab(\'dlpop\');"><b>' , $txt['tp-mostpop'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</b></a>';
 		}
 		echo '
 			</div>
@@ -208,13 +208,14 @@ function template_main()
 			
 			document.getElementById(target).style.display= \'\';
 		}
-	// ]]></script>
+	// ]]></script>';
+	echo '
 	<br>
 	
 	<div class="cat_bar">
 		<h3 class="catbg">'.$txt['tp-categories'] .'</h3>
 	</div>	
-	<div class="windowbg">';
+	<div class="windowbg2 noup">';
 
 		
 		//show all categories
@@ -316,7 +317,7 @@ function template_main()
 			echo '
 			</div>
 		</div>
-		<div class="windowbg" style="padding: 0.5em 1em;">
+		<div style="padding: 0.5em 1em;">
 		';
 			if($context['TPortal']['dlaction']!='item' && !empty($context['TPortal']['pageindex']))
 				echo $context['TPortal']['pageindex'];
