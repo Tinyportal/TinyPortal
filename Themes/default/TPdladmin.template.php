@@ -212,34 +212,6 @@ $clickme.click( function(e) {
 			<hr><br>
 				<dl class="settings">
 					<dt>
-						'.$txt['tp-dluselatest'].'
-					</dt>
-					<dd>
-						<input name="tp_dl_showrecent" type="radio" value="1" ', $context['TPortal']['dl_showlatest']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
-						<input name="tp_dl_showrecent" type="radio" value="0" ', $context['TPortal']['dl_showlatest']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-
-
-
-
-
-					</dd>						
-					<dt>
-						'.$txt['tp-dlusestats'].'
-					</dt>
-					<dd>
-						<input name="tp_dl_showstats" type="radio" value="1" ', $context['TPortal']['dl_showstats']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
-						<input name="tp_dl_showstats" type="radio" value="0" ', $context['TPortal']['dl_showstats']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-					</dd>
-					<dt>'.$txt['tp-dlshowlatest'].'
-					</dt>
-					<dd>
-						<input name="tp_dlshowlatest" type="radio" value="1" ', $context['TPortal']['dl_showlatest']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
-						<input name="tp_dlshowlatest" type="radio" value="0" ', $context['TPortal']['dl_showlatest']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-
-
-
-					</dd>
-					<dt>
 						'.$txt['tp-dlusefeatured'].'
 					</dt>
 					<dd>
@@ -248,7 +220,6 @@ $clickme.click( function(e) {
 					</dd>
 					<dt>
 						'.$txt['tp-dlfeatured'].' :
-
 					</dt>
 					<dd>
 						<select name="tp_dl_featured" style="width: 200px;" size="5">';
@@ -260,46 +231,20 @@ $clickme.click( function(e) {
 				
 				echo '
 					</select><br><br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					</dd>
+					<dt>
+						'.$txt['tp-dluselatest'].'
+					</dt>
+					<dd>
+						<input name="tp_dl_showrecent" type="radio" value="1" ', $context['TPortal']['dl_showlatest']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
+						<input name="tp_dl_showrecent" type="radio" value="0" ', $context['TPortal']['dl_showlatest']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
+					</dd>						
+					<dt>
+						'.$txt['tp-dlusestats'].'
+					</dt>
+					<dd>
+						<input name="tp_dl_showstats" type="radio" value="1" ', $context['TPortal']['dl_showstats']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
+						<input name="tp_dl_showstats" type="radio" value="0" ', $context['TPortal']['dl_showstats']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dlusecategorytext'].'
@@ -307,45 +252,6 @@ $clickme.click( function(e) {
 					<dd>
 						<input name="tp_dl_showcategorytext" type="radio" value="1" ', $context['TPortal']['dl_showcategorytext']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input name="tp_dl_showcategorytext" type="radio" value="0" ', $context['TPortal']['dl_showcategorytext']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					</dd>
 					<dt>'.$txt['tp-dlvisualoptions'].'
 					</dt>
@@ -358,10 +264,6 @@ $clickme.click( function(e) {
 						<input name="tp_dl_visual_options6" type="checkbox" value="lower" ', isset($context['TPortal']['dl_lower']) ? 'checked' : '' ,'> '.$txt['tp-lowerbar'].'<br>
 						<input name="tp_dl_visual_options7" type="checkbox" value="showtop" ', isset($context['TPortal']['dl_showtop']) ? 'checked' : '' ,'> '.$txt['tp-showtop'].'<br>
 						<input name="tp_dl_visual_options8" type="hidden" value="not"><br><br>
-
-
-
-
 					</dd>
 					<dt>',$txt['tp-chosentheme'],' 
 					</dt>
@@ -373,8 +275,6 @@ $clickme.click( function(e) {
   					echo '<option value="'.$them['id'].'" ',$them['id']==$context['TPortal']['dlmanager_theme'] ? 'selected' : '' ,'>'.$them['name'].'</option>';
 
 				echo '
-
-
 						</select><br><br>
 					</dd>
 				</dl>
@@ -384,9 +284,6 @@ $clickme.click( function(e) {
 					</div>
 				</div>
 			</div>
-
-
-
 		</div>';
 	}
 	elseif(substr($context['TPortal']['dlsub'],0,8)=='admincat')
