@@ -957,7 +957,7 @@ function template_main()
 									<b>'.$txt['tp-search'].':</b><br>
 									<input type="text" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px;" name="dl_search" id="dl_search" /><br>
 									<input type="checkbox" id="dl_searcharea_name" checked="checked"/> ' , $txt['tp-searcharea-name'] , '<br>
-									<input type="checkbox" id="dl_searcharea_descr" checked="checked"/> ' , $txt['tp-searcharea-descr'] , '<br>
+									<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> ' , $txt['tp-searcharea-descr'] , '<br>
 									<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 									<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 							</form>
