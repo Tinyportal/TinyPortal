@@ -277,13 +277,16 @@ function template_main()
                 <div class="cat_bar">
 				    <h3 class="catbg">' , $txt['tp-searcharticles2'] , '</h3>
                 </div>
-				<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-searcharticleshelp'] , '</div>
-				<div style="padding: 10px;" class="windowbg">
-					<input type="text" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px; width: 90%;" name="tpsearch_what" /><br />
-					<input type="checkbox" name="tpsearch_title" checked="checked" /> ' , $txt['tp-searchintitle'] , '<br />
-					<input type="checkbox" name="tpsearch_body" checked="checked" /> ' , $txt['tp-searchinbody'] , '<br />
-					<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br />
-					<input type="submit" value="' , $txt['tp-search'] , '" />
+				<div class="windowbg2 noup" style="padding: 1em; border:1px solid #ccc;">
+					<div style="padding: 1em;">'.$txt['tp-searcharticleshelp'].'</div>
+					<div style="padding: 10px;" class="">
+						<b>'.$txt['tp-search'].':</b><br>
+						<input type="text" size="60" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px;" name="tpsearch_what" /><br />
+						<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br />
+						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br />
+						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br />
+						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
+					</div>
 				</div>
 			</div>
 		</form>

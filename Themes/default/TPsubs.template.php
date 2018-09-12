@@ -855,7 +855,7 @@ function template_TPsearch_above()
 		<div class="cat_bar">
 			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
 		</div>
-		<div class="windowbg2">
+		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
 				<a href="' . $scripturl. '?action=tpmod;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
@@ -867,7 +867,7 @@ function template_TPsearch_above()
 		<div class="cat_bar">
 			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
 		</div>
-		<div class="windowbg2">
+		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
 				<a href="' . $scripturl. '?action=tpmod;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |

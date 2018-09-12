@@ -432,20 +432,20 @@ function template_main()
 			fatal_error($txt['tp-adminonly']);
 
 	   echo '
-	 <div id="tpUpload" class="tborder padding-div">
-        <div class="title_bar">
-            <h4 class="titlebg">'.$txt['tp-dlupload'].'</h4>
+	 <div id="tpUpload" class="tborder">
+        <div class="cat_bar">
+            <h3 class="catbg">'.$txt['tp-dlupload'].'</h4>
         </div>
-		<div class="windowbg">
+		<div class="windowbg noup" style="padding:0px">
 			<span class="topslice"><span></span></span>
-			  <div class="windowbg padding-div">
+			  <div">
 				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tpmod;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
-			echo '<div style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
+			echo '<div class="padding-div" style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br>
+		echo '<div style="text-align:center;" class="smalltext padding-div">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br>
 					<div class="formtable padding-div">
 						<dl class="settings">
 							<dt>'.$txt['tp-dluploadtitle'].'
@@ -951,26 +951,17 @@ function template_main()
 			<div class="cat_bar">
 				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
 			</div>
-			<div class="windowbg">
-				<span class="topslice"><span></span></span>
-				<div style="padding:2%;">
+			<div class="windowbg2 noup" style="padding: 1em; border:1px solid #ccc;">
+					<div style="padding: 10px;">
 							<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
-								<div>
-										<div>' , $txt['tp-search'] , ':</div>
-										<div class="input_td" style="padding-top:1%;padding-bottom:1%;">
-											<input type="text" size="60" name="dl_search" id="dl_search" />
-										</div>
-										<div align="right"></div>
-										<div class="input_td">
-										    <input type="checkbox" id="dl_searcharea_name" /> ' , $txt['tp-searcharea-name'] , '<br>
-										    <input type="checkbox" id="dl_searcharea_descr" /> ' , $txt['tp-searcharea-descr'] , '<br>
-										</div><br>
-										<div align="center">
-											<input type="submit" value="' , $txt['tp-search'] , '" />
-											<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-										</div>
-								</div>
+									<b>'.$txt['tp-search'].':</b><br>
+									<input type="text" size="60" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px;" name="dl_search" id="dl_search" /><br>
+									<input type="checkbox" id="dl_searcharea_name" checked="checked"/> ' , $txt['tp-searcharea-name'] , '<br>
+									<input type="checkbox" id="dl_searcharea_descr" checked="checked"/> ' , $txt['tp-searcharea-descr'] , '<br>
+									<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
+									<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 							</form>
+					<div>
 				</div>
 				<span class="botslice"><span></span></span>
 			</div>
