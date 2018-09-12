@@ -1511,7 +1511,7 @@ function TPdlresults()
 	$total = $tt[0];
 	
 	$request = $smcFunc['db_query']('substring', '
-		SELECT d.id, d.created, d.type, d.downloads, d.name, SUBSTRING(d.description, 0, 100) as body, d.author_id as authorID, m.real_name as realName
+		SELECT d.id, d.created, d.type, d.downloads, d.name, LEFT(d.description, 300) as body, d.author_id as authorID, m.real_name as realName
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		WHERE '. $query .'

@@ -977,29 +977,35 @@ function template_main()
 					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;
 				</h3>
 			</div>
-			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
-				<div style="padding: 10px;" class="windowbg">
-					<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
-					<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
-					<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '
-					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-					<input type="submit" value="' , $txt['tp-send'] , '" />
-				</div>
-			</form>
+			<div class="windowbg2 noup" style="padding: 0px; margin-bottom:3px;">
+				<div class="padding-div">			
+					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
+					<div style="padding: 10px;">
+						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
+						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
+						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br><br>
+						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'" />
+					</div>
+				</form>
+			</div>
+		</div>
 				';
 		$bb=1;
 		foreach($context['TPortal']['dlsearchresults'] as $res)
 		{
 			echo '
-			<h4 class="tpresults windowbg"><a href="' . $scripturl . '?action=tpmod;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
-			<div class="windowbg tpresults" style="padding-top: 2px;">
-				<div class="middletext">' , $res['body'] . '</div>
-				<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
-			</div>';
+				<div class="windowbg padding-div" style="margin-bottom:3px;">
+					<h4 class="tpresults windowbg"><a href="' . $scripturl . '?action=tpmod;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
+					<hr>
+					<div class="windowbg tpresults" style="padding-top: 4px;">
+						<div class="middletext">' , $res['body'] . '</div>
+						<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
+					</div>
+				</div>';
 			$bb++;	
 		}
 		echo '
-	 </div>
 	</div>';
 	}
 	echo '
