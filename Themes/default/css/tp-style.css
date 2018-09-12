@@ -1939,13 +1939,6 @@ box-sizing:border-box;
 	box-sizing: border-box;
     border:1px solid #ccc;
 } 
-.admin-area .catbg {
-   padding:1.5%;	
-}
-#editblock .catbg,
-#panels-admin .panels-options .catbg {
-	padding:0px;
-}
 .pos  {
 	border-left:0px!important;
 }
@@ -1963,19 +1956,19 @@ box-sizing:border-box;
 	margin: 0px;
 	border-radius: 0 0 0 0;
 }
-.admintable .windowbg {
+.admintable > .windowbg {
 	box-shadow: none;
 	border-radius: 0;
 	border: none;
 	margin: 0 0 0 0 !important;
 }
-.admintable .windowbg2 {
+.admintable > .windowbg2 {
 	box-shadow: none;
 	border-radius: 0;
 	border: none;
 	margin: 0 0 0 0 !important;
 }
-.admintable .windowbg3 {
+.admintable > .windowbg3 {
 	box-shadow: none;
 	border-radius: 0;
 	border: none;

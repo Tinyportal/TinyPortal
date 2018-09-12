@@ -109,7 +109,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsettings'].'</h3></div>
 
 		<div id="dlsettings" class="admintable admin-area">
-			<div class="windowbg2 noup">
+			<div class="windowbg2 noup" style="padding:0px;">
 
 
 				<div class="formtable padding-div">
@@ -417,7 +417,7 @@ $clickme.click( function(e) {
 						<input name="tp_dlcatpos'.$cat['id'].'" size="2" type="text" value="'.$cat['pos'].'">
 						<input type="hidden" name="admineditcatval" value="'.$cat['parent'].'" />
 					</div>
-					<div style="width:71%;" class="float-items windowbg">
+					<div style="width:71%;" class="float-items">
 						<img src="' .$settings['tp_images_url']. '/TPboard.gif" alt="" align="top" border="0" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<p class="clearthefloat"></p>
@@ -429,10 +429,10 @@ $clickme.click( function(e) {
 			    <div style="width:20%;" class="fullwidth-on-res-layout float-items">	
 					<div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
 					<div id="size-on-respnsive-layout">
-						<div style="width:48%;" class="float-items windowbg" align="center"> 
+						<div style="width:48%;" class="float-items" align="center"> 
 						'.$cat['items'].'
 					</div>
-					<div style="width:48%;" class="float-items windowbg" align="center">
+					<div style="width:48%;" class="float-items" align="center">
 					'.$cat['submitted'].'
 					</div>
 					<p class="clearthefloat"></p>
@@ -519,7 +519,7 @@ $clickme.click( function(e) {
 
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' - '.$cat['name'].'</h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg2 noup" style="padding:0px;">
 				<div class="formtable padding-div">
 					<dl class="settings">
 					<dt>
