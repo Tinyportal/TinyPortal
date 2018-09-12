@@ -377,24 +377,31 @@ function template_main()
                 <h3 class="catbg">' , $txt['tp-searchresults'] , '
                 ' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['searchterm'].'&quot;</h3>
             </div>
-			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
-					<div style="padding: 10px;" class="windowbg">
-						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px; width: 90%;" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" /><br />
+			<div class="windowbg2 noup" style="padding: 0px; margin-bottom:3px;">
+				<div class="padding-div">
+					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
+					<div style="padding: 10px;">
+						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px;" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" /><br />
 						<input type="checkbox" name="tpsearch_title" checked="checked" /> ' , $txt['tp-searchintitle'] , '
-						<input type="checkbox" name="tpsearch_body" checked="checked" /> ' , $txt['tp-searchinbody'] , '
+						<input type="checkbox" name="tpsearch_body" checked="checked" /> ' , $txt['tp-searchinbody'] , '<br><br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-						<input type="submit" value="' , $txt['tp-search'] , '" />
+						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'"><br>
 					</div>
-			</form>
+					</form>
+				</div>
+			</div>
 			';
 			$bb = 1;
 			foreach($context['TPortal']['searchresults'] as $res)
 			{
 				echo '
-				<h4 class="tpresults windowbg"><a href="' . $scripturl . '?page=' . $res['id'] . '">' . $res['subject'] . '</a></h4>
-				<div class="windowbg tpresults" style="padding-top: 2px;">
-					<div class="middletext">' , $res['body'] . '</div>
-					<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
+					<div class="windowbg padding-div" style="margin-bottom:3px;">
+						<h4 class="tpresults"><a href="' . $scripturl . '?page=' . $res['id'] . '">' . $res['subject'] . '</a></h4>
+						<hr>
+						<div class="tpresults" style="padding-top: 4px;">
+							<div class="middletext">' , $res['body'] . '</div>
+							<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
+						</div>
 				</div>';
 				$bb++;	
 			}

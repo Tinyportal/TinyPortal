@@ -502,7 +502,7 @@ function TPmodules()
         $now = forum_time();
         
 		$request= $smcFunc['db_query']('', '
-			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 100) as body, a.author_id as authorID, a.type, m.real_name as realName
+			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) as body, a.author_id as authorID, a.type, m.real_name as realName
 			FROM {db_prefix}tp_articles AS a
 			LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
 			WHERE {raw:query}
