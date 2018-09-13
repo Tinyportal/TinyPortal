@@ -845,7 +845,7 @@ function template_panels()
 							<span class="smalltext">'.$txt['tp-inpixels'].'</span>
 						</dd>
 					</dl>
-
+					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 
 				<div class="title_bar"><h3 class="titlebg">'.$txt['tp-panel'].'</h3>
@@ -2123,13 +2123,12 @@ function template_editarticle($type = '')
 	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);"> 
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
-		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['categoryNAME'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , ' </h3></div> 
+		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['categoryNAME'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , ' &nbsp;-&nbsp; ' , $mg['id']==0 ? '' : '<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a></h3></div> 
 		<div id="edit-add-single-article" class="admintable admin-area">
 		<div class="windowbg2 noup">
 			<div class="formtable padding-div">
-			<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			<div>
-						<div class="font-strong">' , $mg['id']==0 ? '' : '<a href="'.$scripturl.'?page='.$mg['id'].';tpreview">['.$txt['tp-preview'].']</a>' , $txt['tp-title'] , ':</div>
+						<div class="font-strong">' , $txt['tp-title'] , ':</div>
 						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. htmlentities($mg['subject'], ENT_QUOTES) .'">
 					</div>
 					<div>
@@ -2137,6 +2136,7 @@ function template_editarticle($type = '')
 						<input style="max-width: 50%;" name="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
 					</div>
 					<br>
+			<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 					<div>';
 						
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
