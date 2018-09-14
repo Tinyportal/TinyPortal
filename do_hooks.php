@@ -39,7 +39,9 @@ if(strpos($forum_version, '2.0') !== false) {
 	define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
 }
 else {
-    $hooks['integrate_redirect']   = 'tpIntegrateRedirect';
+    $hooks['integrate_redirect']                = 'tpIntegrateRedirect';
+	$hooks['integrate_pre_profile_areas']       = 'tpAddProfileMenu';
+    unset($hooks['integrate_profile_areas']);
     // We can use a hook of sorts for the default actions now
     if(isset($context['uninstalling'])) {
         updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
