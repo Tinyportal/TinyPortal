@@ -46,7 +46,7 @@ $clickme.click( function(e) {
 
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="user-download" class="admintable admin-area">
-			<div class="windowbg2 noup">
+			<div class="windowbg noup">
 				<div class="addborderleft" style="padding:0px;">
 					<div class="float-items pos" style="width:14%;">x</div>
 					<div class="float-items name" style="width:26%;">'.$txt['tp-dlname'].'</div>
@@ -100,18 +100,15 @@ $clickme.click( function(e) {
 				<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
 			</div>
 		</div>';
-	} // Settings
+	} 
+	
+// Settings
 	elseif($context['TPortal']['dlsub']=='adminsettings')
 	{
 		echo '
-
-
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsettings'].'</h3></div>
-
 		<div id="dlsettings" class="admintable admin-area">
-			<div class="windowbg2 noup" style="padding:0px;">
-
-
+			<div class="windowbg noup" style="padding:0px;">
 				<div class="formtable padding-div">
 					<dl class="settings">
 					<dt>
@@ -119,11 +116,6 @@ $clickme.click( function(e) {
 					</dt>
 					<dd>
 						<input style="width: 95%;" name="tp_dl_allowed_types" type="text" value="'.$context['TPortal']['dl_allowed_types'].'"><br><br>
-
-
-
-
-
 					</dd>
 					<dt>'.$txt['tp-dlallowedsize'].':
 					</dt>
@@ -142,11 +134,6 @@ $clickme.click( function(e) {
 					<dd>
 						<input name="tp_dl_usescreenshot" type="radio" value="1" ', $context['TPortal']['dl_usescreenshot']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input name="tp_dl_usescreenshot" type="radio" value="0" ', $context['TPortal']['dl_usescreenshot']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-
-
-
-
-
 					</dd>
 					<dt>'.$txt['tp-dlscreenshotsizes'].'
 					</dt>
@@ -258,11 +245,10 @@ $clickme.click( function(e) {
 					<dd>
 						<input name="tp_dl_visual_options1" type="checkbox" value="left" ', isset($context['TPortal']['dl_left']) ? 'checked' : '' ,'> '.$txt['tp-leftbar'].'<br>
 						<input name="tp_dl_visual_options2" type="checkbox" value="right" ', isset($context['TPortal']['dl_right']) ? 'checked' : '' ,'> '.$txt['tp-rightbar'].'<br>
-						<input name="tp_dl_visual_options3" type="checkbox" value="center" ', isset($context['TPortal']['dl_center']) ? 'checked' : '' ,'> '.$txt['tp-centerbar'].'<br>
 						<input name="tp_dl_visual_options4" type="checkbox" value="top" ', isset($context['TPortal']['dl_top']) ? 'checked' : '' ,'> '.$txt['tp-topbar'].'<br>
-						<input name="tp_dl_visual_options5" type="checkbox" value="bottom" ', isset($context['TPortal']['dl_bottom']) ? 'checked' : '' ,'> '.$txt['tp-bottombar'].'<br>
+						<input name="tp_dl_visual_options3" type="checkbox" value="center" ', isset($context['TPortal']['dl_center']) ? 'checked' : '' ,'> '.$txt['tp-centerbar'].'<br>
 						<input name="tp_dl_visual_options6" type="checkbox" value="lower" ', isset($context['TPortal']['dl_lower']) ? 'checked' : '' ,'> '.$txt['tp-lowerbar'].'<br>
-						<input name="tp_dl_visual_options7" type="checkbox" value="showtop" ', isset($context['TPortal']['dl_showtop']) ? 'checked' : '' ,'> '.$txt['tp-showtop'].'<br>
+						<input name="tp_dl_visual_options5" type="checkbox" value="bottom" ', isset($context['TPortal']['dl_bottom']) ? 'checked' : '' ,'> '.$txt['tp-bottombar'].'<br>
 						<input name="tp_dl_visual_options8" type="hidden" value="not"><br><br>
 					</dd>
 					<dt>',$txt['tp-chosentheme'],' 
@@ -293,7 +279,7 @@ $clickme.click( function(e) {
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="any-subcats" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 			<div class="addborderleft addborder" style="padding:0px;font-size:100%;">
 				<div style="width:30%;" class="float-items pos">'.$txt['tp-dlname'].'</div>
 				<div style="width:5%;" class="float-items title-admin-area">'.$txt['tp-dlicon'].'</div>
@@ -416,7 +402,7 @@ $clickme.click( function(e) {
 
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' - '.$cat['name'].'</h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
-			<div class="windowbg2 noup" style="padding:0px;">
+			<div class="windowbg noup" style="padding:0px;">
 				<div class="formtable padding-div">
 					<dl class="settings">
 					<dt>
@@ -693,7 +679,7 @@ $clickme.click( function(e) {
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsubmissions'].'</h3></div>
 		<div id="any-submitted" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 				<div class="addborderleft addborder" style="padding:0px;font-size:100%;">
 					<div class="name float-items" style="width:18%;">'.$txt['tp-dlname'].'</div>
 					<div class="title-admin-area float-items" style="width:18%;">'.$txt['tp-dlfilename'].'</div>
@@ -745,7 +731,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-ftpstrays'].'</h3></div>
 			<div id="ftp-files" class="admintable admin-area">
 				<div class="information smalltext" style="margin:0px;border:0px;">'.$txt['tp-assignftp'].'</div>
-				<div class="windowbg2 noup padding-div">';
+				<div class="windowbg noup padding-div">';
 
 		// alert if new files were added recently
 		if(!empty($_GET['ftpcat']))
@@ -794,7 +780,7 @@ $clickme.click( function(e) {
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatedit'].'</h3></div>
 		<div id="editupcat" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 
 				<div><b>'.$txt['tp-title'].':</b><br>
 				<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
@@ -918,7 +904,7 @@ $clickme.click( function(e) {
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatadd'].'</h3></div>
 		<div id="dl-addcat" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 				<div><b>'.$txt['tp-title'].':</b><br>
 				<input style="width: 100ex;max-width:98%!important;" name="newdladmin_name" type="text" value=""><br><br>
 				</div>

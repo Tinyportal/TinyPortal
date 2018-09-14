@@ -108,7 +108,7 @@ $clickme.click( function(e) {
 	</div>';
 }
 
-// blocks overview
+// blocks overview block access
 function template_blockoverview()
 {
 	global $context, $settings, $txt, $boardurl, $scripturl;
@@ -118,7 +118,7 @@ function template_blockoverview()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="blockoverview">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div>
-		<div id="blocks-overview" class="windowbg2 noup">
+		<div id="blocks-overview" class="admintable admin-area windowbg noup">
 			<span class="topslice"><span></span></span>
 			<div class="content" style="overflow: hidden; padding: 2% 0 2% 2%;">';
 
@@ -192,7 +192,7 @@ function template_submission()
 		<input name="tpadmin_form" type="hidden" value="submission">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-submissionsettings']  . '</div></h3>
 		<div id="submissions" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">';
+			<div class="windowbg noup padding-div">';
 	if(isset($context['TPortal']['arts_submissions']))
 	{
 		echo '
@@ -368,7 +368,7 @@ function template_menubox()
 		<input name="tp_menuid" type="hidden" value="'.$mid.'">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-menumanager'].' - '.$context['TPortal']['menus'][$mid]['name'] . '  <a href="' . $scripturl . '?action=tpadmin;sa=addmenu;mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">['.$txt['tp-addmenuitem'].']</a></h3></div>
 		<div id="menu-manager" class="admintable admin-area bigger-width">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 				<div class="titlebg2 addborderleft addborder">
 							<div style="width:9%;" class="pos float-items">'.$txt['tp-pos'].'</div>
 							<div style="width:14%;" class="name float-items">'.$txt['tp-title'].'</div>
@@ -779,7 +779,7 @@ function template_panels()
 			<div id="panels-admin" class="admintable admin-area">
 			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helppanels'] , '</div>
 
-			<div class="windowbg2 noup">
+			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
@@ -847,11 +847,9 @@ function template_panels()
 					</dl>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
-
-				<div class="title_bar"><h3 class="titlebg">'.$txt['tp-panel'].'</h3>
-				</div>';
+				<hr>';
 	
-	$allpanels = array('left','right','top','bottom','front','center','lower');
+	$allpanels = array('left','right','top','center','front','lower','bottom');
 	$alternate = true;
 	
 	if(function_exists('ctheme_tp_getblockstyles'))
@@ -863,15 +861,16 @@ function template_panels()
 	{
 		echo '
 			 <div id="panels-options" class="padding-div">
-			   <div><strong>';
+			   <div class="title_bar"><h3 class="titlebg">';
 		if($panl!='front')
-			echo $txt['tp-'.$panl.'panel'].'</strong>
+			echo $txt['tp-'.$panl.'panel'].'</h3></div>
 									<a name="'.$panl.'"></a><br>
 									<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.gif" alt="" />';
 		else
-			echo $txt['tp-'.$panl.'panel'].'</strong>
-									<a name="'.$panl.'"></a><br>';
-		echo '</div><br>
+			echo $txt['tp-'.$panl.'panel'].'</h3></div>
+									<a name="'.$panl.'"></a><br>
+									<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.gif" alt="" />';
+		echo '<br>
 
 			<div>
 		<dl class="settings">
@@ -929,10 +928,10 @@ function template_panels()
 								</dd>
 							</dl>
 							<div style="background-color:#ffffff;overflow:hidden;padding:5px;">';
-		
+							
 			foreach($types as $blo => $bl)
 				echo '
-								<div class="panels-options" style="float:left; width:45%; height:120px; margin:5px;">
+								<div class="panels-options" style="float:left; width:160px; height:120px; margin:5px;">
 									<div class="smalltext" style="padding: 4px 0;">
 										<input name="tp_panelstyle_'.$panl.'" type="radio" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '>
 										<span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
@@ -943,7 +942,7 @@ function template_panels()
 			echo '
 							</div>
 						</div>
-				<br><hr>
+				<hr>
 					</div>';
 		$alternate = !$alternate;
 	}
@@ -967,7 +966,7 @@ function template_settings()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings" class="admintable admin-area">
 			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div>
-				<div class="windowbg2 noup">
+				<div class="windowbg noup">
 					<div class="formtable padding-div">
 						<!-- START non responsive themes form -->
 							<div>
@@ -1116,7 +1115,7 @@ function template_clist()
 				<input name="tpadmin_form" type="hidden" value="clist">
 				<div class="cat_bar"><h3 class="catbg">TinyPortal - '.$txt['tp-generalsettings'].'</h3></div>
 				<div id="clist" class="admintable admin-area">
-					<div class="windowbg2 noup">
+					<div class="windowbg noup">
 						<div class="padding-div"><strong>'.$txt['tp-clist'].'</strong></div>
 					    <div class="padding-div">';
 		$clist = explode(',',$context['TPortal']['cat_list']);
@@ -1148,7 +1147,7 @@ function template_artsettings()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-articlesettings'] . '</h3></div>
 		<div id="article-settings" class="admintable admin-area">
 			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpartsettings'] , '</div>
-			<div class="windowbg2 noup">
+			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
@@ -1260,7 +1259,7 @@ function template_frontpage()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-frontpage_settings'] . '</h3></div>
 		<div id="frontpage-settings" class="admintable admin-area">
 			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpfrontpage'] , '</div>
-			<div class="windowbg2 noup">
+			<div class="windowbg noup">
 				<div class="formtable padding-div">		
 					<dl class="settings">
 						<dt>
@@ -1508,7 +1507,7 @@ function template_categories()
 		<input name="tpadmin_form" type="hidden" value="categories">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-article'], ' ' , $txt['tp-tabs5'] . '</h3></div>
 		<div id="edit-category" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 				<div class="addborder">
 					<div class="float-items" style="width:120px;"><strong>' , $txt['tp-actions'] , '</strong></div>
 					<div class="float-items" style="max-width:76%;"><strong>' , $txt['tp-name'] , '</strong></div>
@@ -1558,7 +1557,7 @@ function template_editcategory()
 		<input name="tpadmin_form_id" type="hidden" value="' . $mg['id'] . '">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-editcategory'] . '</h3></div>
 		<div id="edit-art-category" class="admintable admin-area">
-		<div class="windowbg2 noup">
+		<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
@@ -1610,6 +1609,7 @@ function template_editcategory()
 							<input size="6" name="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '">
 						</dd>
 					</dl>
+					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 					<hr>
 					<div>
 						<div><strong><label for="field_name">', $txt['tp-catlayouts'], '</label></strong></div>
@@ -1776,7 +1776,7 @@ function template_addcategory()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-addcategory'] . '</h3></div>
 		<div id="new-category" class="admintable admin-area">
 			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpaddcategory'] , '</div>
-			<div class="windowbg2 noup ">
+			<div class="windowbg noup ">
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
@@ -1820,7 +1820,7 @@ function template_articles()
 		<div class="cat_bar"><h3 class="catbg">' , $txt['tp-articles'] , !empty($context['TPortal']['categoryNAME']) ? $txt['tp-incategory']. ' ' . $context['TPortal']['categoryNAME'].' ' : '' ,  '</h3></div> 
 		<div id="edit-articles" class="admintable admin-area">
 			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helparticles'] , '</div>
-			<div class="windowbg2 noup padding-div">';
+			<div class="windowbg noup padding-div">';
 
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
 	{
@@ -1968,7 +1968,6 @@ function template_articles()
 }
 
 // uncategorized
-
 function template_strays()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
@@ -1983,7 +1982,7 @@ function template_strays()
 	if(isset($context['TPortal']['arts_nocat']))
 	{
 		echo '
-				<div class="windowbg2 noup padding-div">
+				<div class="windowbg noup padding-div">
 					<div>
 								<div class="catbg3 addborderleft">
 									<div style="width:7%;" class="pos float-items">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on position" /> ' : '' , '<a title="Sort on position" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=parse">' , $txt['tp-pos'] , '</a></div>
@@ -2125,7 +2124,7 @@ function template_editarticle($type = '')
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
 		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.gif" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['categoryNAME'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , ' &nbsp;-&nbsp; ' , $mg['id']==0 ? '' : '<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a></h3></div> 
 		<div id="edit-add-single-article" class="admintable admin-area">
-		<div class="windowbg2 noup">
+		<div class="windowbg noup">
 			<div class="formtable padding-div">
 			<div>
 						<div class="font-strong">' , $txt['tp-title'] , ':</div>
@@ -2685,7 +2684,7 @@ function template_articons()
 		<input name="tpadmin_form" type="hidden" value="articons">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-adminicons7'] . '</h3></div>
 		<div id="article-icons-pictures" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 				<div class="formtable"><br>
 					<dl class="settings">
 						<dt>
@@ -2847,7 +2846,7 @@ function template_blockedit()
 		<input name="tpadmin_form_id" type="hidden" value="' . $context['TPortal']['blockedit']['id'] . '">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-editblock'] . '</h3></div>
 		<div id="editblock" class="admintable admin-area">
-			<div class="windowbg2 noup padding-div">
+			<div class="windowbg noup padding-div">
 				<div class="formtable">
 					<dl class="settings">
 						<dt>
@@ -2906,7 +2905,7 @@ function template_blockedit()
 			{
 				if($context['TPortal']['blockedit']['type']=='11')
 				{
-					echo '</div><div><b>',$txt['tp-body'],'<b> <br><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
+					echo '</div><div><b>',$txt['tp-body'],'</b> <br><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
@@ -3226,17 +3225,18 @@ function template_blockedit()
 				<dl class="settings">
 					<dt>'.$txt['tp-blockframehelp'].':</dt>
 					<dd>
-					<input name="tp_block_frame" type="radio" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-useframe'].'</label><br>
-					<input name="tp_block_frame" type="radio" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-useframe2'].' </label><br>
-					<input name="tp_block_frame" type="radio" value="title" ' , $context['TPortal']['blockedit']['frame']=='title' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-usetitle'].' </label></br>
-					<input name="tp_block_frame" type="radio" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-noframe'].'</label>
+						<input name="tp_block_frame" type="radio" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-useframe'].'</label><br>
+						<input name="tp_block_frame" type="radio" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-useframe2'].' </label><br>
+						<input name="tp_block_frame" type="radio" value="title" ' , $context['TPortal']['blockedit']['frame']=='title' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-usetitle'].' </label></br>
+						<input name="tp_block_frame" type="radio" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-noframe'].'</label>
 					</dd>
 				</dl>
 				<br>
 				<dl class="settings">
 					<dt><label for="field_name"> '.$txt['tp-allowupshrink'].': </label></dt>
-					<dd><input name="tp_block_visible" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-allowupshrink'].'</label><br>
-					<input name="tp_block_visible" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-notallowupshrink'].'</label>
+					<dd>
+						<input name="tp_block_visible" type="radio" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '> '.$txt['tp-allowupshrink'].'</label><br>
+						<input name="tp_block_visible" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '><label for="field_name"> '.$txt['tp-notallowupshrink'].'</label>
 					</dd>
 				</dl>
 				<br>
@@ -3503,10 +3503,10 @@ function template_blocks()
 		<input name="tpadmin_form" type="hidden" value="blocks">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blocksettings'] . '</h3></div>
 		<div id="all-the-blocks" class="admintable admin-area">
-			<div class="windowbg2 noup">';
+			<div class="windowbg noup">';
 				
-		$side=array('left','right','center','front','bottom','top','lower');
-		$sd=array('lb','rb','cb','fb','bb','tb','lob');
+		$side=array('left','right','top','center','front','lower','bottom');
+		$sd=array('lb','rb','tb','cb','fb','lob','bb');
 
 		for($i=0 ; $i<7 ; $i++)
 		{
