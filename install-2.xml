@@ -17,11 +17,4 @@
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>
-	
-	<file name="$sourcedir/QueryString.php">
-		<operation>
-			<search position="replace"><![CDATA[?:board|topic)=]]></search>
-			<add><![CDATA[?:board|topic|page|cat)=]]></add>
-		</operation>
-	</file>
 </modification>
