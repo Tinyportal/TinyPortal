@@ -49,6 +49,7 @@ $txt['tp-sortby'] = 'Sort by';
 $txt['tp-useredit'] = 'Edit file';
 $txt['tp-dlcatedit'] = 'Edit category';
 $txt['tp-dlcatadd'] = 'Add category';
+$txt['tp-dlpreview'] = 'View download';
 
 // TPdlmanager template
 //  SVN Rev67
