@@ -49,7 +49,7 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 // Adds TP copyright in the buffer so we don't have to edit an SMF file
 function tpAddCopy($buffer)
 {
-	global $context, $scripturl;
+	global $context, $scripturl, $txt, $forum_version;
 
 	$bodyid = '';
 	$bclass = '';
@@ -102,34 +102,39 @@ function tpAddCopy($buffer)
 
 	$find = array(
 		'<body>',
-		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>',
 		'class="copywrite"',
 	);
-
-	if(!empty($context['TPortal']['copyrightremoval'])) {
-		global $boardurl;
-		$tmpurl = parse_url($boardurl, PHP_URL_HOST);
-		if(sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval']) {
-			return $buffer;
-		}
-	}
-
 	$replace = array(
 		'<body id="' . $bodyid . '" class="' . $bclass . '">',
-		'<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string,
 		'class="copywrite" style="line-height: 1;"',
 	);
 
-	if (!in_array($context['current_action'], array('post', 'post2')))
-	{
+	if (!in_array($context['current_action'], array('post', 'post2'))) {
 		$finds[] = '[cutoff]';
 		$replaces[] = '';
 	}
 
 	$buffer = str_replace($find, $replace, $buffer);
 
-	if (strpos($buffer, $string) === false)
-	{
+    if(strpos($forum_version, '2.1') !== false) {
+        $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
+        $replace= '<a href="'.$scripturl.'?action=tpmod;sa=help">'.$txt['tp-tphelp'].'</a>';
+	    $buffer = str_replace($find, $replace.' | '.$find, $buffer);
+    }
+
+	global $boardurl;
+	$tmpurl = parse_url($boardurl, PHP_URL_HOST);
+
+	if(!empty($context['TPortal']['copyrightremoval']) && (sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval'])) {
+        return $buffer;
+    }
+    else {
+	    $find       = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
+		$replace    = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
+	    $buffer     = str_replace($find, $replace, $buffer);
+    }
+
+	if (strpos($buffer, $string) === false) {
 		$string = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $string . '</div></body></html>';
 		$buffer = preg_replace('~</body>\s*</html>~', $string, $buffer);
 	}
