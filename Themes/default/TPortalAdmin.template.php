@@ -677,6 +677,17 @@ function template_menucore()
                             <option value="3" ', $context['TPortal']['editmenuitem']['sub'] == '3' ? 'selected' : '', '>3</option>
                         </select>   
 						</dd>
+                        <dt>
+                            <label for="tp_menu_position"><h4>'.$txt['tp-menu-after'].':</h4><label>
+                        </dt>
+                        <dd>
+                        <select style="max-width:98%;" size="1" name="tp_menu_position" id="tp_menu_position">';
+                        foreach($context['menu_buttons'] as $k => $v ) {
+                            echo '<option value="', $k ,'" ', $context['TPortal']['editmenuitem']['position'] == $k ? 'selected' : '', '>', $v['title'], '</option>';
+                        }
+                        echo '
+                        </select>   
+						</dd>
 					</dl>
 				<div>
 					</div>
@@ -695,6 +706,8 @@ function template_menucore()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
+                        $("#tp_menu_position").hide()
+                        $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').hide();
                         $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
@@ -705,6 +718,8 @@ function template_menucore()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
+                        $("#tp_menu_position").show()
+                        $(\'label[for="tp_menu_position"]\').show();
                         $(\'label[for="tp_menu_sub"]\').hide();
                         $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
@@ -715,6 +730,8 @@ function template_menucore()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $("#tp_menu_position").hide()
+                        $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').hide();
@@ -725,6 +742,8 @@ function template_menucore()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $("#tp_menu_position").hide()
+                        $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').hide();
@@ -735,6 +754,8 @@ function template_menucore()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $("#tp_menu_position").hide()
+                        $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').show();
@@ -745,6 +766,8 @@ function template_menucore()
                         $("#tp_menu_article").show()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
+                        $("#tp_menu_position").hide()
+                        $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').show();
@@ -755,6 +778,8 @@ function template_menucore()
                         $("#tp_menu_category").show()
                         $("#tp_menu_article").show()
                         $("#tp_menu_sub").show()
+                        $("#tp_menu_position").hide()
+                        $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').show();

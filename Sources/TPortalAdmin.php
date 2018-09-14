@@ -889,6 +889,7 @@ function do_menus()
 				'IDtype' => $idtype,
 				'off' => $row['value5'],
 				'sub' => $row['value4'],
+				'position' => $row['value7'],
 				'subtype' => $row['subtype'],
 				'newlink' => $newlink,
 			);
@@ -905,6 +906,7 @@ function do_menus()
 						'IDtype' => $idtype,
 						'off' => $status,
 						'sub' => $row['value4'],
+						'position' => $row['value7'],
 						'subtype' => $row['subtype'],
 						'newlink' => $newlink ,
 					);
@@ -2423,6 +2425,16 @@ function do_postchecks()
 							'val4' => $value,
 							'varid' => $where,
 						)
+                    );
+				elseif($what == 'tp_menu_position')
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_variables
+						SET value7 = {string:val7}
+						WHERE id = {int:varid}',
+						array(
+							'val7' => $value,
+							'varid' => $where,
+						)
 					);
 				elseif(substr($what, 0, 15) == 'tp_menu_newlink')
 					$smcFunc['db_query']('', '
@@ -2689,6 +2701,7 @@ function do_postchecks()
 				$mtype = $mlink;
 
 			$msub = $_POST['tp_menu_sub'];
+			$mpos = $_POST['tp_menu_position'];
 			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_variables',
 				array(
@@ -2698,9 +2711,10 @@ function do_postchecks()
 					'type' => 'string',
 					'value4' => 'string',
 					'value5' => 'int',
-					'subtype2'=> 'int'
+					'subtype2'=> 'int',
+                    'value7' => 'string'
 				),
-				array($mtitle, $mnewlink, $mtype, 'menubox', $msub, -1, $mid),
+				array($mtitle, $mnewlink, $mtype, 'menubox', $msub, -1, $mid, $mpos),
 				array('id')
 			);
 

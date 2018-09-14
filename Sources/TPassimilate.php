@@ -197,24 +197,33 @@ function tpAddMenuItems(&$buttons)
     }
 
     // Add the forum button     
-    array_splice($buttons, array_search('home', array_keys($buttons), true) + 1, 0, array ( 
-            'forum' => array (
-                'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-                'href' => $scripturl.'?action=forum',
-                'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
+    $buttons = array_merge(
+            array_slice($buttons, 0, array_search('home', array_keys($buttons), true) + 1),
+            array ( 
+                'forum' => array (
+                    'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
+                    'href' => $scripturl.'?action=forum',
+                    'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
+                ),
             ),
-        )
+            $buttons
     );
+
+
     // Add the admin button
-    array_splice($buttons, array_search('calendar', array_keys($buttons), true) + 1, 0, array ( 
-            'tpadmin' => array (
-                'title' => $txt['tp-tphelp'],
-                'href' => $scripturl.'?action=tpadmin',
-                'show' =>  TPcheckAdminAreas(),
-                'sub_buttons' => tp_getbuttons(),
+    $buttons = array_merge(
+            array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
+            array ( 
+                'tpadmin' => array (
+                    'title' => $txt['tp-tphelp'],
+                    'href' => $scripturl.'?action=tpadmin',
+                    'show' =>  TPcheckAdminAreas(),
+                    'sub_buttons' => tp_getbuttons(),
+                ),
             ),
-        )
+            $buttons
     );
+
     // Add the help
     if(array_key_exists('help', $buttons)) {
         $buttons['help']['sub_buttons'] = array(
@@ -228,7 +237,8 @@ function tpAddMenuItems(&$buttons)
 
 
     $request = $smcFunc['db_query']('', '
-        SELECT value1 AS name , value3 AS href FROM {db_prefix}tp_variables 
+        SELECT value1 AS name , value3 AS href , value7 AS position
+        FROM {db_prefix}tp_variables 
         WHERE type = {string:type} 
         AND value3 LIKE {string:mainmenu}
         AND value5 = 0',
@@ -239,20 +249,24 @@ function tpAddMenuItems(&$buttons)
     );
 
     if($smcFunc['db_num_rows']($request) > 0) {
+        $i = 0;
         while($row = $smcFunc['db_fetch_assoc']($request)) {
             // Add the admin button
-            array_splice($buttons, array_search('calendar', array_keys($buttons), true) + 1, 0, array ( 
-                    'tpbutton' => array (
-                        'title' => $row['name'],
-                        'href' => substr($row['href'], 4),
-                        'show' =>  true,
+            $i++;
+            $buttons = array_merge(
+                    array_slice($buttons, 0, array_search($row['position'], array_keys($buttons), true) + 1),
+                    array ( 
+                        'tpbutton'.$i => array (
+                            'title' => $row['name'],
+                            'href' => substr($row['href'], 4),
+                            'show' =>  true,
+                        ),
                     ),
-                )
-            );
+                    $buttons
+                );
         }
         $smcFunc['db_free_result']($request);
     }
-
 }
 
 function tpAddProfileMenu(&$profile_areas)

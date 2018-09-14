@@ -517,6 +517,7 @@ $txt['tp-memberlist'] = 'Memberlist';
 $txt['tp-stats'] = 'Stats';
 $txt['tp-status'] ='Status';
 $txt['tp-sub_item'] ='Position';
+$txt['tp-menu-after'] ='Add Menu after';
 $txt['tp-title']='Title';
 $txt['tp-remove'] = 'Remove';
 $txt['tp-pos'] = 'Pos';
