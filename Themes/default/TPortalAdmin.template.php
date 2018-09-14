@@ -117,7 +117,7 @@ function template_blockoverview()
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="blockoverview">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div><div></div>
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
 			<span class="topslice"><span></span></span>
 			<div class="content" style="overflow: hidden; padding: 2% 0 2% 2%;">';
@@ -161,7 +161,7 @@ function template_overview()
 	global $context, $settings, $txt, $boardurl;
 
 	echo '
-	<div id="tp_overview" class="windowbg2">';
+	<div id="tp_overview" class="windowbg">';
 		
 	if(is_array($context['admin_tabs']) && count($context['admin_tabs'])>0)
 	{
@@ -320,7 +320,7 @@ function template_modules()
 		<input name="tpadmin_form" type="hidden" value="modules">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-modules'] . '</h3></div>
 		<div id="modules" class="admintable admin-area">
-			<div class="windowbg2 padding-div">';
+			<div class="windowbg noup padding-div">';
 
 		foreach($context['TPortal']['internal_modules'] as $modul)
 			echo '
@@ -488,7 +488,7 @@ function template_menubox()
 		<input name="tpadmin_form" type="hidden" value="menus">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-menumanager'].' <a href="' . $scripturl . '?action=tpadmin;sa=addmenu;fullmenu">['.$txt['tp-addmenu'].']</a></h3></div>
 		<div id="single-menus" class="admintable admin-area">
-			<div class="windowbg2 padding-div">';
+			<div class="windowbg noup padding-div">';
 
 			foreach($context['TPortal']['menus'] as $mbox)
 			{
@@ -566,16 +566,14 @@ function template_addmenu()
 		        <input name="tpadmin_form" type="hidden" value="menuadd">
                 <div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
                 <div id="add-menu" class="admintable admin-area">
-                    <div class="windowbg2">
-                        <div class="padding-div">
-                            <dl class="settings">
-                                <dt><label for="field_name"><h4>'.$txt['tp-title'].'</h4><label>
-                                </dt>
-                                <dd><input name="tp_menu_title" type="text" size="40" value=""><br>
-                                </dd>
-                            </dl>
-                        </div>
-                        <div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+                    <div class="windowbg noup padding-div">
+						<dl class="settings">
+							<dt><label for="field_name"><h4>'.$txt['tp-title'].'</h4><label>
+							</dt>
+							<dd><input name="tp_menu_title" type="text" size="40" value=""><br>
+							</dd>
+						</dl>
+						<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
                     </div>
                 </div>
             </form>';
@@ -604,7 +602,7 @@ function template_menucore()
 
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
-		<div class="windowbg2 padding-div">
+		<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
                             <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
@@ -777,7 +775,7 @@ function template_panels()
 		<input name="tpadmin_form" type="hidden" value="panels">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-panelsettings'] . '</h3></div>
 			<div id="panels-admin" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helppanels'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helppanels'] , '</div><div></div>
 
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
@@ -965,7 +963,7 @@ function template_settings()
 		<input name="tpadmin_form" type="hidden" value="settings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div><div></div>
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
 						<!-- START non responsive themes form -->
@@ -1146,7 +1144,7 @@ function template_artsettings()
 		<input name="tpadmin_form" type="hidden" value="artsettings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-articlesettings'] . '</h3></div>
 		<div id="article-settings" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpartsettings'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpartsettings'] , '</div><div></div>
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
@@ -1258,7 +1256,7 @@ function template_frontpage()
 		<input name="tpadmin_form" type="hidden" value="frontpage">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-frontpage_settings'] . '</h3></div>
 		<div id="frontpage-settings" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpfrontpage'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpfrontpage'] , '</div><div></div>
 			<div class="windowbg noup">
 				<div class="formtable padding-div">		
 					<dl class="settings">
@@ -1775,7 +1773,7 @@ function template_addcategory()
 		<input name="tpadmin_form" type="hidden" value="addcategory">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-addcategory'] . '</h3></div>
 		<div id="new-category" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpaddcategory'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpaddcategory'] , '</div><div></div>
 			<div class="windowbg noup ">
 				<div class="formtable padding-div">
 					<dl class="settings">
@@ -1819,7 +1817,7 @@ function template_articles()
 		<input name="tpadmin_form" type="hidden" value="articles">
 		<div class="cat_bar"><h3 class="catbg">' , $txt['tp-articles'] , !empty($context['TPortal']['categoryNAME']) ? $txt['tp-incategory']. ' ' . $context['TPortal']['categoryNAME'].' ' : '' ,  '</h3></div> 
 		<div id="edit-articles" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helparticles'] , '</div>
+			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helparticles'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
 
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
@@ -1978,7 +1976,7 @@ function template_strays()
 		<input name="tpadmin_form" type="hidden" value="strays">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-uncategorised2'] . '</h3></div>
 		<div id="uncategorized" class="admintable admin-area">
-				<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpstrays'] , '</div>';
+				<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpstrays'] , '</div><div></div>';
 	if(isset($context['TPortal']['arts_nocat']))
 	{
 		echo '
