@@ -540,6 +540,7 @@ function template_addmenu()
             $context['TPortal']['editmenuitem']['sub']      = 0;
             $context['TPortal']['editmenuitem']['newlink']  = '0';
             $context['TPortal']['editmenuitem']['type']     = 'cats';
+            $context['TPortal']['editmenuitem']['position'] = 'home';
 
 			echo '
 	            <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
