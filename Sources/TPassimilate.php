@@ -249,12 +249,14 @@ function tpAddMenuItems(&$buttons)
     );
 
     if($smcFunc['db_num_rows']($request) > 0) {
+        $i = 0;
         while($row = $smcFunc['db_fetch_assoc']($request)) {
             // Add the admin button
+            $i++;
             $buttons = array_merge(
                     array_slice($buttons, 0, array_search($row['position'], array_keys($buttons), true) + 1),
                     array ( 
-                        'tpbutton' => array (
+                        'tpbutton'.$i => array (
                             'title' => $row['name'],
                             'href' => substr($row['href'], 4),
                             'show' =>  true,
