@@ -2402,8 +2402,8 @@ function template_editarticle($type = '')
 							<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>
 						</div><br>
 					</dd>
-										<dt>
-						<label for="field_name">', $txt['tp-useintro'], '</label>
+					<dt>
+						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
 					<dd>
 							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'
@@ -2413,9 +2413,9 @@ function template_editarticle($type = '')
 					';
 				if($mg['articletype'] == 'php' || $mg['articletype'] == '' || $mg['articletype'] == 'html')
 				{
-					echo '
-					<div class="font-strong">'.$txt['tp-introtext'].'</div>
-						<div>';
+					echo '<div id="tp_article_show_intro">
+                        <div class="font-strong">'.$txt['tp-introtext'].'</div>';
+
 					if($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
 					else
@@ -2694,6 +2694,26 @@ function template_editarticle($type = '')
 			</div>
 		</div>
 	</form>';
+
+    $context['insert_after_template'] =
+        '<script>
+        $(function () {
+                $(\'input[type=radio][name=tp_article_useintro]\').change(function() {
+                    alert ( $(this).val() ) 
+                    switch($(this).val()){
+                        case "1":
+                            $("#tp_article_show_intro").show()
+                            break;
+                        case "0":
+                            $("#tp_article_show_intro").hide()
+                            break;
+                        default:
+                            $("#tp_article_show_intro").show()
+                }
+            });
+        });
+        </script>';
+
 }
 
 // manage article icons and pictures
