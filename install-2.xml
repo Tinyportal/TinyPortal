@@ -17,18 +17,4 @@
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>
-	
-	<file name="$sourcedir/QueryString.php">
-		<operation>
-			<search position="replace"><![CDATA[?:board|topic)=]]></search>
-			<add><![CDATA[?:board|topic|page|cat)=]]></add>
-		</operation>
-	</file>
-	
-	<file name="$themedir/index.template.php" error="skip">
-		<operation>
-			<search position="after"><![CDATA[<a href="', $scripturl, '?action=help">', $txt['help'], '</a>]]></search>
-			<add><![CDATA[<a href="', $scripturl, '?action=tpmod;sa=help">', $txt['tp-tphelp'], '</a> | ]]></add>
-		</operation>
-	</file>
 </modification>
