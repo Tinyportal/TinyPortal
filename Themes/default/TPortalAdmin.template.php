@@ -2413,8 +2413,8 @@ function template_editarticle($type = '')
 					';
 				if($mg['articletype'] == 'php' || $mg['articletype'] == '' || $mg['articletype'] == 'html')
 				{
-					echo '<div id="tp_article_show_intro">
-                        <div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
+                        '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
 
 					if($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
@@ -2426,8 +2426,8 @@ function template_editarticle($type = '')
 				}
 				elseif($mg['articletype'] == 'bbc' || $mg['articletype'] == 'import')
 				{
-					echo '<div id="tp_article_show_intro">
-					<div class="font-strong">'.$txt['tp-introtext'].'</div>
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,    
+                    '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
 					</div>
