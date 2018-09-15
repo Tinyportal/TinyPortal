@@ -2426,11 +2426,12 @@ function template_editarticle($type = '')
 				}
 				elseif($mg['articletype'] == 'bbc' || $mg['articletype'] == 'import')
 				{
-					echo '
+					echo '<div id="tp_article_show_intro">
 					<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
-					</div>';
+					</div>
+                    </div>';
 				}
 				echo '<br><hr>
 				<dl class="settings">
@@ -2707,7 +2708,7 @@ function template_editarticle($type = '')
                             $("#tp_article_show_intro").hide()
                             break;
                         default:
-                            $("#tp_article_show_intro").show()
+                            $("#tp_article_show_intro").hide()
                 }
             });
         });
