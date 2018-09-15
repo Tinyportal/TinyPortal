@@ -956,7 +956,7 @@ function template_main()
 					<div style="padding: 10px;">
 							<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
 									<b>'.$txt['tp-search'].':</b><br>
-									<input type="text" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px;" name="dl_search" id="dl_search" /><br>
+									<input type="text" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px;" name="dl_search" id="dl_search" required/><br>
 									<input type="checkbox" id="dl_searcharea_name" checked="checked"/> ' , $txt['tp-searcharea-name'] , '<br>
 									<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> ' , $txt['tp-searcharea-descr'] , '<br>
 									<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
