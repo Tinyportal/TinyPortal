@@ -220,7 +220,8 @@ function tpAddMenuItems(&$buttons)
             array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
             array ( 
                 'tpadmin' => array (
-                    'title' => $txt['tp-tphelp'],
+                    'icon' => 'tinyportal/menu_tp.png',
+					'title' => $txt['tp-tphelp'],
                     'href' => $scripturl.'?action=tpadmin',
                     'show' =>  TPcheckAdminAreas(),
                     'sub_buttons' => tp_getbuttons(),
@@ -287,6 +288,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['tpsummary'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_summary',
+		'icon' => 'menu_tp',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
@@ -297,6 +299,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['articlesprofile'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_articles',
+		'icon' => 'menu_tparticle',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
@@ -311,6 +314,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['downloadprofile'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_download',
+		'icon' => 'menu_tpdownload',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
@@ -321,6 +325,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['shoutboxprofile'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_shoutb',
+		'icon' => 'menu_tpshout',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
