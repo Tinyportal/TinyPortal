@@ -288,6 +288,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['tpsummary'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_summary',
+		'icon' => 'menu_tp',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
@@ -298,6 +299,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['articlesprofile'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_articles',
+		'icon' => 'menu_tparticle',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
@@ -312,6 +314,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['downloadprofile'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_download',
+		'icon' => 'menu_tpdownload',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
@@ -322,6 +325,7 @@ function tpAddProfileMenu(&$profile_areas)
 		'label' => $txt['shoutboxprofile'],
 		'file' => 'TPmodules.php',
 		'function' => 'tp_shoutb',
+		'icon' => 'menu_tpshout',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
