@@ -2699,7 +2699,6 @@ function template_editarticle($type = '')
         '<script>
         $(function () {
                 $(\'input[type=radio][name=tp_article_useintro]\').change(function() {
-                    alert ( $(this).val() ) 
                     switch($(this).val()){
                         case "1":
                             $("#tp_article_show_intro").show()
