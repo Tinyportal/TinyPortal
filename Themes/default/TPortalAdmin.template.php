@@ -704,10 +704,10 @@ function template_menucore()
                         $("#tp_menu_newlink").show()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
-                        $("#tp_menu_sub").hide()
+                        $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
                         $(\'label[for="tp_menu_position"]\').hide();
-                        $(\'label[for="tp_menu_sub"]\').hide();
+                        $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
                         break;
