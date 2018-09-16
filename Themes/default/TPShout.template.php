@@ -279,48 +279,40 @@ function template_tpshout_profile()
 	global $settings, $txt, $context;
 
 	echo '
-	<div class="bordercolor" style="margin-left: 1ex;">
-		<div class="title_bar"><h3 class="titlebg">'.$txt['shoutboxprofile'].'</h3></div>
-		<div id="tpshout_profile" style="width:100%;">
-			<div class="windowbg">
-				<div class="smalltext" style="padding: 2ex;">'.$txt['shoutboxprofile2'].'</div>
-			</div>
-			<div class="windowbg2" style="margin-top:1px;margin-bottom:1px;">
-				<div style="padding: 2ex;">';
-
-	echo $txt['tp-prof_allshouts'].' <b>', !$context['TPortal']['profile_shouts_hide'] ? $context['TPortal']['all_shouts'] : '0' ,'</b><br>';
+		<div class="cat_bar"><h3 class="catbg">'.$txt['shoutboxprofile'].'</h3></div>
+		<p class="information">'.$txt['shoutboxprofile2'].'</p>
+		<div></div>
+		<div id="tpshout_profile" class="windowbg">
+			<div class="windowbg addborder" style="padding: 2ex;">';
+	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
-				</div>
 			</div>
-			<div class="catbg">
-				<div class="float-items" align="center" style="width:22%;border-right:1px solid #ffffff;">'.$txt['date'].'</div>
-				<div align="center" class="smalltext float-items" style="width:51%;">',$txt['tp-shout'],'</div>
-				<div class="float-items" align="center" style="width:19%;border-left:1px solid #ffffff;">'. $txt['tp-edit'] .'</div>
+			<div class="catbg addborder">
+				<div class="font-strong float-items" align="center" style="width:22%;border-right:1px solid #ffffff;">'.$txt['date'].'</div>
+				<div class="font-strong float-items" align="center" style="width:51%;">',$txt['tp-shout'],'</div>
+				<div class="font-strong float-items" align="center" style="width:19%;border-left:1px solid #ffffff;">'. $txt['tp-edit'] .'</div>
 			    <p class="clearthefloat"></p>
-		  </div>';
-	if(!$context['TPortal']['profile_shouts_hide'] && isset($context['TPortal']['profile_shouts']) && sizeof($context['TPortal']['profile_shouts'])>0){
+			</div>';
+	if(isset($context['TPortal']['profile_shouts']) && sizeof($context['TPortal']['profile_shouts'])>0){
 		foreach($context['TPortal']['profile_shouts'] as $art){
 			echo '
-			<div class="windowbg2" style="margin-bottom:1px;">
-					<div align="center" class="smalltext float-items" style="width:22%;" >',$art['created'],'</div>
-					<div class="smalltext float-items" style="width:51%;" >',$art['shout'],'</div>
-					<div class="float-items" align="center" style="width:21%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.gif" alt="" /></a>' : '' , '</div>
-				    <p class="clearthefloat"></p>
+			<div class="windowbg2 addborder" style="margin-bottom:1px;">
+				<div align="center" class="smalltext float-items" style="width:22%;" >',$art['created'],'</div>
+				<div class="smalltext float-items" style="width:51%;" >',$art['shout'],'</div>
+				<div class="float-items" align="center" style="width:21%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.gif" alt="" /></a>' : '' , '</div>
+				<p class="clearthefloat"></p>
 			</div>';
 		}
 	}
 	else
-			echo '
-				<div class="windowbg2">
-					<div align="center" class="smalltext">',$txt['tpsummary_shout'],' 0</div>
-				</div>';
+		echo '
+			<div class="windowbg2">
+				<div align="center" class="smalltext">',$txt['tpsummary_noshout'],' 0</div>
+			</div>';
 
 	echo '
-			<div class="windowbg">
-				<div style="padding: 2ex; font-weight: bold;">'.$context['TPortal']['pageindex'].'</div>
-			</div>
-		</div>
-	</div>';
+			<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
+		</div>';
 
 }
 
