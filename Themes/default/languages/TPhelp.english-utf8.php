@@ -57,7 +57,7 @@ $txt['tphelp_articles_main']= '
 <h2 class="tphelp">&nbsp; Articles</h2>
 
 <b class="tphelp">Admin</b>:
-<p class="tphelp">You can enter your "<i>Tinyportal > Manage articles</i>" section and create unlimited categories & subcategories for all of your articles. For each category you create, you can choose your sorting options, which membergroups have access to that category, the article layout, and how many articles to display per page just to name a few.</p><p class="tphelp"> After that, take a look at your "<i>Articles > Settings</i>" page and decide if you want to show a category icon, or even hide the quick edit link under each article.</p><p class="tphelp">If you keep browsing, you will also find a "<i>Articles > Submission</i>" page. Here you will find options to select which membergroups can submit an article. Once your users begin writing articles, their submission will appear on this page for approval before it can actually be viewed by other users.</p> 
+<p class="tphelp">You can enter your "<i>Tinyportal > Manage articles</i>" section and create unlimited categories & subcategories for all of your articles. For each category you create, you can choose your sorting options, which membergroups have access to that category, the article layout, and how many articles to display per page just to name a few.</p><p class="tphelp"> After that, take a look at your "<i>Articles > Settings</i>" page and decide if you want to show a category icon, or even hide the quick edit link under each article.</p><p class="tphelp">If you keep browsing, you will also find a "<i>Articles > Submission</i>" page. Here you will find options to select which membergroups can submit an article. Once your users begin writing articles, their submission will appear on this page for approval before it can actually be viewed by other users.</p>
 
 <p class="tphelp">The types of articles are HTML, PHP, BBC, Imported, or External pages that can be added to your site. Every article carries with it the options to display views, blocks, date, author, avatar, and or linktree. It even has additional options such as what theme it should be viewed in, no theme at all, ratings, and/or user comments.</p>
 
@@ -84,7 +84,7 @@ $txt['tphelp_frontpage_main']= '
 <p class="tphelp">To see these options, go to: "<i>TinyPortal > Settings > Frontpage</i>".</p>
 <p><br /></p>
 <b class="tphelp">User</b>:
-<p class="tphelp">When it comes to the frontpage, the user just doesn\'t have any direct options. However the user does has some indirect options available in the panels and blocks...</p> 
+<p class="tphelp">When it comes to the frontpage, the user just doesn\'t have any direct options. However the user does has some indirect options available in the panels and blocks...</p>
 <p class="tphelp">Assuming the admin has given you or your membergroup permission to do so, a block or panel can be collapsed and ignored. This is an On-The-Fly setting often located within the header/title of the block(for blocks) or below the copyright(for panels), controlled by a little image/icon.</p>
 
 <div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For the complete documentation, please browse our <a href="https://www.tinyportal.net/docs/index.php?cat=95" target="_blank"><b class="tphelp">Frontpage Documentation</b></a>.</div>
@@ -95,7 +95,7 @@ $txt['tphelp_frontpage_main']= '
 $txt['tphelp_panels_main']= '
 <h2 class="tphelp">&nbsp; Panels</h2>
 <b class="tphelp">Admin</b>:
-<p class="tphelp">You can control how much padding you want between your panels, and/or decide which sections/actions you want to hide all your panels in. Panels do have additional settings like setting the width, hide while in forum, and various layouts for your blocks inside. 
+<p class="tphelp">You can control how much padding you want between your panels, and/or decide which sections/actions you want to hide all your panels in. Panels do have additional settings like setting the width, hide while in forum, and various layouts for your blocks inside.
 For these panel settings, go to: "<i>TinyPortal > Manage blocks > Panels</i>".</p>
 <p><br /></p>
 <b class="tphelp">User</b>:
@@ -153,7 +153,7 @@ $txt['tphelp_plugins_main']= '
 
 // Credits...
 $txt['tp-credit1'] = '
-<h4>Founder</h4> 
+<h4>Founder</h4>
 Bjorn "Bloc" Kristiansen
 <br /><br />
 <h4>Developers and Contributors</h4>
@@ -171,7 +171,7 @@ For those who relentlessy find bugs, give feedback, and drive the developer craz
 <h4>Language Translators</h4>
 Thank you for efforts in making TinyPortal available around the globe.';
 
-$txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible. 
+$txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible.
 The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
  Thank you Bloc for allowing the TP Team to continue your work.';
 $txt['tp-credits'] = 'TinyPortal 1.5.1 - Credits';

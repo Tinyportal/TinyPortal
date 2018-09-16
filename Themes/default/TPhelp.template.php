@@ -28,7 +28,7 @@ function template_main()
 function template_tpcredits()
 {
 	global $txt;
-	
+
 	echo '
 	<div class="tborder">
 		<div class="cat_bar">
@@ -48,7 +48,7 @@ function template_tpcredits()
 function template_tphelp()
 {
 	global $context, $txt;
-	
+
 	echo '
 	<span class="upperframe"><span></span></span>
 	<div class="roundframe">

@@ -74,7 +74,7 @@ function template_tp_articles()
 			<div class="windowbg2 addborder">
 				<div class="float-items fullwidth-on-res-layout" style="width:26%;"><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['off']==1 ? '<i>' : '' ,  $art['subject'], $art['off']==1 ? '</i>' : '' , $art['approved']==0 ? ')' : '' ,  '</a></div>
 				<a href="" class="clickme">More</a>
-				<div class="box" style="width:72%;float:left;">				
+				<div class="box" style="width:72%;float:left;">
 				<div class="smalltext float-items fullwidth-on-res-layout" style="width:15%;">
 				  <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 				  <div id="size-on-respnsive-layout">',$art['date'],'</div>
@@ -121,7 +121,7 @@ $clickme.click( function(e) {
     e.preventDefault();
 });
 });
-</script>		
+</script>
 	</div>';
 	}
 	elseif($context['TPortal']['profile_action'] == 'settings'){
@@ -200,7 +200,7 @@ if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['
 				</div>
 
 				<a href="" class="clickme">More</a>
-				<div class="box" style="width:81%;float:left;">				
+				<div class="box" style="width:81%;float:left;">
 				  <div style="width:24%;" class="fullwidth-on-res-layout smalltext float-items">
 				    <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
 				    <div id="size-on-respnsive-layout">',$art['created'],'</div>
@@ -211,7 +211,7 @@ if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['
 				  </div>
 				  <div style="width:18%;" class="fullwidth-on-res-layout float-items">
 				    <div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-ratings'].'</div>
-				    ' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ') 
+				    ' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')
 				  </div>
 				  <div style="width:18%;" class="fullwidth-on-res-layout float-items" align="center">
 				    <div id="show-on-respnsive-layout" style="word-break:break-all;">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
@@ -223,7 +223,7 @@ if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['
 				   </div>
 			       <p class="clearthefloat"></p>
 				</div>
-				<p class="clearthefloat"></p>		   
+				<p class="clearthefloat"></p>
 		    </div>';
 	}
 }
@@ -244,7 +244,7 @@ $clickme.click( function(e) {
     e.preventDefault();
 });
 });
-</script>			
+</script>
 	</div>';
 }
 

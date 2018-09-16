@@ -27,7 +27,7 @@ function TPortal_init()
   if(strpos($forum_version, '2.1') !== false) {
     global $smcFunc;
     $modSettings['disableQueryCheck'] = true;
-    $sqlMode  = $smcFunc['db_query']('' , 
+    $sqlMode  = $smcFunc['db_query']('' ,
       'SELECT @@sql_mode AS SQL_MODE;'
     );
     if($smcFunc['db_num_rows']($sqlMode) === 1) {
@@ -47,23 +47,23 @@ function TPortal_init()
     $smcFunc['db_free_result']($sqlMode);
     $modSettings['disableQueryCheck'] = false;
   }
-  
+
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['fixed_width']))
 		return;
 
 	if(loadLanguage('TPortal') == false)
-		loadLanguage('TPortal', 'english');		
+		loadLanguage('TPortal', 'english');
 
 	$context['TPortal'] = array();
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
-	
+
 	if(!isset($context['forum_name']))
 		$context['forum_name'] = '';
 
 	// Include a ton of functions.
 	require_once($sourcedir.'/TPSubs.php');
-	
+
 	// Add all the TP settings into ['TPortal']
 	setupTPsettings();
 
@@ -81,7 +81,7 @@ function TPortal_init()
 
 	fetchTPhooks();
 	doModules();
- 
+
 	// set up the layers, but not for certain actions
 	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer']))
 		$context['template_layers'][] = $context['TPortal']['hooks']['tp_layer'];
@@ -92,7 +92,7 @@ function TPortal_init()
 	// is the permanent theme option set?
 	if(isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged'])
 		TP_permaTheme($_GET['theme']);
-	
+
 	// do after action
 	if(isset($_GET['page']) && !isset($context['current_action']))
 		$context['shortID'] = doTPpage();
@@ -114,7 +114,7 @@ function TPortal_init()
 	// if we are in permissions admin section, load all permissions
 	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
 		TPcollectPermissions();
-		
+
 	// Show search/frontpage topic layers?
 	TP_doTagSearchLayers();
 
@@ -124,7 +124,7 @@ function TPortal_init()
 		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
 			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
 	}
-	// set cookie change for selected upshrinks 
+	// set cookie change for selected upshrinks
 	tp_setupUpshrinks();
 
 	// finally..any errors finding an article or category?
@@ -145,7 +145,7 @@ function TPortal_init()
 	}
 }
 
-function addPromoteButton(&$normal_buttons) 
+function addPromoteButton(&$normal_buttons)
 {
 	global $context, $scripturl;
 
@@ -159,11 +159,11 @@ function addPromoteButton(&$normal_buttons)
 }
 
 
-function TP_doTagSearchLayers() 
+function TP_doTagSearchLayers()
 {
 
 	global $context;
-	
+
 	// are we on search page? then add TP search options as well!
 	if($context['TPortal']['action'] == 'search')
 		$context['template_layers'][] = 'TPsearch';
@@ -174,7 +174,7 @@ function TP_doTagSearchLayers()
 function TP_whichHideBars()
 {
 	global $context;
-	
+
 	// for some very large forum sections, give the option to hide bars
 	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile')
 		tp_hidebars('all');
@@ -198,7 +198,7 @@ function TP_whichHideBars()
 	// finally..wap modes should not display the bars
 	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode']))
 		tp_hidebars('all');
-	
+
 	// maybe we are at the password pages?
 	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2')))
 		tp_hidebars('all');
@@ -207,23 +207,23 @@ function TP_whichHideBars()
 function TP_loadCSS()
 {
 	global $context, $settings;
-    
+
 	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
-	$context['html_headers'] .= '<!--[if lt IE 9]>'; 
+	$context['html_headers'] .= '<!--[if lt IE 9]>';
 	$context['html_headers'] .= '
 	<style type="text/css">
 		  body {min-width:900px;}
 	</style>
-	'; 
-	$context['html_headers'] .= '<![endif]-->'; 
-	$context['html_headers'] .= '<!--[if lt IE 7]>'; 
+	';
+	$context['html_headers'] .= '<![endif]-->';
+	$context['html_headers'] .= '<!--[if lt IE 7]>';
 	$context['html_headers'] .= '
 	<style type="text/css">
 	      #centerContainer {float: left;}
 		  body {width:900px;}
 	</style>
-	'; 
-	$context['html_headers'] .= '<![endif]-->';	
+	';
+	$context['html_headers'] .= '<![endif]-->';
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
@@ -315,7 +315,7 @@ function TP_loadTheme()
 				$row = $smcFunc['db_fetch_row']($request);
 				$smcFunc['db_free_result']($request);
 				$request = $smcFunc['db_query']('', '
-						SELECT art.id_theme 
+						SELECT art.id_theme
 						FROM {db_prefix}tp_articles AS art
 						WHERE featured = {int:feat}',
 							array('feat' => 1)
@@ -379,11 +379,11 @@ function setupTPsettings()
 			}
 			$smcFunc['db_free_result']($request);
 		}
-		
+
 		if (!empty($modSettings['cache_enable']))
 			cache_put_data('tpSettings', $context['TPortal'], 90);
 	}
-		
+
 	// setup the userbox settings
 	$userbox = explode(',', $context['TPortal']['userbox_options']);
 	foreach($userbox as $u => $val)
@@ -399,7 +399,7 @@ function setupTPsettings()
 	{
 		if(substr($what, 0, 14) == 'sitemap_items_' && !empty($value))
 			$context['TPortal']['sitemap_items'] .= ','. $value;
-	}	
+	}
 	if(isset($context['TPortal']['sitemap_items']))
 	{
 		$context['TPortal']['sitemap'] = explode(',', $context['TPortal']['sitemap_items']);
@@ -426,7 +426,7 @@ function setupTPsettings()
 		'tp_layer' => 'tp',
 		'tp_block' => 'TPblock',
 	);
-	
+
 
 	// start of things
 	$context['TPortal']['mystart'] = 0;
@@ -463,13 +463,13 @@ function setupTPsettings()
 	if(isset($_GET['action']) && $_GET['action'] == 'tpadmin')
 		$context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
 
-	// if we are in maintance mode, just hide panels 
+	// if we are in maintance mode, just hide panels
 	if (!empty($maintenance) && !allowedTo('admin_forum'))
 		tp_hidebars('all');
 
 	// save the action value
 	$context['TPortal']['action'] = !empty($_GET['action']) ? tp_sanitize($_GET['action']) : '';
-	
+
 	// save the frontapge setting for SMF
 	$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
 	if(empty($context['page_title']))
@@ -478,7 +478,7 @@ function setupTPsettings()
 	if(empty($context['TPortal']['standalone'])) {
 		$request = $smcFunc['db_query']('', '
 			SELECT value
-			FROM {db_prefix}tp_settings 
+			FROM {db_prefix}tp_settings
 			WHERE name = \'standalone_mode\''
 		);
 		$context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
@@ -523,13 +523,13 @@ function fetchTPhooks()
 
 	$request2 = $smcFunc['db_query']('', '
 		SELECT *
-		FROM {db_prefix}tp_variables 
+		FROM {db_prefix}tp_variables
 		WHERE type IN ({array_string:type})',
 		array(
 			'type' => $types
 		)
 	);
-	
+
 	$context['TPortal']['submitcheck'] = array('articles' => 0, 'uploads' => 0);
 
 	// do the actual hooks
@@ -575,7 +575,7 @@ function doTPpage()
 {
 	global $context, $scripturl, $txt, $modSettings, $boarddir, $sourcedir, $smcFunc, $user_info;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
-	
+
 	$now = time();
 	// Set the avatar height/width
 	$avatar_width = '';
@@ -591,8 +591,8 @@ function doTPpage()
 	{
 		$page = tp_sanitize($_GET['page']);
 		$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
-		
-		$_SESSION['login_url'] = $scripturl . '?page=' . $page; 
+
+		$_SESSION['login_url'] = $scripturl . '?page=' . $page;
 
 		if(allowedTo('tp_articles'))
         {
@@ -631,7 +631,7 @@ function doTPpage()
 				array('page' => is_numeric($page) ? (int) $page : $page)
 			);
         }
-        
+
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$article = $smcFunc['db_fetch_assoc']($request);
@@ -678,7 +678,7 @@ function doTPpage()
 				// allowed and all is well, go on with it.
 				$context['TPortal']['article'] = $article;
 
-				if ($image_proxy_enabled && !empty($article['avatar']) && stripos($article['avatar'], 'http://') !== false) 
+				if ($image_proxy_enabled && !empty($article['avatar']) && stripos($article['avatar'], 'http://') !== false)
 					$context['TPortal']['article']['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($article['avatar']) . '&hash=' . md5($article['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
 					$context['TPortal']['article']['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($article['avatar'], 'https://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : stristr($article['avatar'], 'http://') ? '<img src="' . $article['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
@@ -743,8 +743,8 @@ function doTPpage()
 
 				// We'll use this in the template to allow comment box
 				if (allowedTo('tp_artcomment'))
-					$context['TPortal']['can_artcomment'] = true;			
-					
+					$context['TPortal']['can_artcomment'] = true;
+
 				// fetch any comments
 				$request =  $smcFunc['db_query']('', '
 					SELECT var.* , IFNULL(mem.real_name,0) as realName,mem.avatar,
@@ -801,7 +801,7 @@ function doTPpage()
 						WHERE id = {int:artid}',
 						array('com' => $ccount, 'artid' => $article['id'])
 						);
-				
+
 				// the frontblocks should not display here
 				$context['TPortal']['frontpanel'] = 0;
 				// sort out the options
@@ -1009,7 +1009,7 @@ function doTPcat()
 	//return if not quite a category
 	if((isset($_GET['area']) && $_GET['area'] == 'manageboards') || isset($_GET['action']))
 		return;
-	
+
 	global $context, $scripturl, $txt, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
@@ -1077,7 +1077,7 @@ function doTPcat()
 				// fallback value
 				if(!isset($context['TPortal']['category']['options']['catlayout']))
 					$context['TPortal']['category']['options']['catlayout'] = 1;
-                
+
 				$request = $smcFunc['db_query']('', '
 					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
@@ -1117,7 +1117,7 @@ function doTPcat()
 						// expand the vislaoptions
 						$row['visual_options'] = explode(',', $row['options']);
 
-						if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+						if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 							$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 						else
 				 			$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
@@ -1249,7 +1249,7 @@ function doTPcat()
 	}
 	else
 		return;
-	
+
 }
 
 // do the frontpage
@@ -1261,7 +1261,7 @@ function doTPfrontpage()
 	// check we aren't in any other section because 'cat' is used in SMF and TP
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
 		return;
-	
+
 	$now = time();
 	// set up visual options for frontpage
 	$context['TPortal']['visual_opts'] = explode(',', $context['TPortal']['frontpage_visual']);
@@ -1281,7 +1281,7 @@ function doTPfrontpage()
 			$catsort = substr($vo, 5);
 		else
 			$catsort = 'date';
-		
+
 		if(substr($vo, 0, 10) == 'sortorder_')
 			$catsort_order = substr($vo, 10);
 		else
@@ -1301,19 +1301,19 @@ function doTPfrontpage()
 			$artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
 		else
 			$artgroups = '';
-		
+
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id
-			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var) 
-			WHERE art.off = 0 
+			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var)
+			WHERE art.off = 0
 			AND var.id = art.category
 			' . $artgroups . '
 			AND art.category > 0
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1 
+			AND art.approved = 1
 			AND art.frontpage = 1'
 		);
 
@@ -1321,7 +1321,7 @@ function doTPfrontpage()
 		{
 			$articles_total = $smcFunc['db_num_rows']($request);
 			$smcFunc['db_free_result']($request);
-		}	
+		}
 		else
 			$articles_total = 0;
 
@@ -1337,18 +1337,18 @@ function doTPfrontpage()
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 			FROM {db_prefix}tp_articles AS art
-			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category) 
+			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = 0 
+			WHERE art.off = 0
 			' . $artgroups . '
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = 1 
-			AND (art.frontpage = 1 OR art.featured = 1) 
+			AND art.approved = 1
+			AND (art.frontpage = 1 OR art.featured = 1)
 			ORDER BY art.featured DESC, art.sticky DESC, art.'.$catsort.' '. $catsort_order .'
 			LIMIT {int:start}, {int:max}',
 			array('start' => $start, 'max' => $max)
@@ -1374,11 +1374,11 @@ function doTPfrontpage()
 				// expand the vislaoptions
 				$row['visual_options'] = explode(',', $row['options']);
 
-				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 					$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
-			
+
 				if($counter == 0)
 					$context['TPortal']['category']['featured'] = $row;
 				elseif($counter < $col1 )
@@ -1386,7 +1386,7 @@ function doTPfrontpage()
 				elseif($counter > $col1 || $counter == $col1)
 					$context['TPortal']['category']['col2'][] = $row;
 
-				$counter++;						
+				$counter++;
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1403,16 +1403,16 @@ function doTPfrontpage()
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 			FROM {db_prefix}tp_articles AS art
-			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category) 
+			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = 0 
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			WHERE art.off = 0
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.featured = 1
-			AND art.approved = 1 
+			AND art.approved = 1
 			LIMIT 1'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1430,7 +1430,7 @@ function doTPfrontpage()
 			// expand the vislaoptions
 			$row['visual_options'] = explode(',', $row['options']);
 
-			if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+			if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 				$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 			else
 				$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
@@ -1444,7 +1444,7 @@ function doTPfrontpage()
 		$totalmax = 200;
 
 		loadLanguage('Stats');
-		
+
 		// Find the post ids.
 		if($context['TPortal']['front_type'] == 'forum_only')
         {
@@ -1475,7 +1475,7 @@ function doTPfrontpage()
 				)
 			);
         }
-        
+
 		$posts = array();
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 			$posts[] = $row['ID_FIRST_MSG'];
@@ -1486,13 +1486,13 @@ function doTPfrontpage()
 
 		// do some conversion
 		if($catsort == 'date')
-            $catsort = 'poster_time'; 
+            $catsort = 'poster_time';
 		elseif($catsort == 'authorID')
-            $catsort = 'id_member'; 
+            $catsort = 'id_member';
 		elseif($catsort == 'parse' || $catsort == 'id')
-            $catsort = 'id_msg'; 
+            $catsort = 'id_msg';
 		else
-			$catsort = 'poster_time'; 
+			$catsort = 'poster_time';
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, m.body,
@@ -1516,10 +1516,10 @@ function doTPfrontpage()
 				'max' => $max,
 			)
 		);
-	
+
 		// make the pageindex!
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
-		
+
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$total = $smcFunc['db_num_rows']($request);
@@ -1556,13 +1556,13 @@ function doTPfrontpage()
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
 				$row['boardnews'] = 1;
-				if(!isset($context['TPortal']['frontpage_visopts'])) 
+				if(!isset($context['TPortal']['frontpage_visopts']))
 					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
-				
+
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
 
-				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 					$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
@@ -1577,7 +1577,7 @@ function doTPfrontpage()
 				elseif($counter > $col1 || $counter == $col1)
 					$context['TPortal']['category']['col2'][] = $row;
 
-				$counter++;						
+				$counter++;
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1590,24 +1590,24 @@ function doTPfrontpage()
 			$artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
 		else
 			$artgroups = '';
-		
+
 		$totalmax = 200;
 		loadLanguage('Stats');
 		$year = 10000000;
 		$year2 = 100000000;
 
-		$request =  $smcFunc['db_query']('', 
+		$request =  $smcFunc['db_query']('',
 		'SELECT art.id, art.date, art.sticky, art.featured
-			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var) 
-			WHERE art.off = 0 
+			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var)
+			WHERE art.off = 0
 			AND var.id = art.category
 			' . $artgroups . '
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = 1 
+			AND art.approved = 1
 			AND (art.frontpage = 1 OR art.featured = 1)
 			ORDER BY art.featured DESC, art.sticky desc, art.date DESC'
 		);
@@ -1654,7 +1654,7 @@ function doTPfrontpage()
 				ORDER BY date DESC'
 			);
         }
-        
+
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
@@ -1667,7 +1667,7 @@ function doTPfrontpage()
 		$posts = array_reverse($posts);
 
 		// which should we select
-		$aposts = array(); 
+		$aposts = array();
         $mposts = array();
         $a = 0;
 		foreach($posts as $ab => $val)
@@ -1688,7 +1688,7 @@ function doTPfrontpage()
 			// Find the thumbs.
 			$request =  $smcFunc['db_query']('', '
 				SELECT id_thumb FROM {db_prefix}attachments
-				WHERE id_msg IN ({array_int:posts}) 
+				WHERE id_msg IN ({array_int:posts})
 				AND id_thumb > 0',
 				array('posts' => $mposts)
 			);
@@ -1739,7 +1739,7 @@ function doTPfrontpage()
 			)
 		);
 
-		unset($posts); 
+		unset($posts);
 		$posts = array();
 		// insert the forumposts into $posts
 		if($request && $smcFunc['db_num_rows']($request) > 0)
@@ -1764,21 +1764,21 @@ function doTPfrontpage()
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
 				$row['boardnews'] = 1;
-				
-				if(!isset($context['TPortal']['frontpage_visopts'])) 
-					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');				
-				
+
+				if(!isset($context['TPortal']['frontpage_visopts']))
+					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
+
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
 
-				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 					$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
 					$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 				if(!empty($row['thumb_id']))
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
-				
+
 				$posts[$row['date'].'0' . sprintf("%06s", $row['id'])] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1795,7 +1795,7 @@ function doTPfrontpage()
 					IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 				FROM {db_prefix}tp_articles AS art
-				LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category) 
+				LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 				LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
 				WHERE art.id IN ({array_string:artid})
@@ -1810,10 +1810,10 @@ function doTPfrontpage()
 					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
 					$row['rating'] = array_sum(explode(',', $row['rating']));
-	
-					if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+
+					if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 						$row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
-					else 
+					else
 						$row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
 
 					// we need some trick to put featured/sticky on top
@@ -1822,21 +1822,21 @@ function doTPfrontpage()
 						$sortdate = $row['date'] + $year;
 					if($row['featured'] == 1)
 						$sortdate = $row['date'] + $year + $year;
-					
+
 					$posts[$sortdate.'0' . sprintf("%06s", $row['id'])] = $row;
 				}
 				$smcFunc['db_free_result']($request);
 			}
-		}	
-		$total = count($posts); 
+		}
+		$total = count($posts);
         $col1 = ceil($total / 2);
 		$col2 = $total - $col1;
 		$counter = 0;
-		
+
 		// divide it
 		ksort($posts,SORT_NUMERIC);
 		$all = array_reverse($posts);
-		
+
 		foreach($all as $p => $row)
 		{
 			if($counter == 0)
@@ -1845,7 +1845,7 @@ function doTPfrontpage()
 				$context['TPortal']['category']['col1'][] = $row;
 			elseif($counter > $col1 || $counter == $col1)
 				$context['TPortal']['category']['col2'][] = $row;
-			$counter++;						
+			$counter++;
 		}
 	}
 
@@ -1861,21 +1861,21 @@ function doTPfrontpage()
 
     if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
 		$access = '1';
-        
+
 	// get the blocks
 	$request =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_blocks 
-		WHERE off = 0 
+		SELECT * FROM {db_prefix}tp_blocks
+		WHERE off = 0
 		AND bar = 4
 		AND '. $access .'
 		ORDER BY pos,id ASC'
 	);
 
-	$count = array('front' => 0); 
+	$count = array('front' => 0);
 	$fetch_articles = array();
 	$fetch_article_titles = array();
 	$panels = array(4 => 'front');
-    
+
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
@@ -1906,7 +1906,7 @@ function doTPfrontpage()
 			$can_edit = get_perm($row['editgroups'], '');
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage)
-				$can_edit = false; 
+				$can_edit = false;
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
@@ -1945,21 +1945,21 @@ function doTPfrontpage()
 	{
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype, 
+			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
 				IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9 
-			FROM {db_prefix}tp_articles as art 
+				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type !=3)
-			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category) 
-			WHERE ' . $fetchart.' 
-			AND art.off = 0 
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
+			WHERE ' . $fetchart.'
+			AND art.off = 0
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = 1 
+			AND art.approved = 1
 			AND art.category > 0 AND art.category < 9999'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1969,7 +1969,7 @@ function doTPfrontpage()
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 
-				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false) 
+				if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 					$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $row['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
 					$context['TPortal']['blockarticles'][$article['id']]['avatar']= $row['avatar'] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
@@ -1989,11 +1989,11 @@ function doTPfrontpage()
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, art.subject, art.date, art.category, art.author_id as authorID, art.shortname,
 			IFNULL(mem.real_name,art.author) as real_name FROM {db_prefix}tp_articles AS art
-			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member) 
+			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE ' . 	$fetchtitles . '
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.off = 0
 			AND art.category > 0
@@ -2023,7 +2023,7 @@ function doTPfrontpage()
 	{
 		$context['TPortal']['menu'] = array();
 		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
+			SELECT * FROM {db_prefix}tp_variables
 			WHERE type = {string:type} ORDER BY value5 ASC',
 			array('type' => 'menubox')
 		);
@@ -2079,7 +2079,7 @@ function doTPfrontpage()
 			$context['TPortal'][$panel.'panel'] = 0;
 
 	}
-	
+
 	$context['TPortal']['frontblocks'] = $blocks;
 
 	if (defined('WIRELESS') && WIRELESS)
@@ -2177,8 +2177,8 @@ function doTPblocks()
 	);
 
 	$context['TPortal']['hide_frontbar_forum'] = 0;
-	$count = array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0); 
-	
+	$count = array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0);
+
 	$fetch_articles = array();
 	$fetch_article_titles = array();
 
@@ -2213,7 +2213,7 @@ function doTPblocks()
 			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage)
-				$can_edit = false; 
+				$can_edit = false;
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
@@ -2252,20 +2252,20 @@ function doTPblocks()
 	{
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype, 
+			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
 			IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9 
-			FROM {db_prefix}tp_articles as art 
+			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id)
-			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category) 
+			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 			WHERE ' . $fetchart. '
-			AND art.off = 0 
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			AND art.off = 0
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1 
+			AND art.approved = 1
 			AND art.category > 0 AND art.category < 9999'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2287,7 +2287,7 @@ function doTPblocks()
 					$avatar_height = '';
 				}
 
-				if ($image_proxy_enabled && !empty($article['avatar']) && stripos($article['avatar'], 'http://') !== false) 
+				if ($image_proxy_enabled && !empty($article['avatar']) && stripos($article['avatar'], 'http://') !== false)
 					$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $article['avatar'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($article['avatar']) . '&hash=' . md5($article['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 				else
 					$context['TPortal']['blockarticles'][$article['id']]['avatar'] = $article['avatar'] == '' ? ($article['ID_ATTACH'] > 0 ? '<img src="' . (empty($article['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $article['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $article['filename']) . '" alt="" class="avatar" border="0" />' : '') : (stristr($article['avatar'], 'https://') ? '<img src="' . $article['avatar'] . '"' . $avatar_width . $avatar_height . ' alt="" class="avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($article['avatar'], ENT_QUOTES) . '" alt="" class="avatar" border="0" />');
@@ -2307,12 +2307,12 @@ function doTPblocks()
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, art.subject, art.date, art.category, art.author_id as authorID, art.shortname,
 	 		IFNULL(mem.real_name,art.author) as realName FROM {db_prefix}tp_articles AS art
-			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member) 
+			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE  '. 	$fetchtitles . '
 			AND art.off = 0
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0) 
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.') 
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.approved = 1'
 		);
@@ -2384,7 +2384,7 @@ function TPortal_panel($side)
 		ctheme_tportal_panel($side);
 		return;
 	}
-	
+
 	// decide for $flow
 	$flow = $context['TPortal']['block_layout_' . $side];
 
@@ -2392,16 +2392,16 @@ function TPortal_panel($side)
 
 	// $code = '
 	// <div class="tp_'.$side.'panel" style="overflow: hidden;">';
-/* 
+/*
 $code outputs an empty div in every panel after the div that contains the panel blocks
 $code has no closing tag </div>
-and gets output by calling return $code; at the end of this function that make the div take the closing tag from TPBlockLayout.template.php. 
+and gets output by calling return $code; at the end of this function that make the div take the closing tag from TPBlockLayout.template.php.
 Takes the closing tag of tptopbarHeader in the case of Top Panel Blocks, the closing tag of tpleftbarHeader in the case of Left Panel Blocks etc.
 Also I belive the code below is meant to be the closing tag but because is before return $code; then it's closing tptopbarHeader not $code div.
 [code]	// the upshrink routine for blocks
 	echo '</div>[/code]
-*/	
-	
+*/
+
 	// set the grid type
 	if($flow == 'grid')
 	{
@@ -2483,7 +2483,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 			'15' => array(4, 4, 4, 3),
 			'16' => array(4, 4, 4, 4),
 		);
-		
+
 	}
 	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4')))
 	{
@@ -2619,7 +2619,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 			if($i == ($flowcount-1))
 				$pad=0;
 
-			echo '<div class="panelsColumnsHorizontally" style="float: left; width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px; padding-bottom: '.$pad.'px;">'; 
+			echo '<div class="panelsColumnsHorizontally" style="float: left; width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px; padding-bottom: '.$pad.'px;">';
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 			echo '</div></div>';
 		}
@@ -2644,8 +2644,8 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				$flowmain++;
 				if($flow == 'horiz2' && $flowmain == 1) {$pad = 0;}
 				elseif($flow == 'horiz3' && $flowmain == 2) {$pad = 0;$wh = 34;}
-                elseif($flow == 'horiz4' && $flowmain == 3) {$pad = 0;}				
-				echo '</div><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">'; 
+                elseif($flow == 'horiz4' && $flowmain == 3) {$pad = 0;}
+				echo '</div><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">';
 			}
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 		}
@@ -2670,7 +2670,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 		// or just plain vertically
 		else
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
-		
+
 		$bcount++;
 		$flowsub++;
 	}
@@ -2705,11 +2705,11 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				}
 			// ]]></script>';
 
-	// return $code;	
+	// return $code;
 }
 
 function tp_setupUpshrinks()
-{	
+{
 	global $context, $settings, $smcFunc;
 
 	$context['tp_panels'] = array();
@@ -2783,7 +2783,7 @@ function tp_setupUpshrinks()
 					$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', 'tp' . strtolower($pan) . 'barContainer', strtolower($pan).'-tp-upshrink_description');
 				else
 					$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', '', strtolower($pan).'-tp-upshrink_description');
-		
+
 			}
 		}
 	}
@@ -2792,9 +2792,9 @@ function tp_setupUpshrinks()
 	{
 		// set some values based on user-prefs
 		$result = $smcFunc['db_query']('', '
-			SELECT type, value, item 
-			FROM {db_prefix}tp_data 
-			WHERE type = {int:type} 
+			SELECT type, value, item
+			FROM {db_prefix}tp_data
+			WHERE type = {int:type}
 			AND id_member = {int:id_mem}',
 			array('type' => 2, 'id_mem' => $context['user']['id'])
 		);
@@ -2808,7 +2808,7 @@ function tp_setupUpshrinks()
 		}
 		$context['TPortal']['use_wysiwyg'] = (int) $context['TPortal']['use_wysiwyg'];
 		$context['TPortal']['show_wysiwyg'] = $context['TPortal']['use_wysiwyg'];
-		
+
 		if ($context['TPortal']['use_wysiwyg'] > 0)
 		{
 			$context['TPortal']['allow_wysiwyg'] = true;
@@ -2880,7 +2880,7 @@ function TP_blockgrids()
 
 function doModules() {
 	global $context, $boarddir, $smcFunc;
-    
+
     // fetch any block render hooks and notifications from tpmodules
 	$context['TPortal']['tpmodules'] = array(
 		'blockrender' => array(),
@@ -2890,7 +2890,7 @@ function doModules() {
 	$context['TPortal']['modulepermissions'] = array('tp_settings', 'tp_blocks', 'tp_articles', 'tp_alwaysapproved', 'tp_submithtml', 'tp_submitbbc', 'tp_editownarticle');
 
 	$request = $smcFunc['db_query']('', '
-		SELECT id, modulename, blockrender, autoload_run, adminhook, 
+		SELECT id, modulename, blockrender, autoload_run, adminhook,
 		frontsection, permissions
 		FROM {db_prefix}tp_modules WHERE active = {int:active}',
 		array('active' => 1)
@@ -2945,7 +2945,7 @@ function doModules() {
 			}
 		}
 		$smcFunc['db_free_result']($request);
-	}    
+	}
 }
 
 // TPortal leftblocks
@@ -2973,8 +2973,8 @@ function TPortal_menubox()
 
     $context['TPortal']['menu'] = array();
     $request =  $smcFunc['db_query']('', '
-        SELECT * 
-        FROM {db_prefix}tp_variables 
+        SELECT *
+        FROM {db_prefix}tp_variables
         WHERE type = {string:type}
         ORDER BY subtype + 0 ASC',
         array('type' => 'menubox')

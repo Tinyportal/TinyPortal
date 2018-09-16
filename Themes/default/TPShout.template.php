@@ -43,7 +43,7 @@ function template_tpshout_bigscreen()
 	<div class="tborder">
 		<div class="catbg" style="padding: 5px 5px 5px 1em;">' , $txt['tp-tabs10'] , '</div>
 		<div class="windowbg" style="padding: 1em;">';
-	
+
 	echo '
 			<div id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div>';
 
@@ -76,10 +76,10 @@ function template_tpshout_admin()
 							<div class="smalltext float-items" align="right" style="width:47%;"><b>'. $context['TPortal']['shoutbox_pageindex'].'</b></div>
 							<p class="clearthefloat"></p>
 						</div>';
-						
-					
+
+
 	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts)
-	{	
+	{
 		echo '			<div style="border-bottom:1px solid #ccc;">
 							<div class="fullwidth-on-res-layout float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '" style="width:30%;">
 							'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
@@ -110,7 +110,7 @@ function template_tpshout_admin()
 				</div>
 			</div>
 	</form><p class="clearthefloat"></p>';
-}	
+}
 
 function template_tpshout_admin_settings()
 {
@@ -211,7 +211,7 @@ function template_tpshout_admin_settings()
 			</div>
 		</div>
 	</form><p class="clearthefloat"></p>';
-}		
+}
 
 function template_tpshout_shoutblock()
 {
@@ -223,10 +223,10 @@ function template_tpshout_shoutblock()
 	$context['tp_shoutbox_form'] = 'tp_shoutbox';
 	$context['tp_shout_post_box_name'] = 'tp_shout';
 
-	if(!empty($context['TPortal']['shoutbox_stitle'])) 
-		echo 
+	if(!empty($context['TPortal']['shoutbox_stitle']))
+		echo
 	'<p style="margin-top: 0;">' . parse_bbc($context['TPortal']['shoutbox_stitle'],true) . '</p><hr><br>';
-	
+
 	if($context['TPortal']['shoutbox_usescroll'] > '0')
 		echo '
 		<marquee id="tp_marquee" behavior="scroll" direction="down" scrollamount="'. $context['TPortal']['shoutbox_scrollduration'] . '" height="'. $context['TPortal']['shoutbox_height'] . '">
@@ -244,7 +244,7 @@ function template_tpshout_shoutblock()
 		echo '
 		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
 		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 100%;margin-top: 1em; height: 80px;"  tabindex="', $context['tabindex']++, '"></textarea><br>';
-	
+
 		if(!empty($context['TPortal']['show_shoutbox_smile']))
 		{
 			shout_smiley_code();
@@ -252,7 +252,7 @@ function template_tpshout_shoutblock()
 		}
 		if(!empty($context['TPortal']['show_shoutbox_icons']))
 			shout_bcc_code();
-			
+
 		echo '
 		<div id="shout_errors"></div><hr>
 		<div style="overflow: hidden;">
@@ -327,7 +327,7 @@ function template_tpshout_profile()
 function template_singleshout($row)
 {
 	global $scripturl, $context, $settings, $txt;
-	
+
 	$layoutOptions = array(
 	 '0' => '
 	<div style="padding-bottom: 5px;">
@@ -345,15 +345,15 @@ function template_singleshout($row)
 			<div class="bubble speech">' . $row['value1'] . '</div>
 		</div>
 	</div>',
-	'1' => '	
+	'1' => '
 	<div style="padding-bottom: 5px;">
-		<div class="tp_shoutcontainer">							
+		<div class="tp_shoutcontainer">
 			<div class="shout_options">
 				' . $row['realName'] . ':
 				' . (allowedTo('tp_can_admin_shout') ? '
 				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.gif" alt="'.$txt['tp-edit'].'" /></a>
 				<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.gif" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
-			</div> 
+			</div>
 			<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
 			<div class="shoutbody_layout1">' . $row['value1'] . '</div>
 		</div>
@@ -363,9 +363,9 @@ function template_singleshout($row)
 	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
 }
 
-function template_tpshout_ajax() 
+function template_tpshout_ajax()
 {
-	
+
 	global $context;
 	echo '
 	<div id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout') . '">'. $context['TPortal']['rendershouts']. '</div>';
