@@ -33,7 +33,7 @@ function template_wap2_tp_frontpage()
 	unset($context['TPortal']['article']);
 
 	if(isset($context['TPortal']['category']['col1']))
-	{	
+	{
 		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
 		{
 			render_frontp();
@@ -75,7 +75,7 @@ function template_imode_tp_frontpage()
 	unset($context['TPortal']['article']);
 
 	if(isset($context['TPortal']['category']['col1']))
-	{	
+	{
 		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
 		{
 			render_frontp();
@@ -118,7 +118,7 @@ function template_wap_tp_frontpage()
 	unset($context['TPortal']['article']);
 
 	if(isset($context['TPortal']['category']['col1']))
-	{	
+	{
 		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
 		{
 			render_frontp();
@@ -157,7 +157,7 @@ function render_frontp($single = false)
 	}
 	echo '
 		</p>';
-		
+
 	echo '
 		<p class="windowbg">
 		' , tp_renderarticle() , '
@@ -192,8 +192,8 @@ function render_frontp($single = false)
 		'.$post['text'].'
 		</p>	';
 
-	
-			$counter++;				
+
+			$counter++;
 		}
 	}
 }
@@ -280,7 +280,7 @@ function template_wap_tp_page()
 	// additonal links etc.
 	echo '
 		<p>', $txt['wireless_navigation'], '</p>
-		<p>[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></p>	
+		<p>[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></p>
 		<p>[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></p>
 	</card>';
 }
@@ -303,7 +303,7 @@ function template_wap2_tp_cat()
 	unset($context['TPortal']['article']);
 
 	if(isset($context['TPortal']['category']['col1']))
-	{	
+	{
 		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
 		{
 			render_frontp();
@@ -346,7 +346,7 @@ function template_imode_tp_cat()
 	unset($context['TPortal']['article']);
 
 	if(isset($context['TPortal']['category']['col1']))
-	{	
+	{
 		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
 		{
 			render_frontp();
@@ -390,7 +390,7 @@ function template_wap_tp_cat()
 	unset($context['TPortal']['article']);
 
 	if(isset($context['TPortal']['category']['col1']))
-	{	
+	{
 		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
 		{
 			render_frontp();

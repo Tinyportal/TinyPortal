@@ -54,7 +54,7 @@ function template_main()
 					echo '
 				<div class="windowbg2">
 					<div class="windowbg2 error" style="padding:1%;">
-						'.$txt['tp-articlelocked'].' 
+						'.$txt['tp-articlelocked'].'
 					</div>
 				</div>';
 				}
@@ -63,7 +63,7 @@ function template_main()
 					echo '
 				<div class="windowbg2">
 					<div class="windowbg2 error" style="padding:1%;">
-						'.$txt['tp-notapproved'].' 
+						'.$txt['tp-notapproved'].'
 					</div>
 				</div>';
 				}
@@ -81,7 +81,7 @@ function template_main()
 					<div>';
 
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
-					
+
 				if($mg['articletype']=='php')
 					echo '
 						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
@@ -96,7 +96,7 @@ function template_main()
 				}
 				else
 					echo $txt['tp-importarticle'] , '</div><div><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
-			
+
 				if($context['TPortal']['allow_wysiwyg'] && $mg['articletype']=='html')
 					echo '
 					</div></div>
@@ -122,7 +122,7 @@ function template_main()
 					echo '
 					<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 80%; height: 200px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
 				}
-	
+
 				echo '
 				</div></div>
 				<div class="windowbg">
@@ -305,7 +305,7 @@ function template_main()
 				<div class="float-items" style="width:20%;">' . $txt['tp-commenter'] . '</div>
 				<p class="clearthefloat"></p>
 			</div>';
-			
+
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
@@ -320,11 +320,11 @@ function template_main()
 				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></div>
 			    <p class="clearthefloat"></p>
 			</div>';
-		
+
 			}
 			echo '
 			<div class="titlebg" align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>';
-			
+
 			echo '
 		</div>
 		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
@@ -343,7 +343,7 @@ function template_main()
 				<div class="float-items" style="width:20%;">' . $txt['tp-commenter'] . '</div>
 				<p class="clearthefloat"></p>
 			</div>';
-			
+
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
@@ -358,7 +358,7 @@ function template_main()
 				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></div>
 				<p class="clearthefloat"></p>
 			</div>';
-		
+
 			}
 			else
 				echo '
@@ -367,8 +367,8 @@ function template_main()
 				<div class="titlebg" align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>';
 			echo '
 				</div>';
-			
-		} 
+
+		}
 			break;
 		case 'searcharticle2':
 			echo '
@@ -403,7 +403,7 @@ function template_main()
 							<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
 						</div>
 				</div>';
-				$bb++;	
+				$bb++;
 			}
 			echo '
 		</div>';
@@ -416,23 +416,23 @@ function template_main()
 		<div class="windowbg">
 			<span class="topslice"><span></span></span>
 			<div class="content">';
-			
+
 			if(!empty($context['TPortal']['pageindex']))
 				echo '
 				<div>' . $context['TPortal']['pageindex'] . '</div><hr />';
-			
+
 			if(count($context['TPortal']['myarticles'])>0)
 			{
 				foreach($context['TPortal']['myarticles'] as $art)
 				{
 					echo '
 					<div style="oveflow: hidden; padding: 3px;">
-						<div style="float: right;">';	
+						<div style="float: right;">';
 				if($art['off']==0 && $art['approved']==1)
 						echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.gif" alt="*" /> ';
 				else
 						echo '<img src="' . $settings['tp_images_url'] . '/TPactive1.gif" alt="*" /> ';
-					
+
 				if($art['locked']==1)
 						echo '<img src="' . $settings['tp_images_url'] . '/TPlock1.gif" alt="*" /> ';
 				if($art['approved']==0)
@@ -447,7 +447,7 @@ function template_main()
 
 					echo '
 						</div>';
-					
+
 					if($art['off'] == 0 && $art['approved'] == 1)
 						echo '
 						<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>';
@@ -517,9 +517,9 @@ function template_submitarticle()
 			</div>
 			<div class="windowbg2" style="padding:1%;">
 				<div>'.$txt['tp-artbodytext'].' <br />';
-			
+
 			$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
-			
+
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
 				TPwysiwyg('tp_article_body', '', true,'qup_tp_article_body', $tp_use_wysiwyg);
 			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
@@ -527,7 +527,7 @@ function template_submitarticle()
 					<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
 			elseif(isset($context['TPortal']['submitbbc']))
 				TP_bbcbox($context['TPortal']['editor_id']);
-			
+
 			echo '<br />' . $txt['tp-artintrotext']. '<br />';
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
 				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
@@ -536,7 +536,7 @@ function template_submitarticle()
 					<textarea name="tp_article_intro" id="tp_article_intro" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
 			elseif(isset($context['TPortal']['submitbbc']))
 				echo '<textarea name="tp_article_intro" id="tp_article_intro" style="width: 80%; height: 200px;" wrap="auto"></textarea><br />';
-			
+
 			echo '
 					<input name="tp_article_frame" type="hidden" value="theme">
 					<input name="newarticle" type="hidden" value="1">

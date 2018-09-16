@@ -34,10 +34,10 @@ function TPdlmanager_init()
 	{
 		// a switch to make it clear what is "forum" and not
 		$context['TPortal']['not_forum'] = true;
-	
+
 		$context['html_headers'] .= '
 			<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
-	
+
 		// see if its admin section
 		if(substr($context['TPortal']['dlsub'], 0, 5) == 'admin' || $context['TPortal']['dlsub']=='submission')
 			TPortalDLAdmin();
@@ -61,7 +61,7 @@ function TPortalDLManager()
 		fatal_error($txt['tp-dlmanageroff']);
 
 	$context['TPortal']['upshrinkpanel'] = '';
-	
+
 	// add visual options to thsi section
 	$context['TPortal']['dl_visual'] = array();
 	$dl_visual = explode(',',$context['TPortal']['dl_visual_options']);
@@ -100,14 +100,14 @@ function TPortalDLManager()
 		// skip the uplaod checks etc . if just an empty item
 		if(!isset($_POST['tp-dluploadnot']))
 		{
-			// check if uploaded quick-list picture 
+			// check if uploaded quick-list picture
 			if(isset($_FILES['qup_tp_dluploadtext']) && file_exists($_FILES['qup_tp_dluploadtext']['tmp_name']))
 			{
 				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
 				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'].'uid');
 				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
 				redirectexit('action=tpmod;dl='. $item_id);
-			}			
+			}
 			// check that nothing happended
 			if(!file_exists($_FILES['tp-dluploadfile']['tmp_name']) || !is_uploaded_file($_FILES['tp-dluploadfile']['tmp_name']))
 				fatal_error($txt['tp-dluploadfailure']);
@@ -237,7 +237,7 @@ function TPortalDLManager()
 			else
 				$acc = '';
 
-			$request = $smcFunc['db_insert']('INSERT', 
+			$request = $smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_dlmanager',
 				array('name' => 'string', 'description' => 'string', 'icon' => 'string', 'category' => 'int', 'type' => 'string', 'downloads' => 'int', 'views' => 'int',
 			 		'file' => 'string', 'created' => 'int', 'last_access' => 'int', 'filesize' => 'int', 'parent' => 'int', 'access' => 'string', 'link' => 'string',
@@ -247,7 +247,7 @@ function TPortalDLManager()
 			);
 
 			$newitem = $smcFunc['db_insert_id']($request);
-			
+
 			// record the event
 			if(($context['TPortal']['dl_approve'] == '1' && allowedTo('tp_dlmanager')) || $context['TPortal']['dl_approve']=='0')
 				tp_recordevent($now, $context['user']['id'], 'tp-createdupload', 'action=tpmod;dl=item' . $newitem, 'Uploaded new file.', $acc , $newitem);
@@ -267,7 +267,7 @@ function TPortalDLManager()
 				if(isset($_POST['create_topic_body']))
 					$body = $_POST['create_topic_body'];
 
-				
+
 				$body .= '[hr][b]'.$txt['tp-download'].':[/b][br]'.$scripturl.'?action=tpmod;dl=item'.$newitem;
 				// ok, create the topic then
 				$top = TP_createtopic($title, $body, 'theme', $brd, $sticky ? 1 : 0 , $context['user']['id']);
@@ -278,7 +278,7 @@ function TPortalDLManager()
 						redirectexit('action=announce;sa=selectgroup;topic=' . $top );
 					else
 						redirectexit('topic=' . $top );
-				
+
 				}
 			}
 			// put this into submissions - id and type
@@ -327,8 +327,8 @@ function TPortalDLManager()
 					$context['TPortal']['item'] = $item;
 					$context['TPortal']['dlaction'] = 'item';
 					$request = $smcFunc['db_query']('', '
-						SELECT category, subitem 
-						FROM {db_prefix}tp_dlmanager 
+						SELECT category, subitem
+						FROM {db_prefix}tp_dlmanager
 						WHERE id = {int:dl} AND type = {string:type} LIMIT 1',
 						array('dl' => $item, 'type' => 'dlitem')
 					);
@@ -387,17 +387,17 @@ function TPortalDLManager()
 			if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 			{
 				$context['TPortal']['editor_id'] = 'tp_dluploadtext';
-				TP_prebbcbox($context['TPortal']['editor_id']); 			
+				TP_prebbcbox($context['TPortal']['editor_id']);
 			}
 			TP_dlgeticons();
-			
+
 			// allow to attach this to another item
 			$context['TPortal']['attachitems'] = array();
 			if(allowedTo('dlmanager'))
 			{
 				// get all items for a list
 				$itemlist = $smcFunc['db_query']('', '
-					SELECT id, name FROM {db_prefix}tp_dlmanager 
+					SELECT id, name FROM {db_prefix}tp_dlmanager
 					WHERE type = {string:type} AND subitem = {int:sub} ORDER BY name ASC',
 					array('type' => 'dlitem', 'sub' => 0)
 				);
@@ -418,10 +418,10 @@ function TPortalDLManager()
 				// how about attaching to one of your own?
 				// get all items for a list
 				$itemlist = $smcFunc['db_query']('', '
-					SELECT id,name FROM {db_prefix}tp_dlmanager 
-					WHERE category > {int:cat} 
-					AND type = {string:type} 
-					AND subitem = {int:sub} 
+					SELECT id,name FROM {db_prefix}tp_dlmanager
+					WHERE category > {int:cat}
+					AND type = {string:type}
+					AND subitem = {int:sub}
 					AND author_id = {int:auth}
 					ORDER BY name ASC',
 					array('cat' => 0, 'type' => 'dlitem', 'sub' => 0, 'auth' => $context['user']['id'])
@@ -459,7 +459,7 @@ function TPortalDLManager()
 			// check its really exists
 			$what = $context['TPortal']['dlsub'];
 			$request = $smcFunc['db_query']('', '
-				SELECT id FROM {db_prefix}tp_dlmanager 
+				SELECT id FROM {db_prefix}tp_dlmanager
 				WHERE link = {string:link} LIMIT 1',
 				array('link' => $what));
 			if(isset($request) && $smcFunc['db_num_rows']($request) > 0)
@@ -525,10 +525,10 @@ function TPortalDLManager()
 
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
-						if(!empty($row['screenshot'])) 
+						if(!empty($row['screenshot']))
 							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
-							$ico = '';	
+							$ico = '';
 					}
 					else
 						$ico = '';
@@ -555,7 +555,7 @@ function TPortalDLManager()
 			}
 			$request = $smcFunc['db_query']('', '
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
-					dlm.author_id as authorID, dlm.created, dlm.filesize, dlcat.name AS catname, 
+					dlm.author_id as authorID, dlm.created, dlm.filesize, dlcat.name AS catname,
 					mem.real_name as realName
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
@@ -601,7 +601,7 @@ function TPortalDLManager()
 			$week = (int) date("W",$now);
 			$year = (int) date("Y",$now);
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views, 
+				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views,
 					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 					dlcat.name AS catname, mem.real_name as realName
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
@@ -622,10 +622,10 @@ function TPortalDLManager()
 				{
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
-						if(!empty($row['screenshot'])) 
+						if(!empty($row['screenshot']))
 							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
-							$ico = '';	
+							$ico = '';
 					}
 					else
 						$ico = '';
@@ -745,7 +745,7 @@ function TPortalDLManager()
 					$total = 0;
 					foreach($rat as $mm => $mval)
 					{
-						if(is_numeric($mval)) 
+						if(is_numeric($mval))
 							$total = $total + $mval;
 					}
 
@@ -754,16 +754,16 @@ function TPortalDLManager()
 					else
 						$rating_average = 0;
 
-					   $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : ''; 
-						// does it exist? 
+					   $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
+						// does it exist?
 						if(file_exists($boarddir . '/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
-							$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot']; 
+							$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
 
 						if($context['user']['is_logged'])
 							$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
 						else
 							$can_rate = false;
-							
+
 						$context['TPortal']['featured'] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
@@ -789,7 +789,7 @@ function TPortalDLManager()
 					);
 				}
 				$smcFunc['db_free_result']($request);
-	
+
 		}
 		$context['TPortal']['dlheader'] = $txt['tp-downloads'];
 	}
@@ -801,7 +801,7 @@ function TPortalDLManager()
 			$context['TPortal']['dlsort'] = $dlsort = $_GET['dlsort'];
 		else
 			$context['TPortal']['dlsort'] = $dlsort = 'id';
-		
+
 		if(isset($_GET['asc']))
 			$context['TPortal']['dlsort_way'] = $dlsort_way = 'asc';
 		else
@@ -870,8 +870,8 @@ function TPortalDLManager()
 
 		// do we have access then?
 		$request = $smcFunc['db_query']('', '
-			SELECT parent, access, name 
-			FROM {db_prefix}tp_dlmanager 
+			SELECT parent, access, name
+			FROM {db_prefix}tp_dlmanager
 			WHERE id = {int:cat}',
 			array('cat' => $currentcat)
 		);
@@ -957,9 +957,9 @@ function TPortalDLManager()
 
 			// get total count
 			$request = $smcFunc['db_query']('', '
-				SELECT COUNT(*) FROM {db_prefix}tp_dlmanager 
-				WHERE type = {string:type} 
-				AND category = {int:cat} 
+				SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
+				WHERE type = {string:type}
+				AND category = {int:cat}
 				AND subitem = {int:sub}',
 				array('type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0)
 			);
@@ -967,14 +967,14 @@ function TPortalDLManager()
 			$rows2 = $row[0];
 
 			$request = $smcFunc['db_query']('', '
-				SELECT dl.id, LEFT(dl.description, 400) as ingress,dl.name, dl.category, dl.file, 
-					dl.downloads, dl.views, dl.link, dl.created, dl.last_access, 
-					dl.author_id as authorID, dl.icon, dl.screenshot, dl.filesize, mem.real_name as realName 
+				SELECT dl.id, LEFT(dl.description, 400) as ingress,dl.name, dl.category, dl.file,
+					dl.downloads, dl.views, dl.link, dl.created, dl.last_access,
+					dl.author_id as authorID, dl.icon, dl.screenshot, dl.filesize, mem.real_name as realName
 				FROM {db_prefix}tp_dlmanager as dl
 				LEFT JOIN {db_prefix}members as mem ON (dl.author_id=mem.id_member)
-				WHERE dl.type = {string:type} 
-				AND dl.category = {int:cat} 
-				AND dl.subitem = {int:sub} 
+				WHERE dl.type = {string:type}
+				AND dl.category = {int:cat}
+				AND dl.subitem = {int:sub}
 				ORDER BY dl.'.$dlsort.' '. $dlsort_way .' LIMIT {int:start}, 10',
 				array('type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0, 'start' => $start)
 			);
@@ -1003,9 +1003,9 @@ function TPortalDLManager()
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
-							$decideshot = $boardurl. '/' . $row['screenshot']; 
+							$decideshot = $boardurl. '/' . $row['screenshot'];
 					else
-						$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot']; 
+						$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot'];
 
 					if($context['TPortal']['dl_fileprefix'] == 'K')
 						$fs = ceil($row['filesize'] / 1000).' Kb';
@@ -1013,13 +1013,13 @@ function TPortalDLManager()
 						$fs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
 					elseif($context['TPortal']['dl_fileprefix']=='G')
 						$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
-					
+
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
-						if(!empty($row['screenshot'])) 
+						if(!empty($row['screenshot']))
 							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
-							$ico = '';	
+							$ico = '';
 					}
 					else
 						$ico = $row['icon'];
@@ -1077,7 +1077,7 @@ function TPortalDLManager()
 			}
 			else
 				$catparent = 0;
-				
+
 			if($catparent == 0)
 				$done++;
 		}
@@ -1112,7 +1112,7 @@ function TPortalDLManager()
 
 		// get total count
 		$request = $smcFunc['db_query']('', '
-			SELECT COUNT(*) FROM {db_prefix}tp_dlmanager 
+			SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
 			WHERE type = {string:type}
 			AND subitem = {int:sub}',
 			array('type' => 'dlitem', 'sub' => 0)
@@ -1123,9 +1123,9 @@ function TPortalDLManager()
 		$request = $smcFunc['db_query']('', '
 			SELECT id, name, category, file, downloads, views, link, created,
 				last_access, author_id as authorID, icon, screenshot, filesize,
-				global_tag 
-			FROM {db_prefix}tp_dlmanager 
-			WHERE type = {string:type} 
+				global_tag
+			FROM {db_prefix}tp_dlmanager
+			WHERE type = {string:type}
 			AND subitem = {int:sub} LIMIT {int:start}, 10',
 			array('type' => 'dlitem', 'sub' => 0, 'start' => $start)
 		);
@@ -1133,9 +1133,9 @@ function TPortalDLManager()
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
-					$decideshot = $boardurl. '/' . $row['screenshot']; 
+					$decideshot = $boardurl. '/' . $row['screenshot'];
 			else
-				$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot']; 
+				$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot'];
 
 			// set up the sorting links
 			$context['TPortal']['sortlinks'] = '';
@@ -1186,8 +1186,8 @@ function TPortalDLManager()
 		$catdesc = '';
 
 		$request = $smcFunc['db_query']('', '
-			SELECT id, name, parent, icon, access, link 
-			FROM {db_prefix}tp_dlmanager 
+			SELECT id, name, parent, icon, access, link
+			FROM {db_prefix}tp_dlmanager
 			WHERE id = {int:cat}
 			AND type = {string:type} LIMIT 1',
 			array('cat' => $cat, 'type' => 'dlcat')
@@ -1274,7 +1274,7 @@ function TPortalDLManager()
 					ORDER BY id DESC',
 					array('type' => 'dlitem', 'sub' => $subitem)
 				);
-					
+
 				if($smcFunc['db_num_rows']($fetch) > 0)
 				{
 					$fdata = array();
@@ -1286,7 +1286,7 @@ function TPortalDLManager()
 							$ffs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
 						elseif($context['TPortal']['dl_fileprefix'] == 'G')
 							$ffs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
-						
+
 						$fdata[] = array(
 							'id' => $frow['id'],
 							'name' => $frow['name'],
@@ -1301,7 +1301,7 @@ function TPortalDLManager()
 					}
 					$smcFunc['db_free_result']($fetch);
 				}
-					
+
 				if($context['TPortal']['dl_fileprefix'] == 'K')
 					$fs = ceil($row['filesize'] / 1000).' Kb';
 				elseif($context['TPortal']['dl_fileprefix'] == 'M')
@@ -1319,7 +1319,7 @@ function TPortalDLManager()
 				$total = 0;
 				foreach($rat as $mm => $mval)
 				{
-					if(is_numeric($mval)) 
+					if(is_numeric($mval))
 						$total = $total + $mval;
 				}
 
@@ -1328,18 +1328,18 @@ function TPortalDLManager()
 				else
 					$rating_average=0;
 
-				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : ''; 
-				// does it exist? 
+				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
+				// does it exist?
 				if(file_exists($boarddir . '/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
-					$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot']; 
+					$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
 				if(file_exists($boarddir . '/tp-images/dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
-					$bigshot = $boardurl. '/tp-images/dlmanager/' . $row['screenshot']; 
+					$bigshot = $boardurl. '/tp-images/dlmanager/' . $row['screenshot'];
 
 				if($context['user']['is_logged'])
 					$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
 				else
 					$can_rate = false;
-							
+
 					$context['TPortal']['dlitem'][] = array(
 					'id' => $row['id'],
 					'name' => $row['name'],
@@ -1378,12 +1378,12 @@ function TPortalDLManager()
 			$views++;
 			$now = time();
 			$year = (int) date("Y",$now);
-			$week = (int) date("W",$now);	
+			$week = (int) date("W",$now);
 			// update weekly views
 			$req=$smcFunc['db_query']('', '
-				SELECT id FROM {db_prefix}tp_dldata 
-				WHERE year = {int:year} 
-				AND week = {int:week} 
+				SELECT id FROM {db_prefix}tp_dldata
+				WHERE year = {int:year}
+				AND week = {int:week}
 				AND item = {int:item}',
 				array('year' => $year, 'week' => $week, 'item' => $itemid)
 			);
@@ -1391,14 +1391,14 @@ function TPortalDLManager()
 			{
 				$row = $smcFunc['db_fetch_assoc']($req);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dldata 
-					SET views = views + 1 
+					UPDATE {db_prefix}tp_dldata
+					SET views = views + 1
 					WHERE id = {int:item}',
 					array('item' => $row['id'])
 				);
 			}
 			else
-				$smcFunc['db_insert']('INSERT', 
+				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_dldata',
 					array('week' => 'int', 'year' => 'int', 'views' => 'int', 'item' => 'int'),
 					array($week, $year, 1, $itemid),
@@ -1406,7 +1406,7 @@ function TPortalDLManager()
 				);
 
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
+				UPDATE {db_prefix}tp_dlmanager
 				SET views = {int:views}, last_access = {int:last}
 				WHERE id = {int:item}',
 				array('views' => $views, 'last' => $now, 'item' => $itemid)
@@ -1448,7 +1448,7 @@ function TPdlresults()
 
 	if(isset($_GET['p']) && is_numeric($_GET['p']))
 		$start = $_GET['p'];
-	
+
 	checkSession('post');
 
 	// nothing to search for?
@@ -1478,11 +1478,11 @@ function TPdlresults()
 		$query = 'd.name LIKE \'%{raw:what}%\'';
 
 	$dlquery = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
-	
+
 	// find out which categoies you ahve access to:
 	$request=$smcFunc['db_query']('', '
-		SELECT id FROM {db_prefix}tp_dlmanager 
-		WHERE type = {string:type} 
+		SELECT id FROM {db_prefix}tp_dlmanager
+		WHERE type = {string:type}
 		AND '. $dlquery,
 		array('type' => 'dlcat')
 	);
@@ -1498,7 +1498,7 @@ function TPdlresults()
 
 	$context['TPortal']['dlsearchresults'] = array();
 	$context['TPortal']['dlsearchterm'] = $what;
-	
+
 	// find how many first
 	$check=$smcFunc['db_query']('', '
 		SELECT COUNT(d.id)
@@ -1509,7 +1509,7 @@ function TPdlresults()
 	);
 	$tt = $smcFunc['db_fetch_row']($check);
 	$total = $tt[0];
-	
+
 	$request = $smcFunc['db_query']('substring', '
 		SELECT d.id, d.created, d.type, d.downloads, d.name, LEFT(d.description, 300) as body, d.author_id as authorID, m.real_name as realName
 		FROM {db_prefix}tp_dlmanager AS d
@@ -1563,7 +1563,7 @@ function TPdlstats()
 	$context['TPortal']['topcats'] = array();
 	// count items in each category
 	$request = $smcFunc['db_query']('', '
-		SELECT category FROM {db_prefix}tp_dlmanager 
+		SELECT category FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array('type' => 'dlitem')
 	);
@@ -1584,8 +1584,8 @@ function TPdlstats()
 	//first : fetch all allowed categories
 	$context['TPortal']['uploadcats'] = array();
 	$request = $smcFunc['db_query']('', '
-		SELECT id, parent, name, access 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT id, parent, name, access
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array('type' => 'dlcat')
 	);
@@ -1609,7 +1609,7 @@ function TPdlstats()
 
 	// fetch all categories with subcats
 	$req = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_dlmanager 
+		SELECT * FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array('type' => 'dlcat')
 	);
@@ -1642,8 +1642,8 @@ function TPdlstats()
 	$context['TPortal']['topitems'] = array();
 
 	$request = $smcFunc['db_query']('', '
-		SELECT category, filesize, views, downloads, id, name 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT category, filesize, views, downloads, id, name
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array('type' => 'dlitem')
 	);
@@ -1685,7 +1685,7 @@ function TPdownloadme()
 
 	$item = $context['TPortal']['dlitem'];
 	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_dlmanager 
+		SELECT * FROM {db_prefix}tp_dlmanager
 		WHERE id = {int:item} LIMIT 1',
 		array('item' => $item)
 	);
@@ -1699,14 +1699,14 @@ function TPdownloadme()
 		{
 			$parent = $row['subitem'];
 			$req3 = $smcFunc['db_query']('', '
-				SELECT category FROM {db_prefix}tp_dlmanager 
+				SELECT category FROM {db_prefix}tp_dlmanager
 				WHERE id = {int:parent} LIMIT 1',
 				array('parent' => $parent)
 			);
 			$what = $smcFunc['db_fetch_assoc']($req3);
 			$cat = $what['category'];
 			$request2 = $smcFunc['db_query']('', '
-				SELECT * FROM {db_prefix}tp_dlmanager 
+				SELECT * FROM {db_prefix}tp_dlmanager
 				WHERE id = {int:cat}',
 				array('cat' => $cat));
 			if($smcFunc['db_num_rows']($request2) > 0)
@@ -1720,7 +1720,7 @@ function TPdownloadme()
 		{
 			$cat = $row['category'];
 			$request2 = $smcFunc['db_query']('', '
-				SELECT * FROM {db_prefix}tp_dlmanager 
+				SELECT * FROM {db_prefix}tp_dlmanager
 				WHERE id = {int:cat}',
 				array('cat' => $cat));
 			if($smcFunc['db_num_rows']($request2) > 0)
@@ -1741,11 +1741,11 @@ function TPdownloadme()
 	{
 		$now = time();
 		$year = (int) date("Y",$now);
-		$week = (int) date("W",$now);	
+		$week = (int) date("W",$now);
 
 		// update weekly views
 		$req = $smcFunc['db_query']('', '
-			SELECT id FROM {db_prefix}tp_dldata 
+			SELECT id FROM {db_prefix}tp_dldata
 			WHERE year = {int:year}
 			AND week = {int:week}
 			AND item = {int:item}',
@@ -1756,8 +1756,8 @@ function TPdownloadme()
 		{
 			$row = $smcFunc['db_fetch_assoc']($req);
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dldata 
-				SET downloads = downloads + 1 
+				UPDATE {db_prefix}tp_dldata
+				SET downloads = downloads + 1
 				WHERE id = {int:dlitem}',
 				array('dlitem' => $row['id'])
 			);
@@ -1771,8 +1771,8 @@ function TPdownloadme()
 			);
 
 		$smcFunc['db_query']('', '
-			UPDATE LOW_PRIORITY {db_prefix}tp_dlmanager 
-			SET downloads = downloads + 1 
+			UPDATE LOW_PRIORITY {db_prefix}tp_dlmanager
+			SET downloads = downloads + 1
 			WHERE id = {int:item} LIMIT 1',
 			array('item' => $item));
 		ob_end_clean();
@@ -1792,7 +1792,7 @@ function TPdownloadme()
 		}
 
 		// Send the attachment headers.
-		header('Pragma: no-cache'); 
+		header('Pragma: no-cache');
 		header('Cache-Control: max-age=' . 10 . ', private');
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Cache-Control: post-check=0, pre-check=0', FALSE);
@@ -1935,7 +1935,7 @@ function TPortalDLAdmin()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	
+
 	// Add in BBC editor before we call in template so the headers are there
 	if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 	{
@@ -1943,14 +1943,14 @@ function TPortalDLAdmin()
 		{
 			$context['TPortal']['editor_id'] = 'newdladmin_text';
 			TP_prebbcbox($context['TPortal']['editor_id']);
-		} 
+		}
 		else
 		{
 			$context['TPortal']['editor_id'] = 'tp_dl_introtext';
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['dl_introtext']);
-		}	
-	}	
-	
+		}
+	}
+
 	// any items from the ftp screen?
 	if(!empty($_POST['ftpdlsend']))
 	{
@@ -1981,7 +1981,7 @@ function TPortalDLAdmin()
 				'{db_prefix}tp_dlmanager',
 				array(
 					'name' => 'string',
-					'description' => 'string', 
+					'description' => 'string',
 					'icon' => 'string',
 					'category' => 'int',
 					'type' => 'string',
@@ -2012,11 +2012,11 @@ function TPortalDLAdmin()
 				$name = $value;
 				$now = time();
 				$fsize = filesize($boarddir.'/tp-downloads/'.$value);
-				$smcFunc['db_insert']('INSERT', 
+				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_dlmanager',
 					array(
 					'name' => 'string',
-					'description' => 'string', 
+					'description' => 'string',
 					'icon' => 'string',
 					'category' => 'int',
 					'type' => 'string',
@@ -2069,11 +2069,11 @@ function TPortalDLAdmin()
 		}
 		$access = implode(',', $dlgrp);
 		// insert the category
-		$request = $smcFunc['db_insert']('INSERT', 
+		$request = $smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_dlmanager',
 			array(
 				'name' => 'string',
-				'description' => 'string', 
+				'description' => 'string',
 				'icon' => 'string',
 				'category' => 'int',
 				'type' => 'string',
@@ -2105,15 +2105,15 @@ function TPortalDLAdmin()
 		$itemid = $_POST['dladmin_itemtags'];
 		// get title
 		$request = $smcFunc['db_query']('', '
-			SELECT name FROM {db_prefix}tp_dlmanager 
+			SELECT name FROM {db_prefix}tp_dlmanager
 			WHERE id = {int:item} LIMIT 1',
 			array('item' => $itemid)
 		);
 		$title = $smcFunc['db_fetch_row']($request);
 		// remove old ones first
 		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_variables 
-			WHERE value3 = {string:val3} 
+			DELETE FROM {db_prefix}tp_variables
+			WHERE value3 = {string:val3}
 			AND subtype2 = {int:sub}',
 			array('val3' => 'dladmin_itemtags', 'sub' => $itemid)
 		);
@@ -2130,7 +2130,7 @@ function TPortalDLAdmin()
 				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="taglink">' . $title[0] . '</span>';
 				if(!empty($tag))
 				{
-					$smcFunc['db_query']('INSERT', 
+					$smcFunc['db_query']('INSERT',
 						'{db_prefix}tp_variables',
 						array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'value5' => 'int', 'subtype' => 'string', 'value7' => 'string', 'value8' => 'string', 'subtype2' => 'int'),
 						array($href, $tg, 'dladmin_itemtags', '', 0, $tag, '', '', $itemid),
@@ -2142,8 +2142,8 @@ function TPortalDLAdmin()
 		}
 		$tg = implode(',', $alltags);
 		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_dlmanager 
-			SET global_tag = {string:tag} 
+			UPDATE {db_prefix}tp_dlmanager
+			SET global_tag = {string:tag}
 			WHERE id = {int:item}',
 			array('tag' => $tg, 'item' => $itemid)
 		);
@@ -2158,15 +2158,15 @@ function TPortalDLAdmin()
 		$itemid = $_POST['dladmin_cattags'];
 		// get title
 		$request = $smcFunc['db_query']('', '
-			SELECT name FROM {db_prefix}tp_dlmanager 
+			SELECT name FROM {db_prefix}tp_dlmanager
 			WHERE id = {int:item} LIMIT 1',
 			array('item' => $itemid)
 		);
 		$title = $smcFunc['db_fetch_row']($request);
 		// remove old ones first
 		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_variables 
-			WHERE value3 = {string:val3} 
+			DELETE FROM {db_prefix}tp_variables
+			WHERE value3 = {string:val3}
 			AND subtype2 = {int:sub}',
 			array('val3' => 'dladmin_cattags', 'sub' => $itemid));
 		foreach($_POST as $what => $value)
@@ -2179,9 +2179,9 @@ function TPortalDLAdmin()
 				// insert new one
 				$href = '?action=tpmod;dl=cat'.$itemid;
 				$title = $title[0].' ['.strtolower($txt['tp-downloads']).'] ';
-				$smcFunc['db_query']('INSERT', 
+				$smcFunc['db_query']('INSERT',
 					'{db_prefix}tp_variables',
-					array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'value5' => 'int', 'subtype' => 'string', 'value7' => 'string', 'value8' => 'string', 'subtype2' => 'int'), 
+					array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'value5' => 'int', 'subtype' => 'string', 'value7' => 'string', 'value8' => 'string', 'subtype2' => 'int'),
 					array($href, $title, 'dladmin_cattags', '', 0, $tag, '', '', $itemid),
 					array('id')
 				);
@@ -2205,11 +2205,11 @@ function TPortalDLAdmin()
 		$dlmanager_grp = array();
 		$dlupload_grp = array();
 		$dlcreatetopic_grp = array();
-		
+
 		// Our settings array to send to updateTPSettings();
 		$changeArray = array();
-		
-		foreach ($_POST as $what => $value) 
+
+		foreach ($_POST as $what => $value)
 		{
 			if(substr($what, 0, 13) == 'dladmin_group')
 			{
@@ -2238,13 +2238,13 @@ function TPortalDLAdmin()
 		{
 			$dlaccess = implode(',', $admgrp);
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET access = {string:access} 
+				UPDATE {db_prefix}tp_dlmanager
+				SET access = {string:access}
 				WHERE id = {int:item}',
 				array('access' => $dlaccess, 'item' => $id)
 			);
 		}
-		
+
 		if(!empty($_POST['dlsettings']))
 			$changeArray['dl_createtopic_boards'] = implode(',', $creategrp);
 
@@ -2275,7 +2275,7 @@ function TPortalDLAdmin()
 
 		if($shot)
 		{
-			$sid = $_POST['tp_dluploadpic_editID'];		
+			$sid = $_POST['tp_dluploadpic_editID'];
 			$sfile = 'tp_dluploadpic_edit';
 			$uid = $context['user']['id'].'uid';
 			$dim = '1800';
@@ -2283,14 +2283,14 @@ function TPortalDLAdmin()
 			$dest = 'tp-images/dlmanager';
 			$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 			$screenshot = $sname;
-			
+
 			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
 			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
 			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
-			
+
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET screenshot = {string:ss} 
+				UPDATE {db_prefix}tp_dlmanager
+				SET screenshot = {string:ss}
 				WHERE id = {int:item}',
 				array('ss' => $screenshot, 'item' => $sid)
 			);
@@ -2306,8 +2306,8 @@ function TPortalDLAdmin()
 			$sid = $_POST['tp_dluploadpic_editID'];
 			$screenshot = $_POST['tp_dluploadpic_link'];
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET screenshot = {string:ss} 
+				UPDATE {db_prefix}tp_dlmanager
+				SET screenshot = {string:ss}
 				WHERE id = {int:item}',
 				array('ss' => $screenshot, 'item' => $sid)
 			);
@@ -2317,7 +2317,7 @@ function TPortalDLAdmin()
 
 		// a new file uploaded?
 		if(!empty($_FILES['tp_dluploadfile_edit']['tmp_name']) && is_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name']))
-		{	
+		{
 			$shot = true;
 		}
 		else
@@ -2358,8 +2358,8 @@ function TPortalDLAdmin()
 			}
 			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'],$boarddir.'/tp-downloads/'.$sname);
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
-				SET file = {string:file} 
+				UPDATE {db_prefix}tp_dlmanager
+				SET file = {string:file}
 				WHERE id = {int:item}',
 				array('file' => $sname, 'item' => $sid)
 			);
@@ -2369,7 +2369,7 @@ function TPortalDLAdmin()
 			if(!is_numeric($value))
 				$value = 0;
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_dlmanager 
+				UPDATE {db_prefix}tp_dlmanager
 				SET filesize = {int:size}
 				WHERE id = {int:item}',
 				array('size' => $value, 'item' => $sid)
@@ -2388,8 +2388,8 @@ function TPortalDLAdmin()
 				if(empty($value))
 					$value = '-no title-';
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
-					SET name = {string:name} 
+					UPDATE {db_prefix}tp_dlmanager
+					SET name = {string:name}
 					WHERE id = {int:item}',
 					array('name' => $value, 'item' => $id)
 				);
@@ -2401,8 +2401,8 @@ function TPortalDLAdmin()
 				{
 					$val = $boardurl.'/tp-downloads/icons/'.$value;
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_dlmanager 
-						SET icon = {string:icon} 
+						UPDATE {db_prefix}tp_dlmanager
+						SET icon = {string:icon}
 						WHERE id = {int:item}',
 						array('icon' => $val, 'item' => $id)
 					);
@@ -2423,7 +2423,7 @@ function TPortalDLAdmin()
 						// We need this for everything else.
 						$value = $_POST[$what] = $_REQUEST[$what];
 
-					}					
+					}
 					if(isset($_POST['dladmin_text'.$id.'_pure']) && isset($_POST['dladmin_text'.$id.'_choice']))
 					{
 						if($_POST['dladmin_text'.$id.'_choice'] == 1)
@@ -2432,8 +2432,8 @@ function TPortalDLAdmin()
 							$value = $_POST['dladmin_text'.$id.'_pure'];
 					}
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_dlmanager 
-						SET description = {string:desc} 
+						UPDATE {db_prefix}tp_dlmanager
+						SET description = {string:desc}
 						WHERE id = {int:item}',
 						array('desc' => $value, 'item' => $id)
 					);
@@ -2443,7 +2443,7 @@ function TPortalDLAdmin()
 			{
 				$id = substr($what, 14);
 					$request = $smcFunc['db_query']('', '
-						SELECT * FROM {db_prefix}tp_dlmanager 
+						SELECT * FROM {db_prefix}tp_dlmanager
 						WHERE id = {int:item}',
 						array('item' => $id)
 					);
@@ -2456,8 +2456,8 @@ function TPortalDLAdmin()
 							if ($category > 0)
 							{
 								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_dlmanager 
-									SET downloads = downloads - 1 
+									UPDATE {db_prefix}tp_dlmanager
+									SET downloads = downloads - 1
 									WHERE id = {int:cat} LIMIT 1',
 									array('cat' => $category)
 								);
@@ -2475,12 +2475,12 @@ function TPortalDLAdmin()
 								if(!$succ2)
 									$err .= '<br />' . $txt['tp-dlssnotdel'] . ' ('.$row['screenshot'].')';
 							}
-	
+
 						}
 						$smcFunc['db_free_result']($request);
 					}
 				$smcFunc['db_query']('', '
-					DELETE FROM {db_prefix}tp_dlmanager 
+					DELETE FROM {db_prefix}tp_dlmanager
 					WHERE id = {int:item}',
 					array('item' => $id)
 				);
@@ -2492,7 +2492,7 @@ function TPortalDLAdmin()
 			{
 				$id = abs(substr($what, 15));
 				$request = $smcFunc['db_query']('', '
-					SELECT category FROM {db_prefix}tp_dlmanager 
+					SELECT category FROM {db_prefix}tp_dlmanager
 					WHERE id = {int:item}',
 					array('item' => $id)
 				);
@@ -2501,14 +2501,14 @@ function TPortalDLAdmin()
 					$row = $smcFunc['db_fetch_row']($request);
 					$newcat = abs($row[0]);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_dlmanager 
-						SET category = {int:cat} 
+						UPDATE {db_prefix}tp_dlmanager
+						SET category = {int:cat}
 						WHERE id = {int:item}',
 						array('cat' => $newcat, 'item' => $id)
 					);
 					$smcFunc['db_query']('', '
-						DELETE FROM {db_prefix}tp_variables 
-						WHERE type = {string:type} 
+						DELETE FROM {db_prefix}tp_variables
+						WHERE type = {string:type}
 						AND value5 = {int:val5}',
 						array('type' => 'dl_not_approved', 'val5' => $id)
 					);
@@ -2519,7 +2519,7 @@ function TPortalDLAdmin()
 			{
 				$id = abs(substr($what, 16));
 				$request = $smcFunc['db_query']('', '
-					SELECT category FROM {db_prefix}tp_dlmanager 
+					SELECT category FROM {db_prefix}tp_dlmanager
 					WHERE id = {int:item}',
 					array('item' => $id)
 				);
@@ -2528,14 +2528,14 @@ function TPortalDLAdmin()
 					$row = $smcFunc['db_fetch_row']($request);
 					$newcat = abs($row[0]);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_dlmanager 
-						SET category = {int:cat} 
+						UPDATE {db_prefix}tp_dlmanager
+						SET category = {int:cat}
 						WHERE id = {int:item}',
 						array('cat' => $newcat, 'item' => $id)
 					);
 					$smcFunc['db_query']('', '
-						DELETE FROM {db_prefix}tp_variables 
-						WHERE type = {string:type} 
+						DELETE FROM {db_prefix}tp_variables
+						WHERE type = {string:type}
 						AND value5 = {int:val5}',
 						array('type' => 'dl_not_approved', 'val5' => $id)
 					);
@@ -2548,8 +2548,8 @@ function TPortalDLAdmin()
 				// update, but not on negative values :)
 				if($value>0)
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_dlmanager 
-						SET category = {int:cat} 
+						UPDATE {db_prefix}tp_dlmanager
+						SET category = {int:cat}
 						WHERE id = {int:item}',
 						array('cat' => $value, 'item' => $id)
 					);
@@ -2558,7 +2558,7 @@ function TPortalDLAdmin()
 			{
 				$id = substr($what, 14);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
+					UPDATE {db_prefix}tp_dlmanager
 					SET parent = {int:parent}
 					WHERE id = {int:item}',
 					array('parent' => $value, 'item' => $id)
@@ -2568,7 +2568,7 @@ function TPortalDLAdmin()
 			{
 				$id = substr($what, 15);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
+					UPDATE {db_prefix}tp_dlmanager
 					SET subitem = {int:sub}
 					WHERE id = {int:item}',
 					array('sub' => $value, 'item' => $id)
@@ -2582,9 +2582,9 @@ function TPortalDLAdmin()
 					$myid = $_POST['admineditcatval'];
 					$go = 4;
 				}
-	
+
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
+					UPDATE {db_prefix}tp_dlmanager
 					SET downloads = {int:down}
 					WHERE id = {int:item}',
 					array('down' => $value, 'item' => $id)
@@ -2594,8 +2594,8 @@ function TPortalDLAdmin()
 			{
 				$id = substr($what, 18);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
-					SET screenshot = {string:ss} 
+					UPDATE {db_prefix}tp_dlmanager
+					SET screenshot = {string:ss}
 					WHERE id = {int:item}',
 					array('ss' => $value, 'item' => $id)
 				);
@@ -2604,8 +2604,8 @@ function TPortalDLAdmin()
 			{
 				$id = substr($what, 12);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
-					SET link = {string:link} 
+					UPDATE {db_prefix}tp_dlmanager
+					SET link = {string:link}
 					WHERE id = {int:item}',
 					array('link' => $value, 'item' => $id)
 				);
@@ -2614,7 +2614,7 @@ function TPortalDLAdmin()
 			{
 				$id = substr($what, 12);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
+					UPDATE {db_prefix}tp_dlmanager
 					SET file = {string:file}
 					WHERE id = {int:item}',
 					array('file' => $value, 'item' => $id)
@@ -2631,7 +2631,7 @@ function TPortalDLAdmin()
 				if(!is_numeric($value))
 					$value = 0;
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_dlmanager 
+					UPDATE {db_prefix}tp_dlmanager
 					SET filesize = {int:size}
 					WHERE id = {int:item}',
 					array('size' => $value, 'item' => $id)
@@ -2658,7 +2658,7 @@ function TPortalDLAdmin()
 				// which one
 				$who = substr($what, 20);
 				$result = $smcFunc['db_query']('', '
-					SELECT value FROM {db_prefix}tp_settings 
+					SELECT value FROM {db_prefix}tp_settings
 					WHERE name = {string:name} LIMIT 1',
 					array('name' => 'dl_screenshotsizes')
 				);
@@ -2718,7 +2718,7 @@ function TPortalDLAdmin()
 				$changeArray['dl_introtext'] = trim($value);
 				$go = 1;
 			}
-		
+
 			elseif($what == 'tp_dluploadsize')
 			{
 				$changeArray['dl_max_upload_size'] = $value;
@@ -2745,14 +2745,14 @@ function TPortalDLAdmin()
 				$go = 1;
 			}
 		}
-		
+
 		// Update all the changes settings finally
 		updateTPSettings($changeArray);
-		
+
 		// if we came from useredit screen..
 		if(isset($_POST['dl_useredit']))
 		   redirectexit('action=tpmod;dl=useredit'.$_POST['dl_useredit']);
-		
+
 		if(!empty($newgo))
 			$go = $newgo;
 		// guess not, admin screen then
@@ -2817,8 +2817,8 @@ function TPortalDLAdmin()
 	$sorted = array();
 	$context['TPortal']['linkcats'] = array();
 	$srequest = $smcFunc['db_query']('', '
-		SELECT id, name, description, icon, access, parent 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT id, name, description, icon, access, parent
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type} ORDER BY downloads ASC',
 		array('type' => 'dlcat')
 	);
@@ -2857,8 +2857,8 @@ function TPortalDLAdmin()
 	$context['TPortal']['dl_allitems'] = array();
 	// count items in each category
 	$request = $smcFunc['db_query']('', '
-		SELECT file, category 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT file, category
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array('type' => 'dlitem')
 	);
@@ -2891,8 +2891,8 @@ function TPortalDLAdmin()
 		$context['TPortal']['dl_title'] = $txt['tp-dladmin'];
 		// fetch all categories with subcats
 		$req = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_dlmanager 
-			WHERE type = {string:type} 
+			SELECT * FROM {db_prefix}tp_dlmanager
+			WHERE type = {string:type}
 			ORDER BY downloads ASC',
 			array('type' => 'dlcat')
 		);
@@ -2935,8 +2935,8 @@ function TPortalDLAdmin()
 		$cat = substr($admsub, 3);
 		// get the parent first
 		$request = $smcFunc['db_query']('', '
-			SELECT parent, name, link 
-			FROM {db_prefix}tp_dlmanager 
+			SELECT parent, name, link
+			FROM {db_prefix}tp_dlmanager
 			WHERE type = {string:type}
 			AND id = {int:item}',
 			array('type' => 'dlcat', 'item' => $cat)
@@ -2990,7 +2990,7 @@ function TPortalDLAdmin()
 		}
 		// fetch all categories with subcats
 		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_dlmanager 
+			SELECT * FROM {db_prefix}tp_dlmanager
 			WHERE type = {string:type}
 			ORDER BY name ASC',
 			array('type' => 'dlcat')
@@ -3089,7 +3089,7 @@ function TPortalDLAdmin()
 		}
 		// check that submissions link to downloads
 		$request = $smcFunc['db_query']('', '
-			SELECT id,value5 FROM {db_prefix}tp_variables 
+			SELECT id,value5 FROM {db_prefix}tp_variables
 			WHERE type = {string:type}',
 			array('type' => 'dl_not_approved')
 		);
@@ -3100,7 +3100,7 @@ function TPortalDLAdmin()
 				$what = $row['id'];
 				if(!in_array($row['value5'], $submitted))
 					$smcFunc['db_query']('', '
-						DELETE FROM {db_prefix}tp_variables 
+						DELETE FROM {db_prefix}tp_variables
 						WHERE id = {int:item}',
 						array('item' => $what)
 					);
@@ -3114,8 +3114,8 @@ function TPortalDLAdmin()
 		$cat = substr($admsub, 7);
 		// edit category
 		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_dlmanager 
-			WHERE id = {int:item} 
+			SELECT * FROM {db_prefix}tp_dlmanager
+			WHERE id = {int:item}
 			AND type = {string:type} LIMIT 1',
 			array('item' => $cat, 'type' => 'dlcat')
 		);
@@ -3135,12 +3135,12 @@ function TPortalDLAdmin()
 			}
 			$smcFunc['db_free_result']($request);
 		}
-		
+
 		if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 		{
 			$context['TPortal']['editor_id'] = 'dladmin_text'.$context['TPortal']['admcats'][0]['id'];
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['admcats'][0]['description']);
-		}		
+		}
 	}
 	elseif(substr($admsub, 0, 6) == 'delcat')
 	{
@@ -3148,13 +3148,13 @@ function TPortalDLAdmin()
 		$cat = substr($admsub, 6);
 		// delete category and all item it's in
 		$request = $smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_dlmanager 
+			DELETE FROM {db_prefix}tp_dlmanager
 			WHERE type = {string:type}
 			AND category = {int:cat}',
 			array('type' => 'dlitem', 'cat' => $cat)
 		);
 		$request = $smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_dlmanager 
+			DELETE FROM {db_prefix}tp_dlmanager
 			WHERE id = {int:cat} LIMIT 1',
 			array('cat' => $cat)
 		);
@@ -3168,8 +3168,8 @@ function TPortalDLAdmin()
 	{
 		$item = substr($admsub, 4);
 		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_dlmanager 
-			WHERE id = {int:item} 
+			SELECT * FROM {db_prefix}tp_dlmanager
+			WHERE id = {int:item}
 			AND type = {string:type} LIMIT 1',
 			array('item' => $item, 'type' => 'dlitem')
 		);
@@ -3185,16 +3185,16 @@ function TPortalDLAdmin()
 			if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 			{
 				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
-				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']); 			
-			}			
+				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']);
+			}
 
 			// get all items for a list
 			$context['TPortal']['admitems'] = array();
 			$itemlist = $smcFunc['db_query']('', '
-				SELECT id, name FROM {db_prefix}tp_dlmanager 
-				WHERE id != {int:item} 
-				AND type = {string:type} 
-				AND subitem = 0 
+				SELECT id, name FROM {db_prefix}tp_dlmanager
+				WHERE id != {int:item}
+				AND type = {string:type}
+				AND subitem = 0
 				ORDER BY name ASC',
 				array('item' => $item, 'type' => 'dlitem')
 			);
@@ -3219,7 +3219,7 @@ function TPortalDLAdmin()
 				AND subitem = {int:sub}',
 				array('type' => 'dlitem', 'sub' => $subitem)
 			);
-					
+
 			if($smcFunc['db_num_rows']($fetch) > 0)
 			{
 				while($frow = $smcFunc['db_fetch_assoc']($fetch))
@@ -3230,7 +3230,7 @@ function TPortalDLAdmin()
 						$ffs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
 						$ffs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
-							
+
 					$fdata[] = array(
 						'id' => $frow['id'],
 						'name' => $frow['name'],
@@ -3278,8 +3278,8 @@ function TPortalDLAdmin()
 
 			$smcFunc['db_free_result']($request);
 			$request = $smcFunc['db_query']('', '
-				SELECT mem.real_name as realName 
-				FROM {db_prefix}members as mem 
+				SELECT mem.real_name as realName
+				FROM {db_prefix}members as mem
 				WHERE mem.id_member = {int:id_mem}',
 				array('id_mem' => $authorID)
 			);
@@ -3380,8 +3380,8 @@ function TPortalDLUser($item)
 
 	// check that it is indeed yours
 	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_dlmanager 
-		WHERE id = {int:item} 
+		SELECT * FROM {db_prefix}tp_dlmanager
+		WHERE id = {int:item}
 		AND type = {string:type}
 		AND author_id = {int:auth} LIMIT 1',
 		array('item' => $item, 'type' => 'dlitem', 'auth' => $context['user']['id'])
@@ -3399,11 +3399,11 @@ function TPortalDLUser($item)
 		$context['TPortal']['useritems'] = array();
 		$context['TPortal']['dl_useredit'] = array();
 		$itemlist = $smcFunc['db_query']('', '
-			SELECT id, name FROM {db_prefix}tp_dlmanager 
+			SELECT id, name FROM {db_prefix}tp_dlmanager
 			WHERE id != {int:item}
-			AND author_id = {int:auth} 
-			AND type = {string:type} 
-			AND subitem = 0 
+			AND author_id = {int:auth}
+			AND type = {string:type}
+			AND subitem = 0
 			ORDER BY name ASC',
 			array('item' => $item, 'auth' => $context['user']['id'], 'type' => 'dlitem')
 		);
@@ -3428,7 +3428,7 @@ function TPortalDLUser($item)
 			AND subitem = {int:sub}',
 			array('type' => 'dlitem', 'sub' => $subitem)
 		);
-					
+
 		if($smcFunc['db_num_rows']($fetch) > 0)
 		{
 			while($frow = $smcFunc['db_fetch_assoc']($fetch))
@@ -3439,7 +3439,7 @@ function TPortalDLUser($item)
 					$ffs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
 				elseif($context['TPortal']['dl_fileprefix'] == 'G')
 					$ffs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
-								
+
 				$fdata[] = array(
 					'id' => $frow['id'],
 					'name' => $frow['name'],
@@ -3479,8 +3479,8 @@ function TPortalDLUser($item)
 
 		$smcFunc['db_free_result']($request);
 		$request = $smcFunc['db_query']('', '
-			SELECT real_name as realName 
-			FROM {db_prefix}members 
+			SELECT real_name as realName
+			FROM {db_prefix}members
 			WHERE id_member = {int:auth} LIMIT 1',
 			array('auth' => $authorID)
 		);
@@ -3517,16 +3517,16 @@ function dlupdatefilecount($category, $total = true)
 
 	// get all files in its own category first
 	$request = $smcFunc['db_query']('', '
-		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager 
-		WHERE category = {int:cat} 
+		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
+		WHERE category = {int:cat}
 		AND type = {string:type}',
 		array('cat' => $category, 'type' => 'dlitem')
 	);
 	$result = $smcFunc['db_fetch_row']($request);
 	$r = $result[0];
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_dlmanager 
-		SET files = {int:file} 
+		UPDATE {db_prefix}tp_dlmanager
+		SET files = {int:file}
 		WHERE id = {int:item}',
 		array('file' => $r, 'item' => $category)
 	);
@@ -3565,8 +3565,8 @@ function TP_dluploadcats()
 	//first : fetch all allowed categories
 	$sorted = array();
 	$request = $smcFunc['db_query']('', '
-		SELECT id, parent, name, access 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT id, parent, name, access
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array('type' => 'dlcat')
 	);
@@ -3607,9 +3607,9 @@ function TP_dlgeticons()
 
 	// fetch icons, just read the directory
 	$context['TPortal']['dlicons'] = array();
-	if ($handle = opendir($boarddir.'/tp-downloads/icons')) 
+	if ($handle = opendir($boarddir.'/tp-downloads/icons'))
 	{
-		while (false !== ($file = readdir($handle))) 
+		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && in_array(substr($file,(strlen($file)-4), 4), array('.jpg','.gif','.png')))
 				$context['TPortal']['dlicons'][] = $file;
@@ -3629,7 +3629,7 @@ function TP_dlftpfiles()
 		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'icons')
-			{ 
+			{
 				$size = floor(filesize($boarddir.'/tp-downloads/'.$file) / 1024);
 				$sorted[$count] = array(
 					'id' => $count,

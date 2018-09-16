@@ -145,7 +145,7 @@ $txt['center-tp-upshrink_description'] = 'Center Panel';
 
 // Search... //
 // Rev 89
-$txt['tp-searcharticles'] = 'Extended search'; 
+$txt['tp-searcharticles'] = 'Extended search';
 $txt['tp-searcharticles2'] = 'Search Articles';
 $txt['tp-searchdownloads'] = 'Search Downloads Manager';
 $txt['tp-nosearchentered'] = 'Nothing to search for!';

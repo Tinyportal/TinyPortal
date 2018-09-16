@@ -28,7 +28,7 @@ if(!defined('SMF') && file_exists('SSI.php'))
 }
 elseif(!defined('SMF'))
 	die('<strong>Install Error:</strong> - please verify you put this file the same directory as SMF\'s index.php.');
-	
+
 // Make sure we have all the $smcFunc stuff
 if (!array_key_exists('db_create_table', $smcFunc))
     db_extend('packages');
@@ -56,8 +56,8 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
 <script>
 	function closeNav() {
     document.getElementById("hidemenow").style.width = "0px";
-    document.getElementById("hidemenow").style.height = "0px";	
-    document.getElementById("hidemenow").style.overflow = "hidden";	
+    document.getElementById("hidemenow").style.height = "0px";
+    document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
 <div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/tp-delete_shout.gif" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v1.5.1 for SMF 2.0.x<h3/></div>
@@ -304,10 +304,10 @@ $tables = array(
 );
 
 foreach ($tables as $table => $col) {
-    if (in_array($db_prefix . $table, $existing_tables)) { 
+    if (in_array($db_prefix . $table, $existing_tables)) {
         $render .= '
         <li>'. $table .' already exists. Updating table if necessary.</li>';
-        
+
         // Change old column names to newer names
         if ($table == 'tp_articles')
 			articleChanges();
@@ -315,7 +315,7 @@ foreach ($tables as $table => $col) {
 			updateDownLoads();
 		elseif ($table == 'tp_data')
 			dataTableChanges();
-				
+
         // If utf8 is set alter table to use utf8 character set.
         if ($utf8) {
             $smcFunc['db_query']('', '
@@ -327,7 +327,7 @@ foreach ($tables as $table => $col) {
         foreach ($col['columns'] as $column) {
 			if (!isset($column['old_name']) || !$smcFunc['db_change_column']($db_prefix . $table, $column['old_name'], $column))
 				$smcFunc['db_add_column']('{db_prefix}' . $table, $column);
-            
+
             // If utf8 is set alter column to be utf8 if text or tinytext.
             if ($utf8 && in_array($column['type'], array('text', 'tinytext', 'longtext'))) {
                 $smcFunc['db_query']('', '
@@ -340,18 +340,18 @@ foreach ($tables as $table => $col) {
     }
     else {
         $smcFunc['db_create_table']($db_prefix . $table, $col['columns'], $col['indexes'], array(), 'ignore');
-        
+
         if ($utf8) {
             $smcFunc['db_query']('', '
                 ALTER TABLE {db_prefix}{raw:table}
                 CONVERT TO CHARACTER SET utf8',
                 array('table' => $table)
             );
-            
+
             foreach ($col['columns'] as $column) {
                 if (!in_array($column['type'], array('text', 'tinytext')))
                     continue;
-                    
+
                 $smcFunc['db_query']('', '
                     ALTER TABLE {db_prefix}{raw:table}
                     CHANGE {raw:name} {raw:name} {raw:type}
@@ -362,11 +362,11 @@ foreach ($tables as $table => $col) {
         }
         $render .= '
         <li>'. $table .' table has been created.</li>';
-    }    
+    }
 }
 
 $request = $smcFunc['db_query']('', '
-    SELECT * FROM {db_prefix}tp_settings 
+    SELECT * FROM {db_prefix}tp_settings
     WHERE name = {string:name} LIMIT 1',
     array('name' => 'version')
 );
@@ -379,7 +379,7 @@ if($row['value'] < 104)
 	$convertmodule = true;*/
 if($row['value'] < 1090)
 	$convertaccess = true;
-	
+
 $smcFunc['db_free_result']($request);
 
 $settings_array = array(
@@ -565,7 +565,7 @@ $barskey = array_keys($bars);
 foreach($settings_array as $what => $val)
 {
 	$request = $smcFunc['db_query']('', '
-        SELECT * FROM {db_prefix}tp_settings 
+        SELECT * FROM {db_prefix}tp_settings
         WHERE name = {string:name}',
         array('name' => $what)
     );
@@ -580,8 +580,8 @@ foreach($settings_array as $what => $val)
 	}
 	elseif($smcFunc['db_num_rows']($request) > 0 && $what == 'version'){
 		$smcFunc['db_query']('', '
-            UPDATE {db_prefix}tp_settings 
-            SET value = {string:val} 
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
             WHERE name = {string:name}',
             array('val' => $val, 'name' => $what)
         );
@@ -590,8 +590,8 @@ foreach($settings_array as $what => $val)
 	}
 	elseif($smcFunc['db_num_rows']($request) > 0 && $what == 'userbox_options'){
 		$smcFunc['db_query']('', '
-            UPDATE {db_prefix}tp_settings 
-            SET value = {string:val} 
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
             WHERE name = {string:name}',
             array('val' => $val, 'name' => $what)
         );
@@ -626,8 +626,8 @@ if($updates > 0)
 if($convertblocks)
 {
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_blocks 
-		SET access2 = {string:access2} 
+		UPDATE {db_prefix}tp_blocks
+		SET access2 = {string:access2}
 		WHERE access2 = ""',
 		array('access2' => 'actio=allpages')
 	);
@@ -636,8 +636,8 @@ if($convertblocks)
 
 // make sure access2 is comma separated
 $smcFunc['db_query']('', '
-	UPDATE {db_prefix}tp_blocks 
-	SET access2 = REPLACE(access2, "|", ",") 
+	UPDATE {db_prefix}tp_blocks
+	SET access2 = REPLACE(access2, "|", ",")
 	WHERE 1'
 );
 $render .= '<li>Updated access field of blocks</li>';
@@ -646,9 +646,9 @@ $render .= '<li>Updated access field of blocks</li>';
 if($convertblocks)
 {
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_variables 
-		SET value3 = {string:val3} 
-		WHERE value3 = "" 
+		UPDATE {db_prefix}tp_variables
+		SET value3 = {string:val3}
+		WHERE value3 = ""
 		AND type = {string:cat}',
 		array('val3' => '-1,0', 'cat' => 'category')
 	);
@@ -663,7 +663,7 @@ articleUpdates();
 
 // make sure TPShout is available
 $request = $smcFunc['db_query']('', '
-	SELECT id FROM {db_prefix}tp_modules 
+	SELECT id FROM {db_prefix}tp_modules
 	WHERE modulename = {string:name}',
 	array('name' => 'TPShout')
 );
@@ -672,7 +672,7 @@ if($smcFunc['db_num_rows']($request) > 0)
 	$row = $smcFunc['db_fetch_row']($request);
 	$smcFunc['db_free_result']($request);
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_modules 
+		UPDATE {db_prefix}tp_modules
 		SET logo = {string:logo}',
 		array('logo' => 'tpshoutbox.png')
 	);
@@ -682,15 +682,15 @@ else
 	$newmod = array(
 		'version' => '1.4',
 		'modulename' => 'TPShout',	// must be exactly equal to the folder.
-		'title' => 'TP Simple Shout', 
+		'title' => 'TP Simple Shout',
 		'subquery' => 'shout',	// the subcall that let TP knows which module is running.
 		'autoload_run' => 'TPShout.php',
 		'autoload_admin' => 'TPShout.php',
 		'autorun' => '',
 		'autorun_admin' => '',
-		'db' => '', 
+		'db' => '',
 		'permissions' => 'tp_can_admin_shout|1',	//permiss
-		'active' => 1, 
+		'active' => 1,
 		'languages' => 'english',
 		'blockrender' => 'tpshout_fetch',
 		'adminhook' => 'tpshout_adminhook',
@@ -708,7 +708,7 @@ else
 	require_once($sourcedir . '/Subs-Post.php');
 	preparsecode($newmod['description']);
 
-	// ok, insert this into modules table. 
+	// ok, insert this into modules table.
 	$smcFunc['db_insert']('INSERT',
 		'{db_prefix}tp_modules',
 		array(
@@ -752,7 +752,7 @@ if(isset($convertaccess))
 		$new = array();
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
-			unset($new); 
+			unset($new);
 			$new = array();
 			$a = explode('|', $row['access2']);
 			if(count($a) > 1)
@@ -774,10 +774,10 @@ if(isset($convertaccess))
 			}
 			else
 				$new[] = $row['access2'];
-			
+
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_blocks 
-				SET access2 = {string:access2} 
+				UPDATE {db_prefix}tp_blocks
+				SET access2 = {string:access2}
 				WHERE id = {int:blockid}',
 				array(
 					'blockid' => $row['id'],
@@ -790,16 +790,16 @@ if(isset($convertaccess))
 }
 
 
-$render .= '</ul>		
+$render .= '</ul>
 		<hr><p>TinyPortal\'s table structure is now installed/updated. </p>
 		<b>Thank you for trying out TinyPortal!</b>';
-		
+
 if (!$manual)
 	$render .= '
 		<div style="padding-top: 3em; padding-right: 50px; text-align: center;">
 			<a class="button_submit" style="font-size: 1.2em; display: block; width: 250px; padding: 1em;margin:0 auto;" href="'.$scripturl.'?action=tpadmin">Redirect to TP admin</a>
 		</div>';
-		
+
 $render .= '
 	</div></div>';
 
@@ -807,24 +807,24 @@ if($manual)
 	echo $render . '</body></html>';
 else
 {
-	echo $render; 
+	echo $render;
 }
 
 function checkColumn($table, $col, $action)
 {
 	global $render, $existing_tables, $smcFunc, $db_prefix;
-	
+
 	if (in_array($db_prefix . $table, $existing_tables))
 	{
 		$columns = $smcFunc['db_list_columns']('{db_prefix}' . $table);
-		
+
 		if(in_array($col, $columns))
 			$smcFunc['db_query']('', '
 				ALTER TABLE {db_prefix}'. $table .' ' . $action);
-				
+
 		$render .= '
-		<li>Changed ' . $col . ' in ' . $table . ' table</li>';		
-	}	
+		<li>Changed ' . $col . ' in ' . $table . ' table</li>';
+	}
 }
 
 function updateDownLoads()
@@ -842,14 +842,14 @@ function articleChanges()
 	checkColumn('tp_articles', 'ID_THEME', 'CHANGE `ID_THEME` `id_theme` smallint(6) default 0 NOT NULL');
 	checkColumn('tp_articles', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
 	checkColumn('tp_articles', 'body', 'CHANGE `body` `body` LONGTEXT NULL');
-	$render .= '<li>Updated old columns in articles table</li>';		
+	$render .= '<li>Updated old columns in articles table</li>';
 }
 function dataTableChanges()
 {
 	global $render;
 	// Update old column names
 	checkColumn('tp_data', 'ID_MEMBER', 'CHANGE `ID_MEMBER` `id_member` int default 0 NOT NULL');
-	$render .= '<li>Updated old columns in data table</li>';	
+	$render .= '<li>Updated old columns in data table</li>';
 }
 
 function articleUpdates()
@@ -857,27 +857,27 @@ function articleUpdates()
 	global $smcFunc, $render;
 	// change to types
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_articles 
-		SET type = {string:type}, useintro = {int:useintro} 
+		UPDATE {db_prefix}tp_articles
+		SET type = {string:type}, useintro = {int:useintro}
 		WHERE useintro = -1',
 		array('type' => 'php', 'useintro' => 0)
 	);
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_articles 
-		SET type = {string:type}, useintro = {int:useintro} 
+		UPDATE {db_prefix}tp_articles
+		SET type = {string:type}, useintro = {int:useintro}
 		WHERE useintro = -2',
 		array('type' => 'bbc', 'useintro' => 0)
 	);
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_articles 
-		SET type = {string:type} 
+		UPDATE {db_prefix}tp_articles
+		SET type = {string:type}
 		WHERE useintro = -3',
 		array('type' => 'import')
 	);
-	
+
 	// make sure featured is updated
 	$request = $smcFunc['db_query']('', '
-		SELECT value FROM {db_prefix}tp_settings 
+		SELECT value FROM {db_prefix}tp_settings
 		WHERE name = {string:name}',
 		array('name' => 'featured_article')
 	);
@@ -888,14 +888,14 @@ function articleUpdates()
 		if(!empty($row['value']))
 		{
 			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles 
-				SET featured = 1 
+				UPDATE {db_prefix}tp_articles
+				SET featured = 1
 				WHERE id = {int:art_id}',
 				array('art_id' => $row['value'])
 			);
 			$render .='<li>Update featured article</li>';
 		}
-	}	
+	}
 }
 function addDefaults()
 {
@@ -908,26 +908,26 @@ function addDefaults()
 		array(
 			'name' => 'TinyPortal',
 		)
-	); 
-	
+	);
+
 	// Check for blocks in table, if none insert default blocks.
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_dlmanager LIMIT 1'
 	);
-	if ($smcFunc['db_num_rows']($request) < 1)			
+	if ($smcFunc['db_num_rows']($request) < 1)
 		$smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_dlmanager',
 			array('name' => 'string', 'access' => 'string', 'type' => 'string'),
 			array('General', '-1,0,1', 'dlcat'),
 			array('id')
 		);
-	
+
 	// Check for blocks in table, if none insert default blocks.
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_blocks LIMIT 1'
 	);
-	
-	if ($smcFunc['db_num_rows']($request) < 1) 
+
+	if ($smcFunc['db_num_rows']($request) < 1)
 	{
 		$blocks = array(
 			'online' =>array(
@@ -1043,9 +1043,9 @@ function addDefaults()
 				'var3' => 0,
 				'var4' => 0,
 				'var5' => 0,
-			),										
-		);	
-		
+			),
+		);
+
 		$smcFunc['db_insert']('ignore',
 			'{db_prefix}tp_blocks',
 			array(
@@ -1071,14 +1071,14 @@ function addDefaults()
 			array('id')
 		);
 		$smcFunc['db_free_result']($request);
-		$render .= '<li>Added some sample values for some default blocks</li>';	
+		$render .= '<li>Added some sample values for some default blocks</li>';
 	}
-	
+
 	// Check for date in variables table, if none insert default values.
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables LIMIT 1'
 	);
-	
+
 	if ($smcFunc['db_num_rows']($request) < 1) {
 		$vars = array(
 			'var1' =>array(
@@ -1121,7 +1121,7 @@ function addDefaults()
 				'value9' => '',
 			),
 		);
-		
+
 		$smcFunc['db_insert']('ignore',
 			'{db_prefix}tp_variables',
 			array(
@@ -1140,9 +1140,9 @@ function addDefaults()
 			$vars,
 			array('id')
 		);
-		$smcFunc['db_free_result']($request);		
+		$smcFunc['db_free_result']($request);
 		$render .= '<li>Added some sample values to the variables table</li>';
-	}					
+	}
 }
 
 ?>
