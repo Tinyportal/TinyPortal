@@ -2338,58 +2338,7 @@ function doTPblocks()
 	// get menubox items
 	if(isset($test_menubox))
 	{
-		$context['TPortal']['menu'] = array();
-		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} ORDER BY subtype + 0 ASC',
-			array('type' => 'menubox')
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				$icon = '';
-				if($row['value5'] < 1)
-				{
-					$mtype = substr($row['value3'], 0, 4);
-					$idtype = substr($row['value3'], 4);
-					if($mtype == 'menu') {
-                        continue;
-                    }
-                    elseif($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac') {
-						$mtype = 'link';
-						$idtype = $row['value3'];
-					}
-
-					if($mtype == 'cats')
-					{
-						if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
-							$icon = $context['TPortal']['article_categories']['icon'][$idtype];
-					}
-					if($mtype == 'head')
-					{
-						$mtype = 'head';
-						$idtype = $row['value1'];
-					}
-					$menupos = $row['value5'];
-
-					$context['TPortal']['menu'][$row['subtype2']][] = array(
-						'id' => $row['id'],
-						'menuID' => $row['subtype2'],
-						'name' => $row['value1'],
-						'pos' => $menupos,
-						'type' => $mtype,
-						'IDtype' => $idtype,
-						'off' => '0',
-						'sub' => $row['value4'],
-						'icon' => $icon,
-						'newlink' => $row['value2'],
-						'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
-					);
-				}
-			}
-			$smcFunc['db_free_result']($request);
-		}
+        TPortal_menubox();
 	}
 
 	// for tpadmin
@@ -3016,4 +2965,66 @@ function TPortal_rightbar()
 {
 	TPortal_sidebar('right');
 }
+
+function TPortal_menubox()
+{
+
+    global $context, $smcFunc;
+
+    $context['TPortal']['menu'] = array();
+    $request =  $smcFunc['db_query']('', '
+        SELECT * 
+        FROM {db_prefix}tp_variables 
+        WHERE type = {string:type}
+        ORDER BY subtype + 0 ASC',
+        array('type' => 'menubox')
+    );
+    if($smcFunc['db_num_rows']($request) > 0)
+    {
+        while ($row = $smcFunc['db_fetch_assoc']($request))
+        {
+            $icon = '';
+            if($row['value5'] < 1)
+            {
+                $mtype = substr($row['value3'], 0, 4);
+                $idtype = substr($row['value3'], 4);
+                if($mtype == 'menu') {
+                    continue;
+                }
+                elseif($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac') {
+                    $mtype = 'link';
+                    $idtype = $row['value3'];
+                }
+
+                if($mtype == 'cats')
+                {
+                    if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
+                        $icon = $context['TPortal']['article_categories']['icon'][$idtype];
+                }
+                if($mtype == 'head')
+                {
+                    $mtype = 'head';
+                    $idtype = $row['value1'];
+                }
+                $menupos = $row['value5'];
+
+                $context['TPortal']['menu'][$row['subtype2']][] = array(
+                        'id' => $row['id'],
+                        'menuID' => $row['subtype2'],
+                        'name' => $row['value1'],
+                        'pos' => $menupos,
+                        'type' => $mtype,
+                        'IDtype' => $idtype,
+                        'off' => '0',
+                        'sub' => $row['value4'],
+                        'icon' => $icon,
+                        'newlink' => $row['value2'],
+                        'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
+                        );
+            }
+        }
+        $smcFunc['db_free_result']($request);
+    }
+}
+
 ?>
