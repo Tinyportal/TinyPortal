@@ -129,8 +129,14 @@ function tpAddCopy($buffer)
         return $buffer;
     }
     else {
-	    $find       = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
-		$replace    = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
+        if(strpos($forum_version, '2.1') !== false) {
+            $find       = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
+            $replace    = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
+	    } 
+        else {
+            $find       = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
+		    $replace    = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
+        }
 	    $buffer     = str_replace($find, $replace, $buffer);
     }
 
