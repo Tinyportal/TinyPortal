@@ -55,10 +55,10 @@ if(!empty($context['TPortal']['shoutbox_refresh']))
 
 if(file_exists($settings['theme_dir'].'/css/TPShout.css'))
 	$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin150" />';
+	<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
 else
 	$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin150" />';
+	<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
 
 if($context['TPortal']['shoutbox_usescroll'] > 0)
 	$context['html_headers'] .= '
