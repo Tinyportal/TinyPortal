@@ -286,32 +286,38 @@ function template_tpshout_profile()
 			<div class="windowbg addborder" style="padding: 2ex;">';
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
-			</div>
-			<div class="catbg addborder">
-				<div class="font-strong float-items" align="center" style="width:22%;border-right:1px solid #ffffff;">'.$txt['date'].'</div>
-				<div class="font-strong float-items" align="center" style="width:51%;">',$txt['tp-shout'],'</div>
-				<div class="font-strong float-items" align="center" style="width:19%;border-left:1px solid #ffffff;">'. $txt['tp-edit'] .'</div>
-			    <p class="clearthefloat"></p>
-			</div>';
+			</div><br>
+		<table class="table_grid">
+			<thead>
+				<tr class="title_bar">
+					<th scope="col" class="tpshout_date">'.$txt['date'].'</th>
+					<th scope="col" class="tpshout_shout">',$txt['tp-shout'],'</th>
+					<th scope="col" class="tpshout_edit">'. $txt['tp-edit'] .'</th>
+				</tr>
+			</thead>
+			<tbody>';
 	if(isset($context['TPortal']['profile_shouts']) && sizeof($context['TPortal']['profile_shouts'])>0){
 		foreach($context['TPortal']['profile_shouts'] as $art){
 			echo '
-			<div class="windowbg2 addborder" style="margin-bottom:1px;">
-				<div align="center" class="smalltext float-items" style="width:22%;" >',$art['created'],'</div>
-				<div class="smalltext float-items" style="width:51%;" >',$art['shout'],'</div>
-				<div class="float-items" align="center" style="width:21%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.gif" alt="" /></a>' : '' , '</div>
-				<p class="clearthefloat"></p>
-			</div>';
+				<tr class="windowbg">
+					<td class="tpshout_date">',$art['created'],'</td>
+					<td class="tpshout_shout">',$art['shout'],'</td>
+					<td class="tpshout_edit">' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.gif" alt="" /></a>' : '' , '</td>			
+					</td>
+				</tr>';
 		}
 	}
 	else
 		echo '
-			<div class="windowbg2">
-				<div align="center" class="smalltext">',$txt['tpsummary_noshout'],' 0</div>
-			</div>';
+				<tr class="windowbg">
+					<td class="tpshout_date" colspan="3">',$txt['tpsummary_noshout'],'</td>	
+					</td>
+				</tr>';
 
 	echo '
-			<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
+			</tbody>
+		</table>
+	<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
 		</div>';
 
 }
