@@ -3,7 +3,7 @@
 <modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/"> 
   
 	<id>bloc:tinyportal</id>
-    <version>1.5.1</version>
+    <version>1.6.0</version>
 	<file name="$sourcedir/Load.php">
 		<operation>
 			<search position="before"><![CDATA[	// The theme is the forum's default.

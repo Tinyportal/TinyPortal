@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.5.1
+ * @version 1.6.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -227,10 +227,10 @@ function TP_loadCSS()
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin150" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';
 	else
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin150" />';
+	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />';
 
 	if(!empty($context['TPortal']['padding']))
 		$context['html_headers'] .= '
@@ -2132,6 +2132,11 @@ function doTPblocks()
 		if(substr($_GET['dl'], 0, 3) == 'cat')
 			$down = true;
 	}
+
+    $action = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+    if(!empty($action) && array_key_exists('action', $action)) {
+        $sqlarray[] = 'actio='.$action['action'];
+    }
 
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))
