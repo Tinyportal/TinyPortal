@@ -14,7 +14,7 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
- 
+
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
@@ -48,14 +48,14 @@ function TPsetupAdminAreas()
 	}
 	// any from modules?
 	$request = $smcFunc['db_query']('', '
-		SELECT modulename, subquery, permissions, languages 
-		FROM {db_prefix}tp_modules 
+		SELECT modulename, subquery, permissions, languages
+		FROM {db_prefix}tp_modules
 		WHERE active = {int:active}',
 		array(
 			'active' => 1
 		)
 	);
-	
+
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
@@ -91,13 +91,13 @@ function TPsetupAdminAreas()
 function TP_addPerms()
 {
 	global $smcFunc;
-	
-	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups', 
-		'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys', 
+
+	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups',
+		'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys',
 		'manage_attachments', 'tp_articles', 'tp_blocks', 'tp_dlmanager', 'tp_settings');
 	$request = $smcFunc['db_query']('', '
-		SELECT permissions 
-		FROM {db_prefix}tp_modules 
+		SELECT permissions
+		FROM {db_prefix}tp_modules
 		WHERE {int:active}',
 		array(
 			'active' => 1
@@ -178,14 +178,14 @@ function TPcollectPermissions()
 	);
 	// done, now onto custom modules
 	$request = $smcFunc['db_query']('', '
-		SELECT modulename, permissions, languages 
-		FROM {db_prefix}tp_modules 
+		SELECT modulename, permissions, languages
+		FROM {db_prefix}tp_modules
 		WHERE active = {int:active}',
 		array(
 			'active' => 1
 		)
 	);
-	
+
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
@@ -198,7 +198,7 @@ function TPcollectPermissions()
 				$setperm[$pr[0]] = 0;
 				// admin permission?
 				if($pr[1] == 1)
-					$context['TPortal']['adminlist'][$pr[0]] = 1;				
+					$context['TPortal']['adminlist'][$pr[0]] = 1;
 			}
 			$context['TPortal']['permissonlist'][] = array(
 				'title' => strtolower($row['modulename']),
@@ -221,14 +221,14 @@ function tp_getbuttons()
 		loadLanguage('TPortal', 'english');
 
 	$buts = array();
-	
+
 	if(!empty($context['TPortal']['show_download']))
 		$buts['downloads'] = array(
 			'title' => $txt['tp-downloads'],
 			'href' => $scripturl . '?action=tpmod;dl',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(),			
+			'sub_buttons' => array(),
 		);
 
 	if($context['user']['is_logged'])
@@ -237,16 +237,16 @@ function tp_getbuttons()
 			'href' => $scripturl . '?action=tpmod;sa=myarticles',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(),			
+			'sub_buttons' => array(),
 		);
-	
+
 	if(allowedTo('tp_submithtml'))
 		$buts['tpeditwonarticle']['sub_buttons']['submithtml'] = array(
 			'title' => $txt['tp-submitarticle'],
 			'href' => $scripturl . '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_html',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(),			
+			'sub_buttons' => array(),
 		);
 
 	if(allowedTo('tp_submitbbc'))
@@ -255,7 +255,7 @@ function tp_getbuttons()
 			'href' => $scripturl . '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_bbc',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(),			
+			'sub_buttons' => array(),
 		);
 
 	// the admin fucntions
@@ -267,7 +267,7 @@ function tp_getbuttons()
 			'active_button' => false,
 			'sub_buttons' => array(),
 		);
-		
+
 	if(allowedTo('tp_blocks'))
 	{
 		$buts['tpblocks'] = array(
@@ -294,7 +294,7 @@ function tp_getbuttons()
 					'show' => true,
 					'active_button' => false,
 				),
-			),			
+			),
 		);
 	}
 	if(allowedTo('tp_settings'))
@@ -317,7 +317,7 @@ function tp_getbuttons()
 					'show' => true,
 					'active_button' => false,
 				),
-			),			
+			),
 		);
 	}
 	if(allowedTo('tp_articles'))
@@ -346,7 +346,7 @@ function tp_getbuttons()
 					'show' => true,
 					'active_button' => false,
 				),
-			),			
+			),
 		);
 	}
 	if(allowedTo('tp_dlmanager'))
@@ -357,7 +357,7 @@ function tp_getbuttons()
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(
-			),			
+			),
 		);
 	}
 	if(allowedTo('tp_shoutbox'))
@@ -367,7 +367,7 @@ function tp_getbuttons()
 			'href' => $scripturl . '?action=tpmod;shout=admin',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(),			
+			'sub_buttons' => array(),
 		);
 	}
 	return $buts;
@@ -379,13 +379,13 @@ function TPcollectSnippets()
 
 	// fetch any blockcodes in blockcodes folder
 	$codefiles = array();
-	if ($handle = opendir($boarddir.'/tp-files/tp-blockcodes')) 
+	if ($handle = opendir($boarddir.'/tp-files/tp-blockcodes'))
 	{
-		while (false !== ($file = readdir($handle))) 
+		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && substr($file, (strlen($file) - 10), 10) == '.blockcode')
 			{
-				$snippet = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $file), array('name', 'author', 'version', 'date', 'description')); 
+				$snippet = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $file), array('name', 'author', 'version', 'date', 'description'));
 				$codefiles[] = array(
 					'file' => substr($file, 0, strlen($file) - 10),
 					'name' => isset($snippet['name']) ? $snippet['name'] : '',
@@ -449,7 +449,7 @@ function TP_article_categories($use_sorted = false)
 	$total = array();
 	$request2 =  $smcFunc['db_query']('', '
 		SELECT category, COUNT(*) as files
-		FROM {db_prefix}tp_articles 
+		FROM {db_prefix}tp_articles
 		WHERE category > {int:category} GROUP BY category',
 		array(
 			'category' => 0
@@ -466,7 +466,7 @@ function TP_article_categories($use_sorted = false)
 	$total2 = array();
 	$request2 =  $smcFunc['db_query']('', '
 		SELECT value2, COUNT(*) as siblings
-		FROM {db_prefix}tp_variables 
+		FROM {db_prefix}tp_variables
 		WHERE type = {string:type} GROUP BY value2',
 		array(
 			'type' => 'category'
@@ -480,25 +480,25 @@ function TP_article_categories($use_sorted = false)
 		}
 		$smcFunc['db_free_result']($request2);
 	}
-	
+
 	$request =  $smcFunc['db_query']('', '
 		SELECT cats.*
 		FROM {db_prefix}tp_variables as cats
-		WHERE cats.type = {string:type} 
+		WHERE cats.type = {string:type}
 		ORDER BY cats.value1 ASC',
 		array(
 			'type' => 'category'
 		)
 	);
-	
+
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			// set the options up
 			$options = array(
-				'layout' => '1', 
-				'width' => '100%', 
+				'layout' => '1',
+				'width' => '100%',
 				'cols' => '1',
 				'sort' => 'date',
 				'sortorder' => 'desc',
@@ -544,7 +544,7 @@ function TP_article_categories($use_sorted = false)
 				elseif(substr($val,0,11) == 'lowerpanel=')
 					$options['lowerpanel'] = substr($val,11);
 			}
-			
+
 			// check the parent
 			if($row['value2'] == $row['id'] || $row['value2'] == '' || $row['value2'] == '0')
 				$row['value2'] = 9999;
@@ -563,7 +563,7 @@ function TP_article_categories($use_sorted = false)
 					'children' => !empty($total2[$row['id']][0]) ? $total2[$row['id']][0] : 0,
 					'options' => array(
 						'layout' => $options['layout'],
-						'catlayout' => $options['catlayout'], 
+						'catlayout' => $options['catlayout'],
 						'width' => $options['width'],
 						'cols' => $options['cols'],
 						'sort' => $options['sort'],
@@ -678,10 +678,10 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 
 	if($output != 'array')
 		$render .= '<ul class="tp_articleList">';
-	
+
 	$request =  $smcFunc['db_query']('', '
-		SELECT id, subject, shortname 
-		FROM {db_prefix}tp_articles 
+		SELECT id, subject, shortname
+		FROM {db_prefix}tp_articles
 		WHERE category = {int:cat}
 		ORDER BY {string:order} {string:sort}',
 		array(
@@ -696,7 +696,7 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 				$row['shortname'] = $row['id'];
 
 			$render .= '<li';
-			if($current == $row['id'] || strtolower($current) == $row['shortname']) 
+			if($current == $row['id'] || strtolower($current) == $row['shortname'])
 				 $render .= ' class="current_art"';
 			$render .= '><a href="' . $scripturl . '?page=' . $row['shortname'] . '">' . $row['subject'] . '</a></li>';
 			$articles[] = array(
@@ -736,10 +736,10 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 			$art_next = $art[$curr + 1];
 		else
 			$art_next = $art[$i];
-		
+
 		echo '
 		<form name="articlejump" id="articlejump" action="#">
-			&#171; ' . $art_previous , ' 
+			&#171; ' . $art_previous , '
 			<select name="articlejump_menu" onchange="javascript:location=document.articlejump.articlejump_menu.options[document.articlejump.articlejump_menu.selectedIndex].value;">';
 		foreach($articles as $art)
 		{
@@ -763,22 +763,22 @@ function tp_cleantitle($text)
 function TP_permaTheme($theme)
 {
 	global $context, $smcFunc;
-	
+
 	$me = $context['user']['id'];
 	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}members 
-		SET id_theme = {int:theme} 
+		UPDATE {db_prefix}members
+		SET id_theme = {int:theme}
 		WHERE id_member = {int:mem_id}',
 		array(
 			'theme' => $theme, 'mem_id' => $me,
 		)
 	);
-	
+
 	if(isset($context['TPortal']['querystring']))
 		$tp_where = str_replace(array(';permanent'), array(''), $context['TPortal']['querystring']);
 	else
 		$tp_where = 'action=forum;';
-	
+
 	redirectexit($tp_where);
 }
 
@@ -865,10 +865,10 @@ function tp_renderbbc($message)
 	echo '
 			<tr>
 				<td valign="middle" colspan="2" class="windowbg2">';
-	
+
 		echo '
 				</td>
-			</tr>';	
+			</tr>';
 }
 
 function get_snippets_xml()
@@ -882,7 +882,7 @@ if(!function_exists('htmlspecialchars_decode'))
     {
         $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS, $style));
         if($style === ENT_QUOTES)
-			$translation['&#38;#38;#039;'] = '\''; 
+			$translation['&#38;#38;#039;'] = '\'';
 		return strtr($string,$translation);
     }
 }
@@ -941,7 +941,7 @@ function TPwysiwyg_setup()
 			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
 		</style>';
 
-	$context['html_headers'] .= ' 
+	$context['html_headers'] .= '
 		<script type="text/javascript"><!-- // --><![CDATA[
 			sceditor.command.set(\'floatleft\', {
 				exec: function() {
@@ -1090,25 +1090,25 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				dragdrop: dragdropOptions,';
 		}
 
-	echo '			
+	echo '
 				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
-		echo '		
+		echo '
 				format: \'xhtml\',
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
-				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'	
+				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'
 			});
 
 		// ]]></script>';
-	
+
 
 	// only if you can edit your own articles
 	if($upload && allowedTo('tp_editownarticle'))
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
-		if ($handle = opendir($boarddir.'/tp-images/thumbs')) 
+		if ($handle = opendir($boarddir.'/tp-images/thumbs'))
 		{
-			while (false !== ($file = readdir($handle))) 
+			while (false !== ($file = readdir($handle)))
 			{
 				if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_'.$user_info['id'].'uid')
 				{
@@ -1128,7 +1128,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';					
+				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';
 		}
 		echo '
 		</div>
@@ -1143,8 +1143,8 @@ function TP_getallmenus()
 	global $smcFunc;
 
 	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_variables 
-		WHERE type = {string:type} 
+		SELECT * FROM {db_prefix}tp_variables
+		WHERE type = {string:type}
 		ORDER BY value1 ASC',
 		array(
 			'type' => 'menus'
@@ -1152,9 +1152,9 @@ function TP_getallmenus()
 	);
 	$menus = array();
 	$menus[0] = array(
-		'id' => 0, 
-		'name' => 'Internal', 
-		'var1' => '', 
+		'id' => 0,
+		'name' => 'Internal',
+		'var1' => '',
 		'var2' => ''
 	);
 
@@ -1163,9 +1163,9 @@ function TP_getallmenus()
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$menus[$row['id']] = array(
-				'id' => $row['id'], 
-				'name' => $row['value1'], 
-				'var1' => $row['value2'], 
+				'id' => $row['id'],
+				'name' => $row['value1'],
+				'var1' => $row['value2'],
 				'var2' => $row['value3']
 			);
 		}
@@ -1181,9 +1181,9 @@ function TP_getmenu($menu_id)
 	// get menubox items
 	$menu = array();
 	$request =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_variables 
+		SELECT * FROM {db_prefix}tp_variables
 		WHERE type = {string:type}
-		AND subtype2 = {int:subtype} 
+		AND subtype2 = {int:subtype}
 		ORDER BY value5 ASC',
 		array(
 			'type' => 'menubox', 'subtype' => $menu_id,
@@ -1246,12 +1246,12 @@ function TP_getmenu($menu_id)
 function tp_fetchpermissions($perms)
 {
 	global $txt, $smcFunc;
-	
+
 	$perm = array();
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT p.permission, m.group_name as groupName, p.id_group as ID_GROUP 
+			SELECT p.permission, m.group_name as groupName, p.id_group as ID_GROUP
 			FROM ({db_prefix}permissions as p, {db_prefix}membergroups as m)
 			WHERE p.add_deny = {int:deny}
 			AND p.id_group = m.id_group
@@ -1291,7 +1291,7 @@ function tp_fetchpermissions($perms)
 	{
 		$names = array();
 		$request = $smcFunc['db_query']('', '
-			SELECT m.group_name as groupName, m.id_group as ID_GROUP 
+			SELECT m.group_name as groupName, m.id_group as ID_GROUP
 			FROM {db_prefix}membergroups as m
 			WHERE m.min_posts = {int:minpost}
 			ORDER BY m.group_name ASC',
@@ -1301,14 +1301,14 @@ function tp_fetchpermissions($perms)
 		{
 			// set regaular members
 			$names[0] = array(
-				'id' => 0,				
-				'name' => $txt['members'],				
+				'id' => 0,
+				'name' => $txt['members'],
 			);
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$names[$row['ID_GROUP']] = array(
-					'id' => $row['ID_GROUP'],				
-					'name' => $row['groupName'],				
+					'id' => $row['ID_GROUP'],
+					'name' => $row['groupName'],
 				);
 			}
 			$smcFunc['db_free_result']($request);
@@ -1323,8 +1323,8 @@ function tp_fetchboards()
 
 	// get all boards for board-spesific news
 	$request =  $smcFunc['db_query']('', '
-		SELECT id_board as ID_BOARD,name 
-		FROM {db_prefix}boards 
+		SELECT id_board as ID_BOARD,name
+		FROM {db_prefix}boards
 		WHERE 1',
 		array()
 	);
@@ -1342,7 +1342,7 @@ function tp_fetchboards()
 function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 {
 	global $context, $settings;
-	
+
 	$what = '
 	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
@@ -1356,12 +1356,12 @@ function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 function tp_hidepanel2($id, $id2, $alt)
 {
 	global $txt, $context, $settings;
-	
+
 	$what = '
 	<a title="'.$txt[$alt].'" style="cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.gif" alt="*" />
 	</a>';
-	
+
 	return $what;
 }
 
@@ -1373,15 +1373,15 @@ function tp_collectArticleAttached($art)
 	$context['TPortal']['illustrations'] = array();
 	$context['TPortal']['illustrations_align'] = array();
 	$context['TPortal']['illustrations_text'] = array();
-	
+
 	if(is_array($art))
 	{
 		$tagquery = 'FIND_IN_SET(subtype2, "' . implode(',', $art) .'")';
 		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
-			WHERE type = {string:type} 
+			SELECT * FROM {db_prefix}tp_variables
+			WHERE type = {string:type}
 			AND value5 = {int:val5}
-			AND {string:tag} 
+			AND {string:tag}
 			ORDER BY subtype2 ASC',
 			array(
 				'type' => 'articleimage', 'val5' => 0, 'tag' => $tagquery,
@@ -1390,9 +1390,9 @@ function tp_collectArticleAttached($art)
 	}
 	else
 		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
+			SELECT * FROM {db_prefix}tp_variables
 			WHERE type = {string:type}
-			AND subtype2 = {int:subtype} 
+			AND subtype2 = {int:subtype}
 			ORDER BY value5 ASC',
 			array(
 				'type' => 'articleimage', 'subtype' => $art,
@@ -1433,8 +1433,8 @@ function TP_fetchprofile_areas()
 
 	// done, now onto custom modules
 	$request = $smcFunc['db_query']('', '
-		SELECT modulename, profile 
-		FROM {db_prefix}tp_modules 
+		SELECT modulename, profile
+		FROM {db_prefix}tp_modules
 		WHERE active = {int:active}',
 		array(
 			'active' => 1
@@ -1470,9 +1470,9 @@ function TP_fetchprofile_areas2($memID)
 	}
 	// done, now onto custom modules
 	$request =  $smcFunc['db_query']('', '
-		SELECT modulename, autoload_run, profile 
-		FROM {db_prefix}tp_modules 
-		WHERE active = {int:active} 
+		SELECT modulename, autoload_run, profile
+		FROM {db_prefix}tp_modules
+		WHERE active = {int:active}
 		AND profile != ""',
 		array(
 			'active' => 1
@@ -1512,7 +1512,7 @@ function get_perm($perm, $moderate = '')
 	// admin sees all
 	if($context['user']['is_admin'])
 		$show = true;
-	
+
 	// permission holds true? allow them as well!
 	if($moderate != '' && allowedTo($moderate))
 		$show = true;
@@ -1560,7 +1560,7 @@ function normalizeNewline($text)
 {
 	str_replace("\r\n", "\n", $text);
 	str_replace("\r", "\n", $text);
-	
+
 	return addslashes($text);
 }
 
@@ -1659,7 +1659,7 @@ function tp_renderarticle($intro = '')
 {
 	global $context, $txt, $scripturl, $boarddir, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
-	
+
 	// just return if data is missing
 	if(!isset($context['TPortal']['article']))
 		return;
@@ -1705,18 +1705,18 @@ function tp_renderarticle($intro = '')
 				echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
 			else
 				include($context['TPortal']['article']['fileimport']);
-		}			
+		}
 		else
 		{
 			$post = $context['TPortal']['article']['body'];
 			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false)
-			{       
+			{
 				$post = preg_replace_callback("~<img([\w\W]+?)/>~",
 					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
-						if (stripos($matches[0], 'http://') !== false) { 
+						if (stripos($matches[0], 'http://') !== false) {
 							$matches[0] = preg_replace_callback("~src\=(?:\"|\')(.+?)(?:\"|\')~",
 								function( $src ) use ( $boardurl, $image_proxy_secret ) {
-									if (stripos($src[1], 'http://') !== false) 
+									if (stripos($src[1], 'http://') !== false)
 										return ' src="'. $boardurl . '/proxy.php?request='.urlencode($src[1]).'&hash=' . md5($src[1] . $image_proxy_secret) .'"';
 									else
 										return $src[0];
@@ -1728,7 +1728,7 @@ function tp_renderarticle($intro = '')
 				$post);
 			}
 			echo $post;
-		}	
+		}
 	}
 	echo '
 	</div>';
@@ -1738,7 +1738,7 @@ function tp_renderblockarticle()
 {
 
 	global $context, $txt, $boarddir;
-	
+
 	// just return if data is missing
 	if(!isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]))
 		return;
@@ -2001,8 +2001,8 @@ function TPparseRSS($override = '', $encoding = 0)
 		switch (strtolower($xml->getName())) {
 			case 'rss':
 				foreach ($xml->channel->item as $v) {
-					if($numShown++ >= $context['TPortal']['rssmaxshown']) 
-						break;	
+					if($numShown++ >= $context['TPortal']['rssmaxshown'])
+						break;
 
 					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
@@ -2012,8 +2012,8 @@ function TPparseRSS($override = '', $encoding = 0)
 				break;
 			case 'feed':
 				foreach ($xml->entry as $v) {
-					if($numShown++ >= $context['TPortal']['rssmaxshown']) 
-						break;	
+					if($numShown++ >= $context['TPortal']['rssmaxshown'])
+						break;
 
 					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link['href']), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
@@ -2090,13 +2090,13 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'description' => $txt['tp-articledesc4'],
 				'href' => $scripturl . '?action=tpadmin;sa=submission',
 				'is_selected' => $tpsub == 'submission',
-			),	
+			),
 			'icons' => array(
 				'title' => $txt['tp-adminicons'],
 				'description' => $txt['tp-articledesc5'],
 				'href' => $scripturl . '?action=tpadmin;sa=articons',
 				'is_selected' => $tpsub == 'articons',
-			),	
+			),
 		);
 	}
 	if (allowedTo('tp_blocks'))
@@ -2112,13 +2112,13 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'title' => $txt['tp-allblocks'],
 				'description' => $txt['tp-blocksdesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=blocks',
-				'is_selected' => $tpsub == 'blocks' && !isset($_GET['latest']) && !isset($_GET['overview']), 
+				'is_selected' => $tpsub == 'blocks' && !isset($_GET['latest']) && !isset($_GET['overview']),
 			),
 			'blockoverview' => array(
 				'title' => $txt['tp-blockoverview'],
 				'description' => '',
 				'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-				'is_selected' => $tpsub == 'blocks' && isset($_GET['overview']), 
+				'is_selected' => $tpsub == 'blocks' && isset($_GET['overview']),
 			),
 		);
 	}
@@ -2150,9 +2150,9 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	// collect modules and their permissions	
+	// collect modules and their permissions
 	$result =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_modules 
+		SELECT * FROM {db_prefix}tp_modules
 		WHERE 1',
 		array()
 	);
@@ -2206,9 +2206,9 @@ function tp_collectArticleIcons()
 	$count = 1;
 	$sorted2 = array();
 	//illustrations/images
-	if ($handle = opendir($boarddir.'/tp-files/tp-articles/illustrations')) 
+	if ($handle = opendir($boarddir.'/tp-files/tp-articles/illustrations'))
 	{
-		while (false !== ($file = readdir($handle))) 
+		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
@@ -2236,7 +2236,7 @@ function tp_recordevent($date, $id_member, $textvariable, $link, $description, $
 			'id_member' => 'int',
 			'date' => 'int',
 			'textvariable' => 'string',
-			'link' => 'string', 
+			'link' => 'string',
 			'description' => 'string',
 			'allowed' => 'string',
 			'eventID' => 'int',
@@ -2250,7 +2250,7 @@ function tp_fatal_error($error)
 {
 	global $context;
 
-	$context['sub_template'] = 'tp_fatal_error';	
+	$context['sub_template'] = 'tp_fatal_error';
 	$context['TPortal']['errormessage'] = $error;
 }
 
@@ -2328,11 +2328,11 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 		censorText($row['subject']);
 		censorText($row['body']);
 
-		if ($image_proxy_enabled && !empty($row['avy']) && stripos($row['avy'], 'http://') !== false) 
+		if ($image_proxy_enabled && !empty($row['avy']) && stripos($row['avy'], 'http://') !== false)
 			$row['avy'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avy']) . '&hash=' . md5($row['avy'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 		else
 			$row['avy'] = $row['avy'] == '' ? ( $row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '' ) : (stristr($row['avy'], 'https://' ) ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avy'], ENT_QUOTES) . '" alt="" class="recent_avatar" border="0" />');
-		
+
 		// Build the array.
 		$posts[] = array(
 			'board' => array(
@@ -2401,7 +2401,7 @@ function tpattach()
 	else
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT a.id_folder, a.filename, a.file_hash, a.fileext, a.id_attach, 
+			SELECT a.id_folder, a.filename, a.file_hash, a.fileext, a.id_attach,
 				a.attachment_type, a.mime_type, a.approved
 			FROM {db_prefix}attachments AS a
 			WHERE a.id_attach = {int:attach}
@@ -2569,21 +2569,21 @@ function art_recentitems($max = 5, $type = 'date' ){
 	$now = forum_time();
 	$data = array();
 	$orderby = '';
-	
+
 	if($type == 'date')
 		$orderby = 'art.date';
 	elseif($type == 'views')
 		$orderby = 'art.views';
 	elseif($type == 'comments')
 		$orderby = 'art.comments';
-    
+
 		$request = $smcFunc['db_query']('', '
-			SELECT art.id, art.date, art.subject, art.views, art.rating, art.comments 
-			FROM {db_prefix}tp_articles as art 
-			WHERE art.off = {int:off} and art.approved = {int:approved} 
-			AND ((art.pub_start = 0 AND art.pub_end = 0) 
-				OR (art.pub_start != 0 AND art.pub_start < '. $now .' AND art.pub_end = 0) 
-				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '. $now .') 
+			SELECT art.id, art.date, art.subject, art.views, art.rating, art.comments
+			FROM {db_prefix}tp_articles as art
+			WHERE art.off = {int:off} and art.approved = {int:approved}
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+				OR (art.pub_start != 0 AND art.pub_start < '. $now .' AND art.pub_end = 0)
+				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '. $now .')
 				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '. $now .' AND art.pub_start < '. $now .'))
 			ORDER BY {raw:orderby} DESC LIMIT {int:limit}',
 			array(
@@ -2601,7 +2601,7 @@ function art_recentitems($max = 5, $type = 'date' ){
 			$total = 0;
 			foreach($rat as $mm => $mval)
 			{
-				if(is_numeric($mval)) 
+				if(is_numeric($mval))
 					$total = $total + $mval;
 			}
 			if($rating_votes > 0 && $total > 0)
@@ -2638,7 +2638,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		foreach($context['TPortal']['dl_allowed_cats'] as $ca)
 			$mycats[] = $ca['id'];
 	}
-	
+
 	if($sort == 'authorID')
 		$sort = 'author_id';
 
@@ -2658,8 +2658,8 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 
 		if($sort == 'weekdownloads')
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name, dlm.category, 
-					dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.icon, 
+				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name, dlm.category,
+					dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.icon,
 					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
@@ -2669,10 +2669,10 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				{raw:sort} LIMIT {int:limit}',
 				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);
-		else	
+		else
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name, 
-					dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id, dlm.icon, 
+				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name,
+					dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id, dlm.icon,
 					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
@@ -2696,10 +2696,10 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 
 				if($context['TPortal']['dl_usescreenshot'] == 1)
 				{
-					if(!empty($row['screenshot'])) 
+					if(!empty($row['screenshot']))
 						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
 					else
-						$ico = '';	
+						$ico = '';
 				}
 				else
 					$ico = '';
@@ -2757,8 +2757,8 @@ function dl_getcats()
 
 	$context['TPortal']['dl_allowed_cats'] = array();
 	$request =  $smcFunc['db_query']('','
-		SELECT id, parent, name, access 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT id, parent, name, access
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}',
 		array(
 			'type' => 'dlcat'
@@ -2781,7 +2781,7 @@ function dl_getcats()
 }
 
 function TP_bbcbox($input)
-{	
+{
    echo'<div id="tp_messbox"></div>';
    echo'<div id="tp_smilebox"></div>';
 
@@ -2791,9 +2791,9 @@ function TP_bbcbox($input)
 function TP_prebbcbox($id, $body = '')
 {
 	global $sourcedir;
-	
+
 	require_once($sourcedir . '/Subs-Editor.php');
-	
+
 	$editorOptions = array(
 		'id' => $id,
 		'value' => $body,
@@ -2801,7 +2801,7 @@ function TP_prebbcbox($id, $body = '')
 		'height' => '300px',
 		'width' => '100%',
 	);
-	create_control_richedit($editorOptions); 			
+	create_control_richedit($editorOptions);
 }
 function tp_getblockstyles()
 {
@@ -2914,7 +2914,7 @@ function get_grps($save = true, $noposts = true)
 		);
 	}
 	$smcFunc['db_free_result']($request);
-	
+
 	if($save)
 		return $context['TPmembergroups'];
 }
@@ -2935,11 +2935,11 @@ function tp_convertphp($code, $reverse = false)
 function tp_getDLcats()
 {
 	global $context, $smcFunc;
-	
+
 	$context['TPortal']['dlcats'] = array();
 	$request =  $smcFunc['db_query']('', '
-		SELECT id, name 
-		FROM {db_prefix}tp_dlmanager 
+		SELECT id, name
+		FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:dlcat}',
 		array('dlcat' => 'dlcat')
 	);
@@ -2958,11 +2958,11 @@ function tp_getDLcats()
 function tp_getTPmodules()
 {
 	global $context, $smcFunc;
-	
+
 	$context['TPortal']['tpmods'] = array();
 	$request =  $smcFunc['db_query']('', '
-		SELECT title, subquery 
-		FROM {db_prefix}tp_modules 
+		SELECT title, subquery
+		FROM {db_prefix}tp_modules
 		WHERE active = {int:act}',
 		array('act' => 1)
 	);
@@ -3000,7 +3000,7 @@ function updateTPSettings($addSettings, $check = false)
 						'value' => $value === true ? 'value + 1' : ($value === false ? 'value - 1' : $value),
 						'variable' => $variable,
 					)
-				);				
+				);
 			}
 			$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_settings
@@ -3011,7 +3011,7 @@ function updateTPSettings($addSettings, $check = false)
 						'variable' => $variable,
 					)
 				);
-			
+
 			$context['TPortal'][$variable] = $value === true ? $context['TPortal'][$variable] + 1 : ($value === false ? $context['TPortal'][$variable] - 1 : $value);
 		}
 	}

@@ -56,30 +56,30 @@ function tpAddCopy($buffer)
 
 	// Dynamic body ID
 	if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
-		$bodyid = "profilepage";		
+		$bodyid = "profilepage";
 	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'pm') {
-		$bodyid = "pmpage";		
+		$bodyid = "pmpage";
 	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'calendar') {
-		$bodyid = "calendarpage";	
+		$bodyid = "calendarpage";
 	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'mlist') {
-		$bodyid = "mlistpage";	
+		$bodyid = "mlistpage";
 	} elseif (isset($context['TPortal']) && in_array($context['TPortal']['action'], array('search', 'search2'))) {
-		$bodyid = "searchpage";	
+		$bodyid = "searchpage";
 	} elseif (isset($context['TPortal']) && $context['TPortal']['action'] == 'forum') {
-		$bodyid = "forumpage";	
+		$bodyid = "forumpage";
 	} elseif (isset($_GET['board']) && !isset($_GET['topic'])) {
 		$bodyid = "boardpage";
 	} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
-		  $bodyid = "topicpage";		
+		  $bodyid = "topicpage";
 	} elseif (isset($_GET['page'])) {
-		$bodyid = "page";		
+		$bodyid = "page";
 	} elseif (isset($_GET['cat'])) {
-		$bodyid = "catpage";		
+		$bodyid = "catpage";
 	} elseif (isset($context['TPortal']) && $context['TPortal']['is_frontpage']) {
-		$bodyid = "frontpage";	
+		$bodyid = "frontpage";
 	} else {
 		$bodyid = "tpbody";
-	} 
+	}
 
 	// Dynamic body classes
 	if (isset($_GET['board']) && !isset($_GET['topic'])) {
@@ -87,7 +87,7 @@ function tpAddCopy($buffer)
 	} elseif (isset($_GET['board']) && isset($_GET['topic'])) {
 		$bclass =  "boardpage board" . $_GET['board'] . " " . "topicpage topic" . $_GET['topic'];
 	} elseif (isset($_GET['page'])) {
-		$bclass =  "page" . $_GET['page'];	
+		$bclass =  "page" . $_GET['page'];
 	} elseif (isset($_GET['cat'])) {
 		$bclass =  "cat" . $_GET['cat'];
 	} else {
@@ -145,10 +145,10 @@ function tpAddCopy($buffer)
 function tpAddIllegalPermissions()
 {
 	global $context;
-	
+
 	if (empty($context['non_guest_permissions']))
 		$context['non_guest_permissions'] = array();
-	
+
 	$tp_illegal_perms = array(
 		'tp_settings',
 		'tp_blocks',
@@ -171,7 +171,7 @@ function tpAddMenuItems(&$buttons)
 {
     global $smcFunc, $context, $scripturl, $txt, $forum_version;
 
-    // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items. 
+    // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items.
     if(!isset($context['TPortal'])) {
         return;
     }
@@ -201,10 +201,10 @@ function tpAddMenuItems(&$buttons)
         }
     }
 
-    // Add the forum button     
+    // Add the forum button
     $buttons = array_merge(
             array_slice($buttons, 0, array_search('home', array_keys($buttons), true) + 1),
-            array ( 
+            array (
                 'forum' => array (
                     'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
                     'href' => $scripturl.'?action=forum',
@@ -218,7 +218,7 @@ function tpAddMenuItems(&$buttons)
     // Add the admin button
     $buttons = array_merge(
             array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
-            array ( 
+            array (
                 'tpadmin' => array (
                     'icon' => 'tinyportal/menu_tp.png',
 					'title' => $txt['tp-tphelp'],
@@ -244,12 +244,12 @@ function tpAddMenuItems(&$buttons)
 
     $request = $smcFunc['db_query']('', '
         SELECT value1 AS name , value3 AS href , value7 AS position
-        FROM {db_prefix}tp_variables 
-        WHERE type = {string:type} 
+        FROM {db_prefix}tp_variables
+        WHERE type = {string:type}
         AND value3 LIKE {string:mainmenu}
         AND value5 = 0',
         array (
-            'type' => 'menubox', 
+            'type' => 'menubox',
             'mainmenu' => 'menu%'
         )
     );
@@ -261,7 +261,7 @@ function tpAddMenuItems(&$buttons)
             $i++;
             $buttons = array_merge(
                     array_slice($buttons, 0, array_search($row['position'], array_keys($buttons), true) + 1),
-                    array ( 
+                    array (
                         'tpbutton'.$i => array (
                             'title' => $row['name'],
                             'href' => substr($row['href'], 4),
@@ -279,6 +279,7 @@ function tpAddProfileMenu(&$profile_areas)
 {
 	global $txt, $context;
 	
+
 	$profile_areas['tp'] = array(
 		'title' => 'Tinyportal',
 		'areas' => array(),
@@ -428,7 +429,7 @@ function tpWhosOnline($actions)
                 WHERE id = {int:id}
                 LIMIT 1',
                 array (
-                    'id' => $actions['page'], 
+                    'id' => $actions['page'],
                 )
             );
         }
@@ -438,7 +439,7 @@ function tpWhosOnline($actions)
                 WHERE shortname = {string:shortname}
                 LIMIT 1',
                 array (
-                    'shortname' => $actions['page'], 
+                    'shortname' => $actions['page'],
                 )
             );
         }
@@ -471,11 +472,11 @@ function tpWhosOnline($actions)
 
 }
 
-function tpStatsIgnore(&$no_stat_actions) 
+function tpStatsIgnore(&$no_stat_actions)
 {
     $no_stat_actions = array_merge($no_stat_actions, array('shout'));
 
-	// We can also call init from here although it's not meant for this 
+	// We can also call init from here although it's not meant for this
 	TPortal_init();
 }
 

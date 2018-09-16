@@ -149,7 +149,7 @@ $txt['tp-dlchooseboard'] = 'Choose board to post topic in';
 $txt['tp-dlusescreenshot'] = 'Use the screenshot instead of icon?';
 $txt['tp-dlscreenshotsizes'] = 'Resize screenshot sizes:';
 $txt['tp-dlperms'] = 'Permissions';
-$txt['tp-dlperms2'] = 'Select and set permissions on all membergroups from one place. "Manage Downloads" give admin rights for all downloads, 
+$txt['tp-dlperms2'] = 'Select and set permissions on all membergroups from one place. "Manage Downloads" give admin rights for all downloads,
 "Upload file" give permission to actually upload, while "create topic" give permission to start a forum topic at the the time of upload.';
 $txt['tp-dlcreatetopicboards'] = 'Boards to use for support topics';
 $txt['tp-mostpopweek'] = 'Most downloaded this week';

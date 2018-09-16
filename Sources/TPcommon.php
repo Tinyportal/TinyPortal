@@ -63,8 +63,8 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	$nHeight = round($nHeight);
 
 	$newpicture = imagecreatetruecolor($nWidth, $nHeight);
- 
-	/* Check if this image is PNG or GIF, then set if Transparent*/ 
+
+	/* Check if this image is PNG or GIF, then set if Transparent*/
 	if(($pictureInfo[2] == 1) OR ($pictureInfo[2]==3))
 	{
 		imagealphablending($newpicture, false);
@@ -127,7 +127,7 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 	// check that no other file exists with same name
 	if(file_exists($boarddir.'/'.$destdir.'/'.$name))
 		$name = time().$name;
-	
+
 	// add prefix
 	$sname = $prefix.$name;
 
@@ -155,7 +155,7 @@ function tp_groups()
 	);
 
 	$request =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}membergroups 
+		SELECT * FROM {db_prefix}membergroups
 		WHERE 1 ORDER BY id_group'
 	);
 	while ($row = $smcFunc['db_fetch_assoc']($request))

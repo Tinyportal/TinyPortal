@@ -46,11 +46,11 @@ function TPmodules()
 	// for help pages
 	if(isset($_GET['p']))
 	{
-		$helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');	
+		$helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
 		if(in_array($_GET['p'], $helpOptions))
 			$context['TPortal']['helpsection'] = $_GET['p'];
 		else
-			$context['TPortal']['helpsection'] = 'introduction';	
+			$context['TPortal']['helpsection'] = 'introduction';
 	}
 	else
 		$context['TPortal']['helpsection'] = 'introduction';
@@ -70,7 +70,7 @@ function TPmodules()
 
 	// fetch all extensions and compare
 	$result =  $smcFunc['db_query']('', '
-        SELECT modulename, autoload_run, subquery 
+        SELECT modulename, autoload_run, subquery
         FROM {db_prefix}tp_modules WHERE active = {int:active}',
         array('active' => 1)
     );
@@ -83,7 +83,7 @@ function TPmodules()
 		}
 		$smcFunc['db_free_result']($result);
 	}
-	
+
 	// clear the linktree first
 	TPstrip_linktree();
 
@@ -140,7 +140,7 @@ function TPmodules()
 
 		// check if the article indeed exists
 		$request =  $smcFunc['db_query']('', '
-            SELECT comments FROM {db_prefix}tp_articles 
+            SELECT comments FROM {db_prefix}tp_articles
             WHERE id = {int:artid}',
             array('artid' => $article)
         );
@@ -163,11 +163,11 @@ function TPmodules()
                 array($title, $comment, $ID_MEMBER, 'article_comment', $time, $article),
                 array('id')
             );
-            
+
 			// count and increase the number of comments
 			$smcFunc['db_query']('', '
-                UPDATE {db_prefix}tp_articles 
-                SET comments = {int:com} 
+                UPDATE {db_prefix}tp_articles
+                SET comments = {int:com}
                 WHERE id = {int:artid}',
                 array('com' => $num_comments, 'artid' => $article)
             );
@@ -179,7 +179,7 @@ function TPmodules()
 	{
 		$context['TPortal']['subaction'] = 'updatelog';
 		$request = $smcFunc['db_query']('', '
-            SELECT value1 FROM {db_prefix}tp_variables 
+            SELECT value1 FROM {db_prefix}tp_variables
             WHERE type = {string:type} ORDER BY id DESC',
             array('type' => 'updatelog')
         );
@@ -201,7 +201,7 @@ function TPmodules()
 			$tpstart = $_GET['tpstart'];
 		else
 			$tpstart = 0;
-		
+
 		$mylast = 0;
 		$mylast = $user_info['last_login'];
 		$showall = false;
@@ -218,9 +218,9 @@ function TPmodules()
 		);
 		$check = $smcFunc['db_fetch_row']($request);
 		$smcFunc['db_free_result']($request);
-	
+
 		$request = $smcFunc['db_query']('', '
-			SELECT art.subject, memb.real_name as author, art.author_id as authorID, var.value1, var.value3, 
+			SELECT art.subject, memb.real_name as author, art.author_id as authorID, var.value1, var.value3,
 			var.value5, var.value4, mem.real_name as realName,
 			' . ($user_info['is_guest'] ? '1' : '(IFNULL(log.item, 0) >= var.value4)') . ' AS isRead
 			FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
@@ -235,22 +235,22 @@ function TPmodules()
 		);
 
 		$context['TPortal']['artcomments']['new'] = array();
-		
+
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			while($row=$smcFunc['db_fetch_assoc']($request))
 				$context['TPortal']['artcomments']['new'][] = array(
-				'page' => $row['value5'],	
-				'subject' => $row['subject'],	
-				'title' => $row['value1'],	
-				'membername' => $row['realName'],	
-				'time' => timeformat($row['value4']),	
-				'author' => $row['author'],	
-				'authorID' => $row['authorID'],	
-				'member_id' => $row['value3'],	
+				'page' => $row['value5'],
+				'subject' => $row['subject'],
+				'title' => $row['value1'],
+				'membername' => $row['realName'],
+				'time' => timeformat($row['value4']),
+				'author' => $row['author'],
+				'authorID' => $row['authorID'],
+				'member_id' => $row['value3'],
 				'is_read' => $row['isRead'],
 				'replies' => $check[0],
-				);	
+				);
 			$smcFunc['db_free_result']($request);
 		}
 
@@ -260,7 +260,7 @@ function TPmodules()
 		$context['TPortal']['showall'] = $showall;
 		$context['TPortal']['subaction'] = 'showcomments';
 		TPadd_linktree($scripturl.'?action=tpmod;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
-		loadtemplate('TPmodules'); 
+		loadtemplate('TPmodules');
 	}
 	elseif($tpsub == 'savesettings' )
 	{
@@ -270,7 +270,7 @@ function TPmodules()
 			$item = $_POST['item'];
 		else
 			$item = 0;
-		
+
 		if(isset($_POST['memberid']))
 			$mem = $_POST['memberid'];
 		else
@@ -282,18 +282,18 @@ function TPmodules()
 		foreach($_POST as $what => $value){
 			if($what == 'tpwysiwyg' && $item > 0){
 				 $smcFunc['db_query']('', '
-				 UPDATE {db_prefix}tp_data 
+				 UPDATE {db_prefix}tp_data
 				 SET value = {int:val} WHERE id = {int:id}',
 				 array('val' => $value, 'id' => $item)
 		 	);
 			}
 			elseif($what == 'tpwysiwyg' && $item == 0)
-				 $smcFunc['db_insert']('INSERT', 
+				 $smcFunc['db_insert']('INSERT',
 				 	'{db_prefix}tp_data',
 					 array('type' => 'int', 'id_member' => 'int', 'value' => 'int'),
 					 array(2, $mem, $value),
 					 array('id')
-				 ); 
+				 );
 
 		}
 		// go back to profile page
@@ -308,7 +308,7 @@ function TPmodules()
 			fatal_error($txt['tp-noadmincomments']);
 
 		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables 
+			SELECT * FROM {db_prefix}tp_variables
 			WHERE id = {int:varid} LIMIT 1',
 			array('varid' => $comment)
 		);
@@ -322,8 +322,8 @@ function TPmodules()
 				if(substr($tpsub, 0, 11) == 'killcomment')
 				{
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_variables 
-						SET value5 = -value5 
+						UPDATE {db_prefix}tp_variables
+						SET value5 = -value5
 						WHERE id = {int:varid}',
 						array('varid' => $comment)
 					);
@@ -353,7 +353,7 @@ function TPmodules()
 		$article = $_POST['tp_article_id'];
 		// check if the article indeed exists
 		$request = $smcFunc['db_query']('', '
-			SELECT rating, voters FROM {db_prefix}tp_articles 
+			SELECT rating, voters FROM {db_prefix}tp_articles
 			WHERE id = {int:artid}',
 			array('artid' => $article)
 		);
@@ -381,13 +381,13 @@ function TPmodules()
 				}
 				// update ratings and raters
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_articles 
+					UPDATE {db_prefix}tp_articles
 					SET rating = {string:rate} WHERE id = {int:artid}',
 					array('rate' => $new_ratings, 'artid' => $article)
 				);
 				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_articles 
-					SET voters = {string:vote} 
+					UPDATE {db_prefix}tp_articles
+					SET voters = {string:vote}
 					WHERE id = {int:artid}',
 					array('vote' => $new_voters, 'artid' => $article)
 				);
@@ -406,7 +406,7 @@ function TPmodules()
 		$dl = $_POST['tp_dlitem_id'];
 		// check if the download indeed exists
 		$request = $smcFunc['db_query']('', '
-			SELECT rating, voters FROM {db_prefix}tp_dlmanager 
+			SELECT rating, voters FROM {db_prefix}tp_dlmanager
 			WHERE id = {int:dlid}',
 			array('dlid' => $dl)
 		);
@@ -434,13 +434,13 @@ function TPmodules()
 				}
 				// update ratings and raters
 				$smcFunc['db_query']('', '
-				 	UPDATE {db_prefix}tp_dlmanager 
-					SET rating = {string:rate} 
+				 	UPDATE {db_prefix}tp_dlmanager
+					SET rating = {string:rate}
 					WHERE id = {int:dlid}',
 					array('rate' => $new_ratings, 'dlid' => $dl)
 				);
 				$smcFunc['db_query']('', '
-				 	UPDATE {db_prefix}tp_dlmanager 
+				 	UPDATE {db_prefix}tp_dlmanager
 				 	SET voters = {string:vote}
 				 	WHERE id = {int:dlid}',
 					array('vote' => $new_voters, 'dlid' => $dl)
@@ -500,21 +500,21 @@ function TPmodules()
 		$context['TPortal']['searchresults'] = array();
 		$context['TPortal']['searchterm'] = $what;
         $now = forum_time();
-        
+
 		$request= $smcFunc['db_query']('', '
 			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) as body, a.author_id as authorID, a.type, m.real_name as realName
 			FROM {db_prefix}tp_articles AS a
 			LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
 			WHERE {raw:query}
-			AND ((a.pub_start = 0 AND a.pub_end = 0) 
-			OR (a.pub_start != 0 AND a.pub_start < '.$now.' AND a.pub_end = 0) 
-			OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > '.$now.') 
+			AND ((a.pub_start = 0 AND a.pub_end = 0)
+			OR (a.pub_start != 0 AND a.pub_start < '.$now.' AND a.pub_end = 0)
+			OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > '.$now.')
 			OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > '.$now.' AND a.pub_start < '.$now.'))
-			AND a.off = 0 
+			AND a.off = 0
 			ORDER BY a.date DESC LIMIT 20',
 			array('query' => $query)
 		);
-		
+
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			while($row = $smcFunc['db_fetch_assoc']($request))
@@ -548,12 +548,12 @@ function TPmodules()
 		$what = substr($tpsub, 11);
 		if(!is_numeric($what))
 			fatal_error($txt['tp-notanarticle']);
-	   
+
 		// get one article
 		$context['TPortal']['subaction'] = 'editarticle';
 		$context['TPortal']['editarticle'] = array();
 		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_articles 
+			SELECT * FROM {db_prefix}tp_articles
 			WHERE id = {int:artid} LIMIT 1',
 			array('artid' => $what)
 		);
@@ -567,15 +567,15 @@ function TPmodules()
 			isAllowedTo('tp_editownarticle');
 
 			if($row['locked'] == 1)
-				fatal_error($txt['tp-articlelocked']);			
-			
+				fatal_error($txt['tp-articlelocked']);
+
 			// Add in BBC editor before we call in template so the headers are there
 			if($row['type'] == 'bbc')
 			{
 				$context['TPortal']['editor_id'] = 'tp_article_body' . $row['id'];
-				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($row['body'])); 			
+				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($row['body']));
 			}
-			
+
 			$context['TPortal']['editarticle'] = array(
 				'id' => $row['id'],
 				'date' => array(
@@ -612,7 +612,7 @@ function TPmodules()
 		}
 		else
 			fatal_error($txt['tp-notanarticlefound']);
-		
+
 		if(loadLanguage('TPortalAdmin') == false)
 			loadLanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
@@ -626,7 +626,7 @@ function TPmodules()
 
 		// get all articles
 		$request = $smcFunc['db_query']('', '
-			SELECT COUNT(*) FROM {db_prefix}tp_articles 
+			SELECT COUNT(*) FROM {db_prefix}tp_articles
 			WHERE author_id = {int:author}',
 			array('author' => $context['user']['id'])
 		);
@@ -637,12 +637,12 @@ function TPmodules()
 		// sorting?
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('date', 'id', 'subject'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;sa=myarticles;sort=' . $sort, $mystart, $allmy, 15);
-		
+
 		$context['TPortal']['subaction'] = 'myarticles';
 		$context['TPortal']['myarticles'] = array();
 		$request2 =  $smcFunc['db_query']('', '
-			SELECT id, subject, date, locked, approved, off FROM {db_prefix}tp_articles 
-			WHERE author_id = {int:author} 
+			SELECT id, subject, date, locked, approved, off FROM {db_prefix}tp_articles
+			WHERE author_id = {int:author}
 			ORDER BY {string:sort} DESC LIMIT {int:start}, 15',
 			array('author' => $context['user']['id'], 'sort' => $sort, 'start' => $mystart)
 		);
@@ -654,7 +654,7 @@ function TPmodules()
 
 			$smcFunc['db_free_result']($request2);
 		}
-		
+
 		if(loadLanguage('TPortalAdmin') == false)
 			loadLanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
@@ -672,10 +672,10 @@ function TPmodules()
 			$context['TPortal']['submitbbc'] = 1;
 			$context['html_headers'] .= '
 				<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
-			
+
 			// Add in BBC editor before we call in template so the headers are there
 			$context['TPortal']['editor_id'] = 'tp_article_body';
-			TP_prebbcbox($context['TPortal']['editor_id']); 							
+			TP_prebbcbox($context['TPortal']['editor_id']);
 		}
 		else
 			isAllowedTo('tp_submithtml');
@@ -700,7 +700,7 @@ function TPmodules()
 	elseif($tpsub == 'submitarticle2')
 	{
 		require_once($sourcedir. '/TPcommon.php');
-		
+
 		if(isset($_POST['tp_article_approved']) || allowedTo('tp_alwaysapproved'))
 			$artpp = '0';
 		else
@@ -732,24 +732,24 @@ function TPmodules()
 				'body' => 'string',
 				'intro' => 'string',
 				'useintro' => 'int',
-				'category' => 'int', 
-                'frontpage' => 'int', 
-                'subject' => 'string', 
-                'author_id' => 'int', 
-                'author' => 'string', 
-                'frame' => 'string', 
-                'approved' => 'int', 
-                'off' => 'int', 
-                'options' => 'string', 
-                'parse' => 'int', 
-                'comments' => 'int', 
-                'comments_var' => 'string', 
-                'views' => 'int', 
-                'rating' => 'string', 
-                'voters' => 'string', 
-                'id_theme' => 'int', 
-                'shortname' => 'string', 
-                'fileimport' => 'string', 
+				'category' => 'int',
+                'frontpage' => 'int',
+                'subject' => 'string',
+                'author_id' => 'int',
+                'author' => 'string',
+                'frame' => 'string',
+                'approved' => 'int',
+                'off' => 'int',
+                'options' => 'string',
+                'parse' => 'int',
+                'comments' => 'int',
+                'comments_var' => 'string',
+                'views' => 'int',
+                'rating' => 'string',
+                'voters' => 'string',
+                'id_theme' => 'int',
+                'shortname' => 'string',
+                'fileimport' => 'string',
                 'type' => 'string'),
 			array($artd, $artbb, $arti, $artu, $artc, $artf, $arts, $nameb, $name, $artframe, $artpp, '0', $artoptions, 0, 0, '', 0, '', '', 0, '', $artimp, $arttype),
 			array('id')
@@ -803,7 +803,7 @@ function TPmodules()
 		$context['TPortal']['subaction'] = 'editblock';
 		$context['TPortal']['blockedit'] = array();
 		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_blocks 
+			SELECT * FROM {db_prefix}tp_blocks
 			WHERE id = {int:blockid} LIMIT 1',
 			array('blockid' => $what)
 		);
@@ -838,9 +838,9 @@ function TPmodules()
 		if($context['TPortal']['blockedit']['type'] == '5')
 		{
 			$context['TPortal']['editor_id'] = 'blockbody' . $context['TPortal']['blockedit']['id'];
-			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body'])); 			
+			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
 		}
-		
+
 		if(loadLanguage('TPortalAdmin') == false)
 			loadLanguage('TPortalAdmin', 'english');
 		loadtemplate('TPmodules');
@@ -850,13 +850,13 @@ function TPmodules()
 	{
 		if(!isset($_GET['t']))
 			redirectexit('action=forum');
-		
+
 		$t = is_numeric($_GET['t']) ? $_GET['t'] : 0;
 
 		if(empty($t))
 			redirectexit('action=forum');
 
-		isAllowedTo('tp_settings');		
+		isAllowedTo('tp_settings');
 		$existing = explode(',', $context['TPortal']['frontpage_topics']);
 		if(in_array($t, $existing))
 			unset($existing[array_search($t, $existing)]);
@@ -874,12 +874,12 @@ function TPmodules()
 	// save a block?
 	elseif(substr($tpsub, 0, 9) == 'saveblock')
 	{
-		
+
 		$whatID = substr($tpsub, 9);
 		if(!is_numeric($whatID))
 			fatal_error($txt['tp-notablock']);
 		$request =  $smcFunc['db_query']('', '
-			SELECT editgroups FROM {db_prefix}tp_blocks 
+			SELECT editgroups FROM {db_prefix}tp_blocks
 			WHERE id = {int:blockid} LIMIT 1',
 			array('blockid' => $whatID)
 		);
@@ -892,9 +892,9 @@ function TPmodules()
 			else
 				fatal_error($txt['tp-blocknotallowed']);
 			$smcFunc['db_free_result']($request);
-			
+
 			// loop through the values and save them
-			foreach ($_POST as $what => $value) 
+			foreach ($_POST as $what => $value)
 			{
 				if(substr($what, 0, 10) == 'blocktitle')
 				{
@@ -903,14 +903,14 @@ function TPmodules()
 					$value = preg_replace('~&#\d+$~', '', $value);
 					$val = substr($what,10);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks 
-						SET title = {string:title} 
+						UPDATE {db_prefix}tp_blocks
+						SET title = {string:title}
 						WHERE id = {int:blockid}',
 						array('title' => $value, 'blockid' => $val)
 					);
 				}
 				elseif(substr($what, 0, 9) == 'blockbody' && substr($what, -4) != 'mode')
-				{	
+				{
 					// If we came from WYSIWYG then turn it back into BBC regardless.
 					if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what]))
 					{
@@ -921,12 +921,12 @@ function TPmodules()
 						// We need this for everything else.
 						$value = $_POST[$what] = $_REQUEST[$what];
 					}
-					
+
 					$val = (int) substr($what, 9);
-					
+
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks 
-						SET body = {string:body} 
+						UPDATE {db_prefix}tp_blocks
+						SET body = {string:body}
 						WHERE id = {int:blockid}',
 						array('body' => $value, 'blockid' => $val)
 					);
@@ -935,7 +935,7 @@ function TPmodules()
 				{
 					$val = substr($what, 10);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks 
+						UPDATE {db_prefix}tp_blocks
 						SET frame = {string:frame}
 						WHERE id = {int:blockid}',
 						array('frame' => $value, 'blockid' => $val)
@@ -945,7 +945,7 @@ function TPmodules()
 				{
 					$val = substr($what, 12);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks 
+						UPDATE {db_prefix}tp_blocks
 						SET visible = {string:vis}
 						WHERE id = {int:blockid}',
 						array('vis' => $value, 'blockid' => $val)
@@ -955,7 +955,7 @@ function TPmodules()
 				{
 					$val=substr($what, 9);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks 
+						UPDATE {db_prefix}tp_blocks
 						SET var1 = {string:var1}
 						WHERE id = {int:blockid}',
 						array('var1' => $value, 'blockid' => $val)
@@ -965,7 +965,7 @@ function TPmodules()
 				{
 					$val = substr($what, 9);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks 
+						UPDATE {db_prefix}tp_blocks
 						SET var2 = {string:var2}
 						WHERE id = {int:blockid}',
 						array('var2' => $value, 'blockid' => $val)
@@ -982,14 +982,14 @@ function TPmodules()
 	{
 		if(isset($_REQUEST['send']))
 		{
-			foreach ($_POST as $what => $value) 
+			foreach ($_POST as $what => $value)
 			{
 				if(substr($what, 0, 16) == 'tp_article_title')
 				{
 					$val = substr($what, 16);
 					if(is_numeric($val) && $val > 0)
 						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles 
+							UPDATE {db_prefix}tp_articles
 							SET subject = {string:subject}
 							WHERE id = {int:artid}',
 							array('subject' => $value, 'artid' => $val)
@@ -1006,11 +1006,11 @@ function TPmodules()
 						$_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
 						// We need this for everything else.
 						$value = $_POST[$what] = $_REQUEST[$what];
-					}				
+					}
 					$val = substr($what, 15);
 					if(is_numeric($val) && $val > 0)
 						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles 
+							UPDATE {db_prefix}tp_articles
 							SET body = {string:body}
 							WHERE id = {int:artid}',
 							array('body' => $value, 'artid' => $val)
@@ -1021,7 +1021,7 @@ function TPmodules()
 					$val = substr($what, 19);
 					if(is_numeric($val) && $val > 0)
 						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles 
+							UPDATE {db_prefix}tp_articles
 							SET useintro = {string:useintro}
 							WHERE id = {int:artid}',
 							array('useintro' => $value, 'artid' => $val)
@@ -1031,7 +1031,7 @@ function TPmodules()
 				{
 					$val = (int) substr($what, 16);
 					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_articles 
+						UPDATE {db_prefix}tp_articles
 						SET intro = {string:intro}
 						WHERE id = {int:artid}',
 						array('intro' => $value, 'artid' => $val)
@@ -1040,8 +1040,8 @@ function TPmodules()
 				elseif($what == 'tp_wysiwyg')
 				{
 					$result = $smcFunc['db_query']('', '
-						SELECT id FROM {db_prefix}tp_data 
-						WHERE type = {int:type} 
+						SELECT id FROM {db_prefix}tp_data
+						WHERE type = {int:type}
 						AND id_member = {int:id_mem}',
 						array('type' => 2, 'id_mem' => $ID_MEMBER)
 					);
@@ -1053,8 +1053,8 @@ function TPmodules()
 					}
 					if(isset($wysid))
 						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_data 
-							SET value = {int:val} 
+							UPDATE {db_prefix}tp_data
+							SET value = {int:val}
 							WHERE id = {int:dataid}',
 							array('val' => $value, 'dataid' => $wysid)
 						);
@@ -1107,8 +1107,8 @@ function TPmodules()
 		echo json_encode( $response );
 		// we want to just exit
 		die;
-	}	
-	else 
+	}
+	else
 	{
 		redirectexit('action=forum');
 	}
@@ -1209,13 +1209,13 @@ function tp_profile_articles($memID)
 
 	$request = $smcFunc['db_query']('', '
 		SELECT art.id, art.date, art.subject, art.approved, art.off, art.comments, art.views, art.rating, art.voters,
-			art.author_id as authorID, art.category, art.locked	
+			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
 		ORDER BY art.{raw:sort} DESC LIMIT {int:start}, 10',
 		array('auth' => $memID, 'sort' => $sorting, 'start' => $start)
 	);
-	
+
 	if($smcFunc['db_num_rows']($request) > 0){
 		while($row = $smcFunc['db_fetch_assoc']($request))
 		{
@@ -1229,7 +1229,7 @@ function tp_profile_articles($memID)
 			$total = 0;
 			foreach($rat as $mm => $mval)
 			{
-				if(is_numeric($mval)) 
+				if(is_numeric($mval))
 					$total = $total + $mval;
 			}
 
@@ -1237,7 +1237,7 @@ function tp_profile_articles($memID)
 				$rating_average = floor($total / $rating_votes);
 			else
 				$rating_average = 0;
-			
+
 			$can_see = true;
 
 			if(($row['approved'] != 1 || $row['off'] == 1) && !isAllowedTo('tp_articles'))
@@ -1287,11 +1287,11 @@ function tp_profile_articles($memID)
 	);
 
 	// setup values for personal settings - for now only editor choice
-	// type = 1 - 
+	// type = 1 -
 	// type = 2 - editor choice
 
 	$result = $smcFunc['db_query']('', '
-		SELECT id, value FROM {db_prefix}tp_data 
+		SELECT id, value FROM {db_prefix}tp_data
 		WHERE type = {int:type} AND id_member = {int:id_mem} LIMIT 1',
 		array('type' => 2, 'id_mem' => $memID)
 	);
@@ -1348,8 +1348,8 @@ function tp_profile_download($memID)
 	// get all not approved uploads
 	$request = $smcFunc['db_query']('', '
 		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
-		WHERE author_id = {int:auth} 
-		AND type = {string:type} 
+		WHERE author_id = {int:auth}
+		AND type = {string:type}
 		AND category < 0',
 		array('auth' => $memID, 'type' => 'dlitem')
 	);
@@ -1385,7 +1385,7 @@ function tp_profile_download($memID)
 			$total = 0;
 			foreach($rat as $mm => $mval)
 			{
-				if(is_numeric($mval)) 
+				if(is_numeric($mval))
 					$total = $total + $mval;
 			}
 
@@ -1532,7 +1532,7 @@ function tpshout_profile($memID)
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '10', true);
 	else
 		$context['TPortal']['pageindex'] = '';
-	
+
 
 	loadtemplate('TPShout');
 

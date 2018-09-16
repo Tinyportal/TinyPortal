@@ -95,7 +95,7 @@ function template_tp_print_above()
 function template_tp_print_body()
 {
 	global $context;
-	
+
 	echo $context['TPortal']['printbody'];
 }
 

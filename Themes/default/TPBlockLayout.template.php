@@ -20,13 +20,13 @@
 
 function template_tp_above()
 {
-	global $context, $settings;	
-	
+	global $context, $settings;
+
 // body responsive classes
-$respClass = ''; 
+$respClass = '';
 if (isset($context['TPortal'])) {
 $tm2 = '';
-$tm2=explode(",",$context['TPortal']['resp']);			
+$tm2=explode(",",$context['TPortal']['resp']);
 if (in_array($settings['theme_id'],$tm2)) {
 	$respClass = "tp_nonresponsive";
 	echo '<style>
@@ -36,9 +36,9 @@ if (in_array($settings['theme_id'],$tm2)) {
 body {
 	min-width:900px!important;
 }
-}		
+}
 	</style>';
-} else {$respClass = "tp_responsive";}	
+} else {$respClass = "tp_responsive";}
 }
 // sidebars classses
 $sideclass = '';
@@ -50,10 +50,10 @@ if (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $conte
 	$sideclass =  "lrs lrON";
 } elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $context['TPortal']['rightpanel']==0)) {
 	$sideclass =  "nosides";
-} else {$bclass =  "nosides";} 
+} else {$bclass =  "nosides";}
 
 
-echo '<div class="'. $sideclass .' '. $respClass .'">';		
+echo '<div class="'. $sideclass .' '. $respClass .'">';
 	if(!empty($context['TPortal']['upshrinkpanel']))
 		echo '
 	<div style="float: right; margin-right: 0.5em; margin-top: -1.5em;">', $context['TPortal']['upshrinkpanel'] , '</div>';
@@ -62,7 +62,7 @@ echo '<div class="'. $sideclass .' '. $respClass .'">';
 		echo '
 	<div id="tptopbarHeader" style="' , in_array('tptopbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , 'clear: both;">
 	'	, TPortal_panel('top') , '
-	<p class="clearthefloat"></p></div>';	
+	<p class="clearthefloat"></p></div>';
 
 	echo '<div id="mainContainer" style="clear: both;">';
 
@@ -75,7 +75,7 @@ echo '<div class="'. $sideclass .' '. $respClass .'">';
 				' , $context['TPortal']['useroundframepanels']==1 ?
 				'<span class="upperframe"><span></span></span>
 				<div class="roundframe" style="overflow: auto;">' : ''
-				, TPortal_panel('left') , 
+				, TPortal_panel('left') ,
 				$context['TPortal']['useroundframepanels']==1 ?
 				'</div>
 				<span class="lowerframe"><span></span></span>' : '' , '
@@ -92,18 +92,18 @@ echo '<div class="'. $sideclass .' '. $respClass .'">';
 				' , $context['TPortal']['useroundframepanels']==1 ?
 				'<span class="upperframe"><span></span></span>
 				<div class="roundframe">' : ''
-				, TPortal_panel('right') , 
+				, TPortal_panel('right') ,
 				$context['TPortal']['useroundframepanels']==1 ?
 				'</div>
 				<span class="lowerframe"><span></span></span>' : '' , '
 				<p class="clearthefloat"></p></div>
 			</div>';
 
-	}	
-	echo '		
+	}
+	echo '
 		<div id="centerContainer">
 			<div id="tpcontentHeader">';
-  
+
 	if($context['TPortal']['centerpanel']==1)
 		echo '
 				<div id="tpcenterbarHeader" style="' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
@@ -121,10 +121,10 @@ function template_tp_below()
 	if($context['TPortal']['lowerpanel']==1)
 		echo '
 				<div id="tplowerbarHeader" style="' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
-				' , TPortal_panel('lower') , '<p class="clearthefloat"></p></div>';	
+				' , TPortal_panel('lower') , '<p class="clearthefloat"></p></div>';
 // end centerContainer
 	echo '</div>';
-// end mainContainer	
+// end mainContainer
 	echo '<p class="clearthefloat" style="padding:0px;margin:0px;"></p>
 	</div>';
 
@@ -132,8 +132,8 @@ function template_tp_below()
 		echo '
 		<div id="tpbottombarHeader" style="clear: both;' , in_array('tpbottombarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 				' , TPortal_panel('bottom') , '
-		<p class="clearthefloat"></p></div>';	
-	echo '</div>';	
+		<p class="clearthefloat"></p></div>';
+	echo '</div>';
 
 }
 
