@@ -312,8 +312,7 @@ function template_tpshout_profile()
 
 	echo '
 			<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
-		</div>
-	</div>';
+		</div>';
 
 }
 
