@@ -2133,6 +2133,8 @@ function doTPblocks()
 			$down = true;
 	}
 
+    $sqlarray[] = str_replace('action', 'actio', $_SERVER['QUERY_STRING']);
+
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))
 		$front = true;
