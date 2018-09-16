@@ -277,7 +277,7 @@ function tpAddMenuItems(&$buttons)
 
 function tpAddProfileMenu(&$profile_areas)
 {
-	global $txt;
+	global $txt, $context;
 	
 	$profile_areas['tp'] = array(
 		'title' => 'Tinyportal',
@@ -321,6 +321,8 @@ function tpAddProfileMenu(&$profile_areas)
 		),
 	);
 
+	if(!$context['TPortal']['profile_shouts_hide'])
+	{
 	$profile_areas['tp']['areas']['tpshoutbox'] = array(
 		'label' => $txt['shoutboxprofile'],
 		'file' => 'TPmodules.php',
@@ -331,6 +333,7 @@ function tpAddProfileMenu(&$profile_areas)
 			'any' => 'profile_view_any',
 		),
 	);
+	}
 }
 
 function addTPActions(&$actionArray)
