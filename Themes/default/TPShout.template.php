@@ -287,12 +287,14 @@ function template_tpshout_profile()
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
 			</div><br>
-		<table class="table_grid">
+		<table class="table_grid" style="width:100%">
 			<thead>
 				<tr class="title_bar">
-					<th scope="col" class="tpshout_date">'.$txt['date'].'</th>
-					<th scope="col" class="tpshout_shout">',$txt['tp-shout'],'</th>
-					<th scope="col" class="tpshout_edit">'. $txt['tp-edit'] .'</th>
+				<th scope="col" class="shouts">
+					<div class="float-items" align="center" style="width:22%;border-right:1px solid #ffffff;">'.$txt['date'].'</div>
+					<div align="center" class="smalltext float-items" style="width:51%;">',$txt['tp-shout'],'</div>
+					<div class="float-items" align="center" style="width:19%;border-left:1px solid #ffffff;">'. $txt['tp-edit'] .'</div>
+				</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -300,17 +302,19 @@ function template_tpshout_profile()
 		foreach($context['TPortal']['profile_shouts'] as $art){
 			echo '
 				<tr class="windowbg">
-					<td class="tpshout_date">',$art['created'],'</td>
-					<td class="tpshout_shout">',$art['shout'],'</td>
-					<td class="tpshout_edit">' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.gif" alt="" /></a>' : '' , '</td>			
-					</td>
+				<td class="shouts">
+					<div align="center" class="smalltext float-items" style="width:22%;" >',$art['created'],'</div>
+					<div class="smalltext float-items" style="width:51%;" >',$art['shout'],'</div>
+					<div class="float-items" align="center" style="width:21%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.gif" alt="" /></a>' : '' , '</div>
+				</td>
 				</tr>';
 		}
 	}
 	else
 		echo '
 				<tr class="windowbg">
-					<td class="tpshout_date" colspan="3">',$txt['tpsummary_noshout'],'</td>	
+					<td class="tpshout_date" colspan="3">
+					<div align="center" class="smalltext">',$txt['tpsummary_noshout'],'</div>	
 					</td>
 				</tr>';
 
