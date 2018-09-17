@@ -58,8 +58,12 @@ function template_tp_articles()
 			echo $txt['tp-prof_offarticles'].' <b>'.$context['TPortal']['off_articles'].'</b><br>';
 
 		echo '
-				</div>
-			<div class="font-strong addborder" style="padding:0px;">
+				</div><br>
+	<table class="table_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar">
+			<th scope="col" class="articles">
+			<div class="font-strong" style="padding:0px;">
 				<div align="center" class="float-items pos" style="width:26%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['subject'].'</a></div>
 				<div align="center" class="float-items title-admin-area" style="width:10%;">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 				<div align="center" class="float-items title-admin-area" style="width:7%;">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
@@ -68,41 +72,51 @@ function template_tp_articles()
 				<div align="center" class="float-items title-admin-area" style="width:13%;">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
 				<div align="center" class="float-items title-admin-area" style="width:5%;">'.$txt['tp-edit'].'</div>
 			    <p class="clearthefloat"></p>
-			</div>';
+			</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 		if(isset($context['TPortal']['profile_articles']) && sizeof($context['TPortal']['profile_articles'])>0){
 			foreach($context['TPortal']['profile_articles'] as $art){
 				echo '
-			<div class="windowbg2 addborder">
+			<tr class="windowbg">
+			<td class="articles">
 				<div class="float-items fullwidth-on-res-layout" style="width:26%;"><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['off']==1 ? '<i>' : '' ,  $art['subject'], $art['off']==1 ? '</i>' : '' , $art['approved']==0 ? ')' : '' ,  '</a></div>
 				<a href="" class="clickme">More</a>
 				<div class="box" style="width:72%;float:left;">
-				<div class="smalltext float-items fullwidth-on-res-layout" style="width:15%;">
-				  <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
-				  <div id="size-on-respnsive-layout">',$art['date'],'</div>
-				</div>
-				<div class="fullwidth-on-res-layout float-items" style="width:11%;text-align:center;">
-				  <div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
-				  ',$art['views'],'
-				</div>
-				<div class="fullwidth-on-res-layout float-items" style="width:20%;">
-				  <div id="show-on-respnsive-layout">'.$txt['tp-ratings'].'</div>
-				  ' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')
-				</div>
-				<div class="fullwidth-on-res-layout float-items" style="width:15%;text-align:center;">
-				  <div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>
-				  ',$art['comments'],'
-				</div>
-				<div class="fullwidth-on-res-layout float-items" style="width:19%;">
-				  <div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
-				  ',$art['category'],'
-				</div>
-				<div class="fullwidth-on-res-layout float-items" style="width:8%;">
-				    <div id="show-on-respnsive-layout">'.$txt['tp-edit'].'</div>
-					', allowedTo('tp_editownarticle') ? '<a href="'. $art['editlink'] .'"><img border="0" src="' .$settings['tp_images_url']. '/TPmodify.gif" alt="" /></a>' : '' , '
-				</div><p class="clearthefloat"></p></div><p class="clearthefloat"></p>
-			</div>';
+					<div class="smalltext float-items fullwidth-on-res-layout" style="width:15%;">
+						<div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
+						<div id="size-on-respnsive-layout">',$art['date'],'</div>
+					</div>
+					<div class="fullwidth-on-res-layout float-items" style="width:11%;text-align:center;">
+						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
+						',$art['views'],'
+					</div>
+					<div class="fullwidth-on-res-layout float-items" style="width:20%;">
+						<div id="show-on-respnsive-layout">'.$txt['tp-ratings'].'</div>
+						' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')
+					</div>
+					<div class="fullwidth-on-res-layout float-items" style="width:15%;text-align:center;">
+						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>
+						',$art['comments'],'
+					</div>
+					<div class="fullwidth-on-res-layout float-items" style="width:19%;">
+						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
+						',$art['category'],'
+					</div>
+					<div class="fullwidth-on-res-layout float-items" style="width:8%;">
+						<div id="show-on-respnsive-layout">'.$txt['tp-edit'].'</div>
+						', allowedTo('tp_editownarticle') ? '<a href="'. $art['editlink'] .'"><img border="0" src="' .$settings['tp_images_url']. '/TPmodify.gif" alt="" /></a>' : '' , '
+					</div><p class="clearthefloat"></p></div><p class="clearthefloat"></p>
+			</td>
+			</tr>';
 			}
 		}
+	echo '
+		</tbody>
+	</table>';
+			
 		if(!empty($context['TPortal']['pageindex']))
 			echo '
 			<div style="padding: 3ex;">
