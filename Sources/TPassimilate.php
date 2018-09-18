@@ -226,7 +226,7 @@ function tpAddMenuItems(&$buttons)
             array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
             array (
                 'tpadmin' => array (
-                    'icon' => 'tinyportal/menu_tp.png',
+					'icon' => 'tinyportal/menu_tp.png',
 					'title' => $txt['tp-tphelp'],
                     'href' => $scripturl.'?action=tpadmin',
                     'show' =>  TPcheckAdminAreas(),
