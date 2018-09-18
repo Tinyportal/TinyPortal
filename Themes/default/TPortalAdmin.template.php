@@ -445,7 +445,7 @@ function template_menubox()
 						echo ' ';
 					}
                     elseif($lbox['type']=='menu'){
-						echo $lbox['IDtype'];
+						echo '<span title="'.$lbox['IDtype'].'">'.$lbox['IDtype'].'</span>';
 					}
 					else{
 						// its a link then.
