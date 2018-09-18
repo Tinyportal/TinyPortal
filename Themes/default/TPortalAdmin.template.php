@@ -226,7 +226,7 @@ function template_submission()
 				<div style="width:25%;" class="adm-name float-items">
 					' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '"> ' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
 				</div>
-				<a href="" class="clickme">More</a>
+				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			    <div class="box" style="width:64%;float:left;">
 				  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 		            <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=author_id">' , $txt['tp-author'] , '</a></div>
@@ -393,7 +393,7 @@ function template_menubox()
 								<div style="width:14%;" class="adm-name float-items">
 								  <a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">' .$lbox['name']. '</a>
 								</div>
-								<a href="" class="clickme">More</a>
+								<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			                    <div class="box" style="width:73%;float:left;">
 							      <div style="width:13%;" class="fullwidth-on-res-layout float-items">
 								    <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>';
@@ -445,7 +445,7 @@ function template_menubox()
 						echo ' ';
 					}
                     elseif($lbox['type']=='menu'){
-						echo $lbox['IDtype'];
+						echo '<span title="'.$lbox['IDtype'].'">'.$lbox['IDtype'].'</span>';
 					}
 					else{
 						// its a link then.
@@ -1929,7 +1929,7 @@ function template_articles()
 									<div style="width:25%;" class="adm-name float-items">
 										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">&nbsp;' . $alink['subject'].'</a>' : '&nbsp;' . $alink['subject'] , '
 									</div>
-									<a href="" class="clickme">More</a>
+									<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			                        <div class="box" style="width:64%;float:left;">
 									  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 									    <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=author_id">' , $txt['tp-author'] , '</a></div>
@@ -2042,7 +2042,7 @@ function template_strays()
 									<div style="width:20%;" class="adm-name float-items">
 										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
 									</div>
-									<a href="" class="clickme">More</a>
+									<a href="" class="clickme">'.$txt['tp-more'].'</a>
 									<div class="box" style="width:69%;float:left;">
 									  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 									    <div id="show-on-respnsive-layout">
@@ -2808,6 +2808,7 @@ function template_addblock()
 									<dt><h3>' , $txt['tp-chooseblock'] , '</h3>
 								    </dt>
 									<dd>
+									<div class="tp_largelist2">
 									<input type="radio" name="tp_addblock" value="1" checked />' . $txt['tp-blocktype1'] . '<br>
 									<input type="radio" name="tp_addblock" value="2" />' . $txt['tp-blocktype2'] . '<br>
 									<input type="radio" name="tp_addblock" value="3" />' . $txt['tp-blocktype3'] . '<br>
@@ -2827,6 +2828,7 @@ function template_addblock()
 									<input type="radio" name="tp_addblock" value="18" />' . $txt['tp-blocktype18'] . '<br>
 									<input type="radio" name="tp_addblock" value="19" />' . $txt['tp-blocktype19'] . '<br>
 									<input type="radio" name="tp_addblock" value="20" />' . $txt['tp-blocktype20'] . '<br>
+									</div>
 									</dd>
 								</dl>';
 			// theme hooks
@@ -2836,11 +2838,11 @@ function template_addblock()
 			}
 
 					echo '
-								<hr>
 								<dl class="settings">
 									<dt><h3>' , $txt['tp-chooseblocktype'] , '</h3>
 									</dt>
-									<dd>';
+									<dd>
+									<div class="tp_largelist2">';
 
 					foreach($context['TPortal']['blockcodes'] as $bc)
 						echo '
@@ -2851,13 +2853,14 @@ function template_addblock()
 									</div>';
 
 					echo '
+									</div>
 									</dd>
 								</dl>
-								<hr>
 								<dl class="settings">
 									<dt><h3 style="padding:1%;">' , $txt['tp-chooseblockcopy'] , '</h3>
 									</dt>
-									<dd>';
+									<dd>
+									<div class="tp_largelist2">';
 
 					foreach($context['TPortal']['copyblocks'] as $bc)
 						echo '
@@ -2865,7 +2868,8 @@ function template_addblock()
 										<input type="radio" name="tp_addblock" value="mb_' . $bc['id']. '"  />' . $bc['title'].' [' . $panels[$bc['bar']] . ']
 									</div>';
 
-					echo ' 			</dd>
+					echo ' 			</div>
+									</dd>
 								</dl>
 							</div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -3305,7 +3309,7 @@ function template_blockedit()
 				}
 			}
 			// if none is chosen, have a control value
-			echo '</div><hr /><input type="checkbox" onclick="invertAll(this, this.form, \'tp_group\');" />'.$txt['tp-checkall'].'<br>
+			echo '</div><input type="checkbox" onclick="invertAll(this, this.form, \'tp_group\');" />'.$txt['tp-checkall'].'<br>
 						</div>
 					</dd>
 				</dl>';
@@ -3326,7 +3330,7 @@ function template_blockedit()
 				}
 			}
 			// if none is chosen, have a control value
-			echo '			</div><hr /><input type="checkbox" onclick="invertAll(this, this.form, \'tp_editgroup\');" />'.$txt['tp-checkall'];
+			echo '			</div><input type="checkbox" onclick="invertAll(this, this.form, \'tp_editgroup\');" />'.$txt['tp-checkall'];
 			echo '<br>
 						</div>
 					</dd>
@@ -3431,7 +3435,7 @@ function template_blockedit()
 					$a++;
 				}
 				// if none is chosen, have a control value
-				echo '</div><hr /><input type="checkbox" onclick="invertAll(this, this.form, \'articletype\');" />'.$txt['tp-checkall'];
+				echo '</div><input type="checkbox" onclick="invertAll(this, this.form, \'articletype\');" />'.$txt['tp-checkall'];
 				echo '<br>
 							</div>
 						</dd>
@@ -3452,7 +3456,7 @@ function template_blockedit()
 					}
 				}
 				// if none is chosen, have a control value
-				echo '</div><hr /><input type="checkbox" onclick="invertAll(this, this.form, \'categorytype\');" />'.$txt['tp-checkall'];
+				echo '</div><input type="checkbox" onclick="invertAll(this, this.form, \'categorytype\');" />'.$txt['tp-checkall'];
 				echo '<br>
 
 						</dd>
@@ -3492,14 +3496,15 @@ function template_blockedit()
 						$a++;
 					}
 				}
-				echo '
-									</div>
+				// if none is chosen, have a control value
+				echo '</div><input type="checkbox" onclick="invertAll(this, this.form, \'dlcattype\');" />'.$txt['tp-checkall'];
+				echo '<br>
 						</dd>
 					</dl>
 					<dl class="settings">
 						<dt><label for="field_name"><h4>'.$txt['tp-modules'].'</h4><label></dt>
 						<dd>
-							<div class="tp_largelist">';
+							<div>';
 				$a=1;
 
 				if(!empty($context['TPortal']['tpmods']))
