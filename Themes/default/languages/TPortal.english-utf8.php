@@ -179,6 +179,7 @@ $txt['tp-prof_offarticles'] = 'Articles not currently active:';
 $txt['tp-prof_offarticles2'] = 'All articles are marked as active.';
 $txt['tp-prof_waitapproval1'] = 'You have ';
 $txt['tp-prof_waitapproval2'] = 'articles waiting approval.';
+$txt['tp-more']='More ';
 
 // News... //
 // Rev 89

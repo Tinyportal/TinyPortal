@@ -83,7 +83,7 @@ function template_tp_articles()
 			<tr class="windowbg">
 			<td class="articles">
 				<div class="float-items fullwidth-on-res-layout" style="width:26%;"><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['off']==1 ? '<i>' : '' ,  $art['subject'], $art['off']==1 ? '</i>' : '' , $art['approved']==0 ? ')' : '' ,  '</a></div>
-				<a href="" class="clickme">More</a>
+				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 				<div class="box" style="width:72%;float:left;">
 					<div class="smalltext float-items fullwidth-on-res-layout" style="width:15%;">
 						<div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
@@ -193,8 +193,11 @@ function template_tp_download()
 		echo $txt['tp-prof_approvarticles'].' <b>'.$context['TPortal']['approved_downloads'].'</b> '.$txt['tp-prof_approvdownloads'].'<br>';
 
 	echo '
-			</div>
-			<div class="catbg addborder">
+			</div><br>
+		<table class="table_grid" style="width:100%">
+			<thead>
+				<tr class="title_bar">
+				<th scope="col" class="tp_profile_uploaded">
 				<div align="center" style="width:17%;" class="font-strong float-items pos">', $context['TPortal']['tpsort']=='name' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=name">'.$txt['subject'].'</a></div>
 				<div align="center" style="width:19%;" class="font-strong float-items title-admin-area">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
 				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
@@ -202,17 +205,21 @@ function template_tp_download()
 				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
 				<div align="center" style="width:9%;" class="font-strong float-items title-admin-area">'. $txt['tp-edit'] .'</div>
 			    <p class="clearthefloat"></p>
-			</div>';
+				</th>
+				</tr>
+			</thead>
+			<tbody>';
 if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['profile_uploads'])>0)
 {
 	foreach($context['TPortal']['profile_uploads'] as $art)
 	{
 		echo '
-			<div class="windowbg2 addborder" style="margin-bottom:1px;">
+			<tr class="windowbg">
+			<td class="shouts">
 				<div style="width:17%;" class="fullwidth-on-res-layout float-items">
 				  <a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['name'], $art['approved'] == 0 ? ')' : '' ,  '</a>
 				</div>
-				<a href="" class="clickme">More</a>
+				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 				<div class="box" style="width:81%;float:left;">
 				  <div style="width:24%;" class="fullwidth-on-res-layout smalltext float-items">
 				    <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.gif" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
@@ -237,13 +244,14 @@ if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['
 			       <p class="clearthefloat"></p>
 				</div>
 				<p class="clearthefloat"></p>
-		    </div>';
+			</td>
+			</tr>';
 	}
 }
 	echo '
-			<div class="padding-div">
-				<div style="padding: 2ex; font-weight: bold;">'.$context['TPortal']['pageindex'].'</div>
-			</div>
+			</tbody>
+		</table>
+				<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
 
 <script>
 $(document).ready( function() {
