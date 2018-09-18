@@ -226,7 +226,7 @@ function template_submission()
 				<div style="width:25%;" class="adm-name float-items">
 					' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '"> ' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
 				</div>
-				<a href="" class="clickme">More</a>
+				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			    <div class="box" style="width:64%;float:left;">
 				  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 		            <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=author_id">' , $txt['tp-author'] , '</a></div>
@@ -393,7 +393,7 @@ function template_menubox()
 								<div style="width:14%;" class="adm-name float-items">
 								  <a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">' .$lbox['name']. '</a>
 								</div>
-								<a href="" class="clickme">More</a>
+								<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			                    <div class="box" style="width:73%;float:left;">
 							      <div style="width:13%;" class="fullwidth-on-res-layout float-items">
 								    <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>';
@@ -1929,7 +1929,7 @@ function template_articles()
 									<div style="width:25%;" class="adm-name float-items">
 										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">&nbsp;' . $alink['subject'].'</a>' : '&nbsp;' . $alink['subject'] , '
 									</div>
-									<a href="" class="clickme">More</a>
+									<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			                        <div class="box" style="width:64%;float:left;">
 									  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 									    <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.gif" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=author_id">' , $txt['tp-author'] , '</a></div>
@@ -2042,7 +2042,7 @@ function template_strays()
 									<div style="width:20%;" class="adm-name float-items">
 										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
 									</div>
-									<a href="" class="clickme">More</a>
+									<a href="" class="clickme">'.$txt['tp-more'].'</a>
 									<div class="box" style="width:69%;float:left;">
 									  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 									    <div id="show-on-respnsive-layout">
