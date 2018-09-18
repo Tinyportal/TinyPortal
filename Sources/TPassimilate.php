@@ -269,6 +269,7 @@ function tpAddMenuItems(&$buttons)
                     array_slice($buttons, 0, array_search($row['position'], array_keys($buttons), true) + 1),
                     array (
                         'tpbutton'.$i => array (
+							'icon' => 'tinyportal/menu_tpmenu.png',
                             'title' => $row['name'],
                             'href' => substr($row['href'], 4),
                             'show' =>  true,
