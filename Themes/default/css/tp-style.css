@@ -1975,6 +1975,9 @@ box-sizing:border-box;
 	border: none;
 	margin: 0 0 0 0 !important;
 }
+.tp_rightblock_body > .windowbg, .tp_leftblock_body > .windowbg, .tp_centerblock_body > .windowbg, .tp_topblock_body > .windowbg, .tp_lowerblock_body > .windowbg, .tp_bottomblock_body > .windowbg {
+	padding: 0px;
+}
 /* Generic icons for SMF 2.1 */
 .generic_icons.menu_tp::before {
 	background: url(../images/tinyportal/menu_tp.png) no-repeat;
