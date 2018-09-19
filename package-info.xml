@@ -66,13 +66,11 @@
 		<require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
 		<readme type="inline">Installing TinyPortal v1.6.0 for SMF2.1</readme>
-		<modification>install-2.xml</modification>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
 	</install>
 	<uninstall for="2.1.* - 2.1.99">
 		<readme type="inline">Uninstalling TinyPortal v1.6.0 for SMF2.1</readme>
-		<modification reverse="true">install-2.xml</modification>
 		<remove-dir name="$boarddir/tp-files/tp-modules" />
 		<remove-dir name="$boarddir/tp-files/tp-blockcodes" />
 		<remove-dir name="$boarddir/tp-files/tp-plugins" />

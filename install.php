@@ -42,14 +42,24 @@ $utf8 = !empty($modSettings['global_character_set']) && $modSettings['global_cha
 // Why $db_prefix has the database name prepended in it I don't know. Stripping off the stuff we don't need.
 $smf_prefix = trim(strstr($db_prefix, '.'), '.');
 
-if ($manual)
+if ($manual) {
+    global $forum_version;
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v1.6.0 for SMF2.0.x</title>
+		<title>TinyPortal - v1.6.0 for';
+    
+    if(strpos($forum_version, '2.0') !== false) {
+        $render .= 'SMF2.0.x';
+    }
+    else {
+        $render .= 'SMF2.1.x';
+    }
+
+    $render .= '</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
-
+}
 
 $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; position: absolute; top: 120px; left: 25%; width: 50%; background: inherit;
 -webkit-box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6); box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.6); border-radius: 12px 12px 0 0;">
