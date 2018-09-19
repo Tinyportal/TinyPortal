@@ -28,7 +28,6 @@ $hooks = array(
 	'integrate_profile_areas'                   => 'tpAddProfileMenu',
     'integrate_whos_online'                     => 'tpWhosOnline',
     'integrate_pre_log_stats'                   => 'tpStatsIgnore',
-    'integrate_load_theme'                      => 'tpLoadTheme',
 );
 
 $mod_name = 'TinyPortal';
@@ -41,6 +40,7 @@ if(strpos($forum_version, '2.0') !== false) {
 else {
     $hooks['integrate_redirect']                = 'tpIntegrateRedirect';
 	$hooks['integrate_pre_profile_areas']       = 'tpAddProfileMenu';
+    $hooks['integrate_pre_load_theme']          = 'tpLoadTheme';
     unset($hooks['integrate_profile_areas']);
     // We can use a hook of sorts for the default actions now
     if(isset($context['uninstalling'])) {

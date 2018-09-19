@@ -496,9 +496,12 @@ function tpIntegrateRedirect(&$setLocation, &$refresh, &$permanent)
 
 }
 
-function tpLoadTheme()
+function tpLoadTheme(&$id_theme)
 {
 
+    $newtheme = TP_loadTheme();
+	if($newtheme != $id_theme && $newtheme > 0)
+		$id_theme = $newtheme;
 
 }
 
