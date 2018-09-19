@@ -1027,13 +1027,6 @@ function template_settings()
 						<input style="width: 100%;" name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-fixedwidth'], '</label>
-						<div class="smalltext">'.$txt['tp-fixedwidth2'].'</div>
-					</dt>
-					<dd>
-						<input size="6" name="tp_fixed_width" type="text" value="' ,$context['TPortal']['fixed_width'], '">
-					</dd>
-					<dt>
 						<label for="field_name">', $txt['tp-redirectforum'], '</label>
 					</dt>
 					<dd>

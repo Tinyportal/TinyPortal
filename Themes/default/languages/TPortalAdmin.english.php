@@ -418,9 +418,7 @@ $txt['tp-usetoppanel']='Use top panel?';
 $txt['tp-usebottompanel']='Use bottom panel?';
 
 // TP Settings
-$txt['tp-fixedwidth'] = 'Set fixed width:';
 $txt['tp-generalsettings'] = 'General Settings';
-$txt['tp-fixedwidth2'] = '(in pixels - use 0 for 100% width)';
 $txt['tp-hidecollapse'] = 'Allow the panels to be collapsed?';
 $txt['tp-maxrating'] = 'Max rating:';
 $txt['tp-stars'] = 'Display stars instead of numbers?';
