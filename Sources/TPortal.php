@@ -173,8 +173,12 @@ function TP_doTagSearchLayers()
 
 function TP_whichHideBars()
 {
-	global $context;
+	global $maintenance, $context;
 
+	// if we are in maintance mode, just hide panels
+	if (!empty($maintenance) && !allowedTo('admin_forum'))
+		tp_hidebars('all');
+		
 	// for some very large forum sections, give the option to hide bars
 	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile')
 		tp_hidebars('all');
