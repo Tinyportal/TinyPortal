@@ -49,7 +49,7 @@ function TPortal_init()
   }
 
 	// has init been run before? if so return!
-	if(isset($context['TPortal']['fixed_width']))
+	if(isset($context['TPortal']['redirectforum']))
 		return;
 
 	if(loadLanguage('TPortal') == false)

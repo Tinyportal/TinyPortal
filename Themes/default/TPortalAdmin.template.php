@@ -455,12 +455,24 @@ function template_menubox()
 					echo '
 						</div>
 							  </div>
-								  <div style="width:15%;" class="fullwidth-on-res-layout float-items">
-								      <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
+								  <div style="width:15%;" class="fullwidth-on-res-layout float-items">'; 
+								      
+									  if($lbox['type']!=='menu'){
+									  
+									  echo '
+									  <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="0" ' , $lbox['sub']=='0' ? 'checked' : '' ,'>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="1" ' , $lbox['sub']=='1' ? 'checked' : '' ,'>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="2" ' , $lbox['sub']=='2' ? 'checked' : '' ,'>
-									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="3" ' , $lbox['sub']=='3' ? 'checked' : '' ,'>
+									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="3" ' , $lbox['sub']=='3' ? 'checked' : '' ,'>';
+									  }
+									  else {
+										echo '
+										<div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
+										'.$txt['tp-none-'].'';
+									}
+									echo '
+									
 								  </div>
 								  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
 								    <div id="show-on-respnsive-layout">'.$txt['tp-sitemap_on'].'</div>
@@ -1025,13 +1037,6 @@ function template_settings()
 					</dt>
 					<dd>
 						<input style="width: 100%;" name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
-					</dd>
-					<dt>
-						<label for="field_name">', $txt['tp-fixedwidth'], '</label>
-						<div class="smalltext">'.$txt['tp-fixedwidth2'].'</div>
-					</dt>
-					<dd>
-						<input size="6" name="tp_fixed_width" type="text" value="' ,$context['TPortal']['fixed_width'], '">
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-redirectforum'], '</label>

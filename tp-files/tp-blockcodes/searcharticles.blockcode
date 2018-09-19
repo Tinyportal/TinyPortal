@@ -4,7 +4,7 @@ format: Boardmod
 </info>
 
 <name>
-Article search block
+Search articles
 </name>
 
 <author>
@@ -41,5 +41,5 @@ echo '
 </code>
 
 <description>
-Search box for articles.
+Search box for TinyPortal articles.
 </description>
