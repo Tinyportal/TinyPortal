@@ -466,11 +466,11 @@ function template_menubox()
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="2" ' , $lbox['sub']=='2' ? 'checked' : '' ,'>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="3" ' , $lbox['sub']=='3' ? 'checked' : '' ,'>';
 									  }
-									  else
+									  else {
 										echo '
 										<div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
 										'.$txt['tp-none-'].'';
-									
+									}
 									echo '
 									
 								  </div>
