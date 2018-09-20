@@ -227,7 +227,7 @@ function tpAddMenuItems(&$buttons)
             array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
             array (
                 'tpadmin' => array (
-                    'icon' => 'tinyportal/menu_tp.png',
+					'icon' => 'tinyportal/menu_tp.png',
 					'title' => $txt['tp-tphelp'],
                     'href' => $scripturl.'?action=tpadmin',
                     'show' =>  TPcheckAdminAreas(),
@@ -270,6 +270,7 @@ function tpAddMenuItems(&$buttons)
                     array_slice($buttons, 0, array_search($row['position'], array_keys($buttons), true) + 1),
                     array (
                         'tpbutton'.$i => array (
+							'icon' => 'tinyportal/menu_tpmenu.png',
                             'title' => $row['name'],
                             'href' => substr($row['href'], 4),
                             'show' =>  true,
@@ -284,14 +285,15 @@ function tpAddMenuItems(&$buttons)
 
 function tpAddProfileMenu(&$profile_areas)
 {
-	global $txt, $context;
+	global $txt, $context, $forum_version;
 	
-
 	$profile_areas['tp'] = array(
 		'title' => 'Tinyportal',
 		'areas' => array(),
 	);
-
+           // Profile area for 2.1
+	if(strpos($forum_version, '2.1') !== false) 
+	{
 	$profile_areas['tp']['areas']['tpsummary'] = array(
 		'label' => $txt['tpsummary'],
 		'file' => 'TPmodules.php',
@@ -330,17 +332,68 @@ function tpAddProfileMenu(&$profile_areas)
 	);
 
 	if(!$context['TPortal']['profile_shouts_hide'])
+		{
+		$profile_areas['tp']['areas']['tpshoutbox'] = array(
+			'label' => $txt['shoutboxprofile'],
+			'file' => 'TPmodules.php',
+			'function' => 'tp_shoutb',
+			'icon' => 'menu_tpshout',
+			'permission' => array(
+				'own' => 'profile_view_own',
+				'any' => 'profile_view_any',
+			),
+		);
+		}
+	}
+	else
+           // Profile area for 2.0 - no icons
 	{
-	$profile_areas['tp']['areas']['tpshoutbox'] = array(
-		'label' => $txt['shoutboxprofile'],
+		$profile_areas['tp']['areas']['tpsummary'] = array(
+		'label' => $txt['tpsummary'],
 		'file' => 'TPmodules.php',
-		'function' => 'tp_shoutb',
-		'icon' => 'menu_tpshout',
+		'function' => 'tp_summary',
 		'permission' => array(
 			'own' => 'profile_view_own',
 			'any' => 'profile_view_any',
 		),
 	);
+
+	$profile_areas['tp']['areas']['tparticles'] = array(
+		'label' => $txt['articlesprofile'],
+		'file' => 'TPmodules.php',
+		'function' => 'tp_articles',
+		'permission' => array(
+			'own' => 'profile_view_own',
+			'any' => 'profile_view_any',
+		),
+		'subsections' => array(
+			'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
+			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
+		),
+	);
+
+	$profile_areas['tp']['areas']['tpdownload'] = array(
+		'label' => $txt['downloadprofile'],
+		'file' => 'TPmodules.php',
+		'function' => 'tp_download',
+		'permission' => array(
+			'own' => 'profile_view_own',
+			'any' => 'profile_view_any',
+		),
+	);
+
+	if(!$context['TPortal']['profile_shouts_hide'])
+		{
+		$profile_areas['tp']['areas']['tpshoutbox'] = array(
+			'label' => $txt['shoutboxprofile'],
+			'file' => 'TPmodules.php',
+			'function' => 'tp_shoutb',
+			'permission' => array(
+				'own' => 'profile_view_own',
+				'any' => 'profile_view_any',
+			),
+		);
+		}
 	}
 }
 

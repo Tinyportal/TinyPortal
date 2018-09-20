@@ -34,7 +34,7 @@ function template_tpcredits()
 		<div class="cat_bar">
 			<h3 class="catbg">' . $txt['tp-credits'] . '</h3>
 		</div>
-		<p class="description">' , $txt['tp-creditack2']  , '</p>
+		<p class="information">' , $txt['tp-creditack2']  , '</p>
 		<div class="windowbg2">
 			<span class="topslice"><span></span></span>
 			<div class="content" style="line-height: 1.6em; padding: 0 1em;">

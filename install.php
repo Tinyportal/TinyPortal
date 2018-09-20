@@ -400,7 +400,6 @@ $settings_array = array(
     'topbar_align' => 'center',
     'leftbar_width' => '200',
     'rightbar_width' => '230',
-    'fixed_width' => '0',
     'use_SSI' => '1',
     'frontpage_limit' => '5',
     'SSI_board' => '1',

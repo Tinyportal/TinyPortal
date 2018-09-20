@@ -394,6 +394,7 @@ function TPcollectSnippets()
 				);
 			}
 		}
+		sort($codefiles);
 		closedir($handle);
 	}
 	return $codefiles;

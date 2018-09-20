@@ -764,7 +764,24 @@ ul.tp_catmenu li.tp_catmenu_header
 /* for tp admin */
 .tp_largelist
 {
+-webkit-box-sizing:border-box;
+-moz-box-sizing:border-box;
+	box-sizing: border-box;
+	border: solid 1px #ccc;
+	padding: 4px;
+	margin-bottom: 4px;
 	max-height: 10em;
+	overflow: auto;
+}
+.tp_largelist2
+{
+-webkit-box-sizing:border-box;
+-moz-box-sizing:border-box;
+	box-sizing: border-box;
+	border: solid 1px #ccc;
+	padding: 4px;
+	margin-bottom: 4px;
+	max-height: 20em;
 	overflow: auto;
 }
 #tp_dlmanager ul.hoveritems, #tp_dlmanager ul.hoveritems li
@@ -1974,6 +1991,9 @@ box-sizing:border-box;
 	border-radius: 0;
 	border: none;
 	margin: 0 0 0 0 !important;
+}
+.tp_rightblock_body > .windowbg, .tp_leftblock_body > .windowbg, .tp_centerblock_body > .windowbg, .tp_topblock_body > .windowbg, .tp_lowerblock_body > .windowbg, .tp_bottomblock_body > .windowbg {
+	padding: 0px;
 }
 /* Generic icons for SMF 2.1 */
 .generic_icons.menu_tp::before {
