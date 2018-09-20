@@ -117,8 +117,9 @@ function tpAddCopy($buffer)
 	$buffer = str_replace($find, $replace, $buffer);
 
     if(strpos($forum_version, '2.1') !== false) {
+        $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
         $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
-        $replace= '<a href="'.$scripturl.'?action=tpmod;sa=help">'.isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help'.'</a>';
+        $replace= '<a href="'.$scripturl.'?action=tpmod;sa=help">'.$tmp.'</a>';
 	    $buffer = str_replace($find, $replace.' | '.$find, $buffer);
     }
 
