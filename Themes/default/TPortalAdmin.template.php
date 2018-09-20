@@ -725,14 +725,14 @@ function template_menucore()
                         break;
                     case "menu":
                         $("#tp_menu_link").show()
-                        $("#tp_menu_newlink").show()
+                        $("#tp_menu_newlink").hide()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
                         $("#tp_menu_position").show()
                         $(\'label[for="tp_menu_position"]\').show();
                         $(\'label[for="tp_menu_sub"]\').hide();
-                        $(\'label[for="tp_menu_newlink"]\').show();
+                        $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').show();
                         break;
                     case "spac":
