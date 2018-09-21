@@ -116,7 +116,7 @@ $tables = array(
 			array('name' => 'editgroups', 'type' => 'text',),
 			array('name' => 'var3', 'type' => 'int', 'size' => 11,),
 			array('name' => 'var4', 'type' => 'int', 'size' => 11,),
-			array('name' => 'var5', 'type' => 'int', 'size' => 11,),
+			array('name' => 'var5', 'type' => 'int', 'size' => 11, 'default' => 99,),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),

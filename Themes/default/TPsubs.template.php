@@ -1017,8 +1017,8 @@ function TPblock($block, $theme, $side, $double=false)
 		$types = tp_getblockstyles();
 
 	// check
-	if ( ($block['var5'] == '') || ($block['var5'] == 0) );
-//		$block['var5'] = $context['TPortal']['panelstyle_'.$side];
+	if ( ($block['var5'] == '') || ($block['var5'] == 99) )
+		$block['var5'] = $context['TPortal']['panelstyle_'.$side];
 
 	// its a normal block..
 	if(in_array($block['frame'],array('theme', 'frame', 'title', 'none')))
