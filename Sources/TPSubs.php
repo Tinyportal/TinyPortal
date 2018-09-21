@@ -2905,14 +2905,14 @@ function tp_getblockstyles21()
 			'code_bottom' => '</div></div>',
 		),
 		'3' => array(
-			'class' => 'tp_titlebg+windowbg',
+			'class' => 'tptitlebg+windowbg',
 			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
 			'code_title_right' => '</h3></div>',
 			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
 			'code_bottom' => '</div></div>',
 		),
 		'4' => array(
-			'class' => 'tp_catbg+windowbg',
+			'class' => 'tpcatbg+windowbg',
 			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
 			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
