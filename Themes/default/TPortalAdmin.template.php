@@ -637,6 +637,7 @@ function template_menucore()
                         </select>
                         </dd>
 					</dl>
+					<hr>
 					<dl class="settings">
 						<dt>
                             <label for="tp_item"><h4>'.$txt['tp-item'].':</h4><label>
@@ -666,10 +667,8 @@ function template_menucore()
 			echo '          <option value=""></option>';
 
 		echo '  </select>
-                    <input style="max-width:100%;" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
+                    <input style="max-width:100%; "size="40" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 					</dd>
-					</dl>
-					<dl class="settings">
 						<dt><label for="tp_menu_newlink"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
                         <dd>
                         <select style="max-width:98%;" size="1" name="tp_menu_newlink" id="tp_menu_newlink">
@@ -805,7 +804,7 @@ function template_menucore()
 	// Panels
 function template_panels()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
@@ -890,6 +889,8 @@ function template_panels()
 
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
+	if(strstr($forum_version, '2.1'))
+		$types = tp_getblockstyles21();
 	else
 		$types = tp_getblockstyles();
 
@@ -3259,10 +3260,11 @@ function template_blockedit()
 			<div style="background-color:#ffffff; overflow: hidden; padding: 5px;">';
 
 			if(function_exists('ctheme_tp_getblockstyles'))
-				$types = ctheme_tp_getblockstyles();
+				$types = ctheme_tp_getblockstyles();	
+			if(strstr($forum_version, '2.1'))
+				$types = tp_getblockstyles21();
 			else
 				$types = tp_getblockstyles();
-
 			foreach($types as $blo => $bl)
 				echo '
 			<div style="float: left; width: 160px; height: 120px; margin: 5px;">

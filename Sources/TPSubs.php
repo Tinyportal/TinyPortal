@@ -2880,6 +2880,83 @@ function tp_getblockstyles()
 	);
 }
 
+function tp_getblockstyles21()
+{
+	return array(
+		'0' => array(
+			'class' => 'titlebg+windowbg',
+			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
+			'code_bottom' => '</div></div>',
+		),
+		'1' => array(
+			'class' => 'catbg+windowbg',
+			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div><div class="windowbg" style="padding: 6px 8px;">',
+			'code_bottom' => '</div></div>',
+		),
+		'2' => array(
+			'class' => 'catbg+roundframe',
+			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div><div class="roundframe" style="padding: 6px 8px;">',
+			'code_bottom' => '</div></div>',
+		),
+		'3' => array(
+			'class' => 'tp_titlebg+windowbg',
+			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
+			'code_bottom' => '</div></div>',
+		),
+		'4' => array(
+			'class' => 'tp_catbg+windowbg',
+			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
+			'code_bottom' => '</div></div>',
+		),
+		'5' => array(
+			'class' => 'titlebg+windowbg-2',
+			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div class="windowbg noup" style="padding: 6px 8px;"><div>',
+			'code_bottom' => '</div></div>',
+		),
+		'6' => array(
+			'class' => 'catbg+windowbg-2',
+			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div><div class="windowbg noup" style="padding: 6px 8px;">',
+			'code_bottom' => '</div></div>',
+		),
+
+		'7' => array(
+			'class' => 'catbg+roundframe-2',
+			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div class="roundframe noup" style="padding: 6px 8px;"><div>',
+			'code_bottom' => '</div></div>',
+		),
+		'8' => array(
+			'class' => 'tptitlebg+windowbg-2',
+			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div><div class="windowbg noup" style="padding: 6px 8px;">',
+			'code_bottom' => '</div></div>',
+		),
+		'9' => array(
+			'class' => 'tpcatbg+roundframe-2',
+			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_right' => '</h3></div>',
+			'code_top' => '<div class="roundframe noup" style="padding: 6px 8px;"><div>',
+			'code_bottom' => '</div></div>',
+		),
+	);
+}
+
 function get_grps($save = true, $noposts = true)
 {
 	global $context, $txt, $smcFunc;
