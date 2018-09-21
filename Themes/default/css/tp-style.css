@@ -1992,9 +1992,7 @@ box-sizing:border-box;
 	border: none;
 	margin: 0 0 0 0 !important;
 }
-.tp_rightblock_body > .windowbg, .tp_leftblock_body > .windowbg, .tp_centerblock_body > .windowbg, .tp_topblock_body > .windowbg, .tp_lowerblock_body > .windowbg, .tp_bottomblock_body > .windowbg {
-	padding: 0px;
-}
+
 /* Generic icons for SMF 2.1 */
 .generic_icons.menu_tp::before {
 	background: url(../images/tinyportal/menu_tp.png) no-repeat;
@@ -2008,7 +2006,26 @@ box-sizing:border-box;
 .generic_icons.menu_tpshout::before {
 	background: url(../images/tinyportal/menu_tpshout.png) no-repeat;
 }
-
+/* Additional style for blocks replacing tp_half */
+div.tp_half21 {
+	background: #B1BBC5;
+	padding: 0;
+	border-radius: 6px 6px 0 0;
+	box-shadow: 0 16px 20px rgba(255,255,255,0.15) inset;
+	text-shadow: -1px -1px 1px rgba(0,0,0,0.2);
+}
+.tp_half21 h3.titlebg
+{
+	font-size: 1.1em;
+	overflow: hidden;
+	padding: 8px 12px 6px 12px;
+}
+.tp_half21 h3.catbg
+{
+	font-size: 1.1em;
+	overflow: hidden;
+	padding: 8px 12px 6px 12px;
+}
 }
 /************* TP ADMIN RESPONSIVE ********************/
 

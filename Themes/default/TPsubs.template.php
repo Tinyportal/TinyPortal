@@ -958,7 +958,7 @@ function template_tptabs_below()
 
 function TPblock($block, $theme, $side, $double=false)
 {
-	global $context , $scripturl, $settings, $txt;
+	global $context , $scripturl, $settings, $txt, $forum_version;
 
 	// setup a container that can be massaged through css
 	if ($block['type']=='ssi') {
@@ -1011,6 +1011,8 @@ function TPblock($block, $theme, $side, $double=false)
 
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
+	if(strstr($forum_version, '2.1'))
+		$types = tp_getblockstyles21();
 	else
 		$types = tp_getblockstyles();
 
