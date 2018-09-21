@@ -666,7 +666,7 @@ function TPortalDLManager()
 			FROM ({db_prefix}tp_dlmanager AS a)
 			LEFT JOIN {db_prefix}tp_dlmanager AS b ON (a.id = b.category)
 			WHERE a.type = {string:type}
-		  	GROUP BY a.id
+		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.id, a.parent
 			ORDER BY a.downloads ASC',
 			array('type' => 'dlcat')
 		);

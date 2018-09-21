@@ -848,9 +848,9 @@ function articleChanges()
 {
 	global $smcFunc, $render;
 	checkColumn('tp_articles', 'parse', ' CHANGE `parse` `parse` SMALLINT DEFAULT 0 NOT NULL');
-	checkColumn('tp_articles', 'ID_THEME', 'CHANGE `ID_THEME` `id_theme` smallint(6) default 0 NOT NULL');
-	checkColumn('tp_articles', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
-	checkColumn('tp_articles', 'body', 'CHANGE `body` `body` LONGTEXT NULL');
+	checkColumn('tp_articles', 'ID_THEME', 'CHANGE `ID_THEME` `id_theme` smallint(6) DEFAULT 0 NOT NULL');
+	checkColumn('tp_articles', 'authorID', 'CHANGE `authorID` `author_id` int DEFAULT 0 NOT NULL');
+	checkColumn('tp_articles', 'body', 'CHANGE `body` `body` LONGTEXT DEFAULT NULL');
 	$render .= '<li>Updated old columns in articles table</li>';
 }
 function dataTableChanges()

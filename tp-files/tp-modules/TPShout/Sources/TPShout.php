@@ -178,28 +178,32 @@ function postShout()
 
 		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
-		if($shout != '')
-			$smcFunc['db_insert']('INSERT',
-				'{db_prefix}tp_shoutbox',
-				array (
-              'value1' => 'string',
-              'value2' => 'string',
-              'value3' => 'string',
-              'type' => 'string',
-              'value4' => 'string',
-              'value5' => 'int'
-        ),
-				array (
-              $shout,
-              $shout_time,
-              $shout_name,
-              'shoutbox',
-              $ip,
-              $memID
-        ),
-				array('id')
-			);
-	}
+        if($shout != '')
+            $smcFunc['db_insert']('INSERT',
+                    '{db_prefix}tp_shoutbox',
+                array (
+                    'value1' => 'string',
+                    'value2' => 'string',
+                    'value3' => 'string',
+                    'type' => 'string',
+                    'value4' => 'string',
+                    'value5' => 'int',
+                    'value7' => 'int',
+                    'edit' => 'int',
+                ),
+                array (
+                    $shout,
+                    $shout_time,
+                    $shout_name,
+                    'shoutbox',
+                    $ip,
+                    $memID,
+                    0,
+                    0,
+                ),
+                array('id')
+            );
+    }
 }
 
 // This is to delete a shout via ajax
@@ -510,7 +514,7 @@ function tpshout_admin()
 }
 
 function tpshout_bigscreen($state = false, $number = 10)
- {
+{
     global $context;
 
     loadTemplate('TPShout');
@@ -525,6 +529,7 @@ function tpshout_bigscreen($state = false, $number = 10)
         $context['page_title'] = 'Shoutbox';
     }
 }
+
 // fetch all the shouts for output
 function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 {
@@ -564,28 +569,28 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			FROM {db_prefix}tp_shoutbox as s
 		WHERE s.value7 = {int:val7}
 		ORDER BY s.value2 DESC LIMIT {int:limit}',
-			array('val7' => 0, 'limit' => $limit)
-		);
+		array('val7' => 0, 'limit' => $limit)
+	);
 
-	if($smcFunc['db_num_rows']($request)>0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0 ) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$fetched[] = $row;
-			if(!empty($row['value5']) && !in_array($row['value5'], $members))
+			if(!empty($row['value5']) && !in_array($row['value5'], $members)) {
 				$members[] = $row['value5'];
+            }
 		}
 		$smcFunc['db_free_result']($request);
 	}
 
-	if(count($members)>0)
+	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
-		SELECT mem.id_member, mem.real_name as realName,
-			mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
-		FROM {db_prefix}members AS mem
+		    SELECT mem.id_member, mem.real_name as realName,
+			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
+		    FROM {db_prefix}members AS mem
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
-		WHERE mem.id_member IN(' . implode(",",$members) . ')'
-		);
+		    WHERE mem.id_member IN(' . implode(",",$members) . ')'
+	    );
+    }
 
 	$memberdata = array();
 	if(isset($request2) && $smcFunc['db_num_rows']($request2)>0)
