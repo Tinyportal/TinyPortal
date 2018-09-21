@@ -116,7 +116,7 @@ $tables = array(
 			array('name' => 'editgroups', 'type' => 'text',),
 			array('name' => 'var3', 'type' => 'int', 'size' => 11,),
 			array('name' => 'var4', 'type' => 'int', 'size' => 11,),
-			array('name' => 'var5', 'type' => 'int', 'size' => 11,),
+			array('name' => 'var5', 'type' => 'int', 'size' => 11, 'default' => 99,),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -956,7 +956,7 @@ function addDefaults()
 				'editgroups' => '-2',
 				'var3' => 0,
 				'var4' => 0,
-				'var5' => 0,
+				'var5' => 99,
 			),
 			'search' =>array(
 				'type' => 4,
@@ -975,7 +975,7 @@ function addDefaults()
 				'editgroups' => '',
 				'var3' => 0,
 				'var4' => 0,
-				'var5' => 0,
+				'var5' => 99,
 			),
 			'user' =>array(
 				'type' => 1,
@@ -994,7 +994,7 @@ function addDefaults()
 				'editgroups' => '',
 				'var3' => 0,
 				'var4' => 0,
-				'var5' => 0,
+				'var5' => 99,
 			),
 			'recent' =>array(
 				'type' => 12,
@@ -1013,7 +1013,7 @@ function addDefaults()
 				'editgroups' => '',
 				'var3' => 0,
 				'var4' => 0,
-				'var5' => 0,
+				'var5' => 99,
 			),
 			'stats' =>array(
 				'type' => 3,
@@ -1032,7 +1032,7 @@ function addDefaults()
 				'editgroups' => '',
 				'var3' => 0,
 				'var4' => 0,
-				'var5' => 0,
+				'var5' => 99,
 			),
 			'shout' => array(
 				'type' => 20,
@@ -1051,7 +1051,7 @@ function addDefaults()
 				'editgroups' => '',
 				'var3' => 0,
 				'var4' => 0,
-				'var5' => 0,
+				'var5' => 99,
 			),
 		);
 

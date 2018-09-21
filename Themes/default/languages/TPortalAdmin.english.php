@@ -347,6 +347,9 @@ $txt['tp-gobackurl'] = 'Go back to block location';
 $txt['tp-gobackallblocks'] = 'Go to all blocks';
 $txt['tp-blocknotice'] = 'NB! The type of block has changed.<br />Please save first to see the new options!';
 $txt['tp-allboards'] = 'Display on all boards';
+$txt['tp-blocksusepaneltyle'] = 'Use Panel style';
+$txt['tp-blockstylehelp'] = 'Choose style for the block';
+$txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
 
 // Block Types...
 $txt['tp-userbox1']='Avatar (if any)';
@@ -604,9 +607,6 @@ $txt['tp-redirectforum1'] = 'Redirect to forum';
 $txt['tp-redirectforum2'] = 'Redirect to frontpage';
 $txt['tp-useroundframepanels'] = 'Use the roundframe style for left/right panels?';
 $txt['tp-allowedgroups'] = 'Membergroups that can see this category';
-
-$txt['tp-blockstylehelp'] = 'Choose style for the block';
-$txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
 
 $txt['tp-admin_showblocks'] = 'Admin can see all blocks?';
 $txt['tp-uselangoption'] = 'Use language visibility option for blocks?';

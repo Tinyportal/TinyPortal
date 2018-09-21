@@ -3254,9 +3254,14 @@ function template_blockedit()
 			echo '
 								</div>
 							</div>
-					<div><hr>
-					<div class="padding-div"><b>'.$txt['tp-blockstylehelp'].':</b></div>
-							<div>
+				<div><hr>						
+					<dl class="settings">
+						<dt><b>'.$txt['tp-blockstylehelp'].':</b></dt>
+						<dt>
+							<input name="tp_block_var5" type="radio" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '>' , $txt['tp-blocksusepaneltyle'] , '</span>
+						</dt>
+					</dl>
+				<div>
 			<div style="background-color:#ffffff; overflow: hidden; padding: 5px;">';
 
 			if(function_exists('ctheme_tp_getblockstyles'))
