@@ -216,7 +216,7 @@ function tpAddMenuItems(&$buttons)
                     'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
                     'href' => $scripturl.'?action=forum',
                     'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
-                    'icon' => 'tinyportal/menu_tpforum.png',
+					'icon' => 'menu_tpforum',
                 ),
             ),
             $buttons
