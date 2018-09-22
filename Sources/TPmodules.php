@@ -488,21 +488,32 @@ function TPmodules()
 		else
 			$usebody = false;
 
-		if($usetitle && !$usebody)
-			$query = 'a.subject LIKE \'%' . $what . '%\'';
-		elseif(!$usetitle && $usebody)
-			$query = 'a.body LIKE \'%' . $what . '%\'';
-		elseif($usetitle && $usebody)
-			$query = 'a.subject LIKE \'%' . $what . '%\' OR a.body LIKE \'%' . $what . '%\'';
-		else
-			$query = 'a.subject LIKE \'%' . $what . '%\'';
+        $select     = '';
+        $query      = '';
+        $order_by   = '';
+
+        if($context['TPortal']['fulltextsearch'] == 0) {
+            if($usetitle && !$usebody)
+                $query = 'a.subject LIKE \'%' . $what . '%\'';
+            elseif(!$usetitle && $usebody)
+                $query = 'a.body LIKE \'%' . $what . '%\'';
+            elseif($usetitle && $usebody)
+                $query = 'a.subject LIKE \'%' . $what . '%\' OR a.body LIKE \'%' . $what . '%\'';
+            else
+                $query = 'a.subject LIKE \'%' . $what . '%\'';
+        }
+        else {
+            $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
+            $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+            $order_by   = 'score DESC, ';
+        }
 
 		$context['TPortal']['searchresults'] = array();
 		$context['TPortal']['searchterm'] = $what;
         $now = forum_time();
 
 		$request= $smcFunc['db_query']('', '
-			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) as body, a.author_id as authorID, a.type, m.real_name as realName
+			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) AS body, a.author_id AS authorID, a.type, m.real_name AS realName {raw:select}
 			FROM {db_prefix}tp_articles AS a
 			LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
 			WHERE {raw:query}
@@ -511,8 +522,12 @@ function TPmodules()
 			OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > '.$now.')
 			OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > '.$now.' AND a.pub_start < '.$now.'))
 			AND a.off = 0
-			ORDER BY a.date DESC LIMIT 20',
-			array('query' => $query)
+			ORDER BY {raw:order_by} a.date DESC LIMIT 20',
+			array(
+                'select'    => $select,
+                'query'     => $query,
+                'order_by'  => $order_by,
+            )
 		);
 
 		if($smcFunc['db_num_rows']($request) > 0)
