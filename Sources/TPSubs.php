@@ -2234,15 +2234,16 @@ function tp_recordevent($date, $id_member, $textvariable, $link, $description, $
 	$smcFunc['db_insert']('insert',
 		'{db_prefix}tp_events',
 		array(
-			'id_member' => 'int',
-			'date' => 'int',
-			'textvariable' => 'string',
-			'link' => 'string',
-			'description' => 'string',
-			'allowed' => 'string',
-			'eventID' => 'int',
+            'id_member'     => 'int',
+            'date'          => 'int',
+            'textvariable'  => 'string',
+            'link'          => 'string',
+            'description'   => 'string',
+            'allowed'       => 'string',
+            'eventID'       => 'int',
+            'on'            => 'int',
 		),
-		array($id_member, $date, $textvariable, $link, $description, $allowed, $eventid),
+		array($id_member, $date, $textvariable, $link, $description, $allowed, $eventid, 0),
 		array('id')
 	);
 }

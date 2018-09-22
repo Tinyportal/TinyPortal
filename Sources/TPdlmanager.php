@@ -666,7 +666,7 @@ function TPortalDLManager()
 			FROM ({db_prefix}tp_dlmanager AS a)
 			LEFT JOIN {db_prefix}tp_dlmanager AS b ON (a.id = b.category)
 			WHERE a.type = {string:type}
-		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.id, a.parent
+		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.id, a.parent, b.category
 			ORDER BY a.downloads ASC',
 			array('type' => 'dlcat')
 		);
@@ -1400,8 +1400,14 @@ function TPortalDLManager()
 			else
 				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_dldata',
-					array('week' => 'int', 'year' => 'int', 'views' => 'int', 'item' => 'int'),
-					array($week, $year, 1, $itemid),
+					array(
+                        'week'      => 'int',
+                        'year'      => 'int',
+                        'views'     => 'int',
+                        'item'      => 'int',
+                        'downloads' => 'int'
+                    ),
+					array($week, $year, 1, $itemid, 0),
 					array('id')
 				);
 
