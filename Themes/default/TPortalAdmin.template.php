@@ -964,7 +964,11 @@ function template_panels()
 									<input name="tp_blockheight_'.$panl.'" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['blockheight_'.$panl], '">
 								</dd>
 							</dl>
-							<div style="background-color:#ffffff;overflow:hidden;padding:5px;">';
+							<div>'.$txt['tp-panelstylehelp'].'<br>
+								<div class="smalltext">'.$txt['tp-panelstylehelp2'].'</div>
+								</div>
+
+							<br><div style="background-color:#ffffff;overflow:hidden;padding:5px;">';
 
 			foreach($types as $blo => $bl)
 				echo '
@@ -3254,13 +3258,13 @@ function template_blockedit()
 			echo '
 								</div>
 							</div>
-				<div><hr>						
-					<dl class="settings">
-						<dt><b>'.$txt['tp-blockstylehelp'].':</b></dt>
-						<dt>
-							<input name="tp_block_var5" type="radio" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '>' , $txt['tp-blocksusepaneltyle'] , '</span>
-						</dt>
-					</dl>
+				<div><hr>
+					<div>'.$txt['tp-blockstylehelp'].':<br>
+						<div class="smalltext">'.$txt['tp-blockstylehelp2'].'</div>
+					</div>				
+					<div class="smalltext" style="padding: 4px 0;">
+						<br><input name="tp_block_var5" type="radio" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '>' , $txt['tp-blocksusepaneltyle'] , '</span>
+					</div>
 				<div>
 			<div style="background-color:#ffffff; overflow: hidden; padding: 5px;">';
 
