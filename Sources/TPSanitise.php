@@ -24,6 +24,9 @@ class TPSanitise {
             case 'post':
                 $data = $_POST;        
                 break;
+            default:
+                return false;
+                break;
         }
 
         if(!array_key_exists($key, $data)) {
