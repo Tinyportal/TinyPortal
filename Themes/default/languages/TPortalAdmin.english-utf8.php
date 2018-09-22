@@ -255,6 +255,14 @@ $txt['tp-editcategory'] = 'Edit';
 $txt['tp-showsociallinks'] = 'Show Social Bookmarks buttons';
 $txt['tp-noicon'] = '- Do not use a icon -';
 $txt['tp-editorheight'] = 'Height of WYSIWYG editor:';
+$txt['tp-hidearticle-facebook'] = 'Hide Facebook button?';
+$txt['tp-hidearticle-twitter'] = 'Hide Twitter button?';
+$txt['tp-hidearticle-google'] = 'Hide Google button?';
+$txt['tp-hidearticle-reddit'] = 'Hide Reddit button?';
+$txt['tp-hidearticle-digg'] = 'Hide Digg button?';
+$txt['tp-hidearticle-delicious'] = 'Hide Delicious button?';
+$txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button?';
+$txt['tp-hidearticle-link'] = 'Hide the edit article link under articles?';
 
 // Blocks admin...
 $txt['tp-addcenterblock']='Add upper block';
@@ -349,6 +357,8 @@ $txt['tp-blocknotice'] = 'NB! The type of block has changed.<br />Please save fi
 $txt['tp-allboards'] = 'Display on all boards';
 $txt['tp-blocksusepaneltyle'] = 'Use Panel style';
 $txt['tp-blockstylehelp'] = 'Choose style for the block';
+$txt['tp-blockstylehelp2'] = '(This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.)';
+
 $txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
 
 // Block Types...
@@ -377,41 +387,20 @@ $txt['tp-oldcatmenu'] = 'Use flat menu style';
 $txt['tp-newcatmenu'] = 'Use dropdown style';
 
 // Panels admin
-$txt['tp-panelwidth'] = 'Width of this panel';
-$txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
-$txt['tp-hide_bottombar_forum'] = 'Hide bottom panel when in forum?';
-$txt['tp-hide_centerbar_forum']='Hide upper panel when in forum?';
-$txt['tp-hide_leftbar_forum']='Hide left panel when in forum?';
-$txt['tp-hide_lowerbar_forum'] = 'Hide lower panel when in forum?';
-$txt['tp-hide_rightbar_forum']='Hide right panel when in forum?';
-$txt['tp-hide_topbar_forum'] = 'Hide top panel when in forum?';
-$txt['tp-hidearticle-link'] = 'Hide the edit article link under articles?';
-$txt['tp-hidebarsadminonly'] = 'Hide panels when in admin section?';
+$txt['tp-panelsettings'] = 'Panel Settings';
+$txt['tp-panel'] = 'Panel';
 $txt['tp-hidebarsall'] = 'Hide panels when in these sections:';
+
+$txt['tp-hidebarsprofile'] = 'Profile screen';
+$txt['tp-hidebarspm'] = 'Personal Messages screen';
+$txt['tp-hidebarsmemberlist'] = 'Memberlist screen';
+$txt['tp-hidebarssearch'] = 'Search screen';
 $txt['tp-hidebarscalendar'] = 'Calendar screen';
 $txt['tp-hidebarscustom'] = 'Hide panels when in custom actions:<br /><span class="smalltext">(separate the actions with comma.<br /> For example: "gallery,arcade,shop")</span>';
-$txt['tp-hidebarsmemberlist'] = 'Memberlist screen';
-$txt['tp-hidebarspm'] = 'Personal Messages screen';
-$txt['tp-hidebarsprofile'] = 'Profile screen';
-$txt['tp-hidebarssearch'] = 'Search screen';
-$txt['tp-hideediticon'] = 'Hide the block edit link?';
-$txt['tp-hidearticle-facebook'] = 'Hide Facebook button?';
-$txt['tp-hidearticle-twitter'] = 'Hide Twitter button?';
-$txt['tp-hidearticle-google'] = 'Hide Google button?';
-$txt['tp-hidearticle-reddit'] = 'Hide Reddit button?';
-$txt['tp-hidearticle-digg'] = 'Hide Digg button?';
-$txt['tp-hidearticle-delicious'] = 'Hide Delicious button?';
-$txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button?';
-$txt['tp-horisontal'] = 'Display the blocks horizontally';
-$txt['tp-grid'] = 'Display the blocks according to a grid';
 $txt['tp-padding_between']='Padding between panels:';
-$txt['tp-panel'] = 'Panel';
-$txt['tp-panelsettings'] = 'Panel Settings';
-$txt['tp-horisontal2cols'] = 'Display the blocks in 2 columns';
-$txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
-$txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
-$txt['tp-vertical'] = 'Display the blocks vertically(default)';
 $txt['tp-inpixels']='in pixels';
+$txt['tp-panelwidth'] = 'Width of this panel';
+
 $txt['tp-useleftpanel']='Use left panel?';
 $txt['tp-userightpanel']='Use right panel?';
 $txt['tp-useupperpanel']='Use upper panel?';
@@ -420,12 +409,34 @@ $txt['tp-uselowerpanel']='Use lower panel?';
 $txt['tp-usetoppanel']='Use top panel?';
 $txt['tp-usebottompanel']='Use bottom panel?';
 
+$txt['tp-hide_leftbar_forum']='Hide left panel when in forum?';
+$txt['tp-hide_rightbar_forum']='Hide right panel when in forum?';
+$txt['tp-hide_topbar_forum'] = 'Hide top panel when in forum?';
+$txt['tp-hide_centerbar_forum']='Hide upper panel when in forum?';
+$txt['tp-hide_lowerbar_forum'] = 'Hide lower panel when in forum?';
+$txt['tp-hide_bottombar_forum'] = 'Hide bottom panel when in forum?';
+
+$txt['tp-vertical'] = 'Display the blocks vertically(default)';
+$txt['tp-horisontal'] = 'Display the blocks horizontally';
+$txt['tp-horisontal2cols'] = 'Display the blocks in 2 columns';
+$txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
+$txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
+$txt['tp-grid'] = 'Display the blocks according to a grid';
+$txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
+$txt['tp-blockheight'] = '<b>Force</b> this heigth on each block(use 00px or 00%)';
+$txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel:';
+$txt['tp-panelstylehelp2'] = '(This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.)';
+
 // TP Settings
 $txt['tp-generalsettings'] = 'General Settings';
 $txt['tp-hidecollapse'] = 'Allow the panels to be collapsed?';
+$txt['tp-hideediticon'] = 'Hide the block edit link?';
+
 $txt['tp-maxrating'] = 'Max rating:';
 $txt['tp-stars'] = 'Display stars instead of numbers?';
+
 $txt['tp-themesavail']='Themes available in the themebox:';
+$txt['tp-hidebarsadminonly'] = 'Hide panels when in admin section?';
 
 // Modules Admin
 $txt['tp-installmenow'] = 'Install the module?';
@@ -474,6 +485,7 @@ $txt['tp-showmenustyle'] = 'Menu style:';
 $txt['tp-showmenus'] = 'Use menu:';
 $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
+$txt['tp-menu-after'] ='Add Menu after';
 
 // Shoutbox Manager
 $txt['tp-deleteallshouts'] = 'Delete all shouts?';
@@ -507,8 +519,8 @@ $txt['tp-delete']='Delete';
 $txt['tp-display']='Display:';
 $txt['tp-sortdown'] = 'Move down';
 $txt['tp-sortup'] = 'Move up';
-$txt['tp-off'] = 'Off';
 $txt['tp-on']='On';
+$txt['tp-off'] = 'Off';
 $txt['tp-yes']='Yes';
 $txt['tp-no']='No';
 $txt['tp-type']='Type';
@@ -518,7 +530,6 @@ $txt['tp-memberlist'] = 'Memberlist';
 $txt['tp-stats'] = 'Stats';
 $txt['tp-status'] ='Status';
 $txt['tp-sub_item'] ='Position';
-$txt['tp-menu-after'] ='Add Menu after';
 $txt['tp-title']='Title';
 $txt['tp-remove'] = 'Remove';
 $txt['tp-pos'] = 'Pos';
@@ -545,7 +556,6 @@ $txt['tp-blocktype17'] = 'Admin links';
 $txt['tp-blocktype18'] = 'Single Article';
 $txt['tp-blocktype19'] = 'Articles in a Category';
 $txt['tp-blocktype20'] = 'TP module';
-$txt['tp-blockheight'] = '<b>Force</b> this heigth on each block(use 00px or 00%)';
 $txt['tp-customactions'] = 'Custom actions (format: action1,action2) - will be added to actions list above. To remove, simply uncheck.';
 $txt['tp-admin'] = 'TP Admin';
 $txt['custom_modules'] = 'TP Modules';
