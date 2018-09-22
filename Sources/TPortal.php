@@ -1143,10 +1143,10 @@ function doTPcat()
 				$allcats = array();
 				$context['TPortal']['category']['children'] = array();
 				$request =  $smcFunc['db_query']('', '
-					SELECT cat.*, COUNT(art.id) as articlecount
+					SELECT cat.id, cat.value1, cat.value2, COUNT(art.id) as articlecount
 					FROM ({db_prefix}tp_variables as cat)
 					LEFT JOIN {db_prefix}tp_articles as art ON (art.category = cat.id)
-					WHERE cat.type = {string:type} GROUP BY art.category',
+					WHERE cat.type = {string:type} GROUP BY art.category, cat.id, cat.value1, cat.value2',
 					array('type' => 'category')
 				);
 				if($smcFunc['db_num_rows']($request) > 0)
