@@ -492,7 +492,7 @@ function TPmodules()
         $query      = '';
         $order_by   = '';
 
-        if($context['TPortal']['tp_fulltextsearch'] == 0) {
+        if($context['TPortal']['fulltextsearch'] == 0) {
             if($usetitle && !$usebody)
                 $query = 'a.subject LIKE \'%' . $what . '%\'';
             elseif(!$usetitle && $usebody)
