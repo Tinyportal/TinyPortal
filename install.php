@@ -319,12 +319,19 @@ foreach ($tables as $table => $col) {
         <li>'. $table .' already exists. Updating table if necessary.</li>';
 
         // Change old column names to newer names
-        if ($table == 'tp_articles')
+        if ($table == 'tp_articles') {
 			articleChanges();
-		elseif ($table == 'tp_dlmanager')
+    	    $smcFunc['db_query']('', '
+                ALTER TABLE {db_prefix}tp_articles 
+                ADD FULLTEXT (subject, body)'
+	        );
+        }
+		elseif ($table == 'tp_dlmanager') {
 			updateDownLoads();
-		elseif ($table == 'tp_data')
+        }
+		elseif ($table == 'tp_data') {
 			dataTableChanges();
+        }
 
         // If utf8 is set alter table to use utf8 character set.
         if ($utf8) {
@@ -509,6 +516,7 @@ $settings_array = array(
     'frontpage_catlayout' => '1',
     'showcollapse' => '1',
     'remove_modulesettings' => '0',
+    'fulltextsearch' => '0',
     'front_module' => '',
     'forumposts_avatar' => '1',
     'dl_usescreenshot' => '1',
@@ -883,6 +891,7 @@ function articleUpdates()
 		WHERE useintro = -3',
 		array('type' => 'import')
 	);
+
 
 	// make sure featured is updated
 	$request = $smcFunc['db_query']('', '

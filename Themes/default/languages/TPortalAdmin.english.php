@@ -640,6 +640,8 @@ $txt['tp-sticky5'] = 'Normal style + red background';
 $txt['tp-sticky6'] = 'Normal style + green background';
 $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
 
+$txt['tp-fulltextsearch']       = 'Enable TinyPortal Full Text search';
+$txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Search Functionality';
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
