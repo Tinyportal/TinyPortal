@@ -2006,6 +2006,10 @@ box-sizing:border-box;
 .generic_icons.menu_tpshout::before {
 	background: url(../images/tinyportal/menu_tpshout.png) no-repeat;
 }
+.generic_icons.menu_tpforum::before {
+    background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
+}
+
 /* Additional style for blocks replacing tp_half */
 div.tp_half21 {
 	background: #B1BBC5;
