@@ -1031,6 +1031,19 @@ function TPblock($block, $theme, $side, $double=false)
 		{
 			echo $types[$block['var5']]['code_title_left'];
 
+			if(strstr($forum_version, '2.1'))
+			{
+			if($block['visible'] == '' || $block['visible'] == '1')
+				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.gif" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+
+			// can you edit the block?
+			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
+				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
+				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 2px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+			}
+			else
+			{
 			if($block['visible'] == '' || $block['visible'] == '1')
 				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.gif" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 
@@ -1039,7 +1052,8 @@ function TPblock($block, $theme, $side, $double=false)
 				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 8px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
 			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
 				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 8px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
-
+			}
+					
 			echo $block['title'];
 			echo $types[$block['var5']]['code_title_right'];
 		}
