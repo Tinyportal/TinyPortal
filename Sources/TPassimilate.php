@@ -327,8 +327,8 @@ function tpAddProfileMenu(&$profile_areas)
 		'function' => 'tp_download',
 		'icon' => 'menu_tpdownload',
 		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
+			'own' => 'profile_view_own' && !empty($context['TPortal']['show_download']),
+			'any' => 'profile_view_any' && !empty($context['TPortal']['show_download']),
 		),
 	);
 

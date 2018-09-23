@@ -349,12 +349,12 @@ function tp_getbuttons()
 			),
 		);
 	}
-	if(allowedTo('tp_dlmanager'))
+	if(allowedTo('tp_dlmanager')) 
 	{
 		$buts['tpdlmanager'] = array(
 			'title' => $txt['permissionname_tp_dlmanager'],
 			'href' => $scripturl . '?action=tpmod;dl=admin',
-			'show' => true,
+			'show' => !empty($context['TPortal']['show_download']),
 			'active_button' => false,
 			'sub_buttons' => array(
 			),
