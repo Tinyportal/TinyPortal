@@ -476,8 +476,9 @@ function TPmodules()
 		// nothing to search for?
 		if(empty($_POST['tpsearch_what']))
 			fatal_error($txt['tp-nosearchentered']);
-		// clean the search
-		$what = strip_tags($_POST['tpsearch_what']);
+		
+        // clean the search
+        $what = TPSanitise::filter('tpsearch_what', 'post', 'string');
 
 		if(!empty($_POST['tpsearch_title']))
 			$usetitle = true;
@@ -506,13 +507,14 @@ function TPmodules()
             $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
             $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
             $order_by   = 'score DESC, ';
+            $what       = str_replace(array('+', '-', '>', '<', '~', '*', '(', ')', '"') , array('', '', '', '', '', '', '', '', ''), $what);
         }
 
-		$context['TPortal']['searchresults'] = array();
-		$context['TPortal']['searchterm'] = $what;
+		$context['TPortal']['searchresults']    = array();
+		$context['TPortal']['searchterm']       = $what;
         $now = forum_time();
 
-		$request= $smcFunc['db_query']('', '
+		$request    = $smcFunc['db_query']('', '
 			SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) AS body, a.author_id AS authorID, a.type, m.real_name AS realName {raw:select}
 			FROM {db_prefix}tp_articles AS a
 			LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
@@ -523,7 +525,7 @@ function TPmodules()
 			OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > '.$now.' AND a.pub_start < '.$now.'))
 			AND a.off = 0
 			ORDER BY {raw:order_by} a.date DESC LIMIT 20',
-			array(
+			array (
                 'select'    => $select,
                 'query'     => $query,
                 'order_by'  => $order_by,
@@ -542,7 +544,7 @@ function TPmodules()
 					$row['body'] = strip_tags($row['body']);
 
 				$row['subject'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
-				$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+				$row['body']    = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 				$context['TPortal']['searchresults'][]=array(
 					'id' => $row['id'],
 					'date' => $row['date'],

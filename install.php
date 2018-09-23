@@ -321,10 +321,15 @@ foreach ($tables as $table => $col) {
         // Change old column names to newer names
         if ($table == 'tp_articles') {
 			articleChanges();
-    	    $smcFunc['db_query']('', '
-                ALTER TABLE {db_prefix}tp_articles 
-                ADD FULLTEXT (subject, body)'
-	        );
+            $request = $smcFunc['db_query']('','
+                SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search\' AND Index_type = \'FULLTEXT\''
+            );
+            if($smcFunc['db_num_rows']($request) === 0) {
+                $smcFunc['db_query']('', '
+                    CREATE FULLTEXT INDEX search ON
+                    {db_prefix}tp_articles (subject, body)'
+                );
+            }
         }
 		elseif ($table == 'tp_dlmanager') {
 			updateDownLoads();
