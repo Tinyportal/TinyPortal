@@ -30,10 +30,10 @@ function template_main()
 		</div>
 		<div>';
 		$dlbuttons = array(
-			'frontdl' => array('text' => 'tp-downloads', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl' ),
-			'search' => array('text' => 'tp-search', 'image' => 'search.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search'),
-			'stats' => array('text' => 'tp-stats', 'image' => 'stats.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=stats'),
-			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'image' => 'upload.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload'),
+			'frontdl' => array('text' => 'tp-downloads', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl' ),
+			'search' => array('text' => 'tp-search', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search'),
+			'stats' => array('text' => 'tp-stats', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=stats'),
+			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload'),
 		);
 
 		if(in_array($context['TPortal']['dlaction'],array('frontdl','search','stats','upload')))
@@ -387,7 +387,7 @@ function template_main()
 			echo '
 					<hr />
 					<div class="post">
-						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.gif" alt="'.$txt['tp-download'].'" /></a></p>
+						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><b>'.$txt['tp-download'].'</b></a></p>
 						' . $dlitem['description'] . '
 					</div>';
 
