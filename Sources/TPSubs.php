@@ -354,7 +354,7 @@ function tp_getbuttons()
 		$buts['tpdlmanager'] = array(
 			'title' => $txt['permissionname_tp_dlmanager'],
 			'href' => $scripturl . '?action=tpmod;dl=admin',
-			'show' => true,
+			'show' => !empty($context['TPortal']['show_download']),
 			'active_button' => false,
 			'sub_buttons' => array(
 			),

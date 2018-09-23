@@ -198,6 +198,7 @@ $txt['tp_maintenace'] = 'Maintenance Mode';
 
 // File Manager... //
 // Rev 89
+$txt['tp-dlmanageroff'] = 'The DL Manager module is not active.';
 $txt['tp-dluploaded'] = 'Uploads';
 $txt['tp-uploadedby'] = 'Uploaded by ';
 $txt['permissiongroup_tinyportal_dl'] = 'TinyPortal File manager';

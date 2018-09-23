@@ -152,9 +152,9 @@ function addPromoteButton(&$normal_buttons)
 	if(allowedTo(array('tp_settings')))
 	{
 		if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics'])))
-			$normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'image' => 'admin_move.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+			$normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
 		else
-			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'image' => 'admin_move.gif', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
 	}
 }
 
