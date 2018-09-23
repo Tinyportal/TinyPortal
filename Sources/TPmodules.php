@@ -507,6 +507,7 @@ function TPmodules()
             $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
             $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
             $order_by   = 'score DESC, ';
+            $what       = str_replace(array('+', '-', '>', '<', '~', '*', '(', ')', '"') , array('', '', '', '', '', '', '', '', ''), $what);
         }
 
 		$context['TPortal']['searchresults']    = array();
@@ -543,7 +544,7 @@ function TPmodules()
 					$row['body'] = strip_tags($row['body']);
 
 				$row['subject'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
-				$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+				$row['body']    = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 				$context['TPortal']['searchresults'][]=array(
 					'id' => $row['id'],
 					'date' => $row['date'],
