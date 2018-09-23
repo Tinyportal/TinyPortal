@@ -36,7 +36,7 @@ class TPSanitise {
         return filter_var($data[$key], self::filterType($filterType), $options);
     }
 
-    private function filterType($type) {
+    private static function filterType($type) {
         switch (strtolower($type)) {
             case 'string':
                 $filter = FILTER_SANITIZE_STRING;
