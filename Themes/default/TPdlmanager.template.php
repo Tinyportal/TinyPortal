@@ -387,7 +387,7 @@ function template_main()
 			echo '
 					<hr />
 					<div class="post">
-						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><b>'.$txt['tp-download'].'</b></a></p>
+						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
 						' . $dlitem['description'] . '
 					</div>';
 
