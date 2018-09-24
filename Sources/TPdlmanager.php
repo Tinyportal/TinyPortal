@@ -58,7 +58,7 @@ function TPortalDLManager()
 
 	// is even the manager active?
 	if(!$context['TPortal']['show_download'])
-		fatal_error($txt['tp-dlmanageroff']);
+		fatal_error($txt['tp-dlmanageroff'], false);
 
 	$context['TPortal']['upshrinkpanel'] = '';
 
@@ -110,13 +110,13 @@ function TPortalDLManager()
 			}
 			// check that nothing happended
 			if(!file_exists($_FILES['tp-dluploadfile']['tmp_name']) || !is_uploaded_file($_FILES['tp-dluploadfile']['tmp_name']))
-				fatal_error($txt['tp-dluploadfailure']);
+				fatal_error($txt['tp-dluploadfailure'], false);
 
 			// first, can we upload at all?
 			if(!$context['TPortal']['can_upload'])
 			{
 				unlink($_FILES['tp-dluploadfile']['tmp_name']);
-				fatal_error($txt['tp-dluploadnotallowed']);
+				fatal_error($txt['tp-dluploadnotallowed'], false);
 			}
 		}
 		// a file it is
@@ -158,7 +158,7 @@ function TPortalDLManager()
 				$status = 'maxsize';
 				unlink($_FILES['tp-dluploadfile']['tmp_name']);
 				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1000) .' Kb';
-				fatal_error($error);
+				fatal_error($error, false);
 			}
 		}
 		else
@@ -181,7 +181,7 @@ function TPortalDLManager()
 				$status = 'wrongtype';
 				unlink($_FILES['tp-dluploadfile']['tmp_name']);
 				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlexterror2'].': <b>'.$name.'</b>';
-				fatal_error($error);
+				fatal_error($error, false);
 			}
 		}
 
@@ -1459,7 +1459,7 @@ function TPdlresults()
 
 	// nothing to search for?
 	if(empty($_POST['dl_search']))
-		fatal_error($txt['tp-nosearchentered']);
+		fatal_error($txt['tp-nosearchentered'], false);
 
 	// clean the search
 	$what2 = str_replace(' ', '%', strip_tags($_POST['dl_search']));
@@ -2343,7 +2343,7 @@ function TPortalDLAdmin()
 			{
 				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
 				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1000) .' Kb';
-				fatal_error($error);
+				fatal_error($error, false);
 			}
 
 			// check the extension
@@ -2360,7 +2360,7 @@ function TPortalDLAdmin()
 			{
 				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
 				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlexterror2'].': <b>'.$sname.'</b>';
-				fatal_error($error);
+				fatal_error($error, false);
 			}
 			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'],$boarddir.'/tp-downloads/'.$sname);
 			$smcFunc['db_query']('', '
