@@ -527,7 +527,7 @@ function TPmodules()
 			array (
                 'select'    => $select,
                 'query'     => $query,
-                'order_by'  => $order_by,
+                'order_by'  => $order_by
             )
 		);
 
