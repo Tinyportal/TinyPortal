@@ -1121,8 +1121,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			$imgs = array_reverse($imgfiles);
 		}
 		echo '
-		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
-		<div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
+		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
 		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
 		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
 		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
@@ -1134,6 +1133,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		echo '
 		</div>
 		</div>
+		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
 	</div>';
 	}
 
