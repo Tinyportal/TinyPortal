@@ -1470,7 +1470,7 @@ function article_picturecolumn($render = true)
 	<div style="width: 128px; height: 128px; background: top right url(' . $context['TPortal']['article']['illustration'] . ') no-repeat;"></div>';
 	else
 		echo '
-	<div style="width: 128px; height: 128px; background: top right url(' . $settings['tp_images_url'] . '/TPno_illustration.gif) no-repeat;"></div>';
+	<div style="width: 128px; height: 128px; background: top right url(' . $settings['tp_images_url'] . '/TPno_illustration.png) no-repeat;"></div>';
 
 }
 

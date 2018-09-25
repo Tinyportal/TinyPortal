@@ -35,7 +35,7 @@ $txt['tp-shout-autorefresh'] = 'Auto refresh (in seconds)<br /><h6 style="color:
 $txt['permissiongroup_tpshout'] = 'TP Shoutbox';
 $txt['permissiongroup_tpshoutbox'] = 'TP Shoutbox';
 $txt['permissiongroup_simple_tpshout'] = 'Manage Shoutbox';
-$txt['permissionname_tp_can_admin_shout'] = 'Manage Shoutbox';
+$txt['permissionname_tp_can_admin_shout'] = 'Manage TPshout';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
 $txt['permissionname_tp_can_shout'] = 'Can Post Shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';

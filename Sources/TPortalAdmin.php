@@ -674,7 +674,7 @@ function do_blocks()
 		}
 		// if not throw an error
 		else
-			fatal_error($txt['tp-blockfailure']);
+			fatal_error($txt['tp-blockfailure'], false);
 	}
 	// or maybe adding it?
 	elseif(isset($_GET['addblock']))

@@ -268,35 +268,6 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if(allowedTo('tp_blocks'))
-	{
-		$buts['tpblocks'] = array(
-			'title' => $txt['permissionname_tp_blocks'],
-			'href' => $scripturl . '?action=tpadmin;sa=blocks',
-			'show' => true,
-			'active_button' => false,
-			'sub_buttons' => array(
-				'tppanels' => array(
-					'title' => $txt['tp-panels'],
-					'href' => $scripturl . '?action=tpadmin;sa=panels',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpmenumanager' => array(
-					'title' => $txt['tp-menumanager'],
-					'href' => $scripturl . '?action=tpadmin;sa=menubox',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpblockaccess' => array(
-					'title' => $txt['tp-blockoverview'],
-					'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-					'show' => true,
-					'active_button' => false,
-				),
-			),
-		);
-	}
 	if(allowedTo('tp_settings'))
 	{
 		$buts['tpsettings'] = array(
@@ -349,6 +320,35 @@ function tp_getbuttons()
 			),
 		);
 	}
+	if(allowedTo('tp_blocks'))
+	{
+		$buts['tpblocks'] = array(
+			'title' => $txt['permissionname_tp_blocks'],
+			'href' => $scripturl . '?action=tpadmin;sa=blocks',
+			'show' => true,
+			'active_button' => false,
+			'sub_buttons' => array(
+				'tppanels' => array(
+					'title' => $txt['tp-panels'],
+					'href' => $scripturl . '?action=tpadmin;sa=panels',
+					'show' => true,
+					'active_button' => false,
+				),
+				'tpblockaccess' => array(
+					'title' => $txt['tp-blockoverview'],
+					'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
+					'show' => true,
+					'active_button' => false,
+				),
+				'tpmenumanager' => array(
+					'title' => $txt['tp-menumanager'],
+					'href' => $scripturl . '?action=tpadmin;sa=menubox',
+					'show' => true,
+					'active_button' => false,
+				),
+			),
+		);
+	}
 	if(allowedTo('tp_dlmanager'))
 	{
 		$buts['tpdlmanager'] = array(
@@ -363,7 +363,7 @@ function tp_getbuttons()
 	if(allowedTo('tp_shoutbox'))
 	{
 		$buts['tpshoutbox'] = array(
-			'title' => $txt['shoutboxprofile'],
+			'title' => $txt['permissionname_tp_can_admin_shout'],
 			'href' => $scripturl . '?action=tpmod;shout=admin',
 			'show' => true,
 			'active_button' => false,
@@ -1121,8 +1121,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			$imgs = array_reverse($imgfiles);
 		}
 		echo '
-		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
-		<div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
+		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
 		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
 		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
 		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
@@ -1134,6 +1133,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		echo '
 		</div>
 		</div>
+		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
 	</div>';
 	}
 
@@ -2211,7 +2211,7 @@ function tp_collectArticleIcons()
 	{
 		while (false !== ($file = readdir($handle)))
 		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.png' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
 				if(substr($file, 0, 2) == 's_')
 					$context['TPortal']['articons']['illustrations'][] = array(
