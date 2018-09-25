@@ -268,35 +268,6 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if(allowedTo('tp_blocks'))
-	{
-		$buts['tpblocks'] = array(
-			'title' => $txt['permissionname_tp_blocks'],
-			'href' => $scripturl . '?action=tpadmin;sa=blocks',
-			'show' => true,
-			'active_button' => false,
-			'sub_buttons' => array(
-				'tppanels' => array(
-					'title' => $txt['tp-panels'],
-					'href' => $scripturl . '?action=tpadmin;sa=panels',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpmenumanager' => array(
-					'title' => $txt['tp-menumanager'],
-					'href' => $scripturl . '?action=tpadmin;sa=menubox',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpblockaccess' => array(
-					'title' => $txt['tp-blockoverview'],
-					'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-					'show' => true,
-					'active_button' => false,
-				),
-			),
-		);
-	}
 	if(allowedTo('tp_settings'))
 	{
 		$buts['tpsettings'] = array(
@@ -349,6 +320,35 @@ function tp_getbuttons()
 			),
 		);
 	}
+	if(allowedTo('tp_blocks'))
+	{
+		$buts['tpblocks'] = array(
+			'title' => $txt['permissionname_tp_blocks'],
+			'href' => $scripturl . '?action=tpadmin;sa=blocks',
+			'show' => true,
+			'active_button' => false,
+			'sub_buttons' => array(
+				'tppanels' => array(
+					'title' => $txt['tp-panels'],
+					'href' => $scripturl . '?action=tpadmin;sa=panels',
+					'show' => true,
+					'active_button' => false,
+				),
+				'tpblockaccess' => array(
+					'title' => $txt['tp-blockoverview'],
+					'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
+					'show' => true,
+					'active_button' => false,
+				),
+				'tpmenumanager' => array(
+					'title' => $txt['tp-menumanager'],
+					'href' => $scripturl . '?action=tpadmin;sa=menubox',
+					'show' => true,
+					'active_button' => false,
+				),
+			),
+		);
+	}
 	if(allowedTo('tp_dlmanager'))
 	{
 		$buts['tpdlmanager'] = array(
@@ -363,7 +363,7 @@ function tp_getbuttons()
 	if(allowedTo('tp_shoutbox'))
 	{
 		$buts['tpshoutbox'] = array(
-			'title' => $txt['shoutboxprofile'],
+			'title' => $txt['permissionname_tp_can_admin_shout'],
 			'href' => $scripturl . '?action=tpmod;shout=admin',
 			'show' => true,
 			'active_button' => false,
