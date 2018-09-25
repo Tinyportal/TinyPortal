@@ -2211,7 +2211,7 @@ function tp_collectArticleIcons()
 	{
 		while (false !== ($file = readdir($handle)))
 		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.gif' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
+			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'TPno_illustration.png' && in_array(strtolower(substr($file, strlen($file) -4, 4)), array('.gif', '.jpg', '.png')))
 			{
 				if(substr($file, 0, 2) == 's_')
 					$context['TPortal']['articons']['illustrations'][] = array(

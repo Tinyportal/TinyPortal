@@ -902,11 +902,11 @@ function template_panels()
 		if($panl!='front')
 			echo $txt['tp-'.$panl.'panel'].'</h3></div>
 									<a name="'.$panl.'"></a><br>
-									<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.gif" alt="" />';
+									<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" />';
 		else
 			echo $txt['tp-'.$panl.'panel'].'</h3></div>
 									<a name="'.$panl.'"></a><br>
-									<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.gif" alt="" />';
+									<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" />';
 		echo '<br>
 
 			<div>
@@ -1357,28 +1357,28 @@ function template_frontpage()
 						$context['TPortal']['frontpage_layout']<2 ? 'checked' : '' , '> A ' ,
 						$context['TPortal']['frontpage_layout']<2 ? '' : '' , '
 							<div style="margin-top: 5px;">
-								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_a.gif"/>
+								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_a.png"/>
 							</div>
 						</div>
 						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="2" ' ,
 						$context['TPortal']['frontpage_layout']==2 ? 'checked' : '' , '> B ' ,
 						$context['TPortal']['frontpage_layout']==2 ? '' : '' , '
 							<div style="margin-top: 5px;">
-								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_b.gif"/>
+								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_b.png"/>
 							</div>
 						</div>
 						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="3" ' ,
 						$context['TPortal']['frontpage_layout']==3 ? 'checked' : '' , '> C ' ,
 						$context['TPortal']['frontpage_layout']==3 ? '' : '' , '
 							<div style="margin-top: 5px;">
-								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_c.gif"/>
+								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_c.png"/>
 							</div>
 						</div>
 						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="4" ' ,
 						$context['TPortal']['frontpage_layout']==4 ? 'checked' : '' , '> D ' ,
 						$context['TPortal']['frontpage_layout']==4 ? '' : '' , '
 							<div style="margin-top: 5px;">
-								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_d.gif"/>
+								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_d.png"/>
 							</div>
 						</div>
 						<br style="clear: both;" /><br>
@@ -1390,7 +1390,7 @@ function template_frontpage()
 								echo '
 												<div style="float: left; width: 180px; height: 100px; margin: 4px;' , $context['TPortal']['frontpage_catlayout']==$box['value'] ? ' font-weight: bold;' : '' , '">
 													<input type="radio" name="tp_frontpage_catlayout" value="'.$box['value'].'"' , $context['TPortal']['frontpage_catlayout']==$box['value'] ? ' checked="checked"' : '' , '>
-													'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.gif" alt="tplayout'.$box['value'].'" />
+													'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" />
 												</div>';
 
 							if(empty($context['TPortal']['frontpage_template']))
@@ -1660,28 +1660,28 @@ function template_editcategory()
 							$mg['layout']==1 ? 'checked' : '' , '> A ' ,
 							$mg['layout']==1 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
-									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_a.gif"/>
+									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_a.png"/>
 								</div>
 							</div>
 							<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="2" ' ,
 							$mg['layout']==2 ? 'checked' : '' , '> B ' ,
 							$mg['layout']==2 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
-									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_b.gif"/>
+									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_b.png"/>
 								</div>
 							</div>
 							<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="3" ' ,
 							$mg['layout']==3 ? 'checked' : '' , '> C ' ,
 							$mg['layout']==3 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
-									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_c.gif"/>
+									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_c.png"/>
 								</div>
 							</div>
 							<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="4" ' ,
 							$mg['layout']==4 ? 'checked' : '' , '> D ' ,
 							$mg['layout']==4 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
-									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_d.gif"/>
+									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_d.png"/>
 								</div>
 							</div>
 							<p class="clearthefloat"></p><br>
@@ -1694,7 +1694,7 @@ function template_editcategory()
 			echo '
 									<div style="float: left; width: 180px; height: 100px; margin: 4px;' , $mg['catlayout']==$box['value'] ? ' font-weight: bold;' : '' , '">
 										<input type="radio" name="tp_category_catlayout" value="'.$box['value'].'"' , $mg['catlayout']==$box['value'] ? ' checked="checked"' : '' , '>
-										'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.gif" alt="tplayout'.$box['value'].'" />
+										'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" />
 									</div>';
 			if(empty($mg['value9']))
 				$mg['value9'] = '
@@ -2479,7 +2479,7 @@ function template_editarticle($type = '')
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-illustration'], '</label><br>
-						<div><img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.gif' , '" alt="" /></div>
+						<div><img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /></div>
 					</dt>
 					<dd>
 							<select size="10" style="width: 200px;" name="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
