@@ -584,7 +584,7 @@ ul#tp_tabmenu li a:hover
 }
 .tabimage
 {
-	background: url(../images/tinyportal/TPtabindicator.gif) no-repeat;
+	background: url(../images/tinyportal/TPtabindicator.png) no-repeat;
 	font-weight: bold;
 }
 .notab
@@ -602,7 +602,7 @@ ul#tp_tabmenu li a:hover
 #tp_tabs_frame h4.forumpost
 {
 	padding-left: 24px;
-	background: url(../images/topic/normal_post.gif) 0 50% no-repeat;
+	background: url(../images/tinyportal/normal_post.png) 0 50% no-repeat;
 }
 #tp_tabs_frame h3
 {
@@ -631,7 +631,7 @@ ul#tp_child_articles
 }
 ul#tp_child_articles li
 {
-	background: url(../images/tinyportal/TPboard.gif) no-repeat 0 50%;
+	background: url(../images/tinyportal/TPboard.png) no-repeat 0 50%;
 	margin-left: 0;
 	padding: 5px 0 5px 20px;
 }
@@ -744,7 +744,7 @@ ul.tp_recentblock li
 }
 .tp_statsblock h5.online
 {
-	background: url(../images/icons/online.gif) no-repeat 0 5px;
+	background: url(../images/tinyportal/online.png) no-repeat 0 5px;
 }
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li
@@ -2076,7 +2076,7 @@ div.tp_half21 {
 	padding: 1%;
     clear:both;	
 	display:block;
-	background-image:url(../images/tinyportal/TPsort_down.gif);
+	background-image:url(../images/tinyportal/TPsort_down.png);
 	background-repeat:no-repeat;
 	background-position:center right;
 	text-decoration:none;
