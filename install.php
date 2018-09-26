@@ -70,7 +70,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/tp-delete_shout.gif" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v1.6.0 for SMF 2.0.x<h3/></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v1.6.0 for SMF 2.0.x<h3/></div>
 	<div class="middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 

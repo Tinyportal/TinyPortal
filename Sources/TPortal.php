@@ -417,7 +417,7 @@ function setupTPsettings()
 	if(!isset($settings['tp_images_url']))
 	{
 		// check if the them has a folder
-		if(file_exists($settings['theme_dir'].'/images/tinyportal/TParticle.gif'))
+		if(file_exists($settings['theme_dir'].'/images/tinyportal/TParticle.png'))
 			$settings['tp_images_url'] = $settings['images_url'] . '/tinyportal';
 		else
 			$settings['tp_images_url'] = $settings['default_images_url'] . '/tinyportal';
@@ -2706,7 +2706,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 							state = 0;
 						}
 
-						document.getElementById( blockimage ).src = "'.$settings['tp_images_url'].'" + (state ? "/TPcollapse.gif" : "/TPexpand.gif");
+						document.getElementById( blockimage ).src = "'.$settings['tp_images_url'].'" + (state ? "/TPcollapse.png" : "/TPexpand.png");
 						var tempImage = new Image();
 						tempImage.src = "'.$scripturl.'?action=tpmod;upshrink=" + targetId + ";state=" + state + ";" + (new Date().getTime());
 
@@ -2748,14 +2748,14 @@ function tp_setupUpshrinks()
 					pstate = 1;
 					removeFromArray(targetID, tpPanels);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink.gif\';
+					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
 				}
 				else {
 					target.style.display = "none";
 					pstate = 0;
 					tpPanels.push(targetID);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink2.gif\';
+					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
 				}
 			}
 		}
