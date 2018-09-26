@@ -1896,6 +1896,10 @@ left: 16px;
    padding:0px;
    margin:0px   
 }
+input#searchbox  {
+	width: 100%;
+	max-width: 350px!important;;
+}
 input,select {
 	max-width:97%!important;
 }
