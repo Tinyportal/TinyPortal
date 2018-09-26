@@ -504,6 +504,44 @@ function TPmodules()
                 $query = 'a.subject LIKE \'%' . $what . '%\'';
         }
         else {
+            $splitWords = preg_split("#\s{1,}#", $what, -1);
+            if(is_array($splitWords)) {
+                $words  = array();
+                foreach($splitWords as $word) {
+                    $word       = trim($word);
+                    $operator   = substr($word, 0, 1);
+                    // First Character 
+                    switch($operator) {
+                        // Allowed operators
+                        case '-':
+                        case '+':
+                        case '>':
+                        case '<':
+                        case '~':
+                            $word = substr($word, 1);
+                            break;
+                        default:
+                            // Last Character of a word
+                            $operator   = substr($word, -1); 
+                            switch($operator) {
+                                // Allowed operators
+                                case '-':
+                                case '+':
+                                case '>':
+                                case '<':
+                                case '~':
+                                    $word = substr($word, 0, -1);
+                                    break;
+                                default:
+                                    $operator = '';
+                                    break;
+                            }
+                    }
+                    $word       = preg_replace("#(-|\+|<|>|~|@)#s", '', $word);
+                    $words[]    = $operator.$word;
+                }
+                $what = implode(' ',$words);
+            }
             $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
             $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
             $order_by   = 'score DESC, ';
@@ -527,7 +565,7 @@ function TPmodules()
 			array (
                 'select'    => $select,
                 'query'     => $query,
-                'order_by'  => $order_by
+                'order_by'  => $order_by,
             )
 		);
 
@@ -542,9 +580,8 @@ function TPmodules()
 				else
 					$row['body'] = strip_tags($row['body']);
 
-			    $row['subject'] = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
-			    $row['body']    = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['body']);
-
+				$row['subject'] = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
+				$row['body']    = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 				$context['TPortal']['searchresults'][]=array(
 					'id' => $row['id'],
 					'date' => $row['date'],
