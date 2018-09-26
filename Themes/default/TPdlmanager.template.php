@@ -231,7 +231,7 @@ function template_main()
 					{
 						$content .= '
 					<li>
-						<img style="margin: 0;" alt="" src="' .$settings['tp_images_url']. '/TPboard.gif' . '" border="0" />
+						<img style="margin: 0;" alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" border="0" />
 							<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
 						if($dlchild['files']>0)
 							$content .= ' (' . $dlchild['files'].')';
@@ -356,7 +356,7 @@ function template_main()
 						<li>' , $txt['tp-created'] . ': ' .  timeformat($dlitem['created']).'</li>
 						<li>' , $txt['tp-itemlastdownload'] , ': ' . timeformat($dlitem['date_last']).'</li>
 					</ul>
-					<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $dlitem['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')</div>';
+					<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $dlitem['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')</div>';
 
 			if($dlitem['can_rate'])
 			{
@@ -599,7 +599,7 @@ function template_main()
 
 		echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.gif" alt="" /><br>
+						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dluploadpic'].'
@@ -641,7 +641,7 @@ function template_main()
 				<div>'.$maxcount.' '.$txt['tp-dlstatscats'].'</div>
 			</div>
 			<div style="width:100%;">
-			  <div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.gif" alt="" /></div>
+			  <div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" /></div>
 			  <div class="float-items" class="windowbg2" style="width:91%;">';
 
 		// top categories
@@ -655,7 +655,7 @@ function template_main()
 				if($counter<$maxcount){
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
-							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , $cats['items']>0 ? ceil(100*($cats['items']/$maxval)) : '1' , '%" /></div>
 							<div class="float-items" style="width:15%;">'.$cats['items'].'</div>
 					        <p class="clearthefloat"></p>';
 					$counter++;
@@ -674,7 +674,7 @@ function template_main()
 				<div class="titlebg padding-div">
 				  <div>'.$maxcount.' '.$txt['tp-dlstatsviews'].'</div>
 			    </div>
-				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.gif" alt="" /></div>
+				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.png" alt="" /></div>
 				<div class="float-items" class="windowbg2" style="width:91%;">';
 
 		// top views
@@ -687,7 +687,7 @@ function template_main()
 				if($counter<$maxcount){
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
-							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></div>
 							<div class="float-items" style="width="15%";">'.$cats['views'].'</div>
 					        <p class="clearthefloat"></p>';
 					$counter++;
@@ -706,7 +706,7 @@ function template_main()
 			<div class="titlebg padding-div">
 				<div>'.$maxcount.' '.$txt['tp-dlstatsdls'].'</div>
 			</div>
-			<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></div>
+			<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.png" alt="" /></div>
 				<div class="windowbg2 float-items" style="width:91%;">';
 
 		// top downloads
@@ -720,7 +720,7 @@ function template_main()
 				if($counter<$maxcount){
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
-							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , ($maxval > 0) ? ceil(100*($cats['downloads']/$maxval)) : 0 , '%" /></div>
 							<div class="float-items" style="width:15%;">'.$cats['downloads'].'</div>
 							<p class="clearthefloat"></p>';
 					$counter++;
@@ -739,7 +739,7 @@ function template_main()
 			<div class="titlebg padding-div">
 				<div>'.$maxcount.' '.$txt['tp-dlstatssize'].'</div>
 			</div>
-				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.gif" alt="" /></div>
+				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.png" alt="" /></div>
 				<div class="windowbg2 float-items" style="width:91%;">';
 
 		// top filesize
@@ -754,7 +754,7 @@ function template_main()
 				if($counter<$maxcount){
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
-							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.gif" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></div>
 							<div class="float-items" style="width:15%;">'. floor($cats['size']/1000).'kb</div>
 							<p class="clearthefloat"></p>';
 					$counter++;
@@ -859,7 +859,7 @@ function template_main()
 					</div>
 					' , $cat['approved']=='0' ? '
 					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;"><img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.gif" alt="'.$txt['tp-dlapprove'].'"  /></div>
+					  <div class="windowbg2 float-items" align="right" style="width:25%;"><img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  /></div>
 					  <div class="windowbg2 float-items" style="width:71%;"><b>'.$txt['tp-dlnotapprovedyet'].'</b></div><p class="clearthefloat"></p></div>' : '' , ' ';
 		}
 		// any extra files?

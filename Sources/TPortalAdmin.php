@@ -674,7 +674,7 @@ function do_blocks()
 		}
 		// if not throw an error
 		else
-			fatal_error($txt['tp-blockfailure']);
+			fatal_error($txt['tp-blockfailure'], false);
 	}
 	// or maybe adding it?
 	elseif(isset($_GET['addblock']))
@@ -772,7 +772,7 @@ function do_blocks()
 			{
 				if(Ajax.readyState == 4)
 				{
-					target.src = source == "' . $settings['tp_images_url'] . '/TPactive1.gif" ? "' . $settings['tp_images_url'] . '/TPactive2.gif" : "' . $settings['tp_images_url'] . '/TPactive1.gif";
+					target.src = source == "' . $settings['tp_images_url'] . '/TPactive1.png" ? "' . $settings['tp_images_url'] . '/TPactive2.png" : "' . $settings['tp_images_url'] . '/TPactive1.png";
 				}
 			}
 
@@ -1815,7 +1815,7 @@ function do_articles()
 			{
 				if(Ajax.readyState == 4)
 				{
-					target.src = source == "' . $settings['tp_images_url'] . '/TPactive2.gif" ? "' . $settings['tp_images_url'] . '/TPactive1.gif" : "' . $settings['tp_images_url'] . '/TPactive2.gif";
+					target.src = source == "' . $settings['tp_images_url'] . '/TPactive2.png" ? "' . $settings['tp_images_url'] . '/TPactive1.png" : "' . $settings['tp_images_url'] . '/TPactive2.png";
 				}
 			}
 
@@ -1843,7 +1843,7 @@ function do_articles()
 			{
 				if(Ajax.readyState == 4)
 				{
-					target.src = source == "' . $settings['tp_images_url'] . '/TPfront.gif" ? "' . $settings['tp_images_url'] . '/TPfront2.gif" : "' . $settings['tp_images_url'] . '/TPfront.gif";
+					target.src = source == "' . $settings['tp_images_url'] . '/TPfront.png" ? "' . $settings['tp_images_url'] . '/TPfront2.png" : "' . $settings['tp_images_url'] . '/TPfront.png";
 				}
 			}
 
@@ -1871,7 +1871,7 @@ function do_articles()
 			{
 				if(Ajax.readyState == 4)
 				{
-					target.src = source == "' . $settings['tp_images_url'] . '/TPsticky1.gif" ? "' . $settings['tp_images_url'] . '/TPsticky2.gif" : "' . $settings['tp_images_url'] . '/TPsticky1.gif";
+					target.src = source == "' . $settings['tp_images_url'] . '/TPsticky1.png" ? "' . $settings['tp_images_url'] . '/TPsticky2.png" : "' . $settings['tp_images_url'] . '/TPsticky1.png";
 				}
 			}
 
@@ -1899,7 +1899,7 @@ function do_articles()
 			{
 				if(Ajax.readyState == 4)
 				{
-					target.src = source == "' . $settings['tp_images_url'] . '/TPlock1.gif" ? "' . $settings['tp_images_url'] . '/TPlock2.gif" : "' . $settings['tp_images_url'] . '/TPlock1.gif";
+					target.src = source == "' . $settings['tp_images_url'] . '/TPlock1.png" ? "' . $settings['tp_images_url'] . '/TPlock2.png" : "' . $settings['tp_images_url'] . '/TPlock1.png";
 				}
 			}
 
@@ -1916,7 +1916,7 @@ function do_articles()
 			{
 				if(aP[i].className===\'toggleFeatured\' && aP[i] != target)
 				{
-					aP[i].src=\'' . $settings['tp_images_url'] . '/TPflag2.gif\';
+					aP[i].src=\'' . $settings['tp_images_url'] . '/TPflag2.png\';
 				}
 			}
 
@@ -1937,7 +1937,7 @@ function do_articles()
 			{
 				if(Ajax.readyState == 4)
 				{
-					target.src = source == "' . $settings['tp_images_url'] . '/TPflag.gif" ? "' . $settings['tp_images_url'] . '/TPflag2.gif" : "' . $settings['tp_images_url'] . '/TPflag.gif";
+					target.src = source == "' . $settings['tp_images_url'] . '/TPflag.png" ? "' . $settings['tp_images_url'] . '/TPflag2.png" : "' . $settings['tp_images_url'] . '/TPflag.png";
 				}
 			}
 

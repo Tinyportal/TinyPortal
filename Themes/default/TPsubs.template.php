@@ -250,10 +250,10 @@ function TPortal_catmenu()
 			{
 				if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
 					echo '
-			<img src="'.$boardurl.'/tp-images/icons/TPdivider2.gif" alt="" />&nbsp;';
+			<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" />&nbsp;';
 				elseif($context['TPortal']['menuvar1'] == '1')
 					echo '
-			<img src="'.$boardurl.'/tp-images/icons/bullet3.gif" alt="" />';
+			<img src="'.$settings['tp_images_url'].'/bullet3.png" alt="" />';
 
 			}
 			elseif(isset($cn['icon']) && $cn['icon'] != '' && $cn['type'] != 'head' && $cn['type'] != 'spac')
@@ -306,11 +306,11 @@ function TPortal_userbox()
 {
 	global $context, $settings, $scripturl, $txt, $forum_version;
 
-	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.gif" alt="" style="margin:0 4px 0 0;" />';
-	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.gif" alt="" style="margin:0 4px 0 0;" />';
-	$bullet3 = '<img src="'.$settings['tp_images_url'].'/TPdivider3.gif" alt="" style="margin:0 4px 0 0;" />';
-	$bullet4 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.gif" alt="" style="margin:0 4px 0 0;" />';
-	$bullet5 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.gif" alt=""  style="margin:0 4px 0 0;" />';
+	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet3 = '<img src="'.$settings['tp_images_url'].'/TPdivider3.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet4 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet5 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt=""  style="margin:0 4px 0 0;" />';
 
 	echo'
 	<div class="tp_userblocknew">';
@@ -551,8 +551,8 @@ function TPortal_statsbox()
 {
 	global $context, $settings, $scripturl, $txt, $modSettings;
 
-	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.gif" alt=""  style="margin:0 4px 0 0;" />';
-	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.gif" alt="" style="margin:0 4px 0 0;" />';
+	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt=""  style="margin:0 4px 0 0;" />';
+	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
 
 	echo'
 	<div class="tp_statsblock">';
@@ -754,7 +754,7 @@ function TPortal_sitemap()
 	<div class="tborder">
 		<ul class="tpsitemap">';
 	if($context['TPortal']['show_download'] == '1')
-		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tpmod;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.gif" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
+		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tpmod;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
 
 	if(!empty($context['TPortal']['sitemap']) && !empty($context['TPortal']['menu']))
 	{
@@ -786,13 +786,13 @@ function TPortal_sitemap()
 				if($cn['sitemap'] == '1'){
 					switch($cn['type']){
 							case 'cats' :
-								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?cat='.$cn['IDtype'].'" ' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.gif" border="0" alt="" /> '.$cn['name'].'</a></li>';
+								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?cat='.$cn['IDtype'].'" ' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
 								break;
 							case 'arti' :
-								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?page='.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.gif" border="0" alt="" /> '.$cn['name'].'</a></li>';
+								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?page='.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
 								break;
 							case 'link' :
-								echo '<li><a class="' , $catclass ,'" href="'.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.gif" border="0" alt="" /> '.$cn['name'].'</a></li>';
+								echo '<li><a class="' , $catclass ,'" href="'.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
 								break;
 					}
 				}
@@ -1034,24 +1034,24 @@ function TPblock($block, $theme, $side, $double=false)
 			if(strstr($forum_version, '2.1'))
 			{
 			if($block['visible'] == '' || $block['visible'] == '1')
-				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.gif" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
-				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
-				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 2px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 2px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			}
 			else
 			{
 			if($block['visible'] == '' || $block['visible'] == '1')
-				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.gif" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
-				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 8px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 8px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
-				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 8px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 8px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			}
 
 			echo $block['title'];
@@ -1064,7 +1064,7 @@ function TPblock($block, $theme, $side, $double=false)
 				echo '
 		<div style="padding: 4px;">';
 				if($block['visible'] == '' || $block['visible'] == '1')
-					echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 0;" align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks']) ? 'TPcollapse' : 'TPexpand' , '.gif" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+					echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 0;" align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks']) ? 'TPcollapse' : 'TPexpand' , '.png" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 				echo '&nbsp;
 		</div>';
 			}
@@ -1115,9 +1115,9 @@ function TPblock($block, $theme, $side, $double=false)
 
 		// can you edit the block?
 		if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
-			echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin-right: 4px;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+			echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin-right: 4px;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 		elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
-			echo '<a href="',$scripturl,'?action=tpadmin;blockedit'.substr($side,0,1).'='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin-right: 4px;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.gif" alt="" title="'.$txt['edit_description'].'" /></a>';
+			echo '<a href="',$scripturl,'?action=tpadmin;blockedit'.substr($side,0,1).'='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin-right: 4px;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 
 		echo $block['title'];
 		echo $context['TPortal']['blocktheme'][$block['frame']]['title']['after'];
@@ -1454,7 +1454,7 @@ function article_iconcolumn($render = true)
 	else
 		echo '
 	<div style="overflow: hidden;">
-		<img src="' . $settings['tp_images_url'] . '/TPnoimage' . (isset($context['TPortal']['article']['boardnews']) ? '_forum' : '') . '.gif" alt="" />
+		<img src="' . $settings['tp_images_url'] . '/TPnoimage' . (isset($context['TPortal']['article']['boardnews']) ? '_forum' : '') . '.png" alt="" />
 	</div>';
 }
 
@@ -1470,7 +1470,7 @@ function article_picturecolumn($render = true)
 	<div style="width: 128px; height: 128px; background: top right url(' . $context['TPortal']['article']['illustration'] . ') no-repeat;"></div>';
 	else
 		echo '
-	<div style="width: 128px; height: 128px; background: top right url(' . $settings['tp_images_url'] . '/TPno_illustration.gif) no-repeat;"></div>';
+	<div style="width: 128px; height: 128px; background: top right url(' . $settings['tp_images_url'] . '/TPno_illustration.png) no-repeat;"></div>';
 
 }
 
@@ -1836,7 +1836,7 @@ function render_rating($total, $votes, $id, $can_rate = false)
 	elseif($total == 0 && $votes == 0)
 		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (0 ' . $txt['tp-ratingvotes'] . ')';
 	else
-		echo ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.gif" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+		echo ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
 
 	// can we rate it?
 	if($context['TPortal']['single_article'])

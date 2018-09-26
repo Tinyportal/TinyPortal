@@ -8,7 +8,7 @@ function expandHeaderSmiley(mode, is_guest, sessionId)
 	else
 		smf_setThemeOption("expand_header_smiley", mode ? 1 : 0, null, sessionId);
 
-	document.getElementById("expand_smiley").src = mode ? tp_images_url + "/TPcollapse.gif" : tp_images_url + "/TPexpand.gif";
+	document.getElementById("expand_smiley").src = mode ? tp_images_url + "/TPcollapse.png" : tp_images_url + "/TPexpand.png";
 	document.getElementById("expandHeaderSmiley").style.display = mode ? "" : "none";
 	current_header_smiley = mode;
 }
@@ -21,7 +21,7 @@ function expandHeaderBBC(mode, is_guest, sessionId)
 	else
 		smf_setThemeOption("expand_header_bbc", mode ? 1 : 0, null, sessionId);
 
-	document.getElementById("expand_bbc").src = mode ? tp_images_url + "/TPcollapse.gif" : tp_images_url + "/TPexpand.gif";
+	document.getElementById("expand_bbc").src = mode ? tp_images_url + "/TPcollapse.png" : tp_images_url + "/TPexpand.png";
 	document.getElementById("expandHeaderBBC").style.display = mode ? "" : "none";
 	current_header_bbc = mode;
 }
