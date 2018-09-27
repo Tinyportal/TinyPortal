@@ -728,7 +728,7 @@ ul.tp_recentblock li
 img.tp_social
 { 
 	height: 24px; 
-	width:24px;
+	width:auto;
 }
 .tp_statsblock h5
 {
