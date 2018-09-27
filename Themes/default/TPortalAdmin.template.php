@@ -3608,12 +3608,12 @@ function template_blocks()
 				echo '
 					<div class="titlebg2">
 						<div style="width:7%;" class="smalltext pos float-items">'.$txt['tp-pos'].'</div>
-						<div style="width:24%;" class="smalltext name float-items">'.$txt['tp-title'].'</div>
-						<div style="width:23%;" class="smalltext title-admin-area float-items" >'.$txt['tp-type'].'</div>
- 						<div style="width:8%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-activate'].'</div>
-						<div style="width:8%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-move'].'</div>
-						<div style="width:8%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-editsave'].'</div>
-						<div style="width:8%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-delete'].'</div>
+						<div style="width:20%;" class="smalltext name float-items">'.$txt['tp-title'].'</div>
+						<div style="width:18%;" class="smalltext title-admin-area float-items" >'.$txt['tp-type'].'</div>
+ 						<div style="width:7%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-activate'].'</div>
+						<div style="width:14%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-move'].'</div>
+						<div style="width:10%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-editsave'].'</div>
+						<div style="width:7%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-delete'].'</div>
 						<p class="clearthefloat"></p>
 					</div>';
 
@@ -3637,8 +3637,8 @@ function template_blocks()
 					echo '
 					<div id="blocksDiv" class="',$class,'">
 						<div style="width:7%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
-							<input name="pos' .$lblock['id']. '" type="text" size="2" value="' .($n*10). '">
-							<a name="block' .$lblock['id']. '"></a>';
+							<input name="pos' .$lblock['id']. '" type="text" size="1em" maxlength="3" value="' .($n*10). '">
+							<a name="block' .$lblock['id']. '"></a><br>';
 					echo '
 						    <a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.png" value="' .(($n*10)+11). '" /></a>';
 
@@ -3648,10 +3648,10 @@ function template_blocks()
 
 					echo '
 						</div>
-						<div style="width:24%;max-width:100%;" class="adm-name float-items">
-						     <input style="max-width:100%;" name="title' .$lblock['id']. '" type="text" size="20" value="' .html_entity_decode($newtitle). '">
+						<div style="width:20%;max-width:100%;" class="adm-name float-items">
+						     <input style="max-width:100%;" name="title' .$lblock['id']. '" type="text" size="15" value="' .html_entity_decode($newtitle). '">
 						</div>
-						<div style="width:23%;max-width:100%;" class="fullwidth-on-res-layout block-opt float-items">
+						<div style="width:20%;max-width:100%;" class="fullwidth-on-res-layout block-opt float-items">
 						    <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>
 							<select style="max-width:100%;" size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
@@ -3680,13 +3680,13 @@ function template_blocks()
 			}
 					echo '</select>
 						</div>
-						<div style="width:8%;" align="center" class="fullwidth-on-res-layout float-items">
+						<div style="width:6%;" align="center" class="fullwidth-on-res-layout float-items">
 						    <div id="show-on-respnsive-layout">'.$txt['tp-activate'].'</div>
 							&nbsp;<a name="'.$lblock['id'].'"></a>
 						    <img class="toggleButton" id="blockonbutton' .$lblock['id']. '" title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TP' , $lblock['off']=='0' ? 'active2' : 'active1' , '.png" alt="'.$txt['tp-activate'].'"  />';
 				echo '
 						</div>
-						<div  style="width:8%;" align="center" class="fullwidth-on-res-layout float-items">
+						<div  style="width:15%;" align="center" class="fullwidth-on-res-layout float-items">
 						  <div id="show-on-respnsive-layout">'.$txt['tp-move'].'</div>';
 
 					switch($side[$i]){
@@ -3758,15 +3758,15 @@ function template_blocks()
 						</div>
 						<div  style="width:8%;" align="center" class="fullwidth-on-res-layout float-items">
 						    <div id="show-on-respnsive-layout">'.$txt['tp-editsave'].'</div>
-							<a href="' . $scripturl . '?action=tpadmin;blockedit=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" border="0" align="middle" src="' .$settings['tp_images_url']. '/TPmodify.png" alt="'.$txt['tp-edit'].'"  /></a>';
+							<a href="' . $scripturl . '?action=tpadmin;blockedit=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPmodify.png" alt="'.$txt['tp-edit'].'"  /></a>';
 
 				echo '
-							<input align="middle" class="tpbut" style="height:16px;" type="image" src="' .$settings['tp_images_url']. '/TPsave.png" alt="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">';
+							<input class="tpbut" style="height:16px; vertical-align:top;" type="image" src="' .$settings['tp_images_url']. '/TPsave.png" alt="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">';
 						echo '
 						</div>
 	                    <div style="width:6%;" align="center" class="fullwidth-on-res-layout float-items">
 						    <div id="show-on-respnsive-layout">'.$txt['tp-delete'].'</div>
-							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';blockdelete=' .$lblock['id']. '" onclick="javascript:return confirm(\''.$txt['tp-blockconfirmdelete'].'\')"><img title="'.$txt['tp-delete'].'" align="middle" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  /></a>
+							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';blockdelete=' .$lblock['id']. '" onclick="javascript:return confirm(\''.$txt['tp-blockconfirmdelete'].'\')"><img title="'.$txt['tp-delete'].'"  border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  /></a>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>';

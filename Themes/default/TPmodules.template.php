@@ -281,7 +281,7 @@ function template_main()
 					<div style="padding: 1em;">'.$txt['tp-searcharticleshelp'].'</div>
 					<div style="padding: 10px;" class="">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input type="text" style="font-size: 1.2em; margin-bottom: 0.5em; padding: 3px;" name="tpsearch_what" required/><br />
+						<input id="searchbox" type="text" style="font-size: 1.2em; margin-bottom: 0.5em; padding: 3px;" name="tpsearch_what" required/><br />
 						<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br />
 						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br />
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br />
@@ -381,7 +381,7 @@ function template_main()
 				<div class="padding-div">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
 					<div style="padding: 10px;">
-						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px;" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" /><br />
+						<input id="searchbox" type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px;" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" /><br />
 						<input type="checkbox" name="tpsearch_title" checked="checked" /> ' , $txt['tp-searchintitle'] , '
 						<input type="checkbox" name="tpsearch_body" checked="checked" /> ' , $txt['tp-searchinbody'] , '<br><br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
