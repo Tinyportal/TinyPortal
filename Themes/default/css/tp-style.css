@@ -725,6 +725,11 @@ ul.tp_recentblock li
 	padding: 0;
 	margin: 0;
 }
+img.tp_social
+{ 
+	height: 24px; 
+	width:auto;
+}
 .tp_statsblock h5
 {
 	padding: 5px 0 5px 0;
