@@ -1923,6 +1923,12 @@ input,select {
 box-sizing:border-box;
 	/* blocks in panels set to display in columns (the default is vertically)*/
 }
+.panels-options {
+	float: left;
+	width: 160px;
+	height: 120px; 
+	margin: 5px;
+}
 .article_inner img,
 .bbc_img {
 	max-width: 100%;

@@ -972,7 +972,7 @@ function template_panels()
 
 			foreach($types as $blo => $bl)
 				echo '
-								<div class="panels-options" style="float:left; width:160px; height:120px; margin:5px;">
+								<div class="panels-options">
 									<div class="smalltext" style="padding: 4px 0;">
 										<input name="tp_panelstyle_'.$panl.'" type="radio" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '>
 										<span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
@@ -3284,7 +3284,7 @@ function template_blockedit()
 				$types = tp_getblockstyles();
 			foreach($types as $blo => $bl)
 				echo '
-			<div style="float: left; width: 160px; height: 120px; margin: 5px;">
+			<div class="panels-options">
 				<div class="smalltext" style="padding: 4px 0;"><input name="tp_block_var5" type="radio" value="'.$blo.'" ' , $context['TPortal']['blockedit']['var5']==$blo ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
 				</div>' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
 				' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
