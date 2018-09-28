@@ -162,7 +162,6 @@ function TPMembers()
         }
 		$smcFunc['db_free_result']($data);
 	}
-	$smcFunc['db_free_result']($query);
 
 	return $users;
 }
