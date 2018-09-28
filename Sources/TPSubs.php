@@ -206,8 +206,8 @@ function TPcollectPermissions()
 			);
 
 			$context['TPortal']['tppermissonlist'][$pr[0]] = array(false, strtolower($row['modulename']), strtolower($row['modulename']));
-			if(loadLanguage($row['modulename']) == false)
-				loadLanguage($row['modulename'], 'english');
+			if(loadLanguage($row['modulename'], '', false) == false)
+				loadLanguage($row['modulename'], 'english', false);
 		}
 		$smcFunc['db_free_result']($request);
 	}

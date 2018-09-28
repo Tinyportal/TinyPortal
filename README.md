@@ -1,6 +1,12 @@
 [TinyPortal](https://www.tinyportal.net/) - Portal Mod for SMF
 ==================================================
 
+
+[![Latest Version](https://img.shields.io/github/release/TinyPortal/TinyPortal.svg)](https://github.com/TinyPortal/TinyPortal/releases)
+[![Total Downloads](https://img.shields.io/github/downloads/TinyPortal/TinyPortal/total.svg)](https://github.com/TinyPortal/TinyPortal/releases)
+[![GitHub issues](https://img.shields.io/github/issues/TinyPortal/TinyPortal.svg)](https://github.com/TinyPortal/TinyPortal/issues)
+
+
 What is TinyPortal?
 --------------------------------------
 TinyPortal is a mod for Simple Machines Forum (SMF) that adds a powerful and mature Portal to 
