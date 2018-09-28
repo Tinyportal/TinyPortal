@@ -36,7 +36,7 @@ $txt['tphelp_introduction_main']= '
 
 <p class="tphelp">TinyPortal enables you to setup HTML/Javascript, PHP, or BBC articles and blocks. Expanded permissions give you all the admin/user options you could ask for. Adding content to your site has never been easier, and it will have your site carrying that professional appeal.</p>
 
-<p class="tphelp">Best of all, it\'s FREE!</p><br />
+<p class="tphelp">Best of all, it\'s FREE!</p><br>
 
 <div class="information" style="margin-top: 1em; padding: 2ex;"><b class="tphelp">TinyPortal Features Include</b>:</div>
 
@@ -62,7 +62,7 @@ $txt['tphelp_articles_main']= '
 <p class="tphelp">The types of articles are HTML, PHP, BBC, Imported, or External pages that can be added to your site. Every article carries with it the options to display views, blocks, date, author, avatar, and or linktree. It even has additional options such as what theme it should be viewed in, no theme at all, ratings, and/or user comments.</p>
 
 <p class="tphelp">Unlike forum topics, articles can be whole pages of information, stories, or even scripts to suit your needs. You can decide which panels & blocks you want to show with it, and even show links to other article categories or articles. With this kind of flexibility, you can set up a professional looking site in no time...</p>
-<p><br /></p>
+<p><br></p>
 <b class="tphelp">User</b>:
 <p class="tphelp">All users can submit articles if the admin has given permission for the user to do so. Permissions are given on a membergroup basis.</p>
 <p class="tphelp">Assuming you have permissions to write articles you\'ll often find the links to do so within the userbox block. If the site you are using does not have a userbox, you can always find a list of all your written articles within your "<i>Profile > TinyPortal > Articles</i>". From here you can submit new articles or even edit your already existing articles. </p>
@@ -82,7 +82,7 @@ $txt['tphelp_frontpage_main']= '
 <p class="tphelp">If you wish to show articles or forum posts on your front page, you can select what kind of layout you want for articles, or what boards to show forum posts from. You can even choose how many articles and forum posts you want to appear on your frontpage...</p>
 
 <p class="tphelp">To see these options, go to: "<i>TinyPortal > Settings > Frontpage</i>".</p>
-<p><br /></p>
+<p><br></p>
 <b class="tphelp">User</b>:
 <p class="tphelp">When it comes to the frontpage, the user just doesn\'t have any direct options. However the user does has some indirect options available in the panels and blocks...</p>
 <p class="tphelp">Assuming the admin has given you or your membergroup permission to do so, a block or panel can be collapsed and ignored. This is an On-The-Fly setting often located within the header/title of the block(for blocks) or below the copyright(for panels), controlled by a little image/icon.</p>
@@ -97,7 +97,7 @@ $txt['tphelp_panels_main']= '
 <b class="tphelp">Admin</b>:
 <p class="tphelp">You can control how much padding you want between your panels, and/or decide which sections/actions you want to hide all your panels in. Panels do have additional settings like setting the width, hide while in forum, and various layouts for your blocks inside.
 For these panel settings, go to: "<i>TinyPortal > Manage blocks > Panels</i>".</p>
-<p><br /></p>
+<p><br></p>
 <b class="tphelp">User</b>:
 <p class="tphelp">Assuming the admin has given you or your membergroup permission to do so, each panel can be collapsed and ignored. This is an On-The-Fly setting on the frontpage of the site, often controlled by little images/icons located below the copyright...</p>
 
@@ -110,7 +110,7 @@ $txt['tphelp_blocks_main']= '
 <p class="tphelp">Blocks are your boxes of code that add more information, entertainment, and excitement to your site. Blocks are placed inside panels, which can be switched on or off in different articles or actions in your forum and frontpage.</p>
 
 <p class="tphelp">There are several types of blocks, RSS feeds, Stats, News, PHP are some of the many different types just to name a few. Each block created can be placed in a chosen selected panel, and numerically ordered. So you get to chose which order blocks load in within each panel. To create or manage your blocks to go: "<i>TinyPortal > Manage blocks</i>". You can even specify which membergroups can moderate/edit each block and decide which sections/actions of the site you wish the block to be viewed in. This gives you complete control over your blocks...</p>
-<p><br /></p>
+<p><br></p>
 <b class="tphelp">User</b>:
 <p class="tphelp">Assuming the admin has given you or your membergroup permission to do so, a block can be collapsed and ingored. This is an On-The-Fly setting often located within the header/title of the block, controlled by a little image/icon...</p>
 
@@ -131,7 +131,7 @@ $txt['tphelp_modules_main']= '<h2 class="tphelp">&nbsp; Modules</h2>
 <p class="tphelp">Every module installed has its own options functionality, a user link will need to be added to your site theme navigation or menutabs. Admin access can always be found at "<i>TinyPortal > Settings > Modules</i>".<p class="tphelp">
 
 <p class="tphelp">NOTE: TinyPortal is not responsible for keeping any module updated or upgraded. That is the sole responsibility of its developer.</p>
-<p><br /></p>
+<p><br></p>
 <b class="tphelp">User</b>:
 <p class="tphelp">User options & use depends on the module and its various abilities. While some modules may add new features to the site and for the admin, may not always add something extra for the user.</p>
 
@@ -146,7 +146,7 @@ $txt['tphelp_plugins_main']= '
 <b class="tphelp">Admin</b>:
 <p class="tphelp">... no longer available...</p>
 
-<p><br /></p>
+<p><br></p>
 
 <div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="https://www.tinyportal.net/docs" target="_blank"><b class="tphelp">Documentation</b></a>.
 </div>';
@@ -155,19 +155,19 @@ $txt['tphelp_plugins_main']= '
 $txt['tp-credit1'] = '
 <h4>Founder</h4>
 Bjorn "Bloc" Kristiansen
-<br /><br />
+<br><br>
 <h4>Developers and Contributors</h4>
 Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, emanuele, @rjen.
-<br /><br />
+<br><br>
 <h4>TP Team</h4>
 Agridoc, Crip, Freddy, Ken, Lesmond, Renegd98, WillyP, wildenborch and ZarPrime.
-<br /><br />
+<br><br>
 <h4>TP Friends</h4>
 Aku, Anunlike, BorgBOB, deniz, Dragooon, eeek, eld^kar, feline, Fussilet, G6, gerrymo, Ianedres, JPDeni, Max, Maya, Moocat, nokonium, PhilH, Rasyr, Ray, RebelRose, redone, StormLrd, Thurnok, Tuxie, Xarcell, and Zetan.
-<br /><br />
+<br><br>
 <h4>Beta Testers</h4>
 For those who relentlessy find bugs, give feedback, and drive the developer crazy.
-<br /><br />
+<br><br>
 <h4>Language Translators</h4>
 Thank you for efforts in making TinyPortal available around the globe.';
 

@@ -30,7 +30,7 @@ $txt['tp-shoutboxheader'] = 'Managing Shoutbox';
 $txt['tp-shoutboxhelp'] = 'Help';
 $txt['tp-shoutboxdescription'] = '';
 $txt['tp-shoutboxduration'] = 'Speed for the scrolling (1 - 5)';
-$txt['tp-shout-autorefresh'] = 'Auto refresh (in seconds)<br /><h6 style="color: #CC0000;">Setting this too low can eat server resources</h6> (0 = disabled)';
+$txt['tp-shout-autorefresh'] = 'Auto refresh (in seconds)<br><h6 style="color: #CC0000;">Setting this too low can eat server resources</h6> (0 = disabled)';
 
 $txt['permissiongroup_tpshout'] = 'TP Shoutbox';
 $txt['permissiongroup_tpshoutbox'] = 'TP Shoutbox';

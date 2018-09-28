@@ -169,4 +169,6 @@ $txt['tp-dlfilenotdel'] = 'Unable to delete the actual file, but the item was de
 $txt['tp-dlssnotdel'] = 'Unable to delete the actual screenshot, but the item was deleted.';
 $txt['tp-dlnotuploaded'] = 'File was not uploaded.';
 $txt['tp-dlnotitle'] = '-no title-';
+$txt['tp-nocats'] = 'No categories found.';
+$txt['tp-nofiles'] = 'Currently there are no files in this category.';
 ?>

@@ -25,9 +25,9 @@ function template_main()
 				if(isset($context['TPortal']['comment_edit'])){
 					echo '
 		<form accept-charset="', $context['character_set'], '"  name="tp_edit_comment" action="'.$scripturl.'?action=tpmod;sa=editcomment" method="post" style="margin: 1ex;">
-			<input name="tp_editcomment_title" type="text" value="'.$context['TPortal']['comment_edit']['title'].'"> <br />
+			<input name="tp_editcomment_title" type="text" value="'.$context['TPortal']['comment_edit']['title'].'"> <br>
 			<textarea name="tp_editcomment_body" rows="6" cols="20" style="width: 90%;" wrap="on">'.$context['TPortal']['comment_edit']['body'].'</textarea>
-			<br /><input id="tp_editcomment_submit" type="submit" value="'.$txt['tp-submit'].'">
+			<br><input id="tp_editcomment_submit" type="submit" value="'.$txt['tp-submit'].'">
 			<input name="tp_editcomment_type" type="hidden" value="article_comment">
 			<input name="tp_editcomment_id" type="hidden" value="'.$context['TPortal']['comment_edit']['id'].'">
 		</form>';
@@ -84,12 +84,12 @@ function template_main()
 
 				if($mg['articletype']=='php')
 					echo '
-						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
+						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" wrap="auto">' , $mg['body'], '</textarea><br>';
 				elseif($tp_use_wysiwyg > 0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
 					TPwysiwyg('tp_article_body'.$mg['id'], $mg['body'], true,'qup_tp_article_body', $tp_use_wysiwyg);
 				elseif($tp_use_wysiwyg == 0 && $mg['articletype']=='' )
 					echo '
-						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br />';
+						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" wrap="auto">' , $mg['body'], '</textarea><br>';
 				elseif($mg['articletype']=='bbc')
 				{
 					TP_bbcbox($context['TPortal']['editor_id']);
@@ -107,20 +107,20 @@ function template_main()
 
 
 				echo '
-				<br />' . $txt['tp-artintrotext']. '<br />';
+				<br>' . $txt['tp-artintrotext']. '<br>';
 
 				if($mg['articletype']=='php')
 					echo '
-						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
+						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" wrap="auto">' , $mg['intro'], '</textarea><br>';
 				elseif($tp_use_wysiwyg > 0 && $mg['articletype'] == 'html' )
 						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
 				elseif($tp_use_wysiwyg == 0 && $mg['articletype'] == '' )
 					echo '
-							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 95%; height: 300px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
+							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" wrap="auto">' , $mg['intro'], '</textarea><br>';
 				elseif($mg['articletype']=='bbc')
 				{
 					echo '
-					<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" style="width: 80%; height: 200px;" wrap="auto">' , $mg['intro'], '</textarea><br />';
+					<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" wrap="auto">' , $mg['intro'], '</textarea><br>';
 				}
 
 				echo '
@@ -140,15 +140,15 @@ function template_main()
 				</div>
 				<div class="windowbg2" style="padding:1%;">
 					<div>
-					'.$txt['tp-title'].'<br /><input style="width: 94%" name="blocktitle' .$context['TPortal']['blockedit']['id']. '" type="text" value="' .$context['TPortal']['blockedit']['title']. '">
-					<br />';
+					'.$txt['tp-title'].'<br><input style="width: 94%" name="blocktitle' .$context['TPortal']['blockedit']['id']. '" type="text" value="' .$context['TPortal']['blockedit']['title']. '">
+					<br>';
 				if($context['TPortal']['blockedit']['type']=='11')
 				{
 					if($context['TPortal']['use_wysiwyg'] && !empty($context['TPortal']['usersettings']['wysiwyg']))
 						TPwysiwyg('blockbody' .$context['TPortal']['blockedit']['id'], $context['TPortal']['blockedit']['body'], true, 'qup_blockbody', 2, false);
 					else
 						echo '
-					<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="blockbody'.$context['TPortal']['blockedit']['id'].'_pure" id="blockbody'.$context['TPortal']['blockedit']['id'].'_pure">'. $context['TPortal']['blockedit']['body'] .'</textarea><br />';
+					<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="blockbody'.$context['TPortal']['blockedit']['id'].'_pure" id="blockbody'.$context['TPortal']['blockedit']['id'].'_pure">'. $context['TPortal']['blockedit']['body'] .'</textarea><br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
@@ -156,61 +156,61 @@ function template_main()
 				}
 				elseif($context['TPortal']['blockedit']['type']=='10')
 				{
-					echo $txt['tp-body'].' <br /><textarea style="width: 94%;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" rows=15 cols=40 wrap="auto">' . $context['TPortal']['blockedit']['body'] . '</textarea>';
+					echo $txt['tp-body'].' <br><textarea style="width: 94%;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" rows=15 cols=40 wrap="auto">' . $context['TPortal']['blockedit']['body'] . '</textarea>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='12'){
 					// check to see if it is numeric
 					if(!is_numeric($context['TPortal']['blockedit']['body']))
 						$context['TPortal']['blockedit']['body']='10';
 
-					echo '<br />'.$txt['tp-numberofrecenttopics'].'<input style="width: 50px;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" value="' .$context['TPortal']['blockedit']['body']. '"><br />';
+					echo '<br>'.$txt['tp-numberofrecenttopics'].'<input style="width: 50px;" name="blockbody' .$context['TPortal']['blockedit']['id']. '" value="' .$context['TPortal']['blockedit']['body']. '"><br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='13'){
 					// SSI block..which function?
 					if(!in_array($context['TPortal']['blockedit']['body'],array('recentpoll','toppoll','topposters','topboards','topreplies','topviews','calendar')))
 						$context['TPortal']['blockedit']['body']='';
-					echo '<br />';
+					echo '<br>';
 					echo '<input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '>' .$txt['tp-none-'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="recentpoll" ' , $context['TPortal']['blockedit']['body']=='recentpoll' ? 'checked' : '' , '>'.$txt['tp-ssi-recentpoll'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="toppoll" ' , $context['TPortal']['blockedit']['body']=='toppoll' ? 'checked' : '' , '>'.$txt['tp-ssi-toppoll'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '>'.$txt['tp-ssi-topboards'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '>'.$txt['tp-ssi-topposters'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '>'.$txt['tp-ssi-topreplies'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topviews" ' , $context['TPortal']['blockedit']['body']=='topviews' ? 'checked' : '' , '>'.$txt['tp-ssi-topviews'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '>'.$txt['tp-ssi-calendar'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="recentpoll" ' , $context['TPortal']['blockedit']['body']=='recentpoll' ? 'checked' : '' , '>'.$txt['tp-ssi-recentpoll'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="toppoll" ' , $context['TPortal']['blockedit']['body']=='toppoll' ? 'checked' : '' , '>'.$txt['tp-ssi-toppoll'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '>'.$txt['tp-ssi-topboards'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '>'.$txt['tp-ssi-topposters'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '>'.$txt['tp-ssi-topreplies'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="topviews" ' , $context['TPortal']['blockedit']['body']=='topviews' ? 'checked' : '' , '>'.$txt['tp-ssi-topviews'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '>'.$txt['tp-ssi-calendar'];
 					echo '<hr />';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='14'){
 					// Module block...choose module and module ID , check if module is active
-					echo '<br />';
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats" ' , $context['TPortal']['blockedit']['body']=='dl-stats' ? 'checked' : '' , '>'.$txt['tp-module1'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats2" ' , $context['TPortal']['blockedit']['body']=='dl-stats2' ? 'checked' : '' , '>'.$txt['tp-module2'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats3" ' , $context['TPortal']['blockedit']['body']=='dl-stats3' ? 'checked' : '' , '>'.$txt['tp-module3'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats4" ' , $context['TPortal']['blockedit']['body']=='dl-stats4' ? 'checked' : '' , '>'.$txt['tp-module4'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats5" ' , $context['TPortal']['blockedit']['body']=='dl-stats5' ? 'checked' : '' , '>'.$txt['tp-module5'];
-					echo '<br /><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats6" ' , $context['TPortal']['blockedit']['body']=='dl-stats6' ? 'checked' : '' , '>'.$txt['tp-module6'].'<br />';
+					echo '<br>';
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats" ' , $context['TPortal']['blockedit']['body']=='dl-stats' ? 'checked' : '' , '>'.$txt['tp-module1'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats2" ' , $context['TPortal']['blockedit']['body']=='dl-stats2' ? 'checked' : '' , '>'.$txt['tp-module2'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats3" ' , $context['TPortal']['blockedit']['body']=='dl-stats3' ? 'checked' : '' , '>'.$txt['tp-module3'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats4" ' , $context['TPortal']['blockedit']['body']=='dl-stats4' ? 'checked' : '' , '>'.$txt['tp-module4'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats5" ' , $context['TPortal']['blockedit']['body']=='dl-stats5' ? 'checked' : '' , '>'.$txt['tp-module5'];
+					echo '<br><input name="blockbody' .$context['TPortal']['blockedit']['id']. '" type="radio" value="dl-stats6" ' , $context['TPortal']['blockedit']['body']=='dl-stats6' ? 'checked' : '' , '>'.$txt['tp-module6'].'<br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='3'){
 					// userbox type
-					echo '<br />'.$txt['tp-showuserbox'].'<br />
-						<input name="tp_userbox_options0" type="checkbox" value="avatar" ', (isset($context['TPortal']['userbox']['avatar']) && $context['TPortal']['userbox']['avatar']) ? 'checked' : '' , '> '.$txt['tp-userbox1'].'<br />';
-					echo '<input name="tp_userbox_options1" type="checkbox" value="logged" ', (isset($context['TPortal']['userbox']['logged']) && $context['TPortal']['userbox']['logged']) ? 'checked' : '' , '> '.$txt['tp-userbox2'].'<br />';
-					echo '<input name="tp_userbox_options2" type="checkbox" value="time" ', (isset($context['TPortal']['userbox']['time']) && $context['TPortal']['userbox']['time']) ? 'checked' : '' , '> '.$txt['tp-userbox3'].'<br />';
-					echo '<input name="tp_userbox_options3" type="checkbox" value="unread" ', (isset($context['TPortal']['userbox']['unread']) && $context['TPortal']['userbox']['unread']) ? 'checked' : '' , '> '.$txt['tp-userbox4'].'<br />';
-					echo '<input name="tp_userbox_options4" type="checkbox" value="stats" ', (isset($context['TPortal']['userbox']['stats']) && $context['TPortal']['userbox']['stats']) ? 'checked' : '' , '> '.$txt['tp-userbox5'].'<br />';
-					echo '<input name="tp_userbox_options5" type="checkbox" value="online" ', (isset($context['TPortal']['userbox']['online']) && $context['TPortal']['userbox']['online']) ? 'checked' : '' , '> '.$txt['tp-userbox6'].'<br />';
-					echo '<input name="tp_userbox_options6" type="checkbox" value="stats_all" ', (isset($context['TPortal']['userbox']['stats_all']) && $context['TPortal']['userbox']['stats_all']) ? 'checked' : '' , '> '.$txt['tp-userbox7'].'<br />
-							<br />';
+					echo '<br>'.$txt['tp-showuserbox'].'<br>
+						<input name="tp_userbox_options0" type="checkbox" value="avatar" ', (isset($context['TPortal']['userbox']['avatar']) && $context['TPortal']['userbox']['avatar']) ? 'checked' : '' , '> '.$txt['tp-userbox1'].'<br>';
+					echo '<input name="tp_userbox_options1" type="checkbox" value="logged" ', (isset($context['TPortal']['userbox']['logged']) && $context['TPortal']['userbox']['logged']) ? 'checked' : '' , '> '.$txt['tp-userbox2'].'<br>';
+					echo '<input name="tp_userbox_options2" type="checkbox" value="time" ', (isset($context['TPortal']['userbox']['time']) && $context['TPortal']['userbox']['time']) ? 'checked' : '' , '> '.$txt['tp-userbox3'].'<br>';
+					echo '<input name="tp_userbox_options3" type="checkbox" value="unread" ', (isset($context['TPortal']['userbox']['unread']) && $context['TPortal']['userbox']['unread']) ? 'checked' : '' , '> '.$txt['tp-userbox4'].'<br>';
+					echo '<input name="tp_userbox_options4" type="checkbox" value="stats" ', (isset($context['TPortal']['userbox']['stats']) && $context['TPortal']['userbox']['stats']) ? 'checked' : '' , '> '.$txt['tp-userbox5'].'<br>';
+					echo '<input name="tp_userbox_options5" type="checkbox" value="online" ', (isset($context['TPortal']['userbox']['online']) && $context['TPortal']['userbox']['online']) ? 'checked' : '' , '> '.$txt['tp-userbox6'].'<br>';
+					echo '<input name="tp_userbox_options6" type="checkbox" value="stats_all" ', (isset($context['TPortal']['userbox']['stats_all']) && $context['TPortal']['userbox']['stats_all']) ? 'checked' : '' , '> '.$txt['tp-userbox7'].'<br>
+							<br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='15'){
 					// RSS feed type
-					echo '<br /><input style="width: 95%" name="blockbody' .$context['TPortal']['blockedit']['id']. '" value="' .$context['TPortal']['blockedit']['body']. '"><br /><br />';
+					echo '<br><input style="width: 95%" name="blockbody' .$context['TPortal']['blockedit']['id']. '" value="' .$context['TPortal']['blockedit']['body']. '"><br><br>';
 					echo $txt['tp-rssblock-showonlytitle'].'
 							<input name="blockvar2' .$context['TPortal']['blockedit']['id']. '" type="radio" value="1" ' , $context['TPortal']['blockedit']['var2']=='1' ? ' checked' : '' ,'>'.$txt['tp-yes'].'
-							<input name="blockvar2' .$context['TPortal']['blockedit']['id']. '" type="radio" value="0" ' , ($context['TPortal']['blockedit']['var2']=='0' || $context['TPortal']['blockedit']['var2']=='') ? ' checked' : '' ,'>'.$txt['tp-no'].'<br /><br />';
+							<input name="blockvar2' .$context['TPortal']['blockedit']['id']. '" type="radio" value="0" ' , ($context['TPortal']['blockedit']['var2']=='0' || $context['TPortal']['blockedit']['var2']=='') ? ' checked' : '' ,'>'.$txt['tp-no'].'<br><br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='16'){
-					echo '<br />'.$txt['tp-sitemapmodules'].'<ul>';
+					echo '<br>'.$txt['tp-sitemapmodules'].'<ul>';
 					if($context['TPortal']['show_download']=='1')
 						echo '<li>'.$txt['tp-dldownloads'].'</li>';
 					if($context['TPortal']['show_gallery']=='1')
@@ -227,11 +227,11 @@ function template_main()
 					if(!is_numeric($context['TPortal']['blockedit']['body']))
 						$lblock['body']='';
 
-					echo '<br />',$txt['tp-showarticle'],' <select name="blockbody' .$context['TPortal']['blockedit']['id']. '">';
+					echo '<br>',$txt['tp-showarticle'],' <select name="blockbody' .$context['TPortal']['blockedit']['id']. '">';
 					foreach($context['TPortal']['edit_articles'] as $article){
 						echo '<option value="'.$article['id'].'" ' , $context['TPortal']['blockedit']['body']==$article['id'] ? ' selected' : '' ,' >'.$article['subject'].'</option>';
 					}
-					echo '</select><br />';
+					echo '</select><br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='19'){
 					// check to see if it is numeric
@@ -242,23 +242,23 @@ function template_main()
 					if($context['TPortal']['blockedit']['var1']=='0')
 						$lblock['var1']='15';
 
-					echo '<br />',$txt['tp-showcategory'],' <select name="blockbody' .$context['TPortal']['blockedit']['id']. '">';
+					echo '<br>',$txt['tp-showcategory'],' <select name="blockbody' .$context['TPortal']['blockedit']['id']. '">';
 					foreach($context['TPortal']['admin_categories'] as $cats){
 						echo '<option value="'.$cats['id'].'" ' , $context['TPortal']['blockedit']['body']==$cats['id'] ? ' selected' : '' ,' >'.$cats['name'].'</option>';
 				}
-				echo '</select><br />';
+				echo '</select><br>';
 				echo $txt['tp-catboxheight'].'
 						<input name="blockvar1' .$context['TPortal']['blockedit']['id']. '" type="text" value="' , $context['TPortal']['blockedit']['var1'] ,'"> em';
 			}
-			echo '<br />
-						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '> '.$txt['tp-useframe'].'<br />
-						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '> '.$txt['tp-useframe2'].' <br />
-						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="title" ' , $context['TPortal']['blockedit']['frame']=='title' ? 'checked' : '' , '> '.$txt['tp-usetitle'].' <br />
-						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '> '.$txt['tp-noframe'].'<br />';
+			echo '<br>
+						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '> '.$txt['tp-useframe'].'<br>
+						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '> '.$txt['tp-useframe2'].' <br>
+						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="title" ' , $context['TPortal']['blockedit']['frame']=='title' ? 'checked' : '' , '> '.$txt['tp-usetitle'].' <br>
+						<input name="blockframe' .$context['TPortal']['blockedit']['id']. '" type="radio" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '> '.$txt['tp-noframe'].'<br>';
 
 			echo '<hr />
-						<input name="blockvisible' .$context['TPortal']['blockedit']['id']. '" type="radio" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '> '.$txt['tp-allowupshrink'].'<br />
-						<input name="blockvisible' .$context['TPortal']['blockedit']['id']. '" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '> '.$txt['tp-notallowupshrink'].'<br />
+						<input name="blockvisible' .$context['TPortal']['blockedit']['id']. '" type="radio" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '> '.$txt['tp-allowupshrink'].'<br>
+						<input name="blockvisible' .$context['TPortal']['blockedit']['id']. '" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '> '.$txt['tp-notallowupshrink'].'<br>
 
 					</div>
 			     </div>';
@@ -277,14 +277,14 @@ function template_main()
                 <div class="cat_bar">
 				    <h3 class="catbg">' , $txt['tp-searcharticles2'] , '</h3>
                 </div>
-				<div class="windowbg2 noup" style="padding: 1em; border:1px solid #ccc;">
-					<div style="padding: 1em;">'.$txt['tp-searcharticleshelp'].'</div>
-					<div style="padding: 10px;" class="">
+				<div class="roundframe noup">
+					<div class="tp_pad">'.$txt['tp-searcharticleshelp'].'</div>
+					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input id="searchbox" type="text" style="font-size: 1.2em; margin-bottom: 0.5em; padding: 3px;" name="tpsearch_what" required/><br />
-						<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br />
-						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br />
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br />
+						<input id="searchbox" type="text" name="tpsearch_what" required/><br>
+						<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br>
+						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
+						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 					</div>
 				</div>
@@ -295,7 +295,7 @@ function template_main()
 		case 'showcomments':
 		if(!empty($context['TPortal']['showall'])){
 			echo '
-		<div class="windowbg" style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
+		<div class="windowbg tp_pad">'.$context['TPortal']['pageindex'].'</div>
 		<div id="show-art-comm" class="bordercolor">
 			<div class="titlebg" style="padding:1%;">' . $txt['tp-commentnew'] . '</div>
 			<div class="catbg" style="word-break:break-all;">
@@ -327,13 +327,13 @@ function template_main()
 
 			echo '
 		</div>
-		<div style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
+		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
 		';
 		}
 		else
 		{
 			echo '
-		<div class="windowbg" style="padding: 4px;">'.$context['TPortal']['pageindex'].'</div>
+		<div class="windowbg" class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
 		<div id="latest-art-comm" class="bordercolor">
 			<div class="titlebg" style="padding:1%;">' . $txt['tp-commentnew'] . '</div>
 			<div class="catbg">
@@ -377,15 +377,16 @@ function template_main()
                 <h3 class="catbg">' , $txt['tp-searchresults'] , '
                 ' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['searchterm'].'&quot;</h3>
             </div>
-			<div class="windowbg2 noup" style="padding: 0px; margin-bottom:3px;">
+			<div class="roundframe noup">
 				<div class="padding-div">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
-					<div style="padding: 10px;">
-						<input id="searchbox" type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px;" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" /><br />
-						<input type="checkbox" name="tpsearch_title" checked="checked" /> ' , $txt['tp-searchintitle'] , '
-						<input type="checkbox" name="tpsearch_body" checked="checked" /> ' , $txt['tp-searchinbody'] , '<br><br>
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'"><br>
+					<div class="tp_pad">
+						<b>'.$txt['tp-search'].':</b><br>
+						<input id="searchbox" type="text" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" required/><br>
+						<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br>
+						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
+						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
+						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 					</div>
 					</form>
 				</div>
@@ -484,7 +485,7 @@ function template_dlsubmitsuccess()
 
 	echo '
 		<div class="tborder">
-			<div class="catbg" style="padding: 5px;">'.$txt['tp-dlsubmitsuccess2'].'</div>
+			<div class="catbg" class="tp_pad">'.$txt['tp-dlsubmitsuccess2'].'</div>
 			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-dlsubmitsuccess'].'</div>
 		</div>';
 }
@@ -494,7 +495,7 @@ function template_submitsuccess()
 
 	echo '
 		<div class="tborder">
-			<div class="catbg" style="padding: 5px;">'.$txt['tp-submitsuccess2'].'</div>
+			<div class="catbg" class="tp_pad">'.$txt['tp-submitsuccess2'].'</div>
 			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-submitsuccess'].'</div>
 		</div>';
 }
@@ -516,7 +517,7 @@ function template_submitarticle()
 				<div style="padding:1%;"><input style="width: 92%;" name="tp_article_title" type="text" value=""></div>
 			</div>
 			<div class="windowbg2" style="padding:1%;">
-				<div>'.$txt['tp-artbodytext'].' <br />';
+				<div>'.$txt['tp-artbodytext'].' <br>';
 
 			$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 
@@ -524,18 +525,18 @@ function template_submitarticle()
 				TPwysiwyg('tp_article_body', '', true,'qup_tp_article_body', $tp_use_wysiwyg);
 			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
 				echo '
-					<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
+					<textarea name="tp_article_body" id="tp_article_body" wrap="auto"></textarea><br>';
 			elseif(isset($context['TPortal']['submitbbc']))
 				TP_bbcbox($context['TPortal']['editor_id']);
 
-			echo '<br />' . $txt['tp-artintrotext']. '<br />';
+			echo '<br>' . $txt['tp-artintrotext']. '<br>';
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
 				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
 			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
 				echo '
-					<textarea name="tp_article_intro" id="tp_article_intro" style="width: 95%; height: 300px;" wrap="auto"></textarea><br />';
+					<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
 			elseif(isset($context['TPortal']['submitbbc']))
-				echo '<textarea name="tp_article_intro" id="tp_article_intro" style="width: 80%; height: 200px;" wrap="auto"></textarea><br />';
+				echo '<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
 
 			echo '
 					<input name="tp_article_frame" type="hidden" value="theme">
