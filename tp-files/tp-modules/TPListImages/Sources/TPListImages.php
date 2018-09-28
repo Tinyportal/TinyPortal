@@ -131,26 +131,35 @@ function TPRemoveImage( $image )
 
 function TPMembers()
 {
-	global $smcFunc;
+	global $smcFunc, $boarddir;
 
 	$users	= array();
-	$query	=  $smcFunc['db_query']('', '
-		SELECT author_id FROM {db_prefix}tp_articles
-		GROUP BY author_id'
-	);
-	while($row = $smcFunc['db_fetch_assoc']($query))
-	{
+    if ($handle = opendir($boarddir.'/tp-images/thumbs')) {
+        while (false !== ($file = readdir($handle))) {
+            if($file != '.' && $file !='..' && $file !='.htaccess') {
+                if(preg_match('/thumb_(.*)uid/', $file, $matches)) {
+                    $users[$matches[1]] = $matches[1];
+                }
+            }
+        }
+        closedir($handle);
+    }
+
+    foreach ($users as $user_id) {
 		$data	=  $smcFunc['db_query']('', '
 			SELECT member_name FROM {db_prefix}members
 			WHERE id_member = {int:member_id}',
 			array (
-				'member_id' => $row['author_id']
+				'member_id' => $user_id
 			)
 		);
 		$member	= $smcFunc['db_fetch_assoc']($data)['member_name'];
 		if(!is_null($member)) {
-			$users[$row['author_id']] = $member;
+			$users[$user_id] = $member;
 		}
+        else {
+            $users[$user_id] = $txt['tp-listimage-username'].' '.$user_id;
+        }
 		$smcFunc['db_free_result']($data);
 	}
 	$smcFunc['db_free_result']($query);
