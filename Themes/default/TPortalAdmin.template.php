@@ -114,13 +114,13 @@ function template_blockoverview()
 	global $context, $settings, $txt, $boardurl, $scripturl;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="blockoverview">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div><div></div>
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
 			<span class="topslice"><span></span></span>
-			<div class="content" style="overflow: hidden; padding: 2% 0 2% 2%;">';
+			<div class="content">';
 
 		$side=array('','left','right','center','front','bottom','top','lower');
 
@@ -187,7 +187,7 @@ function template_submission()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;" enctype="multipart/form-data" onsubmit="syncTextarea();">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="submission">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-submissionsettings']  . '</div></h3>
@@ -278,14 +278,14 @@ function template_submission()
 		if(isset($context['TPortal']['allcats']))
 		{
 			echo '	<div class="padding-div"><p style="text-align: center;">
-							<select style="max-width:100%;" name="tp_article_cat">
+							<select name="tp_article_cat">
 								<option value="0">' . $txt['tp-createnew2'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg)
   					echo '
 								<option value="'.$submg['id'].'">'. $txt['tp-approveto'] . $submg['name'].'</option>';
 			echo '
 							</select>
-							<input style="max-width:95%!important;" name="tp_article_new" value="" size="40" style="max-width:97%;" /> &nbsp;
+							<input name="tp_article_new" value="" size="40" /> &nbsp;
 						</p></div>';
 		}
 		echo '
@@ -315,7 +315,7 @@ function template_modules()
 		<div class="error">', $context['TPortal']['tpmodule_message'], '</div>';
 
 		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="modules">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-modules'] . '</h3></div>
@@ -362,7 +362,7 @@ function template_menubox()
 		{
 			$mid=is_numeric($_GET['mid']) ? $_GET['mid'] : 0;
 			echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="menuitems">
 		<input name="tp_menuid" type="hidden" value="'.$mid.'">
@@ -388,7 +388,7 @@ function template_menubox()
 					echo '
 							<div class="addborder windowbg' , $lbox['off']=='0' ? '2' : '' , '" >
 								<div style="width:9%;" class="adm-pos float-items">
-								  <input style="max-width:90%!important;" name="menu_pos' .$lbox['id']. '" type="text" size="4" value="' . (empty($lbox['subtype']) ? '0' :  $lbox['subtype']) . '">
+								  <input name="menu_pos' .$lbox['id']. '" type="text" size="4" value="' . (empty($lbox['subtype']) ? '0' :  $lbox['subtype']) . '">
 								</div>
 								<div style="width:14%;" class="adm-name float-items">
 								  <a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">' .$lbox['name']. '</a>
@@ -495,7 +495,7 @@ function template_menubox()
 		else
 		{
 			echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="menus">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-menumanager'].' <a href="' . $scripturl . '?action=tpadmin;sa=addmenu;fullmenu">['.$txt['tp-addmenu'].']</a></h3></div>
@@ -555,7 +555,7 @@ function template_addmenu()
             $context['TPortal']['editmenuitem']['position'] = 'home';
 
 			echo '
-	            <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	            <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post">
 		        <input type="hidden" name="sc" value="', $context['session_id'], '" />
 		        <input name="tpadmin_form" type="hidden" value="menuaddsingle">
 		        <div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
@@ -574,7 +574,7 @@ function template_addmenu()
 				$mid = 0;
 
 			echo '
-            <form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+            <form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		        <input type="hidden" name="sc" value="', $context['session_id'], '" />
 		        <input name="tpadmin_form" type="hidden" value="menuadd">
                 <div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
@@ -599,7 +599,7 @@ function template_linkmanager()
 
 
 	echo '
-        <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+        <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="singlemenuedit">
 		<input name="tpadmin_form_id" type="hidden" value="'.$context['TPortal']['editmenuitem']['id'].'">
@@ -627,7 +627,7 @@ function template_menucore()
 					<dl class="settings">
 						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
                         <dd>
-                        <select style="max-width:98%;" size="1" name="tp_menu_type" id="tp_menu_type">
+                        <select size="1" name="tp_menu_type" id="tp_menu_type">
                             <option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
                             <option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
                             <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
@@ -644,7 +644,7 @@ function template_menucore()
 						</dt>
 					<dd>';
 		// (category)
-		echo '<select style="max-width:98%;" size="1" id="tp_menu_category" name="tp_menu_category" ' , $context['TPortal']['editmenuitem']['type']!='cats' ? '' : '' ,'>';
+		echo '<select size="1" id="tp_menu_category" name="tp_menu_category" ' , $context['TPortal']['editmenuitem']['type']!='cats' ? '' : '' ,'>';
 		if(count($context['TPortal']['editcats'])>0){
 			foreach($context['TPortal']['editcats'] as $bmg){
  				echo '
@@ -657,7 +657,7 @@ function template_menucore()
 
 		//  (article)
 		echo '  </select>
-			    <select style="max-width:100%;" size="1" id="tp_menu_article" name="tp_menu_article" >';
+			    <select size="1" id="tp_menu_article" name="tp_menu_article" >';
 		if(count($context['TPortal']['edit_articles']) > 0 ) {
 			foreach($context['TPortal']['edit_articles'] as $bmg){
  				echo '      <option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] == 'arti' && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,'> '.html_entity_decode($bmg['subject']).'</option>';
@@ -667,11 +667,11 @@ function template_menucore()
 			echo '          <option value=""></option>';
 
 		echo '  </select>
-                    <input style="max-width:100%; "size="40" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
+                    <input "size="40" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 					</dd>
 						<dt><label for="tp_menu_newlink"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
                         <dd>
-                        <select style="max-width:98%;" size="1" name="tp_menu_newlink" id="tp_menu_newlink">
+                        <select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
                             <option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
                             <option value="1" ', $context['TPortal']['editmenuitem']['newlink'] == '1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
                         </select>
@@ -680,7 +680,7 @@ function template_menucore()
                             <label for="tp_menu_sub"><h4>'.$txt['tp-sub_item'].':</h4><label>
                         </dt>
                         <dd>
-                        <select style="max-width:98%;" size="1" name="tp_menu_sub" id="tp_menu_sub">
+                        <select size="1" name="tp_menu_sub" id="tp_menu_sub">
                             <option value="0" ', $context['TPortal']['editmenuitem']['sub'] == '0' ? 'selected' : '', '>0</option>
                             <option value="1" ', $context['TPortal']['editmenuitem']['sub'] == '1' ? 'selected' : '', '>1</option>
                             <option value="2" ', $context['TPortal']['editmenuitem']['sub'] == '2' ? 'selected' : '', '>2</option>
@@ -691,7 +691,7 @@ function template_menucore()
                             <label for="tp_menu_position"><h4>'.$txt['tp-menu-after'].':</h4><label>
                         </dt>
                         <dd>
-                        <select style="max-width:98%;" size="1" name="tp_menu_position" id="tp_menu_position">';
+                        <select size="1" name="tp_menu_position" id="tp_menu_position">';
                         foreach($context['menu_buttons'] as $k => $v ) {
                             echo '<option value="', $k ,'" ', $context['TPortal']['editmenuitem']['position'] == $k ? 'selected' : '', '>', $v['title'], '</option>';
                         }
@@ -807,12 +807,12 @@ function template_panels()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="panels">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-panelsettings'] . '</h3></div>
 			<div id="panels-admin" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helppanels'] , '</div><div></div>
+			<div class="information smalltext">' , $txt['tp-helppanels'] , '</div><div></div>
 
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
@@ -862,7 +862,7 @@ function template_panels()
 							<input name="tp_hidebars_calendar" type="radio" value="1" ' , $context['TPortal']['hidebars_calendar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_calendar" type="radio" value="0" ' , $context['TPortal']['hidebars_calendar']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
-					<dl class="settings"><br>
+					<dl class="settings">
 					</dl>
 						<dt>
 							<label for="field_name">', $txt['tp-hidebarscustom'], '</label>
@@ -870,13 +870,13 @@ function template_panels()
 						<dd>
 							<textarea cols="40" style="width: 94%; height: 100px;" name="tp_hidebars_custom">' . $context['TPortal']['hidebars_custom'].'</textarea>
 						</dd>
-					<dl class="settings"><br>
+					<dl class="settings">
 					</dl>
 						<dt>
 							<label for="field_name">', $txt['tp-padding_between'], '</label>
 						</dt>
 						<dd>
-							<input style="margin-left: 10px;" name="tp_padding" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['padding'], '">
+							<input name="tp_padding" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['padding'], '">
 							<span class="smalltext">'.$txt['tp-inpixels'].'</span>
 						</dd>
 					</dl>
@@ -947,7 +947,7 @@ function template_panels()
 								<dt> '.$txt['tp-horisontal3cols'].'<br></dt><dd><input name="tp_block_layout_'.$panl.'" type="radio" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '></dd>
 								<dt> '.$txt['tp-horisontal4cols'].'<br></dt><dd><input name="tp_block_layout_'.$panl.'" type="radio" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '></dd>
 								<dt> '.$txt['tp-grid'].'<br></dt><dd><input name="tp_block_layout_'.$panl.'" type="radio" value="grid" ' , $context['TPortal']['block_layout_'.$panl]=='grid' ? 'checked' : '' , '></dd>
-								<dt></dt><dd><p style="padding-left: 2em;">
+								<dt></dt><dd><p>
 										<input type="radio" name="tp_blockgrid_'.$panl.'" value="colspan3" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan3' ? 'checked' : '' , ' /><img align="middle" src="' .$settings['tp_images_url']. '/TPgrid1.png" alt="colspan3" />
 										<input type="radio" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' /><img align="middle" src="' .$settings['tp_images_url']. '/TPgrid2.png" alt="rowspan1" />
 									</p></dd>
@@ -968,7 +968,7 @@ function template_panels()
 								<div class="smalltext">'.$txt['tp-panelstylehelp2'].'</div>
 								</div>
 
-							<br><div style="background-color:#ffffff;overflow:hidden;padding:5px;">';
+							<br><div class="panels-optionsbg">';
 
 			foreach($types as $blo => $bl)
 				echo '
@@ -1001,12 +1001,12 @@ function template_settings()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="settings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpsettings'] , '</div><div></div>
+			<div class="information smalltext">' , $txt['tp-helpsettings'] , '</div><div></div>
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
 						<!-- START non responsive themes form -->
@@ -1017,12 +1017,12 @@ function template_settings()
 							foreach($context['TPallthem'] as $them) {
 					              if(strstr($forum_version, '2.1')) {
 									echo '
-										  <img style="width: 35px; height: 35px;" alt="*" src="'.$them['path'].'/thumbnail.png" />
+										  <img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
 										  <input name="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
 										}
 								  else {
 									echo '
-										  <img style="width: 35px; height: 35px;" alt="*" src="'.$them['path'].'/thumbnail.gif" />
+										  <img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.gif" />
 										  <input name="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
 										}
 					              if(in_array($them['id'],$tm)) {
@@ -1041,7 +1041,7 @@ function template_settings()
 						<div class="smalltext">' , $txt['tp-frontpagetitle2'] , '</div>
 					</dt>
 					<dd>
-						<input style="width: 100%;" name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
+						<input name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-redirectforum'], '</label>
@@ -1137,7 +1137,7 @@ function template_settings()
 						<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
 					</dt>
 					<dd>
-						<input style="width: 85%;" name="tp_copyrightremoval" type="text" value="' , !empty($context['TPortal']['copyrightremoval']) ? $context['TPortal']['copyrightremoval'] : '' , '">
+						<input name="tp_copyrightremoval" type="text" value="' , !empty($context['TPortal']['copyrightremoval']) ? $context['TPortal']['copyrightremoval'] : '' , '">
 					</dd>
 				</div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -1152,7 +1152,7 @@ function template_clist()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 		echo '
-			<form  accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+			<form  accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin" method="post">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 				<input name="tpadmin_form" type="hidden" value="clist">
 				<div class="cat_bar"><h3 class="catbg">TinyPortal - '.$txt['tp-generalsettings'].'</h3></div>
@@ -1168,9 +1168,9 @@ function template_clist()
 							<input name="tp_clist'.$ta.'" type="checkbox" value="'.$ta.'"';
 			if(in_array($ta, $clist))
 				echo ' checked';
-			echo '><p style="padding-left:1%;display:inline-block;"></p>'.html_entity_decode($val).'<br>';
+			echo '>  '.html_entity_decode($val).'<br>';
 		}
-		echo '<br><input type="checkbox" onclick="invertAll(this, this.form, \'tp_clist\');" /><p style="padding-left:1%;display:inline-block;"></p>'.$txt['tp-checkall'].'
+		echo '<br><input type="checkbox" onclick="invertAll(this, this.form, \'tp_clist\');" />  '.$txt['tp-checkall'].'
 						</div>
 		     			<br><div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
 		     		</div>
@@ -1183,12 +1183,12 @@ function template_artsettings()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="artsettings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-articlesettings'] . '</h3></div>
 		<div id="article-settings" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpartsettings'] , '</div><div></div>
+			<div class="information smalltext">' , $txt['tp-helpartsettings'] , '</div><div></div>
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
@@ -1295,12 +1295,12 @@ function template_frontpage()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="frontpage">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-frontpage_settings'] . '</h3></div>
 		<div id="frontpage-settings" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpfrontpage'] , '</div><div></div>
+			<div class="information smalltext">' , $txt['tp-helpfrontpage'] , '</div><div></div>
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
@@ -1353,28 +1353,28 @@ function template_frontpage()
 					<hr>
 					<div><strong><label for="field_name">', $txt['tp-frontpage_layout'], '</label></strong></div>
 					<div>
-						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="1" ' ,
+						<div class="tpartlayoutfp"><input name="tp_frontpage_layout" type="radio" value="1" ' ,
 						$context['TPortal']['frontpage_layout']<2 ? 'checked' : '' , '> A ' ,
 						$context['TPortal']['frontpage_layout']<2 ? '' : '' , '
 							<div style="margin-top: 5px;">
 								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_a.png"/>
 							</div>
 						</div>
-						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="2" ' ,
+						<div class="tpartlayoutfp"><input name="tp_frontpage_layout" type="radio" value="2" ' ,
 						$context['TPortal']['frontpage_layout']==2 ? 'checked' : '' , '> B ' ,
 						$context['TPortal']['frontpage_layout']==2 ? '' : '' , '
 							<div style="margin-top: 5px;">
 								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_b.png"/>
 							</div>
 						</div>
-						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="3" ' ,
+						<div class="tpartlayoutfp"><input name="tp_frontpage_layout" type="radio" value="3" ' ,
 						$context['TPortal']['frontpage_layout']==3 ? 'checked' : '' , '> C ' ,
 						$context['TPortal']['frontpage_layout']==3 ? '' : '' , '
 							<div style="margin-top: 5px;">
 								<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_c.png"/>
 							</div>
 						</div>
-						<div style="float: left; margin: 4px;"><input name="tp_frontpage_layout" type="radio" value="4" ' ,
+						<div class="tpartlayoutfp"><input name="tp_frontpage_layout" type="radio" value="4" ' ,
 						$context['TPortal']['frontpage_layout']==4 ? 'checked' : '' , '> D ' ,
 						$context['TPortal']['frontpage_layout']==4 ? '' : '' , '
 							<div style="margin-top: 5px;">
@@ -1388,7 +1388,7 @@ function template_frontpage()
 					</div>
 					<div>';	foreach($context['TPortal']['admin_layoutboxes'] as $box)
 								echo '
-												<div style="float: left; width: 180px; height: 100px; margin: 4px;' , $context['TPortal']['frontpage_catlayout']==$box['value'] ? ' font-weight: bold;' : '' , '">
+												<div class="tpartlayouttype">
 													<input type="radio" name="tp_frontpage_catlayout" value="'.$box['value'].'"' , $context['TPortal']['frontpage_catlayout']==$box['value'] ? ' checked="checked"' : '' , '>
 													'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" />
 												</div>';
@@ -1417,12 +1417,12 @@ function template_frontpage()
 							{article_morelinks}
 						</div>
 					</div>
-					<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>';
+					<span class="lowerframe" style="margin-bottom: 5px;"></span>';
 							echo '<br style="clear: both;" />
 				</div>
 				<div>
 					<h4>', $txt['reset_custom_template_layout'] ,'</h4>
-					<textarea id="tp_frontpage_template" name="tp_frontpage_template" style="width: 90%; height: 200px;">' . $context['TPortal']['frontpage_template'] . '</textarea><br><br>
+					<textarea id="tp_customlayout" name="tp_frontpage_template">' . $context['TPortal']['frontpage_template'] . '</textarea><br><br>
 				</div>
 				<hr>
 					<dl class="settings">
@@ -1438,7 +1438,7 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-numberofposts'], '</label>
 						</dt>
 						<dd>
-						  <input style="margin-left: 10px;" name="tp_frontpage_limit" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['frontpage_limit'], '"><br><br>
+						  <input name="tp_frontpage_limit" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['frontpage_limit'], '"><br><br>
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-sortingoptions'], '</label>
@@ -1464,44 +1464,44 @@ function template_frontpage()
 						<dd>';
 
 		echo '
-							<select size="1" name="tp_ssiboard1" style="max-width:100%;">';
+							<select size="1" name="tp_ssiboard1">';
 		$tn=sizeof($context['TPortal']['boards']);
 		for($n=0 ; $n<$tn; $n++){
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][0]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][0] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
 		}
 		echo '
-							</select> ';
+							</select><br>';
 		// board 2
 		echo '
-							<select size="1" name="tp_ssiboard2" style="max-width:100%;"><option value="0">',$txt['tp-none-'],'</option>';
+							<select size="1" name="tp_ssiboard2"><option value="0">',$txt['tp-none-'],'</option>';
 		for($n=0 ; $n<$tn; $n++){
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][1]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][1] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
 		}
 		echo '
-							</select> ';
+							</select><br>';
 		// board 3
 		echo '
-							<select size="1" name="tp_ssiboard3" style="max-width:100%;"><option value="0">',$txt['tp-none-'],'</option>';
+							<select size="1" name="tp_ssiboard3"><option value="0">',$txt['tp-none-'],'</option>';
 		for($n=0 ; $n<$tn; $n++){
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][2]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][2] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
 		}
 		echo '
-							</select> ';
+							</select><br>';
 		// board 4
 		echo '
-							<select size="1" name="tp_ssiboard4" style="max-width:100%;"><option value="0">',$txt['tp-none-'],'</option>';
+							<select size="1" name="tp_ssiboard4"><option value="0">',$txt['tp-none-'],'</option>';
 		for($n=0 ; $n<$tn; $n++){
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][3]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][3] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
 		}
 		echo '
-							</select> ';
+							</select><br>';
 		// board 5
 		echo '
-							<select size="1" name="tp_ssiboard5" style="max-width:100%;"><option value="0">',$txt['tp-none-'],'</option>';
+							<select size="1" name="tp_ssiboard5"><option value="0">',$txt['tp-none-'],'</option>';
 		for($n=0 ; $n<$tn; $n++){
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][4]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][4] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
@@ -1514,7 +1514,7 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-lengthofposts'], '</label>
 						</dt>
 						<dd>
-						  <input style="margin-left: 10px;" name="tp_frontpage_limit_len" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['frontpage_limit_len'], '"><br><br>
+						  <input name="tp_frontpage_limit_len" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['frontpage_limit_len'], '"><br><br>
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-forumposts_avatar'], '</label>
@@ -1544,7 +1544,7 @@ function template_categories()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;" enctype="multipart/form-data" onsubmit="syncTextarea();">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="categories">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-article'], ' ' , $txt['tp-tabs5'] . '</h3></div>
@@ -1593,7 +1593,7 @@ function template_editcategory()
 
 		$mg = $context['TPortal']['editcategory'];
 		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editcategory">
 		<input name="tpadmin_form_id" type="hidden" value="' . $mg['id'] . '">
@@ -1606,7 +1606,7 @@ function template_editcategory()
 							<label for="field_name">', $txt['tp-name'], '</label>
 						</dt>
 						<dd>
-							<input size="40" name="tp_category_value1" style="width: 90%;" type="text" value="' ,html_entity_decode($mg['value1']), '">
+							<input size="40" name="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '">
 						<dd>
 						<dt>
 							<label for="field_name">', $txt['tp-parent'], '</label>
@@ -1648,7 +1648,7 @@ function template_editcategory()
 							<label for="field_name">', $txt['tp-shortname'], '</label>
 						</dt>
 						<dd>
-							<input size="6" name="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '">
+							<input size="20" name="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '">
 						</dd>
 					</dl>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -1656,28 +1656,28 @@ function template_editcategory()
 					<div>
 						<div><strong><label for="field_name">', $txt['tp-catlayouts'], '</label></strong></div>
 
-						<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="1" ' ,
+						<div class="tpartlayoutfp"><input name="tp_category_layout" type="radio" value="1" ' ,
 							$mg['layout']==1 ? 'checked' : '' , '> A ' ,
 							$mg['layout']==1 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
 									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_a.png"/>
 								</div>
 							</div>
-							<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="2" ' ,
+							<div class="tpartlayoutfp"><input name="tp_category_layout" type="radio" value="2" ' ,
 							$mg['layout']==2 ? 'checked' : '' , '> B ' ,
 							$mg['layout']==2 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
 									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_b.png"/>
 								</div>
 							</div>
-							<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="3" ' ,
+							<div class="tpartlayoutfp"><input name="tp_category_layout" type="radio" value="3" ' ,
 							$mg['layout']==3 ? 'checked' : '' , '> C ' ,
 							$mg['layout']==3 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
 									<img border="0" src="' .$settings['tp_images_url']. '/edit_art_cat_c.png"/>
 								</div>
 							</div>
-							<div style="float: left; margin: 4px;"><input name="tp_category_layout" type="radio" value="4" ' ,
+							<div class="tpartlayoutfp"><input name="tp_category_layout" type="radio" value="4" ' ,
 							$mg['layout']==4 ? 'checked' : '' , '> D ' ,
 							$mg['layout']==4 ? '' : '' , '
 								<div class="tborder" style="margin-top: 5px;">
@@ -1692,7 +1692,7 @@ function template_editcategory()
 								<div>';
 		foreach($context['TPortal']['admin_layoutboxes'] as $box)
 			echo '
-									<div style="float: left; width: 180px; height: 100px; margin: 4px;' , $mg['catlayout']==$box['value'] ? ' font-weight: bold;' : '' , '">
+									<div class="tpartlayouttype">
 										<input type="radio" name="tp_category_catlayout" value="'.$box['value'].'"' , $mg['catlayout']==$box['value'] ? ' checked="checked"' : '' , '>
 										'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" />
 									</div>';
@@ -1725,7 +1725,7 @@ function template_editcategory()
 						echo '</div>
 								<br style="clear: both;" />
                                 <h4>', $txt['reset_custom_template_layout'] ,'</h4>
-								<textarea id="tp_category_value9" name="tp_category_value9" style="width: 90%; height: 200px;">' . $mg['value9'] . '</textarea><br><br>
+								<textarea id="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
 							</div>
 						</div>
 						<hr>
@@ -1777,10 +1777,9 @@ function template_editcategory()
 								<input type="checkbox" name="tp_category_lowerpanel" value="1"' , !empty($mg['lowerpanel']) ? ' checked="checked"' : '' ,' />
 							<dd>
 						</dl>
-						<hr>
-						<div class="font-strong">'.$txt['tp-allowedgroups']. ':</div>
-						<div>
-							<div style="max-height: 30em; overflow: auto;">';
+						<dl class="settings">
+							<dt><div class="font-strong">'.$txt['tp-allowedgroups']. ':</div>
+							<div class="tp_largelist2">';
 		// loop through and set membergroups
 		$tg=explode(',',$mg['value3']);
 		foreach($context['TPmembergroups'] as $g)
@@ -1795,7 +1794,8 @@ function template_editcategory()
 		}
 		// if none is chosen, have a control value
 					echo '</div><br><input type="checkbox" onclick="invertAll(this, this.form, \'tp_category_group\');" /> '.$txt['tp-checkall'].'<input name="tp_catgroup-2" type="hidden" value="'.$mg['id'].'">
-						</div>
+						</dt>
+					</dl>
 					</div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
@@ -1812,12 +1812,12 @@ function template_addcategory()
 		$currcat = $_GET['cu'];
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="addcategory">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-addcategory'] . '</h3></div>
 		<div id="new-category" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpaddcategory'] , '</div><div></div>
+			<div class="information smalltext">' , $txt['tp-helpaddcategory'] , '</div><div></div>
 			<div class="windowbg noup ">
 				<div class="formtable padding-div">
 					<dl class="settings">
@@ -1832,7 +1832,7 @@ function template_addcategory()
 							<label for="field_name"><h4>'.$txt['tp-subcatof'].'</h></label>
 						</dt>
 						<dd>
-						<select size="1" name="tp_cat_parent" style="max-width:100%;">
+						<select size="1" name="tp_cat_parent">
 							<option value="0">'.$txt['tp-none2'].'</option>';
 	if(isset($context['TPortal']['editcats'])){
 		foreach($context['TPortal']['editcats'] as $s => $submg ){
@@ -1856,12 +1856,12 @@ function template_articles()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;" enctype="multipart/form-data" onsubmit="syncTextarea();">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="articles">
 		<div class="cat_bar"><h3 class="catbg">' , $txt['tp-articles'] , !empty($context['TPortal']['categoryNAME']) ? $txt['tp-incategory']. ' ' . $context['TPortal']['categoryNAME'].' ' : '' ,  '</h3></div>
 		<div id="edit-articles" class="admintable admin-area">
-			<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helparticles'] , '</div><div></div>
+			<div class="information smalltext">' , $txt['tp-helparticles'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
 
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
@@ -2015,12 +2015,12 @@ function template_strays()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;" enctype="multipart/form-data" onsubmit="syncTextarea();">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="strays">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-uncategorised2'] . '</h3></div>
 		<div id="uncategorized" class="admintable admin-area">
-				<div class="information smalltext" style="margin:0px;border:0px;">' , $txt['tp-helpstrays'] , '</div><div></div>';
+				<div class="information smalltext">' , $txt['tp-helpstrays'] , '</div><div></div>';
 	if(isset($context['TPortal']['arts_nocat']))
 	{
 		echo '
@@ -2125,14 +2125,14 @@ function template_strays()
 		if(isset($context['TPortal']['allcats']))
 		{
 			echo '	<p style="text-align: right;padding:1%;max-width:100%;">
-							<select name="tp_article_cat" style="max-width:100%;">
+							<select name="tp_article_cat">
 								<option value="0">' . $txt['tp-createnew'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg)
   					echo '
 								<option value="'.$submg['id'].'">',  $submg['indent']>1 ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
 			echo '
 							</select>
-							<input style="max-width:95%!important;" name="tp_article_new" value="" size="40"  /> &nbsp;
+							<input name="tp_article_new" value="" size="40"  /> &nbsp;
 						</p>';
 		}
 		echo '
@@ -2161,7 +2161,7 @@ function template_editarticle($type = '')
 		$context['TPortal']['categoryNAME'] = $txt['tp-uncategorised'];
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" style="margin: 0px;" onsubmit="submitonce(this);">
+	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
 		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['categoryNAME'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , '' , $mg['id']==0 ? '' : '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>';
@@ -2175,7 +2175,7 @@ function template_editarticle($type = '')
 					</div>
 					<div>
 						<div class="font-strong">'.$txt['tp-shortname_article'].'&nbsp;</div>
-						<input style="max-width: 50%;" name="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
+						<input size=20 name="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
 					</div>
 					<br>
 			<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -2185,16 +2185,16 @@ function template_editarticle($type = '')
 
 				if($mg['articletype'] == 'php')
 					echo '
-							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
+							<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
 				elseif($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
 				elseif($tp_use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
 					echo '
-							<textarea name="tp_article_body" id="tp_article_body" style="width: 95%; height: 300px;" wrap="auto">' , $mg['body'], '</textarea><br>';
+							<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
 				elseif($mg['articletype'] == 'bbc')
 					TP_bbcbox($context['TPortal']['editor_id']);
 				else
-					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" style="width: 60%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">' ;
+					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">' ;
 
 					echo '
 					</div>
@@ -2405,8 +2405,8 @@ function template_editarticle($type = '')
 						<label for="field_name">', $txt['tp-category'], '</label>
 					</dt>
 					<dd>
-						<div style="max-width:100%;">
-							<select size="1" name="tp_article_category" style="max-width:100%;">
+						<div>
+							<select size="1" name="tp_article_category">
 								<option value="0">'.$txt['tp-none2'].'</option>';
 
 				foreach($context['TPortal']['allcats'] as $cats)
@@ -2438,7 +2438,7 @@ function template_editarticle($type = '')
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
 					else
 						echo '
-							<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
+							<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
 					echo '
 						</div>';
 				}
@@ -2447,7 +2447,7 @@ function template_editarticle($type = '')
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
                     '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
-						<textarea name="tp_article_intro" id="tp_article_intro" style="width: 100%; height: 140px;" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
+						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
 					</div>
                     </div>';
 				}
@@ -2482,7 +2482,7 @@ function template_editarticle($type = '')
 						<div><img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /></div>
 					</dt>
 					<dd>
-							<select size="10" style="width: 200px;" name="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
+							<select size="10" name="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
 								<option value=""' , $mg['illustration']=='' ? ' selected="selected"' : '' , '>' . $txt['tp-none2'] . '</option>';
 
 			foreach($context['TPortal']['articons']['illustrations'] as $ill)
@@ -2520,79 +2520,79 @@ function template_editarticle($type = '')
 									<label for="field_name">', $txt['tp-articleoptions1'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[1].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[1].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions2'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[2].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[2]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[2].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[2]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions12'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[12].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[12]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[12].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[12]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions13'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[13].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[13].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions3'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[3].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[3]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[3].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[3]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions4'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[4].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[4]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[4].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[4]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions14'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[14].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[14]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[14].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[14]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions15'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[15].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[15]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[15].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[15]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions5'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[5].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[5].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions16'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[16].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[16]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[16].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[16]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions17'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[17].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[17]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[17].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[17]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions18'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[18].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[18]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[18].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[18]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions19'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[19].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[19]]) ? 'checked' : '' , '><br><br>
+									<input name="tp_article_options_'.$opts[19].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[19]]) ? 'checked' : '' , '><br><br>
 								</dd>
 							</dl>
 								<div class="title_bar">
@@ -2603,7 +2603,7 @@ function template_editarticle($type = '')
 									<label for="field_name">', $txt['tp-articleoptions24'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[22].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[22].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
 						<hr /><br>
@@ -2612,49 +2612,49 @@ function template_editarticle($type = '')
 									<label for="field_name">', $txt['tp-articleoptions7'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[7].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[7].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions22'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_rblockwidth" type="text" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
+									<input name="tp_article_options_rblockwidth" type="text" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions8'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[8].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[8]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[8].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[8]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions23'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_lblockwidth" type="text" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
+									<input name="tp_article_options_lblockwidth" type="text" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions6'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[6].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[6]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[6].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[6]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions9'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions10'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[10].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[10]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[10].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[10]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions11'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[11].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[11]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[11].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[11]]) ? 'checked' : '' , '>
 								</dd>
 							</dl><br>
 								<div class="title_bar">
@@ -2665,19 +2665,19 @@ function template_editarticle($type = '')
 									<label for="field_name">', $txt['tp-articleoptions20'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[20].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[20].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions21'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[21].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[21]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[21].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[21]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-showsociallinks'], '</label><br>
 								</dt>
 								<dd>
-									<input style="vertical-align: middle;" name="tp_article_options_'.$opts[23].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[23].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
 						<br><hr>
@@ -2704,7 +2704,7 @@ function template_editarticle($type = '')
 							</dl>
 								<div>
 										' , $txt['tp-articleheaders'] , '<br>
-										<textarea name="tp_article_headers" style="width: 90%;" rows="5" cols="40">' , $mg['headers'] , '</textarea>
+										<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
 								</div>
 				    </div>
 				</div>
@@ -2742,7 +2742,7 @@ function template_articons()
 		tp_collectArticleIcons();
 
 		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="articons">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-adminicons7'] . '</h3></div>
@@ -2794,7 +2794,7 @@ function template_addblock()
 	$panels = array('','left','right','center','front','bottom','top','lower');
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="addblock">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-addblock'] . '</h3></div>
@@ -2802,7 +2802,7 @@ function template_addblock()
 			<div class="windowbg2">
 			  <div class="formtable padding-div">
 								<dl class="settings">
-									<dt><h3 style="display: inline;">' , $txt['tp-title'] , ':</h3>
+									<dt><h3>' , $txt['tp-title'] , ':</h3>
 									</dt>
 									<dd>
 										<input type="input" name="tp_addblocktitle" size="60" value="" />
@@ -2907,7 +2907,7 @@ function template_blockedit()
 		$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;" onsubmit="submitonce(this);">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post" onsubmit="submitonce(this);">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="blockedit">
 		<input name="tpadmin_form_id" type="hidden" value="' . $context['TPortal']['blockedit']['id'] . '">
@@ -2926,7 +2926,7 @@ function template_blockedit()
 					</dl>
 						<div>
 							<div><b>'.$txt['tp-title'].':</b></div>
-							<div><input style="width: 94%" name="tp_block_title"  type="text" value="' .$newtitle. '"><br><br></div>
+							<div><input size=60 name="tp_block_title" type="text" value="' .$newtitle. '"><br><br></div>
 						</div>
 						<div>
 							<div><b>',$txt['tp-type'].':</b></div>
@@ -2962,7 +2962,7 @@ function template_blockedit()
 								</select>
 							</div>
 						</div>
-						<div style="padding:2%;"><input type="submit" class="button button_submit" value="' . $txt['tp-send'] . '" /></div>
+						<div style="padding:1%;"><input type="submit" class="button button_submit" value="' . $txt['tp-send'] . '" /></div>
 						<div>
 							<div id="blocknotice" class="smallpadding error middletext" style="display: none;">' , $txt['tp-blocknotice'] , '</a></div>
 						</div>
@@ -3181,11 +3181,11 @@ function template_blockedit()
 				{
 					if(strstr($forum_version, '2.1')) {
 						echo '
-							<img style="width: 35px; height: 35px;" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input name="tp_theme'.$tema['id'].'" type="checkbox" value="'.$tema['name'].'"';
+							<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input name="tp_theme'.$tema['id'].'" type="checkbox" value="'.$tema['name'].'"';
 						}
 					else {
 						echo '
-							<img style="width: 35px; height: 35px;" alt="*" src="'.$tema['path'].'/thumbnail.gif" /> <input name="tp_theme'.$tema['id'].'" type="checkbox" value="'.$tema['name'].'"';
+							<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.gif" /> <input name="tp_theme'.$tema['id'].'" type="checkbox" value="'.$tema['name'].'"';
 						}
 					if(in_array($tema['id'],$myt))
 						echo ' checked';
@@ -3274,7 +3274,7 @@ function template_blockedit()
 						<br><input name="tp_block_var5" type="radio" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '>' , $txt['tp-blocksusepaneltyle'] , '</span>
 					</div>
 				<div>
-			<div style="background-color:#ffffff; overflow: hidden; padding: 5px;">';
+			<div class="panels-optionsbg">';
 
 			if(function_exists('ctheme_tp_getblockstyles'))
 				$types = ctheme_tp_getblockstyles();	
@@ -3572,7 +3572,7 @@ function template_blocks()
 	global $context, $settings, $txt, $scripturl;
 
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" style="margin: 0px;">
+	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="blocks">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blocksettings'] . '</h3></div>
@@ -3649,11 +3649,11 @@ function template_blocks()
 					echo '
 						</div>
 						<div style="width:20%;max-width:100%;" class="adm-name float-items">
-						     <input style="max-width:100%;" name="title' .$lblock['id']. '" type="text" size="15" value="' .html_entity_decode($newtitle). '">
+						     <input name="title' .$lblock['id']. '" type="text" size="15" value="' .html_entity_decode($newtitle). '">
 						</div>
-						<div style="width:20%;max-width:100%;" class="fullwidth-on-res-layout block-opt float-items">
+						<div style="width:20%;" class="fullwidth-on-res-layout block-opt float-items">
 						    <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>
-							<select style="max-width:100%;" size="1" name="type' .$lblock['id']. '">
+							<select size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
 								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
 								<option value="2"' ,$lblock['type']=='newsbox' ? ' selected' : '' , '>', $txt['tp-blocktype2'] , '</option>
@@ -3777,7 +3777,7 @@ function template_blocks()
 						echo '
 			     	<div class="windowbg">
 						<div align="center" style="padding:1%;">
-							'.$txt['tp-numberofrecenttopics'].'<input style="width: 50px;" name="blockbody' .$lblock['id']. '" value="' .$lblock['body']. '">
+							'.$txt['tp-numberofrecenttopics'].'<input size=4 name="blockbody' .$lblock['id']. '" value="' .$lblock['body']. '">
 						</div>
 					</div>';
 					}
@@ -3878,9 +3878,8 @@ function template_blocks()
 
 		}
 		echo '
-			</div>
-			<div class="windowbg2">
-				<div class="windowbg3" style="padding:1%;"><input type="submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+
+			<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			</div>
 		</div>
 	</form>';
