@@ -763,6 +763,8 @@ else
 	);
 }
 
+tpListImages();
+
 // check if blocks access2 needs converting
 if(isset($convertaccess))
 {
@@ -1166,6 +1168,82 @@ function addDefaults()
 		$smcFunc['db_free_result']($request);
 		$render .= '<li>Added some sample values to the variables table</li>';
 	}
+}
+
+function tpListImages()
+{
+    global $sourcedir, $smcFunc;
+
+    // make sure TPListImages is available
+    $request = $smcFunc['db_query']('', '
+        SELECT id FROM {db_prefix}tp_modules
+        WHERE modulename = {string:name}',
+        array('name' => 'TPListImages')
+    );
+
+    if($smcFunc['db_num_rows']($request) == 0) {
+        $newmod = array(
+            'version' => '1.0.0',
+            'modulename' => 'TPListImages',	            // must be exactly equal to the folder.
+            'title' => 'TP List Images',
+            'subquery' => 'listimage',	                // the subcall that let TP knows which module is running.
+            'autoload_run' => 'TPListImages.php',
+            'autoload_admin' => 'TPListImages.php',
+            'autorun' => '',
+            'autorun_admin' => '',
+            'db' => '',
+            'permissions' => 'tp_can_list_images|1',	// permissions
+            'active' => 1,
+            'languages' => 'english',
+            'blockrender' => '',
+            'adminhook' => '',
+            'logo' => 'tpshoutbox.png',
+            'tpversion' => '1.6.0',
+            'smfversion' => '2.x.x',
+            'description' => '[b]TP List Images[/b] Allows you to remove uploaded images from the Tiny Portal Image Directory.<br >	',
+            'author' => 'tinoest',
+            'email' => 'tinoest@gmail.com',
+            'website' => 'http://www.tinyportal.net',
+            'profile' => 'tpshout_profile',
+            'frontsection' => '',
+        );
+    }
+
+	require_once($sourcedir . '/Subs-Post.php');
+	preparsecode($newmod['description']);
+
+	// ok, insert this into modules table.
+	$smcFunc['db_insert']('INSERT',
+		'{db_prefix}tp_modules',
+		array(
+			'version' => 'string',
+			'modulename' => 'string',
+			'title' => 'string',
+			'subquery' => 'string',
+			'autoload_run' => 'string',
+			'autoload_admin' => 'string',
+			'autorun' => 'string',
+			'autorun_admin' => 'string',
+			'db' => 'string',
+			'permissions' => 'string',
+			'active' => 'int',
+			'languages' => 'string',
+			'blockrender' => 'string',
+			'adminhook' => 'string',
+			'logo' => 'string',
+			'tpversion' => 'string',
+			'smfversion' => 'string',
+			'description' => 'string',
+			'author' => 'string',
+			'email' => 'string',
+			'website' => 'string',
+			'profile' => 'string',
+			'frontsection' => 'string',
+		),
+		$newmod,
+		array('id')
+	);
+
 }
 
 ?>
