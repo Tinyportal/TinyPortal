@@ -31,46 +31,41 @@ function template_main()
 
     loadTPModuleLanguage();
 
+    $ret = '';
     if(array_key_exists('listimage', $_GET)) {
-	switch($_GET['listimage']) {
-		case 'list';
-			$html = TPListImages($_POST['id_member']);
-			break;
-		case 'remove':
-			TPRemoveImage($_POST['image']);
-			break;
+	    switch($_GET['listimage']) {
+		    case 'remove':
+			    TPRemoveImage($_POST['image']);
+			    break;
 	    }
     }
 
-    if(!empty($html)) {
-        echo '
-        <div class="title_bar">
-            <h3 class="titlebg">'.$txt['tp-listimage-settings'].'</h3>
-        </div>';
-        echo $html;
+    if(array_key_exists('id_member', $_POST)) {
+		$ret = TPListImages($_POST['id_member']);
     }
-    else {
-        $users = TPMembers();
 
-        echo '
-        <div class="title_bar">
-            <h3 class="titlebg">'.$txt['tp-listimage-settings'].'</h3>
+    $users = TPMembers();
+
+    echo '
+    <div class="title_bar">
+        <h3 class="titlebg">'.$txt['tp-listimage-settings'].'</h3>
+    </div>
+    <form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=list"  method="post" style="margin: 0px;">
+        <div class="windowbg" style="padding:1%;">
+            <input type="hidden" name="sc" value="', $context['session_id'], '" />
+            <select name="id_member">';
+
+            foreach ( $users as $id => $name)
+                echo '<option value="'.$id.'">'.$name.'</option>';
+
+    echo '
+            </select>
+            <input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
         </div>
-        <form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=list"  method="post" style="margin: 0px;">
-            <div class="windowbg" style="padding:1%;">
-                <input type="hidden" name="sc" value="', $context['session_id'], '" />
-                <select name="id_member">';
+    </form>
+    <p class="clearthefloat"></p>';
 
-                foreach ( $users as $id => $name)
-                    echo '<option value="'.$id.'">'.$name.'</option>';
-
-        echo '
-                </select>
-                <input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
-            </div>
-        </form>
-        <p class="clearthefloat"></p>';
-    }
+    echo $ret;
 }
 
 function TPListImages($user_id) 
@@ -104,6 +99,7 @@ function TPListImages($user_id)
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=remove"  method="post" style="margin: 0px;">
                 <div class="windowbg" style="padding:1%;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
+                    <input type="hidden" name="id_member" value="'.$user_id.'" />
                     <input type="hidden" name="image" value="'.substr($im,6).'" />
                     <img src="'.$boardurl.'/tp-images/'.substr($im,6). '"  border="none" alt="" /><br >
                     <input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"><br >
@@ -135,29 +131,37 @@ function TPRemoveImage( $image )
 
 function TPMembers()
 {
-	global $smcFunc;
+	global $smcFunc, $boarddir;
 
 	$users	= array();
-	$query	=  $smcFunc['db_query']('', '
-		SELECT author_id FROM {db_prefix}tp_articles
-		GROUP BY author_id'
-	);
-	while($row = $smcFunc['db_fetch_assoc']($query))
-	{
+    if ($handle = opendir($boarddir.'/tp-images/thumbs')) {
+        while (false !== ($file = readdir($handle))) {
+            if($file != '.' && $file !='..' && $file !='.htaccess') {
+                if(preg_match('/thumb_(.*)uid/', $file, $matches)) {
+                    $users[$matches[1]] = $matches[1];
+                }
+            }
+        }
+        closedir($handle);
+    }
+
+    foreach ($users as $user_id) {
 		$data	=  $smcFunc['db_query']('', '
 			SELECT member_name FROM {db_prefix}members
 			WHERE id_member = {int:member_id}',
 			array (
-				'member_id' => $row['author_id']
+				'member_id' => $user_id
 			)
 		);
 		$member	= $smcFunc['db_fetch_assoc']($data)['member_name'];
 		if(!is_null($member)) {
-			$users[$row['author_id']] = $member;
+			$users[$user_id] = $member;
 		}
+        else {
+            $users[$user_id] = $txt['tp-listimage-username'].' '.$user_id;
+        }
 		$smcFunc['db_free_result']($data);
 	}
-	$smcFunc['db_free_result']($query);
 
 	return $users;
 }
