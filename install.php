@@ -1183,29 +1183,29 @@ function tpListImages()
 
     if($smcFunc['db_num_rows']($request) == 0) {
         $newmod = array(
-            'version' => '1.0.0',
-            'modulename' => 'TPListImages',	            // must be exactly equal to the folder.
-            'title' => 'TP List Images',
-            'subquery' => 'listimage',	                // the subcall that let TP knows which module is running.
-            'autoload_run' => 'TPListImages.php',
-            'autoload_admin' => 'TPListImages.php',
-            'autorun' => '',
-            'autorun_admin' => '',
-            'db' => '',
-            'permissions' => 'tp_can_list_images|1',	// permissions
-            'active' => 1,
-            'languages' => 'english',
-            'blockrender' => '',
-            'adminhook' => '',
-            'logo' => 'tpshoutbox.png',
-            'tpversion' => '1.6.0',
-            'smfversion' => '2.x.x',
-            'description' => '[b]TP List Images[/b] Allows you to remove uploaded images from the Tiny Portal Image Directory.<br >	',
-            'author' => 'tinoest',
-            'email' => 'tinoest@gmail.com',
-            'website' => 'http://www.tinyportal.net',
-            'profile' => 'tpshout_profile',
-            'frontsection' => '',
+            'version'           => '1.0.0',
+            'modulename'        => 'TPListImages',	            // must be exactly equal to the folder.
+            'title'             => 'TP List Images',
+            'subquery'          => 'listimage',	                // the subcall that let TP knows which module is running.
+            'autoload_run'      => 'TPListImages.php',
+            'autoload_admin'    => 'TPListImages.php',
+            'autorun'           => '',
+            'autorun_admin'     => '',
+            'db'                => '',
+            'permissions'       => 'tp_can_list_images|1',	// permissions
+            'active'            => 1,
+            'languages'         => 'english',
+            'blockrender'       => '',
+            'adminhook'         => '',
+            'logo'              => 'tpshoutbox.png',
+            'tpversion'         => '1.6.0',
+            'smfversion'        => '2.x.x',
+            'description'       => '[b]TP List Images[/b] Allows you to remove uploaded images from the Tiny Portal Image Directory.<br >	',
+            'author'            => 'tinoest',
+            'email'             => 'tinoest@gmail.com',
+            'website'           => 'http://www.tinyportal.net',
+            'profile'           => '',
+            'frontsection'      => '',
         );
     }
 
