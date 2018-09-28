@@ -12,10 +12,24 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
+
+function loadTPModuleLanguage()
+{
+    global $txt, $boarddir;
+
+    $filePath = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.english.php';
+
+    if(is_file($filePath)) {
+        require_once($filePath);
+    }
+}
+
 function template_main()
 {
 
 	global $txt, $context, $boarddir, $scripturl;
+
+    loadTPModuleLanguage();
 
     if(array_key_exists('listimage', $_GET)) {
 	switch($_GET['listimage']) {
@@ -62,6 +76,8 @@ function template_main()
 function TPListImages($user_id) 
 {
     global $txt, $boarddir, $boardurl, $context, $scripturl;
+
+    loadTPModuleLanguage();
 
     $html = '';
     // fetch all images you have uploaded
