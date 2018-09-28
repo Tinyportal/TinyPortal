@@ -22,13 +22,13 @@ function template_tp_summary()
 	echo '
 	<div class="cat_bar"><h3 class="catbg">'.$txt['tpsummary'].'</h3></div>
 	<div></div>
-	<div id="tp_summary" class="windowbg bordercolor" align="center">
-		<div style="margin-bottom:1px;text-align:left;">
+	<div id="tp_summary" class="windowbg padding-div">
+		<div>
 			<div class="float-items" style="width:38%;">'.$txt['tpsummary_art'].'</div>
 			<div class="float-items" style="width:58%;font-weight: bold;">'.$context['TPortal']['tpsummary']['articles'].'</div>
 		    <p class="clearthefloat"></p>
 		</div>
-		<div style="text-align:left;">
+		<div>
 			<div class="float-items" style="width:38%;">'.$txt['tpsummary_dl'].'</div>
 			<div class="float-items" style="width:58%;font-weight: bold;">'.$context['TPortal']['tpsummary']['uploads'].'</div>
 		    <p class="clearthefloat"></p>
@@ -45,8 +45,8 @@ function template_tp_articles()
 		echo '
 	<div>
 		<div></div>
-		<div id="tp_profile_articles" class="tpProfile bigger-width windowbg" >
-			<div class="windowbg addborder" style="padding: 1em;">';
+		<div id="tp_profile_articles" class="windowbg padding-div" >
+			<div class="windowbg addborder tp_pad">';
 
 		echo $txt['tp-prof_allarticles']. ' <b>'.$context['TPortal']['all_articles'].'</b><br>';
 		if($context['TPortal']['approved_articles']>0)
@@ -141,18 +141,16 @@ $clickme.click( function(e) {
 	}
 	elseif($context['TPortal']['profile_action'] == 'settings'){
 		echo '
-	<div id="tp_profile_articles_settings" class="bordercolor windowbg" style="margin-left: 1ex;">
-		<div width="100%">
-			<div class="font-strong" style="padding:1%;">
-				'.$txt['tp-dlsettings'].'
-			</div>
-			<div class="">
-				<div style="padding: 2ex;">
-					<form name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savesettings" method="post">
-						<input type="hidden" name="sc" value="', $context['session_id'], '" />
-						<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
-						<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />
-						';
+	<div id="tp_profile_articles_settings" class="bordercolor windowbg padding-div">
+		<div class="font-strong" style="padding:1%;">
+			'.$txt['tp-dlsettings'].'
+		</div>
+			<div style="padding: 2ex;">
+				<form name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savesettings" method="post">
+					<input type="hidden" name="sc" value="', $context['session_id'], '" />
+					<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
+					<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />
+					';
 		if(!empty($context['TPortal']['allow_wysiwyg']))
 			echo '<div>
 					<dl class="settings">
@@ -166,13 +164,9 @@ $clickme.click( function(e) {
 						<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
 				</div>';
 			echo '
-		</form>';
-
-
+				</form>';
 		echo '
-				</div>
 			</div>
-		</div>
 	</div>';
 	}
 }
@@ -185,8 +179,8 @@ function template_tp_download()
 		<div class="cat_bar"><h3 class="catbg">'.$txt['downloadsprofile'].'</h3></div>
 		<p class="information">'.$txt['downloadsprofile2'].'</p>
 		<div></div>
-		<div id="tp_profile_uploaded" class="tpProfile bordercolor windowbg">
-			<div class="windowbg" style="padding: 2ex;">';
+		<div id="tp_profile_uploaded" class="windowbg padding-div">
+			<div class="windowbg addborder tp_pad">';
 
 	echo $txt['tp-prof_alldownloads'].' <b>'.$context['TPortal']['all_downloads'].'</b><br>';
 	if($context['TPortal']['approved_downloads']>0)
@@ -251,7 +245,7 @@ if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['
 	echo '
 			</tbody>
 		</table>
-				<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
+				<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
 
 <script>
 $(document).ready( function() {

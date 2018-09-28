@@ -104,7 +104,7 @@ function template_tp_print_below()
 	global $context;
 
 	echo '
-			<br /><br />
+			<br><br>
 			<div align="center" class="smalltext">', theme_copyright(), '
 				<p>' , $context['TPortal']['print'] , '</p>
 			</div>

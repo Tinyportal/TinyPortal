@@ -111,10 +111,10 @@
 {
 	padding: 1em;
 }
-.tp_pad
+/*.tp_pad
 {
 	padding: 0 1em 0.5em 1em;
-}
+}*/
 h2.author_h2
 {
 	font-size: 1.3em;
@@ -1891,7 +1891,9 @@ left: 16px;
 }
 input#searchbox  {
 	width: 100%;
-	max-width: 350px!important;;
+	max-width: 350px!important;
+	margin-bottom: 0.5em; 
+	padding: 5px;
 }
 input,select {
 	max-width:97%!important;
@@ -1936,6 +1938,9 @@ box-sizing:border-box;
     float: left;
 	box-sizing: border-box;
     border:1px solid #ccc;
+}
+.admin-area img{
+	max-width: 100%;
 } 
 .tpartlayoutfp {
     float: left;
