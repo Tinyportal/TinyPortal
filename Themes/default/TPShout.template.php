@@ -42,10 +42,10 @@ function template_tpshout_bigscreen()
 	echo '
 	<div class="tborder">
 		<div class="catbg" style="padding: 5px 5px 5px 1em;">' , $txt['tp-tabs10'] , '</div>
-		<div class="windowbg" style="padding: 1em;">';
+		<div class="windowbg tp_pad"">';
 
 	echo '
-			<div id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div>';
+			<div id="bigshout">', $shouts, '</div>';
 
 	echo '
 			<form  accept-charset="', $context['character_set'], '" class="smalltext" style="padding: 10px; margin: 0; text-align: center;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" >
@@ -80,7 +80,7 @@ function template_tpshout_admin()
 
 	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts)
 	{
-		echo '			<div style="border-bottom:1px solid #ccc;">
+		echo '			<div class="addborder">
 							<div class="fullwidth-on-res-layout float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '" style="width:30%;">
 							'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
 							'. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
@@ -96,7 +96,7 @@ function template_tpshout_admin()
 						</div>';
 	}
 
-		echo '			<div style="">
+		echo '			<div>
 							<div class="normaltext float-items" style="width:47%;">
 								<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
 							</div>
@@ -117,7 +117,7 @@ function template_tpshout_admin_settings()
 	global $context, $scripturl, $txt, $settings;
 
 	echo '
-	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;shout=admin"  method="post" style="margin: 0px;">
+	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;shout=admin"  method="post">
 		<input name="TPadmin_blocks" type="hidden" value="set" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="singlemenuedit">
@@ -201,8 +201,8 @@ function template_tpshout_admin_settings()
 						<dt>'.$txt['shoutbox_layout'].'
 						</dt>
 						<dd>
-							<div class="float-items" style="width:47%;"><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /> <img style="max-width: 80% !important;" src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" align="right"/></div>
-							<div class="float-items" style="width:47%;"><input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /> <img style="max-width: 80% !important;" src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" align="right"/></div>
+							<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" align="right"/></div></div>
+							<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></div></div>
 							<p class="clearthefloat"></p>
 						</dd>
 					</dl>
@@ -282,8 +282,8 @@ function template_tpshout_profile()
 		<div class="cat_bar"><h3 class="catbg">'.$txt['shoutboxprofile'].'</h3></div>
 		<p class="information">'.$txt['shoutboxprofile2'].'</p>
 		<div></div>
-		<div id="tpshout_profile" class="windowbg">
-			<div class="windowbg addborder" style="padding: 2ex;">';
+		<div id="tpshout_profile" class="windowbg padding-div">
+			<div class="windowbg addborder tp_pad">';
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
 			</div><br>

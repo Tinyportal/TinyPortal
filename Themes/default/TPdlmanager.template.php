@@ -61,7 +61,7 @@ function template_main()
 				<div class="cat_bar">
 					<h3 class="catbg">' . $txt['tp-dlfeatured'] . '</h3>
 				</div>
-				<div class="windowbg2 noup" style="overflow: hidden; padding: 1em; margin:0px 0px 4px;">';
+				<div class="windowbg noup" style="overflow: hidden; padding: 1em; margin:0px 0px 4px;">';
 
 			if(!empty($context['TPortal']['featured']['sshot']))
 				 echo '
@@ -94,7 +94,7 @@ function template_main()
 			</div>
         </div>
 		<span class="lowerframe" style="margin-bottom: 5px;"><span></span></span>
-		<div class="windowbg2">
+		<div class="windowbg">
 			<span class="topslice"><span></span></span>
 		    <div style="padding: 1em;">';
 	}
@@ -215,7 +215,7 @@ function template_main()
 	<div class="cat_bar">
 		<h3 class="catbg">'.$txt['tp-categories'] .'</h3>
 	</div>
-	<div class="windowbg2 noup">';
+	<div class="windowbg noup">';
 
 
 		//show all categories
@@ -273,7 +273,7 @@ function template_main()
 			echo '
 			</div>
 		</div>
-		<div class="windowbg2" style="padding: 1em;">
+		<div class="windowbg" style="padding: 1em;">
 			<div style="overflow: hidden;">';
 
 			foreach($context['TPortal']['dlitem'] as $dlitem)
@@ -322,6 +322,8 @@ function template_main()
 			if($context['TPortal']['dlaction']!='item' && !empty($context['TPortal']['pageindex']))
 				echo $context['TPortal']['pageindex'];
 		}
+				else
+			echo '<div class="padding-div">'.$txt['tp-nofiles'].'</div>';
 		echo '
 		</div>
 	</div>';
@@ -435,7 +437,7 @@ function template_main()
 	   echo '
 	 <div id="tpUpload" class="tborder">
         <div class="cat_bar">
-            <h3 class="catbg">'.$txt['tp-dlupload'].'</h4>
+            <h3 class="catbg">'.$txt['tp-dlupload'].'</h3>
         </div><div></div>
 		<div class="windowbg noup" style="padding:0px">
 			<span class="topslice"><span></span></span>
@@ -446,7 +448,7 @@ function template_main()
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
 			echo '<div class="padding-div" style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext padding-div">'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</div><br>
+		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</b></div><br>
 					<div class="formtable padding-div">
 						<dl class="settings">
 							<dt>'.$txt['tp-dluploadtitle'].'
@@ -618,7 +620,7 @@ function template_main()
 			</div>
 			<span class="botslice"><span></span></span>
 		</div>
-	</div></div>
+	</div>
 	<script type="text/javascript">
 		function dlcheck(icon)
 		{
@@ -632,17 +634,15 @@ function template_main()
 	{
 		$maxcount = 10;
 	   echo '
-	<div id="stats-page" class="tborder windowbg2">
+	<div id="stats-page" class="tborder"><div></div>
 		<div class="cat_bar">
 			<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-stats'].'</h3>
 		</div>
-		<div class="bordercolor padding-div">
-			<div class="titlebg padding-div">
-				<div>'.$maxcount.' '.$txt['tp-dlstatscats'].'</div>
-			</div>
+		<div class="windowbg noup padding-div">
+			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatscats'].'</h3></div>
 			<div style="width:100%;">
 			  <div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" /></div>
-			  <div class="float-items" class="windowbg2" style="width:91%;">';
+			  <div class="float-items" class="windowbg" style="width:91%;">';
 
 		// top categories
 		echo '<div>';
@@ -671,9 +671,7 @@ function template_main()
 
 		echo '
 				</div><p class="clearthefloat"></p></div>
-				<div class="titlebg padding-div">
-				  <div>'.$maxcount.' '.$txt['tp-dlstatsviews'].'</div>
-			    </div>
+				<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatsviews'].'</h3></div>
 				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.png" alt="" /></div>
 				<div class="float-items" class="windowbg2" style="width:91%;">';
 
@@ -703,9 +701,7 @@ function template_main()
 
 		echo '
 			</div><p class="clearthefloat"></p></div>
-			<div class="titlebg padding-div">
-				<div>'.$maxcount.' '.$txt['tp-dlstatsdls'].'</div>
-			</div>
+			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatsdls'].'</h3></div>
 			<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.png" alt="" /></div>
 				<div class="windowbg2 float-items" style="width:91%;">';
 
@@ -736,9 +732,7 @@ function template_main()
 
 		echo '
 				</div><p class="clearthefloat"></p></div>
-			<div class="titlebg padding-div">
-				<div>'.$maxcount.' '.$txt['tp-dlstatssize'].'</div>
-			</div>
+			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatssize'].'</h3></div>
 				<div style="width:100%;"><div class="windowbg2 float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.png" alt="" /></div>
 				<div class="windowbg2 float-items" style="width:91%;">';
 
@@ -948,25 +942,25 @@ function template_main()
 	if($context['TPortal']['dlaction']=='search')
 	{
 	   echo '
+	<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
 		<div class="tborder" id="dlfiles-search">
 			<div class="cat_bar">
 				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
 			</div>
-			<div class="windowbg2 noup" style="padding: 1em; border:1px solid #ccc;">
-					<div style="padding: 10px;">
-							<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
-									<b>'.$txt['tp-search'].':</b><br>
-									<input type="text" style="font-size: 1.3em; margin-bottom: 0.5em; padding: 3px;" name="dl_search" id="dl_search" required/><br>
-									<input type="checkbox" id="dl_searcharea_name" checked="checked"/> ' , $txt['tp-searcharea-name'] , '<br>
-									<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> ' , $txt['tp-searcharea-descr'] , '<br>
-									<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
-									<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-							</form>
+			<div class="roundframe noup">
+					<div class="tp_pad">
+						<b>'.$txt['tp-search'].':</b><br>
+						<input id="searchbox" type="text" name="dl_search" required/><br>
+						<input type="checkbox" checked="checked"/> '.$txt['tp-searcharea-name'].'<br>
+						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> '.$txt['tp-searcharea-descr'].'<br>
+						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
+						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 					<div>
 				</div>
 			</div>
 			</div>
-		</div>';
+		</div>
+	</form>';
 	}
 
 	if($context['TPortal']['dlaction']=='results')
@@ -975,17 +969,17 @@ function template_main()
 		<div class="tborder">
 			<div class="cat_bar">
 				<h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
-					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;
-				</h3>
+					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;</h3>
 			</div>
-			<div class="windowbg2 noup" style="padding: 0px; margin-bottom:3px;">
+			<div class="roundframe noup">
 				<div class="padding-div">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
-					<div style="padding: 10px;">
-						<input type="text" style="font-size: 1em; margin-bottom: 0.5em; padding: 3px;" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
-						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '
-						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br><br>
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+					<div class="tp_pad">
+						<b>'.$txt['tp-search'].':</b><br>
+						<input id="searchbox" type="text" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
+						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '<br>
+						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br>
+						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'" />
 					</div>
 				</form>
@@ -997,9 +991,9 @@ function template_main()
 		{
 			echo '
 				<div class="windowbg padding-div" style="margin-bottom:3px;">
-					<h4 class="tpresults windowbg"><a href="' . $scripturl . '?action=tpmod;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
+					<h4 class="tpresults"><a href="' . $scripturl . '?action=tpmod;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
 					<hr>
-					<div class="windowbg tpresults" style="padding-top: 4px;">
+					<div class="tpresults" style="padding-top: 4px;">
 						<div class="middletext">' , $res['body'] . '</div>
 						<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
 					</div>

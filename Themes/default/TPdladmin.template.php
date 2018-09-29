@@ -43,14 +43,14 @@ $clickme.click( function(e) {
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="user-download" class="admintable admin-area">
-			<div class="windowbg noup">
-				<div class="addborderleft" style="padding:0px;">
-					<div class="float-items pos" style="width:14%;">x</div>
-					<div class="float-items name" style="width:26%;">'.$txt['tp-dlname'].'</div>
-					<div class="float-items title-admin-area" style="width:5%;">'.$txt['tp-dlicon'].'</div>
-					<div class="float-items title-admin-area" style="width:14%;">'.$txt['tp-dlfiles'].'</div>
-					<div class="float-items title-admin-area" style="width:14%;">'.$txt['tp-dlsubmitted'].'</div>
-					<div class="float-items title-admin-area" style="width:14%;">'.$txt['tp-dledit'].'</div>
+			<div class="windowbg noup padding-div">
+				<div class="addborderleft">
+					<div class="float-items pos" style="width:14%;"><strong>'.$txt['tp-pos'].'</strong></div>
+					<div class="float-items name" style="width:26%;"><strong>'.$txt['tp-dlname'].'</strong></div>
+					<div class="float-items title-admin-area" style="width:5%;"><strong>'.$txt['tp-dlicon'].'</strong></div>
+					<div class="float-items title-admin-area" style="width:14%;"><strong>'.$txt['tp-dlfiles'].'</strong></div>
+					<div class="float-items title-admin-area" style="width:14%;"><strong>'.$txt['tp-dlsubmitted'].'</strong></div>
+					<div class="float-items title-admin-area" style="width:14%;"><strong>'.$txt['tp-dledit'].'</strong></div>
 					<p class="clearthefloat"></p>
 				</div>';
 			// output all the categories, sort after childs
@@ -60,7 +60,7 @@ $clickme.click( function(e) {
 			{
 				if($cat['parent']==0)
 					echo '
-				<div class="windowbg" style="border-bottom: 1px solid #ccc;">
+				<div class="addborder">
 					<div class="adm-pos float-items" style="width:14%;">
 					  <input name="tp_dlcatpos'.$cat['id'].'" size="2" type="text" value="'.$cat['pos'].'">
 					</div>
@@ -93,6 +93,8 @@ $clickme.click( function(e) {
 				</div>';
 			}
 		}
+		else
+			echo '<div class="padding-div">'.$txt['tp-nocats'].'</div>';
 		echo '
 				<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
 			</div>
@@ -105,14 +107,13 @@ $clickme.click( function(e) {
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsettings'].'</h3></div>
 		<div id="dlsettings" class="admintable admin-area">
-			<div class="windowbg noup" style="padding:0px;">
-				<div class="formtable padding-div">
+			<div class="windowbg noup padding-div">
 					<dl class="settings">
 					<dt>
 						'.$txt['tp-dlallowedtypes'].':
 					</dt>
 					<dd>
-						<input style="width: 95%;" name="tp_dl_allowed_types" type="text" value="'.$context['TPortal']['dl_allowed_types'].'"><br><br>
+						<input size=60 name="tp_dl_allowed_types" type="text" value="'.$context['TPortal']['dl_allowed_types'].'"><br><br>
 					</dd>
 					<dt>'.$txt['tp-dlallowedsize'].':
 					</dt>
@@ -182,7 +183,7 @@ $clickme.click( function(e) {
 					elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 						TP_bbcbox($context['TPortal']['editor_id']);
 					else
-						echo '<textarea name="tp_dl_introtext" style="width: 99%; height: 300px;">'.$context['TPortal']['dl_introtext'].'</textarea>';
+						echo '<textarea id="tp_article_body" name="tp_dl_introtext" >'.$context['TPortal']['dl_introtext'].'</textarea>';
 					echo '
 						</div>
 					</div>
@@ -199,7 +200,7 @@ $clickme.click( function(e) {
 						'.$txt['tp-dlfeatured'].' :
 					</dt>
 					<dd>
-						<select name="tp_dl_featured" style="width: 200px;" size="5">';
+						<select name="tp_dl_featured" size="5">';
 
 				foreach($context['TPortal']['all_dlitems'] as $item)
 				{
@@ -258,7 +259,6 @@ $clickme.click( function(e) {
 						<input type="hidden" name="dlsettings" value="1" />
 						<input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'">
 					</div>
-				</div>
 			</div>
 		</div>';
 	}
@@ -270,12 +270,12 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="any-subcats" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-			<div class="addborderleft addborder" style="padding:0px;font-size:100%;">
-				<div style="width:30%;" class="float-items pos">'.$txt['tp-dlname'].'</div>
-				<div style="width:5%;" class="float-items title-admin-area">'.$txt['tp-dlicon'].'</div>
-				<div style="width:19%;" class="float-items title-admin-area">'.$txt['tp-dlviews'].'</div>
-				<div style="width:26%;" class="float-items title-admin-area">'.$txt['tp-dlfile'].'</div>
-				<div style="width:9%;" class="float-items title-admin-area">'.$txt['tp-dlfilesize'].'</div>
+			<div class="addborderleft">
+				<div style="width:30%;" class="float-items pos"><strong>'.$txt['tp-dlname'].' / '.$txt['tp-pos'].'</strong></div>
+				<div style="width:5%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlicon'].'</strong></div>
+				<div style="width:19%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlviews'].'</strong></div>
+				<div style="width:26%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfile'].'</strong></div>
+				<div style="width:9%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
 				<p class="clearthefloat"></p>
 			</div>';
 		if(isset($context['TPortal']['admcats']) && count($context['TPortal']['admcats'])>0)
@@ -284,7 +284,7 @@ $clickme.click( function(e) {
 			{
 				if($cat['parent']==$mycat)
 					echo '
-			<div class="windowbg" style="padding-top:1%; border-bottom: 1px solid #ccc;">
+			<div class="windowbg addborder">
 			    <div class="fullwidth-on-res-layout float-items" style="width:30%;">
 					<div style="width:25%;" class="float-items">
 						<input name="tp_dlcatpos'.$cat['id'].'" size="2" type="text" value="'.$cat['pos'].'">
@@ -312,7 +312,7 @@ $clickme.click( function(e) {
 				</div>
 			</div>
 			<div style="width:37%;" class="fullwidth-on-res-layout float-items">
-				<div id="show-on-respnsive-layout" style="margi-left:1%;">'.$txt['tp-dlfile'].'</div>
+				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
 				<a href="',$scripturl, '?action=tpmod;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
 				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" border="0" src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
@@ -326,7 +326,7 @@ $clickme.click( function(e) {
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
 				echo '
-			<div id="up-file" class="windowbg2 bigger-width" style="border-bottom: 1px solid #ccc;">
+			<div id="up-file" class="windowbg2 bigger-width addborder">
 				<div style="width:30%;" class="fullwidth-on-res-layout float-items">
 					<a href="',$scripturl, '?action=tpmod;dl=item',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
@@ -366,7 +366,8 @@ $clickme.click( function(e) {
 		</div>';
 			}
 		}
-
+		else
+			echo '<div class="padding-div">'.$txt['tp-nofiles'].'</div>';
 		echo '
 			<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'">
 			</div>
@@ -383,11 +384,9 @@ $clickme.click( function(e) {
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
-			<div class="windowbg noup" style="padding:0px;">
-				<div class="formtable padding-div">
-					<div class="font-strong">'.$txt['tp-dluploadtitle'].'</b></div>
-					<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
-				<div class="padding-div"></div>
+			<div class="windowbg noup padding-div">
+				<div class="font-strong">'.$txt['tp-dluploadtitle'].'</b></div>
+					<input size=60 name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
 				<div>
 					<div class="font-strong">'.$txt['tp-dluploadtext'].' :</div>';
 
@@ -396,9 +395,9 @@ $clickme.click( function(e) {
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox($context['TPortal']['editor_id']);
 				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;max-width:98%!important;">'.$cat['description'].'</textarea>';
+					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body">'.$cat['description'].'</textarea>';
 				echo '
-			</div>
+				</div>
 			<hr>
 				<dl class="settings">
 				<dt>'.$txt['tp-dlfilename'].'
@@ -406,10 +405,11 @@ $clickme.click( function(e) {
 				<dd>';
 		if($cat['file']=='- empty item -' || $cat['file']=='- empty item - ftp'){
 			if($cat['file']=='- empty item - ftp')
-				echo '<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
+				echo '
+				<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
 
 			echo '
-					<select size="1" name="dladmin_file'.$cat['id'].'" style="max-width:100%;">
+					<select size="1" name="dladmin_file'.$cat['id'].'">
 						<option value="">' . $txt['tp-noneicon'] . '</option>';
 
 			foreach($context['TPortal']['tp-downloads'] as $file)
@@ -455,7 +455,7 @@ $clickme.click( function(e) {
 					<dt>'.$txt['tp-dluploadcategory'].'
 					</dt>
 					<dd>
-						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px;max-width:100%;">';
+						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px">';
 
 		foreach($context['TPortal']['admuploadcats'] as $ucats)
 		{
@@ -478,8 +478,8 @@ $clickme.click( function(e) {
 			foreach($cat['subitem'] as $sub)
 			{
 				echo '<div><a href="' , $sub['href'], '">' , $sub['name'] , '</a> (',$sub['file'],')
-						', $sub['filesize'] ,' &nbsp;&nbsp;<br><input style="vertical-align: middle;" name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
-						&nbsp;&nbsp;<input style="vertical-align: middle;" name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
+						', $sub['filesize'] ,' &nbsp;&nbsp;<br><input name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
+						&nbsp;&nbsp;<input name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
 						<br></div>';
 			}
 		echo '
@@ -549,7 +549,8 @@ $clickme.click( function(e) {
 					<dd>
 						<br>' , $cat['sshot']!='' ? '<img style="max-width:95%;" src="'.$cat['sshot'].'" alt="" />' : '' , '
 					</dd>
-
+				</dl>
+				<dl class="settings">
 					<dt>'.$txt['tp-uploadnewpic'].':
 					</dt>
 					<dd>
@@ -571,12 +572,13 @@ $clickme.click( function(e) {
 						<b>'.$txt['tp-dldelete'].'</b>
 					</dt>
 					<dd>
-						<input style="vertical-align: middle;" name="dladmin_delete'.$cat['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
+						<input name="dladmin_delete'.$cat['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
 					</dd>
 				</dl>
-		   </div>
-		   <div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div></div></div>
-			';
+			<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
+			</div>
+	   </div>
+	';
 	}
 	// any submitted items? - submission
 	elseif($context['TPortal']['dlsub']=='adminsubmission')
@@ -585,12 +587,12 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsubmissions'].'</h3></div>
 		<div id="any-submitted" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<div class="addborderleft addborder" style="padding:0px;font-size:100%;">
-					<div class="name float-items" style="width:18%;">'.$txt['tp-dlname'].'</div>
-					<div class="title-admin-area float-items" style="width:18%;">'.$txt['tp-dlfilename'].'</div>
-					<div class="title-admin-area float-items" style="width:18%;">'.$txt['tp-created'].'</div>
-					<div class="title-admin-area float-items" style="width:18%;">'.$txt['tp-uploadedby'].'</div>
-					<div class="title-admin-area float-items" style="width:17%;">'.$txt['tp-dlfilesize'].'</div>
+				<div class="addborderleft">
+					<div class="float-items pos" style="width:18%;"><strong>'.$txt['tp-dlname'].'</strong></div>
+					<div class="title-admin-area float-items" style="width:18%;"><strong>'.$txt['tp-dlfilename'].'</strong></div>
+					<div class="title-admin-area float-items" style="width:18%;"><strong>'.$txt['tp-created'].'</strong></div>
+					<div class="title-admin-area float-items" style="width:18%;"><strong>'.$txt['tp-uploadedby'].'</strong></div>
+					<div class="title-admin-area float-items" style="width:17%;"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
 					<p class="clearthefloat"></p>
 				</div>';
 		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
@@ -598,7 +600,7 @@ $clickme.click( function(e) {
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
 				echo '
-				<div style="border-bottom: 1px solid #ccc;">
+				<div class="addborder">
 					<div class="fullwidth-on-res-layout windowbg2 float-items" style="width:18%;"><a href="'.$cat['href'].'">'.$cat['name'].'</a></div>
 					<div class="fullwidth-on-res-layout windowbg2 float-items" style="width:18%;">
 					  <div id="show-on-respnsive-layout">'.$txt['tp-dlfilename'].'</div>
@@ -634,7 +636,7 @@ $clickme.click( function(e) {
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-ftpstrays'].'</h3></div>
 			<div id="ftp-files" class="admintable admin-area">
-				<div class="information smalltext" style="margin:0px;border:0px;">'.$txt['tp-assignftp'].'</div>
+				<div class="information smalltext">'.$txt['tp-assignftp'].'</div>
 				<div class="windowbg noup padding-div">';
 
 		// alert if new files were added recently
@@ -648,12 +650,12 @@ $clickme.click( function(e) {
 					echo '<div><input name="assign-ftp-checkbox'.$ccount.'" type="checkbox" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' Kb]  - <b><a href="'.$scripturl.'?action=tpmod;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
 					$ccount++;
 			}
-			echo '<div style="padding: 5px;max-width:100%;"><span class="smalltext">
+			echo '<div style="padding: 5px;"><span class="smalltext">
 			 '.$txt['tp-newcatassign'].' <input name="assign-ftp-newcat" type="text" value=""> ';
 			// the parent category - or the one to use
 				// which parent category?
 				echo $txt['tp-assigncatparent'].'</span>
-					<select size="1" name="assign-ftp-cat" style="margin-top: 4px;max-width:100%;">
+					<select size="1" name="assign-ftp-cat" style="margin-top: 4px;">
 						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
@@ -698,7 +700,7 @@ $clickme.click( function(e) {
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox($context['TPortal']['editor_id']);
 				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
+					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
 
 
 				echo '<br><br>
@@ -734,7 +736,7 @@ $clickme.click( function(e) {
 				<dd>';
 				// which parent category?
 				echo '
-					<select size="1" name="dladmin_parent'.$cat['id'].'" style="margin-top: 4px;max-width:100%;">
+					<select size="1" name="dladmin_parent'.$cat['id'].'" style="margin-top: 4px;">
 						<option value="0" ', $cat['parent']==0 ? 'selected' : '' ,'>'.$txt['tp-nocategory'].'</option>';
 
 				if(count($context['TPortal']['admuploadcats'])>0)
@@ -812,7 +814,7 @@ $clickme.click( function(e) {
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox($context['TPortal']['editor_id']);
 				else
-					echo '<textarea name="newdladmin_text" style="width: 99%; height: 300px;"></textarea>';
+					echo '<textarea name="newdladmin_text" id="tp_article_body"></textarea>';
 
 
 			echo '<br><br></div>
@@ -847,7 +849,7 @@ $clickme.click( function(e) {
 					<dd>';
 		// which parent category?
 		echo '
-					<select size="1" name="newdladmin_parent" style="margin-top: 4px;max-width:100%;">
+					<select size="1" name="newdladmin_parent" style="margin-top: 4px;">
 						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
 
 		foreach($context['TPortal']['admuploadcats'] as $ucats)

@@ -111,10 +111,10 @@
 {
 	padding: 1em;
 }
-.tp_pad
+/*.tp_pad
 {
 	padding: 0 1em 0.5em 1em;
-}
+}*/
 h2.author_h2
 {
 	font-size: 1.3em;
@@ -1371,8 +1371,7 @@ this is where you set the distance between blocks, use padding and target each p
 }
 #tpadmin .content
 {
-	margin: 0;
-	padding: 0.4em;
+	overflow: hidden;
 }
 
 table.admintable, table.formtable, table.multiplerow
@@ -1570,14 +1569,6 @@ h2.catbg img.icon
 	float: left;
 	margin: 5px 8px 0 0;
 }
-
-
-#tpadmin_content .information
-{
-	border-left: none;
-	border-right: none;
-}
-
 #tp_overview
 {
 	padding: 2%; /* EDITED */
@@ -1649,9 +1640,6 @@ span.tpavatar img
 	border: solid 1px #aaa;
 	margin: 4px 4px 4px 0;
 }
-
-
-
 ul.recent_topics li
 {
 	padding: 4px;
@@ -1903,7 +1891,9 @@ left: 16px;
 }
 input#searchbox  {
 	width: 100%;
-	max-width: 350px!important;;
+	max-width: 350px!important;
+	margin-bottom: 0.5em; 
+	padding: 5px;
 }
 input,select {
 	max-width:97%!important;
@@ -1936,15 +1926,53 @@ box-sizing:border-box;
 }
 
 /************* TP ADMIN STYLES ********************/
-#tpadmin_content {
-	min-width:700px;
-}
+
 .addborder {
 	border-bottom: 1px solid #ccc;	
 }
 .addborderleft div{
 	border-left:1px solid #ccc;
 } 
+.admin-area {
+	width: 100%;
+    float: left;
+	box-sizing: border-box;
+    border:1px solid #ccc;
+}
+.admin-area img{
+	max-width: 100%;
+} 
+.tpartlayoutfp {
+    float: left;
+	margin: 4px;
+} 
+.tpartlayouttype {
+	float: left; 
+	width: 180px; 
+	height: 100px; 
+	margin: 4px;
+}
+#tp_article_body {
+	width: 95%; 
+	height: 300px;
+}
+#tp_article_intro{
+	width: 95%; 
+	height: 140px;
+}
+#tp_customlayout {
+	width: 90%; 
+	max-width: 900px;
+	height: 200px;
+}
+#tpadmin_content .information
+{	margin: 0px;
+	border: none;
+	border-radius: 0 0 0 0;
+}
+#tpadmin_content {
+	min-width:700px;
+}
 .padding-div{
 	padding:1%;
 }
@@ -1959,12 +1987,6 @@ box-sizing:border-box;
 #show-on-respnsive-layout {
 	display:none;
 }
-.admin-area {
-	width: 100%;
-    float: left;
-	box-sizing: border-box;
-    border:1px solid #ccc;
-} 
 .pos  {
 	border-left:0px!important;
 }
@@ -1976,13 +1998,23 @@ box-sizing:border-box;
 #tpadmin {
 	padding: 0 0 4px 0;
 }
-
+.panels-optionsbg {
+	background-color: #ffffff;
+	overflow: hidden;
+	padding: 5px;
+}
+.panels-options {
+	float: left;
+	width: 160px;
+	height: 120px; 
+	margin: 5px;
+}
+img.theme_icon {
+   width: 35px; 
+   height: 35px;
+}
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.admintable .information {
-	margin: 0px;
-	border-radius: 0 0 0 0;
-}
 .admintable > .windowbg {
 	box-shadow: none;
 	border-radius: 0;
