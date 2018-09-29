@@ -1207,42 +1207,42 @@ function tpListImages()
             'profile'           => '',
             'frontsection'      => '',
         );
+
+        require_once($sourcedir . '/Subs-Post.php');
+        preparsecode($newmod['description']);
+
+        // ok, insert this into modules table.
+        $smcFunc['db_insert']('INSERT',
+            '{db_prefix}tp_modules',
+            array(
+                'version' => 'string',
+                'modulename' => 'string',
+                'title' => 'string',
+                'subquery' => 'string',
+                'autoload_run' => 'string',
+                'autoload_admin' => 'string',
+                'autorun' => 'string',
+                'autorun_admin' => 'string',
+                'db' => 'string',
+                'permissions' => 'string',
+                'active' => 'int',
+                'languages' => 'string',
+                'blockrender' => 'string',
+                'adminhook' => 'string',
+                'logo' => 'string',
+                'tpversion' => 'string',
+                'smfversion' => 'string',
+                'description' => 'string',
+                'author' => 'string',
+                'email' => 'string',
+                'website' => 'string',
+                'profile' => 'string',
+                'frontsection' => 'string',
+            ),
+            $newmod,
+            array('id')
+        );
     }
-
-	require_once($sourcedir . '/Subs-Post.php');
-	preparsecode($newmod['description']);
-
-	// ok, insert this into modules table.
-	$smcFunc['db_insert']('INSERT',
-		'{db_prefix}tp_modules',
-		array(
-			'version' => 'string',
-			'modulename' => 'string',
-			'title' => 'string',
-			'subquery' => 'string',
-			'autoload_run' => 'string',
-			'autoload_admin' => 'string',
-			'autorun' => 'string',
-			'autorun_admin' => 'string',
-			'db' => 'string',
-			'permissions' => 'string',
-			'active' => 'int',
-			'languages' => 'string',
-			'blockrender' => 'string',
-			'adminhook' => 'string',
-			'logo' => 'string',
-			'tpversion' => 'string',
-			'smfversion' => 'string',
-			'description' => 'string',
-			'author' => 'string',
-			'email' => 'string',
-			'website' => 'string',
-			'profile' => 'string',
-			'frontsection' => 'string',
-		),
-		$newmod,
-		array('id')
-	);
 
 }
 
