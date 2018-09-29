@@ -131,7 +131,7 @@ function TPRemoveImage( $image )
 
 function TPMembers()
 {
-	global $smcFunc, $boarddir;
+	global $smcFunc, $boarddir, $txt;
 
 	$users	= array();
     if ($handle = opendir($boarddir.'/tp-images/thumbs')) {
