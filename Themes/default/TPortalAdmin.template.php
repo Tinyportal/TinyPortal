@@ -2178,7 +2178,6 @@ function template_editarticle($type = '')
 						<input size=20 name="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
 					</div>
 					<br>
-			<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 					<div>';
 
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
@@ -2198,7 +2197,8 @@ function template_editarticle($type = '')
 
 					echo '
 					</div>
-				<hr><br>
+				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+			<hr><br>
 				<dl class="settings">
 					<dt>
 						<label for="field_name">', $txt['tp-status'], '</label>

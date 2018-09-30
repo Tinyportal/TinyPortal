@@ -47,24 +47,26 @@ function template_main()
     $users = TPMembers();
 
     echo '
-    <div class="title_bar">
+		<div class="title_bar">
         <h3 class="titlebg">'.$txt['tp-listimage-settings'].'</h3>
-    </div>
-    <form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=list"  method="post" style="margin: 0px;">
-        <div class="windowbg" style="padding:1%;">
-            <input type="hidden" name="sc" value="', $context['session_id'], '" />
-            <select name="id_member">';
+		</div>
+		<div class="windowbg noup padding-div">
+		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=list"  method="post" style="margin: 0px;">
+		<div class="smalltext padding-div">' , $txt['tp-listimage-intro'] , '</div>
+		<div class="padding-div">
+				<input type="hidden" name="sc" value="', $context['session_id'], '" />
+				<select name="id_member">';
 
             foreach ( $users as $id => $name)
                 echo '<option value="'.$id.'">'.$name.'</option>';
 
     echo '
-            </select>
-            <input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
-        </div>
-    </form>
-    <p class="clearthefloat"></p>';
-
+				</select>
+				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
+			</div>
+		</form>
+		</div>
+	    <p class="clearthefloat"></p>';
     echo $ret;
 }
 
@@ -91,25 +93,27 @@ function TPListImages($user_id)
         $imgs = array_reverse($imgfiles);
     }
     $html .='
-        <div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
+        <div class="roundframe tp_pad" style="max-height: 800px; overflow: auto;">
             <div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
     if(!empty($imgs)) {
         foreach($imgs as $im) {
 
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=remove"  method="post" style="margin: 0px;">
-                <div class="windowbg" style="padding:1%;">
+                <div style="float:left; padding:1%;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />
                     <input type="hidden" name="image" value="'.substr($im,6).'" />
-                    <img src="'.$boardurl.'/tp-images/'.substr($im,6). '"  border="none" alt="" /><br >
-                    <input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"><br >
+                    <div style="width: 160px; height: 180px;"><img src="'.$boardurl.'/tp-images/'.substr($im,6). '"  border="none" alt="" /><br>
+                    <input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"><br ></div>
                 </div>
             </form>';
         }
 
     }
-    $html .= '  </div>
-        </div>';
+    $html .= '  
+			</div>
+		<div class="padding-div"></div>
+	</div>';
 
     return $html;
 }
