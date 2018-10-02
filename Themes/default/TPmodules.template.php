@@ -277,6 +277,7 @@ function template_main()
                 <div class="cat_bar">
 				    <h3 class="catbg">' , $txt['tp-searcharticles2'] , '</h3>
                 </div>
+			<span class="upperframe"><span></span></span>
 				<div class="roundframe noup">
 					<div class="tp_pad">'.$txt['tp-searcharticleshelp'].'</div>
 					<div class="tp_pad">
@@ -288,6 +289,7 @@ function template_main()
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 					</div>
 				</div>
+				<span class="lowerframe"><span></span></span>
 			</div>
 		</form>
 			';
@@ -377,6 +379,7 @@ function template_main()
                 <h3 class="catbg">' , $txt['tp-searchresults'] , '
                 ' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['searchterm'].'&quot;</h3>
             </div>
+			<span class="upperframe"><span></span></span>
 			<div class="roundframe noup">
 				<div class="padding-div">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
@@ -391,6 +394,8 @@ function template_main()
 					</form>
 				</div>
 			</div>
+			<span class="lowerframe"><span></span></span>
+		</div>
 			';
 			$bb = 1;
 			foreach($context['TPortal']['searchresults'] as $res)
@@ -403,11 +408,10 @@ function template_main()
 							<div class="middletext">' , $res['body'] . '</div>
 							<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
 						</div>
-				</div>';
+					</div>';
 				$bb++;
 			}
-			echo '
-		</div>';
+
 			break;
 		case 'myarticles':
 			echo '
