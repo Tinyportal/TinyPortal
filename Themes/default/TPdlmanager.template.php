@@ -947,20 +947,21 @@ function template_main()
 			<div class="cat_bar">
 				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
 			</div>
+			<span class="upperframe"><span></span></span>
 			<div class="roundframe noup">
-					<div class="tp_pad">
-						<b>'.$txt['tp-search'].':</b><br>
-						<input id="searchbox" type="text" name="dl_search" required/><br>
-						<input type="checkbox" checked="checked"/> '.$txt['tp-searcharea-name'].'<br>
-						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> '.$txt['tp-searcharea-descr'].'<br>
-						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
-						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-					<div>
+				<div class="tp_pad">
+					<b>'.$txt['tp-search'].':</b><br>
+					<input id="searchbox" type="text" name="dl_search" required/><br>
+					<input type="checkbox" checked="checked"/> '.$txt['tp-searcharea-name'].'<br>
+					<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> '.$txt['tp-searcharea-descr'].'<br>
+					<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
+					<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
 				</div>
 			</div>
-			</div>
+			<span class="lowerframe"><span></span></span>
 		</div>
-	</form>';
+	</form>
+		</div>	';
 	}
 
 	if($context['TPortal']['dlaction']=='results')
@@ -971,6 +972,7 @@ function template_main()
 				<h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
 					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;</h3>
 			</div>
+			<span class="upperframe"><span></span></span>
 			<div class="roundframe noup">
 				<div class="padding-div">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
@@ -982,8 +984,10 @@ function template_main()
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'" />
 					</div>
-				</form>
+					</form>
+				</div>
 			</div>
+			<span class="lowerframe"><span></span></span>
 		</div>
 				';
 		$bb=1;
