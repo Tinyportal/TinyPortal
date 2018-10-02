@@ -942,26 +942,26 @@ function template_main()
 	if($context['TPortal']['dlaction']=='search')
 	{
 	   echo '
-	<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
-		<div class="tborder" id="dlfiles-search">
-			<div class="cat_bar">
-				<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
-			</div>
-			<span class="upperframe"><span></span></span>
-			<div class="roundframe noup">
-				<div class="tp_pad">
-					<b>'.$txt['tp-search'].':</b><br>
-					<input id="searchbox" type="text" name="dl_search" required/><br>
-					<input type="checkbox" checked="checked"/> '.$txt['tp-searcharea-name'].'<br>
-					<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> '.$txt['tp-searcharea-descr'].'<br>
-					<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
-					<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
+		<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
+			<div class="tborder" id="dlfiles-search">
+				<div class="cat_bar">
+					<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
 				</div>
+				<span class="upperframe"><span></span></span>
+				<div class="roundframe noup">
+					<div class="tp_pad">
+						<b>'.$txt['tp-search'].':</b><br>
+						<input id="searchbox" type="text" name="dl_search" required/><br>
+						<input type="checkbox" checked="checked"/> '.$txt['tp-searcharea-name'].'<br>
+						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> '.$txt['tp-searcharea-descr'].'<br>
+						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
+						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
+					</div>
+				</div>
+				<span class="lowerframe"><span></span></span>
 			</div>
-			<span class="lowerframe"><span></span></span>
-		</div>
-	</form>
-		</div>	';
+		</form>
+	</div>';
 	}
 
 	if($context['TPortal']['dlaction']=='results')
