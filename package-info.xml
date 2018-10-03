@@ -28,6 +28,7 @@
 		<remove-file name="$sourcedir/TPmodules.php" />
 		<remove-file name="$sourcedir/TPortal.php" />
 		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSanitise.php" />
 		<remove-file name="$sourcedir/TPSubs.php" />
 		<remove-file name="$themedir/TPBlockLayout.template.php" />
 		<remove-file name="$themedir/TPdladmin.template.php" />
@@ -84,6 +85,7 @@
 		<remove-file name="$sourcedir/TPmodules.php" />
 		<remove-file name="$sourcedir/TPortal.php" />
 		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSanitise.php" />
 		<remove-file name="$sourcedir/TPSubs.php" />
 		<remove-file name="$themedir/TPBlockLayout.template.php" />
 		<remove-file name="$themedir/TPdladmin.template.php" />
