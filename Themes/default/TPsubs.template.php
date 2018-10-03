@@ -229,7 +229,7 @@ function TPortal_recentbox()
 // TPortal categories
 function TPortal_catmenu()
 {
-	global $context, $scripturl, $boardurl;
+	global $context, $scripturl, $boardurl, $settings;
 
 	if(isset($context['TPortal']['menu'][$context['TPortal']['menuid']]) && !empty($context['TPortal']['menu'][$context['TPortal']['menuid']])){
 		echo '
