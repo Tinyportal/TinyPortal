@@ -15,10 +15,14 @@ if (!defined('SMF'))
 
 function loadTPModuleLanguage()
 {
-    global $txt, $boarddir;
+    global $txt, $boarddir, $user_info, $language;
 
-if(loadLanguage('TPListImages') == false)
-	loadLanguage('TPListImages', 'english');
+    // Default to the user's language.
+    $lang       = isset($user_info['language']) ? $user_info['language'] : $language;
+    $filePath   = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.'.$lang.'.php';
+    if(is_file($filePath)) {
+        require_once($filePath);
+    }
 
 }
 
