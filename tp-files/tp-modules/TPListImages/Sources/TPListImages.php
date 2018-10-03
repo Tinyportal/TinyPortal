@@ -17,11 +17,9 @@ function loadTPModuleLanguage()
 {
     global $txt, $boarddir;
 
-    $filePath = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.english.php';
+if(loadLanguage('TPListImages') == false)
+	loadLanguage('TPListImages', 'english');
 
-    if(is_file($filePath)) {
-        require_once($filePath);
-    }
 }
 
 function template_main()
