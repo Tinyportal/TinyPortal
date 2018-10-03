@@ -58,7 +58,7 @@
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<remove-file name="$languagedir/TPListImages.english.php" />
-		<remove-file name="$languagedir/TPListImages.english.php-utf8.php" />
+		<remove-file name="$languagedir/TPListImages.english-utf8.php" />
 		<code>do_hooks.php</code>
 	</uninstall>
 	<install for="2.1.* - 2.1.99">
@@ -98,6 +98,7 @@
 		<remove-file name="$themedir/TPprofile.template.php" />
 		<remove-file name="$themedir/TPShout.template.php" />
 		<remove-file name="$themedir/TPsubs.template.php" />
+		<remove-file name="$themedir/TPwireless.template.php" />
 		<remove-file name="$themedir/css/TPShout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
 		<remove-file name="$themedir/scripts/TPShout.js" />
@@ -114,7 +115,7 @@
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<remove-file name="$languagedir/TPListImages.english.php" />
-		<remove-file name="$languagedir/TPListImages.english.php-utf8.php" />
+		<remove-file name="$languagedir/TPListImages.english-utf8.php" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>
