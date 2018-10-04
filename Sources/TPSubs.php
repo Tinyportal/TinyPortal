@@ -2204,7 +2204,6 @@ function tp_collectArticleIcons()
 	$context['TPortal']['articons'] = array();
 	$context['TPortal']['articons']['illustrations'] = array();
 
-	$count = 1;
 	$sorted2 = array();
 	//illustrations/images
 	if ($handle = opendir($boarddir.'/tp-files/tp-articles/illustrations'))
@@ -2218,6 +2217,7 @@ function tp_collectArticleIcons()
 						'id' => $count,
 						'file' => $file,
 						'image' => '<img src="'.$boardurl.'/tp-files/tp-articles/illustrations/'.$file.'" alt="'.$file.'" />',
+						'background' => $boardurl.'/tp-files/tp-articles/illustrations/'.$file,						
 					);
 				$count++;
 			}

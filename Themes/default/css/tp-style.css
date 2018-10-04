@@ -232,6 +232,13 @@ h3.article_title span.article_shortdate span
    max-width: 100%;
    height: auto;
 }
+.article_icon
+{
+   width: 128px;
+   height: 128px;
+   overflow: hidden;
+   border: 1px solid #ccc;
+}
 /* render 4 */
 .render4
 {
