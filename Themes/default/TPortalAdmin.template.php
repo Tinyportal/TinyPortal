@@ -1945,7 +1945,7 @@ function template_articles()
 										<a name="article'.$alink['id'].'"></a><input type="text" size="2" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" />
 									</div>
 									<div style="width:25%;" class="adm-name float-items">
-										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">&nbsp;' . $alink['subject'].'</a>' : '&nbsp;' . $alink['subject'] , '
+										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">' . $alink['subject'].'</a>' : '&nbsp;' . $alink['subject'] , '
 									</div>
 									<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			                        <div class="box" style="width:64%;float:left;">
@@ -2479,6 +2479,14 @@ function template_editarticle($type = '')
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-illustration'], '</label><br>
+					</dt>
+					<dd>
+						<div class="article_icon" style="background: top right url(' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , ')no-repeat;"></div>
+					</dd>
+				</dl>
+				<dl class="settings">
+					<dt>
+						<label for="field_name">', $txt['tp-illustration2'], '</label><br>
 						<div><img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /></div>
 					</dt>
 					<dd>
@@ -2747,7 +2755,8 @@ function template_articons()
 		<input name="tpadmin_form" type="hidden" value="articons">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-adminicons7'] . '</h3></div>
 		<div id="article-icons-pictures" class="admintable admin-area">
-			<div class="windowbg noup padding-div">
+			<div class="information smalltext">' , $txt['tp-adminiconsinfo'] , '</div><div></div>
+				<div class="windowbg noup padding-div">
 				<div class="formtable"><br>
 					<dl class="settings">
 						<dt>
@@ -2757,28 +2766,28 @@ function template_articons()
 							<input type="file" name="tp_article_newillustration" />
 						</dd>
 					</dl>
+					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 					<hr><br>';
-
+					
+				$alt=true;
 		if(count($context['TPortal']['articons']['illustrations'])>0)
 		{
 			foreach($context['TPortal']['articons']['illustrations'] as $icon)
 			{
 				echo '
-					<dl class="settings">
-						<dt>
-							' . $icon['image'] . '
-						</dt>
-						<dd>
+					<div class="smalltext" style="float:left; padding:1%;">
+						<div class="article_icon" style="background: top right url(' . $icon['background'] . ') no-repeat;">
+						</div>
 							<input type="checkbox" name="artillustration'.$icon['id'].'" id="artillustration'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  /> <label style="vertical-align: top;"  for="artiillustration'.$icon['id'].'">'.$txt['tp-remove'].'?</label>
-						</dd>
-					</dl>
+					</div>
 							';
 				$alt = !$alt;
 			}
 		}
 
 		echo '
-				<hr></div>
+						<p class="clearthefloat"></p>
+		<hr></div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 		</div>
