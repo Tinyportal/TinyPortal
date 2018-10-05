@@ -18,10 +18,15 @@ function loadTPModuleLanguage()
     global $txt, $boarddir, $user_info, $language;
 
     // Default to the user's language.
-    $lang       = isset($user_info['language']) ? $user_info['language'] : $language;
-    $filePath   = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.'.$lang.'.php';
-    if(is_file($filePath)) {
-        require_once($filePath);
+    $lang           = isset($user_info['language']) ? $user_info['language'] : $language;
+    $filePaths[]    = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.'.$lang.'.php';
+    $filePaths[]    = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.'.$language.'.php';
+    $filePaths[]    = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.english.php';
+    foreach($filePaths as $filePath) {
+        if(is_file($filePath)) {
+            require_once($filePath);
+            return;
+        }
     }
 
 }
