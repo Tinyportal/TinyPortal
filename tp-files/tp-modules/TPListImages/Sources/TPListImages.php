@@ -104,13 +104,26 @@ function TPListImages($user_id)
             <div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
     if(!empty($imgs)) {
         foreach($imgs as $im) {
-
+            if(!is_file($boarddir.'/tp-images/'.substr($im, 6))) {
+                if(is_file($boarddir.'/tp-images/thumbs/'.$im)) {
+                    $image      = substr($im, 6);
+                    $imageUrl   = $boardurl.'/tp-images/thumbs/'.$im;
+                }
+                else {
+                    continue;
+                }
+            }
+            else {
+                $image          = substr($im, 6);
+                $imageUrl       = $boardurl.'/tp-images/'.substr($im, 6);
+            }
+            
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=remove"  method="post" style="margin: 0px;">
                 <div style="float:left; padding:1%;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />
-                    <input type="hidden" name="image" value="'.substr($im,6).'" />
-                    <div style="width: 160px; height: 180px;"><img src="'.$boardurl.'/tp-images/'.substr($im,6). '"  border="none" alt="" /><br>
+                    <input type="hidden" name="image" value="'.$image.'" />
+                    <div style="width: 160px; height: 180px;"><img src="'.$imageUrl.'"  border="none" alt="" /><br>
                     <input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"><br ></div>
                 </div>
             </form>';
