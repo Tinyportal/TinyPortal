@@ -18,11 +18,18 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-global $context, $settings, $options;
+global $context, $settings, $options, $modSettings;
 
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
 
+// Mentions
+if (!empty($modSettings['enable_mentions']) && allowedTo('mention'))
+{
+    loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
+    loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
+    loadJavaScriptFile('shoutMentions.js', array('defer' => true, 'minimize' => false), 'smf_mentions');
+}
 
 // bbc code for shoutbox
 $context['html_headers'] .= '
@@ -137,7 +144,7 @@ if(isset($_REQUEST['shout']))
 // Post the shout via ajax
 function postShout()
 {
-	global $context, $smcFunc, $user_info, $scripturl, $sourcedir;
+	global $context, $smcFunc, $user_info, $scripturl, $sourcedir, $modSettings;
 
 	isAllowedTo('tp_can_shout');
 
@@ -177,6 +184,54 @@ function postShout()
 		$memID = $user_info['id'];
 
 		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
+
+        if (!empty($modSettings['enable_mentions']))
+        {
+	        require_once($sourcedir . '/Mentions.php');
+            $mentions = Mentions::getMentionedMembers($shout);
+            if ($mentions) 
+            {
+                $shout = Mentions::getBody($shout, $mentions);
+            }
+
+            // Alerts are relatively easy.
+            $insert_rows = array();
+            $insert_rows[] = array(
+                    'alert_time'        => time(),
+                    'id_member'         => 1,
+                    'id_member_started' => $user_info['id'],
+                    'member_name'       => 'admin',
+                    'content_type'      => 'shout',
+                    'content_id'        => 1,
+                    'content_action'    => 'new',
+                    'is_read'           => 0,
+                    'extra' => $smcFunc['json_encode'](
+                        array(
+                            "event_id"      => 1,
+                            "event_title"   => 'Shoutbox Mention',
+                        )
+                    ),
+            );
+
+            $smcFunc['db_insert']('insert',
+                    '{db_prefix}user_alerts',
+                    array(  
+                            'alert_time'        => 'int', 
+                            'id_member'         => 'int',
+                            'id_member_started' => 'int',
+                            'member_name'       => 'string',
+                            'content_type'      => 'string',
+                            'content_id'        => 'int',
+                            'content_action'    => 'string',
+                            'is_read'           => 'int',
+                            'extra'             => 'string'
+                    ),
+                    $insert_rows,
+                    array('id_alert')
+            );
+            // And update the count of alerts for those people.
+            //updateMemberData($notifies['alert'], array('alerts' => '+'));
+        }
 
         if($shout != '')
             $smcFunc['db_insert']('INSERT',
