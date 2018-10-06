@@ -560,4 +560,14 @@ function tpLoadTheme(&$id_theme)
 
 }
 
+function tpDoTagSearchLayers()
+{
+	global $context;
+
+	// are we on search page? then add TP search options as well!
+	if($context['TPortal']['action'] == 'search')
+		$context['template_layers'][] = 'TPsearch';
+
+}
+
 ?>

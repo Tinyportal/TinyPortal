@@ -116,7 +116,7 @@ function TPortal_init()
 		TPcollectPermissions();
 
 	// Show search/frontpage topic layers?
-	TP_doTagSearchLayers();
+	tpDoTagSearchLayers();
 
 	// any modules needed to load then?
 	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
@@ -156,19 +156,6 @@ function addPromoteButton(&$normal_buttons)
 		else
 			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
 	}
-}
-
-
-function TP_doTagSearchLayers()
-{
-
-	global $context;
-
-	// are we on search page? then add TP search options as well!
-	if($context['TPortal']['action'] == 'search')
-		$context['template_layers'][] = 'TPsearch';
-
-
 }
 
 function TP_whichHideBars()
