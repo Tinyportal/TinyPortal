@@ -368,6 +368,7 @@ function template_menubox()
 		<input name="tp_menuid" type="hidden" value="'.$mid.'">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-menumanager'].' - '.$context['TPortal']['menus'][$mid]['name'] . '  <a href="' . $scripturl . '?action=tpadmin;sa=addmenu;mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">['.$txt['tp-addmenuitem'].']</a></h3></div>
 		<div id="menu-manager" class="admintable admin-area bigger-width">
+		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
 			<div class="windowbg noup padding-div">
 				<div class="titlebg2 addborderleft addborder">
 							<div style="width:9%;" class="pos float-items">'.$txt['tp-pos'].'</div>
@@ -615,6 +616,7 @@ function template_menucore()
 
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
+		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
 		<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
@@ -624,6 +626,7 @@ function template_menucore()
                             <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 						</dd>
 					</dl>
+					
 					<dl class="settings">
 						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
                         <dd>
@@ -632,11 +635,16 @@ function template_menucore()
                             <option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
                             <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
                             <option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
-                            <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>
-                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>
+                            <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>';
+
+					if ($context['TPortal']['editmenuitem']['menuID']==0) {
+						echo '
+                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
+					}
+					echo '
                         </select>
                         </dd>
-					</dl>
+					</dl>					
 					<hr>
 					<dl class="settings">
 						<dt>
