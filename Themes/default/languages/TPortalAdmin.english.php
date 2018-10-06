@@ -570,6 +570,7 @@ $txt['tp-helppanels'] = 'Blocks are located in panels and each panel has its own
 $txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
 $txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
 $txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
+$txt['tp-helpmenuitems'] = 'Here you can create and change the menu items for the menu. The menu item types available are: Category, Article, Link, Header, Spacer or Menu button (only in the <i>Internal</i> menu)<br>';
 
 $txt['tp-assignnewauthor'] = 'Author ID(change to re-assign to another)';
 $txt['tp-uncategorised'] = 'Uncategorized';
