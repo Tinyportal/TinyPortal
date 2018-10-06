@@ -343,7 +343,7 @@ function template_modules()
 						</dd>
 						<dt> ', $txt['tp-author'] , ': <a href="mailto:', $mod['email'], '">', $mod['author'], '</a>
 						</dt>
-						<dd><div class="post">', !empty($mod['information']) ? parse_bbc($mod['information']) : '' , '</div>
+						<dd><div class="post">', !empty($mod['description']) ? parse_bbc($mod['description']) : '' , '</div>
 						</dd>
 					</dl>
 					';
