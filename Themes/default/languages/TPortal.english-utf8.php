@@ -324,4 +324,9 @@ $txt['tp-who-articles']         = 'Viewing Articles';
 $txt['tp-who-article']          = 'Viewing the Article &quot;<a href="%3$s?page=%2$s">%1$s</a>&quot;.';
 $txt['tp-who-article-search']   = 'Searching Articles.';
 $txt['tp-who-downloads']        = 'Viewing Downloads';
+
+// TPListimages //
+$txt['permissionname_tp_can_list_images'] = 'Manage TPlistimages';
+$txt['permissionhelp_tp_can_list_images'] = 'Allows users to remove uploaded images from the Tiny Portal Image Directory.';
+$txt['cannot_tp_can_list_images'] = 'Sorry, you aren\'t allowed to manage article images.';
 ?>

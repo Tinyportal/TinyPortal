@@ -35,6 +35,7 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 			'tp_dlmanager' => array(false, 'tp', 'tp'),
 			'tp_dlupload' => array(false, 'tp', 'tp'),
 			'tp_dlcreatetopic' => array(false, 'tp', 'tp'),
+			'tp_can_list_images' => array(false, 'tp', 'tp'),
 		),
 		$permissionList['membergroup']
 	);
@@ -170,6 +171,7 @@ function tpAddIllegalPermissions()
 		'tp_dlmanager',
 		'tp_dlupload',
 		'tp_dlcreatetopic',
+		'tp_can_list_images',
 	);
 	$context['non_guest_permissions'] = array_merge($context['non_guest_permissions'], $tp_illegal_perms);
 }

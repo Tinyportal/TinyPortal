@@ -32,6 +32,7 @@ function template_main()
 	global $txt, $context, $boarddir, $scripturl;
 
     loadTPModuleLanguage();
+	isAllowedTo('tp_can_list_images');
 
     $ret = '';
     if(array_key_exists('listimage', $_GET)) {
@@ -77,7 +78,7 @@ function TPListImages($user_id)
     global $txt, $boarddir, $boardurl, $context, $scripturl;
 
     loadTPModuleLanguage();
-
+	
     $html = '';
     // fetch all images you have uploaded
     $imgfiles = array();
