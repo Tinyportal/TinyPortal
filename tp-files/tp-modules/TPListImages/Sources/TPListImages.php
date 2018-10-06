@@ -148,7 +148,7 @@ function TPMembers()
     if ($handle = opendir($boarddir.'/tp-images/thumbs')) {
         while (false !== ($file = readdir($handle))) {
             if($file != '.' && $file !='..' && $file !='.htaccess') {
-                if(preg_match('/thumb_(.*)uid/', $file, $matches)) {
+                if(preg_match('/thumb_(.*?)uid/', $file, $matches)) {
                     $users[$matches[1]] = $matches[1];
                 }
             }
