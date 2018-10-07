@@ -84,8 +84,8 @@ function template_tpListImages_admin()
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
 			</div>
 		</form>
-		</div>
-	    <p class="clearthefloat"></p>';
+		</div>';
+    
     echo $ret;
 
 }
