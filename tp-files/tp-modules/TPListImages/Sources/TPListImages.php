@@ -13,6 +13,18 @@ if (!defined('SMF'))
 	die('Hacking attempt...');
 
 
+global $context;
+
+if(!isset($context['tp_panels']))
+	$context['tp_panels'] = array();
+
+$context['template_layers'][]   = 'tpadm';
+$context['template_layers'][]   = 'subtab';
+TPadminIndex();
+$context['current_action']      = 'admin';
+$context['sub_template']        = 'tpListImages_admin';
+tp_hidebars('all');
+
 function loadTPModuleLanguage()
 {
     global $txt, $boarddir, $user_info, $language;
@@ -28,10 +40,9 @@ function loadTPModuleLanguage()
             return;
         }
     }
-
 }
 
-function template_main()
+function template_tpListImages_admin()
 {
 
 	global $txt, $context, $boarddir, $scripturl;
@@ -76,6 +87,7 @@ function template_main()
 		</div>
 	    <p class="clearthefloat"></p>';
     echo $ret;
+
 }
 
 function TPListImages($user_id) 
