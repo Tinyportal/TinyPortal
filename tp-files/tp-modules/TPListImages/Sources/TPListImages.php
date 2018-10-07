@@ -23,7 +23,10 @@ $context['template_layers'][]   = 'subtab';
 TPadminIndex();
 $context['current_action']      = 'admin';
 $context['sub_template']        = 'tpListImages_admin';
-tp_hidebars('all');
+
+if($context['TPortal']['hidebars_admin_only'] == '1') {
+    tp_hidebars();
+}
 
 function loadTPModuleLanguage()
 {
