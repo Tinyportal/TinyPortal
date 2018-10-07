@@ -23,30 +23,30 @@ function TPortal_init()
 {
 	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version;
 
-  // Remove the ONLY_FULL_GROUP_BY and STRICT_TRANS_TABLES keep all the other sql_mode settings
-  if(strpos($forum_version, '2.1') !== false) {
-    global $smcFunc;
-    $modSettings['disableQueryCheck'] = true;
-    $sqlMode  = $smcFunc['db_query']('' ,
-      'SELECT @@sql_mode AS SQL_MODE;'
-    );
-    if($smcFunc['db_num_rows']($sqlMode) === 1) {
-      $sqlModeResult = $smcFunc['db_fetch_assoc']($sqlMode)['SQL_MODE'];
-      if(strpos($sqlModeResult, ',') !== false) {
-        $sqlModeResults = explode(',', $sqlModeResult);
-        foreach($sqlModeResults as $key => $value) {
-          if(in_array($value, array('ONLY_FULL_GROUP_BY', 'STRICT_TRANS_TABLES'))) {
-            unset($sqlModeResults[$key]);
-          }
+    // Remove the ONLY_FULL_GROUP_BY and STRICT_TRANS_TABLES keep all the other sql_mode settings
+    if(strpos($forum_version, '2.1') !== false) {
+        global $smcFunc;
+        $modSettings['disableQueryCheck'] = true;
+        $sqlMode  = $smcFunc['db_query']('' ,
+                'SELECT @@sql_mode AS SQL_MODE;'
+                );
+        if($smcFunc['db_num_rows']($sqlMode) === 1) {
+            $sqlModeResult = $smcFunc['db_fetch_assoc']($sqlMode)['SQL_MODE'];
+            if(strpos($sqlModeResult, ',') !== false) {
+                $sqlModeResults = explode(',', $sqlModeResult);
+                foreach($sqlModeResults as $key => $value) {
+                    if(in_array($value, array('ONLY_FULL_GROUP_BY', 'STRICT_TRANS_TABLES'))) {
+                        unset($sqlModeResults[$key]);
+                    }
+                }
+            }
+            $smcFunc['db_query']('',
+                    'SET SESSION sql_mode = \''.implode(',', $sqlModeResults).'\';'
+                    );
         }
-      }
-      $smcFunc['db_query']('',
-        'SET SESSION sql_mode = \''.implode(',', $sqlModeResults).'\';'
-      );
+        $smcFunc['db_free_result']($sqlMode);
+        $modSettings['disableQueryCheck'] = false;
     }
-    $smcFunc['db_free_result']($sqlMode);
-    $modSettings['disableQueryCheck'] = false;
-  }
 
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum']))
@@ -116,7 +116,7 @@ function TPortal_init()
 		TPcollectPermissions();
 
 	// Show search/frontpage topic layers?
-	TP_doTagSearchLayers();
+	tpDoTagSearchLayers();
 
 	// any modules needed to load then?
 	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
@@ -156,19 +156,6 @@ function addPromoteButton(&$normal_buttons)
 		else
 			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
 	}
-}
-
-
-function TP_doTagSearchLayers()
-{
-
-	global $context;
-
-	// are we on search page? then add TP search options as well!
-	if($context['TPortal']['action'] == 'search')
-		$context['template_layers'][] = 'TPsearch';
-
-
 }
 
 function TP_whichHideBars()

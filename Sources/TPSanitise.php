@@ -15,6 +15,45 @@
  */
 class TPSanitise {
     
+    public static function xssClean( $string ) {
+
+        // URL decode
+        $string = urldecode($string);
+        // Convert Hexadecimals
+        $string = preg_replace_callback('!(&#|\\\)[xX]([0-9a-fA-F]+);?!', function($m) {
+            return chr(hexdec($m[2]));
+        }, $string);
+        // Clean up entities
+        $string = preg_replace('!(&#0+[0-9]+)!','$1;',$string);
+        // Decode entities
+        $string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
+        // Strip whitespace characters
+        $string = preg_replace('!\s!','',$string);
+        // Set the patterns we'll test against
+        $patterns = array(
+            // Match any attribute starting with "on" or xmlns
+            '#(<[^>]+[\x00-\x20\"\'\/])(on|xmlns)[^>]*>?#iUu',
+            // Match javascript:, livescript:, vbscript: and mocha: protocols
+            '!((java|live|vb)script|mocha|feed|data):(\w)*!iUu',
+            '#-moz-binding[\x00-\x20]*:#u',
+            // Match style attributes
+            '#(<[^>]+[\x00-\x20\"\'\/])style=[^>]*>?#iUu',
+            // Match unneeded tags
+            '#</*(applet|meta|xml|blink|link|style|script|embed|object|iframe|frame|frameset|ilayer|layer|bgsound|title|base)[^>]*>?#i'
+        );
+        foreach($patterns as $pattern) {
+            $string = preg_replace($pattern, '', $string);
+        }
+
+        if(!empty($string)) {
+            return $string;
+        }
+        else {
+            return false;
+        }
+    }
+
+
     public static function filter($key, $type = 'get', $filterType = 'string', $options = array()) {
         
         switch($type) {
