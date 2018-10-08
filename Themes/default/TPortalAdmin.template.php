@@ -617,9 +617,7 @@ function template_menucore()
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
 		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
-		<div class="windowbg noup padding-div">';
-
-		echo '
+		<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
                             <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
