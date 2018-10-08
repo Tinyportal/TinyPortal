@@ -2046,9 +2046,6 @@ table.tp_grid td, th
 {
 	border: 1px solid #ddd;
 }
-table.tp_grid tr.title_bar {
-    background: #fff;
-}
 table.tp_grid tr.windowbg:nth-of-type(odd) {
     background: #fdfdfd;
 }
