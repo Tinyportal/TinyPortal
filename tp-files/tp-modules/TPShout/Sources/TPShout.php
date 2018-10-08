@@ -23,6 +23,9 @@ global $context, $settings, $options;
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
 
+if($context['TPortal']['hidebars_admin_only'] == '1') {
+    tp_hidebars();
+}
 
 // bbc code for shoutbox
 $context['html_headers'] .= '
