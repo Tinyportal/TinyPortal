@@ -617,7 +617,9 @@ function template_menucore()
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
 		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
-		<div class="windowbg noup padding-div">
+		<div class="windowbg noup padding-div">';
+
+		echo '
 					<dl class="settings">
 						<dt>
                             <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
@@ -636,9 +638,9 @@ function template_menucore()
                             <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
                             <option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
                             <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>';
-
-					if ($context['TPortal']['editmenuitem']['menuID']==0) {
-						echo '
+					// check for menu button
+				if ((!empty($_GET['mid']) && $_GET['mid']==0) || ($context['TPortal']['editmenuitem']['menuID']==0)) {
+					echo '*/
                             <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
 					}
 					echo '
