@@ -59,7 +59,7 @@ function template_tp_articles()
 
 		echo '
 				</div><br>
-	<table class="table_grid" style="width:100%";>
+	<table class="table_grid tp_grid tp_grid" style="width:100%";>
 		<thead>
 			<tr class="title_bar">
 			<th scope="col" class="articles">
@@ -188,7 +188,7 @@ function template_tp_download()
 
 	echo '
 			</div><br>
-		<table class="table_grid" style="width:100%">
+		<table class="table_grid tp_grid" style="width:100%">
 			<thead>
 				<tr class="title_bar">
 				<th scope="col" class="tp_profile_uploaded">

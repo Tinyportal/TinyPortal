@@ -287,13 +287,13 @@ function template_tpshout_profile()
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
 			</div><br>
-		<table class="table_grid" style="width:100%">
+		<table class="table_grid tp_grid" style="width:100%">
 			<thead>
 				<tr class="title_bar">
 				<th scope="col" class="shouts">
-					<div class="float-items" align="center" style="width:22%;border-right:1px solid #ffffff;">'.$txt['date'].'</div>
+					<div class="float-items" align="center" style="width:22%;">'.$txt['date'].'</div>
 					<div align="center" class="smalltext float-items" style="width:51%;">',$txt['tp-shout'],'</div>
-					<div class="float-items" align="center" style="width:19%;border-left:1px solid #ffffff;">'. $txt['tp-edit'] .'</div>
+					<div class="float-items" align="center" style="width:19%;">'. $txt['tp-edit'] .'</div>
 				</th>
 				</tr>
 			</thead>
