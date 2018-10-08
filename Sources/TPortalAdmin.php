@@ -1374,9 +1374,9 @@ function do_articles()
 			$request = $smcFunc['db_query']('', '
 				SELECT	art.category as id, COUNT(art.id) as files
 				FROM {db_prefix}tp_articles as art
-				WHERE art.category IN ({string:cats})
+				WHERE art.category IN ({array_int:cats})
 				GROUP BY art.category',
-				array('cats' => implode(',', $alcats))
+				array('cats' => $alcats)
 			);
 
 			if($smcFunc['db_num_rows']($request) > 0)
