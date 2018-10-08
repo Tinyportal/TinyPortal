@@ -625,8 +625,7 @@ function template_menucore()
 						<dd>
                             <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 						</dd>
-					</dl>
-					
+					</dl>	
 					<dl class="settings">
 						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
                         <dd>
@@ -636,9 +635,19 @@ function template_menucore()
                             <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
                             <option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
                             <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>';
-					// check for menu button
-				if ((!empty($_GET['mid']) && $_GET['mid']==0) || ($context['TPortal']['editmenuitem']['menuID']==0)) {
-					echo '*/
+				// check for menu button in createmenuitem
+				if (isset($_GET['mid']))
+					{
+					if($_GET['mid']==0)
+						{
+						echo '
+                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
+						}
+					}
+				// check for menu button in editmenuitem
+				elseif ($context['TPortal']['editmenuitem']['menuID']==0) 
+					{
+					echo '
                             <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
 					}
 					echo '
