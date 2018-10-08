@@ -2042,7 +2042,7 @@ img.theme_icon {
 }
 
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
-table.tp_grid td, th
+table.tp_grid td, table.tp_grid th
 {
 	border: 1px solid #ddd;
 }
