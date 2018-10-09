@@ -119,7 +119,6 @@ function template_blockoverview()
 		<input name="tpadmin_form" type="hidden" value="blockoverview">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div><div></div>
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
-			<span class="topslice"><span></span></span>
 			<div class="content">';
 
 		$side=array('','left','right','center','front','bottom','top','lower');
