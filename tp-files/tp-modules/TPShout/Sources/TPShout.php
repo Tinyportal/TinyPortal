@@ -23,9 +23,13 @@ global $context, $settings, $options;
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
 
-if($context['TPortal']['hidebars_admin_only'] == '1') {
-    tp_hidebars();
+// if in admin screen, turn off blocks
+if($context['TPortal']['action'] == 'tpmod' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin')
+{
+	$in_admin = true;
 }
+if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin))
+	tp_hidebars();
 
 // bbc code for shoutbox
 $context['html_headers'] .= '
@@ -513,7 +517,7 @@ function tpshout_admin()
 
 	$context['page_title'] = 'Shoutbox admin';
 
-	tp_hidebars();
+/*	tp_hidebars();*/
 }
 
 function tpshout_bigscreen($state = false, $number = 10)
