@@ -520,7 +520,42 @@ function tpWhosOnline($actions)
             return $txt['tp-who-articles'];
         }
     }
-
+    if(isset($actions['cat'])) {
+        if(is_numeric($actions['cat'])) {
+            $request = $smcFunc['db_query']('', '
+                SELECT 	value1 FROM {db_prefix}tp_variables
+                WHERE id = {int:id}
+                LIMIT 1',
+                array (
+                    'id' => $actions['cat'],
+                )
+            );
+        }
+        else {
+            $request = $smcFunc['db_query']('', '
+                SELECT value1 FROM {db_prefix}tp_variables
+                WHERE value8 = {string:shortname}
+                LIMIT 1',
+                array (
+                    'shortname' => $actions['cat'],
+                )
+            );
+        }
+        $category = array();
+        if($smcFunc['db_num_rows']($request) > 0) {
+            while($row = $smcFunc['db_fetch_assoc']($request)) {
+                $category = $row;
+            }
+            $smcFunc['db_free_result']($request);
+        }
+        if(!empty($category)) {
+            return sprintf($txt['tp-who-category'], $category['value1'], $actions['cat'], $scripturl );
+        }
+        else {
+            return $txt['tp-who-categories'];
+        }
+    }
+	
     if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
         return $txt['tp-who-downloads'];
     }
