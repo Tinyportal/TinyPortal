@@ -424,7 +424,7 @@ $txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
 $txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
 $txt['tp-grid'] = 'Display the blocks according to a grid';
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
-$txt['tp-blockheight'] = '<b>Force</b> this heigth on each block(use 00px or 00%)';
+$txt['tp-blockheight'] = '<b>Force</b> this height on each block(use 00px or 00%)';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel:';
 $txt['tp-panelstylehelp2'] = '(This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.)';
 
