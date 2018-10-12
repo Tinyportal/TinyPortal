@@ -1395,10 +1395,10 @@ function template_frontpage()
 						<dd>
 							<input name="tp_frontpage_visual_left" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['left']>0 ? 'checked' : '' , '> ',$txt['tp-displayleftpanel'],'<br>
 							<input name="tp_frontpage_visual_right" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['right']>0 ? 'checked' : '' , '> ',$txt['tp-displayrightpanel'],'<br>
-							<input name="tp_frontpage_visual_center" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['center']>0 ? 'checked' : '' , '> ',$txt['tp-displayupperpanel'],'<br>
 							<input name="tp_frontpage_visual_top" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['top']>0 ? 'checked' : '' , '> ',$txt['tp-displaytoppanel'],'<br>
-							<input name="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '> ',$txt['tp-displaybottompanel'],'<br>
+							<input name="tp_frontpage_visual_center" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['center']>0 ? 'checked' : '' , '> ',$txt['tp-displayupperpanel'],'<br>
 							<input name="tp_frontpage_visual_lower" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['lower']>0 ? 'checked' : '' , '> ',$txt['tp-displaylowerpanel'],'<br>
+							<input name="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '> ',$txt['tp-displaybottompanel'],'<br>
 							<input name="tp_frontpage_visual_header" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['header']>0 ? 'checked' : '' , '> ',$txt['tp-displaynews'],'<br><br>
 						</dd>
 
@@ -2330,8 +2330,9 @@ function template_editarticle($type = '')
 						<label for="field_name">', $txt['tp-approved'], '</label>
 					</dt>
 					<dd>
-							<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'
-							<input name="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'<br><br>
+							
+							<input name="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
+							<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'<br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-author'], '</label>
@@ -2527,8 +2528,8 @@ function template_editarticle($type = '')
 						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
 					<dd>
-							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'
-							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'<br>
+							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
+							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
 					</dd>
 				</dl>
 					';
@@ -2720,18 +2721,6 @@ function template_editarticle($type = '')
 						<hr /><br>
 							<dl class="settings">
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions7'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[7].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="field_name">', $txt['tp-articleoptions22'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_rblockwidth" type="text" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
-								</dd>
-								<dt>
 									<label for="field_name">', $txt['tp-articleoptions8'], '</label><br>
 								</dt>
 								<dd>
@@ -2744,16 +2733,16 @@ function template_editarticle($type = '')
 									<input name="tp_article_options_lblockwidth" type="text" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
 								</dd>
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions6'], '</label><br>
+									<label for="field_name">', $txt['tp-articleoptions7'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[6].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[6]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[7].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions9'], '</label><br>
+									<label for="field_name">', $txt['tp-articleoptions22'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_rblockwidth" type="text" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions10'], '</label><br>
@@ -2762,10 +2751,22 @@ function template_editarticle($type = '')
 									<input name="tp_article_options_'.$opts[10].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[10]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
+									<label for="field_name">', $txt['tp-articleoptions6'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[6].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[6]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
 									<label for="field_name">', $txt['tp-articleoptions11'], '</label><br>
 								</dt>
 								<dd>
 									<input name="tp_article_options_'.$opts[11].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[11]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
+									<label for="field_name">', $txt['tp-articleoptions9'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
 								</dd>
 							</dl><br>
 								<div class="title_bar">
@@ -2926,11 +2927,11 @@ function template_addblock()
 									<dd>
 										<input type="radio" name="tp_addblockpanel" value="1" ' , $side=='left' ? 'checked' : '' , ' />' . $txt['tp-leftpanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="2" ' , $side=='right' ? 'checked' : '' , ' />' . $txt['tp-rightpanel'] . '<br>
+										<input type="radio" name="tp_addblockpanel" value="6" ' , $side=='top' ? 'checked' : '' , ' />' . $txt['tp-toppanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="3" ' , $side=='upper' || $side=='center' ? 'checked' : '' , ' />' . $txt['tp-centerpanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="4" ' , $side=='front' ? 'checked' : '' , ' />' . $txt['tp-frontpanel'] . '<br>
-										<input type="radio" name="tp_addblockpanel" value="5" ' , $side=='bottom' ? 'checked' : '' , ' />' . $txt['tp-bottompanel'] . '<br>
-										<input type="radio" name="tp_addblockpanel" value="6" ' , $side=='top' ? 'checked' : '' , ' />' . $txt['tp-toppanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="7" ' , $side=='lower' ? 'checked' : '' , ' />' . $txt['tp-lowerpanel'] . '<br>
+										<input type="radio" name="tp_addblockpanel" value="5" ' , $side=='bottom' ? 'checked' : '' , ' />' . $txt['tp-bottompanel'] . '<br>
 									</dd>
 								</dl>
 							<hr>
