@@ -2365,7 +2365,9 @@ div.tp_half21 {
 		overflow:hidden!important;
 	 	max-width:100%;
 	}
-	.lrON input.input_text {
+	.lrON input.input_text,
+	.leftpanelOn input.input_text,
+	.rightpanelOn input.input_text	{
 		width:97%;
 	}
 	.inner a {
