@@ -1888,9 +1888,9 @@ left: 16px;
 }
 
 /************* TP STYLES ********************/
-* {
+/* {
 	border:0px;	
-}
+}*/
 .clearthefloat{
    clear:both;
    padding:0px;
@@ -2337,6 +2337,7 @@ div.tp_half21 {
 		padding: 0px;
 		margin: 0px;
 	}
+
 }
 
 /** screen from 500px to 900px **/
@@ -2364,7 +2365,11 @@ div.tp_half21 {
 		overflow:hidden!important;
 	 	max-width:100%;
 	}
-
+	.lrON input.input_text,
+	.leftpanelOn input.input_text,
+	.rightpanelOn input.input_text	{
+		width:97%;
+	}
 	.inner a {
 		/* These are technically the same, but use both */
 		overflow-wrap: break-word;
