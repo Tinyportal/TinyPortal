@@ -18,7 +18,6 @@
 global $txt, $context, $scripturl;
 
 // Navigation... //
-// Rev 89
 $txt['tp-admin9'] = 'TPdownloads';
 $txt['tp-admin8'] = 'Articles and Categories';
 $txt['tp-adminpanels'] = 'Panels and Blocks';
@@ -30,14 +29,12 @@ $txt['tp-tpnews'] = 'News and Credits';
 $txt['tp-adminmodules1'] = 'Modules';
 
 // General Miscellious... //
-// Rev 89
 $txt['tp-edit'] = 'Edit';
 $txt['tp-send'] = 'Save';
 $txt['tp-tpadmin'] = 'TP Admin';
 $txt['tp-profilesection'] = 'TinyPortal';
 
 // Articles... //
-// Rev 89
 $txt['tp_rate'] = 'Rate it!';
 $txt['tp-arenew'] = 'are new';
 $txt['tp-by'] = 'Written by';
@@ -103,9 +100,7 @@ $txt['tp-acronymhours'] = 'h ';
 $txt['tp-acronymminutes'] = 'm ';
 $txt['tp-incategory'] = ' in ';
 
-
 // Blocks... //
-// Rev 89
 $txt['tp-guest']='Guest';
 $txt['tp-guests'] = 'Guests';
 $txt['tp-itemviews'] = 'Views';
@@ -133,7 +128,6 @@ $txt['edit_description'] = 'Edit Block Contents';
 $txt['block-upshrink_description'] = 'Collapse or Expand Block';
 
 // Panels... //
-// Rev 89
 $txt['left-tp-upshrink_description'] = 'Left Panel';
 $txt['right-tp-upshrink_description'] = 'Right Panel';
 $txt['upper-tp-upshrink_description'] = 'Upper Panel';
@@ -144,7 +138,6 @@ $txt['front-tp-upshrink_description'] = 'Frontpage';
 $txt['center-tp-upshrink_description'] = 'Center Panel';
 
 // Search... //
-// Rev 89
 $txt['tp-searcharticles'] = 'Extended search';
 $txt['tp-searcharticles2'] = 'Search Articles';
 $txt['tp-searchdownloads'] = 'Search Downloads Manager';
@@ -153,9 +146,13 @@ $txt['tp-search'] = 'Search';
 $txt['tp-searchintitle'] = 'Search in titles';
 $txt['tp-searchinbody'] = 'Search in article texts';
 $txt['tp-searcharticleshelp'] = 'Search through all allowed articles.';
+$txt['tp-searcharticleshelp2'] = '<span class="smalltext"><b>You can use the following operators:</b><br>
+<B>+</B>&nbsp;&nbsp;include, the word must be present.<br>
+<B>-</B>&nbsp;&nbsp;exclude, the word must not be present.<br>
+<B>*</B>&nbsp;&nbsp;wildcard at the end of the word.<br><br>
+Example: <i>+Morrissey +album +live  <b>OR</B> +Morrissey +album -live <b>OR</B> morris*</i></span>';
 
 // Profile... //
-// Rev 89
 $txt['articlesprofile'] = 'Articles';
 $txt['downloadprofile'] = 'Uploaded files';
 $txt['galleryprofile'] = 'Gallery items';
@@ -182,13 +179,11 @@ $txt['tp-prof_waitapproval2'] = 'articles waiting approval.';
 $txt['tp-more']='More ';
 
 // News... //
-// Rev 89
 $txt['permissionname_tp_news'] = 'Can read TP news';
 $txt['permissionhelp_tp_news'] = 'Allows users to read news, install updates etc.';
 $txt['cannot_tp_news'] = 'Sorry, you aren\'t allowed to fetch news.';
 
 // TP Settings... //
-// Rev 89
 $txt['permissiongroup_tinyportal'] = 'TinyPortal';
 $txt['permissiongroup_simple_tinyportal'] = 'Manage TinyPortal';
 $txt['permissionname_tp_settings'] = 'Manage settings';
@@ -197,7 +192,6 @@ $txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage settings.';
 $txt['tp_maintenace'] = 'Maintenance Mode';
 
 // File Manager... //
-// Rev 89
 $txt['tp-dlmanageroff'] = 'The DL Manager module is not active.';
 $txt['tp-dluploaded'] = 'Uploads';
 $txt['tp-uploadedby'] = 'Uploaded by ';
@@ -221,7 +215,6 @@ $txt['permissionhelp_tp_dlcreatetopic'] = 'Allows users to create a linked suppo
 $txt['cannot_tp_dlcreatetopic'] = 'Sorry, you aren\'t allowed to create support topics.';
 
 // Shoutbox... //
-// Rev 89
 $txt['tp-shouts'] = 'Shouts:';
 $txt['shout!'] = 'Shout!';
 $txt['tp-shout'] = 'Shout';
@@ -231,7 +224,6 @@ $txt['permissionname_tp_can_shout'] = 'Can Post Shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 
 // Menus... //
-// Rev 89
 $txt['tp-miscblocks'] = 'Menus';
 
 $txt['tp-quicklist'] = 'My Images Quicklist';
@@ -264,7 +256,6 @@ $txt['tp-indownloads'] = ' [Downloads]';
 $txt['tp-fullscreenshot'] = 'Show full picture';
 
 $txt['tp-from'] = 'From ';
-$txt['tp-newtag'] = 'Create new tag:';
 
 $txt['tp-rates'] = 'rates';
 $txt['tp-haverated'] = 'You have rated.';
