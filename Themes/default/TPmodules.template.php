@@ -287,7 +287,13 @@ function template_main()
 						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-					</div>
+					</div>';
+					
+				if ($context['TPortal']['fulltextsearch']==1) {
+				echo '
+					<div class="tp_pad">'.$txt['tp-searcharticleshelp2'].'</div>';
+				}
+				echo '
 				</div>
 				<span class="lowerframe"><span></span></span>
 			</div>
@@ -381,7 +387,8 @@ function template_main()
             </div>
 			<span class="upperframe"><span></span></span>
 			<div class="roundframe noup">
-				<div class="padding-div">
+				<div class="tp_pad">'.$txt['tp-searcharticleshelp'].'</div>
+					<div class="tp_pad">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
@@ -390,7 +397,13 @@ function template_main()
 						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-					</div>
+					</div>';
+					
+				if ($context['TPortal']['fulltextsearch']==1) {
+				echo '
+					<div class="tp_pad">'.$txt['tp-searcharticleshelp2'].'</div>';
+				}
+				echo '
 					</form>
 				</div>
 			</div>
