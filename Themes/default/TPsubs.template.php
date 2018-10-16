@@ -154,7 +154,7 @@ function TPortal_scriptbox()
 // TPortal recent topics block
 function TPortal_recentbox()
 {
-	global $scripturl, $context, $settings, $txt, $modSettings;
+	global $scripturl, $context, $settings, $txt, $modSettings, $forum_version;
 
 	// is it a number?
 	if(!is_numeric($context['TPortal']['recentboxnum']))
@@ -182,8 +182,12 @@ function TPortal_recentbox()
 				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
+			{
+			if (strstr($forum_version, '2.0'))
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-
+			else
+				echo ' <a href="'.$w['href'].'" id="newicon' . $topic['first_post']['id'] . '" class="new_posts" >' . $txt['new'] . '</a> ';
+			}
 			echo '<br><span class="smalltext">['.$w['time'].']</span>
 			</li>';
 			$coun++;
@@ -215,8 +219,12 @@ function TPortal_recentbox()
 					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
+			{
+			if (strstr($forum_version, '2.0'))
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-
+			else
+				echo ' <a href="'.$w['href'].'" id="newicon' . $topic['first_post']['id'] . '" class="new_posts" >' . $txt['new'] . '</a> ';
+			}
 			echo '<br><span class="smalltext">['.$w['time'].']</span>
 			</li>';
 			$coun++;
