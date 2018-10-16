@@ -320,14 +320,17 @@ foreach ($tables as $table => $col) {
         // Change old column names to newer names
         if ($table == 'tp_articles') {
 			articleChanges();
-            $request = $smcFunc['db_query']('','
-                SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search\' AND Index_type = \'FULLTEXT\''
-            );
-            if($smcFunc['db_num_rows']($request) === 0) {
-                $smcFunc['db_query']('', '
-                    CREATE FULLTEXT INDEX search ON
-                    {db_prefix}tp_articles (subject, body)'
+            db_extend('extra');
+            if(version_compare($smcFunc['db_get_version'], '5.6', '>=')) {
+                $request = $smcFunc['db_query']('','
+                    SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search\' AND Index_type = \'FULLTEXT\''
                 );
+                if($smcFunc['db_num_rows']($request) === 0) {
+                    $smcFunc['db_query']('', '
+                        CREATE FULLTEXT INDEX search ON
+                        {db_prefix}tp_articles (subject, body)'
+                    );
+                }
             }
         }
 		elseif ($table == 'tp_dlmanager') {
