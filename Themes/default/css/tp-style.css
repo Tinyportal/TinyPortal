@@ -748,11 +748,11 @@ img.tp_social
 }
 .tp_statsblock h5.mlist
 {
-	background: url(../images/icons/members.gif) no-repeat 0 5px;
+	background: url(../images/tinyportal/members.png) no-repeat 0 5px;
 }
 .tp_statsblock h5.stats
 {
-	background: url(../images/stats_info.gif) no-repeat 0 5px;
+	background: url(../images/tinyportal/stats.png) no-repeat 0 5px;
 }
 .tp_statsblock h5.online
 {

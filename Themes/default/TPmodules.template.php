@@ -320,7 +320,7 @@ function template_main()
 					echo '
 			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
 				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
-				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
+				' , ($mes['is_read']==0 && strstr($forum_version, '2.0')) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
 				</div>
 				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
@@ -358,7 +358,7 @@ function template_main()
 					echo '
 			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
 				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
-				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
+				' , ($mes['is_read']==0 && strstr($forum_version, '2.0')) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
 				</div>
 				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>

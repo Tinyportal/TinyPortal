@@ -154,7 +154,7 @@ function TPortal_scriptbox()
 // TPortal recent topics block
 function TPortal_recentbox()
 {
-	global $scripturl, $context, $settings, $txt, $modSettings;
+	global $scripturl, $context, $settings, $txt, $modSettings, $forum_version;
 
 	// is it a number?
 	if(!is_numeric($context['TPortal']['recentboxnum']))
@@ -182,8 +182,12 @@ function TPortal_recentbox()
 				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
+			{
+			if (strstr($forum_version, '2.0'))
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-
+			else
+				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
+			}
 			echo '<br><span class="smalltext">['.$w['time'].']</span>
 			</li>';
 			$coun++;
@@ -215,8 +219,12 @@ function TPortal_recentbox()
 					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
+			{
+			if (strstr($forum_version, '2.0'))
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-
+			else
+				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
+			}
 			echo '<br><span class="smalltext">['.$w['time'].']</span>
 			</li>';
 			$coun++;
@@ -1724,7 +1732,7 @@ function article_bookmark($render = true)
 
 function article_comments($render = true)
 {
-	global $scripturl, $txt, $settings, $context;
+	global $scripturl, $txt, $settings, $context, $forum_version;
 
 	if(in_array('comments', $context['TPortal']['article']['visual_options']))
 	{
@@ -1744,7 +1752,8 @@ function article_comments($render = true)
 						<a id="comment'.$comment['id'].'"></a>
 						<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].' '. $txt['on'] . ' ' . $comment['date'] . '</div>
-						' . (($comment['is_new'] && $context['user']['is_logged']) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+						' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+						' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '
 						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br>';
 				else
 					echo '
@@ -1752,7 +1761,8 @@ function article_comments($render = true)
 					<a id="comment'.$comment['id'].'"></a>
 					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
-					' . (($comment['is_new'] && $context['user']['is_logged']) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '
 					<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['posterID'].'">'.$comment['poster'].'</a>
 					' . $txt['on'] . ' ' . $comment['date'] . '</div>
 					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br>';
@@ -1761,7 +1771,7 @@ function article_comments($render = true)
 					// can we edit the comment or are the owner of it?
 				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
 					echo '
-						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div><br>';
+						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div><br>';
 
 				echo '
 				</div>';
