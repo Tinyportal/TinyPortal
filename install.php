@@ -321,7 +321,7 @@ foreach ($tables as $table => $col) {
         if ($table == 'tp_articles') {
 			articleChanges();
             db_extend('extra');
-            if(version_compare($smcFunc['db_get_version'], '5.6', '>=')) {
+            if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
                 $request = $smcFunc['db_query']('','
                     SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search\' AND Index_type = \'FULLTEXT\''
                 );
