@@ -657,4 +657,6 @@ $txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Searc
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
+// new in 1.6.1
+$txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 ?>

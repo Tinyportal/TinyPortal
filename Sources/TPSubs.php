@@ -1128,9 +1128,9 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		}
 		echo '
 		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
-		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
-		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
-		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
+		<div class="windowbg2 smalltext tp_pad">' , $txt['tp-quicklist2'] , '</div>
+		<div class="windowbg tpquicklist">
+		<div class="tpthumb">';
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
@@ -1139,7 +1139,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		echo '
 		</div>
 		</div>
-		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
+		<div class="tp_pad">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
 	</div>';
 	}
 
@@ -1330,9 +1330,10 @@ function tp_fetchboards()
 
 	// get all boards for board-spesific news
 	$request =  $smcFunc['db_query']('', '
-		SELECT id_board as ID_BOARD,name
+		SELECT id_board as ID_BOARD, name, board_order
 		FROM {db_prefix}boards
-		WHERE 1',
+		WHERE 1
+		ORDER BY board_order ASC',
 		array()
 	);
 	$boards = array();
@@ -3025,7 +3026,8 @@ function tp_getDLcats()
 	$request =  $smcFunc['db_query']('', '
 		SELECT id, name
 		FROM {db_prefix}tp_dlmanager
-		WHERE type = {string:dlcat}',
+		WHERE type = {string:dlcat}
+		ORDER BY name',
 		array('dlcat' => 'dlcat')
 	);
 	$count = 0;

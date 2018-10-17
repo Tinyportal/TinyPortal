@@ -303,7 +303,8 @@ function template_submission()
 	else
 		echo '
 				<div class="windowbg2">
-					<div class="windowbg3"></div>
+					<div class="padding-div">'.$txt['tp-nosubmissions'].'</div>
+					<div class="padding-div">&nbsp;</div>
 				</div>';
 
 	echo '
@@ -1347,6 +1348,7 @@ function template_frontpage()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
+
 		echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -1559,6 +1561,7 @@ function template_frontpage()
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][4]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][4] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
 		}
+
 
 		echo '
 							</select><br><br>
@@ -3070,6 +3073,7 @@ function template_blockedit()
 		{
 			ctheme_tp_blocks('listblocktypes');
 		}
+
 
 		echo '
 								</select>
