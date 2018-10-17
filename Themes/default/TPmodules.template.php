@@ -431,21 +431,29 @@ function template_main()
         <div class="cat_bar">
             <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
         </div>
-		<div class="windowbg">
-			<span class="topslice"><span></span></span>
-			<div class="content">';
-
-			if(!empty($context['TPortal']['pageindex']))
-				echo '
-				<div>' . $context['TPortal']['pageindex'] . '</div><hr />';
-
+		<div class="windowbg padding-div">
+	<table class="table_grid tp_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col" class="myarticles">
+				<div class="font-strong" style="padding:0px;">
+					<div align="center" class="float-items title-admin-area">'.$txt['subject'].'</div>
+				</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 			if(count($context['TPortal']['myarticles'])>0)
 			{
 				foreach($context['TPortal']['myarticles'] as $art)
 				{
 					echo '
-					<div style="oveflow: hidden; padding: 3px;">
+				<tr class="windowbg">
+				<td class="articles">
+					<div style="overflow: hidden; padding: 3px;">
 						<div style="float: right;">';
+				if($art['approved']==0)
+						echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" alt="*" /> ';
 				if($art['off']==0 && $art['approved']==1)
 						echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="*" /> ';
 				else
@@ -453,8 +461,6 @@ function template_main()
 
 				if($art['locked']==1)
 						echo '<img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="*" /> ';
-				if($art['approved']==0)
-						echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" alt="*" /> ';
 
 				if((allowedTo('tp_editownarticle') && $art['locked']==0) && !allowedTo('tp_articles'))
 					echo '
@@ -471,22 +477,32 @@ function template_main()
 						<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>';
 					else
 						echo '
-					' . html_entity_decode($art['subject']);
+					(<i>' . html_entity_decode($art['subject']). '</i>)';
 
 					echo '
-					</div>';
+					</div>
+				</td>
+				</tr>';
 				}
 			}
 			else
-				echo $txt['tp-noarticlesfound'];
+			{
+				echo '
+				<tr class="windowbg">
+				<td class="articles"> 
+				'. $txt['tp-noarticlesfound'] .'
+				</td>
+				</tr>';
+			}
+		echo '
+			</tbody>
+		</table>';
 
 			if(!empty($context['TPortal']['pageindex']))
 				echo '
-				<hr /><div>' . $context['TPortal']['pageindex'] . '</div>';
-
+				<div class="middletext padding-div">' . $context['TPortal']['pageindex'] . '</div>
+				<div class="padding-div"></div>';
 			echo '
-			</div>
-			<span class="botslice"><span></span></span>
 		</div>';
 
 			break;
