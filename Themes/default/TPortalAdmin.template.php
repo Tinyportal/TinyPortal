@@ -2279,7 +2279,7 @@ function template_editarticle($type = '')
 			<div class="formtable padding-div">
 			<div>
 						<div class="font-strong">' , $txt['tp-title'] , ':</div>
-						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. htmlentities($mg['subject'], ENT_QUOTES) .'">
+						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
 					</div>
 					<div>
 						<div class="font-strong">'.$txt['tp-shortname_article'].'&nbsp;</div>
