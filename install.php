@@ -331,6 +331,24 @@ foreach ($tables as $table => $col) {
                         {db_prefix}tp_articles (subject, body)'
                     );
                 }
+                $request = $smcFunc['db_query']('','
+                    SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search_subject\' AND Index_type = \'FULLTEXT\''
+                );
+                if($smcFunc['db_num_rows']($request) === 0) {
+                    $smcFunc['db_query']('', '
+                        CREATE FULLTEXT INDEX search_subject ON
+                        {db_prefix}tp_articles (subject)'
+                    );
+                }
+                $request = $smcFunc['db_query']('','
+                    SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search_body\' AND Index_type = \'FULLTEXT\''
+                );
+                if($smcFunc['db_num_rows']($request) === 0) {
+                    $smcFunc['db_query']('', '
+                        CREATE FULLTEXT INDEX search_body ON
+                        {db_prefix}tp_articles (body)'
+                    );
+                }
             }
         }
 		elseif ($table == 'tp_dlmanager') {
