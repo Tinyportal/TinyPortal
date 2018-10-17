@@ -443,6 +443,7 @@ function template_main()
 			</tr>
 		</thead>
 		<tbody>';
+
 			if(count($context['TPortal']['myarticles'])>0)
 			{
 				foreach($context['TPortal']['myarticles'] as $art)

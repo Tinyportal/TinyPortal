@@ -689,7 +689,7 @@ function TPmodules()
 
 		$mystart = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
-		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('date', 'id', 'subject'))) ? $_GET['sort'] : 'date';
+		$sort = $context['TPortal']['tpsort'] = (!empty($_GET['tpsort']) && in_array($_GET['tpsort'], array('date', 'id', 'subject'))) ? $_GET['tpsort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;sa=myarticles;sort=' . $sort, $mystart, $allmy, 15);
 
 		$context['TPortal']['subaction'] = 'myarticles';
@@ -707,9 +707,11 @@ function TPmodules()
 
 		if($smcFunc['db_num_rows']($request2) > 0)
 		{
+			$context['TPortal']['myarticles']=array();
 			while($row = $smcFunc['db_fetch_assoc']($request2))
+			{
 				$context['TPortal']['myarticles'][] = $row;
-
+			}
 			$smcFunc['db_free_result']($request2);
 		}
 
