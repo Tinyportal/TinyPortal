@@ -704,7 +704,7 @@ function TPmodules()
 		$mystart = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
 		$sort = $context['TPortal']['tpsort'] = (!empty($_GET['tpsort']) && in_array($_GET['tpsort'], array('date', 'id', 'subject'))) ? $_GET['tpsort'] : 'date';
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;sa=myarticles;sort=' . $sort, $mystart, $allmy, 15);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;sa=myarticles;tpsort=' . $sort, $mystart, $allmy, 15);
 
 		$context['TPortal']['subaction'] = 'myarticles';
 		$context['TPortal']['myarticles'] = array();
