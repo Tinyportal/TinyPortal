@@ -64,7 +64,7 @@ function template_tp_articles()
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
 			<div class="font-strong" style="padding:0px;">
-				<div align="center" class="float-items pos" style="width:26%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['subject'].'</a></div>
+				<div align="center" class="float-items pos" style="width:26%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['subject'].'</a></div>
 				<div align="center" class="float-items title-admin-area" style="width:10%;">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 				<div align="center" class="float-items title-admin-area" style="width:7%;">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
 				<div align="center" class="float-items title-admin-area" style="width:14%;">'.$txt['tp-ratings'].'</div>
@@ -192,11 +192,11 @@ function template_tp_download()
 			<thead>
 				<tr class="title_bar titlebg2 titlebg2">
 				<th scope="col" class="tp_profile_uploaded">
-				<div align="center" style="width:17%;" class="font-strong float-items pos">', $context['TPortal']['tpsort']=='name' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=name">'.$txt['subject'].'</a></div>
-				<div align="center" style="width:19%;" class="font-strong float-items title-admin-area">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
-				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
+				<div align="center" style="width:17%;" class="font-strong float-items pos">', $context['TPortal']['tpsort']=='name' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=name">'.$txt['subject'].'</a></div>
+				<div align="center" style="width:19%;" class="font-strong float-items title-admin-area">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=created">'.$txt['date'].'</a></div>
+				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=views">'.$txt['views'].'</a></div>
 				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">'.$txt['tp-ratings'].'</div>
-				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
+				<div align="center" style="width:14%;" class="font-strong float-items title-admin-area">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
 				<div align="center" style="width:9%;" class="font-strong float-items title-admin-area">'. $txt['tp-edit'] .'</div>
 			    <p class="clearthefloat"></p>
 				</th>

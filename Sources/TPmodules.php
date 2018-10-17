@@ -697,8 +697,12 @@ function TPmodules()
 		$request2 =  $smcFunc['db_query']('', '
 			SELECT id, subject, date, locked, approved, off FROM {db_prefix}tp_articles
 			WHERE author_id = {int:author}
-			ORDER BY {string:sort} DESC LIMIT {int:start}, 15',
-			array('author' => $context['user']['id'], 'sort' => $sort, 'start' => $mystart)
+			ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, 15',
+			array('author' => $context['user']['id'], 
+			'sort' => $sort,
+			'sorter' => in_array($sort, array('subject')) ? 'ASC' : 'DESC',
+			'start' => $mystart
+			)
 		);
 
 		if($smcFunc['db_num_rows']($request2) > 0)
@@ -1266,8 +1270,12 @@ function tp_profile_articles($memID)
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sort} DESC LIMIT {int:start}, 10',
-		array('auth' => $memID, 'sort' => $sorting, 'start' => $start)
+		ORDER BY art.{raw:sort} {raw:sorter} LIMIT {int:start}, 10',
+		array('auth' => $memID, 
+		'sort' => $sorting, 
+		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
+		'start' => $start
+		)
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0){
@@ -1422,8 +1430,12 @@ function tp_profile_download($memID)
 		FROM {db_prefix}tp_dlmanager
 		WHERE author_id = {int:auth}
 		AND type = {string:type}
-		ORDER BY {string:sort} DESC LIMIT {int:start}, 10',
-		array('auth' => $memID, 'type' => 'dlitem', 'sort' => $sorting, 'start' => $start)
+		ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, 15',
+		array('auth' => $memID, 
+		'type' => 'dlitem', 
+		'sort' => $sorting,
+		'sorter' => in_array($sorting, array('created', 'views', 'downloads')) ? 'DESC' : 'ASC',
+		'start' => $start)
 	);
 	if($smcFunc['db_num_rows']($request) > 0)
 	{

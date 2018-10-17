@@ -437,7 +437,7 @@ function template_main()
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="myarticles">
 				<div class="font-strong" style="padding:0px;">
-					<div align="center" class="float-items title-admin-area">'.$txt['subject'].'</div>
+					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tpmod;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
 				</div>
 			</th>
 			</tr>
