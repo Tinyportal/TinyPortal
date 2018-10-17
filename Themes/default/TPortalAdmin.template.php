@@ -1052,7 +1052,7 @@ function template_panels()
 // settings
 function template_settings()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version, $smcFunc;
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -1177,15 +1177,20 @@ function template_settings()
 					<dd>
 						<input name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-					</dd>
-					<dt>
-						<label for="field_name">', $txt['tp-fulltextsearch'], '</label>
-						<div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
-					</dt>
-					<dd>
-						<input name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-						<input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-					</dd>
+					</dd>';
+                    db_extend('extra');
+                    if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
+                        echo '
+                        <dt>
+                            <label for="field_name">', $txt['tp-fulltextsearch'], '</label>
+                            <div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
+                        </dt>
+                        <dd>
+                            <input name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+                            <input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+                        </dd>';
+                    }
+					echo '
 					<dt>
 						<label for="field_name">', $txt['tp-copyrightremoval'], '</label>
 						<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
@@ -2277,7 +2282,7 @@ function template_editarticle($type = '')
 			<div class="formtable padding-div">
 			<div>
 						<div class="font-strong">' , $txt['tp-title'] , ':</div>
-						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. htmlentities($mg['subject'], ENT_QUOTES) .'">
+						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
 					</div>
 					<div>
 						<div class="font-strong">'.$txt['tp-shortname_article'].'&nbsp;</div>

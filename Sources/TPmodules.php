@@ -542,8 +542,22 @@ function TPmodules()
                 }
                 $what = implode(' ',$words);
             }
-            $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
-            $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+            if($usetitle && !$usebody) {
+                $select     = ', MATCH (subject) AGAINST (\''.$what.'\') AS score';
+                $query      = 'MATCH (subject) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+            }
+            elseif(!$usetitle && $usebody) {
+                $select     = ', MATCH (body) AGAINST (\''.$what.'\') AS score';
+                $query      = 'MATCH (body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+            }
+            elseif($usetitle && $usebody) { 
+                $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
+                $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+            }
+            else {
+                $select     = ', MATCH (subject) AGAINST (\''.$what.'\') AS score';
+                $query      = 'MATCH (subject) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+            }
             $order_by   = 'score DESC, ';
         }
 
