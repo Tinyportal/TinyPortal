@@ -1176,12 +1176,17 @@ function template_settings()
 					<dd>
 						<input name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-					</dd>
-					<dt>
-						<label for="field_name">', $txt['tp-fulltextsearch'], '</label>
-						<div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
-					</dt>
-					<dd>
+					</dd>';
+                    db_extend('extra');
+                    if(version_compare($smcFunc['db_get_version'], '5.6', '>=')) {
+                        echo '
+                        <dt>
+                            <label for="field_name">', $txt['tp-fulltextsearch'], '</label>
+                            <div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
+                        </dt>';
+                    }
+					echo '
+                    <dd>
 						<input name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
