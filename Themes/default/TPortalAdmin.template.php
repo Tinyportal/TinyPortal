@@ -2010,7 +2010,7 @@ function template_articles()
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
-									<div class="catbg3 addborderleft">
+									<div class="catbg3">
 									<div style="width:7%;" class="pos float-items">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on position" /> ' : '' , '<a title="Sort on position" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=parse"><strong>' , $txt['tp-pos'] , '</strong></a></div>
 									<div style="width:25%;" class="name float-items">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on subject" /> ' : '' , '<a title="Sort on subject" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=subject"><strong>' , $txt['tp-name'] , '</strong></a></div>
 									<div style="width:10%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=author_id"><strong>' , $txt['tp-author'] , '</strong></a></div>
@@ -2963,7 +2963,6 @@ function template_addblock()
 									<input type="radio" name="tp_addblock" value="14" />' . $txt['tp-blocktype14'] . '<br>
 									<input type="radio" name="tp_addblock" value="15" />' . $txt['tp-blocktype15'] . '<br>
 									<input type="radio" name="tp_addblock" value="16" />' . $txt['tp-blocktype16'] . '<br>
-									<input type="radio" name="tp_addblock" value="17" />' . $txt['tp-blocktype17'] . '<br>
 									<input type="radio" name="tp_addblock" value="18" />' . $txt['tp-blocktype18'] . '<br>
 									<input type="radio" name="tp_addblock" value="19" />' . $txt['tp-blocktype19'] . '<br>
 									<input type="radio" name="tp_addblock" value="20" />' . $txt['tp-blocktype20'] . '<br>

@@ -553,7 +553,6 @@ $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype14'] = 'Article / Download functions';
 $txt['tp-blocktype15'] = 'RSS';
 $txt['tp-blocktype16'] = 'Sitemap';
-$txt['tp-blocktype17'] = 'Admin links';
 $txt['tp-blocktype18'] = 'Single Article';
 $txt['tp-blocktype19'] = 'Articles in a Category';
 $txt['tp-blocktype20'] = 'TP module';
