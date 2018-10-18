@@ -605,7 +605,8 @@ function do_blocks()
 			$request = $smcFunc['db_query']('', '
 				SELECT id, value1 as name
 				FROM {db_prefix}tp_variables
-				WHERE type = {string:type}',
+				WHERE type = {string:type}
+				ORDER BY value1',
 				array(
 					'type' => 'category'
 				)
@@ -3480,9 +3481,10 @@ function get_boards()
 
 	$context['TPortal']['boards'] = array();
 	$request = $smcFunc['db_query']('', '
-		SELECT b.id_board as id, b.name
+		SELECT b.id_board as id, b.name, b.board_order
 		FROM {db_prefix}boards as b
-		WHERE 1',
+		WHERE 1
+		ORDER BY b.board_order ASC',
 		array()
 	);
 	if($smcFunc['db_num_rows']($request) > 0)
@@ -3503,7 +3505,8 @@ function get_articles()
 
 	$request = $smcFunc['db_query']('', '
 		SELECT id, subject, shortname FROM {db_prefix}tp_articles
-		WHERE approved = 1 AND off = 0');
+		WHERE approved = 1 AND off = 0
+		ORDER BY subject ASC');
 
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
@@ -3522,7 +3525,7 @@ function get_catnames()
 	$context['TPortal']['catnames'] = array();
 
 	$request = $smcFunc['db_query']('', '
-		SELECT id,value1 FROM {db_prefix}tp_variables
+		SELECT id, value1 FROM {db_prefix}tp_variables
 		WHERE type = {string:type}',
 		array('type' => 'category')
 	);

@@ -111,10 +111,6 @@
 {
 	padding: 1em;
 }
-/*.tp_pad
-{
-	padding: 0 1em 0.5em 1em;
-}*/
 h2.author_h2
 {
 	font-size: 1.3em;
@@ -1931,6 +1927,17 @@ box-sizing:border-box;
    max-height: 150px;
    padding: 5px;
 }
+.tpthumb div {
+   padding: 4px;
+   margin-top: 4px;
+   overflow: auto;
+}
+.tpquicklist div {
+   padding: 4px;
+   margin-top: 4px;
+   max-height: 200px;
+   overflow: auto;
+ }
 
 /************* TP ADMIN STYLES ********************/
 
@@ -2164,7 +2171,7 @@ div.tp_half21 {
 .tp_responsive #show-on-respnsive-layout{
 	display:block;
 	float: left;
-	width: 21%!important;
+	width: 30%!important;
 	padding: 0 1% 0 1%!important;
 }
 .tp_responsive #size-on-respnsive-layout {

@@ -553,7 +553,6 @@ $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype14'] = 'Article / Download functions';
 $txt['tp-blocktype15'] = 'RSS';
 $txt['tp-blocktype16'] = 'Sitemap';
-$txt['tp-blocktype17'] = 'Admin links';
 $txt['tp-blocktype18'] = 'Single Article';
 $txt['tp-blocktype19'] = 'Articles in a Category';
 $txt['tp-blocktype20'] = 'TP module';
@@ -657,4 +656,6 @@ $txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Searc
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
+// new in 1.6.1
+$txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 ?>

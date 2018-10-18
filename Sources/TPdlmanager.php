@@ -442,8 +442,9 @@ function TPortalDLManager()
 			$context['TPortal']['boards'] = array();
 			// fetch all boards
 			$request = $smcFunc['db_query']('', '
-				SELECT b.ID_BOARD, b.name FROM {db_prefix}boards as b
-				WHERE {query_see_board}');
+				SELECT b.ID_BOARD, b.name, b.board_order FROM {db_prefix}boards as b
+				WHERE {query_see_board}
+				ORDER BY b.board_order ASC');
 			if ($smcFunc['db_num_rows']($request) > 0)
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
@@ -3573,7 +3574,8 @@ function TP_dluploadcats()
 	$request = $smcFunc['db_query']('', '
 		SELECT id, parent, name, access
 		FROM {db_prefix}tp_dlmanager
-		WHERE type = {string:type}',
+		WHERE type = {string:type}
+		ORDER BY name ASC',
 		array('type' => 'dlcat')
 	);
 	if($smcFunc['db_num_rows']($request) > 0)
