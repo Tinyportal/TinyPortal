@@ -291,9 +291,9 @@ function template_tpshout_profile()
 			<thead>
 				<tr class="title_bar titlebg2">
 				<th scope="col" class="shouts">
-					<div class="float-items" align="center" style="width:22%;">'.$txt['date'].'</div>
-					<div align="center" class="smalltext float-items" style="width:51%;">',$txt['tp-shout'],'</div>
-					<div class="float-items" align="center" style="width:19%;">'. $txt['tp-edit'] .'</div>
+					<div align="left" class="float-items" align="center" style="width:30%;">'.$txt['date'].'</div>
+					<div align="left" class="smalltext float-items" style="width:60%;">',$txt['tp-shout'],'</div>
+					<div class="float-items" align="center" style="width:10%;">'. $txt['tp-edit'] .'</div>
 				</th>
 				</tr>
 			</thead>
@@ -303,9 +303,9 @@ function template_tpshout_profile()
 			echo '
 				<tr class="windowbg">
 				<td class="shouts">
-					<div align="center" class="smalltext float-items" style="width:22%;" >',$art['created'],'</div>
-					<div class="smalltext float-items" style="width:51%;" >',$art['shout'],'</div>
-					<div class="float-items" align="center" style="width:21%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.png" alt="" /></a>' : '' , '</div>
+					<div align="left" class="smalltext float-items" style="width:30%;" >',$art['created'],'</div>
+					<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
+					<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
 				</td>
 				</tr>';
 		}

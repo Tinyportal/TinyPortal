@@ -1996,7 +1996,8 @@ box-sizing:border-box;
 }
 .float-items {
    	float: left;
-	padding: 1%;	
+	padding: 1%;
+	box-sizing: border-box;
 }
 #show-on-respnsive-layout {
 	display:none;
@@ -2136,7 +2137,7 @@ div.tp_half21 {
 /** screen smaller then 900px **/
 @media all and (max-width: 900px) {	
 .tp_responsive .clickme {
-	width:47px;
+	width:55px;
 	font-weight:bold;
 	font-size:12px;
 	cursor: pointer;
@@ -2157,6 +2158,7 @@ div.tp_half21 {
 	width:98%!important;	
 	float:none!important;
 	clear:both!important;
+	box-sizing: border-box;
 }	
 .tp_responsive .fullwidth-on-res-layout::after{
     content: "";
@@ -2172,10 +2174,10 @@ div.tp_half21 {
 	display:block;
 	float: left;
 	width: 30%!important;
-	padding: 0 1% 0 1%!important;
+	max-width: 150px;
 }
 .tp_responsive #size-on-respnsive-layout {
-	width: 77%;	
+	width: 70%;
 	float: left;
 }	
 .tp_responsive .title-admin-area {
@@ -2184,17 +2186,20 @@ div.tp_half21 {
 .tp_responsive .admin-area .pos,
 .tp_responsive .admin-area .name {
 	display:inline-block;
+	box-sizing: border-box;
 }
 .tp_responsive .admin-area .name {
 	width:78%!important;		
 }
 .tp_responsive .admin-area .pos,
 .tp_responsive .admin-area .adm-pos {
-	width:14%!important;	
+	width:14%!important;
+	box-sizing: border-box;	
 }	
 .tp_responsive .admin-area .adm-name {
 	width:80%!important;	
-    padding:1% 2%!important;	
+    padding:1%!important;
+	box-sizing: border-box;	
 }	
 .tp_responsive .bigger-width #show-on-respnsive-layout{
 	width: 30%!important;
@@ -2212,6 +2217,7 @@ div.tp_half21 {
 .tp_responsive #up-file #size-on-respnsive-layout .float-items {
 	padding:0px 1%;
 	text-align:left;
+	
 }
 .tp_responsive #any-subcats #size-on-respnsive-layout,
 .tp_responsive #up-file #size-on-respnsive-layout {
@@ -2375,10 +2381,12 @@ div.tp_half21 {
 /* very specific fixes dealing width responsive curve in 2.0 */
 	.lrON input[name="subject"], input[name="evtitle"], input[name="secret_question"], .lrON #edit_poll fieldset input, .lrON select[name="targetboard"], 
 	.leftpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], .leftpanelOn #edit_poll fieldset input, .leftpanelOn select[name="targetboard"],
-	.rightpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], .rightpanelOn #edit_poll fieldset input, .rightpanelOn select[name="targetboard"]	{
+	.rightpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], .rightpanelOn #edit_poll fieldset input, .rightpanelOn select[name="targetboard"] {
 		width:90%;
 	}	
-		
+	.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select	{
+		width:70%;
+	}		
 	.inner a {
 		/* These are technically the same, but use both */
 		overflow-wrap: break-word;

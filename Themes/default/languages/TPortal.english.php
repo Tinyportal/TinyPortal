@@ -54,7 +54,7 @@ $txt['tp-readmore'] = 'Read More';
 $txt['tp-submit'] = 'Save';
 $txt['tp-views'] = 'Views';
 $txt['tp-subject'] = 'Subject';
-$txt['tp-articlessubmitted'] = 'Articles';
+$txt['tp-articlessubmitted'] = 'New article(s)';
 $txt['tp-articlenotexist'] = 'This article is not available. You may not have permission to see the article, it isn\'t active, hasn\'t been approved yet, or simply does not exist.';
 $txt['tp-categorynotexist'] = 'The category doesn\'t exist.';
 $txt['tp-last'] = 'Last';
@@ -193,7 +193,7 @@ $txt['tp_maintenace'] = 'Maintenance Mode';
 
 // File Manager... //
 $txt['tp-dlmanageroff'] = 'The DL Manager module is not active.';
-$txt['tp-dluploaded'] = 'Uploads';
+$txt['tp-dluploaded'] = 'New upload(s)';
 $txt['tp-uploadedby'] = 'Uploaded by ';
 $txt['permissiongroup_tinyportal_dl'] = 'TinyPortal File manager';
 $txt['permissionname_tp_dlmanager'] = 'Manage TPdownloads';
