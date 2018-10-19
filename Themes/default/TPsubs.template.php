@@ -401,7 +401,7 @@ function TPortal_userbox()
 		// tpadmin checks
 		if (allowedTo('tp_settings'))
 			echo '
-			<li><a href="' . $scripturl . '?action=tpadmin;sa=settings">' . $bullet4.$txt['permissionname_tp_settings'] . '</a></li>';
+			<li><hr><a href="' . $scripturl . '?action=tpadmin;sa=settings">' . $bullet4.$txt['permissionname_tp_settings'] . '</a></li>';
 		if (allowedTo('tp_blocks'))
 					echo '
 			<li><a href="' . $scripturl . '?action=tpadmin;sa=blocks">' . $bullet4.$txt['permissionname_tp_blocks'] . '</a></li>';

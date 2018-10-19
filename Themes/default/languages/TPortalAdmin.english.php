@@ -537,6 +537,7 @@ $txt['tp-pos'] = 'Pos';
 $txt['tp-send']='Save';
 $txt['tp-useonfrontpage'] = 'Override frontpage settings when displayed on frontpage?';
 $txt['tp-more']='More ';
+$txt['tp-hide']='Hide ';
 $txt['tp-blocktype0'] = '- not set -';
 $txt['tp-blocktype1'] = 'User';
 $txt['tp-blocktype2'] = 'News';
