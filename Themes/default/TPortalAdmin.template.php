@@ -1939,9 +1939,9 @@ function template_articles()
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
 				<div>
-					<div class="pos float-items" style="width:68%;"><strong>' , $txt['tp-name'] , '</strong></div>
-					<div class="title-admin-area float-items" style="width:9%;"><strong>' , $txt['tp-articles'] , '</strong></div>
-					<div class="title-admin-area float-items" style="width:65px;"><strong>' , $txt['tp-actions'] , '</strong></div>
+					<div class="pos float-items" style="width:65%;"><strong>' , $txt['tp-name'] , '</strong></div>
+					<div align="center" class="title-admin-area float-items" style="width:15%;"><strong>' , $txt['tp-articles'] , '</strong></div>
+					<div align="center" class="title-admin-area float-items" style="width:20%;"><strong>' , $txt['tp-actions'] , '</strong></div>
 					<p class="clearthefloat"></p>
 				</div>
 			</th>
@@ -1957,11 +1957,11 @@ function template_articles()
 			<tr class="windowbg">
 			<td class="articles">
 				<div>
-					<div style="width:70%;" class="float-items">
+					<div style="width:65%;" class="float-items">
 					  <a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$cat['id'].'">' , $cat['name'] , '</a>
 					</div>
-					<div style="width:8%;" class="float-items">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>
-					<div style="width:65px;" class="float-items">
+					<div align="center" style="width:15%;" class="float-items">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>
+					<div align="center" style="width:20%;" class="float-items">
 						<a href="' . $scripturl . '?cat=' . $cat['id'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>
 						<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu=' . $cat['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="" /></a>
 					</div><p class="clearthefloat"></p>
@@ -1973,11 +1973,11 @@ function template_articles()
 					{
 						echo '
 				<div>
-					<div style="width:70%;" class="float-items">&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPtree_article.png" alt="" />
+					<div style="width:65%;" class="float-items">&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPtree_article.png" alt="" />
 						<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$subcat['id'].'">' , $subcat['name'] , '</a>
 					</div>
-					<div style="width:8%;" class="float-items">' , isset($context['TPortal']['cats_count'][$subcat['id']]) ? $context['TPortal']['cats_count'][$subcat['id']] : '0' , '</div>
-					<div style="width:8%;" class="float-items">&nbsp;</div>
+					<div align="center" style="width:15%;" class="float-items">' , isset($context['TPortal']['cats_count'][$subcat['id']]) ? $context['TPortal']['cats_count'][$subcat['id']] : '0' , '</div>
+					<div align="center" style="width:20%;" class="float-items">&nbsp;</div>
 					<p class="clearthefloat"></p>
 				</div>';
 					}

@@ -2173,11 +2173,11 @@ div.tp_half21 {
 .tp_responsive #show-on-respnsive-layout{
 	display:block;
 	float: left;
-	width: 30%!important;
+	width: 35%!important;
 	max-width: 150px;
 }
 .tp_responsive #size-on-respnsive-layout {
-	width: 70%;
+	width: 65%;
 	float: left;
 }	
 .tp_responsive .title-admin-area {
