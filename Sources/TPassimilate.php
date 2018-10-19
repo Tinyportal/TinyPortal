@@ -322,7 +322,7 @@ function tpAddProfileMenu(&$profile_areas)
 			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
-
+	if(!empty($context['TPortal']['show_download']))
 	$profile_areas['tp']['areas']['tpdownload'] = array(
 		'label' => $txt['downloadprofile'],
 		'file' => 'TPmodules.php',
@@ -374,7 +374,7 @@ function tpAddProfileMenu(&$profile_areas)
 			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
-
+	if(!empty($context['TPortal']['show_download']))
 	$profile_areas['tp']['areas']['tpdownload'] = array(
 		'label' => $txt['downloadprofile'],
 		'file' => 'TPmodules.php',

@@ -519,8 +519,11 @@ function template_dlsubmitsuccess()
 
 	echo '
 		<div class="tborder">
-			<div class="catbg" class="tp_pad">'.$txt['tp-dlsubmitsuccess2'].'</div>
-			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-dlsubmitsuccess'].'</div>
+                <div class="cat_bar">
+				    <h3 class="catbg">'.$txt['tp-dlsubmitsuccess2'].'</h3>
+                </div>
+					<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-dlsubmitsuccess'].'
+					<div class="padding-div">&nbsp;</div></div>
 		</div>';
 }
 function template_submitsuccess()
@@ -529,8 +532,11 @@ function template_submitsuccess()
 
 	echo '
 		<div class="tborder">
-			<div class="catbg" class="tp_pad">'.$txt['tp-submitsuccess2'].'</div>
-			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-submitsuccess'].'</div>
+                <div class="cat_bar">
+				    <h3 class="catbg">'.$txt['tp-submitsuccess2'].'</h3>
+                </div>
+					<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-submitsuccess'].'
+					<div class="padding-div">&nbsp;</div></div>
 		</div>';
 }
 
