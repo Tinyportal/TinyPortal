@@ -2923,7 +2923,7 @@ function doModules()
 		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'])) {
 			if(!empty($row['adminhook'])) {
 				$perms = explode(',', $row['permissions']);
-                if(is_countable($perms) {
+                if(is_countable($perms)) {
                     for($a = 0; $a < count($perms); $a++) {
                         $pr = explode('|',$perms[$a]);
                         // admin permission?
