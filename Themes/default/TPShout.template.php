@@ -289,13 +289,13 @@ function template_tpshout_profile()
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
 			</div><br>
-		<table class="table_grid" style="width:100%">
+		<table class="table_grid tp_grid" style="width:100%">
 			<thead>
-				<tr class="title_bar">
+				<tr class="title_bar titlebg2">
 				<th scope="col" class="shouts">
-					<div class="float-items" align="center" style="width:22%;border-right:1px solid #ffffff;">'.$txt['date'].'</div>
-					<div align="center" class="smalltext float-items" style="width:51%;">',$txt['tp-shout'],'</div>
-					<div class="float-items" align="center" style="width:19%;border-left:1px solid #ffffff;">'. $txt['tp-edit'] .'</div>
+					<div align="left" class="float-items" align="center" style="width:30%;">'.$txt['date'].'</div>
+					<div align="left" class="smalltext float-items" style="width:60%;">',$txt['tp-shout'],'</div>
+					<div class="float-items" align="center" style="width:10%;">'. $txt['tp-edit'] .'</div>
 				</th>
 				</tr>
 			</thead>
@@ -305,9 +305,9 @@ function template_tpshout_profile()
 			echo '
 				<tr class="windowbg">
 				<td class="shouts">
-					<div align="center" class="smalltext float-items" style="width:22%;" >',$art['created'],'</div>
-					<div class="smalltext float-items" style="width:51%;" >',$art['shout'],'</div>
-					<div class="float-items" align="center" style="width:21%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPmodify.png" alt="" /></a>' : '' , '</div>
+					<div align="left" class="smalltext float-items" style="width:30%;" >',$art['created'],'</div>
+					<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
+					<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
 				</td>
 				</tr>';
 		}

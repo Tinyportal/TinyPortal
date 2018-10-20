@@ -287,7 +287,13 @@ function template_main()
 						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-					</div>
+					</div>';
+					
+				if ($context['TPortal']['fulltextsearch']==1) {
+				echo '
+					<div class="tp_pad">'.$txt['tp-searcharticleshelp2'].'</div>';
+				}
+				echo '
 				</div>
 				<span class="lowerframe"><span></span></span>
 			</div>
@@ -314,7 +320,7 @@ function template_main()
 					echo '
 			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
 				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
-				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
+				' , ($mes['is_read']==0 && strstr($forum_version, '2.0')) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
 				</div>
 				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
@@ -352,7 +358,7 @@ function template_main()
 					echo '
 			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
 				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
-				' , $mes['is_read']==0 ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
+				' , ($mes['is_read']==0 && strstr($forum_version, '2.0')) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
 				</div>
 				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
@@ -381,7 +387,8 @@ function template_main()
             </div>
 			<span class="upperframe"><span></span></span>
 			<div class="roundframe noup">
-				<div class="padding-div">
+				<div class="tp_pad">'.$txt['tp-searcharticleshelp'].'</div>
+					<div class="tp_pad">
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tpmod;sa=searcharticle2" method="post">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
@@ -390,7 +397,13 @@ function template_main()
 						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-					</div>
+					</div>';
+					
+				if ($context['TPortal']['fulltextsearch']==1) {
+				echo '
+					<div class="tp_pad">'.$txt['tp-searcharticleshelp2'].'</div>';
+				}
+				echo '
 					</form>
 				</div>
 			</div>
@@ -418,21 +431,30 @@ function template_main()
         <div class="cat_bar">
             <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
         </div>
-		<div class="windowbg">
-			<span class="topslice"><span></span></span>
-			<div class="content">';
-
-			if(!empty($context['TPortal']['pageindex']))
-				echo '
-				<div>' . $context['TPortal']['pageindex'] . '</div><hr />';
+		<div class="windowbg padding-div">
+	<table class="table_grid tp_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col" class="myarticles">
+				<div class="font-strong" style="padding:0px;">
+					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tpmod;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
+				</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 			if(count($context['TPortal']['myarticles'])>0)
 			{
 				foreach($context['TPortal']['myarticles'] as $art)
 				{
 					echo '
-					<div style="oveflow: hidden; padding: 3px;">
+				<tr class="windowbg">
+				<td class="articles">
+					<div style="overflow: hidden; padding: 3px;">
 						<div style="float: right;">';
+				if($art['approved']==0)
+						echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" alt="*" /> ';
 				if($art['off']==0 && $art['approved']==1)
 						echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="*" /> ';
 				else
@@ -440,8 +462,6 @@ function template_main()
 
 				if($art['locked']==1)
 						echo '<img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="*" /> ';
-				if($art['approved']==0)
-						echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" alt="*" /> ';
 
 				if((allowedTo('tp_editownarticle') && $art['locked']==0) && !allowedTo('tp_articles'))
 					echo '
@@ -458,22 +478,32 @@ function template_main()
 						<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>';
 					else
 						echo '
-					' . html_entity_decode($art['subject']);
+					(<i>' . html_entity_decode($art['subject']). '</i>)';
 
 					echo '
-					</div>';
+					</div>
+				</td>
+				</tr>';
 				}
 			}
 			else
-				echo $txt['tp-noarticlesfound'];
+			{
+				echo '
+				<tr class="windowbg">
+				<td class="articles"> 
+				'. $txt['tp-noarticlesfound'] .'
+				</td>
+				</tr>';
+			}
+		echo '
+			</tbody>
+		</table>';
 
 			if(!empty($context['TPortal']['pageindex']))
 				echo '
-				<hr /><div>' . $context['TPortal']['pageindex'] . '</div>';
-
+				<div class="middletext padding-div">' . $context['TPortal']['pageindex'] . '</div>
+				<div class="padding-div"></div>';
 			echo '
-			</div>
-			<span class="botslice"><span></span></span>
 		</div>';
 
 			break;
@@ -489,8 +519,11 @@ function template_dlsubmitsuccess()
 
 	echo '
 		<div class="tborder">
-			<div class="catbg" class="tp_pad">'.$txt['tp-dlsubmitsuccess2'].'</div>
-			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-dlsubmitsuccess'].'</div>
+                <div class="cat_bar">
+				    <h3 class="catbg">'.$txt['tp-dlsubmitsuccess2'].'</h3>
+                </div>
+					<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-dlsubmitsuccess'].'
+					<div class="padding-div">&nbsp;</div></div>
 		</div>';
 }
 function template_submitsuccess()
@@ -499,8 +532,11 @@ function template_submitsuccess()
 
 	echo '
 		<div class="tborder">
-			<div class="catbg" class="tp_pad">'.$txt['tp-submitsuccess2'].'</div>
-			<div style="padding: 30px 10px 30px 10px;text-align: center;" class="windowbg">'.$txt['tp-submitsuccess'].'</div>
+                <div class="cat_bar">
+				    <h3 class="catbg">'.$txt['tp-submitsuccess2'].'</h3>
+                </div>
+					<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-submitsuccess'].'
+					<div class="padding-div">&nbsp;</div></div>
 		</div>';
 }
 

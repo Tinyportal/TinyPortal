@@ -13,6 +13,21 @@ if (!defined('SMF'))
 	die('Hacking attempt...');
 
 
+global $context;
+
+if(!isset($context['tp_panels']))
+	$context['tp_panels'] = array();
+
+$context['template_layers'][]   = 'tpadm';
+$context['template_layers'][]   = 'subtab';
+TPadminIndex();
+$context['current_action']      = 'admin';
+$context['sub_template']        = 'tpListImages_admin';
+
+if($context['TPortal']['hidebars_admin_only'] == '1') {
+    tp_hidebars();
+}
+
 function loadTPModuleLanguage()
 {
     global $txt, $boarddir, $user_info, $language;
@@ -28,15 +43,15 @@ function loadTPModuleLanguage()
             return;
         }
     }
-
 }
 
-function template_main()
+function template_tpListImages_admin()
 {
 
 	global $txt, $context, $boarddir, $scripturl;
 
     loadTPModuleLanguage();
+	isAllowedTo('tp_can_list_images');
 
     $ret = '';
     if(array_key_exists('listimage', $_GET)) {
@@ -72,9 +87,10 @@ function template_main()
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
 			</div>
 		</form>
-		</div>
-	    <p class="clearthefloat"></p>';
+		</div>';
+    
     echo $ret;
+
 }
 
 function TPListImages($user_id) 
@@ -82,7 +98,7 @@ function TPListImages($user_id)
     global $txt, $boarddir, $boardurl, $context, $scripturl;
 
     loadTPModuleLanguage();
-
+	
     $html = '';
     // fetch all images you have uploaded
     $imgfiles = array();

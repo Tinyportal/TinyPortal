@@ -100,7 +100,7 @@ var $clickme = $(".clickme"),
 $box.hide();
 
 $clickme.click( function(e) {
-    $(this).text(($(this).text() === "Hide" ? "More" : "Hide")).next(".box").slideToggle();
+    $(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
     e.preventDefault();
 });
 });
@@ -119,7 +119,6 @@ function template_blockoverview()
 		<input name="tpadmin_form" type="hidden" value="blockoverview">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div><div></div>
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
-			<span class="topslice"><span></span></span>
 			<div class="content">';
 
 		$side=array('','left','right','center','front','bottom','top','lower');
@@ -196,21 +195,23 @@ function template_submission()
 	if(isset($context['TPortal']['arts_submissions']))
 	{
 		echo '
-								<div class="catbg3 addborderleft">
-									<div style="width:7%;" class="pos float-items"><strong>' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on position" /> ' : '' , '<a title="Sort on position" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=parse">' , $txt['tp-pos'] , '</a></strong></div>
-									<div style="width:25%;" class="name float-items"><strong>' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on subject" /> ' : '' , '<a title="Sort on subject" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=subject">' , $txt['tp-name'] , '</a></strong></div>
-									<div style="width:11%;" class="title-admin-area float-items"><strong> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=author_id">' , $txt['tp-author'] , '</a></strong></div>
-									<div style="width:14%;" class="title-admin-area float-items"><strong> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=date">' , $txt['tp-date'] , '</a></strong></div>
-									<div style="width:18%;" class="title-admin-area float-items"><strong>&nbsp;</strong></div>
-									<div style="width:3%;" class="title-admin-area float-items"><strong> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=type">' , $txt['tp-type'] , '</a></strong></div>
+	<table class="table_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col" class="articles">
+								<div class="catbg3">
+									<div style="width:7%;" class="pos float-items"><strong>Select</div>
+									<div style="width:25%;" class="name float-items"><strong>' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_up.png" alt="Sort on subject" /> ' : '' , '<a title="Sort on subject" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=subject">' , $txt['tp-name'] , '</a></strong></div>
+									<div style="width:10%;" class="title-admin-area float-items"><strong> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_up.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=author_id">' , $txt['tp-author'] , '</a></strong></div>
+									<div style="width:20%;" class="title-admin-area float-items"><strong> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=date">' , $txt['tp-date'] , '</a></strong></div>
+									<div style="width:25%;" class="title-admin-area float-items"><strong>&nbsp;</strong></div>
+									<div style="width:13%;" class="title-admin-area float-items"><strong> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_up.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=type">' , $txt['tp-type'] , '</a></strong></div>
 								    <p class="clearthefloat"></p>
-								</div>';
-
-		if(!empty($context['TPortal']['pageindex']))
-			echo '
-								<div class="middletext padding-div addborder">
-									<strong>'.$context['TPortal']['pageindex'].'</strong>
-								</div>';
+								</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 		foreach($context['TPortal']['arts_submissions'] as $a => $alink)
 		{
@@ -218,57 +219,59 @@ function template_submission()
 			$catty = $alink['category'];
 
 			echo '
-				<div class="addborder">
-				  <div style="width:7%;" class="adm-pos float-items">
-					<a name="article'.$alink['id'].'"></a>
-					<input type="text" size="2" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" />
-				</div>
-				<div style="width:25%;" class="adm-name float-items">
+			<tr class="windowbg">
+			<td class="articles">
+				<div>
+					<div style="width:7%;" class="adm-pos float-items">
+					<input type="checkbox" name="tp_article_submission'.$alink['id'].'" value="1"  />
+					</div>
+					<div style="width:25%;" class="adm-name float-items">
 					' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '"> ' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
-				</div>
-				<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			    <div class="box" style="width:64%;float:left;">
-				  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
-		            <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=author_id">' , $txt['tp-author'] , '</a></div>
-					<div id="size-on-respnsive-layout"><a href="' . $scripturl . '?action=profile;u=' , $alink['authorID'], '">'.$alink['author'] .'</a></div>
-				  </div>
-				  <div style="width:25.5%;" class="smalltext fullwidth-on-res-layout float-items">
-					<div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=date">' , $txt['tp-date'] , '</a></div>
-					<div id="size-on-respnsive-layout">' , timeformat($alink['date']) , '</div>
-				 </div>
-				 <div style="text-align:left;width:26%;" class="smalltext fullwidth-on-res-layout float-items">
-					<div id="show-on-respnsive-layout" style="margin-top:0.5%;"><strong>Options</strong></div>
-					<div id="size-on-respnsive-layout">
-					  <img style="cursor: pointer;" class="toggleActive" id="artActive' .$alink['id']. '" title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TPactive' , $alink['off']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-activate'].'"  />
-					  <a href="',$scripturl, '?page=',$alink['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
-					  ' , $alink['locked']==0 ?
-					  '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle'.$alink['id']. '"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>' : '<img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-islocked'].'"  />' , '
+					</div>
+					<a href="" class="clickme">'.$txt['tp-more'].'</a>
+					<div class="box" style="width:68%;float:left;">
+						<div style="width:14.8%;" class="smalltext fullwidth-on-res-layout float-items">
+						<div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=author_id"><strong>' , $txt['tp-author'] , '</strong></a></div>
+						<div id="size-on-respnsive-layout"><a href="' . $scripturl . '?action=profile;u=' , $alink['authorID'], '">'.$alink['author'] .'</a></div>
+					</div>
+					<div style="width:29.8%;" class="smalltext fullwidth-on-res-layout float-items">
+						<div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=date"><strong>' , $txt['tp-date'] , '</strong></a></div>
+						<div id="size-on-respnsive-layout">' , timeformat($alink['date']) , '</div>
+					</div>
+					<div style="text-align:left;width:37.5%;" class="smalltext fullwidth-on-res-layout float-items">
+						<div id="show-on-respnsive-layout" style="margin-top:0.5%;"><strong>'.$txt['tp-editarticleoptions2'].'</strong></div>
+						<div id="size-on-respnsive-layout">
+						<img style="cursor: pointer;" class="toggleActive" id="artActive' .$alink['id']. '" title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TPactive' , $alink['off']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-activate'].'"  />
+						<a href="',$scripturl, '?page=',$alink['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
+						  ' , $alink['locked']==0 ?
+						  '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle'.$alink['id']. '"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>' : '<img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-islocked'].'"  />' , '
 
-					  <img style="cursor: pointer;" class="toggleFront" id="artFront' .$alink['id']. '" title="'.$txt['tp-setfrontpage'].'" border="0" src="' .$settings['tp_images_url']. '/TPfront' , $alink['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
-					  <img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$alink['id']. '" title="'.$txt['tp-setsticky'].'" border="0" src="' .$settings['tp_images_url']. '/TPsticky' , $alink['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
-					  <img style="cursor: pointer;" class="toggleLock" id="artLock' .$alink['id']. '" title="'.$txt['tp-setlock'].'" border="0" src="' .$settings['tp_images_url']. '/TPlock' , $alink['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />
-					  <img style="cursor: pointer;" class="toggleFeatured" id="artFeatured' .$alink['id']. '" title="'.$txt['tp-featured'].'" border="0" src="' .$settings['tp_images_url']. '/TPflag' , $alink['featured']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-turnoff'].'"  />
-				    </div>
+						  <img style="cursor: pointer;" class="toggleFront" id="artFront' .$alink['id']. '" title="'.$txt['tp-setfrontpage'].'" border="0" src="' .$settings['tp_images_url']. '/TPfront' , $alink['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
+						  <img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$alink['id']. '" title="'.$txt['tp-setsticky'].'" border="0" src="' .$settings['tp_images_url']. '/TPsticky' , $alink['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
+						  <img style="cursor: pointer;" class="toggleLock" id="artLock' .$alink['id']. '" title="'.$txt['tp-setlock'].'" border="0" src="' .$settings['tp_images_url']. '/TPlock' , $alink['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />
+						  <img style="cursor: pointer;" class="toggleFeatured" id="artFeatured' .$alink['id']. '" title="'.$txt['tp-featured'].'" border="0" src="' .$settings['tp_images_url']. '/TPflag' , $alink['featured']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-turnoff'].'"  />
+						</div>
+					</div>
+					<div class="smalltext fullwidth-on-res-layout float-items" style="text-align:center;width:7%;text-transform:uppercase;">
+						<div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=type"><strong>' , $txt['tp-type'] , '</strong></a></div>
+						' , empty($alink['type']) ? 'html' : $alink['type'] , '
+					</div>
+					<div style="text-align:center;width:6%;" class="smalltext fullwidth-on-res-layout float-items">
+						<div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
+						<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id']. '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
+						<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  /></a>
+					</div>
+					<p class="clearthefloat"></p>
 				</div>
-			    <div class="smalltext fullwidth-on-res-layout float-items" style="text-align:center;width:8%;text-transform:uppercase;">
-					<div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=type">' , $txt['tp-type'] , '</a></div>
-					' , empty($alink['type']) ? 'html' : $alink['type'] , '
-				</div>
-				<div style="text-align:center;width:5%;" class="smalltext fullwidth-on-res-layout float-items">
-				  <div id="show-on-respnsive-layout"><strong>Delete</strong></div>
-				  <a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id']. '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
-				    <img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  />
-				  </a>
-				</div>
-				<div style="width:5%;text-align:center;" class="smalltext fullwidth-on-res-layout float-items">
-				  <div id="show-on-respnsive-layout"><strong>Select</strong></div>
-				  <input type="checkbox" name="tp_article_submission'.$alink['id'].'" value="1"  />
-			    </div>
-			    <p class="clearthefloat"></p>
+				<p class="clearthefloat"></p>
 			</div>
-			<p class="clearthefloat"></p>
-		</div>';
-			}
+			</td>
+			</tr>';
+		}
+	echo '
+		</tbody>
+	</table>';
+			
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
 								<div class="middletext padding-div">
@@ -295,7 +298,8 @@ function template_submission()
 	else
 		echo '
 				<div class="windowbg2">
-					<div class="windowbg3"></div>
+					<div class="padding-div">'.$txt['tp-nosubmissions'].'</div>
+					<div class="padding-div">&nbsp;</div>
 				</div>';
 
 	echo '
@@ -343,7 +347,7 @@ function template_modules()
 						</dd>
 						<dt> ', $txt['tp-author'] , ': <a href="mailto:', $mod['email'], '">', $mod['author'], '</a>
 						</dt>
-						<dd><div class="post">', !empty($mod['information']) ? parse_bbc($mod['information']) : '' , '</div>
+						<dd><div class="post">', !empty($mod['description']) ? parse_bbc($mod['description']) : '' , '</div>
 						</dd>
 					</dl>
 					';
@@ -368,35 +372,46 @@ function template_menubox()
 		<input name="tp_menuid" type="hidden" value="'.$mid.'">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-menumanager'].' - '.$context['TPortal']['menus'][$mid]['name'] . '  <a href="' . $scripturl . '?action=tpadmin;sa=addmenu;mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">['.$txt['tp-addmenuitem'].']</a></h3></div>
 		<div id="menu-manager" class="admintable admin-area bigger-width">
+		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
 			<div class="windowbg noup padding-div">
-				<div class="titlebg2 addborderleft addborder">
-							<div style="width:9%;" class="pos float-items">'.$txt['tp-pos'].'</div>
-							<div style="width:14%;" class="name float-items">'.$txt['tp-title'].'</div>
-							<div style="width:8%;" class="title-admin-area float-items">'.$txt['tp-type'].'</div>
-							<div style="width:12%;" class="title-admin-area float-items">'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </div>
-							<div style="width:9%;" class="title-admin-area float-items">'.$txt['tp-item'].'</div>
-							<div style="width:10%;" class="title-admin-area float-items">'.$txt['tp-sub_item'].'</div>
-							<div style="width:11%;" class="title-admin-area float-items">'.$txt['tp-sitemap_on'].'</div>
-							<div style="width:9%;" class="title-admin-area float-items">'.$txt['tp-delete'].' </div>
+			<table class="table_grid tp_grid" style="width:100%";>
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="menuitems">			
+						<div class="font-strong">
+							<div style="width:7%;" class="pos float-items">'.$txt['tp-pos'].'</div>
+							<div style="width:15%;" class="name float-items">'.$txt['tp-title'].'</div>
+							<div style="width:10%;" class="title-admin-area float-items">'.$txt['tp-type'].'</div>
+							<div style="width:12%;" class="title-admin-area float-items" align="center">'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </div>
+							<div style="width:15%;" class="title-admin-area float-items">'.$txt['tp-item'].'</div>
+							<div style="width:18%;" class="title-admin-area float-items">'.$txt['tp-sub_item'].'</div>
+							<div style="width:15%;" class="title-admin-area float-items">'.$txt['tp-sitemap_on'].'</div>
+							<div style="width:7%;" class="title-admin-area float-items">'.$txt['tp-delete'].' </div>
 							<p class="clearthefloat"></p>
-						</div>';
+						</div>
+					</th>
+					</tr>
+				</thead>
+				<tbody>';
 			if(!empty($context['TPortal']['menubox'][$mid]))
 			{
 				$tn=sizeof($context['TPortal']['menubox'][$mid]);
 				$n=1;
 				foreach($context['TPortal']['menubox'][$mid] as $lbox){
 					echo '
-							<div class="addborder windowbg' , $lbox['off']=='0' ? '2' : '' , '" >
-								<div style="width:9%;" class="adm-pos float-items">
+					<tr class="windowbg' , $lbox['off']=='0' ? '' : '' , '">
+					<td class="blocks">
+							<div>
+								<div style="width:7%;" class="adm-pos float-items">
 								  <input name="menu_pos' .$lbox['id']. '" type="text" size="4" value="' . (empty($lbox['subtype']) ? '0' :  $lbox['subtype']) . '">
 								</div>
-								<div style="width:14%;" class="adm-name float-items">
+								<div style="width:15%;" class="adm-name float-items">
 								  <a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">' .$lbox['name']. '</a>
 								</div>
 								<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			                    <div class="box" style="width:73%;float:left;">
-							      <div style="width:13%;" class="fullwidth-on-res-layout float-items">
-								    <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>';
+			                    <div class="box" style="width:78%;float:left;">
+							      <div style="width:13%;" class="smalltext fullwidth-on-res-layout float-items">
+								    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-type'].'</strong></div>';
 					if($lbox['type']=='cats')
 						echo $txt['tp-category'];
 					elseif($lbox['type']=='arti')
@@ -412,14 +427,14 @@ function template_menubox()
 
 					echo '
 								  </div>
-								  <div style="width:16%;" class="fullwidth-on-res-layout float-items" align="center">
-								      <div id="show-on-respnsive-layout">'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </div>&nbsp;
+								  <div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
+								      <div id="show-on-respnsive-layout"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].'</strong></div>
 								      <a href="' . $scripturl . '?action=tpadmin;linkon=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TPgreen' , $lbox['off']!=0 ? '2' : '' , '.png" alt="'.$txt['tp-activate'].'"  /></a>
 									  <a href="' . $scripturl . '?action=tpadmin;linkoff=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-deactivate'].'" border="0" src="' .$settings['tp_images_url']. '/TPred' , $lbox['off']==0 ? '2' : '' , '.png" alt="'.$txt['tp-deactivate'].'"  /></a>
 									  <a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
 								  </div>
-							      <div style="width:14%; overflow:hidden;" class="fullwidth-on-res-layout float-items">
-								      <div id="show-on-respnsive-layout">'.$txt['tp-item'].'</div>
+							      <div style="width:19.2%; overflow:hidden;" class="smalltext fullwidth-on-res-layout float-items">
+								      <div id="show-on-respnsive-layout"><strong>'.$txt['tp-item'].'</strong></div>
 								      <div id="size-on-respnsive-layout">';
 					if($lbox['type']=='cats'){
 						// is it a cats ( category)?
@@ -455,12 +470,12 @@ function template_menubox()
 					echo '
 						</div>
 							  </div>
-								  <div style="width:15%;" class="fullwidth-on-res-layout float-items">'; 
+								  <div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">'; 
 								      
 									  if($lbox['type']!=='menu'){
 									  
 									  echo '
-									  <div id="show-on-respnsive-layout">'.$txt['tp-sub_item'].'</div>
+									  <div id="show-on-respnsive-layout"><strong>'.$txt['tp-sub_item'].'</strong></div>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="0" ' , $lbox['sub']=='0' ? 'checked' : '' ,'>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="1" ' , $lbox['sub']=='1' ? 'checked' : '' ,'>
 									  <input name="menu_sub' .$lbox['id']. '" type="radio" value="2" ' , $lbox['sub']=='2' ? 'checked' : '' ,'>
@@ -474,22 +489,27 @@ function template_menubox()
 									echo '
 									
 								  </div>
-								  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
-								    <div id="show-on-respnsive-layout">'.$txt['tp-sitemap_on'].'</div>
+								  <div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">
+								    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
 									<input name="tp_menu_sitemap' .$lbox['id']. '" type="radio" value="1" ' , in_array($lbox['id'],$context['TPortal']['sitemap']) ? 'checked' : '' ,'>' . $txt['tp-yes'] .'
 									<input name="tp_menu_sitemap' .$lbox['id']. '" type="radio" value="0" ' , !in_array($lbox['id'],$context['TPortal']['sitemap']) ? 'checked' : '' ,'> ' . $txt['tp-no'] . '
 								  </div>
-								  <div style="width:13%;" class="fullwidth-on-res-layout float-items">
-								    <div id="show-on-respnsive-layout">'.$txt['tp-delete'].' </div>&nbsp;
+								  <div style="width:5%;" class="smalltext fullwidth-on-res-layout float-items">
+								    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
 									<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete=' .$lbox['id']. '" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /></a>
 								  </div>
 								  <p class="clearthefloat"></p>
 							  </div>
 							  <p class="clearthefloat"></p>
-					       </div>';
+					       </div>
+						 </td>
+						</tr>';
 					$n++;
 				}
 			}
+		echo '
+		</tbody>
+	</table>';			
 		}
 		// ok, show the single menus
 		else
@@ -506,7 +526,11 @@ function template_menubox()
 			{
 				if($mbox['id']==0)
 					echo '
-				<div style="padding:1%;" class="addborder">
+			<table class="table_grid tp_grid" style="width:100%";>
+			<tbody>
+				<tr class="windowbg">
+				<td class="menu">
+					<div style="padding-div"><br>
 					<dl class="settings">
 						<dt>
 							<strong><i>' . $txt['tp-internal'] . '</i></strong><br>
@@ -515,11 +539,15 @@ function template_menubox()
 							<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=0"><img height="16px" title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPedit.png" alt="'.$txt['tp-edit'].'"  /><strong>' .$txt['tp-edit'].'</strong></a><br>
 						</dd>
 					</dl>
-				</div>';
+				</div>
+				</td>
+				</tr>';
 
 				else
 					echo '
-				<div style="padding:1%;" class="addborder">
+				<tr class="windowbg">
+				<td class="menu">
+					<div style="padding-div"><br>
 					<dl class="settings">
 						<dt>
 							<input name="tp_menu_name' .$mbox['id']. '" type="text" size="40" value="' .$mbox['name']. '"><br>
@@ -529,10 +557,14 @@ function template_menubox()
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete=' .$mbox['id']. ';fullmenu" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img height="16px" title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /> <strong>'.$txt['tp-delete'].'</strong></a><br>
 						</dd>
 					</dl>
-				</div>';
+				</div>
+				</td>
+				</tr>';
 			}
 		}
 		echo '
+			</tbody>
+			</table>
 				<div><br>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
@@ -615,6 +647,7 @@ function template_menucore()
 
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
+		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
 		<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
@@ -624,6 +657,7 @@ function template_menucore()
                             <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 						</dd>
 					</dl>
+					
 					<dl class="settings">
 						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
                         <dd>
@@ -632,11 +666,26 @@ function template_menucore()
                             <option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
                             <option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
                             <option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
-                            <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>
-                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>
+                            <option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>';
+				// check for menu button in createmenuitem
+				if (isset($_GET['mid']))
+					{
+					if($_GET['mid']==0)
+						{
+						echo '
+                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
+						}
+					}
+				// check for menu button in editmenuitem
+				elseif ($context['TPortal']['editmenuitem']['menuID']==0) 
+					{
+					echo '
+                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
+					}
+					echo '
                         </select>
                         </dd>
-					</dl>
+					</dl>					
 					<hr>
 					<dl class="settings">
 						<dt>
@@ -998,7 +1047,7 @@ function template_panels()
 // settings
 function template_settings()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version, $smcFunc;
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -1123,15 +1172,20 @@ function template_settings()
 					<dd>
 						<input name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-					</dd>
-					<dt>
-						<label for="field_name">', $txt['tp-fulltextsearch'], '</label>
-						<div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
-					</dt>
-					<dd>
-						<input name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-						<input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-					</dd>
+					</dd>';
+                    db_extend('extra');
+                    if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
+                        echo '
+                        <dt>
+                            <label for="field_name">', $txt['tp-fulltextsearch'], '</label>
+                            <div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
+                        </dt>
+                        <dd>
+                            <input name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+                            <input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+                        </dd>';
+                    }
+					echo '
 					<dt>
 						<label for="field_name">', $txt['tp-copyrightremoval'], '</label>
 						<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
@@ -1294,6 +1348,7 @@ function template_frontpage()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
+
 		echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -1342,10 +1397,10 @@ function template_frontpage()
 						<dd>
 							<input name="tp_frontpage_visual_left" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['left']>0 ? 'checked' : '' , '> ',$txt['tp-displayleftpanel'],'<br>
 							<input name="tp_frontpage_visual_right" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['right']>0 ? 'checked' : '' , '> ',$txt['tp-displayrightpanel'],'<br>
-							<input name="tp_frontpage_visual_center" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['center']>0 ? 'checked' : '' , '> ',$txt['tp-displayupperpanel'],'<br>
 							<input name="tp_frontpage_visual_top" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['top']>0 ? 'checked' : '' , '> ',$txt['tp-displaytoppanel'],'<br>
-							<input name="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '> ',$txt['tp-displaybottompanel'],'<br>
+							<input name="tp_frontpage_visual_center" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['center']>0 ? 'checked' : '' , '> ',$txt['tp-displayupperpanel'],'<br>
 							<input name="tp_frontpage_visual_lower" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['lower']>0 ? 'checked' : '' , '> ',$txt['tp-displaylowerpanel'],'<br>
+							<input name="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '> ',$txt['tp-displaybottompanel'],'<br>
 							<input name="tp_frontpage_visual_header" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['header']>0 ? 'checked' : '' , '> ',$txt['tp-displaynews'],'<br><br>
 						</dd>
 
@@ -1507,6 +1562,7 @@ function template_frontpage()
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][4]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][4] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
 		}
 
+
 		echo '
 							</select><br><br>
 						</dd>
@@ -1550,11 +1606,19 @@ function template_categories()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-article'], ' ' , $txt['tp-tabs5'] . '</h3></div>
 		<div id="edit-category" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<div class="addborder">
+	<table class="table_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col">
+				<div>
 					<div class="float-items" style="width:120px;"><strong>' , $txt['tp-actions'] , '</strong></div>
 					<div class="float-items" style="max-width:76%;"><strong>' , $txt['tp-name'] , '</strong></div>
 					<p class="clearthefloat"></p>
-				</div>';
+				</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 	if(isset($context['TPortal']['editcats']) && count($context['TPortal']['editcats'])>0)
 	{
@@ -1562,8 +1626,11 @@ function template_categories()
 		foreach($context['TPortal']['editcats'] as $c => $cat)
 		{
 			echo '
-				<div class="addborder">
-					<div class="float-items" style="width:120px;">
+			<tr class="windowbg">
+			<td class="articles">
+				<div>';
+/*				var_dump ($context['TPortal']['cats_count'][$cat['id']]);*/
+echo '					<div class="float-items" style="width:120px;">
 						<a href="' . $scripturl . '?cat=' . $cat['id'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>
 						<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>
 						<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;copy;cu=' . $cat['id'] . '" title="' . $txt['tp-copycategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPcopy.png" alt="" /></a>
@@ -1571,14 +1638,19 @@ function template_categories()
 					</div>
 					<div class="float-items' , '" style="max-width:76%;">
 					' , str_repeat("-",$cat['indent']) , '
-						<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'"><b>' , $cat['name'] , '</b></a>
+						<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'">' , $cat['name'] , '</a>
 						' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '<a href="' . $scripturl. '?action=tpadmin;sa=articles;cu='.$cat['id'].'">('.$context['TPortal']['cats_count'][$cat['id']].' ' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . ')</a>' : '' , '
 					</div>
 					<p class="clearthefloat"></p>
-				</div>';
+				</div>
+			</td>
+			</tr>';
 			$alt = !$alt;
 		}
 	}
+	echo '
+		</tbody>
+	</table>';
 	echo '
 				<br><div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'">
 					</div>
@@ -1867,24 +1939,34 @@ function template_articles()
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
 	{
 		echo '
-				<div class="addborder">
-					<div class="pos float-items" style="width:68%;"><strong>' , $txt['tp-name'] , '</strong></div>
-					<div class="title-admin-area float-items" style="width:9%;"><strong>' , $txt['tp-articles'] , '</strong></div>
-					<div class="title-admin-area float-items" style="width:65px;"><strong>' , $txt['tp-actions'] , '</strong></div>
+		<table class="table_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col" class="articles">
+				<div>
+					<div class="pos float-items" style="width:65%;"><strong>' , $txt['tp-name'] , '</strong></div>
+					<div align="center" class="title-admin-area float-items" style="width:15%;"><strong>' , $txt['tp-articles'] , '</strong></div>
+					<div align="center" class="title-admin-area float-items" style="width:20%;"><strong>' , $txt['tp-actions'] , '</strong></div>
 					<p class="clearthefloat"></p>
-				</div>';
+				</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 		$alt=true;
 		foreach($context['TPortal']['cats'] as $c => $cat)
 		{
 			if(in_array($cat['parent'],$context['TPortal']['basecats']))
 			{
 				echo '
-				<div class="addborder">
-					<div style="width:70%;" class="float-items">
-					  <a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$cat['id'].'"><b>' , $cat['name'] , '</b></a>
+			<tr class="windowbg">
+			<td class="articles">
+				<div>
+					<div style="width:65%;" class="float-items">
+					  <a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$cat['id'].'">' , $cat['name'] , '</a>
 					</div>
-					<div style="width:8%;" class="float-items">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>
-					<div style="width:65px;" class="float-items">
+					<div align="center" style="width:15%;" class="float-items">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>
+					<div align="center" style="width:20%;" class="float-items">
 						<a href="' . $scripturl . '?cat=' . $cat['id'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>
 						<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu=' . $cat['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="" /></a>
 					</div><p class="clearthefloat"></p>
@@ -1895,44 +1977,52 @@ function template_articles()
 					if($subcat['parent']==$cat['id'])
 					{
 						echo '
-				<div class="windowbg">
-					<div style="max-width:78%;" class="float-items">&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPtree_article.png" alt="" />
+				<div>
+					<div style="width:65%;" class="float-items">&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPtree_article.png" alt="" />
 						<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$subcat['id'].'">' , $subcat['name'] , '</a>
 					</div>
-					<div style="width:8%;" class="float-items">' , isset($context['TPortal']['cats_count'][$subcat['id']]) ? $context['TPortal']['cats_count'][$subcat['id']] : '0' , '</div>
-					<div style="width:8%;" class="float-items">&nbsp;</div>
+					<div align="center" style="width:15%;" class="float-items">' , isset($context['TPortal']['cats_count'][$subcat['id']]) ? $context['TPortal']['cats_count'][$subcat['id']] : '0' , '</div>
+					<div align="center" style="width:20%;" class="float-items">&nbsp;</div>
 					<p class="clearthefloat"></p>
 				</div>';
 					}
 				}
+	echo '
+			</td>
+			</tr>';
 				$alt = !$alt;
 			}
 		}
+	echo '
+		</tbody>
+	</table><br>';
 	}
 	// ok, so onto the actual articles
 	if(isset($context['TPortal']['arts']))
 	{
 		echo '
-								<div class="catbg3 addborderleft">
+	<table class="table_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col" class="articles">
+									<div class="catbg3">
 									<div style="width:7%;" class="pos float-items">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on position" /> ' : '' , '<a title="Sort on position" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=parse"><strong>' , $txt['tp-pos'] , '</strong></a></div>
 									<div style="width:25%;" class="name float-items">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on subject" /> ' : '' , '<a title="Sort on subject" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=subject"><strong>' , $txt['tp-name'] , '</strong></a></div>
 									<div style="width:10%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=author_id"><strong>' , $txt['tp-author'] , '</strong></a></div>
-									<div style="width:17%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=date"><strong>' , $txt['tp-date'] , '</strong></a></div>
-									<div style="width:20%;" class="title-admin-area float-items">
+									<div style="width:20%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=date"><strong>' , $txt['tp-date'] , '</strong></a></div>
+									<div style="width:25%;" class="title-admin-area float-items">
 										' , $context['TPortal']['sort']=='off' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on active" /> ' : '' , '<a title="Sort on active" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=off"><img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="" /></a>
 										' , $context['TPortal']['sort']=='frontpage' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on frontpage" /> ' : '' , '<a title="Sort on frontpage" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=frontpage"><img src="' . $settings['tp_images_url'] . '/TPfront.png" alt="*" /></a>
 										' , $context['TPortal']['sort']=='sticky' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on sticky" /> ' : '' , '<a title="Sort on sticky" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=sticky"><img src="' . $settings['tp_images_url'] . '/TPsticky1.png" alt="" /></a>
 										' , $context['TPortal']['sort']=='locked' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on locked" /> ' : '' , '<a title="Sort on locked" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=locked"><img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="" /></a>
 									</div>
-									<div style="width:7%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=type"><strong>' , $txt['tp-type'] , '</strong></a></div>
+									<div style="width:13%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=type"><strong>' , $txt['tp-type'] , '</strong></a></div>
 									<p class="clearthefloat"></p>
-								 </div>';
-
-		if(!empty($context['TPortal']['pageindex']))
-			echo '
-								<div class="middletext padding-div addborder">
-									'.$context['TPortal']['pageindex'].'
-								</div>';
+								 </div>
+			</th>
+			</tr>
+		</thead>
+		<tbody> ';
 
 		foreach($context['TPortal']['arts'] as $a => $alink)
 		{
@@ -1940,7 +2030,9 @@ function template_articles()
 			$catty = $alink['category'];
 
 			echo '
-								<div class="addborder">
+			<tr class="windowbg">
+			<td class="articles">
+								<div>
 									<div style="width:7%;" class="adm-pos float-items">
 										<a name="article'.$alink['id'].'"></a><input type="text" size="2" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" />
 									</div>
@@ -1948,22 +2040,17 @@ function template_articles()
 										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">' . $alink['subject'].'</a>' : '&nbsp;' . $alink['subject'] , '
 									</div>
 									<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			                        <div class="box" style="width:64%;float:left;">
-									  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
-									    <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=author_id">' , $txt['tp-author'] , '</a></div>
+			                        <div class="box" style="width:68%;float:left;">
+									  <div style="width:14.8%;" class="smalltext fullwidth-on-res-layout float-items">
+									    <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=author_id"><strong>' , $txt['tp-author'] , '</a></strong></div>
 									    <div id="size-on-respnsive-layout"><a href="' . $scripturl . '?action=profile;u=' , $alink['authorID'], '">'.$alink['author'] .'</a></div>
 									  </div>
-									  <div style="width:25.5%;" class="smalltext fullwidth-on-res-layout float-items">
-									    <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=date">' , $txt['tp-date'] , '</a></div>
+									  <div style="width:29.8%;" class="smalltext fullwidth-on-res-layout float-items">
+									    <div id="show-on-respnsive-layout"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=date"><strong>' , $txt['tp-date'] , '</strong></a></div>
 									    <div id="size-on-respnsive-layout">' , timeformat($alink['date']) , '</div>
 									  </div>
-									  <div style="width:34.5%;" class="smalltext fullwidth-on-res-layout float-items">
-									     <div id="show-on-respnsive-layout">
-										  ' , $context['TPortal']['sort']=='off' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on active" /> ' : '' , '<a title="Sort on active" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=off"><img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="" /></a>
-										  ' , $context['TPortal']['sort']=='frontpage' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on frontpage" /> ' : '' , '<a title="Sort on frontpage" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=frontpage"><img src="' . $settings['tp_images_url'] . '/TPfront.png" alt="*" /></a>
-										  ' , $context['TPortal']['sort']=='sticky' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on sticky" /> ' : '' , '<a title="Sort on sticky" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=sticky"><img src="' . $settings['tp_images_url'] . '/TPsticky1.png" alt="" /></a>
-										  ' , $context['TPortal']['sort']=='locked' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on locked" /> ' : '' , '<a title="Sort on locked" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=locked"><img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="" /></a>
-										 </div>
+									  <div style="width:37.5%;" class="smalltext fullwidth-on-res-layout float-items">
+										<div id="show-on-respnsive-layout" style="margin-top:0.5%;"><strong>'.$txt['tp-editarticleoptions2'].'</strong></div>
 										 <div id="size-on-respnsive-layout">
 										  <img style="cursor: pointer;" class="toggleActive" id="artActive' .$alink['id']. '" title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TPactive' , $alink['off']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-activate'].'"  />
 										  <a href="',$scripturl, '?page=',$alink['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
@@ -1977,20 +2064,26 @@ function template_articles()
 									</div>
 									<div style="width:7%;text-transform:uppercase;" class="smalltext fullwidth-on-res-layout float-items">
 									 	<div id="show-on-respnsive-layout">
-								         ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=type">' , $txt['tp-type'] , '</a>
+								         ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=type"><strong>' , $txt['tp-type'] , '</strong></a>
 									    </div>
 										' , empty($alink['type']) ? 'html' : $alink['type'] , '
 									</div>
 									<div style="width:6%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
-									    <div id="show-on-respnsive-layout">Delete</div>
+									    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
 										<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id'] , !empty($_GET['cu']) ? ';cu=' . $_GET['cu'] : '' , '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
 										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  />
 										</a>
-									 </div>
-									 <p class="clearthefloat"></p>
-									</div><p class="clearthefloat"></p>
-								</div>';
+									</div>
+									<p class="clearthefloat"></p>
+								</div>
+								<p class="clearthefloat"></p>
+							</div>
+			</td>
+			</tr>';
 			}
+	echo '
+		</tbody>
+	</table>';
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
 								<div class="middletext padding-div">
@@ -2026,26 +2119,28 @@ function template_strays()
 		echo '
 				<div class="windowbg noup padding-div">
 					<div>
-								<div class="catbg3 addborderleft">
-									<div style="width:7%;" class="pos float-items">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on position" /> ' : '' , '<a title="Sort on position" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=parse">' , $txt['tp-pos'] , '</a></div>
-									<div style="width:20%;" class="name float-items">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on subject" /> ' : '' , '<a title="Sort on subject" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=subject">' , $txt['tp-name'] , '</a></div>
-									<div style="width:10%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id">' , $txt['tp-author'] , '</a></div>
-									<div style="width:15%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date">' , $txt['tp-date'] , '</a></div>
-									<div style="width:20%;" class="title-admin-area float-items">
+	<table class="table_grid tp_grid" style="width:100%";>
+		<thead>
+			<tr class="title_bar titlebg2">
+			<th scope="col">
+								<div>
+									<div style="width:7%;" class="pos float-items">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on position" /> ' : '' , '<a title="Sort on position" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=parse"><strong>' , $txt['tp-pos'] , '</strong></a></div>
+									<div style="width:25%;" class="name float-items">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on subject" /> ' : '' , '<a title="Sort on subject" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=subject"><strong>' , $txt['tp-name'] , '</strong></a></div>
+									<div style="width:10%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id"><strong>' , $txt['tp-author'] , '</strong></a></div>
+									<div style="width:20%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date"><strong>' , $txt['tp-date'] , '</strong></a></div>
+									<div style="width:25%;" class="title-admin-area float-items">
 										' , $context['TPortal']['sort']=='off' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on active" /> ' : '' , '<a title="Sort on active" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=off"><img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="" /></a>
 										' , $context['TPortal']['sort']=='frontpage' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on frontpage" /> ' : '' , '<a title="Sort on frontpage" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=frontpage"><img src="' . $settings['tp_images_url'] . '/TPfront.png" alt="*" /></a>
 										' , $context['TPortal']['sort']=='sticky' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on sticky" /> ' : '' , '<a title="Sort on sticky" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=sticky"><img src="' . $settings['tp_images_url'] . '/TPsticky1.png" alt="" /></a>
 										' , $context['TPortal']['sort']=='locked' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on locked" /> ' : '' , '<a title="Sort on locked" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=locked"><img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="" /></a>
 									</div>
-									<div  style="width:15%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type">' , $txt['tp-type'] , '</a></div>
+									<div  style="width:13%;" class="title-admin-area float-items"> ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type"><strong>' , $txt['tp-type'] , '</strong></a></div>
 									<p class="clearthefloat"></p>
-								</div>';
-
-		if(!empty($context['TPortal']['pageindex']))
-			echo '
-								<div class="middletext padding-div addborder">
-									'.$context['TPortal']['pageindex'].'
-								</div>';
+								</div>
+			</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 		foreach($context['TPortal']['arts_nocat'] as $a => $alink)
 		{
@@ -2053,36 +2148,33 @@ function template_strays()
 			$catty = $alink['category'];
 
 			echo '
-								<div class="addborder">
+			<tr class="windowbg">
+			<td class="articles">
+								<div>
 									<div style="width:7%;max-width:100%;" class="adm-pos float-items">
 										<a name="article'.$alink['id'].'"></a><input type="text" size="2" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" />
 									</div>
-									<div style="width:20%;" class="adm-name float-items">
+									<div style="width:25%;" class="adm-name float-items">
 										' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $alink['id'] . '">' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
 									</div>
 									<a href="" class="clickme">'.$txt['tp-more'].'</a>
-									<div class="box" style="width:69%;float:left;">
-									  <div style="width:17%;" class="fullwidth-on-res-layout float-items">
+									<div class="box" style="width:68%;float:left;">
+									  <div style="width:14.8%;" class="smalltext fullwidth-on-res-layout float-items">
 									    <div id="show-on-respnsive-layout">
-									       ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id">' , $txt['tp-author'] , '</a>
+									       ' , $context['TPortal']['sort']=='author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on author" /> ' : '' , '<a title="Sort on author" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id"><strong>' , $txt['tp-author'] , '</strong></a>
 									    </div>
 									    <div id="size-on-respnsive-layout">
 									     <a href="' . $scripturl . '?action=profile;u=' , $alink['authorID'], '">'.$alink['author'] .'</a>
 									    </div>
 									  </div>
-									  <div style="width:22%;" class="smalltext fullwidth-on-res-layout float-items">
+									  <div style="width:29.8%;" class="smalltext fullwidth-on-res-layout float-items">
 									    <div id="show-on-respnsive-layout">
-									     ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date">' , $txt['tp-date'] , '</a>
+									     ' , $context['TPortal']['sort']=='date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on date" /> ' : '' , '<a title="Sort on date" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date"><strong>' , $txt['tp-date'] , '</strong></a>
 									    </div>
 									    <div id="size-on-respnsive-layout">' , timeformat($alink['date']) , '</div>
 									  </div>
-									  <div style="width:31%;" class="smalltext fullwidth-on-res-layout float-items">
-									    <div id="show-on-respnsive-layout">
-										 ' , $context['TPortal']['sort']=='off' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on active" /> ' : '' , '<a title="Sort on active" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=off"><img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="" /></a>
-										 ' , $context['TPortal']['sort']=='frontpage' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on frontpage" /> ' : '' , '<a title="Sort on frontpage" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=frontpage"><img src="' . $settings['tp_images_url'] . '/TPfront.png" alt="*" /></a>
-										 ' , $context['TPortal']['sort']=='sticky' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on sticky" /> ' : '' , '<a title="Sort on sticky" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=sticky"><img src="' . $settings['tp_images_url'] . '/TPsticky1.png" alt="" /></a>
-										 ' , $context['TPortal']['sort']=='locked' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on locked" /> ' : '' , '<a title="Sort on locked" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=locked"><img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="" /></a>
-										</div>
+									  <div style="width:36%;" class="smalltext fullwidth-on-res-layout float-items">
+										<div id="show-on-respnsive-layout" style="margin-top:0.5%;"><strong>'.$txt['tp-editarticleoptions2'].'</strong></div>
 										<div id="size-on-respnsive-layout">
 										  <img style="cursor: pointer;" class="toggleActive" id="artActive' .$alink['id']. '" title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TPactive' , $alink['off']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-activate'].'"  />
 										  <a href="',$scripturl, '?page=',$alink['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
@@ -2097,12 +2189,12 @@ function template_strays()
 									  </div>
 									  <div style="width:7%;text-transform:uppercase;" class="smalltext fullwidth-on-res-layout float-items" align="center" >
 									     <div id="show-on-respnsive-layout">
-									      ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type">' , $txt['tp-type'] , '</a>
+									      ' , $context['TPortal']['sort']=='type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="Sort on type" /> ' : '' , '<a title="Sort on type" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type"><strong>' , $txt['tp-type'] , '</strong></a>
 									     </div>
 										 ' , empty($alink['type']) ? 'html' : $alink['type'] , '
 									  </div>
-									  <div style="width:7%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
-									    <div id="show-on-respnsive-layout">Delete</div>
+									  <div style="width:6%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
+									    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'<strong></div>
 										<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id']. '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
 										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  />
 										</a>
@@ -2112,8 +2204,13 @@ function template_strays()
 										<input type="checkbox" name="tp_article_stray'.$alink['id'].'" value="1"  />
 									  </div><p class="clearthefloat"></p>
 								  </div><p class="clearthefloat"></p>
-								</div>';
+								</div>
+			</td>
+			</tr>';
 			}
+	echo '
+		</tbody>
+	</table>';
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
 								<div class="middletext padding-div">
@@ -2171,7 +2268,7 @@ function template_editarticle($type = '')
 			<div class="formtable padding-div">
 			<div>
 						<div class="font-strong">' , $txt['tp-title'] , ':</div>
-						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. htmlentities($mg['subject'], ENT_QUOTES) .'">
+						<input style="width: 92%;" name="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
 					</div>
 					<div>
 						<div class="font-strong">'.$txt['tp-shortname_article'].'&nbsp;</div>
@@ -2227,8 +2324,9 @@ function template_editarticle($type = '')
 						<label for="field_name">', $txt['tp-approved'], '</label>
 					</dt>
 					<dd>
-							<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'
-							<input name="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'<br><br>
+							
+							<input name="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
+							<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'<br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-author'], '</label>
@@ -2424,8 +2522,8 @@ function template_editarticle($type = '')
 						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
 					<dd>
-							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'
-							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'<br>
+							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
+							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
 					</dd>
 				</dl>
 					';
@@ -2617,18 +2715,6 @@ function template_editarticle($type = '')
 						<hr /><br>
 							<dl class="settings">
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions7'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[7].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="field_name">', $txt['tp-articleoptions22'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_rblockwidth" type="text" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
-								</dd>
-								<dt>
 									<label for="field_name">', $txt['tp-articleoptions8'], '</label><br>
 								</dt>
 								<dd>
@@ -2641,16 +2727,16 @@ function template_editarticle($type = '')
 									<input name="tp_article_options_lblockwidth" type="text" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
 								</dd>
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions6'], '</label><br>
+									<label for="field_name">', $txt['tp-articleoptions7'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[6].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[6]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[7].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions9'], '</label><br>
+									<label for="field_name">', $txt['tp-articleoptions22'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_rblockwidth" type="text" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions10'], '</label><br>
@@ -2659,10 +2745,22 @@ function template_editarticle($type = '')
 									<input name="tp_article_options_'.$opts[10].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[10]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
+									<label for="field_name">', $txt['tp-articleoptions6'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[6].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[6]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
 									<label for="field_name">', $txt['tp-articleoptions11'], '</label><br>
 								</dt>
 								<dd>
 									<input name="tp_article_options_'.$opts[11].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[11]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
+									<label for="field_name">', $txt['tp-articleoptions9'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
 								</dd>
 							</dl><br>
 								<div class="title_bar">
@@ -2823,11 +2921,11 @@ function template_addblock()
 									<dd>
 										<input type="radio" name="tp_addblockpanel" value="1" ' , $side=='left' ? 'checked' : '' , ' />' . $txt['tp-leftpanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="2" ' , $side=='right' ? 'checked' : '' , ' />' . $txt['tp-rightpanel'] . '<br>
+										<input type="radio" name="tp_addblockpanel" value="6" ' , $side=='top' ? 'checked' : '' , ' />' . $txt['tp-toppanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="3" ' , $side=='upper' || $side=='center' ? 'checked' : '' , ' />' . $txt['tp-centerpanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="4" ' , $side=='front' ? 'checked' : '' , ' />' . $txt['tp-frontpanel'] . '<br>
-										<input type="radio" name="tp_addblockpanel" value="5" ' , $side=='bottom' ? 'checked' : '' , ' />' . $txt['tp-bottompanel'] . '<br>
-										<input type="radio" name="tp_addblockpanel" value="6" ' , $side=='top' ? 'checked' : '' , ' />' . $txt['tp-toppanel'] . '<br>
 										<input type="radio" name="tp_addblockpanel" value="7" ' , $side=='lower' ? 'checked' : '' , ' />' . $txt['tp-lowerpanel'] . '<br>
+										<input type="radio" name="tp_addblockpanel" value="5" ' , $side=='bottom' ? 'checked' : '' , ' />' . $txt['tp-bottompanel'] . '<br>
 									</dd>
 								</dl>
 							<hr>
@@ -2851,7 +2949,6 @@ function template_addblock()
 									<input type="radio" name="tp_addblock" value="14" />' . $txt['tp-blocktype14'] . '<br>
 									<input type="radio" name="tp_addblock" value="15" />' . $txt['tp-blocktype15'] . '<br>
 									<input type="radio" name="tp_addblock" value="16" />' . $txt['tp-blocktype16'] . '<br>
-									<input type="radio" name="tp_addblock" value="17" />' . $txt['tp-blocktype17'] . '<br>
 									<input type="radio" name="tp_addblock" value="18" />' . $txt['tp-blocktype18'] . '<br>
 									<input type="radio" name="tp_addblock" value="19" />' . $txt['tp-blocktype19'] . '<br>
 									<input type="radio" name="tp_addblock" value="20" />' . $txt['tp-blocktype20'] . '<br>
@@ -2966,6 +3063,7 @@ function template_blockedit()
 		{
 			ctheme_tp_blocks('listblocktypes');
 		}
+
 
 		echo '
 								</select>
@@ -3586,7 +3684,7 @@ function template_blocks()
 		<input name="tpadmin_form" type="hidden" value="blocks">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blocksettings'] . '</h3></div>
 		<div id="all-the-blocks" class="admintable admin-area">
-			<div class="windowbg noup">';
+			<div class="windowbg noup padding-div">';
 
 		$side=array('left','right','top','center','front','lower','bottom');
 		$sd=array('lb','rb','tb','cb','fb','lob','bb');
@@ -3615,16 +3713,24 @@ function template_blocks()
 
 			if($tn>0)
 				echo '
-					<div class="titlebg2">
-						<div style="width:7%;" class="smalltext pos float-items">'.$txt['tp-pos'].'</div>
-						<div style="width:20%;" class="smalltext name float-items">'.$txt['tp-title'].'</div>
-						<div style="width:18%;" class="smalltext title-admin-area float-items" >'.$txt['tp-type'].'</div>
- 						<div style="width:7%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-activate'].'</div>
-						<div style="width:14%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-move'].'</div>
-						<div style="width:10%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-editsave'].'</div>
-						<div style="width:7%;" class="smalltext title-admin-area float-items" align="center">'.$txt['tp-delete'].'</div>
+			<table class="table_grid tp_grid" style="width:100%";>
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="blocks">
+					<div>
+						<div style="width:10%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
+						<div style="width:20%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
+						<div style="width:20%;" class="smalltext title-admin-area float-items" ><strong>'.$txt['tp-type'].'</strong></div>
+ 						<div style="width:10%;" class="smalltext title-admin-area float-items" align="center"><strong>'.$txt['tp-activate'].'</strong></div>
+						<div style="width:20%;" class="smalltext title-admin-area float-items" align="center"><strong>'.$txt['tp-move'].'</strong></div>
+						<div style="width:10%;" class="smalltext title-admin-area float-items" align="center"><strong>'.$txt['tp-editsave'].'</strong></div>
+						<div style="width:10%;" class="smalltext title-admin-area float-items" align="center"><strong>'.$txt['tp-delete'].'</strong></div>
 						<p class="clearthefloat"></p>
-					</div>';
+					</div>
+					</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 			$n=0;
 			if($tn>0)
@@ -3638,16 +3744,15 @@ function template_blocks()
 					if(!$lblock['loose'])
 						$class="windowbg3";
 					else{
-						if($lblock['off']==0)
-							$class='windowbg2';
-						else
-							$class='windowbg';
+						$class='windowbg';
 					}
 					echo '
-					<div id="blocksDiv" class="',$class,'">
-						<div style="width:7%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
+					<tr class="',$class,'">
+					<td class="blocks">
+					<div id="blocksDiv">
+						<div style="width:10%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
 							<input name="pos' .$lblock['id']. '" type="text" size="1em" maxlength="3" value="' .($n*10). '">
-							<a name="block' .$lblock['id']. '"></a><br>';
+							<a name="block' .$lblock['id']. '"></a>';
 					echo '
 						    <a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.png" value="' .(($n*10)+11). '" /></a>';
 
@@ -3658,10 +3763,10 @@ function template_blocks()
 					echo '
 						</div>
 						<div style="width:20%;max-width:100%;" class="adm-name float-items">
-						     <input name="title' .$lblock['id']. '" type="text" size="15" value="' .html_entity_decode($newtitle). '">
+						     <input name="title' .$lblock['id']. '" type="text" size="25" value="' .html_entity_decode($newtitle). '">
 						</div>
 						<div style="width:20%;" class="fullwidth-on-res-layout block-opt float-items">
-						    <div id="show-on-respnsive-layout">'.$txt['tp-type'].'</div>
+						    <div id="show-on-respnsive-layout"><div class="smalltext"><strong>'.$txt['tp-type'].'</strong></div></div>
 							<select size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
 								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
@@ -3689,14 +3794,14 @@ function template_blocks()
 			}
 					echo '</select>
 						</div>
-						<div style="width:6%;" align="center" class="fullwidth-on-res-layout float-items">
-						    <div id="show-on-respnsive-layout">'.$txt['tp-activate'].'</div>
+						<div style="width:10%;" align="center" class="smalltext fullwidth-on-res-layout float-items">
+						    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-activate'].'</strong></div>
 							&nbsp;<a name="'.$lblock['id'].'"></a>
 						    <img class="toggleButton" id="blockonbutton' .$lblock['id']. '" title="'.$txt['tp-activate'].'" border="0" src="' .$settings['tp_images_url']. '/TP' , $lblock['off']=='0' ? 'active2' : 'active1' , '.png" alt="'.$txt['tp-activate'].'"  />';
 				echo '
 						</div>
-						<div  style="width:15%;" align="center" class="fullwidth-on-res-layout float-items">
-						  <div id="show-on-respnsive-layout">'.$txt['tp-move'].'</div>';
+						<div  style="width:20%;" align="center" class="smalltext fullwidth-on-res-layout float-items">
+						  <div id="show-on-respnsive-layout"><strong>'.$txt['tp-move'].'</strong></div>';
 
 					switch($side[$i]){
 						case 'left':
@@ -3765,37 +3870,45 @@ function template_blocks()
 					}
 					echo '
 						</div>
-						<div  style="width:8%;" align="center" class="fullwidth-on-res-layout float-items">
-						    <div id="show-on-respnsive-layout">'.$txt['tp-editsave'].'</div>
+						<div  style="width:10%;" align="center" class="smalltext fullwidth-on-res-layout float-items">
+						    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-editsave'].'</strong></div>
 							<a href="' . $scripturl . '?action=tpadmin;blockedit=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPmodify.png" alt="'.$txt['tp-edit'].'"  /></a>';
 
 				echo '
 							<input class="tpbut" style="height:16px; vertical-align:top;" type="image" src="' .$settings['tp_images_url']. '/TPsave.png" alt="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">';
 						echo '
 						</div>
-	                    <div style="width:6%;" align="center" class="fullwidth-on-res-layout float-items">
-						    <div id="show-on-respnsive-layout">'.$txt['tp-delete'].'</div>
+	                    <div style="width:10%;" align="center" class="smalltext fullwidth-on-res-layout float-items">
+						    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';blockdelete=' .$lblock['id']. '" onclick="javascript:return confirm(\''.$txt['tp-blockconfirmdelete'].'\')"><img title="'.$txt['tp-delete'].'"  border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  /></a>
 						</div>
 						<p class="clearthefloat"></p>
-					</div>';
+					</div>
+					</td>
+					</tr>';
 					if($lblock['type']=='recentbox'){
 						// check to see if it is numeric
 						if(!is_numeric($lblock['body']))
 							$lblock['body']='10';
 						echo '
-			     	<div class="windowbg">
+					<tr class="windowbg">
+					<td class="blocks">
+			     	<div>
 						<div align="center" style="padding:1%;">
 							'.$txt['tp-numberofrecenttopics'].'<input size=4 name="blockbody' .$lblock['id']. '" value="' .$lblock['body']. '">
 						</div>
-					</div>';
+					</div>
+					</td>
+					</tr>';
 					}
 					elseif($lblock['type']=='ssi'){
 						// SSI block..which function?
 						if(!in_array($lblock['body'],array('recentpoll','toppoll','topposters','topboards','topreplies','topviews','calendar')))
 							$lblock['body']='';
 						echo '
-					<div class="windowbg">
+					<tr class="windowbg">
+					<td class="blocks">
+					<div>
 						<div align="center" style="padding:1%;">
 							<select name="blockbody' .$lblock['id']. '"><option value="" ' , $lblock['body']=='' ? 'selected' : '' , '>' .$txt['tp-none-'].'</option>';
 						echo '
@@ -3814,19 +3927,27 @@ function template_blocks()
 								<option value="calendar" ' , $lblock['body']=='calendar' ? 'selected' : '' , '>'.$txt['tp-ssi-calendar'].'</option>
 							</select>
 						</div>
-					</div>';
+					</div>
+					</td>
+					</tr>';
 					}
 					elseif($lblock['type']=='rss'){
 						echo '
-					<div class="windowbg">
+					<tr class="windowbg">
+					<td class="blocks">
+					<div>
 						<div align="center" style="padding:1%;">
 							'.$txt['tp-rssblock'].'<input style="width: 75%;" name="blockbody' .$lblock['id']. '" value="' .$lblock['body']. '">
 						</div>
-					</div>';
+					</div>
+					</td>
+					</tr>';
 					}
 					elseif($lblock['type']=='module'){
 						echo '
-								<div class="windowbg">
+					<tr class="windowbg">
+					<td class="blocks">
+								<div>
 									<div align="center" style="padding:1%;">
 										<select name="blockbody' .$lblock['id']. '">
 											<option value="dl-stats" ' , $lblock['body']=='dl-stats' ? 'selected' : '' , '>' .$txt['tp-module1'].'</option>
@@ -3840,14 +3961,18 @@ function template_blocks()
 											<option value="dl-stats9" ' , $lblock['body']=='dl-stats9' ? 'selected' : '' , '>' .$txt['tp-module9'].'</option>
 										</select>
 									</div>
-								</div>';
+								</div>
+					</td>
+					</tr>';
 					}
 					elseif($lblock['type']=='articlebox'){
 						// check to see if it is numeric
 						if(!is_numeric($lblock['body']))
 							$lblock['body']='';
 						echo '
-								<div class="windowbg">
+					<tr class="windowbg">
+					<td class="blocks">
+								<div>
 									<div align="center" style="padding:1%;">
 										<select name="blockbody' .$lblock['id']. '">';
 						foreach($context['TPortal']['edit_articles'] as $article){
@@ -3857,7 +3982,9 @@ function template_blocks()
 						echo '
 										</select>
 									</div>
-								</div>';
+								</div>
+					</td>
+					</tr>';
 					}
 					elseif($lblock['type']=='categorybox'){
 						// check to see if it is numeric
@@ -3865,7 +3992,9 @@ function template_blocks()
 							$lblock['body']='';
 
 						echo '
-								<div class="windowbg">
+					<tr class="windowbg">
+					<td class="blocks">
+								<div>
 									<div align="center" style="padding:1%;">
 										<select name="blockbody' .$lblock['id']. '">';
 						if(isset($context['TPortal']['catnames']) && count($context['TPortal']['catnames'])>0)
@@ -3879,15 +4008,18 @@ function template_blocks()
 						echo '
 										</select>
 									</div>
-								</div>';
+								</div>
+					</td>
+					</tr>';
 					}
 					$n++;
 				}
 			}
-
+		echo '
+		</tbody>
+	</table>';
 		}
 		echo '
-
 			<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			</div>
 		</div>

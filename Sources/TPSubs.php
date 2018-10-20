@@ -637,6 +637,12 @@ class chain
 
    function makeBranch($parent_id, $level, $maxlevel)
    {
+       if(!is_array($this->table)) 
+              $this->table = array();
+	   
+       if(!array_key_exists($parent_id, $this->table)) 
+              return;
+	   
        $rows = $this->table[$parent_id];
        foreach($rows as $key=>$value)
        {
@@ -755,8 +761,8 @@ function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $displ
 
 function tp_cleantitle($text)
 {
-	$tmp = strtr($text, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$tmp = strtr($tmp, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
+	$tmp = strtr($text, 'ÂŠÂŽÂšÂžÂŸÃ€ÃÃ‚ÃƒÃ„Ã…Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃŽÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¶Ã¸Ã¹ÃºÃ»Ã¼Ã½Ã¿', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+	$tmp = strtr($tmp, array('Ãž' => 'TH', 'Ã¾' => 'th', 'Ã' => 'DH', 'Ã°' => 'dh', 'ÃŸ' => 'ss', 'ÂŒ' => 'OE', 'Âœ' => 'oe', 'Ã†' => 'AE', 'Ã¦' => 'ae', 'Âµ' => 'u'));
 	$cleaned = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $tmp);
 	return $cleaned;
 }
@@ -1122,9 +1128,9 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		}
 		echo '
 		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
-		<div class="windowbg2 smalltext" style="padding: 1em;">' , $txt['tp-quicklist2'] , '</div>
-		<div class="windowbg" style="padding: 4px; margin-top: 4px; max-height: 200px; overflow: auto;">
-		<div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
+		<div class="windowbg2 smalltext tp_pad">' , $txt['tp-quicklist2'] , '</div>
+		<div class="windowbg tpquicklist">
+		<div class="tpthumb">';
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
@@ -1133,7 +1139,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		echo '
 		</div>
 		</div>
-		<div style="padding: 6px;">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
+		<div class="tp_pad">' , $txt['tp-uploadfile'] ,'<input type="file" name="'.$uploadname.'"></div>
 	</div>';
 	}
 
@@ -1324,9 +1330,10 @@ function tp_fetchboards()
 
 	// get all boards for board-spesific news
 	$request =  $smcFunc['db_query']('', '
-		SELECT id_board as ID_BOARD,name
+		SELECT id_board as ID_BOARD, name, board_order
 		FROM {db_prefix}boards
-		WHERE 1',
+		WHERE 1
+		ORDER BY board_order ASC',
 		array()
 	);
 	$boards = array();
@@ -3019,7 +3026,8 @@ function tp_getDLcats()
 	$request =  $smcFunc['db_query']('', '
 		SELECT id, name
 		FROM {db_prefix}tp_dlmanager
-		WHERE type = {string:dlcat}',
+		WHERE type = {string:dlcat}
+		ORDER BY name',
 		array('dlcat' => 'dlcat')
 	);
 	$count = 0;

@@ -35,6 +35,7 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 			'tp_dlmanager' => array(false, 'tp', 'tp'),
 			'tp_dlupload' => array(false, 'tp', 'tp'),
 			'tp_dlcreatetopic' => array(false, 'tp', 'tp'),
+			'tp_can_list_images' => array(false, 'tp', 'tp'),
 		),
 		$permissionList['membergroup']
 	);
@@ -170,6 +171,7 @@ function tpAddIllegalPermissions()
 		'tp_dlmanager',
 		'tp_dlupload',
 		'tp_dlcreatetopic',
+		'tp_can_list_images',
 	);
 	$context['non_guest_permissions'] = array_merge($context['non_guest_permissions'], $tp_illegal_perms);
 }
@@ -320,7 +322,7 @@ function tpAddProfileMenu(&$profile_areas)
 			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
-
+	if(!empty($context['TPortal']['show_download']))
 	$profile_areas['tp']['areas']['tpdownload'] = array(
 		'label' => $txt['downloadprofile'],
 		'file' => 'TPmodules.php',
@@ -372,7 +374,7 @@ function tpAddProfileMenu(&$profile_areas)
 			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
-
+	if(!empty($context['TPortal']['show_download']))
 	$profile_areas['tp']['areas']['tpdownload'] = array(
 		'label' => $txt['downloadprofile'],
 		'file' => 'TPmodules.php',
@@ -518,7 +520,42 @@ function tpWhosOnline($actions)
             return $txt['tp-who-articles'];
         }
     }
-
+    if(isset($actions['cat'])) {
+        if(is_numeric($actions['cat'])) {
+            $request = $smcFunc['db_query']('', '
+                SELECT 	value1 FROM {db_prefix}tp_variables
+                WHERE id = {int:id}
+                LIMIT 1',
+                array (
+                    'id' => $actions['cat'],
+                )
+            );
+        }
+        else {
+            $request = $smcFunc['db_query']('', '
+                SELECT value1 FROM {db_prefix}tp_variables
+                WHERE value8 = {string:shortname}
+                LIMIT 1',
+                array (
+                    'shortname' => $actions['cat'],
+                )
+            );
+        }
+        $category = array();
+        if($smcFunc['db_num_rows']($request) > 0) {
+            while($row = $smcFunc['db_fetch_assoc']($request)) {
+                $category = $row;
+            }
+            $smcFunc['db_free_result']($request);
+        }
+        if(!empty($category)) {
+            return sprintf($txt['tp-who-category'], $category['value1'], $actions['cat'], $scripturl );
+        }
+        else {
+            return $txt['tp-who-categories'];
+        }
+    }
+	
     if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
         return $txt['tp-who-downloads'];
     }
@@ -557,6 +594,16 @@ function tpLoadTheme(&$id_theme)
     $newtheme = TP_loadTheme();
 	if($newtheme != $id_theme && $newtheme > 0)
 		$id_theme = $newtheme;
+
+}
+
+function tpDoTagSearchLayers()
+{
+	global $context;
+
+	// are we on search page? then add TP search options as well!
+	if($context['TPortal']['action'] == 'search')
+		$context['template_layers'][] = 'TPsearch';
 
 }
 

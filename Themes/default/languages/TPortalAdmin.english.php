@@ -424,7 +424,7 @@ $txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
 $txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
 $txt['tp-grid'] = 'Display the blocks according to a grid';
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
-$txt['tp-blockheight'] = '<b>Force</b> this heigth on each block(use 00px or 00%)';
+$txt['tp-blockheight'] = '<b>Force</b> this height on each block(use 00px or 00%)';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel:';
 $txt['tp-panelstylehelp2'] = '(This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.)';
 
@@ -537,6 +537,7 @@ $txt['tp-pos'] = 'Pos';
 $txt['tp-send']='Save';
 $txt['tp-useonfrontpage'] = 'Override frontpage settings when displayed on frontpage?';
 $txt['tp-more']='More ';
+$txt['tp-hide']='Hide ';
 $txt['tp-blocktype0'] = '- not set -';
 $txt['tp-blocktype1'] = 'User';
 $txt['tp-blocktype2'] = 'News';
@@ -553,7 +554,6 @@ $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype14'] = 'Article / Download functions';
 $txt['tp-blocktype15'] = 'RSS';
 $txt['tp-blocktype16'] = 'Sitemap';
-$txt['tp-blocktype17'] = 'Admin links';
 $txt['tp-blocktype18'] = 'Single Article';
 $txt['tp-blocktype19'] = 'Articles in a Category';
 $txt['tp-blocktype20'] = 'TP module';
@@ -570,6 +570,7 @@ $txt['tp-helppanels'] = 'Blocks are located in panels and each panel has its own
 $txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
 $txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
 $txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
+$txt['tp-helpmenuitems'] = 'Here you can create and change the menu items for the menu. The menu item types available are: Category, Article, Link, Header, Spacer or Menu button (only in the <i>Internal</i> menu)<br>';
 
 $txt['tp-assignnewauthor'] = 'Author ID(change to re-assign to another)';
 $txt['tp-uncategorised'] = 'Uncategorized';
@@ -656,4 +657,6 @@ $txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Searc
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
+// new in 1.6.1
+$txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 ?>

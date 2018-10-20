@@ -20,7 +20,7 @@ Bloc
 </date>
 
 <code>
-global $context, $modSettings, $settings, $txt;
+global $context, $modSettings, $settings, $txt, $forum_version;
 $context['TPortal']['recentboxnum'] = '15';
 
 if(isset($modSettings['recycle_board']))
@@ -40,8 +40,12 @@ foreach($what as $w)
 	<div class="smalltext">', $txt['by'], ' <b>', $w['poster']['link'], '</b></div>
 	<div class="smalltext">';
 	if(!$w['new'])
+	{
+	if (strstr($forum_version, '2.0'))
 		echo '<a href="'.$w['href'].'"><img border="0" src="'.$settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-
+	else
+		echo '<a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
+	}
 	echo '['.$w['time'].']
 	</div>';
 
