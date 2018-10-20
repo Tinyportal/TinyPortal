@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -56,33 +56,31 @@ function TPsetupAdminAreas()
 		)
 	);
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$perms = explode(',', $row['permissions']);
 			$setperm = array();
 			$admin_set = false;
-			for($a = 0; $a < sizeof($perms); $a++)
-			{
-				$pr = explode('|', $perms[$a]);
-				$setperm[$pr[0]] = $pr[1];
-				// admin permission?
-				if (isset($pr[1]) && $pr[1] == 1)
-				{
-					if (allowedTo($pr[0]))
-					{
-						if(!$admin_set)
-							$context['admin_tabs']['custom_modules'][$pr[0]] = array(
-								'title' => $row['modulename'],
-								'description' => '',
-								'href' => $scripturl . '?action=tpmod;'.$row['subquery'].'=admin',
-								'is_selected' => isset($_GET[$row['subquery']]) ? true : false,
-							);
-						$admin_set=true;
-					}
-				}
-			}
+            if(is_countable($perms)) {
+                for($a = 0; $a < count($perms); $a++) {
+                    $pr = explode('|', $perms[$a]);
+                    $setperm[$pr[0]] = $pr[1];
+                    // admin permission?
+                    if (isset($pr[1]) && $pr[1] == 1) {
+                        if (allowedTo($pr[0])) {
+                            if(!$admin_set) {
+                                $context['admin_tabs']['custom_modules'][$pr[0]] = array(
+                                    'title'         => $row['modulename'],
+                                    'description'   => '',
+                                    'href'          => $scripturl . '?action=tpmod;'.$row['subquery'].'=admin',
+                                    'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
+                                );
+                            }
+                            $admin_set = true;
+                        }
+                    }
+                }
+            }
 		}
 		$smcFunc['db_free_result']($request);
 	}
@@ -104,20 +102,20 @@ function TP_addPerms()
 		)
 	);
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$perms = explode(',', $row['permissions']);
 			$setperm = array();
-			for($a = 0; $a < sizeof($perms); $a++)
-			{
-				$pr = explode('|', $perms[$a]);
-				$setperm[$pr[0]] = $pr[1];
-				// admin permission?
-				if($pr[1] == 1)
-					$admperms[] = $pr[0];
-			}
+            if(is_countable($perms)) {
+                for($a = 0; $a < count($perms); $a++) {
+                    $pr = explode('|', $perms[$a]);
+                    $setperm[$pr[0]] = $pr[1];
+                    // admin permission?
+                    if($pr[1] == 1) {
+                        $admperms[] = $pr[0];
+                    }
+                }
+            }
 		}
 		$smcFunc['db_free_result']($request);
 	}
@@ -186,20 +184,20 @@ function TPcollectPermissions()
 		)
 	);
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$perms = explode(',', $row['permissions']);
-			$setperm = array();
-			for($a=0; $a < sizeof($perms); $a++)
-			{
-				$pr = explode('|', $perms[$a]);
-				$setperm[$pr[0]] = 0;
-				// admin permission?
-				if($pr[1] == 1)
-					$context['TPortal']['adminlist'][$pr[0]] = 1;
-			}
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
+			$perms      = explode(',', $row['permissions']);
+			$setperm    = array();
+            if(is_countable($perms)) {
+                for($a=0; $a < count($perms); $a++) {
+                    $pr = explode('|', $perms[$a]);
+                    $setperm[$pr[0]] = 0;
+                    // admin permission?
+                    if($pr[1] == 1) {
+                        $context['TPortal']['adminlist'][$pr[0]] = 1;
+                    }
+                }
+            }
 			$context['TPortal']['permissonlist'][] = array(
 				'title' => strtolower($row['modulename']),
 				'perms' => $setperm
@@ -1909,8 +1907,14 @@ function get_blockaccess($what, $front = false, $whichbar)
 
 function TPgetlangOption($langlist, $set)
 {
-	$lang = explode("|", $langlist);
-	$num = count($lang);
+
+	$lang   = explode("|", $langlist);
+	if(is_countable($lang)) {
+        $num = count($lang);
+    }
+    else {
+        $num = 0;
+    }
 
 	$setlang = '';
 
@@ -2600,23 +2604,30 @@ function art_recentitems($max = 5, $type = 'date' ){
 			)
 		);
 
-	if($smcFunc['db_num_rows']($request) > 0){
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
 			$rat = explode(',', $row['rating']);
-			$rating_votes = count($rat);
-			if($row['rating'] == '')
+            if(is_countable($count)) {
+			    $rating_votes = count($rat);
+            }
+            else {
+                $rating_votes = 0;
+            }
+			if($row['rating'] == '') {
 				$rating_votes = 0;
+            }
 			$total = 0;
-			foreach($rat as $mm => $mval)
-			{
-				if(is_numeric($mval))
+			foreach($rat as $mm => $mval) {
+				if(is_numeric($mval)) {
 					$total = $total + $mval;
+                }
 			}
-			if($rating_votes > 0 && $total > 0)
+			if($rating_votes > 0 && $total > 0) {
 				$rating_average = floor($total / $rating_votes);
-			else
+            }
+			else {
 				$rating_average = 0;
+            }
 
 			$data[] = array(
 				'id' => $row['id'],
@@ -2652,8 +2663,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		$sort = 'author_id';
 
 	// empty?
-	if(sizeof($mycats) > 0)
-	{
+    if(is_countable($mycats) && count($mycats) > 0 ) {
 		$context['TPortal']['dlrecenttp'] = array();
 		// decide what to sort from
 		if($sort == 'date')
@@ -3031,10 +3041,8 @@ function tp_getDLcats()
 		array('dlcat' => 'dlcat')
 	);
 	$count = 0;
-	if ($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$context['TPortal']['dlcats'][$count] = array('id' => $row['id'], 'name' => $row['name']);
 			$count++;
 		}
@@ -3054,15 +3062,14 @@ function tp_getTPmodules()
 		array('act' => 1)
 	);
 	$count = 0;
-	if ($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$context['TPortal']['tpmods'][$count] = array('title' => $row['title'], 'subquery' => $row['subquery']);
 			$count++;
 		}
 		$smcFunc['db_free_result']($request);
 	}
+
 }
 
 function updateTPSettings($addSettings, $check = false)
@@ -3122,6 +3129,12 @@ function updateTPSettings($addSettings, $check = false)
 	cache_put_data('tpSettings', null, 90);
 
 	return;
+}
+
+if (!function_exists('is_countable')) {
+    function is_countable($var) {
+        return ( is_array($var) || $var instanceof Countable || $var instanceof \SimpleXMLElement || $var instanceof \ResourceBundle );
+    }
 }
 
 ?>

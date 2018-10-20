@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -119,7 +119,7 @@ function TPortal_init()
 	tpDoTagSearchLayers();
 
 	// any modules needed to load then?
-	if(!empty($context['TPortal']['always_loaded']) && sizeof($context['TPortal']['always_loaded']) > 0)
+	if(!empty($context['TPortal']['always_loaded']) && count($context['TPortal']['always_loaded']) > 0)
 	{
 		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
 			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
@@ -751,11 +751,9 @@ function doTPpage()
 
 				$ccount = 0;
 				$newcount = 0;
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$context['TPortal']['article']['comment_posts'] = array();
-					while($row = $smcFunc['db_fetch_assoc']($request))
-					{
+					while($row = $smcFunc['db_fetch_assoc']($request)) {
 						if ($image_proxy_enabled && !empty($row['avatar']) && stripos($row['avatar'], 'http://') !== false)
 							$avatar = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
 						else
@@ -784,14 +782,16 @@ function doTPpage()
 					$context['TPortal']['article_comments_new'] = $newcount;
 					$context['TPortal']['article_comments_count'] = $ccount;
 				}
+
 				// if the count differs, update it
-				if($ccount != $article['comments'])
+				if($ccount != $article['comments']) {
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_articles
 						SET comments = {int:com}
 						WHERE id = {int:artid}',
 						array('com' => $ccount, 'artid' => $article['id'])
-						);
+					);
+                }
 
 				// the frontblocks should not display here
 				$context['TPortal']['frontpanel'] = 0;
@@ -1220,7 +1220,7 @@ function doTPcat()
 						$txt['catlist'. $value] = $allcats[$value]['value1'];
 					}
 				}
-				$context['TPortal']['show_catlist'] = sizeof($context['TPortal']['clist']) > 0 ? true : false;
+				$context['TPortal']['show_catlist'] = count($context['TPortal']['clist']) > 0 ? true : false;
 
 				if (defined('WIRELESS') && WIRELESS)
 				{
@@ -1921,12 +1921,12 @@ function doTPfrontpage()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	if(sizeof($fetch_articles) > 0)
+	if(count($fetch_articles) > 0)
 		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
 	else
 		$fetchart='';
 
-	if(sizeof($fetch_article_titles) > 0)
+	if(count($fetch_article_titles) > 0)
 		$fetchtitles= '(art.category='. implode(' OR art.category=', $fetch_article_titles).')';
 	else
 		$fetchtitles='';
@@ -2233,12 +2233,12 @@ function doTPblocks()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	if(sizeof($fetch_articles) > 0)
+	if(count($fetch_articles) > 0)
 		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
 	else
 		$fetchart = '';
 
-	if(sizeof($fetch_article_titles) > 0)
+	if(count($fetch_article_titles) > 0)
 		$fetchtitles= '(art.category='. implode(' OR art.category=', $fetch_article_titles).')';
 	else
 		$fetchtitles = '';
@@ -2718,7 +2718,7 @@ function tp_setupUpshrinks()
 	// the generic panel upshrink code
 	$context['html_headers'] .= '
 	  <script type="text/javascript"><!-- // --><![CDATA[
-		' . (sizeof($context['tp_panels']) > 0 ? '
+		' . (count($context['tp_panels']) > 0 ? '
 		var tpPanels = new Array(\'' . (implode("','",$context['tp_panels'])) . '\');' : '
 		var tpPanels = new Array();') . '
 		function togglepanel( targetID )
@@ -2874,7 +2874,8 @@ function TP_blockgrids()
 	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
 }
 
-function doModules() {
+function doModules()
+{
 	global $context, $boarddir, $smcFunc;
 
     // fetch any block render hooks and notifications from tpmodules
@@ -2891,53 +2892,49 @@ function doModules() {
 		FROM {db_prefix}tp_modules WHERE active = {int:active}',
 		array('active' => 1)
 	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			if(!empty($row['permissions']))
-			{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
+			if(!empty($row['permissions'])) {
 				$all = explode(',', $row['permissions']);
-				foreach($all as $one)
-				{
+				foreach($all as $one) {
 					$real = explode('|', $one);
 					$context['TPortal']['modulepermissions'][] = $real[0];
 					unset($real);
 				}
 			}
-			if(!empty($row['blockrender']))
+			if(!empty($row['blockrender'])) {
 				$context['TPortal']['tpmodules']['blockrender'][$row['id']] = array(
 						'id' => $row['id'],
 						'name' => $row['modulename'],
 						'function' => $row['blockrender'],
 						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
 				);
-			if(!empty($row['frontsection']))
+            }
+			if(!empty($row['frontsection'])) {
 				$context['TPortal']['tpmodules']['frontsection'][$row['id']] = array(
 					'id' => $row['id'],
 					'name' => $row['modulename'],
 					'function' => $row['frontsection'],
 					'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
 				);
+            }
 		}
-		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']))
-		{
-			if(!empty($row['adminhook']))
-			{
+
+		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'])) {
+			if(!empty($row['adminhook'])) {
 				$perms = explode(',', $row['permissions']);
-				for($a = 0; $a < sizeof($perms); $a++)
-				{
-					$pr = explode('|',$perms[$a]);
-					// admin permission?
-					if($pr[1] == 1)
-					{
-						if (allowedTo($pr[0]))
-						{
-							require_once($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']);
-							$context['TPortal']['tpmodules']['adminhook'][$row['id']] = call_user_func($row['adminhook']);
-						}
-					}
-				}
+                if(is_countable($perms)) {
+                    for($a = 0; $a < count($perms); $a++) {
+                        $pr = explode('|',$perms[$a]);
+                        // admin permission?
+                        if($pr[1] == 1) {
+                            if (allowedTo($pr[0])) {
+                                require_once($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']);
+                                $context['TPortal']['tpmodules']['adminhook'][$row['id']] = call_user_func($row['adminhook']);
+                            }
+                        }
+                    }
+                }
 			}
 		}
 		$smcFunc['db_free_result']($request);
