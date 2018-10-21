@@ -425,7 +425,7 @@ function TPortal_userbox()
 		}
 
 		// add adminhooks
-		if(sizeof($context['TPortal']['tpmodules']['adminhook']) > 0)
+		if(is_countable($context['TPortal']['tpmodules']['adminhook']) && count($context['TPortal']['tpmodules']['adminhook']) > 0)
 		{
 			foreach($context['TPortal']['tpmodules']['adminhook'] as $link)
 				echo '<li><a href="' . $scripturl . '?'.$link['action'].'">' . $bullet5.$link['title']. '</a></li>';
@@ -494,11 +494,11 @@ function TPortal_themebox()
 	// remove multiple theme=x in the string.
 	$tp_where=preg_replace("'theme=[^>]*?;'si", "", $tp_where);
 
-	 if(sizeof($temaid) > 0){
+	 if(is_countable($temaid) && count($temaid) > 0){
         echo '
 		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
-         for($a=0 ; $a<(sizeof($temaid)); $a++)
+         for($a=0 ; $a<(count($temaid)); $a++)
 		 {
                 echo '
 				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
@@ -515,7 +515,7 @@ function TPortal_themebox()
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var extra = \'\';
 			var themepath = new Array();';
-         for($a=0 ; $a<(sizeof($temaid)); $a++){
+         for($a=0 ; $a<(count($temaid)); $a++){
 			 echo '
 			    themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
 				';
@@ -650,7 +650,7 @@ function TPortal_module()
 		case 'dl-stats4':
 			$it = array();
 			$it = dl_recentitems('1', 'date', 'array');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -665,7 +665,7 @@ function TPortal_module()
 		case 'dl-stats5':
 			$it = array();
 			$it = dl_recentitems('1', 'downloads', 'array');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -680,7 +680,7 @@ function TPortal_module()
 		case 'dl-stats6':
 			$it = array();
 			$it = dl_recentitems('1', 'views', 'array');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -695,7 +695,7 @@ function TPortal_module()
 		case 'dl-stats7':
 			$it = array();
 			$it = art_recentitems('5','date');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -707,7 +707,7 @@ function TPortal_module()
 		case 'dl-stats8':
 			$it = array();
 			$it = art_recentitems('5', 'views');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -719,7 +719,7 @@ function TPortal_module()
 		case 'dl-stats9':
 			$it = array();
 			$it = art_recentitems('5', 'comments');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -818,7 +818,7 @@ function TPortal_categorybox()
     global $context, $txt, $scripturl;
 
 	if(isset($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])){
-		echo '<div class="middletext" ', (sizeof($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])>$context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height']!='0') ? ' style="overflow: auto; width: 100%; height: '.$context['TPortal']['blocklisting_height'].'em;"' : '' ,'>';
+		echo '<div class="middletext" ', (count($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])>$context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height']!='0') ? ' style="overflow: auto; width: 100%; height: '.$context['TPortal']['blocklisting_height'].'em;"' : '' ,'>';
 		foreach($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']] as $listing){
 			if($listing['category'] == $context['TPortal']['blocklisting'])
 				echo '<b><a href="'.$scripturl.'?page='.$listing['shortname'].'">'.$listing['subject'].'</a></b> ' , $context['TPortal']['blocklisting_author']=='1' ? $txt['by'].' '.$listing['poster'] : '' , '<br>';
@@ -1742,7 +1742,7 @@ function article_comments($render = true)
 		<div class="windowbg2" style="padding: 1em 2em;">';
 
 		$counter = 1;
-				if(isset($context['TPortal']['article']['comment_posts']))
+		if(isset($context['TPortal']['article']['comment_posts']))
 		{
 			foreach($context['TPortal']['article']['comment_posts'] as $comment)
 			{
@@ -2074,7 +2074,7 @@ function template_subtab_above()
 {
 	global $context, $txt;
 
-	if(isset($context['TPortal']['subtabs']) && sizeof($context['TPortal']['subtabs']) > 1)
+	if(isset($context['TPortal']['subtabs']) && ( is_countable($context['TPortal']['subtabs']) && count($context['TPortal']['subtabs']) > 1 ))
 	{
 		echo '
 		<div class="tborder" style="margin-bottom: 0.5em;">
