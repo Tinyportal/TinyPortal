@@ -1064,7 +1064,6 @@ a.avatar img
 .dl_number
 {
 	float: left;
-	font-family: Georgia, sans-serif;
 	font-size: 1.8em;
 	color: #965;
 	margin: 0 8px 0 0;
@@ -1072,7 +1071,6 @@ a.avatar img
 .dl_number2
 {
 	float: left;
-	font-family: Georgia, sans-serif;
 	font-size: 1.4em;
 	color: #888;
 	margin: 0 8px 0 0;
@@ -1133,6 +1131,10 @@ img.dl_icon
 	padding: 4px 10px; 
 	margin-bottom: 0.5em; 
 	overflow: visible;
+ }
+.tp-subcats
+{
+ padding-left: 5%;
  }
  .dlcategory .details
 {
@@ -1233,7 +1235,7 @@ img.dl_icon
 .dl_most_downloaded
 {
 	overflow: visible;
-	padding-bottom: 0.5em;
+	padding: 1%;
 }
 .forumgtags
 {
@@ -1783,7 +1785,7 @@ h3.h3dl
 .recentdl
 {
 	overflow: hidden;
-	padding: 0.5em 0;
+	padding: 1%;
 }
 .dlpost
 {
@@ -2248,6 +2250,16 @@ div.tp_half21 {
 .tp_responsive #tpadmin_content {
     margin: 2px 0 0 0px!important;
 }
+/*** responsiveness dlmanager ***/
+.dlitemgrid
+{
+	width: 98%;
+	word-wrap: break-word;
+}
+ul.tp-subcategories li
+{
+	width: 48%;
+}
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
@@ -2269,6 +2281,10 @@ div.tp_half21 {
 }
 .tp_responsive #tp_overview ul li {
     width: 50%!important;
+}
+ul.tp-subcategories li
+{
+	width: 98%;
 }
 }
 /** screen smaller then 400px **/
