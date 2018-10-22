@@ -2699,7 +2699,7 @@ function TPortalDLAdmin()
 			}
 			elseif($what == 'tp_dl_showcategorytext')
 			{
-				$changeArray['dl_showcategorylist'] = $value;
+				$changeArray['dl_showcategorytext'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_featured')
