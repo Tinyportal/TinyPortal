@@ -750,7 +750,7 @@ function template_main()
 		echo '
 				</div><p class="clearthefloat"></p></div>
 			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatssize'].'</h3></div>
-				<div style="width:100%;"><div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo2.png" alt="" /></div>
+				<div style="width:100%;"><div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo3.png" alt="" /></div>
 				<div class="float-items" style="width:91%;">';
 
 		// top filesize
