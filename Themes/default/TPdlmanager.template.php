@@ -26,7 +26,7 @@ function template_main()
 		echo '
 	<div class="dl_container">
 		<div class="title_bar">
-			<h3 class="titlebg">',$txt['tp-downloads'],'</h3>
+			<h3 class="titlebg">', ($context['TPortal']['dlaction']=='item' || $context['TPortal']['dlaction']=='cat') ? $txt['tp-downloads'] . ':&nbsp;' .$context['TPortal']['dlheader'] : $txt['tp-downloads'] ,'</h3>
 		</div>
 		<div>';
 		$dlbuttons = array(
