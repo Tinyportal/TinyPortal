@@ -74,7 +74,7 @@ function template_main()
 		}
 
 		// render last added and most downloaded.
-		if($context['TPortal']['dl_showlatest']==1 || ($context['TPortal']['dl_showstats']==1))
+		if(($context['TPortal']['dl_showlatest']==1 || ($context['TPortal']['dl_showstats']==1)) && (!empty($context['TPortal']['dl_last_added'])))
 		{
 			echo '
 				<span class="upperframe"><span></span></span>
@@ -96,7 +96,7 @@ function template_main()
 			<div class="windowbg" style="margin-bottom: 5px;">';
 		}
 
-		if($context['TPortal']['dl_showlatest']==1)
+		if(($context['TPortal']['dl_showlatest']==1) && (!empty($context['TPortal']['dl_last_added'])))
 		{
 			echo '
 			<div id="dlrecent">
@@ -129,7 +129,7 @@ function template_main()
 			echo '
 			</div>';
 		}
-		if($context['TPortal']['dl_showstats']==1)
+		if(($context['TPortal']['dl_showstats']==1) && (!empty($context['TPortal']['dl_most_downloaded'])))
 		{
 			echo '
 			<div id="dlweekpop" ' , $context['TPortal']['dl_showlatest']==1 ? 'style="display: none;"' : '' , '>
@@ -217,9 +217,9 @@ function template_main()
 	// output the category block?
 		if(sizeof($context['TPortal']['dlcats'])>0)
 		{
-			echo '
+		echo '
 			<div class="cat_bar">
-				<h3 class="catbg">'.$txt['tp-categories'] .'</h3>
+				<h3 class="catbg">' , $context['TPortal']['dlaction']=='cat' ? $txt['tp-childcategories'] : $txt['tp-categories'] , '</h3>
 			</div>
 			<div class="windowbg noup padding-div">';
 				//show all categories
@@ -251,7 +251,7 @@ function template_main()
 						<img style="float: left; margin: 0 10px 5px 0;" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
 							<div class="details">' ,	$dlcat['files']>0 ? $dlcat['files'].' '.$txt['tp-dlfiles'] : '0 '.$txt['tp-dlfiles'] , '</div>
 							<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
-							<div class="post middletext">', $context['TPortal']['dl_showcategorytext']==1 ? $dlcat['description'] : '' , '</div>
+							<div class="post middletext">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>';
