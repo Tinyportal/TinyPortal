@@ -52,7 +52,7 @@ function template_main()
 	{
 		if(!empty($context['TPortal']['dl_introtext']) && (!$context['TPortal']['dlaction'])=='cat')
 			echo '
-			<div class="windowbg tp_pad" style="margin-bottom: 5px">'. parse_bbc($context['TPortal']['dl_introtext']) .'</div>';
+			<div class="windowbg tp_pad" style="margin-bottom: 5px">' , $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($context['TPortal']['dl_introtext']) : $context['TPortal']['dl_introtext'] , '</div>';
 
 		if(!empty($context['TPortal']['dl_showfeatured']) && !empty($context['TPortal']['featured']))
 		{
