@@ -141,6 +141,7 @@ $txt['tp-bottombar'] = 'Show bottom panel';
 $txt['tp-lowerbar'] = 'Show lower panel';
 $txt['tp-showtop'] = 'Show header top';
 $txt['tp-categories'] = 'Categories';
+$txt['tp-childcategories'] = 'Child categories';
 
 $txt['tp-dlcreatetopic'] = 'Create new topic?';
 $txt['tp-dlcreatetopic_sticky'] = 'Set as sticky?';
@@ -158,7 +159,7 @@ $txt['tp-dluselatest'] = 'Show recent files?';
 $txt['tp-dlusefeatured'] = 'Show featured file on frontpage of Download manager?';
 $txt['tp-dlusestats'] = 'Show most downloaded/weekly?';
 $txt['tp-dlintrotext'] = 'Text for introduction';
-$txt['tp-dlusecategorytext'] = 'Show category descriptions inside file listings?';
+$txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories?';
 $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dlwysiwyg'] = 'Show text-editor?';
 
