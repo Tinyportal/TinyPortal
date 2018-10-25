@@ -389,6 +389,10 @@ function TPortalDLManager()
 				$context['TPortal']['editor_id'] = 'tp_dluploadtext';
 				TP_prebbcbox($context['TPortal']['editor_id']);
 			}
+			elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+            {
+                TPwysiwyg_setup();
+            }
 			TP_dlgeticons();
 
 			// allow to attach this to another item
@@ -1956,7 +1960,11 @@ function TPortalDLAdmin()
 			$context['TPortal']['editor_id'] = 'tp_dl_introtext';
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['dl_introtext']);
 		}
-	}
+    }
+    elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+    {
+        TPwysiwyg_setup();
+    }
 
 	// any items from the ftp screen?
 	if(!empty($_POST['ftpdlsend']))
@@ -3148,6 +3156,10 @@ function TPortalDLAdmin()
 			$context['TPortal']['editor_id'] = 'dladmin_text'.$context['TPortal']['admcats'][0]['id'];
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['admcats'][0]['description']);
 		}
+        elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+        {
+            TPwysiwyg_setup();
+        }
 	}
 	elseif(substr($admsub, 0, 6) == 'delcat')
 	{
@@ -3194,8 +3206,11 @@ function TPortalDLAdmin()
 				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
 				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']);
 			}
-
-			// get all items for a list
+            elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+            {
+                TPwysiwyg_setup();
+            }
+            // get all items for a list
 			$context['TPortal']['admitems'] = array();
 			$itemlist = $smcFunc['db_query']('', '
 				SELECT id, name FROM {db_prefix}tp_dlmanager

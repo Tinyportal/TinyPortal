@@ -70,9 +70,6 @@ function TPortalAdmin()
 			$context['TPortal']['frontpage_visualopts_admin']['sortorder'] = substr($r, 10);
 	}
 
-	// call up the editor
-	TPwysiwyg_setup();
-
 	TPadd_linktree($scripturl.'?action=tpadmin', 'TP Admin');
 
 	// some GET values set up
@@ -113,6 +110,9 @@ function TPortalAdmin()
 		{
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = $_GET['sa'];
+            if($_GET['sa'] == 'addarticle_html') {
+                TPwysiwyg_setup();
+            }
 		}
 		do_subaction($tpsub);
 	}
@@ -1593,6 +1593,10 @@ function do_articles()
 			$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
 			$smcFunc['db_free_result']($request);
 		}
+
+        if($context['TPortal']['editarticle']['articletype'] == 'html') {
+            TPwysiwyg_setup();
+        }
 
 		// Add in BBC editor before we call in template so the headers are there
 		if($context['TPortal']['editarticle']['articletype'] == 'bbc')

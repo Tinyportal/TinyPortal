@@ -59,7 +59,6 @@ function TPmodules()
 	$context['TPortal']['not_forum'] = true;
 
 	// call the editor setup
-	TPwysiwyg_setup();
 	require_once($sourcedir. '/TPcommon.php');
 
 	// download manager?
