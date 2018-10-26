@@ -677,7 +677,7 @@ function doTPpage()
                         'ID_ATTACH' => $article['ID_ATTACH'],
                         'attachmentType' => $article['attachmentType'],
                      )
-                );
+                )['image'];
 
 				// update views
 				$smcFunc['db_query']('', '
@@ -767,7 +767,7 @@ function doTPpage()
                                     'ID_ATTACH' => $row['ID_ATTACH'],
                                     'attachmentType' => $row['attachmentType'],
                                 )
-                        );
+                        )['image'];
 
 						$context['TPortal']['article']['comment_posts'][] = array(
 							'id' => $row['id'],
@@ -1125,7 +1125,7 @@ function doTPcat()
                                     'ID_ATTACH' => $row['ID_ATTACH'],
                                     'attachmentType' => $row['attachmentType'],
                                 )
-                        );
+                        )['image'];
 
 						if($counter == 0)
 							$context['TPortal']['category']['featured'] = $row;
@@ -1385,7 +1385,7 @@ function doTPfrontpage()
                             'ID_ATTACH' => $row['ID_ATTACH'],
                             'attachmentType' => $row['attachmentType'],
                         )
-                );
+                )['image'];
 
             	if($counter == 0)
 					$context['TPortal']['category']['featured'] = $row;
@@ -1445,7 +1445,7 @@ function doTPfrontpage()
                         'ID_ATTACH' => $row['ID_ATTACH'],
                         'attachmentType' => $row['attachmentType'],
                     )
-            );
+            )['image'];
 
 			$context['TPortal']['category']['featured'] = $row;
 			$smcFunc['db_free_result']($request);
@@ -1580,7 +1580,7 @@ function doTPfrontpage()
                             'ID_ATTACH' => $row['ID_ATTACH'],
                             'attachmentType' => $row['attachmentType'],
                         )
-                );
+                )['image'];
 
 				if(!empty($row['thumb_id']))
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
@@ -1792,7 +1792,7 @@ function doTPfrontpage()
                             'ID_ATTACH' => $row['ID_ATTACH'],
                             'attachmentType' => $row['attachmentType'],
                         )
-                );
+                )['image'];
 
 				if(!empty($row['thumb_id']))
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
@@ -1835,7 +1835,7 @@ function doTPfrontpage()
                                 'ID_ATTACH' => $row['ID_ATTACH'],
                                 'attachmentType' => $row['attachmentType'],
                             )
-                    );
+                    )['image'];
 
                    	// we need some trick to put featured/sticky on top
 					$sortdate = $row['date'];
@@ -1996,7 +1996,7 @@ function doTPfrontpage()
                             'ID_ATTACH' => $row['ID_ATTACH'],
                             'attachmentType' => $row['attachmentType'],
                         )
-                );
+                )['image'];
 
 				// sort out the options
 				$context['TPortal']['blockarticles'][$article['id']]['visual_options'] = array();
@@ -2322,7 +2322,7 @@ function doTPblocks()
                             'ID_ATTACH' => $article['ID_ATTACH'],
                             'attachmentType' => $article['attachmentType'],
                         )
-                );
+                )['image'];
 
 				// sort out the options
 				$context['TPortal']['blockarticles'][$article['id']]['visual_options'] = array();

@@ -2347,7 +2347,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
                     'ID_ATTACH' => $row['ID_ATTACH'],
                     'attachmentType' => $row['attachmentType'],
                 )
-        );
+        )['image'];
 
 		// Build the array.
 		$posts[] = array(

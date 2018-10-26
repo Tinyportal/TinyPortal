@@ -108,7 +108,7 @@ function progetAvatars($ids)
                     'ID_ATTACH' => $row['ID_ATTACH'],
                     'attachmentType' => $row['attachmentType'],
                 )
-            );
+            )['image'];
 		}
 		$smcFunc['db_free_result']($request);
 	}

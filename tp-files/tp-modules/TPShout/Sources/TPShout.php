@@ -611,7 +611,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
                     'ID_ATTACH' => $row['ID_ATTACH'],
                     'attachmentType' => $row['attachmentType'],
                 )
-            );
+            )['image'];
 			$memberdata[$row['id_member']] = $row;
 		}
 		$smcFunc['db_free_result']($request2);
