@@ -591,7 +591,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
-		    SELECT mem.id_member, mem.real_name as realName,
+		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
 			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
 		    FROM {db_prefix}members AS mem
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
