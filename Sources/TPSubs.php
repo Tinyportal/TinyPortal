@@ -2340,11 +2340,14 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 		// Censor the subject.
 		censorText($row['subject']);
 		censorText($row['body']);
-
-		if ($image_proxy_enabled && !empty($row['avy']) && stripos($row['avy'], 'http://') !== false)
-			$row['avy'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avy']) . '&hash=' . md5($row['avy'] . $image_proxy_secret) .'" alt="&nbsp;" />';
-		else
-			$row['avy'] = $row['avy'] == '' ? ( $row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '' ) : (stristr($row['avy'], 'https://' ) ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avy'], ENT_QUOTES) . '" alt="" class="recent_avatar" border="0" />');
+        $row['avy'] = set_avatar_data( array(      
+                    'avatar' => $row['avy'],
+                    'email' => $row['email_address'],
+                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
+                    'ID_ATTACH' => $row['ID_ATTACH'],
+                    'attachmentType' => $row['attachmentType'],
+                )
+        );
 
 		// Build the array.
 		$posts[] = array(
