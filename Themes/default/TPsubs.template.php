@@ -89,7 +89,7 @@ function progetAvatars($ids)
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 	$request = $smcFunc['db_query']('', '
 		SELECT
-			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar,
+			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address,
 			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 		FROM {db_prefix}members AS mem
 		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
@@ -108,7 +108,7 @@ function progetAvatars($ids)
                     'ID_ATTACH' => $row['ID_ATTACH'],
                     'attachmentType' => $row['attachmentType'],
                 )
-            );
+            )['image'];
 		}
 		$smcFunc['db_free_result']($request);
 	}
