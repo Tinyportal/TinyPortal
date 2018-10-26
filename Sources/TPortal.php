@@ -593,7 +593,7 @@ function doTPpage()
 					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
 					art.type as rendertype, IFNULL(mem.real_name,art.author) as realName, mem.avatar,
 					mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
 				FROM {db_prefix}tp_articles as art
 				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
