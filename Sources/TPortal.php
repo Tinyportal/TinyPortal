@@ -607,7 +607,7 @@ function doTPpage()
         {
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1, var.value2,
-					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype,
+					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype, mem.email_address,
 					IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
 					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
 				FROM {db_prefix}tp_articles as art
@@ -744,7 +744,7 @@ function doTPpage()
 				// fetch any comments
 				$request =  $smcFunc['db_query']('', '
 					SELECT var.* , IFNULL(mem.real_name,0) as realName,mem.avatar,
-						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address
 					FROM {db_prefix}tp_variables AS var
 					LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
 					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
@@ -1080,7 +1080,7 @@ function doTPcat()
 					$context['TPortal']['category']['options']['catlayout'] = 1;
 
 				$request = $smcFunc['db_query']('', '
-					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
+					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body, mem.email_address,
 						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
 						art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type,
@@ -1339,7 +1339,7 @@ function doTPfrontpage()
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1409,7 +1409,7 @@ function doTPfrontpage()
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1511,7 +1511,7 @@ function doTPfrontpage()
 				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views,t.num_replies as replies, t.locked,
-				IFNULL(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename
+				IFNULL(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address
 			FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type !=3)
@@ -1728,7 +1728,7 @@ function doTPfrontpage()
 				COALESCE(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
 				COALESCE(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views, t.num_replies as replies, t.locked,
-				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename
+				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address
 				FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
 				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
@@ -1811,7 +1811,7 @@ function doTPfrontpage()
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
 					art.fileimport, art.topic, art.illustration, art.type as rendertype,
 					IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address
 				FROM {db_prefix}tp_articles AS art
 				LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 				LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1968,7 +1968,7 @@ function doTPfrontpage()
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
 				IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type !=3)
@@ -2283,7 +2283,7 @@ function doTPblocks()
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
 			IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9
+			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id)
