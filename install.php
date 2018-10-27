@@ -145,7 +145,7 @@ $tables = array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'date', 'type' => 'int', 'size' => 11, 'default' => 0,),
-            array('name' => 'body', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'intro', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'useintro', 'type' => 'smallint', 'size' => 4, 'default' => 1),
             array('name' => 'category', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
