@@ -1452,8 +1452,8 @@ function do_articles()
             'headers' => '',
             'type' => substr($_GET['sa'],11),
             'featured' => 0,
-            'realName' => $context['user']['name'],
-            'authorID' => $context['user']['id'],
+            'real_name' => $context['user']['name'],
+            'author_id' => $context['user']['id'],
             'articletype' => substr($_GET['sa'],11),
             'id_theme' => 0,
 			'pub_start' => 0,
@@ -1512,8 +1512,8 @@ function do_articles()
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('date', 'id','author_id', 'type', 'subject', 'parse'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=submission;sort=' . $sort , $start, $context['TPortal']['total_submissions'], 15);
 		$request = $smcFunc['db_query']('', '
-			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as authorID,
-				IFNULL(mem.real_name, art.author) as author, art.subject, art.approved,
+			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
+				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved,
 				art.sticky, art.type, art.featured, art.locked, art.off, art.parse as pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1547,8 +1547,8 @@ function do_articles()
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('off', 'date', 'id', 'author_id', 'locked', 'frontpage', 'sticky', 'featured', 'type', 'subject', 'parse'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=articles;sort=' . $sort , $start, $context['TPortal']['total_nocategory'], 15);
 		$request = $smcFunc['db_query']('', '
-			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as authorID,
-				IFNULL(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
+			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
+				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
 				art.type, art.featured,art.locked, art.off, art.parse as pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1576,7 +1576,7 @@ function do_articles()
 	if(isset($whatarticle))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT	art.*, IFNULL(mem.real_name, art.author) as realName, art.author_id as authorID,
+			SELECT	art.*,  COALESCE(mem.real_name, art.author) AS real_name, art.author_id AS author_id,
 				art.type as articletype, art.id_theme as id_theme
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members as mem ON (art.author_id = mem.id_member)
@@ -1711,8 +1711,8 @@ function do_articles()
 		$smcFunc['db_free_result']($request);
 
 		$request = $smcFunc['db_query']('', '
-			SELECT art.id, art.date, art.frontpage, art.category, art.author_id as authorID,
-				IFNULL(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
+			SELECT art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
+				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
 				art.type, art.featured, art.locked, art.off, art.parse as pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -3409,11 +3409,15 @@ function do_postchecks()
 								array('type' => 'art_not_approved', 'val5' => $where)
 							);
 						elseif ($new)
-							$smcFunc['db_insert']('replace',
+							$smcFunc['db_insert']('insert',
 								'{db_prefix}tp_variables',
-								array('type' => 'string', 'value5' => 'int'),
-								array('art_not_approved', $where),
-								array('id')
+								array(  'type' => 'string', 
+                                        'value5' => 'int'
+                                ),
+								array(  'art_not_approved',
+                                        $where
+                                ),
+								array( 'id' )
 							);
 					}
 					else

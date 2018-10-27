@@ -90,7 +90,7 @@ function progetAvatars($ids)
 	$request = $smcFunc['db_query']('', '
 		SELECT
 			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address AS email_address,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type
 		FROM {db_prefix}members AS mem
 		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
 		WHERE mem.id_member IN ({array_int:ids})',
@@ -105,8 +105,8 @@ function progetAvatars($ids)
                     'avatar' => $row['avatar'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'ID_ATTACH' => $row['ID_ATTACH'],
-                    'attachmentType' => $row['attachmentType'],
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
                 )
             )['image'];
 		}
