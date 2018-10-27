@@ -2298,7 +2298,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			COALESCE(mem.real_name, m.poster_name) AS poster_name, ' . ($user_info['is_guest'] ? '1 AS is_read, 0 AS new_from' : '
 			COALESCE(lt.id_msg, COALESCE(lmr.id_msg, 0)) >= m.id_msg_modified AS is_read,
 			COALESCE(lt.id_msg, COALESCE(lmr.id_msg, -1)) + 1 AS new_from') . ', SUBSTRING(m.body, 1, 384) AS body, m.smileys_enabled, m.icon,
-			COALESCE(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType,  mem.avatar as avy, mem.email_address AS email_address
+			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type,  mem.avatar as avy, mem.email_address AS email_address
 		FROM {db_prefix}topics AS t
 			INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_last_msg)
 			INNER JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
@@ -2344,8 +2344,8 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
                     'avatar' => $row['avy'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'ID_ATTACH' => $row['ID_ATTACH'],
-                    'attachmentType' => $row['attachmentType'],
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
                 )
         )['image'];
 

@@ -591,8 +591,8 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
-		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
-			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
+		    SELECT mem.id_member, mem.real_name as real_name, mem.email_address AS email_address, 
+			    mem.avatar, COALESCE(a.id_attach,0) AS id_attach, a.filename, COALESCE(a.attachment_type,0) as attachment_type
 		    FROM {db_prefix}members AS mem
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
 		    WHERE mem.id_member IN(' . implode(",",$members) . ')'
@@ -608,8 +608,8 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
                     'avatar' => $row['avatar'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'ID_ATTACH' => $row['ID_ATTACH'],
-                    'attachmentType' => $row['attachmentType'],
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
                 )
             )['image'];
 			$memberdata[$row['id_member']] = $row;
@@ -622,7 +622,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		foreach($fetched as $b => $row)
 		{
 			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
-			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
+			$row['real_name'] = !empty($memberdata[$row['value5']]['real_name']) ? $memberdata[$row['value5']]['real_name'] : $row['value3'];
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
 			$ns[] = template_singleshout($row);
 		}
