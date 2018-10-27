@@ -21,10 +21,10 @@ if (!defined('SMF'))
 // TinyPortal init
 function TPortal_init()
 {
-	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version;
+	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version, $db_type;
 
     // Remove the ONLY_FULL_GROUP_BY and STRICT_TRANS_TABLES keep all the other sql_mode settings
-    if(strpos($forum_version, '2.1') !== false) {
+    if(strpos($forum_version, '2.1') !== false && $db_type == 'mysql') {
         global $smcFunc;
         $modSettings['disableQueryCheck'] = true;
         $sqlMode  = $smcFunc['db_query']('' ,
@@ -1613,9 +1613,10 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('',
 		'SELECT art.id, art.date, art.sticky, art.featured
-			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var)
+			FROM {db_prefix}tp_articles AS art
+			INNER JOIN {db_prefix}tp_variables AS var
+            ON var.id = art.category
 			WHERE art.off = 0
-			AND var.id = art.category
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
@@ -1647,10 +1648,12 @@ function doTPfrontpage()
         {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
-				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
-				WHERE t.id_board = b.id_board
-				AND t.id_first_msg = m.id_msg
-				AND t.id_board IN({raw:board})
+				FROM {db_prefix}topics AS t
+                INNER JOIN {db_prefix}boards AS b
+                ON t.id_board = b.id_board
+                INNER JOIN {db_prefix}messages AS m
+				ON t.id_first_msg = m.id_msg
+				WHERE t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC
 				LIMIT {int:max}',
@@ -1660,11 +1663,13 @@ function doTPfrontpage()
 		else
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
-				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
-				WHERE t.id_board = b.id_board
-				AND t.id_first_msg = m.id_msg
-				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) .')
+				SELECT t.id_first_msg AS ID_FIRST_MSG , m.poster_time AS date
+				FROM ({db_prefix}topics AS t
+                INNER JOIN {db_prefix}boards AS b
+				ON t.id_board = b.id_board
+                INNER JOIN {db_prefix}messages AS m
+				ON t.id_first_msg = m.id_msg
+				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC'
 			);
@@ -2168,8 +2173,14 @@ function doTPblocks()
 
 	$sqlarray[] = 'actio=allpages';
 
+    $access2 = '';
+    foreach($sqlarray as $sql) {
+        $access2 .= "'" . $sql ."' IN ( access2 ) OR ";
+    }
+    $access2 = rtrim($access2,' OR ');
+
 	// set the location access
-	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+	//$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
 
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
@@ -2177,7 +2188,7 @@ function doTPblocks()
 	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
 
 	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
-		$access = '1';
+		$access = '1=1';
 
 	// get the blocks
 	$request = $smcFunc['db_query']('', '
