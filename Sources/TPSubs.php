@@ -2187,7 +2187,7 @@ function tp_collectArticleIcons()
 	// get all themes for selection
 	$context['TPthemes']  = array();
 	$request =  $smcFunc['db_query']('', '
-		SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+		SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
 		FROM {db_prefix}themes AS th
 		LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
 		WHERE th.variable = {string:thvar}
@@ -2203,7 +2203,7 @@ function tp_collectArticleIcons()
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$context['TPthemes'][] = array(
-				'id' => $row['ID_THEME'],
+				'id' => $row['id_theme'],
 				'path' => $row['path'],
 				'name' => $row['name']
 			);

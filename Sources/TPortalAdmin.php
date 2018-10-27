@@ -324,7 +324,7 @@ function do_blocks()
 		$context['TPortal']['blockcodes'] = TPcollectSnippets();
 		$request = $smcFunc['db_query']('', '
 			SELECT id, title, bar
-			FROM {db_prefix}tp_blocks WHERE 1',
+			FROM {db_prefix}tp_blocks WHERE 1=1',
 			array()
 		);
 		if ($smcFunc['db_num_rows']($request) > 0)
@@ -621,9 +621,9 @@ function do_blocks()
 			// get all themes for selection
 			$context['TPthemes'] = array();
 			$request = $smcFunc['db_query']('', '
-				SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+				SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
 				FROM {db_prefix}themes AS th
-				LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+				LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
 				WHERE th.variable = {string:thvar}
 				AND tb.variable = {string:tbvar}
 				AND th.id_member = {int:id_member}
@@ -637,7 +637,7 @@ function do_blocks()
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					$context['TPthemes'][] = array(
-						'id' => $row['ID_THEME'],
+						'id' => $row['id_theme'],
 						'path' => $row['path'],
 						'name' => $row['name']
 					);
@@ -695,7 +695,7 @@ function do_blocks()
 
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_blocks
-			WHERE 1 ORDER BY bar, pos, id ASC',
+			WHERE 1=1 ORDER BY bar, pos, id ASC',
 			array()
 		);
 		if ($smcFunc['db_num_rows']($request) > 0)
@@ -1455,7 +1455,7 @@ function do_articles()
             'realName' => $context['user']['name'],
             'authorID' => $context['user']['id'],
             'articletype' => substr($_GET['sa'],11),
-            'ID_THEME' => 0,
+            'id_theme' => 0,
 			'pub_start' => 0,
 			'pub_end' => 0,
         );
@@ -1577,7 +1577,7 @@ function do_articles()
 	{
 		$request = $smcFunc['db_query']('', '
 			SELECT	art.*, IFNULL(mem.real_name, art.author) as realName, art.author_id as authorID,
-				art.type as articletype, art.id_theme as ID_THEME
+				art.type as articletype, art.id_theme as id_theme
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members as mem ON (art.author_id = mem.id_member)
 			WHERE art.id = {int:artid}',
@@ -1741,9 +1741,9 @@ function do_articles()
     // get all themes for selection
     $context['TPthemes'] = array();
     $request = $smcFunc['db_query']('', '
-            SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+            SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
             FROM {db_prefix}themes AS th
-            LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+            LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
             WHERE th.variable = {string:thvar}
             AND tb.variable = {string:tbvar}
             AND th.id_member = {int:id_member}
@@ -1757,7 +1757,7 @@ function do_articles()
         while ($row = $smcFunc['db_fetch_assoc']($request))
         {
             $context['TPthemes'][] = array(
-                    'id' => $row['ID_THEME'],
+                    'id' => $row['id_theme'],
                     'path' => $row['path'],
                     'name' => $row['name']
                     );
@@ -1968,7 +1968,7 @@ function do_modules()
 		// fetch modules
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_modules
-			WHERE 1',
+			WHERE 1=1',
 			array()
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2026,9 +2026,9 @@ function do_postchecks()
 		    // get all the themes
             $context['TPallthem'] = array();
 			$request = $smcFunc['db_query']('', '
-				SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+				SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
 				FROM {db_prefix}themes AS th
-				LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+				LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
 				WHERE th.variable = {string:thvar}
 				AND tb.variable = {string:tbvar}
 				AND th.id_member = {int:id_member}
@@ -2042,7 +2042,7 @@ function do_postchecks()
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					$context['TPallthem'][] = array(
-						'id' => $row['ID_THEME'],
+						'id' => $row['id_theme'],
 						'path' => $row['path'],
 						'name' => $row['name']
 					);
