@@ -2208,7 +2208,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_variables
 									SET value2 = {string:val2}
-									WHERE id = {string:varid} LIMIT 1',
+									WHERE id = {string:varid}',
 									array(
 										'val2' => '0',
 										'varid' => $value,
@@ -2218,7 +2218,7 @@ function do_postchecks()
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_variables
 								SET value2 = {string:val2}
-								WHERE id = {string:varid} LIMIT 1',
+								WHERE id = {string:varid}',
 								array(
 									'val2' => $value,
 									'varid' => $where,
@@ -2244,7 +2244,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET parse = {int:parse}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array(
 								'parse' => $value,
 								'artid' => $where,
@@ -2526,7 +2526,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET '. $param .' = {string:val}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val' => $value, 'varid' => $where)
 						);
 					// parents needs some checking..
@@ -2544,14 +2544,14 @@ function do_postchecks()
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_variables
 								SET value2 = {string:val2}
-								WHERE id = {int:varid} LIMIT 1',
+								WHERE id = {int:varid}',
 								array('val2' => '0', 'varid' => $value)
 							);
 
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value2 = {string:val2}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val2' => $value, 'varid' => $where)
 						);
 					}
@@ -2559,21 +2559,21 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value1 = {string:val1}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val1' => strip_tags($value), 'varid' => $where)
 						);
 					elseif($param == 'value4')
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value4 = {string:val4}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val4' => $value, 'varid' => $where)
 						);
 					elseif($param == 'value9')
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value9 = {string:val9}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val9' => $value, 'varid' => $where)
 						);
 					elseif(substr($param, 0, 6) == 'group_')
@@ -2585,7 +2585,7 @@ function do_postchecks()
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_variables
 				SET value3 = {string:val3}, value7 = {string:val7}
-				WHERE id = {int:varid} LIMIT 1',
+				WHERE id = {int:varid}',
 				array('val3' => implode(',', $groups), 'val7' => implode('|', $options), 'varid' => $where)
 			);
 			$from = 'categories;cu=' . $where;
@@ -3183,7 +3183,7 @@ function do_postchecks()
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles
 					SET illustration = {string:ill}
-					WHERE id = {int:artid} LIMIT 1',
+					WHERE id = {int:artid}',
 					array('ill' => 's_' . $name, 'artid' => $where)
 				);
 			}
@@ -3209,7 +3209,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET author_id = {int:auth}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('auth' => $value, 'artid' => $where)
 						);
 					}
@@ -3218,7 +3218,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET id_theme = {int:id_theme}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('id_theme' => $value, 'artid' => $where)
 						);
 					}
@@ -3227,7 +3227,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET subject = {string:subject}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('subject' => $value, 'artid' => $where)
 						);
 					}
@@ -3237,7 +3237,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET shortname = {string:shortname}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('shortname' => $value, 'artid' => $where)
 						);
 					}
@@ -3259,7 +3259,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET category = {int:cat}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('cat' => $value, 'artid' => $where)
 						);
 					}
@@ -3320,7 +3320,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET '. $setting .' = {string:val}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('val' => $value, 'artid' => $where)
 						);
 					}
@@ -3331,7 +3331,7 @@ function do_postchecks()
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_articles
 								SET date = {int:date}
-								WHERE id = {int:artid} LIMIT 1',
+								WHERE id = {int:artid}',
 								array('date' => $timestamp, 'artid' => $where)
 							);
 						$savedtime = 1;
@@ -3343,7 +3343,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_start = {int:start}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('start' => 0, 'artid' => $where)
 								);
 						else
@@ -3352,7 +3352,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_start = {int:start}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('start' => $timestamp, 'artid' => $where)
 								);
 
@@ -3365,7 +3365,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_end = {int:end}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('end' => 0, 'artid' => $where)
 								);
 						else
@@ -3374,7 +3374,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_end = {int:end}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('end' => $timestamp, 'artid' => $where)
 								);
 
@@ -3398,7 +3398,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET approved = {int:approved}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('approved' => $value, 'artid' => $where)
 						);
 						if($value == 1)
@@ -3421,7 +3421,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET '.$setting.' = {string:val}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('val' => $value, 'artid' => $where)
 						);
 					}
@@ -3434,7 +3434,7 @@ function do_postchecks()
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET options = {string:opt}
-				WHERE id = {int:artid} LIMIT 1',
+				WHERE id = {int:artid}',
 				array(
 					'opt' => implode(',', $options),
 					'artid' => $where,
