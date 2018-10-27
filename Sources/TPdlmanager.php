@@ -2786,7 +2786,7 @@ function TPortalDLAdmin()
 	// get all themes
     $context['TPthemes'] = array();
 	$request = $smcFunc['db_query']('', '
-		SELECT value AS name, id_theme as ID_THEME
+		SELECT value AS name, id_theme as id_theme
 		FROM {db_prefix}themes
 		WHERE variable = {string:var}
 		AND id_member = {int:id_mem}
@@ -2798,7 +2798,7 @@ function TPortalDLAdmin()
     	while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$context['TPthemes'][] = array(
-				'id' => $row['ID_THEME'],
+				'id' => $row['id_theme'],
 				'name' => $row['name']
 			);
 		}

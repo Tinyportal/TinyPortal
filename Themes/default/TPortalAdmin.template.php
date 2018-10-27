@@ -2799,10 +2799,10 @@ function template_editarticle($type = '')
 								</dt>
 								<dd>
 									<select size="1" name="tp_article_idtheme">';
-									echo '			<option value="0" ', $mg['ID_THEME']==0 ? 'selected' : '' ,'>'.$txt['tp-none-'].'</option>';
+									echo '			<option value="0" ', $mg['id_theme']==0 ? 'selected' : '' ,'>'.$txt['tp-none-'].'</option>';
 									foreach($context['TPthemes'] as $them)
 										echo '
-														<option value="'.$them['id'].'" ',$them['id']==$mg['ID_THEME'] ? 'selected' : '' ,'>'.$them['name'].'</option>';
+														<option value="'.$them['id'].'" ',$them['id']==$mg['id_theme'] ? 'selected' : '' ,'>'.$them['name'].'</option>';
 
 									echo '
 								</select>

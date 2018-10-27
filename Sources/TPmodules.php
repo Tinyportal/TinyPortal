@@ -665,7 +665,7 @@ function TPmodules()
 				'approved' => $row['approved'],
 				'off' => $row['off'],
 				'options' => $row['options'],
-				'ID_THEME' => $row['id_theme'],
+				'id_theme' => $row['id_theme'],
 				'shortname' => $row['shortname'],
 				'sticky' => $row['sticky'],
 				'locked' => $row['locked'],

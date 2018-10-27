@@ -589,7 +589,7 @@ function doTPpage()
 		if(allowedTo('tp_articles'))
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT art.*, art.author_id as author_id, art.id_theme as ID_THEME, var.value1,
+				SELECT art.*, art.author_id as author_id, art.id_theme as id_theme, var.value1,
 					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
 					art.type as rendertype, IFNULL(mem.real_name,art.author) as real_name, mem.avatar,
 					mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
@@ -606,7 +606,7 @@ function doTPpage()
 		else
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT art.*, art.author_id as author_id, art.id_theme as ID_THEME, var.value1, var.value2,
+				SELECT art.*, art.author_id as author_id, art.id_theme as id_theme, var.value1, var.value2,
 					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype, mem.email_address AS email_address,
 					IFNULL(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
 					IFNULL(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
