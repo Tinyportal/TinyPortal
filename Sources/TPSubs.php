@@ -2165,7 +2165,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	// collect modules and their permissions
 	$result =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_modules
-		WHERE 1',
+		WHERE 1=1',
 		array()
 	);
 	if($smcFunc['db_num_rows']($result) > 0)

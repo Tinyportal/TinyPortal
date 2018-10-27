@@ -3487,7 +3487,7 @@ function get_boards()
 	$request = $smcFunc['db_query']('', '
 		SELECT b.id_board as id, b.name, b.board_order
 		FROM {db_prefix}boards as b
-		WHERE 1
+		WHERE 1=1
 		ORDER BY b.board_order ASC',
 		array()
 	);

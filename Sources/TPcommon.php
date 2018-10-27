@@ -156,7 +156,7 @@ function tp_groups()
 
 	$request =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}membergroups
-		WHERE 1 ORDER BY id_group'
+		WHERE 1=1 ORDER BY id_group'
 	);
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
