@@ -1256,7 +1256,7 @@ function tp_fetchpermissions($perms)
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT p.permission, m.group_name as groupName, p.id_group as id_group
+			SELECT p.permission, m.group_name as group_name, p.id_group as id_group
 			FROM ({db_prefix}permissions as p, {db_prefix}membergroups as m)
 			WHERE p.add_deny = {int:deny}
 			AND p.id_group = m.id_group
@@ -1296,7 +1296,7 @@ function tp_fetchpermissions($perms)
 	{
 		$names = array();
 		$request = $smcFunc['db_query']('', '
-			SELECT m.group_name as groupName, m.id_group as id_group
+			SELECT m.group_name as group_name, m.id_group as id_group
 			FROM {db_prefix}membergroups as m
 			WHERE m.min_posts = {int:minpost}
 			ORDER BY m.group_name ASC',
@@ -1313,7 +1313,7 @@ function tp_fetchpermissions($perms)
 			{
 				$names[$row['id_group']] = array(
 					'id' => $row['id_group'],
-					'name' => $row['groupName'],
+					'name' => $row['group_name'],
 				);
 			}
 			$smcFunc['db_free_result']($request);
@@ -2998,7 +2998,7 @@ function get_grps($save = true, $noposts = true)
 		);
 	}
     $request = $smcFunc['db_query']('', '
-        SELECT id_group as id_group, group_name as groupName, min_posts as minPosts
+        SELECT id_group as id_group, group_name as group_name, min_posts as min_posts
         FROM {db_prefix}membergroups
         WHERE '. ($noposts ? 'min_posts = -1 AND id_group > 1' : '1') .'
         ORDER BY id_group'
@@ -3008,8 +3008,8 @@ function get_grps($save = true, $noposts = true)
 	{
 		$context['TPmembergroups'][] = array(
 			'id' => $row['id_group'],
-			'name' => $row['groupName'],
-			'posts' => $row['minPosts']
+			'name' => $row['group_name'],
+			'posts' => $row['min_posts']
 		);
 	}
 	$smcFunc['db_free_result']($request);
