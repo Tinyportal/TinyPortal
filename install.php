@@ -406,6 +406,7 @@ foreach ($tables as $table => $col) {
         $render .= '
             <li>'. $table .' table has been created.</li>';
     }
+    checkTextColumnNull($table);
 }
 
 $request = $smcFunc['db_query']('', '
@@ -1265,6 +1266,18 @@ function tpListImages()
         );
     }
 
+}
+
+function checkTextColumnNull($table)
+{
+	global $smcFunc, $db_prefix;
+
+	$columns = $smcFunc['db_list_columns']('{db_prefix}' . $table, true);
+    foreach($columns as $column) {
+        if(array_key_exists('name', $column) && array_key_exists('type', $column) && in_array($column['type'], array('tinytext', 'text', 'mediumtext', 'longtext'))) {
+		    $smcFunc['db_query']('', 'ALTER TABLE {db_prefix}'. $table . ' CHANGE `' . $column['name'] . '` `' . $column['name'] . '` '. $column['type'] .' DEFAULT NULL');
+        }
+    }
 }
 
 ?>
