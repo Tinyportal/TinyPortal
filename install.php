@@ -105,17 +105,17 @@ $tables = array(
 			array('name' => 'title', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'body', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'access', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-			array('name' => 'bar', 'type' => 'smallint', 'size' => 4,),
-			array('name' => 'pos', 'type' => 'int', 'size' => 11,),
+			array('name' => 'bar', 'type' => 'smallint', 'size' => 4, 'default' => 0 ),
+			array('name' => 'pos', 'type' => 'int', 'size' => 11, 'default' => 0 ),
 			array('name' => 'off', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
 			array('name' => 'visible', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-			array('name' => 'var1', 'type' => 'int', 'size' => 11,),
-			array('name' => 'var2', 'type' => 'int', 'size' => 11,),
+			array('name' => 'var1', 'type' => 'int', 'size' => 11, 'default' => 0 ),
+			array('name' => 'var2', 'type' => 'int', 'size' => 11, 'default' => 0 ),
 			array('name' => 'lang', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'access2', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'editgroups', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-			array('name' => 'var3', 'type' => 'int', 'size' => 11,),
-			array('name' => 'var4', 'type' => 'int', 'size' => 11,),
+			array('name' => 'var3', 'type' => 'int', 'size' => 11, 'default' => 0 ),
+			array('name' => 'var4', 'type' => 'int', 'size' => 11, 'default' => 0 ),
 			array('name' => 'var5', 'type' => 'int', 'size' => 11, 'default' => 99,),
         ),
         'indexes' => array(
@@ -242,11 +242,11 @@ $tables = array(
     'tp_dldata' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'bigint', 'size' => 20, 'auto' => true,),
-            array('name' => 'views', 'type' => 'bigint', 'size' => 20,),
-            array('name' => 'downloads', 'type' => 'bigint', 'size' => 20),
-            array('name' => 'item', 'type' => 'int', 'size' => 11),
-            array('name' => 'week', 'type' => 'smallint', 'size' => 4),
-            array('name' => 'year', 'type' => 'smallint', 'size' => 6,),
+            array('name' => 'views', 'type' => 'bigint', 'size' => 20, 'default' => 0 ),
+            array('name' => 'downloads', 'type' => 'bigint', 'size' => 20, 'default' => 0 ),
+            array('name' => 'item', 'type' => 'int', 'size' => 11, 'default' => 0 ),
+            array('name' => 'week', 'type' => 'smallint', 'size' => 4, 'default' => 0 ),
+            array('name' => 'year', 'type' => 'smallint', 'size' => 6, 'default' => 0 ),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -262,9 +262,9 @@ $tables = array(
             array('name' => 'value4', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'value5', 'type' => 'int', 'size' => 11, 'default' => -2),
             array('name' => 'value6', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'value7', 'type' => 'smallint', 'size' => 4,),
+            array('name' => 'value7', 'type' => 'smallint', 'size' => 4, 'default' => 0),
             array('name' => 'value8', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'edit', 'type' => 'smallint', 'size' => 4,),
+            array('name' => 'edit', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -273,11 +273,11 @@ $tables = array(
 	'tp_rates' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'member_id', 'type' => 'int', 'size' => 11),
-            array('name' => 'timestamp', 'type' => 'int', 'size' => 11),
-            array('name' => 'rate', 'type' => 'smallint', 'size' => 4),
+            array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0),
+            array('name' => 'timestamp', 'type' => 'int', 'size' => 11, 'default' => 0),
+            array('name' => 'rate', 'type' => 'smallint', 'size' => 4, 'default' => 0),
             array('name' => 'rate_type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'rate_id', 'type' => 'int', 'size' => 11),
+            array('name' => 'rate_id', 'type' => 'int', 'size' => 11, 'default' => 0),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -286,10 +286,10 @@ $tables = array(
     'tp_ratestats' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'average', 'type' => 'smallint', 'size' => 4),
+            array('name' => 'average', 'type' => 'smallint', 'size' => 4, 'default' => 0),
             array('name' => 'rate_type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'rate_id', 'type' => 'int', 'size' => 11),
-            array('name' => 'rates', 'type' => 'int', 'size' => 11),
+            array('name' => 'rate_id', 'type' => 'int', 'size' => 11, 'default' => 0),
+            array('name' => 'rates', 'type' => 'int', 'size' => 11, 'default' => 0),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -298,14 +298,14 @@ $tables = array(
     'tp_events' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'id_member', 'type' => 'int', 'size' => 11),
-			array('name' => 'date', 'type' => 'int', 'size' => 11),
+            array('name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => 0),
+			array('name' => 'date', 'type' => 'int', 'size' => 11, 'default' => 0),
             array('name' => 'textvariable', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'link', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'description', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'allowed', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'eventid', 'type' => 'int', 'size' => 11, 'default' => null),
-            array('name' => 'on', 'type' => 'smallint', 'size' => 4),
+            array('name' => 'on', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
