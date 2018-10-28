@@ -36,7 +36,7 @@ if($smcFunc['db_num_rows']($request)>0)
 			$members[] = $row['value5'];
 	}
 	$smcFunc['db_free_result']($request);
-	$request2 =  $smcFunc['db_query']('', 'SELECT mem.id_member, mem.real_name as realName, mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType FROM {db_prefix}members AS mem LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3) WHERE mem.id_member IN(' . implode(",",$members) . ')');
+	$request2 =  $smcFunc['db_query']('', 'SELECT mem.id_member, mem.real_name as realName, mem.avatar, COALESCE(a.id_attach,0) AS ID_ATTACH, a.filename, COALESCE(a.attachment_type,0) as attachmentType FROM {db_prefix}members AS mem LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3) WHERE mem.id_member IN(' . implode(",",$members) . ')');
 }
 $memberdata = array();
 if(isset($request2) && $smcFunc['db_num_rows']($request2)>0)

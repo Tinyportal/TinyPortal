@@ -368,7 +368,7 @@ function do_blocks()
 		$what = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}tp_blocks
-			SET off = IF(off = 0 , 1, 0)
+			SET off = NOT off = 0
 			WHERE id = {int:blockid}',
 			array(
 				'blockid' => $what
@@ -1020,7 +1020,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET off = IF(off = 0 , 1, 0)
+				SET off = NOT off
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1034,7 +1034,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET locked = IF(locked = 0 , 1, 0)
+				SET locked = NOT locked
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1048,7 +1048,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET sticky = IF(sticky = 0 , 1, 0)
+				SET sticky = NOT sticky
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1062,7 +1062,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET frontpage = IF(frontpage = 0 , 1, 0)
+				SET frontpage = NOT frontpage
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1077,15 +1077,9 @@ function do_articles()
 		{
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET featured = IF(featured = 0, 1, 0)
+				SET featured = NOT featured
 				WHERE id = {int:artid}',
 				array('artid' => $what)
-			);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET featured = {int:featured}
-				WHERE id != {int:artid}',
-				array('featured' => 0, 'artid' => $what)
 			);
 		}
 		else
