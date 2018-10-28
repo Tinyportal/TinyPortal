@@ -3409,7 +3409,7 @@ function do_postchecks()
 								array('type' => 'art_not_approved', 'val5' => $where)
 							);
 						elseif ($new)
-							$smcFunc['db_insert']('replace',
+							$smcFunc['db_insert']('insert',
 								'{db_prefix}tp_variables',
 								array('type' => 'string', 'value5' => 'int'),
 								array('art_not_approved', $where),
