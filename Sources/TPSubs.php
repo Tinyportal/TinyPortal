@@ -2251,7 +2251,7 @@ function tp_recordevent($date, $id_member, $textvariable, $link, $description, $
             'link'          => 'string',
             'description'   => 'string',
             'allowed'       => 'string',
-            'eventID'       => 'int',
+            'eventid'       => 'int',
             'on'            => 'int',
 		),
 		array($id_member, $date, $textvariable, $link, $description, $allowed, $eventid, 0),
