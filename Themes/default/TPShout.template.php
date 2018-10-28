@@ -341,7 +341,7 @@ function template_singleshout($row)
 					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
-				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></h4>
+				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['real_name'] . '</a></h4>
 				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
 			</div>
 			<div class="bubble speech">' . $row['value1'] . '</div>
@@ -351,7 +351,7 @@ function template_singleshout($row)
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer">
 			<div class="shout_options">
-				' . $row['realName'] . ':
+				' . $row['real_name'] . ':
 				' . (allowedTo('tp_can_admin_shout') ? '
 				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
 				<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
