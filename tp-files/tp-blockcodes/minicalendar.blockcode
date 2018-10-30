@@ -4,7 +4,7 @@ format: Boardmod
 </info>
 
 <name>
-Mini calendar
+Mini calendar2
 </name>
 
 <author>
@@ -12,11 +12,11 @@ Bloc
 </author>
 
 <version>
-0.1
+0.2
 </version>
 
 <date>
-01.oct.2009
+30.oct.2018
 </date>
 
 <code>
@@ -26,9 +26,9 @@ $now = time();
 $today = date('j',$now);
 $year = date("Y",$now);
 $month = date("n",$now);
-$days = array($today => array(NULL, NULL, '<a class="smalltext" style="color: steelblue; font-weight: bold; border: solid 1px black; background-color: white; padding: 0px 4px 0px 4px;" href="'.$scripturl.'?action=calendar;sa=post;month='.$month.';year='.$year.';day='.$today.'" target="_self">'.$today.'</a>'));
+$days = array($today => array(NULL, NULL, '<a class="smalltext" style="color: steelblue; font-weight: bold; border: solid 1px black; background-color: white; padding: 0px 4px 0px 4px;" href="'.$scripturl.'?action=calendar;sa=view;month='.$month.';year='.$year.';day='.$today.'" target="_self">'.$today.'</a>'));
 
-$day_name_length = 3;
+$day_name_length = 2;
 $month_href = $scripturl . '?action=calendar';
 $first_day = 1;
 $pn = array();
@@ -53,39 +53,39 @@ if($p)
 	$p = '<span class="smalltext">'.($pl ? '<a href="'.htmlspecialchars($pl).'">'.$p.'</a>' : $p).'</span> ';
 if($n) 
 	$n = ' <span class="smalltext">'.($nl ? '<a href="'.htmlspecialchars($nl).'">'.$n.'</a>' : $n).'</span>';
-$calendar = '<table id="tpcalendar">'."\n".
+$calendar = '<table>'."\n".
 '<caption >'.$p.($month_href ? '<a href="'.htmlspecialchars($month_href).'">'.$title.'</a>' : $title).$n."</caption>\n<tr>";
 
 if($day_name_length){ #if the day names should be shown ($day_name_length > 0)
 	//if day_name_length is >3, the full name of the day will be printed
 	foreach($day_names as $d)
-		$calendar .= '<th class="smalltext" abbr="'.htmlentities($d).'">'.htmlentities($day_name_length < 4 ? substr($d,0,$day_name_length) : $d).'</th>';
+		$calendar .= '<th class="smalltext" style="padding: 4px;" abbr="'.htmlentities($d).'">'.htmlentities($day_name_length < 4 ? substr($d,0,$day_name_length) : $d).'</th>';
 		
-	$calendar .= "</tr>\n<tr style=\"text-align:center;\">";
+	$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
 }
 
 if($weekday > 0) 
-	$calendar .= '<td class="smalltext" colspan="'.$weekday.'"> </td>'; //initial 'empty' days
+	$calendar .= '<td class="smalltext"  style="width:20px;" colspan="'.$weekday.'"> </td>'; //initial 'empty' days
 for($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $day++,$weekday++){
 	if($weekday == 7){
 		$weekday   = 0; #start a new week
-		$calendar .= "</tr>\n<tr style=\"text-align:center;\">";
+		$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
 	}
 	if(isset($days[$day]) and is_array($days[$day])){
 		@list($link, $classes, $content) = $days[$day];
 		if(is_null($content))  
 			$content  = $day;
-		$calendar .= '<td "'.($classes ? ' class="'.htmlspecialchars($classes).'">' : '>').
-		($link ? '<a href="'.htmlspecialchars($link).'">'.$content.'</a>' : $content).'</td>';
+		$calendar .= '<td '.($classes ? ' class="'.htmlspecialchars($classes).'">' : '>').
+		($link ? '<a href="'.htmlspecialchars($link).'?">'.$content.'</a>' : $content).'</td>';
 	}
 	else 
 	{
-		$calendar .= "<td class=\"smalltext\" style=\"padding-right:4px;\"><a";
+		$calendar .= "<td class=\"smalltext\" style=\"padding-right:8px;\"><a";
 		if(((($weekday+$first_day) % 7)==0)||((($weekday+$first_day) % 7)==6))
 		{
 			$calendar .= ' style="color:#C00000;"';
 		}
-		$calendar .= " href=\"".$scripturl."?action=calendar;sa=post;month=".$month.";year=".$year.";day=".$day."\" target=\"_self\">$day</a></td>";
+		$calendar .= " href=\"".$scripturl."?action=calendar;sa=view;month=".$month.";year=".$year.";day=".$day."\" target=\"_self\">$day</a></td>";
 	}
 }
 if($weekday != 7) 
@@ -96,5 +96,5 @@ echo $calendar."</tr>\n</table>\n";
 
 <description>
 A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar , slightly modified. 
-It simply displays the date and the days in current month/year. Current day is highlighted.
+It simply displays the date and the days in current month/year. Current day is highlighted. Version 0.2 is updated to be used in SMF 2.1 and fit in the side bars.
 </description>
