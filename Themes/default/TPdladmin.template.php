@@ -490,9 +490,9 @@ $clickme.click( function(e) {
 		if($cat['file']=='- empty item -' || $cat['file']=='- empty item - ftp'){
 			if($cat['file']=='- empty item - ftp')
 				echo '
-				<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
+					<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
 
-			echo '
+				echo '
 					<select size="1" name="dladmin_file'.$cat['id'].'">
 						<option value="">' . $txt['tp-noneicon'] . '</option>';
 
