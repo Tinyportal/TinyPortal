@@ -525,25 +525,77 @@ function template_main()
 					</dd>';
 
 		}
+		echo '</dl>';
 
+		echo '<hr><br>
+				<dl class="settings">
+					<dt>'.$txt['tp-dluploadicon'].'
+					</dt>
+					<dd>
+						<select size="1" name="tp_dluploadicon" onchange="dlcheck(this.value)">
+							<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
+		// output the icons
+		foreach($context['TPortal']['dlicons'] as $dlicon => $value)
+			echo '
+							<option value="'.$value.'">'.substr($value,0,strlen($value)-4).'</option>';
+
+		echo '
+						</select>
+						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
+					</dd>
+					<dt>
+						'.$txt['tp-dluploadpic'].'
+					</dt>
+					<dd>
+						<input name="tp_dluploadpic" id="tp_dluploadpic" type="file" size="60">
+						<input name="tp-uploadcat" type="hidden" value="'.$context['TPortal']['dlitem'].'">
+						<input name="tp-uploaduser" type="hidden" value="'.$context['user']['id'].'">
+					</dd>
+				</dl>';
+		// can you attach it?
+		if(!empty($context['TPortal']['attachitems']))
+		{
+			echo '
+				<hr><br>
+				<dl class="settings">
+					<dt>
+						'.$txt['tp-dluploadattach'].'
+					</dt>
+					<dd>
+						 <select size="1" name="tp_dluploadattach">
+							<option value="0" selected>'.$txt['tp-none'].'</option>';
+			foreach($context['TPortal']['attachitems'] as $att)
+				echo '
+							<option value="'.$att['id'].'">'.$att['name'].'</option>';
+			echo '
+						</select>
+					<br>
+					</dd>
+				</dl>';
+		}
 		// make a new topic too?
-		if(allowedTo('tp_dlcreatetopic') || !empty($context['TPortal']['dl_createtopic']))
+		if(allowedTo('tp_dlcreatetopic') && !empty($context['TPortal']['dl_createtopic']))
 		{
 			$allowed=explode(",",$context['TPortal']['dl_createtopic_boards']);
 			if(empty($context['TPortal']['dl_createtopic_boards']))
 			{
 				echo '
-					<br>
+			<hr>
+			<br>
+				<dl class="settings">
 					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>'.$txt['tp-dlmissingboards'].'
-					</dd>';
+					</dd>
+				</dl>';
 			}
 			else
 			{
 				echo '
-					<br>
+			<hr>
+			<br>
+				<dl class="settings">
 					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
@@ -581,54 +633,10 @@ function template_main()
 				<div style="padding: 5px;">
 					<textarea name="create_topic_body" style="width: 100%; height: 200px;" rows=5 cols=50 wrap="on"></textarea>
 				</div>
-				<dl class="settings">';
+			</dl>';
 			}
 		}
-
-		// can you attach it?
-		if(!empty($context['TPortal']['attachitems']))
-		{
-			echo '
-					<dt>
-						'.$txt['tp-dluploadattach'].'
-					</dt>
-					<dd>
-						 <select size="1" name="tp_dluploadattach">
-							<option value="0" selected>'.$txt['tp-none'].'</option>';
-			foreach($context['TPortal']['attachitems'] as $att)
-				echo '
-							<option value="'.$att['id'].'">'.$att['name'].'</option>';
-			echo '
-						</select>';
-		}
 		echo '
-					<br>
-					</dd>
-				</dl>
-				<dl class="settings">
-					<dt>'.$txt['tp-dluploadicon'].'
-					</dt>
-					<dd>
-						<select size="1" name="tp_dluploadicon" onchange="dlcheck(this.value)">
-							<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
-		// output the icons
-		foreach($context['TPortal']['dlicons'] as $dlicon => $value)
-			echo '
-							<option value="'.$value.'">'.substr($value,0,strlen($value)-4).'</option>';
-
-		echo '
-						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
-					</dd>
-					<dt>
-						'.$txt['tp-dluploadpic'].'
-					</dt>
-					<dd>
-						<input name="tp_dluploadpic" id="tp_dluploadpic" type="file" size="60">
-						<input name="tp-uploadcat" type="hidden" value="'.$context['TPortal']['dlitem'].'">
-						<input name="tp-uploaduser" type="hidden" value="'.$context['user']['id'].'">
-					</dd>
-				</dl>
 				<div style="padding:1%;">
 					<input type="submit" class="button button_submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
 				</div>
