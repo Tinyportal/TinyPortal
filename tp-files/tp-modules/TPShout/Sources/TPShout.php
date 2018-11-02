@@ -117,7 +117,7 @@ if(isset($_REQUEST['shout']))
 	elseif($shoutAction == 'del')
 	{
 		deleteShout();
-		tpshout_bigscreen(false);
+		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
 	elseif($shoutAction == 'save')
 	{
@@ -126,7 +126,7 @@ if(isset($_REQUEST['shout']))
 				return;
 		}
 		postShout();
-		tpshout_bigscreen(false);
+		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
 	elseif($shoutAction == 'fetch')
 	{
