@@ -203,6 +203,7 @@ function template_tpshout_admin_settings()
 						<dd>
 							<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" align="right"/></div></div>
 							<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></div></div>
+							<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="2" ' , $context['TPortal']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></div></div>
 							<p class="clearthefloat"></p>
 						</dd>
 					</dl>
@@ -242,8 +243,8 @@ function template_tpshout_shoutblock()
 	if(!$context['user']['is_guest'] && allowedTo('tp_can_shout'))
 	{
 		echo '
-		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="padding: 0; text-align: center; margin: 0; width: 95%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
-		<textarea class="editor" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" style="width: 100%;margin-top: 1em; height: 80px;"  tabindex="', $context['tabindex']++, '"></textarea><br>';
+		<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="text-align: center; width: 99%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
+		<textarea class="shoutbox_editor'. $context['TPortal']['shoutbox_layout']. '" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '"></textarea><br>';
 
 		if(!empty($context['TPortal']['show_shoutbox_smile']))
 		{
@@ -360,6 +361,16 @@ function template_singleshout($row)
 			<div class="shoutbody_layout1">' . $row['value1'] . '</div>
 		</div>
 	</div>',
+	'2' => '	
+		<div class="shoutbody_layout2">
+			<div class="shout_options">
+				['. date( 'M-d H:i:s', $row['value2'] ).']
+				<div class="shoutbox_edit">	' . (allowedTo( 'tp_can_admin_shout' ) ? '<a href="'.$scripturl.'?action=tpmod;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
+					<a onclick="TPupdateShouts(\'del\', '. $row['id'].'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpmod;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
+				</div>
+				<b>' . $row['realName'].'</b>: '.$row['value1'].'
+			</div>
+		</div>',
 	);
 
 	return $layoutOptions[$context['TPortal']['shoutbox_layout']];
