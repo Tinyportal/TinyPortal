@@ -109,6 +109,10 @@ textarea.shoutbox_editor1 {
 .shout_date {
 	clear: both;
 }
+.shoutbox_edit {
+	float: right;
+	padding-left: 5px;
+}
 .shoutbody_layout2 {
 	padding: 5px;
 line-height: 1.3em;
@@ -167,29 +171,6 @@ top: -9px;
 left: 16px;
 }
 
-.shoutbox_datetime {
-	float: left;
-	padding-right: 5px;
-}
-
-.shoutbox_edit {
-	float: right;
-	padding-left: 5px;
-}
-
-.shout_options .shoutbox_datetime a {
-	/*display: none;*/
-	margin-right: 0.1em;
-}
-/*
-.shoutbox_datetime:hover {
-	display: none;
-}
-
-.shoutbox_datetime:hover .shout_options:after {
-	 display: block;
-}
-*/
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
 
  /*.bubble {	background-color: #888; } 

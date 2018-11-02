@@ -364,7 +364,7 @@ function template_singleshout($row)
 	'2' => '	
 		<div class="shoutbody_layout2">
 			<div class="shout_options">
-				<div class="shoutbox_datetime"> ['. date( 'M-d H:i:s', $row['value2'] ).']</div>
+				['. date( 'M-d H:i:s', $row['value2'] ).']
 				<div class="shoutbox_edit">	' . (allowedTo( 'tp_can_admin_shout' ) ? '<a href="'.$scripturl.'?action=tpmod;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'].'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpmod;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
 				</div>
