@@ -338,7 +338,7 @@ function template_singleshout($row)
 			<div class="tp_shoutavatar">
 				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
 				' . (allowedTo('tp_can_admin_shout') ? '
-				<div style="float: right; margin-bottom: 3px;">
+				<div class="shoutbox_edit">
 					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
@@ -354,8 +354,8 @@ function template_singleshout($row)
 			<div class="shout_options">
 				' . $row['realName'] . ':
 				' . (allowedTo('tp_can_admin_shout') ? '
-				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
-				<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : ''). '
+				<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
+				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>' : ''). '
 			</div>
 			<div class="shout_date">'. date('M. d Y - g:ia', $row['value2']).'</div>
 			<div class="shoutbody_layout1">' . $row['value1'] . '</div>
@@ -365,8 +365,10 @@ function template_singleshout($row)
 		<div class="shoutbody_layout2">
 			<div class="shout_options">
 				['. date( 'M-d H:i:s', $row['value2'] ).']
-				<div class="shoutbox_edit">	' . (allowedTo( 'tp_can_admin_shout' ) ? '<a href="'.$scripturl.'?action=tpmod;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
-					<a onclick="TPupdateShouts(\'del\', '. $row['id'].'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpmod;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
+				<div class="shoutbox_edit">	
+				' . (allowedTo( 'tp_can_admin_shout' ) ? '
+				<a onclick="TPupdateShouts(\'del\', '. $row['id'].'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpmod;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
+				<a href="'.$scripturl.'?action=tpmod;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>' : '').'
 				</div>
 				<b>' . $row['realName'].'</b>: '.$row['value1'].'
 			</div>
