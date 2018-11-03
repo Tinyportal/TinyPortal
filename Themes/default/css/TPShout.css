@@ -100,12 +100,6 @@ textarea.shoutbox_editor1 {
 }
 
 /* for layout option 2 */
-.shout_options img{
-	float: right;
-}
-.shout_options img.smiley{
-	float: unset !important;
-}
 .shout_date {
 	clear: both;
 }
