@@ -236,7 +236,7 @@ function template_tpshout_shoutblock()
 	else
 		echo '
 
-				<div id="shoutboxContainer"><div class="middletext" style="width: 99%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
+				<div id="shoutboxContainer"><div class="middletext" style="width: 100%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
 					<div class="tp_shoutframe">'. $context['TPortal']['shoutbox']. '</div>
 				</div></div>';
 
@@ -250,13 +250,13 @@ function template_tpshout_shoutblock()
 			<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
 			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
-			<br>
+			<p class="clearthefloat"></p>
 			</div>';
 
 			if(!empty($context['TPortal']['show_shoutbox_smile']))
 			{
 			echo '
-			<div style="width:48%; float:left;">';
+			<div style="display: inline-block;min-width:150px;vertical-align: top;">';
 				shout_smiley_code();
 				print_shout_smileys();
 			echo '
@@ -265,7 +265,7 @@ function template_tpshout_shoutblock()
 			if(!empty($context['TPortal']['show_shoutbox_icons']))
 			{
 			echo '
-			<div style="width:48%; float:left;">';
+			<div style="display: inline-block;min-width:150px;vertical-align: top;">';
 				shout_bcc_code();
 			echo '
 			</div>';	
