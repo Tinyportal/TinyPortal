@@ -246,22 +246,32 @@ function template_tpshout_shoutblock()
 		{
 		echo '
 			<form  accept-charset="'. $context['character_set']. '" class="smalltext" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
-			<input type="text" class="shoutbox_editor'. $context['TPortal']['shoutbox_layout']. '" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '"></input>
+			<div style="margin-bottom: 5px;"><input type="text" class="shoutbox_editor'. $context['TPortal']['shoutbox_layout']. '" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '"></input>
 			<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
 			<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 			<a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpmod;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
-			<br>';
+			<br>
+			</div>';
 
 			if(!empty($context['TPortal']['show_shoutbox_smile']))
 			{
+			echo '
+			<div style="width:48%; float:left;">';
 				shout_smiley_code();
 				print_shout_smileys();
+			echo '
+			</div>';				
 			}
 			if(!empty($context['TPortal']['show_shoutbox_icons']))
-				shout_bcc_code();
-
+			{
 			echo '
-			<div id="shout_errors"></div
+			<div style="width:48%; float:left;">';
+				shout_bcc_code();
+			echo '
+			</div>';	
+			}
+			echo '
+			<br>
 			<input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
 			<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		</form>';
