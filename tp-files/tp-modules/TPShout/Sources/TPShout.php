@@ -914,13 +914,15 @@ function shout_smiley_code()
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
 		{
 			$request = $smcFunc['db_query']('', '
-			  SELECT code, filename, description, smiley_row, hidden
+			    SELECT code, filename, description, smiley_row, hidden
 				FROM {db_prefix}smileys
 				WHERE hidden IN ({int:val1}, {int:val2})
 				ORDER BY smiley_row, smiley_order',
-				array('val1' => 0,
-				      'val2' => 2)
-				);
+				array(
+                    'val1' => 0,
+				    'val2' => 2
+                )
+			);
 
 		    while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
@@ -938,6 +940,19 @@ function shout_smiley_code()
 			$context['tp_smileys'] = $temp;
         }
 	}
+
+    if(strpos($forum_version, '2.0') === false) {
+        if(empty($modSettings['smiley_sets_enable'])) {
+            $file_ext   = $context['user']['smiley_set_default_ext'];
+        }
+        else {
+            $file_ext   = $user_info['smiley_set_ext'];
+        }
+    }
+    else {
+        $file_ext = '';
+    }
+
 	// Clean house... add slashes to the code for javascript.
 	foreach (array_keys($context['tp_smileys']) as $location)
 	{
@@ -946,8 +961,9 @@ function shout_smiley_code()
 			$n = count($context['tp_smileys'][$location][$j]['smileys']);
 			for ($i = 0; $i < $n; $i++)
 			{
-				$context['tp_smileys'][$location][$j]['smileys'][$i]['code'] = addslashes($context['tp_smileys'][$location][$j]['smileys'][$i]['code']);
-				$context['tp_smileys'][$location][$j]['smileys'][$i]['js_description'] = addslashes($context['tp_smileys'][$location][$j]['smileys'][$i]['description']);
+				$context['tp_smileys'][$location][$j]['smileys'][$i]['code']            = addslashes($context['tp_smileys'][$location][$j]['smileys'][$i]['code']);
+                $context['tp_smileys'][$location][$j]['smileys'][$i]['js_description']  = addslashes($context['tp_smileys'][$location][$j]['smileys'][$i]['description']);
+				$context['tp_smileys'][$location][$j]['smileys'][$i]['filename']        = $context['tp_smileys'][$location][$j]['smileys'][$i]['filename'].$file_ext;
 			}
 
 			$context['tp_smileys'][$location][$j]['smileys'][$n - 1]['last'] = true;
@@ -955,6 +971,7 @@ function shout_smiley_code()
 		if (!empty($context['tp_smileys'][$location]))
 			$context['tp_smileys'][$location][count($context['tp_smileys'][$location]) - 1]['last'] = true;
 	}
+
 	$settings['smileys_url'] = $modSettings['smileys_url'] . '/' . $user_info['smiley_set'];
 }
 
