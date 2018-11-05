@@ -216,7 +216,7 @@ function template_tpshout_admin_settings()
 
 function template_tpshout_shoutblock()
 {
-	global $context, $scripturl, $txt, $settings;
+	global $context, $scripturl, $txt, $settings, $user_info;
 
 	if(!isset($context['TPortal']['shoutbox']))
 		$context['TPortal']['shoutbox'] = '';
@@ -253,7 +253,7 @@ function template_tpshout_shoutblock()
 			<p class="clearthefloat"></p>
 			</div>';
 
-			if(!empty($context['TPortal']['show_shoutbox_smile']))
+			if(!empty($context['TPortal']['show_shoutbox_smile']) && $user_info['smiley_set'] != 'none')
 			{
 			echo '
 			<div style="display: inline-block;min-width:150px;vertical-align: top;">';
@@ -282,7 +282,7 @@ function template_tpshout_shoutblock()
 			<form  accept-charset="'. $context['character_set']. '" class="smalltext" style="text-align: center; width: 99%;" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
 			<textarea class="shoutbox_editor'. $context['TPortal']['shoutbox_layout']. '" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '"></textarea><br>';
 
-			if(!empty($context['TPortal']['show_shoutbox_smile']))
+			if(!empty($context['TPortal']['show_shoutbox_smile']) && $user_info['smiley_set'] != 'none')
 			{
 				shout_smiley_code();
 				print_shout_smileys();
