@@ -706,7 +706,7 @@ function shout_bcc_code($collapse = true)
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
+		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 5px;" align="left" />
 	</a>
 <div id="shoutbox_bbc">';
 	else
@@ -846,61 +846,69 @@ function shout_bcc_code($collapse = true)
 
 function shout_smiley_code()
 {
-	global $context, $settings, $user_info, $txt, $modSettings, $smcFunc, $forum_version;
+    global $context, $settings, $user_info, $txt, $modSettings, $smcFunc, $forum_version;
 
-	// Initialize smiley array...
-	$context['tp_smileys'] = array(
-		'postform' => array(),
-		'popup' => array(),
-	);
-	// Load smileys - don't bother to run a query if we're not using the database's ones anyhow.
-	if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none') {
-    if(strpos($forum_version, '2.1') === false) {
-      $context['tp_smileys']['postform'][] = array(
-        'smileys' => array(
-          array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
-          array('code' => ';)', 'filename' => 'wink.gif', 'description' => $txt['icon_wink']),
-          array('code' => ':D', 'filename' => 'cheesy.gif', 'description' => $txt['icon_cheesy']),
-          array('code' => ';D', 'filename' => 'grin.gif', 'description' => $txt['icon_grin']),
-          array('code' => '>:(', 'filename' => 'angry.gif', 'description' => $txt['icon_angry']),
-          array('code' => ':(', 'filename' => 'sad.gif', 'description' => $txt[ 'icon_sad']),
-          array('code' => ':o', 'filename' => 'shocked.gif', 'description' => $txt['icon_shocked']),
-          array('code' => '8)', 'filename' => 'cool.gif', 'description' => $txt[ 'icon_cool']),
-          array('code' => '???', 'filename' => 'huh.gif', 'description' => $txt['icon_huh']),
-          array('code' => '::)', 'filename' => 'rolleyes.gif', 'description' => $txt[ 'icon_rolleyes']),
-          array('code' => ':P', 'filename' => 'tongue.gif', 'description' => $txt['icon_tongue']),
-          array('code' => ':-[', 'filename' => 'embarrassed.gif', 'description' => $txt['icon_embarrassed']),
-          array('code' => ':-X', 'filename' => 'lipsrsealed.gif', 'description' => $txt['icon_lips']),
-          array('code' => ':-\\', 'filename' => 'undecided.gif', 'description' => $txt[ 'icon_undecided']),
-          array('code' => ':-*', 'filename' => 'kiss.gif', 'description' => $txt['icon_kiss']),
-          array('code' => ':\'(', 'filename' => 'cry.gif', 'description' => $txt['icon_cry'])
-        ),
-        'last' => true,
-      );
-    }
-    else {
-      $context['tp_smileys']['postform'][] = array(
-        'smileys' => array(
-          array('code' => ':)', 'filename' => 'smiley.png', 'description' => $txt['icon_smiley']),
-          array('code' => ';)', 'filename' => 'wink.png', 'description' => $txt['icon_wink']),
-          array('code' => ':D', 'filename' => 'cheesy.png', 'description' => $txt['icon_cheesy']),
-          array('code' => ';D', 'filename' => 'grin.png', 'description' => $txt['icon_grin']),
-          array('code' => '>:(', 'filename' => 'angry.png', 'description' => $txt['icon_angry']),
-          array('code' => ':(', 'filename' => 'sad.png', 'description' => $txt[ 'icon_sad']),
-          array('code' => ':o', 'filename' => 'shocked.png', 'description' => $txt['icon_shocked']),
-          array('code' => '8)', 'filename' => 'cool.png', 'description' => $txt[ 'icon_cool']),
-          array('code' => '???', 'filename' => 'huh.png', 'description' => $txt['icon_huh']),
-          array('code' => '::)', 'filename' => 'rolleyes.png', 'description' => $txt[ 'icon_rolleyes']),
-          array('code' => ':P', 'filename' => 'tongue.png', 'description' => $txt['icon_tongue']),
-          array('code' => ':-[', 'filename' => 'embarrassed.png', 'description' => $txt['icon_embarrassed']),
-          array('code' => ':-X', 'filename' => 'lipsrsealed.png', 'description' => $txt['icon_lips']),
-          array('code' => ':-\\', 'filename' => 'undecided.png', 'description' => $txt[ 'icon_undecided']),
-          array('code' => ':-*', 'filename' => 'kiss.png', 'description' => $txt['icon_kiss']),
-          array('code' => ':\'(', 'filename' => 'cry.png', 'description' => $txt['icon_cry'])
-        ),
-        'last' => true,
-      );
-    }
+    // Initialize smiley array...
+    $context['tp_smileys'] = array(
+        'postform' => array(),
+        'popup' => array(),
+    );
+
+    // Load smileys - don't bother to run a query if we're not using the database's ones anyhow.
+    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none') {
+        if(strpos($forum_version, '2.1') === false) {
+            $context['tp_smileys']['postform'][] = array(
+                'smileys' => array(
+                    array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
+                    array('code' => ';)', 'filename' => 'wink.gif', 'description' => $txt['icon_wink']),
+                    array('code' => ':D', 'filename' => 'cheesy.gif', 'description' => $txt['icon_cheesy']),
+                    array('code' => ';D', 'filename' => 'grin.gif', 'description' => $txt['icon_grin']),
+                    array('code' => '>:(', 'filename' => 'angry.gif', 'description' => $txt['icon_angry']),
+                    array('code' => ':(', 'filename' => 'sad.gif', 'description' => $txt[ 'icon_sad']),
+                    array('code' => ':o', 'filename' => 'shocked.gif', 'description' => $txt['icon_shocked']),
+                    array('code' => '8)', 'filename' => 'cool.gif', 'description' => $txt[ 'icon_cool']),
+                    array('code' => '???', 'filename' => 'huh.gif', 'description' => $txt['icon_huh']),
+                    array('code' => '::)', 'filename' => 'rolleyes.gif', 'description' => $txt[ 'icon_rolleyes']),
+                    array('code' => ':P', 'filename' => 'tongue.gif', 'description' => $txt['icon_tongue']),
+                    array('code' => ':-[', 'filename' => 'embarrassed.gif', 'description' => $txt['icon_embarrassed']),
+                    array('code' => ':-X', 'filename' => 'lipsrsealed.gif', 'description' => $txt['icon_lips']),
+                    array('code' => ':-\\', 'filename' => 'undecided.gif', 'description' => $txt[ 'icon_undecided']),
+                    array('code' => ':-*', 'filename' => 'kiss.gif', 'description' => $txt['icon_kiss']),
+                    array('code' => ':\'(', 'filename' => 'cry.gif', 'description' => $txt['icon_cry'])
+                ),
+                'last' => true,
+            );
+        }
+        else {
+            if (empty($modSettings['smiley_sets_enable'])) {
+                $file_ext   = $context['user']['smiley_set_default_ext'];
+            }
+            else {
+                $file_ext   = $user_info['smiley_set_ext'];
+            }
+
+            $context['tp_smileys']['postform'][] = array(
+                'smileys' => array(
+                    array('code' => ':)', 'filename' => 'smiley'.$file_ext, 'description' => $txt['icon_smiley']),
+                    array('code' => ';)', 'filename' => 'wink'.$file_ext, 'description' => $txt['icon_wink']),
+                    array('code' => ':D', 'filename' => 'cheesy'.$file_ext, 'description' => $txt['icon_cheesy']),
+                    array('code' => ';D', 'filename' => 'grin'.$file_ext, 'description' => $txt['icon_grin']),
+                    array('code' => '>:(', 'filename' => 'angry'.$file_ext, 'description' => $txt['icon_angry']),
+                    array('code' => ':(', 'filename' => 'sad'.$file_ext, 'description' => $txt[ 'icon_sad']),
+                    array('code' => ':o', 'filename' => 'shocked'.$file_ext, 'description' => $txt['icon_shocked']),
+                    array('code' => '8)', 'filename' => 'cool'.$file_ext, 'description' => $txt[ 'icon_cool']),
+                    array('code' => '???', 'filename' => 'huh'.$file_ext, 'description' => $txt['icon_huh']),
+                    array('code' => '::)', 'filename' => 'rolleyes'.$file_ext, 'description' => $txt[ 'icon_rolleyes']),
+                    array('code' => ':P', 'filename' => 'tongue'.$file_ext, 'description' => $txt['icon_tongue']),
+                    array('code' => ':-[', 'filename' => 'embarrassed'.$file_ext, 'description' => $txt['icon_embarrassed']),
+                    array('code' => ':-X', 'filename' => 'lipsrsealed'.$file_ext, 'description' => $txt['icon_lips']),
+                    array('code' => ':-\\', 'filename' => 'undecided'.$file_ext, 'description' => $txt[ 'icon_undecided']),
+                    array('code' => ':-*', 'filename' => 'kiss'.$file_ext, 'description' => $txt['icon_kiss']),
+                    array('code' => ':\'(', 'filename' => 'cry'.$file_ext, 'description' => $txt['icon_cry'])
+                ),
+                'last' => true,
+            );
+        }
   }
   elseif ($user_info['smiley_set'] != 'none') {
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
@@ -914,7 +922,7 @@ function shout_smiley_code()
 				      'val2' => 2)
 				);
 
-		while ($row = $smcFunc['db_fetch_assoc']($request))
+		    while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['code'] = htmlspecialchars($row['code']);
 				$row['filename'] = htmlspecialchars($row['filename']);
@@ -926,8 +934,9 @@ function shout_smiley_code()
 
 			cache_put_data('posting_smileys', $context['tp_smileys'], 480);
 		}
-		else
+		else {
 			$context['tp_smileys'] = $temp;
+        }
 	}
 	// Clean house... add slashes to the code for javascript.
 	foreach (array_keys($context['tp_smileys']) as $location)
