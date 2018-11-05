@@ -706,7 +706,7 @@ function shout_bcc_code($collapse = true)
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 5px;" align="left" />
+		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
 	</a>
 <div id="shoutbox_bbc">';
 	else
@@ -889,22 +889,22 @@ function shout_smiley_code()
 
             $context['tp_smileys']['postform'][] = array(
                 'smileys' => array(
-                    array('code' => ':)', 'filename' => 'smiley'.$file_ext, 'description' => $txt['icon_smiley']),
-                    array('code' => ';)', 'filename' => 'wink'.$file_ext, 'description' => $txt['icon_wink']),
-                    array('code' => ':D', 'filename' => 'cheesy'.$file_ext, 'description' => $txt['icon_cheesy']),
-                    array('code' => ';D', 'filename' => 'grin'.$file_ext, 'description' => $txt['icon_grin']),
-                    array('code' => '>:(', 'filename' => 'angry'.$file_ext, 'description' => $txt['icon_angry']),
-                    array('code' => ':(', 'filename' => 'sad'.$file_ext, 'description' => $txt[ 'icon_sad']),
-                    array('code' => ':o', 'filename' => 'shocked'.$file_ext, 'description' => $txt['icon_shocked']),
-                    array('code' => '8)', 'filename' => 'cool'.$file_ext, 'description' => $txt[ 'icon_cool']),
-                    array('code' => '???', 'filename' => 'huh'.$file_ext, 'description' => $txt['icon_huh']),
-                    array('code' => '::)', 'filename' => 'rolleyes'.$file_ext, 'description' => $txt[ 'icon_rolleyes']),
-                    array('code' => ':P', 'filename' => 'tongue'.$file_ext, 'description' => $txt['icon_tongue']),
-                    array('code' => ':-[', 'filename' => 'embarrassed'.$file_ext, 'description' => $txt['icon_embarrassed']),
-                    array('code' => ':-X', 'filename' => 'lipsrsealed'.$file_ext, 'description' => $txt['icon_lips']),
-                    array('code' => ':-\\', 'filename' => 'undecided'.$file_ext, 'description' => $txt[ 'icon_undecided']),
-                    array('code' => ':-*', 'filename' => 'kiss'.$file_ext, 'description' => $txt['icon_kiss']),
-                    array('code' => ':\'(', 'filename' => 'cry'.$file_ext, 'description' => $txt['icon_cry'])
+                    array('code' => ':)', 'filename' => 'smiley' ,$file_ext, 'description' => $txt['icon_smiley']),
+                    array('code' => ';)', 'filename' => 'wink' ,$file_ext, 'description' => $txt['icon_wink']),
+                    array('code' => ':D', 'filename' => 'cheesy' ,$file_ext, 'description' => $txt['icon_cheesy']),
+                    array('code' => ';D', 'filename' => 'grin' ,$file_ext, 'description' => $txt['icon_grin']),
+                    array('code' => '>:(', 'filename' => 'angry' ,$file_ext, 'description' => $txt['icon_angry']),
+                    array('code' => ':(', 'filename' => 'sad' ,$file_ext, 'description' => $txt[ 'icon_sad']),
+                    array('code' => ':o', 'filename' => 'shocked' ,$file_ext, 'description' => $txt['icon_shocked']),
+                    array('code' => '8)', 'filename' => 'cool' ,$file_ext, 'description' => $txt[ 'icon_cool']),
+                    array('code' => '???', 'filename' => 'huh' ,$file_ext, 'description' => $txt['icon_huh']),
+                    array('code' => '::)', 'filename' => 'rolleyes' ,$file_ext, 'description' => $txt[ 'icon_rolleyes']),
+                    array('code' => ':P', 'filename' => 'tongue' ,$file_ext, 'description' => $txt['icon_tongue']),
+                    array('code' => ':-[', 'filename' => 'embarrassed' ,$file_ext, 'description' => $txt['icon_embarrassed']),
+                    array('code' => ':-X', 'filename' => 'lipsrsealed' ,$file_ext, 'description' => $txt['icon_lips']),
+                    array('code' => ':-\\', 'filename' => 'undecided' ,$file_ext, 'description' => $txt[ 'icon_undecided']),
+                    array('code' => ':-*', 'filename' => 'kiss' ,$file_ext, 'description' => $txt['icon_kiss']),
+                    array('code' => ':\'(', 'filename' => 'cry' ,$file_ext, 'description' => $txt['icon_cry'])
                 ),
                 'last' => true,
             );
