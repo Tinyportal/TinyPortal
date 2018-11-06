@@ -18,10 +18,14 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-global $context, $settings, $options;
+global $context, $settings, $options, $forum_version;
 
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
+
+if(strpos($forum_version, '2.0') === false) {
+    loadCSSFile('jquery.sceditor.css');
+}
 
 // if in admin screen, turn off blocks
 if($context['TPortal']['action'] == 'tpmod' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin')
@@ -678,7 +682,7 @@ function shout_bcc_code($collapse = true)
 
         $context['tp_bbc_tags'][] = array(
             'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $editortxt['Bold']),
-            'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $editortxt['Italic']),
+            'italic' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $editortxt['Italic']),
         );
         $context['tp_bbc_tags2'][] = array(
             'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $editortxt['Underline']),
@@ -701,31 +705,37 @@ function shout_bcc_code($collapse = true)
 	// Here loop through the array, printing the images/rows/separators!
 	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0) {
 		foreach ($context['tp_bbc_tags'][0] as $image => $tag) {
-			// Is there a "before" part for this bbc button? If not, it can't be a button!!
-			if (isset($tag['before'])) {
-				// Is this tag disabled?
-				if (!empty($context['disabled_tags'][$tag['code']]))
-					continue;
+            if(strpos($forum_version, '2.1') === false) {
+                // Is there a "before" part for this bbc button? If not, it can't be a button!!
+                if (isset($tag['before'])) {
+                    // Is this tag disabled?
+                    if (!empty($context['disabled_tags'][$tag['code']]))
+                        continue;
 
-				$found_button = true;
+                    $found_button = true;
 
-				// If there's no after, we're just replacing the entire selection in the post box.
-				if (!isset($tag['after']))
-					echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
-				// On the other hand, if there is one we are surrounding the selection ;).
-				else
-					echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // If there's no after, we're just replacing the entire selection in the post box.
+                    if (!isset($tag['after']))
+                        echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // On the other hand, if there is one we are surrounding the selection ;).
+                    else
+                        echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
 
-				// Okay... we have the link. Now for the image and the closing </a>!
-				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
-			}
-			// I guess it's a divider...
-			elseif ($found_button) {
-				echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-				$found_button = false;
-			}
+                    // Okay... we have the link. Now for the image and the closing </a>!
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+                }
+                // I guess it's a divider...
+                elseif ($found_button) {
+                    echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
+                    $found_button = false;
+                }
+            }
+            else {
+                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><div unselectable="on">'.$tag['description'].'</div></a>';
+            }
 		}
 	}
+
 
 	if($collapse) {
 		echo '<div id="expandHeaderBBC"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
@@ -740,33 +750,39 @@ function shout_bcc_code($collapse = true)
 	{
 		foreach ($context['tp_bbc_tags2'][0] as $image => $tag)
 		{
-			// Is there a "before" part for this bbc button? If not, it can't be a button!!
-			if (isset($tag['before']))
-			{
-				// Is this tag disabled?
-				if (!empty($context['disabled_tags'][$tag['code']]))
-					continue;
+            if(strpos($forum_version, '2.1') === false) {
+                // Is there a "before" part for this bbc button? If not, it can't be a button!!
+                if (isset($tag['before']))
+                {
+                    // Is this tag disabled?
+                    if (!empty($context['disabled_tags'][$tag['code']]))
+                        continue;
 
-				$found_button1 = true;
+                    $found_button1 = true;
 
-				// If there's no after, we're just replacing the entire selection in the post box.
-				if (!isset($tag['after']))
-					echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
-				// On the other hand, if there is one we are surrounding the selection ;).
-				else
-					echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // If there's no after, we're just replacing the entire selection in the post box.
+                    if (!isset($tag['after']))
+                        echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // On the other hand, if there is one we are surrounding the selection ;).
+                    else
+                        echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
 
-				// Okay... we have the link. Now for the image and the closing </a>!
-				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
-			}
-			// I guess it's a divider...
-			elseif ($found_button1)
-			{
-				echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-				$found_button1 = false;
-			}
+                    // Okay... we have the link. Now for the image and the closing </a>!
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+                }
+                // I guess it's a divider...
+                elseif ($found_button1)
+                {
+                    echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
+                    $found_button1 = false;
+                }
+            }
+            else {
+                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><div unselectable="on">'.$tag['description'].'</div></a>';
+            }
 		}
 	}
+
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
 		echo ' <br /><select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
