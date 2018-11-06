@@ -18,10 +18,14 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-global $context, $settings, $options;
+global $context, $settings, $options, $forum_version;
 
 if(loadLanguage('TPShout') == false)
 	loadLanguage('TPShout', 'english');
+
+if(strpos($forum_version, '2.0') === false) {
+    loadCSSFile('jquery.sceditor.css');
+}
 
 // if in admin screen, turn off blocks
 if($context['TPortal']['action'] == 'tpmod' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin')
@@ -640,7 +644,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 function shout_bcc_code($collapse = true)
 {
-	global $context, $txt, $settings, $option;
+	global $context, $txt, $settings, $option, $forum_version;
 
 	loadLanguage('Post');
 
@@ -651,107 +655,94 @@ function shout_bcc_code($collapse = true)
 			something.style.backgroundImage = "url(" + smf_images_url + (mode ? "/bbc/bbc_hoverbg.gif)" : "/bbc/bbc_bg.gif)");
 		}
 	// ]]></script>';
+    
+    // The below array makes it dead easy to add images to this page. Add it to the array and everything else is done for you!
+    $context['tp_bbc_tags'] = array();
+    $context['tp_bbc_tags2'] = array();
 
-	// The below array makes it dead easy to add images to this page. Add it to the array and everything else is done for you!
-	$context['tp_bbc_tags'] = array();
-	$context['tp_bbc_tags2'] = array();
-	$removed_bbc = array(
-		'b' => 'bold',
-		'i' => 'italic',
-		'img' => 'image',
-		'quote' => 'bbc_quote',
-	);
-	$tmp = array();
-	foreach($removed_bbc as $k => $v) {
-		if(array_key_exists( $v, $txt )) {
-			if($v == 'italic') {
-				$tmp = $tmp + array('italicize' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-			elseif($v == 'bold') {
-				$tmp = $tmp + array('bold' => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-			else {
-				$tmp = $tmp + array($k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-		}
-	}
-	$context['tp_bbc_tags'][] = $tmp;
-	$removed_bbc = array(
-		'u' => 'underline',
-		's' => 'strike',
-		'glow' => 'glow',
-		'shadow' => 'shadow',
-		'move' => 'marquee',
-	);
-	$tmp = array();
-	foreach($removed_bbc as $k => $v) {
-		if(array_key_exists( $v, $txt )) {
-			if($v == 'glow') {
-				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.'=red,2,300]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-			elseif($v == 'shadow') {
-				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.'=red,left]', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-			elseif($v == 'marquee') {
-				$tmp = $tmp + array($k => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-			else {
-				$tmp = $tmp + array($v => array('code' => $k, 'before' => '['.$k.']', 'after' => '[/'.$k.']', 'description' => $txt[$v]));
-			}
-		}
-	}
+    if(strpos($forum_version, '2.1') === false) {
+        $context['tp_bbc_tags'][] = array(
+            'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
+            'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
+            'img' => array('code' => 'img', 'before' => '[img]', 'after' => '[/img]', 'description' => $txt['image']),
+            'quote' => array('code' => 'quote', 'before' => '[quote]', 'after' => '[/quote]', 'description' => $txt['bbc_quote']),
+        );
+        $context['tp_bbc_tags2'][] = array(
+            'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $txt[ 'underline']),
+            'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $txt['strike']),
+            'glow' => array('code' => 'glow', 'before' => '[glow=red,2,300]', 'after' => '[/glow]', 'description' => $txt[ 'glow']),
+            'shadow' => array('code' => 'shadow', 'before' => '[shadow=red,left]', 'after' => '[/shadow]', 'description' => $txt[ 'shadow']),
+            'move' => array('code' => 'move', 'before' => '[move]', 'after' => '[/move]', 'description' => $txt[ 'marquee']),
+        );
 
-	$context['tp_bbc_tags2'][] = $tmp;
+    }
+    else {
+        global $editortxt;
+        loadLanguage('Editor');
 
-	if($collapse)
-		echo '
-	<a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		<img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
-	</a>
-<div id="shoutbox_bbc">';
-	else
-		echo '<div>';
+        $context['tp_bbc_tags'][] = array(
+            'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $editortxt['Bold']),
+            'italic' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $editortxt['Italic']),
+        );
+        $context['tp_bbc_tags2'][] = array(
+            'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $editortxt['Underline']),
+            'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $editortxt['Strikethrough']),
+        );
+
+    }
+
+	if($collapse) {
+		echo '  <a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
+		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
+	            </a>
+                <div id="shoutbox_bbc">';
+    }
+	else {
+		echo '  <div>';
+    }
 
 	$found_button = false;
 	// Here loop through the array, printing the images/rows/separators!
-	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0)
-	{
-		foreach ($context['tp_bbc_tags'][0] as $image => $tag)
-		{
-			// Is there a "before" part for this bbc button? If not, it can't be a button!!
-			if (isset($tag['before']))
-			{
-				// Is this tag disabled?
-				if (!empty($context['disabled_tags'][$tag['code']]))
-					continue;
+	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0) {
+		foreach ($context['tp_bbc_tags'][0] as $image => $tag) {
+            if(strpos($forum_version, '2.1') === false) {
+                // Is there a "before" part for this bbc button? If not, it can't be a button!!
+                if (isset($tag['before'])) {
+                    // Is this tag disabled?
+                    if (!empty($context['disabled_tags'][$tag['code']]))
+                        continue;
 
-				$found_button = true;
+                    $found_button = true;
 
-				// If there's no after, we're just replacing the entire selection in the post box.
-				if (!isset($tag['after']))
-					echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
-				// On the other hand, if there is one we are surrounding the selection ;).
-				else
-					echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // If there's no after, we're just replacing the entire selection in the post box.
+                    if (!isset($tag['after']))
+                        echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // On the other hand, if there is one we are surrounding the selection ;).
+                    else
+                        echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
 
-				// Okay... we have the link. Now for the image and the closing </a>!
-				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
-			}
-			// I guess it's a divider...
-			elseif ($found_button)
-			{
-				echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-				$found_button = false;
-			}
+                    // Okay... we have the link. Now for the image and the closing </a>!
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+                }
+                // I guess it's a divider...
+                elseif ($found_button) {
+                    echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
+                    $found_button = false;
+                }
+            }
+            else {
+                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><div unselectable="on">'.$tag['description'].'</div></a>';
+            }
 		}
 	}
 
-	if($collapse)
-		echo '
-	<div id="expandHeaderBBC"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
-	else
-		echo '
-	<div style="display: inline;">';
+
+	if($collapse) {
+		echo '<div id="expandHeaderBBC"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
+    }
+	else {
+		echo '<div style="display: inline;">';
+    }
 
 	$found_button1 = false;
 	// Here loop through the array, printing the images/rows/separators!
@@ -759,33 +750,39 @@ function shout_bcc_code($collapse = true)
 	{
 		foreach ($context['tp_bbc_tags2'][0] as $image => $tag)
 		{
-			// Is there a "before" part for this bbc button? If not, it can't be a button!!
-			if (isset($tag['before']))
-			{
-				// Is this tag disabled?
-				if (!empty($context['disabled_tags'][$tag['code']]))
-					continue;
+            if(strpos($forum_version, '2.1') === false) {
+                // Is there a "before" part for this bbc button? If not, it can't be a button!!
+                if (isset($tag['before']))
+                {
+                    // Is this tag disabled?
+                    if (!empty($context['disabled_tags'][$tag['code']]))
+                        continue;
 
-				$found_button1 = true;
+                    $found_button1 = true;
 
-				// If there's no after, we're just replacing the entire selection in the post box.
-				if (!isset($tag['after']))
-					echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
-				// On the other hand, if there is one we are surrounding the selection ;).
-				else
-					echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // If there's no after, we're just replacing the entire selection in the post box.
+                    if (!isset($tag['after']))
+                        echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                    // On the other hand, if there is one we are surrounding the selection ;).
+                    else
+                        echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
 
-				// Okay... we have the link. Now for the image and the closing </a>!
-				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
-			}
-			// I guess it's a divider...
-			elseif ($found_button1)
-			{
-				echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-				$found_button1 = false;
-			}
+                    // Okay... we have the link. Now for the image and the closing </a>!
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+                }
+                // I guess it's a divider...
+                elseif ($found_button1)
+                {
+                    echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
+                    $found_button1 = false;
+                }
+            }
+            else {
+                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><div unselectable="on">'.$tag['description'].'</div></a>';
+            }
 		}
 	}
+
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
 		echo ' <br /><select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
@@ -880,31 +877,24 @@ function shout_smiley_code()
             );
         }
         else {
-            if (empty($modSettings['smiley_sets_enable'])) {
-                $file_ext   = $context['user']['smiley_set_default_ext'];
-            }
-            else {
-                $file_ext   = $user_info['smiley_set_ext'];
-            }
-
             $context['tp_smileys']['postform'][] = array(
                 'smileys' => array(
-                    array('code' => ':)', 'filename' => 'smiley' ,$file_ext, 'description' => $txt['icon_smiley']),
-                    array('code' => ';)', 'filename' => 'wink' ,$file_ext, 'description' => $txt['icon_wink']),
-                    array('code' => ':D', 'filename' => 'cheesy' ,$file_ext, 'description' => $txt['icon_cheesy']),
-                    array('code' => ';D', 'filename' => 'grin' ,$file_ext, 'description' => $txt['icon_grin']),
-                    array('code' => '>:(', 'filename' => 'angry' ,$file_ext, 'description' => $txt['icon_angry']),
-                    array('code' => ':(', 'filename' => 'sad' ,$file_ext, 'description' => $txt[ 'icon_sad']),
-                    array('code' => ':o', 'filename' => 'shocked' ,$file_ext, 'description' => $txt['icon_shocked']),
-                    array('code' => '8)', 'filename' => 'cool' ,$file_ext, 'description' => $txt[ 'icon_cool']),
-                    array('code' => '???', 'filename' => 'huh' ,$file_ext, 'description' => $txt['icon_huh']),
-                    array('code' => '::)', 'filename' => 'rolleyes' ,$file_ext, 'description' => $txt[ 'icon_rolleyes']),
-                    array('code' => ':P', 'filename' => 'tongue' ,$file_ext, 'description' => $txt['icon_tongue']),
-                    array('code' => ':-[', 'filename' => 'embarrassed' ,$file_ext, 'description' => $txt['icon_embarrassed']),
-                    array('code' => ':-X', 'filename' => 'lipsrsealed' ,$file_ext, 'description' => $txt['icon_lips']),
-                    array('code' => ':-\\', 'filename' => 'undecided' ,$file_ext, 'description' => $txt[ 'icon_undecided']),
-                    array('code' => ':-*', 'filename' => 'kiss' ,$file_ext, 'description' => $txt['icon_kiss']),
-                    array('code' => ':\'(', 'filename' => 'cry' ,$file_ext, 'description' => $txt['icon_cry'])
+                    array('code' => ':)', 'filename' => 'smiley', 'description' => $txt['icon_smiley']),
+                    array('code' => ';)', 'filename' => 'wink', 'description' => $txt['icon_wink']),
+                    array('code' => ':D', 'filename' => 'cheesy' , 'description' => $txt['icon_cheesy']),
+                    array('code' => ';D', 'filename' => 'grin' , 'description' => $txt['icon_grin']),
+                    array('code' => '>:(', 'filename' => 'angry' , 'description' => $txt['icon_angry']),
+                    array('code' => ':(', 'filename' => 'sad' , 'description' => $txt[ 'icon_sad']),
+                    array('code' => ':o', 'filename' => 'shocked' , 'description' => $txt['icon_shocked']),
+                    array('code' => '8)', 'filename' => 'cool' , 'description' => $txt[ 'icon_cool']),
+                    array('code' => '???', 'filename' => 'huh' , 'description' => $txt['icon_huh']),
+                    array('code' => '::)', 'filename' => 'rolleyes' , 'description' => $txt[ 'icon_rolleyes']),
+                    array('code' => ':P', 'filename' => 'tongue' , 'description' => $txt['icon_tongue']),
+                    array('code' => ':-[', 'filename' => 'embarrassed' , 'description' => $txt['icon_embarrassed']),
+                    array('code' => ':-X', 'filename' => 'lipsrsealed' , 'description' => $txt['icon_lips']),
+                    array('code' => ':-\\', 'filename' => 'undecided' , 'description' => $txt[ 'icon_undecided']),
+                    array('code' => ':-*', 'filename' => 'kiss' , 'description' => $txt['icon_kiss']),
+                    array('code' => ':\'(', 'filename' => 'cry' , 'description' => $txt['icon_cry'])
                 ),
                 'last' => true,
             );
