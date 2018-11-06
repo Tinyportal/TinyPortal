@@ -30,17 +30,10 @@
 	font-size: 0.9em;
 	overflow: auto;
 }
-.tp_shoutcontainer
-{
-}
-.tp_shoutmember,
-.tp_shoutavatar img
+.tp_shoutmember, .tp_shoutavatar img
 {
 	font-weight: bold;
 	float: left;
-}
-.tp_shoutmember
-{
 }
 .tp_shoutavatar .avy2 img
 {
@@ -62,24 +55,21 @@
 {
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
-
 }
-
 #shoutError {
 	border: 1px solid #CC0000;
 	padding: 3px;
 	background-color: #FF9999;
 	margin-top: 5px;
 }
-
 #bigshout {
 	height: 100%;
 	width: 99%;
 }
-
 #shout_errors {
 	display: none;
 }
+/* for layout option 0 */
 textarea.shoutbox_editor0 {
 	width: 100%;
     max-width: 95%;
@@ -87,40 +77,6 @@ textarea.shoutbox_editor0 {
 	height: 80px;
     margin: 0.25em 0 1em 0;
 }
-.shoutbody_layout1 {
-	border-bottom: 1px dotted #000;
-	padding: 5px 0;
-}
-textarea.shoutbox_editor1 {
-	width: 100%;
-    max-width: 95%;
-	margin-top: 1em; 
-	height: 80px;
-    margin: 0.25em 0 1em 0;
-}
-
-/* for layout option 2 */
-.shout_date {
-	clear: both;
-}
-.shoutbox_edit {
-	float: right;
-	padding-left: 5px;
-}
-.shoutbody_layout2 {
-	padding: 5px;
-	line-height: 1.3em;
-}
-.shoutbody_layout2:nth-child(odd){
-    background:#fdfdfd;
-}
-.shoutbody_layout2:nth-child(even){
-    background:#f0f4f7;
-}
-input.shoutbox_editor2 {
-	width: 70%;
-}
-
 .bubble {
 	position: relative;
 	padding: 1.5em 1em;
@@ -134,7 +90,6 @@ input.shoutbox_editor2 {
 	word-wrap: break-word;
 	word-break: break-word;
 }
-
 .bubble:after
 {
 content: '';
@@ -148,7 +103,6 @@ z-index: 1;
 top: -8px;
 left: 16px;
 }
-
 .bubble:before
 {
 content: '';
@@ -162,7 +116,6 @@ z-index: 0;
 top: -9px;
 left: 16px;
 }
-
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
 
  /*.bubble {	background-color: #888; } 
@@ -179,7 +132,6 @@ left: 16px; } */
 
 /* sticky styles */
 /* blue */
-
 .shout_stickybg2 {
 	background: #ffffff; /* Old browsers */
 	background: -moz-linear-gradient(top,  #f0f0f8 0%, #e0e0e8 100%); /* FF3.6+ */
@@ -230,3 +182,33 @@ left: 16px; } */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0fff0, endColorstr='#e0efe0,GradientType=0 ); /* IE6-9 */
 }
 .speech.shout_stickybg5:after {	border-color: transparent transparent #f0fff0 #f0fff0 ; }
+
+/* for layout option 1 */
+.shoutbody_layout1 {
+	border-bottom: 1px dotted #000;
+	padding: 5px 0;
+}
+textarea.shoutbox_editor1 {
+	width: 100%;
+    max-width: 95%;
+	margin-top: 1em; 
+	height: 80px;
+    margin: 0.25em 0 1em 0;
+}
+
+/* for layout option 2 */
+.shout_date {
+	clear: both;
+}
+.shoutbox_edit {
+	float: right;
+	padding-left: 5px;
+}
+.shoutbody_layout2 {
+	padding: 5px;
+	line-height: 1.3em;
+}
+input.shoutbox_editor2 {
+	width: 70%;
+}
+
