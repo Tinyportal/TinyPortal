@@ -366,7 +366,19 @@ function tpshout_admin()
 					$changeArray['shout_submit_returnkey'] = $value;
 				if($what == 'shoutbox_stitle')
 					$changeArray['shoutbox_stitle'] = $value;
-			}
+				if($what == 'shoutbox_maxlength')
+					$changeArray['shoutbox_maxlength'] = $value;
+				if($what == 'shoutbox_timeformat')
+					$changeArray['shoutbox_timeformat'] = $value;
+				if($what == 'shoutbox_textcolor')
+					$changeArray['shoutbox_textcolor'] = $value;
+				if($what == 'shoutbox_timecolor')
+					$changeArray['shoutbox_timecolor'] = $value;
+				if($what == 'shoutbox_linecolor1')
+					$changeArray['shoutbox_linecolor1'] = $value;
+				if($what == 'shoutbox_linecolor2')
+					$changeArray['shoutbox_linecolor2'] = $value;
+				}
 		}
 		updateTPSettings($changeArray, true);
 

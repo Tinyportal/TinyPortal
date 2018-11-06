@@ -52,4 +52,11 @@ $txt['shout_submit_returnkey'] = 'Submit Shout on enter key?';
 $txt['tp-yes-ctrl'] = 'Yes with ctrl/cmd';
 $txt['tpsummary_noshout'] = 'No shout messages found';
 
+$txt['tp-shoutboxmaxlength'] = 'Maximum shout length in characters';
+$txt['tp-shoutboxtimeformat'] = 'Time format';
+$txt['tp-shoutboxcolors'] = 'Shoutbox color settings<br><span class="smalltext">(Use hex color codes: an example of a Hex color representation is #123456. To use the default theme colors, leave these fields blank.)</span>';
+$txt['tp-shoutboxtextcolor'] = 'Default shout text color';
+$txt['tp-shoutboxtimecolor'] = 'Time text color';
+$txt['tp-shoutboxlinecolor1'] = 'Layout 2: background color odd lines';
+$txt['tp-shoutboxlinecolor2'] = 'Layout 2: background color even lines';
 ?>
