@@ -665,12 +665,12 @@ function TPortalDLManager()
 		// fetch the categories, the number of files
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon, a.link AS shortname, a.description AS description,
-				a.name AS name, a.id AS id, a.parent AS parent,
+				a.name AS name, a.id AS id, a.parent AS parent,a.downloads AS downloads,
 	  			if (a.id = b.category, count(*), 0) AS files, b.category AS subchild
 			FROM ({db_prefix}tp_dlmanager AS a)
 			LEFT JOIN {db_prefix}tp_dlmanager AS b ON (a.id = b.category)
 			WHERE a.type = {string:type}
-		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.parent, b.category
+		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.parent, a.downloads, b.category
 			ORDER BY a.downloads ASC',
 			array('type' => 'dlcat')
 		);
