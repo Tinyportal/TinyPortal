@@ -608,10 +608,10 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
 		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
-			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType
-		    FROM {db_prefix}members AS mem
+			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, grp.online_color as online_color
+		    FROM ({db_prefix}members AS mem, {db_prefix}membergroups AS grp) 
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
-		    WHERE mem.id_member IN(' . implode(",",$members) . ')'
+		    WHERE mem.id_group = grp.id_group AND mem.id_member IN(' . implode(",",$members) . ')' 
 	    );
     }
 
@@ -640,6 +640,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
 			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
+			$row['online_color'] = !empty($memberdata[$row['value5']]['online_color']) ? $memberdata[$row['value5']]['online_color'] : '';
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode('', $ns);
