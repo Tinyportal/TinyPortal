@@ -216,6 +216,13 @@ function template_tpshout_admin_settings()
 					<dl class="settings">
 						<dt>'.$txt['tp-shoutboxcolors'].'
 						</dt>
+						<dt>
+							'.$txt['tp-shoutbox_use_groupcolor'].'
+						</dt>
+						<dd>
+							<input name="tp_shoutbox_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['shoutbox_use_groupcolor']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
+							<input name="tp_shoutbox_use_groupcolor" type="radio" value="0" ' , $context['TPortal']['shoutbox_use_groupcolor']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br><br>
+						</dd>
 						<dt>'.$txt['tp-shoutboxtextcolor'].'
 						</dt>
 						<dd>
@@ -331,7 +338,8 @@ function template_tpshout_shoutblock()
 				shout_bcc_code();
 
 			echo '
-			<div id="shout_errors"></div><hr>
+			<div id="shout_errors"></div><br>
+			<hr>
 			<div style="overflow: hidden;">
 				<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 				<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
@@ -419,7 +427,7 @@ function template_singleshout($row)
 					<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '. $row['id'] . '); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpmod;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
-				<h4><a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></h4>
+				<h4><a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . ' href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></h4>
 				<div class="smalltext clear" style="padding-top: .5em;color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], $row['value2']).'</div>
 			</div>
 			<div class="bubble speech" ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . '' .$row['value1']. '</div>
@@ -428,7 +436,7 @@ function template_singleshout($row)
 	'1' => '
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer">
-			<a href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a>:
+			<a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . ' href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a>:
 			' . (allowedTo('tp_can_admin_shout') ? '
 			<div class="shoutbox_edit">
 				<a href="' . $scripturl. '?action=tpmod;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
@@ -446,7 +454,8 @@ function template_singleshout($row)
 			<a href="'.$scripturl.'?action=tpmod;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/TPmodify.png" alt="'.$txt['tp-edit'].'" /></a>
 			<a onclick="TPupdateShouts(\'del\', '. $row['id'].'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpmod;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img src="'.$settings['tp_images_url'].'/tp-delete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
 			</div>
-			<b><a style="color:' .$row['online_color']. ';" href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></b>: <span ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . ''.$row['value1'].'</span>
+			<b><a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . '
+			href="' . $scripturl . '?action=profile;u=' . $row['value5'] . '">' . $row['realName'] . '</a></b>: <span ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . ''.$row['value1'].'</span>
 		</div>',
 	);
 

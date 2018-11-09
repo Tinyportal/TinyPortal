@@ -374,6 +374,8 @@ function tpshout_admin()
 					$changeArray['shoutbox_maxlength'] = $value;
 				if($what == 'shoutbox_timeformat')
 					$changeArray['shoutbox_timeformat'] = $value;
+				if($what == 'shoutbox_use_groupcolor')
+					$changeArray['shoutbox_use_groupcolor'] = $value;
 				if($what == 'shoutbox_textcolor')
 					$changeArray['shoutbox_textcolor'] = $value;
 				if($what == 'shoutbox_timecolor')
@@ -608,10 +610,14 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
 		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
-			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, grp.online_color as online_color
-		    FROM ({db_prefix}members AS mem, {db_prefix}membergroups AS grp) 
-			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
-		    WHERE mem.id_group = grp.id_group AND mem.id_member IN(' . implode(",",$members) . ')' 
+			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, mgrp.online_color as mg_online_color, pgrp.online_color as pg_online_color
+		    FROM {db_prefix}members AS mem
+				LEFT JOIN {db_prefix}membergroups AS mgrp ON
+				(mgrp.id_group = mem.id_group)
+				LEFT JOIN {db_prefix}membergroups AS pgrp ON
+				(pgrp.id_group = mem.id_post_group)
+				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
+		    WHERE mem.id_member IN(' . implode(",",$members) . ')' 
 	    );
     }
 
@@ -640,7 +646,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
 			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
-			$row['online_color'] = !empty($memberdata[$row['value5']]['online_color']) ? $memberdata[$row['value5']]['online_color'] : '';
+			$row['online_color'] = !empty($memberdata[$row['value5']]['mg_online_color']) ? $memberdata[$row['value5']]['mg_online_color'] : $memberdata[$row['value5']]['pg_online_color'];
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode('', $ns);
@@ -747,7 +753,6 @@ function shout_bcc_code($collapse = true)
             }
 		}
 	}
-
 
 	if($collapse) {
 		echo '<div id="expandHeaderBBC"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';

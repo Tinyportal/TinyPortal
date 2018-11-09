@@ -587,6 +587,7 @@ $settings_array = array(
     'shout_allow_links' => '0',
 	'shoutbox_timecolor' => '#787878',
 	'shoutbox_timeformat' => 'Y M d H:m:s',
+	'shoutbox_use_groupcolor' => '1',
 	'shoutbox_linecolor1' => '#f0f4f7',
 	'shoutbox_linecolor2' => '#fdfdfd',
 	'shoutbox_textcolor' => '#000',
