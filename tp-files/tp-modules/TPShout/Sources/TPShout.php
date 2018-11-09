@@ -187,7 +187,7 @@ function postShout()
 		$ip = $user_info['ip'];
 		$memID = $user_info['id'];
 
-		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
+		$shout = str_ireplace(array("<br>","<br>","<br/>"), "\r\n", $shout);
 
         if($shout != '')
             $smcFunc['db_insert']('INSERT',
@@ -320,7 +320,7 @@ function tpshout_admin()
 				$val = substr($what, 16);
 				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, 300));
 				preparsecode($bshout);
-				$bshout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $bshout);
+				$bshout = str_ireplace(array("<br>","<br>","<br/>"), "\r\n", $bshout);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
 					SET value1 = {string:val1}
@@ -374,6 +374,8 @@ function tpshout_admin()
 					$changeArray['shoutbox_maxlength'] = $value;
 				if($what == 'shoutbox_timeformat')
 					$changeArray['shoutbox_timeformat'] = $value;
+				if($what == 'shoutbox_use_groupcolor')
+					$changeArray['shoutbox_use_groupcolor'] = $value;
 				if($what == 'shoutbox_textcolor')
 					$changeArray['shoutbox_textcolor'] = $value;
 				if($what == 'shoutbox_timecolor')
@@ -417,7 +419,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br>'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -440,7 +442,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br>'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -608,10 +610,14 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
 		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
-			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, grp.online_color as online_color
-		    FROM ({db_prefix}members AS mem, {db_prefix}membergroups AS grp) 
-			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
-		    WHERE mem.id_group = grp.id_group AND mem.id_member IN(' . implode(",",$members) . ')' 
+			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, mgrp.online_color as mg_online_color, pgrp.online_color as pg_online_color
+		    FROM {db_prefix}members AS mem
+				LEFT JOIN {db_prefix}membergroups AS mgrp ON
+				(mgrp.id_group = mem.id_group)
+				LEFT JOIN {db_prefix}membergroups AS pgrp ON
+				(pgrp.id_group = mem.id_post_group)
+				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
+		    WHERE mem.id_member IN(' . implode(",",$members) . ')' 
 	    );
     }
 
@@ -640,7 +646,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
 			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
-			$row['online_color'] = !empty($memberdata[$row['value5']]['online_color']) ? $memberdata[$row['value5']]['online_color'] : '';
+			$row['online_color'] = !empty($memberdata[$row['value5']]['mg_online_color']) ? $memberdata[$row['value5']]['mg_online_color'] : $memberdata[$row['value5']]['pg_online_color'];
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode('', $ns);
@@ -748,7 +754,6 @@ function shout_bcc_code($collapse = true)
 		}
 	}
 
-
 	if($collapse) {
 		echo '<div id="expandHeaderBBC"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
     }
@@ -797,7 +802,7 @@ function shout_bcc_code($collapse = true)
 
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
-		echo ' <br /><select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
+		echo ' <br><p class="clearthefloat"></p><select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto auto auto;">
 						<option value="" selected="selected">'. $txt['change_color']. '</option>
 						<option value="Black">Black</option>
 						<option value="Red">Red</option>
@@ -814,7 +819,7 @@ function shout_bcc_code($collapse = true)
 						<option value="Maroon">Maroon</option>
 						<option value="LimeGreen">LimeGreen</option>
 					</select>';
-	echo '<br />';
+	echo '<br>';
 
 	$found_button2 = false;
 	// Print the bottom row of buttons!
@@ -1014,7 +1019,7 @@ function print_shout_smileys($collapse = true)
 			}
 			// If this isn't the last row, show a break.
 			if (empty($smiley_row['last']))
-				echo '<br />';
+				echo '<br>';
 		}
 	}
 
