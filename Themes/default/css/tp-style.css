@@ -931,9 +931,8 @@ a.avatar
 }
 a.avatar img
 {
-	border: solid 1px #aaa;
+	border-radius: 2px;
 	padding: 1px;
-	background: white;
 	width: 35px;
 	margin-right: 0.7em;
 }
@@ -1600,25 +1599,24 @@ h2.catbg img.icon
 span.tpavatar
 {
 	float: left;
-	margin-right: 1em;
-	border: solid 1px #aaa;
+	margin-top: 2px;
+	margin-right: 10px;
 	padding: 1px;
-	background: white;
 	display: block;
 	overflow: auto;
 }
 span.tpavatar img
 {
-	width: 35px;
+	width: 40px;
 	height: auto;
+	border-radius: 2px;
 }
 .avatar_single img
 {
-	height: 28px;
+	height: 30px;
 	float: left;
 	padding: 1px;
-	background: white;
-	border: solid 1px #aaa;
+	border-radius: 2px;
 	margin: 0 .75em 4px 0;
 }
 .tp_avatar, .tp_avatar_category
@@ -1638,11 +1636,10 @@ span.tpavatar img
 }
 .avatar_single2 img
 {
-	height: 32px;
+	height: 30px;
 	float: left;
 	padding: 1px;
-	background: white;
-	border: solid 1px #aaa;
+	border-radius: 2px;
 	margin: 4px 4px 4px 0;
 }
 ul.recent_topics li
@@ -1815,9 +1812,8 @@ h3.h3dl
 div.useravatar img
 {
 	margin: 1em auto 0 auto;
-	border: solid 1px #aaa;
+	border-radius: 2px;
 	padding: 1px;
-	background: white;
 	display: block;
 	overflow: auto;
 	width: 45px;

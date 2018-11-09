@@ -370,7 +370,19 @@ function tpshout_admin()
 					$changeArray['shout_submit_returnkey'] = $value;
 				if($what == 'shoutbox_stitle')
 					$changeArray['shoutbox_stitle'] = $value;
-			}
+				if($what == 'shoutbox_maxlength')
+					$changeArray['shoutbox_maxlength'] = $value;
+				if($what == 'shoutbox_timeformat')
+					$changeArray['shoutbox_timeformat'] = $value;
+				if($what == 'shoutbox_textcolor')
+					$changeArray['shoutbox_textcolor'] = $value;
+				if($what == 'shoutbox_timecolor')
+					$changeArray['shoutbox_timecolor'] = $value;
+				if($what == 'shoutbox_linecolor1')
+					$changeArray['shoutbox_linecolor1'] = $value;
+				if($what == 'shoutbox_linecolor2')
+					$changeArray['shoutbox_linecolor2'] = $value;
+				}
 		}
 		updateTPSettings($changeArray, true);
 
@@ -683,12 +695,11 @@ function shout_bcc_code($collapse = true)
         $context['tp_bbc_tags'][] = array(
             'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $editortxt['Bold']),
             'italic' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $editortxt['Italic']),
-        );
-        $context['tp_bbc_tags2'][] = array(
             'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $editortxt['Underline']),
             'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $editortxt['Strikethrough']),
         );
-
+        $context['tp_bbc_tags2'][] = array(
+        );
     }
 
 	if($collapse) {
@@ -731,7 +742,7 @@ function shout_bcc_code($collapse = true)
                 }
             }
             else {
-                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><div unselectable="on">'.$tag['description'].'</div></a>';
+				echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;" style="padding:0px;"><div unselectable="on">'.$tag['description'].'</div></a>';
             }
 		}
 	}
@@ -778,7 +789,7 @@ function shout_bcc_code($collapse = true)
                 }
             }
             else {
-                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><div unselectable="on">'.$tag['description'].'</div></a>';
+                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;" style="padding:0px;"><div unselectable="on">'.$tag['description'].'</div></a>';
             }
 		}
 	}
