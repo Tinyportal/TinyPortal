@@ -40,6 +40,7 @@ function TPortal_onlinebox()
 		echo '
 	<div style="line-height: 1.4em;">' , ssi_whosOnline() , '</div>';
 }
+
 function tpo_whos($buddy_only = false)
 {
 	global $txt, $scripturl;
@@ -70,6 +71,7 @@ function tpo_whos($buddy_only = false)
 		<a class="avatar_single2" title="'.$names[$a].'" href="' . $scripturl . '?action=profile;u='.$a.'">' . $av . '</a>';
 	}
 }
+
 function tpo_whosOnline()
 {
 	global $sourcedir;
@@ -83,6 +85,7 @@ function tpo_whosOnline()
 	$return = getMembersOnlineStats($membersOnlineOptions);
 	return $return;
 }
+
 function progetAvatars($ids)
 {
 	global $user_info, $smcFunc, $modSettings, $scripturl;

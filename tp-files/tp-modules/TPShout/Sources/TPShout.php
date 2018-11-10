@@ -187,7 +187,7 @@ function postShout()
 		$ip = $user_info['ip'];
 		$memID = $user_info['id'];
 
-		$shout = str_ireplace(array("<br>","<br>","<br/>"), "\r\n", $shout);
+		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
         if($shout != '')
             $smcFunc['db_insert']('INSERT',
@@ -320,7 +320,7 @@ function tpshout_admin()
 				$val = substr($what, 16);
 				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, 300));
 				preparsecode($bshout);
-				$bshout = str_ireplace(array("<br>","<br>","<br/>"), "\r\n", $bshout);
+				$bshout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $bshout);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
 					SET value1 = {string:val1}
