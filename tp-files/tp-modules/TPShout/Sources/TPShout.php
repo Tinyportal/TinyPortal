@@ -187,7 +187,7 @@ function postShout()
 		$ip = $user_info['ip'];
 		$memID = $user_info['id'];
 
-		$shout = str_ireplace(array("<br>","<br>","<br/>"), "\r\n", $shout);
+		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
         if($shout != '')
             $smcFunc['db_insert']('INSERT',
@@ -320,7 +320,7 @@ function tpshout_admin()
 				$val = substr($what, 16);
 				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, 300));
 				preparsecode($bshout);
-				$bshout = str_ireplace(array("<br>","<br>","<br/>"), "\r\n", $bshout);
+				$bshout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $bshout);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
 					SET value1 = {string:val1}
@@ -419,7 +419,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br>'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -442,7 +442,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br>'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -683,15 +683,16 @@ function shout_bcc_code($collapse = true)
         $context['tp_bbc_tags'][] = array(
             'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
             'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
-            'img' => array('code' => 'img', 'before' => '[img]', 'after' => '[/img]', 'description' => $txt['image']),
-            'quote' => array('code' => 'quote', 'before' => '[quote]', 'after' => '[/quote]', 'description' => $txt['bbc_quote']),
-        );
-        $context['tp_bbc_tags2'][] = array(
             'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $txt[ 'underline']),
             'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $txt['strike']),
+        );
+        $context['tp_bbc_tags2'][] = array(
+
             'glow' => array('code' => 'glow', 'before' => '[glow=red,2,300]', 'after' => '[/glow]', 'description' => $txt[ 'glow']),
             'shadow' => array('code' => 'shadow', 'before' => '[shadow=red,left]', 'after' => '[/shadow]', 'description' => $txt[ 'shadow']),
             'move' => array('code' => 'move', 'before' => '[move]', 'after' => '[/move]', 'description' => $txt[ 'marquee']),
+			'img' => array('code' => 'img', 'before' => '[img]', 'after' => '[/img]', 'description' => $txt['image']),
+            'quote' => array('code' => 'quote', 'before' => '[quote]', 'after' => '[/quote]', 'description' => $txt['bbc_quote']),
         );
 
     }
@@ -713,7 +714,7 @@ function shout_bcc_code($collapse = true)
 		echo '  <a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
 		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
 	            </a>
-                <div id="shoutbox_bbc">';
+                <div id="shoutbox_bbc" style="text-align:left;">';
     }
 	else {
 		echo '  <div>';
@@ -802,7 +803,8 @@ function shout_bcc_code($collapse = true)
 
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
-		echo ' <br><p class="clearthefloat"></p><select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto auto auto;">
+		echo ' <p class="clearthefloat"></p>
+				<select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
 						<option value="" selected="selected">'. $txt['change_color']. '</option>
 						<option value="Black">Black</option>
 						<option value="Red">Red</option>
@@ -819,7 +821,7 @@ function shout_bcc_code($collapse = true)
 						<option value="Maroon">Maroon</option>
 						<option value="LimeGreen">LimeGreen</option>
 					</select>';
-	echo '<br>';
+	echo '<br />';
 
 	$found_button2 = false;
 	// Print the bottom row of buttons!
@@ -993,7 +995,7 @@ function print_shout_smileys($collapse = true)
 	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
 		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
 	</a>
-	<div id="shoutbox_smiley">
+	<div id="shoutbox_smiley" style="text-align:left;">
 		';
 	else
 		echo '
@@ -1017,9 +1019,6 @@ function print_shout_smileys($collapse = true)
 					<a href="javascript:void(0);" onclick="replaceText(\' ', $smiley['code'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" align="bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></a>';
 				$sm_counter++;
 			}
-			// If this isn't the last row, show a break.
-			if (empty($smiley_row['last']))
-				echo '<br>';
 		}
 	}
 
