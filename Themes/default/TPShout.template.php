@@ -338,7 +338,9 @@ function template_tpshout_shoutblock()
 				shout_bcc_code();
 
 			echo '
-			<p class="clearthefloat"></p><hr>
+			<div id="shout_errors"></div>
+			<p class="clearthefloat"></p>
+			<hr>
 			<div style="overflow: hidden;">
 				<a href="' , $scripturl , '?action=tpmod;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 				<input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
