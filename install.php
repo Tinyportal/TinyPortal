@@ -608,6 +608,7 @@ $settings_array = array(
     'uselangoption' => '0',
     'resp' => '0',
     'copyrightremoval' => '',
+	'use_groupcolor' => '0',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
