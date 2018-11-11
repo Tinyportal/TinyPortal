@@ -54,16 +54,19 @@ function tpAddCopy($buffer)
 	$bodyid = '';
 	$bclass = '';
 
-    $user_match     = '~href="' . preg_quote($scripturl) . '\?action=profile;u=(\d+)"~';
-    if(preg_match_all($user_match, $buffer, $matches)) {
-        $user_ids       = array_values(array_unique($matches[1]));
-        $user_colour    = TPGetMemberColour($user_ids);
-        foreach($user_ids as $id) {
-            $user_replace   = '~href="' . preg_quote($scripturl) . '\?action=profile;u='.$id.'"~';
-            $buffer         = preg_replace($user_replace, ' style="color:'.$user_colour[$id].';" $0', $buffer);
-        }
-    }
-
+	// apply user membergroup colors ony when set in TP settings.
+	if(!empty($context['TPortal']['use_groupcolor'])) {
+		$user_match     = '~href="' . preg_quote($scripturl) . '\?action=profile;u=(\d+)"~';
+		if(preg_match_all($user_match, $buffer, $matches)) {
+			$user_ids       = array_values(array_unique($matches[1]));
+			$user_colour    = TPGetMemberColour($user_ids);
+			foreach($user_ids as $id) {
+				$user_replace   = '~href="' . preg_quote($scripturl) . '\?action=profile;u='.$id.'"~';
+				$buffer         = preg_replace($user_replace, ' style="color:'.$user_colour[$id].';" $0', $buffer);
+			}
+		}
+	}
+	
 	// Dynamic body ID
 	if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
 		$bodyid = "profilepage";

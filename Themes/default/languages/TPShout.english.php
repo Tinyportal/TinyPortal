@@ -56,6 +56,7 @@ $txt['tp-shoutboxmaxlength'] = 'Maximum shout length in characters';
 $txt['tp-shoutboxtimeformat'] = 'Time format';
 $txt['tp-shoutboxcolors'] = 'Shoutbox color settings<br><span class="smalltext">(Use hex color codes: an example of a Hex color representation is #123456. To use the default theme colors, leave these fields blank.)</span>';
 $txt['tp-shoutbox_use_groupcolor'] = 'Use membergroup color for user names';
+$txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';
 $txt['tp-shoutboxtextcolor'] = 'Default shout text color';
 $txt['tp-shoutboxtimecolor'] = 'Time text color';
 $txt['tp-shoutboxlinecolor1'] = 'Layout 2: background color odd lines';

@@ -659,5 +659,6 @@ $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPorta
 
 // new in 1.6.1
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
-
+$txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
+$txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';
 ?>
