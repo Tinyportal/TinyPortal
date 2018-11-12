@@ -1751,9 +1751,10 @@ function article_comments($render = true)
 	if(in_array('comments', $context['TPortal']['article']['visual_options']))
 	{
 		echo '
+	<a name="tp-comment">
 	<h2 class="titlebg" style="padding: 0 1em;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
-		<div class="windowbg2" style="padding: 1em 2em;">';
+		<div class="windowbg2" style="padding: 1em;">';
 
 		$counter = 1;
 		if(isset($context['TPortal']['article']['comment_posts']))
@@ -1762,30 +1763,33 @@ function article_comments($render = true)
 			{
 				if ($comment['posterID'] == 0)
 					echo '
-				<div class="othercomment">
+				<div style="margin-bottom:8px;" class="othercomment">
 						<a id="comment'.$comment['id'].'"></a>
 						<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].' '. $txt['on'] . ' ' . $comment['date'] . '</div>
 						' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
 						' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '
-						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br>';
+						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 				else
 					echo '
-					<div class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
-					<a id="comment'.$comment['id'].'"></a>
+					<div style="margin-bottom:8px;" class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
+					<a id="comment'.$comment['id'].'"></a>';
+					
+				// can we edit the comment or are the owner of it?
+				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
+					echo '
+						<div class="floatright"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div>';
+
+					echo '	
 					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
 					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
 					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '
 					<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['posterID'].'">'.$comment['poster'].'</a>
 					' . $txt['on'] . ' ' . $comment['date'] . '</div>
-					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br>';
+					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 
 
-					// can we edit the comment or are the owner of it?
-				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
-					echo '
-						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div><br>';
 
 				echo '
 				</div>';
