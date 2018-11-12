@@ -993,10 +993,8 @@ a.avatar img
 }
 .comment_author img
 {
-	width: 30px;
-	padding: white;
-	padding: 1px;
-	border: solid 1px #aaa;
+	width: 34px;
+	border-radius: 2px;
 	margin: 0 8px 0 0;
 }
 
