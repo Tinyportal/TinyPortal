@@ -3138,6 +3138,11 @@ function TPGetMemberColour($member_ids)
 {
     global $smcFunc, $modSettings;
 
+	if (empty($member_ids))
+		return false;
+	
+	$member_ids = is_array($member_ids) ? $member_ids : array($member_ids);
+	
     $request = $smcFunc['db_query']('', '
             SELECT mem.id_member, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
             FROM {db_prefix}members AS mem
@@ -3145,7 +3150,10 @@ function TPGetMemberColour($member_ids)
                 ON (mgrp.id_group = mem.id_group)
             LEFT JOIN {db_prefix}membergroups AS pgrp 
                 ON (pgrp.id_group = mem.id_post_group)
-            WHERE mem.id_member IN(' . implode(",",$member_ids) . ')'
+            WHERE mem.id_member IN ({array_int:member_ids})',
+		array(
+			'member_ids'	=> $member_ids,
+		)
     );
 
     $mcol = array();
