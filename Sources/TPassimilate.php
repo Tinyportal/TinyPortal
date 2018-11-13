@@ -61,8 +61,10 @@ function tpAddCopy($buffer)
 			$user_ids       = array_values(array_unique($matches[1]));
 			$user_colour    = TPGetMemberColour($user_ids);
 			foreach($user_ids as $id) {
-				$user_replace   = '~href="' . preg_quote($scripturl) . '\?action=profile;u='.$id.'"~';
-				$buffer         = preg_replace($user_replace, ' style="color:'.$user_colour[$id].';" $0', $buffer);
+				if(array_key_exists($id, $user_colour)){
+					$user_replace   = '~href="' . preg_quote($scripturl) . '\?action=profile;u='.$id.'"~';
+					$buffer         = preg_replace($user_replace, ' style="color:'.$user_colour[$id].';" $0', $buffer);
+				}
 			}
 		}
 	}
