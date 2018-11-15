@@ -340,7 +340,7 @@ function TPortal_userbox()
 			echo '
 				<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
 		echo '
-		<strong>', $context['user']['name'], '</strong>
+		<strong><a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">', $context['user']['name'], '</a></strong>
 		<ul class="reset">';
 
 		// Only tell them about their messages if they can read their messages!
