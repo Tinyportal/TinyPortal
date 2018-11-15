@@ -2002,7 +2002,7 @@ function do_news($tpsub = 'overview')
 	if($tpsub == 'overview')
 	{
 		if(!TPcheckAdminAreas())
-			fatal_error($txt['tp-notallowed']);
+			fatal_error($txt['tp-noadmin']);
 	}
 	elseif($tpsub == 'permissions')
 	{
