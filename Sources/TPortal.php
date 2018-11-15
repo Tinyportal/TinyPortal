@@ -2543,7 +2543,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				break;
 			case 'userbox':
 				if($context['user']['is_logged'])
-					$mp = '<a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">'.$block['title'].'</a>';
+					$mp = ''.$block['title'].'';
 				else
 					$mp = '<a class="subject"  href="'.$scripturl.'?action=login">'.$block['title'].'</a>';
 				$block['title'] = $mp;
