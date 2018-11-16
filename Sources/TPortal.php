@@ -397,7 +397,7 @@ function setupTPsettings()
 	// start of things
 	$context['TPortal']['mystart'] = 0;
 	if(isset($_GET['p']) && $_GET['p'] != '' && is_numeric($_GET['p']))
-		$context['TPortal']['mystart'] = $_GET['p'];
+		$context['TPortal']['mystart'] = TPSanitise::filter('p', 'get', 'int');
 
 	$context['tp_html_headers'] = '';
 
@@ -990,11 +990,12 @@ function doTPcat()
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	$now = time();
+
 	// check validity and fetch it
 	if(!empty($_GET['cat']))
 	{
-		$cat = tp_sanitize($_GET['cat']);
-		$catid = is_numeric($cat) ? 'id = {int:cat}' : 'value8 = {string:cat}';
+		$cat    = tp_sanitize($_GET['cat']);
+		$catid  = is_numeric($cat) ? 'id = {int:cat}' : 'value8 = {string:cat}';
 
 		// get the category first
 		$request =  $smcFunc['db_query']('', '
@@ -1018,13 +1019,15 @@ function doTPcat()
 					if(isset($a[1]))
 						$options[$a[0]] = $a[1];
 				}
-				$catsort = isset($options['sort']) ? $options['sort'] : 'date';
-				if($catsort == 'authorID')
-					$catsort = 'author_id';
 
-				$catsort_order = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
-				$max = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
-				$start = $context['TPortal']['mystart'];
+				$catsort    = isset($options['sort']) ? $options['sort'] : 'date';
+				if($catsort == 'authorID') {
+					$catsort = 'author_id';
+                }
+
+				$catsort_order  = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
+				$max            = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
+				$start          = $context['TPortal']['mystart'];
 
 				// some swapping to avoid compability issues
 				$options['catlayout'] = isset($options['catlayout']) ? $options['catlayout'] : 1;
