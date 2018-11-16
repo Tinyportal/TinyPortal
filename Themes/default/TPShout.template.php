@@ -218,7 +218,7 @@ function template_tpshout_admin_settings()
 						</dt>
 						<dt>
 							'.$txt['tp-shoutbox_use_groupcolor'].'
-							<div class="smalltext">'.$txt['tp-use_groupcolordesc'].'</div>
+							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<div class="smalltext" style="color:red;">'.$txt['tp-use_groupcolordesc'].'</div>' : '' , '
 						</dt>
 						<dd>
 							<input name="tp_shoutbox_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['shoutbox_use_groupcolor']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
