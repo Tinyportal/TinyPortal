@@ -3136,11 +3136,27 @@ function updateTPSettings($addSettings, $check = false)
 
 function TPGetMemberColour($member_ids)
 {
-    global $smcFunc, $modSettings;
+    global $smcFunc, $db_connection, $db_server, $db_name, $db_user, $db_passwd;
+    global $db_prefix, $db_persist, $db_port, $db_mb4, $forum_version;
 
-	if (empty($member_ids))
+	if (empty($member_ids)) {
 		return false;
+    }
 	
+    // SMF2.1 and php < 7.0 need this
+    if (strpos($forum_version, '2.1') !== false && empty($db_connection)) {
+        $db_options = array();
+        // Add in the port if needed
+        if (!empty($db_port)) {
+            $db_options['port'] = $db_port;
+        }
+        if (!empty($db_mb4)) {
+            $db_options['db_mb4'] = $db_mb4;
+        }
+        $options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
+        $db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+    }
+
 	$member_ids = is_array($member_ids) ? $member_ids : array($member_ids);
 	
     $request = $smcFunc['db_query']('', '
@@ -3151,9 +3167,9 @@ function TPGetMemberColour($member_ids)
             LEFT JOIN {db_prefix}membergroups AS pgrp 
                 ON (pgrp.id_group = mem.id_post_group)
             WHERE mem.id_member IN ({array_int:member_ids})',
-		array(
-			'member_ids'	=> $member_ids,
-		)
+		    array(
+			    'member_ids'	=> $member_ids,
+		    )
     );
 
     $mcol = array();
