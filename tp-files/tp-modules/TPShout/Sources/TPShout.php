@@ -712,7 +712,7 @@ function shout_bcc_code($collapse = true)
 
 	if($collapse) {
 		echo '  <a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
+		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;" align="left" />
 	            </a>
                 <div id="shoutbox_bbc" style="text-align:left;">';
     }
@@ -993,7 +993,7 @@ function print_shout_smileys($collapse = true)
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px; position: relative; top: 2px;" align="left" />
+		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;" align="left" />
 	</a>
 	<div id="shoutbox_smiley" style="text-align:left;">
 		';
