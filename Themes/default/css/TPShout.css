@@ -200,8 +200,12 @@ textarea.shoutbox_editor1 {
 	clear: both;
 }
 .shoutbox_edit {
+	display: none;
 	float: right;
 	padding-left: 5px;
+}
+.showhover:hover .shoutbox_edit {
+	display : block;
 }
 .shoutbody_layout2 {
 	padding: 5px;
