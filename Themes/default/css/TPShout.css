@@ -182,7 +182,7 @@ left: 16px; } */
 }
 .speech.shout_stickybg5:after {	border-color: transparent transparent #f0fff0 #f0fff0 ; }
 
-/* for layout option 1 */
+/* for layout option 2 */
 .shoutbody_layout1 {
 	border-bottom: 1px dotted #000;
 	padding: 5px 0;
@@ -195,7 +195,7 @@ textarea.shoutbox_editor1 {
     margin: 0.25em 0 1em 0;
 }
 
-/* for layout option 2 */
+/* for layout option 3 and 4 */
 .shout_date {
 	clear: both;
 }
@@ -207,11 +207,10 @@ textarea.shoutbox_editor1 {
 .showhover:hover .shoutbox_edit {
 	display : block;
 }
-.shoutbody_layout2 {
+.shoutbody_layout2, .shoutbody_layout3 {
 	padding: 5px;
 	line-height: 1.3em;
 }
-input.shoutbox_editor2 {
+input.shoutbox_editor2, input.shoutbox_editor3 {
 	width: 70%;
 }
-
