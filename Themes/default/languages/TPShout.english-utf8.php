@@ -59,6 +59,6 @@ $txt['tp-shoutbox_use_groupcolor'] = 'Use membergroup color for user names';
 $txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';
 $txt['tp-shoutboxtextcolor'] = 'Default shout text color';
 $txt['tp-shoutboxtimecolor'] = 'Time text color';
-$txt['tp-shoutboxlinecolor1'] = 'Layout 2: background color odd lines';
-$txt['tp-shoutboxlinecolor2'] = 'Layout 2: background color even lines';
+$txt['tp-shoutboxlinecolor1'] = 'Layouts 3 and 4: background color odd lines';
+$txt['tp-shoutboxlinecolor2'] = 'Layouts 3 and 4: background color even lines';
 ?>
