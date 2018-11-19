@@ -465,7 +465,7 @@ function template_singleshout($row)
 			</div>
 		</div>',
 	'3' => '	
-		<div class="shoutbody_layout2" style="background:' . (($row['id'] % 2) ? ($context['TPortal']['shoutbox_linecolor2']) : ($context['TPortal']['shoutbox_linecolor1'])) . ';">
+		<div class="shoutbody_layout3" style="background:' . (($row['id'] % 2) ? ($context['TPortal']['shoutbox_linecolor2']) : ($context['TPortal']['shoutbox_linecolor1'])) . ';">
 			<div class="showhover">
 				<div class="shoutbox_edit">	
 					' . (allowedTo( 'tp_can_admin_shout' ) ? '
