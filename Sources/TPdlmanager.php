@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -208,7 +208,6 @@ function TPortalDLManager()
 				$screenshot = $sname;
 				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
 				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
-				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
 			}
 			else
 			{
@@ -389,6 +388,10 @@ function TPortalDLManager()
 				$context['TPortal']['editor_id'] = 'tp_dluploadtext';
 				TP_prebbcbox($context['TPortal']['editor_id']);
 			}
+			elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+            {
+                TPwysiwyg_setup();
+            }
 			TP_dlgeticons();
 
 			// allow to attach this to another item
@@ -662,12 +665,12 @@ function TPortalDLManager()
 		// fetch the categories, the number of files
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon, a.link AS shortname, a.description AS description,
-				a.name AS name, a.id AS id, a.parent AS parent,
+				a.name AS name, a.id AS id, a.parent AS parent, a.downloads AS downloads,
 	  			if (a.id = b.category, count(*), 0) AS files, b.category AS subchild
 			FROM ({db_prefix}tp_dlmanager AS a)
 			LEFT JOIN {db_prefix}tp_dlmanager AS b ON (a.id = b.category)
 			WHERE a.type = {string:type}
-		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.id, a.parent, b.category
+		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.parent, a.downloads, b.category
 			ORDER BY a.downloads ASC',
 			array('type' => 'dlcat')
 		);
@@ -902,14 +905,14 @@ function TPortalDLManager()
 
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon,	a.link AS shortname, a.description AS description,
-				a.name AS name,	a.id AS id, a.parent AS parent, if (a.id = b.category, count(*), 0) AS files,
+				a.name AS name,	a.id AS id, a.parent AS parent, a.downloads AS downloads, if (a.id = b.category, count(*), 0) AS files,
 		  		b.category AS subchild
 			FROM ({db_prefix}tp_dlmanager AS a)
 			LEFT JOIN {db_prefix}tp_dlmanager AS b
 		  		ON a.id = b.category
 			WHERE a.type = {string:type}
 			AND a.parent = {int:cat}
-		  	GROUP BY a.id
+		  	GROUP BY a.id, a.access, a.icon, a.link, a.description,	a.name, a.parent, a.downloads, b.category
 		  	ORDER BY a.downloads ASC',
 			array('type' => 'dlcat', 'cat' => $currentcat));
 		$context['TPortal']['dlchildren'] = array();
@@ -1956,7 +1959,11 @@ function TPortalDLAdmin()
 			$context['TPortal']['editor_id'] = 'tp_dl_introtext';
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['dl_introtext']);
 		}
-	}
+    }
+    elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+    {
+        TPwysiwyg_setup();
+    }
 
 	// any items from the ftp screen?
 	if(!empty($_POST['ftpdlsend']))
@@ -2293,7 +2300,6 @@ function TPortalDLAdmin()
 
 			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
 			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][2],$context['TPortal']['dl_screenshotsize'][3], $dest.'/listing/'.$sname);
-			tp_createthumb($dest.'/'.$sname, $context['TPortal']['dl_screenshotsize'][4],$context['TPortal']['dl_screenshotsize'][5], $dest.'/single/'.$sname);
 
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_dlmanager
@@ -2699,7 +2705,7 @@ function TPortalDLAdmin()
 			}
 			elseif($what == 'tp_dl_showcategorytext')
 			{
-				$changeArray['dl_showcategorylist'] = $value;
+				$changeArray['dl_showcategorytext'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_featured')
@@ -3148,6 +3154,10 @@ function TPortalDLAdmin()
 			$context['TPortal']['editor_id'] = 'dladmin_text'.$context['TPortal']['admcats'][0]['id'];
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['admcats'][0]['description']);
 		}
+        elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+        {
+            TPwysiwyg_setup();
+        }
 	}
 	elseif(substr($admsub, 0, 6) == 'delcat')
 	{
@@ -3194,8 +3204,11 @@ function TPortalDLAdmin()
 				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
 				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']);
 			}
-
-			// get all items for a list
+            elseif($context['TPortal']['dl_wysiwyg'] == 'html')
+            {
+                TPwysiwyg_setup();
+            }
+            // get all items for a list
 			$context['TPortal']['admitems'] = array();
 			$itemlist = $smcFunc['db_query']('', '
 				SELECT id, name FROM {db_prefix}tp_dlmanager
@@ -3269,7 +3282,7 @@ function TPortalDLAdmin()
 				'description' => $row['description'],
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
-				'filesize' => (substr($row['file'],14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
+				'filesize' => (substr($row['file'],0,14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
 				'downloads' => $row['downloads'],
 				'sshot' => !empty($sshot) ? $sshot : '',
 				'screenshot' => $row['screenshot'],

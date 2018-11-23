@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -70,9 +70,6 @@ function TPortalAdmin()
 			$context['TPortal']['frontpage_visualopts_admin']['sortorder'] = substr($r, 10);
 	}
 
-	// call up the editor
-	TPwysiwyg_setup();
-
 	TPadd_linktree($scripturl.'?action=tpadmin', 'TP Admin');
 
 	// some GET values set up
@@ -113,6 +110,9 @@ function TPortalAdmin()
 		{
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = $_GET['sa'];
+            if($_GET['sa'] == 'addarticle_html') {
+                TPwysiwyg_setup();
+            }
 		}
 		do_subaction($tpsub);
 	}
@@ -139,7 +139,7 @@ function TPortalAdmin()
 
 	// done with all POST values, go to the correct screen
 	$context['TPortal']['subtabs'] = '';
-	if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory')))
+	if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory'))) {
 		$context['TPortal']['subtabs'] = array(
 			'categories' => array(
 				'lang' => true,
@@ -196,7 +196,8 @@ function TPortalAdmin()
 				'active' => $tpsub == 'clist',
 			),
 		);
-	elseif(in_array($tpsub,array('addcategory','categories','clist')))
+    }
+	elseif(in_array($tpsub,array('addcategory','categories','clist'))) {
 		$context['TPortal']['subtabs'] = array(
 			'categories' => array(
 				'lang' => true,
@@ -217,7 +218,8 @@ function TPortalAdmin()
 				'active' => $tpsub == 'clist',
 			),
 		);
-	elseif(in_array($tpsub,array('blocks','panels')))
+    }
+	elseif(in_array($tpsub,array('blocks','panels'))) {
 		$context['TPortal']['subtabs'] = array(
 			'blocks' => array(
 				'lang' => true,
@@ -238,10 +240,15 @@ function TPortalAdmin()
 				'active' => $tpsub == 'blocks' && isset($_GET['overview']),
 			),
 		);
-	// TP Admin menu layer
-	$context['template_layers'][] = 'tpadm';
-	// Shows subtab layer above for admin submenu links
-	$context['template_layers'][] = 'subtab';
+    }
+
+    if(array_search('tpadm', $context['template_layers']) === FALSE) {
+        // TP Admin menu layer
+        $context['template_layers'][] = 'tpadm';
+	    // Shows subtab layer above for admin submenu links
+        $context['template_layers'][] = 'subtab';
+    }
+
 	loadTemplate('TPortalAdmin');
 	TPadminIndex($tpsub);
 }
@@ -1594,6 +1601,10 @@ function do_articles()
 			$smcFunc['db_free_result']($request);
 		}
 
+        if($context['TPortal']['editarticle']['articletype'] == 'html') {
+            TPwysiwyg_setup();
+        }
+
 		// Add in BBC editor before we call in template so the headers are there
 		if($context['TPortal']['editarticle']['articletype'] == 'bbc')
 		{
@@ -1991,7 +2002,7 @@ function do_news($tpsub = 'overview')
 	if($tpsub == 'overview')
 	{
 		if(!TPcheckAdminAreas())
-			fatal_error($txt['tp-notallowed']);
+			fatal_error($txt['tp-noadmin'], false);
 	}
 	elseif($tpsub == 'permissions')
 	{
@@ -3405,7 +3416,7 @@ function do_postchecks()
 								array('type' => 'art_not_approved', 'val5' => $where)
 							);
 						elseif ($new)
-							$smcFunc['db_insert']('replace',
+							$smcFunc['db_insert']('insert',
 								'{db_prefix}tp_variables',
 								array('type' => 'string', 'value5' => 'int'),
 								array('art_not_approved', $where),

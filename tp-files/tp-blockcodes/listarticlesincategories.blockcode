@@ -12,25 +12,23 @@ List Articles in categories
 </author>
 
 <version>
-0.1
+0.2
 </version>
 
 <date>
-19.sept.2018
+26.oct.2018
 </date>
 
 <code>
-echo ' <div style="float:left;padding-right: 5px;"><img height="35px" src="/Themes/default/images/tinyportal/TPov_articles.png"></img></div><a href="/docs/index.php?cat=Modules"><strong>Articles</strong></a></br>' ;
+echo ' <div style="float:left;padding-right: 5px;"><img height="35px" src="Themes/default/images/tinyportal/TPov_articles.png"></img></div><strong>Articles</strong></br>' ;
 echo ' <br>' ;
 echo ' <hr>' ;
 
 // Configuration
-
 // Specify your categories, comma separated if more than one category.
-$categories = array(1,2,3);
+$categories = array(1,2);
 
 // End Config
-
 
 global $scripturl, $smcFunc; 
 
@@ -45,10 +43,18 @@ $request = $smcFunc['db_query']('', '
      )
 ); 
 echo '
-		<ul style="margin: 0pt; padding: 0pt 15px;"> ';
+		<ul style="list-style-type:disc; margin: 0pt; padding: 0pt 15px;">
+ ';
 while ($row = $smcFunc['db_fetch_assoc']($request))
 { 
+if (!empty($row['shortname']))
+	{
      echo '<li><a href="', $scripturl, '?page=', $row['shortname'], '">', $row['subject'], '</a></li>'; 
+	}
+else
+	{
+     echo '<li><a href="', $scripturl, '?page=', $row['id'], '">', $row['subject'], '</a></li>'; 
+	}
 } 
 echo '</ul>'; 
 $smcFunc['db_free_result']($request); 

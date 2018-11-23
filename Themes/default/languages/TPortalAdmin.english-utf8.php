@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -152,7 +152,7 @@ $txt['tp-articleoptions9'] = 'Display bottom panel';
 $txt['tp-author']='Author';
 $txt['tp-catarray'] = ' Show when viewing this category listing';
 $txt['tp-catboxauthor'] = 'Show author?';
-$txt['tp-catboxheight'] = 'Number of articles before scrollbar:';
+$txt['tp-catboxheight'] = 'Height of the article box before scrollbar:';
 $txt['tp-category']='Category';
 $txt['tp-confirmcat1'] = 'Are you sure you want to delete this category ?';
 $txt['tp-dldownloads'] = 'Downloads';
@@ -659,5 +659,6 @@ $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPorta
 
 // new in 1.6.1
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
-
+$txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
+$txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -65,7 +65,7 @@ $txt['tp-dlstatsviews'] = 'most viewed items';
 $txt['tp-dlupload'] = 'Upload';
 $txt['tp-dluploadattach'] = 'Attach to an existing file?';
 $txt['tp-dluploadfile'] = 'File to upload:';
-$txt['tp-dluploadpic'] = 'Additional picture:';
+$txt['tp-dluploadpic'] = 'Additional picture for screenshot:';
 $txt['tp-dluploadtext'] = 'Description (HTML allowed)';
 $txt['tp-downloadsection'] = 'Download Section';
 $txt['tp-downloadsection2'] = 'File Repository';
@@ -141,13 +141,15 @@ $txt['tp-bottombar'] = 'Show bottom panel';
 $txt['tp-lowerbar'] = 'Show lower panel';
 $txt['tp-showtop'] = 'Show header top';
 $txt['tp-categories'] = 'Categories';
+$txt['tp-childcategories'] = 'Child categories';
 
 $txt['tp-dlcreatetopic'] = 'Create new topic?';
 $txt['tp-dlcreatetopic_sticky'] = 'Set as sticky?';
 $txt['tp-dlcreatetopic_announce'] = 'Announce it?';
 $txt['tp-dlchooseboard'] = 'Choose board to post topic in';
 $txt['tp-dlusescreenshot'] = 'Use the screenshot instead of icon?';
-$txt['tp-dlscreenshotsizes'] = 'Resize screenshot sizes:';
+$txt['tp-dlscreenshotsize1'] = 'Resize screenshot for thumbnail:';
+$txt['tp-dlscreenshotsize2'] = 'Resize screenshot for featured:';
 $txt['tp-dlperms'] = 'Permissions';
 $txt['tp-dlperms2'] = 'Select and set permissions on all membergroups from one place. "Manage Downloads" give admin rights for all downloads,
 "Upload file" give permission to actually upload, while "create topic" give permission to start a forum topic at the the time of upload.';
@@ -158,7 +160,7 @@ $txt['tp-dluselatest'] = 'Show recent files?';
 $txt['tp-dlusefeatured'] = 'Show featured file on frontpage of Download manager?';
 $txt['tp-dlusestats'] = 'Show most downloaded/weekly?';
 $txt['tp-dlintrotext'] = 'Text for introduction';
-$txt['tp-dlusecategorytext'] = 'Show category descriptions inside file listings?';
+$txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories?';
 $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dlwysiwyg'] = 'Show text-editor?';
 

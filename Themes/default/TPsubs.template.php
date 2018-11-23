@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -40,6 +40,7 @@ function TPortal_onlinebox()
 		echo '
 	<div style="line-height: 1.4em;">' , ssi_whosOnline() , '</div>';
 }
+
 function tpo_whos($buddy_only = false)
 {
 	global $txt, $scripturl;
@@ -70,6 +71,7 @@ function tpo_whos($buddy_only = false)
 		<a class="avatar_single2" title="'.$names[$a].'" href="' . $scripturl . '?action=profile;u='.$a.'">' . $av . '</a>';
 	}
 }
+
 function tpo_whosOnline()
 {
 	global $sourcedir;
@@ -83,13 +85,14 @@ function tpo_whosOnline()
 	$return = getMembersOnlineStats($membersOnlineOptions);
 	return $return;
 }
+
 function progetAvatars($ids)
 {
 	global $user_info, $smcFunc, $modSettings, $scripturl;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 	$request = $smcFunc['db_query']('', '
 		SELECT
-			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar,
+			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address AS email_address,
 			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 		FROM {db_prefix}members AS mem
 		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
@@ -101,10 +104,14 @@ function progetAvatars($ids)
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			if ($image_proxy_enabled && !empty($row['id_member']) && stripos($row['avatar'], 'http://') !== false)
-				$avy[$row['id_member']] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avatar']) . '&hash=' . md5($row['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
-			else
-				$avy[$row['id_member']] = $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($row['avatar'], 'https://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : stristr($row['avatar'], 'http://') ? '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="' . $row['avatar'] . '" alt="&nbsp;" />' : '<img ' . (in_array($row['id_member'], $user_info['buddies']) ? 'class="buddyoverlay"' : '' ). ' src="'. $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avatar']) . '" alt="&nbsp;" />');
+            $avy[$row['id_member']] = set_avatar_data( array(      
+                    'avatar' => $row['avatar'],
+                    'email' => $row['email_address'],
+                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
+                    'ID_ATTACH' => $row['ID_ATTACH'],
+                    'attachmentType' => $row['attachmentType'],
+                )
+            )['image'];
 		}
 		$smcFunc['db_free_result']($request);
 	}
@@ -312,7 +319,7 @@ function TPortal_sidebar()
 // Tportal userbox
 function TPortal_userbox()
 {
-	global $context, $settings, $scripturl, $txt, $forum_version;
+	global $context, $settings, $scripturl, $txt, $forum_version, $user_info;
 
 	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt="" style="margin:0 4px 0 0;" />';
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
@@ -333,7 +340,7 @@ function TPortal_userbox()
 			echo '
 				<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
 		echo '
-		<strong>', $context['user']['name'], '</strong>
+		<strong><a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">', $context['user']['name'], '</a></strong>
 		<ul class="reset">';
 
 		// Only tell them about their messages if they can read their messages!
@@ -349,11 +356,18 @@ function TPortal_userbox()
 		if (!empty($context['unapproved_members']))
 			echo '
 				<li><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">'. $bullet. $txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
-
+		// Are there any moderation reports?
+	if(strpos($forum_version, '2.0') !== false) 
+		{
 		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
 			echo '
 				<li><a href="', $scripturl, '?action=moderate;area=reports">'.$bullet.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
-
+		}
+	else {
+		if (!empty($user_info['mod_cache']) && $user_info['mod_cache']['bq'] != '0=1' && !empty($context['open_mod_reports']))
+			echo '
+				<li><a href="', $scripturl, '?action=moderate;area=reports">'.$bullet.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
+		}
 		if(isset($context['TPortal']['userbox']['unread']))
 			echo '
 			<li><hr><a href="', $scripturl, '?action=unread">' .$bullet.$txt['tp-unread'].'</a></li>
@@ -425,7 +439,7 @@ function TPortal_userbox()
 		}
 
 		// add adminhooks
-		if(sizeof($context['TPortal']['tpmodules']['adminhook']) > 0)
+		if(is_countable($context['TPortal']['tpmodules']['adminhook']) && count($context['TPortal']['tpmodules']['adminhook']) > 0)
 		{
 			foreach($context['TPortal']['tpmodules']['adminhook'] as $link)
 				echo '<li><a href="' . $scripturl . '?'.$link['action'].'">' . $bullet5.$link['title']. '</a></li>';
@@ -494,11 +508,11 @@ function TPortal_themebox()
 	// remove multiple theme=x in the string.
 	$tp_where=preg_replace("'theme=[^>]*?;'si", "", $tp_where);
 
-	 if(sizeof($temaid) > 0){
+	 if(is_countable($temaid) && count($temaid) > 0){
         echo '
 		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
-         for($a=0 ; $a<(sizeof($temaid)); $a++)
+         for($a=0 ; $a<(count($temaid)); $a++)
 		 {
                 echo '
 				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
@@ -515,7 +529,7 @@ function TPortal_themebox()
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var extra = \'\';
 			var themepath = new Array();';
-         for($a=0 ; $a<(sizeof($temaid)); $a++){
+         for($a=0 ; $a<(count($temaid)); $a++){
 			 echo '
 			    themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
 				';
@@ -650,7 +664,7 @@ function TPortal_module()
 		case 'dl-stats4':
 			$it = array();
 			$it = dl_recentitems('1', 'date', 'array');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -665,7 +679,7 @@ function TPortal_module()
 		case 'dl-stats5':
 			$it = array();
 			$it = dl_recentitems('1', 'downloads', 'array');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -680,7 +694,7 @@ function TPortal_module()
 		case 'dl-stats6':
 			$it = array();
 			$it = dl_recentitems('1', 'views', 'array');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -695,7 +709,7 @@ function TPortal_module()
 		case 'dl-stats7':
 			$it = array();
 			$it = art_recentitems('5','date');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -707,7 +721,7 @@ function TPortal_module()
 		case 'dl-stats8':
 			$it = array();
 			$it = art_recentitems('5', 'views');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -719,7 +733,7 @@ function TPortal_module()
 		case 'dl-stats9':
 			$it = array();
 			$it = art_recentitems('5', 'comments');
-			if(sizeof($it) > 0)
+			if(is_countable($it) && count($it) > 0)
 			{
 				foreach($it as $item)
 				{
@@ -818,7 +832,7 @@ function TPortal_categorybox()
     global $context, $txt, $scripturl;
 
 	if(isset($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])){
-		echo '<div class="middletext" ', (sizeof($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])>$context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height']!='0') ? ' style="overflow: auto; width: 100%; height: '.$context['TPortal']['blocklisting_height'].'em;"' : '' ,'>';
+		echo '<div class="middletext" ', (count($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])>$context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height']!='0') ? ' style="overflow: auto; width: 100%; height: '.$context['TPortal']['blocklisting_height'].'em;"' : '' ,'>';
 		foreach($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']] as $listing){
 			if($listing['category'] == $context['TPortal']['blocklisting'])
 				echo '<b><a href="'.$scripturl.'?page='.$listing['shortname'].'">'.$listing['subject'].'</a></b> ' , $context['TPortal']['blocklisting_author']=='1' ? $txt['by'].' '.$listing['poster'] : '' , '<br>';
@@ -1737,42 +1751,39 @@ function article_comments($render = true)
 	if(in_array('comments', $context['TPortal']['article']['visual_options']))
 	{
 		echo '
+	<a name="tp-comment">
 	<h2 class="titlebg" style="padding: 0 1em;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
-		<div class="windowbg2" style="padding: 1em 2em;">';
+		<div class="windowbg2" style="padding: 1em;">';
 
 		$counter = 1;
-				if(isset($context['TPortal']['article']['comment_posts']))
+		if(isset($context['TPortal']['article']['comment_posts']))
 		{
 			foreach($context['TPortal']['article']['comment_posts'] as $comment)
 			{
-				if ($comment['posterID'] == 0)
-					echo '
-				<div class="othercomment">
-						<a id="comment'.$comment['id'].'"></a>
-						<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
-						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].' '. $txt['on'] . ' ' . $comment['date'] . '</div>
-						' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
-						' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '
-						<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br>';
-				else
-					echo '
-					<div class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
-					<a id="comment'.$comment['id'].'"></a>
-					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>
-					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
-					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
-					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '
-					<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['posterID'].'">'.$comment['poster'].'</a>
-					' . $txt['on'] . ' ' . $comment['date'] . '</div>
-					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div><br>';
-
-
-					// can we edit the comment or are the owner of it?
+				echo '
+					<div style="margin-bottom:8px;" class="' . ($context['TPortal']['article']['authorID']!=$comment['posterID'] ? 'mycomment' : 'othercomment') . '">
+					<a id="comment'.$comment['id'].'"></a>';
+				// can we edit the comment or are the owner of it?
 				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
 					echo '
-						<div class="buttonlist align_right"><ul><li><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></li></ul></div><br>';
-
+						<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
+				// not a guest
+				if ($comment['posterID'] > 0) 
+					echo '	
+					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>';
+				echo '
+					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
+					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
+				if ($comment['posterID'] > 0) 
+					echo '					
+						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['posterID'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
+				else
+					echo '
+						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>'; 
+				echo '	
+					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 				echo '
 				</div>';
 			}
@@ -2074,7 +2085,7 @@ function template_subtab_above()
 {
 	global $context, $txt;
 
-	if(isset($context['TPortal']['subtabs']) && sizeof($context['TPortal']['subtabs']) > 1)
+	if(isset($context['TPortal']['subtabs']) && ( is_countable($context['TPortal']['subtabs']) && count($context['TPortal']['subtabs']) > 1 ))
 	{
 		echo '
 		<div class="tborder" style="margin-bottom: 0.5em;">

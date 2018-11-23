@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -56,33 +56,31 @@ function TPsetupAdminAreas()
 		)
 	);
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$perms = explode(',', $row['permissions']);
 			$setperm = array();
 			$admin_set = false;
-			for($a = 0; $a < sizeof($perms); $a++)
-			{
-				$pr = explode('|', $perms[$a]);
-				$setperm[$pr[0]] = $pr[1];
-				// admin permission?
-				if (isset($pr[1]) && $pr[1] == 1)
-				{
-					if (allowedTo($pr[0]))
-					{
-						if(!$admin_set)
-							$context['admin_tabs']['custom_modules'][$pr[0]] = array(
-								'title' => $row['modulename'],
-								'description' => '',
-								'href' => $scripturl . '?action=tpmod;'.$row['subquery'].'=admin',
-								'is_selected' => isset($_GET[$row['subquery']]) ? true : false,
-							);
-						$admin_set=true;
-					}
-				}
-			}
+            if(is_countable($perms)) {
+                for($a = 0; $a < count($perms); $a++) {
+                    $pr = explode('|', $perms[$a]);
+                    $setperm[$pr[0]] = $pr[1];
+                    // admin permission?
+                    if (isset($pr[1]) && $pr[1] == 1) {
+                        if (allowedTo($pr[0])) {
+                            if(!$admin_set) {
+                                $context['admin_tabs']['custom_modules'][$pr[0]] = array(
+                                    'title'         => $row['modulename'],
+                                    'description'   => '',
+                                    'href'          => $scripturl . '?action=tpmod;'.$row['subquery'].'=admin',
+                                    'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
+                                );
+                            }
+                            $admin_set = true;
+                        }
+                    }
+                }
+            }
 		}
 		$smcFunc['db_free_result']($request);
 	}
@@ -104,20 +102,20 @@ function TP_addPerms()
 		)
 	);
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$perms = explode(',', $row['permissions']);
 			$setperm = array();
-			for($a = 0; $a < sizeof($perms); $a++)
-			{
-				$pr = explode('|', $perms[$a]);
-				$setperm[$pr[0]] = $pr[1];
-				// admin permission?
-				if($pr[1] == 1)
-					$admperms[] = $pr[0];
-			}
+            if(is_countable($perms)) {
+                for($a = 0; $a < count($perms); $a++) {
+                    $pr = explode('|', $perms[$a]);
+                    $setperm[$pr[0]] = $pr[1];
+                    // admin permission?
+                    if($pr[1] == 1) {
+                        $admperms[] = $pr[0];
+                    }
+                }
+            }
 		}
 		$smcFunc['db_free_result']($request);
 	}
@@ -186,20 +184,20 @@ function TPcollectPermissions()
 		)
 	);
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$perms = explode(',', $row['permissions']);
-			$setperm = array();
-			for($a=0; $a < sizeof($perms); $a++)
-			{
-				$pr = explode('|', $perms[$a]);
-				$setperm[$pr[0]] = 0;
-				// admin permission?
-				if($pr[1] == 1)
-					$context['TPortal']['adminlist'][$pr[0]] = 1;
-			}
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
+			$perms      = explode(',', $row['permissions']);
+			$setperm    = array();
+            if(is_countable($perms)) {
+                for($a=0; $a < count($perms); $a++) {
+                    $pr = explode('|', $perms[$a]);
+                    $setperm[$pr[0]] = 0;
+                    // admin permission?
+                    if($pr[1] == 1) {
+                        $context['TPortal']['adminlist'][$pr[0]] = 1;
+                    }
+                }
+            }
 			$context['TPortal']['permissonlist'][] = array(
 				'title' => strtolower($row['modulename']),
 				'perms' => $setperm
@@ -1909,8 +1907,14 @@ function get_blockaccess($what, $front = false, $whichbar)
 
 function TPgetlangOption($langlist, $set)
 {
-	$lang = explode("|", $langlist);
-	$num = count($lang);
+
+	$lang   = explode("|", $langlist);
+	if(is_countable($lang)) {
+        $num = count($lang);
+    }
+    else {
+        $num = 0;
+    }
 
 	$setlang = '';
 
@@ -2294,7 +2298,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 			IFNULL(mem.real_name, m.poster_name) AS poster_name, ' . ($user_info['is_guest'] ? '1 AS is_read, 0 AS new_from' : '
 			IFNULL(lt.id_msg, IFNULL(lmr.id_msg, 0)) >= m.id_msg_modified AS is_read,
 			IFNULL(lt.id_msg, IFNULL(lmr.id_msg, -1)) + 1 AS new_from') . ', SUBSTRING(m.body, 1, 384) AS body, m.smileys_enabled, m.icon,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType,  mem.avatar as avy
+			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType,  mem.avatar as avy, mem.email_address AS email_address
 		FROM {db_prefix}topics AS t
 			INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_last_msg)
 			INNER JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
@@ -2336,11 +2340,14 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 		// Censor the subject.
 		censorText($row['subject']);
 		censorText($row['body']);
-
-		if ($image_proxy_enabled && !empty($row['avy']) && stripos($row['avy'], 'http://') !== false)
-			$row['avy'] = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($row['avy']) . '&hash=' . md5($row['avy'] . $image_proxy_secret) .'" alt="&nbsp;" />';
-		else
-			$row['avy'] = $row['avy'] == '' ? ( $row['ID_ATTACH'] > 0 ? '<img src="' . (empty($row['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" class="recent_avatar" border="0" />' : '' ) : (stristr($row['avy'], 'https://' ) ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : stristr($row['avy'], 'http://') ? '<img src="' . $row['avy'] . '" alt="" class="recent_avatar" border="0" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($row['avy'], ENT_QUOTES) . '" alt="" class="recent_avatar" border="0" />');
+        $row['avy'] = set_avatar_data( array(      
+                    'avatar' => $row['avy'],
+                    'email' => $row['email_address'],
+                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
+                    'ID_ATTACH' => $row['ID_ATTACH'],
+                    'attachmentType' => $row['attachmentType'],
+                )
+        )['image'];
 
 		// Build the array.
 		$posts[] = array(
@@ -2600,23 +2607,30 @@ function art_recentitems($max = 5, $type = 'date' ){
 			)
 		);
 
-	if($smcFunc['db_num_rows']($request) > 0){
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
 			$rat = explode(',', $row['rating']);
-			$rating_votes = count($rat);
-			if($row['rating'] == '')
+            if(is_countable($count)) {
+			    $rating_votes = count($rat);
+            }
+            else {
+                $rating_votes = 0;
+            }
+			if($row['rating'] == '') {
 				$rating_votes = 0;
+            }
 			$total = 0;
-			foreach($rat as $mm => $mval)
-			{
-				if(is_numeric($mval))
+			foreach($rat as $mm => $mval) {
+				if(is_numeric($mval)) {
 					$total = $total + $mval;
+                }
 			}
-			if($rating_votes > 0 && $total > 0)
+			if($rating_votes > 0 && $total > 0) {
 				$rating_average = floor($total / $rating_votes);
-			else
+            }
+			else {
 				$rating_average = 0;
+            }
 
 			$data[] = array(
 				'id' => $row['id'],
@@ -2652,8 +2666,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		$sort = 'author_id';
 
 	// empty?
-	if(sizeof($mycats) > 0)
-	{
+    if(is_countable($mycats) && count($mycats) > 0 ) {
 		$context['TPortal']['dlrecenttp'] = array();
 		// decide what to sort from
 		if($sort == 'date')
@@ -3031,10 +3044,8 @@ function tp_getDLcats()
 		array('dlcat' => 'dlcat')
 	);
 	$count = 0;
-	if ($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$context['TPortal']['dlcats'][$count] = array('id' => $row['id'], 'name' => $row['name']);
 			$count++;
 		}
@@ -3054,15 +3065,14 @@ function tp_getTPmodules()
 		array('act' => 1)
 	);
 	$count = 0;
-	if ($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$context['TPortal']['tpmods'][$count] = array('title' => $row['title'], 'subquery' => $row['subquery']);
 			$count++;
 		}
 		$smcFunc['db_free_result']($request);
 	}
+
 }
 
 function updateTPSettings($addSettings, $check = false)
@@ -3122,6 +3132,62 @@ function updateTPSettings($addSettings, $check = false)
 	cache_put_data('tpSettings', null, 90);
 
 	return;
+}
+
+function TPGetMemberColour($member_ids)
+{
+    global $smcFunc, $db_connection, $db_server, $db_name, $db_user, $db_passwd;
+    global $db_prefix, $db_persist, $db_port, $db_mb4, $forum_version;
+
+	if (empty($member_ids)) {
+		return false;
+    }
+	
+    // SMF2.1 and php < 7.0 need this
+    if (strpos($forum_version, '2.1') !== false && empty($db_connection)) {
+        $db_options = array();
+        // Add in the port if needed
+        if (!empty($db_port)) {
+            $db_options['port'] = $db_port;
+        }
+        if (!empty($db_mb4)) {
+            $db_options['db_mb4'] = $db_mb4;
+        }
+        $options = array_merge($db_options, array('persist' => $db_persist, 'dont_select_db' => SMF == 'SSI'));
+        $db_connection = smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, $db_prefix, $options);
+    }
+
+	$member_ids = is_array($member_ids) ? $member_ids : array($member_ids);
+	
+    $request = $smcFunc['db_query']('', '
+            SELECT mem.id_member, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
+            FROM {db_prefix}members AS mem
+            LEFT JOIN {db_prefix}membergroups AS mgrp
+                ON (mgrp.id_group = mem.id_group)
+            LEFT JOIN {db_prefix}membergroups AS pgrp 
+                ON (pgrp.id_group = mem.id_post_group)
+            WHERE mem.id_member IN ({array_int:member_ids})',
+		    array(
+			    'member_ids'	=> $member_ids,
+		    )
+    );
+
+    $mcol = array();
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while ($row = $smcFunc['db_fetch_assoc']($request)) {
+            $mcol[$row['id_member']]    = !empty($row['mg_online_color']) ? $row['mg_online_color'] : $row['pg_online_color'];
+        }
+        $smcFunc['db_free_result']($request);
+    }
+
+    return $mcol;
+}
+
+
+if (!function_exists('is_countable')) {
+    function is_countable($var) {
+        return ( is_array($var) || $var instanceof Countable || $var instanceof \SimpleXMLElement || $var instanceof \ResourceBundle );
+    }
 }
 
 ?>

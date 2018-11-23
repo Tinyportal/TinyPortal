@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.0
+ * @version 1.6.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -44,7 +44,6 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
   if(strpos($forum_version, '2.0') !== false) {
     tpAddIllegalPermissions();
   }
-
 }
 
 // Adds TP copyright in the buffer so we don't have to edit an SMF file
@@ -55,6 +54,21 @@ function tpAddCopy($buffer)
 	$bodyid = '';
 	$bclass = '';
 
+	// apply user membergroup colors ony when set in TP settings.
+	if(!empty($context['TPortal']['use_groupcolor'])) {
+		$user_match     = '~href="' . preg_quote($scripturl) . '\?action=profile;u=(\d+)"~';
+		if(preg_match_all($user_match, $buffer, $matches)) {
+			$user_ids       = array_values(array_unique($matches[1]));
+			$user_colour    = TPGetMemberColour($user_ids);
+			foreach($user_ids as $id) {
+				if(array_key_exists($id, $user_colour)){
+					$user_replace   = '~href="' . preg_quote($scripturl) . '\?action=profile;u='.$id.'"~';
+					$buffer         = preg_replace($user_replace, ' style="color:'.$user_colour[$id].';" $0', $buffer);
+				}
+			}
+		}
+	}
+	
 	// Dynamic body ID
 	if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
 		$bodyid = "profilepage";
@@ -96,7 +110,7 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.6.0">&copy; 2005-2018</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.6.1">&copy; 2005-2018</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
@@ -605,6 +619,29 @@ function tpDoTagSearchLayers()
 	if($context['TPortal']['action'] == 'search')
 		$context['template_layers'][] = 'TPsearch';
 
+}
+
+
+// Backwards compat function for SMF2.0
+if(!function_exists('set_avatar_data')) {
+
+    function set_avatar_data( $data ) {
+
+        global $image_proxy_enabled, $image_proxy_secret, $scripturl, $modSettings, $smcFunc, $boardurl; 
+
+        if ($image_proxy_enabled && !empty($data['avatar']) && stripos($data['avatar'], 'http://') !== false) {
+            $tmp = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($data['avatar']) . '&hash=' . md5($data['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
+        }
+        else { 
+            $tmp = $data['avatar'] == '' ? ($data['ID_ATTACH'] > 0 ? '<img src="' . (empty($data['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $data['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $data['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($data['avatar'], 'https://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : stristr($data['avatar'], 'http://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($data['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+        }
+
+        $avatar = array();
+        $avatar['image'] = $tmp;
+
+        return $avatar;
+
+    }
 }
 
 ?>
