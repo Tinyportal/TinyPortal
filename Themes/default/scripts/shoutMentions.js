@@ -60,8 +60,8 @@ var atwhoConfig = {
 };
 $(function()
 {
-	$('textarea[name=tp_shout]').atwho(atwhoConfig);
-	$('.tp_shout').find('textarea').atwho(atwhoConfig);
+	$('input[name=tp_shout]').atwho(atwhoConfig);
+	$('.tp_shout').find('input').atwho(atwhoConfig);
 	var iframe = $('.tp_shout').find('iframe')[0];
 	if (typeof iframe != 'undefined')
 		$(iframe.contentDocument.body).atwho(atwhoConfig);

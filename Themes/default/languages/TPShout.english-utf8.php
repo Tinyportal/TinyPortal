@@ -61,4 +61,6 @@ $txt['tp-shoutboxtextcolor'] = 'Default shout text color';
 $txt['tp-shoutboxtimecolor'] = 'Time text color';
 $txt['tp-shoutboxlinecolor1'] = 'Layouts 3 and 4: background color odd lines';
 $txt['tp-shoutboxlinecolor2'] = 'Layouts 3 and 4: background color even lines';
+
+$txt['alert_shout_mention'] = 'You have been mentioned by {user_mention} in a {text}!';
 ?>

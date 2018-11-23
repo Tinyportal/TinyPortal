@@ -198,37 +198,35 @@ function postShout()
 
 		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
-        if (!empty($modSettings['enable_mentions']))
-        {
-	        require_once($sourcedir . '/Mentions.php');
+        if (!empty($modSettings['enable_mentions'])) {
+            require_once($sourcedir . '/Subs-Post.php');
+            require_once($sourcedir . '/Mentions.php');
             $mentions = Mentions::getMentionedMembers($shout);
-            if ($mentions) 
-            {
+            if (is_array($mentions)) {
+                Mentions::insertMentions('shout', 41, $mentions, $user_info['id']);
                 $shout = Mentions::getBody($shout, $mentions);
-            }
+                foreach($mentions as $id => $member) {
+                    $insert_rows[] = array(
+                        'alert_time'        => time(),
+                        'id_member'         => $member['id'],
+                        'id_member_started' => $user_info['id'],
+                        'member_name'       => $user_info['username'],
+                        'content_type'      => 'shout',
+                        'content_id'        => 41,
+                        'content_action'    => 'mention',
+                        'is_read'           => 0,
+                        'extra' => $smcFunc['json_encode'](
+                            array(
+                                "text"          => "Shout",
+                                "user_mention"  => $user_info['username'],
+                                "event_title"   => 'Shoutbox Mention',
+                            )
+                        ),
+                    );
 
-            // Alerts are relatively easy.
-            $insert_rows = array();
-            $insert_rows[] = array(
-                    'alert_time'        => time(),
-                    'id_member'         => 1,
-                    'id_member_started' => $user_info['id'],
-                    'member_name'       => 'admin',
-                    'content_type'      => 'shout',
-                    'content_id'        => 1,
-                    'content_action'    => 'new',
-                    'is_read'           => 0,
-                    'extra' => $smcFunc['json_encode'](
-                        array(
-                            "event_id"      => 1,
-                            "event_title"   => 'Shoutbox Mention',
-                        )
-                    ),
-            );
-
-            $smcFunc['db_insert']('insert',
-                    '{db_prefix}user_alerts',
-                    array(  
+                    $smcFunc['db_insert']('insert',
+                        '{db_prefix}user_alerts',
+                        array(  
                             'alert_time'        => 'int', 
                             'id_member'         => 'int',
                             'id_member_started' => 'int',
@@ -238,12 +236,13 @@ function postShout()
                             'content_action'    => 'string',
                             'is_read'           => 'int',
                             'extra'             => 'string'
-                    ),
-                    $insert_rows,
-                    array('id_alert')
-            );
-            // And update the count of alerts for those people.
-            //updateMemberData($notifies['alert'], array('alerts' => '+'));
+                        ),
+                        $insert_rows,
+                        array('id_alert')
+                    );
+                    updateMemberData($member['id'], ['alerts' => '+']);
+                }
+            }
         }
 
         if($shout != '')
