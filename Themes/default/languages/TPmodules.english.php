@@ -40,9 +40,10 @@ $txt['tp-searchresults'] = 'Article search results';
 $txt['tp-commenter'] = 'Commenter';
 $txt['tp-commenter_time'] = 'Time';
 $txt['tp-commenter_title'] = 'Title';
-$txt['tp-nocomments2'] = 'There are no replies on your comments.';
+$txt['tp-nocomments2'] = 'There are no comments to show.';
 $txt['tp-commentreplies'] = 'Replies in article comments';
-$txt['tp-commentnew'] = 'New comments in articles';
+$txt['tp-commentnew'] = 'New comments in articles since last visit';
+$txt['tp-commentall'] = 'All comments in articles';
 $txt['tp-showall'] = 'Show all comments';
 
 $txt['tp-nocomments'] = 'Sorry, you are not allowed to comment';

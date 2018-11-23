@@ -139,7 +139,7 @@ function TPortalAdmin()
 
 	// done with all POST values, go to the correct screen
 	$context['TPortal']['subtabs'] = '';
-	if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory')))
+	if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory'))) {
 		$context['TPortal']['subtabs'] = array(
 			'categories' => array(
 				'lang' => true,
@@ -196,7 +196,8 @@ function TPortalAdmin()
 				'active' => $tpsub == 'clist',
 			),
 		);
-	elseif(in_array($tpsub,array('addcategory','categories','clist')))
+    }
+	elseif(in_array($tpsub,array('addcategory','categories','clist'))) {
 		$context['TPortal']['subtabs'] = array(
 			'categories' => array(
 				'lang' => true,
@@ -217,7 +218,8 @@ function TPortalAdmin()
 				'active' => $tpsub == 'clist',
 			),
 		);
-	elseif(in_array($tpsub,array('blocks','panels')))
+    }
+	elseif(in_array($tpsub,array('blocks','panels'))) {
 		$context['TPortal']['subtabs'] = array(
 			'blocks' => array(
 				'lang' => true,
@@ -238,10 +240,15 @@ function TPortalAdmin()
 				'active' => $tpsub == 'blocks' && isset($_GET['overview']),
 			),
 		);
-	// TP Admin menu layer
-	$context['template_layers'][] = 'tpadm';
-	// Shows subtab layer above for admin submenu links
-	$context['template_layers'][] = 'subtab';
+    }
+
+    if(array_search('tpadm', $context['template_layers']) === FALSE) {
+        // TP Admin menu layer
+        $context['template_layers'][] = 'tpadm';
+	    // Shows subtab layer above for admin submenu links
+        $context['template_layers'][] = 'subtab';
+    }
+
 	loadTemplate('TPortalAdmin');
 	TPadminIndex($tpsub);
 }
@@ -1989,7 +1996,7 @@ function do_news($tpsub = 'overview')
 	if($tpsub == 'overview')
 	{
 		if(!TPcheckAdminAreas())
-			fatal_error($txt['tp-notallowed']);
+			fatal_error($txt['tp-noadmin'], false);
 	}
 	elseif($tpsub == 'permissions')
 	{

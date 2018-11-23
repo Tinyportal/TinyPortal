@@ -153,12 +153,15 @@ $clickme.click( function(e) {
 						<input name="tp_dl_usescreenshot" type="radio" value="1" ', $context['TPortal']['dl_usescreenshot']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input name="tp_dl_usescreenshot" type="radio" value="0" ', $context['TPortal']['dl_usescreenshot']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlscreenshotsizes'].'
+					<dt>'.$txt['tp-dlscreenshotsize1'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_screenshotsize0" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br>
-						<input name="tp_dl_screenshotsize2" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br>
-						<input name="tp_dl_screenshotsize4" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][4].'"> x <input name="tp_dl_screenshotsize5" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][5].'"> px<br><br>
+						<input name="tp_dl_screenshotsize0" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br><br>
+					</dd>
+					<dt>'.$txt['tp-dlscreenshotsize2'].'
+					</dt>
+					<dd>
+						<input name="tp_dl_screenshotsize2" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br><br>
 					</dd>
 					<dt>'.$txt['tp-dlmustapprove'].'
 					</dt>
@@ -433,10 +436,41 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<div class="font-strong">'.$txt['tp-dluploadtitle'].'</b></div>
-					<input size=60 name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
+				<dl class="settings">
+				<dt>
+					'.$txt['tp-uploadedby'].':
+				</dt>
+				<dd>
+					'.$context['TPortal']['admcurrent']['member'].'<br>
+				</dd>
+				<dt>
+					'.$txt['tp-dlviews'].':
+				</dt>
+				<dd>
+					 '.$cat['views'].' / '.$cat['downloads'].'<br>
+				</dd>
+				<dt>'.$txt['tp-dluploadtitle'].'
+				</dt>
+				<dd>
+					<input style="width:97%;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
+				</dd>
+					<dt>'.$txt['tp-dluploadcategory'].'
+					</dt>
+					<dd>
+						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px">';
+
+		foreach($context['TPortal']['admuploadcats'] as $ucats)
+		{
+			echo '
+						<option value="'.$ucats['id'].'" ', $ucats['id'] == abs($cat['category']) ? 'selected' : '' ,'>', (!empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '') ,' '.$ucats['name'].'</option>';
+		}
+		echo '
+						</select><br>
+					</dd>							
+				</dl>
+				<hr>			
 				<div>
-					<div class="font-strong">'.$txt['tp-dluploadtext'].' :</div>';
+					<div><b>'.$txt['tp-dluploadtext'].'</b><br><br></div>';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
@@ -447,16 +481,18 @@ $clickme.click( function(e) {
 				echo '
 				</div>
 			<hr>
-				<dl class="settings">
+				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
+				</div><br>
+			<dl class="settings">
 				<dt>'.$txt['tp-dlfilename'].'
 				</dt>
 				<dd>';
 		if($cat['file']=='- empty item -' || $cat['file']=='- empty item - ftp'){
 			if($cat['file']=='- empty item - ftp')
 				echo '
-				<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
+					<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
 
-			echo '
+				echo '
 					<select size="1" name="dladmin_file'.$cat['id'].'">
 						<option value="">' . $txt['tp-noneicon'] . '</option>';
 
@@ -479,40 +515,76 @@ $clickme.click( function(e) {
 		else
 			echo '<input name="dladmin_file'.$cat['id'].'" type="text" size="50" style="margin-bottom: 0.5em" value="'.$cat['file'].'">';
 
-		echo '<br><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a><br><br>
+		echo '
 				</dd>
 				<dt>'.$txt['tp-dlfilesize'].'</dt>
-					<dd>
-						'.($cat['filesize']*1024).' bytes<br>
-					</dd>
-					<dt>
-						'.$txt['tp-uploadedby'].':
-					</dt>
-					<dd>
-						'.$context['TPortal']['admcurrent']['member'].'<br>
-					</dd>
-					<dt>
-						'.$txt['tp-dlviews'].':
-					</dt>
-					<dd>
-						 '.$cat['views'].' / '.$cat['downloads'].'<br>
-					</dd>
-				</dl>
+				<dd>
+					'.($cat['filesize']*1024).' bytes<br>
+				</dd>
+				<dt>
+					'.$txt['tp-uploadnewfileexisting'].':
+				</dt>
+				<dd>
+					<input name="tp_dluploadfile_edit" type="file" value="">
+					<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'"><br>
+				</dd>
+			</dl>
 				<hr>
 				<dl class="settings">
-					<dt>'.$txt['tp-dluploadcategory'].'
+					<dt>'.$txt['tp-dluploadicon'].'
 					</dt>
 					<dd>
-						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px">';
+						<select size="1" name="dladmin_icon'.$cat['id'].'" onchange="dlcheck(this.value)">';
 
-		foreach($context['TPortal']['admuploadcats'] as $ucats)
-		{
 			echo '
-						<option value="'.$ucats['id'].'" ', $ucats['id'] == abs($cat['category']) ? 'selected' : '' ,'>', (!empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '') ,' '.$ucats['name'].'</option>';
-		}
-		echo '
-						</select><br>
-					</dd>';
+						<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
+
+				// output the icons
+				$selicon = substr($cat['icon'], strrpos($cat['icon'], '/')+1);
+				foreach($context['TPortal']['dlicons'] as $dlicon => $value)
+					echo '
+						<option ' , ($selicon == $value) ? 'selected="selected" ' : '', 'value="'.$value.'">'. $value.'</option>';
+
+				echo '
+						</select>
+						<img align="top" style="margin-left: 2ex;" name="dlicon" src="'.$cat['icon'].'" alt="" />
+					<script type="text/javascript">
+					function dlcheck(icon)
+						{
+							document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
+						}
+					</script><br>
+					</dd>
+				</dl>
+				<dl class="settings">
+					<dt>'.$txt['tp-uploadnewpicexisting'].':
+					</dt>
+					<dd>
+						<input name="tp_dluploadpic_link" size="50" type="text" value="'.$cat['screenshot'].'">
+					</dd>
+					<dd>
+						<div class="padding-div">' , $cat['sshot']!='' ? '<img style="max-width:95%;" src="'.$cat['sshot'].'" alt="" />' : '' , '</div>
+					</dd>
+				</dl>
+				<dl class="settings">
+					<dt>'.$txt['tp-uploadnewpic'].':
+					</dt>
+					<dd>
+						<input name="tp_dluploadpic_edit" type="file" value="">
+						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'"><br>
+					</dd>
+				</dl>
+				' , $cat['approved']=='0' ? '
+				<dl class="settings">
+					<dt><b> '.$txt['tp-dlapprove'].'</b>
+					</dt>
+					<dd>
+						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
+					</dd>
+				</dl>' : '' , '
+				<hr>
+			<dl class="settings">
+';
 			}
 		}
 		// any extra files?
@@ -553,68 +625,8 @@ $clickme.click( function(e) {
 
 			echo '
 
-					<dt>
-						'.$txt['tp-uploadnewfileexisting'].':
-					</dt>
-					<dd>
-						<input name="tp_dluploadfile_edit" type="file" value="">
-						<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'"><br>
-					</dd>
 				</dl>
 				<hr>
-				<dl class="settings">
-					<dt>'.$txt['tp-dluploadicon'].'
-					</dt>
-					<dd>
-						<select size="1" name="dladmin_icon'.$cat['id'].'" onchange="dlcheck(this.value)">';
-
-			echo '
-						<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
-
-				// output the icons
-				$selicon = substr($cat['icon'], strrpos($cat['icon'], '/')+1);
-				foreach($context['TPortal']['dlicons'] as $dlicon => $value)
-					echo '
-						<option ' , ($selicon == $value) ? 'selected="selected" ' : '', 'value="'.$value.'">'. $value.'</option>';
-
-				echo '
-						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="'.$cat['icon'].'" alt="" />
-					<script type="text/javascript">
-					function dlcheck(icon)
-						{
-							document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
-						}
-					</script><br>
-					</dd>
-				</dl>
-				<dl class="settings">
-					<dt>'.$txt['tp-uploadnewpicexisting'].':
-					</dt>
-					<dd>
-						<input name="tp_dluploadpic_link" size="50" type="text" value="'.$cat['screenshot'].'">
-					</dd>
-					<dd>
-						<br>' , $cat['sshot']!='' ? '<img style="max-width:95%;" src="'.$cat['sshot'].'" alt="" />' : '' , '
-					</dd>
-				</dl>
-				<dl class="settings">
-					<dt>'.$txt['tp-uploadnewpic'].':
-					</dt>
-					<dd>
-						<input name="tp_dluploadpic_edit" type="file" value="">
-						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'"><br><br>
-					</dd>
-				</dl>
-				' , $cat['approved']=='0' ? '
-				<dl class="settings">
-					<dt><b> '.$txt['tp-dlapprove'].'</b>
-					</dt>
-					<dd>
-						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
-					</dd>
-				</dl>' : '' , '
-			<hr>
 				<dl class="settings">
 					<dt>
 						<b>'.$txt['tp-dldelete'].'</b>

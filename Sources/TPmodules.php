@@ -219,7 +219,7 @@ function TPmodules()
 		$smcFunc['db_free_result']($request);
 
 		$request = $smcFunc['db_query']('', '
-			SELECT art.subject, memb.real_name as author, art.author_id as authorID, var.value1, var.value3,
+			SELECT art.subject, memb.real_name as author, art.author_id as authorID, var.value1, var.value2, var.value3,
 			var.value5, var.value4, mem.real_name as realName,
 			' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.value4)') . ' AS isRead
 			FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
@@ -242,6 +242,7 @@ function TPmodules()
 				'page' => $row['value5'],
 				'subject' => $row['subject'],
 				'title' => $row['value1'],
+				'comment' => $row['value2'],
 				'membername' => $row['realName'],
 				'time' => timeformat($row['value4']),
 				'author' => $row['author'],

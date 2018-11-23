@@ -23,31 +23,6 @@ function TPortal_init()
 {
 	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version, $db_type;
 
-    // Remove the ONLY_FULL_GROUP_BY and STRICT_TRANS_TABLES keep all the other sql_mode settings
-    if(strpos($forum_version, '2.1') !== false && $db_type == 'mysql') {
-        global $smcFunc;
-        $modSettings['disableQueryCheck'] = true;
-        $sqlMode  = $smcFunc['db_query']('' ,
-                'SELECT @@sql_mode AS SQL_MODE;'
-                );
-        if($smcFunc['db_num_rows']($sqlMode) === 1) {
-            $sqlModeResult = $smcFunc['db_fetch_assoc']($sqlMode)['SQL_MODE'];
-            if(strpos($sqlModeResult, ',') !== false) {
-                $sqlModeResults = explode(',', $sqlModeResult);
-                foreach($sqlModeResults as $key => $value) {
-                    if(in_array($value, array('ONLY_FULL_GROUP_BY', 'STRICT_TRANS_TABLES'))) {
-                        unset($sqlModeResults[$key]);
-                    }
-                }
-            }
-            $smcFunc['db_query']('',
-                    'SET SESSION sql_mode = \''.implode(',', $sqlModeResults).'\';'
-                    );
-        }
-        $smcFunc['db_free_result']($sqlMode);
-        $modSettings['disableQueryCheck'] = false;
-    }
-
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum']))
 		return;
@@ -421,7 +396,7 @@ function setupTPsettings()
 	// start of things
 	$context['TPortal']['mystart'] = 0;
 	if(isset($_GET['p']) && $_GET['p'] != '' && is_numeric($_GET['p']))
-		$context['TPortal']['mystart'] = $_GET['p'];
+		$context['TPortal']['mystart'] = TPSanitise::filter('p', 'get', 'int');
 
 	$context['tp_html_headers'] = '';
 
@@ -1014,11 +989,12 @@ function doTPcat()
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	$now = time();
+
 	// check validity and fetch it
 	if(!empty($_GET['cat']))
 	{
-		$cat = tp_sanitize($_GET['cat']);
-		$catid = is_numeric($cat) ? 'id = {int:cat}' : 'value8 = {string:cat}';
+		$cat    = tp_sanitize($_GET['cat']);
+		$catid  = is_numeric($cat) ? 'id = {int:cat}' : 'value8 = {string:cat}';
 
 		// get the category first
 		$request =  $smcFunc['db_query']('', '
@@ -1042,13 +1018,15 @@ function doTPcat()
 					if(isset($a[1]))
 						$options[$a[0]] = $a[1];
 				}
-				$catsort = isset($options['sort']) ? $options['sort'] : 'date';
-				if($catsort == 'author_id')
-					$catsort = 'author_id';
 
-				$catsort_order = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
-				$max = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
-				$start = $context['TPortal']['mystart'];
+				$catsort    = isset($options['sort']) ? $options['sort'] : 'date';
+				if($catsort == 'authorID') {
+					$catsort = 'author_id';
+                }
+
+				$catsort_order  = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
+				$max            = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
+				$start          = $context['TPortal']['mystart'];
 
 				// some swapping to avoid compability issues
 				$options['catlayout'] = isset($options['catlayout']) ? $options['catlayout'] : 1;
@@ -2588,7 +2566,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				break;
 			case 'userbox':
 				if($context['user']['is_logged'])
-					$mp = '<a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">'.$block['title'].'</a>';
+					$mp = ''.$block['title'].'';
 				else
 					$mp = '<a class="subject"  href="'.$scripturl.'?action=login">'.$block['title'].'</a>';
 				$block['title'] = $mp;

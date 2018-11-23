@@ -406,6 +406,7 @@ foreach ($tables as $table => $col) {
         $render .= '
             <li>'. $table .' table has been created.</li>';
     }
+    checkTextColumnNull($table);
 }
 
 $request = $smcFunc['db_query']('', '
@@ -584,6 +585,13 @@ $settings_array = array(
     'show_shoutbox_icons' => '1',
     'profile_shouts_hide' => '0',
     'shout_allow_links' => '0',
+	'shoutbox_timecolor' => '#787878',
+	'shoutbox_timeformat' => 'Y M d H:i:s',
+	'shoutbox_use_groupcolor' => '1',
+	'shoutbox_linecolor1' => '#f0f4f7',
+	'shoutbox_linecolor2' => '#fdfdfd',
+	'shoutbox_textcolor' => '#000',
+	'shoutbox_maxlength' => '256',
     'frontpage_topics' => '',
     'frontpage_title' => '',
     'redirectforum' => '1',
@@ -600,6 +608,7 @@ $settings_array = array(
     'uselangoption' => '0',
     'resp' => '0',
     'copyrightremoval' => '',
+	'use_groupcolor' => '0',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
@@ -1267,6 +1276,18 @@ function tpListImages()
         );
     }
 
+}
+
+function checkTextColumnNull($table)
+{
+	global $smcFunc, $db_prefix;
+
+	$columns = $smcFunc['db_list_columns']('{db_prefix}' . $table, true);
+    foreach($columns as $column) {
+        if(array_key_exists('name', $column) && array_key_exists('type', $column) && in_array($column['type'], array('tinytext', 'text', 'mediumtext', 'longtext'))) {
+		    $smcFunc['db_query']('', 'ALTER TABLE {db_prefix}'. $table . ' CHANGE `' . $column['name'] . '` `' . $column['name'] . '` '. $column['type'] .' DEFAULT NULL');
+        }
+    }
 }
 
 ?>

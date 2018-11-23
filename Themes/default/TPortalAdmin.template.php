@@ -1132,6 +1132,14 @@ function template_settings()
 						<input name="tp_uselangoption" type="radio" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_uselangoption" type="radio" value="0" ' , $context['TPortal']['uselangoption']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
+					<dt>
+						<label for="field_name">', $txt['tp-use_groupcolor'], '</label>
+						<div class="smalltext">'.$txt['tp-use_groupcolordesc'].'</div>
+					</dt>
+					<dd>
+						<input name="tp_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['use_groupcolor']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input name="tp_use_groupcolor" type="radio" value="0" ' , $context['TPortal']['use_groupcolor']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+					</dd>
 				</dl>
 					<hr>
 				<dl class="settings">
@@ -3106,10 +3114,10 @@ function template_blockedit()
 					}
 					echo '
 							</select>
-							<input type="button" value="' , $txt['tp-insert'] , '" name="blockcode_save" onclick="submit();" />
-							<input type="checkbox" value="' . $context['TPortal']['blockedit']['id'] . '" name="blockcode_overwrite" /> ' , $txt['tp-blockcodes_overwrite'] , '
+							<p style="padding: 10px 0 10px 0; margin: 0;"><input type="button" value="' , $txt['tp-insert'] , '" name="blockcode_save" onclick="submit();" />
+							<input type="checkbox" value="' . $context['TPortal']['blockedit']['id'] . '" name="blockcode_overwrite" /> ' , $txt['tp-blockcodes_overwrite'] , '</p>
 						</div>
-						</p><br>
+
 					<div id="blockcodeinfo" class="description" >&nbsp;</div>
 					<script type="text/javascript"><!-- // --><![CDATA[
 						function changeSnippet(indx)

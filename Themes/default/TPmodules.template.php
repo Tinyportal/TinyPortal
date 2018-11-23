@@ -17,7 +17,7 @@
 
 function template_main()
 {
-	global $context, $settings, $txt, $scripturl;
+	global $context, $settings, $txt, $scripturl, $forum_version;
 
 	if(isset($context['TPortal']['subaction'])){
 		switch($context['TPortal']['subaction']){
@@ -303,79 +303,121 @@ function template_main()
 		case 'showcomments':
 		if(!empty($context['TPortal']['showall'])){
 			echo '
-		<div class="windowbg tp_pad">'.$context['TPortal']['pageindex'].'</div>
-		<div id="show-art-comm" class="bordercolor">
-			<div class="titlebg" style="padding:1%;">' . $txt['tp-commentnew'] . '</div>
-			<div class="catbg" style="word-break:break-all;">
-				<div class="float-items" style="width:27%;">' . $txt['tp-article'] . '</div>
-				<div class="float-items" style="width:20%;">' . $txt['tp-author'] . '</div>
-				<div class="float-items" style="width:25%;">' . $txt['tp-commenter_time'] . '</div>
-				<div class="float-items" style="width:20%;">' . $txt['tp-commenter'] . '</div>
-				<p class="clearthefloat"></p>
-			</div>';
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
+		<div></div>
+			<div id="show-art-comm" class="windowbg padding-div">
+			<table class="table_grid tp_grid" style="width:100%">
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="comments">
+					<div style="word-break:break-all;">
+						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
+						<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
+						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
+						<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+						<p class="clearthefloat"></p>
+					</div>
+					</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
 					echo '
-			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
-				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
+			<tr class="windowbg">
+			<td class="comments">
+			<div>
+				<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
 				' , ($mes['is_read']==0 && strstr($forum_version, '2.0')) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
-				</a><div class="smalltext"> ' , $mes['title'] , '</div>
+				</a>
 				</div>
-				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
-				<div class="float-items" style="width:25%;">' . $mes['time'] . '</div>
-				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></div>
+				<div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+				<div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'],0,150) , '...</div></div>
+				<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
+				</div>
 			    <p class="clearthefloat"></p>
-			</div>';
+			</div>
+			</td>
+			</tr>';
 
 			}
 			echo '
-			<div class="titlebg" align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>';
+			<tr class="windowbg">
+			<td class="shouts">
+				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
+			</td>
+			</tr>';
 
 			echo '
-		</div>
+			</tbody>
+		</table>
 		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
+		</div>
 		';
 		}
 		else
 		{
 			echo '
-		<div class="windowbg" class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
-		<div id="latest-art-comm" class="bordercolor">
-			<div class="titlebg" style="padding:1%;">' . $txt['tp-commentnew'] . '</div>
-			<div class="catbg">
-				<div class="float-items" style="width:27%;">' . $txt['tp-article'] . '</div>
-				<div class="float-items" style="width:20%;">' . $txt['tp-author'] . '</div>
-				<div class="float-items" style="width:25%;">' . $txt['tp-commenter_time'] . '</div>
-				<div class="float-items" style="width:20%;">' . $txt['tp-commenter'] . '</div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '</h3></div>
+		<div></div>
+			<div id="latest-art-comm" class="windowbg padding-div">
+			<table class="table_grid tp_grid" style="width:100%">
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="comments">
+			<div>
+				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
+				<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
+				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
+				<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
 				<p class="clearthefloat"></p>
-			</div>';
+			</div>
+				</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 			if(!empty($context['TPortal']['artcomments']['new']))
 			{
 				foreach($context['TPortal']['artcomments']['new'] as $mes)
 					echo '
-			<div class="windowbg' , $mes['is_read']==0 ? '3' : '2' , '">
-				<div class="float-items" style="width:27%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
+			<tr class="windowbg">
+			<td class="comments">
+			<div>
+				<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
 				' , ($mes['is_read']==0 && strstr($forum_version, '2.0')) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
 				</a><div class="smalltext"> ' , $mes['title'] , '</div>
 				</div>
-				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
-				<div class="float-items" style="width:25%;">' . $mes['time'] . '</div>
-				<div class="float-items" style="width:20%;"><a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a></div>
+				<div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+				<div class="float-items" style="width:30%;">' , $mes['title'] , '<br> ' , $mes['comment'] , '</div>
+				<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div></div>
 				<p class="clearthefloat"></p>
-			</div>';
+			</div>
+			</td>
+			</tr>';
 
 			}
 			else
 				echo '
-					<div style="padding:1%;" class="windowbg2">' . $txt['tp-nocomments2'] . '</div>';
+			<tr class="windowbg">
+			<td class="comments">
+				<div style="padding:1%;">' . $txt['tp-nocomments2'] . '</div>
+			</td>
+			</tr>';
 			echo '
-				<div class="titlebg" align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>';
+			<tr class="windowbg">
+			<td class="comments">
+				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>
+			</td>
+			</tr>';
 			echo '
-				</div>';
-
+			</tbody>
+		</table>
+		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
+		</div>';
+	
 		}
 			break;
 		case 'searcharticle2':
