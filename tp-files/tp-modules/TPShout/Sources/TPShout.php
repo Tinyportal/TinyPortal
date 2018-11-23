@@ -231,7 +231,7 @@ function postShout()
                 require_once($sourcedir . '/Mentions.php');
                 $mentions = Mentions::getMentionedMembers($shout);
                 if (is_array($mentions)) {
-                    Mentions::insertMentions('shout', 41, $mentions, $user_info['id']);
+                    Mentions::insertMentions('shout', $shout_id, $mentions, $user_info['id']);
                     $shout = Mentions::getBody($shout, $mentions);
                     foreach($mentions as $id => $member) {
                         $insert_rows[] = array(
