@@ -293,7 +293,7 @@ function template_tpshout_shoutblock()
 
 	if(!$context['user']['is_guest'] && allowedTo('tp_can_shout'))
 	{
-	if($context['TPortal']['shoutbox_layout'] == '2' || '3')
+	if ( in_array($context['TPortal']['shoutbox_layout'], array('2','3'), true ) )
 		{
 		echo '
 			<form  accept-charset="'. $context['character_set']. '" class="smalltext" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpmod;shout=save" method="post" ><hr>
