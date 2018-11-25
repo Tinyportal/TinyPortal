@@ -261,7 +261,7 @@ $tables = array(
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'sticky', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'sticky', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
             array('name' => 'sticky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'edit', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
@@ -910,7 +910,7 @@ function updateShoutbox()
 	checkColumn('tp_shoutbox', 'value4', ' CHANGE `value4` `member_ip` TEXT DEFAULT NULL');
 	checkColumn('tp_shoutbox', 'value5', ' CHANGE `value5` `member_id` TEXT DEFAULT NULL');
 	checkColumn('tp_shoutbox', 'value6', ' DROP `value6`');
-	checkColumn('tp_shoutbox', 'value7', ' CHANGE `value7` `sticky` TEXT DEFAULT NULL');
+	checkColumn('tp_shoutbox', 'value7', ' CHANGE `value7` `sticky` smallint(6) DEFAULT 0 NOT NULL');
 	checkColumn('tp_shoutbox', 'value8', ' CHANGE `value8` `sticky_layout` TEXT DEFAULT NULL');
 	$render .= '<li>Updated old columns in articles table</li>';
 }
