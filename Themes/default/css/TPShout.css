@@ -199,6 +199,14 @@ textarea.shoutbox_editor1 {
 .shout_date {
 	clear: both;
 }
+.shoutbox_time {
+	display: block;
+	float: right;
+	padding-left: 5px;
+}
+.showhover:hover .shoutbox_time {
+	display : none;
+}
 .shoutbox_edit {
 	display: none;
 	float: right;
@@ -212,5 +220,5 @@ textarea.shoutbox_editor1 {
 	line-height: 1.3em;
 }
 input.shoutbox_editor2, input.shoutbox_editor3 {
-	width: 70%;
+	width: 65%;
 }
