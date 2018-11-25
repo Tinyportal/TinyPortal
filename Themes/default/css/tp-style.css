@@ -773,7 +773,6 @@ ul.tp_catmenu li.tp_catmenu_header
 .tp_largelist
 {
 -webkit-box-sizing:border-box;
--moz-box-sizing:border-box;
 	box-sizing: border-box;
 	border: solid 1px #ccc;
 	padding: 4px;
@@ -784,7 +783,6 @@ ul.tp_catmenu li.tp_catmenu_header
 .tp_largelist2
 {
 -webkit-box-sizing:border-box;
--moz-box-sizing:border-box;
 	box-sizing: border-box;
 	border: solid 1px #ccc;
 	padding: 4px;
@@ -1828,7 +1826,6 @@ div.useravatar img
 	margin: 14px 10px 10px 0;
 	background: #fff;
 	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
 	border: #999 solid 1px;
@@ -1909,7 +1906,6 @@ input,select {
 }	
 .panelsColumns{
 -webkit-box-sizing:border-box;
--moz-box-sizing:border-box;
 box-sizing:border-box;
 	/* blocks in panels set to display in columns (the default is vertically)*/
 }
@@ -1951,7 +1947,7 @@ box-sizing:border-box;
     border:1px solid #ccc;
 }
 .admin-area img{
-	max-width: 100%;
+	max-width: 95%;
 } 
 .tpartlayoutfp {
     float: left;
