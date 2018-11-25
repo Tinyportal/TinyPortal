@@ -82,7 +82,6 @@ textarea.shoutbox_editor0 {
 	margin: 14px 10px 10px 0;
 	background: #fff;
 	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
 	border: #999 solid 1px;
@@ -133,7 +132,6 @@ left: 16px; } */
 /* blue */
 .shout_stickybg2 {
 	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #f0f0f8 0%, #e0e0e8 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f8), color-stop(100%,#e0e0e8)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  #f0f0f8 0%,#e0e0e8 100%); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  #f0f0f8 0%,#e0e0e8 100%); /* Opera 11.10+ */
@@ -146,7 +144,6 @@ left: 16px; } */
 /* yellow */
 .shout_stickybg3 {
 	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #fff8f0 0%, #efe8e0 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff8f0), color-stop(100%,#efe8e0)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  #fff8f0 0%,#efe8e0 100%); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  #fff8f0 0%,#efe8e0 100%); /* Opera 11.10+ */
@@ -159,7 +156,6 @@ left: 16px; } */
 /* red */
 .shout_stickybg4 {
 	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #fff0f0 0%, #efe0e0 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff0f0), color-stop(100%,#efe0e0)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  #fff0f0 0%,#efe0e0 100%); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  #fff0f0 0%,#efe0e0 100%); /* Opera 11.10+ */
@@ -172,7 +168,6 @@ left: 16px; } */
 /* green */
 .shout_stickybg5 {
 	background: #ffffff; /* Old browsers */
-	background: -moz-linear-gradient(top,  #f0fff0 0%, #e0efe0 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0fff0), color-stop(100%,#e0efe0)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top,  #f0fff0 0%,#e0efe0 100%); /* Chrome10+,Safari5.1+ */
 	background: -o-linear-gradient(top,  #f0fff0 0%,#e0efe0 100%); /* Opera 11.10+ */
