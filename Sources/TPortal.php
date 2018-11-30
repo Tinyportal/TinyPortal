@@ -283,7 +283,7 @@ function TP_loadTheme()
 				$request = $smcFunc['db_query']('', '
 						SELECT art.id_theme
 						FROM {db_prefix}tp_articles AS art
-						WHERE featured = true' 
+						WHERE featured = 1' 
 					);
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
@@ -705,7 +705,7 @@ function doTPpage()
 				$request =  $smcFunc['db_query']('', '
 					SELECT id FROM {db_prefix}tp_articles
 					WHERE author_id = {int:author}
-					AND off = false',
+					AND off = 0',
 					array('author' => $context['TPortal']['article']['author_id'])
 				);
 				$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
@@ -846,8 +846,8 @@ function doTPpage()
 						SELECT id, subject, shortname
 						FROM {db_prefix}tp_articles
 						WHERE category = {int:cat}
-						AND off = false
-						AND approved = true
+						AND off = 0
+						AND approved = 1
 						ORDER BY parse',
 						array('cat' => $context['TPortal']['article']['category'])
 					);
@@ -1071,8 +1071,8 @@ function doTPcat()
 					OR (art.pub_start !=0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 					OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-					AND art.off = false
-					AND art.approved = true
+					AND art.off = 0
+					AND art.approved = 1
 					ORDER BY art.sticky desc, art.'.$catsort.' '.$catsort_order.'
 					LIMIT {int:start}, {int:max}',
 					array(
@@ -1147,7 +1147,7 @@ function doTPcat()
 					OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 					OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-					AND art.off = false AND art.approved = true',
+					AND art.off = 0 AND art.approved = 1',
 					array('cat' => $category['id'])
 				);
 				if($smcFunc['db_num_rows']($request)>0)
@@ -1286,7 +1286,7 @@ function doTPfrontpage()
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id
 			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var)
-			WHERE art.off = false
+			WHERE art.off = 0
 			AND var.id = art.category
 			' . $artgroups . '
 			AND art.category > 0
@@ -1294,8 +1294,8 @@ function doTPfrontpage()
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = true
-			AND art.frontpage = true'
+			AND art. approved = 1
+			AND art.frontpage = 1'
 		);
 
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1321,15 +1321,15 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = false
+			WHERE art.off = 0
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = true
-			AND (art.frontpage = true OR art.featured = true)
+			AND art.approved = 1
+			AND (art.frontpage = 1 OR art.featured = 1)
 			ORDER BY art.featured DESC, art.sticky DESC, art.'.$catsort.' '. $catsort_order .'
 			LIMIT {int:start}, {int:max}',
 			array('start' => $start, 'max' => $max)
@@ -1391,13 +1391,13 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = false
+			WHERE art.off = 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.featured = true
-			AND art.approved = true
+			AND art.featured = 1
+			AND art.approved = 1
 			LIMIT 1'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1485,10 +1485,10 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, m.body,
-				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
-				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, t.id_board as category, b.name as category_name,
-				t.num_replies as numReplies, t.id_topic as id, m.id_member as author_id, t.num_views as views,t.num_replies as replies, t.locked,
-				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address AS email_address
+				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time AS date, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS lastLogin,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, t.id_board AS category, b.name AS category_name,
+				t.num_replies AS numReplies, t.id_topic AS id, m.id_member AS author_id, t.num_views AS views, t.num_replies AS replies, t.locked,
+				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename, mem.email_address AS email_address
 			FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type !=3)
@@ -1497,7 +1497,7 @@ function doTPfrontpage()
 			WHERE t.id_first_msg IN ({array_int:posts})
 			AND m.id_msg = t.id_first_msg
 			ORDER BY m.{raw:catsort} DESC
-			LIMIT {int:start}, {int:max}',
+			LIMIT {int:max} OFFSET {int:start}',
 			array(
 				'posts' => $posts,
 				'catsort' => $catsort,
@@ -1593,15 +1593,15 @@ function doTPfrontpage()
 			FROM {db_prefix}tp_articles AS art
 			INNER JOIN {db_prefix}tp_variables AS var
             ON var.id = art.category
-			WHERE art.off = false
+			WHERE art.off = 0
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = true
-			AND (art.frontpage = true OR art.featured = true)
+			AND art. approved = 1
+			AND (art.frontpage = 1 OR art. featured = 1)
 			ORDER BY art.featured DESC, art.sticky desc, art.date DESC'
 		);
 
@@ -1877,7 +1877,7 @@ function doTPfrontpage()
 	// get the blocks
 	$request =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_blocks
-		WHERE off = false
+		WHERE off = 0
 		AND bar = 4
 		AND '. $access .'
 		ORDER BY pos,id ASC'
@@ -1965,13 +1965,13 @@ function doTPfrontpage()
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type !=3)
 			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 			WHERE ' . $fetchart.'
-			AND art.off = false
+			AND art.off = 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = true
+			AND art.approved = 1
 			AND art.category > 0 AND art.category < 9999'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2010,9 +2010,9 @@ function doTPfrontpage()
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.off = false
+			AND art.off = 0
 			AND art.category > 0
-			AND art.approved = true'
+			AND art.approved = 1'
 		);
 
 		if (!isset($context['TPortal']['blockarticle_titles']))
@@ -2180,7 +2180,7 @@ function doTPblocks()
 	// get the blocks
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_blocks
-		WHERE off = false
+		WHERE off = 0
 		AND bar != {int:bar}
 		AND (' . (!empty($_GET['page']) ? '{string:page} IN ( access2 ) OR ' : '') . '
 		' . (!empty($_GET['cat']) ? '{string:cat} IN ( access2 ) OR ' : '') . '
@@ -2286,12 +2286,12 @@ function doTPblocks()
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id)
 			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 			WHERE ' . $fetchart. '
-			AND art.off = false
+			AND art.off = 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = true
+			AND art.approved = 1
 			AND art.category > 0 AND art.category < 9999'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2339,12 +2339,12 @@ function doTPblocks()
             FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE  '. 	$fetchtitles . '
-			AND art.off = false
+			AND art.off = 0
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = true'
+			AND art.approved = 1'
 		);
 
 		if (!isset($context['TPortal']['blockarticle_titles']))

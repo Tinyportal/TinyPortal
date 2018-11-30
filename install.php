@@ -107,7 +107,7 @@ $tables = array(
 			array('name' => 'access', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'bar', 'type' => 'smallint', 'size' => 4, 'default' => 0 ),
 			array('name' => 'pos', 'type' => 'int', 'size' => 11, 'default' => 0 ),
-            array('name' => 'off', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
+            array('name' => 'off', 'type' => 'smallint', 'size' => 1, 'default' => 0 ),
 			array('name' => 'visible', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'var1', 'type' => 'int', 'size' => 11, 'default' => 0 ),
 			array('name' => 'var2', 'type' => 'int', 'size' => 11, 'default' => 0 ),
@@ -147,15 +147,15 @@ $tables = array(
             array('name' => 'date', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'intro', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'useintro', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 1 : 'true') ),
+            array('name' => 'useintro', 'type' => 'smallint', 'size' => 1, 'default' => 0,),
             array('name' => 'category', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
-            array('name' => 'frontpage', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
+            array('name' => 'frontpage', 'type' => 'smallint', 'size' => 1, 'default' => 0,),
             array('name' => 'subject', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '') ),
             array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'author', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '') ),
             array('name' => 'frame', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '') ),
-            array('name' => 'approved', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 1 : 'true') ),
-            array('name' => 'off', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
+            array('name' => 'approved', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
+            array('name' => 'off', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'options', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'parse', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'comments', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
@@ -165,14 +165,14 @@ $tables = array(
             array('name' => 'voters', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'shortname', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'sticky', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
+            array('name' => 'sticky', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'fileimport', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'topic', 'type' => 'int', 'size' => 11, 'default' => 0,),
-            array('name' => 'locked', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
+            array('name' => 'locked', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'illustration', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'headers', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'featured', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
+            array('name' => 'featured', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'pub_start', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'pub_end', 'type' => 'int', 'size' => 11, 'default' => 0,),
         ),
@@ -304,16 +304,16 @@ $tables = array(
             array('name' => 'description', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'allowed', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'eventid', 'type' => 'int', 'size' => 11, 'default' => null),
-            array('name' => 'on', 'type' => 'smallint', 'size' => 4, 'default' => 0),
+            array('name' => 'on', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
 );
-
+            
 foreach ($tables as $table => $col) {
-    if (in_array($db_prefix . $table, $existing_tables) && $db_type == 'mysql' ) {
+    if (in_array($db_prefix . $table, $existing_tables)) {
         $render .= '
             <li>'. $table .' already exists. Updating table if necessary.</li>';
 
@@ -321,7 +321,7 @@ foreach ($tables as $table => $col) {
         if ($table == 'tp_articles') {
             articleChanges();
             db_extend('extra');
-            if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
+            if($db_type == 'mysql' && version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
                 $request = $smcFunc['db_query']('','
                         SHOW INDEX FROM {db_prefix}tp_articles WHERE Key_name = \'search\' AND Index_type = \'FULLTEXT\''
                         );
@@ -351,10 +351,10 @@ foreach ($tables as $table => $col) {
                 }
             }
         }
-        elseif ($table == 'tp_dlmanager') {
+        else if ($table == 'tp_dlmanager') {
             updateDownLoads();
         }
-        elseif ($table == 'tp_data') {
+        else if ($table == 'tp_data') {
             dataTableChanges();
         }
         else if ($table == 'tp_shoutbox') {
@@ -364,22 +364,24 @@ foreach ($tables as $table => $col) {
         // If utf8 is set alter table to use utf8 character set.
         if ($utf8) {
             $smcFunc['db_query']('', '
-                    ALTER TABLE {db_prefix}{raw:table}
-                    CONVERT TO CHARACTER SET utf8',
-                    array('table' => $table)
-                    );
+                ALTER TABLE {db_prefix}{raw:table}
+                CONVERT TO CHARACTER SET utf8',
+                array('table' => $table)
+            );
         }
-        foreach ($col['columns'] as $column) {
-            if (!isset($column['old_name']) || !$smcFunc['db_change_column']($db_prefix . $table, $column['old_name'], $column))
-                $smcFunc['db_add_column']('{db_prefix}' . $table, $column);
+        if($db_type == 'mysql') {
+            foreach ($col['columns'] as $column) {
+                if (!isset($column['old_name']) || !$smcFunc['db_change_column']($db_prefix . $table, $column['old_name'], $column))
+                    $smcFunc['db_add_column']('{db_prefix}' . $table, $column);
 
-            // If utf8 is set alter column to be utf8 if text or tinytext.
-            if ($utf8 && in_array($column['type'], array('text', 'tinytext', 'longtext'))) {
-                $smcFunc['db_query']('', '
+                // If utf8 is set alter column to be utf8 if text or tinytext.
+                if ($utf8 && in_array($column['type'], array('text', 'tinytext', 'longtext'))) {
+                    $smcFunc['db_query']('', '
                         ALTER TABLE {db_prefix}{raw:table}
                         CHANGE {raw:name} {raw:name} {raw:type} CHARACTER SET utf8',
                         array('table' => $table, 'name' => $column['name'], 'type' => $column['type'])
-                        );
+                    );
+                }
             }
         }
     }
@@ -868,60 +870,45 @@ else
 	echo $render;
 }
 
-function checkColumn($table, $col, $action)
-{
-	global $render, $existing_tables, $smcFunc, $db_prefix;
-
-	if (in_array($db_prefix . $table, $existing_tables))
-	{
-		$columns = $smcFunc['db_list_columns']('{db_prefix}' . $table);
-
-		if(in_array($col, $columns))
-			$smcFunc['db_query']('', '
-				ALTER TABLE {db_prefix}'. $table .' ' . $action);
-
-		$render .= '
-		<li>Changed ' . $col . ' in ' . $table . ' table</li>';
-	}
-}
-
 function updateDownLoads()
 {
-	global $render;
+	global $smcFunc, $render;
 	// Update old column names
-	checkColumn('tp_dlmanager', 'authorID', 'CHANGE `authorID` `author_id` int default 0 NOT NULL');
+    $smcFunc['db_change_column']('{db_prefix}tp_dlmanager', 'authorID', array( 'name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => '0'));
 	$render .= '<li>Updated old columns in downloads table</li>';
 }
 
 function articleChanges()
 {
-	global $smcFunc, $render;
-	checkColumn('tp_articles', 'parse', ' CHANGE `parse` `parse` SMALLINT DEFAULT 0 NOT NULL');
-	checkColumn('tp_articles', 'ID_THEME', 'CHANGE `ID_THEME` `id_theme` smallint(6) DEFAULT 0 NOT NULL');
-	checkColumn('tp_articles', 'authorID', 'CHANGE `authorID` `author_id` int DEFAULT 0 NOT NULL');
-	checkColumn('tp_articles', 'body', 'CHANGE `body` `body` LONGTEXT DEFAULT NULL');
+	global $smcFunc, $render, $db_type;
+    $smcFunc['db_change_column']('{db_prefix}tp_articles', 'parse', array( 'name' => 'parse', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
+    $smcFunc['db_change_column']('{db_prefix}tp_articles', 'ID_THEME', array( 'name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
+    $smcFunc['db_change_column']('{db_prefix}tp_articles', 'authorID', array( 'name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => '0'));
+    $smcFunc['db_change_column']('{db_prefix}tp_articles', 'body', array( 'name' => 'body', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')));
 	$render .= '<li>Updated old columns in articles table</li>';
 }
 
 function updateShoutbox()
 {
-	global $smcFunc, $render;
-	checkColumn('tp_shoutbox', 'value1', ' CHANGE `value1` `content` TEXT DEFAULT NULL');
-	checkColumn('tp_shoutbox', 'value2', ' CHANGE `value2` `time` TEXT DEFAULT NULL');
-	checkColumn('tp_shoutbox', 'value3', ' CHANGE `value3` `member_link` TEXT DEFAULT NULL');
-	checkColumn('tp_shoutbox', 'value4', ' CHANGE `value4` `member_ip` TEXT DEFAULT NULL');
-	checkColumn('tp_shoutbox', 'value5', ' CHANGE `value5` `member_id` TEXT DEFAULT NULL');
-	checkColumn('tp_shoutbox', 'value6', ' DROP `value6`');
-	checkColumn('tp_shoutbox', 'value7', ' CHANGE `value7` `sticky` smallint(6) DEFAULT 0 NOT NULL');
-	checkColumn('tp_shoutbox', 'value8', ' CHANGE `value8` `sticky_layout` TEXT DEFAULT NULL');
+	global $smcFunc, $render, $db_type;
+
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value1', array( 'name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value2', array( 'name' => 'time', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value3', array( 'name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value4', array( 'name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value5', array( 'name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => '-2' ));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value7', array( 'name' => 'sitcky', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value8', array( 'name' => 'sitcky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
+
 	$render .= '<li>Updated old columns in articles table</li>';
 }
 
 function dataTableChanges()
 {
-	global $render;
+	global $smcFunc, $render;
 	// Update old column names
-	checkColumn('tp_data', 'ID_MEMBER', 'CHANGE `ID_MEMBER` `id_member` int default 0 NOT NULL');
+    $smcFunc['db_change_column']('{db_prefix}tp_data', 'ID_MEMBER', array( 'name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => '0'));
 	$render .= '<li>Updated old columns in data table</li>';
 }
 
@@ -1297,7 +1284,11 @@ function tpListImages()
 
 function checkTextColumnNull($table)
 {
-	global $smcFunc, $db_prefix;
+	global $smcFunc, $db_prefix, $db_type;
+
+    if($db_type != 'mysql') {
+        return;
+    }
 
 	$columns = $smcFunc['db_list_columns']('{db_prefix}' . $table, true);
     foreach($columns as $column) {

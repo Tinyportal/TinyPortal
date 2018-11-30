@@ -714,7 +714,7 @@ function TPmodules()
 			ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, 15',
 			array('author' => $context['user']['id'], 
 			'sort' => $sort,
-			'sorter' => in_array($sort, array('subject')) ? 'ASC' : 'DESC',
+			'sorter' => in_array($sort, array('subject')) ? ' ASC ' : ' DESC ',
 			'start' => $mystart
 			)
 		);
