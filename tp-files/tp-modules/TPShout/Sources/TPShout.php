@@ -18,22 +18,31 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-global $context, $settings, $options, $forum_version;
+global $context, $settings, $options, $modSettings, $forum_version;
 
-if(loadLanguage('TPShout') == false)
+if(loadLanguage('TPShout') == false) {
 	loadLanguage('TPShout', 'english');
+}
+
+// Mentions
+if (!empty($modSettings['enable_mentions']) && allowedTo('mention')) {
+    loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
+    loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
+    loadJavaScriptFile('shoutMentions.js', array('defer' => true, 'minimize' => false), 'smf_mentions');
+}
 
 if(strpos($forum_version, '2.0') === false) {
     loadCSSFile('jquery.sceditor.css');
 }
 
 // if in admin screen, turn off blocks
-if($context['TPortal']['action'] == 'tpmod' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin')
-{
+if($context['TPortal']['action'] == 'tpmod' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
 	$in_admin = true;
 }
-if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin))
+
+if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin)) {
 	tp_hidebars();
+}
 
 // bbc code for shoutbox
 $context['html_headers'] .= '
@@ -148,7 +157,7 @@ if(isset($_REQUEST['shout']))
 // Post the shout via ajax
 function postShout()
 {
-	global $context, $smcFunc, $user_info, $scripturl, $sourcedir;
+	global $context, $smcFunc, $user_info, $scripturl, $sourcedir, $modSettings;
 
 	isAllowedTo('tp_can_shout');
 
@@ -189,18 +198,18 @@ function postShout()
 
 		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
-        if($shout != '')
+
+        if($shout != '') {
             $smcFunc['db_insert']('INSERT',
                     '{db_prefix}tp_shoutbox',
                 array (
-                    'value1' => 'string',
-                    'value2' => 'string',
-                    'value3' => 'string',
-                    'type' => 'string',
-                    'value4' => 'string',
-                    'value5' => 'int',
-                    'value7' => 'int',
-                    'edit' => 'int',
+                    'content'       => 'string',
+                    'time'          => 'string',
+                    'member_link'   => 'string',
+                    'type'          => 'string',
+                    'member_ip'     => 'string',
+                    'member_id'     => 'int',
+                    'edit'          => 'int',
                 ),
                 array (
                     $shout,
@@ -210,10 +219,58 @@ function postShout()
                     $ip,
                     $memID,
                     0,
-                    0,
                 ),
                 array('id')
             );
+            $shout_id = $smcFunc['db_insert_id']('{db_prefix}tp_shoutbox');
+
+            if (!empty($modSettings['enable_mentions'])) {
+                require_once($sourcedir . '/Subs-Post.php');
+                require_once($sourcedir . '/Mentions.php');
+                $mentions = Mentions::getMentionedMembers($shout);
+                if (is_array($mentions)) {
+                    Mentions::insertMentions('shout', $shout_id, $mentions, $user_info['id']);
+                    $shout = Mentions::getBody($shout, $mentions);
+                    foreach($mentions as $id => $member) {
+                        $insert_rows[] = array(
+                            'alert_time'        => time(),
+                            'id_member'         => $member['id'],
+                            'id_member_started' => $user_info['id'],
+                            'member_name'       => $user_info['username'],
+                            'content_type'      => 'shout',
+                            'content_id'        => $shout_id,
+                            'content_action'    => 'mention',
+                            'is_read'           => 0,
+                            'extra' => $smcFunc['json_encode'](
+                                array(
+                                    "text"          => "Shout",
+                                    "user_mention"  => $user_info['username'],
+                                    "event_title"   => 'Shoutbox Mention',
+                                    )
+                                ),
+                        );
+
+                        $smcFunc['db_insert']('insert',
+                            '{db_prefix}user_alerts',
+                            array(  
+                                'alert_time'        => 'int', 
+                                'id_member'         => 'int',
+                                'id_member_started' => 'int',
+                                'member_name'       => 'string',
+                                'content_type'      => 'string',
+                                'content_id'        => 'int',
+                                'content_action'    => 'string',
+                                'is_read'           => 'int',
+                                'extra'             => 'string'
+                            ),
+                            $insert_rows,
+                            array('id_alert')
+                        );
+                        updateMemberData($member['id'], ['alerts' => '+']);
+                    }
+                }
+            }    
+        }
     }
 }
 
@@ -292,7 +349,7 @@ function tpshout_admin()
 
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
-					SET value6 = "' . $value . '",value8 = "' . $svalue . '"
+					SET sticky_layout = "' . $svalue . '"
 					WHERE id = {int:shout}',
 					array('shout' => $val)
 				);
@@ -311,7 +368,7 @@ function tpshout_admin()
 			{
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
-					SET value6 = "0", value8 = "0"
+					SET sticky_layout = "0"
 					WHERE 1');
 				$go = 2;
 			}
@@ -323,7 +380,7 @@ function tpshout_admin()
 				$bshout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $bshout);
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
-					SET value1 = {string:val1}
+					SET content = {string:val1}
 					WHERE id = {int:val}',
 					array('val1' => $bshout, 'val' => $val)
 				);
@@ -411,8 +468,8 @@ function tpshout_admin()
 		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value5 = {int:val5}
-			AND value7 = {int:val7}',
+			AND member_id = {int:val5}
+			AND sticky = {int:val7}',
 			array('type' => 'shoutbox', 'val5' => $memID, 'val7' => 0)
 		);
 		$weh = $smcFunc['db_fetch_row']($shouts);
@@ -423,9 +480,9 @@ function tpshout_admin()
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value5 = {int:val5}
-			AND value7 = {int:val7}
-			ORDER BY value2 DESC LIMIT {int:start},10',
+			AND member_id = {int:val5}
+			AND sticky = {int:val7}
+			ORDER BY time DESC LIMIT {int:start},10',
 			array('type' => 'shoutbox', 'val5'=> $memID, 'val7' => 0, 'start' => $tpstart)
 		);
 	}
@@ -434,8 +491,8 @@ function tpshout_admin()
 		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value4 = {string:val4}
-			AND value7 = {int:val7}',
+			AND member_ip = {string:val4}
+			AND sticky = {int:val7}',
 			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0)
 		);
 		$weh = $smcFunc['db_fetch_row']($shouts);
@@ -446,9 +503,9 @@ function tpshout_admin()
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value4 = {string:val4}
-			AND value7 = {int:val7}
-			ORDER BY value2 DESC LIMIT {int:start}, 10',
+			AND member_ip = {string:val4}
+			AND sticky = {int:val7}
+			ORDER BY time DESC LIMIT {int:start}, 10',
 			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0, 'start' => $tpstart)
 		);
 	}
@@ -460,7 +517,7 @@ function tpshout_admin()
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value7 = {int:val7}
+			AND sticky = {int:val7}
 			AND id = {int:shout}',
 			array('type' => 'shoutbox', 'val7' => 0, 'shout' => $single)
 		);
@@ -470,7 +527,7 @@ function tpshout_admin()
 		$shouts = $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value7 = {int:val7}',
+			AND sticky = {int:val7}',
 			array('type' => 'shoutbox', 'val7' => 0)
 		);
 		$weh = $smcFunc['db_fetch_row']($shouts);
@@ -481,8 +538,8 @@ function tpshout_admin()
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND value7 = {int:val7}
-			ORDER BY value2 DESC LIMIT {int:start}, 10',
+			AND sticky = {int:val7}
+			ORDER BY time DESC LIMIT {int:start}, 10',
 			array('type' => 'shoutbox', 'val7' => 0, 'start' => $tpstart)
 		);
 	}
@@ -493,16 +550,16 @@ function tpshout_admin()
 		{
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],
-				'body' => html_entity_decode($row['value1'], ENT_QUOTES),
-				'poster' => $row['value3'],
-				'timestamp' => $row['value2'],
-				'time' => timeformat($row['value2']),
-				'ip' => $row['value4'],
-				'ID_MEMBER' => $row['value5'],
-				'sort_member' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;u='.$row['value5'].'">'.$txt['tp-allshoutsbymember'].'</a>',
-				'sticky' => $row['value6'],
-				'sticky_layout' => $row['value8'],
-				'sort_ip' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;ip='.$row['value4'].'">'.$txt['tp-allshoutsbyip'].'</a>',
+				'body' => html_entity_decode($row['content'], ENT_QUOTES),
+				'poster' => $row['member_link'],
+				'timestamp' => $row['time'],
+				'time' => timeformat($row['time']),
+				'ip' => $row['member_ip'],
+				'ID_MEMBER' => $row['member_id'],
+				'sort_member' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
+				'sticky' => $row['sticky'],
+				'sticky_layout' => $row['sticky_layout'],
+				'sort_ip' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
 				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpmod;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
 		}
@@ -592,16 +649,16 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	$request =  $smcFunc['db_query']('', '
 		SELECT s.*
 			FROM {db_prefix}tp_shoutbox as s
-		WHERE s.value7 = {int:val7}
-		ORDER BY s.value2 DESC LIMIT {int:limit}',
+		WHERE s.sticky = {int:val7}
+		ORDER BY s.time DESC LIMIT {int:limit}',
 		array('val7' => 0, 'limit' => $limit)
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0 ) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$fetched[] = $row;
-			if(!empty($row['value5']) && !in_array($row['value5'], $members)) {
-				$members[] = $row['value5'];
+			if(!empty($row['member_id']) && !in_array($row['member_id'], $members)) {
+				$members[] = $row['member_id'];
             }
 		}
 		$smcFunc['db_free_result']($request);
@@ -643,10 +700,10 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		$ns = array();
 		foreach($fetched as $b => $row)
 		{
-			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
-			$row['real_name'] = !empty($memberdata[$row['value5']]['real_name']) ? $memberdata[$row['value5']]['real_name'] : $row['value3'];
-			$row['value1'] = parse_bbc(censorText($row['value1']), true);
-			$row['online_color'] = !empty($memberdata[$row['value5']]['mg_online_color']) ? $memberdata[$row['value5']]['mg_online_color'] : $memberdata[$row['value5']]['pg_online_color'];
+			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
+			$row['realName'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
+			$row['content'] = parse_bbc(censorText($row['content']), true);
+			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : $memberdata[$row['member_id']]['pg_online_color'];
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode('', $ns);

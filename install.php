@@ -255,15 +255,14 @@ $tables = array(
 	'tp_shoutbox' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'value1', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'value2', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'value3', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => -2),
+            array('name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'time', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'value4', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'value5', 'type' => 'int', 'size' => 11, 'default' => -2),
-            array('name' => 'value6', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'value7', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-            array('name' => 'value8', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'sticky', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'sticky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'edit', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(
@@ -357,6 +356,9 @@ foreach ($tables as $table => $col) {
         }
         elseif ($table == 'tp_data') {
             dataTableChanges();
+        }
+        else if ($table == 'tp_shoutbox') {
+            updateShoutbox();
         }
 
         // If utf8 is set alter table to use utf8 character set.
@@ -900,6 +902,21 @@ function articleChanges()
 	checkColumn('tp_articles', 'body', 'CHANGE `body` `body` LONGTEXT DEFAULT NULL');
 	$render .= '<li>Updated old columns in articles table</li>';
 }
+
+function updateShoutbox()
+{
+	global $smcFunc, $render;
+	checkColumn('tp_shoutbox', 'value1', ' CHANGE `value1` `content` TEXT DEFAULT NULL');
+	checkColumn('tp_shoutbox', 'value2', ' CHANGE `value2` `time` TEXT DEFAULT NULL');
+	checkColumn('tp_shoutbox', 'value3', ' CHANGE `value3` `member_link` TEXT DEFAULT NULL');
+	checkColumn('tp_shoutbox', 'value4', ' CHANGE `value4` `member_ip` TEXT DEFAULT NULL');
+	checkColumn('tp_shoutbox', 'value5', ' CHANGE `value5` `member_id` TEXT DEFAULT NULL');
+	checkColumn('tp_shoutbox', 'value6', ' DROP `value6`');
+	checkColumn('tp_shoutbox', 'value7', ' CHANGE `value7` `sticky` smallint(6) DEFAULT 0 NOT NULL');
+	checkColumn('tp_shoutbox', 'value8', ' CHANGE `value8` `sticky_layout` TEXT DEFAULT NULL');
+	$render .= '<li>Updated old columns in articles table</li>';
+}
+
 function dataTableChanges()
 {
 	global $render;
