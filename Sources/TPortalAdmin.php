@@ -331,7 +331,7 @@ function do_blocks()
 		$context['TPortal']['blockcodes'] = TPcollectSnippets();
 		$request = $smcFunc['db_query']('', '
 			SELECT id, title, bar
-			FROM {db_prefix}tp_blocks WHERE 1',
+			FROM {db_prefix}tp_blocks WHERE 1=1',
 			array()
 		);
 		if ($smcFunc['db_num_rows']($request) > 0)
@@ -375,7 +375,7 @@ function do_blocks()
 		$what = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}tp_blocks
-			SET off = IF(off = 0 , 1, 0)
+			SET off = NOT off = 0
 			WHERE id = {int:blockid}',
 			array(
 				'blockid' => $what
@@ -628,9 +628,9 @@ function do_blocks()
 			// get all themes for selection
 			$context['TPthemes'] = array();
 			$request = $smcFunc['db_query']('', '
-				SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+				SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
 				FROM {db_prefix}themes AS th
-				LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+				LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
 				WHERE th.variable = {string:thvar}
 				AND tb.variable = {string:tbvar}
 				AND th.id_member = {int:id_member}
@@ -644,7 +644,7 @@ function do_blocks()
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					$context['TPthemes'][] = array(
-						'id' => $row['ID_THEME'],
+						'id' => $row['id_theme'],
 						'path' => $row['path'],
 						'name' => $row['name']
 					);
@@ -702,7 +702,7 @@ function do_blocks()
 
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_blocks
-			WHERE 1 ORDER BY bar, pos, id ASC',
+			WHERE 1=1 ORDER BY bar, pos, id ASC',
 			array()
 		);
 		if ($smcFunc['db_num_rows']($request) > 0)
@@ -1027,7 +1027,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET off = IF(off = 0 , 1, 0)
+				SET off = NOT off
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1041,7 +1041,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET locked = IF(locked = 0 , 1, 0)
+				SET locked = NOT locked
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1055,7 +1055,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET sticky = IF(sticky = 0 , 1, 0)
+				SET sticky = NOT sticky
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1069,7 +1069,7 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET frontpage = IF(frontpage = 0 , 1, 0)
+				SET frontpage = NOT frontpage
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1084,15 +1084,9 @@ function do_articles()
 		{
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET featured = IF(featured = 0, 1, 0)
+				SET featured = NOT featured
 				WHERE id = {int:artid}',
 				array('artid' => $what)
-			);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET featured = {int:featured}
-				WHERE id != {int:artid}',
-				array('featured' => 0, 'artid' => $what)
 			);
 		}
 		else
@@ -1459,10 +1453,10 @@ function do_articles()
             'headers' => '',
             'type' => substr($_GET['sa'],11),
             'featured' => 0,
-            'realName' => $context['user']['name'],
-            'authorID' => $context['user']['id'],
+            'real_name' => $context['user']['name'],
+            'author_id' => $context['user']['id'],
             'articletype' => substr($_GET['sa'],11),
-            'ID_THEME' => 0,
+            'id_theme' => 0,
 			'pub_start' => 0,
 			'pub_end' => 0,
         );
@@ -1519,8 +1513,8 @@ function do_articles()
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('date', 'id','author_id', 'type', 'subject', 'parse'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=submission;sort=' . $sort , $start, $context['TPortal']['total_submissions'], 15);
 		$request = $smcFunc['db_query']('', '
-			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as authorID,
-				IFNULL(mem.real_name, art.author) as author, art.subject, art.approved,
+			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
+				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved,
 				art.sticky, art.type, art.featured, art.locked, art.off, art.parse as pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1554,8 +1548,8 @@ function do_articles()
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], array('off', 'date', 'id', 'author_id', 'locked', 'frontpage', 'sticky', 'featured', 'type', 'subject', 'parse'))) ? $_GET['sort'] : 'date';
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=articles;sort=' . $sort , $start, $context['TPortal']['total_nocategory'], 15);
 		$request = $smcFunc['db_query']('', '
-			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as authorID,
-				IFNULL(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
+			SELECT	art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
+				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
 				art.type, art.featured,art.locked, art.off, art.parse as pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1583,8 +1577,8 @@ function do_articles()
 	if(isset($whatarticle))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT	art.*, IFNULL(mem.real_name, art.author) as realName, art.author_id as authorID,
-				art.type as articletype, art.id_theme as ID_THEME
+			SELECT	art.*,  COALESCE(mem.real_name, art.author) AS real_name, art.author_id AS author_id,
+				art.type as articletype, art.id_theme as id_theme
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members as mem ON (art.author_id = mem.id_member)
 			WHERE art.id = {int:artid}',
@@ -1718,8 +1712,8 @@ function do_articles()
 		$smcFunc['db_free_result']($request);
 
 		$request = $smcFunc['db_query']('', '
-			SELECT art.id, art.date, art.frontpage, art.category, art.author_id as authorID,
-				IFNULL(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
+			SELECT art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
+				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
 				art.type, art.featured, art.locked, art.off, art.parse as pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1748,9 +1742,9 @@ function do_articles()
     // get all themes for selection
     $context['TPthemes'] = array();
     $request = $smcFunc['db_query']('', '
-            SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+            SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
             FROM {db_prefix}themes AS th
-            LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+            LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
             WHERE th.variable = {string:thvar}
             AND tb.variable = {string:tbvar}
             AND th.id_member = {int:id_member}
@@ -1764,7 +1758,7 @@ function do_articles()
         while ($row = $smcFunc['db_fetch_assoc']($request))
         {
             $context['TPthemes'][] = array(
-                    'id' => $row['ID_THEME'],
+                    'id' => $row['id_theme'],
                     'path' => $row['path'],
                     'name' => $row['name']
                     );
@@ -1975,7 +1969,7 @@ function do_modules()
 		// fetch modules
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_modules
-			WHERE 1',
+			WHERE 1=1',
 			array()
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2033,9 +2027,9 @@ function do_postchecks()
 		    // get all the themes
             $context['TPallthem'] = array();
 			$request = $smcFunc['db_query']('', '
-				SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+				SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
 				FROM {db_prefix}themes AS th
-				LEFT JOIN {db_prefix}themes AS tb ON th.ID_THEME = tb.ID_THEME
+				LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
 				WHERE th.variable = {string:thvar}
 				AND tb.variable = {string:tbvar}
 				AND th.id_member = {int:id_member}
@@ -2049,7 +2043,7 @@ function do_postchecks()
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					$context['TPallthem'][] = array(
-						'id' => $row['ID_THEME'],
+						'id' => $row['id_theme'],
 						'path' => $row['path'],
 						'name' => $row['name']
 					);
@@ -2215,7 +2209,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_variables
 									SET value2 = {string:val2}
-									WHERE id = {string:varid} LIMIT 1',
+									WHERE id = {string:varid}',
 									array(
 										'val2' => '0',
 										'varid' => $value,
@@ -2225,7 +2219,7 @@ function do_postchecks()
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_variables
 								SET value2 = {string:val2}
-								WHERE id = {string:varid} LIMIT 1',
+								WHERE id = {string:varid}',
 								array(
 									'val2' => $value,
 									'varid' => $where,
@@ -2251,7 +2245,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET parse = {int:parse}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array(
 								'parse' => $value,
 								'artid' => $where,
@@ -2533,7 +2527,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET '. $param .' = {string:val}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val' => $value, 'varid' => $where)
 						);
 					// parents needs some checking..
@@ -2551,14 +2545,14 @@ function do_postchecks()
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_variables
 								SET value2 = {string:val2}
-								WHERE id = {int:varid} LIMIT 1',
+								WHERE id = {int:varid}',
 								array('val2' => '0', 'varid' => $value)
 							);
 
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value2 = {string:val2}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val2' => $value, 'varid' => $where)
 						);
 					}
@@ -2566,21 +2560,21 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value1 = {string:val1}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val1' => strip_tags($value), 'varid' => $where)
 						);
 					elseif($param == 'value4')
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value4 = {string:val4}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val4' => $value, 'varid' => $where)
 						);
 					elseif($param == 'value9')
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_variables
 							SET value9 = {string:val9}
-							WHERE id = {int:varid} LIMIT 1',
+							WHERE id = {int:varid}',
 							array('val9' => $value, 'varid' => $where)
 						);
 					elseif(substr($param, 0, 6) == 'group_')
@@ -2592,7 +2586,7 @@ function do_postchecks()
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_variables
 				SET value3 = {string:val3}, value7 = {string:val7}
-				WHERE id = {int:varid} LIMIT 1',
+				WHERE id = {int:varid}',
 				array('val3' => implode(',', $groups), 'val7' => implode('|', $options), 'varid' => $where)
 			);
 			$from = 'categories;cu=' . $where;
@@ -3190,7 +3184,7 @@ function do_postchecks()
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles
 					SET illustration = {string:ill}
-					WHERE id = {int:artid} LIMIT 1',
+					WHERE id = {int:artid}',
 					array('ill' => 's_' . $name, 'artid' => $where)
 				);
 			}
@@ -3216,7 +3210,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET author_id = {int:auth}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('auth' => $value, 'artid' => $where)
 						);
 					}
@@ -3225,7 +3219,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET id_theme = {int:id_theme}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('id_theme' => $value, 'artid' => $where)
 						);
 					}
@@ -3234,7 +3228,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET subject = {string:subject}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('subject' => $value, 'artid' => $where)
 						);
 					}
@@ -3244,7 +3238,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET shortname = {string:shortname}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('shortname' => $value, 'artid' => $where)
 						);
 					}
@@ -3266,7 +3260,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET category = {int:cat}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('cat' => $value, 'artid' => $where)
 						);
 					}
@@ -3327,7 +3321,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET '. $setting .' = {string:val}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('val' => $value, 'artid' => $where)
 						);
 					}
@@ -3338,7 +3332,7 @@ function do_postchecks()
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_articles
 								SET date = {int:date}
-								WHERE id = {int:artid} LIMIT 1',
+								WHERE id = {int:artid}',
 								array('date' => $timestamp, 'artid' => $where)
 							);
 						$savedtime = 1;
@@ -3350,7 +3344,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_start = {int:start}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('start' => 0, 'artid' => $where)
 								);
 						else
@@ -3359,7 +3353,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_start = {int:start}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('start' => $timestamp, 'artid' => $where)
 								);
 
@@ -3372,7 +3366,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_end = {int:end}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('end' => 0, 'artid' => $where)
 								);
 						else
@@ -3381,7 +3375,7 @@ function do_postchecks()
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_articles
 									SET pub_end = {int:end}
-									WHERE id = {int:artid} LIMIT 1',
+									WHERE id = {int:artid}',
 									array('end' => $timestamp, 'artid' => $where)
 								);
 
@@ -3405,7 +3399,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET approved = {int:approved}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('approved' => $value, 'artid' => $where)
 						);
 						if($value == 1)
@@ -3418,9 +3412,13 @@ function do_postchecks()
 						elseif ($new)
 							$smcFunc['db_insert']('insert',
 								'{db_prefix}tp_variables',
-								array('type' => 'string', 'value5' => 'int'),
-								array('art_not_approved', $where),
-								array('id')
+								array(  'type' => 'string', 
+                                        'value5' => 'int'
+                                ),
+								array(  'art_not_approved',
+                                        $where
+                                ),
+								array( 'id' )
 							);
 					}
 					else
@@ -3428,7 +3426,7 @@ function do_postchecks()
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET '.$setting.' = {string:val}
-							WHERE id = {int:artid} LIMIT 1',
+							WHERE id = {int:artid}',
 							array('val' => $value, 'artid' => $where)
 						);
 					}
@@ -3441,7 +3439,7 @@ function do_postchecks()
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET options = {string:opt}
-				WHERE id = {int:artid} LIMIT 1',
+				WHERE id = {int:artid}',
 				array(
 					'opt' => implode(',', $options),
 					'artid' => $where,
@@ -3494,7 +3492,7 @@ function get_boards()
 	$request = $smcFunc['db_query']('', '
 		SELECT b.id_board as id, b.name, b.board_order
 		FROM {db_prefix}boards as b
-		WHERE 1
+		WHERE 1=1
 		ORDER BY b.board_order ASC',
 		array()
 	);

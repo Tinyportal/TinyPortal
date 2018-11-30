@@ -93,7 +93,7 @@ function progetAvatars($ids)
 	$request = $smcFunc['db_query']('', '
 		SELECT
 			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address AS email_address,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type
 		FROM {db_prefix}members AS mem
 		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
 		WHERE mem.id_member IN ({array_int:ids})',
@@ -108,8 +108,8 @@ function progetAvatars($ids)
                     'avatar' => $row['avatar'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'ID_ATTACH' => $row['ID_ATTACH'],
-                    'attachmentType' => $row['attachmentType'],
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
                 )
             )['image'];
 		}
@@ -1531,12 +1531,12 @@ function article_author($render = true)
 
 	if(in_array('author', $context['TPortal']['article']['visual_options']))
 	{
-		if($context['TPortal']['article']['dateRegistered'] > 1000)
+		if($context['TPortal']['article']['date_registered'] > 1000)
 			echo '
-		'. $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '">' . $context['TPortal']['article']['realName'] . '</a>';
+		'. $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a>';
 		else
 			echo '&nbsp;
-		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['realName'];
+		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['real_name'];
 	}
 }
 
@@ -1608,7 +1608,7 @@ function article_options($render=true)
 			echo '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
 		// their own article?
-		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['authorID'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0')
+		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['author_id'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0')
 			echo '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
 		else
@@ -1662,13 +1662,13 @@ function article_moreauthor($render = true)
 	{
 		echo '
 	<div class="windowbg2">';
-		if($context['TPortal']['article']['dateRegistered']>1000)
+		if($context['TPortal']['article']['date_registered']>1000)
 			echo '
 		<div class="article_authorinfo tp_pad">
 			<h2 class="author_h2">'.$txt['tp-authorinfo'].'</h2>
-			' . ( !empty($context['TPortal']['article']['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a>' : '') . '
+			' . ( !empty($context['TPortal']['article']['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a>' : '') . '
 			<div class="authortext">
-				<a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '">' . $context['TPortal']['article']['realName'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['article']['dateRegistered']) . $txt['tp-poster3'] .
+				<a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['article']['date_registered']) . $txt['tp-poster3'] .
 				$context['TPortal']['article']['posts'] . $txt['tp-poster4'] . timeformat($context['TPortal']['article']['lastLogin']) . '.
 			</div>
 		</div><br>';
@@ -1677,7 +1677,7 @@ function article_moreauthor($render = true)
 		<div class="article_authorinfo tp_pad">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
 			<div class="authortext">
-				<em>' . $context['TPortal']['article']['realName'] . $txt['tp-poster5'] .  '</em>
+				<em>' . $context['TPortal']['article']['real_name'] . $txt['tp-poster5'] .  '</em>
 			</div>
 		</div>';
 		echo '
@@ -1693,7 +1693,7 @@ function article_avatar($render = true)
 	global $scripturl, $context;
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
-		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['authorID'] . '" title="' . $context['TPortal']['article']['realName'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
+		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
 	else
 		echo '';
 
@@ -2005,12 +2005,12 @@ function blockarticle_author($render = true)
 
 	if(in_array('author',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 	{
-		if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['dateRegistered'] > 1000)
+		if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['date_registered'] > 1000)
 			echo '
-		<span class="article_author">' . $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['authorID'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '</a></span>';
+		<span class="article_author">' . $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['author_id'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '</a></span>';
 		else
 			echo '
-		<span class="article_author">' . $txt['tp-by'] . ' ' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '</span>';
+		<span class="article_author">' . $txt['tp-by'] . ' ' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '</span>';
 	}
 	else
 		echo '';
@@ -2042,13 +2042,13 @@ function blockarticle_moreauthor($render = true)
 
 	if(in_array('avatar', $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 	{
-		if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['dateRegistered'] > 1000)
+		if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['date_registered'] > 1000)
 			echo '
 		<div class="article_authorinfo">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
-			' . ( !empty($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['authorID'] . '" title="' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar'] . '</a>' : '') . '
+			' . ( !empty($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['author_id'] . '" title="' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar'] . '</a>' : '') . '
 			<div class="authortext">
-				<a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['authorID'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['dateRegistered']) . $txt['tp-poster3'] .
+				<a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['author_id'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['date_registered']) . $txt['tp-poster3'] .
 				$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['posts'] . $txt['tp-poster4'] . timeformat($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['lastLogin']) . '.
 			</div>
 		</div>';
@@ -2057,7 +2057,7 @@ function blockarticle_moreauthor($render = true)
 		<div class="article_authorinfo">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
 			<div class="authortext">
-				<em>' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['realName'] . $txt['tp-poster5'] .  '</em>
+				<em>' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . $txt['tp-poster5'] .  '</em>
 			</div>
 		</div>';
 	}

@@ -1256,7 +1256,7 @@ function tp_fetchpermissions($perms)
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT p.permission, m.group_name as groupName, p.id_group as ID_GROUP
+			SELECT p.permission, m.group_name as group_name, p.id_group as id_group
 			FROM ({db_prefix}permissions as p, {db_prefix}membergroups as m)
 			WHERE p.add_deny = {int:deny}
 			AND p.id_group = m.id_group
@@ -1269,7 +1269,7 @@ function tp_fetchpermissions($perms)
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$perm[$row['permission']][$row['ID_GROUP']] = $row['ID_GROUP'];
+				$perm[$row['permission']][$row['id_group']] = $row['id_group'];
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1296,7 +1296,7 @@ function tp_fetchpermissions($perms)
 	{
 		$names = array();
 		$request = $smcFunc['db_query']('', '
-			SELECT m.group_name as groupName, m.id_group as ID_GROUP
+			SELECT m.group_name as group_name, m.id_group as id_group
 			FROM {db_prefix}membergroups as m
 			WHERE m.min_posts = {int:minpost}
 			ORDER BY m.group_name ASC',
@@ -1311,9 +1311,9 @@ function tp_fetchpermissions($perms)
 			);
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$names[$row['ID_GROUP']] = array(
-					'id' => $row['ID_GROUP'],
-					'name' => $row['groupName'],
+				$names[$row['id_group']] = array(
+					'id' => $row['id_group'],
+					'name' => $row['group_name'],
 				);
 			}
 			$smcFunc['db_free_result']($request);
@@ -2165,7 +2165,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	// collect modules and their permissions
 	$result =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_modules
-		WHERE 1',
+		WHERE 1=1',
 		array()
 	);
 	if($smcFunc['db_num_rows']($result) > 0)
@@ -2187,7 +2187,7 @@ function tp_collectArticleIcons()
 	// get all themes for selection
 	$context['TPthemes']  = array();
 	$request =  $smcFunc['db_query']('', '
-		SELECT th.value AS name, th.id_theme as ID_THEME, tb.value AS path
+		SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
 		FROM {db_prefix}themes AS th
 		LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
 		WHERE th.variable = {string:thvar}
@@ -2203,7 +2203,7 @@ function tp_collectArticleIcons()
 		while ($row = $smcFunc['db_fetch_assoc']($request))
 		{
 			$context['TPthemes'][] = array(
-				'id' => $row['ID_THEME'],
+				'id' => $row['id_theme'],
 				'path' => $row['path'],
 				'name' => $row['name']
 			);
@@ -2251,7 +2251,7 @@ function tp_recordevent($date, $id_member, $textvariable, $link, $description, $
             'link'          => 'string',
             'description'   => 'string',
             'allowed'       => 'string',
-            'eventID'       => 'int',
+            'eventid'       => 'int',
             'on'            => 'int',
 		),
 		array($id_member, $date, $textvariable, $link, $description, $allowed, $eventid, 0),
@@ -2295,10 +2295,10 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 	$request = $smcFunc['db_query']('substring', '
 		SELECT
 			m.poster_time, ms.subject, m.id_topic, m.id_member, m.id_msg, b.id_board, b.name AS board_name, t.num_replies, t.num_views,
-			IFNULL(mem.real_name, m.poster_name) AS poster_name, ' . ($user_info['is_guest'] ? '1 AS is_read, 0 AS new_from' : '
-			IFNULL(lt.id_msg, IFNULL(lmr.id_msg, 0)) >= m.id_msg_modified AS is_read,
-			IFNULL(lt.id_msg, IFNULL(lmr.id_msg, -1)) + 1 AS new_from') . ', SUBSTRING(m.body, 1, 384) AS body, m.smileys_enabled, m.icon,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType,  mem.avatar as avy, mem.email_address AS email_address
+			COALESCE(mem.real_name, m.poster_name) AS poster_name, ' . ($user_info['is_guest'] ? '1 AS is_read, 0 AS new_from' : '
+			COALESCE(lt.id_msg, COALESCE(lmr.id_msg, 0)) >= m.id_msg_modified AS is_read,
+			COALESCE(lt.id_msg, COALESCE(lmr.id_msg, -1)) + 1 AS new_from') . ', SUBSTRING(m.body, 1, 384) AS body, m.smileys_enabled, m.icon,
+			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type,  mem.avatar as avy, mem.email_address AS email_address
 		FROM {db_prefix}topics AS t
 			INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_last_msg)
 			INNER JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
@@ -2344,8 +2344,8 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
                     'avatar' => $row['avy'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'ID_ATTACH' => $row['ID_ATTACH'],
-                    'attachmentType' => $row['attachmentType'],
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
                 )
         )['image'];
 
@@ -2998,7 +2998,7 @@ function get_grps($save = true, $noposts = true)
 		);
 	}
     $request = $smcFunc['db_query']('', '
-        SELECT id_group as ID_GROUP, group_name as groupName, min_posts as minPosts
+        SELECT id_group as id_group, group_name as group_name, min_posts as min_posts
         FROM {db_prefix}membergroups
         WHERE '. ($noposts ? 'min_posts = -1 AND id_group > 1' : '1') .'
         ORDER BY id_group'
@@ -3007,9 +3007,9 @@ function get_grps($save = true, $noposts = true)
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
 		$context['TPmembergroups'][] = array(
-			'id' => $row['ID_GROUP'],
-			'name' => $row['groupName'],
-			'posts' => $row['minPosts']
+			'id' => $row['id_group'],
+			'name' => $row['group_name'],
+			'posts' => $row['min_posts']
 		);
 	}
 	$smcFunc['db_free_result']($request);
