@@ -21,7 +21,7 @@ if (!defined('SMF'))
 // TinyPortal init
 function TPortal_init()
 {
-	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version;
+	global $context, $txt, $user_info, $settings, $boarddir, $sourcedir, $modSettings, $forum_version, $db_type;
 
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum']))
@@ -283,8 +283,7 @@ function TP_loadTheme()
 				$request = $smcFunc['db_query']('', '
 						SELECT art.id_theme
 						FROM {db_prefix}tp_articles AS art
-						WHERE featured = {int:feat}',
-							array('feat' => 1)
+						WHERE featured = true' 
 					);
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
@@ -564,11 +563,11 @@ function doTPpage()
 		if(allowedTo('tp_articles'))
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1,
+				SELECT art.*, art.author_id as author_id, art.id_theme as id_theme, var.value1,
 					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
-					art.type as rendertype, IFNULL(mem.real_name,art.author) as realName, mem.avatar,
-					mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
+					art.type as rendertype, COALESCE(mem.real_name,art.author) as real_name, mem.avatar,
+					mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+					COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
 				FROM {db_prefix}tp_articles as art
 				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
@@ -581,10 +580,10 @@ function doTPpage()
 		else
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT art.*, art.author_id as authorID, art.id_theme as ID_THEME, var.value1, var.value2,
+				SELECT art.*, art.author_id as author_id, art.id_theme as id_theme, var.value1, var.value2,
 					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype, mem.email_address AS email_address,
-					IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
+					COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
+					COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
 				FROM {db_prefix}tp_articles as art
 				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
@@ -649,8 +648,8 @@ function doTPpage()
                         'avatar' => $article['avatar'],
                         'email' => $article['email_address'],
                         'filename' => !empty($article['filename']) ? $article['filename'] : '',
-                        'ID_ATTACH' => $article['ID_ATTACH'],
-                        'attachmentType' => $article['attachmentType'],
+                        'id_attach' => $article['id_attach'],
+                        'attachement_type' => $article['attachement_type'],
                      )
                 )['image'];
 
@@ -706,8 +705,8 @@ function doTPpage()
 				$request =  $smcFunc['db_query']('', '
 					SELECT id FROM {db_prefix}tp_articles
 					WHERE author_id = {int:author}
-					AND off = 0',
-					array('author' => $context['TPortal']['article']['authorID'])
+					AND off = false',
+					array('author' => $context['TPortal']['article']['author_id'])
 				);
 				$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
 				$smcFunc['db_free_result']($request);
@@ -718,8 +717,8 @@ function doTPpage()
 
 				// fetch any comments
 				$request =  $smcFunc['db_query']('', '
-					SELECT var.* , IFNULL(mem.real_name,0) as realName,mem.avatar,
-						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
+					SELECT var.* , COALESCE(mem.real_name,0) as real_name,mem.avatar,
+						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 					FROM {db_prefix}tp_variables AS var
 					LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
 					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
@@ -739,8 +738,8 @@ function doTPpage()
                                     'avatar' => $row['avatar'],
                                     'email' => $row['email_address'],
                                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                                    'ID_ATTACH' => $row['ID_ATTACH'],
-                                    'attachmentType' => $row['attachmentType'],
+                                    'id_attach' => $row['id_attach'],
+                                    'attachement_type' => $row['attachement_type'],
                                 )
                         )['image'];
 
@@ -751,12 +750,12 @@ function doTPpage()
 							'timestamp' => $row['value4'],
 							'date' => timeformat($row['value4']),
 							'posterID' => $row['value3'],
-							'poster' => $row['realName'],
+							'poster' => $row['real_name'],
 							'is_new' => ($row['value4']>$last) ? true : false ,
 							'avatar' => array (
 								'name' => &$row['avatar'],
 								'image' => $avatar,
-								'href' => $row['avatar'] == '' ? ($row['ID_ATTACH'] > 0 ? (empty($row['attachmentType']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['ID_ATTACH'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
+								'href' => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachement_type']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
 								'url' => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
 							),
 						);
@@ -847,8 +846,8 @@ function doTPpage()
 						SELECT id, subject, shortname
 						FROM {db_prefix}tp_articles
 						WHERE category = {int:cat}
-						AND off = 0
-						AND approved = 1
+						AND off = false
+						AND approved = true
 						ORDER BY parse',
 						array('cat' => $context['TPortal']['article']['category'])
 					);
@@ -1059,11 +1058,11 @@ function doTPcat()
 
 				$request = $smcFunc['db_query']('', '
 					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body, mem.email_address AS email_address,
-						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
+						art.date, art.category, art.subject, art.author_id as author_id, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
-						art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type,
-						IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
+						art.fileimport, art.topic, art.illustration, COALESCE(art.type, "html") as rendertype ,COALESCE(art.type, "html") as type,
+						COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type
 					FROM {db_prefix}tp_articles AS art
 					LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
@@ -1072,8 +1071,8 @@ function doTPcat()
 					OR (art.pub_start !=0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 					OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-					AND art.off = 0
-					AND art.approved = 1
+					AND art.off = false
+					AND art.approved = true
 					ORDER BY art.sticky desc, art.'.$catsort.' '.$catsort_order.'
 					LIMIT {int:start}, {int:max}',
 					array(
@@ -1100,8 +1099,8 @@ function doTPcat()
                                     'avatar' => $row['avatar'],
                                     'email' => $row['email_address'],
                                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                                    'ID_ATTACH' => $row['ID_ATTACH'],
-                                    'attachmentType' => $row['attachmentType'],
+                                    'id_attach' => $row['id_attach'],
+                                    'attachement_type' => $row['attachement_type'],
                                 )
                         )['image'];
 
@@ -1148,7 +1147,7 @@ function doTPcat()
 					OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 					OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 					OR (art.pub_start !=0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-					AND art.off = 0 AND art.approved = 1',
+					AND art.off = false AND art.approved = true',
 					array('cat' => $category['id'])
 				);
 				if($smcFunc['db_num_rows']($request)>0)
@@ -1287,7 +1286,7 @@ function doTPfrontpage()
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id
 			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var)
-			WHERE art.off = 0
+			WHERE art.off = false
 			AND var.id = art.category
 			' . $artgroups . '
 			AND art.category > 0
@@ -1295,8 +1294,8 @@ function doTPfrontpage()
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1
-			AND art.frontpage = 1'
+			AND art.approved = true
+			AND art.frontpage = true'
 		);
 
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1312,25 +1311,25 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
+				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
-				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
+				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = 0
+			WHERE art.off = false
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = 1
-			AND (art.frontpage = 1 OR art.featured = 1)
+			AND art.approved = true
+			AND (art.frontpage = true OR art.featured = true)
 			ORDER BY art.featured DESC, art.sticky DESC, art.'.$catsort.' '. $catsort_order .'
 			LIMIT {int:start}, {int:max}',
 			array('start' => $start, 'max' => $max)
@@ -1360,8 +1359,8 @@ function doTPfrontpage()
                             'avatar' => $row['avatar'],
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'ID_ATTACH' => $row['ID_ATTACH'],
-                            'attachmentType' => $row['attachmentType'],
+                            'id_attach' => $row['id_attach'],
+                            'attachement_type' => $row['attachement_type'],
                         )
                 )['image'];
 
@@ -1382,23 +1381,23 @@ function doTPfrontpage()
 	{
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
+				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
-				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
+				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = 0
+			WHERE art.off = false
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.featured = 1
-			AND art.approved = 1
+			AND art.featured = true
+			AND art.approved = true
 			LIMIT 1'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1420,8 +1419,8 @@ function doTPfrontpage()
                         'avatar' => $row['avatar'],
                         'email' => $row['email_address'],
                         'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                        'ID_ATTACH' => $row['ID_ATTACH'],
-                        'attachmentType' => $row['attachmentType'],
+                        'id_attach' => $row['id_attach'],
+                        'attachement_type' => $row['attachement_type'],
                     )
             )['image'];
 
@@ -1477,7 +1476,7 @@ function doTPfrontpage()
 		// do some conversion
 		if($catsort == 'date')
             $catsort = 'poster_time';
-		elseif($catsort == 'authorID')
+		elseif($catsort == 'author_id')
             $catsort = 'id_member';
 		elseif($catsort == 'parse' || $catsort == 'id')
             $catsort = 'id_msg';
@@ -1486,10 +1485,10 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, m.body,
-				IFNULL(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
-				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views,t.num_replies as replies, t.locked,
-				IFNULL(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address AS email_address
+				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time as date, mem.avatar,mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, t.id_board as category, b.name as category_name,
+				t.num_replies as numReplies, t.id_topic as id, m.id_member as author_id, t.num_views as views,t.num_replies as replies, t.locked,
+				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address AS email_address
 			FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type !=3)
@@ -1555,8 +1554,8 @@ function doTPfrontpage()
                             'avatar' => $row['avatar'],
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'ID_ATTACH' => $row['ID_ATTACH'],
-                            'attachmentType' => $row['attachmentType'],
+                            'id_attach' => $row['id_attach'],
+                            'attachement_type' => $row['attachement_type'],
                         )
                 )['image'];
 
@@ -1591,17 +1590,18 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('',
 		'SELECT art.id, art.date, art.sticky, art.featured
-			FROM ({db_prefix}tp_articles AS art, {db_prefix}tp_variables AS var)
-			WHERE art.off = 0
-			AND var.id = art.category
+			FROM {db_prefix}tp_articles AS art
+			INNER JOIN {db_prefix}tp_variables AS var
+            ON var.id = art.category
+			WHERE art.off = false
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = 1
-			AND (art.frontpage = 1 OR art.featured = 1)
+			AND art.approved = true
+			AND (art.frontpage = true OR art.featured = true)
 			ORDER BY art.featured DESC, art.sticky desc, art.date DESC'
 		);
 
@@ -1624,11 +1624,13 @@ function doTPfrontpage()
 		if($context['TPortal']['front_type'] == 'forum_articles')
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
-				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
-				WHERE t.id_board = b.id_board
-				AND t.id_first_msg = m.id_msg
-				AND t.id_board IN({raw:board})
+				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
+				FROM {db_prefix}topics AS t
+                INNER JOIN {db_prefix}boards AS b
+                ON t.id_board = b.id_board
+                INNER JOIN {db_prefix}messages AS m
+				ON t.id_first_msg = m.id_msg
+				WHERE t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC
 				LIMIT {int:max}',
@@ -1638,11 +1640,13 @@ function doTPfrontpage()
 		else
         {
 			$request =  $smcFunc['db_query']('', '
-				SELECT t.id_first_msg as ID_FIRST_MSG , m.poster_time as date
-				FROM ({db_prefix}topics as t, {db_prefix}boards as b, {db_prefix}messages as m)
-				WHERE t.id_board = b.id_board
-				AND t.id_first_msg = m.id_msg
-				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) .')
+				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
+				FROM ({db_prefix}topics AS t
+                INNER JOIN {db_prefix}boards AS b
+				ON t.id_board = b.id_board
+                INNER JOIN {db_prefix}messages AS m
+				ON t.id_first_msg = m.id_msg
+				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC'
 			);
@@ -1650,8 +1654,9 @@ function doTPfrontpage()
 
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-				$posts[$row['date'].'_' . sprintf("%06s", $row['ID_FIRST_MSG'])] = 'm_' . $row['ID_FIRST_MSG'];
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
+				$posts[$row['date'].'_' . sprintf("%06s", $row['id_first_msg'])] = 'm_' . $row['id_first_msg'];
+            }
 			$smcFunc['db_free_result']($request);
 		}
 
@@ -1703,17 +1708,18 @@ function doTPfrontpage()
 		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
 			    SELECT m.subject, m.body,
-				COALESCE(mem.real_name, m.poster_name) AS realName, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-				COALESCE(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, t.id_board as category, b.name as category_name,
-				t.num_replies as numReplies, t.id_topic as id, m.id_member as authorID, t.num_views as views, t.num_replies as replies, t.locked,
+				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, t.id_board as category, b.name as category_name,
+				t.num_replies as numReplies, t.id_topic as id, m.id_member as author_id, t.num_views as views, t.num_replies as replies, t.locked,
 				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address AS email_address
-				FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
+				FROM {db_prefix}topics AS t
+                INNER JOIN {db_prefix}messages AS m
+                    ON  m.id_msg = t.id_first_msg
 				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
-				LEFT JOIN {db_prefix}attachments AS thumb ON (t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 AND thumb.fileext IN ("jpg","gif","png") )
+				LEFT JOIN {db_prefix}attachments AS thumb ON (t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 AND thumb.fileext IN (\'jpg\',\'gif\',\'png\') )
 				LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 				WHERE t.id_first_msg IN ({array_int:posts})
-				AND m.id_msg = t.id_first_msg
 				ORDER BY date DESC, thumb.id_attach ASC',
 				array('posts' => $mposts)
 			);
@@ -1767,8 +1773,8 @@ function doTPfrontpage()
                             'avatar' => $row['avatar'],
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'ID_ATTACH' => $row['ID_ATTACH'],
-                            'attachmentType' => $row['attachmentType'],
+                            'id_attach' => $row['id_attach'],
+                            'attachement_type' => $row['attachement_type'],
                         )
                 )['image'];
 
@@ -1784,12 +1790,12 @@ function doTPfrontpage()
 		{
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
-					art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
+					art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
 					art.fileimport, art.topic, art.illustration, art.type as rendertype,
-					IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
+					COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+					COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 				FROM {db_prefix}tp_articles AS art
 				LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 				LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1810,8 +1816,8 @@ function doTPfrontpage()
                                 'avatar' => $row['avatar'],
                                 'email' => $row['email_address'],
                                 'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                                'ID_ATTACH' => $row['ID_ATTACH'],
-                                'attachmentType' => $row['attachmentType'],
+                                'id_attach' => $row['id_attach'],
+                                'attachement_type' => $row['attachement_type'],
                             )
                     )['image'];
 
@@ -1856,15 +1862,22 @@ function doTPfrontpage()
 
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
-	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
+	//$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
+
+    $access = '';
+    foreach($mygroups as $sql) {
+        $access .= "'" . $sql ."' IN ( access ) OR ";
+    }
+    $access = rtrim($access,' OR ');
+
 
     if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
-		$access = '1';
+		$access = '1=1';
 
 	// get the blocks
 	$request =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_blocks
-		WHERE off = 0
+		WHERE off = false
 		AND bar = 4
 		AND '. $access .'
 		ORDER BY pos,id ASC'
@@ -1945,20 +1958,20 @@ function doTPfrontpage()
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
-				IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
+				COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type !=3)
 			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 			WHERE ' . $fetchart.'
-			AND art.off = 0
+			AND art.off = false
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
 			AND art.category > 0
-			AND art.approved = 1
+			AND art.approved = true
 			AND art.category > 0 AND art.category < 9999'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -1971,8 +1984,8 @@ function doTPfrontpage()
                             'avatar' => $row['avatar'],
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'ID_ATTACH' => $row['ID_ATTACH'],
-                            'attachmentType' => $row['attachmentType'],
+                            'id_attach' => $row['id_attach'],
+                            'attachement_type' => $row['attachement_type'],
                         )
                 )['image'];
 
@@ -1989,17 +2002,17 @@ function doTPfrontpage()
     if(isset($test_catbox) && $fetchtitles != '')
 	{
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, art.subject, art.date, art.category, art.author_id as authorID, art.shortname,
-			IFNULL(mem.real_name,art.author) as real_name FROM {db_prefix}tp_articles AS art
+			SELECT art.id, art.subject, art.date, art.category, art.author_id as author_id, art.shortname,
+			COALESCE(mem.real_name,art.author) as real_name FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE ' . 	$fetchtitles . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.off = 0
+			AND art.off = false
 			AND art.category > 0
-			AND art.approved = 1'
+			AND art.approved = true'
 		);
 
 		if (!isset($context['TPortal']['blockarticle_titles']))
@@ -2014,7 +2027,7 @@ function doTPfrontpage()
 					'subject' => $row['subject'],
 					'shortname' => $row['shortname'] != '' ? $row['shortname'] : $row['id'] ,
 					'category' => $row['category'],
-					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['real_name'].'</a>',
+					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 				);
 			}
 			$smcFunc['db_free_result']($request);
@@ -2147,32 +2160,38 @@ function doTPblocks()
 	$sqlarray[] = 'actio=allpages';
 
 	// set the location access
-	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+    $access2 = '';
+    foreach($sqlarray as $sql) {
+        $access2 .= "'" . $sql ."' IN ( access2 ) OR ";
+    }
+    $access2 = rtrim($access2,' OR ');
 
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
-
-	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
+    $access = '';
+    foreach($mygroups as $sql) {
+        $access .= "'" . $sql ."' IN ( access ) OR ";
+    }
+    $access = rtrim($access,' OR ');
 
 	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
-		$access = '1';
+		$access = '1=1';
 
 	// get the blocks
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_blocks
-		WHERE off = {int:off}
+		WHERE off = false
 		AND bar != {int:bar}
-		AND (' . (!empty($_GET['page']) ? 'FIND_IN_SET({string:page}, access2) OR ' : '') . '
-		' . (!empty($_GET['cat']) ? 'FIND_IN_SET({string:cat}, access2) OR ' : '') . '
-		' . (!empty($_GET['shout']) ? 'FIND_IN_SET({string:shout}, access2) OR ' : '') . '
-		' . (!empty($front) ? 'FIND_IN_SET({string:front}, access2) OR ' : '') . '
-		' . (!empty($down) ? 'FIND_IN_SET({string:down}, access2) OR ' : '') . '
-		' . (!empty($context['TPortal']['uselangoption']) ? 'FIND_IN_SET({string:lang}, access2) OR ' : '') . '
+		AND (' . (!empty($_GET['page']) ? '{string:page} IN ( access2 ) OR ' : '') . '
+		' . (!empty($_GET['cat']) ? '{string:cat} IN ( access2 ) OR ' : '') . '
+		' . (!empty($_GET['shout']) ? '{string:shout} IN ( access2 ) OR ' : '') . '
+		' . (!empty($front) ? '{string:front} IN ( access2 ) OR ' : '') . '
+		' . (!empty($down) ? '{string:down} IN ( access2 ) OR ' : '') . '
+		' . (!empty($context['TPortal']['uselangoption']) ? '{string:lang} IN ( access2 ) OR ' : '') . '
 		' . $access2 . ')
 		AND ' . $access . '
 		ORDER BY bar, pos, id ASC',
 		array(
-			'off' => 0,
 			'bar' => 4,
 			'lang' => 'tlang=' . $user_info['language'],
 			'page' => !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '',
@@ -2260,19 +2279,19 @@ function doTPblocks()
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
-			IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
-			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
+			COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id)
 			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 			WHERE ' . $fetchart. '
-			AND art.off = 0
+			AND art.off = false
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1
+			AND art.approved = true
 			AND art.category > 0 AND art.category < 9999'
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2297,8 +2316,8 @@ function doTPblocks()
                             'avatar' => $article['avatar'],
                             'email' => $article['email_address'],
                             'filename' => !empty($article['filename']) ? $article['filename'] : '',
-                            'ID_ATTACH' => $article['ID_ATTACH'],
-                            'attachmentType' => $article['attachmentType'],
+                            'id_attach' => $article['id_attach'],
+                            'attachement_type' => $article['attachement_type'],
                         )
                 )['image'];
 
@@ -2315,16 +2334,17 @@ function doTPblocks()
     if(isset($test_catbox) && $fetchtitles != '')
 	{
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, art.subject, art.date, art.category, art.author_id as authorID, art.shortname,
-	 		IFNULL(mem.real_name,art.author) as realName FROM {db_prefix}tp_articles AS art
+			SELECT art.id, art.subject, art.date, art.category, art.author_id AS author_id, art.shortname,
+	 		COALESCE(mem.real_name,art.author) as real_name 
+            FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE  '. 	$fetchtitles . '
-			AND art.off = 0
+			AND art.off = false
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1'
+			AND art.approved = true'
 		);
 
 		if (!isset($context['TPortal']['blockarticle_titles']))
@@ -2339,7 +2359,7 @@ function doTPblocks()
 					'subject' => $row['subject'],
 					'shortname' => $row['shortname']!='' ?$row['shortname'] : $row['id'] ,
 					'category' => $row['category'],
-					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
+					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 				);
 			}
 			$smcFunc['db_free_result']($request);

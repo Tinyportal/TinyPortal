@@ -107,7 +107,7 @@ $tables = array(
 			array('name' => 'access', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'bar', 'type' => 'smallint', 'size' => 4, 'default' => 0 ),
 			array('name' => 'pos', 'type' => 'int', 'size' => 11, 'default' => 0 ),
-			array('name' => 'off', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'off', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
 			array('name' => 'visible', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'var1', 'type' => 'int', 'size' => 11, 'default' => 0 ),
 			array('name' => 'var2', 'type' => 'int', 'size' => 11, 'default' => 0 ),
@@ -147,15 +147,15 @@ $tables = array(
             array('name' => 'date', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'intro', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'useintro', 'type' => 'smallint', 'size' => 4, 'default' => 1),
+            array('name' => 'useintro', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 1 : 'true') ),
             array('name' => 'category', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
-            array('name' => 'frontpage', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'frontpage', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
             array('name' => 'subject', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '') ),
             array('name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'author', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '') ),
             array('name' => 'frame', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '') ),
-            array('name' => 'approved', 'type' => 'smallint', 'size' => 4, 'default' => 1,),
-            array('name' => 'off', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'approved', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 1 : 'true') ),
+            array('name' => 'off', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
             array('name' => 'options', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'parse', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'comments', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
@@ -165,14 +165,14 @@ $tables = array(
             array('name' => 'voters', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
             array('name' => 'shortname', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'sticky', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'sticky', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
             array('name' => 'fileimport', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'topic', 'type' => 'int', 'size' => 11, 'default' => 0,),
-            array('name' => 'locked', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'locked', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
             array('name' => 'illustration', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'headers', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'featured', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
+            array('name' => 'featured', 'type' => ($db_type == 'mysql' ? 'tinyint' : 'boolean' ), 'default' => ($db_type == 'mysql' ? 0 : 'false') ),
             array('name' => 'pub_start', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'pub_end', 'type' => 'int', 'size' => 11, 'default' => 0,),
         ),
@@ -713,7 +713,9 @@ if($convertblocks)
 addDefaults();
 
 // Add the changes for articles
-articleUpdates();
+if($db_type == 'mysql') {
+    articleUpdates();
+}
 
 // make sure TPShout is available
 $request = $smcFunc['db_query']('', '

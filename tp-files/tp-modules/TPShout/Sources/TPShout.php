@@ -687,8 +687,8 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
                     'avatar' => $row['avatar'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'ID_ATTACH' => $row['ID_ATTACH'],
-                    'attachmentType' => $row['attachmentType'],
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
                 )
             )['image'];
 			$memberdata[$row['id_member']] = $row;
@@ -701,7 +701,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		foreach($fetched as $b => $row)
 		{
 			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
-			$row['realName'] = !empty($memberdata[$row['member_id']]['realName']) ? $memberdata[$row['member_id']]['realName'] : $row['member_link'];
+			$row['realName'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : $memberdata[$row['member_id']]['pg_online_color'];
 			$ns[] = template_singleshout($row);

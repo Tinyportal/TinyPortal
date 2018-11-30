@@ -221,7 +221,7 @@ function TPmodules()
 		$request = $smcFunc['db_query']('', '
 			SELECT art.subject, memb.real_name as author, art.author_id as authorID, var.value1, var.value2, var.value3,
 			var.value5, var.value4, mem.real_name as realName,
-			' . ($user_info['is_guest'] ? '1' : '(IFNULL(log.item, 0) >= var.value4)') . ' AS isRead
+			' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.value4)') . ' AS isRead
 			FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
 			LEFT JOIN {db_prefix}members as memb ON (art.author_id = memb.id_member)
 			LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
@@ -666,7 +666,7 @@ function TPmodules()
 				'approved' => $row['approved'],
 				'off' => $row['off'],
 				'options' => $row['options'],
-				'ID_THEME' => $row['id_theme'],
+				'id_theme' => $row['id_theme'],
 				'shortname' => $row['shortname'],
 				'sticky' => $row['sticky'],
 				'locked' => $row['locked'],
