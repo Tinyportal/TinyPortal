@@ -1560,7 +1560,7 @@ function doTPfrontpage()
         {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
-				FROM ({db_prefix}topics AS t
+				FROM {db_prefix}topics AS t
                 INNER JOIN {db_prefix}boards AS b
 				ON t.id_board = b.id_board
                 INNER JOIN {db_prefix}messages AS m

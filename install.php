@@ -183,7 +183,7 @@ $tables = array(
     'tp_article_comments' => array (
         'columns' => array (
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'article_id', 'type' => 'init', 'size' => 11, 'default' => 0,),
+            array('name' => 'article_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'datetime', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'comment', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
