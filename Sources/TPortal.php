@@ -50,33 +50,35 @@ function TPortal_init()
 	require_once($boarddir. '/SSI.php');
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
-	if (!isset($modSettings['jquery_source']))
-		$context['html_headers'] .= '
-			<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>';
+	if (!isset($modSettings['jquery_source'])) {
+		$context['html_headers'] .= '<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>';
+    }
 
 	fetchTPhooks();
 	doModules();
 
 	// set up the layers, but not for certain actions
-	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer']))
+	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer'])) {
 		$context['template_layers'][] = $context['TPortal']['hooks']['tp_layer'];
+    }
 
 	loadtemplate('TPsubs');
 	loadtemplate('TPBlockLayout');
 
 	// is the permanent theme option set?
-	if(isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged'])
+	if(isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged']) {
 		TP_permaTheme($_GET['theme']);
+    }
 
 	// do after action
-	if(isset($_GET['page']) && !isset($context['current_action']))
+	if(isset($_GET['page']) && !isset($context['current_action'])) {
 		$context['shortID'] = doTPpage();
-	elseif(isset($_GET['cat']))
+    }
+	else if(isset($_GET['cat'])) {
 		$context['catshortID'] = doTPcat();
-	else
-	{
-		if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
-			doTPfrontpage();
+    }
+	else if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+		doTPfrontpage();
 	}
 
 	// determine the blocks
@@ -87,36 +89,41 @@ function TPortal_init()
 	TP_loadCSS();
 
 	// if we are in permissions admin section, load all permissions
-	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions'))
+	if((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions')) {
 		TPcollectPermissions();
+    }
 
 	// Show search/frontpage topic layers?
 	tpDoTagSearchLayers();
 
 	// any modules needed to load then?
-	if(!empty($context['TPortal']['always_loaded']) && count($context['TPortal']['always_loaded']) > 0)
-	{
-		foreach($context['TPortal']['always_loaded'] as $loaded => $fil)
+	if(!empty($context['TPortal']['always_loaded']) && count($context['TPortal']['always_loaded']) > 0) {
+		foreach($context['TPortal']['always_loaded'] as $loaded => $fil) {
 			require_once($boarddir. '/tp-files/tp-modules/'. $fil);
+        }
 	}
 	// set cookie change for selected upshrinks
 	tp_setupUpshrinks();
 
 	// finally..any errors finding an article or category?
-	if(!empty($context['art_error']))
+	if(!empty($context['art_error'])) {
 		fatal_error($txt['tp-articlenotexist'], false);
-	if(!empty($context['cat_error']))
+    }
+
+	if(!empty($context['cat_error'])) {
 		fatal_error($txt['tp-categorynotexist'], false);
+    }
 
 	// let a module take over
-	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action']))
-	{
+	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action'])) {
 		// let the module take over
 		require_once($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['sourcefile']);
-		if(function_exists($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']))
+		if(function_exists($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function'])) {
 			call_user_func($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']);
-		else
+        }
+		else {
 			echo $txt['tp-nomodule'];
+        }
 	}
 }
 
@@ -124,12 +131,13 @@ function addPromoteButton(&$normal_buttons)
 {
 	global $context, $scripturl;
 
-	if(allowedTo(array('tp_settings')))
-	{
-		if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics'])))
+	if(allowedTo(array('tp_settings'))) {
+		if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
 			$normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
-		else
+        }
+		else {
 			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+        }
 	}
 }
 
@@ -138,36 +146,45 @@ function TP_whichHideBars()
 	global $maintenance, $context;
 
 	// if we are in maintance mode, just hide panels
-	if (!empty($maintenance) && !allowedTo('admin_forum'))
+	if (!empty($maintenance) && !allowedTo('admin_forum')) {
 		tp_hidebars('all');
+    }
 		
 	// for some very large forum sections, give the option to hide bars
-	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile')
+	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile') {
 		tp_hidebars('all');
-	elseif($context['TPortal']['hidebars_pm'] == '1' && $context['TPortal']['action'] == 'pm')
+    }
+	else if($context['TPortal']['hidebars_pm'] == '1' && $context['TPortal']['action'] == 'pm') {
 		tp_hidebars('all');
-	elseif($context['TPortal']['hidebars_calendar'] == '1' && $context['TPortal']['action'] == 'calendar')
+    }
+	else if($context['TPortal']['hidebars_calendar'] == '1' && $context['TPortal']['action'] == 'calendar') {
 		tp_hidebars('all');
-	elseif($context['TPortal']['hidebars_search'] == '1' && in_array($context['TPortal']['action'], array('search', 'search2')))
+    }
+	else if($context['TPortal']['hidebars_search'] == '1' && in_array($context['TPortal']['action'], array('search', 'search2'))) {
 		tp_hidebars('all');
-	elseif($context['TPortal']['hidebars_memberlist'] == '1' && $context['TPortal']['action'] == 'mlist')
+    }
+	else if($context['TPortal']['hidebars_memberlist'] == '1' && $context['TPortal']['action'] == 'mlist') {
 		tp_hidebars('all');
+    }
 
 	// if custom actions is specified, hide panels there as well
-	if(!empty($context['TPortal']['hidebars_custom']))
-	{
+	if(!empty($context['TPortal']['hidebars_custom'])) {
 		$cactions = explode(',', $context['TPortal']['hidebars_custom']);
-		if(in_array($context['TPortal']['action'], $cactions))
+		if(in_array($context['TPortal']['action'], $cactions)) {
 			tp_hidebars('all');
+        }
 	}
 
 	// finally..wap modes should not display the bars
-	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode']))
+	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode'])) {
 		tp_hidebars('all');
+    }
 
 	// maybe we are at the password pages?
-	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2')))
+	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2'))) {
 		tp_hidebars('all');
+    }
+
 }
 
 function TP_loadCSS()
