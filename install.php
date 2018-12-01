@@ -180,6 +180,18 @@ $tables = array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
+    'tp_article_comments' => array (
+        'columns' => array (
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
+            array('name' => 'article_id', 'type' => 'init', 'size' => 11, 'default' => 0,),
+            array('name' => 'datetime', 'type' => 'int', 'size' => 11, 'default' => 0,),
+            array('name' => 'comment', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
+        ),
+        'indexes' => array (
+            array('type' => 'primary', 'columns' => array('id')),
+        ),
+    ),
     'tp_dlmanager' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
@@ -699,8 +711,7 @@ $smcFunc['db_query']('', '
 $render .= '<li>Updated access field of blocks</li>';
 
 
-if($convertblocks)
-{
+if($convertblocks) {
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_variables
 		SET value3 = {string:val3}
@@ -958,6 +969,7 @@ function articleUpdates()
 		}
 	}
 }
+
 function addDefaults()
 {
 	global $smcFunc, $render;
@@ -975,21 +987,21 @@ function addDefaults()
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_dlmanager LIMIT 1'
 	);
-	if ($smcFunc['db_num_rows']($request) < 1)
+	if ($smcFunc['db_num_rows']($request) < 1) {
 		$smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_dlmanager',
 			array('name' => 'string', 'access' => 'string', 'type' => 'string'),
 			array('General', '-1,0,1', 'dlcat'),
 			array('id')
 		);
+    }
 
 	// Check for blocks in table, if none insert default blocks.
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_blocks LIMIT 1'
 	);
 
-	if ($smcFunc['db_num_rows']($request) < 1)
-	{
+	if ($smcFunc['db_num_rows']($request) < 1) {
 		$blocks = array(
 			'online' =>array(
 				'type' => 6,
@@ -1279,7 +1291,6 @@ function tpListImages()
             array('id')
         );
     }
-
 }
 
 function checkTextColumnNull($table)

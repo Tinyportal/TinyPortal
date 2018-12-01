@@ -1275,13 +1275,20 @@ function doTPfrontpage()
 	$start = $context['TPortal']['mystart'];
 
 	// fetch the articles, sorted
-	if($context['TPortal']['front_type'] == 'articles_only')
-	{
+	if($context['TPortal']['front_type'] == 'articles_only') {
 		// first, get all available
-		if(!$context['user']['is_admin'])
-			$artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
-		else
-			$artgroups = '';
+		$artgroups = '';
+		if(!$context['user']['is_admin']) {
+            global $db_type;
+            if($db_type == 'mysql') {
+			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
+            }
+            else {
+                foreach($user_info['groups'] as $k => $v) {
+                    $artgroups .= "AND '.$v.' = ANY (string_to_array(var.value3, ',' ) )";
+                }
+            }
+        }
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id
@@ -1576,12 +1583,19 @@ function doTPfrontpage()
 	}
 	elseif(in_array($context['TPortal']['front_type'], array('forum_articles', 'forum_selected_articles')))
 	{
-
 		// first, get all available
-		if(!$context['user']['is_admin'])
-			$artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
-		else
-			$artgroups = '';
+		$artgroups = '';
+		if(!$context['user']['is_admin']) {
+            global $db_type;
+            if($db_type == 'mysql') {
+			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
+            }
+            else {
+                foreach($user_info['groups'] as $k => $v) {
+                    $artgroups .= "AND '.$v.' = ANY (string_to_array(var.value3, ',' ) )";
+                }
+            }
+        }
 
 		$totalmax = 200;
 		loadLanguage('Stats');
