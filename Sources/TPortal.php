@@ -1292,7 +1292,8 @@ function doTPfrontpage()
 	$start = $context['TPortal']['mystart'];
 
 	// fetch the articles, sorted
-	if($context['TPortal']['front_type'] == 'articles_only') {
+	switch($context['TPortal']['front_type']) {
+        case 'articles_only': 
 		// first, get all available
 		$artgroups = '';
 		if(!$context['user']['is_admin']) {
@@ -1399,10 +1400,8 @@ function doTPfrontpage()
 			}
 			$smcFunc['db_free_result']($request);
 		}
-	}
-	// fetch the articles, sorted
-	elseif($context['TPortal']['front_type'] == 'single_page')
-	{
+        break;
+    case 'single_page':
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
@@ -1424,8 +1423,7 @@ function doTPfrontpage()
 			AND art.approved = 1
 			LIMIT 1'
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['category'] = array(
 				'articles' => array(),
 				'col1' => array(),
@@ -1451,9 +1449,9 @@ function doTPfrontpage()
 			$context['TPortal']['category']['featured'] = $row;
 			$smcFunc['db_free_result']($request);
 		}
-	}
-	elseif(in_array($context['TPortal']['front_type'], array('forum_only', 'forum_selected')))
-	{
+        break;
+	case 'forum_only':
+    case 'forum_selected':
 		$totalmax = 200;
 
 		loadLanguage('Stats');
@@ -1597,9 +1595,9 @@ function doTPfrontpage()
 			}
 			$smcFunc['db_free_result']($request);
 		}
-	}
-	elseif(in_array($context['TPortal']['front_type'], array('forum_articles', 'forum_selected_articles')))
-	{
+        break;
+    case 'forum_articles':
+    case 'forum_selected_articles':
 		// first, get all available
 		$artgroups = '';
 		if(!$context['user']['is_admin']) {
@@ -1772,20 +1770,18 @@ function doTPfrontpage()
 		unset($posts);
 		$posts = array();
 		// insert the forumposts into $posts
-		if($request && $smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
+		if($request && $smcFunc['db_num_rows']($request) > 0) {
+			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				$length = $context['TPortal']['frontpage_limit_len'];
-				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
-				{
+				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
 					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
 
 					// The first space or line break. (<br />, etc.)
 					$cutoff = max(strrpos($row['body'], ' '), strrpos($row['body'], '<'));
 
-					if ($cutoff !== false)
+					if ($cutoff !== false) {
 						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
+                    }
 
 					$row['body'] .= '... <p><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
 				}
@@ -1795,8 +1791,9 @@ function doTPfrontpage()
 				$row['frame'] = 'theme';
 				$row['boardnews'] = 1;
 
-				if(!isset($context['TPortal']['frontpage_visopts']))
+				if(!isset($context['TPortal']['frontpage_visopts'])) {
 					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
+                }
 
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
@@ -1809,16 +1806,15 @@ function doTPfrontpage()
                         )
                 )['image'];
 
-				if(!empty($row['thumb_id']))
+				if(!empty($row['thumb_id'])) {
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
-
+                }
 				$posts[$row['date'].'0' . sprintf("%06s", $row['id'])] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 		}
 		// next up is articles
-		if(count($aposts) > 0)
-		{
+		if(count($aposts) > 0) {
 			$request =  $smcFunc['db_query']('', '
 				SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
 					art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
@@ -1835,10 +1831,8 @@ function doTPfrontpage()
 				ORDER BY art.featured desc, art.sticky desc, art.' . $catsort .' ' . $catsort_order,
 				array('artid' => $aposts)
 			);
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
-				while($row = $smcFunc['db_fetch_assoc']($request))
-				{
+			if($smcFunc['db_num_rows']($request) > 0) {
+				while($row = $smcFunc['db_fetch_assoc']($request)) {
 					// expand the vislaoptions
 					$row['visual_options'] = explode(',', $row['options']);
 					$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
@@ -1854,10 +1848,12 @@ function doTPfrontpage()
 
                    	// we need some trick to put featured/sticky on top
 					$sortdate = $row['date'];
-					if($row['sticky'] == 1)
+					if($row['sticky'] == 1) {
 						$sortdate = $row['date'] + $year;
-					if($row['featured'] == 1)
+                    }
+					if($row['featured'] == 1) {
 						$sortdate = $row['date'] + $year + $year;
+                    }
 
 					$posts[$sortdate.'0' . sprintf("%06s", $row['id'])] = $row;
 				}
@@ -1873,17 +1869,20 @@ function doTPfrontpage()
 		ksort($posts,SORT_NUMERIC);
 		$all = array_reverse($posts);
 
-		foreach($all as $p => $row)
-		{
-			if($counter == 0)
+		foreach($all as $p => $row) {
+			if($counter == 0) {
 				$context['TPortal']['category']['featured'] = $row;
-			elseif($counter < $col1 && $counter > 0)
+            }
+			else if($counter < $col1 && $counter > 0) {
 				$context['TPortal']['category']['col1'][] = $row;
-			elseif($counter > $col1 || $counter == $col1)
+            }
+			else if($counter > $col1 || $counter == $col1) {
 				$context['TPortal']['category']['col2'][] = $row;
+            }
 			$counter++;
 		}
-	}
+        break;
+    }
 
 	// collect up frontblocks
 	$blocks = array('front' => array());
