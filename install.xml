@@ -62,9 +62,7 @@
 		$id_theme = $modSettings['theme_guests'];]]></search>
 			<add><![CDATA[
 	// TinyPortal
-	$newtheme = TP_loadTheme();
-	if($newtheme != $id_theme && $newtheme > 0)
-		$id_theme = $newtheme;
+	tpLoadTheme(&id_theme);
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>
