@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.1
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1478,7 +1478,7 @@ function do_articles()
 	if(!isset($show_nocategory))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT DISTINCT var.id as id, var.value1 as name, var.value2 as parent
+			SELECT DISTINCT var.id AS id, var.value1 AS name, var.value2 AS parent
 			FROM {db_prefix}tp_variables AS var
 			WHERE var.type = {string:type}
 			' . (isset($where) ? 'AND var.value2 = {int:whereval}' : '') . '
@@ -1712,14 +1712,14 @@ function do_articles()
 		$smcFunc['db_free_result']($request);
 
 		$request = $smcFunc['db_query']('', '
-			SELECT art.id, art.date, art.frontpage, art.category, art.author_id as author_id,
-				COALESCE(mem.real_name, art.author) as author, art.subject, art.approved, art.sticky,
-				art.type, art.featured, art.locked, art.off, art.parse as pos
+			SELECT art.id, art.date, art.frontpage, art.category, art.author_id AS author_id,
+				COALESCE(mem.real_name, art.author) AS author, art.subject, art.approved, art.sticky,
+				art.type, art.featured, art.locked, art.off, art.parse AS pos
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE art.category = {int:cat}
 			ORDER BY art.{raw:sort} {raw:sorter}
-			LIMIT {int:start}, 15',
+			LIMIT 15 OFFSET {int:start}',
 			array('cat' => $where,
 				'sort' => $sort,
 				'sorter' => in_array($sort, array('sticky', 'locked', 'frontpage', 'date', 'active')) ? 'DESC' : 'ASC',

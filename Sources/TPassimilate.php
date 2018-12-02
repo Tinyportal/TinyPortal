@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.1
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -110,7 +110,7 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 1.6.1">&copy; 2005-2018</a>';
+	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 2.0.0">&copy; 2005-2018</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
@@ -414,7 +414,7 @@ function tpAddProfileMenu(&$profile_areas)
 	}
 }
 
-function addTPActions(&$actionArray)
+function tpAddActions(&$actionArray)
 {
 	$actionArray = array_merge(
 		array(
@@ -602,15 +602,6 @@ function tpIntegrateRedirect(&$setLocation, &$refresh, &$permanent)
 
 }
 
-function tpLoadTheme(&$id_theme)
-{
-
-    $newtheme = TP_loadTheme();
-	if($newtheme != $id_theme && $newtheme > 0)
-		$id_theme = $newtheme;
-
-}
-
 function tpDoTagSearchLayers()
 {
 	global $context;
@@ -621,6 +612,109 @@ function tpDoTagSearchLayers()
 
 }
 
+function tpAddPromoteButton(&$normal_buttons)
+{
+	global $context, $scripturl;
+
+	if(allowedTo(array('tp_settings'))) {
+		if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
+			$normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+        }
+		else {
+			$normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+        }
+	}
+}
+
+function tpLoadTheme(&$id_theme)
+{
+	global $sourcedir, $smcFunc, $modSettings;
+
+	require_once($sourcedir.'/TPSubs.php');
+
+	$theme = 0;
+
+	// are we on a article? check it for custom theme
+	if(isset($_GET['page']) && !isset($_GET['action'])) {
+		if (($theme = cache_get_data('tpArticleTheme', 120)) == null) {
+			// fetch the custom theme if any
+			$pag = tp_sanitize($_GET['page']);
+			if (is_numeric($pag)) {
+				$request = $smcFunc['db_query']('', '
+                    SELECT id_theme FROM {db_prefix}tp_articles
+                    WHERE id = {int:page}',
+                    array('page' => (int) $pag)
+                );
+			}
+			else {
+				$request =  $smcFunc['db_query']('', '
+                    SELECT id_theme FROM {db_prefix}tp_articles
+                    WHERE shortname = {string:short}',
+                    array('short' => $pag)
+                );
+			}
+			if($smcFunc['db_num_rows']($request) > 0) {
+				$theme = $smcFunc['db_fetch_row']($request)[0];
+				$smcFunc['db_free_result']($request);
+			}
+
+			if (!empty($modSettings['cache_enable'])) {
+				cache_put_data('tpArticleTheme', $theme, 120);
+            }
+		}
+	}
+	// are we on frontpage? and it shows fetured article?
+	else if(!isset($_GET['page']) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+		if (($theme = cache_get_data('tpFrontTheme', 120)) == null) {
+			// fetch the custom theme if any
+			$request = $smcFunc['db_query']('', '
+					SELECT COUNT(*) FROM {db_prefix}tp_settings
+					WHERE name = {string:name}
+					AND value = {string:value}',
+					array('name' => 'front_type', 'value' => 'single_page')
+				);
+			if($smcFunc['db_num_rows']($request) > 0) {
+				$smcFunc['db_free_result']($request);
+                $request = $smcFunc['db_query']('', '
+                    SELECT art.id_theme
+                    FROM {db_prefix}tp_articles AS art
+                    WHERE featured = 1' 
+                );
+                if($smcFunc['db_num_rows']($request) > 0) {
+                    $theme = $smcFunc['db_fetch_row']($request)[0];
+                    $smcFunc['db_free_result']($request);
+                }
+            }
+            if (!empty($modSettings['cache_enable'])) {
+                cache_put_data('tpFrontTheme', $theme, 120);
+            }
+        }
+    }
+    // how about dlmanager, any custom theme there?
+    else if(isset($_GET['action']) && $_GET['action'] == 'tpmod' && isset($_GET['dl'])) {
+        if (($theme = cache_get_data('tpDLTheme', 120)) == null) {
+            // fetch the custom theme if any
+            $request =  $smcFunc['db_query']('', '
+                SELECT value FROM {db_prefix}tp_settings
+                WHERE name = {string:name}',
+                array('name' => 'dlmanager_theme')
+            );
+            if($smcFunc['db_num_rows']($request) > 0) {
+                $theme = $smcFunc['db_fetch_row']($request)[0];
+                $smcFunc['db_free_result']($request);
+            }
+            if (!empty($modSettings['cache_enable'])) {
+                cache_put_data('tpDLTheme', $theme, 120);
+            }
+        }
+    }
+
+	if($theme != $id_theme && $theme > 0) {
+		$id_theme = $theme;
+    }
+
+    return $id_theme;
+}
 
 // Backwards compat function for SMF2.0
 if(!function_exists('set_avatar_data')) {

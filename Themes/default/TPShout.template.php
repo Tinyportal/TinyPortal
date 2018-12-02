@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.1
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -182,13 +182,19 @@ function template_tpshout_admin_settings()
 					</dl>
 					<hr>
 					<dl class="settings">
-						'.$txt['shoutbox_layout'].'<br>
+						<dt>
+						'.$txt['shoutbox_layout'].':<br>
+						</dt>
+						<dd>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" align="right"/></div></div>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></div></div>
+						<p class="clearthefloat"></p>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="2" ' , $context['TPortal']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></div></div>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="3" ' , $context['TPortal']['shoutbox_layout'] == '3' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4" /></div></div>
 						<p class="clearthefloat"></p>
+						</dd>
 					</dl>
+					<hr>
 					<dl class="settings">
 						<dt>
 							'.$txt['tp-shoutboxheight'].'

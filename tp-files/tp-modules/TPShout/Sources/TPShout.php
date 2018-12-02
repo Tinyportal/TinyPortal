@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.1
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -539,7 +539,7 @@ function tpshout_admin()
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
 			AND sticky = {int:val7}
-			ORDER BY time DESC LIMIT {int:start}, 10',
+			ORDER BY time DESC LIMIT 10 OFFSET {int:start}',
 			array('type' => 'shoutbox', 'val7' => 0, 'start' => $tpstart)
 		);
 	}
