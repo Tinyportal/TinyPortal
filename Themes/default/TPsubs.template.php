@@ -518,7 +518,7 @@ function TPortal_themebox()
 				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
          }
 	// 2.0 code
-		if(strpos($forum_version, '2.1') == false) {
+		if(strpos($forum_version, '2.1') === false) {
 			 echo '
 				</select><br>' , $context['user']['is_logged'] ?
 				'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
