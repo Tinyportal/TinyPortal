@@ -111,6 +111,11 @@
 {
 	padding: 1em;
 }
+.tp_readmore
+{
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
 h2.author_h2
 {
 	font-size: 1.3em;
@@ -753,6 +758,11 @@ img.tp_social
 .tp_statsblock h5.online
 {
 	background: url(../images/tinyportal/online.png) no-repeat 0 5px;
+}
+ul.dl_recentitems	
+{
+	padding-inline-start: 20px;
+	margin-top: 0px;
 }
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li
