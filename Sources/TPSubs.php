@@ -1682,17 +1682,17 @@ function tp_renderarticle($intro = '')
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
-			if(defined('WIRELESS') && !WIRELESS)
-				echo parse_bbc($context['TPortal']['article']['intro']), '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
-			else
+			if(defined('WIRELESS') && WIRELESS)
 				echo parse_bbc($context['TPortal']['article']['intro']);
+			else
+				echo parse_bbc($context['TPortal']['article']['intro']), '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 		else
 		{
-			if(defined('WIRELESS') && !WIRELESS)
-				echo $context['TPortal']['article']['intro'], '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';'.WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
-			else
+			if(defined('WIRELESS') && WIRELESS)
 				echo $context['TPortal']['article']['intro'];
+			else
+				echo $context['TPortal']['article']['intro'], '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';'.WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 	}
 	else
@@ -2753,7 +2753,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		{
 			echo '
 			<div class="post">
-				<ul>';
+				<ul class="dl_recentitems">';
 			foreach($context['TPortal']['dlrecenttp'] as $dl)
 			{
 				echo '<li><a href="'.$dl['href'].'">'.$dl['name'].'</a>';

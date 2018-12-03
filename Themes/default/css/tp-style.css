@@ -754,6 +754,11 @@ img.tp_social
 {
 	background: url(../images/tinyportal/online.png) no-repeat 0 5px;
 }
+ul.dl_recentitems	
+{
+	padding-inline-start: 20px;
+	margin-top: 0px;
+}
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li
 {
