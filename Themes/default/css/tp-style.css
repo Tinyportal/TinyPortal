@@ -2280,6 +2280,7 @@ ul.tp-subcategories li
 .tp_upshrink21 {
     float: left;
 	padding-left: 0px;
+	width: 95%;
 } 
 }
 /** screen smaller then 600px **/
