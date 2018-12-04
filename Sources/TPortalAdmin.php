@@ -319,9 +319,9 @@ function do_blocks()
 
 	isAllowedTo('tp_blocks');
 
-	$panels = array('left', 'right', 'center', 'top', 'bottom', 'lower', 'front');
-	$blocktype = array('no', 'userbox', 'newsbox', 'statsbox', 'searchbox', 'html', 'onlinebox', 'themebox', 'oldshoutbox', 'catmenu', 'phpbox', 'scriptbox', 'recentbox', 'ssi', 'module', 'rss', 'sitemap', 'admin', 'articlebox', 'categorybox', 'tpmodulebox');
-	$bars = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
+	$panels     = array( 'left', 'right', 'center', 'top', 'bottom', 'lower', 'front');
+	$blocktype  = array( 'no', 'userbox', 'newsbox', 'statsbox', 'searchbox', 'html', 'onlinebox', 'themebox', 'oldshoutbox', 'catmenu', 'phpbox', 'scriptbox', 'recentbox', 'ssi', 'module', 'rss', 'sitemap', 'admin', 'articlebox', 'categorybox', 'tpmodulebox');
+	$bars       = array( 1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
 
 	if(isset($_GET['addblock']))
 	{
@@ -375,7 +375,17 @@ function do_blocks()
 		$what = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}tp_blocks
-			SET off = NOT off = 0
+			SET off = 
+            ( 
+                SELECT 
+                    CASE WHEN off = 1
+				        THEN 0
+				        ELSE 1
+			        END
+                FROM {db_prefix}tp_blocks 
+                WHERE id = {int:blockid} 
+                LIMIT 1
+            )
 			WHERE id = {int:blockid}',
 			array(
 				'blockid' => $what
@@ -846,7 +856,7 @@ function do_menus()
 	$request = $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_variables
 		WHERE type = {string:type}
-		ORDER BY subtype + 0 ASC',
+		ORDER BY subtype ASC',
 		array('type' => 'menubox')
 	);
 	if($smcFunc['db_num_rows']($request) > 0)
