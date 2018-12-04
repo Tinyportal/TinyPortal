@@ -480,7 +480,7 @@ function TPortal_userbox()
 // TPortal themebox
 function TPortal_themebox()
 {
-	global $context, $settings, $scripturl, $txt, $smcFunc;
+	global $context, $settings, $scripturl, $txt, $smcFunc, $forum_version;
 
 	$what = explode(',', $context['TPortal']['themeboxbody']);
 	$temaid = array();
@@ -517,23 +517,34 @@ function TPortal_themebox()
                 echo '
 				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
          }
-         echo '
+		 echo '
 			</select><br>' , $context['user']['is_logged'] ?
 			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
 			<input class="button_submit" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
- 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
- 			<div style="text-align: center; width: 95%; overflow: hidden;">
-				<img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" />
+			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
+			<div style="text-align: center; width: 95%; overflow: hidden;">';
+			
+		if (strstr($forum_version, '2.0'))
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
+		else
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
+			
+		echo '
 			</div>
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var extra = \'\';
 			var themepath = new Array();';
-         for($a=0 ; $a<(count($temaid)); $a++){
-			 echo '
-			    themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
-				';
-		 }
+		 for($a=0 ; $a<(count($temaid)); $a++){
+			if (strstr($forum_version, '2.0'))
+				echo '
+					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
+					';
+			else
+				echo '
+					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.png";
+					';
+			}
 
 		echo '
 			function jumpit()

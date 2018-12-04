@@ -1450,7 +1450,7 @@ function doTPfrontpage()
 					if ($cutoff !== false)
 						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
 
-					$row['body'] .= '... <p><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
 				}
 
 				// some needed addons
@@ -1673,7 +1673,7 @@ function doTPfrontpage()
 						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
                     }
 
-					$row['body'] .= '... <p><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
 				}
 
 				// some needed addons

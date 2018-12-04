@@ -657,7 +657,7 @@ $txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Searc
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
-// new in 1.6.1
+// new in 1.6.2
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 $txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
 $txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';

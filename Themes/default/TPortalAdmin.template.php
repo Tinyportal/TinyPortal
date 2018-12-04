@@ -2553,7 +2553,7 @@ function template_editarticle($type = '')
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
                     '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
-						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="on">'. $mg['intro'] .'</textarea>
+						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
 					</div>
                     </div>';
 				}

@@ -444,7 +444,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '161',
+    'version' => '162',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
