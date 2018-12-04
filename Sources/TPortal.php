@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.1
+ * @version 1.6.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1539,7 +1539,7 @@ function doTPfrontpage()
 					if ($cutoff !== false)
 						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
 
-					$row['body'] .= '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
 				}
 
 				// some needed addons
@@ -1750,7 +1750,7 @@ function doTPfrontpage()
 					if ($cutoff !== false)
 						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
 
-					$row['body'] .= '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
 				}
 
 				// some needed addons
