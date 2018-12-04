@@ -1700,6 +1700,9 @@ function tp_renderarticle($intro = '')
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
 		{
 			echo parse_bbc($context['TPortal']['article']['body']);
+            if(!empty($context['TPortal']['article']['readmore'])) {
+                echo $context['TPortal']['article']['readmore'];
+            }
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'import')
 		{
