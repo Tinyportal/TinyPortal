@@ -55,9 +55,9 @@ function tpAddCopy($buffer)
 	$bclass = '';
 
 	// add upshrink buttons
-	if(strpos($forum_version, '2.1') !== false) {
+	if( ( strpos($forum_version, '2.1') !== false ) && array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
 		$buffer = preg_replace('~<div class="navigate_section">\s*<ul>~', '<div class="navigate_section"><ul><span class="tp_upshrink21">'.$context['TPortal']['upshrinkpanel'].'</span>', $buffer);
-		}
+	}
 	
 	// apply user membergroup colors ony when set in TP settings.
 	if(!empty($context['TPortal']['use_groupcolor'])) {
