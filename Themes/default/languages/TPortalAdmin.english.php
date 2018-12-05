@@ -266,7 +266,7 @@ $txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button?';
 $txt['tp-hidearticle-link'] = 'Hide the edit article link under articles?';
 
 // Blocks admin...
-$txt['tp-addcenterblock']='Add upper block';
+$txt['tp-addcenterblock']='Add center block';
 $txt['tp-addfrontblock']='Add front page block';
 $txt['tp-addleftblock'] = 'Add left block';
 $txt['tp-addlowerblock']='Add lower block';
