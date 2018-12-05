@@ -130,12 +130,11 @@ $txt['block-upshrink_description'] = 'Collapse or Expand Block';
 // Panels... //
 $txt['left-tp-upshrink_description'] = 'Left Panel';
 $txt['right-tp-upshrink_description'] = 'Right Panel';
-$txt['upper-tp-upshrink_description'] = 'Upper Panel';
+$txt['top-tp-upshrink_description'] = 'Top Panel';
+$txt['center-tp-upshrink_description'] = 'Center Panel';
+$txt['front-tp-upshrink_description'] = 'Frontpage';
 $txt['lower-tp-upshrink_description'] = 'Lower Panel';
 $txt['bottom-tp-upshrink_description'] = 'Bottom Panel';
-$txt['top-tp-upshrink_description'] = 'Top Panel';
-$txt['front-tp-upshrink_description'] = 'Frontpage';
-$txt['center-tp-upshrink_description'] = 'Center Panel';
 
 // Search... //
 $txt['tp-searcharticles'] = 'Extended search';
