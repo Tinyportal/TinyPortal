@@ -524,47 +524,7 @@ function doTPpage()
 
                 $tpArticle->updateArticleViews($page);
 
-				// fetch and update last access by member(to log which comment is new)
-				$now = time();
-				$request = $smcFunc['db_query']('', '
-                    SELECT item FROM {db_prefix}tp_data
-                    WHERE id_member = {int:id_mem}
-                    AND type = {int:type}
-                    AND value = {int:val} LIMIT 1',
-                    array (
-                        'id_mem' => $context['user']['id'], 
-                        'type' => 1, 
-                        'val' => $article['id']
-                    )
-				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
-					$row = $smcFunc['db_fetch_row']($request);
-					$last = $row[0];
-					$smcFunc['db_free_result']($request);
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_data
-						SET item = {int:item}
-						WHERE id_member = {int:id_mem}
-						AND type = {int:type}
-						AND value = {int:val}',
-						array(
-							'item' => $now,
-							'id_mem' => $context['user']['id'],
-							'type' => 1,
-							'val' => $article['id'])
-					);
-				}
-				else
-				{
-					$last = $now;
-					$smcFunc['db_insert']('INSERT',
-						'{db_prefix}tp_data',
-						array('type' => 'int', 'id_member' => 'int', 'value' => 'int', 'item' => 'int'),
-						array(1, $context['user']['id'], $article['id'], $now),
-						array('id')
-					);
-				}
+                $comments = $tpArticle->getArticleComments($context['user']['id'] , $article['id']);
 
 				require_once($sourcedir . '/TPcommon.php');
 
@@ -575,61 +535,48 @@ function doTPpage()
 					$context['TPortal']['can_artcomment'] = true;
                 }
 
-                /*
-				// fetch any comments
-				$request =  $smcFunc['db_query']('', '
-					SELECT var.* , COALESCE(mem.real_name,0) AS real_name, mem.avatar,
-						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, mem.email_address AS email_address
-					FROM {db_prefix}tp_variables AS var
-					LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
-					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
-					WHERE var.type = {string:type}
-					AND var.value5 = {int:val5}
-					ORDER BY var.value4 ASC',
-					array('type' => 'article_comment', 'val5' => $article['id'])
-				);
-
-				$ccount = 0;
-				$newcount = 0;
-				if($smcFunc['db_num_rows']($request) > 0) {
-					$context['TPortal']['article']['comment_posts'] = array();
-					while($row = $smcFunc['db_fetch_assoc']($request)) {
+				$context['TPortal']['article_comments_count']   = 0;
+                $context['TPortal']['article']['comment_posts'] = array();
+                if(is_array($comments)) {
+                    $last = $comments['last'];
+                    $context['TPortal']['article_comments_new']     = $comments['new_count'];
+					$context['TPortal']['article_comments_count']   = $comments['comment_count'];
+                    unset($comments['last']);
+                    unset($comments['new_count']);
+                    unset($comments['comment_count']);
+					
+                    foreach($comments as $row) {
 
                         $avatar = set_avatar_data( array(      
-                                    'avatar' => $row['avatar'],
-                                    'email' => $row['email_address'],
-                                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                                    'id_attach' => $row['id_attach'],
-                                    'attachement_type' => $row['attachement_type'],
+                                    'avatar'            => $row['avatar'],
+                                    'email'             => $row['email_address'],
+                                    'filename'          => !empty($row['filename']) ? $row['filename'] : '',
+                                    'id_attach'         => $row['id_attach'],
+                                    'attachement_type'  => $row['attachment_type'],
                                 )
                         )['image'];
 
 						$context['TPortal']['article']['comment_posts'][] = array(
-							'id' => $row['id'],
-							'subject' => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['value1'].'</a>',
-							'text' => parse_bbc($row['value2']),
+							'id'        => $row['id'],
+							'subject'   => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['value1'].'</a>',
+							'text'      => parse_bbc($row['value2']),
 							'timestamp' => $row['value4'],
-							'date' => timeformat($row['value4']),
-							'posterID' => $row['value3'],
-							'poster' => $row['real_name'],
-							'is_new' => ($row['value4']>$last) ? true : false ,
+							'date'      => timeformat($row['value4']),
+							'poster_id' => $row['value3'],
+							'poster'    => $row['real_name'],
+							'is_new'    => ( $row['value4'] > $last ) ? true : false,
 							'avatar' => array (
 								'name' => &$row['avatar'],
 								'image' => $avatar,
-								'href' => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachement_type']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
-								'url' => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
+								'href'  => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachement_type']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
+								'url'   => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
 							),
 						);
-						$ccount++;
-						if($row['value4'] > $last)
-							$newcount++;
 					}
-					$context['TPortal']['article_comments_new'] = $newcount;
-					$context['TPortal']['article_comments_count'] = $ccount;
 				}
 
 				// if the count differs, update it
-				if($ccount != $article['comments']) {
+				if($context['TPortal']['article_comments_count'] != $article['comments']) {
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_articles
 						SET comments = {int:com}
@@ -638,7 +585,6 @@ function doTPpage()
 					);
                 }
 
-                */
 				// the frontblocks should not display here
 				$context['TPortal']['frontpanel'] = 0;
 				// sort out the options
@@ -2950,11 +2896,17 @@ function tpAutoLoadClass($className)
 
 function setup_smf_backwards_compat()
 {
-    global $boarddir, $cachedir, $sourcedir;
+    global $boarddir, $cachedir, $sourcedir, $db_type;
 
     define('BOARDDIR', $boarddir);
     define('CACHEDIR', $cachedir);
     define('SOURCEDIR', $sourcedir);
+    if($db_type == 'postgresql') {
+        define('PGSQL', true);
+    }
+    else {
+        define('PGSQL', false);
+    }
 }
 
 

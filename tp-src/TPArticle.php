@@ -26,11 +26,11 @@ clASs TPArticle extends TPBase {
         parent::__construct();
     }
 
-    public function getArticle($articleID)
+    public function getArticle($article_id)
     {
 
         $now        = time();
-        $where      = is_numeric( $articleID ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
+        $where      = is_numeric( $article_id ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
 
         $request    = $this->dB->db_query('', '
             SELECT 
@@ -52,8 +52,8 @@ clASs TPArticle extends TPBase {
                 : ' ' 
             )
             .'LIMIT 1',
-            array( 
-                'page' => is_numeric( $articleID ) ? (int) $articleID : $articleID
+            array ( 
+                'page' => is_numeric( $article_id ) ? (int) $article_id : $article_id
             )
         );
 
@@ -68,53 +68,58 @@ clASs TPArticle extends TPBase {
 
     }
 
-    public function updateArticleViews($articleID)
+    public function getArticleComments($user_id, $item_id) 
+    {
+       return parent::getComments('1', $user_id, $item_id); 
+    }
+
+    public function updateArticleViews($article_id)
     {
 
         // update views
         $this->dB->db_query('', '
             UPDATE {db_prefix}tp_articles
             SET views = views + 1
-            WHERE ' . (is_numeric($articleID) ? 'id = {int:page}' : 'shortname = {string:page}'),
+            WHERE ' . (is_numeric($article_id) ? 'id = {int:page}' : 'shortname = {string:page}'),
             array (
-                'page' => $articleID
+                'page' => $article_id
             )
         );
 
     }
 
-    public function updateArticle($articleData)
+    public function updateArticle($article_data)
     {
 
     }
 
-    public function insertArticle($articleData)
+    public function insertArticle($article_data)
     {
 
     }
 
-    public function deleteArticle($articleID)
+    public function deleteArticle($article_id)
     {
 
     }
 
-    public function getTotalAuthorArticles($authorID)
+    public function getTotalAuthorArticles($author_id)
     {
-        $numArticles    = 0;
+        $num_articles   = 0;
         $request        = $this->dB->db_query('', '
             SELECT COUNT(id) AS articles FROM {db_prefix}tp_articles
             WHERE author_id = {int:author}
             AND off = 0',
             array(
-                'author' => $authorID
+                'author' => $author_id
             )
         );
         if($this->dB->db_num_rows($request) > 0) {
-            $numArticles = $this->dB->db_fetch_assoc($request)['articles'];
+            $num_articles = $this->dB->db_fetch_assoc($request)['articles'];
             $this->dB->db_free_result($request);
         }
 
-        return $numArticles;
+        return $num_articles;
     }
 
 }
