@@ -36,7 +36,7 @@ clASs TPArticle extends TPBase {
             SELECT 
                 art.*, art.author_id AS author_id, art.id_theme AS id_theme, var.value1, var.value2,
                 var.value3, var.value4, var.value5, var.value7, var.value8, art.type AS rendertype, mem.email_address AS email_address,
-                COALESCE(mem.real_name,art.author) AS real_name, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.lASt_login AS lAStLogin,
+                COALESCE(mem.real_name,art.author) AS real_name, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
                 COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, var.value9, mem.email_address AS email_address
             FROM {db_prefix}tp_articles AS art
             LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
@@ -68,6 +68,21 @@ clASs TPArticle extends TPBase {
 
     }
 
+    public function updateArticleViews($articleID)
+    {
+
+        // update views
+        $this->dB->db_query('', '
+            UPDATE {db_prefix}tp_articles
+            SET views = views + 1
+            WHERE ' . (is_numeric($articleID) ? 'id = {int:page}' : 'shortname = {string:page}'),
+            array (
+                'page' => $articleID
+            )
+        );
+
+    }
+
     public function updateArticle($articleData)
     {
 
@@ -81,6 +96,25 @@ clASs TPArticle extends TPBase {
     public function deleteArticle($articleID)
     {
 
+    }
+
+    public function getTotalAuthorArticles($authorID)
+    {
+        $numArticles    = 0;
+        $request        = $this->dB->db_query('', '
+            SELECT COUNT(id) AS articles FROM {db_prefix}tp_articles
+            WHERE author_id = {int:author}
+            AND off = 0',
+            array(
+                'author' => $authorID
+            )
+        );
+        if($this->dB->db_num_rows($request) > 0) {
+            $numArticles = $this->dB->db_fetch_assoc($request)['articles'];
+            $this->dB->db_free_result($request);
+        }
+
+        return $numArticles;
     }
 
 }

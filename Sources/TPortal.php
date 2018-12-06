@@ -474,40 +474,31 @@ function doTPpage()
 
         $tpArticle  = new TPArticle();
         $article    = $tpArticle->getArticle($page);
-
         if(is_array($article)) {
-			$valid = true;
+            $shown  = false;
+			$valid  = true;
 
 			// if its not approved, say so.
 			if($article['approved'] == 0) {
 				TP_error($txt['tp-notapproved']);
 				$shown = true;
-				if(!allowedTo('tp_articles')) {
-					$valid = false;
-                }
-			}
-
-			// likewise for off.
-			if($article['off'] == 1) {
-				if(!isset($shown)) {
-					TP_error($txt['tp-noton']);
-                }
-				$shown = true;
-				if(!allowedTo('tp_articles')) {
-					$valid = false;
-                }
-			}
+            }
 
 			// and for no category
-			if($article['category'] < 1 || $article['category'] > 9999) {
-				if(!isset($shown)) {
-					TP_error($txt['tp-nocategory']);
-                }
+			if($article['category'] < 1 || $article['category'] > 9999 && $shown == false) {
+				TP_error($txt['tp-nocategory']);
 				$shown = true;
-				if(!allowedTo('tp_articles')) {
-					$valid = false;
-                }
-			}
+            }
+	
+			// likewise for off.
+			if($article['off'] == 1 && $shown == false) {
+				TP_error($txt['tp-noton']);
+				$shown = true;
+            }	
+
+        	if($shown == true && !allowedTo('tp_articles')) {
+				$valid = false;
+            }
 
 			if( get_perm($article['value3']) && $valid) {
 				// compability towards old articles
@@ -531,23 +522,21 @@ function doTPpage()
                      )
                 )['image'];
 
-				// update views
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_articles
-					SET views = views + 1
-					WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}'),
-					array('page' => $page)
-				);
+                $tpArticle->updateArticleViews($page);
 
 				// fetch and update last access by member(to log which comment is new)
 				$now = time();
 				$request = $smcFunc['db_query']('', '
-					SELECT item FROM {db_prefix}tp_data
-						WHERE id_member = {int:id_mem}
-						AND type = {int:type}
-						AND value = {int:val} LIMIT 1',
-						array('id_mem' => $context['user']['id'], 'type' => 1, 'val' => $article['id'])
-					);
+                    SELECT item FROM {db_prefix}tp_data
+                    WHERE id_member = {int:id_mem}
+                    AND type = {int:type}
+                    AND value = {int:val} LIMIT 1',
+                    array (
+                        'id_mem' => $context['user']['id'], 
+                        'type' => 1, 
+                        'val' => $article['id']
+                    )
+				);
 				if($smcFunc['db_num_rows']($request) > 0)
 				{
 					$row = $smcFunc['db_fetch_row']($request);
@@ -579,19 +568,12 @@ function doTPpage()
 
 				require_once($sourcedir . '/TPcommon.php');
 
-				// ok, how many articles have this member posted?
-				$request =  $smcFunc['db_query']('', '
-					SELECT id FROM {db_prefix}tp_articles
-					WHERE author_id = {int:author}
-					AND off = 0',
-					array('author' => $context['TPortal']['article']['author_id'])
-				);
-				$context['TPortal']['article']['countarticles'] = $smcFunc['db_num_rows']($request);
-				$smcFunc['db_free_result']($request);
+                $context['TPortal']['article']['countarticles'] = $tpArticle->getTotalAuthorArticles($context['TPortal']['article']['author_id']);
 
 				// We'll use this in the template to allow comment box
-				if (allowedTo('tp_artcomment'))
+				if (allowedTo('tp_artcomment')) {
 					$context['TPortal']['can_artcomment'] = true;
+                }
 
                 /*
 				// fetch any comments
@@ -941,7 +923,7 @@ function doTPcat()
 						art.date, art.category, art.subject, art.author_id as author_id, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
 						art.fileimport, art.topic, art.illustration, COALESCE(art.type, "html") as rendertype ,COALESCE(art.type, "html") as type,
-						COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+						COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type
 					FROM {db_prefix}tp_articles AS art
 					LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1203,7 +1185,7 @@ function doTPfrontpage()
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
-				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
@@ -1271,7 +1253,7 @@ function doTPfrontpage()
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
-				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
@@ -1370,7 +1352,7 @@ function doTPfrontpage()
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, m.body,
-				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time AS date, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS lastLogin,
+				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time AS date, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, t.id_board AS category, b.name AS category_name,
 				t.num_replies AS numReplies, t.id_topic AS id, m.id_member AS author_id, t.num_views AS views, t.num_replies AS replies, t.locked,
 				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename, mem.email_address AS email_address
@@ -1600,7 +1582,7 @@ function doTPfrontpage()
 		if(count($mposts) > 0)
 			$request =  $smcFunc['db_query']('', '
 			    SELECT m.subject, m.body,
-				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
+				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, t.id_board as category, b.name as category_name,
 				t.num_replies as numReplies, t.id_topic as id, m.id_member as author_id, t.num_views as views, t.num_replies as replies, t.locked,
 				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename as thumb_filename, mem.email_address AS email_address
@@ -1684,7 +1666,7 @@ function doTPfrontpage()
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
 					art.fileimport, art.topic, art.illustration, art.type as rendertype,
-					COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+					COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 					COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 				FROM {db_prefix}tp_articles AS art
 				LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
@@ -1851,7 +1833,7 @@ function doTPfrontpage()
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
-				COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
+				COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
@@ -2172,7 +2154,7 @@ function doTPblocks()
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
-			COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
+			COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
