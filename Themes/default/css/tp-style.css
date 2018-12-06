@@ -1917,6 +1917,16 @@ input,select {
 #centerContainer {
 	padding-bottom: 4px;
 }	
+.tp_upshrink20 {
+	float: right; 
+	margin-right: 0.5em; 
+	margin-top: -1.5em;
+}
+.tp_upshrink21 {
+	float: right; 
+	margin-top:6px; 
+	padding-left:10px;
+}
 .panelsColumns{
 -webkit-box-sizing:border-box;
 box-sizing:border-box;
@@ -2264,6 +2274,14 @@ ul.tp-subcategories li
 {
 	width: 48%;
 }
+}
+/** screen smaller then 720px **/
+@media only screen and (max-width: 720px) {
+.tp_upshrink21 {
+    float: left;
+	padding-left: 0px;
+	width: 95%;
+} 
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {

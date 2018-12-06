@@ -2718,7 +2718,7 @@ function tp_setupUpshrinks()
 		}
 	// ]]></script>';
 
-	$panels = array('Left', 'Right', 'Center', 'Top', 'Bottom', 'Lower');
+	$panels = array('Left', 'Right', 'Top', 'Center', 'Lower', 'Bottom');
 	$context['TPortal']['upshrinkpanel'] = '';
 
 	if($context['TPortal']['showcollapse'] == 1)
