@@ -27,6 +27,12 @@ function TPortal_init()
 	if(isset($context['TPortal']['redirectforum']))
 		return;
 
+    if(!defined('SMF_BACKWARDS_COMPAT')) {
+        define('SMF_BACKWARDS_COMPAT', true);
+        setup_smf_backwards_compat();
+        spl_autoload_register('tpAutoLoadClass');
+    }
+
 	if(loadLanguage('TPortal') == false)
 		loadLanguage('TPortal', 'english');
 
@@ -463,84 +469,49 @@ function doTPpage()
 	if(!empty($_GET['page']))
 	{
 		$page = tp_sanitize($_GET['page']);
-		$pag = is_numeric($page) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
 
 		$_SESSION['login_url'] = $scripturl . '?page=' . $page;
 
-		if(allowedTo('tp_articles'))
-        {
-			$request =  $smcFunc['db_query']('', '
-				SELECT art.*, art.author_id as author_id, art.id_theme as id_theme, var.value1,
-					var.value2, var.value3, var.value4, var.value5, var.value7, var.value8,
-					art.type as rendertype, COALESCE(mem.real_name,art.author) as real_name, mem.avatar,
-					mem.posts, mem.date_registered as date_registered,mem.last_login as lastLogin,
-					COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
-				FROM {db_prefix}tp_articles as art
-				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
-				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
-				LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
-				WHERE '. $pag .'
-				LIMIT 1',
-				array('page' => is_numeric($page) ? (int) $page : $page)
-			);
-        }
-		else
-        {
-			$request =  $smcFunc['db_query']('', '
-				SELECT art.*, art.author_id as author_id, art.id_theme as id_theme, var.value1, var.value2,
-					var.value3,var.value4, var.value5,var.value7,var.value8, art.type as rendertype, mem.email_address AS email_address,
-					COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as lastLogin,
-					COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
-				FROM {db_prefix}tp_articles as art
-				LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
-				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
-				LEFT JOIN {db_prefix}tp_variables as var ON (var.id = art.category)
-				WHERE '. $pag .'
-				AND ((art.pub_start = 0 AND art.pub_end = 0)
-				OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
-				OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
-				OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-				LIMIT 1',
-				array('page' => is_numeric($page) ? (int) $page : $page)
-			);
-        }
+        $tpArticle  = new TPArticle();
+        $article    = $tpArticle->getArticle($page);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			$article = $smcFunc['db_fetch_assoc']($request);
+        if(is_array($article)) {
 			$valid = true;
-			$smcFunc['db_free_result']($request);
+
 			// if its not approved, say so.
-			if($article['approved'] == 0)
-			{
+			if($article['approved'] == 0) {
 				TP_error($txt['tp-notapproved']);
 				$shown = true;
-				if(!allowedTo('tp_articles'))
+				if(!allowedTo('tp_articles')) {
 					$valid = false;
+                }
 			}
+
 			// likewise for off.
-			if($article['off'] == 1)
-			{
-				if(!isset($shown))
+			if($article['off'] == 1) {
+				if(!isset($shown)) {
 					TP_error($txt['tp-noton']);
+                }
 				$shown = true;
-				if(!allowedTo('tp_articles'))
+				if(!allowedTo('tp_articles')) {
 					$valid = false;
+                }
 			}
+
 			// and for no category
-			if($article['category'] < 1 || $article['category'] > 9999)
-			{
-				if(!isset($shown))
+			if($article['category'] < 1 || $article['category'] > 9999) {
+				if(!isset($shown)) {
 					TP_error($txt['tp-nocategory']);
+                }
 				$shown = true;
-				if(!allowedTo('tp_articles'))
+				if(!allowedTo('tp_articles')) {
 					$valid = false;
+                }
 			}
-			if( get_perm($article['value3']) && $valid)
-			{
+
+			if( get_perm($article['value3']) && $valid) {
 				// compability towards old articles
-				if(empty($article['type']))
-				{
+				if(empty($article['type'])) {
 					$article['type'] = $article['rendertype'] = 'html';
 				}
 
@@ -564,7 +535,7 @@ function doTPpage()
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles
 					SET views = views + 1
-					WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}') . ' LIMIT 1',
+					WHERE ' . (is_numeric($page) ? 'id = {int:page}' : 'shortname = {string:page}'),
 					array('page' => $page)
 				);
 
@@ -622,10 +593,11 @@ function doTPpage()
 				if (allowedTo('tp_artcomment'))
 					$context['TPortal']['can_artcomment'] = true;
 
+                /*
 				// fetch any comments
 				$request =  $smcFunc['db_query']('', '
-					SELECT var.* , COALESCE(mem.real_name,0) as real_name,mem.avatar,
-						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
+					SELECT var.* , COALESCE(mem.real_name,0) AS real_name, mem.avatar,
+						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, mem.email_address AS email_address
 					FROM {db_prefix}tp_variables AS var
 					LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
 					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
@@ -684,6 +656,7 @@ function doTPpage()
 					);
                 }
 
+                */
 				// the frontblocks should not display here
 				$context['TPortal']['frontpanel'] = 0;
 				// sort out the options
@@ -2974,6 +2947,33 @@ function TPortal_menubox()
     }
 }
 
+function tpAutoLoadClass($className)
+{
+
+    $classPrefix = mb_substr($className, 0, 2);
+
+    if( 'TP' !== $classPrefix ) {
+        return;
+    }
+
+    $dir        = BOARDDIR . '/tp-src/';
+
+    $classFile  = $dir.$className . '.php';
+
+    if ( file_exists( $classFile ) ) {
+        require_once($classFile);
+    }
+
+}
+
+function setup_smf_backwards_compat()
+{
+    global $boarddir, $cachedir, $sourcedir;
+
+    define('BOARDDIR', $boarddir);
+    define('CACHEDIR', $cachedir);
+    define('SOURCEDIR', $sourcedir);
+}
 
 
 ?>

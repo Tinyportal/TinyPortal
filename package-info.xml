@@ -13,6 +13,7 @@
 		<require-dir name="tp-downloads" destination="$boarddir" />
 		<require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
+		<require-dir name="tp-src" destination="$boarddir" />
 		<readme type="inline" parsebbc="true">Installing TinyPortal v2.0.0 for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
@@ -57,6 +58,7 @@
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
+		<remove-dir  name="tp-src" />
 		<code>do_hooks.php</code>
 	</uninstall>
 	<install for="2.1.* - 2.1.99">
@@ -66,6 +68,7 @@
 		<require-dir name="tp-downloads" destination="$boarddir" />
 		<require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
+		<require-dir name="tp-src" destination="$boarddir" />
 		<readme type="inline">Installing TinyPortal v2.0.0 for SMF2.1</readme>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
@@ -112,6 +115,7 @@
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
+		<remove-dir  name="tp-src" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>
