@@ -32,7 +32,7 @@ class TPBase
 
 	}
 
-    function getComments($type, $user_id, $item_id)
+    protected function getComments($type, $user_id, $item_id)
     {
 
         // fetch and update last access by member(to log which comment is new)
@@ -121,6 +121,64 @@ class TPBase
         return $comments;
 
     }
+
+    protected function insertComment($type, $user_id, $item_id, $title, $comment)
+    {
+
+		// check if the article indeed exists
+		$request =  $this->dB->db_query('', '
+            SELECT comments FROM {db_prefix}tp_articles
+            WHERE id = {int:artid}',
+            array (
+                'artid' => $item_id
+            )
+        );
+		if($this->dB->db_num_rows($request) > 0) {
+			$num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
+			$this->dB->db_free_result($request);
+			$time = time();
+
+			// insert the comment
+			$this->dB->db_insert('INSERT',
+                '{db_prefix}tp_variables',
+                array (
+                    'value1' => 'string', 
+                    'value2' => 'string', 
+                    'value3' => 'string', 
+                    'type' => 'string', 
+                    'value4' => 'string', 
+                    'value5' => 'int'
+                ),
+                array(
+                    $title,
+                    $comment,
+                    $user_id,
+                    'article_comment',
+                    $time,
+                    $item_id
+                ),
+                array('id')
+            );
+
+            $num_comments++;
+			// count and increase the number of comments
+			$this->dB->db_query('', '
+                UPDATE {db_prefix}tp_articles
+                SET comments = {int:com}
+                WHERE id = {int:artid}',
+                array (
+                    'com'   => $num_comments,
+                    'artid' => $item_id
+                )
+            );
+
+            return true;
+		}
+
+        return false;
+
+    }
+
 
 }
 

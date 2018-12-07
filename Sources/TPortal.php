@@ -1426,23 +1426,21 @@ function doTPfrontpage()
 		);
 
 		$posts = array();
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				if($row['sticky'] == 1)
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
+				if($row['sticky'] == 1) {
 					$row['date'] += $year;
-				if($row['featured'] == 1)
+                }
+				if($row['featured'] == 1) {
 					$row['date'] += $year2;
-
+                }
 				$posts[$row['date'].'_' . sprintf("%06s", $row['id'])] = 'a_' . $row['id'];
 			}
 			$smcFunc['db_free_result']($request);
 		}
 
 		// Find the post ids.
-		if($context['TPortal']['front_type'] == 'forum_articles')
-        {
+		if($context['TPortal']['front_type'] == 'forum_articles') {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
 				FROM {db_prefix}topics AS t
@@ -1457,8 +1455,7 @@ function doTPfrontpage()
 				array('board' => $context['TPortal']['SSI_board'], 'max' => $totalmax)
 			);
         }
-		else
-        {
+		else {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
 				FROM {db_prefix}topics AS t
@@ -1472,8 +1469,7 @@ function doTPfrontpage()
 			);
         }
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$posts[$row['date'].'_' . sprintf("%06s", $row['id_first_msg'])] = 'm_' . $row['id_first_msg'];
             }
@@ -1525,7 +1521,7 @@ function doTPfrontpage()
 		$request = false;
 
 		// ok we got the post ids now, fetch each one, forum first
-		if(count($mposts) > 0)
+		if(count($mposts) > 0) {
 			$request =  $smcFunc['db_query']('', '
 			    SELECT m.subject, m.body,
 				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time as date, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as last_login,
@@ -1543,6 +1539,7 @@ function doTPfrontpage()
 				ORDER BY date DESC, thumb.id_attach ASC',
 				array('posts' => $mposts)
 			);
+        }
 
 		$context['TPortal']['category'] = array(
 			'articles' => array(),
