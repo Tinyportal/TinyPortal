@@ -865,7 +865,7 @@ function doTPcat()
 					$context['TPortal']['category']['options']['catlayout'] = 1;
 
 				$request = $smcFunc['db_query']('', '
-					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body, mem.email_address AS email_address,
+				    SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body, mem.email_address AS email_address,
 						art.date, art.category, art.subject, art.author_id as author_id, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
 						art.fileimport, art.topic, art.illustration, COALESCE(art.type, "html") as rendertype ,COALESCE(art.type, "html") as type,
@@ -1126,7 +1126,7 @@ function doTPfrontpage()
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total, $max);
 
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
+			SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body,
 				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
@@ -1194,7 +1194,7 @@ function doTPfrontpage()
         break;
     case 'single_page':
 		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
+			SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body,
 				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
@@ -1607,7 +1607,7 @@ function doTPfrontpage()
 		// next up is articles
 		if(count($aposts) > 0) {
 			$request =  $smcFunc['db_query']('', '
-				SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body,
+				SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body,
 					art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,

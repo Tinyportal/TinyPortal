@@ -1490,8 +1490,8 @@ function do_articles()
 		$request = $smcFunc['db_query']('', '
 			SELECT DISTINCT var.id AS id, var.value1 AS name, var.value2 AS parent
 			FROM {db_prefix}tp_variables AS var
-			WHERE var.type = {string:type}
-			' . (isset($where) ? 'AND var.value2 = {int:whereval}' : '') . '
+			WHERE var.type = {string:type} 
+			' . (isset($where) ? 'AND var.value2'.((PGSQL == true) ? '::Integer' : ' ' ).' = {int:whereval}' : '') . '
 			ORDER BY parent, id DESC',
 			array('type' => 'category', 'whereval' => isset($where) ? $where : 0)
 		);
