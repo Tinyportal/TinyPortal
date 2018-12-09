@@ -1186,7 +1186,8 @@ function article_renders($type = 1, $single = false, $first = false)
     ' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_shortdate} {article_title} </h3>
     ' . ($useFrame ? '</div>' : '') . '
-	<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2" ' : '') . '>
+	<div></div>
+	<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
 		<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? '' : '') . '">
 		' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
 			{article_author}
@@ -1218,8 +1219,8 @@ function article_renders($type = 1, $single = false, $first = false)
     ' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 	   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
     ' . ($useFrame ? '</div>' : '') . '
-	<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2" ' : '') . '>
-		<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg' : '') . '">
+		<div></div><div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+		<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 			{article_author}
 			{article_category}
@@ -1245,7 +1246,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="article" style="padding: 0 0.5em;">
 		<div class="article_iconcolumn">{article_iconcolumn}</div>
 		<div class="render2">
-			<h3 class="article_title" style="margin-left: 5px;">{article_title} </h3>
+			<h3 class="article_title" style="margin-left: 1em;">{article_title} </h3>
 			<div class="article_info" style="border: none; margin-top: 2px;">
 				{article_author}
 				{article_category}
@@ -1282,16 +1283,16 @@ function article_renders($type = 1, $single = false, $first = false)
 		<div class="article_iconcolumn">{article_iconcolumn}</div>
 		<div class="render2">
 			<div class="title_bar">
-				<h3 class="titlebg article_title" style="padding: 0;margin: 0; border: none;">{article_title} </h3>
+				<h3 class="titlebg article_title" style="margin-left: 1em; border: none;">{article_title} </h3>
 			</div>
-			<div class="article_info" style="border: none; margin-top: 2px;">
+			<div class="article_info" style="border-bottom: solid 1px #ddd; margin-top: 2px;">
 				{article_author}
 				{article_category}
 				{article_date}
 				{article_views}
 				{article_rating}
 				{article_options}
-			</div><hr />
+			</div>
 			<div class="article_padding">{article_text}</div>
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '<div class="article_padding">{article_bookmark}</div>' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '<div class="article_padding">{article_boardnews}</div>' : '') . '
@@ -1317,6 +1318,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="cat_bar">
 				<h3 class="catbg">{article_title} </h3>
 			</div>
+		<div></div><div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1339,6 +1341,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			{article_morelinks}
 			{article_comments}' : '') . '
 		</div>
+		</div>
 	</div><br>';
 	}
 	elseif($type == 5)
@@ -1354,7 +1357,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		<div class="' . $divheader . '">
 			<h3 class="article_title ' . $headerstyle . '">{article_shortdate} <strong>{article_title}</strong> </h3>
 		</div>
-		<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg2' : '') . '">
+			<div></div><div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">
 			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="topslice"><span></span></span>' : '') . '
 				<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
@@ -1409,13 +1412,13 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="article_text">{article_text}</div>
 			<div class="tp_container">
 				<div class="tp_col8">
-					<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg2' : '') . '">{article_moreauthor}</div>
+					<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">{article_moreauthor}</div>
 				</div>
 				<div class="tp_col8">
-					<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg2' : '') . '">{article_bookmark}</div>
+					<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">{article_bookmark}</div>
 				</div>
 			</div>
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg2"' : '') . '>{article_morelinks}</div>
+			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg"' : '') . '>{article_morelinks}</div>
 			<div class="article_padding">{article_comments}</div>
 		</div>';
 	}
@@ -1427,7 +1430,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		$code = '
 <div class="tborder" style="margin-bottom: 5px;">
-	<div class="article' . (isset($context['TPortal']['article']['boardnews']) ? ' windowbg2' : ' windowbg') . '" style="margin: 0;">
+	<div class="article' . (isset($context['TPortal']['article']['boardnews']) ? ' windowbg' : ' windowbg') . '" style="margin: 0;">
 	<span class="topslice"><span></span></span>
 		<div class="article_picturecolumn smallpad">{article_picturecolumn}</div>
 		<div class="render4 smallpad">
@@ -1497,14 +1500,13 @@ function article_picturecolumn($render = true)
 
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews']))
 		echo '
-	<div style="width: 128px; height: 128px; background: top right url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ') no-repeat;"></div>';
+	<div class="article_picture" style="background-image: url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ');"></div>';
 	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']))
 		echo '
-	<div style="width: 128px; height: 128px; background: top right url(' . $context['TPortal']['article']['illustration'] . ') no-repeat;"></div>';
+	<div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
 	else
 		echo '
-	<div style="width: 128px; height: 128px; background: top right url(' . $settings['tp_images_url'] . '/TPno_illustration.png) no-repeat;"></div>';
-
+	<div class="article_picture" style="background-image: url(' . $settings['tp_images_url'] . '/TPno_illustration.png);"></div>';
 }
 
 function article_shortdate($render = true)
@@ -1525,7 +1527,7 @@ function article_boardnews($render = true)
 	if(!isset($context['TPortal']['article']['replies']))
 		return;
 
-	echo '<div class="tp_pad">
+	echo '
 		<span class="article_boardnews">
 			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '.0">' . $context['TPortal']['article']['replies'] . ' ' . ($context['TPortal']['article']['replies'] == 1 ? $txt['ssi_comment'] : $txt['ssi_comments']) . '</a>';
 	if($context['TPortal']['article']['locked'] == 0 && !$context['user']['is_guest'])
@@ -1533,7 +1535,7 @@ function article_boardnews($render = true)
 			&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?action=post;topic=' . $context['TPortal']['article']['id'] . '.' . $context['TPortal']['article']['replies'] . ';num_replies=' . $context['TPortal']['article']['replies'] . '">' . $txt['ssi_write_comment']. '</a>';
 
 	echo '
-		</span></div>';
+		</span>';
 }
 
 function article_author($render = true)
