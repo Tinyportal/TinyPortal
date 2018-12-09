@@ -1196,18 +1196,18 @@ function article_renders($type = 1, $single = false, $first = false)
 			{article_views}
 			{article_rating}
 			{article_options}
-			' . (!$single ? '</div>' : '') .  '
+		' . (!$single ? '</div>' : '') .  '
 		</div>
-		<div class="article_padding article_text" style="clear: both;">{article_text}</div>
+		<div class="article_padding article_text" style="clear: both;">{article_text}
 		' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 		' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-		' . (!$single ? '<span class="botslice"><span></span></span>' : '') . '
+		' . (!$single ? '</div><span class="botslice"><span></span></span>' : '') . '
 	</div>
 		' . ($single ? '
 		{article_moreauthor}
 		{article_bookmark}
 		{article_morelinks}
-		{article_comments}' : '') . '
+		{article_comments}</div>' : '') . '
 </div>
 		';
 	}
@@ -1765,6 +1765,7 @@ function article_comments($render = true)
 	{
 		echo '
 	<a name="tp-comment">
+	<div class="windowbg2"><hr></div>
 	<h2 class="titlebg" style="padding: 0 1em;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
 		<div class="windowbg2" style="padding: 1em;">';
@@ -1808,14 +1809,14 @@ function article_comments($render = true)
 		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
 		{
 				echo '
-			<div class="windowbg" style="margin-top: 10px; padding: 1em;">
+			<div class="windowbg2 tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
 ';
 
 				echo '
-						<br>&nbsp;<input id="tp_article_comment_submit" type="submit" value="' . $txt['tp-submit'] . '">
+						<div style="padding:1%;"><input id="tp_article_comment_submit" type="submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
 						<input name="tp_article_type" type="hidden" value="article_comment">
 						<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
 						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
