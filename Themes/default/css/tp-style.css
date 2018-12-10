@@ -14,49 +14,22 @@
  *
  */
 
-
 .tp_container
 {
 	width: 100%;
 	overflow: hidden;
 }
-.tp_col1,
-.tp_col2,
-.tp_col3,
-.tp_col4,
-.tp_col5,
-.tp_col6,
-.tp_col7,
-.tp_col8,
-.tp_col9,
-.tp_col10,
-.tp_col11,
-.tp_col12,
-.tp_col13,
-.tp_col14,
-.tp_col15,
-.tp_col16
+.tp_col8
 {
 	float: left;
+	width: 50%;
 }
-/* the actual widths */
-.tp_col1 { width: 6.25%; }
-.tp_col2 { width: 12.5%; }
-.tp_col3 { width: 18.75%; }
-.tp_col4 { width: 25%; }
-.tp_col5 { width: 31.25%; }
-.tp_col6 { width: 37.5%; }
-.tp_col7 { width: 43.75%; }
-.tp_col8 { width: 50%; } 
-.tp_col9 { width: 56.25%; }
-.tp_col10 { width: 62.5%; }
-.tp_col11 { width: 68.75%; }
-.tp_col12 { width: 75%; }
-.tp_col13 { width: 81.25%; }
-.tp_col14 { width: 87.5%; }
-.tp_col15 { width: 93.75%; }
-.tp_col16 { width: 100%; }
 
+.tp_col16 
+{
+	float: left;
+	width: 100%;
+}
 .leftcol
 {
 	padding-right: 3px;
@@ -85,7 +58,6 @@
 {
 	height: 1%;
 }
-
 .clearfix
 {
 	display: block;
@@ -166,7 +138,6 @@ ul.gtags li
 {
 	display: none;
 }
-
 .article h2
 {
 	font-size: 1.4em;
@@ -186,7 +157,6 @@ h3.article_title span.article_shortdate span
 	font-size: 80%;
 	font-weight: normal;
 }
-
 /* render1 */
 .article h2
 {
@@ -214,7 +184,7 @@ h3.article_title span.article_shortdate span
 /* render 2 */
 .render2
 {
-	margin: 0 0 0 110px;
+	margin: 0 0 0 65px;
 }
 .render2 h2
 {
@@ -224,7 +194,7 @@ h3.article_title span.article_shortdate span
 }
 .article_iconcolumn
 {
-	width: 100px;
+	width: 60px;
 	text-align: center;
 	float: left;
 }
@@ -256,7 +226,13 @@ h3.article_title span.article_shortdate span
 	text-align: center;
 	float: left;
 }
-
+.article_picture
+{
+	width: 128px; 
+	height: 128px; 
+	background-position: top right;
+	background-repeat: no-repeat;
+}
 .article_boardnews
 {
 	font-size: 0.8em;
@@ -407,7 +383,6 @@ ul.tpsitemap li a.tpsitemapheader
 {
 	margin-bottom: 0;
 }
-
 .tp_subject
 {
 	font-size: 1.0em;
@@ -444,9 +419,6 @@ ul.tpsitemap li a.tpsitemapheader
 {
 	font-weight: normal;
 }
-.catbg .tp_day
-{
-}
 .tp_details
 {
 	line-height: 1.3em;
@@ -466,7 +438,6 @@ ul.tp_details li
 	margin-top: 0px;
 	line-height: 1.4em;
 }
-
 .tp_article_next
 {
 	margin: 1em 0 0 0;
@@ -496,44 +467,10 @@ ul.tp_details li
 	padding: 5px;
 	margin: 0;
 }
-.tp_morebox
-{
-	margin-bottom: 2px;
-	padding: 5px 1em;
-	line-height: 1.4em;
-}
-.tp_morebox h4
-{
-	margin: 0;
-	padding: 0;
-}
-#tp_morearticles h4.tp_cats
-{
-	margin: 0;
-	padding: 1em 0 0 0;
-}
 .tp_article_rate
 {
 	margin: 0;
 	padding: 1em;
-}
-#featured_article h3.tp_subject, #featured_article h3.tp_subject a
-{
-}
-#tp_morearticles
-{
-}
-/* more articles */
-#tp_morearticles ul
-{
-	list-style: none;
-	margin: 1em;
-}
-/* articles first */
-#tp_morearticles li.chosen
-{
-	font-weight: bold;
-	color: #aaa;
 }
 /* comments */
 .article_comment .single
@@ -546,10 +483,7 @@ img.catlayout
 	margin: 6px 2px 4px 16px;
 	padding: 0;
 }
-span.tp_thindivider
-{
-	font-weight: normal;
-}
+
 /* for the tab category layout option */
 #tp_tabarticle_frame
 {
@@ -669,7 +603,6 @@ ul#tp_child_articles li
 {
 }
 
-
 /* panels */
 #tptopbarHeader,
 #tpbottombarHeader,
@@ -778,11 +711,10 @@ ul.tp_catmenu li.tp_catmenu_header
 	padding-top: 6px;
 }
 
-
 /* for tp admin */
 .tp_largelist
 {
--webkit-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
 	border: solid 1px #ccc;
 	padding: 4px;
@@ -792,7 +724,7 @@ ul.tp_catmenu li.tp_catmenu_header
 }
 .tp_largelist2
 {
--webkit-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
 	border: solid 1px #ccc;
 	padding: 4px;
@@ -896,18 +828,11 @@ ul.tp-subcategories ul li
 	margin: 0;
 	padding: 0 10px 15px 10px;
 }
-h3.dlperm
-{
-	
-}
 h4.tpresults
 {
 	font-weight: normal;
 	font-size: 1.3em;
 	padding-bottom: 0;
-}
-.dl_perm
-{
 }
 .dl_perm .perm
 {
@@ -943,9 +868,6 @@ a.avatar img
 	padding: 1px;
 	width: 35px;
 	margin-right: 0.7em;
-}
-.authortext
-{
 }
 .article_authorinfo
 {
@@ -1005,7 +927,6 @@ a.avatar img
 	border-radius: 2px;
 	margin: 0 8px 0 0;
 }
-
 .comments span.counter
 {
 	font-size: 1.6em;
@@ -1139,56 +1060,56 @@ img.dl_icon
  }
 .tp-subcats
 {
- padding-left: 5%;
- }
- .dlcategory .details
+	padding-left: 5%;
+}
+.dlcategory .details
 {
 	float: right;
- }
- .dlcategory h4
- {
+}
+.dlcategory h4
+{
 	line-height: 1.5em;
 	padding: 0 0 0 35px;
 	margin: 0.5em 0 0 0;
 	font-size: 1.1em;
- }
-  .dlitems h5
- {
+}
+.dlitems h5
+{
 	line-height: 1.5em;
 	padding: 4px 10px;
 	margin: 0;
 	font-size: 1em;
- }
- .dlitems h5.titlebg2 a
- {
+}
+.dlitems h5.titlebg2 a
+{
 	text-decoration: none;
- }
- .dlcategory .itempicture
- {
+}
+.dlcategory .itempicture
+{
 	float: right;
 	margin: 5px 0 5px 5px;
- }
- .dlcategory .itemdetails
- {
+}
+.dlcategory .itemdetails
+{
 	padding: 10px 0 4px 0;
- }
- .dlitems
- {
+}
+.dlitems
+{
 	margin-top: 0em;
- }
- .dlitems h4.titlebg
- {
+}
+.dlitems h4.titlebg
+{
 	padding: 5px 10px;
- }
- #fileitem .screenshot
- {
+}
+#fileitem .screenshot
+{
 	float: right;
 	margin: 0 1em 1em 1em;
- }
- #fileitem
- {
+}
+#fileitem
+{
 	padding: 1em;
- }
+}
 #fileitem h3
 {
 	padding: 5px 0 0px 0;
@@ -1263,7 +1184,6 @@ img.dl_icon
 	margin: 0;
 	padding: 4px;
 }
-
 .rate_frame .rate_outer
 {
 	border: solid 1px #777;
@@ -1424,9 +1344,6 @@ table.multiplerow td
 	text-align: left;
 	width: 70%;
 }
-.formtable td input, .formtable td select
-{
-}
 
 #editblock td.left
 {
@@ -1500,7 +1417,6 @@ div.subtab_chosen
 {
 	border: solid 1px #898;
 	margin: 2px 1px 2px 1px;
-
 }
 .catlayout5_title a
 {
@@ -1557,7 +1473,6 @@ h2.catbg2 a, h2.catbg2
 h2.catbg a:hover
 {
 	color: #fd9;
-
 	text-decoration: none;
 }
 h2.catbg2 a:hover
@@ -1581,7 +1496,7 @@ h2.catbg img.icon
 }
 #tp_overview
 {
-	padding: 2%; /* EDITED */
+	padding: 2%;
 	overflow: hidden;
 }
 #tp_overview ul
@@ -1698,7 +1613,6 @@ span.article_shortdate
 {
 	font-weight: normal;
 }
-
 p.tphelp
 {
 	line-height: 1.4em;
@@ -1741,7 +1655,6 @@ h2.tphelp
 	height: 28px;
 	background: url(../images/theme/main_block.png) no-repeat 100% -200px;
 }
-
 .tp_half h3.catbg
 {
 	height: 28px;
@@ -1814,10 +1727,6 @@ h3.h3dl
 	background: none;
 }
 
-#tpadmin_content input:hover, #tpadmin_content button:hover
-{
-}
-
 div.useravatar img
 {
 	margin: 1em auto 0 auto;
@@ -1845,79 +1754,87 @@ div.useravatar img
 	word-wrap: break-word;
 	word-break: break-word;
 }
-
-.textcomment .body:after {
+.textcomment .body:after 
+{
 	content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 10px 8px;
-border-color: #FFFFFF transparent;
-display: block;
-width: 0;
-z-index: 1;
-top: -8px;
-left: 16px;
+	position: absolute;
+	border-style: solid;
+	border-width: 0 10px 8px;
+	border-color: #FFFFFF transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	top: -8px;
+	left: 16px;
 }
-.textcomment .body:before {
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 10px 8px;
-border-color: #999 transparent;
-display: block;
-width: 0;
-z-index: 0;
-top: -9px;
-left: 16px;
+.textcomment .body:before 
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 0 10px 8px;
+	border-color: #999 transparent;
+	display: block;
+	width: 0;
+	z-index: 0;
+	top: -9px;
+	left: 16px;
 }
 .othercomment .textcomment .body
 {
- color: #008;
+	color: #008;
 }
-.editor {
+.editor 
+{
 	height: 100px;
 	width: 635px;
 	max-width: 95%;
 	min-width: 90%;
 	margin: 0.25em 0 1em 0;
 }
-.sceditor-container {
+.sceditor-container 
+{
 	max-width: 100%;
 	margin: 0.25em 0 1em 0;
 }
-.dl_container {
+.dl_container 
+{
 	width: 100%;
 	clear: both;
 }
 
 /************* TP STYLES ********************/
-/* {
-	border:0px;	
-}*/
-.clearthefloat{
+.clearthefloat
+{
    clear:both;
    padding:0px;
    margin:0px   
 }
-input#searchbox  {
+input#searchbox
+{
 	width: 100%;
 	max-width: 350px!important;
 	margin-bottom: 0.5em; 
 	padding: 5px;
 }
-input,select {
+input,select
+{
 	max-width:97%!important;
 }
-#tpleftbarContainer {
+#tpleftbarContainer
+{
 	float: left;
 }
-#tprightbarContainer {
+#tprightbarContainer
+{
 	float: right;
 }
-#centerContainer {
+#centerContainer
+{
 	padding-bottom: 4px;
 }	
-.tp_upshrink20 {
+.tp_upshrink20 
+{
 	float: right; 
 	margin-right: 0.5em; 
 	margin-top: -1.5em;
@@ -1927,28 +1844,31 @@ input,select {
 	margin-top:6px; 
 	padding-left:10px;
 }
+/* blocks in panels set to display in columns (the default is vertically)*/
 .panelsColumns{
 -webkit-box-sizing:border-box;
 box-sizing:border-box;
-	/* blocks in panels set to display in columns (the default is vertically)*/
 }
-.article_inner img,
-.bbc_img {
+/*images in articles content*/
+.article_inner img, .bbc_img 
+{
 	max-width: 100%;
 	height: auto;
-	/*images in articles content*/
 } 
-.tpthumb img {
+.tpthumb img 
+{
    max-width: 150px;
    max-height: 150px;
    padding: 5px;
 }
-.tpthumb div {
+.tpthumb div
+{
    padding: 4px;
    margin-top: 4px;
    overflow: auto;
 }
-.tpquicklist div {
+.tpquicklist div
+{
    padding: 4px;
    margin-top: 4px;
    max-height: 200px;
@@ -1957,40 +1877,49 @@ box-sizing:border-box;
 
 /************* TP ADMIN STYLES ********************/
 
-.addborder {
+.addborder
+{
 	border-bottom: 1px solid #ccc;	
 }
-.addborderleft div{
+.addborderleft div
+{
 	border-left:1px solid #ccc;
 } 
-.admin-area {
+.admin-area
+{
 	width: 100%;
     float: left;
 	box-sizing: border-box;
     border:1px solid #ccc;
 }
-.admin-area img{
+.admin-area img
+{
 	max-width: 95%;
 } 
-.tpartlayoutfp {
+.tpartlayoutfp
+{
     float: left;
 	margin: 4px;
 } 
-.tpartlayouttype {
+.tpartlayouttype
+{
 	float: left; 
 	width: 180px; 
 	height: 100px; 
 	margin: 4px;
 }
-#tp_article_body {
+#tp_article_body
+{
 	width: 95%; 
 	height: 300px;
 }
-#tp_article_intro{
+#tp_article_intro
+{
 	width: 95%; 
 	height: 140px;
 }
-#tp_customlayout {
+#tp_customlayout
+{
 	width: 90%; 
 	max-width: 900px;
 	height: 200px;
@@ -2000,65 +1929,80 @@ box-sizing:border-box;
 	border: none;
 	border-radius: 0 0 0 0;
 }
-#tpadmin_content {
+#tpadmin_content
+{
 	min-width:700px;
 }
-.padding-div{
+.padding-div
+{
 	padding:1%;
 }
-.font-strong {
+.font-strong
+{
 	font-weight:bold;
 	padding:1% 0 1% 0;
 }
-.float-items {
+.float-items
+{
    	float: left;
 	padding: 1%;
 	box-sizing: border-box;
 }
-#show-on-respnsive-layout {
+#show-on-respnsive-layout
+{
 	display:none;
 }
-.pos  {
+.pos
+{
 	border-left:0px!important;
 }
-.admin-area .dl_perm .perm{
+.admin-area .dl_perm .perm
+{
 	width: 100%;
 	height: 100%;
 	float: none;
 }
-#tpadmin {
+#tpadmin
+{
 	padding: 0 0 4px 0;
 }
-.panels-optionsbg {
+.panels-optionsbg
+{
 	background-color: #ffffff;
 	overflow: hidden;
 	padding: 5px;
 }
-.panels-options {
+.panels-options
+{
 	float: left;
 	width: 160px;
 	height: 120px; 
 	margin: 5px;
 }
-img.theme_icon {
+img.theme_icon
+{
    width: 35px; 
    height: 35px;
 }
+
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.admintable > .windowbg {
+.admintable > .windowbg
+{
 	box-shadow: none;
 	border-radius: 0;
 	border: none;
 	margin: 0 0 0 0 !important;
 }
-.admintable > .windowbg2 {
+.admintable > .windowbg2
+{
 	box-shadow: none;
 	border-radius: 0;
 	border: none;
 	margin: 0 0 0 0 !important;
 }
-.admintable > .windowbg3 {
+.admintable > .windowbg3
+{
 	box-shadow: none;
 	border-radius: 0;
 	border: none;
@@ -2070,32 +2014,40 @@ table.tp_grid td, table.tp_grid th
 {
 	border: 1px solid #ddd;
 }
-table.tp_grid tr.windowbg:nth-of-type(odd) {
+table.tp_grid tr.windowbg:nth-of-type(odd)
+{
     background: #fdfdfd;
 }
-table.tp_grid tr.windowbg:nth-of-type(even) {
+table.tp_grid tr.windowbg:nth-of-type(even)
+{
     background: #f0f4f7;
 }
 
 /* Generic icons for SMF 2.1 */
-.generic_icons.menu_tp::before {
+.generic_icons.menu_tp::before
+{
 	background: url(../images/tinyportal/menu_tp.png) no-repeat;
 }
-.generic_icons.menu_tparticle::before {
+.generic_icons.menu_tparticle::before
+{
 	background: url(../images/tinyportal/menu_tparticle.png) no-repeat;
 }
-.generic_icons.menu_tpdownload::before {
+.generic_icons.menu_tpdownload::before
+{
 	background: url(../images/tinyportal/menu_tpdownload.png) no-repeat;
 }
-.generic_icons.menu_tpshout::before {
+.generic_icons.menu_tpshout::before
+{
 	background: url(../images/tinyportal/menu_tpshout.png) no-repeat;
 }
-.generic_icons.menu_tpforum::before {
+.generic_icons.menu_tpforum::before
+{
     background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
 }
 
 /* Additional style for blocks replacing tp_half */
-div.tp_half21 {
+div.tp_half21
+{
 	background: #B1BBC5;
 	padding: 0;
 	border-radius: 6px 6px 0 0;
@@ -2114,45 +2066,83 @@ div.tp_half21 {
 	overflow: hidden;
 	padding: 8px 12px 6px 12px;
 }
-
+.inner a, .article_inner a
+{
+	/* These are technically the same, but use both */
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	-ms-word-break: break-word;
+	/* Adds a hyphen where the word breaks, if supported (No Blink) */
+	hyphens: auto;
+	-ms-hyphens: auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+}
+code.bbc_code
+{
+	white-space: normal !important;
+	/* These are technically the same, but use both */
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	-ms-word-break: break-word;
+	/* Adds a hyphen where the word breaks, if supported (No Blink) */
+	hyphens: none;
+	-ms-hyphens: none;
+	-moz-hyphens: none;
+	-webkit-hyphens: none;
+}
 /************* TP ADMIN RESPONSIVE ********************/
 
 /* Responsive Youtube embed */
 @media only screen and (min-width: 769px) {
-	.youtubecontainer {
-        	width: 59vw;
-        	height: calc(59vw/1.77);
-		margin: 0 auto;
-		display: inline-block;
-	}
+.youtubecontainer
+{
+	width: 59vw;
+	height: calc(59vw/1.77);
+	margin: 0 auto;
+	display: inline-block;
+}
 }
 
 @media only screen and (max-width: 768px) {
-	.youtubecontainer {
-        	width: 80vw;
-        	height: calc(80vw/1.77);
-        	margin: 0 auto;
-		display: inline-block;
-    	}
+.youtubecontainer
+{
+	width: 80vw;
+	height: calc(80vw/1.77);
+	margin: 0 auto;
+	display: inline-block;
+}
 }
 
-.youtubecontainer iframe {
+.youtubecontainer iframe
+{
 	display:block;
 	width:100%;
 	height:100%;
 }
-
-.tp_responsive #tpadmin_content {
+.tp_responsive #tpadmin_content
+{
 	min-width:200px;
 }
+
 /** screen bigger then 900px **/
 @media all and (min-width: 900px) {	
-.clickme {display:none!important;}
-.box {display:block!important;}
+.clickme
+{
+	display:none!important;
 }
+.box
+{
+	display:block!important;
+}
+}
+
 /** screen smaller then 900px **/
 @media all and (max-width: 900px) {	
-.tp_responsive .clickme {
+.tp_responsive .clickme
+{
 	width:55px;
 	font-weight:bold;
 	font-size:12px;
@@ -2165,105 +2155,137 @@ div.tp_half21 {
 	background-position:center right;
 	text-decoration:none;
 }	
-.tp_responsive .box {
+.tp_responsive .box
+{
 	width:100%!important;
     float:none!important;	
 }
-.tp_responsive .fullwidth-on-res-layout{
+.tp_responsive .fullwidth-on-res-layout
+{
     text-align: left!important;	
 	width:98%!important;	
 	float:none!important;
 	clear:both!important;
 	box-sizing: border-box;
 }	
-.tp_responsive .fullwidth-on-res-layout::after{
+.tp_responsive .fullwidth-on-res-layout::after
+{
     content: "";
 	clear:both;
 	display:block;
 }
-.tp_responsive .fullwidth-on-res-layout:after{
+.tp_responsive .fullwidth-on-res-layout:after
+{
     content: "";
 	clear:both;
 	display:block; /* after for older browsers*/
 }
-.tp_responsive #show-on-respnsive-layout{
+.tp_responsive #show-on-respnsive-layout
+{
 	display:block;
 	float: left;
 	width: 35%!important;
 	max-width: 150px;
 }
-.tp_responsive #size-on-respnsive-layout {
+.tp_responsive #size-on-respnsive-layout
+{
 	width: 65%;
 	float: left;
 }	
-.tp_responsive .title-admin-area {
+.tp_responsive .title-admin-area
+{
 	display:none;
 }
 .tp_responsive .admin-area .pos,
-.tp_responsive .admin-area .name {
+.tp_responsive .admin-area .name
+{
 	display:inline-block;
 	box-sizing: border-box;
 }
-.tp_responsive .admin-area .name {
+.tp_responsive .admin-area .name
+{
 	width:78%!important;		
 }
 .tp_responsive .admin-area .pos,
-.tp_responsive .admin-area .adm-pos {
+.tp_responsive .admin-area .adm-pos
+{
 	width:14%!important;
 	box-sizing: border-box;	
 }	
-.tp_responsive .admin-area .adm-name {
+.tp_responsive .admin-area .adm-name
+{
 	width:80%!important;	
     padding:1%!important;
 	box-sizing: border-box;	
 }	
-.tp_responsive .bigger-width #show-on-respnsive-layout{
+.tp_responsive .bigger-width #show-on-respnsive-layout
+{
 	width: 30%!important;
 	padding:0 3% 0 2%!important;
 }
-.tp_responsive .bigger-width  #size-on-respnsive-layout {
+.tp_responsive .bigger-width  #size-on-respnsive-layout
+{
 	width: 65%;	
 }
-.tp_responsive #new-item #show-on-respnsive-layout {
+.tp_responsive #new-item #show-on-respnsive-layout
+{
 	width:100%!important;
 	float:none;
 	padding: 0 0 1% 0!important;
 }
 .tp_responsive #any-subcats #size-on-respnsive-layout .float-items,
-.tp_responsive #up-file #size-on-respnsive-layout .float-items {
+.tp_responsive #up-file #size-on-respnsive-layout .float-items
+{
 	padding:0px 1%;
-	text-align:left;
-	
+	text-align:left;	
 }
 .tp_responsive #any-subcats #size-on-respnsive-layout,
-.tp_responsive #up-file #size-on-respnsive-layout {
+.tp_responsive #up-file #size-on-respnsive-layout
+{
 	text-align:left;
 }
-.tp_responsive #new-item  .float-items {
+.tp_responsive #new-item  .float-items
+{
 	width: 98%!important;
     float: none;
 }
-}
-/** screen smaller then 900px **/
-@media all and (max-width: 900px) {
-.tp_responsive #tpadmin_menu {
+.tp_responsive #tpadmin_menu 
+{
     float: none!important;
     width: 100%!important;
 }
-.tp_responsive #tpadmin_menu ul li {
+.tp_responsive #tpadmin_menu ul li
+{
     width: 31%!important;
     padding-left: 1%!important;
 	display: inline-block;
 	vertical-align: top;
 }
-.tp_responsive #tpadmin_menu .roundframe::after {
+.tp_responsive #tpadmin_menu .roundframe::after
+{
 	content: "";
 	display: table;	
 	clear: both;
 }
-.tp_responsive #tpadmin_content {
+.tp_responsive #tpadmin_content
+{
     margin: 2px 0 0 0px!important;
 }
+.tp_responsive .article_picturecolumn
+{
+	width:100%!important;
+	float:none!important;
+	/* Picture + Article ON for articles*/
+}
+.article_picture
+{
+	background-position: center;
+}
+.tp_responsive .render4
+{
+	margin: 4px 0 0 0px!important;
+}
+
 /*** responsiveness dlmanager ***/
 .dlitemgrid
 {
@@ -2275,33 +2297,41 @@ ul.tp-subcategories li
 	width: 48%;
 }
 }
+
 /** screen smaller then 720px **/
 @media only screen and (max-width: 720px) {
-.tp_upshrink21 {
+.tp_upshrink21 
+{
     float: left;
 	padding-left: 0px;
 	width: 95%;
 } 
 }
+
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
-.tp_responsive #tpadmin_menu {
+.tp_responsive #tpadmin_menu 
+{
     float: none!important;
     width: 100%!important;
 }
-.tp_responsive #tpadmin_menu ul li {
+.tp_responsive #tpadmin_menu ul li
+{
     width: 45%!important;
     padding-left: 3%!important;
 }
-.tp_responsive #tpadmin_menu .roundframe::after {
+.tp_responsive #tpadmin_menu .roundframe::after
+{
 	content: "";
 	display: table;	
 	clear: both;	
 }
-.tp_responsive #tpadmin_content {
+.tp_responsive #tpadmin_content
+{
     margin: 2px 0 0 0px!important;
 }
-.tp_responsive #tp_overview ul li {
+.tp_responsive #tp_overview ul li
+{
     width: 50%!important;
 }
 ul.tp-subcategories li
@@ -2309,15 +2339,19 @@ ul.tp-subcategories li
 	width: 98%;
 }
 }
+
 /** screen smaller then 400px **/
 @media all and (min-width: 0px) and (max-width: 400px) {	
-.tp_responsive .panels-options {
+.tp_responsive .panels-options
+{
 	width: 95%!important; /* Panel Settings */
 }
 }
+
 /** screen smaller then 300px **/
 @media all and (max-width: 300px) {	
-.tp_responsive #tpadmin_content {
+.tp_responsive #tpadmin_content
+{
 	font-size:11px;
 	word-break: break-all;
 }
@@ -2326,155 +2360,148 @@ ul.tp-subcategories li
 /********** RESPONSIVE TP ***********/
 
 /** screen smaller then 500px **/
-@media all and (min-width: 0px) and (max-width: 500px) {	
-	.tp_responsive .article_picturecolumn {
-		width:100%!important;
-		float:none!important;
-      /* Picture + Article ON for articles*/
-	}	
-	.tp_responsive .panelsColumns,
-	.tp_responsive .gridColumns,
-	.tp_responsive .gridC  {
-		width:100%!important;
-		padding-right:0px!important;
-		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
-	}
-	.tp_responsive .render4 {
-		margin: 4px 0 0 0px!important;
-	}
+@media all and (min-width: 0px) and (max-width: 500px) {		
+.tp_responsive .panelsColumns,
+.tp_responsive .gridColumns,
+.tp_responsive .gridC
+{
+	width:100%!important;
+	padding-right:0px!important;
+	/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
+}
+.tp_col8
+{
+	width: 100%;
+}
 }
 
 /** screen from 400px to 600px **/
 @media all and (min-width: 400px) and (max-width: 600px) {
-	.tp_responsive .panelsColumns,
-	.tp_responsive .panelsColumnsHorizontally {
-		width:50%!important;
-	}
+.tp_responsive .panelsColumns,
+.tp_responsive .panelsColumnsHorizontally
+{
+	width:50%!important;
+}
 }
 
 /** screen smaller then 400px **/
 @media all and (min-width: 0px) and (max-width: 400px) {	
-	.tp_responsive .panelsColumns,
-	.tp_responsive .panelsColumnsHorizontally {
-		width:100%!important;
-		/* blocks in panels set to display horizontally or in columns (the default is vertically)*/	
-	}
-	.tp_responsive #left_admsection {
-		width: 100%;
-		float: none;
-		/* width and float for left toggle menu from pages like profile page */
-	}
+.tp_responsive .panelsColumns,
+.tp_responsive .panelsColumnsHorizontally
+{
+	width:100%!important;
+	/* blocks in panels set to display horizontally or in columns (the default is vertically)*/	
+}
+.tp_responsive #left_admsection
+{
+	width: 100%;
+	float: none;
+	/* width and float for left toggle menu from pages like profile page */
+}
 } 
 
 /********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
-.lrs #centerContainer {
-	overflow:hidden; /* do not delete */
+.lrs #centerContainer
+{
+	overflow:hidden; 
+	/* do not delete */
 }
 /** screen smaller then 500px **/
 @media all and (min-width: 0px) and (max-width: 500px) {
-	.lrON.tp_responsive #tpleftbarContainer {
-		display: table-row-group;	
-	}
-	.lrON.tp_responsive #tprightbarContainer {
-		display: table-footer-group;	
-	}
-	.tp_responsive #tpleftbarContainer,
-	.tp_responsive #tprightbarContainer {
-		width:100%!important;
-		float:none!important;
-	}
-	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
-	.tp_responsive #tprightbarContainer #tprightbarHeader {
-		padding: 0px;
-		margin: 0px;
-	}
-
+.lrON.tp_responsive #tpleftbarContainer
+{
+	display: table-row-group;	
+}
+.lrON.tp_responsive #tprightbarContainer
+{
+	display: table-footer-group;	
+}
+.tp_responsive #tpleftbarContainer,
+.tp_responsive #tprightbarContainer
+{
+	width:100%!important;
+	float:none!important;
+}
+.tp_responsive #tpleftbarContainer #tpleftbarHeader,
+.tp_responsive #tprightbarContainer #tprightbarHeader
+{
+	padding: 0px;
+	margin: 0px;
+}
 }
 
 /** screen from 500px to 900px **/
 @media all and (min-width: 500px) and (max-width: 900px) {
-	.lrON.tp_responsive #tpleftbarContainer,
-	.lrON.tp_responsive #tprightbarContainer {
-		float:none!important;	
-	}
-	.lrON.tp_responsive #tpleftbarContainer {
-		display: table-cell;		
-	}
-	.lrON.tp_responsive #tprightbarContainer {
-		display: table-cell;	
-	}
-	.tp_responsive #tpleftbarContainer,
-	.tp_responsive #tprightbarContainer {
-		width:49%!important;
-		padding:0.5%;
-	}			
+.lrON.tp_responsive #tpleftbarContainer,
+.lrON.tp_responsive #tprightbarContainer
+{
+	float:none!important;	
+}
+.lrON.tp_responsive #tpleftbarContainer
+{
+	display: table-cell;		
+}
+.lrON.tp_responsive #tprightbarContainer
+{
+	display: table-cell;	
+}
+.tp_responsive #tpleftbarContainer,
+.tp_responsive #tprightbarContainer
+{
+	width:49%!important;
+	padding:0.5%;
+}			
 }
 
 /** screen smaller then 900px **/
 @media all and (min-width: 0px) and (max-width: 900px) {
-	.tp_responsive #centerContainer {
-		overflow:hidden!important;
-	 	max-width:100%;
-	}
+.tp_responsive #centerContainer
+{
+	overflow:hidden!important;
+ 	max-width:100%;
+}
 /* very specific fixes dealing width responsive curve in 2.0 */
-	.lrON input[name="subject"], input[name="evtitle"], input[name="secret_question"], .lrON #edit_poll fieldset input, .lrON select[name="targetboard"], 
-	.leftpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], .leftpanelOn #edit_poll fieldset input, .leftpanelOn select[name="targetboard"],
-	.rightpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], .rightpanelOn #edit_poll fieldset input, .rightpanelOn select[name="targetboard"] {
-		width:90%;
-	}	
-	.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select	{
-		width:70%;
-	}		
-	.inner a {
-		/* These are technically the same, but use both */
-		overflow-wrap: break-word;
-		word-wrap: break-word;
-		-ms-word-break: break-word;
-		word-break: break-word;
-
-		/* Adds a hyphen where the word breaks, if supported (No Blink) */
-		-ms-hyphens: auto;
-		-moz-hyphens: auto;
-		-webkit-hyphens: auto;
-		hyphens: auto;
-	}
-
-	code.bbc_code {
-		white-space: normal !important;
-
-		/* These are technically the same, but use both */
-		overflow-wrap: break-word;
-		word-wrap: break-word;
-		-ms-word-break: break-word;
-		word-break: break-word;
-
-		/* Adds a hyphen where the word breaks, if supported (No Blink) */
-		-ms-hyphens: none;
-		-moz-hyphens: none;
-		-webkit-hyphens: none;
-		hyphens: none;
-	}
-
-	.lrs.tp_responsive #mainContainer {
-		display: table;
-		width:100%; /* can be changed but not deleted
-	       it must have a width in px or % because of display table */
-	}	
-	.lrs.tp_responsive #centerContainer {
-		display: table-caption;	
-	}		 			
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-	.tp_responsive.rightpanelOn #tprightbarContainer {
-		display: table-footer-group;
-	}	
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-	.tp_responsive.rightpanelOn #tprightbarContainer {
-		width: 100%!important;
-		float:none!important;
-	}
-	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
-	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader{
-		padding: 0px;
-		margin: 0px;
-	}		
+.lrON input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
+.lrON #edit_poll fieldset input, 
+.lrON select[name="targetboard"], 
+.leftpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
+.leftpanelOn #edit_poll fieldset input, 
+.leftpanelOn select[name="targetboard"],
+.rightpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
+.rightpanelOn #edit_poll fieldset input, 
+.rightpanelOn select[name="targetboard"] 
+{
+	width:90%;
+}	
+.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select
+{
+	width:70%;
+}		
+.lrs.tp_responsive #mainContainer
+{
+	display: table;
+	width:100%; /* can be changed but not deleted
+    it must have a width in px or % because of display table */
+}	
+.lrs.tp_responsive #centerContainer
+{
+	display: table-caption;	
+}		 			
+.tp_responsive.leftpanelOn  #tpleftbarContainer,	
+.tp_responsive.rightpanelOn #tprightbarContainer
+{
+	display: table-footer-group;
+}	
+.tp_responsive.leftpanelOn  #tpleftbarContainer,	
+.tp_responsive.rightpanelOn #tprightbarContainer
+{
+	width: 100%!important;
+	float:none!important;
+}
+.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
+.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader
+{
+	padding: 0px;
+	margin: 0px;
+}		
 }
