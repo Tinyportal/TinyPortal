@@ -753,7 +753,8 @@ function TPmodules()
 		}
 		else
 			isAllowedTo('tp_submithtml');
-
+		
+		TPwysiwyg_setup();
 		$context['TPortal']['subaction'] = 'submitarticle';
 		loadtemplate('TPmodules');
 		$context['sub_template'] = 'submitarticle';
