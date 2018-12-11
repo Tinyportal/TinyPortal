@@ -85,8 +85,7 @@
 }
 .tp_readmore
 {
-	margin-top: 1em;
-	margin-bottom: 1em;
+	padding-top: 1em;
 }
 h2.author_h2
 {
@@ -128,6 +127,11 @@ ul.gtags li
 .article
 {
 	overflow: auto;
+}
+.tparticle
+{
+	overflow: auto;
+	border-radius: 0 0 6px 6px;
 }
 .tp_pageindex_lower,
 .tp_pageindex_upper
@@ -235,6 +239,7 @@ h3.article_title span.article_shortdate span
 }
 .article_boardnews
 {
+	padding-top: 1em;
 	font-size: 0.8em;
 }
 #tportal
@@ -1436,7 +1441,6 @@ div.subtab_chosen
 	font-size: 0.9em; 
 	padding: 0px 5px 0 0; 
 	margin: 4px 0 10px 0; 
-	height: 1.2em; 
 	overflow: hidden; 
 }
 fieldset#blockopts
