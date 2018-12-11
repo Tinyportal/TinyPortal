@@ -757,8 +757,11 @@ function TPmodules()
 		}
 		else
 			isAllowedTo('tp_submithtml');
-		
-		TPwysiwyg_setup();
+
+		if($tpsub == 'addarticle_html')
+		{		
+			TPwysiwyg_setup();
+		}
 		$context['TPortal']['subaction'] = 'submitarticle';
 		loadtemplate('TPmodules');
 		$context['sub_template'] = 'submitarticle';
@@ -795,7 +798,7 @@ function TPmodules()
 		$artc = !empty($_POST['tp_article_category']) ? $_POST['tp_article_category'] : 0;
 		$artf = $_POST['tp_article_frontpage'];
 		$artframe = 'theme';
-		$artoptions = 'date,title,author,linktree,top,cblock,rblock,lblock,tblock,lbblock,views,rating,ratingallow,avatar';
+		$artoptions = 'date,title,author,linktree,category,catlist,comments,commentallow,views,rating,ratingallow,inherit,avatar,social';
 		$name = $user_info['name'];
 		$nameb = $ID_MEMBER;
 		if($arts == '')

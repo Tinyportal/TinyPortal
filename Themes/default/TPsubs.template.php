@@ -1318,7 +1318,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="cat_bar">
 				<h3 class="catbg">{article_title} </h3>
 			</div>
-		<div></div><div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+		<div></div><div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg noup" ' : '') . '>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
