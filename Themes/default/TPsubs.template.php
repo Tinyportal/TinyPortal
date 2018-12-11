@@ -1685,7 +1685,7 @@ function article_moreauthor($render = true)
 	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
 	{
 		echo '
-	<div class="windowbg2">';
+	<div>';
 		if($context['TPortal']['article']['dateRegistered']>1000)
 			echo '
 		<div class="article_authorinfo tp_pad">
@@ -1776,10 +1776,10 @@ function article_comments($render = true)
 	{
 		echo '
 	<a name="tp-comment">
-	<div class="windowbg2"><hr></div>
+	<div><hr></div>
 	<h2 class="titlebg" style="padding: 0 1em;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
-		<div class="windowbg2" style="padding: 1em;">';
+		<div style="padding: 1em;">';
 
 		$counter = 1;
 		if(isset($context['TPortal']['article']['comment_posts']))
@@ -1820,7 +1820,7 @@ function article_comments($render = true)
 		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
 		{
 				echo '
-			<div class="windowbg2 tp_pad">
+			<div class="tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
@@ -1852,7 +1852,7 @@ function article_morelinks($render = true)
 		{
 			echo '
 	<h2 class="titlebg" style="padding: 0 1em;"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
-	<div class="windowbg2" style="overflow: hidden;">
+	<div style="overflow: hidden;">
 		<ul style="margin: 0; padding: 1em 2em;">';
 			foreach($context['TPortal']['article']['others'] as $art)
 				echo '
