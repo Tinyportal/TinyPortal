@@ -1248,7 +1248,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="article_iconcolumn">{article_iconcolumn}</div>
 		<div class="render2">
 			<h3 class="article_title" style="margin-left: 1em;">{article_title}</h3>
-			<div class="article_info" style="border: none; margin-top: 2px;">
+			<div class="article_info" style="margin-top: 2px;">
 				{article_author}
 				{article_category}
 				{article_date}
@@ -1302,14 +1302,14 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>
 			' . (($context['TPortal']['article']['frame'] == 'theme' && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
 			' . ($single ? '
-		</div>
-		<div>
-			<div class="tp_container">
-				{article_bookmark}
-				{article_moreauthor}
-			</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . '
+			<div>
+				<div class="tp_container">
+					{article_bookmark}
+					{article_moreauthor}
+				</div>
+				<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
+				<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>
+			</div>' : '') . '
 		</div>
 		</div>
 	</div>
@@ -1420,11 +1420,11 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 				<div class="article_text" style="border-bottom:none">{article_text}</div>
 				<div class="tp_container">
-					<div class="tp_col8">
-						{article_moreauthor}
-					</div>
 					<div class="tp_col8 tp_pad">
 						{article_bookmark}
+					</div>
+					<div class="tp_col8">
+						{article_moreauthor}
 					</div>
 				</div>
 				{article_morelinks}
@@ -1776,8 +1776,8 @@ function article_comments($render = true)
 	{
 		echo '
 	<a name="tp-comment">
-	<div><hr></div>
-	<h2 class="titlebg" style="padding: 0 1em;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
+	<div></div>
+	<h2 class="titlebg" style="padding: 0 1em; border-top: solid 1px #ccc;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
 		<div style="padding: 1em;">';
 
@@ -1851,7 +1851,7 @@ function article_morelinks($render = true)
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others']))
 		{
 			echo '
-	<h2 class="titlebg" style="padding: 0 1em;"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
+	<h2 class="titlebg" style="padding: 0 1em; border-top: solid 1px #ccc;"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
 	<div style="overflow: hidden;">
 		<ul style="margin: 0; padding: 1em 2em;">';
 			foreach($context['TPortal']['article']['others'] as $art)

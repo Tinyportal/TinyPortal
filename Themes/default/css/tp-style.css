@@ -2275,6 +2275,13 @@ code.bbc_code
 {
     margin: 2px 0 0 0px!important;
 }
+.tp_responsive .article_iconcolumn
+{
+	width:100%!important;
+	float:none!important;
+	text-align: left;
+	/* Avatar + Article ON for articles*/
+}
 .tp_responsive .article_picturecolumn
 {
 	width:100%!important;
@@ -2284,6 +2291,10 @@ code.bbc_code
 .article_picture
 {
 	background-position: center;
+}
+.tp_responsive .render2
+{
+	margin: 4px 0 0 0px!important;
 }
 .tp_responsive .render4
 {
