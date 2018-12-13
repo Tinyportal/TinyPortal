@@ -57,7 +57,7 @@
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
-		<remove-dir  name="tp-src" />
+		<remove-dir  name="$boarddir/tp-src" />
 		<code>do_hooks.php</code>
 	</uninstall>
 	<install for="2.1.* - 2.1.99">
@@ -74,7 +74,6 @@
 	</install>
 	<uninstall for="2.1.* - 2.1.99">
 		<readme type="inline">Uninstalling TinyPortal v2.0.0 for SMF2.1</readme>
-		<remove-dir name="$boarddir/tp-files/tp-modules" />
 		<remove-dir name="$boarddir/tp-files/tp-blockcodes" />
 		<remove-dir name="$boarddir/tp-files/tp-plugins" />
 		<remove-dir name="$themedir/images/tinyportal" />
@@ -113,7 +112,7 @@
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
-		<remove-dir  name="tp-src" />
+		<remove-dir  name="$boarddir/tp-src" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>

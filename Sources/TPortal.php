@@ -453,7 +453,6 @@ function doTPpage()
 {
 
 	global $context, $scripturl, $txt, $modSettings, $boarddir, $sourcedir, $smcFunc, $user_info;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	$now = time();
 	// Set the avatar height/width
@@ -794,7 +793,6 @@ function doTPcat()
 		return;
 
 	global $context, $scripturl, $txt, $modSettings, $smcFunc;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	$now = time();
 
@@ -1044,8 +1042,7 @@ function doTPcat()
 // do the frontpage
 function doTPfrontpage()
 {
-	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt, $db_type;
 
 	// check we aren't in any other section because 'cat' is used in SMF and TP
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
@@ -1094,7 +1091,7 @@ function doTPfrontpage()
             }
             else {
                 foreach($user_info['groups'] as $k => $v) {
-                    $artgroups .= "AND '.$v.' = ANY (string_to_array(var.value3, ',' ) )";
+                    $artgroups .= "AND '$v' = ANY (string_to_array(var.value3, ',' ) )";
                 }
             }
         }
@@ -1398,7 +1395,7 @@ function doTPfrontpage()
             }
             else {
                 foreach($user_info['groups'] as $k => $v) {
-                    $artgroups .= "AND '.$v.' = ANY (string_to_array(var.value3, ',' ) )";
+                    $artgroups .= "AND '$v' = ANY (string_to_array(var.value3, ',' ) )";
                 }
             }
         }
@@ -1679,18 +1676,20 @@ function doTPfrontpage()
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
 	// set the membergroup access
-	$mygroups = $user_info['groups'];
-	//$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
-
     $access = '';
-    foreach($mygroups as $sql) {
-        $access .= "'" . $sql ."' IN ( access ) OR ";
+    if($db_type == 'mysql') {
+        $access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
+    }
+    else {
+        foreach($user_info['groups'] as $k => $v) {
+            $access .= " '$v' = ANY (string_to_array(access, ',' ) ) OR ";
+        }
     }
     $access = rtrim($access,' OR ');
 
-
-    if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
+    if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 		$access = '1=1';
+    }
 
 	// get the blocks
 	$request =  $smcFunc['db_query']('', '
@@ -1927,8 +1926,7 @@ function doTPfrontpage()
 // do the blocks
 function doTPblocks()
 {
-	global $context, $scripturl, $user_info, $smcFunc, $modSettings;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+	global $context, $scripturl, $user_info, $smcFunc, $modSettings, $db_type;
 
 	$now = time();
 	// setup the containers
@@ -1940,29 +1938,29 @@ function doTPblocks()
 	// construct the spot we are in
 	$sqlarray = array();
 	// any action?
-	if(!empty($_GET['action']))
-	{
+	if(!empty($_GET['action'])) {
 		$sqlarray[] = 'actio=' . preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
-		if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2')))
+		if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2'))) {
 			$sqlarray[] = 'actio=forumall';
+        }
 	}
-	if(!empty($_GET['board']))
-	{
-		if(!isset($_GET['action']))
+	if(!empty($_GET['board'])) {
+		if(!isset($_GET['action'])) {
 			$sqlarray[] = 'board=-1';
+        }
 		$sqlarray[] = 'board=' . $_GET['board'];
 		$sqlarray[] = 'actio=forumall';
 	}
-	if(!empty($_GET['topic']))
-	{
-		if(!isset($_GET['action']))
+
+	if(!empty($_GET['topic'])) {
+		if(!isset($_GET['action'])) {
 			$sqlarray[] = 'board=-1';
+        }
 		$sqlarray[] = 'topic=' . $_GET['topic'];
 		$sqlarray[] = 'actio=forumall';
 	}
-	if(!empty($_GET['dl']))
-	{
-		if(substr($_GET['dl'], 0, 3) == 'cat')
+
+	if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
 			$down = true;
 	}
 
@@ -1972,23 +1970,33 @@ function doTPblocks()
     }
 
 	// frontpage
-	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))
+	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
 		$front = true;
+    }
 
 	$sqlarray[] = 'actio=allpages';
 
 	// set the location access
     $access2 = '';
-    foreach($sqlarray as $sql) {
-        $access2 .= "'" . $sql ."' IN ( access2 ) OR ";
+    if($db_type == 'mysql') {
+        $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+    }
+    else {
+        foreach($sqlarray as $k => $v) {
+            $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
+        }
     }
     $access2 = rtrim($access2,' OR ');
 
 	// set the membergroup access
-	$mygroups = $user_info['groups'];
     $access = '';
-    foreach($mygroups as $sql) {
-        $access .= "'" . $sql ."' IN ( access ) OR ";
+    if($db_type == 'mysql') {
+        $access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
+    }
+    else {
+        foreach($user_info['groups'] as $k => $v) {
+            $access .= " '$v' = ANY (string_to_array(access, ',' ) ) OR ";
+        }
     }
     $access = rtrim($access,' OR ');
 
@@ -2027,37 +2035,33 @@ function doTPblocks()
 	$fetch_article_titles = array();
 
 	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
-	if ($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			// some tests to minimize sql calls
-			if($row['type'] == 7)
+			if($row['type'] == 7) {
 				$test_themebox = true;
-			elseif($row['type'] == 18)
-			{
+            }
+			elseif($row['type'] == 18) {
 				$test_articlebox = true;
-				if(is_numeric($row['body']))
+				if(is_numeric($row['body'])) {
 					$fetch_articles[] = $row['body'];
+                }
 			}
-			elseif($row['type'] == 9 || $row['type'] == 16  )
+			elseif($row['type'] == 9 || $row['type'] == 16  ) {
 				$test_menubox = true;
-			elseif($row['type'] == 19)
-			{
+			}
+            elseif($row['type'] == 19) {
 				$test_catbox = true;
-				if(is_numeric($row['body']))
+				if(is_numeric($row['body'])) {
 					$fetch_article_titles[] = $row['body'];
+                }
 			}
-			// for modules, include it now
-			elseif($row['type'] == 20)
-			{
-				if(!empty($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']) && file_exists($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']))
-					require_once($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']);
-			}
+
 			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
-			if($can_manage)
+			if($can_manage) {
 				$can_edit = false;
+            }
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
@@ -2081,19 +2085,19 @@ function doTPblocks()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	if(count($fetch_articles) > 0)
-		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
-	else
-		$fetchart = '';
 
-	if(count($fetch_article_titles) > 0)
+	$fetchart = '';
+	if(count($fetch_articles) > 0) {
+		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
+    }
+
+	$fetchtitles = '';
+	if(count($fetch_article_titles) > 0) {
 		$fetchtitles= '(art.category='. implode(' OR art.category=', $fetch_article_titles).')';
-	else
-		$fetchtitles = '';
+    }
 
     // if a block displays an article
-    if(isset($test_articlebox) && $fetchart != '')
-	{
+    if(isset($test_articlebox) && $fetchart != '') {
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
@@ -2219,6 +2223,7 @@ function doTPblocks()
 		if(!isset($context['TPortal']['not_forum']) && $context['TPortal']['hide_' . $panel . 'bar_forum']==1)
 			tp_hidebars($panel);
 	}
+
 	$context['TPortal']['blocks'] = $blocks;
 }
 

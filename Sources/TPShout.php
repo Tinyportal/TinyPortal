@@ -623,20 +623,23 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	$context['TPortal']['usercolor'] = '';
 	// collect the color for shoutbox
 	$request = $smcFunc['db_query']('', '
-		SELECT grp.online_color as onlineColor
-		FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
-		WHERE m.id_group = grp.id_group
-		AND id_member = {int:user} LIMIT 1',
+		SELECT grp.online_color AS onlineColor
+		FROM {db_prefix}members AS m 
+        INNER JOIN {db_prefix}membergroups AS grp
+		ON m.id_group = grp.id_group
+		WHERE id_member = {int:user} LIMIT 1',
 		array('user' => $context['user']['id'])
 	);
+
 	if($smcFunc['db_num_rows']($request) > 0){
 		$row = $smcFunc['db_fetch_row']($request);
 		$context['TPortal']['usercolor'] = $row[0];
 		$smcFunc['db_free_result']($request);
 	}
 
-	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit == 1)
+	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit == 1) {
 		$limit = $context['TPortal']['shoutbox_limit'];
+    }
 
 	// don't fetch more than a hundred - save the poor server! :D
 	$nshouts = '';

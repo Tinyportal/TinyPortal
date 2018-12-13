@@ -123,11 +123,12 @@ function TPortal_tpmodulebox($blockid)
 	global $context;
 
 	// fetch the correct block
-	if(!empty($context['TPortal']['moduleid']))
-	{
+	if(!empty($context['TPortal']['moduleid'])) {
+        require_once(SOURCEDIR . '/TPShout.php');
 		$tpm = $context['TPortal']['moduleid'];
-		if(!empty($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']))
+		if(!empty($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpmodules']['blockrender'][$tpm]['function'])) {
 			call_user_func($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']);
+        }
 	}
 }
 
