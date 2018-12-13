@@ -309,7 +309,7 @@ function setupTPsettings()
 	// start of things
 	$context['TPortal']['mystart'] = 0;
 	if(isset($_GET['p']) && $_GET['p'] != '' && is_numeric($_GET['p']))
-		$context['TPortal']['mystart'] = TPSanitise::filter('p', 'get', 'int');
+		$context['TPortal']['mystart'] = TPUtil::filter('p', 'get', 'int');
 
 	$context['tp_html_headers'] = '';
 
