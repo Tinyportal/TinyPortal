@@ -292,7 +292,7 @@ $txt['tp-myarticles'] = 'My articles';
 $txt['tp_articles_help'] = '';
 $txt['tp-notapproved'] = 'This article hasn\'t been approved yet.';
 $txt['tp-noton'] = 'This article isn\'t active.';
-$txt['tp-nocategory'] = 'This article isn\'t assigned yet.';
+$txt['tp-nocategory'] = 'This article isn\'t assigned to a category yet.';
 $txt['tp_modreports'] = 'Modreports:';
 
 $txt['tp-blockoverview'] = 'Block Access';
