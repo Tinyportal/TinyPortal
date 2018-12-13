@@ -452,7 +452,7 @@ function TPmodules()
 			fatal_error($txt['tp-nosearchentered'], false);
 		
         // clean the search
-        $what = TPSanitise::filter('tpsearch_what', 'post', 'string');
+        $what = TPUtil::filter('tpsearch_what', 'post', 'string');
 
 		if(!empty($_POST['tpsearch_title']))
 			$usetitle = true;
