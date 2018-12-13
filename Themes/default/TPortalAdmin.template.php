@@ -162,22 +162,19 @@ function template_overview()
 	echo '
 	<div id="tp_overview" class="windowbg">';
 
-	if(is_array($context['admin_tabs']) && count($context['admin_tabs'])>0)
-	{
-		echo '
-			<ul>';
-		foreach($context['admin_tabs'] as $ad => $tab)
-		{
-			$tabs=array();
-			foreach($tab as $t => $tb)
+	if(is_array($context['admin_tabs']) && count($context['admin_tabs']) > 0 ) {
+		echo '<ul>';
+		foreach($context['admin_tabs'] as $ad => $tab) {
+			$tabs = array();
+			foreach($tab as $t => $tb) {
 				echo '<li><a href="' . $tb['href'] . '"><img style="margin-bottom: 8px;" src="' . $settings['tp_images_url'] . '/TPov_' . strtolower($t) . '.png" alt="TPov_' . strtolower($t) . '" /><br><b>'.$tb['title'].'</b></a></li>';
+            }
 
 		}
-		echo '
-			</ul>';
+		echo '</ul>';
 	}
-	echo '
-	</div>';
+	echo '</div>';
+
 }
 
 // submissions

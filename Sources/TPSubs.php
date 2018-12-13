@@ -72,7 +72,7 @@ function TPsetupAdminAreas()
                                 $context['admin_tabs']['custom_modules'][$pr[0]] = array(
                                     'title'         => $row['modulename'],
                                     'description'   => '',
-                                    'href'          => $scripturl . '?action=tpmod;'.$row['subquery'].'=admin',
+                                    'href'          => $scripturl . '?action=tpadmin;'.$row['subquery'].'=admin',
                                     'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
                                 );
                             }
@@ -362,7 +362,7 @@ function tp_getbuttons()
 	{
 		$buts['tpshoutbox'] = array(
 			'title' => $txt['permissionname_tp_can_admin_shout'],
-			'href' => $scripturl . '?action=tpmod;shout=admin',
+			'href' => $scripturl . '?action=tpadmin;shout=admin',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),

@@ -314,144 +314,147 @@ function tpAddProfileMenu(&$profile_areas)
 		'areas' => array(),
 	);
            // Profile area for 2.1
-	if(strpos($forum_version, '2.1') !== false) 
-	{
-	$profile_areas['tp']['areas']['tpsummary'] = array(
-		'label' => $txt['tpsummary'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_summary',
-		'icon' => 'menu_tp',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
-	if (!$context['TPortal']['use_wysiwyg']=='0') {
-	$profile_areas['tp']['areas']['tparticles'] = array(
-		'label' => $txt['articlesprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_articles',
-		'icon' => 'menu_tparticle',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-		'subsections' => array(
-			'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
-			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
-		),
-	);
-	}
-	else {
-	$profile_areas['tp']['areas']['tparticles'] = array(
-		'label' => $txt['articlesprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_articles',
-		'icon' => 'menu_tparticle',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
-	}
-	if(!empty($context['TPortal']['show_download']))
-	$profile_areas['tp']['areas']['tpdownload'] = array(
-		'label' => $txt['downloadprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_download',
-		'icon' => 'menu_tpdownload',
-		'permission' => array(
-			'own' => 'profile_view_own' && !empty($context['TPortal']['show_download']),
-			'any' => 'profile_view_any' && !empty($context['TPortal']['show_download']),
-		),
-	);
+    if(strpos($forum_version, '2.1') !== false) {
+        $profile_areas['tp']['areas']['tpsummary'] = array(
+            'label' => $txt['tpsummary'],
+            'file' => 'TPmodules.php',
+            'function' => 'tp_summary',
+            'icon' => 'menu_tp',
+            'permission' => array(
+                'own' => 'profile_view_own',
+                'any' => 'profile_view_any',
+            ),
+        );
 
-	if(!$context['TPortal']['profile_shouts_hide'])
-		{
-		$profile_areas['tp']['areas']['tpshoutbox'] = array(
-			'label' => $txt['shoutboxprofile'],
-			'file' => 'TPmodules.php',
-			'function' => 'tp_shoutb',
-			'icon' => 'menu_tpshout',
-			'permission' => array(
-				'own' => 'profile_view_own',
-				'any' => 'profile_view_any',
-			),
-		);
-		}
-	}
-	else
-           // Profile area for 2.0 - no icons
-	{
-		$profile_areas['tp']['areas']['tpsummary'] = array(
-		'label' => $txt['tpsummary'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_summary',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
+        if (!$context['TPortal']['use_wysiwyg']=='0') {
+            $profile_areas['tp']['areas']['tparticles'] = array(
+                'label' => $txt['articlesprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_articles',
+                'icon' => 'menu_tparticle',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+                'subsections' => array(
+                    'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
+                    'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
+                ),
+            );
+        }
+        else {
+            $profile_areas['tp']['areas']['tparticles'] = array(
+                'label' => $txt['articlesprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_articles',
+                'icon' => 'menu_tparticle',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
 
-	if (!$context['TPortal']['use_wysiwyg']=='0') {
-	$profile_areas['tp']['areas']['tparticles'] = array(
-		'label' => $txt['articlesprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_articles',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-		'subsections' => array(
-			'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
-			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
-		),
-	);
-	}
-	else {
-	$profile_areas['tp']['areas']['tparticles'] = array(
-		'label' => $txt['articlesprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_articles',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
-	}
-	if(!empty($context['TPortal']['show_download']))
-	$profile_areas['tp']['areas']['tpdownload'] = array(
-		'label' => $txt['downloadprofile'],
-		'file' => 'TPmodules.php',
-		'function' => 'tp_download',
-		'permission' => array(
-			'own' => 'profile_view_own',
-			'any' => 'profile_view_any',
-		),
-	);
+        if(!empty($context['TPortal']['show_download'])) {
+            $profile_areas['tp']['areas']['tpdownload'] = array(
+                'label' => $txt['downloadprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_download',
+                'icon' => 'menu_tpdownload',
+                'permission' => array(
+                    'own' => 'profile_view_own' && !empty($context['TPortal']['show_download']),
+                    'any' => 'profile_view_any' && !empty($context['TPortal']['show_download']),
+                ),
+            );
+        }
 
-	if(!$context['TPortal']['profile_shouts_hide'])
-		{
-		$profile_areas['tp']['areas']['tpshoutbox'] = array(
-			'label' => $txt['shoutboxprofile'],
-			'file' => 'TPmodules.php',
-			'function' => 'tp_shoutb',
-			'permission' => array(
-				'own' => 'profile_view_own',
-				'any' => 'profile_view_any',
-			),
-		);
-		}
-	}
+        if(!$context['TPortal']['profile_shouts_hide']) {
+            $profile_areas['tp']['areas']['tpshoutbox'] = array(
+                'label' => $txt['shoutboxprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_shoutb',
+                'icon' => 'menu_tpshout',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
+    }
+    else {
+        // Profile area for 2.0 - no icons 
+        $profile_areas['tp']['areas']['tpsummary'] = array(
+            'label' => $txt['tpsummary'],
+            'file' => 'TPmodules.php',
+            'function' => 'tp_summary',
+            'permission' => array(
+                'own' => 'profile_view_own',
+                'any' => 'profile_view_any',
+            ),
+        );
+
+        if (!$context['TPortal']['use_wysiwyg']=='0') {
+            $profile_areas['tp']['areas']['tparticles'] = array(
+                'label' => $txt['articlesprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_articles',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+                'subsections' => array(
+                    'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
+                    'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
+                ),
+            );
+        }
+        else {
+            $profile_areas['tp']['areas']['tparticles'] = array(
+                'label' => $txt['articlesprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_articles',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
+
+        if(!empty($context['TPortal']['show_download'])) {
+            $profile_areas['tp']['areas']['tpdownload'] = array(
+                'label' => $txt['downloadprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_download',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
+
+        if(!$context['TPortal']['profile_shouts_hide']) {
+            $profile_areas['tp']['areas']['tpshoutbox'] = array(
+                'label' => $txt['shoutboxprofile'],
+                'file' => 'TPmodules.php',
+                'function' => 'tp_shoutb',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
+
+    }
+
 }
 
 function tpAddActions(&$actionArray)
 {
 	$actionArray = array_merge(
-		array(
-			'tpadmin' => array('TPortalAdmin.php', 'TPortalAdmin'),
-			'forum' => array('BoardIndex.php', 'BoardIndex'),
-			'tpmod' => array('TPmodules.php', 'TPmodules'),
+		array (
+			'tpadmin'   => array('TPortalAdmin.php', 'TPortalAdmin'),
+			'forum'     => array('BoardIndex.php', 'BoardIndex'),
+			'tpmod'     => array('TPmodules.php', 'TPmodules'),
 		),
 		$actionArray
 	);
