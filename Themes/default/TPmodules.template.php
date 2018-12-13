@@ -44,92 +44,110 @@ function template_main()
 				echo '
 		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 			<div id="users-editarticle" class="bordercolor users-area">
-				<div class="windowbg2">
-					<div class="titlebg" style="padding:1%;">
-						'.$txt['tp-editarticle'].' - ' ,$mg['subject'], '
-					</div>
-				</div>';
+				<div class="cat_bar">
+					<h3 class="catbg">'.$txt['tp-editarticle'].'&nbsp;' ,$mg['subject'], '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a> </h3>
+				</div><div></div>
+				<div class="windowbg noup tp_pad">				';
 				if($mg['locked']==1)
 				{
 					echo '
-				<div class="windowbg2">
-					<div class="windowbg2 error" style="padding:1%;">
+					<div class="error padding_div" style="text-align:center;">
 						'.$txt['tp-articlelocked'].'
-					</div>
-				</div>';
+					</div>';
 				}
 				if($mg['approved']==0)
 				{
 					echo '
-				<div class="windowbg2">
-					<div class="windowbg2 error" style="padding:1%;">
+					<div class="error padding_div" style="text-align:center;">
 						'.$txt['tp-notapproved'].'
-					</div>
-				</div>';
+					</div>';
 				}
 					echo '
-				<div class="windowbg2" style="margin-top:1px;margin-bottom:1px;">
-					<div align="right" style="width:27%;" class="float-items">
-						<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>
-						'.$txt['tp-title'].'
+					<div class="font-strong">'.$txt['tp-arttitle'].'
 					</div>
-					<div style="width:69%;" class="float-items">
-						<input style="width: 92%;" name="tp_article_title'.$mg['id'].'" type="text" value="'.$mg['subject'].'">
-					</div><p class="clearthefloat"></p>
-				</div>
-				<div class="windowbg2" style="padding:1%;">
-					<div>';
+					<input style="width: 92%;" name="tp_article_title'.$mg['id'].'" type="text" value="'.$mg['subject'].'">
+				<br><br>
+				<div class="font-strong">'.$txt['tp-artbodytext'].' </div>
+				<div>';
 
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 
 				if($mg['articletype']=='php')
 					echo '
 						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" wrap="auto">' , $mg['body'], '</textarea><br>';
-				elseif($tp_use_wysiwyg > 0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
+
+				elseif($mg['articletype']=='html' && $tp_use_wysiwyg > 0)
 					TPwysiwyg('tp_article_body'.$mg['id'], $mg['body'], true,'qup_tp_article_body', $tp_use_wysiwyg);
-				elseif($tp_use_wysiwyg == 0 && $mg['articletype']=='' )
+
+				elseif($mg['articletype']=='html' && $tp_use_wysiwyg == 0 )
 					echo '
-						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" wrap="auto">' , $mg['body'], '</textarea><br>';
+						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
+
 				elseif($mg['articletype']=='bbc')
 				{
 					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else
-					echo $txt['tp-importarticle'] , '</div><div><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
+					echo $txt['tp-importarticle'] , '</div>
+					<div><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
 
-				if($context['TPortal']['allow_wysiwyg'] && $mg['articletype']=='html')
-					echo '
-					</div></div>
-					<div class="windowbg2"><div>';
-				else
-					echo '
-					<input name="tp_article_useintro'.$mg['id'].'" type="hidden" value="-1">';
-
-
+					
 				echo '
-				<br>' . $txt['tp-artintrotext']. '<br>';
+				<hr>
+				<dl class="settings">
+					<dt>
+						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+					</dt>
+					<dd>
+							<input name="tp_article_useintro'.$mg['id'].'" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
+							<input name="tp_article_useintro'.$mg['id'].'" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
+					</dd>
+				</dl>
+				<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
+                    '<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
 
 				if($mg['articletype']=='php')
 					echo '
-						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" wrap="auto">' , $mg['intro'], '</textarea><br>';
-				elseif($tp_use_wysiwyg > 0 && $mg['articletype'] == 'html' )
+						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro" wrap="auto">' , $mg['intro'], '</textarea><br>';
+
+				elseif($mg['articletype'] == 'html' && $tp_use_wysiwyg > 0)
 						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
-				elseif($tp_use_wysiwyg == 0 && $mg['articletype'] == '' )
+
+				elseif($mg['articletype'] == 'html' && $tp_use_wysiwyg == 0)
 					echo '
-							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" wrap="auto">' , $mg['intro'], '</textarea><br>';
+							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro" wrap="auto">' , $mg['intro'], '</textarea><br>';
+
 				elseif($mg['articletype']=='bbc')
 				{
 					echo '
-					<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro'.$mg['id'].'" wrap="auto">' , $mg['intro'], '</textarea><br>';
+					<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro" wrap="auto">' , $mg['intro'], '</textarea><br>';
 				}
 
 				echo '
 				</div></div>
-				<div class="windowbg">
-					<div align="center"><input type="submit" value="'.$txt['tp-send'].'" name="send"></div>
+				<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
 				</div>
 			</div>
 		</form>';
+
+    $context['insert_after_template'] =
+        '<script>
+        $(function () {
+                $(\'input[type=radio][name=tp_article_useintro]\').change(function() {
+                    switch($(this).val()){
+                        case "1":
+                            $("#tp_article_show_intro").show()
+                            break;
+                        case "0":
+                            $("#tp_article_show_intro").hide()
+                            break;
+                        default:
+                            $("#tp_article_show_intro").hide()
+                }
+            });
+        });
+        </script>';
+		
 				break;
 			case 'editblock':
 				echo '
@@ -591,52 +609,84 @@ function template_submitarticle()
 				<input name="TPadmin_submit" type="hidden" value="set">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<div id="users-addarticle" class="bordercolor">
-			<div class="windowbg2">
-				<div class="titlebg" style="padding:1%;">'.$txt['tp-submitarticle'].' </div>
-			</div>
-			<div class="windowbg2">
-				<div style="padding:1%;">'.$txt['tp-arttitle'].' </div>
-				<div style="padding:1%;"><input style="width: 92%;" name="tp_article_title" type="text" value=""></div>
-			</div>
-			<div class="windowbg2" style="padding:1%;">
-				<div>'.$txt['tp-artbodytext'].' <br>';
+			<div class="cat_bar">
+				<h3 class="catbg">' , (isset($context['TPortal']['submitbbc'])) ? $txt['tp-submitarticlebbc'] : $txt['tp-submitarticle'] , '</h3>
+			</div><div></div>
+			<div class="windowbg noup tp_pad">
+				<div class="font-strong">'.$txt['tp-arttitle'].'</div>
+				<input style="width: 92%;" name="tp_article_title" type="text" value="">
+				<br><br>
+				<div class="font-strong">'.$txt['tp-artbodytext'].' </div>
+				<div>';
 
 			$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
 				TPwysiwyg('tp_article_body', '', true,'qup_tp_article_body', $tp_use_wysiwyg);
+
 			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
 				echo '
 					<textarea name="tp_article_body" id="tp_article_body" wrap="auto"></textarea><br>';
+
 			elseif(isset($context['TPortal']['submitbbc']))
 				TP_bbcbox($context['TPortal']['editor_id']);
 
-			echo '<br>' . $txt['tp-artintrotext']. '<br>';
+			echo '
+				<hr>
+				<dl class="settings">
+					<dt>
+						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+					</dt>
+					<dd>
+						<input name="tp_article_useintro" type="radio" value="1">'.$txt['tp-yes'].'
+						<input name="tp_article_useintro" type="radio" value="0" checked> '.$txt['tp-no'].'<br>
+					</dd>
+				</dl>
+				<div id="tp_article_show_intro" style="display:none;">' ,
+                    '<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
+
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
 				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
+
 			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
 				echo '
 					<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
+
 			elseif(isset($context['TPortal']['submitbbc']))
 				echo '<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
 
-			echo '
-					<input name="tp_article_frame" type="hidden" value="theme">
-					<input name="newarticle" type="hidden" value="1">
-					<input name="submittedarticle" type="hidden" value="', isset($context['TPortal']['submitbbc']) ? 'bbc' : 'html' , '">
+				echo '
+					</div>
 				</div>
-			</div>
-			<div class="windowbg" style="padding:1%;">
-				<div align="center">
-				    <input type="submit" value="'.$txt['tp-send'].'" name="send">
-					<input name="tp_article_frontpage" type="hidden" value="0">
-					<input name="tp_article_date" type="hidden" value="',time(),'">
-					<input name="tp_article_category" type="hidden" value="">
-					<input name="tp_article_approved" type="hidden" value="0">
-				</div>
+				<div style="padding:1%;">  <input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
+				<input name="submittedarticle" type="hidden" value="', isset($context['TPortal']['submitbbc']) ? 'bbc' : 'html' , '">
+				<input name="tp_article_date" type="hidden" value="',time(),'">
+				<input name="newarticle" type="hidden" value="1">
+				<input name="tp_article_approved" type="hidden" value="0">
+				<input name="tp_article_category" type="hidden" value="">
+				<input name="tp_article_frontpage" type="hidden" value="0">
+				<input name="tp_article_frame" type="hidden" value="theme">
 			</div>
 		</div>
 	</form>';
+
+    $context['insert_after_template'] =
+        '<script>
+        $(function () {
+                $(\'input[type=radio][name=tp_article_useintro]\').change(function() {
+                    switch($(this).val()){
+                        case "1":
+                            $("#tp_article_show_intro").show()
+                            break;
+                        case "0":
+                            $("#tp_article_show_intro").hide()
+                            break;
+                        default:
+                            $("#tp_article_show_intro").hide()
+                }
+            });
+        });
+        </script>';
 }
 
 function template_updatelog()

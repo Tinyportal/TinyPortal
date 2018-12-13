@@ -1678,21 +1678,17 @@ function tp_renderarticle($intro = '')
 		if($context['TPortal']['article']['rendertype'] == 'php')
 		{
 			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
-			<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
 		{
-			if(defined('WIRELESS') && !WIRELESS)
-				echo parse_bbc($context['TPortal']['article']['intro']), '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
-			else
-				echo parse_bbc($context['TPortal']['article']['intro']);
+			echo parse_bbc($context['TPortal']['article']['intro']), '
+				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 		else
 		{
-			if(defined('WIRELESS') && !WIRELESS)
-				echo $context['TPortal']['article']['intro'], '<p><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , WIRELESS ? ';'.WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
-			else
-				echo $context['TPortal']['article']['intro'];
+			echo $context['TPortal']['article']['intro'], '
+				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 	}
 	else
@@ -1704,6 +1700,9 @@ function tp_renderarticle($intro = '')
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
 		{
 			echo parse_bbc($context['TPortal']['article']['body']);
+            if(!empty($context['TPortal']['article']['readmore'])) {
+                echo $context['TPortal']['article']['readmore'];
+            }
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'import')
 		{
@@ -2753,7 +2752,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		{
 			echo '
 			<div class="post">
-				<ul>';
+				<ul class="dl_recentitems">';
 			foreach($context['TPortal']['dlrecenttp'] as $dl)
 			{
 				echo '<li><a href="'.$dl['href'].'">'.$dl['name'].'</a>';

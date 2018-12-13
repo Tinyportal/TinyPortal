@@ -130,12 +130,11 @@ $txt['block-upshrink_description'] = 'Collapse or Expand Block';
 // Panels... //
 $txt['left-tp-upshrink_description'] = 'Left Panel';
 $txt['right-tp-upshrink_description'] = 'Right Panel';
-$txt['upper-tp-upshrink_description'] = 'Upper Panel';
+$txt['top-tp-upshrink_description'] = 'Top Panel';
+$txt['center-tp-upshrink_description'] = 'Center Panel';
+$txt['front-tp-upshrink_description'] = 'Frontpage';
 $txt['lower-tp-upshrink_description'] = 'Lower Panel';
 $txt['bottom-tp-upshrink_description'] = 'Bottom Panel';
-$txt['top-tp-upshrink_description'] = 'Top Panel';
-$txt['front-tp-upshrink_description'] = 'Frontpage';
-$txt['center-tp-upshrink_description'] = 'Center Panel';
 
 // Search... //
 $txt['tp-searcharticles'] = 'Extended search';
@@ -293,7 +292,7 @@ $txt['tp-myarticles'] = 'My articles';
 $txt['tp_articles_help'] = '';
 $txt['tp-notapproved'] = 'This article hasn\'t been approved yet.';
 $txt['tp-noton'] = 'This article isn\'t active.';
-$txt['tp-nocategory'] = 'This article isn\'t assigned yet.';
+$txt['tp-nocategory'] = 'This article isn\'t assigned to a category yet.';
 $txt['tp_modreports'] = 'Modreports:';
 
 $txt['tp-blockoverview'] = 'Block Access';

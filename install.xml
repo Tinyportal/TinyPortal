@@ -4,7 +4,6 @@
   
 	<id>bloc:tinyportal</id>
     <version>2.0.0</version>
-    
 	<file name="$boarddir/index.php">
         <operation>
             <search position="replace"><![CDATA[writeLog();]]></search>

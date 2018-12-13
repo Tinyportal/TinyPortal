@@ -180,10 +180,11 @@ $tables = array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
-    'tp_article_comments' => array (
+    'tp_comments' => array (
         'columns' => array (
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'article_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
+            array('name' => 'item_type', 'type' => 'varchar', 'size' => 255, 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'item_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'datetime', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'comment', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
@@ -444,7 +445,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '161',
+    'version' => '162',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',

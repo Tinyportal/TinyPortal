@@ -134,45 +134,19 @@ function TPmodules()
 		if (!allowedTo('tp_artcomment'))
 			fatal_error($txt['tp-nocomments'], false);
 
-		$commenter = $context['user']['id'];
-		$article = $_POST['tp_article_id'];
+		$commenter  = $context['user']['id'];
+		$article    = $_POST['tp_article_id'];
+        $title      = strip_tags($_POST['tp_article_comment_title']);
+        $comment    = substr(TPUtil::htmlspecialchars($_POST['tp_article_bodytext']), 0, 65536);
 
-		// check if the article indeed exists
-		$request =  $smcFunc['db_query']('', '
-            SELECT comments FROM {db_prefix}tp_articles
-            WHERE id = {int:artid}',
-            array('artid' => $article)
-        );
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			$row = $smcFunc['db_fetch_row']($request);
-			$num_comments = $row[0] + 1;
-			$smcFunc['db_free_result']($request);
-			$title = strip_tags($_POST['tp_article_comment_title']);
-			$comment = substr($smcFunc['htmlspecialchars']($_POST['tp_article_bodytext']), 0, 65536);
+        require_once($sourcedir.'/Subs-Post.php');
+        preparsecode($comment);
 
-			require_once($sourcedir.'/Subs-Post.php');
-			preparsecode($comment);
-			$time = time();
-
-			// insert the comment
-			$smcFunc['db_insert']('INSERT',
-                '{db_prefix}tp_variables',
-                array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'value5' => 'int'),
-                array($title, $comment, $ID_MEMBER, 'article_comment', $time, $article),
-                array('id')
-            );
-
-			// count and increase the number of comments
-			$smcFunc['db_query']('', '
-                UPDATE {db_prefix}tp_articles
-                SET comments = {int:com}
-                WHERE id = {int:artid}',
-                array('com' => $num_comments, 'artid' => $article)
-            );
+        $tpArticle = new TPArticle();
+        if($tpArticle->insertArticleComment($commenter, $article, $comment, $title))  {
 			// go back to the article
 			redirectexit('page='.$article.'#tp-comment');
-		}
+        }
 	}
 	elseif($tpsub == 'updatelog')
 	{
@@ -643,6 +617,10 @@ function TPmodules()
 				$context['TPortal']['editor_id'] = 'tp_article_body' . $row['id'];
 				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($row['body']));
 			}
+			if($row['type'] == 'html')
+			{
+			TPwysiwyg_setup();
+			}
 
 			$context['TPortal']['editarticle'] = array(
 				'id' => $row['id'],
@@ -754,6 +732,10 @@ function TPmodules()
 		else
 			isAllowedTo('tp_submithtml');
 
+		if($tpsub == 'addarticle_html')
+		{		
+			TPwysiwyg_setup();
+		}
 		$context['TPortal']['subaction'] = 'submitarticle';
 		loadtemplate('TPmodules');
 		$context['sub_template'] = 'submitarticle';
@@ -790,7 +772,7 @@ function TPmodules()
 		$artc = !empty($_POST['tp_article_category']) ? $_POST['tp_article_category'] : 0;
 		$artf = $_POST['tp_article_frontpage'];
 		$artframe = 'theme';
-		$artoptions = 'date,title,author,linktree,top,cblock,rblock,lblock,tblock,lbblock,views,rating,ratingallow,avatar';
+		$artoptions = 'date,title,author,linktree,category,catlist,comments,commentallow,views,rating,ratingallow,inherit,avatar,social';
 		$name = $user_info['name'];
 		$nameb = $ID_MEMBER;
 		if($arts == '')
