@@ -617,6 +617,10 @@ function TPmodules()
 				$context['TPortal']['editor_id'] = 'tp_article_body' . $row['id'];
 				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($row['body']));
 			}
+			if($row['type'] == 'html')
+			{
+			TPwysiwyg_setup();
+			}
 
 			$context['TPortal']['editarticle'] = array(
 				'id' => $row['id'],
@@ -727,7 +731,8 @@ function TPmodules()
 		}
 		else
 			isAllowedTo('tp_submithtml');
-
+		
+		TPwysiwyg_setup();
 		$context['TPortal']['subaction'] = 'submitarticle';
 		loadtemplate('TPmodules');
 		$context['sub_template'] = 'submitarticle';
