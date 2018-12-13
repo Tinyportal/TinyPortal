@@ -326,7 +326,7 @@ function tpAddProfileMenu(&$profile_areas)
 			'any' => 'profile_view_any',
 		),
 	);
-
+	if (!$context['TPortal']['use_wysiwyg']=='0') {
 	$profile_areas['tp']['areas']['tparticles'] = array(
 		'label' => $txt['articlesprofile'],
 		'file' => 'TPmodules.php',
@@ -341,6 +341,19 @@ function tpAddProfileMenu(&$profile_areas)
 			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
+	}
+	else {
+	$profile_areas['tp']['areas']['tparticles'] = array(
+		'label' => $txt['articlesprofile'],
+		'file' => 'TPmodules.php',
+		'function' => 'tp_articles',
+		'icon' => 'menu_tparticle',
+		'permission' => array(
+			'own' => 'profile_view_own',
+			'any' => 'profile_view_any',
+		),
+	);
+	}
 	if(!empty($context['TPortal']['show_download']))
 	$profile_areas['tp']['areas']['tpdownload'] = array(
 		'label' => $txt['downloadprofile'],
@@ -380,6 +393,7 @@ function tpAddProfileMenu(&$profile_areas)
 		),
 	);
 
+	if (!$context['TPortal']['use_wysiwyg']=='0') {
 	$profile_areas['tp']['areas']['tparticles'] = array(
 		'label' => $txt['articlesprofile'],
 		'file' => 'TPmodules.php',
@@ -393,6 +407,18 @@ function tpAddProfileMenu(&$profile_areas)
 			'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
 		),
 	);
+	}
+	else {
+	$profile_areas['tp']['areas']['tparticles'] = array(
+		'label' => $txt['articlesprofile'],
+		'file' => 'TPmodules.php',
+		'function' => 'tp_articles',
+		'permission' => array(
+			'own' => 'profile_view_own',
+			'any' => 'profile_view_any',
+		),
+	);
+	}
 	if(!empty($context['TPortal']['show_download']))
 	$profile_areas['tp']['areas']['tpdownload'] = array(
 		'label' => $txt['downloadprofile'],

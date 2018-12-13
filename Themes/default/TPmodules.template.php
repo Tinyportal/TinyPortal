@@ -76,12 +76,12 @@ function template_main()
 					echo '
 						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" wrap="auto">' , $mg['body'], '</textarea><br>';
 
-				elseif($tp_use_wysiwyg > 0 && ($mg['articletype']=='' || $mg['articletype']=='html'))
+				elseif($mg['articletype']=='html' && $tp_use_wysiwyg > 0)
 					TPwysiwyg('tp_article_body'.$mg['id'], $mg['body'], true,'qup_tp_article_body', $tp_use_wysiwyg);
 
-				elseif($tp_use_wysiwyg == 0 && $mg['articletype']=='' )
+				elseif($mg['articletype']=='html' && $tp_use_wysiwyg == 0 )
 					echo '
-						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body'.$mg['id'].'" wrap="auto">' , $mg['body'], '</textarea><br>';
+						<textarea name="tp_article_body'.$mg['id'].'" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
 
 				elseif($mg['articletype']=='bbc')
 				{
@@ -91,26 +91,32 @@ function template_main()
 					echo $txt['tp-importarticle'] , '</div>
 					<div><input size="40" name="tp_article_importlink'.$mg['id'].'" type="text" value="' , $mg['fileimport'] , '"> ' ;
 
-				if($context['TPortal']['allow_wysiwyg'] && $mg['articletype']=='html')
-					echo '
-					</div>
-					<div>';
-				else
-					echo '
-					<input name="tp_article_useintro'.$mg['id'].'" type="hidden" value="-1">';
-
+					
 				echo '
-					<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
+				<hr>
+				<dl class="settings">
+					<dt>
+						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+					</dt>
+					<dd>
+							<input name="tp_article_useintro'.$mg['id'].'" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
+							<input name="tp_article_useintro'.$mg['id'].'" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
+					</dd>
+				</dl>
+				<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
+                    '<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
 
 				if($mg['articletype']=='php')
 					echo '
 						<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro" wrap="auto">' , $mg['intro'], '</textarea><br>';
 
-				elseif($tp_use_wysiwyg > 0 && $mg['articletype'] == 'html' )
+				elseif($mg['articletype'] == 'html' && $tp_use_wysiwyg > 0)
 						TPwysiwyg('tp_article_intro'.$mg['id'], $mg['intro'], true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
-				elseif($tp_use_wysiwyg == 0 && $mg['articletype'] == '' )
+
+				elseif($mg['articletype'] == 'html' && $tp_use_wysiwyg == 0)
 					echo '
 							<textarea name="tp_article_intro'.$mg['id'].'" id="tp_article_intro" wrap="auto">' , $mg['intro'], '</textarea><br>';
+
 				elseif($mg['articletype']=='bbc')
 				{
 					echo '
@@ -118,11 +124,30 @@ function template_main()
 				}
 
 				echo '
-				</div>
+				</div></div>
 				<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
 				</div>
 			</div>
 		</form>';
+
+    $context['insert_after_template'] =
+        '<script>
+        $(function () {
+                $(\'input[type=radio][name=tp_article_useintro]\').change(function() {
+                    switch($(this).val()){
+                        case "1":
+                            $("#tp_article_show_intro").show()
+                            break;
+                        case "0":
+                            $("#tp_article_show_intro").hide()
+                            break;
+                        default:
+                            $("#tp_article_show_intro").hide()
+                }
+            });
+        });
+        </script>';
+		
 				break;
 			case 'editblock':
 				echo '
@@ -607,7 +632,18 @@ function template_submitarticle()
 				TP_bbcbox($context['TPortal']['editor_id']);
 
 			echo '
-				<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
+				<hr>
+				<dl class="settings">
+					<dt>
+						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+					</dt>
+					<dd>
+						<input name="tp_article_useintro" type="radio" value="1">'.$txt['tp-yes'].'
+						<input name="tp_article_useintro" type="radio" value="0" checked> '.$txt['tp-no'].'<br>
+					</dd>
+				</dl>
+				<div id="tp_article_show_intro" style="display:none;">' ,
+                    '<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
 
 			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
 				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
@@ -619,19 +655,38 @@ function template_submitarticle()
 			elseif(isset($context['TPortal']['submitbbc']))
 				echo '<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
 
-			echo '
-					<input name="tp_article_frame" type="hidden" value="theme">
-					<input name="newarticle" type="hidden" value="1">
-					<input name="submittedarticle" type="hidden" value="', isset($context['TPortal']['submitbbc']) ? 'bbc' : 'html' , '">
+				echo '
+					</div>
 				</div>
 				<div style="padding:1%;">  <input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
-				<input name="tp_article_frontpage" type="hidden" value="0">
+				<input name="submittedarticle" type="hidden" value="', isset($context['TPortal']['submitbbc']) ? 'bbc' : 'html' , '">
 				<input name="tp_article_date" type="hidden" value="',time(),'">
-				<input name="tp_article_category" type="hidden" value="">
+				<input name="newarticle" type="hidden" value="1">
 				<input name="tp_article_approved" type="hidden" value="0">
+				<input name="tp_article_category" type="hidden" value="">
+				<input name="tp_article_frontpage" type="hidden" value="0">
+				<input name="tp_article_frame" type="hidden" value="theme">
 			</div>
 		</div>
 	</form>';
+
+    $context['insert_after_template'] =
+        '<script>
+        $(function () {
+                $(\'input[type=radio][name=tp_article_useintro]\').change(function() {
+                    switch($(this).val()){
+                        case "1":
+                            $("#tp_article_show_intro").show()
+                            break;
+                        case "0":
+                            $("#tp_article_show_intro").hide()
+                            break;
+                        default:
+                            $("#tp_article_show_intro").hide()
+                }
+            });
+        });
+        </script>';
 }
 
 function template_updatelog()
