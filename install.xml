@@ -38,7 +38,7 @@
 			<search position="replace"><![CDATA[	// Start the linktree off empty..
 	$context['linktree'] = array();]]></search>
 			<add><![CDATA[	// Start the linktree off empty..not quite, have to insert forum
-	$context['linktree'] = array(array('url' => $scripturl . '?action=forum', 'name' => 'Forum'));]]></add>
+	$context['linktree'] = array(array('url' => $scripturl . '?action=forum', 'name' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum'));]]></add>
 		</operation>
 		<operation>
 			<search position="replace"><![CDATA[		// Build up the linktree.
