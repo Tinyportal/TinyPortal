@@ -121,7 +121,7 @@ function template_blockoverview()
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
 			<div class="content">';
 
-		$side=array('','left','right','center','front','bottom','top','lower');
+		$side=array('','left','right','top','center','front','lower','bottom');
 
 		if(allowedTo('tp_blocks') && isset($context['TPortal']['blockoverview']))
 		{
@@ -2903,7 +2903,7 @@ function template_addblock()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	$side = $_GET['addblock'];
-	$panels = array('','left','right','center','front','bottom','top','lower');
+	$panels = array('','left','right','top','center','front','lower','bottom');
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post">
