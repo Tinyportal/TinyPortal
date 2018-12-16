@@ -18,6 +18,12 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
+// Load the language file straight away for the check in SMF2.0 and Load.php
+global $txt;
+if(loadLanguage('TPortal') == false) {
+    loadLanguage('TPortal', 'english');
+}
+
 // TinyPortal init
 function TPortal_init()
 {

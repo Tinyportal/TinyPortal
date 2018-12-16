@@ -3529,7 +3529,7 @@ function template_blockedit()
 					// add the custom ones you added
 					$count=19;
 					foreach($context['TPortal']['blockedit']['access2']['action'] as $po => $p)
-					{
+          {
 						if(!in_array($p, array('allpages','frontpage','forumall','forum','recent','unread','unreadreplies','profile','pm','calendar','admin','login','logout','register','post','stats','search','mlist')))
 						{
 							echo '<input name="actiontype'.$count.'" type="checkbox" value="'.$p.'" checked="checked">'.$p.'<br>';
