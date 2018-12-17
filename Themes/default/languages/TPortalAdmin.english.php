@@ -98,7 +98,7 @@ $txt['tp-fckopt3']='One by UserID';
 $txt['tp-frontblockfirst']='Frontpanel will be added before content';
 $txt['tp-frontblocklast']='Frontpanel will be added after content';
 $txt['tp-frontblockoption']='How frontpanel will be shown with content:';
-$txt['tp-frontblocks'] = 'Frontpanel';
+$txt['tp-frontblocks'] = 'Frontpanel only';
 $txt['tp-frontblocksingle']='Hide frontpanel, unless otherwise selected.';
 $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage:';
@@ -608,8 +608,8 @@ $txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 se
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';
 
-$txt['tp-selectedforum'] = 'Selected topics only';
-$txt['tp-selectbothforum'] = 'Selected topics + articles';
+$txt['tp-selectedforum'] = 'Promoted topics only';
+$txt['tp-selectbothforum'] = 'Promoted topics + articles';
 
 $txt['tp-frontpagetitle'] = 'Use a custom browser tab title for your Frontpage: ';
 $txt['tp-frontpagetitle2'] = ' (leave the textfield empty for no title)';
