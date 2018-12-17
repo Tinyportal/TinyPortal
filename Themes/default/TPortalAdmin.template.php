@@ -1490,14 +1490,6 @@ function template_frontpage()
 				<hr>
 					<dl class="settings">
 						<dt>
-							<label for="field_name">', $txt['tp-allowguests'], '</label>
-						</dt>
-						<dd>
-							  <input name="tp_allow_guestnews" type="radio" value="1" ' , $context['TPortal']['allow_guestnews']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
-							  <input name="tp_allow_guestnews" type="radio" value="0" ' , $context['TPortal']['allow_guestnews']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
-						</dd>
-
-						<dt>
 							<label for="field_name">', $txt['tp-numberofposts'], '</label>
 						</dt>
 						<dd>
@@ -1521,6 +1513,13 @@ function template_frontpage()
 					</dl>
 					<hr>
 					<dl class="settings">
+						<dt>
+							<label for="field_name">', $txt['tp-allowguests'], '</label>
+						</dt>
+						<dd>
+							  <input name="tp_allow_guestnews" type="radio" value="1" ' , $context['TPortal']['allow_guestnews']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							  <input name="tp_allow_guestnews" type="radio" value="0" ' , $context['TPortal']['allow_guestnews']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
+						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-showforumposts'], '</label>
 						</dt>
