@@ -455,6 +455,7 @@ function tpAddActions(&$actionArray)
 			'tpadmin'   => array('TPortalAdmin.php', 'TPortalAdmin'),
 			'forum'     => array('BoardIndex.php', 'BoardIndex'),
 			'tpmod'     => array('TPmodules.php', 'TPmodules'),
+			'tpshout'   => array('TPShout.php', 'TPShout'),
 		),
 		$actionArray
 	);

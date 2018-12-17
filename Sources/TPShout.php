@@ -171,10 +171,11 @@ function postShout()
 
 		// collect the color for shoutbox
 		$request = $smcFunc['db_query']('', '
-			SELECT grp.online_color as onlineColor
-			FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
-			WHERE m.id_group = grp.id_group
-			AND id_member = {int:user} LIMIT 1',
+			SELECT grp.online_color AS onlineColor
+			FROM {db_prefix}members AS m
+            INNER JOIN {db_prefix}membergroups AS grp
+			ON m.id_group = grp.id_group
+            WHERE id_member = {int:user} LIMIT 1',
 			array('user' => $context['user']['id'])
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -669,14 +670,15 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
-		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
-			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, mgrp.online_color as mg_online_color, pgrp.online_color as pg_online_color
+		    SELECT mem.id_member, mem.real_name AS real_name, mem.email_address AS email_address, 
+			    mem.avatar, COALESCE(a.id_attach,0) AS id_attach, a.filename, COALESCE(a.attachment_type,0) AS attachment_type, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
 		    FROM {db_prefix}members AS mem
-				LEFT JOIN {db_prefix}membergroups AS mgrp ON
+			LEFT JOIN {db_prefix}membergroups AS mgrp ON
 				(mgrp.id_group = mem.id_group)
-				LEFT JOIN {db_prefix}membergroups AS pgrp ON
+			LEFT JOIN {db_prefix}membergroups AS pgrp ON
 				(pgrp.id_group = mem.id_post_group)
-				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
+			LEFT JOIN {db_prefix}attachments AS a ON 
+                (a.id_member = mem.id_member and a.attachment_type!=3)
 		    WHERE mem.id_member IN(' . implode(",",$members) . ')' 
 	    );
     }
@@ -704,7 +706,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		foreach($fetched as $b => $row)
 		{
 			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
-			$row['realName'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
+			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : $memberdata[$row['member_id']]['pg_online_color'];
 			$ns[] = template_singleshout($row);
