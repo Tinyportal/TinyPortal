@@ -50,6 +50,10 @@ class TPUtil
 		return false;
 	}
 
+    public static function isHTML( $string ) { 
+        return preg_match( "~\/[a-z]*>~i", $string ) != 0; 
+    }
+
     public static function xssClean( $string ) {
 
         // URL decode

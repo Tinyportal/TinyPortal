@@ -1523,6 +1523,8 @@ function doTPfrontpage()
             $forumPosts = ssi_fetchPosts($mposts, false, 'array');
         }
 
+        global $memberContext;
+
 		// insert the forumposts into $posts
 		if(is_array($forumPosts) && count($forumPosts) > 0) {
 			$length = $context['TPortal']['frontpage_limit_len'];
@@ -1535,6 +1537,19 @@ function doTPfrontpage()
                 $row['views'] = 0;
                 $row['date_registered'] = 0;
                 // FIXME 
+
+                // Load their context data.
+                loadMemberData($row['author_id']);
+                loadMemberContext($row['author_id']);
+
+                // Store this member's information.
+                if(array_key_exists($row['author_id'], $memberContext)) {
+                    $avatar         = $memberContext[$row['author_id']];
+                    $row['avatar']  = $avatar['avatar']['image'];
+                }
+                else {
+                    $row['avatar']  = '';
+                }
 
 				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
 					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
@@ -1560,14 +1575,6 @@ function doTPfrontpage()
 
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';
-                $row['avatar'] = set_avatar_data( array(      
-                            'avatar' => $row['avatar'],
-                            'email' => $row['email_address'],
-                            'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'id_attach' => $row['id_attach'],
-                            'attachement_type' => $row['attachement_type'],
-                        )
-                )['image'];
 
 				if(!empty($row['thumb_id'])) {
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
@@ -1603,11 +1610,12 @@ function doTPfrontpage()
                 }
                 $posts[$sortdate.'0' . sprintf("%06s", $row['id'])] = $row;
 			}
+            unset($tpArticle);
 		}
-		$total = count($posts);
-        $col1 = ceil($total / 2);
-		$col2 = $total - $col1;
-		$counter = 0;
+		$total      = count($posts);
+        $col1       = ceil($total / 2);
+		$col2       = $total - $col1;
+		$counter    = 0;
 
 		// divide it
 		ksort($posts,SORT_NUMERIC);

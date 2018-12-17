@@ -1673,49 +1673,47 @@ function tp_renderarticle($intro = '')
 	echo '
 	<div class="article_inner">';
 	// use intro!
-	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro))
-	{
-		if($context['TPortal']['article']['rendertype'] == 'php')
-		{
+	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro)) {
+		if($context['TPortal']['article']['rendertype'] == 'php') {
 			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
 				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
-		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
-		{
+		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
 			echo parse_bbc($context['TPortal']['article']['intro']), '
 				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
-		else
-		{
+		else {
 			echo $context['TPortal']['article']['intro'], '
 				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 	}
-	else
-	{
-		if($context['TPortal']['article']['rendertype'] == 'php')
-		{
+	else {
+		if($context['TPortal']['article']['rendertype'] == 'php') {
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
 		}
-		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
-		{
-			echo parse_bbc($context['TPortal']['article']['body']);
+		elseif($context['TPortal']['article']['rendertype'] == 'bbc') {
+            if(TPUtil::isHTML($context['TPortal']['article']['body'])) {
+			    echo $context['TPortal']['article']['body'];
+            } 
+            else {
+			    echo parse_bbc($context['TPortal']['article']['body']);
+            }
+
             if(!empty($context['TPortal']['article']['readmore'])) {
                 echo $context['TPortal']['article']['readmore'];
             }
 		}
-		elseif($context['TPortal']['article']['rendertype'] == 'import')
-		{
-			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport']))
+		elseif($context['TPortal']['article']['rendertype'] == 'import') {
+			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport'])) {
 				echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-			else
+            }
+			else {
 				include($context['TPortal']['article']['fileimport']);
+            }
 		}
-		else
-		{
+		else {
 			$post = $context['TPortal']['article']['body'];
-			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false)
-			{
+			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false) {
 				$post = preg_replace_callback("~<img([\w\W]+?)/>~",
 					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
 						if (stripos($matches[0], 'http://') !== false) {
