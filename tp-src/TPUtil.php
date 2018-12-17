@@ -50,8 +50,31 @@ class TPUtil
 		return false;
 	}
 
+
+    public static function shortenString($string, $length) {
+
+        if (!empty($length) && TPUtil::strlen($string) > $length) {
+            $tmpString  = TPUtil::substr($string, 0, $length);
+            $lastTag    = preg_match('/.*\[([^]]+)\]/', $string);
+            var_dump($lastTag);
+            if(preg_match('/.*\<([^]]+)\>/', $string, $matches) > 0 ) {
+                var_dump($matches);
+            }
+
+            // The first space or line break. (<br />, etc.)
+            $cutoff = max(strrpos($string, ' '), strrpos($string, '>'));
+
+            if ($cutoff !== false) {
+                $string = TPUtil::substr($string, 0, $cutoff);
+            }
+        }
+
+        return $string;
+
+    }
+
     public static function isHTML( $string ) { 
-        return preg_match( "~\/[a-z]*>~i", $string ) != 0; 
+        return preg_match("~\/[a-z]*>~i", $string ) != 0; 
     }
 
     public static function xssClean( $string ) {

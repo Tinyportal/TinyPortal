@@ -1551,6 +1551,9 @@ function doTPfrontpage()
                     $row['avatar']  = '';
                 }
 
+
+                TPUtil::shortenString($row['body'], $context['TPortal']['frontpage_limit_len']);
+
 				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
 					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
 
