@@ -1371,10 +1371,10 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-whattoshow'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_front_type" type="radio" value="forum_only" ' , $context['TPortal']['front_type']=='forum_only' ? 'checked' : '' , '> '.$txt['tp-onlyforum'].'<br>
 							<input name="tp_front_type" type="radio" value="forum_selected" ' , $context['TPortal']['front_type']=='forum_selected' ? 'checked' : '' , '> '.$txt['tp-selectedforum'].'<br>
-							<input name="tp_front_type" type="radio" value="forum_articles" ' , $context['TPortal']['front_type']=='forum_articles' ? 'checked' : '' , '> '.$txt['tp-bothforum'].'<br>
 							<input name="tp_front_type" type="radio" value="forum_selected_articles" ' , $context['TPortal']['front_type']=='forum_selected_articles' ? 'checked' : '' , '> '.$txt['tp-selectbothforum'].'<br>
+							<input name="tp_front_type" type="radio" value="forum_only" ' , $context['TPortal']['front_type']=='forum_only' ? 'checked' : '' , '> '.$txt['tp-onlyforum'].'<br>
+							<input name="tp_front_type" type="radio" value="forum_articles" ' , $context['TPortal']['front_type']=='forum_articles' ? 'checked' : '' , '> '.$txt['tp-bothforum'].'<br>
 							<input name="tp_front_type" type="radio" value="articles_only" ' , $context['TPortal']['front_type']=='articles_only' ? 'checked' : '' , '> '.$txt['tp-onlyarticles'].'<br>
 							<input name="tp_front_type" type="radio" value="single_page"  ' , $context['TPortal']['front_type']=='single_page' ? 'checked' : '' , '> '.$txt['tp-singlepage'].'<br>
 							<input name="tp_front_type" type="radio" value="frontblock"  ' , $context['TPortal']['front_type']=='frontblock' ? 'checked' : '' , '> '.$txt['tp-frontblocks'].'<br>
