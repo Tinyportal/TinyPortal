@@ -59,7 +59,7 @@ function template_tpListImages_admin()
         <h3 class="titlebg">'.$txt['tp-listimage-settings'].'</h3>
 		</div>
 		<div class="windowbg noup padding-div">
-		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=list"  method="post" style="margin: 0px;">
+		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=list"  method="post" style="margin: 0px;">
 		<div class="smalltext padding-div">' , $txt['tp-listimage-intro'] , '</div>
 		<div class="padding-div">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -122,7 +122,7 @@ function TPListImages($user_id)
                 $imageUrl       = $boardurl.'/tp-images/'.substr($im, 6);
             }
             
-            $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpmod;listimage=remove"  method="post" style="margin: 0px;">
+            $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=remove"  method="post" style="margin: 0px;">
                 <div style="float:left; padding:1%;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />

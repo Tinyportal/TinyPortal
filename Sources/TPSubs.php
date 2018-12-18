@@ -2684,11 +2684,13 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name, dlm.category,
 					dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.icon,
 					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
-				AND dlm.author_id = mem.id_member
 				{raw:sort} LIMIT {int:limit}',
 				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);
@@ -2697,11 +2699,13 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name,
 					dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id, dlm.icon,
 					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat 
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
-				AND dlm.author_id = mem.id_member
 				{raw:sort} LIMIT {int:limit}',
 				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);

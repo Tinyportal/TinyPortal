@@ -35,7 +35,7 @@ clASs TPArticle extends TPBase {
         }
         else {
             $where      = is_numeric( $article ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
-            $article    = is_numeric( $article ) ? $article : (int) $article; 
+            $article    = is_numeric( $article ) ? (int)$article : $article; 
         }
 
         $request    = $this->dB->db_query('', '

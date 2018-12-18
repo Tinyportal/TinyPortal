@@ -506,11 +506,13 @@ function TPortalDLManager()
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
 					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 					dlcat.name AS catname, mem.real_name as realName, LEFT(dlm.description,100) as 	description
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON (dlcat.id = dlm.category)
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN  {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
-				AND dlm.author_id = mem.id_member
 				ORDER BY dlm.created DESC LIMIT 6',
 				array('type' => 'dlitem', 'cat' => $mycats)
 			);
@@ -561,11 +563,13 @@ function TPortalDLManager()
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
 					dlm.author_id as authorID, dlm.created, dlm.filesize, dlcat.name AS catname,
 					mem.real_name as realName
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_string:cat})
-				AND dlm.author_id = mem.id_member
 				ORDER BY dlm.downloads DESC LIMIT 10',
 				array('type' => 'dlitem', 'cat' => $mycats)
 			);
@@ -608,14 +612,17 @@ function TPortalDLManager()
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views,
 					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 					dlcat.name AS catname, mem.real_name as realName
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN {db_prefix}tp_dldata AS data
+				    ON data.item = dlm.id
+                LEFT JOIN {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_string:cat})
-				AND data.item = dlm.id
 				AND data.year = {int:yr}
 				AND data.week = {int:week}
-				AND dlm.author_id = mem.id_member
 				ORDER BY data.downloads DESC LIMIT 10',
 				array('type' => 'dlitem', 'cat' => $mycats, 'yr' => $year, 'week' => $week)
 			);
@@ -666,9 +673,10 @@ function TPortalDLManager()
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon, a.link AS shortname, a.description AS description,
 				a.name AS name, a.id AS id, a.parent AS parent, a.downloads AS downloads,
-	  			if (a.id = b.category, count(*), 0) AS files, b.category AS subchild
-			FROM ({db_prefix}tp_dlmanager AS a)
-			LEFT JOIN {db_prefix}tp_dlmanager AS b ON (a.id = b.category)
+	  			( CASE WHEN a.id = b.category THEN COUNT(a.id) ELSE 0 END ) AS files, b.category AS subchild
+			FROM {db_prefix}tp_dlmanager AS a
+			LEFT JOIN {db_prefix}tp_dlmanager AS b 
+                ON a.id = b.category
 			WHERE a.type = {string:type}
 		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.parent, a.downloads, b.category
 			ORDER BY a.downloads ASC',
@@ -722,10 +730,11 @@ function TPortalDLManager()
 				$item =	$context['TPortal']['dl_featured'];
 				$request = $smcFunc['db_query']('', '
 					SELECT dl.* , dl.author_id as authorID, m.real_name as realName
-					FROM ({db_prefix}tp_dlmanager AS dl, {db_prefix}members AS m)
+					FROM {db_prefix}tp_dlmanager AS dl
+                    LEFT JOIN {db_prefix}members AS m
+					    ON dl.author_id = m.id_member
 					WHERE dl.type = {string:type}
 					AND dl.id = {int:item}
-					AND dl.author_id = m.id_member
 					LIMIT 1',
 					array('type' => 'dlitem', 'item' => $item)
 				);
@@ -824,14 +833,17 @@ function TPortalDLManager()
 		$request = $smcFunc['db_query']('', '
 			SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 			dlcat.name AS catname, mem.real_name as realName
-			FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
-			LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id=dlm.category
+			FROM {db_prefix}tp_dlmanager AS dlm
+            LEFT JOIN {db_prefix}tp_dldata AS data
+			    ON data.item = dlm.id
+            LEFT JOIN {db_prefix}members AS mem
+			    ON dlm.author_id = mem.id_member
+			LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
+                ON dlcat.id = dlm.category
 			WHERE dlm.type = {string:type}
 			AND (dlm.category = {int:cat} OR dlm.parent = {int:cat})
-			AND data.item = dlm.id
 			AND data.year = {int:year}
 			AND data.week = {int:week}
-			AND dlm.author_id = mem.id_member
 			ORDER BY dlm.downloads DESC LIMIT 10',
 			array('type' => 'dlitem', 'cat' => $currentcat, 'year' => $year, 'week' => $week)
 		);
@@ -905,9 +917,9 @@ function TPortalDLManager()
 
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon,	a.link AS shortname, a.description AS description,
-				a.name AS name,	a.id AS id, a.parent AS parent, a.downloads AS downloads, if (a.id = b.category, count(*), 0) AS files,
+				a.name AS name,	a.id AS id, a.parent AS parent, a.downloads AS downloads, ( CASE WHEN a.id = b.category THEN COUNT(a.id) ELSE 0 END ) AS files,
 		  		b.category AS subchild
-			FROM ({db_prefix}tp_dlmanager AS a)
+			FROM {db_prefix}tp_dlmanager AS a
 			LEFT JOIN {db_prefix}tp_dlmanager AS b
 		  		ON a.id = b.category
 			WHERE a.type = {string:type}
@@ -979,7 +991,7 @@ function TPortalDLManager()
 				WHERE dl.type = {string:type}
 				AND dl.category = {int:cat}
 				AND dl.subitem = {int:sub}
-				ORDER BY dl.'.$dlsort.' '. $dlsort_way .' LIMIT {int:start}, 10',
+				ORDER BY dl.'.$dlsort.' '. $dlsort_way .' OFFSET {int:start} LIMIT 10',
 				array('type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0, 'start' => $start)
 			);
 

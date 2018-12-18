@@ -138,7 +138,6 @@ function TPortal_init()
 }
 
 
-
 function tpWhichHideBars()
 {
 	global $maintenance, $context;
