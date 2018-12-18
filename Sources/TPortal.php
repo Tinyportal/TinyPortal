@@ -1552,20 +1552,9 @@ function doTPfrontpage()
                 }
 
 
-                TPUtil::shortenString($row['body'], $context['TPortal']['frontpage_limit_len']);
-
-				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
-					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
-
-					// The first space or line break. (<br />, etc.)
-					$cutoff = max(strrpos($row['body'], ' '), strrpos($row['body'], '>'));
-
-					if ($cutoff !== false) {
-						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
-                    }
-
+                if(TPUtil::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
 					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
-				}
+                }
 
 				// some needed addons
 				$row['rendertype'] = 'bbc';

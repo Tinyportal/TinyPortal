@@ -51,25 +51,43 @@ class TPUtil
 	}
 
 
-    public static function shortenString($string, $length) {
+    public static function shortenString(&$string, $length) {
 
-        if (!empty($length) && TPUtil::strlen($string) > $length) {
-            $tmpString  = TPUtil::substr($string, 0, $length);
-            $lastTag    = preg_match('/.*\[([^]]+)\]/', $string);
-            var_dump($lastTag);
-            if(preg_match('/.*\<([^]]+)\>/', $string, $matches) > 0 ) {
-                var_dump($matches);
+        if (!empty($length) && self::strlen($string) > $length) {
+            $cutOffPos  = max(strpos($string, ' ', $length), strpos($string, '>', $length));
+            $tmpString  = self::substr($string, 0, $cutOffPos);
+
+            // check we haven't cut any bbcode off
+            if(preg_match('/.*\[([^]]+)\]/', $tmpString, $matches) > 0 ) {
+                // Get the bbcode tag
+                $search     = '/'.substr($matches[1], 0, strpos($matches[1], ' ')).']';
+                if(strstr($matches[0], $search) === false) {
+                    $strEnd     = strpos($string, $search, strlen($tmpString));
+                    if($strEnd != 0) {
+                        $tmpString  = self::substr($string, 0, $strEnd + strlen($search));
+                    }
+                }   
             }
 
-            // The first space or line break. (<br />, etc.)
-            $cutoff = max(strrpos($string, ' '), strrpos($string, '>'));
-
-            if ($cutoff !== false) {
-                $string = TPUtil::substr($string, 0, $cutoff);
+            // check that no html has been cut off
+            if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
+                if(strpos($matches[1], 'br') === false) {
+                    // Get the html tag
+                    $search     = '/'.substr($matches[1], 0, strpos($matches[1], ' ')).'>';
+                    if(strstr($matches[0], $search) === false) {
+                        $strEnd     = strpos($string, $search, strlen($tmpString));
+                        if($strEnd != 0) {
+                            $tmpString  = self::substr($string, 0, $strEnd + strlen($search));
+                        }
+                    }
+                } 
             }
+
+            $string = $tmpString;
+            return true;
         }
 
-        return $string;
+        return false;
 
     }
 
