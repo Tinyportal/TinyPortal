@@ -44,7 +44,7 @@
 		<remove-file name="$themedir/TPwireless.template.php" />
 		<remove-file name="$themedir/css/TPShout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
-		<remove-file name="$themedir/scripts/TPShout.js" />
+		<remove-file name="$themedir/css/tp-responsive.css" />
 		<remove-file name="$languagedir/TPdlmanager.english.php" />
 		<remove-file name="$languagedir/TPdlmanager.english-utf8.php" />
 		<remove-file name="$languagedir/TPhelp.english.php" />
@@ -58,6 +58,7 @@
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<remove-dir  name="$boarddir/tp-src" />
+		<remove-dir  name="$themedir/scripts/tinyportal" />
 		<code>do_hooks.php</code>
 	</uninstall>
 	<install for="2.1.* - 2.1.99">
@@ -99,7 +100,7 @@
 		<remove-file name="$themedir/TPwireless.template.php" />
 		<remove-file name="$themedir/css/TPShout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
-		<remove-file name="$themedir/scripts/TPShout.js" />
+		<remove-file name="$themedir/css/tp-responsive.css" />
 		<remove-file name="$languagedir/TPdlmanager.english.php" />
 		<remove-file name="$languagedir/TPdlmanager.english-utf8.php" />
 		<remove-file name="$languagedir/TPhelp.english.php" />
@@ -113,6 +114,7 @@
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<remove-dir  name="$boarddir/tp-src" />
+		<remove-dir  name="$themedir/scripts/tinyportal" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>
