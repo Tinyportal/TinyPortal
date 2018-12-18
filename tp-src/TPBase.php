@@ -47,7 +47,7 @@ class TPBase
                 'id_mem'    => $user_id, 
                 'type'      => $type, 
                 'val'       => $item_id
-                )
+            )
         );
 
         if($this->dB->db_num_rows($request) > 0) {
