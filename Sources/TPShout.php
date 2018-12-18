@@ -36,7 +36,7 @@ if(strpos($forum_version, '2.0') === false) {
 }
 
 // if in admin screen, turn off blocks
-if($context['TPortal']['action'] == 'tpmod' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
+if($context['TPortal']['action'] == 'tpadmin' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
 	$in_admin = true;
 }
 
@@ -65,7 +65,7 @@ else
 $context['html_headers'] .= '
 	// ]]></script>
 
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/TPShout.js?11"></script>';
+	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
 
 if(!empty($context['TPortal']['shoutbox_refresh']))
 	$context['html_headers'] .= '
@@ -171,10 +171,11 @@ function postShout()
 
 		// collect the color for shoutbox
 		$request = $smcFunc['db_query']('', '
-			SELECT grp.online_color as onlineColor
-			FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
-			WHERE m.id_group = grp.id_group
-			AND id_member = {int:user} LIMIT 1',
+			SELECT grp.online_color AS onlineColor
+			FROM {db_prefix}members AS m
+            INNER JOIN {db_prefix}membergroups AS grp
+			ON m.id_group = grp.id_group
+            WHERE id_member = {int:user} LIMIT 1',
 			array('user' => $context['user']['id'])
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -446,9 +447,9 @@ function tpshout_admin()
 		updateTPSettings($changeArray, true);
 
 		if(empty($go))
-			redirectexit('action=tpmod;shout=admin;settings');
+			redirectexit('action=tpadmin;shout=admin;settings');
 		else
-			redirectexit('action=tpmod;shout=admin');
+			redirectexit('action=tpadmin;shout=admin');
 	}
 
 	// get latest shouts for admin section
@@ -476,7 +477,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpadmin;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpadmin;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -499,7 +500,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpmod;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpmod;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpadmin;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpadmin;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -534,7 +535,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpmod;shout=admin', $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpadmin;shout=admin', $tpstart, $allshouts, 10,true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -556,11 +557,11 @@ function tpshout_admin()
 				'time' => timeformat($row['time']),
 				'ip' => $row['member_ip'],
 				'ID_MEMBER' => $row['member_id'],
-				'sort_member' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
+				'sort_member' => '<a href="'.$scripturl.'?action=tpadmin;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
 				'sticky' => $row['sticky'],
 				'sticky_layout' => $row['sticky_layout'],
-				'sort_ip' => '<a href="'.$scripturl.'?action=tpmod;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
-				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpmod;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
+				'sort_ip' => '<a href="'.$scripturl.'?action=tpadmin;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
+				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpadmin;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
 		}
 		$smcFunc['db_free_result']($request);
@@ -573,13 +574,13 @@ function tpshout_admin()
 		$context['TPortal']['subtabs'] = array(
 			'shoutbox_settings' => array(
 				'text' => 'tp-settings',
-				'url' => $scripturl . '?action=tpmod;shout=admin;settings',
-				'active' => (isset($_GET['action']) && ($_GET['action']=='tpmod' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
+				'url' => $scripturl . '?action=tpadmin;shout=admin;settings',
+				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
 			),
 			'shoutbox' => array(
 				'text' => 'tp-tabs10',
-				'url' => $scripturl . '?action=tpmod;shout=admin',
-				'active' => (isset($_GET['action']) && ($_GET['action']=='tpmod' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
+				'url' => $scripturl . '?action=tpadmin;shout=admin',
+				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
 			),
 		);
 		$context['admin_header']['tp_shout'] = $txt['tp_shout'];
@@ -623,20 +624,23 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	$context['TPortal']['usercolor'] = '';
 	// collect the color for shoutbox
 	$request = $smcFunc['db_query']('', '
-		SELECT grp.online_color as onlineColor
-		FROM ({db_prefix}members as m, {db_prefix}membergroups as grp)
-		WHERE m.id_group = grp.id_group
-		AND id_member = {int:user} LIMIT 1',
+		SELECT grp.online_color AS onlineColor
+		FROM {db_prefix}members AS m 
+        INNER JOIN {db_prefix}membergroups AS grp
+		ON m.id_group = grp.id_group
+		WHERE id_member = {int:user} LIMIT 1',
 		array('user' => $context['user']['id'])
 	);
+
 	if($smcFunc['db_num_rows']($request) > 0){
 		$row = $smcFunc['db_fetch_row']($request);
 		$context['TPortal']['usercolor'] = $row[0];
 		$smcFunc['db_free_result']($request);
 	}
 
-	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit == 1)
+	if(is_numeric($context['TPortal']['shoutbox_limit']) && $limit == 1) {
 		$limit = $context['TPortal']['shoutbox_limit'];
+    }
 
 	// don't fetch more than a hundred - save the poor server! :D
 	$nshouts = '';
@@ -666,14 +670,15 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
-		    SELECT mem.id_member, mem.real_name as realName, mem.email_address AS email_address, 
-			    mem.avatar, IFNULL(a.id_attach,0) AS ID_ATTACH, a.filename, IFNULL(a.attachment_type,0) as attachmentType, mgrp.online_color as mg_online_color, pgrp.online_color as pg_online_color
+		    SELECT mem.id_member, mem.real_name AS real_name, mem.email_address AS email_address, 
+			    mem.avatar, COALESCE(a.id_attach,0) AS id_attach, a.filename, COALESCE(a.attachment_type,0) AS attachment_type, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
 		    FROM {db_prefix}members AS mem
-				LEFT JOIN {db_prefix}membergroups AS mgrp ON
+			LEFT JOIN {db_prefix}membergroups AS mgrp ON
 				(mgrp.id_group = mem.id_group)
-				LEFT JOIN {db_prefix}membergroups AS pgrp ON
+			LEFT JOIN {db_prefix}membergroups AS pgrp ON
 				(pgrp.id_group = mem.id_post_group)
-				LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3)
+			LEFT JOIN {db_prefix}attachments AS a ON 
+                (a.id_member = mem.id_member and a.attachment_type!=3)
 		    WHERE mem.id_member IN(' . implode(",",$members) . ')' 
 	    );
     }
@@ -701,7 +706,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 		foreach($fetched as $b => $row)
 		{
 			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
-			$row['realName'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
+			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : $memberdata[$row['member_id']]['pg_online_color'];
 			$ns[] = template_singleshout($row);

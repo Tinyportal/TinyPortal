@@ -26,11 +26,17 @@ clASs TPArticle extends TPBase {
         parent::__construct();
     }
 
-    public function getArticle($article_id)
+    public function getArticle($article)
     {
 
         $now        = time();
-        $where      = is_numeric( $article_id ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
+        if(is_array($article)) {
+            $where      = 'art.id IN ({array_string:page})';
+        }
+        else {
+            $where      = is_numeric( $article ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
+            $article    = is_numeric( $article ) ? $article : (int) $article; 
+        }
 
         $request    = $this->dB->db_query('', '
             SELECT 
@@ -50,21 +56,22 @@ clASs TPArticle extends TPBase {
                     OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
                     OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.')) ' 
                 : ' ' 
-            )
-            .'LIMIT 1',
+            ),
             array ( 
-                'page' => is_numeric( $article_id ) ? (int) $article_id : $article_id
+                'page' => $article
             )
         );
 
-        $article = array();
+        $articles = array();
 
         if($this->dB->db_num_rows($request) > 0) {
-            $article = $this->dB->db_fetch_assoc($request);
+            while ( $row = $this->dB->db_fetch_assoc($request)) {
+                $articles[] = $row;
+            }
             $this->dB->db_free_result($request);
         }
 
-        return $article;
+        return $articles;
 
     }
 
@@ -125,6 +132,35 @@ clASs TPArticle extends TPBase {
         }
 
         return $num_articles;
+    }
+
+    public function getTotalArticles( $group = '' )
+    {
+        $num_articles   = 0;
+        $now            = time();
+
+		$request =  $this->dB->db_query('', '
+			SELECT COUNT(art.id) AS num_articles
+			FROM {db_prefix}tp_articles AS art
+            INNER JOIN  {db_prefix}tp_variables AS var
+			ON var.id = art.category
+			WHERE art.off = 0
+			' . $group . '
+			AND art.category > 0
+			AND ((art.pub_start = 0 AND art.pub_end = 0)
+			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
+			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
+			AND art. approved = 1
+			AND art.frontpage = 1'
+		);
+
+        if($this->dB->db_num_rows($request) > 0) {
+            $num_articles = $this->dB->db_fetch_assoc($request)['num_articles'];
+            $this->dB->db_free_result($request);
+        }
+       
+        return $num_articles; 
     }
 
 }

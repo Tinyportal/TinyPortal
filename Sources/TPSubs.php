@@ -72,7 +72,7 @@ function TPsetupAdminAreas()
                                 $context['admin_tabs']['custom_modules'][$pr[0]] = array(
                                     'title'         => $row['modulename'],
                                     'description'   => '',
-                                    'href'          => $scripturl . '?action=tpmod;'.$row['subquery'].'=admin',
+                                    'href'          => $scripturl . '?action=tpadmin;'.$row['subquery'].'=admin',
                                     'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
                                 );
                             }
@@ -362,7 +362,7 @@ function tp_getbuttons()
 	{
 		$buts['tpshoutbox'] = array(
 			'title' => $txt['permissionname_tp_can_admin_shout'],
-			'href' => $scripturl . '?action=tpmod;shout=admin',
+			'href' => $scripturl . '?action=tpadmin;shout=admin',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
@@ -938,9 +938,9 @@ function TPwysiwyg_setup()
 	global $context, $boardurl;
 
 	$context['html_headers'] .= '
-		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
-		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
-		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>
+		<link rel="stylesheet" href="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/default.min.css" />
+		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/sceditor.min.js"></script>
+		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/formats/xhtml.js"></script>
 		<style>
 			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
 			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
@@ -982,7 +982,7 @@ function TPwysiwyg_setup()
 		// ]]></script>';
 	if($context['TPortal']['use_dragdrop']) {
 		$context['html_headers'] .= '
-			<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
+			<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js"></script>
 			<script type="text/javascript"><!-- // --><![CDATA[
 			function detectIE() {
 				var ua = window.navigator.userAgent;
@@ -1099,8 +1099,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
 		echo '
 				format: \'xhtml\',
-				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
-				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'
+				style: \''.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/content/default.min.css\',
+				emoticonsRoot: \''.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/\'
 			});
 
 		// ]]></script>';
@@ -1673,49 +1673,52 @@ function tp_renderarticle($intro = '')
 	echo '
 	<div class="article_inner">';
 	// use intro!
-	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro))
-	{
-		if($context['TPortal']['article']['rendertype'] == 'php')
-		{
+	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro)) {
+		if($context['TPortal']['article']['rendertype'] == 'php') {
 			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
 				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
-		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import')
-		{
-			echo parse_bbc($context['TPortal']['article']['intro']), '
-				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
+            if(TPUtil::isHTML($context['TPortal']['article']['intro'])) {
+			    echo $context['TPortal']['article']['intro'];
+            } 
+            else {
+                echo parse_bbc($context['TPortal']['article']['intro']);
+            }			
+			echo '<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
-		else
-		{
+		else {
 			echo $context['TPortal']['article']['intro'], '
 				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 	}
-	else
-	{
-		if($context['TPortal']['article']['rendertype'] == 'php')
-		{
+	else {
+		if($context['TPortal']['article']['rendertype'] == 'php') {
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
 		}
-		elseif($context['TPortal']['article']['rendertype'] == 'bbc')
-		{
-			echo parse_bbc($context['TPortal']['article']['body']);
+		elseif($context['TPortal']['article']['rendertype'] == 'bbc') {
+            if(TPUtil::isHTML($context['TPortal']['article']['body'])) {
+			    echo $context['TPortal']['article']['body'];
+            } 
+            else {
+			    echo parse_bbc($context['TPortal']['article']['body']);
+            }
+
             if(!empty($context['TPortal']['article']['readmore'])) {
                 echo $context['TPortal']['article']['readmore'];
             }
 		}
-		elseif($context['TPortal']['article']['rendertype'] == 'import')
-		{
-			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport']))
+		elseif($context['TPortal']['article']['rendertype'] == 'import') {
+			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport'])) {
 				echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-			else
+            }
+			else {
 				include($context['TPortal']['article']['fileimport']);
+            }
 		}
-		else
-		{
+		else {
 			$post = $context['TPortal']['article']['body'];
-			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false)
-			{
+			if ($image_proxy_enabled && !empty($post) && stripos($post, 'http://') !== false) {
 				$post = preg_replace_callback("~<img([\w\W]+?)/>~",
 					function( $matches ) use ( $boardurl, $image_proxy_secret ) {
 						if (stripos($matches[0], 'http://') !== false) {

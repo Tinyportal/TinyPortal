@@ -98,16 +98,13 @@ function TPortalAdmin()
 
 	$tpsub = '';
 
-	if(isset($_GET['sa']))
-	{
+	if(isset($_GET['sa'])) {
 		$context['TPortal']['subaction'] = $tpsub = $_GET['sa'];
-		if(substr($_GET['sa'], 0, 11) == 'editarticle')
-		{
+		if(substr($_GET['sa'], 0, 11) == 'editarticle') {
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = 'editarticle';
 		}
-		elseif(substr($_GET['sa'], 0, 11) == 'addarticle_')
-		{
+		elseif(substr($_GET['sa'], 0, 11) == 'addarticle_') {
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = $_GET['sa'];
             if($_GET['sa'] == 'addarticle_html') {
@@ -116,23 +113,27 @@ function TPortalAdmin()
 		}
 		do_subaction($tpsub);
 	}
-	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos']))
-	{
+	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
 		$context['TPortal']['subaction'] = $tpsub = 'blocks';
 		do_blocks($tpsub);
 	}
-	elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete']))
-	{
+	elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete'])) {
 		$context['TPortal']['subaction'] = $tpsub = 'linkmanager';
 		do_menus($tpsub);
 	}
-	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse']))
-	{
+	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse'])) {
 		$context['TPortal']['subaction'] = $tpsub = 'articles';
 		do_articles($tpsub);
 	}
-	else
-	{
+    elseif(array_key_exists('shout', $_GET) && $_GET['shout'] == 'admin') {
+        require_once(SOURCEDIR . '/TPShout.php');
+        return; 
+    }
+	elseif(array_key_exists('listimage', $_GET) && $_GET['listimage'] == 'admin') {
+        require_once(SOURCEDIR . '/TPListImages.php');
+        return; 
+    }
+    else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';
 		do_news($tpsub);
 	}

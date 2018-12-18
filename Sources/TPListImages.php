@@ -28,29 +28,15 @@ if($context['TPortal']['hidebars_admin_only'] == '1') {
     tp_hidebars();
 }
 
-function loadTPModuleLanguage()
-{
-    global $txt, $boarddir, $user_info, $language;
-
-    // Default to the user's language.
-    $lang           = isset($user_info['language']) ? $user_info['language'] : $language;
-    $filePaths[]    = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.'.$lang.'.php';
-    $filePaths[]    = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.'.$language.'.php';
-    $filePaths[]    = $boarddir.'/tp-files/tp-modules/TPListImages/languages/TPListImages.english.php';
-    foreach($filePaths as $filePath) {
-        if(is_file($filePath)) {
-            require_once($filePath);
-            return;
-        }
-    }
-}
-
 function template_tpListImages_admin()
 {
 
 	global $txt, $context, $boarddir, $scripturl;
 
-    loadTPModuleLanguage();
+ 	if(loadLanguage('TPListImages') == false) {
+		loadLanguage('TPListImages', 'english');
+    }
+
 	isAllowedTo('tp_can_list_images');
 
     $ret = '';
@@ -97,7 +83,9 @@ function TPListImages($user_id)
 {
     global $txt, $boarddir, $boardurl, $context, $scripturl;
 
-    loadTPModuleLanguage();
+ 	if(loadLanguage('TPListImages') == false) {
+		loadLanguage('TPListImages', 'english');
+    }
 	
     $html = '';
     // fetch all images you have uploaded

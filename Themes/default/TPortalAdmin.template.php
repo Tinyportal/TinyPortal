@@ -121,7 +121,7 @@ function template_blockoverview()
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
 			<div class="content">';
 
-		$side=array('','left','right','center','front','bottom','top','lower');
+		$side=array('','left','right','top','center','front','lower','bottom');
 
 		if(allowedTo('tp_blocks') && isset($context['TPortal']['blockoverview']))
 		{
@@ -162,22 +162,19 @@ function template_overview()
 	echo '
 	<div id="tp_overview" class="windowbg">';
 
-	if(is_array($context['admin_tabs']) && count($context['admin_tabs'])>0)
-	{
-		echo '
-			<ul>';
-		foreach($context['admin_tabs'] as $ad => $tab)
-		{
-			$tabs=array();
-			foreach($tab as $t => $tb)
+	if(is_array($context['admin_tabs']) && count($context['admin_tabs']) > 0 ) {
+		echo '<ul>';
+		foreach($context['admin_tabs'] as $ad => $tab) {
+			$tabs = array();
+			foreach($tab as $t => $tb) {
 				echo '<li><a href="' . $tb['href'] . '"><img style="margin-bottom: 8px;" src="' . $settings['tp_images_url'] . '/TPov_' . strtolower($t) . '.png" alt="TPov_' . strtolower($t) . '" /><br><b>'.$tb['title'].'</b></a></li>';
+            }
 
 		}
-		echo '
-			</ul>';
+		echo '</ul>';
 	}
-	echo '
-	</div>';
+	echo '</div>';
+
 }
 
 // submissions
@@ -2906,7 +2903,7 @@ function template_addblock()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	$side = $_GET['addblock'];
-	$panels = array('','left','right','center','front','bottom','top','lower');
+	$panels = array('','left','right','top','center','front','lower','bottom');
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -3529,8 +3526,8 @@ function template_blockedit()
 					// add the custom ones you added
 					$count=19;
 					foreach($context['TPortal']['blockedit']['access2']['action'] as $po => $p)
-					{
-						if(!in_array($p, array('allpages','frontpage','forumall','forum','recent','unread','unreadreplies','profile','pm','calendar','admin','login','logout','register','post','stats','mlist')))
+          {
+						if(!in_array($p, array('allpages','frontpage','forumall','forum','recent','unread','unreadreplies','profile','pm','calendar','admin','login','logout','register','post','stats','search','mlist')))
 						{
 							echo '<input name="actiontype'.$count.'" type="checkbox" value="'.$p.'" checked="checked">'.$p.'<br>';
 							$count++;
