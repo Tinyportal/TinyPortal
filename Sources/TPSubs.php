@@ -938,9 +938,9 @@ function TPwysiwyg_setup()
 	global $context, $boardurl;
 
 	$context['html_headers'] .= '
-		<link rel="stylesheet" href="'.$boardurl.'/Themes/default/tinyportal/sceditor/minified/themes/default.min.css" />
-		<script src="'.$boardurl.'/Themes/default/tinyportal/sceditor/minified/sceditor.min.js"></script>
-		<script src="'.$boardurl.'/Themes/default/tinyportal/sceditor/minified/formats/xhtml.js"></script>
+		<link rel="stylesheet" href="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/default.min.css" />
+		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/sceditor.min.js"></script>
+		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/formats/xhtml.js"></script>
 		<style>
 			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
 			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
@@ -982,7 +982,7 @@ function TPwysiwyg_setup()
 		// ]]></script>';
 	if($context['TPortal']['use_dragdrop']) {
 		$context['html_headers'] .= '
-			<script src="'.$boardurl.'/Themes/default/tinyportal/sceditor/minified/plugins/dragdrop.js"></script>
+			<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js"></script>
 			<script type="text/javascript"><!-- // --><![CDATA[
 			function detectIE() {
 				var ua = window.navigator.userAgent;
@@ -1099,8 +1099,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
 		echo '
 				format: \'xhtml\',
-				style: \''.$boardurl.'/Themes/default/tinyportal/sceditor/minified/themes/content/default.min.css\',
-				emoticonsRoot: \''.$boardurl.'/Themes/default/tinyportal/sceditor/\'
+				style: \''.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/content/default.min.css\',
+				emoticonsRoot: \''.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/\'
 			});
 
 		// ]]></script>';
