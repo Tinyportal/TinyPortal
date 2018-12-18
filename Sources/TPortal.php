@@ -553,13 +553,13 @@ function doTPpage()
 
 						$context['TPortal']['article']['comment_posts'][] = array(
 							'id'        => $row['id'],
-							'subject'   => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['value1'].'</a>',
-							'text'      => parse_bbc($row['value2']),
-							'timestamp' => $row['value4'],
-							'date'      => timeformat($row['value4']),
-							'poster_id' => $row['value3'],
+							'subject'   => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['subject'].'</a>',
+							'text'      => parse_bbc($row['comment']),
+							'timestamp' => $row['datetime'],
+							'date'      => timeformat($row['datetime']),
+							'poster_id' => $row['member_id'],
 							'poster'    => $row['real_name'],
-							'is_new'    => ( $row['value4'] > $last ) ? true : false,
+							'is_new'    => ( $row['datetime'] > $last ) ? true : false,
 							'avatar' => array (
 								'name' => &$row['avatar'],
 								'image' => $avatar,

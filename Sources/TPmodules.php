@@ -278,33 +278,20 @@ function TPmodules()
 	{
 		// check that you indeed can edit or delete
 		$comment = substr($tpsub, 11);
-		if(!is_numeric($comment))
+		if(!is_numeric($comment)) {
 			fatal_error($txt['tp-noadmincomments'], false);
+        }
 
-		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables
-			WHERE id = {int:varid} LIMIT 1',
-			array('varid' => $comment)
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			$row = $smcFunc['db_fetch_assoc']($request);
-			$smcFunc['db_free_result']($request);
-			if(allowedTo('tp_articles') || $row['value3'] == $ID_MEMBER)
-			{
+        $tpArticle  = new TPArticle();
+        $comment    = $tpArticle->getArticleComment($comment);
+		if(is_array($comment)) {
+			if(allowedTo('tp_articles') || $comment['member_id'] == $ID_MEMBER) {
 				// deleting the comment
-				if(substr($tpsub, 0, 11) == 'killcomment')
-				{
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_variables
-						SET value5 = -value5
-						WHERE id = {int:varid}',
-						array('varid' => $comment)
-					);
-					redirectexit('page='.$row['value5']);
+				if(substr($tpsub, 0, 11) == 'killcomment') {
+                    $tpArticle->deleteArticleComment($comment['id']);
+					redirectexit('page='.$comment['item_id']);
 				}
-				elseif(substr($tpsub, 0, 11) == 'editcomment')
-				{
+				elseif(substr($tpsub, 0, 11) == 'editcomment') {
 					$context['TPortal']['comment_edit'] = array(
 						'id' => $row['id'],
 						'title' => $row['value1'],

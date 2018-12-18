@@ -80,9 +80,19 @@ clASs TPArticle extends TPBase {
        return parent::getComments('1', $user_id, $item_id); 
     }
 
+    public function getArticleComment($comment_id) 
+    {
+       return parent::getComment($comment_id, 'article_comment'); 
+    }
+
     public function insertArticleComment($user_id, $item_id, $comment, $title)
     {
         return parent::insertComment('1', $user_id, $item_id, $comment, $title);
+    }
+
+    public function deleteArticleComment($comment_id)
+    {
+        return parent::deleteComment($comment_id, 'article_comment');
     }
 
     public function updateArticleViews($article_id)

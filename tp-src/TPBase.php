@@ -88,17 +88,18 @@ class TPBase
 
         // fetch any comments
         $request =  $this->dB->db_query('', '
-            SELECT var.* , COALESCE(mem.real_name, \'\') AS real_name, mem.avatar,
+            SELECT c.id AS id, c.subject AS subject, c.comment AS comment, c.datetime AS datetime, c.member_id AS member_id,
+            COALESCE(mem.real_name, \'\') AS real_name, mem.avatar,
             COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type, mem.email_address AS email_address
-            FROM {db_prefix}tp_variables AS var
-            LEFT JOIN {db_prefix}members AS mem ON ( var.value3'. ( ( PGSQL == true ) ? '::Integer' : ' ' ) .' = mem.id_member)
+            FROM {db_prefix}tp_comments AS c
+            LEFT JOIN {db_prefix}members AS mem ON ( c.member_id'. ( ( PGSQL == true ) ? '::Integer' : ' ' ) .' = mem.id_member)
             LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
-            WHERE var.type = {string:type}
-            AND var.value5 = {int:val5}
-            ORDER BY var.value4 ASC',
+            WHERE c.item_type = {string:type}
+            AND c.item_id = {int:item_id}
+            ORDER BY c.datetime ASC',
             array (
-                'type' => 'article_comment',
-                'val5' => $item_id
+                'type'      => 'article_comment',
+                'item_id'   => $item_id
             )
         );
 
@@ -108,7 +109,7 @@ class TPBase
             while($row = $this->dB->db_fetch_assoc($request)) {
                 $comments[] = $row;
                 $comment_count++;
-                if($row['value4'] > $last) {
+                if($row['datetime'] > $last) {
                     $new_count++;
                 }
             }
@@ -122,7 +123,31 @@ class TPBase
 
     }
 
-    protected function insertComment($type, $user_id, $item_id, $title, $comment)
+    protected function getComment($comment_id, $item_type)
+    {
+
+        // fetch any comments
+        $request =  $this->dB->db_query('', '
+            SELECT c.id AS id, c.item_id AS item_id, c.subject AS subject, c.comment AS comment, c.datetime AS datetime, c.member_id AS member_id
+            FROM {db_prefix}tp_comments AS c
+            WHERE c.item_type = {string:type}
+            AND c.id = {int:id}',
+            array (
+                'type'  => $item_type,
+                'id'    => $comment_id
+            )
+        );
+
+        $comment = false;
+
+        if($this->dB->db_num_rows($request) > 0) {
+            $comment = $this->dB->db_fetch_assoc($request);
+        }
+
+        return $comment;
+    }
+
+    protected function insertComment($type, $user_id, $item_id, $comment, $title)
     {
 
 		// check if the article indeed exists
@@ -140,14 +165,14 @@ class TPBase
 
 			// insert the comment
 			$this->dB->db_insert('INSERT',
-                '{db_prefix}tp_variables',
+                '{db_prefix}tp_comments',
                 array (
-                    'value1' => 'string', 
-                    'value2' => 'string', 
-                    'value3' => 'string', 
-                    'type' => 'string', 
-                    'value4' => 'string', 
-                    'value5' => 'int'
+                    'subject'   => 'string', 
+                    'comment'   => 'string', 
+                    'member_id' => 'int', 
+                    'item_type' => 'string', 
+                    'datetime'  => 'int',
+                    'item_id'   => 'int', 
                 ),
                 array(
                     $title,
@@ -176,6 +201,21 @@ class TPBase
 		}
 
         return false;
+
+    }
+
+    protected function deleteComment($id, $type)
+    {
+        
+        $this->dB->db_query('', '
+			DELETE FROM {db_prefix}tp_comments
+			WHERE id = {int:id}
+            AND item_type = {string:type}',
+			array(
+				'id'    => $id,
+                'type'  => $type
+			)
+		);
 
     }
 
