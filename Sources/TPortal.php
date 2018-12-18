@@ -189,51 +189,45 @@ function tpLoadCSS()
 	global $context, $settings;
 
 	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
-	$context['html_headers'] .= '<!--[if lt IE 9]>';
-	$context['html_headers'] .= '
-	<style type="text/css">
-		  body {min-width:900px;}
-	</style>
-	';
-	$context['html_headers'] .= '<![endif]-->';
-	$context['html_headers'] .= '<!--[if lt IE 7]>';
-	$context['html_headers'] .= '
-	<style type="text/css">
-	      #centerContainer {float: left;}
-		  body {width:900px;}
-	</style>
-	';
-	$context['html_headers'] .= '<![endif]-->';
-	// load both stylesheets to be sure all is in, but not if things aren't setup!
-	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
-		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';
-	else
-		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />';
+	
+    // load both stylesheets to be sure all is in, but not if things aren't setup!
+	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css')) {
+		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?'.TPVERSION.'" />';
+    }
+	else {
+		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?'.TPVERSION.'" />';
+    }
 
-	if(!empty($context['TPortal']['padding']))
+	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-responsive.css')) {
+		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-responsive.css?'.TPVERSION.'" />';
+    }
+	else {
+		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-responsive.css?'.TPVERSION.'" />';
+    }
+
+	if(!empty($context['TPortal']['padding'])) {
 		$context['html_headers'] .= '
-	<style type="text/css">
-		.block_leftcontainer,
-		.block_rightcontainer,
-		.block_centercontainer,
-		.block_uppercontainer,
-		.block_lowercontainer,
-		.block_topcontainer,
-		.block_bottomcontainer
-		{
-			padding-bottom: ' . $context['TPortal']['padding'] . 'px;
-		}
-		#tpleftbarHeader
-		{
-			margin-right: ' . $context['TPortal']['padding'] . 'px;
-		}
-		#tprightbarHeader
-		{
-			margin-left: ' . $context['TPortal']['padding'] . 'px;
-		}
-	</style>';
+            <style type="text/css">
+                .block_leftcontainer,
+                .block_rightcontainer,
+                .block_centercontainer,
+                .block_uppercontainer,
+                .block_lowercontainer,
+                .block_topcontainer,
+                .block_bottomcontainer {
+                    padding-bottom: ' . $context['TPortal']['padding'] . 'px;
+                }
+
+                #tpleftbarHeader {
+                    margin-right: ' . $context['TPortal']['padding'] . 'px;
+                }
+
+                #tprightbarHeader {
+                    margin-left: ' . $context['TPortal']['padding'] . 'px;
+                }
+
+            </style>';
+    }
 }
 
 
@@ -2856,6 +2850,7 @@ function setup_smf_backwards_compat()
     define('BOARDDIR', $boarddir);
     define('CACHEDIR', $cachedir);
     define('SOURCEDIR', $sourcedir);
+    define('TPVERSION', 'v200');
     if($db_type == 'postgresql') {
         define('PGSQL', true);
     }
