@@ -1739,7 +1739,7 @@ function article_bookmark($render = true)
 		{
 			echo '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_google']=='0')
+		if ($context['TPortal']['hide_article_google']=='0' && mktime(0,0,0,04,01,2019) > strtotime('now'))
 		{
 			echo '<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>';
 		}
