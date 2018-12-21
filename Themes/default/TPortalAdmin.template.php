@@ -1310,7 +1310,7 @@ function template_artsettings()
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-hidearticle-google'], '</label>';
-				if(mktime(0,0,0,04,01,2019) > strtotime('now'))  {
+				if(time() < strtotime('2019-04-01 00:00:00'))  {
 					echo '
 							<br>', $txt['tp-hidearticle-google2'], '
 						</dt>
