@@ -234,8 +234,9 @@ h3.article_title span.article_shortdate span
 {
 	width: 128px; 
 	height: 128px; 
-	background-position: top right;
+	background-position: center;
 	background-repeat: no-repeat;
+	background-size: cover;
 }
 .article_boardnews
 {
@@ -2287,10 +2288,6 @@ code.bbc_code
 	width:100%!important;
 	float:none!important;
 	/* Picture + Article ON for articles*/
-}
-.article_picture
-{
-	background-position: center;
 }
 .tp_responsive .render2
 {
