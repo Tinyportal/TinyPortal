@@ -566,7 +566,7 @@ $settings_array = array(
     'dl_featured' => '',
     'dl_wysiwyg' => 'html',
     'oldsidebar' => '1',
-    'use_attachment' => '1',
+    'use_attachment' => '0',
     'frontpage_template' => '',
     // shoutbox settings
     'shoutbox_height' => '250',
