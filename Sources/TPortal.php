@@ -1720,7 +1720,7 @@ function doTPfrontpage()
 				LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 				WHERE t.id_first_msg IN ({array_int:posts})
 				AND m.id_msg = t.id_first_msg
-				ORDER BY date DESC, thumb.id_attach ASC',
+				ORDER BY date DESC, thumb.id_attach DESC',
 				array('posts' => $mposts)
 			);
 
