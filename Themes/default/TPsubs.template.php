@@ -1512,7 +1512,7 @@ function article_picturecolumn($render = true)
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews']))
 		echo '
 	<div class="article_picture" style="background-image: url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ');"></div>';
-	elseif(allowedTo('view_attachments') && !empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1))
+	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1))
 		echo '
 	<div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
 	else
