@@ -1111,13 +1111,13 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
-		if ($handle = opendir($boarddir.'/tp-images/thumbs'))
+		if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs'))
 		{
 			while (false !== ($file = readdir($handle)))
 			{
 				if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_'.$user_info['id'].'uid')
 				{
-					$imgfiles[filectime($boarddir.'/tp-images/thumbs/'.$file)] = $file;
+					$imgfiles[filectime($boarddir.'/tp-files/tp-images/thumbs/'.$file)] = $file;
 				}
 			}
 			closedir($handle);
@@ -1132,7 +1132,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';
+				echo '<img src="'.$boardurl.'/tp-files/tp-images/', substr($im,6) , '"  border="none" alt="" />';
 		}
 		echo '
 		</div>
@@ -2724,7 +2724,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				if($context['TPortal']['dl_usescreenshot'] == 1)
 				{
 					if(!empty($row['screenshot']))
-						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+						$ico = $boardurl.'/tp-files/tp-images/dlmanager/thumb/'.$row['screenshot'];
 					else
 						$ico = '';
 				}

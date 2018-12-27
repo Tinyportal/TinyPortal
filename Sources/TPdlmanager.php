@@ -532,7 +532,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = $boardurl.'/tp-files/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = '';
 					}
@@ -634,7 +634,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = $boardurl.'/tp-files/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = '';
 					}
@@ -769,8 +769,8 @@ function TPortalDLManager()
 
 					   $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 						// does it exist?
-						if(file_exists($boarddir . '/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
-							$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
+						if(file_exists($boarddir . '/tp-files/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
+							$decideshot = $boardurl. '/tp-files/tp-images/dlmanager/listing/' . $row['screenshot'];
 
 						if($context['user']['is_logged'])
 							$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
@@ -1021,7 +1021,7 @@ function TPortalDLManager()
 					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
 							$decideshot = $boardurl. '/' . $row['screenshot'];
 					else
-						$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot'];
+						$decideshot = $boardurl. '/tp-files/tp-images/dlmanager/thumb/' . $row['screenshot'];
 
 					if($context['TPortal']['dl_fileprefix'] == 'K')
 						$fs = ceil($row['filesize'] / 1000).' Kb';
@@ -1033,7 +1033,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = $boardurl.'/tp-files/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = '';
 					}
@@ -1151,7 +1151,7 @@ function TPortalDLManager()
 			if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
 					$decideshot = $boardurl. '/' . $row['screenshot'];
 			else
-				$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot'];
+				$decideshot = $boardurl. '/tp-files/tp-images/dlmanager/thumb/' . $row['screenshot'];
 
 			// set up the sorting links
 			$context['TPortal']['sortlinks'] = '';
@@ -1346,10 +1346,10 @@ function TPortalDLManager()
 
 				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 				// does it exist?
-				if(file_exists($boarddir . '/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
-					$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
-				if(file_exists($boarddir . '/tp-images/dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
-					$bigshot = $boardurl. '/tp-images/dlmanager/' . $row['screenshot'];
+				if(file_exists($boarddir . '/tp-files/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
+					$decideshot = $boardurl. '/tp-files/tp-images/dlmanager/listing/' . $row['screenshot'];
+				if(file_exists($boarddir . '/tp-files/tp-images/dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
+					$bigshot = $boardurl. '/tp-files/tp-images/dlmanager/' . $row['screenshot'];
 
 				if($context['user']['is_logged'])
 					$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
@@ -3280,7 +3280,7 @@ function TPortalDLAdmin()
 				if(substr($row['screenshot'], 0, 10) == 'tp-images/')
 					$sshot = $boardurl.'/'.$row['screenshot'];
 				else
-				$sshot = $boardurl.'/tp-images/dlmanager/listing/'.$row['screenshot'];
+				$sshot = $boardurl.'/tp-files/tp-images/dlmanager/listing/'.$row['screenshot'];
 			}
 
 			$context['TPortal']['dl_admitems'][] = array(
