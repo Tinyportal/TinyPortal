@@ -651,7 +651,7 @@ function tpAddPromoteButton(&$normal_buttons)
 {
 	global $context, $scripturl;
 
-	if(allowedTo(array('tp_settings'))) {
+	if(allowedTo(array('tp_settings')) && (($context['TPortal']['front_type']=='forum_selected' || $context['TPortal']['front_type']=='forum_selected_articles'))) {
 		if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
 			$normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
         }

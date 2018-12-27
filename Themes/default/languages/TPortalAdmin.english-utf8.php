@@ -82,7 +82,7 @@ $txt['tp-blockfailure'] = 'Block does not exist';
 $txt['tp-tportaladmin'] = 'TinyPortal Admin';
 
 // Frontpage...
-$txt['tp-allowguests'] = 'Allow guests to see news from the news board - even if guest are not allowed to see the board? ';
+$txt['tp-allowguests'] = 'Allow guests and members to see forum-posts on the frontpage from the news board(s)?<br><small>(Even if they are not allowed to see the board!)</small> ';
 $txt['tp-displayleftpanel'] = 'Display left panel';
 $txt['tp-displayrightpanel'] = 'Display right panel';
 $txt['tp-displaytoppanel'] = 'Display top panel';
@@ -98,14 +98,14 @@ $txt['tp-fckopt3']='One by UserID';
 $txt['tp-frontblockfirst']='Frontpanel will be added before content';
 $txt['tp-frontblocklast']='Frontpanel will be added after content';
 $txt['tp-frontblockoption']='How frontpanel will be shown with content:';
-$txt['tp-frontblocks'] = 'Frontpanel';
+$txt['tp-frontblocks'] = 'Frontpanel only';
 $txt['tp-frontblocksingle']='Hide frontpanel, unless otherwise selected.';
 $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage:';
 $txt['tp-frontpage_settings']= 'Frontpage Settings';
 $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><span class="smalltext">(For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s "single page" option.)</span>';
 $txt['tp-showforumposts']='Display forum-posts on frontpage from:';
-$txt['tp-numberofposts']='Number of posts/articles to display on frontpage:';
+$txt['tp-numberofposts']='Number of articles/posts to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
 $txt['tp-whattoshow']='What to display on frontpage:';
 $txt['tp-whizzyeditor']='Yes, WhizzyWig';
@@ -259,6 +259,7 @@ $txt['tp-editorheight'] = 'Height of WYSIWYG editor:';
 $txt['tp-hidearticle-facebook'] = 'Hide Facebook button?';
 $txt['tp-hidearticle-twitter'] = 'Hide Twitter button?';
 $txt['tp-hidearticle-google'] = 'Hide Google button?';
+$txt['tp-hidearticle-google2'] = '<span class="smalltext" style="color: #CC0000;">Google+ is discontinued per March 31, 2019</span>';
 $txt['tp-hidearticle-reddit'] = 'Hide Reddit button?';
 $txt['tp-hidearticle-digg'] = 'Hide Digg button?';
 $txt['tp-hidearticle-delicious'] = 'Hide Delicious button?';
@@ -595,7 +596,7 @@ $txt['tp-chooseblock'] = 'Choose type of block:';
 $txt['tp-chooseblocktype'] = '..or use existing blockcode:';
 $txt['tp-choosepanel'] = 'Choose panel:';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block:';
-$txt['tp-useattachment'] = 'Use first post attachment preview as illustration? <br><small>(Currently only works using Category Layout 4)</small> ';
+$txt['tp-useattachment'] = 'Use first post attachment preview as icon?';
 $txt['tp-rssblock-useutf8'] = 'What encoding to use in this feed:';
 $txt['tp-utf8'] = 'UTF-8';
 $txt['tp-iso'] = 'ISO-8859-1 (default)';
@@ -608,8 +609,8 @@ $txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 se
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';
 
-$txt['tp-selectedforum'] = 'Selected topics only';
-$txt['tp-selectbothforum'] = 'Selected topics + articles';
+$txt['tp-selectedforum'] = 'Promoted topics only';
+$txt['tp-selectbothforum'] = 'Promoted topics + articles';
 
 $txt['tp-frontpagetitle'] = 'Use a custom browser tab title for your Frontpage: ';
 $txt['tp-frontpagetitle2'] = ' (leave the textfield empty for no title)';

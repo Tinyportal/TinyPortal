@@ -35,7 +35,7 @@ clASs TPArticle extends TPBase {
         }
         else {
             $where      = is_numeric( $article ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
-            $article    = is_numeric( $article ) ? $article : (int) $article; 
+            $article    = is_numeric( $article ) ? (int)$article : $article; 
         }
 
         $request    = $this->dB->db_query('', '
@@ -80,9 +80,19 @@ clASs TPArticle extends TPBase {
        return parent::getComments('1', $user_id, $item_id); 
     }
 
+    public function getArticleComment($comment_id) 
+    {
+       return parent::getComment($comment_id, 'article_comment'); 
+    }
+
     public function insertArticleComment($user_id, $item_id, $comment, $title)
     {
         return parent::insertComment('1', $user_id, $item_id, $comment, $title);
+    }
+
+    public function deleteArticleComment($comment_id)
+    {
+        return parent::deleteComment($comment_id, 'article_comment');
     }
 
     public function updateArticleViews($article_id)

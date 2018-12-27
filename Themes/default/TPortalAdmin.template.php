@@ -1239,7 +1239,7 @@ function template_clist()
 	//   article settings
 function template_artsettings()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $date;
 
 		echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -1306,11 +1306,22 @@ function template_artsettings()
 							<input name="tp_hide_article_twitter" type="radio" value="0" ' , $context['TPortal']['hide_article_twitter']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 						<dt>
-							<label for="field_name">', $txt['tp-hidearticle-google'], '</label>
+							<label for="field_name">', $txt['tp-hidearticle-google'], '</label>';
+				if(time() < strtotime('2019-04-01 00:00:00'))  {
+					echo '
+							<br>', $txt['tp-hidearticle-google2'], '
 						</dt>
 						<dd>
 							<input name="tp_hide_article_google" type="radio" value="1" ' , $context['TPortal']['hide_article_google']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-							<input name="tp_hide_article_google" type="radio" value="0" ' , $context['TPortal']['hide_article_google']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+							<input name="tp_hide_article_google" type="radio" value="0" ' , $context['TPortal']['hide_article_google']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'';
+						}
+				else {
+					echo '
+						</dt>
+						<dd>
+							', $txt['tp-hidearticle-google2'], '';
+					}
+					echo '
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-hidearticle-reddit'], '</label>
@@ -1368,10 +1379,10 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-whattoshow'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_front_type" type="radio" value="forum_only" ' , $context['TPortal']['front_type']=='forum_only' ? 'checked' : '' , '> '.$txt['tp-onlyforum'].'<br>
 							<input name="tp_front_type" type="radio" value="forum_selected" ' , $context['TPortal']['front_type']=='forum_selected' ? 'checked' : '' , '> '.$txt['tp-selectedforum'].'<br>
-							<input name="tp_front_type" type="radio" value="forum_articles" ' , $context['TPortal']['front_type']=='forum_articles' ? 'checked' : '' , '> '.$txt['tp-bothforum'].'<br>
 							<input name="tp_front_type" type="radio" value="forum_selected_articles" ' , $context['TPortal']['front_type']=='forum_selected_articles' ? 'checked' : '' , '> '.$txt['tp-selectbothforum'].'<br>
+							<input name="tp_front_type" type="radio" value="forum_only" ' , $context['TPortal']['front_type']=='forum_only' ? 'checked' : '' , '> '.$txt['tp-onlyforum'].'<br>
+							<input name="tp_front_type" type="radio" value="forum_articles" ' , $context['TPortal']['front_type']=='forum_articles' ? 'checked' : '' , '> '.$txt['tp-bothforum'].'<br>
 							<input name="tp_front_type" type="radio" value="articles_only" ' , $context['TPortal']['front_type']=='articles_only' ? 'checked' : '' , '> '.$txt['tp-onlyarticles'].'<br>
 							<input name="tp_front_type" type="radio" value="single_page"  ' , $context['TPortal']['front_type']=='single_page' ? 'checked' : '' , '> '.$txt['tp-singlepage'].'<br>
 							<input name="tp_front_type" type="radio" value="frontblock"  ' , $context['TPortal']['front_type']=='frontblock' ? 'checked' : '' , '> '.$txt['tp-frontblocks'].'<br>
@@ -1487,14 +1498,6 @@ function template_frontpage()
 				<hr>
 					<dl class="settings">
 						<dt>
-							<label for="field_name">', $txt['tp-allowguests'], '</label>
-						</dt>
-						<dd>
-							  <input name="tp_allow_guestnews" type="radio" value="1" ' , $context['TPortal']['allow_guestnews']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
-							  <input name="tp_allow_guestnews" type="radio" value="0" ' , $context['TPortal']['allow_guestnews']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
-						</dd>
-
-						<dt>
 							<label for="field_name">', $txt['tp-numberofposts'], '</label>
 						</dt>
 						<dd>
@@ -1518,6 +1521,13 @@ function template_frontpage()
 					</dl>
 					<hr>
 					<dl class="settings">
+						<dt>
+							<label for="field_name">', $txt['tp-allowguests'], '</label>
+						</dt>
+						<dd>
+							  <input name="tp_allow_guestnews" type="radio" value="1" ' , $context['TPortal']['allow_guestnews']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							  <input name="tp_allow_guestnews" type="radio" value="0" ' , $context['TPortal']['allow_guestnews']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
+						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-showforumposts'], '</label>
 						</dt>

@@ -1667,16 +1667,16 @@ function tp_renderarticle($intro = '')
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	// just return if data is missing
-	if(!isset($context['TPortal']['article']))
+	if(!isset($context['TPortal']['article'])) {
 		return;
+    }
 
 	echo '
 	<div class="article_inner">';
 	// use intro!
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro)) {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
-			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true)), '
-				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true));
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
             if(TPUtil::isHTML($context['TPortal']['article']['intro'])) {
@@ -1685,12 +1685,11 @@ function tp_renderarticle($intro = '')
             else {
                 echo parse_bbc($context['TPortal']['article']['intro']);
             }			
-			echo '<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 		}
 		else {
-			echo $context['TPortal']['article']['intro'], '
-				<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+			echo $context['TPortal']['article']['intro'];
 		}
+        echo '<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
 	}
 	else {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
@@ -1738,10 +1737,10 @@ function tp_renderarticle($intro = '')
 			echo $post;
 		}
 	}
-	echo '
-	</div>';
+	echo '</div> <!-- article_inner -->';
 	return;
 }
+
 function tp_renderblockarticle()
 {
 
@@ -2685,11 +2684,13 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name, dlm.category,
 					dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.icon,
 					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
-				AND dlm.author_id = mem.id_member
 				{raw:sort} LIMIT {int:limit}',
 				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);
@@ -2698,11 +2699,13 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name,
 					dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id, dlm.icon,
 					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
-				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
+				FROM {db_prefix}tp_dlmanager AS dlm
+                LEFT JOIN {db_prefix}members AS mem
+				    ON dlm.author_id = mem.id_member
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat 
+                    ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
-				AND dlm.author_id = mem.id_member
 				{raw:sort} LIMIT {int:limit}',
 				array('type' => 'dlitem', 'cat' => $mycats, 'sort' => $sortstring, 'limit' => $number)
 			);

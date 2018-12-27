@@ -129,7 +129,7 @@ function TPortalAdmin()
         require_once(SOURCEDIR . '/TPShout.php');
         return; 
     }
-	elseif(array_key_exists('listimage', $_GET) && $_GET['listimage'] == 'admin') {
+	elseif(array_key_exists('listimage', $_GET) && in_array($_GET['listimage'], array( 'admin', 'list', 'remove'))) {
         require_once(SOURCEDIR . '/TPListImages.php');
         return; 
     }

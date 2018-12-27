@@ -553,13 +553,13 @@ function doTPpage()
 
 						$context['TPortal']['article']['comment_posts'][] = array(
 							'id'        => $row['id'],
-							'subject'   => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['value1'].'</a>',
-							'text'      => parse_bbc($row['value2']),
-							'timestamp' => $row['value4'],
-							'date'      => timeformat($row['value4']),
-							'poster_id' => $row['value3'],
+							'subject'   => '<a href="'.$scripturl.'?page='.$context['TPortal']['article']['id'].'#comment'. $row['id'].'">'.$row['subject'].'</a>',
+							'text'      => parse_bbc($row['comment']),
+							'timestamp' => $row['datetime'],
+							'date'      => timeformat($row['datetime']),
+							'poster_id' => $row['member_id'],
 							'poster'    => $row['real_name'],
-							'is_new'    => ( $row['value4'] > $last ) ? true : false,
+							'is_new'    => ( $row['datetime'] > $last ) ? true : false,
 							'avatar' => array (
 								'name' => &$row['avatar'],
 								'image' => $avatar,
@@ -569,16 +569,6 @@ function doTPpage()
 						);
 					}
 				}
-
-				// if the count differs, update it
-				if($context['TPortal']['article_comments_count'] != $article['comments']) {
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_articles
-						SET comments = {int:com}
-						WHERE id = {int:artid}',
-						array('com' => $ccount, 'artid' => $article['id'])
-					);
-                }
 
 				// the frontblocks should not display here
 				$context['TPortal']['frontpanel'] = 0;
@@ -677,7 +667,6 @@ function doTPpage()
 					if(!isset($article['id'])) {
 						redirectexit();
                     }
-
 					$what = '<h2>' . $article['subject'] . ' </h2>'. $article['body'];
 					$pwhat = 'echo \'<h2>\' . $article[\'subject\'] . \'</h2>\';' . $article['body'];
 					if($article['type'] == 'php') {
@@ -2696,6 +2685,7 @@ function doModules()
 		FROM {db_prefix}tp_modules WHERE active = {int:active}',
 		array('active' => 1)
 	);
+
 	if($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			if(!empty($row['permissions'])) {
@@ -2722,24 +2712,6 @@ function doModules()
 					'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
 				);
             }
-		}
-
-		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'])) {
-			if(!empty($row['adminhook'])) {
-				$perms = explode(',', $row['permissions']);
-                if(is_countable($perms)) {
-                    for($a = 0; $a < count($perms); $a++) {
-                        $pr = explode('|',$perms[$a]);
-                        // admin permission?
-                        if($pr[1] == 1) {
-                            if (allowedTo($pr[0])) {
-                                require_once($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run']);
-                                $context['TPortal']['tpmodules']['adminhook'][$row['id']] = call_user_func($row['adminhook']);
-                            }
-                        }
-                    }
-                }
-			}
 		}
 		$smcFunc['db_free_result']($request);
 	}

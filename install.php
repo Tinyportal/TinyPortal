@@ -17,21 +17,29 @@
  *
  */
 
+define('TP_MINIMUM_PHP_VERSION', '5.4.0');
+
 global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type;
 $manual = false;
 $render = '';
 
-if(!defined('SMF') && file_exists('SSI.php'))
-{
+if(!defined('SMF') && file_exists('SSI.php')) {
 	require_once('SSI.php');
 	$manual = true;
 }
-elseif(!defined('SMF'))
+elseif(!defined('SMF')) {
 	die('<strong>Install Error:</strong> - please verify you put this file the same directory as SMF\'s index.php.');
+}
+
+
+if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>='))) {
+	die('<strong>Install Error:</strong> - please install a version of php greater than '.TP_MINIMUM_PHP_VERSION);
+}
 
 // Make sure we have all the $smcFunc stuff
-if (!array_key_exists('db_create_table', $smcFunc))
+if (!array_key_exists('db_create_table', $smcFunc)) {
     db_extend('packages');
+}
 
 // old empty blocks needs "action=all"
 $convertblocks = false;
@@ -186,6 +194,7 @@ $tables = array(
             array('name' => 'item_type', 'type' => 'varchar', 'size' => 255, 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'item_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'datetime', 'type' => 'int', 'size' => 11, 'default' => 0,),
+            array('name' => 'subject', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'comment', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
         ),
@@ -372,6 +381,9 @@ foreach ($tables as $table => $col) {
         }
         else if ($table == 'tp_shoutbox') {
             updateShoutbox();
+        }
+        else if ($table == 'tp_comments') {
+            updateComments();
         }
 
         // If utf8 is set alter table to use utf8 character set.
@@ -583,7 +595,7 @@ $settings_array = array(
     'dl_featured' => '',
     'dl_wysiwyg' => 'html',
     'oldsidebar' => '1',
-    'use_attachment' => '1',
+    'use_attachment' => '0',
     'frontpage_template' => '',
     // shoutbox settings
     'shoutbox_height' => '250',
@@ -913,7 +925,58 @@ function updateShoutbox()
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value8', array( 'name' => 'sitcky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
 
-	$render .= '<li>Updated old columns in articles table</li>';
+	$render .= '<li>Updated old columns in shoutbox table</li>';
+}
+
+function updateComments()
+{
+	global $smcFunc, $render, $db_type;
+
+    // fetch any comments
+    $request =  $smcFunc['db_query']('', '
+        SELECT var.* 
+        FROM {db_prefix}tp_variables AS var
+        WHERE var.type = {string:type}',
+        array (
+            'type' => 'article_comment',
+        )
+    );
+
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while($row = $smcFunc['db_fetch_assoc']($request)) {
+          $smcFunc['db_insert']('INSERT',
+                '{db_prefix}tp_comments',
+                array (
+                    'item_id'   => 'int',
+                    'item_type' => 'string',
+                    'subject'   => 'string',
+                    'datetime'  => 'int',
+                    'comment'   => 'string',
+                    'member_id' => 'int'
+                ),
+                array ( 
+                    $row['value5'],
+                    'article_comment',
+                    $row['value1'],
+                    $row['value4'],
+                    $row['value2'],
+                    $row['value3'],
+                ),
+                array ('id')
+            );  
+        }
+    }
+
+    // Remove the article comments
+    $request =  $smcFunc['db_query']('', '
+        DELETE FROM {db_prefix}tp_variables AS var
+        WHERE var.type = {string:type}',
+        array (
+            'type' => 'article_comment',
+        )
+    );
+
+	$render .= '<li>Updated comments table</li>';
 }
 
 function dataTableChanges()

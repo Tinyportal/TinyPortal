@@ -56,6 +56,7 @@ class TPUtil
         if (!empty($length) && self::strlen($string) > $length) {
             $cutOffPos  = max(strpos($string, ' ', $length), strpos($string, '>', $length));
             $tmpString  = self::substr($string, 0, $cutOffPos);
+            //$tmpString  = preg_replace("~^(.{1,$cutOffPos})(\s.*|$)~s", '\\1...', $string);
 
             // check we haven't cut any bbcode off
             if(preg_match('/.*\[([^]]+)\]/', $tmpString, $matches) > 0 ) {
