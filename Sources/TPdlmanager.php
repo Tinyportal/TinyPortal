@@ -131,7 +131,7 @@ function TPortalDLManager()
 		else
 			$shot = false;
 
-		$icon = !empty($_POST['tp_dluploadicon']) ? $boardurl.'/tp-downloads/icons/'.$_POST['tp_dluploadicon'] : '';
+		$icon = !empty($_POST['tp_dluploadicon']) ? $boardurl.'/tp-files/tp-downloads/icons/'.$_POST['tp_dluploadicon'] : '';
 
 		if(!isset($_POST['tp-dluploadnot']))
 		{
@@ -191,10 +191,10 @@ function TPortalDLManager()
 			if(!isset($_POST['tp-dluploadnot']))
 			{
 				// check that no other file exists with same name
-				if(file_exists($boarddir.'/tp-downloads/'.$name))
+				if(file_exists($boarddir.'/tp-files/tp-downloads/'.$name))
 					$name = time().$name;
 
-				$success = move_uploaded_file($_FILES['tp-dluploadfile']['tmp_name'], $boarddir.'/tp-downloads/'.$name);
+				$success = move_uploaded_file($_FILES['tp-dluploadfile']['tmp_name'], $boarddir.'/tp-files/tp-downloads/'.$name);
 			}
 
 			if($shot)
@@ -1752,7 +1752,7 @@ function TPdownloadme()
 				$smcFunc['db_free_result']($request2);
 			}
 		}
-		$filename = $boarddir.'/tp-downloads/'.$real_filename;
+		$filename = $boarddir.'/tp-files/tp-downloads/'.$real_filename;
 		$smcFunc['db_free_result']($request);
 	}
 	else
@@ -2037,7 +2037,7 @@ function TPortalDLAdmin()
 			{
 				$name = $value;
 				$now = time();
-				$fsize = filesize($boarddir.'/tp-downloads/'.$value);
+				$fsize = filesize($boarddir.'/tp-files/tp-downloads/'.$value);
 				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_dlmanager',
 					array(
@@ -2081,7 +2081,7 @@ function TPortalDLAdmin()
 		$link = $_POST['newdladmin_link'];
 		$text = $_POST['newdladmin_text'];
 		$parent = $_POST['newdladmin_parent'];
-		$icon = $boardurl.'/tp-downloads/icons/'.$_POST['newdladmin_icon'];
+		$icon = $boardurl.'/tp-files/tp-downloads/icons/'.$_POST['newdladmin_icon'];
 		// special case, the access
     	$dlgrp = array();
 		foreach ($_POST as $what => $value)
@@ -2381,7 +2381,7 @@ function TPortalDLAdmin()
 				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlexterror2'].': <b>'.$sname.'</b>';
 				fatal_error($error, false);
 			}
-			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'],$boarddir.'/tp-downloads/'.$sname);
+			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'],$boarddir.'/tp-files/tp-downloads/'.$sname);
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_dlmanager
 				SET file = {string:file}
@@ -2390,7 +2390,7 @@ function TPortalDLAdmin()
 			);
 			$new_upload = true;
 			// update filesize as well
-			$value = filesize($boarddir.'/tp-downloads/'.$sname);
+			$value = filesize($boarddir.'/tp-files/tp-downloads/'.$sname);
 			if(!is_numeric($value))
 				$value = 0;
 			$smcFunc['db_query']('', '
@@ -2424,7 +2424,7 @@ function TPortalDLAdmin()
 				$id = substr($what, 12);
 				if($value != '')
 				{
-					$val = $boardurl.'/tp-downloads/icons/'.$value;
+					$val = $boardurl.'/tp-files/tp-downloads/icons/'.$value;
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_dlmanager
 						SET icon = {string:icon}
@@ -2488,9 +2488,9 @@ function TPortalDLAdmin()
 								);
 							}
 							// delete both screenshot and file
-							if(!empty($row['file']) && file_exists($boarddir.'/tp-downloads/'.$row['file']))
+							if(!empty($row['file']) && file_exists($boarddir.'/tp-files/tp-downloads/'.$row['file']))
 							{
-								$succ = unlink($boarddir.'/tp-downloads/'.$row['file']);
+								$succ = unlink($boarddir.'/tp-files/tp-downloads/'.$row['file']);
 								if(!$succ)
 									$err = $txt['tp-dlfilenotdel'] . ' ('.$row['file'].')';
 							}
@@ -2652,7 +2652,7 @@ function TPortalDLAdmin()
 				$id = substr($what, 12);
 				// check the actual size
 				$name = $_POST['dladmin_file'.$id];
-				$value = filesize($boarddir.'/tp-downloads/'.$name);
+				$value = filesize($boarddir.'/tp-files/tp-downloads/'.$name);
 				if(!is_numeric($value))
 					$value = 0;
 				$smcFunc['db_query']('', '
@@ -2818,13 +2818,13 @@ function TPortalDLAdmin()
 	// fetch all files from tp-downloads
 	$context['TPortal']['tp-downloads'] = array();
 	$count = 1;
-	if ($handle = opendir($boarddir.'/tp-downloads'))
+	if ($handle = opendir($boarddir.'/tp-files/tp-downloads'))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'icons')
 			{
-				$size = (floor(filesize($boarddir.'/tp-downloads/'.$file) / 102.4) / 10);
+				$size = (floor(filesize($boarddir.'/tp-files/tp-downloads/'.$file) / 102.4) / 10);
 				$context['TPortal']['tp-downloads'][$count] = array(
 					'id' => $count,
 					'file' => $file,
@@ -3294,7 +3294,7 @@ function TPortalDLAdmin()
 				'description' => $row['description'],
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
-				'filesize' => (substr($row['file'],0,14)!='- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
+				'filesize' => (substr($row['file'],0,14)!='- empty item -') ? floor(filesize($boarddir.'/tp-files/tp-downloads/'.$row['file']) / 1024) : '0',
 				'downloads' => $row['downloads'],
 				'sshot' => !empty($sshot) ? $sshot : '',
 				'screenshot' => $row['screenshot'],
@@ -3496,7 +3496,7 @@ function TPortalDLUser($item)
 			'description' => $row['description'],
 			'created' => timeformat($row['created']),
 			'last_access' => timeformat($row['last_access']),
-			'filesize' => (substr($row['file'], 14) != '- empty item -') ? floor(filesize($boarddir.'/tp-downloads/'.$row['file']) / 1024) : '0',
+			'filesize' => (substr($row['file'], 14) != '- empty item -') ? floor(filesize($boarddir.'/tp-files/tp-downloads/'.$row['file']) / 1024) : '0',
 			'downloads' => $row['downloads'],
 			'sshot' => $row['screenshot'],
 			'link' => $row['link'],
@@ -3640,7 +3640,7 @@ function TP_dlgeticons()
 
 	// fetch icons, just read the directory
 	$context['TPortal']['dlicons'] = array();
-	if ($handle = opendir($boarddir.'/tp-downloads/icons'))
+	if ($handle = opendir($boarddir.'/tp-files/tp-downloads/icons'))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
@@ -3657,13 +3657,13 @@ function TP_dlftpfiles()
 
 	$count = 1;
 	$sorted = array();
-	if ($handle = opendir($boarddir.'/tp-downloads'))
+	if ($handle = opendir($boarddir.'/tp-files/tp-downloads'))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'icons')
 			{
-				$size = floor(filesize($boarddir.'/tp-downloads/'.$file) / 1024);
+				$size = floor(filesize($boarddir.'/tp-files/tp-downloads/'.$file) / 1024);
 				$sorted[$count] = array(
 					'id' => $count,
 					'file' => $file,
