@@ -1513,7 +1513,7 @@ function article_picturecolumn($render = true)
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews']))
 		echo '
 	<div class="article_picture" style="background-image: url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ');"></div>';
-	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']))
+	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1))
 		echo '
 	<div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
 	else
@@ -1740,7 +1740,7 @@ function article_bookmark($render = true)
 		{
 			echo '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_google']=='0')
+		if ($context['TPortal']['hide_article_google']=='0' && time() < strtotime('2019-04-01 00:00:00'))
 		{
 			echo '<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>';
 		}

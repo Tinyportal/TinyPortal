@@ -17,6 +17,8 @@
  *
  */
 
+define('TP_MINIMUM_PHP_VERSION', '5.4.0');
+
 global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type;
 $manual = false;
 $render = '';
@@ -27,6 +29,11 @@ if(!defined('SMF') && file_exists('SSI.php')) {
 }
 elseif(!defined('SMF')) {
 	die('<strong>Install Error:</strong> - please verify you put this file the same directory as SMF\'s index.php.');
+}
+
+
+if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>='))) {
+	die('<strong>Install Error:</strong> - please install a version of php greater than '.TP_MINIMUM_PHP_VERSION);
 }
 
 // Make sure we have all the $smcFunc stuff
@@ -588,7 +595,7 @@ $settings_array = array(
     'dl_featured' => '',
     'dl_wysiwyg' => 'html',
     'oldsidebar' => '1',
-    'use_attachment' => '1',
+    'use_attachment' => '0',
     'frontpage_template' => '',
     // shoutbox settings
     'shoutbox_height' => '250',
