@@ -1256,10 +1256,11 @@ function tp_fetchpermissions($perms)
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT p.permission, m.group_name as group_name, p.id_group as id_group
-			FROM ({db_prefix}permissions as p, {db_prefix}membergroups as m)
+			SELECT p.permission, m.group_name AS group_name, p.id_group AS id_group
+			FROM {db_prefix}permissions AS p
+            INNER JOIN {db_prefix}membergroups AS m
+			    ON p.id_group = m.id_group
 			WHERE p.add_deny = {int:deny}
-			AND p.id_group = m.id_group
 			AND p.permission IN ({array_string:tag})
 			AND m.min_posts = {int:minpost}
 			ORDER BY m.group_name ASC',
@@ -1330,7 +1331,7 @@ function tp_fetchboards()
 	$request =  $smcFunc['db_query']('', '
 		SELECT id_board as ID_BOARD, name, board_order
 		FROM {db_prefix}boards
-		WHERE 1
+		WHERE  1=1
 		ORDER BY board_order ASC',
 		array()
 	);

@@ -445,13 +445,14 @@ function TPortalDLManager()
 			$context['TPortal']['boards'] = array();
 			// fetch all boards
 			$request = $smcFunc['db_query']('', '
-				SELECT b.ID_BOARD, b.name, b.board_order FROM {db_prefix}boards as b
+				SELECT b.id_board AS id_board , b.name AS name, b.board_order AS board_order
+                FROM {db_prefix}boards AS b
 				WHERE {query_see_board}
 				ORDER BY b.board_order ASC');
 			if ($smcFunc['db_num_rows']($request) > 0)
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
-					$context['TPortal']['boards'][] = array('id' => $row['ID_BOARD'], 'name' => $row['name']);
+					$context['TPortal']['boards'][] = array('id' => $row['id_board'], 'name' => $row['name']);
 
 				$smcFunc['db_free_result']($request);
 			}
@@ -1269,7 +1270,7 @@ function TPortalDLManager()
 		$context['TPortal']['dlitem'] = array();
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.*, dl.author_id as authorID, m.real_name as realName
-			FROM ({db_prefix}tp_dlmanager AS dl)
+			FROM {db_prefix}tp_dlmanager AS dl
 			LEFT JOIN {db_prefix}members AS m ON (m.id_member = dl.author_id)
 			WHERE dl.type = {string:type}
 			AND dl.id = {int:item}

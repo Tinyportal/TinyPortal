@@ -51,36 +51,43 @@ $context['html_headers'] .= '
 		var tp_session_id = "' . $context['session_id'] . '";
 		var tp_session_var = "' . $context['session_var'] . '";
 		var current_header_smiley = ';
-if(empty($options['expand_header_smiley']))
+
+if(empty($options['expand_header_smiley'])) {
 	$context['html_headers'] .= 'false';
-else
+}
+else {
 	$context['html_headers'] .= 'true';
+}
+
+$context['html_headers'] .= 'var current_header_bbc = ';
+
+if(empty($options['expand_header_bbc'])) {
+	$context['html_headers'] .= 'false';
+}
+else {
+	$context['html_headers'] .= 'true';
+}
 
 $context['html_headers'] .= '
-	var current_header_bbc = ';
-if(empty($options['expand_header_bbc']))
-	$context['html_headers'] .= 'false';
-else
-	$context['html_headers'] .= 'true';
-$context['html_headers'] .= '
-	// ]]></script>
+    // ]]></script>
 
 	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
 
-if(!empty($context['TPortal']['shoutbox_refresh']))
+if(!empty($context['TPortal']['shoutbox_refresh'])) {
 	$context['html_headers'] .= '
 	<script type="text/javascript"><!-- // --><![CDATA[
 		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
 	// ]]></script>';
+}
 
-if(file_exists($settings['theme_dir'].'/css/TPShout.css'))
-	$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
-else
-	$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
+if(file_exists($settings['theme_dir'].'/css/TPShout.css')) {
+	$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
+}
+else {
+	$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
+}
 
-if($context['TPortal']['shoutbox_usescroll'] > 0)
+if($context['TPortal']['shoutbox_usescroll'] > 0) {
 	$context['html_headers'] .= '
 	<script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
 	<script type="text/javascript">
@@ -92,6 +99,8 @@ if($context['TPortal']['shoutbox_usescroll'] > 0)
 				});
 			});
 	</script>';
+}
+
 if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 	if($context['TPortal']['shout_submit_returnkey'] == 1) {
 		$context['html_headers'] .= '
@@ -103,7 +112,8 @@ if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 				});
 			});
 		// ]]></script>';
-	} else if($context['TPortal']['shout_submit_returnkey'] == 2) {
+	} 
+    else if($context['TPortal']['shout_submit_returnkey'] == 2) {
 		$context['html_headers'] .= '
 		<script type="text/javascript"><!-- // --><![CDATA[
 		$(document).ready(function() {
@@ -119,37 +129,31 @@ if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 	}
 }
 
-if(isset($_REQUEST['shout']))
-{
+if(isset($_REQUEST['shout'])) {
 	$shoutAction = $_REQUEST['shout'];
 
-	if($shoutAction == 'admin')
-	{
+	if($shoutAction == 'admin') {
 		tpshout_admin();
 	}
-	elseif($shoutAction == 'del')
-	{
+	elseif($shoutAction == 'del') {
 		deleteShout();
 		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
-	elseif($shoutAction == 'save')
-	{
-		if (empty($context['TPortal']['shout_allow_links'])) {
-			if (shoutHasLinks())
+	elseif($shoutAction == 'save') {
+		if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
 				return;
 		}
 		postShout();
 		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
-	elseif($shoutAction == 'fetch')
-	{
+	elseif($shoutAction == 'fetch') {
 		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
 	}
-	else
-	{
+	else {
 		$number = substr($shoutAction, 4);
-		if(!is_numeric($number))
-			$number = 10;
+		if(!is_numeric($number)) {
+            $number = 10;
+        }
 		tpshout_bigscreen(true, $number);
 	}
 }
@@ -161,8 +165,7 @@ function postShout()
 
 	isAllowedTo('tp_can_shout');
 
-	if(!empty($_POST['tp_shout']) && !empty($_POST['tp-shout-name']))
-	{
+	if(!empty($_POST['tp_shout']) && !empty($_POST['tp-shout-name'])) {
 		// Check the session id.
 		checkSession('post');
 		require_once($sourcedir . '/Subs-Post.php');
@@ -178,8 +181,7 @@ function postShout()
             WHERE id_member = {int:user} LIMIT 1',
 			array('user' => $context['user']['id'])
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$row = $smcFunc['db_fetch_row']($request);
 			$context['TPortal']['usercolor'] = $row[0];
 			$smcFunc['db_free_result']($request);
@@ -187,8 +189,9 @@ function postShout()
 
 		// Build the name with color for user, otherwise strip guests name of html tags.
 		$shout_name = ($user_info['id'] != 0) ? '<a href="'.$scripturl.'?action=profile;u='.$user_info['id'].'"' : strip_tags($_POST['tp-shout-name']);
-		if(!empty($context['TPortal']['usercolor']))
+		if(!empty($context['TPortal']['usercolor'])) {
 			$shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
+        }
 		$shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
 
 		$shout_time = time();
@@ -198,7 +201,6 @@ function postShout()
 		$memID = $user_info['id'];
 
 		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
-
 
         if($shout != '') {
             $smcFunc['db_insert']('INSERT',
@@ -283,14 +285,14 @@ function deleteShout()
 	// A couple of security checks
 	checkSession('post');
 	isAllowedTo('tp_can_admin_shout');
-	if(!empty($_POST['s']))
-	{
+	if(!empty($_POST['s'])) {
 		$smcFunc['db_query']('', '
 			DELETE FROM {db_prefix}tp_shoutbox
 			WHERE id = {int:id}',
 			array('id' => (int) $_POST['s'])
 		);
 	}
+
 }
 
 function tpshout_admin()
@@ -300,13 +302,16 @@ function tpshout_admin()
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
 
-	if(!isset($context['tp_panels']))
+	if(!isset($context['tp_panels'])) {
 		$context['tp_panels'] = array();
+    }
 
-	if(isset($_GET['p']) && is_numeric($_GET['p']))
+	if(isset($_GET['p']) && is_numeric($_GET['p'])) {
 		$tpstart = $_GET['p'];
-	else
+    }
+	else {
 		$tpstart = 0;
+    }
 
 	require_once($sourcedir . '/Subs-Post.php');
 	loadtemplate('TPShout');
@@ -318,15 +323,11 @@ function tpshout_admin()
 	TPadminIndex('shout', true);
 	$context['current_action'] = 'admin';
 
-	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks']))
-	{
+	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks'])) {
 		$go = 0;
 		$changeArray = array();
-		foreach ($_POST as $what => $value)
-		{
-
-			if(substr($what, 0, 18) == 'tp_shoutbox_remove')
-			{
+		foreach ($_POST as $what => $value) {
+			if(substr($what, 0, 18) == 'tp_shoutbox_remove') {
 				$val = substr($what, 18);
 				$smcFunc['db_query']('', '
 					DELETE FROM {db_prefix}tp_shoutbox
@@ -335,18 +336,21 @@ function tpshout_admin()
 				);
 				$go = 2;
 			}
-			elseif(substr($what, 0, 18) == 'tp_shoutbox_hidden')
-			{
+			elseif(substr($what, 0, 18) == 'tp_shoutbox_hidden') {
 				$val = substr($what, 18);
-				if(!empty($_POST['tp_shoutbox_sticky'.$val]))
+				if(!empty($_POST['tp_shoutbox_sticky'.$val])) {
 					$value = '1';
-				else
+                }
+				else {
 					$value = '';
+                }
 
-				if(!empty($_POST['tp_shoutbox_sticky_layout'.$val]) && is_numeric($_POST['tp_shoutbox_sticky_layout'.$val]))
+				if(!empty($_POST['tp_shoutbox_sticky_layout'.$val]) && is_numeric($_POST['tp_shoutbox_sticky_layout'.$val])) {
 					$svalue = $_POST['tp_shoutbox_sticky_layout'.$val];
-				else
+                }
+				else {
 					$svalue = '0';
+                }
 
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
@@ -356,8 +360,7 @@ function tpshout_admin()
 				);
 				$go = 2;
 			}
-			elseif($what == 'tp_shoutsdelall' && $value == 'ON')
-			{
+			elseif($what == 'tp_shoutsdelall' && $value == 'ON') {
 				$smcFunc['db_query']('', '
 					DELETE FROM {db_prefix}tp_shoutbox
 					WHERE type = {string:type}',
@@ -365,16 +368,14 @@ function tpshout_admin()
 				);
 				$go = 2;
 			}
-			elseif($what == 'tp_shoutsunstickall' && $value == 'ON')
-			{
+			elseif($what == 'tp_shoutsunstickall' && $value == 'ON') {
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
 					SET sticky_layout = "0"
 					WHERE 1');
 				$go = 2;
 			}
-			elseif(substr($what, 0, 16) == 'tp_shoutbox_item')
-			{
+			elseif(substr($what, 0, 16) == 'tp_shoutbox_item') {
 				$val = substr($what, 16);
 				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, 300));
 				preparsecode($bshout);
@@ -387,85 +388,126 @@ function tpshout_admin()
 				);
 				$go = 2;
 			}
-			else
-			{
+			else {
 				$what = substr($what, 3);
-				if($what == 'shoutbox_smile')
+				if($what == 'shoutbox_smile') {
 					$changeArray['show_shoutbox_smile'] = $value;
-				if($what == 'shoutbox_icons')
+                }
+				
+                if($what == 'shoutbox_icons') {
 					$changeArray['show_shoutbox_icons'] = $value;
-				if($what == 'shoutbox_height')
+                }
+				
+                if($what == 'shoutbox_height') {
 					$changeArray['shoutbox_height'] = $value;
-				if($what == 'shoutbox_usescroll')
+                }
+
+				if($what == 'shoutbox_usescroll') {
 					$changeArray['shoutbox_usescroll'] = $value;
-				if($what == 'shoutbox_scrollduration')
-				{
-					if($value > 5)
+                }
+
+				if($what == 'shoutbox_scrollduration') {
+					if($value > 5) {
 						$value = 5;
-					elseif($value < 1)
+                    }
+					else if($value < 1) {
 						$value = 1;
+                    }
+
 					$changeArray['shoutbox_scrollduration'] = $value;
 				}
-				if($what == 'shoutbox_limit')
-				{
-					if(!is_numeric($value))
+
+				if($what == 'shoutbox_limit') {
+					if(!is_numeric($value)) {
 						$value = 10;
+                    }
 					$changeArray['shoutbox_limit'] = $value;
 				}
-				if($what == 'shoutbox_refresh')
-				{
-					if(empty($value))
+
+				if($what == 'shoutbox_refresh') {
+					if(empty($value)) {
 						$value = '0';
+                    }
 					$changeArray['shoutbox_refresh'] = $value;
 				}
-				if($what == 'show_profile_shouts')
+
+				if($what == 'show_profile_shouts') {
 					$changeArray['profile_shouts_hide'] = $value;
-				if($what == 'shout_allow_links')
+                }
+
+				if($what == 'shout_allow_links') {
 					$changeArray['shout_allow_links'] = $value;
-				if($what == 'shoutbox_layout')
+                }
+
+				if($what == 'shoutbox_layout') {
 					$changeArray['shoutbox_layout'] = $value;
-				if($what == 'shout_submit_returnkey')
+                }
+
+				if($what == 'shout_submit_returnkey') {
 					$changeArray['shout_submit_returnkey'] = $value;
-				if($what == 'shoutbox_stitle')
+                }
+
+				if($what == 'shoutbox_stitle') {
 					$changeArray['shoutbox_stitle'] = $value;
-				if($what == 'shoutbox_maxlength')
+                }
+
+				if($what == 'shoutbox_maxlength') {
 					$changeArray['shoutbox_maxlength'] = $value;
-				if($what == 'shoutbox_timeformat')
+                }
+
+				if($what == 'shoutbox_timeformat') {
 					$changeArray['shoutbox_timeformat'] = $value;
-				if($what == 'shoutbox_use_groupcolor')
+                }
+
+				if($what == 'shoutbox_use_groupcolor') {
 					$changeArray['shoutbox_use_groupcolor'] = $value;
-				if($what == 'shoutbox_textcolor')
+                }
+
+				if($what == 'shoutbox_textcolor') {
 					$changeArray['shoutbox_textcolor'] = $value;
-				if($what == 'shoutbox_timecolor')
+                }
+
+				if($what == 'shoutbox_timecolor') {
 					$changeArray['shoutbox_timecolor'] = $value;
-				if($what == 'shoutbox_linecolor1')
+                }
+
+				if($what == 'shoutbox_linecolor1') {
 					$changeArray['shoutbox_linecolor1'] = $value;
-				if($what == 'shoutbox_linecolor2')
+                }
+
+				if($what == 'shoutbox_linecolor2') {
 					$changeArray['shoutbox_linecolor2'] = $value;
 				}
+            }
 		}
 		updateTPSettings($changeArray, true);
 
-		if(empty($go))
+		if(empty($go)) {
 			redirectexit('action=tpadmin;shout=admin;settings');
-		else
+        }
+		else {
 			redirectexit('action=tpadmin;shout=admin');
+        }
 	}
 
 	// get latest shouts for admin section
 	// check that a member has been filtered
-	if(isset($_GET['u']))
+	if(isset($_GET['u'])) {
 		$memID = $_GET['u'];
+    }
+
 	// check that a IP has been filtered
-	if(isset($_GET['ip']))
+	if(isset($_GET['ip'])) {
 		$ip = $_GET['ip'];
-	if(isset($_GET['s']))
+    }
+
+	if(isset($_GET['s'])) {
 		$single = $_GET['s'];
+    }
 
 	$context['TPortal']['admin_shoutbox_items'] = array();
 
-	if(isset($memID))
-	{
+	if(isset($memID)) {
 		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -487,8 +529,7 @@ function tpshout_admin()
 			array('type' => 'shoutbox', 'val5'=> $memID, 'val7' => 0, 'start' => $tpstart)
 		);
 	}
-	elseif(isset($ip))
-	{
+	elseif(isset($ip)) {
 		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -510,8 +551,7 @@ function tpshout_admin()
 			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0, 'start' => $tpstart)
 		);
 	}
-	elseif(isset($single))
-	{
+	elseif(isset($single)) {
 		// check session
 		checkSession('get');
 		$context['TPortal']['shoutbox_pageindex'] = '';
@@ -523,8 +563,7 @@ function tpshout_admin()
 			array('type' => 'shoutbox', 'val7' => 0, 'shout' => $single)
 		);
 	}
-	else
-	{
+	else {
 		$shouts = $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -545,10 +584,8 @@ function tpshout_admin()
 		);
 	}
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-		{
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],
 				'body' => html_entity_decode($row['content'], ENT_QUOTES),
@@ -569,8 +606,7 @@ function tpshout_admin()
 
 	$context['TPortal']['subtabs'] = '';
 	// setup menu items
-	if (allowedTo('tp_can_admin_shout'))
-	{
+	if (allowedTo('tp_can_admin_shout')) {
 		$context['TPortal']['subtabs'] = array(
 			'shoutbox_settings' => array(
 				'text' => 'tp-settings',
@@ -585,11 +621,14 @@ function tpshout_admin()
 		);
 		$context['admin_header']['tp_shout'] = $txt['tp_shout'];
 	}
+
 	// on settings screen?
-	if(isset($_GET['settings']))
+	if(isset($_GET['settings'])) {
 		$context['sub_template'] = 'tpshout_admin_settings';
-	else
+    }
+	else {
 		$context['sub_template'] = 'tpshout_admin';
+    }
 
 	$context['page_title'] = 'Shoutbox admin';
 
@@ -606,7 +645,8 @@ function tpshout_bigscreen($state = false, $number = 10)
         $context['template_layers'] = array();
         $context['sub_template'] = 'tpshout_ajax';
         $context['TPortal']['rendershouts'] = tpshout_fetch($state, $number, true);
-    } else {
+    }
+    else {
         $context['TPortal']['rendershouts'] = tpshout_fetch(false, $number, false);
         TP_setThemeLayer('tpshout', 'TPShout', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
