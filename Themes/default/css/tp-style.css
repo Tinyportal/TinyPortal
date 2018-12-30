@@ -2027,24 +2027,24 @@ table.tp_grid tr.windowbg:nth-of-type(even)
     background: #f0f4f7;
 }
 
-/* Generic icons for SMF 2.1 */
-.generic_icons.menu_tp::before
+/* Main icons for SMF 2.1 */
+.main_icons.menu_tp::before
 {
 	background: url(../images/tinyportal/menu_tp.png) no-repeat;
 }
-.generic_icons.menu_tparticle::before
+.main_icons.menu_tparticle::before
 {
 	background: url(../images/tinyportal/menu_tparticle.png) no-repeat;
 }
-.generic_icons.menu_tpdownload::before
+.main_icons.menu_tpdownload::before
 {
 	background: url(../images/tinyportal/menu_tpdownload.png) no-repeat;
 }
-.generic_icons.menu_tpshout::before
+.main_icons.menu_tpshout::before
 {
 	background: url(../images/tinyportal/menu_tpshout.png) no-repeat;
 }
-.generic_icons.menu_tpforum::before
+.main_icons.menu_tpforum::before
 {
     background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
 }
