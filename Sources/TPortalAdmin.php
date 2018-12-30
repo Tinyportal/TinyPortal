@@ -127,11 +127,11 @@ function TPortalAdmin()
 	}
     elseif(array_key_exists('shout', $_GET) && $_GET['shout'] == 'admin') {
         require_once(SOURCEDIR . '/TPShout.php');
-        return; 
+        return;
     }
 	elseif(array_key_exists('listimage', $_GET) && in_array($_GET['listimage'], array( 'admin', 'list', 'remove'))) {
         require_once(SOURCEDIR . '/TPListImages.php');
-        return; 
+        return;
     }
     else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';

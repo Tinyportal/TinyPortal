@@ -30,7 +30,7 @@ $categories = array(1,2);
 
 // End Config
 
-global $scripturl, $smcFunc; 
+global $scripturl, $smcFunc;
 
 $request = $smcFunc['db_query']('', ' 
      SELECT shortname, id, subject, parse
@@ -41,23 +41,23 @@ $request = $smcFunc['db_query']('', '
      array('cats' => $categories,
           'approved' => 1,
      )
-); 
+);
 echo '
 		<ul style="list-style-type:disc; margin: 0pt; padding: 0pt 15px;">
  ';
 while ($row = $smcFunc['db_fetch_assoc']($request))
-{ 
+{
 if (!empty($row['shortname']))
 	{
-     echo '<li><a href="', $scripturl, '?page=', $row['shortname'], '">', $row['subject'], '</a></li>'; 
+     echo '<li><a href="', $scripturl, '?page=', $row['shortname'], '">', $row['subject'], '</a></li>';
 	}
 else
 	{
-     echo '<li><a href="', $scripturl, '?page=', $row['id'], '">', $row['subject'], '</a></li>'; 
+     echo '<li><a href="', $scripturl, '?page=', $row['id'], '">', $row['subject'], '</a></li>';
 	}
 } 
-echo '</ul>'; 
-$smcFunc['db_free_result']($request); 
+echo '</ul>';
+$smcFunc['db_free_result']($request);
 </code>
 
 <description>

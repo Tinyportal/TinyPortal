@@ -79,7 +79,7 @@ function template_tpListImages_admin()
 
 }
 
-function TPListImages($user_id) 
+function TPListImages($user_id)
 {
     global $txt, $boarddir, $boardurl, $context, $scripturl;
 
@@ -90,9 +90,9 @@ function TPListImages($user_id)
     $html = '';
     // fetch all images you have uploaded
     $imgfiles = array();
-    if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs')) 
+    if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs'))
     {
-        while (false !== ($file = readdir($handle))) 
+        while (false !== ($file = readdir($handle)))
         {
             if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_id) + 9) == 'thumb_'.$user_id.'uid')
             {
@@ -142,7 +142,7 @@ function TPListImages($user_id)
     return $html;
 }
 
-function TPRemoveImage( $image ) 
+function TPRemoveImage( $image )
 {
     global $boarddir;
 

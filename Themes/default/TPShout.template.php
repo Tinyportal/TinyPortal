@@ -317,7 +317,7 @@ function template_tpshout_shoutblock()
 				shout_smiley_code();
 				print_shout_smileys();
 			echo '
-			</div>';				
+			</div>';
 			}
 			if(!empty($context['TPortal']['show_shoutbox_icons']))
 			{
@@ -325,7 +325,7 @@ function template_tpshout_shoutblock()
 			<div style="display: inline-block;min-width:150px;vertical-align: top;">';
 				shout_bcc_code();
 			echo '
-			</div>';	
+			</div>';
 			}
 			echo '
 			<br>

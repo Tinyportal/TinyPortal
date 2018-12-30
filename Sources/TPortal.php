@@ -1701,7 +1701,7 @@ function doTPfrontpage()
 		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
     }
 	else {
-		$fetchart=''; 
+		$fetchart='';
     }
 
 	if(count($fetch_article_titles) > 0) {

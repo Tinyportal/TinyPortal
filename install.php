@@ -963,7 +963,7 @@ function updateComments()
                     $row['value3'],
                 ),
                 array ('id')
-            );  
+            );
         }
     }
 

@@ -21,7 +21,7 @@ if (!defined('SMF'))
 
 clASs TPArticle extends TPBase {
 
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
     }
@@ -35,7 +35,7 @@ clASs TPArticle extends TPBase {
         }
         else {
             $where      = is_numeric( $article ) ? 'art.id = {int:page}' : 'art.shortname = {string:page}';
-            $article    = is_numeric( $article ) ? (int)$article : $article; 
+            $article    = is_numeric( $article ) ? (int)$article : $article;
         }
 
         $request    = $this->dB->db_query('', '
@@ -75,14 +75,14 @@ clASs TPArticle extends TPBase {
 
     }
 
-    public function getArticleComments($user_id, $item_id) 
+    public function getArticleComments($user_id, $item_id)
     {
-       return parent::getComments('1', $user_id, $item_id); 
+       return parent::getComments('1', $user_id, $item_id);
     }
 
-    public function getArticleComment($comment_id) 
+    public function getArticleComment($comment_id)
     {
-       return parent::getComment($comment_id, 'article_comment'); 
+       return parent::getComment($comment_id, 'article_comment');
     }
 
     public function insertArticleComment($user_id, $item_id, $comment, $title)
@@ -170,7 +170,7 @@ clASs TPArticle extends TPBase {
             $this->dB->db_free_result($request);
         }
        
-        return $num_articles; 
+        return $num_articles;
     }
 
 }

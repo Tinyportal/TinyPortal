@@ -483,7 +483,7 @@ function TPmodules()
                             break;
                         default:
                             // Last Character of a word
-                            $operator   = substr($word, -1); 
+                            $operator   = substr($word, -1);
                             switch($operator) {
                                 // Allowed operators
                                 case '-':
@@ -511,7 +511,7 @@ function TPmodules()
                 $select     = ', MATCH (body) AGAINST (\''.$what.'\') AS score';
                 $query      = 'MATCH (body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
             }
-            elseif($usetitle && $usebody) { 
+            elseif($usetitle && $usebody) {
                 $select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
                 $query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
             }
@@ -720,7 +720,7 @@ function TPmodules()
 			isAllowedTo('tp_submithtml');
 
 		if($tpsub == 'addarticle_html')
-		{		
+		{
 			TPwysiwyg_setup();
 		}
 		$context['TPortal']['subaction'] = 'submitarticle';
@@ -1243,7 +1243,7 @@ function tp_profile_articles($memID)
 	$max_off = $result[0];
 	$smcFunc['db_free_result']($request);
 
-	$context['TPortal']['all_articles'] = $max - $max_approve - $max_off; 
+	$context['TPortal']['all_articles'] = $max - $max_approve - $max_off;
 	$context['TPortal']['approved_articles'] = $max_approve;
 	$context['TPortal']['off_articles'] = $max_off;
 

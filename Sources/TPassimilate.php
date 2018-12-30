@@ -756,12 +756,12 @@ if(!function_exists('set_avatar_data')) {
 
     function set_avatar_data( $data ) {
 
-        global $image_proxy_enabled, $image_proxy_secret, $scripturl, $modSettings, $smcFunc, $boardurl; 
+        global $image_proxy_enabled, $image_proxy_secret, $scripturl, $modSettings, $smcFunc, $boardurl;
 
         if ($image_proxy_enabled && !empty($data['avatar']) && stripos($data['avatar'], 'http://') !== false) {
             $tmp = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($data['avatar']) . '&hash=' . md5($data['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
         }
-        else { 
+        else {
             $tmp = $data['avatar'] == '' ? ($data['id_attach'] > 0 ? '<img src="' . (empty($data['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $data['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $data['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($data['avatar'], 'https://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : stristr($data['avatar'], 'http://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($data['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
         }
 

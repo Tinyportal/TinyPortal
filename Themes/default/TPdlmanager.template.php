@@ -260,7 +260,7 @@ function template_main()
 					<div class="dlcategory tp-subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
 				}
 		echo '
-			</div>'; 	
+			</div>';
 		}
 
 		// output the files in the category
@@ -341,7 +341,7 @@ function template_main()
 				echo '
 			<div class="padding-div">'.$txt['tp-nofiles'].'</div>
 			</div>
-			'; 
+			';
 			}
 		}
 	}
