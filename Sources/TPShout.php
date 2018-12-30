@@ -18,144 +18,149 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-global $context, $settings, $options, $modSettings, $forum_version;
+function TPShout()
+{
 
-if(loadLanguage('TPShout') == false) {
-	loadLanguage('TPShout', 'english');
-}
+    global $context, $settings, $options, $modSettings, $forum_version;
 
-// Mentions
-if (!empty($modSettings['enable_mentions']) && allowedTo('mention')) {
-    loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-    loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-    loadJavaScriptFile('shoutMentions.js', array('defer' => true, 'minimize' => false), 'smf_mentions');
-}
+    if(loadLanguage('TPShout') == false) {
+        loadLanguage('TPShout', 'english');
+    }
 
-if(strpos($forum_version, '2.0') === false) {
-    loadCSSFile('jquery.sceditor.css');
-}
+    // Mentions
+    if (!empty($modSettings['enable_mentions']) && allowedTo('mention')) {
+        loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
+        loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
+        loadJavaScriptFile('shoutMentions.js', array('defer' => true, 'minimize' => false), 'smf_mentions');
+    }
 
-// if in admin screen, turn off blocks
-if($context['TPortal']['action'] == 'tpadmin' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
-	$in_admin = true;
-}
+    if(strpos($forum_version, '2.0') === false) {
+        loadCSSFile('jquery.sceditor.css');
+    }
 
-if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin)) {
-	tp_hidebars();
-}
+    // if in admin screen, turn off blocks
+    if($context['TPortal']['action'] == 'tpadmin' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
+        $in_admin = true;
+    }
 
-// bbc code for shoutbox
-$context['html_headers'] .= '
-	<script type="text/javascript"><!-- // --><![CDATA[
-		var tp_images_url = "' .$settings['tp_images_url'] . '";
-		var tp_session_id = "' . $context['session_id'] . '";
-		var tp_session_var = "' . $context['session_var'] . '";
-		var current_header_smiley = ';
+    if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin)) {
+        tp_hidebars();
+    }
 
-if(empty($options['expand_header_smiley'])) {
-	$context['html_headers'] .= 'false';
-}
-else {
-	$context['html_headers'] .= 'true';
-}
+    // bbc code for shoutbox
+    $context['html_headers'] .= '
+        <script type="text/javascript"><!-- // --><![CDATA[
+            var tp_images_url = "' .$settings['tp_images_url'] . '";
+            var tp_session_id = "' . $context['session_id'] . '";
+            var tp_session_var = "' . $context['session_var'] . '";
+            var current_header_smiley = ';
 
-$context['html_headers'] .= 'var current_header_bbc = ';
+    if(empty($options['expand_header_smiley'])) {
+        $context['html_headers'] .= 'false';
+    }
+    else {
+        $context['html_headers'] .= 'true';
+    }
 
-if(empty($options['expand_header_bbc'])) {
-	$context['html_headers'] .= 'false';
-}
-else {
-	$context['html_headers'] .= 'true';
-}
+    $context['html_headers'] .= 'var current_header_bbc = ';
 
-$context['html_headers'] .= '
-    // ]]></script>
+    if(empty($options['expand_header_bbc'])) {
+        $context['html_headers'] .= 'false';
+    }
+    else {
+        $context['html_headers'] .= 'true';
+    }
 
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
+    $context['html_headers'] .= '
+        // ]]></script>
 
-if(!empty($context['TPortal']['shoutbox_refresh'])) {
-	$context['html_headers'] .= '
-	<script type="text/javascript"><!-- // --><![CDATA[
-		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
-	// ]]></script>';
-}
+        <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
 
-if(file_exists($settings['theme_dir'].'/css/TPShout.css')) {
-	$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
-}
-else {
-	$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
-}
+    if(!empty($context['TPortal']['shoutbox_refresh'])) {
+        $context['html_headers'] .= '
+        <script type="text/javascript"><!-- // --><![CDATA[
+            window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
+        // ]]></script>';
+    }
 
-if($context['TPortal']['shoutbox_usescroll'] > 0) {
-	$context['html_headers'] .= '
-	<script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
-	<script type="text/javascript">
-		$j(document).ready(function(){
-			$j("marquee").marquee("tp_marquee").mouseover(function () {
-					$j(this).trigger("stop");
-				}).mouseout(function () {
-					$j(this).trigger("start");
-				});
-			});
-	</script>';
-}
+    if(file_exists($settings['theme_dir'].'/css/TPShout.css')) {
+        $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
+    }
+    else {
+        $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
+    }
 
-if(!empty($context['TPortal']['shout_submit_returnkey'])) {
-	if($context['TPortal']['shout_submit_returnkey'] == 1) {
-		$context['html_headers'] .= '
-		<script type="text/javascript"><!-- // --><![CDATA[
-			$(document).ready(function() {
-				$("#tp_shout").keypress(function(event) {
-					if(event.which == 13 && !event.shiftKey)
-						TPupdateShouts("save");
-				});
-			});
-		// ]]></script>';
-	} 
-    else if($context['TPortal']['shout_submit_returnkey'] == 2) {
-		$context['html_headers'] .= '
-		<script type="text/javascript"><!-- // --><![CDATA[
-		$(document).ready(function() {
-			$("#tp_shout").keydown(function (event) {
-				if((event.metaKey || event.ctrlKey) &&  event.keyCode == 13) {
-					TPupdateShouts(\'save\');
-					event.preventDefault();
-					return false;
-				}
-			});
-		});
-		// ]]></script>';
-	}
-}
+    if($context['TPortal']['shoutbox_usescroll'] > 0) {
+        $context['html_headers'] .= '
+        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+        <script type="text/javascript">
+            $j(document).ready(function(){
+                $j("marquee").marquee("tp_marquee").mouseover(function () {
+                        $j(this).trigger("stop");
+                    }).mouseout(function () {
+                        $j(this).trigger("start");
+                    });
+                });
+        </script>';
+    }
 
-if(isset($_REQUEST['shout'])) {
-	$shoutAction = $_REQUEST['shout'];
-
-	if($shoutAction == 'admin') {
-		tpshout_admin();
-	}
-	elseif($shoutAction == 'del') {
-		deleteShout();
-		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
-	}
-	elseif($shoutAction == 'save') {
-		if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
-				return;
-		}
-		postShout();
-		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
-	}
-	elseif($shoutAction == 'fetch') {
-		tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
-	}
-	else {
-		$number = substr($shoutAction, 4);
-		if(!is_numeric($number)) {
-            $number = 10;
+    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
+        if($context['TPortal']['shout_submit_returnkey'] == 1) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+                $(document).ready(function() {
+                    $("#tp_shout").keypress(function(event) {
+                        if(event.which == 13 && !event.shiftKey)
+                            TPupdateShouts("save");
+                    });
+                });
+            // ]]></script>';
+        } 
+        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout").keydown(function (event) {
+                    if((event.metaKey || event.ctrlKey) &&  event.keyCode == 13) {
+                        TPupdateShouts(\'save\');
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            });
+            // ]]></script>';
         }
-		tpshout_bigscreen(true, $number);
-	}
+    }
+
+    if(isset($_REQUEST['shout'])) {
+        $shoutAction = $_REQUEST['shout'];
+
+        if($shoutAction == 'admin') {
+            tpshout_admin();
+        }
+        elseif($shoutAction == 'del') {
+            deleteShout();
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
+        }
+        elseif($shoutAction == 'save') {
+            if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
+                    return;
+            }
+            postShout();
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
+        }
+        elseif($shoutAction == 'fetch') {
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
+        }
+        else {
+            $number = substr($shoutAction, 4);
+            if(!is_numeric($number)) {
+                $number = 10;
+            }
+            tpshout_bigscreen(true, $number);
+        }
+    }
+
 }
 
 // Post the shout via ajax
@@ -1092,33 +1097,30 @@ function print_shout_smileys($collapse = true)
 
 	loadLanguage('Post');
 
-	if($collapse)
+	if($collapse) {
 		echo '
 	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
 		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;" align="left" />
 	</a>
 	<div id="shoutbox_smiley" style="text-align:left;">
 		';
-	else
-		echo '
-	<div>';
+    }
+	else {
+		echo '<div>';
+    }
 
 	// Now start printing all of the smileys.
-	if (!empty($context['tp_smileys']['postform']))
-	{
+	if (!empty($context['tp_smileys']['postform'])) {
 		// counter...
 		$sm_counter = 0;
 		// Show each row of smileys ;).
-		foreach ($context['tp_smileys']['postform'] as $smiley_row)
-		{
-			foreach ($smiley_row['smileys'] as $smiley)
-			{
-				if($sm_counter == 5 && $collapse)
-					echo '
-			<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
+		foreach ($context['tp_smileys']['postform'] as $smiley_row) {
+			foreach ($smiley_row['smileys'] as $smiley) {
+				if($sm_counter == 5 && $collapse) {
+					echo '<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
+                }
 
-				echo '
-					<a href="javascript:void(0);" onclick="replaceText(\' ', $smiley['code'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" align="bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></a>';
+				echo '<a href="javascript:void(0);" onclick="replaceText(\' ', $smiley['code'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" align="bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></a>';
 				$sm_counter++;
 			}
 		}
@@ -1136,7 +1138,8 @@ function tpshout_frontpage()
     tpshout_bigscreen(true);
 }
 
-function shoutHasLinks() {
+function shoutHasLinks()
+{
 
 	global $context;
 	$shout = !empty($_POST['tp_shout']) ? $_POST['tp_shout'] : '';
