@@ -10,8 +10,6 @@
 		<redirect url="">Installed!</redirect>
 		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
-		<require-dir name="tp-downloads" destination="$boarddir" />
-		<require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-src" destination="$boarddir" />
 		<readme type="inline" parsebbc="true">Installing TinyPortal v2.0.0 for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
@@ -65,8 +63,6 @@
 		<redirect url="">Installed!</redirect>
 		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
-		<require-dir name="tp-downloads" destination="$boarddir" />
-		<require-dir name="tp-images" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-src" destination="$boarddir" />
 		<readme type="inline">Installing TinyPortal v2.0.0 for SMF2.1</readme>
@@ -75,9 +71,9 @@
 	</install>
 	<uninstall for="2.1.* - 2.1.99">
 		<readme type="inline">Uninstalling TinyPortal v2.0.0 for SMF2.1</readme>
-		<remove-dir name="$boarddir/tp-files/tp-blockcodes" />
-		<remove-dir name="$boarddir/tp-files/tp-plugins" />
 		<remove-dir name="$themedir/images/tinyportal" />
+		<remove-dir name="$boarddir/tp-src" />
+		<remove-dir name="$themedir/scripts/tinyportal" />
 		<remove-file name="$sourcedir/TPassimilate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
 		<remove-file name="$sourcedir/TPdlmanager.php" />
@@ -113,8 +109,6 @@
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/TPShout.english.php" />
 		<remove-file name="$languagedir/TPShout.english-utf8.php" />
-		<remove-dir  name="$boarddir/tp-src" />
-		<remove-dir  name="$themedir/scripts/tinyportal" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>

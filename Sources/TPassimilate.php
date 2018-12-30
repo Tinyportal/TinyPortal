@@ -224,7 +224,7 @@ function tpAddMenuItems(&$buttons)
             );
         }
 
-        if (!empty($context['linktree'][2])) {
+        if (!empty($context['linktree'][2]) && array_key_exists('url', $context['linktree'][2])) {
             $context['linktree'][2]['url'] = str_replace('#', '?action=forum#', $context['linktree'][2]['url']);
         }
     }

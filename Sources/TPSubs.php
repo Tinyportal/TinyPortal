@@ -1111,13 +1111,13 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 	{
 		// fetch all images you have uploaded
 		$imgfiles = array();
-		if ($handle = opendir($boarddir.'/tp-images/thumbs'))
+		if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs'))
 		{
 			while (false !== ($file = readdir($handle)))
 			{
 				if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_'.$user_info['id'].'uid')
 				{
-					$imgfiles[filectime($boarddir.'/tp-images/thumbs/'.$file)] = $file;
+					$imgfiles[filectime($boarddir.'/tp-files/tp-images/thumbs/'.$file)] = $file;
 				}
 			}
 			closedir($handle);
@@ -1132,7 +1132,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';
+				echo '<img src="'.$boardurl.'/tp-files/tp-images/', substr($im,6) , '"  border="none" alt="" />';
 		}
 		echo '
 		</div>
@@ -1256,10 +1256,11 @@ function tp_fetchpermissions($perms)
 	if(is_array($perms))
 	{
 		$request = $smcFunc['db_query']('', '
-			SELECT p.permission, m.group_name as group_name, p.id_group as id_group
-			FROM ({db_prefix}permissions as p, {db_prefix}membergroups as m)
+			SELECT p.permission, m.group_name AS group_name, p.id_group AS id_group
+			FROM {db_prefix}permissions AS p
+            INNER JOIN {db_prefix}membergroups AS m
+			    ON p.id_group = m.id_group
 			WHERE p.add_deny = {int:deny}
-			AND p.id_group = m.id_group
 			AND p.permission IN ({array_string:tag})
 			AND m.min_posts = {int:minpost}
 			ORDER BY m.group_name ASC',
@@ -1330,7 +1331,7 @@ function tp_fetchboards()
 	$request =  $smcFunc['db_query']('', '
 		SELECT id_board as ID_BOARD, name, board_order
 		FROM {db_prefix}boards
-		WHERE 1
+		WHERE  1=1
 		ORDER BY board_order ASC',
 		array()
 	);
@@ -2724,7 +2725,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				if($context['TPortal']['dl_usescreenshot'] == 1)
 				{
 					if(!empty($row['screenshot']))
-						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+						$ico = $boardurl.'/tp-files/tp-images/dlmanager/thumb/'.$row['screenshot'];
 					else
 						$ico = '';
 				}

@@ -90,13 +90,13 @@ function TPListImages($user_id)
     $html = '';
     // fetch all images you have uploaded
     $imgfiles = array();
-    if ($handle = opendir($boarddir.'/tp-images/thumbs')) 
+    if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs')) 
     {
         while (false !== ($file = readdir($handle))) 
         {
             if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_id) + 9) == 'thumb_'.$user_id.'uid')
             {
-                $imgfiles[filectime($boarddir.'/tp-images/thumbs/'.$file)] = $file;
+                $imgfiles[filectime($boarddir.'/tp-files/tp-images/thumbs/'.$file)] = $file;
             }
         }
         closedir($handle);
@@ -108,10 +108,10 @@ function TPListImages($user_id)
             <div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
     if(!empty($imgs)) {
         foreach($imgs as $im) {
-            if(!is_file($boarddir.'/tp-images/'.substr($im, 6))) {
-                if(is_file($boarddir.'/tp-images/thumbs/'.$im)) {
+            if(!is_file($boarddir.'/tp-files/tp-images/'.substr($im, 6))) {
+                if(is_file($boarddir.'/tp-files/tp-images/thumbs/'.$im)) {
                     $image      = substr($im, 6);
-                    $imageUrl   = $boardurl.'/tp-images/thumbs/'.$im;
+                    $imageUrl   = $boardurl.'/tp-files/tp-images/thumbs/'.$im;
                 }
                 else {
                     continue;
@@ -119,7 +119,7 @@ function TPListImages($user_id)
             }
             else {
                 $image          = substr($im, 6);
-                $imageUrl       = $boardurl.'/tp-images/'.substr($im, 6);
+                $imageUrl       = $boardurl.'/tp-files/tp-images/'.substr($im, 6);
             }
             
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=remove"  method="post" style="margin: 0px;">
@@ -146,8 +146,8 @@ function TPRemoveImage( $image )
 {
     global $boarddir;
 
-    $fileNameThumb  = $boarddir.'/tp-images/thumbs/thumb_'.$image;
-    $fileName       = $boarddir.'/tp-images/'.$image;
+    $fileNameThumb  = $boarddir.'/tp-files/tp-images/thumbs/thumb_'.$image;
+    $fileName       = $boarddir.'/tp-files/tp-images/'.$image;
     if(file_exists($fileNameThumb)) {
         unlink($fileNameThumb);
     }
@@ -162,7 +162,7 @@ function TPMembers()
 	global $smcFunc, $boarddir, $txt;
 
 	$users	= array();
-    if ($handle = opendir($boarddir.'/tp-images/thumbs')) {
+    if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs')) {
         while (false !== ($file = readdir($handle))) {
             if($file != '.' && $file !='..' && $file !='.htaccess') {
                 if(preg_match('/thumb_(.*?)uid/', $file, $matches)) {

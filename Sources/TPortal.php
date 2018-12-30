@@ -67,7 +67,7 @@ function TPortal_init()
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
 	if (!isset($modSettings['jquery_source'])) {
-		$context['html_headers'] .= '<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>';
+		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array('external' => true), 'tp_jquery');
     }
 
 	fetchTPhooks();
