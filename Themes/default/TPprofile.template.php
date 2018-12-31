@@ -39,7 +39,7 @@ function template_tp_summary()
 
 function template_tp_articles()
 {
-	global $settings, $txt, $context, $scripturl;
+	global $settings, $txt, $context, $scripturl, $user_info;
 
 	if($context['TPortal']['profile_action'] == ''){
 		echo '
@@ -151,7 +151,7 @@ $clickme.click( function(e) {
 					<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
 					<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />
 					';
-		if(!empty($context['TPortal']['allow_wysiwyg']))
+		    if(!empty($context['TPortal']['allow_wysiwyg']) && ($user_info['id'] == $context['TPortal']['selected_member']))
 			echo '<div>
 					<dl class="settings">
 						<dt>'.$txt['tp-wysiwygchoice'].':
