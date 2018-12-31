@@ -193,7 +193,7 @@ $txt['tp-catlayout7'] = 'use custom template';
 $txt['tp-catlayout8'] = 'articles + icons2';
 $txt['tp-articlesettings'] = 'Article Settings';
 $txt['tp-parent'] = 'Parent:';
-$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:';
+$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:<br><span class="smalltext">(Note that this setting only works if display is set to \'Only articles\' on the frontpage.)<span>';
 $txt['tp-sortoptions1'] = 'Sort by date';
 $txt['tp-sortoptions2'] = 'Sort by author';
 $txt['tp-sortoptions3'] = 'Sort by position';
@@ -610,7 +610,7 @@ $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';
 
 $txt['tp-selectedforum'] = 'Promoted topics only';
-$txt['tp-selectbothforum'] = 'Promoted topics + articles';
+$txt['tp-selectbothforum'] = 'Promoted topics + articles - sorted on date';
 
 $txt['tp-frontpagetitle'] = 'Use a custom browser tab title for your Frontpage: ';
 $txt['tp-frontpagetitle2'] = ' (leave the textfield empty for no title)';

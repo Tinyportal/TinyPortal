@@ -12,13 +12,13 @@
 		<require-dir name="Sources" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-src" destination="$boarddir" />
-		<readme type="inline" parsebbc="true">Installing TinyPortal v2.0.0 for SMF2.0.x[br][size=18pt][color=red][b]Important:[/b] [/color]Please Un-install any existing Version Of Tinyportal Before Installing.[/size]</readme>
+		<readme parsebbc="true">readme_install20.txt</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
 	</install>
 	<uninstall for="2.0 - 2.0.99">
-		<readme type="inline">Uninstalling TinyPortal v2.0.0 for SMF2.0.x</readme>
+		<readme parsebbc="true">readme_uninstall.txt</readme>
 		<modification reverse="true">install.xml</modification>
 		<remove-file name="$sourcedir/TPassimilate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
@@ -65,12 +65,12 @@
 		<require-dir name="Sources" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-src" destination="$boarddir" />
-		<readme type="inline">Installing TinyPortal v2.0.0 for SMF2.1</readme>
+		<readme parsebbc="true">readme_install21.txt</readme>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
 	</install>
 	<uninstall for="2.1.* - 2.1.99">
-		<readme type="inline">Uninstalling TinyPortal v2.0.0 for SMF2.1</readme>
+		<readme parsebbc="true">readme_uninstall.txt</readme>
 		<remove-dir name="$themedir/images/tinyportal" />
 		<remove-dir name="$boarddir/tp-src" />
 		<remove-dir name="$themedir/scripts/tinyportal" />

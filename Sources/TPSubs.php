@@ -635,10 +635,10 @@ class chain
 
    function makeBranch($parent_id, $level, $maxlevel)
    {
-       if(!is_array($this->table)) 
+       if(!is_array($this->table))
               $this->table = array();
 	   
-       if(!array_key_exists($parent_id, $this->table)) 
+       if(!array_key_exists($parent_id, $this->table))
               return;
 	   
        $rows = $this->table[$parent_id];

@@ -60,7 +60,7 @@ $topPoster = 8;
 
 	// Output our array of users with avatar, posts, and name
 	echo '
-	<div>';	
+	<div>';
 	
 	foreach ($users as $user)
 	{

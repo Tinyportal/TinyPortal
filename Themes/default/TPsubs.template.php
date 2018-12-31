@@ -358,7 +358,7 @@ function TPortal_userbox()
 			echo '
 				<li><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">'. $bullet. $txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
 		// Are there any moderation reports?
-	if(strpos($forum_version, '2.0') !== false) 
+	if(strpos($forum_version, '2.0') !== false)
 		{
 		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
 			echo '
@@ -1795,19 +1795,19 @@ function article_comments($render = true)
 					echo '
 						<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
 				// not a guest
-				if ($comment['poster_id'] > 0) 
+				if ($comment['poster_id'] > 0)
 					echo '	
 					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>';
 				echo '
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
 					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
 					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
-				if ($comment['poster_id'] > 0) 
+				if ($comment['poster_id'] > 0)
 					echo '					
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
 				else
 					echo '
-						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>'; 
+						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>';
 				echo '	
 					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 				echo '

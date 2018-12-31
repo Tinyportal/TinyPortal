@@ -45,7 +45,7 @@
 }
 
 /** screen bigger then 900px **/
-@media all and (min-width: 900px) {	
+@media all and (min-width: 900px) {
     .clickme {
         display:none!important;
     }
@@ -62,7 +62,7 @@
         font-size:12px;
         cursor: pointer;
         padding: 1%;
-        clear:both;	
+        clear:both;
         display:block;
         background-image:url(../images/tinyportal/TPsort_down.png);
         background-repeat:no-repeat;
@@ -71,11 +71,11 @@
     }	
     .tp_responsive .box {
         width:100%!important;
-        float:none!important;	
+        float:none!important;
     }
     .tp_responsive .fullwidth-on-res-layout {
-        text-align: left!important;	
-        width:98%!important;	
+        text-align: left!important;
+        width:98%!important;
         float:none!important;
         clear:both!important;
         box-sizing: border-box;
@@ -116,19 +116,19 @@
     }
 
     .tp_responsive .admin-area .name {
-        width:78%!important;		
+        width:78%!important;
     }
 
     .tp_responsive .admin-area .pos,
     .tp_responsive .admin-area .adm-pos {
         width:14%!important;
-        box-sizing: border-box;	
+        box-sizing: border-box;
     }	
 
     .tp_responsive .admin-area .adm-name {
-        width:80%!important;	
+        width:80%!important;
         padding:1%!important;
-        box-sizing: border-box;	
+        box-sizing: border-box;
     }	
 
     .tp_responsive .bigger-width #show-on-respnsive-layout {
@@ -137,7 +137,7 @@
     }
 
     .tp_responsive .bigger-width  #size-on-respnsive-layout {
-        width: 65%;	
+        width: 65%;
     }
 
     .tp_responsive #new-item #show-on-respnsive-layout {
@@ -149,7 +149,7 @@
     .tp_responsive #any-subcats #size-on-respnsive-layout .float-items,
     .tp_responsive #up-file #size-on-respnsive-layout .float-items {
         padding:0px 1%;
-        text-align:left;	
+        text-align:left;
     }
 
     .tp_responsive #any-subcats #size-on-respnsive-layout,
@@ -176,7 +176,7 @@
 
     .tp_responsive #tpadmin_menu .roundframe::after {
         content: "";
-        display: table;	
+        display: table;
         clear: both;
     }
 
@@ -243,8 +243,8 @@
 
     .tp_responsive #tpadmin_menu .roundframe::after {
         content: "";
-        display: table;	
-        clear: both;	
+        display: table;
+        clear: both;
     }
 
     .tp_responsive #tpadmin_content {
@@ -261,14 +261,14 @@
 }
 
 /** screen smaller then 400px **/
-@media all and (min-width: 0px) and (max-width: 400px) {	
+@media all and (min-width: 0px) and (max-width: 400px) {
     .tp_responsive .panels-options {
         width: 95%!important; /* Panel Settings */
     }
 }
 
 /** screen smaller then 300px **/
-@media all and (max-width: 300px) {	
+@media all and (max-width: 300px) {
     .tp_responsive #tpadmin_content {
         font-size:11px;
         word-break: break-all;
@@ -278,7 +278,7 @@
 /********** RESPONSIVE TP ***********/
 
 /** screen smaller then 500px **/
-@media all and (min-width: 0px) and (max-width: 500px) {		
+@media all and (min-width: 0px) and (max-width: 500px) {
     .tp_responsive .panelsColumns,
     .tp_responsive .gridColumns,
     .tp_responsive .gridC {
@@ -300,7 +300,7 @@
 }
 
 /** screen smaller then 400px **/
-@media all and (min-width: 0px) and (max-width: 400px) {	
+@media all and (min-width: 0px) and (max-width: 400px) {
     .tp_responsive .panelsColumns,
     .tp_responsive .panelsColumnsHorizontally {
         width:100%!important;
@@ -317,18 +317,18 @@
 /********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
 .lrs #centerContainer
 {
-	overflow:hidden; 
+	overflow:hidden;
 	/* do not delete */
 }
 /** screen smaller then 500px **/
 @media all and (min-width: 0px) and (max-width: 500px) {
 
     .lrON.tp_responsive #tpleftbarContainer {
-        display: table-row-group;	
+        display: table-row-group;
     }
 
     .lrON.tp_responsive #tprightbarContainer {
-        display: table-footer-group;	
+        display: table-footer-group;
     }
 
     .tp_responsive #tpleftbarContainer,
@@ -348,15 +348,15 @@
 @media all and (min-width: 500px) and (max-width: 900px) {
     .lrON.tp_responsive #tpleftbarContainer,
     .lrON.tp_responsive #tprightbarContainer {
-        float:none!important;	
+        float:none!important;
     }
 
     .lrON.tp_responsive #tpleftbarContainer {
-        display: table-cell;		
+        display: table-cell;
     }
 
     .lrON.tp_responsive #tprightbarContainer {
-        display: table-cell;	
+        display: table-cell;
     }
 
     .tp_responsive #tpleftbarContainer,
@@ -397,7 +397,7 @@
     }
 
     .lrs.tp_responsive #centerContainer {
-        display: table-caption;	
+        display: table-caption;
     }
 
     .tp_responsive.leftpanelOn  #tpleftbarContainer,	

@@ -445,14 +445,13 @@ function TPortalDLManager()
 			$context['TPortal']['boards'] = array();
 			// fetch all boards
 			$request = $smcFunc['db_query']('', '
-				SELECT b.id_board AS id_board , b.name AS name, b.board_order AS board_order
-                FROM {db_prefix}boards AS b
+				SELECT b.ID_BOARD, b.name, b.board_order FROM {db_prefix}boards as b
 				WHERE {query_see_board}
 				ORDER BY b.board_order ASC');
 			if ($smcFunc['db_num_rows']($request) > 0)
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
-					$context['TPortal']['boards'][] = array('id' => $row['id_board'], 'name' => $row['name']);
+					$context['TPortal']['boards'][] = array('id' => $row['ID_BOARD'], 'name' => $row['name']);
 
 				$smcFunc['db_free_result']($request);
 			}
@@ -505,8 +504,8 @@ function TPortalDLManager()
 		{
 			$request = $smcFunc['db_query']('', '
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
-					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
-					dlcat.name AS catname, mem.real_name as realName, LEFT(dlm.description,100) as 	description
+					dlm.author_id as author_id, dlm.created, dlm.screenshot, dlm.filesize,
+					dlcat.name AS catname, mem.real_name as real_name, LEFT(dlm.description,100) as 	description
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN  {db_prefix}members AS mem
 				    ON dlm.author_id = mem.id_member
@@ -549,8 +548,8 @@ function TPortalDLManager()
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
-						'authorID' => $row['authorID'],
+						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
 						'catname' => $row['catname'],
@@ -562,8 +561,8 @@ function TPortalDLManager()
 			}
 			$request = $smcFunc['db_query']('', '
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
-					dlm.author_id as authorID, dlm.created, dlm.filesize, dlcat.name AS catname,
-					mem.real_name as realName
+					dlm.author_id as author_id, dlm.created, dlm.filesize, dlcat.name AS catname,
+					mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN {db_prefix}members AS mem
 				    ON dlm.author_id = mem.id_member
@@ -595,8 +594,8 @@ function TPortalDLManager()
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
-						'authorID' => $row['authorID'],
+						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
 						'catname' => $row['catname'],
 						'cathref' => $scripturl.'?action=tpmod;dl=cat'.$row['category'],
@@ -611,8 +610,8 @@ function TPortalDLManager()
 			$year = (int) date("Y",$now);
 			$request = $smcFunc['db_query']('', '
 				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views,
-					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
-					dlcat.name AS catname, mem.real_name as realName
+					dlm.author_id as author_id, dlm.created, dlm.screenshot, dlm.filesize,
+					dlcat.name AS catname, mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN {db_prefix}tp_dldata AS data
 				    ON data.item = dlm.id
@@ -658,8 +657,8 @@ function TPortalDLManager()
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
-						'authorID' => $row['authorID'],
+						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
 						'catname' => $row['catname'],
@@ -730,7 +729,7 @@ function TPortalDLManager()
 				// fetch the item data
 				$item =	$context['TPortal']['dl_featured'];
 				$request = $smcFunc['db_query']('', '
-					SELECT dl.* , dl.author_id as authorID, m.real_name as realName
+					SELECT dl.* , dl.author_id as author_id, m.real_name as real_name
 					FROM {db_prefix}tp_dlmanager AS dl
                     LEFT JOIN {db_prefix}members AS m
 					    ON dl.author_id = m.id_member
@@ -789,8 +788,8 @@ function TPortalDLManager()
 						'views' => $row['views'],
 						'link' => $row['link'],
 						'date_last' => $row['last_access'],
-						'author' => $row['realName'],
-						'authorID' => $row['authorID'],
+						'author' => $row['real_name'],
+						'author_id' => $row['author_id'],
 						'screenshot' => $row['screenshot'],
 						'sshot' => $decideshot,
 						'icon' => $row['icon'],
@@ -832,8 +831,8 @@ function TPortalDLManager()
 		$week = (int) date("W",$now);
 		$year = (int) date("Y",$now);
 		$request = $smcFunc['db_query']('', '
-			SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
-			dlcat.name AS catname, mem.real_name as realName
+			SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as author_id, dlm.created, dlm.screenshot, dlm.filesize,
+			dlcat.name AS catname, mem.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dlm
             LEFT JOIN {db_prefix}tp_dldata AS data
 			    ON data.item = dlm.id
@@ -869,8 +868,8 @@ function TPortalDLManager()
 					'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
-					'authorID' => $row['authorID'],
+					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+					'author_id' => $row['author_id'],
 					'date' => timeformat($row['created']),
 					'screenshot' => !empty($row['screenshot']) ? $row['screenshot'] : '' ,
 					'catname' => $row['catname'],
@@ -986,7 +985,7 @@ function TPortalDLManager()
 			$request = $smcFunc['db_query']('', '
 				SELECT dl.id, LEFT(dl.description, 400) as ingress,dl.name, dl.category, dl.file,
 					dl.downloads, dl.views, dl.link, dl.created, dl.last_access,
-					dl.author_id as authorID, dl.icon, dl.screenshot, dl.filesize, mem.real_name as realName
+					dl.author_id as author_id, dl.icon, dl.screenshot, dl.filesize, mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager as dl
 				LEFT JOIN {db_prefix}members as mem ON (dl.author_id=mem.id_member)
 				WHERE dl.type = {string:type}
@@ -1000,7 +999,7 @@ function TPortalDLManager()
 			{
 				// set up the sorting links
 				$context['TPortal']['sortlinks'] = '<span class="smalltext">' . $txt['tp-sortby'] . ': ';
-				$what = array('id', 'name', 'downloads', 'last_access', 'created', 'authorID');
+				$what = array('id', 'name', 'downloads', 'last_access', 'created', 'author_id');
 				foreach($what as $v)
 				{
 					if($context['TPortal']['dlsort'] == $v)
@@ -1054,8 +1053,8 @@ function TPortalDLManager()
 						'link' => $row['link'],
 						'created' => $row['created'],
 						'date_last' => $row['last_access'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
-						'authorID' => $row['authorID'],
+						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author_id' => $row['author_id'],
 						'screenshot' => $row['screenshot'],
 						'sshot' => $decideshot,
 						'icon' => $ico,
@@ -1139,7 +1138,7 @@ function TPortalDLManager()
 
 		$request = $smcFunc['db_query']('', '
 			SELECT id, name, category, file, downloads, views, link, created,
-				last_access, author_id as authorID, icon, screenshot, filesize,
+				last_access, author_id as author_id, icon, screenshot, filesize,
 				global_tag
 			FROM {db_prefix}tp_dlmanager
 			WHERE type = {string:type}
@@ -1179,7 +1178,7 @@ function TPortalDLManager()
 					'created' => $row['created'],
 					'date_last' => $row['last_access'],
 					'author' => '',
-					'authorID' => $row['authorID'],
+					'author_id' => $row['author_id'],
 					'screenshot' => $row['screenshot'],
 					'sshot' => $decideshot,
 					'icon' => $row['icon'],
@@ -1269,8 +1268,8 @@ function TPortalDLManager()
 		$item =	$context['TPortal']['item'] = $item;
 		$context['TPortal']['dlitem'] = array();
 		$request = $smcFunc['db_query']('', '
-			SELECT dl.*, dl.author_id as authorID, m.real_name as realName
-			FROM {db_prefix}tp_dlmanager AS dl
+			SELECT dl.*, dl.author_id as author_id, m.real_name as real_name
+			FROM ({db_prefix}tp_dlmanager AS dl)
 			LEFT JOIN {db_prefix}members AS m ON (m.id_member = dl.author_id)
 			WHERE dl.type = {string:type}
 			AND dl.id = {int:item}
@@ -1368,8 +1367,8 @@ function TPortalDLManager()
 					'views' => $row['views'],
 					'link' => $row['link'],
 					'date_last' => $row['last_access'],
-					'author' => $row['realName'],
-					'authorID' => $row['authorID'],
+					'author' => $row['real_name'],
+					'author_id' => $row['author_id'],
 					'screenshot' => $row['screenshot'],
 					'sshot' => $decideshot,
 					'bigshot' => $bigshot,
@@ -1381,7 +1380,7 @@ function TPortalDLManager()
 					'rating_average' => $rating_average,
 					'can_rate' => $can_rate,
 				);
-				$author = $row['authorID'];
+				$author = $row['author_id'];
 				$parent_cat = $row['category'];
 				$views = $row['views'];
 				$itemname = $row['name'];
@@ -1534,7 +1533,7 @@ function TPdlresults()
 	$total = $tt[0];
 
 	$request = $smcFunc['db_query']('substring', '
-		SELECT d.id, d.created, d.type, d.downloads, d.name, LEFT(d.description, 300) as body, d.author_id as authorID, m.real_name as realName
+		SELECT d.id, d.created, d.type, d.downloads, d.name, LEFT(d.description, 300) as body, d.author_id as author_id, m.real_name as real_name
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		WHERE '. $query .'
@@ -1560,7 +1559,7 @@ function TPdlresults()
 				'downloads' => $row['downloads'],
 				'name' => $row['name'],
 				'body' => $row['body'],
-				'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
+				'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 			);
 		}
 		$smcFunc['db_free_result']($request);
@@ -2978,7 +2977,7 @@ function TPortalDLAdmin()
 
 		// fetch items within a category
 		$request = $smcFunc['db_query']('', '
-			SELECT dl.*, dl.author_id as authorID,m.real_name as realName
+			SELECT dl.*, dl.author_id as author_id,m.real_name as real_name
 			FROM ({db_prefix}tp_dlmanager AS dl, {db_prefix}members AS m)
 			WHERE abs(dl.category) = {int:cat}
 			AND dl.type = {string:type}
@@ -2999,8 +2998,8 @@ function TPortalDLAdmin()
 					'file' => $row['file'],
 					'filesize' => floor($row['filesize'] / 1024),
 					'views' => $row['views'],
-					'authorID' => $row['authorID'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
+					'author_id' => $row['author_id'],
+					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
 					'description' => $row['description'],
@@ -3088,7 +3087,7 @@ function TPortalDLAdmin()
 		isAllowedTo('tp_dlmanager');
 		$context['TPortal']['dl_admitems'] = array();
 		$request = $smcFunc['db_query']('', '
-			SELECT dl.id, dl.name, dl.file, dl.created, dl.filesize, dl.author_id as authorID, m.real_name as realName
+			SELECT dl.id, dl.name, dl.file, dl.created, dl.filesize, dl.author_id as author_id, m.real_name as real_name
 			FROM ({db_prefix}tp_dlmanager AS dl, {db_prefix}members AS m)
 			WHERE dl.type = {string:type}
 			AND dl.category < 0
@@ -3106,7 +3105,7 @@ function TPortalDLAdmin()
 					'file' => $row['file'],
 					'filesize' => floor($row['filesize'] / 1024),
 					'href' => $scripturl.'?action=tpmod;dl=adminitem'.$row['id'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
+					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 					'date' => timeformat($row['created']),
 				);
 				$submitted[] = $row['id'];
@@ -3291,7 +3290,7 @@ function TPortalDLAdmin()
 				'category' => $row['category'],
 				'file' => $row['file'],
 				'views' => $row['views'],
-				'authorID' => $row['author_id'],
+				'author_id' => $row['author_id'],
 				'description' => $row['description'],
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
@@ -3305,21 +3304,21 @@ function TPortalDLAdmin()
 				'approve' => $scripturl.'?action=tpmod;dl=adminitem'.$row['id'],
 				'subitem' => $fdata,
 			);
-			$authorID = $row['author_id'];
+			$author_id = $row['author_id'];
 			$catparent = $row['category'];
 			$itemname = $row['name'];
 
 			$smcFunc['db_free_result']($request);
 			$request = $smcFunc['db_query']('', '
-				SELECT mem.real_name as realName
+				SELECT mem.real_name as real_name
 				FROM {db_prefix}members as mem
 				WHERE mem.id_member = {int:id_mem}',
-				array('id_mem' => $authorID)
+				array('id_mem' => $author_id)
 			);
 			if($smcFunc['db_num_rows']($request) > 0)
 			{
 				$row = $smcFunc['db_fetch_assoc']($request);
-				$context['TPortal']['admcurrent']['member'] = $row['realName'];
+				$context['TPortal']['admcurrent']['member'] = $row['real_name'];
 				$smcFunc['db_free_result']($request);
 			}
 			else
@@ -3493,7 +3492,7 @@ function TPortalDLUser($item)
 			'category' => $row['category'],
 			'file' => $row['file'],
 			'views' => $row['views'],
-			'authorID' => $row['author_id'],
+			'author_id' => $row['author_id'],
 			'description' => $row['description'],
 			'created' => timeformat($row['created']),
 			'last_access' => timeformat($row['last_access']),
@@ -3506,21 +3505,21 @@ function TPortalDLUser($item)
 			'approve' => $scripturl.'?action=tpmod;dl=adminitem'.$row['id'],
 			'subitem' => $fdata,
 		);
-		$authorID = $row['author_id'];
+		$author_id = $row['author_id'];
 		$catparent = $row['category'];
 		$itemname = $row['name'];
 
 		$smcFunc['db_free_result']($request);
 		$request = $smcFunc['db_query']('', '
-			SELECT real_name as realName
+			SELECT real_name as real_name
 			FROM {db_prefix}members
 			WHERE id_member = {int:auth} LIMIT 1',
-			array('auth' => $authorID)
+			array('auth' => $author_id)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			$row = $smcFunc['db_fetch_assoc']($request);
-			$context['TPortal']['admcurrent']['member'] = $row['realName'];
+			$context['TPortal']['admcurrent']['member'] = $row['real_name'];
 			$smcFunc['db_free_result']($request);
 		}
 		else

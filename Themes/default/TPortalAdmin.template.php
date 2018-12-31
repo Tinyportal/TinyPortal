@@ -467,7 +467,7 @@ function template_menubox()
 					echo '
 						</div>
 							  </div>
-								  <div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">'; 
+								  <div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">';
 								      
 									  if($lbox['type']!=='menu'){
 									  
@@ -506,7 +506,7 @@ function template_menubox()
 			}
 		echo '
 		</tbody>
-	</table>';			
+	</table>';
 		}
 		// ok, show the single menus
 		else
@@ -674,7 +674,7 @@ function template_menucore()
 						}
 					}
 				// check for menu button in editmenuitem
-				elseif ($context['TPortal']['editmenuitem']['menuID']==0) 
+				elseif ($context['TPortal']['editmenuitem']['menuID']==0)
 					{
 					echo '
                             <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
@@ -3399,7 +3399,7 @@ function template_blockedit()
 			<div class="panels-optionsbg">';
 
 			if(function_exists('ctheme_tp_getblockstyles'))
-				$types = ctheme_tp_getblockstyles();	
+				$types = ctheme_tp_getblockstyles();
 			if(strstr($forum_version, '2.1'))
 				$types = tp_getblockstyles21();
 			else

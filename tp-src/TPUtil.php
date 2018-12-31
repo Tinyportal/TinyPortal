@@ -92,8 +92,8 @@ class TPUtil
 
     }
 
-    public static function isHTML( $string ) { 
-        return preg_match("~\/[a-z]*>~i", $string ) != 0; 
+    public static function isHTML( $string ) {
+        return preg_match("~\/[a-z]*>~i", $string ) != 0;
     }
 
     public static function xssClean( $string ) {
@@ -139,10 +139,10 @@ class TPUtil
         
         switch($type) {
             case 'get':
-                $data = $_GET;        
+                $data = $_GET;
                 break;
             case 'post':
-                $data = $_POST;        
+                $data = $_POST;
                 break;
             default:
                 return false;

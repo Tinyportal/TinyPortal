@@ -177,7 +177,7 @@ h3.article_title span.article_shortdate span
 {
 	border-right: solid 1px #888;
 	padding: 0;
-	padding-right: 10px; 
+	padding-right: 10px;
 	margin-right: 5px;
 }
 .article_info span:last-of-type
@@ -232,8 +232,8 @@ h3.article_title span.article_shortdate span
 }
 .article_picture
 {
-	width: 128px; 
-	height: 128px; 
+	width: 128px;
+	height: 128px;
 	background-position: top right;
 	background-repeat: no-repeat;
 }
@@ -352,7 +352,7 @@ ul.tpsitemap li a.tpsitemapheader
 }
 .rss_body img
 {
-	vertical-align: middle; 
+	vertical-align: middle;
 	margin: 8px 0;
 	width: 100%;
 	border: solid 1px #888;
@@ -537,7 +537,7 @@ ul#tp_tabmenu li a:hover
 .notab
 {
 	font-weight: normal;
-	background-image: none; 
+	background-image: none;
 }
 #tp_tabs_frame h4
 {
@@ -672,8 +672,8 @@ ul.tp_recentblock li
 	margin: 0;
 }
 img.tp_social
-{ 
-	height: 24px; 
+{
+	height: 24px;
 	width:auto;
 }
 .tp_statsblock h5
@@ -924,7 +924,7 @@ a.avatar img
 {
 	float: left;
 	display: block;
-	margin: 0; 
+	margin: 0;
 }
 .comment_author img
 {
@@ -1059,8 +1059,8 @@ img.dl_icon
 }
 .dlcategory
 {
-	padding: 4px 10px; 
-	margin-bottom: 0.5em; 
+	padding: 4px 10px;
+	margin-bottom: 0.5em;
 	overflow: visible;
  }
 .tp-subcats
@@ -1438,10 +1438,10 @@ div.subtab_chosen
 }
 .catlayout6_text
 {
-	font-size: 0.9em; 
-	padding: 0px 5px 0 0; 
-	margin: 4px 0 10px 0; 
-	overflow: hidden; 
+	font-size: 0.9em;
+	padding: 0px 5px 0 0;
+	margin: 4px 0 10px 0;
+	overflow: hidden;
 }
 fieldset#blockopts
 {
@@ -1818,7 +1818,7 @@ input#searchbox
 {
 	width: 100%;
 	max-width: 350px!important;
-	margin-bottom: 0.5em; 
+	margin-bottom: 0.5em;
 	padding: 5px;
 }
 input,select
@@ -1839,13 +1839,13 @@ input,select
 }	
 .tp_upshrink20 
 {
-	float: right; 
-	margin-right: 0.5em; 
+	float: right;
+	margin-right: 0.5em;
 	margin-top: -1.5em;
 }
 .tp_upshrink21 {
-	float: right; 
-	margin-top:6px; 
+	float: right;
+	margin-top:6px;
 	padding-left:10px;
 }
 /* blocks in panels set to display in columns (the default is vertically)*/
@@ -1883,7 +1883,7 @@ box-sizing:border-box;
 
 .addborder
 {
-	border-bottom: 1px solid #ccc;	
+	border-bottom: 1px solid #ccc;
 }
 .addborderleft div
 {
@@ -1907,24 +1907,24 @@ box-sizing:border-box;
 } 
 .tpartlayouttype
 {
-	float: left; 
-	width: 180px; 
-	height: 100px; 
+	float: left;
+	width: 180px;
+	height: 100px;
 	margin: 4px;
 }
 #tp_article_body
 {
-	width: 95%; 
+	width: 95%;
 	height: 300px;
 }
 #tp_article_intro
 {
-	width: 95%; 
+	width: 95%;
 	height: 140px;
 }
 #tp_customlayout
 {
-	width: 90%; 
+	width: 90%;
 	max-width: 900px;
 	height: 200px;
 }
@@ -1980,12 +1980,12 @@ box-sizing:border-box;
 {
 	float: left;
 	width: 160px;
-	height: 120px; 
+	height: 120px;
 	margin: 5px;
 }
 img.theme_icon
 {
-   width: 35px; 
+   width: 35px;
    height: 35px;
 }
 
@@ -2027,24 +2027,24 @@ table.tp_grid tr.windowbg:nth-of-type(even)
     background: #f0f4f7;
 }
 
-/* Generic icons for SMF 2.1 */
-.generic_icons.menu_tp::before
+/* Main icons for SMF 2.1 */
+.main_icons.menu_tp::before
 {
 	background: url(../images/tinyportal/menu_tp.png) no-repeat;
 }
-.generic_icons.menu_tparticle::before
+.main_icons.menu_tparticle::before
 {
 	background: url(../images/tinyportal/menu_tparticle.png) no-repeat;
 }
-.generic_icons.menu_tpdownload::before
+.main_icons.menu_tpdownload::before
 {
 	background: url(../images/tinyportal/menu_tpdownload.png) no-repeat;
 }
-.generic_icons.menu_tpshout::before
+.main_icons.menu_tpshout::before
 {
 	background: url(../images/tinyportal/menu_tpshout.png) no-repeat;
 }
-.generic_icons.menu_tpforum::before
+.main_icons.menu_tpforum::before
 {
     background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
 }
