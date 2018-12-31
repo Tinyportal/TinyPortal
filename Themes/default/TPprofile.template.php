@@ -39,7 +39,7 @@ function template_tp_summary()
 
 function template_tp_articles()
 {
-	global $settings, $txt, $context, $scripturl;
+	global $settings, $txt, $context, $scripturl, $user_info;
 
 	if($context['TPortal']['profile_action'] == ''){
 		echo '
@@ -139,7 +139,7 @@ $clickme.click( function(e) {
 </script>
 	</div>';
 	}
-	elseif($context['TPortal']['profile_action'] == 'settings'){
+	elseif($context['TPortal']['profile_action'] == 'settings') {
 		echo '
 	<div id="tp_profile_articles_settings" class="bordercolor windowbg padding-div">
 		<div class="font-strong" style="padding:1%;">
@@ -150,9 +150,10 @@ $clickme.click( function(e) {
 					<input type="hidden" name="sc" value="', $context['session_id'], '" />
 					<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
 					<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />
-					';
-		if(!empty($context['TPortal']['allow_wysiwyg']))
-			echo '<div>
+                ';
+
+		    if(!empty($context['TPortal']['allow_wysiwyg']) && ($user_info['id'] == $context['TPortal']['selected_member'])) {
+			    echo '<div>
 					<dl class="settings">
 						<dt>'.$txt['tp-wysiwygchoice'].':
 						</dt>
@@ -163,6 +164,7 @@ $clickme.click( function(e) {
 					</dl>
 						<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
 				</div>';
+            }
 			echo '
 				</form>';
 		echo '
