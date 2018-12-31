@@ -68,7 +68,7 @@ function template_main()
 
 			echo '
 				<h4 class="h4dl"><a href="' . $scripturl . '?action=tpmod;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
-				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['authorID'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
+				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['author_id'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
 				<p>' . $context['TPortal']['featured']['description'] , '</p>
 			</div>';
 		}
@@ -260,7 +260,7 @@ function template_main()
 					<div class="dlcategory tp-subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
 				}
 		echo '
-			</div>';
+			</div>'; 	
 		}
 
 		// output the files in the category
@@ -305,7 +305,7 @@ function template_main()
 					// edit the file?
 					if(allowedTo('tp_dlmanager'))
 						$details[] = '<a href="' . $scripturl . '?action=tpmod;dl=adminitem' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
-					elseif($dlitem['authorID']==$context['user']['id'])
+					elseif($dlitem['author_id']==$context['user']['id'])
 						$details[] ='<a href="' . $scripturl . '?action=tpmod;dl=useredit' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
 
 					if(isset($dlitem['ingress']))
@@ -341,7 +341,7 @@ function template_main()
 				echo '
 			<div class="padding-div">'.$txt['tp-nofiles'].'</div>
 			</div>
-			';
+			'; 
 			}
 		}
 	}
@@ -363,7 +363,7 @@ function template_main()
 			// edit the file?
 			if(allowedTo('tp_dlmanager'))
 				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tpmod;dl=adminitem' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
-			elseif($dlitem['authorID']==$context['user']['id'])
+			elseif($dlitem['author_id']==$context['user']['id'])
 				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tpmod;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 
 			echo '
