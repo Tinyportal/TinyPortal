@@ -56,19 +56,19 @@ function TPShoutLoad()
             var current_header_smiley = ';
 
     if(empty($options['expand_header_smiley'])) {
-        $context['html_headers'] .= 'false';
+        $context['html_headers'] .= 'false;';
     }
     else {
-        $context['html_headers'] .= 'true';
+        $context['html_headers'] .= 'true;';
     }
 
     $context['html_headers'] .= 'var current_header_bbc = ';
 
     if(empty($options['expand_header_bbc'])) {
-        $context['html_headers'] .= 'false';
+        $context['html_headers'] .= 'false;';
     }
     else {
-        $context['html_headers'] .= 'true';
+        $context['html_headers'] .= 'true;';
     }
 
     $context['html_headers'] .= '

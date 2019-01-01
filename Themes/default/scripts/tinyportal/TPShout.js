@@ -27,45 +27,34 @@ function expandHeaderBBC(mode, is_guest, sessionId)
 function TPupdateShouts(action, shoutId)
 {
 
-    alert(action);
-    
 	var params = "";
 	var name;
 	var shout;
 	if (action === "save") {
 		name = $("#tp-shout-name").val();
 		shout = $("#tp_shout").val();
-		params = "shout=" + action + "&tp-shout-name=" + name + "&tp_shout=" + shout;
+		params = "&tp-shout-name=" + name + "&tp_shout=" + shout;
 	}
 
 	if (shoutId) {
-		params = "shout=" + action + "&s=" + shoutId;
+		params = "&s=" + shoutId;
 	}
 	
 	$.ajax({
 		type : "POST",
 		dataType: "html",
 		cache: false,
+        async: false,
 		url: smf_scripturl + "?action=tpshout;shout=" + action,
 		data: params + "&" + tp_session_var + "=" + tp_session_id,
-        statusCode: {
-            404: function() {
-                alert( "page not found" );
-            }
-        },
         error: function (request, status, error) {
-            alert(request.responseText);
+            console.log(request.responseText);
         },
 		beforeSend: function() {
-            alert('before');
-            return false;
 		},
 		complete: function(){
-            alert('complete');
 		},
 		success: function(data) {
-            alert('Successfully called');
-            alert(data);
 			var error = $($.parseHTML(data)).filter("#shoutError");
 			// If there's an error let's display it
 			if (error.length > 0) {
