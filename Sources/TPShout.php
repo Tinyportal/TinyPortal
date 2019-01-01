@@ -18,7 +18,7 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-function TPShout()
+function TPShoutLoad()
 {
 
     global $context, $settings, $options, $modSettings, $forum_version;
@@ -132,9 +132,14 @@ function TPShout()
         }
     }
 
+}
+
+function TPShout() {
+    
+    global $context, $settings, $options, $modSettings, $forum_version;
+
     if(isset($_REQUEST['shout'])) {
         $shoutAction = $_REQUEST['shout'];
-
         if($shoutAction == 'admin') {
             tpshout_admin();
         }
@@ -149,6 +154,10 @@ function TPShout()
             postShout();
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
         }
+        elseif($shoutAction == 'refresh') {
+            var_dump(tpshout_fetch(false, $context['TPortal']['shoutbox_limit'], true));
+            die;
+        }
         elseif($shoutAction == 'fetch') {
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
         }
@@ -161,6 +170,8 @@ function TPShout()
         }
     }
 
+    return true;
+    
 }
 
 // Post the shout via ajax
@@ -646,9 +657,9 @@ function tpshout_bigscreen($state = false, $number = 10)
 
     loadTemplate('TPShout');
 
-    if (!$state) {
-        $context['template_layers'] = array();
-        $context['sub_template'] = 'tpshout_ajax';
+    if ($state == false) {
+        $context['template_layers']         = array();
+        $context['sub_template']            = 'tpshout_ajax';
         $context['TPortal']['rendershouts'] = tpshout_fetch($state, $number, true);
     }
     else {
@@ -762,10 +773,12 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	}
 
 	// its from a block, render it
-	if($render && !$ajaxRequest)
+	if($render && !$ajaxRequest) {
 		template_tpshout_shoutblock();
-	else
+    }
+	else {
 		return $nshouts;
+    }
 }
 
 function shout_bcc_code($collapse = true)

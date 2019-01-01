@@ -1,5 +1,3 @@
-	
-
 function expandHeaderSmiley(mode, is_guest, sessionId)
 {
 	// Guests don't have theme options!!
@@ -28,15 +26,18 @@ function expandHeaderBBC(mode, is_guest, sessionId)
 
 function TPupdateShouts(action, shoutId)
 {
-	var params = "shout=" + action;
+
+    alert(action);
+    
+	var params = "";
 	var name;
 	var shout;
-	if (action === "save")
-	{
+	if (action === "save") {
 		name = $("#tp-shout-name").val();
 		shout = $("#tp_shout").val();
 		params = "shout=" + action + "&tp-shout-name=" + name + "&tp_shout=" + shout;
 	}
+
 	if (shoutId) {
 		params = "shout=" + action + "&s=" + shoutId;
 	}
@@ -45,13 +46,26 @@ function TPupdateShouts(action, shoutId)
 		type : "POST",
 		dataType: "html",
 		cache: false,
-		url: smf_scripturl + "?action=tpmod;shout",
+		url: smf_scripturl + "?action=tpshout;shout=" + action,
 		data: params + "&" + tp_session_var + "=" + tp_session_id,
+        statusCode: {
+            404: function() {
+                alert( "page not found" );
+            }
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+        },
 		beforeSend: function() {
+            alert('before');
+            return false;
 		},
 		complete: function(){
+            alert('complete');
 		},
 		success: function(data) {
+            alert('Successfully called');
+            alert(data);
 			var error = $($.parseHTML(data)).filter("#shoutError");
 			// If there's an error let's display it
 			if (error.length > 0) {

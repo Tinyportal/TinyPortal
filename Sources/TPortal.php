@@ -124,17 +124,9 @@ function TPortal_init()
 		fatal_error($txt['tp-categorynotexist'], false);
     }
 
-	// let a module take over
-	if($context['TPortal']['front_type'] == 'module' && !isset($_GET['page']) && !isset($_GET['cat']) && !isset($_GET['action'])) {
-		// let the module take over
-		require_once($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['sourcefile']);
-		if(function_exists($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function'])) {
-			call_user_func($context['TPortal']['tpmodules']['frontsection'][$context['TPortal']['front_module']]['function']);
-        }
-		else {
-			echo $txt['tp-nomodule'];
-        }
-	}
+    require_once(SOURCEDIR.'/TPShout.php');
+    TPShoutLoad();
+
 }
 
 
@@ -2392,6 +2384,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				$context['TPortal']['moduleid'] = $block['var1'];
 				$context['TPortal']['modulevar2'] = $block['var2'];
 				$context['TPortal']['modulebody'] = $block['body'];
+
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -2401,6 +2394,8 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				$context['TPortal']['blockid'] = $block['id'];
 				break;
 		}
+
+
 		// render them horisontally
 		if($flow == 'horiz')
 		{
