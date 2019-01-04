@@ -1329,7 +1329,7 @@ function tp_fetchboards()
 
 	// get all boards for board-spesific news
 	$request =  $smcFunc['db_query']('', '
-		SELECT id_board as ID_BOARD, name, board_order
+		SELECT id_board, name, board_order
 		FROM {db_prefix}boards
 		WHERE  1=1
 		ORDER BY board_order ASC',
@@ -1339,7 +1339,7 @@ function tp_fetchboards()
 	if ($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request))
-			$boards[] = array('id' => $row['ID_BOARD'], 'name' => $row['name']);
+			$boards[] = array('id' => $row['id_board'], 'name' => $row['name']);
 
 		$smcFunc['db_free_result']($request);
 	}
