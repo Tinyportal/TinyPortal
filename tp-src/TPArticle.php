@@ -122,7 +122,13 @@ clASs TPArticle extends TPBase {
 
     public function deleteArticle($article_id)
     {
-
+			$this->dB->db_query('', '
+				DELETE FROM {db_prefix}tp_articles
+				WHERE id = {int:article_id}',
+				array (
+                    'article_id' => $article_id
+                )
+			);
     }
 
     public function getTotalAuthorArticles($author_id)
@@ -171,6 +177,13 @@ clASs TPArticle extends TPBase {
         }
        
         return $num_articles;
+    }
+
+    public function getArticlesInCategory( $category ) 
+    {
+
+        
+
     }
 
 }
