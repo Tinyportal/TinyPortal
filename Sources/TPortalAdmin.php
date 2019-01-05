@@ -2205,7 +2205,7 @@ function do_postchecks()
 					{
 						if(substr($what, 0, 19) == 'tp_category_value2_')
 						{
-							$where = tp_sanitize(substr($what, 19));
+							$where = substr($what, 19);
 							//make sure parent are not its own parent
 							$request = $smcFunc['db_query']('', '
 								SELECT value2 FROM {db_prefix}tp_variables
@@ -2252,7 +2252,7 @@ function do_postchecks()
 			{
 				if(substr($what, 0, 14) == 'tp_article_pos')
 				{
-					$where = tp_sanitize(substr($what, 14));
+					$where = substr($what, 14);
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_articles
 							SET parse = {int:parse}
@@ -2309,7 +2309,7 @@ function do_postchecks()
 						SET subtype = {string:subtype}
 						WHERE id = {int:varid}',
 						array(
-							'subtype' => tp_sanitize($value),
+							'subtype' => $value,
 							'varid' => substr($what, 8),
 						)
 					);
@@ -2319,7 +2319,7 @@ function do_postchecks()
 						SET value4 = {string:val4}
 						WHERE id = {int:varid}',
 						array(
-							'val4' => tp_sanitize($value),
+							'val4' => $value,
 							'varid' => substr($what, 8),
 						)
 					);
@@ -2358,7 +2358,7 @@ function do_postchecks()
 						SET value1 = {string:val1}
 						WHERE id = {int:varid}',
 						array(
-							'val1' => tp_sanitize($value),
+							'val1' => $value,
 							'varid' => substr($what, 12),
 						)
 					);
@@ -2532,7 +2532,7 @@ function do_postchecks()
 			{
 				if(substr($what, 0, 3) == 'tp_')
 				{
-					$clean = tp_sanitize($value);
+					$clean = $value;
 					$param = substr($what, 12);
 					if(in_array($param, array('value5', 'value6', 'value8')))
 						$smcFunc['db_query']('', '
@@ -2871,7 +2871,7 @@ function do_postchecks()
 				}
 				elseif(substr($what, 0, 9) == 'blockbody')
 				{
-					$where = tp_sanitize(substr($what, 9));
+					$where = substr($what, 9);
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks
 						SET body = {string:body}

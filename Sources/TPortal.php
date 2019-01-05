@@ -336,7 +336,7 @@ function setupTPsettings()
 		tp_hidebars('all');
 
 	// save the action value
-	$context['TPortal']['action'] = !empty($_GET['action']) ? tp_sanitize($_GET['action']) : '';
+	$context['TPortal']['action'] = !empty($_GET['action']) ? TPUtil::filter('action', 'get', 'string') : '';
 
 	// save the frontapge setting for SMF
 	$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
@@ -455,7 +455,7 @@ function doTPpage()
 
 	// check validity and fetch it
 	if(!empty($_GET['page'])) {
-		$page = tp_sanitize($_GET['page']);
+		$page = TPUtil::filter('page', 'get', 'string');
 
 		$_SESSION['login_url'] = $scripturl . '?page=' . $page;
 
@@ -770,17 +770,17 @@ function doTPpage()
 function doTPcat()
 {
 	//return if not quite a category
-	if((isset($_GET['area']) && $_GET['area'] == 'manageboards') || isset($_GET['action']))
+	if((isset($_GET['area']) && $_GET['area'] == 'manageboards') || isset($_GET['action'])) {
 		return;
+    }
 
 	global $context, $scripturl, $txt, $modSettings, $smcFunc;
 
 	$now = time();
 
 	// check validity and fetch it
-	if(!empty($_GET['cat']))
-	{
-		$cat    = tp_sanitize($_GET['cat']);
+	if(!empty($_GET['cat'])) {
+		$cat    = TPUtil::filter('cat', 'get', 'string');
 		$catid  = is_numeric($cat) ? 'id = {int:cat}' : 'value8 = {string:cat}';
 
 		// get the category first
@@ -789,21 +789,19 @@ function doTPcat()
 			WHERE '. $catid .' LIMIT 1',
 			array('cat' => is_numeric($cat) ? (int) $cat : $cat)
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$category = $smcFunc['db_fetch_assoc']($request);
 			$smcFunc['db_free_result']($request);
 			// check permission
-			if(get_perm($category['value3']))
-			{
+			if(get_perm($category['value3'])) {
 				// get the sorting from the category
 				$op = explode('|', $category['value7']);
 				$options = array();
-				foreach($op as $po => $val)
-				{
+				foreach($op as $po => $val) {
 					$a = explode('=', $val);
-					if(isset($a[1]))
+					if(isset($a[1])) {
 						$options[$a[0]] = $a[1];
+                    }
 				}
 
 				$catsort    = isset($options['sort']) ? $options['sort'] : 'date';
@@ -819,8 +817,9 @@ function doTPcat()
 				$options['catlayout'] = isset($options['catlayout']) ? $options['catlayout'] : 1;
 
 				// make the template
-				if($options['catlayout'] == 7)
+				if($options['catlayout'] == 7) {
 					$context['TPortal']['frontpage_template'] = $category['value9'];
+                }
 
 				// allowed and all is well, go on with it.
 				$context['TPortal']['category'] = $category;
@@ -831,17 +830,19 @@ function doTPcat()
 
 				// set bars on/off according to options, setting override
 				$all = array('centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-				for($p = 0; $p < 5; $p++)
-				{
-					if(isset($options[$all[$p]]) && $context['TPortal'][$all[$p]] == 1)
+				for($p = 0; $p < 5; $p++) {
+					if(isset($options[$all[$p]]) && $context['TPortal'][$all[$p]] == 1) {
 						$context['TPortal'][$all[$p]] = 1;
-					else
+                    }
+					else {
 						$context['TPortal'][$all[$p]] = 0;
+                    }
 				}
 
 				// fallback value
-				if(!isset($context['TPortal']['category']['options']['catlayout']))
+				if(!isset($context['TPortal']['category']['options']['catlayout'])) {
 					$context['TPortal']['category']['options']['catlayout'] = 1;
+                }
 
 				$request = $smcFunc['db_query']('', '
 				    SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body, mem.email_address AS email_address,
@@ -869,14 +870,12 @@ function doTPcat()
 					)
 				);
 
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$total = $smcFunc['db_num_rows']($request);
 					$col1 = ceil($total / 2);
 					$counter = 0;
 					$context['TPortal']['category']['col1'] = array(); $context['TPortal']['category']['col2'] = array();
-					while($row = $smcFunc['db_fetch_assoc']($request))
-					{
+					while($row = $smcFunc['db_fetch_assoc']($request)) {
 						// Add the rating together
 						$row['rating'] = array_sum(explode(',', $row['rating']));
 						// expand the vislaoptions
@@ -891,13 +890,15 @@ function doTPcat()
                                 )
                         )['image'];
 
-						if($counter == 0)
+						if($counter == 0) {
 							$context['TPortal']['category']['featured'] = $row;
-						elseif($counter < $col1 )
+                        }
+						elseif($counter < $col1 ) {
 							$context['TPortal']['category']['col1'][] = $row;
-						elseif($counter > $col1 || $counter == $col1)
+                        }
+						elseif($counter > $col1 || $counter == $col1) {
 							$context['TPortal']['category']['col2'][] = $row;
-
+                        }
 						$counter++;
 					}
 					$smcFunc['db_free_result']($request);
@@ -913,14 +914,12 @@ function doTPcat()
 					WHERE cat.type = {string:type} GROUP BY art.category, cat.id, cat.value1, cat.value2',
 					array('type' => 'category')
 				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
-					while($row = $smcFunc['db_fetch_assoc']($request))
-					{
+				if($smcFunc['db_num_rows']($request) > 0) {
+					while($row = $smcFunc['db_fetch_assoc']($request)) {
 						// get any children
-						if($row['value2'] == $cat)
+						if($row['value2'] == $cat) {
 							$context['TPortal']['category']['children'][] = $row;
-
+                        }
 						$allcats[$row['id']] = $row;
 					}
 					$smcFunc['db_free_result']($request);
@@ -937,14 +936,13 @@ function doTPcat()
 					AND art.off = 0 AND art.approved = 1',
 					array('cat' => $category['id'])
 				);
-				if($smcFunc['db_num_rows']($request)>0)
-				{
+				if($smcFunc['db_num_rows']($request)>0) {
 					$row = $smcFunc['db_fetch_row']($request);
 					$all_articles = $row[0];
 				}
-				else
+				else {
 					$all_articles = 0;
-
+                }
 				// make the pageindex!
 				$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?cat=' . $cat, $start, $all_articles, $max);
 
@@ -956,15 +954,16 @@ function doTPcat()
 				$parent = $context['TPortal']['category']['value2'];
 				// save the immediate for wireless
 
-				if (defined('WIRELESS') && WIRELESS)
-				{
-					if($context['TPortal']['category']['value2'] > 0)
+				if (defined('WIRELESS') && WIRELESS) {
+					if($context['TPortal']['category']['value2'] > 0) {
 						$context['TPortal']['category']['catname'] =  $allcats[$context['TPortal']['category']['value2']]['value1'];
-					else
+                    }
+					else {
 						$context['TPortal']['category']['catname'] =  $txt['tp-frontpage'];
+                    }
 				}
-				while($parent != 0)
-				{
+
+				while($parent != 0) {
 					$parents[] = array(
 						'id' => $allcats[$parent],
 						'name' => $allcats[$parent]['value1'],
@@ -976,19 +975,21 @@ function doTPcat()
 				// make the linktree
 				$parts = array_reverse($parents, TRUE);
 				// add to the linktree
-				foreach($parts as $parent)
+				foreach($parts as $parent) {
 					TPadd_linktree($scripturl.'?cat='. $parent['shortname'] , $parent['name']);
-				if(!empty($context['TPortal']['category']['shortname']))
+                }
+
+				if(!empty($context['TPortal']['category']['shortname'])) {
 					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['value8'], $context['TPortal']['category']['value1']);
-				else
+                }
+				else {
 					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['id'], $context['TPortal']['category']['value1']);
+                }
 
 				// check clist
 				$context['TPortal']['clist'] = array();
-				foreach(explode(',' , $context['TPortal']['cat_list']) as $cl => $value)
-				{
-					if(isset($allcats[$value]) && is_numeric($value))
-					{
+				foreach(explode(',' , $context['TPortal']['cat_list']) as $cl => $value) {
+					if(isset($allcats[$value]) && is_numeric($value)) {
 						$context['TPortal']['clist'][] = array(
 								'id' => $value,
 								'name' => $allcats[$value]['value1'],
@@ -999,8 +1000,7 @@ function doTPcat()
 				}
 				$context['TPortal']['show_catlist'] = count($context['TPortal']['clist']) > 0 ? true : false;
 
-				if (defined('WIRELESS') && WIRELESS)
-				{
+				if (defined('WIRELESS') && WIRELESS) {
 					$context['TPortal']['single_article'] = false;
 					loadtemplate('TPwireless');
 					// decide what subtemplate
@@ -1009,14 +1009,17 @@ function doTPcat()
 				$context['page_title'] = $context['TPortal']['category']['value1'];
 				return $category['id'];
 			}
-			else
+			else {
 				return;
+            }
 		}
-		else
+		else {
 			$context['cat_error'] = true;
+        }
 	}
-	else
+	else {
 		return;
+    }
 
 }
 

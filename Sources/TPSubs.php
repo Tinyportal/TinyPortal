@@ -1499,11 +1499,6 @@ function TP_fetchprofile_areas2($memID)
 
 }
 
-function tp_sanitize($value, $strict = false)
-{
-	return strip_tags($value);
-}
-
 function get_perm($perm, $moderate = '')
 {
 	global $context, $user_info;
