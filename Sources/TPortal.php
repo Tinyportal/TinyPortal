@@ -66,7 +66,7 @@ function TPortal_init()
 	require_once($boarddir. '/SSI.php');
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
-	if (!isset($modSettings['jquery_source'])) {
+    if(strpos($forum_version, '2.0') !== false && !isset($modSettings['jquery_source'])) {
 		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array('external' => true), 'tp_jquery');
     }
 
