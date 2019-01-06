@@ -18,7 +18,7 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-function TPShout()
+function TPShoutLoad()
 {
 
     global $context, $settings, $options, $modSettings, $forum_version;
@@ -27,12 +27,8 @@ function TPShout()
         loadLanguage('TPShout', 'english');
     }
 
-    // Mentions
-    if (!empty($modSettings['enable_mentions']) && allowedTo('mention')) {
-        loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-        loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-        loadJavaScriptFile('shoutMentions.js', array('defer' => true, 'minimize' => false), 'smf_mentions');
-    }
+    $tpMention = new TPMentions();
+    $tpMention->addJS();
 
     if(strpos($forum_version, '2.0') === false) {
         loadCSSFile('jquery.sceditor.css');
@@ -56,19 +52,19 @@ function TPShout()
             var current_header_smiley = ';
 
     if(empty($options['expand_header_smiley'])) {
-        $context['html_headers'] .= 'false';
+        $context['html_headers'] .= 'false;';
     }
     else {
-        $context['html_headers'] .= 'true';
+        $context['html_headers'] .= 'true;';
     }
 
     $context['html_headers'] .= 'var current_header_bbc = ';
 
     if(empty($options['expand_header_bbc'])) {
-        $context['html_headers'] .= 'false';
+        $context['html_headers'] .= 'false;';
     }
     else {
-        $context['html_headers'] .= 'true';
+        $context['html_headers'] .= 'true;';
     }
 
     $context['html_headers'] .= '
@@ -132,9 +128,14 @@ function TPShout()
         }
     }
 
+}
+
+function TPShout() {
+    
+    global $context, $settings, $options, $modSettings, $forum_version;
+
     if(isset($_REQUEST['shout'])) {
         $shoutAction = $_REQUEST['shout'];
-
         if($shoutAction == 'admin') {
             tpshout_admin();
         }
@@ -149,6 +150,10 @@ function TPShout()
             postShout();
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
         }
+        elseif($shoutAction == 'refresh') {
+            var_dump(tpshout_fetch(false, $context['TPortal']['shoutbox_limit'], true));
+            die;
+        }
         elseif($shoutAction == 'fetch') {
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
         }
@@ -161,6 +166,8 @@ function TPShout()
         }
     }
 
+    return true;
+    
 }
 
 // Post the shout via ajax
@@ -231,53 +238,18 @@ function postShout()
                 array('id')
             );
             $shout_id = $smcFunc['db_insert_id']('{db_prefix}tp_shoutbox');
+       
+            $mention_data['id']             = $shout_id;
+            $mention_data['content']        = $shout;
+            $mention_data['type']           = 'shout';
+            $mention_data['member_id']      = $user_info['id'];
+            $mention_data['username']       = $user_info['username'];
+            $mention_data['action']         = 'mention';
+            $mention_data['event_title']    = 'Shoutbox Mention';
+            $mention_data['text']           = 'Shout';
 
-            if (!empty($modSettings['enable_mentions'])) {
-                require_once($sourcedir . '/Subs-Post.php');
-                require_once($sourcedir . '/Mentions.php');
-                $mentions = Mentions::getMentionedMembers($shout);
-                if (is_array($mentions)) {
-                    Mentions::insertMentions('shout', $shout_id, $mentions, $user_info['id']);
-                    $shout = Mentions::getBody($shout, $mentions);
-                    foreach($mentions as $id => $member) {
-                        $insert_rows[] = array(
-                            'alert_time'        => time(),
-                            'id_member'         => $member['id'],
-                            'id_member_started' => $user_info['id'],
-                            'member_name'       => $user_info['username'],
-                            'content_type'      => 'shout',
-                            'content_id'        => $shout_id,
-                            'content_action'    => 'mention',
-                            'is_read'           => 0,
-                            'extra' => $smcFunc['json_encode'](
-                                array(
-                                    "text"          => "Shout",
-                                    "user_mention"  => $user_info['username'],
-                                    "event_title"   => 'Shoutbox Mention',
-                                    )
-                                ),
-                        );
-
-                        $smcFunc['db_insert']('insert',
-                            '{db_prefix}user_alerts',
-                            array(  
-                                'alert_time'        => 'int', 
-                                'id_member'         => 'int',
-                                'id_member_started' => 'int',
-                                'member_name'       => 'string',
-                                'content_type'      => 'string',
-                                'content_id'        => 'int',
-                                'content_action'    => 'string',
-                                'is_read'           => 'int',
-                                'extra'             => 'string'
-                            ),
-                            $insert_rows,
-                            array('id_alert')
-                        );
-                        updateMemberData($member['id'], ['alerts' => '+']);
-                    }
-                }
-            }    
+            $tpMention = new TPMentions();
+            $tpMention->addMention($mention_data); 
         }
     }
 }
@@ -646,9 +618,9 @@ function tpshout_bigscreen($state = false, $number = 10)
 
     loadTemplate('TPShout');
 
-    if (!$state) {
-        $context['template_layers'] = array();
-        $context['sub_template'] = 'tpshout_ajax';
+    if ($state == false) {
+        $context['template_layers']         = array();
+        $context['sub_template']            = 'tpshout_ajax';
         $context['TPortal']['rendershouts'] = tpshout_fetch($state, $number, true);
     }
     else {
@@ -762,10 +734,12 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	}
 
 	// its from a block, render it
-	if($render && !$ajaxRequest)
+	if($render && !$ajaxRequest) {
 		template_tpshout_shoutblock();
-	else
+    }
+	else {
 		return $nshouts;
+    }
 }
 
 function shout_bcc_code($collapse = true)

@@ -22,13 +22,17 @@ if (!defined('SMF')) {
 class TPBase 
 {
 	protected $dB = null;
+    protected $modSettings = null;
 
 	function __construct()
 	{
+        global $modSettings;
 
 		if(is_null($this->dB)) {
 			$this->dB = new TPortalDB();
 		}
+
+        $this->modSettings = $modSettings;
 
 	}
 
