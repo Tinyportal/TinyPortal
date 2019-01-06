@@ -27,8 +27,8 @@ function TPShoutLoad()
         loadLanguage('TPShout', 'english');
     }
 
-    $mention = new TPMentions();
-    $mention->addJS();
+    $tpMention = new TPMentions();
+    $tpMention->addJS();
 
     if(strpos($forum_version, '2.0') === false) {
         loadCSSFile('jquery.sceditor.css');
@@ -248,8 +248,8 @@ function postShout()
             $mention_data['event_title']    = 'Shoutbox Mention';
             $mention_data['text']           = 'Shout';
 
-            $mention = new TPMentions();
-            $mention->addMention($mention_data); 
+            $tpMention = new TPMentions();
+            $tpMention->addMention($mention_data); 
         }
     }
 }

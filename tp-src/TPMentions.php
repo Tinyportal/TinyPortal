@@ -27,7 +27,7 @@ class TPMentions extends TPBase {
 
     }
 
-    public addJS()
+    public function addJS()
     {
         // Mentions
         if (!empty($this->modSettings['enable_mentions']) && allowedTo('mention')) {
@@ -37,12 +37,12 @@ class TPMentions extends TPBase {
         }
     }
 
-    public getMention( $mention_id ) 
+    public function getMention( $mention_id ) 
     {
 
     }
 
-    public addMention( $mention )
+    public function addMention( $mention )
     {
         if (!empty($this->modSettings['enable_mentions'])) {
             require_once(SOURCEDIR . '/Subs-Post.php');
@@ -92,11 +92,10 @@ class TPMentions extends TPBase {
         }
     }
 
-    public removeMention( $mention_id )
+    public function removeMention( $mention_id )
     {
 
     }
-
 }
 
 ?>
