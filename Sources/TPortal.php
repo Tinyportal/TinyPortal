@@ -56,9 +56,9 @@ function TPortal_init()
 	require_once($boarddir. '/SSI.php');
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
-	if (!isset($modSettings['jquery_source']))
-		$context['html_headers'] .= '
-			<script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>';
+    if(strpos($forum_version, '2.0') !== false && !isset($modSettings['jquery_source'])) {
+		$context['html_headers'] .= '<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>';
+    }
 
 	fetchTPhooks();
 	doModules();
