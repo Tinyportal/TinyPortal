@@ -214,7 +214,7 @@ function tpAddMenuItems(&$buttons)
 
     // This removes a edit in Load.php
     if( (strpos($forum_version, '2.1') !== false) && (!empty($context['linktree'])) ) {
-        if (!empty($_GET) && array_key_exists('TPortal', $context) && array_key_exists('not_forum', $context['TPortal']) && empty($context['TPortal']['not_forum'])) {
+        if (!empty($_GET) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
             array_splice($context['linktree'], 1, 0, array(
                     array(
                         'url'   => $scripturl . '?action=forum',
