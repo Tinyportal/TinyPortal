@@ -214,7 +214,7 @@ function tpAddMenuItems(&$buttons)
 
     // This removes a edit in Load.php
     if( (strpos($forum_version, '2.1') !== false) && (!empty($context['linktree'])) ) {
-        if (!empty($_GET)) {
+        if (!empty($_GET) && array_key_exists('TPortal', $context) && array_key_exists('not_forum', $context['TPortal']) && empty($context['TPortal']['not_forum'])) {
             array_splice($context['linktree'], 1, 0, array(
                     array(
                         'url'   => $scripturl . '?action=forum',
@@ -673,7 +673,7 @@ function tpLoadTheme(&$id_theme)
 	if(isset($_GET['page']) && !isset($_GET['action'])) {
 		if (($theme = cache_get_data('tpArticleTheme', 120)) == null) {
 			// fetch the custom theme if any
-			$pag = tp_sanitize($_GET['page']);
+			$pag = TPUtil::filter('page', 'get', 'string');
 			if (is_numeric($pag)) {
 				$request = $smcFunc['db_query']('', '
                     SELECT id_theme FROM {db_prefix}tp_articles

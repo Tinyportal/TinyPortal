@@ -24,6 +24,13 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
+// We need to load our autoloader outside of the main function    
+if(!defined('SMF_BACKWARDS_COMPAT')) {
+    define('SMF_BACKWARDS_COMPAT', true);
+    setup_smf_backwards_compat();
+    spl_autoload_register('tpAutoLoadClass');
+}
+
 // TinyPortal init
 function TPortal_init()
 {
@@ -32,12 +39,6 @@ function TPortal_init()
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum'])) {
 		return;
-    }
-
-    if(!defined('SMF_BACKWARDS_COMPAT')) {
-        define('SMF_BACKWARDS_COMPAT', true);
-        setup_smf_backwards_compat();
-        spl_autoload_register('tpAutoLoadClass');
     }
 
 	if(loadLanguage('TPortal') == false) {
