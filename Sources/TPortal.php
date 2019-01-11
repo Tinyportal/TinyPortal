@@ -809,7 +809,7 @@ function doTPpage()
 				$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
 				'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
 
-				for($p = 0; $p < 6; $p++)
+				for($p = 0; $p < 7; $p++)
 				{
 					$primary = $context['TPortal'][$all[$p]];
 					if(in_array($all2[$p], $context['TPortal']['article']['visual_options']))
