@@ -809,7 +809,7 @@ function doTPpage()
 				$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
 				'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
 
-				for($p = 0; $p < 6; $p++)
+				for($p = 0; $p < 7; $p++)
 				{
 					$primary = $context['TPortal'][$all[$p]];
 					if(in_array($all2[$p], $context['TPortal']['article']['visual_options']))
@@ -839,7 +839,7 @@ function doTPpage()
 				{
 					// set bars on/off according to options, setting override
 					$all=array('upperpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-					for($p = 0; $p < 5; $p++)
+					for($p = 0; $p < 6; $p++)
 					{
 						if(isset($cat_opts[$all[$p]]))
 							$context['TPortal'][$all[$p]] = $cat_opts[$all[$p]];
@@ -1051,7 +1051,7 @@ function doTPcat()
 
 				// set bars on/off according to options, setting override
 				$all = array('centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-				for($p = 0; $p < 5; $p++)
+				for($p = 0; $p < 6; $p++)
 				{
 					if(isset($options[$all[$p]]) && $context['TPortal'][$all[$p]] == 1)
 						$context['TPortal'][$all[$p]] = 1;
