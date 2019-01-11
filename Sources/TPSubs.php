@@ -1956,75 +1956,52 @@ function TPgetlangOption($langlist, $set)
 	return $setlang;
 }
 
+function category_col($column, $featured = false)
+{
+    global $context;
+
+    unset($context['TPortal']['article']);
+
+    if(!isset($context['TPortal']['category'][$column])) {
+        return;
+    }
+
+    if($column == 'featured' ) {
+        $context['TPortal']['category']['featured'] = array( $context['TPortal']['category']['featured'] );
+    }
+
+    foreach($context['TPortal']['category'][$column] as $article => $context['TPortal']['article']) {
+        if(!empty($context['TPortal']['article']['template'])) {
+            render_template($context['TPortal']['article']['template']);
+        }
+        else {
+            if(function_exists('ctheme_article_renders')) {
+                render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured));
+            }
+            else {
+                render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured));
+            }
+        }
+        unset($context['TPortal']['article']);
+    }
+}
+
 // the featured or first article
 function category_featured()
 {
-	global $context;
+    return category_col('featured', true);
 
-	unset($context['TPortal']['article']);
-	if(empty($context['TPortal']['category']['featured']))
-		return;
-
-	$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
-
-	if(!empty($context['TPortal']['article']['template']))
-		render_template($context['TPortal']['article']['template']);
-	else
-	{
-		// check if theme has its own
-		if(function_exists('ctheme_article_renders'))
-			render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'],false,true));
-		else
-			render_template(article_renders($context['TPortal']['category']['options']['catlayout'],false,true));
-	}
 }
-
 // the first half
 function category_col1()
 {
-	global $context;
-
-	unset($context['TPortal']['article']);
-	if(!isset($context['TPortal']['category']['col1']))
-		return;
-
-	foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-	{
-		if(!empty($context['TPortal']['article']['template']))
-			render_template($context['TPortal']['article']['template']);
-		else
-		{
-			if(function_exists('ctheme_article_renders'))
-				render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false));
-			else
-				render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false));
-		}
-		unset($context['TPortal']['article']);
-	}
+    return category_col('col1');
 }
 
 // the second half
 function category_col2()
 {
-	global $context;
-
-	unset($context['TPortal']['article']);
-	if(!isset($context['TPortal']['category']['col2']))
-		return;
-
-	foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-	{
-		if(!empty($context['TPortal']['article']['template']))
-			render_template($context['TPortal']['article']['template']);
-		else
-		{
-			if(function_exists('ctheme_article_renders'))
-				render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false));
-			else
-				render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false));
-		}
-		unset($context['TPortal']['article']);
-	}
+    return category_col('col2');
 }
 
 function TPparseRSS($override = '', $encoding = 0)
