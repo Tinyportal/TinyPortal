@@ -1768,11 +1768,27 @@ function tp_renderblockarticle()
 
 function render_template($code, $render = true)
 {
-	$ncode = 'echo \'' . str_replace(array('{','}'),array("', ","(), '"),$code).'\';';
-	if($render)
-		eval($ncode);
-	else
-		return $ncode;
+    global $modSettings;
+
+    if(!empty($modSettings['tp_disable_template_eval']) && $render == true) { 
+        preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match);
+        foreach($match[0] as $func) {
+            ob_start();
+            $func();
+            $output = ob_get_clean();
+            $code = str_replace( '{'.$func.'}', $output, $code);
+        }
+        echo $code;
+    } 
+    else {
+	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', ","(), '"),$code).'\';';
+	    if($render) {
+		    eval($ncode);
+        }
+	    else {
+		    return $ncode;
+        }
+    }
 }
 
 function render_template_layout($code, $prefix = '')
