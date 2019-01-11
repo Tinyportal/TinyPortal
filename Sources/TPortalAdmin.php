@@ -1038,7 +1038,13 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET off = NOT off
+				SET off = 
+                (
+                    SELECT CASE WHEN off = 1 THEN 0 ELSE 1 END
+                    FROM {db_prefix}tp_articles
+                    WHERE id = {int:artid} 
+                    LIMIT 1
+                )
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1052,7 +1058,13 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET locked = NOT locked
+				SET locked = 
+                (
+                    SELECT CASE WHEN locked = 1 THEN 0 ELSE 1 END
+                    FROM {db_prefix}tp_articles
+                    WHERE id = {int:artid} 
+                    LIMIT 1
+                )				
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1066,7 +1078,13 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET sticky = NOT sticky
+				SET sticky = 
+                (
+                    SELECT CASE WHEN sticky = 1 THEN 0 ELSE 1 END
+                    FROM {db_prefix}tp_articles
+                    WHERE id = {int:artid} 
+                    LIMIT 1
+                )				
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1080,7 +1098,13 @@ function do_articles()
 		if($what > 0)
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET frontpage = NOT frontpage
+				SET frontpage = 
+                (
+                    SELECT CASE WHEN frontpage = 1 THEN 0 ELSE 1 END
+                    FROM {db_prefix}tp_articles
+                    WHERE id = {int:artid} 
+                    LIMIT 1
+                )
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -1095,7 +1119,13 @@ function do_articles()
 		{
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
-				SET featured = NOT featured
+				SET featured = 
+                (
+                    SELECT CASE WHEN featured = 1 THEN 0 ELSE 1 END
+                    FROM {db_prefix}tp_articles
+                    WHERE id = {int:artid} 
+                    LIMIT 1
+                )
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
@@ -3168,6 +3198,24 @@ function do_postchecks()
 		{
 			checkSession('post');
 			isAllowedTo('tp_articles');
+
+            $article_data = array();
+            foreach($_POST as $what => $value) {
+				if(substr($what, 0, 11) == 'tp_article_') {
+                    $setting = substr($what, 11);
+                    switch($setting) {
+                        case 'authorid':
+                            $article_data['author_id'] = $value;
+                            break;
+                        case 'idtheme':
+                            $article_data['id_theme'] = $value;
+                            break;
+                        default:
+                            $article_data[$setting] = $value;
+                            break;
+                    }
+                }
+            }
 
 			$new = false;
 			$where = substr($from, 11);
