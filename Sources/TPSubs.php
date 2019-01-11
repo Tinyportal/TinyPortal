@@ -1773,10 +1773,12 @@ function render_template($code, $render = true)
     if(!empty($context['TPortal']['disable_template_eval']) && $render == true) { 
         if(preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match) !== false) {
             foreach($match[0] as $func) {
-                ob_start();
-                $func();
-                $output = ob_get_clean();
-                $code = str_replace( '{'.$func.'}', $output, $code);
+                if(function_exists($func)) {
+                    ob_start();
+                    $func();
+                    $output = ob_get_clean();
+                    $code = str_replace( '{'.$func.'}', $output, $code);
+                }
             }
             echo $code;
         }
@@ -1794,8 +1796,22 @@ function render_template($code, $render = true)
 
 function render_template_layout($code, $prefix = '')
 {
-	$ncode = 'echo \'' . str_replace(array('{','}'),array("', " . $prefix , "(), '"),$code).'\';';
-	eval($ncode);
+    global $context;
+
+    if(!empty($context['TPortal']['disable_template_eval'])) { 
+        if(preg_match_all('~(?<={)([A-Za-z0-9]+)(?=})~', $code, $match) !== false) {
+            foreach($match[0] as $suffix) {
+                $func = (string)"$prefix$suffix";
+                if(function_exists($func)) {
+                    $func();
+                }
+            }
+        }
+    } 
+    else {
+	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', " . $prefix , "(), '"),$code).'\';';
+	    eval($ncode);
+    }
 }
 
 function tp_hidebars($what = 'all' )
