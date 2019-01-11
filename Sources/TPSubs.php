@@ -1768,17 +1768,18 @@ function tp_renderblockarticle()
 
 function render_template($code, $render = true)
 {
-    global $modSettings;
+    global $context;
 
-    if(!empty($modSettings['tp_disable_template_eval']) && $render == true) { 
-        preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match);
-        foreach($match[0] as $func) {
-            ob_start();
-            $func();
-            $output = ob_get_clean();
-            $code = str_replace( '{'.$func.'}', $output, $code);
+    if(!empty($context['TPortal']['disable_template_eval']) && $render == true) { 
+        if(preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match) !== false) {
+            foreach($match[0] as $func) {
+                ob_start();
+                $func();
+                $output = ob_get_clean();
+                $code = str_replace( '{'.$func.'}', $output, $code);
+            }
+            echo $code;
         }
-        echo $code;
     } 
     else {
 	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', ","(), '"),$code).'\';';
