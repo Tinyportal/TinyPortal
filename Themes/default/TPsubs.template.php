@@ -1762,10 +1762,10 @@ function article_rating($render = true)
 
 	if(in_array('rating',$context['TPortal']['article']['visual_options'])) {
 		if(!empty($context['TPortal']['article']['voters'])) {
-			$data = '<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], count(explode(',', $context['TPortal']['article']['voters'])), $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
+			$data = '<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], count(explode(',', $context['TPortal']['article']['voters'])), $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false), $render)) . '</span>';
 		}
         else {
-			 $data = '<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], 0, $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
+			 $data = '<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], 0, $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false), $render)) . '</span>';
         }
 	}
 
@@ -1988,37 +1988,43 @@ function article_morelinks($render = true)
     }
 }
 
-function render_rating($total, $votes, $id, $can_rate = false)
+function render_rating($total, $votes, $id, $can_rate = false, $render = true)
 {
 	global $txt, $context, $settings, $scripturl;
 
-	if(!is_numeric($total))
+    $data = '';
+
+	if(!is_numeric($total)) {
 		$total = (int)$total;
+    }
 
-	if(!is_numeric($votes))
+	if(!is_numeric($votes)) {
 		$votes = (int)$votes;
+    }
 
-	if($total == 0 && $votes > 0)
-		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
-	elseif($total == 0 && $votes == 0)
-		echo ' '.  $txt['tp-ratingaverage'] . ' 0 (0 ' . $txt['tp-ratingvotes'] . ')';
-	else
-		echo ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+	if($total == 0 && $votes > 0) {
+		$data .= ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+    }
+	elseif($total == 0 && $votes == 0) {
+		$data .= ' '.  $txt['tp-ratingaverage'] . ' 0 (0 ' . $txt['tp-ratingvotes'] . ')';
+    }
+	else {
+		$data .= ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+    }
 
 	// can we rate it?
-	if($context['TPortal']['single_article'])
-	{
-		if($context['user']['is_logged'] && $can_rate)
-		{
-				echo '
+	if($context['TPortal']['single_article']) {
+		if($context['user']['is_logged'] && $can_rate) {
+				$data .= '
 			<form action="' . $scripturl . '?action=tpmod;sa=rate_article" style="margin: 0; padding: 0; display: inline;" method="post">
 				<select size="1" name="tp_article_rating">';
 
-				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--)
-					echo '
+				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--) {
+					$data .= '
 					<option value="' . $u . '">' . $u . '</option>';
+                }
 
-				echo '
+				$data .= '
 				</select>
 				<input type="submit" name="tp_article_rating_submit" value="' . $txt['tp_rate'] . '">
 				<input name="tp_article_type" type="hidden" value="article_rating">
@@ -2026,13 +2032,19 @@ function render_rating($total, $votes, $id, $can_rate = false)
 				<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
 			</form>';
 		}
-		else
-		{
-			if (!$context['user']['is_guest'])
-			echo ' 	<em class="tp_article_rate smalltext">'. $txt['tp-dlhaverated'].'</em>';
+		else {
+			if (!$context['user']['is_guest']) {
+			    $data .= ' 	<em class="tp_article_rate smalltext">'. $txt['tp-dlhaverated'].'</em>';
+            }
 		}
 	}
 
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function tp_grids()
