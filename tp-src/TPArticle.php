@@ -110,13 +110,40 @@ clASs TPArticle extends TPBase {
 
     }
 
-    public function updateArticle($article_data)
+    public function updateArticle($article_id, $article_data)
     {
+
+        $update_data = $article_data;
+        array_walk($update_data, function(&$update_data, $key){
+                $update_data = $key.' = {string:'.$key.'}';
+            }
+        );
+        $update_query = implode(', ', array_values($update_data));
+        $article_data['article_id'] = (int)$article_id;
+        $this->dB->db_query('', '
+            UPDATE {db_prefix}tp_articles
+            SET '.$update_query.'
+            WHERE id = {int:article_id}',
+            $article_data
+        );
 
     }
 
     public function insertArticle($article_data)
     {
+        $insert_data = array();
+        foreach(array_keys($article_data) as $key) {
+            $insert_data[$key] = 'string';
+        }
+
+        $this->dB->db_insert('INSERT',
+            '{db_prefix}tp_articles',
+            $insert_data,
+            array_values($article_data),
+            array ('id')
+        );
+			
+        return $this->dB->db_insert_id('{db_prefix}tp_articles', 'id');
 
     }
 
