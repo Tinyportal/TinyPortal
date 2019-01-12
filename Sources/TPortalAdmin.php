@@ -3194,316 +3194,217 @@ function do_postchecks()
 			redirectexit('action=tpadmin;blockedit='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
 		// Editing an article?
-		elseif(substr($from, 0, 11) == 'editarticle')
-		{
+		elseif(substr($from, 0, 11) == 'editarticle') {
 			checkSession('post');
 			isAllowedTo('tp_articles');
 
-            $article_data = array();
+			$options        = array();
+            $article_data   = array();
             foreach($_POST as $what => $value) {
 				if(substr($what, 0, 11) == 'tp_article_') {
                     $setting = substr($what, 11);
-                    switch($setting) {
-                        case 'authorid':
-                            $article_data['author_id'] = $value;
+
+					if(substr($setting, 0, 8) == 'options_') {
+						if(substr($setting, 0, 19) == 'options_lblockwidth' || substr($setting,0,19) == 'options_rblockwidth') {
+							$options[] = substr($setting, 8).$value;
+                        }
+						else {
+							$options[] = substr($setting, 8);
+                        }
+					} 
+                    else { 
+                        switch($setting) {
+                            case 'body_mode':
+                            case 'intro_mode':
+                            case 'illupload':
+                            case 'intro_pure':
+                            case 'body_pure':
+                            case 'body_choice':
+                                // We ignore all these
+                                break;
+                            case 'authorid':
+                                $article_data['author_id'] = $value;
+                                break;
+                            case 'idtheme':
+                                $article_data['id_theme'] = $value;
+                                break;
+                            case 'category':
+                                // for the event, get the allowed
+                                $request = $smcFunc['db_query']('', '
+                                    SELECT value3 FROM {db_prefix}tp_variables
+                                    WHERE id = {int:varid} LIMIT 1',
+                                    array('varid' => $value)
+                                );
+                                if($smcFunc['db_num_rows']($request) > 0) {
+                                    $row = $smcFunc['db_fetch_assoc']($request);
+                                    $allowed = $row['value3'];
+                                    $smcFunc['db_free_result']($request);
+                                }
+                                $article_data['category'] = $value;
+                                break;
+                            case 'shortname':
+                                $article_data[$setting] = htmlspecialchars(str_replace(' ', '-', $value), ENT_QUOTES);
+                                break;
+                            case 'intro':
+                            case 'body':
+                                // If we came from WYSIWYG then turn it back into BBC regardless.
+                                if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body'])) {
+                                    require_once($sourcedir . '/Subs-Editor.php');
+                                    $_REQUEST['tp_article_body'] = html_to_bbc($_REQUEST['tp_article_body']);
+                                    // We need to unhtml it now as it gets done shortly.
+                                    $_REQUEST['tp_article_body'] = un_htmlspecialchars($_REQUEST['tp_article_body']);
+                                    // We need this for everything else.
+                                    if($setting == 'body') {
+                                        $value = $_POST['tp_article_body'] = $_REQUEST['tp_article_body'];
+                                    }
+                                    elseif ($settings == 'intro') {
+                                        $value = $_POST['tp_article_intro'] = $_REQUEST['tp_article_intro'];
+                                    }
+                                }
+                                // in case of HTML article we need to check it
+                                if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice'])) {
+                                    if($_POST['tp_article_body_choice'] == 0) {
+                                        if ($setting == 'body') {
+                                            $value = $_POST['tp_article_body_pure'];
+                                        }
+                                        elseif ($setting == 'intro') {
+                                            $value = $_POST['tp_article_intro'];
+                                        }
+                                    }
+
+                                    // save the choice too
+                                    $request = $smcFunc['db_query']('', '
+                                        SELECT id FROM {db_prefix}tp_variables
+                                        WHERE subtype2 = {int:sub2}
+                                        AND type = {string:type} LIMIT 1',
+                                        array('sub2' => $where, 'type' => 'editorchoice')
+                                    );
+                                    if($smcFunc['db_num_rows']($request) > 0) {
+                                        $row = $smcFunc['db_fetch_assoc']($request);
+                                        $smcFunc['db_free_result']($request);
+                                        $smcFunc['db_query']('', '
+                                            UPDATE {db_prefix}tp_variables
+                                            SET value1 = {string:val1}
+                                            WHERE subtype2 = {int:sub2}
+                                            AND type = {string:type}',
+                                            array('val1' => $_POST['tp_article_body_choice'], 'sub2' => $where, 'type' => 'editorchoice')
+                                        );
+                                    }
+                                    else {
+                                        $smcFunc['db_insert']('INSERT',
+                                            '{db_prefix}tp_variables',
+                                            array('value1' => 'string', 'type' => 'string', 'subtype2' => 'int'),
+                                            array($_POST['tp_article_body_choice'], 'editorchoice', $where),
+                                            array('id')
+                                        );
+                                    }
+                                }
+                                $article_data[$setting] = $value;
+                                break;
+                            case 'day':
+                            case 'month':
+                            case 'year':
+                            case 'minute':
+                            case 'hour':
+                            case 'timestamp':
+                                $timestamp = mktime($_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year']);
+                                if(!isset($savedtime)) {
+                                    $article_data['date'] = $timestamp;
+                                }
+                                break;
+                            case 'pubstartday':
+                            case 'pubstartmonth':
+                            case 'pubstartyear':
+                            case 'pubstartminute':
+                            case 'pubstarthour':
+                            case 'pub_start':
+                                if(empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear'])) {
+                                    $article_data['pub_start'] = 0;
+                                }
+                                else {
+                                    $timestamp = mktime($_POST['tp_article_pubstarthour'], $_POST['tp_article_pubstartminute'], 0, $_POST['tp_article_pubstartmonth'], $_POST['tp_article_pubstartday'], $_POST['tp_article_pubstartyear']);
+                                    $article_data['pub_start'] = $timestamp;
+                                }
                             break;
-                        case 'idtheme':
-                            $article_data['id_theme'] = $value;
-                            break;
-                        default:
-                            $article_data[$setting] = $value;
-                            break;
+                            case 'pubendday':
+                            case 'pubendmonth':
+                            case 'pubendyear':
+                            case 'pubendminute':
+                            case 'pubendhour':
+                            case 'pub_end':
+                                if(empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear'])) {
+                                    $article_data['pub_end'] = 0;
+                                }
+                                else {
+                                    $timestamp = mktime($_POST['tp_article_pubendhour'], $_POST['tp_article_pubendminute'], 0, $_POST['tp_article_pubendmonth'], $_POST['tp_article_pubendday'], $_POST['tp_article_pubendyear']);
+                                    $article_data['pub_end'] = $timestamp;
+                                }
+                                break;
+                            default:
+                                $article_data[$setting] = $value;
+                                break;
+                        }
                     }
                 }
             }
 
-			$new = false;
-			$where = substr($from, 11);
-
-			if(empty($where))
-			{
-				// we need to create one first
-				$smcFunc['db_insert']('INSERT',
-					'{db_prefix}tp_articles',
-					array('date' => 'int'),
-					array(time()),
-					array('id')
-				);
-
-				$where = $smcFunc['db_insert_id']('{db_prefix}tp_articles', 'id');
-				$new = true;
-				$from = 'editarticle' . $where;
-			}
+            $article_data['options'] = implode(',', $options);
 
 			// check if uploads are there
-			if(file_exists($_FILES['tp_article_illupload']['tmp_name']))
-			{
+			if(file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
 				$name = TPuploadpicture('tp_article_illupload', '', '180', 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
 				tp_createthumb('tp-files/tp-articles/illustrations/'. $name, 128, 128, 'tp-files/tp-articles/illustrations/s_'. $name);
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_articles
-					SET illustration = {string:ill}
-					WHERE id = {int:artid}',
-					array('ill' => 's_' . $name, 'artid' => $where)
-				);
+                $article_data['illustration'] = $name;
 			}
+
+			$where      = substr($from, 11);
+            $tpArticle  = new TPArticle();
+			if(empty($where)) {
+                // We are inserting
+                $where = $tpArticle->insertArticle($article_data);
+            }
+            else {
+                // We are updating
+                $tpArticle->updateArticle((int)$where, $article_data);
+            }
+
+            // Update the approved status
+            if($article_data['approved'] == 1) {
+                $smcFunc['db_query']('', '
+                    DELETE FROM {db_prefix}tp_variables
+                    WHERE type = {string:type}
+                    AND value5 = {int:val5}',
+                    array('type' => 'art_not_approved', 'val5' => $where)
+                );
+            }
+			elseif(empty($where)) {
+                $smcFunc['db_insert']('insert',
+                    '{db_prefix}tp_variables',
+                    array (
+                        'type' => 'string', 
+                        'value5' => 'int'
+                    ),
+                    array (  
+                        'art_not_approved',
+                        $where
+                    ),
+                    array ( 
+                        'id' 
+                    )
+                );
+            }
+            unset($tpArticle);
+
 			// check if uploadad picture
-			if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name']))
-			{
+			if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
 				$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
 				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
 			}
-			$options = array();
 
-			foreach($_POST as $what => $value)
-			{
-				if($what == 'tp_article_intro_pure')
-					continue;
-
-				if(substr($what, 0, 11) == 'tp_article_' && !empty($where))
-				{
-					$setting = substr($what, 11);
-
-					if($setting == 'authorid')
-					{
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET author_id = {int:auth}
-							WHERE id = {int:artid}',
-							array('auth' => $value, 'artid' => $where)
-						);
-					}
-					elseif($setting == 'idtheme')
-					{
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET id_theme = {int:id_theme}
-							WHERE id = {int:artid}',
-							array('id_theme' => $value, 'artid' => $where)
-						);
-					}
-					elseif($setting == 'subject')
-					{
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET subject = {string:subject}
-							WHERE id = {int:artid}',
-							array('subject' => $value, 'artid' => $where)
-						);
-					}
-					elseif($setting == 'shortname')
-					{
-						$value = htmlspecialchars(str_replace(' ', '-', $value), ENT_QUOTES);
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET shortname = {string:shortname}
-							WHERE id = {int:artid}',
-							array('shortname' => $value, 'artid' => $where)
-						);
-					}
-					elseif($setting == 'category')
-					{
-						// for the event, get the allowed
-						$request = $smcFunc['db_query']('', '
-							SELECT value3 FROM {db_prefix}tp_variables
-							WHERE id = {int:varid} LIMIT 1',
-							array('varid' => $value)
-						);
-
-						if($smcFunc['db_num_rows']($request) > 0)
-						{
-							$row = $smcFunc['db_fetch_assoc']($request);
-							$allowed = $row['value3'];
-							$smcFunc['db_free_result']($request);
-						}
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET category = {int:cat}
-							WHERE id = {int:artid}',
-							array('cat' => $value, 'artid' => $where)
-						);
-					}
-					elseif(in_array($setting, array('body', 'intro')))
-					{
-						// If we came from WYSIWYG then turn it back into BBC regardless.
-						if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body']))
-						{
-							require_once($sourcedir . '/Subs-Editor.php');
-							$_REQUEST['tp_article_body'] = html_to_bbc($_REQUEST['tp_article_body']);
-							// We need to unhtml it now as it gets done shortly.
-							$_REQUEST['tp_article_body'] = un_htmlspecialchars($_REQUEST['tp_article_body']);
-							// We need this for everything else.
-							if($setting == 'body')
-								$value = $_POST['tp_article_body'] = $_REQUEST['tp_article_body'];
-							elseif ($settings == 'intro')
-								$value = $_POST['tp_article_intro'] = $_REQUEST['tp_article_intro'];
-						}
-
-						// in case of HTML article we need to check it
-						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice']))
-						{
-							if($_POST['tp_article_body_choice'] == 0)
-							{
-								if ($setting == 'body')
-									$value = $_POST['tp_article_body_pure'];
-								elseif ($setting == 'intro')
-									$value = $_POST['tp_article_intro'];
-							}
-
-							// save the choice too
-							$request = $smcFunc['db_query']('', '
-								SELECT id FROM {db_prefix}tp_variables
-								WHERE subtype2 = {int:sub2}
-								AND type = {string:type} LIMIT 1',
-								array('sub2' => $where, 'type' => 'editorchoice')
-							);
-							if($smcFunc['db_num_rows']($request) > 0)
-							{
-								$row = $smcFunc['db_fetch_assoc']($request);
-								$smcFunc['db_free_result']($request);
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_variables
-									SET value1 = {string:val1}
-									WHERE subtype2 = {int:sub2}
-									AND type = {string:type}',
-									array('val1' => $_POST['tp_article_body_choice'], 'sub2' => $where, 'type' => 'editorchoice')
-								);
-							}
-							else
-								$smcFunc['db_insert']('INSERT',
-									'{db_prefix}tp_variables',
-									array('value1' => 'string', 'type' => 'string', 'subtype2' => 'int'),
-									array($_POST['tp_article_body_choice'], 'editorchoice', $where),
-									array('id')
-								);
-						}
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET '. $setting .' = {string:val}
-							WHERE id = {int:artid}',
-							array('val' => $value, 'artid' => $where)
-						);
-					}
-					elseif(in_array($setting, array('day', 'month', 'year', 'minute', 'hour', 'timestamp')))
-					{
-						$timestamp = mktime($_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year']);
-						if(!isset($savedtime))
-							$smcFunc['db_query']('', '
-								UPDATE {db_prefix}tp_articles
-								SET date = {int:date}
-								WHERE id = {int:artid}',
-								array('date' => $timestamp, 'artid' => $where)
-							);
-						$savedtime = 1;
-					}
-					elseif(in_array($setting, array('pubstartday', 'pubstartmonth', 'pubstartyear', 'pubstartminute', 'pubstarthour', 'pub_start')))
-					{
-						// are all zero? then skip
-						if(empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear']))
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_articles
-									SET pub_start = {int:start}
-									WHERE id = {int:artid}',
-									array('start' => 0, 'artid' => $where)
-								);
-						else
-							$timestamp = mktime($_POST['tp_article_pubstarthour'], $_POST['tp_article_pubstartminute'], 0, $_POST['tp_article_pubstartmonth'], $_POST['tp_article_pubstartday'], $_POST['tp_article_pubstartyear']);
-							if(!isset($pubstart))
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_articles
-									SET pub_start = {int:start}
-									WHERE id = {int:artid}',
-									array('start' => $timestamp, 'artid' => $where)
-								);
-
-						$pubstart = 1;
-					}
-					elseif(in_array($setting, array('pubendday', 'pubendmonth', 'pubendyear', 'pubendminute', 'pubendhour', 'pub_start')))
-					{
-						// are all zero? then skip
-						if(empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear']))
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_articles
-									SET pub_end = {int:end}
-									WHERE id = {int:artid}',
-									array('end' => 0, 'artid' => $where)
-								);
-						else
-							$timestamp = mktime($_POST['tp_article_pubendhour'], $_POST['tp_article_pubendminute'], 0, $_POST['tp_article_pubendmonth'], $_POST['tp_article_pubendday'], $_POST['tp_article_pubendyear']);
-							if(!isset($pubend))
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_articles
-									SET pub_end = {int:end}
-									WHERE id = {int:artid}',
-									array('end' => $timestamp, 'artid' => $where)
-								);
-
-						$pubend = 1;
-					}
-					elseif(substr($setting, 0, 8) == 'options_')
-					{
-						if(substr($setting, 0, 19) == 'options_lblockwidth' || substr($setting,0,19) == 'options_rblockwidth')
-							$options[] = substr($setting, 8).$value;
-						else
-							$options[] = substr($setting, 8);
-
-					}
-					elseif(in_array($setting, array('body_mode', 'intro_mode', 'illupload', 'body_pure', 'body_choice')))
-					{
-						// ignore it
-						continue;
-					}
-					elseif($setting == 'approved')
-					{
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET approved = {int:approved}
-							WHERE id = {int:artid}',
-							array('approved' => $value, 'artid' => $where)
-						);
-						if($value == 1)
-							$smcFunc['db_query']('', '
-								DELETE FROM {db_prefix}tp_variables
-								WHERE type = {string:type}
-								AND value5 = {int:val5}',
-								array('type' => 'art_not_approved', 'val5' => $where)
-							);
-						elseif ($new)
-							$smcFunc['db_insert']('insert',
-								'{db_prefix}tp_variables',
-								array(  'type' => 'string', 
-                                        'value5' => 'int'
-                                ),
-								array(  'art_not_approved',
-                                        $where
-                                ),
-								array( 'id' )
-							);
-					}
-					else
-					{
-						$smcFunc['db_query']('', '
-							UPDATE {db_prefix}tp_articles
-							SET '.$setting.' = {string:val}
-							WHERE id = {int:artid}',
-							array('val' => $value, 'artid' => $where)
-						);
-					}
-				}
-			}
 			// if this was a new article
-			if($_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0)
+			if($_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
 				tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0) , $where);
-
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET options = {string:opt}
-				WHERE id = {int:artid}',
-				array(
-					'opt' => implode(',', $options),
-					'artid' => $where,
-				)
-			);
+            }
 
 			return $from;
 		}
