@@ -19,11 +19,48 @@ if (!defined('SMF'))
 	die('Hacking attempt...');
 
 
-clASs TPArticle extends TPBase {
+class TPArticle extends TPBase {
+
+    private $dBStructure = array();
 
     public function __construct()
     {
         parent::__construct();
+
+        $this->dBStructure = array ( 
+            'id'            => 'int',
+            'date'          => 'int',
+            'body'          => 'string',
+            'intro'         => 'string',
+            'useintro'      => 'int',
+            'category'      => 'int',
+            'frontpage'     => 'int',
+            'subject'       => 'string',
+            'author_id'     => 'int',
+            'author'        => 'string',
+            'frame'         => 'string',
+            'approved'      => 'int',
+            'off'           => 'int',
+            'options'       => 'string',
+            'parse'         => 'int',
+            'comments'      => 'int',
+            'comments_var'  => 'string',
+            'views'         => 'int',
+            'rating'        => 'string',
+            'voters'        => 'string',
+            'id_theme'      => 'int',
+            'shortname'     => 'string',
+            'sticky'        => 'int',
+            'fileimport'    => 'string',
+            'topic'         => 'int',
+            'locked'        => 'int',
+            'illustration'  => 'string',
+            'headers'       => 'string',
+            'type'          => 'string',
+            'featured'      => 'int',
+            'pub_start'     => 'int',
+            'pub_end'       => 'int',
+        );
     }
 
     public function getArticle($article)
@@ -114,8 +151,8 @@ clASs TPArticle extends TPBase {
     {
 
         $update_data = $article_data;
-        array_walk($update_data, function(&$update_data, $key){
-                $update_data = $key.' = {string:'.$key.'}';
+        array_walk($update_data, function(&$update_data, $key) {
+                $update_data = $key.' = {'.$this->dBStructure[$key].':'.$key.'}';
             }
         );
         $update_query = implode(', ', array_values($update_data));
@@ -133,7 +170,7 @@ clASs TPArticle extends TPBase {
     {
         $insert_data = array();
         foreach(array_keys($article_data) as $key) {
-            $insert_data[$key] = 'string';
+            $insert_data[$key] = $this->dBStructure[$key];
         }
 
         $this->dB->db_insert('INSERT',
