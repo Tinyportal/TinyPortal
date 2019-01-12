@@ -638,6 +638,7 @@ $settings_array = array(
     'resp' => '0',
     'copyrightremoval' => '',
 	'use_groupcolor' => '0',
+	'disable_template_eval' => '1',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');

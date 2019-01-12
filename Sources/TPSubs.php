@@ -1768,17 +1768,50 @@ function tp_renderblockarticle()
 
 function render_template($code, $render = true)
 {
-	$ncode = 'echo \'' . str_replace(array('{','}'),array("', ","(), '"),$code).'\';';
-	if($render)
-		eval($ncode);
-	else
-		return $ncode;
+    global $context;
+
+    if(!empty($context['TPortal']['disable_template_eval']) && $render == true) { 
+        if(preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match) !== false) {
+            foreach($match[0] as $func) {
+                if(function_exists($func)) {
+                    ob_start();
+                    $func();
+                    $output = ob_get_clean();
+                    $code = str_replace( '{'.$func.'}', $output, $code);
+                }
+            }
+            echo $code;
+        }
+    } 
+    else {
+	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', ","(), '"),$code).'\';';
+	    if($render) {
+		    eval($ncode);
+        }
+	    else {
+		    return $ncode;
+        }
+    }
 }
 
 function render_template_layout($code, $prefix = '')
 {
-	$ncode = 'echo \'' . str_replace(array('{','}'),array("', " . $prefix , "(), '"),$code).'\';';
-	eval($ncode);
+    global $context;
+
+    if(!empty($context['TPortal']['disable_template_eval'])) { 
+        if(preg_match_all('~(?<={)([A-Za-z0-9]+)(?=})~', $code, $match) !== false) {
+            foreach($match[0] as $suffix) {
+                $func = (string)"$prefix$suffix";
+                if(function_exists($func)) {
+                    $func();
+                }
+            }
+        }
+    } 
+    else {
+	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', " . $prefix , "(), '"),$code).'\';';
+	    eval($ncode);
+    }
 }
 
 function tp_hidebars($what = 'all' )
@@ -1923,75 +1956,52 @@ function TPgetlangOption($langlist, $set)
 	return $setlang;
 }
 
+function category_col($column, $featured = false)
+{
+    global $context;
+
+    unset($context['TPortal']['article']);
+
+    if(!isset($context['TPortal']['category'][$column])) {
+        return;
+    }
+
+    if($column == 'featured' ) {
+        $context['TPortal']['category']['featured'] = array( $context['TPortal']['category']['featured'] );
+    }
+
+    foreach($context['TPortal']['category'][$column] as $article => $context['TPortal']['article']) {
+        if(!empty($context['TPortal']['article']['template'])) {
+            render_template($context['TPortal']['article']['template']);
+        }
+        else {
+            if(function_exists('ctheme_article_renders')) {
+                render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured));
+            }
+            else {
+                render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured));
+            }
+        }
+        unset($context['TPortal']['article']);
+    }
+}
+
 // the featured or first article
 function category_featured()
 {
-	global $context;
+    return category_col('featured', true);
 
-	unset($context['TPortal']['article']);
-	if(empty($context['TPortal']['category']['featured']))
-		return;
-
-	$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
-
-	if(!empty($context['TPortal']['article']['template']))
-		render_template($context['TPortal']['article']['template']);
-	else
-	{
-		// check if theme has its own
-		if(function_exists('ctheme_article_renders'))
-			render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'],false,true));
-		else
-			render_template(article_renders($context['TPortal']['category']['options']['catlayout'],false,true));
-	}
 }
-
 // the first half
 function category_col1()
 {
-	global $context;
-
-	unset($context['TPortal']['article']);
-	if(!isset($context['TPortal']['category']['col1']))
-		return;
-
-	foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-	{
-		if(!empty($context['TPortal']['article']['template']))
-			render_template($context['TPortal']['article']['template']);
-		else
-		{
-			if(function_exists('ctheme_article_renders'))
-				render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false));
-			else
-				render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false));
-		}
-		unset($context['TPortal']['article']);
-	}
+    return category_col('col1');
 }
 
 // the second half
 function category_col2()
 {
-	global $context;
-
-	unset($context['TPortal']['article']);
-	if(!isset($context['TPortal']['category']['col2']))
-		return;
-
-	foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-	{
-		if(!empty($context['TPortal']['article']['template']))
-			render_template($context['TPortal']['article']['template']);
-		else
-		{
-			if(function_exists('ctheme_article_renders'))
-				render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false));
-			else
-				render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false));
-		}
-		unset($context['TPortal']['article']);
-	}
+    return category_col('col2');
 }
 
 function TPparseRSS($override = '', $encoding = 0)
@@ -2267,116 +2277,7 @@ function tp_fatal_error($error)
 // Recent topic list:   [board] Subject by Poster	Date
 function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_boards = null, $output_method = 'echo')
 {
-	global $context, $settings, $scripturl, $txt, $db_prefix, $user_info;
-	global $modSettings, $smcFunc;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
-
-	if ($exclude_boards === null && !empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] > 0)
-		$exclude_boards = array($modSettings['recycle_board']);
-	else
-		$exclude_boards = empty($exclude_boards) ? array() : (is_array($exclude_boards) ? $exclude_boards : array($exclude_boards));
-
-	// Only some boards?.
-	if (is_array($include_boards) || (int) $include_boards === $include_boards)
-	{
-		$include_boards = is_array($include_boards) ? $include_boards : array($include_boards);
-	}
-	elseif ($include_boards != null)
-	{
-		$output_method = $include_boards;
-		$include_boards = array();
-	}
-
-
-	// Find all the posts in distinct topics.  Newer ones will have higher IDs.
-	$request = $smcFunc['db_query']('substring', '
-		SELECT
-			m.poster_time, ms.subject, m.id_topic, m.id_member, m.id_msg, b.id_board, b.name AS board_name, t.num_replies, t.num_views,
-			COALESCE(mem.real_name, m.poster_name) AS poster_name, ' . ($user_info['is_guest'] ? '1 AS is_read, 0 AS new_from' : '
-			COALESCE(lt.id_msg, COALESCE(lmr.id_msg, 0)) >= m.id_msg_modified AS is_read,
-			COALESCE(lt.id_msg, COALESCE(lmr.id_msg, -1)) + 1 AS new_from') . ', SUBSTRING(m.body, 1, 384) AS body, m.smileys_enabled, m.icon,
-			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type,  mem.avatar as avy, mem.email_address AS email_address
-		FROM {db_prefix}topics AS t
-			INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_last_msg)
-			INNER JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
-			INNER JOIN {db_prefix}messages AS ms ON (ms.id_msg = t.id_first_msg)
-			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)' . (!$user_info['is_guest'] ? '
-			LEFT JOIN {db_prefix}log_topics AS lt ON (lt.id_topic = t.id_topic AND lt.id_member = {int:current_member})
-			LEFT JOIN {db_prefix}log_mark_read AS lmr ON (lmr.id_board = b.id_board AND lmr.id_member = {int:current_member})' : '') . '
-			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
-
-		WHERE	t.id_last_msg >= {int:min_message_id}
-			AND {query_wanna_see_board}' . ($modSettings['postmod_active'] ? '
-			AND t.approved = {int:is_approved}
-			AND m.approved = {int:is_approved}' : '') . '
-
-			' . (empty($exclude_boards) ? '' : '
-			AND b.id_board NOT IN ({array_int:exclude_boards})') . '
-
-			' . (empty($include_boards) ? '' : '
-			AND b.id_board IN ({array_int:include_boards})') . '
-
-		ORDER BY t.id_last_msg DESC
-		LIMIT ' . $num_recent,
-		array(
-			'current_member' => $user_info['id'],
-			'include_boards' => empty($include_boards) ? '' : $include_boards,
-			'exclude_boards' => empty($exclude_boards) ? '' : $exclude_boards,
-			'min_message_id' => $modSettings['maxMsgID'] - 200 * min($num_recent, 5),
-
-			'is_approved' => 1,
-		)
-	);
-	$posts = array();
-	while ($row = $smcFunc['db_fetch_assoc']($request))
-	{
-		$row['body'] = strip_tags(strtr(parse_bbc($row['body'], $row['smileys_enabled'], $row['id_msg']), array('<br />' => '&#10;')));
-		if ($smcFunc['strlen']($row['body']) > 128)
-			$row['body'] = $smcFunc['substr']($row['body'], 0, 128) . '...';
-
-		// Censor the subject.
-		censorText($row['subject']);
-		censorText($row['body']);
-        $row['avy'] = set_avatar_data( array(      
-                    'avatar' => $row['avy'],
-                    'email' => $row['email_address'],
-                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'id_attach' => $row['id_attach'],
-                    'attachment_type' => $row['attachment_type'],
-                )
-        )['image'];
-
-		// Build the array.
-		$posts[] = array(
-			'board' => array(
-				'id' => $row['id_board'],
-				'name' => $row['board_name'],
-				'href' => $scripturl . '?board=' . $row['id_board'] . '.0',
-				'link' => '<a href="' . $scripturl . '?board=' . $row['id_board'] . '.0">' . $row['board_name'] . '</a>'
-			),
-			'topic' => $row['id_topic'],
-			'poster' => array(
-				'id' => $row['id_member'],
-				'name' => $row['poster_name'],
-				'href' => empty($row['id_member']) ? '' : $scripturl . '?action=profile;u=' . $row['id_member'],
-				'link' => empty($row['id_member']) ? $row['poster_name'] : '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['poster_name'] . '</a>',
-				'avatar' => $row['avy']
-			),
-			'subject' => $row['subject'],
-			'short_subject' => shorten_subject($row['subject'], 25),
-			'time' => timeformat($row['poster_time']),
-			'timestamp' => forum_time(true, $row['poster_time']),
-			'href' => $scripturl . '?topic=' . $row['id_topic'] . '.msg' . $row['id_msg'] . ';topicseen#new',
-			'link' => '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.msg' . $row['id_msg'] . '#new" rel="nofollow">' . $row['subject'] . '</a>',
-			// Retained for compatibility - is technically incorrect!
-			'new' => !empty($row['is_read']),
-			'is_new' => empty($row['is_read']),
-			'new_from' => $row['new_from'],
-		);
-	}
-	$smcFunc['db_free_result']($request);
-
-	return $posts;
+    return ssi_recentTopics($num_recent, $exclude_boards, $include_boards, $output_method);
 }
 
 // Download an attachment.

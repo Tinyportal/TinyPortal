@@ -654,6 +654,8 @@ $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
 
 $txt['tp-fulltextsearch']       = 'Enable TinyPortal Full Text search';
 $txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Search Functionality';
+$txt['tp-disabletemplateeval']       = 'Disable the PHP eval function for templates';
+$txt['tp-disabletemplateevaldesc']   = 'Disable the PHP eval function for rending article templates';
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 

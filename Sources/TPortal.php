@@ -24,6 +24,13 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
+// We need to load our autoloader outside of the main function    
+if(!defined('SMF_BACKWARDS_COMPAT')) {
+    define('SMF_BACKWARDS_COMPAT', true);
+    setup_smf_backwards_compat();
+    spl_autoload_register('tpAutoLoadClass');
+}
+
 // TinyPortal init
 function TPortal_init()
 {
@@ -32,12 +39,6 @@ function TPortal_init()
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum'])) {
 		return;
-    }
-
-    if(!defined('SMF_BACKWARDS_COMPAT')) {
-        define('SMF_BACKWARDS_COMPAT', true);
-        setup_smf_backwards_compat();
-        spl_autoload_register('tpAutoLoadClass');
     }
 
 	if(loadLanguage('TPortal') == false) {
@@ -587,7 +588,7 @@ function doTPpage()
 				$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
 				'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
 
-				for($p = 0; $p < 6; $p++) {
+				for($p = 0; $p < 7; $p++) {
 					$primary = $context['TPortal'][$all[$p]];
 					if(in_array($all2[$p], $context['TPortal']['article']['visual_options'])) {
 						$secondary = 1;
@@ -619,8 +620,8 @@ function doTPpage()
 				// the article should follow panel settngs from category?
 				if(in_array('inherit', $context['TPortal']['article']['visual_options'])) {
 					// set bars on/off according to options, setting override
-					$all=array('upperpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-					for($p = 0; $p < 5; $p++) {
+					$all = array('upperpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
+					for($p = 0; $p < 6; $p++) {
 						if(isset($cat_opts[$all[$p]])) {
 							$context['TPortal'][$all[$p]] = $cat_opts[$all[$p]];
                         }
@@ -830,7 +831,7 @@ function doTPcat()
 
 				// set bars on/off according to options, setting override
 				$all = array('centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
-				for($p = 0; $p < 5; $p++) {
+				for($p = 0; $p < 6; $p++) {
 					if(isset($options[$all[$p]]) && $context['TPortal'][$all[$p]] == 1) {
 						$context['TPortal'][$all[$p]] = 1;
                     }

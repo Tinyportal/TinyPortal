@@ -1192,6 +1192,14 @@ function template_settings()
                     }
 					echo '
 					<dt>
+						<label for="field_name">', $txt['tp-disabletemplateeval'], '</label>
+						<div class="smalltext">' , $txt['tp-disabletemplateevaldesc'] , '</div>
+					</dt>
+					<dd>
+                        <input name="tp_disable_template_eval" type="radio" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+                        <input name="tp_disable_template_eval" type="radio" value="0" ' , $context['TPortal']['disable_template_eval']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+					</dd>
+                    <dt>
 						<label for="field_name">', $txt['tp-copyrightremoval'], '</label>
 						<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
 					</dt>
