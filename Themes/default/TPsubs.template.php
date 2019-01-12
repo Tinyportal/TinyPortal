@@ -1478,214 +1478,315 @@ function article_renders($type = 1, $single = false, $first = false)
 /* ********************************************** */
 /* these are the prototype functions that can be called from an article template */
 function article_edit() { return; }
-function article_date($render=true)
+function article_date($render = true)
 {
 	global $context;
 
-	if(in_array('date',$context['TPortal']['article']['visual_options']))
-	echo '
-		<span class="article_date"> ' . (timeformat($context['TPortal']['article']['date'])) . '</span>';
-	else
-		echo '';
+	$data = '';
+	if(in_array('date',$context['TPortal']['article']['visual_options'])) {
+	    $data =  '<span class="article_date"> ' . (timeformat($context['TPortal']['article']['date'])) . '</span>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_iconcolumn($render = true)
 {
 	global $context, $settings;
 
-	if(!empty($context['TPortal']['article']['avatar']))
-		echo '
-	<div style="overflow: hidden;">
-		' . $context['TPortal']['article']['avatar'] . '
-	</div>';
-	else
-		echo '
-	<div style="overflow: hidden;">
-		<img src="' . $settings['tp_images_url'] . '/TPnoimage' . (isset($context['TPortal']['article']['boardnews']) ? '_forum' : '') . '.png" alt="" />
-	</div>';
+	if(!empty($context['TPortal']['article']['avatar'])) {
+		$data = '
+        <div style="overflow: hidden;">
+            ' . $context['TPortal']['article']['avatar'] . '
+        </div>';
+    }
+	else {
+        $data = '
+        <div style="overflow: hidden;">
+            <img src="' . $settings['tp_images_url'] . '/TPnoimage' . (isset($context['TPortal']['article']['boardnews']) ? '_forum' : '') . '.png" alt="" />
+        </div>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_picturecolumn($render = true)
 {
 	global $context, $settings, $boardurl;
 
-	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews']))
-		echo '
+	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews'])) {
+		$data = '
 	<div class="article_picture" style="background-image: url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ');"></div>';
-	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1))
-		echo '
-	<div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
-	else
-		echo '
+    }
+	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1)) {
+		$data = '
+	    <div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
+	}
+    else {
+		$data = '
 	<div class="article_picture" style="background-image: url(' . $settings['tp_images_url'] . '/TPno_illustration.png);"></div>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_shortdate($render = true)
 {
 	global $context;
 
-	if(in_array('date',$context['TPortal']['article']['visual_options']))
-		echo '
-		<span class="article_shortdate">' . tptimeformat($context['TPortal']['article']['date'], true, '%d %b %Y').' - </span>';
-	else
-		echo '';
+    $data = '';
+
+	if(in_array('date',$context['TPortal']['article']['visual_options'])) {
+		$data = '<span class="article_shortdate">' . tptimeformat($context['TPortal']['article']['date'], true, '%d %b %Y').' - </span>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_boardnews($render = true)
 {
 	global $context, $scripturl, $txt;
 
-	if(!isset($context['TPortal']['article']['replies']))
+	if(!isset($context['TPortal']['article']['replies'])) {
 		return;
+    }
 
-	echo '
+	$data = '
 		<div class="article_boardnews">
 			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '.0">' . $context['TPortal']['article']['replies'] . ' ' . ($context['TPortal']['article']['replies'] == 1 ? $txt['ssi_comment'] : $txt['ssi_comments']) . '</a>';
-	if($context['TPortal']['article']['locked'] == 0 && !$context['user']['is_guest'])
-		echo '
+	if($context['TPortal']['article']['locked'] == 0 && !$context['user']['is_guest']) {
+		$data .= '
 			&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?action=post;topic=' . $context['TPortal']['article']['id'] . '.' . $context['TPortal']['article']['replies'] . ';num_replies=' . $context['TPortal']['article']['replies'] . '">' . $txt['ssi_write_comment']. '</a>';
+    }
 
-	echo '
+	$data .= '
 		</div>';
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_author($render = true)
 {
 	global $scripturl, $txt, $context;
 
-	if(in_array('author', $context['TPortal']['article']['visual_options']))
-	{
-		if($context['TPortal']['article']['date_registered'] > 1000)
-			echo '
+    $data = '';
+
+	if(in_array('author', $context['TPortal']['article']['visual_options'])) {
+		if($context['TPortal']['article']['date_registered'] > 1000) {
+			$data = '
 		'. $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a>';
-		else
-			echo '&nbsp;
+        }
+		else {
+			$data = '&nbsp;
 		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['real_name'];
+        }
 	}
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_views($render = true)
 {
 	global $txt, $context;
 
-	if(in_array('views',$context['TPortal']['article']['visual_options']))
-		echo '
-		<span class="article_views">' . $context['TPortal']['article']['views'] . ' ' . $txt['tp-views'] . '</span>';
-	else
-		echo '';
+    $data = '';
 
+	if(in_array('views',$context['TPortal']['article']['visual_options'])) {
+		$data = '
+		<span class="article_views">' . $context['TPortal']['article']['views'] . ' ' . $txt['tp-views'] . '</span>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_title($render = true)
 {
 	global $scripturl, $context;
 
-	if(in_array('title',$context['TPortal']['article']['visual_options']))
-	{
-		if(isset($context['TPortal']['article']['boardnews']))
-			echo '
+    $data = '';
+
+	if(in_array('title',$context['TPortal']['article']['visual_options'])) {
+		if(isset($context['TPortal']['article']['boardnews'])) {
+			$data = '
 		<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '">' . $context['TPortal']['article']['subject'] . '</a>';
-		else
-			echo '
+		}
+        else {
+			$data = '
 		<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' . $context['TPortal']['article']['subject'] . '</a>';
+        }
 	}
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
-function article_category($render=true)
+function article_category($render = true)
 {
 	global $scripturl, $txt, $context;
 
+    $data = '';
+
 	$catNameOrId = !empty($context['TPortal']['article']['category_shortname']) ? $context['TPortal']['article']['category_shortname'] : $context['TPortal']['article']['category'];
 
-	if(!empty($context['TPortal']['article']['category_name']))
-	{
-		if(isset($context['TPortal']['article']['boardnews']))
-			echo '
+	if(!empty($context['TPortal']['article']['category_name'])) {
+		if(isset($context['TPortal']['article']['boardnews'])) {
+			$data = '
 		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?board=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
-		else
-			echo '
+        }
+		else {
+			$data = '
 		<span class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?cat=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></span>';
+        }
 	}
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_lead($render = true)
 {
 	global $context;
 
-	if(in_array('lead',$context['TPortal']['article']['visual_options']))
-		echo '
-	<div class="article_lead">' . tp_renderarticle('intro') . '</div>';
-	else
-		echo '';
+    $data = '';
 
+	if(in_array('lead',$context['TPortal']['article']['visual_options'])) {
+		$data = '<div class="article_lead">' . tp_renderarticle('intro') . '</div>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
-function article_options($render=true)
+function article_options($render = true)
 {
 	global $scripturl, $txt, $context;
 
-	echo '';
-	if(!isset($context['TPortal']['article']['boardnews']))
-	{
+    $data = '';
+	if(!isset($context['TPortal']['article']['boardnews'])) {
 		// give 'em a edit link? :)
-		if(allowedTo('tp_articles') && $context['TPortal']['hide_editarticle_link']=='0')
-			echo '
+		if(allowedTo('tp_articles') && $context['TPortal']['hide_editarticle_link']=='0') {
+			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
+        }
 		// their own article?
-		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['author_id'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0')
-			echo '
+		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['author_id'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0') {
+			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
-		else
-			echo '';
+        }
 
 	}
-	if($context['TPortal']['print_articles'] == 0 )
-		echo '';
-	else
-	{
-		if(isset($context['TPortal']['article']['boardnews']) && !$context['user']['is_guest'])
-			echo '
+
+	if($context['TPortal']['print_articles'] != 0 ) {
+		if(isset($context['TPortal']['article']['boardnews']) && !$context['user']['is_guest']) {
+			$data .= '
 		<span class="article_rating"><a href="' . $scripturl . '?action=printpage;topic=' . $context['TPortal']['article']['id'] . '">' . $txt['print_page'] . '</a></span>';
-		elseif (!$context['user']['is_guest'])
-			echo '
+        }
+		elseif (!$context['user']['is_guest']) {
+			$data .= '
 		<span class="article_rating"><a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . ';print">' . $txt['tp-print'] . '</a></span>';
+        }
 	}
 
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_text($render = true)
 {
-	echo '
-	<div class="article_bodytext">' . tp_renderarticle() . '</div>';
+	$data = '<div class="article_bodytext">' . tp_renderarticle() . '</div>';
 
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_rating($render = true)
 {
 	global $context;
 
-	if(in_array('rating',$context['TPortal']['article']['visual_options']))
-	{
-		if(!empty($context['TPortal']['article']['voters']))
-			echo '
-		<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], count(explode(',', $context['TPortal']['article']['voters'])), $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
-		else
-			echo '
-		<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], 0, $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
-	}
-	else
-		echo '';
+    $data = '';
 
+	if(in_array('rating',$context['TPortal']['article']['visual_options'])) {
+		if(!empty($context['TPortal']['article']['voters'])) {
+			$data = '<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], count(explode(',', $context['TPortal']['article']['voters'])), $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
+		}
+        else {
+			 $data = '<span class="article_rating">' . (render_rating($context['TPortal']['article']['rating'], 0, $context['TPortal']['article']['id'], (isset($context['TPortal']['article']['can_rate']) ? $context['TPortal']['article']['can_rate'] : false))) . '</span>';
+        }
+	}
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_moreauthor($render = true)
 {
 	global $scripturl, $txt, $context;
 
+    $data = '';
+
 	if(in_array('avatar', $context['TPortal']['article']['visual_options'])) {
-		echo '<div class="windowbg2">';
+		$data .= '<div class="windowbg2">';
 		if( $context['TPortal']['article']['date_registered'] > 1000 ) {
-			echo '
+			$data .= '
                 <div class="article_authorinfo tp_pad">
                     <h2 class="author_h2">'.$txt['tp-authorinfo'].'</h2>
                     ' . ( !empty($context['TPortal']['article']['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a>' : '') . '
@@ -1696,7 +1797,7 @@ function article_moreauthor($render = true)
                 </div><br>';
         }
 		else {
-			echo '
+			$data .= '
                 <div class="article_authorinfo tp_pad">
                     <h3>'.$txt['tp-authorinfo'].'</h3>
                     <div class="authortext">
@@ -1704,77 +1805,86 @@ function article_moreauthor($render = true)
                     </div>
                 </div>';
         }
-		echo '</div>';
+		$data .= '</div>';
 	}
-	else {
-		echo '';
-    }
 
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_avatar($render = true)
 {
 	global $scripturl, $context;
 
-	if(in_array('avatar', $context['TPortal']['article']['visual_options']))
-		echo (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
-	else
-		echo '';
+    $data = '';
 
+	if(in_array('avatar', $context['TPortal']['article']['visual_options'])) {
+		$data = (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 function article_bookmark($render = true)
 {
 	global $scripturl, $settings, $context;
 
-	if(in_array('social',$context['TPortal']['article']['visual_options']))
-	{
-		echo '
+    $data = '';
+
+	if(in_array('social',$context['TPortal']['article']['visual_options'])) {
+		$data .= '
 	<div style="margin: 1px 0; padding-bottom: 1em;">
 		<div class="article_socialbookmark">';
-		if ($context['TPortal']['hide_article_facebook']=='0')
-		{
-			echo '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
+		if ($context['TPortal']['hide_article_facebook']=='0') {
+		    $data .= '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_twitter']=='0')
-		{
-			echo '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
+		if ($context['TPortal']['hide_article_twitter']=='0') {
+			$data .= '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_google']=='0' && time() < strtotime('2019-04-01 00:00:00'))
-		{
-			echo '<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>';
+		if ($context['TPortal']['hide_article_google']=='0' && time() < strtotime('2019-04-01 00:00:00')) {
+			$data .= '<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>';
 		}
-		if ($context['TPortal']['hide_article_reddit']=='0')
-		{
-			echo '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
+		if ($context['TPortal']['hide_article_reddit']=='0') {
+			$data .= '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
 		}
-		if ($context['TPortal']['hide_article_digg']=='0')
-		{
-			echo '<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img class="tp_social" title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
+		if ($context['TPortal']['hide_article_digg']=='0') {
+			$data .= '<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img class="tp_social" title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_delicious']=='0')
-		{
-			echo '<a href="http://del.icio.us/post?url=' . $scripturl.'?page=' . $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>';
+		if ($context['TPortal']['hide_article_delicious']=='0') {
+			$data .= '<a href="http://del.icio.us/post?url=' . $scripturl.'?page=' . $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>';
 		}
-		if ($context['TPortal']['hide_article_stumbleupon']=='0')
-		{
-			echo '<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/stumbleupon.png" alt="StumbleUpon" title="Stumbleupon" /></a>';
+		if ($context['TPortal']['hide_article_stumbleupon']=='0') {
+			$data .= '<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/stumbleupon.png" alt="StumbleUpon" title="Stumbleupon" /></a>';
 		}
-			echo'
+			$data .='
 		</div>
 	</div>';
 	}
-	else
-		echo '';
 
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function article_comments($render = true)
 {
 	global $scripturl, $txt, $settings, $context, $forum_version;
 
-	if(in_array('comments', $context['TPortal']['article']['visual_options']))
-	{
-		echo '
+    $data = '';
+
+	if(in_array('comments', $context['TPortal']['article']['visual_options'])) {
+		$data .= '
 	<a name="tp-comment">
 	<div></div>
 	<h2 class="titlebg" style="padding: 0 1em; border-top: solid 1px #ccc;">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
@@ -1782,62 +1892,69 @@ function article_comments($render = true)
 		<div style="padding: 1em;">';
 
 		$counter = 1;
-		if(isset($context['TPortal']['article']['comment_posts']))
-		{
-			foreach($context['TPortal']['article']['comment_posts'] as $comment)
-			{
-				echo '
+		if(isset($context['TPortal']['article']['comment_posts'])) {
+			foreach($context['TPortal']['article']['comment_posts'] as $comment) {
+				$data .= '
 					<div style="margin-bottom:8px;" class="' . ($context['TPortal']['article']['author_id']!=$comment['poster_id'] ? 'mycomment' : 'othercomment') . '">
 					<a id="comment'.$comment['id'].'"></a>';
 				// can we edit the comment or are the owner of it?
-				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
-					echo '
-						<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
+				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest']) {
+					$data .= '<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
+                }
 				// not a guest
-				if ($comment['poster_id'] > 0)
-					echo '	
+				if ($comment['poster_id'] > 0) {
+					$data .= '	
 					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>';
-				echo '
+                }
+				$data .= '
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
 					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
 					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
-				if ($comment['poster_id'] > 0)
-					echo '					
+				if ($comment['poster_id'] > 0) {
+					$data .= '					
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
-				else
-					echo '
+				}
+                else {
+					$data .= '
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>';
-				echo '	
+                }
+				$data .= '	
 					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
-				echo '
+				$data .= '
 				</div>';
 			}
 		}
-		echo '
+		$data .= '
 			</div></div>';
 	}
 
-		if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
-		{
-				echo '
+	if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) {
+		$data .= '
 			<div class="tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
 ';
 
-				echo '
+		$data .= '
 						<div style="padding:1%;"><input id="tp_article_comment_submit" type="submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
 						<input name="tp_article_type" type="hidden" value="article_comment">
 						<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
 						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
 				</form>
 			</div>';
-		}
-
-	elseif (in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment']))
-			echo '
+	}
+	elseif (in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) {
+		$data .= '
 			<div style="padding: 1ex;" class="windowbg"><em>' . $txt['tp-cannotcomment'] . '</em></div>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 
 }
 
@@ -1845,26 +1962,30 @@ function article_morelinks($render = true)
 {
 	global $scripturl, $txt, $context;
 
-	if(in_array('category',$context['TPortal']['article']['visual_options']))
-	{
-		echo '';
-		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others']))
-		{
-			echo '
+    $data = '';
+
+	if(in_array('category',$context['TPortal']['article']['visual_options'])) {
+		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others'])) {
+			$data .= '
 	<h2 class="titlebg" style="padding: 0 1em; border-top: solid 1px #ccc;"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
 	<div style="overflow: hidden;">
 		<ul style="margin: 0; padding: 1em 2em;">';
-			foreach($context['TPortal']['article']['others'] as $art)
-				echo '
+			foreach($context['TPortal']['article']['others'] as $art) {
+				$data .= '
 			<li' . (isset($art['selected']) ? ' class="selected"' : '') . '><a href="' . $scripturl . '?page=' . (!empty($art['shortname']) ? $art['shortname'] : $art['id']) . '">' . html_entity_decode($art['subject']) . '</a></li>';
-			echo '
+            }
+			$data .= '
 		</ul>
 	</div>';
 		}
 	}
-	else
-		echo '';
 
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
 }
 
 function render_rating($total, $votes, $id, $can_rate = false)
