@@ -2137,8 +2137,7 @@ function template_strays()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-uncategorised2'] . '</h3></div>
 		<div id="uncategorized" class="admintable admin-area">
 				<div class="information smalltext">' , $txt['tp-helpstrays'] , '</div><div></div>';
-	if(isset($context['TPortal']['arts_nocat']))
-	{
+	if(isset($context['TPortal']['arts_nocat'])) {
 		echo '
 				<div class="windowbg noup padding-div">
 					<div>
@@ -2165,8 +2164,7 @@ function template_strays()
 		</thead>
 		<tbody>';
 
-		foreach($context['TPortal']['arts_nocat'] as $a => $alink)
-		{
+		foreach($context['TPortal']['arts_nocat'] as $a => $alink) {
 			$alink['pos'] = $alink['pos']=='' ? 0 : $alink['pos'];
 			$catty = $alink['category'];
 
@@ -2234,22 +2232,23 @@ function template_strays()
 	echo '
 		</tbody>
 	</table>';
-			if( !empty($context['TPortal']['pageindex']))
+			if( !empty($context['TPortal']['pageindex'])) {
 				echo '
 								<div class="middletext padding-div">
 									'.$context['TPortal']['pageindex'].'
 								</div>';
+            }
 			echo '
 						</div>';
 
-		if(isset($context['TPortal']['allcats']))
-		{
+		if(isset($context['TPortal']['allcats'])) {
 			echo '	<p style="text-align: right;padding:1%;max-width:100%;">
 							<select name="tp_article_cat">
 								<option value="0">' . $txt['tp-createnew'] . '</option>';
-			foreach($context['TPortal']['allcats'] as $submg)
+			foreach($context['TPortal']['allcats'] as $submg) {
   					echo '
-								<option value="'.$submg['id'].'">',  $submg['indent']>1 ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
+								<option value="'.$submg['id'].'">',  ( isset($submg['indent']) && $submg['indent'] > 1 ) ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
+            }
 			echo '
 							</select>
 							<input name="tp_article_new" value="" size="40"  /> &nbsp;
@@ -2259,12 +2258,12 @@ function template_strays()
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>';
 	}
-	else
+	else {
 		echo '
 				<div class="windowbg2">
 					<div class="windowbg3"></div>
 				</div>';
-
+    }
 	echo '
 		</div>
 	</form>';
