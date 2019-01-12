@@ -26,6 +26,7 @@ $xpath = new DOMXPath($html); // So we can use XPath...
 return($xpath->query("//*[@id='$id']")->item(0)); // Return the first item in element matching our id.
 
 }
+
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
@@ -40,55 +41,47 @@ function template_main()
 	$go = isset($context['TPortal']['subaction']) ? 'template_' . $context['TPortal']['subaction'] : '';
 
 	// some extraction..
-	if(substr($go,0,20) == 'template_editarticle')
-	{
+	if(substr($go,0,20) == 'template_editarticle') {
 		$go = 'template_editarticle';
 		$param = '';
 	}
-	elseif(substr($go,0,20) == 'template_addarticle_')
-	{
+	elseif(substr($go,0,20) == 'template_addarticle_') {
 		$go = 'template_editarticle';
 		$param = substr($go,20);
 	}
-	elseif($go == 'template_addarticle')
-	{
+	elseif($go == 'template_addarticle') {
 		$go = 'template_editarticle';
 		$param = 'html';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['latest']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['latest'])) {
 		$go = 'template_latestblocks';
 		$param = 'html';
 	}
-	elseif($go == 'template_credits')
-	{
+	elseif($go == 'template_credits') {
 		$go = 'template_tpcredits';
 		$param = '';
 	}
-	elseif($go == 'template_categories' && !empty($_GET['cu']) && is_numeric($_GET['cu']))
-	{
+	elseif($go == 'template_categories' && !empty($_GET['cu']) && is_numeric($_GET['cu'])) {
 		$go = 'template_editcategory';
 		$param = '';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['blockedit']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['blockedit'])) {
 		$go = 'template_blockedit';
 		$param = '';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['overview']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['overview'])) {
 		$go = 'template_blockoverview';
 		$param = '';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['addblock']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['addblock'])) {
 		$go = 'template_addblock';
 		$param = '';
 	}
-	else
+	else {
 		$param = '';
+    }
 
-	call_user_func($go,$param);
+	call_user_func($go, $param);
 
 	echo '
 		</div><p class="clearthefloat"></p>
