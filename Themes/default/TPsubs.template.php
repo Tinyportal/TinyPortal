@@ -1184,7 +1184,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		$code = '
 	<div style="overflow: hidden;">
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
-		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_shortdate} {article_title} </h3>
+		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
 		<div></div>
 		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
