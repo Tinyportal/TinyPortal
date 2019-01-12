@@ -45,7 +45,7 @@ function template_main_nolayer()
 {
 	global $context;
 
-	tp_renderarticle($context['TPortal']['article']);
+	echo tp_renderarticle($context['TPortal']['article']);
 }
 
 // the frontpage template

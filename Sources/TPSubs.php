@@ -1674,7 +1674,9 @@ function tp_renderarticle($intro = '')
 	// use intro!
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro)) {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
-			$data .= eval(tp_convertphp($context['TPortal']['article']['intro'], true));
+            ob_start();
+			eval(tp_convertphp($context['TPortal']['article']['intro'], true));
+            $data .= ob_get_clean();
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
             if(TPUtil::isHTML($context['TPortal']['article']['intro'])) {
@@ -1691,7 +1693,9 @@ function tp_renderarticle($intro = '')
 	}
 	else {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
+            ob_start();
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
+            $data .= ob_get_clean();
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc') {
             if(TPUtil::isHTML($context['TPortal']['article']['body'])) {
