@@ -3021,8 +3021,7 @@ function do_postchecks()
 				redirectexit('action=tpadmin;sa=blocks');
 		}
 		// from editing block
-		elseif($from == 'blockedit')
-		{
+		elseif($from == 'blockedit') {
 			checkSession('post');
 			isAllowedTo('tp_blocks');
 
@@ -3409,8 +3408,9 @@ function do_postchecks()
 			return $from;
 		}
 	}
-	else
+	else {
 		return;
+    }
 }
 
 function get_langfiles()

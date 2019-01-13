@@ -1068,16 +1068,13 @@ function doTPfrontpage()
 	switch($context['TPortal']['front_type']) {
         case 'articles_only': 
 		// first, get all available
-		$artgroups = '';
 		if(!$context['user']['is_admin']) {
             global $db_type;
             if($db_type == 'mysql') {
 			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
             }
             else {
-                foreach($user_info['groups'] as $k => $v) {
-                    $artgroups .= "AND '$v' = ANY (string_to_array(var.value3, ',' ) )";
-                }
+			    $artgroups = 'AND ( \''. implode('\' = ANY (string_to_array( var.value3, \',\' )) OR \'', $user_info['groups']) . '\' = ANY (string_to_array(var.value3, \',\')))';
             }
         }
 
@@ -1359,9 +1356,7 @@ function doTPfrontpage()
 			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
             }
             else {
-                foreach($user_info['groups'] as $k => $v) {
-                    $artgroups .= "AND '$v' = ANY (string_to_array(var.value3, ',' ) )";
-                }
+			    $artgroups = 'AND ( \''. implode('\' = ANY (string_to_array( var.value3, \',\' )) OR \'', $user_info['groups']) . '\' = ANY (string_to_array(var.value3, \',\')))';
             }
         }
 

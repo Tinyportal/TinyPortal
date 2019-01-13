@@ -26,6 +26,7 @@ $xpath = new DOMXPath($html); // So we can use XPath...
 return($xpath->query("//*[@id='$id']")->item(0)); // Return the first item in element matching our id.
 
 }
+
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
@@ -40,55 +41,47 @@ function template_main()
 	$go = isset($context['TPortal']['subaction']) ? 'template_' . $context['TPortal']['subaction'] : '';
 
 	// some extraction..
-	if(substr($go,0,20) == 'template_editarticle')
-	{
+	if(substr($go,0,20) == 'template_editarticle') {
 		$go = 'template_editarticle';
 		$param = '';
 	}
-	elseif(substr($go,0,20) == 'template_addarticle_')
-	{
+	elseif(substr($go,0,20) == 'template_addarticle_') {
 		$go = 'template_editarticle';
 		$param = substr($go,20);
 	}
-	elseif($go == 'template_addarticle')
-	{
+	elseif($go == 'template_addarticle') {
 		$go = 'template_editarticle';
 		$param = 'html';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['latest']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['latest'])) {
 		$go = 'template_latestblocks';
 		$param = 'html';
 	}
-	elseif($go == 'template_credits')
-	{
+	elseif($go == 'template_credits') {
 		$go = 'template_tpcredits';
 		$param = '';
 	}
-	elseif($go == 'template_categories' && !empty($_GET['cu']) && is_numeric($_GET['cu']))
-	{
+	elseif($go == 'template_categories' && !empty($_GET['cu']) && is_numeric($_GET['cu'])) {
 		$go = 'template_editcategory';
 		$param = '';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['blockedit']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['blockedit'])) {
 		$go = 'template_blockedit';
 		$param = '';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['overview']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['overview'])) {
 		$go = 'template_blockoverview';
 		$param = '';
 	}
-	elseif($go == 'template_blocks' && isset($_GET['addblock']))
-	{
+	elseif($go == 'template_blocks' && isset($_GET['addblock'])) {
 		$go = 'template_addblock';
 		$param = '';
 	}
-	else
+	else {
 		$param = '';
+    }
 
-	call_user_func($go,$param);
+	call_user_func($go, $param);
 
 	echo '
 		</div><p class="clearthefloat"></p>
@@ -2137,8 +2130,7 @@ function template_strays()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-uncategorised2'] . '</h3></div>
 		<div id="uncategorized" class="admintable admin-area">
 				<div class="information smalltext">' , $txt['tp-helpstrays'] , '</div><div></div>';
-	if(isset($context['TPortal']['arts_nocat']))
-	{
+	if(isset($context['TPortal']['arts_nocat'])) {
 		echo '
 				<div class="windowbg noup padding-div">
 					<div>
@@ -2165,8 +2157,7 @@ function template_strays()
 		</thead>
 		<tbody>';
 
-		foreach($context['TPortal']['arts_nocat'] as $a => $alink)
-		{
+		foreach($context['TPortal']['arts_nocat'] as $a => $alink) {
 			$alink['pos'] = $alink['pos']=='' ? 0 : $alink['pos'];
 			$catty = $alink['category'];
 
@@ -2234,22 +2225,23 @@ function template_strays()
 	echo '
 		</tbody>
 	</table>';
-			if( !empty($context['TPortal']['pageindex']))
+			if( !empty($context['TPortal']['pageindex'])) {
 				echo '
 								<div class="middletext padding-div">
 									'.$context['TPortal']['pageindex'].'
 								</div>';
+            }
 			echo '
 						</div>';
 
-		if(isset($context['TPortal']['allcats']))
-		{
+		if(isset($context['TPortal']['allcats'])) {
 			echo '	<p style="text-align: right;padding:1%;max-width:100%;">
 							<select name="tp_article_cat">
 								<option value="0">' . $txt['tp-createnew'] . '</option>';
-			foreach($context['TPortal']['allcats'] as $submg)
+			foreach($context['TPortal']['allcats'] as $submg) {
   					echo '
-								<option value="'.$submg['id'].'">',  $submg['indent']>1 ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
+								<option value="'.$submg['id'].'">',  ( isset($submg['indent']) && $submg['indent'] > 1 ) ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
+            }
 			echo '
 							</select>
 							<input name="tp_article_new" value="" size="40"  /> &nbsp;
@@ -2259,12 +2251,12 @@ function template_strays()
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>';
 	}
-	else
+	else {
 		echo '
 				<div class="windowbg2">
 					<div class="windowbg3"></div>
 				</div>';
-
+    }
 	echo '
 		</div>
 	</form>';

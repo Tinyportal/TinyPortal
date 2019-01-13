@@ -1662,50 +1662,56 @@ function tp_renderarticle($intro = '')
 	global $context, $txt, $scripturl, $boarddir, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
+    $data = '';
+
 	// just return if data is missing
 	if(!isset($context['TPortal']['article'])) {
 		return;
     }
 
-	echo '
+	$data .= '
 	<div class="article_inner">';
 	// use intro!
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro)) {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
-			echo eval(tp_convertphp($context['TPortal']['article']['intro'], true));
+            ob_start();
+			eval(tp_convertphp($context['TPortal']['article']['intro'], true));
+            $data .= ob_get_clean();
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
             if(TPUtil::isHTML($context['TPortal']['article']['intro'])) {
-			    echo $context['TPortal']['article']['intro'];
+			    $data .= $context['TPortal']['article']['intro'];
             } 
             else {
-                echo parse_bbc($context['TPortal']['article']['intro']);
+                $data .= parse_bbc($context['TPortal']['article']['intro']);
             }			
 		}
 		else {
-			echo $context['TPortal']['article']['intro'];
+			$data .= $context['TPortal']['article']['intro'];
 		}
-        echo '<p class="tp_readmore"><b><a href="' .$scripturl . '?page=' , !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] , '' , ( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' , '">'.$txt['tp-readmore'].'</a></b></p>';
+        $data .= '<p class="tp_readmore"><b><a href="' .$scripturl . '?page='. ( !empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id'] ) . '' . (( defined('WIRELESS') && WIRELESS ) ? ';' . WIRELESS_PROTOCOL : '' ). '">'.$txt['tp-readmore'].'</a></b></p>';
 	}
 	else {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
+            ob_start();
 			eval(tp_convertphp($context['TPortal']['article']['body'], true));
+            $data .= ob_get_clean();
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc') {
             if(TPUtil::isHTML($context['TPortal']['article']['body'])) {
-			    echo $context['TPortal']['article']['body'];
+			    $data .= $context['TPortal']['article']['body'];
             } 
             else {
-			    echo parse_bbc($context['TPortal']['article']['body']);
+			    $data .= parse_bbc($context['TPortal']['article']['body']);
             }
 
             if(!empty($context['TPortal']['article']['readmore'])) {
-                echo $context['TPortal']['article']['readmore'];
+                $data .= $context['TPortal']['article']['readmore'];
             }
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'import') {
 			if(!file_exists($boarddir. '/' . $context['TPortal']['article']['fileimport'])) {
-				echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
+				$data .= '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
             }
 			else {
 				include($context['TPortal']['article']['fileimport']);
@@ -1730,11 +1736,11 @@ function tp_renderarticle($intro = '')
 					},
 				$post);
 			}
-			echo $post;
+			$data .= $post;
 		}
 	}
-	echo '</div> <!-- article_inner -->';
-	return;
+	$data .= '</div> <!-- article_inner -->';
+	return $data;
 }
 
 function tp_renderblockarticle()
@@ -1774,10 +1780,8 @@ function render_template($code, $render = true)
         if(preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match) !== false) {
             foreach($match[0] as $func) {
                 if(function_exists($func)) {
-                    ob_start();
-                    $func();
-                    $output = ob_get_clean();
-                    $code = str_replace( '{'.$func.'}', $output, $code);
+                    $output = $func(false);
+                    $code   = str_replace( '{'.$func.'}', $output, $code);
                 }
             }
             echo $code;

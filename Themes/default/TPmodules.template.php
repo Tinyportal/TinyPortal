@@ -621,15 +621,16 @@ function template_submitarticle()
 
 			$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 
-			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
+			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc'])) {
 				TPwysiwyg('tp_article_body', '', true,'qup_tp_article_body', $tp_use_wysiwyg);
-
-			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
+            }
+			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc'])) {
 				echo '
 					<textarea name="tp_article_body" id="tp_article_body" wrap="auto"></textarea><br>';
-
-			elseif(isset($context['TPortal']['submitbbc']))
+            }
+			elseif(isset($context['TPortal']['submitbbc'])) {
 				TP_bbcbox($context['TPortal']['editor_id']);
+            }
 
 			echo '
 				<hr>
@@ -645,15 +646,16 @@ function template_submitarticle()
 				<div id="tp_article_show_intro" style="display:none;">' ,
                     '<div class="font-strong">' . $txt['tp-artintrotext']. '</div>';
 
-			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc']))
+			if($tp_use_wysiwyg > 0 && !isset($context['TPortal']['submitbbc'])) {
 				TPwysiwyg('tp_article_intro', '', true,'qup_tp_article_intro', $tp_use_wysiwyg, false);
-
-			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc']))
+            }
+			elseif($tp_use_wysiwyg == 0 && !isset($context['TPortal']['submitbbc'])) {
 				echo '
 					<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
-
-			elseif(isset($context['TPortal']['submitbbc']))
+            }
+			elseif(isset($context['TPortal']['submitbbc'])) {
 				echo '<textarea name="tp_article_intro" id="tp_article_intro" wrap="auto"></textarea><br>';
+            }
 
 				echo '
 					</div>
