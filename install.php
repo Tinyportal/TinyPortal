@@ -970,8 +970,8 @@ function updateComments()
 
     // Remove the article comments
     $request =  $smcFunc['db_query']('', '
-        DELETE FROM {db_prefix}tp_variables AS var
-        WHERE var.type = {string:type}',
+        DELETE FROM {db_prefix}tp_variables
+        WHERE type = {string:type}',
         array (
             'type' => 'article_comment',
         )
