@@ -31,9 +31,9 @@ class TPMentions extends TPBase {
     {
         // Mentions
         if (!empty($this->modSettings['enable_mentions']) && allowedTo('mention')) {
-            loadJavaScriptFile('jquery.atwho.min.js', array('defer' => true), 'smf_atwho');
-            loadJavaScriptFile('jquery.caret.min.js', array('defer' => true), 'smf_caret');
-            loadJavaScriptFile('shoutMentions.js', array('defer' => true, 'minimize' => false), 'smf_mentions');
+            loadJavaScriptFile('jquery.atwho.min.js',           array('defer' => true, 'minimize' => false), 'tp_atwho');
+            loadJavaScriptFile('jquery.caret.min.js',           array('defer' => true, 'minimize' => false), 'tp_caret');
+            loadJavaScriptFile('tinyportal/shoutMentions.js',   array('defer' => true, 'minimize' => false), 'tp_mentions');
         }
     }
 

@@ -60,7 +60,7 @@ var atwhoConfig = {
 };
 $(function()
 {
-	$('input[name=tp_shout]').atwho(atwhoConfig);
+	$('input[name=tp_shout], textarea').atwho(atwhoConfig);
 	$('.tp_shout').find('input').atwho(atwhoConfig);
 	var iframe = $('.tp_shout').find('iframe')[0];
 	if (typeof iframe != 'undefined')
