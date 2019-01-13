@@ -17,7 +17,7 @@
  *
  */
 
-define('TP_MINIMUM_PHP_VERSION', '7.0.0');
+define('TP_MINIMUM_PHP_VERSION', '5.6.0');
 
 global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type;
 $manual = false;
@@ -970,8 +970,8 @@ function updateComments()
 
     // Remove the article comments
     $request =  $smcFunc['db_query']('', '
-        DELETE FROM {db_prefix}tp_variables AS var
-        WHERE var.type = {string:type}',
+        DELETE FROM {db_prefix}tp_variables
+        WHERE type = {string:type}',
         array (
             'type' => 'article_comment',
         )
