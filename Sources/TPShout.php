@@ -460,10 +460,10 @@ function tpshout_admin()
 		updateTPSettings($changeArray, true);
 
 		if(empty($go)) {
-			redirectexit('action=tpadmin;shout=admin;settings');
+			redirectexit('action=tpshout;shout=admin;settings');
         }
 		else {
-			redirectexit('action=tpadmin;shout=admin');
+			redirectexit('action=tpshout;shout=admin');
         }
 	}
 
@@ -496,7 +496,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpadmin;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpadmin;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -518,7 +518,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpadmin;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpadmin;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -551,7 +551,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpadmin;shout=admin', $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpshout;shout=admin', $tpstart, $allshouts, 10,true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -571,11 +571,11 @@ function tpshout_admin()
 				'time' => timeformat($row['time']),
 				'ip' => $row['member_ip'],
 				'ID_MEMBER' => $row['member_id'],
-				'sort_member' => '<a href="'.$scripturl.'?action=tpadmin;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
+				'sort_member' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
 				'sticky' => $row['sticky'],
 				'sticky_layout' => $row['sticky_layout'],
-				'sort_ip' => '<a href="'.$scripturl.'?action=tpadmin;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
-				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpadmin;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
+				'sort_ip' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
+				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpshout;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
 		}
 		$smcFunc['db_free_result']($request);
@@ -587,12 +587,12 @@ function tpshout_admin()
 		$context['TPortal']['subtabs'] = array(
 			'shoutbox_settings' => array(
 				'text' => 'tp-settings',
-				'url' => $scripturl . '?action=tpadmin;shout=admin;settings',
+				'url' => $scripturl . '?action=tpshout;shout=admin;settings',
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
 			),
 			'shoutbox' => array(
 				'text' => 'tp-tabs10',
-				'url' => $scripturl . '?action=tpadmin;shout=admin',
+				'url' => $scripturl . '?action=tpshout;shout=admin',
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
 			),
 		);
