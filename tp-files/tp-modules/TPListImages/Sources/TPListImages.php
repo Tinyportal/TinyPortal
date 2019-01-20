@@ -5,7 +5,7 @@
  * @author tinoest
  * @license BSD 3
  *
- * Copyright (C) 2018 - tinoest
+ * Copyright (C) 2019 - tinoest
  *
  */
 
