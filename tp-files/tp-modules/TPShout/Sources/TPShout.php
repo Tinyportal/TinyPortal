@@ -897,6 +897,19 @@ function shout_smiley_code()
 	elseif ($user_info['smiley_set'] != 'none') {
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
 		{
+        if(strpos($forum_version, '2.1') === false) {
+			$request = $smcFunc['db_query']('', '
+			    SELECT code, filename, description, smiley_row, hidden
+				FROM {db_prefix}smileys
+				WHERE hidden IN ({int:val1}, {int:val2})
+				ORDER BY smiley_row, smiley_order',
+				array(
+                    'val1' => 0,
+				    'val2' => 2
+                )
+			);			
+		}
+		else {
 			$request = $smcFunc['db_query']('', '
 			    SELECT smiley.code, files.filename, smiley.description, smiley.smiley_row, smiley.hidden
 				FROM {db_prefix}smileys AS smiley
@@ -910,7 +923,8 @@ function shout_smiley_code()
 					'smiley_set' => $user_info['smiley_set']
 				)
 			);
-
+		}
+			
 		    while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['code'] = htmlspecialchars($row['code']);
