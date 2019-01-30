@@ -24,6 +24,10 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
+// Backwards compatible check for Forum Version
+global $forum_version;
+$forum_version = SMF_FULL_VERSION;
+
 // TinyPortal init
 function TPortal_init()
 {
