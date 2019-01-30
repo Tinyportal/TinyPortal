@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2018 - The TinyPortal Team
+ * Copyright (C) 2019 - The TinyPortal Team
  *
  */
 
@@ -115,7 +115,7 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="http://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 2.0.0">&copy; 2005-2018</a>';
+	$string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 2.0.0">&copy; 2005-2018</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
@@ -151,12 +151,12 @@ function tpAddCopy($buffer)
     }
     else {
         if(strpos($forum_version, '2.1') !== false) {
-            $find       = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
-            $replace    = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
+            $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
+            $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
 	    } 
         else {
-            $find       = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
-		    $replace    = '<a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
+            $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
+		    $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
         }
 	    $buffer     = str_replace($find, $replace, $buffer);
     }
