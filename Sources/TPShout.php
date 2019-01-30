@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2018 - The TinyPortal Team
+ * Copyright (C) 2019 - The TinyPortal Team
  *
  */
 
@@ -460,10 +460,10 @@ function tpshout_admin()
 		updateTPSettings($changeArray, true);
 
 		if(empty($go)) {
-			redirectexit('action=tpadmin;shout=admin;settings');
+			redirectexit('action=tpshout;shout=admin;settings');
         }
 		else {
-			redirectexit('action=tpadmin;shout=admin');
+			redirectexit('action=tpshout;shout=admin');
         }
 	}
 
@@ -496,7 +496,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpadmin;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpadmin;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$memID.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;u='.$memID, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -518,7 +518,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpadmin;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpadmin;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = 'IP '.$ip.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;ip='.urlencode($ip) , $tpstart, $allshouts, 10,true);
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -551,7 +551,7 @@ function tpshout_admin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpadmin;shout=admin', $tpstart, $allshouts, 10,true);
+		$context['TPortal']['shoutbox_pageindex'] = TPageIndex($scripturl.'?action=tpshout;shout=admin', $tpstart, $allshouts, 10,true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -571,11 +571,11 @@ function tpshout_admin()
 				'time' => timeformat($row['time']),
 				'ip' => $row['member_ip'],
 				'ID_MEMBER' => $row['member_id'],
-				'sort_member' => '<a href="'.$scripturl.'?action=tpadmin;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
+				'sort_member' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
 				'sticky' => $row['sticky'],
 				'sticky_layout' => $row['sticky_layout'],
-				'sort_ip' => '<a href="'.$scripturl.'?action=tpadmin;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
-				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpadmin;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
+				'sort_ip' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
+				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpshout;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
 		}
 		$smcFunc['db_free_result']($request);
@@ -587,12 +587,12 @@ function tpshout_admin()
 		$context['TPortal']['subtabs'] = array(
 			'shoutbox_settings' => array(
 				'text' => 'tp-settings',
-				'url' => $scripturl . '?action=tpadmin;shout=admin;settings',
+				'url' => $scripturl . '?action=tpshout;shout=admin;settings',
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
 			),
 			'shoutbox' => array(
 				'text' => 'tp-tabs10',
-				'url' => $scripturl . '?action=tpadmin;shout=admin',
+				'url' => $scripturl . '?action=tpshout;shout=admin',
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
 			),
 		);
@@ -951,9 +951,8 @@ function shout_smiley_code()
         'popup' => array(),
     );
 
-    // Load smileys - don't bother to run a query if we're not using the database's ones anyhow.
-    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none') {
-        if(strpos($forum_version, '2.1') === false) {
+    // Load smileys - don't bother to run a query in 2.0 if we're not using the database's ones anyhow.
+    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none' && strpos($forum_version, '2.1') === false) {
             $context['tp_smileys']['postform'][] = array(
                 'smileys' => array(
                     array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
@@ -975,34 +974,11 @@ function shout_smiley_code()
                 ),
                 'last' => true,
             );
-        }
-        else {
-            $context['tp_smileys']['postform'][] = array(
-                'smileys' => array(
-                    array('code' => ':)', 'filename' => 'smiley', 'description' => $txt['icon_smiley']),
-                    array('code' => ';)', 'filename' => 'wink', 'description' => $txt['icon_wink']),
-                    array('code' => ':D', 'filename' => 'cheesy' , 'description' => $txt['icon_cheesy']),
-                    array('code' => ';D', 'filename' => 'grin' , 'description' => $txt['icon_grin']),
-                    array('code' => '>:(', 'filename' => 'angry' , 'description' => $txt['icon_angry']),
-                    array('code' => ':(', 'filename' => 'sad' , 'description' => $txt[ 'icon_sad']),
-                    array('code' => ':o', 'filename' => 'shocked' , 'description' => $txt['icon_shocked']),
-                    array('code' => '8)', 'filename' => 'cool' , 'description' => $txt[ 'icon_cool']),
-                    array('code' => '???', 'filename' => 'huh' , 'description' => $txt['icon_huh']),
-                    array('code' => '::)', 'filename' => 'rolleyes' , 'description' => $txt[ 'icon_rolleyes']),
-                    array('code' => ':P', 'filename' => 'tongue' , 'description' => $txt['icon_tongue']),
-                    array('code' => ':-[', 'filename' => 'embarrassed' , 'description' => $txt['icon_embarrassed']),
-                    array('code' => ':-X', 'filename' => 'lipsrsealed' , 'description' => $txt['icon_lips']),
-                    array('code' => ':-\\', 'filename' => 'undecided' , 'description' => $txt[ 'icon_undecided']),
-                    array('code' => ':-*', 'filename' => 'kiss' , 'description' => $txt['icon_kiss']),
-                    array('code' => ':\'(', 'filename' => 'cry' , 'description' => $txt['icon_cry'])
-                ),
-                'last' => true,
-            );
-        }
-  }
-  elseif ($user_info['smiley_set'] != 'none') {
+	}
+	elseif ($user_info['smiley_set'] != 'none') {
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
 		{
+        if(strpos($forum_version, '2.1') === false) {
 			$request = $smcFunc['db_query']('', '
 			    SELECT code, filename, description, smiley_row, hidden
 				FROM {db_prefix}smileys
@@ -1012,8 +988,24 @@ function shout_smiley_code()
                     'val1' => 0,
 				    'val2' => 2
                 )
+			);			
+		}
+		else {
+			$request = $smcFunc['db_query']('', '
+			    SELECT smiley.code, files.filename, smiley.description, smiley.smiley_row, smiley.hidden
+				FROM {db_prefix}smileys AS smiley
+				LEFT JOIN {db_prefix}smiley_files AS files ON				
+				(smiley.id_smiley = files.id_smiley)
+				WHERE hidden IN ({int:val1}, {int:val2}) and files.smiley_set = {string:smiley_set}
+				ORDER BY smiley_row, smiley_order',
+				array(
+                    'val1' => 0,
+				    'val2' => 2,
+					'smiley_set' => $user_info['smiley_set']
+				)
 			);
-
+		}
+			
 		    while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['code'] = htmlspecialchars($row['code']);
@@ -1031,17 +1023,7 @@ function shout_smiley_code()
         }
 	}
 
-    if(strpos($forum_version, '2.0') === false) {
-        if(empty($modSettings['smiley_sets_enable'])) {
-            $file_ext   = $context['user']['smiley_set_default_ext'];
-        }
-        else {
-            $file_ext   = $user_info['smiley_set_ext'];
-        }
-    }
-    else {
-        $file_ext = '';
-    }
+	$file_ext = '';
 
 	// Clean house... add slashes to the code for javascript.
 	foreach (array_keys($context['tp_smileys']) as $location)

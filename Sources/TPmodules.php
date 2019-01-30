@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2018 - The TinyPortal Team
+ * Copyright (C) 2019 - The TinyPortal Team
  *
  */
 
@@ -1573,7 +1573,7 @@ function tpshout_profile($memID)
 				'shout' => parse_bbc(censorText($row['value1'])),
 				'created' => timeformat($row['value2']),
 				'ip' => $row['value4'],
-				'editlink' => allowedTo('tp_shoutbox') ? $scripturl.'?action=tpadmin;shout=admin;u='.$memID : '',
+				'editlink' => allowedTo('tp_shoutbox') ? $scripturl.'?action=tpshout;shout=admin;u='.$memID : '',
 			);
 		}
 		$smcFunc['db_free_result']($request);

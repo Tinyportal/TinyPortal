@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2018 - The TinyPortal Team
+ * Copyright (C) 2019 - The TinyPortal Team
  *
  */
 
@@ -69,12 +69,22 @@ function TPsetupAdminAreas()
                     if (isset($pr[1]) && $pr[1] == 1) {
                         if (allowedTo($pr[0])) {
                             if(!$admin_set) {
-                                $context['admin_tabs']['custom_modules'][$pr[0]] = array(
-                                    'title'         => $row['modulename'],
-                                    'description'   => '',
-                                    'href'          => $scripturl . '?action=tpadmin;'.$row['subquery'].'=admin',
-                                    'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
-                                );
+                                if($row['subquery'] == 'shout') {
+                                    $context['admin_tabs']['custom_modules'][$pr[0]] = array(
+                                        'title'         => $row['modulename'],
+                                        'description'   => '',
+                                        'href'          => $scripturl . '?action=tpshout;'.$row['subquery'].'=admin',
+                                        'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
+                                    );
+                                }
+                                else {
+                                    $context['admin_tabs']['custom_modules'][$pr[0]] = array(
+                                        'title'         => $row['modulename'],
+                                        'description'   => '',
+                                        'href'          => $scripturl . '?action=tpadmin;'.$row['subquery'].'=admin',
+                                        'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
+                                    );
+                                }
                             }
                             $admin_set = true;
                         }
@@ -362,7 +372,7 @@ function tp_getbuttons()
 	{
 		$buts['tpshoutbox'] = array(
 			'title' => $txt['permissionname_tp_can_admin_shout'],
-			'href' => $scripturl . '?action=tpadmin;shout=admin',
+			'href' => $scripturl . '?action=tpshout;shout=admin',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
