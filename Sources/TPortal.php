@@ -24,6 +24,12 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
+// Backwards compatible check for Forum Version
+global $forum_version;
+if(!isset($forum_version)) { 
+$forum_version = SMF_FULL_VERSION;
+}
+
 // We need to load our autoloader outside of the main function    
 if(!defined('SMF_BACKWARDS_COMPAT')) {
     define('SMF_BACKWARDS_COMPAT', true);
