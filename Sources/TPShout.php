@@ -21,7 +21,7 @@ if (!defined('SMF'))
 function TPShoutLoad()
 {
 
-    global $context, $settings, $options, $modSettings, $forum_version;
+    global $context, $settings, $options, $modSettings;
 
     if(loadLanguage('TPShout') == false) {
         loadLanguage('TPShout', 'english');
@@ -30,7 +30,7 @@ function TPShoutLoad()
     $tpMention = new TPMentions();
     $tpMention->addJS();
 
-    if(strpos($forum_version, '2.0') === false) {
+    if(TP_SMF21_VERSION) {
         loadCSSFile('jquery.sceditor.css');
     }
 
@@ -132,7 +132,7 @@ function TPShoutLoad()
 
 function TPShout() {
     
-    global $context, $settings, $options, $modSettings, $forum_version;
+    global $context, $settings, $options, $modSettings;
 
     if(isset($_REQUEST['shout'])) {
         $shoutAction = $_REQUEST['shout'];
@@ -744,7 +744,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 function shout_bcc_code($collapse = true)
 {
-	global $context, $txt, $settings, $option, $forum_version;
+	global $context, $txt, $settings, $option;
 
 	loadLanguage('Post');
 
@@ -760,7 +760,7 @@ function shout_bcc_code($collapse = true)
     $context['tp_bbc_tags'] = array();
     $context['tp_bbc_tags2'] = array();
 
-    if(strpos($forum_version, '2.1') === false) {
+    if(!TP_SMF21_VERSION) {
         $context['tp_bbc_tags'][] = array(
             'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
             'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
@@ -805,7 +805,7 @@ function shout_bcc_code($collapse = true)
 	// Here loop through the array, printing the images/rows/separators!
 	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0) {
 		foreach ($context['tp_bbc_tags'][0] as $image => $tag) {
-            if(strpos($forum_version, '2.1') === false) {
+            if(!TP_SMF21_VERSION) === false) {
                 // Is there a "before" part for this bbc button? If not, it can't be a button!!
                 if (isset($tag['before'])) {
                     // Is this tag disabled?
@@ -849,7 +849,7 @@ function shout_bcc_code($collapse = true)
 	{
 		foreach ($context['tp_bbc_tags2'][0] as $image => $tag)
 		{
-            if(strpos($forum_version, '2.1') === false) {
+            if(!TP_SMF21_VERSION) {
                 // Is there a "before" part for this bbc button? If not, it can't be a button!!
                 if (isset($tag['before']))
                 {
@@ -943,7 +943,7 @@ function shout_bcc_code($collapse = true)
 
 function shout_smiley_code()
 {
-    global $context, $settings, $user_info, $txt, $modSettings, $smcFunc, $forum_version;
+    global $context, $settings, $user_info, $txt, $modSettings, $smcFunc;
 
     // Initialize smiley array...
     $context['tp_smileys'] = array(
@@ -952,7 +952,7 @@ function shout_smiley_code()
     );
 
     // Load smileys - don't bother to run a query in 2.0 if we're not using the database's ones anyhow.
-    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none' && strpos($forum_version, '2.1') === false) {
+    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none' && !TP_SMF21_VERSION) {
             $context['tp_smileys']['postform'][] = array(
                 'smileys' => array(
                     array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
@@ -978,7 +978,7 @@ function shout_smiley_code()
 	elseif ($user_info['smiley_set'] != 'none') {
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
 		{
-        if(strpos($forum_version, '2.1') === false) {
+        if(!TP_SMF21_VERSION) {
 			$request = $smcFunc['db_query']('', '
 			    SELECT code, filename, description, smiley_row, hidden
 				FROM {db_prefix}smileys

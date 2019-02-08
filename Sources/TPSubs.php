@@ -3053,14 +3053,14 @@ function updateTPSettings($addSettings, $check = false)
 function TPGetMemberColour($member_ids)
 {
     global $smcFunc, $db_connection, $db_server, $db_name, $db_user, $db_passwd;
-    global $db_prefix, $db_persist, $db_port, $db_mb4, $forum_version;
+    global $db_prefix, $db_persist, $db_port, $db_mb4;
 
 	if (empty($member_ids)) {
 		return false;
     }
 	
     // SMF2.1 and php < 7.0 need this
-    if (strpos($forum_version, '2.1') !== false && empty($db_connection)) {
+    if (TP_SMF21_VERSION && empty($db_connection)) {
         $db_options = array();
         // Add in the port if needed
         if (!empty($db_port)) {

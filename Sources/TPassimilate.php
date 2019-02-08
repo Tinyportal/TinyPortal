@@ -16,8 +16,6 @@
  */
 
 function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
-    global $forum_version;
-
 	loadLanguage('TPShout');
 
 	$permissionList['membergroup'] = array_merge(
@@ -41,7 +39,7 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 	);
 
   // This is to get around there being no hook to call to remove guest permissions in SMF 2.0
-  if(strpos($forum_version, '2.0') !== false) {
+  if(!TP_SMF21_VERSION) {
     tpAddIllegalPermissions();
   }
 }
@@ -49,13 +47,13 @@ function tpAddPermissions(&$permissionGroups, &$permissionList, &$leftPermission
 // Adds TP copyright in the buffer so we don't have to edit an SMF file
 function tpAddCopy($buffer)
 {
-	global $context, $scripturl, $txt, $forum_version;
+	global $context, $scripturl, $txt;
 
 	$bodyid = '';
 	$bclass = '';
 
 	// add upshrink buttons
-	if( ( strpos($forum_version, '2.1') !== false ) && array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
+	if( TP_SMF21_VERSION && array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
 		$buffer = preg_replace('~<div class="navigate_section">\s*<ul>~', '<div class="navigate_section"><ul><span class="tp_upshrink21">'.$context['TPortal']['upshrinkpanel'].'</span>', $buffer, 1);
 	}
 	
@@ -136,7 +134,7 @@ function tpAddCopy($buffer)
 
 	$buffer = str_replace($find, $replace, $buffer);
 
-    if(strpos($forum_version, '2.1') !== false) {
+    if( TP_SMF21_VERSION ) {
         $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
         $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
         $replace= '<a href="'.$scripturl.'?action=tpmod;sa=help">'.$tmp.'</a>';
@@ -150,7 +148,7 @@ function tpAddCopy($buffer)
         return $buffer;
     }
     else {
-        if(strpos($forum_version, '2.1') !== false) {
+        if( TP_SMF21_VERSION ) {
             $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
             $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
 	    } 
@@ -197,7 +195,7 @@ function tpAddIllegalPermissions()
 
 function tpAddMenuItems(&$buttons)
 {
-    global $smcFunc, $context, $scripturl, $txt, $forum_version;
+    global $smcFunc, $context, $scripturl, $txt;
 
     // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items.
     if(!isset($context['TPortal'])) {
@@ -213,7 +211,7 @@ function tpAddMenuItems(&$buttons)
     }
 
     // This removes a edit in Load.php
-    if( (strpos($forum_version, '2.1') !== false) && (!empty($context['linktree'])) ) {
+    if( TP_SMF21_VERSION && (!empty($context['linktree'])) ) {
         if (!empty($_GET) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
             array_splice($context['linktree'], 1, 0, array(
                     array(
@@ -307,14 +305,14 @@ function tpAddMenuItems(&$buttons)
 
 function tpAddProfileMenu(&$profile_areas)
 {
-	global $txt, $context, $forum_version;
+	global $txt, $context;
 	
 	$profile_areas['tp'] = array(
 		'title' => 'Tinyportal',
 		'areas' => array(),
 	);
            // Profile area for 2.1
-    if(strpos($forum_version, '2.1') !== false) {
+    if( TP_SMF21_VERSION ) {
         $profile_areas['tp']['areas']['tpsummary'] = array(
             'label' => $txt['tpsummary'],
             'file' => 'TPmodules.php',
@@ -464,7 +462,7 @@ function tpAddActions(&$actionArray)
 
 function whichTPAction()
 {
-	global $topic, $board, $sourcedir, $context, $forum_version;
+	global $topic, $board, $sourcedir, $context;
 
 	$theAction = false;
 	// first..if the action is set, but empty, don't go any further
@@ -493,7 +491,7 @@ function whichTPAction()
 	}
 
     // SMF 2.1 has a default action hook so less source edits
-    if(strpos($forum_version, '2.0') !== false) {
+    if(TP_SMF21_VERSION) {
         return $theAction;
     }
     else {

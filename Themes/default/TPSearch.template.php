@@ -17,7 +17,7 @@
 
 function template_main()
 {
-	global $context, $settings, $txt, $scripturl, $forum_version;
+	global $context, $settings, $txt, $scripturl;
 
 	if(isset($context['TPortal']['subaction'])) {
 		switch($context['TPortal']['subaction']) {

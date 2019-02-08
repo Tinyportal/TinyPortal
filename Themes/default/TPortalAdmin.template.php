@@ -843,7 +843,7 @@ function template_menucore()
 	// Panels
 function template_panels()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -928,7 +928,7 @@ function template_panels()
 
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
-	if(strstr($forum_version, '2.1'))
+	if(TP_SMF21_VERSION)
 		$types = tp_getblockstyles21();
 	else
 		$types = tp_getblockstyles();
@@ -1037,7 +1037,7 @@ function template_panels()
 // settings
 function template_settings()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version, $smcFunc;
+	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -1054,7 +1054,7 @@ function template_settings()
 						       $tm=explode(",",$context['TPortal']['resp']);
 						   echo '<input name="tp_resp" type="checkbox" value="0">'.$txt['tp-deselectthemes'].'<br><br> ';
 							foreach($context['TPallthem'] as $them) {
-					              if(strstr($forum_version, '2.1')) {
+					              if(TP_SMF21_VERSION) {
 									echo '
 										  <img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
 										  <input name="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
@@ -3020,7 +3020,7 @@ function template_addblock()
 // edit single block
 function template_blockedit()
 {
-	global $context, $settings, $txt, $scripturl, $boardurl, $forum_version;
+	global $context, $settings, $txt, $scripturl, $boardurl;
 
 
 	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
@@ -3301,7 +3301,7 @@ function template_blockedit()
 							<input type="hidden" value="1" name="tp_tpath-1">';
 				foreach($context['TPthemes'] as $tema)
 				{
-					if(strstr($forum_version, '2.1')) {
+					if(TP_SMF21_VERSION) {
 						echo '
 							<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input name="tp_theme'.$tema['id'].'" type="checkbox" value="'.$tema['name'].'"';
 						}
@@ -3400,7 +3400,7 @@ function template_blockedit()
 
 			if(function_exists('ctheme_tp_getblockstyles'))
 				$types = ctheme_tp_getblockstyles();
-			if(strstr($forum_version, '2.1'))
+			if(TP_SMF21_VERSION)
 				$types = tp_getblockstyles21();
 			else
 				$types = tp_getblockstyles();

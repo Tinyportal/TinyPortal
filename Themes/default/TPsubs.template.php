@@ -161,7 +161,7 @@ function TPortal_scriptbox()
 // TPortal recent topics block
 function TPortal_recentbox()
 {
-	global $scripturl, $context, $settings, $txt, $modSettings, $forum_version;
+	global $scripturl, $context, $settings, $txt, $modSettings;
 
 	// is it a number?
 	if(!is_numeric($context['TPortal']['recentboxnum']))
@@ -190,7 +190,7 @@ function TPortal_recentbox()
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
 			{
-			if (strstr($forum_version, '2.0'))
+			if (!TP_SMF21_VERSION)
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
 			else
 				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
@@ -227,7 +227,7 @@ function TPortal_recentbox()
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if(!$w['new'])
 			{
-			if (strstr($forum_version, '2.0'))
+			if (!TP_SMF21_VERSION)
 				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
 			else
 				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
@@ -319,7 +319,7 @@ function TPortal_sidebar()
 // Tportal userbox
 function TPortal_userbox()
 {
-	global $context, $settings, $scripturl, $txt, $forum_version, $user_info;
+	global $context, $settings, $scripturl, $txt, $user_info;
 
 	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt="" style="margin:0 4px 0 0;" />';
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
@@ -357,7 +357,7 @@ function TPortal_userbox()
 			echo '
 				<li><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">'. $bullet. $txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
 		// Are there any moderation reports?
-	if(strpos($forum_version, '2.0') !== false)
+	if(!TP_SMF21_VERSION)
 		{
 		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
 			echo '
@@ -449,7 +449,7 @@ function TPortal_userbox()
 		</ul>';
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
-	else if(strpos($forum_version, '2.1') !== false) {
+	else if(TP_SMF21_VERSION) {
 	    echo '
 			<ul class="floatleft welcome">
 				<li>', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '</li>
@@ -480,7 +480,7 @@ function TPortal_userbox()
 // TPortal themebox
 function TPortal_themebox()
 {
-	global $context, $settings, $scripturl, $txt, $smcFunc, $forum_version;
+	global $context, $settings, $scripturl, $txt, $smcFunc;
 
 	$what = explode(',', $context['TPortal']['themeboxbody']);
 	$temaid = array();
@@ -524,7 +524,7 @@ function TPortal_themebox()
 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
 			<div style="text-align: center; width: 95%; overflow: hidden;">';
 			
-		if (strstr($forum_version, '2.0'))
+		if (!TP_SMF21_VERSION)
 			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
 		else
 			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
@@ -536,7 +536,7 @@ function TPortal_themebox()
 			var extra = \'\';
 			var themepath = new Array();';
 		 for($a=0 ; $a<(count($temaid)); $a++){
-			if (strstr($forum_version, '2.0'))
+		    if (!TP_SMF21_VERSION)
 				echo '
 					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
 					';
@@ -991,7 +991,7 @@ function template_tptabs_below()
 
 function TPblock($block, $theme, $side, $double=false)
 {
-	global $context , $scripturl, $settings, $txt, $forum_version;
+	global $context , $scripturl, $settings, $txt;
 
 	// setup a container that can be massaged through css
 	if ($block['type']=='ssi') {
@@ -1044,7 +1044,8 @@ function TPblock($block, $theme, $side, $double=false)
 
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
-	if(strstr($forum_version, '2.1'))
+
+	if(TP_SMF21_VERSION)
 		$types = tp_getblockstyles21();
 	else
 		$types = tp_getblockstyles();
@@ -1054,20 +1055,18 @@ function TPblock($block, $theme, $side, $double=false)
 		$block['var5'] = $context['TPortal']['panelstyle_'.$side];
 
 	// its a normal block..
-	if(in_array($block['frame'],array('theme', 'frame', 'title', 'none')))
-	{
+	if(in_array($block['frame'],array('theme', 'frame', 'title', 'none'))) {
 		echo	'
 	<div class="', (($theme || $block['frame'] == 'frame') ? 'tborder tp_'.$side.'block_frame' : 'tp_'.$side.'block_noframe'), '">';
 
 		// show the frame and title
-		if ($theme || $block['frame'] == 'title')
-		{
+		if ($theme || $block['frame'] == 'title') {
 			echo $types[$block['var5']]['code_title_left'];
 
-			if(strstr($forum_version, '2.1'))
-			{
-			if($block['visible'] == '' || $block['visible'] == '1')
+	        if(TP_SMF21_VERSION) {
+			if($block['visible'] == '' || $block['visible'] == '1') {
 				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+            }
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
@@ -1075,8 +1074,7 @@ function TPblock($block, $theme, $side, $double=false)
 			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
 				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 2px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			}
-			else
-			{
+			else {
 			if($block['visible'] == '' || $block['visible'] == '1')
 				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0; " align="right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" border="0" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 
@@ -1879,7 +1877,7 @@ function article_bookmark($render = true)
 
 function article_comments($render = true)
 {
-	global $scripturl, $txt, $settings, $context, $forum_version;
+	global $scripturl, $txt, $settings, $context;
 
     $data = '';
 
@@ -1908,8 +1906,8 @@ function article_comments($render = true)
                 }
 				$data .= '
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
-					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.0')) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
-					' . (($comment['is_new'] && $context['user']['is_logged'] && strstr($forum_version, '2.1')) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
+					' . (($comment['is_new'] && $context['user']['is_logged'] && !TP_SMF21_VERSION) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
+					' . (($comment['is_new'] && $context['user']['is_logged'] && TP_SMF21_VERSION) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
 				if ($comment['poster_id'] > 0) {
 					$data .= '					
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
@@ -2409,7 +2407,7 @@ function tptimeformat($log_time, $show_today = true, $format)
 // Generate a strip of buttons.
 function tp_template_button_strip($button_strip, $direction = 'top', $strip_options = array())
 {
-	global $context, $txt, $forum_version;
+	global $context, $txt;
 
 	if (!is_array($strip_options))
 		$strip_options = array();
@@ -2419,7 +2417,7 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 	foreach ($button_strip as $key => $value)
 	{
 		if (!isset($value['test']) || !empty($context[$value['test']])) {
-			if(strstr($forum_version, '2.1')) {
+			if(TP_SMF21_VERSION) {
 				$buttons[] = '<a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a>';
 			}
 			else {

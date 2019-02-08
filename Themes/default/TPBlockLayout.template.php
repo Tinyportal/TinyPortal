@@ -20,7 +20,7 @@
 
 function template_tp_above()
 {
-	global $context, $settings, $forum_version;
+	global $context, $settings;
 
 // body responsive classes
 $respClass = '';
@@ -54,7 +54,7 @@ if (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $conte
 
 
 echo '<div class="'. $sideclass .' '. $respClass .'">';
-	if(!empty($context['TPortal']['upshrinkpanel']) && (strpos($forum_version, '2.0') !== false))
+	if(!empty($context['TPortal']['upshrinkpanel']) && (!TP_SMF21_VERSION) !== false))
 		echo '
 	<div class="tp_upshrink20">', $context['TPortal']['upshrinkpanel'] , '</div>';
 

@@ -24,11 +24,6 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
-// Backwards compatible check for Forum Version
-global $forum_version;
-if(!isset($forum_version)) { 
-$forum_version = SMF_FULL_VERSION;
-}
 
 // We need to load our autoloader outside of the main function    
 if(!defined('SMF_BACKWARDS_COMPAT')) {
@@ -40,7 +35,7 @@ if(!defined('SMF_BACKWARDS_COMPAT')) {
 // TinyPortal init
 function TPortal_init()
 {
-	global $context, $txt, $user_info, $settings, $boarddir, $modSettings, $forum_version, $db_type;
+	global $context, $txt, $user_info, $settings, $boarddir, $modSettings, $db_type;
 
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum'])) {
@@ -73,7 +68,7 @@ function TPortal_init()
 	require_once($boarddir. '/SSI.php');
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
-    if(strpos($forum_version, '2.0') !== false && !isset($modSettings['jquery_source'])) {
+    if(TP_SMF21_VERSION === false && !isset($modSettings['jquery_source'])) {
 		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array('external' => true), 'tp_jquery');
     }
 
@@ -2819,6 +2814,15 @@ function setup_smf_backwards_compat()
 {
     global $boarddir, $cachedir, $sourcedir, $db_type;
 
+    if(defined('SMF_FULL_VERSION')) {
+        // SMF 2.1 
+        define('TP_SMF21_VERSION', true);
+    }
+    else {
+        // We must be on SMF 2.0
+        define('TP_SMF21_VERSION', false);
+    }
+
     define('BOARDDIR', $boarddir);
     define('CACHEDIR', $cachedir);
     define('SOURCEDIR', $sourcedir);
@@ -2829,6 +2833,7 @@ function setup_smf_backwards_compat()
     else {
         define('PGSQL', false);
     }
+
 }
 
 
