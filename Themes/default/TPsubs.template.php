@@ -881,8 +881,7 @@ function template_TPsearch_above()
 {
 	global $context, $txt, $scripturl;
 
-	if($context['TPortal']['show_download']==0)
-	{
+	if($context['TPortal']['show_download']==0) {
 		echo '
 	<div style="padding: 0 5px;">
 		<div class="cat_bar">
@@ -891,11 +890,10 @@ function template_TPsearch_above()
 		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tpmod;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
+				<a href="' . $scripturl. '?action=tpsearch;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
 	}
-	else
-
- echo '
+	else {
+        echo '
 	<div style="padding: 0 5px;">
 		<div class="cat_bar">
 			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
@@ -903,13 +901,14 @@ function template_TPsearch_above()
 		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tpmod;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
+				<a href="' . $scripturl. '?action=tpsearch;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
 				<a href="' . $scripturl. '?action=tpmod;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
-
+    }
 
 	// any others?
-	if(!empty($context['TPortal']['searcharray']) && count($context['TPortal']['searcharray']) > 0)
+	if(!empty($context['TPortal']['searcharray']) && count($context['TPortal']['searcharray']) > 0) {
 		echo implode(' | ', $context['TPortal']['searcharray']);
+    }
 
 	echo '
 			</p>
@@ -918,6 +917,7 @@ function template_TPsearch_above()
 	</div>';
 
 }
+
 function template_TPsearch_below()
 {
 	return;

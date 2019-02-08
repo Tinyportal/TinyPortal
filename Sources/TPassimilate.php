@@ -452,10 +452,11 @@ function tpAddActions(&$actionArray)
 {
 	$actionArray = array_merge(
 		array (
-			'tpadmin'   => array('TPortalAdmin.php', 'TPortalAdmin'),
-			'forum'     => array('BoardIndex.php', 'BoardIndex'),
-			'tpmod'     => array('TPmodules.php', 'TPmodules'),
-			'tpshout'   => array('TPShout.php', 'TPShout'),
+			'tpadmin'   => array('TPortalAdmin.php',    'TPortalAdmin'),
+			'forum'     => array('BoardIndex.php',      'BoardIndex'),
+			'tpmod'     => array('TPmodules.php',       'TPmodules'),
+			'tpshout'   => array('TPShout.php',         'TPShout'),
+			'tpsearch'  => array('TPSearch.php',        'TPSearch'),
 		),
 		$actionArray
 	);

@@ -144,6 +144,8 @@ class TPUtil
             case 'post':
                 $data = $_POST;
                 break;
+            case 'request':
+                $data = $_REQUEST;
             default:
                 return false;
                 break;
