@@ -25,6 +25,8 @@
 		<remove-file name="$sourcedir/TPdlmanager.php" />
 		<remove-file name="$sourcedir/TPhelp.php" />
 		<remove-file name="$sourcedir/TPmodules.php" />
+		<remove-file name="$sourcedir/TPSearch.php" />
+		<remove-file name="$sourcedir/TPShout.php" />
 		<remove-file name="$sourcedir/TPortal.php" />
 		<remove-file name="$sourcedir/TPortalAdmin.php" />
 		<remove-file name="$sourcedir/TPSubs.php" />
@@ -37,6 +39,7 @@
 		<remove-file name="$themedir/TPortalAdmin.template.php" />
 		<remove-file name="$themedir/TPprint.template.php" />
 		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPSearch.template.php" />
 		<remove-file name="$themedir/TPShout.template.php" />
 		<remove-file name="$themedir/TPsubs.template.php" />
 		<remove-file name="$themedir/TPwireless.template.php" />
@@ -81,6 +84,8 @@
 		<remove-file name="$sourcedir/TPmodules.php" />
 		<remove-file name="$sourcedir/TPortal.php" />
 		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPSearch.php" />
+		<remove-file name="$sourcedir/TPShout.php" />
 		<remove-file name="$sourcedir/TPSubs.php" />
 		<remove-file name="$themedir/TPBlockLayout.template.php" />
 		<remove-file name="$themedir/TPdladmin.template.php" />
@@ -91,6 +96,7 @@
 		<remove-file name="$themedir/TPortalAdmin.template.php" />
 		<remove-file name="$themedir/TPprint.template.php" />
 		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPSearch.template.php" />
 		<remove-file name="$themedir/TPShout.template.php" />
 		<remove-file name="$themedir/TPsubs.template.php" />
 		<remove-file name="$themedir/TPwireless.template.php" />
