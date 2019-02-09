@@ -361,35 +361,32 @@ function fetchTPhooks()
 	global $context, $smcFunc, $boarddir;
 
 	// are we inside a board?
-	if (isset($context['current_topic']))
-	{
+	if (isset($context['current_topic'])) {
 		$what = 'what_topic';
 		$param = $context['current_topic'];
 	}
 	// perhaps a topic then?
-	elseif (isset($context['current_board']))
-	{
+	elseif (isset($context['current_board'])) {
 		$what = 'what_board';
 		$param = $context['current_board'];
 	}
 	// alright, an article?
-	elseif (isset($_GET['page']) && $context['current_action'] != 'help')
-	{
+	elseif (isset($_GET['page']) && $context['current_action'] != 'help') {
 		$what = 'what_page';
 		$param = $_GET['page'];
 	}
 	// a category of articles?
-	elseif (isset($_GET['cat']))
-	{
+	elseif (isset($_GET['cat'])) {
 		$what = 'what_cat';
 		$param = $_GET['cat'];
 	}
 	// guess neither..
-	else
+	else {
 		$param = 0;
+    }
 
 	// something should always load? + submissions
-	$types = array('layerhook', 'art_not_approved', 'dl_not_approved');
+	$types = array('art_not_approved', 'dl_not_approved');
 
 	$request2 = $smcFunc['db_query']('', '
 		SELECT *
@@ -403,40 +400,14 @@ function fetchTPhooks()
 	$context['TPortal']['submitcheck'] = array('articles' => 0, 'uploads' => 0);
 
 	// do the actual hooks
-	while ($row = $smcFunc['db_fetch_assoc']($request2))
-	{
-		if (isset($what) && $row['value1'] == $what && $row['type'] == 'layerhook' && file_exists(SOURCEDIR . '/' .$row['value2']))
-		{
-				require_once(SOURCEDIR. '/' .$row['value2']);
-				if (function_exists($row['value3']))
-					call_user_func($row['value3'], $param);
-		}
-		if ($row['type'] == 'art_not_approved' && allowedTo('tp_articles'))
+	while ($row = $smcFunc['db_fetch_assoc']($request2)) {
+		if ($row['type'] == 'art_not_approved' && allowedTo('tp_articles')) {
 			$context['TPortal']['submitcheck']['articles']++;
+        }
 		// check submission on dl manager, but only if its active
-		elseif ($row['type'] == 'dl_not_approved' && $context['TPortal']['show_download'] && allowedTo('tp_dlmanager'))
+		elseif ($row['type'] == 'dl_not_approved' && $context['TPortal']['show_download'] && allowedTo('tp_dlmanager')) {
 			$context['TPortal']['submitcheck']['uploads']++;
-		// something alwasy loads?
-		elseif ($row['type'] == 'layerhook')
-		{
-			if ($row['value1'] == 'what_all' && file_exists(SOURCEDIR . '/' . $row['value2']))
-			{
-				require_once(SOURCEDIR. '/' .$row['value2']);
-				if (function_exists($row['value3']))
-					call_user_func($row['value3'], $param);
-			}
-			// something always loads?
-			elseif ($row['value1'] == 'what_all_tpmodule' && file_exists($boarddir . '/tp-files/tp-modules/' .$row['value2'] . '/Sources/' . $row['value2'] . '.php'))
-			{
-				// is it installed at all?
-				if (isset($context['TPortal'][$row['value4']]) && $context['TPortal'][$row['value4']] == 1)
-				{
-					require_once($boarddir . '/tp-files/tp-modules/' . $row['value2'] . '/Sources/' . $row['value2'] . '.php');
-					if (function_exists($row['value3']))
-						call_user_func($row['value3'], $param);
-				}
-			}
-		}
+        }
 	}
 	$smcFunc['db_free_result']($request2);
 }
