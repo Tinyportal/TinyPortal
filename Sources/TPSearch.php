@@ -23,13 +23,15 @@ function TPSearch()
     global $scripturl, $txt, $context;
 
     if( is_array($_POST) && count($_POST) > 0 ) {
-	    $context['TPortal']['subaction'] = 'searcharticle2';
         TPSearchArticle();
+        TPadd_linktree($scripturl.'?action=tpsearch;sa=searcharticle' , $txt['tp-searcharticles2']);
+        loadtemplate('TPSearch');
+        $context['sub_template'] = 'article_search_results';
     } 
     else {
-	    $context['TPortal']['subaction'] = TPUtil::filter('sa', 'get', 'string');
 	    TPadd_linktree($scripturl.'?action=tpsearch;sa=searcharticle' , $txt['tp-searcharticles2']);
 	    loadtemplate('TPSearch');
+        $context['sub_template'] = 'article_search_form';
     }
 
 }
@@ -181,7 +183,6 @@ function TPSearchArticle()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	TPadd_linktree($scripturl.'?action=tpsearch;sa=searcharticle' , $txt['tp-searcharticles2']);
-	loadtemplate('TPSearch');
 }
+
 ?>
