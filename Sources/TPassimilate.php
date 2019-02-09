@@ -491,7 +491,7 @@ function whichTPAction()
 	}
 
     // SMF 2.1 has a default action hook so less source edits
-    if(TP_SMF21_VERSION) {
+    if(!TP_SMF21_VERSION) {
         return $theAction;
     }
     else {

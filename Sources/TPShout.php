@@ -805,7 +805,7 @@ function shout_bcc_code($collapse = true)
 	// Here loop through the array, printing the images/rows/separators!
 	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0) {
 		foreach ($context['tp_bbc_tags'][0] as $image => $tag) {
-            if(!TP_SMF21_VERSION) === false) {
+            if(!TP_SMF21_VERSION) {
                 // Is there a "before" part for this bbc button? If not, it can't be a button!!
                 if (isset($tag['before'])) {
                     // Is this tag disabled?
