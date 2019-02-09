@@ -1554,19 +1554,6 @@ function TPstrip_linktree()
 	$context['linktree'][] = array('url' => $scripturl, 'name' => $context['forum_name']);
 }
 
-// TinyPortal startpage
-function TPortal()
-{
-	global $context;
-
-	// For wireless, we use the Wireless template...
-	if (defined('WIRELESS') && WIRELESS ) {
-		loadTemplate('TPwireless');
-		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp';
-	}
-	else
-		loadTemplate('TPortal');
-}
 
 function normalizeNewline($text)
 {
