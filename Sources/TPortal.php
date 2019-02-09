@@ -24,14 +24,6 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
-
-// We need to load our autoloader outside of the main function    
-if(!defined('SMF_BACKWARDS_COMPAT')) {
-    define('SMF_BACKWARDS_COMPAT', true);
-    setup_smf_backwards_compat();
-    spl_autoload_register('tpAutoLoadClass');
-}
-
 // TinyPortal init
 function TPortal_init()
 {
@@ -112,7 +104,7 @@ function TPortal_init()
     }
 
 	// Show search/frontpage topic layers?
-	tpDoTagSearchLayers();
+	TPortal_Integrate::hookSearchLayers();
 
 	// set cookie change for selected upshrinks
 	tpSetupUpshrinks();
@@ -2762,50 +2754,36 @@ function TPortal_menubox()
     }
 }
 
-function tpAutoLoadClass($className)
-{
+// Backwards compat function for SMF2.0
+if(!function_exists('set_avatar_data')) {
 
-    $classPrefix = mb_substr($className, 0, 2);
+    function set_avatar_data( $data ) {
 
-    if( 'TP' !== $classPrefix ) {
-        return;
+        global $image_proxy_enabled, $image_proxy_secret, $scripturl, $modSettings, $smcFunc, $boardurl;
+
+        if ($image_proxy_enabled && !empty($data['avatar']) && stripos($data['avatar'], 'http://') !== false) {
+            $tmp = '<img src="'. $boardurl . '/proxy.php?request=' . urlencode($data['avatar']) . '&hash=' . md5($data['avatar'] . $image_proxy_secret) .'" alt="&nbsp;" />';
     }
+        else {
+            $tmp = $data['avatar'] == '' ? ($data['id_attach'] > 0 ? '<img src="' . (empty($data['attachmentType']) ? $scripturl . '?action=dlattach;attach=' . $data['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $data['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($data['avatar'], 'https://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : stristr($data['avatar'], 'http://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($data['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />');
+        }
 
-    $dir        = BOARDDIR . '/tp-src/';
+        $avatar = array();
+        $avatar['image'] = $tmp;
 
-    $classFile  = $dir.$className . '.php';
+        return $avatar;
 
-    if ( file_exists( $classFile ) ) {
-        require_once($classFile);
     }
-
 }
 
-function setup_smf_backwards_compat()
-{
-    global $boarddir, $cachedir, $sourcedir, $db_type;
-
-    if(defined('SMF_FULL_VERSION')) {
-        // SMF 2.1 
-        define('TP_SMF21_VERSION', true);
+if(!function_exists('loadJavaScriptFile')) {
+    function loadJavaScriptFile($fileName, $params = array(), $id = '') {
+        global $context;
+        $context['html_headers'] .= '<script type="text/javascript" src="'.$fileName.'"></script>';
     }
-    else {
-        // We must be on SMF 2.0
-        define('TP_SMF21_VERSION', false);
-    }
-
-    define('BOARDDIR', $boarddir);
-    define('CACHEDIR', $cachedir);
-    define('SOURCEDIR', $sourcedir);
-    define('TPVERSION', 'v200');
-    if($db_type == 'postgresql') {
-        define('PGSQL', true);
-    }
-    else {
-        define('PGSQL', false);
-    }
-
 }
+
+
 
 
 ?>
