@@ -775,7 +775,7 @@ if(!function_exists('set_avatar_data')) {
 if(!function_exists('loadJavaScriptFile')) {
     function loadJavaScriptFile($fileName, $params = array(), $id = '') {
         global $context;
-        $context['html_headers'] .= $filename;
+        $context['html_headers'] .= '<script type="text/javascript" src="'.$fileName.'"></script>';
     }
 }
 
