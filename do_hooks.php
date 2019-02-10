@@ -15,14 +15,14 @@
  *
  */
 
-global $hooks, $mod_name;
+global $hooks, $mod_name, $forum_version;
 
 $hooks = array(
     'integrate_pre_include'                     => '$sourcedir/TPortal.php,$sourcedir/TPortal.integrate.php',
     'integrate_pre_load'                        => 'TPortal_Integrate::hookPreLoad'
 );
 
-if(strpos($forum_version, '2.0') !== false) {
+if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
     define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
 }
 
