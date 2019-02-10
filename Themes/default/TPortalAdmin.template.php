@@ -928,7 +928,7 @@ function template_panels()
 
 	if(function_exists('ctheme_tp_getblockstyles'))
 		$types = ctheme_tp_getblockstyles();
-	if(TP_SMF21_VERSION)
+	if(TP_SMF21)
 		$types = tp_getblockstyles21();
 	else
 		$types = tp_getblockstyles();
@@ -1054,7 +1054,7 @@ function template_settings()
 						       $tm=explode(",",$context['TPortal']['resp']);
 						   echo '<input name="tp_resp" type="checkbox" value="0">'.$txt['tp-deselectthemes'].'<br><br> ';
 							foreach($context['TPallthem'] as $them) {
-					              if(TP_SMF21_VERSION) {
+					              if(TP_SMF21) {
 									echo '
 										  <img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
 										  <input name="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
@@ -3301,7 +3301,7 @@ function template_blockedit()
 							<input type="hidden" value="1" name="tp_tpath-1">';
 				foreach($context['TPthemes'] as $tema)
 				{
-					if(TP_SMF21_VERSION) {
+					if(TP_SMF21) {
 						echo '
 							<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input name="tp_theme'.$tema['id'].'" type="checkbox" value="'.$tema['name'].'"';
 						}
@@ -3400,7 +3400,7 @@ function template_blockedit()
 
 			if(function_exists('ctheme_tp_getblockstyles'))
 				$types = ctheme_tp_getblockstyles();
-			if(TP_SMF21_VERSION)
+			if(TP_SMF21)
 				$types = tp_getblockstyles21();
 			else
 				$types = tp_getblockstyles();

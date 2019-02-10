@@ -41,7 +41,7 @@ class TPortal_Integrate
             'pre_log_stats'                   => 'TPortal_Integrate::hookPreLogStats',
         );
 
-        if(TP_SMF21_VERSION) {
+        if(TP_SMF21) {
             $hooks['redirect']                = 'TPortal_Integrate::hookRedirect';
             $hooks['pre_profile_areas']       = 'TPortal_Integrate::hookProfileArea';
             $hooks['pre_load_theme']          = 'TPortal_Integrate::hookLoadTheme';
@@ -81,11 +81,11 @@ class TPortal_Integrate
 
         if(defined('SMF_FULL_VERSION')) {
             // SMF 2.1 
-            define('TP_SMF21_VERSION', true);
+            define('TP_SMF21', true);
         }
         else {
             // We must be on SMF 2.0
-            define('TP_SMF21_VERSION', false);
+            define('TP_SMF21', false);
         }
 
         define('BOARDDIR', $boarddir);
@@ -93,10 +93,10 @@ class TPortal_Integrate
         define('SOURCEDIR', $sourcedir);
         define('TPVERSION', 'v200');
         if($db_type == 'postgresql') {
-            define('PGSQL', true);
+            define('TP_PGSQL', true);
         }
         else {
-            define('PGSQL', false);
+            define('TP_PGSQL', false);
         }
 
     }
@@ -125,7 +125,7 @@ class TPortal_Integrate
         );
 
       // This is to get around there being no hook to call to remove guest permissions in SMF 2.0
-      if(!TP_SMF21_VERSION) {
+      if(!TP_SMF21) {
         self::hookIllegalPermissions();
       }
     }
@@ -140,7 +140,7 @@ class TPortal_Integrate
         $bclass = '';
 
         // add upshrink buttons
-        if( TP_SMF21_VERSION && array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
+        if( TP_SMF21 && array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
             $buffer = preg_replace('~<div class="navigate_section">\s*<ul>~', '<div class="navigate_section"><ul><span class="tp_upshrink21">'.$context['TPortal']['upshrinkpanel'].'</span>', $buffer, 1);
         }
         
@@ -221,7 +221,7 @@ class TPortal_Integrate
 
         $buffer = str_replace($find, $replace, $buffer);
 
-        if( TP_SMF21_VERSION ) {
+        if( TP_SMF21 ) {
             $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
             $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
             $replace= '<a href="'.$scripturl.'?action=tpmod;sa=help">'.$tmp.'</a>';
@@ -253,7 +253,7 @@ class TPortal_Integrate
             return $buffer;
         }
         else {
-            if( TP_SMF21_VERSION ) {
+            if( TP_SMF21 ) {
                 $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
                 $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
             } 
@@ -316,7 +316,7 @@ class TPortal_Integrate
         }
 
         // This removes a edit in Load.php
-        if( TP_SMF21_VERSION && (!empty($context['linktree'])) ) {
+        if( TP_SMF21 && (!empty($context['linktree'])) ) {
             if (!empty($_GET) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
                 array_splice($context['linktree'], 1, 0, array(
                         array(
@@ -417,7 +417,7 @@ class TPortal_Integrate
             'areas' => array(),
         );
                // Profile area for 2.1
-        if( TP_SMF21_VERSION ) {
+        if( TP_SMF21 ) {
             $profile_areas['tp']['areas']['tpsummary'] = array(
                 'label' => $txt['tpsummary'],
                 'file' => 'TPmodules.php',
@@ -594,7 +594,7 @@ class TPortal_Integrate
         }
 
         // SMF 2.1 has a default action hook so less source edits
-        if(!TP_SMF21_VERSION) {
+        if(!TP_SMF21) {
             return $theAction;
         }
         else {

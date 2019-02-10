@@ -3047,7 +3047,7 @@ function TPGetMemberColour($member_ids)
     }
 	
     // SMF2.1 and php < 7.0 need this
-    if (TP_SMF21_VERSION && empty($db_connection)) {
+    if (TP_SMF21 && empty($db_connection)) {
         $db_options = array();
         // Add in the port if needed
         if (!empty($db_port)) {

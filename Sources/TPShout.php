@@ -30,7 +30,7 @@ function TPShoutLoad()
     $tpMention = new TPMentions();
     $tpMention->addJS();
 
-    if(TP_SMF21_VERSION) {
+    if(TP_SMF21) {
         loadCSSFile('jquery.sceditor.css');
     }
 
@@ -760,7 +760,7 @@ function shout_bcc_code($collapse = true)
     $context['tp_bbc_tags'] = array();
     $context['tp_bbc_tags2'] = array();
 
-    if(!TP_SMF21_VERSION) {
+    if(!TP_SMF21) {
         $context['tp_bbc_tags'][] = array(
             'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
             'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
@@ -805,7 +805,7 @@ function shout_bcc_code($collapse = true)
 	// Here loop through the array, printing the images/rows/separators!
 	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0) {
 		foreach ($context['tp_bbc_tags'][0] as $image => $tag) {
-            if(!TP_SMF21_VERSION) {
+            if(!TP_SMF21) {
                 // Is there a "before" part for this bbc button? If not, it can't be a button!!
                 if (isset($tag['before'])) {
                     // Is this tag disabled?
@@ -849,7 +849,7 @@ function shout_bcc_code($collapse = true)
 	{
 		foreach ($context['tp_bbc_tags2'][0] as $image => $tag)
 		{
-            if(!TP_SMF21_VERSION) {
+            if(!TP_SMF21) {
                 // Is there a "before" part for this bbc button? If not, it can't be a button!!
                 if (isset($tag['before']))
                 {
@@ -952,7 +952,7 @@ function shout_smiley_code()
     );
 
     // Load smileys - don't bother to run a query in 2.0 if we're not using the database's ones anyhow.
-    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none' && !TP_SMF21_VERSION) {
+    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none' && !TP_SMF21) {
             $context['tp_smileys']['postform'][] = array(
                 'smileys' => array(
                     array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
@@ -978,7 +978,7 @@ function shout_smiley_code()
 	elseif ($user_info['smiley_set'] != 'none') {
 		if (($temp = cache_get_data('posting_smileys', 480)) == null)
 		{
-        if(!TP_SMF21_VERSION) {
+        if(!TP_SMF21) {
 			$request = $smcFunc['db_query']('', '
 			    SELECT code, filename, description, smiley_row, hidden
 				FROM {db_prefix}smileys
