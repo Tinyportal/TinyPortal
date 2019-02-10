@@ -1008,36 +1008,43 @@ function doTPfrontpage()
 	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt, $db_type;
 
 	// check we aren't in any other section because 'cat' is used in SMF and TP
-	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic']))
+	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic'])) {
 		return;
+    }
 
 	$now = time();
 	// set up visual options for frontpage
 	$context['TPortal']['visual_opts'] = explode(',', $context['TPortal']['frontpage_visual']);
 
 	// first, the panels
-	foreach(array('left', 'right', 'center', 'top', 'bottom', 'lower') as $pan => $panel)
-	{
-		if($context['TPortal'][$panel.'panel'] == 1 && in_array($panel, $context['TPortal']['visual_opts']))
+	foreach(array('left', 'right', 'center', 'top', 'bottom', 'lower') as $pan => $panel) {
+		if($context['TPortal'][$panel.'panel'] == 1 && in_array($panel, $context['TPortal']['visual_opts'])) {
 			$context['TPortal'][$panel.'panel'] = 1;
-		else
+        }
+		else {
 			$context['TPortal'][$panel.'panel'] = 0;
+        }
 	}
 	// get the sorting
-	foreach($context['TPortal']['visual_opts'] as $vi => $vo)
-	{
-		if(substr($vo, 0, 5) == 'sort_')
+	foreach($context['TPortal']['visual_opts'] as $vi => $vo) {
+		if(substr($vo, 0, 5) == 'sort_') {
 			$catsort = substr($vo, 5);
-		else
+        }
+		else {
 			$catsort = 'date';
+        }
 
-		if(substr($vo, 0, 10) == 'sortorder_')
+		if(substr($vo, 0, 10) == 'sortorder_') {
 			$catsort_order = substr($vo, 10);
-		else
+        }
+		else {
 			$catsort_order = 'desc';
+        }
 	}
-	if(!in_array($catsort, array('date', 'author_id', 'id', 'parse')))
+
+	if(!in_array($catsort, array('date', 'author_id', 'id', 'parse'))) {
 		$catsort = 'date';
+    }
 
 	$max = $context['TPortal']['frontpage_limit'];
 	$start = $context['TPortal']['mystart'];
@@ -1087,8 +1094,7 @@ function doTPfrontpage()
 			LIMIT {int:start}, {int:max}',
 			array('start' => $start, 'max' => $max)
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$total = $smcFunc['db_num_rows']($request);
 			$col1 = ceil($total / 2);
 			$col2 = $total - $col1;
@@ -1103,8 +1109,7 @@ function doTPfrontpage()
 				)
 			);
 
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				// expand the vislaoptions
 				$row['visual_options'] = explode(',', $row['options']);
 
@@ -1117,13 +1122,15 @@ function doTPfrontpage()
                         )
                 )['image'];
 
-            	if($counter == 0)
+            	if($counter == 0) {
 					$context['TPortal']['category']['featured'] = $row;
-				elseif($counter < $col1 )
+                }
+				elseif($counter < $col1 ) {
 					$context['TPortal']['category']['col1'][] = $row;
-				elseif($counter > $col1 || $counter == $col1)
+                }
+				elseif($counter > $col1 || $counter == $col1) {
 					$context['TPortal']['category']['col2'][] = $row;
-
+                }
 				$counter++;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1185,8 +1192,7 @@ function doTPfrontpage()
 		loadLanguage('Stats');
 
 		// Find the post ids.
-		if($context['TPortal']['front_type'] == 'forum_only')
-        {
+		if($context['TPortal']['front_type'] == 'forum_only') {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
@@ -1200,8 +1206,7 @@ function doTPfrontpage()
 					'max' => $totalmax)
 			);
         }
-		else
-        {
+		else {
 			$request =  $smcFunc['db_query']('', '
 				SELECT t.id_first_msg as ID_FIRST_MSG
 				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
@@ -1216,22 +1221,28 @@ function doTPfrontpage()
         }
 
 		$posts = array();
-		while ($row = $smcFunc['db_fetch_assoc']($request))
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
 			$posts[] = $row['ID_FIRST_MSG'];
+        }
 		$smcFunc['db_free_result']($request);
 
-		if (empty($posts))
+		if (empty($posts)) {
 			return array();
+        }
 
 		// do some conversion
-		if($catsort == 'date')
+		if($catsort == 'date') {
             $catsort = 'poster_time';
-		elseif($catsort == 'author_id')
+        }
+		elseif($catsort == 'author_id') {
             $catsort = 'id_member';
-		elseif($catsort == 'parse' || $catsort == 'id')
+        }
+		elseif($catsort == 'parse' || $catsort == 'id') {
             $catsort = 'id_msg';
-		else
+        }
+		else {
 			$catsort = 'poster_time';
+        }
 
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, m.body,
@@ -1259,8 +1270,7 @@ function doTPfrontpage()
 		// make the pageindex!
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$total = $smcFunc['db_num_rows']($request);
 			$col1 = ceil($total / 2);
 			$col2 = $total - $col1;
@@ -1309,15 +1319,19 @@ function doTPfrontpage()
                         )
                 )['image'];
 
-				if(!empty($row['thumb_id']))
+				if(!empty($row['thumb_id'])) {
 					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
+                }
 
-				if($counter == 0)
+				if($counter == 0) {
 					$context['TPortal']['category']['featured'] = $row;
-				elseif($counter < $col1 && $counter > 0)
+                }
+				elseif($counter < $col1 && $counter > 0) {
 					$context['TPortal']['category']['col1'][] = $row;
-				elseif($counter > $col1 || $counter == $col1)
+                }
+				elseif($counter > $col1 || $counter == $col1) {
 					$context['TPortal']['category']['col2'][] = $row;
+                }
 
 				$counter++;
 			}
@@ -1419,21 +1433,20 @@ function doTPfrontpage()
 		$aposts = array();
         $mposts = array();
         $a = 0;
-		foreach($posts as $ab => $val)
-		{
-			if(($a == $start || $a > $start) && $a < ($start + $max))
-			{
-				if(substr($val, 0, 2) == 'a_')
+		foreach($posts as $ab => $val) {
+			if(($a == $start || $a > $start) && $a < ($start + $max)) {
+				if(substr($val, 0, 2) == 'a_') {
 					$aposts[] = substr($val, 2);
-				elseif(substr($val, 0, 2) == 'm_')
+                }
+				elseif(substr($val, 0, 2) == 'm_') {
 					$mposts[] = substr($val, 2);
+                }
 			}
 			$a++;
 		}
 
 		$thumbs = array();
-		if(count($mposts) > 0)
-		{
+		if(count($mposts) > 0) {
 			// Find the thumbs.
 			$request =  $smcFunc['db_query']('', '
 				SELECT id_thumb FROM {db_prefix}attachments
@@ -1442,10 +1455,10 @@ function doTPfrontpage()
 				array('posts' => $mposts)
 			);
 
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
-				while ($row = $smcFunc['db_fetch_assoc']($request))
+			if($smcFunc['db_num_rows']($request) > 0) {
+				while ($row = $smcFunc['db_fetch_assoc']($request)) {
 					$thumbs[] = $row['id_thumb'];
+                }
 				$smcFunc['db_free_result']($request);
 			}
 		}
@@ -1482,12 +1495,13 @@ function doTPfrontpage()
 			$length = $context['TPortal']['frontpage_limit_len'];
             foreach($forumPosts as $k => $row) {
                 // FIXME 
-                $row['date'] = $row['timestamp'];
-                $row['real_name'] = $row['poster']['name'];
-                $row['author_id'] = $row['poster']['id'];
-                $row['category'] = $row['board']['name'];
-                $row['views'] = 0;
+                $row['date']            = $row['timestamp'];
+                $row['real_name']       = $row['poster']['name'];
+                $row['author_id']       = $row['poster']['id'];
+                $row['category']        = $row['board']['name'];
+                $row['views']           = 0;
                 $row['date_registered'] = 0;
+                $row['id']              = $row['topic'];
                 // FIXME 
 
                 // Load their context data.
