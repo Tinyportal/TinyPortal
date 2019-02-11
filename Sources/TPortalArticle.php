@@ -67,7 +67,7 @@ function TPortalArticle()
 	    case 'submitarticle':
         case 'addarticle_html':
         case 'addarticle_bbc': 
-            return articleInsert();
+            return articleNew();
             break;
         case 'publish':
             return articlePublish();
@@ -77,6 +77,9 @@ function TPortalArticle()
             break;
         case 'uploadimage':
             return articleUploadImage();
+            break;
+        case 'submitsuccess':
+            return articleSubmitSuccess();
             break;
         default:
 		    redirectexit('action=forum');
@@ -294,7 +297,8 @@ function articleEdit() {
 	global $context, $smcFunc;
 
 	checkSession('post');
-	isAllowedTo('tp_articles');
+	isAllowedTo(array('tp_articles', 'tp_submitbbc', 'tp_submithtml'));
+
 	$options        = array();
 	$article_data   = array();
 	foreach($_POST as $what => $value) {
@@ -318,6 +322,9 @@ function articleEdit() {
 					case 'body_choice':
 						// We ignore all these
 						break;
+                    case 'title':
+						$article_data['subject'] = $value;
+                        break;
 					case 'authorid':
 						$article_data['author_id'] = $value;
 						break;
@@ -329,14 +336,14 @@ function articleEdit() {
 						$request = $smcFunc['db_query']('', '
 							SELECT value3 FROM {db_prefix}tp_variables
 							WHERE id = {int:varid} LIMIT 1',
-							array('varid' => $value)
+							array('varid' => is_numeric($value) ? $value : 0 )
 						);
 						if($smcFunc['db_num_rows']($request) > 0) {
 							$row = $smcFunc['db_fetch_assoc']($request);
 							$allowed = $row['value3'];
 							$smcFunc['db_free_result']($request);
+						    $article_data['category'] = $value;
 						}
-						$article_data['category'] = $value;
 						break;
 					case 'shortname':
 						$article_data[$setting] = htmlspecialchars(str_replace(' ', '-', $value), ENT_QUOTES);
@@ -444,7 +451,7 @@ function articleEdit() {
 	}
 	$article_data['options'] = implode(',', $options);
 	// check if uploads are there
-	if(file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
+	if(array_key_exists('tp_article_illupload', $_FILES) && file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
 		$name = TPuploadpicture('tp_article_illupload', '', '180', 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
 		tp_createthumb('tp-files/tp-articles/illustrations/'. $name, 128, 128, 'tp-files/tp-articles/illustrations/s_'. $name);
 		$article_data['illustration'] = $name;
@@ -496,7 +503,12 @@ function articleEdit() {
 		tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0) , $where);
 	}
 
-	return $_POST['tpadmin_form'].';article='.$where;
+    if(array_key_exists('tpadmin_form', $_POST)) {
+	    return $_POST['tpadmin_form'].';article='.$where;
+    }
+    else {
+        redirectexit('action=tpmod;sa=submitsuccess');
+    }
 
 }
 
@@ -549,7 +561,7 @@ function articleShow() {
     loadtemplate('TPmodules');
 }
 
-function articleInsert() {
+function articleNew() {
     global $context, $smcFunc, $settings;
 
     require_once(SOURCEDIR. '/TPcommon.php');
@@ -565,19 +577,20 @@ function articleInsert() {
         $context['TPortal']['editor_id'] = 'tp_article_body';
         TP_prebbcbox($context['TPortal']['editor_id']);
     }
-    else {
+    else if($_GET['sa'] == 'addarticle_html') {
         isAllowedTo('tp_submithtml');
-    }
-
-    if($_GET['sa'] == 'addarticle_html') {
         TPwysiwyg_setup();
     }
+    else {
+        redirectexit('action=forum');
+    }
+
     $context['TPortal']['subaction'] = 'submitarticle';
     loadtemplate('TPmodules');
     $context['sub_template'] = 'submitarticle';
 }
 
-function articleInsertSuccess() {
+function articleSubmitSuccess() {
     global $context;
 
     $context['TPortal']['subaction'] = 'submitsuccess';
