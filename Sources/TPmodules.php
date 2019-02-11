@@ -36,7 +36,7 @@ function TPmodules()
         case 'showcomments':
             articleShowComments();
             break;
-        case 'addcomment':
+        case 'comment':
             articleInsertComment();
             break;
         case 'killcomment':

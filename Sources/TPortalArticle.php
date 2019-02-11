@@ -17,11 +17,10 @@
 
 if (!defined('SMF'))
         die('Hacking attempt...');
-
 // TinyPortal module entrance
 function TPortalArticle()
 {
-	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
+	global $settings, $context, $scripturl, $txt, $user_info, $boarddir, $smcFunc;
 
 	if(loadLanguage('TPmodules') == false)
 		loadLanguage('TPmodules', 'english');
@@ -33,7 +32,7 @@ function TPortalArticle()
 	$context['TPortal']['not_forum'] = true;
 
 	// call the editor setup
-	require_once($sourcedir. '/TPcommon.php');
+	require_once(SOURCEDIR. '/TPcommon.php');
 
 	// clear the linktree first
 	TPstrip_linktree();
@@ -44,6 +43,7 @@ function TPortalArticle()
             articleShowComments();
             break;
         case 'addcomment':
+        case 'comment':
             articleInsertComment();
             break;
         case 'killcomment':
@@ -84,21 +84,22 @@ function TPortalArticle()
     }
 }
 
-
 function articleInsertComment() {
+    global $context;
 
     // check the session
     checkSession('post');
 
-    if (!allowedTo('tp_artcomment'))
+    if (!allowedTo('tp_artcomment')) {
         fatal_error($txt['tp-nocomments'], false);
+    }
 
     $commenter  = $context['user']['id'];
     $article    = $_POST['tp_article_id'];
     $title      = strip_tags($_POST['tp_article_comment_title']);
     $comment    = substr(TPUtil::htmlspecialchars($_POST['tp_article_bodytext']), 0, 65536);
 
-    require_once($sourcedir.'/Subs-Post.php');
+    require_once(SOURCEDIR.'/Subs-Post.php');
     preparsecode($comment);
 
     $tpArticle = new TPArticle();
@@ -110,7 +111,6 @@ function articleInsertComment() {
 }
 
 function articleShowComments() {
-
     global $smcFunc;
 
     if(!empty($_GET['tpstart']) && is_numeric($_GET['tpstart'])) {
@@ -189,7 +189,7 @@ function articleDeleteComment() {
 	// edit or deleting a comment?
 	if($context['user']['is_logged']) {
 		// check that you indeed can edit or delete
-		$comment = substr($_GET['sa'], 11);
+	    $comment = TPUtil::filter('comment', 'get', 'int');
 		if(!is_numeric($comment)) {
 			fatal_error($txt['tp-noadmincomments'], false);
         }
@@ -231,7 +231,6 @@ function articleEditComment() {
 	}
 
 }
-
 
 function articleRate() {
     global $context, $smcFunc;
@@ -422,9 +421,9 @@ function articleShow() {
 }
 
 function articleInsert() {
-    global $context, $smcFunc, $sourcedir, $settings;
+    global $context, $smcFunc, $settings;
 
-    require_once($sourcedir. '/TPcommon.php');
+    require_once(SOURCEDIR. '/TPcommon.php');
 
     // a BBC article?
     if(isset($_GET['bbc']) || $_GET['sa'] == 'addarticle_bbc') {
@@ -450,47 +449,51 @@ function articleInsert() {
 }
 
 function articleInsertSuccess() {
-	elseif($tpsub == 'submitsuccess') {
-		$context['TPortal']['subaction'] = 'submitsuccess';
-		loadtemplate('TPmodules');
-		$context['sub_template'] = 'submitsuccess';
-	}
-	// article
-	elseif($tpsub == 'submitarticle2') {
-		require_once($sourcedir. '/TPcommon.php');
+    global $context;
 
-		if(isset($_POST['tp_article_approved']) || allowedTo('tp_alwaysapproved'))
-			$artpp = '0';
-		else
-			$artpp = '1';
+    $context['TPortal']['subaction'] = 'submitsuccess';
+    loadtemplate('TPmodules');
+    $context['sub_template'] = 'submitsuccess';
 
-		$arttype = isset($_POST['submittedarticle']) ? $_POST['submittedarticle'] : '';
-		$arts = strip_tags($_POST['tp_article_title']);
-		$artd = $_POST['tp_article_date'];
-		$artimp = isset($_POST['tp_article_fileimport']) ? $_POST['tp_article_fileimport'] : '';
-		$artbb = $_POST['tp_article_body'];
-		$artu = isset($_POST['tp_article_useintro']) ? $_POST['tp_article_useintro'] : 0;
-		$arti = isset($_POST['tp_article_intro']) ? $_POST['tp_article_intro'] : '';
-		$artc = !empty($_POST['tp_article_category']) ? $_POST['tp_article_category'] : 0;
-		$artf = $_POST['tp_article_frontpage'];
-		$artframe = 'theme';
-		$artoptions = 'date,title,author,linktree,category,catlist,comments,commentallow,views,rating,ratingallow,inherit,avatar,social';
-		$name = $user_info['name'];
-		$nameb = $context['user']['id'];
-		if($arts == '')
-			$arts = $txt['tp-no_title'];
-		// escape any php code
-		if($artu == -1 && !get_magic_quotes_gpc())
-			$artbb = addslashes($artbb);
+}
 
-		$request = $smcFunc['db_insert']('INSERT',
-			'{db_prefix}tp_articles',
-			array(
-				'date' => 'int',
-				'body' => 'string',
-				'intro' => 'string',
-				'useintro' => 'int',
-				'category' => 'int',
+function articleSubmit() {
+
+    // article
+    require_once(SOURCEDIR. '/TPcommon.php');
+
+    if(isset($_POST['tp_article_approved']) || allowedTo('tp_alwaysapproved'))
+        $artpp = '0';
+    else
+        $artpp = '1';
+
+    $arttype = isset($_POST['submittedarticle']) ? $_POST['submittedarticle'] : '';
+    $arts = strip_tags($_POST['tp_article_title']);
+    $artd = $_POST['tp_article_date'];
+    $artimp = isset($_POST['tp_article_fileimport']) ? $_POST['tp_article_fileimport'] : '';
+    $artbb = $_POST['tp_article_body'];
+    $artu = isset($_POST['tp_article_useintro']) ? $_POST['tp_article_useintro'] : 0;
+    $arti = isset($_POST['tp_article_intro']) ? $_POST['tp_article_intro'] : '';
+    $artc = !empty($_POST['tp_article_category']) ? $_POST['tp_article_category'] : 0;
+    $artf = $_POST['tp_article_frontpage'];
+    $artframe = 'theme';
+    $artoptions = 'date,title,author,linktree,category,catlist,comments,commentallow,views,rating,ratingallow,inherit,avatar,social';
+    $name = $user_info['name'];
+    $nameb = $context['user']['id'];
+    if($arts == '')
+        $arts = $txt['tp-no_title'];
+    // escape any php code
+    if($artu == -1 && !get_magic_quotes_gpc())
+        $artbb = addslashes($artbb);
+
+    $request = $smcFunc['db_insert']('INSERT',
+            '{db_prefix}tp_articles',
+            array(
+                'date' => 'int',
+                'body' => 'string',
+                'intro' => 'string',
+                'useintro' => 'int',
+                'category' => 'int',
                 'frontpage' => 'int',
                 'subject' => 'string',
                 'author_id' => 'int',
@@ -509,48 +512,46 @@ function articleInsertSuccess() {
                 'shortname' => 'string',
                 'fileimport' => 'string',
                 'type' => 'string'),
-			array($artd, $artbb, $arti, $artu, $artc, $artf, $arts, $nameb, $name, $artframe, $artpp, '0', $artoptions, 0, 0, '', 0, '', '', 0, '', $artimp, $arttype),
-			array('id')
-		);
+                array($artd, $artbb, $arti, $artu, $artc, $artf, $arts, $nameb, $name, $artframe, $artpp, '0', $artoptions, 0, 0, '', 0, '', '', 0, '', $artimp, $arttype),
+                array('id')
+                    );
 
-		$newitem = $smcFunc['db_insert_id']('{db_prefix}tp_articles', 'id');
-		// put this into submissions - id and type
-		$title = $arts;
-		$now = $artd;
-		if($artpp == '0')
-			 $smcFunc['db_insert']('INSERT',
-			 	'{db_prefix}tp_variables',
-			 	array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4'  => 'string', 'value5' => 'int'),
-			 	array($title, $now, '', 'art_not_approved', '' , $newitem),
-			 	array('id')
-			 );
+    $newitem = $smcFunc['db_insert_id']('{db_prefix}tp_articles', 'id');
+    // put this into submissions - id and type
+    $title = $arts;
+    $now = $artd;
+    if($artpp == '0') {
+        $smcFunc['db_insert']('INSERT',
+            '{db_prefix}tp_variables',
+            array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4'  => 'string', 'value5' => 'int'),
+            array($title, $now, '', 'art_not_approved', '' , $newitem),
+            array('id')
+        );
+    }
 
-		if(isset($_POST['pre_approved']))
-			redirectexit('action=tpmod;sa=addsuccess');
+    if(isset($_POST['pre_approved'])) {
+        redirectexit('action=tpmod;sa=addsuccess');
+    }
 
-		if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles'))
-		{
-			// did we get a picture as well?
-			if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name']))
-			{
-				$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
-			}
-			redirectexit('action=tpmod;sa=editarticle'.$newitem);
-		}
-		elseif(allowedTo('tp_articles'))
-		{
-			// did we get a picture as well?
-			if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name']))
-			{
-				$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
-			}
-			redirectexit('action=tpadmin;sa=editarticle'.$newitem);
-		}
-		else
-			redirectexit('action=tpmod;sa=submitsuccess');
-	}
+    if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles')) {
+        // did we get a picture as well?
+        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
+            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+        }
+        redirectexit('action=tpmod;sa=editarticle'.$newitem);
+    }
+    elseif(allowedTo('tp_articles')) {
+        // did we get a picture as well?
+        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
+            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+        }
+        redirectexit('action=tpadmin;sa=editarticle'.$newitem);
+    }
+    else {
+        redirectexit('action=tpmod;sa=submitsuccess');
+    }
 }
 
 function articlePublish() {
@@ -582,25 +583,25 @@ function articlePublish() {
 }
 
 function articleSave() {
-	// save an article
+    global $context;
+    // save an article
     if(isset($_REQUEST['send'])) {
         foreach ($_POST as $what => $value) {
             if(substr($what, 0, 16) == 'tp_article_title') {
                 $val = substr($what, 16);
-                if(is_numeric($val) && $val > 0)
+                if(is_numeric($val) && $val > 0) {
                     $smcFunc['db_query']('', '
                         UPDATE {db_prefix}tp_articles
                         SET subject = {string:subject}
                         WHERE id = {int:artid}',
                         array('subject' => $value, 'artid' => $val)
                     );
+                }
             }
-            elseif(substr($what, 0, 15) == 'tp_article_body' && substr($what, -4) != 'mode')
-            {
+            elseif(substr($what, 0, 15) == 'tp_article_body' && substr($what, -4) != 'mode') {
                 // If we came from WYSIWYG then turn it back into BBC regardless.
-                if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what]))
-                {
-                    require_once($sourcedir . '/Subs-Editor.php');
+                if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what])) {
+                    require_once(SOURCEDIR . '/Subs-Editor.php');
                     $_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
                     // We need to unhtml it now as it gets done shortly.
                     $_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
@@ -608,27 +609,27 @@ function articleSave() {
                     $value = $_POST[$what] = $_REQUEST[$what];
                 }
                 $val = substr($what, 15);
-                if(is_numeric($val) && $val > 0)
+                if(is_numeric($val) && $val > 0) {
                     $smcFunc['db_query']('', '
                         UPDATE {db_prefix}tp_articles
                         SET body = {string:body}
                         WHERE id = {int:artid}',
                         array('body' => $value, 'artid' => $val)
                     );
+                }
             }
-            elseif(substr($what, 0, 19) == 'tp_article_useintro')
-            {
+            elseif(substr($what, 0, 19) == 'tp_article_useintro') {
                 $val = substr($what, 19);
-                if(is_numeric($val) && $val > 0)
+                if(is_numeric($val) && $val > 0) {
                     $smcFunc['db_query']('', '
                         UPDATE {db_prefix}tp_articles
                         SET useintro = {string:useintro}
                         WHERE id = {int:artid}',
                         array('useintro' => $value, 'artid' => $val)
                     );
+                }
             }
-            elseif(substr($what, 0, 16) == 'tp_article_intro')
-            {
+            elseif(substr($what, 0, 16) == 'tp_article_intro') {
                 $val = (int) substr($what, 16);
                 $smcFunc['db_query']('', '
                     UPDATE {db_prefix}tp_articles
@@ -637,62 +638,64 @@ function articleSave() {
                     array('intro' => $value, 'artid' => $val)
                 );
             }
-            elseif($what == 'tp_wysiwyg')
-            {
+            elseif($what == 'tp_wysiwyg') {
                 $result = $smcFunc['db_query']('', '
                     SELECT id FROM {db_prefix}tp_data
                     WHERE type = {int:type}
                     AND id_member = {int:id_mem}',
                     array('type' => 2, 'id_mem' => $context['user']['id'])
                 );
-                if($smcFunc['db_num_rows']($result) > 0)
-                {
+                if($smcFunc['db_num_rows']($result) > 0) {
                     $row = $smcFunc['db_fetch_assoc']($result);
                     $wysid = $row['id'];
                     $smcFunc['db_free_result']($result);
                 }
-                if(isset($wysid))
+
+                if(isset($wysid)) {
                     $smcFunc['db_query']('', '
                         UPDATE {db_prefix}tp_data
                         SET value = {int:val}
                         WHERE id = {int:dataid}',
                         array('val' => $value, 'dataid' => $wysid)
                     );
-                else
+                }
+                else {
                     $smcFunc['db_query']('INSERT',
                         '{db_prefix}tp_data}',
                         array('type' => 'int', 'id_member' => 'int', 'value' => 'int', 'item' => 'int'),
                         array(2, $context['user']['id'], $value, 0),
                         array('id')
                     );
-            }
+                }
+            } 
         }
-        if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles'))
-        {
-            // did we get a picture as well?
-            if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name']))
-            {
-                $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-                tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
-            }
-            redirectexit('action=tpmod;sa=editarticle'.$val);
+    }
+
+    if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles')) {
+        // did we get a picture as well?
+        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
+            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
         }
-        elseif(allowedTo('tp_articles'))
-        {
-            // did we get a picture as well?
-            if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name']))
-            {
-                $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-                tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
-            }
-            redirectexit('action=tpadmin;sa=editarticle'.$val);
+        redirectexit('action=tpmod;sa=editarticle'.$val);
+    }
+    elseif(allowedTo('tp_articles')) {
+        // did we get a picture as well?
+        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
+            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
         }
-        else
-            fatal_error($txt['tp-notallowed'], false);
+        redirectexit('action=tpadmin;sa=editarticle'.$val);
+    }
+    else {
+        fatal_error($txt['tp-notallowed'], false);
+    }
+
 }
 
-function articleUploadImage() {
-    require_once($sourcedir.'/TPcommon.php');
+function articleUploadImage() 
+{
+    require_once(SOURCEDIR.'/TPcommon.php');
     $name = TPuploadpicture( 'image', $context['user']['id'].'uid' );
     tp_createthumb( 'tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name );
     $response['data'] = 'tp-images/'.$name;
@@ -702,5 +705,4 @@ function articleUploadImage() {
     // we want to just exit
     die;
 }
-
 ?>
