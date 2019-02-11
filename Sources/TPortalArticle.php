@@ -40,43 +40,43 @@ function TPortalArticle()
 	$subAction = TPUtil::filter('sa', 'get', 'string');
     switch($subAction) {
         case 'showcomments':
-            articleShowComments();
+            return articleShowComments();
             break;
         case 'addcomment':
         case 'comment':
-            articleInsertComment();
+            return articleInsertComment();
             break;
         case 'killcomment':
-            articleDeleteComment();
+            return articleDeleteComment();
             break;
         case 'editcomment':
-            articleEditComment();
+            return articleEditComment();
             break;
         case 'rate_article':
-            articleRate();
+            return articleRate();
             break;
         case 'editarticle':
-            articleEdit();
+            return articleEdit();
             break;
         case 'tpattach':
-            articleAttachment();
+            return articleAttachment();
             break;
         case 'myarticles':
-            articleShow();
+            return articleShow();
             break;
 	    case 'submitarticle':
         case 'addarticle_html':
         case 'addarticle_bbc': 
-            articleInsert();
+            return articleInsert();
             break;
         case 'publish':
-            articlePublish();
+            return articlePublish();
             break;
         case 'savearticle':
-            articleSave();
+            return articleSave();
             break;
         case 'uploadimage':
-            articleUploadImage();
+            return articleUploadImage();
             break;
         default:
 		    redirectexit('action=forum');
@@ -291,84 +291,213 @@ function articleAttachment() {
 }
 
 function articleEdit() {
-    global $context, $smcFunc;
+	global $context, $smcFunc;
 
-	// edit your own articles?
-    $what = substr($_GET['sa'], 11);
-    if(!is_numeric($what)) {
-        fatal_error($txt['tp-notanarticle'], false);
-    }
+	checkSession('post');
+	isAllowedTo('tp_articles');
+	$options        = array();
+	$article_data   = array();
+	foreach($_POST as $what => $value) {
+		if(substr($what, 0, 11) == 'tp_article_') {
+			$setting = substr($what, 11);
+			if(substr($setting, 0, 8) == 'options_') {
+				if(substr($setting, 0, 19) == 'options_lblockwidth' || substr($setting,0,19) == 'options_rblockwidth') {
+					$options[] = substr($setting, 8).$value;
+				}
+				else {
+					$options[] = substr($setting, 8);
+				}
+			} 
+			else { 
+				switch($setting) {
+					case 'body_mode':
+					case 'intro_mode':
+					case 'illupload':
+					case 'intro_pure':
+					case 'body_pure':
+					case 'body_choice':
+						// We ignore all these
+						break;
+					case 'authorid':
+						$article_data['author_id'] = $value;
+						break;
+					case 'idtheme':
+						$article_data['id_theme'] = $value;
+						break;
+					case 'category':
+						// for the event, get the allowed
+						$request = $smcFunc['db_query']('', '
+							SELECT value3 FROM {db_prefix}tp_variables
+							WHERE id = {int:varid} LIMIT 1',
+							array('varid' => $value)
+						);
+						if($smcFunc['db_num_rows']($request) > 0) {
+							$row = $smcFunc['db_fetch_assoc']($request);
+							$allowed = $row['value3'];
+							$smcFunc['db_free_result']($request);
+						}
+						$article_data['category'] = $value;
+						break;
+					case 'shortname':
+						$article_data[$setting] = htmlspecialchars(str_replace(' ', '-', $value), ENT_QUOTES);
+						break;
+					case 'intro':
+					case 'body':
+						// If we came from WYSIWYG then turn it back into BBC regardless.
+						if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body'])) {
+							require_once($sourcedir . '/Subs-Editor.php');
+							$_REQUEST['tp_article_body'] = html_to_bbc($_REQUEST['tp_article_body']);
+							// We need to unhtml it now as it gets done shortly.
+							$_REQUEST['tp_article_body'] = un_htmlspecialchars($_REQUEST['tp_article_body']);
+							// We need this for everything else.
+							if($setting == 'body') {
+								$value = $_POST['tp_article_body'] = $_REQUEST['tp_article_body'];
+							}
+							elseif ($settings == 'intro') {
+								$value = $_POST['tp_article_intro'] = $_REQUEST['tp_article_intro'];
+							}
+						}
+						// in case of HTML article we need to check it
+						if(isset($_POST['tp_article_body_pure']) && isset($_POST['tp_article_body_choice'])) {
+							if($_POST['tp_article_body_choice'] == 0) {
+								if ($setting == 'body') {
+									$value = $_POST['tp_article_body_pure'];
+								}
+								elseif ($setting == 'intro') {
+									$value = $_POST['tp_article_intro'];
+								}
+							}
+							// save the choice too
+							$request = $smcFunc['db_query']('', '
+								SELECT id FROM {db_prefix}tp_variables
+								WHERE subtype2 = {int:sub2}
+								AND type = {string:type} LIMIT 1',
+								array('sub2' => $where, 'type' => 'editorchoice')
+							);
+							if($smcFunc['db_num_rows']($request) > 0) {
+								$row = $smcFunc['db_fetch_assoc']($request);
+								$smcFunc['db_free_result']($request);
+								$smcFunc['db_query']('', '
+									UPDATE {db_prefix}tp_variables
+									SET value1 = {string:val1}
+									WHERE subtype2 = {int:sub2}
+									AND type = {string:type}',
+									array('val1' => $_POST['tp_article_body_choice'], 'sub2' => $where, 'type' => 'editorchoice')
+								);
+							}
+							else {
+								$smcFunc['db_insert']('INSERT',
+									'{db_prefix}tp_variables',
+									array('value1' => 'string', 'type' => 'string', 'subtype2' => 'int'),
+									array($_POST['tp_article_body_choice'], 'editorchoice', $where),
+									array('id')
+								);
+							}
+						}
+						$article_data[$setting] = $value;
+						break;
+					case 'day':
+					case 'month':
+					case 'year':
+					case 'minute':
+					case 'hour':
+					case 'timestamp':
+						$timestamp = mktime($_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year']);
+						if(!isset($savedtime)) {
+							$article_data['date'] = $timestamp;
+						}
+						break;
+					case 'pubstartday':
+					case 'pubstartmonth':
+					case 'pubstartyear':
+					case 'pubstartminute':
+					case 'pubstarthour':
+					case 'pub_start':
+						if(empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear'])) {
+							$article_data['pub_start'] = 0;
+						}
+						else {
+							$timestamp = mktime($_POST['tp_article_pubstarthour'], $_POST['tp_article_pubstartminute'], 0, $_POST['tp_article_pubstartmonth'], $_POST['tp_article_pubstartday'], $_POST['tp_article_pubstartyear']);
+							$article_data['pub_start'] = $timestamp;
+						}
+					break;
+					case 'pubendday':
+					case 'pubendmonth':
+					case 'pubendyear':
+					case 'pubendminute':
+					case 'pubendhour':
+					case 'pub_end':
+						if(empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear'])) {
+							$article_data['pub_end'] = 0;
+						}
+						else {
+							$timestamp = mktime($_POST['tp_article_pubendhour'], $_POST['tp_article_pubendminute'], 0, $_POST['tp_article_pubendmonth'], $_POST['tp_article_pubendday'], $_POST['tp_article_pubendyear']);
+							$article_data['pub_end'] = $timestamp;
+						}
+						break;
+					default:
+						$article_data[$setting] = $value;
+						break;
+				}
+			}
+		}
+	}
+	$article_data['options'] = implode(',', $options);
+	// check if uploads are there
+	if(file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
+		$name = TPuploadpicture('tp_article_illupload', '', '180', 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
+		tp_createthumb('tp-files/tp-articles/illustrations/'. $name, 128, 128, 'tp-files/tp-articles/illustrations/s_'. $name);
+		$article_data['illustration'] = $name;
+	}
 
-    // get one article
-    $context['TPortal']['subaction'] = 'editarticle';
-    $context['TPortal']['editarticle'] = array();
-    $request =  $smcFunc['db_query']('', '
-        SELECT * FROM {db_prefix}tp_articles
-        WHERE id = {int:artid} LIMIT 1',
-        array('artid' => $what)
-    );
-    if($smcFunc['db_num_rows']($request)) {
-        $row = $smcFunc['db_fetch_assoc']($request);
-        // check permission
-        if(!allowedTo('tp_articles') && $context['user']['id'] != $row['author_id'])
-            fatal_error($txt['tp-articlenotallowed'], false);
-        // can you edit your own then..?
-        isAllowedTo('tp_editownarticle');
+	$where      = TPUtil::filter('article', 'request', 'string');
+	$tpArticle  = new TPArticle();
+	if(empty($where)) {
+		// We are inserting
+		$where = $tpArticle->insertArticle($article_data);
+	}
+	else {
+		// We are updating
+		$tpArticle->updateArticle((int)$where, $article_data);
+	}
+	// Update the approved status
+	if($article_data['approved'] == 1) {
+		$smcFunc['db_query']('', '
+			DELETE FROM {db_prefix}tp_variables
+			WHERE type = {string:type}
+			AND value5 = {int:val5}',
+			array('type' => 'art_not_approved', 'val5' => $where)
+		);
+	}
+	elseif(empty($where)) {
+		$smcFunc['db_insert']('insert',
+			'{db_prefix}tp_variables',
+			array (
+				'type' => 'string', 
+				'value5' => 'int'
+			),
+			array (  
+				'art_not_approved',
+				$where
+			),
+			array ( 
+				'id' 
+			)
+		);
+	}
+	unset($tpArticle);
+	// check if uploadad picture
+	if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
+		tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+	}
+	// if this was a new article
+	if($_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
+		tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0) , $where);
+	}
 
-        if($row['locked'] == 1)
-            fatal_error($txt['tp-articlelocked'], false);
+	return $_POST['tpadmin_form'].';article='.$where;
 
-        // Add in BBC editor before we call in template so the headers are there
-        if($row['type'] == 'bbc')
-        {
-            $context['TPortal']['editor_id'] = 'tp_article_body' . $row['id'];
-            TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($row['body']));
-        }
-        if($row['type'] == 'html')
-        {
-        TPwysiwyg_setup();
-        }
-
-        $context['TPortal']['editarticle'] = array(
-            'id' => $row['id'],
-            'date' => array(
-                'timestamp' => $row['date'],
-                'day' => date("j",$row['date']),
-                'month' => date("m",$row['date']),
-                'year' => date("Y",$row['date']),
-                'hour' => date("G",$row['date']),
-                'minute' => date("i",$row['date']),
-            ),
-            'body' => $row['body'],
-            'intro' => $row['intro'],
-            'useintro' => $row['useintro'],
-            'category' => $row['category'],
-            'frontpage' => $row['frontpage'],
-            'subject' => $row['subject'],
-            'authorID' => $row['author_id'],
-            'author' => $row['author'],
-            'frame' => !empty($row['frame']) ? $row['frame'] : 'theme',
-            'approved' => $row['approved'],
-            'off' => $row['off'],
-            'options' => $row['options'],
-            'id_theme' => $row['id_theme'],
-            'shortname' => $row['shortname'],
-            'sticky' => $row['sticky'],
-            'locked' => $row['locked'],
-            'fileimport' => $row['fileimport'],
-            'topic' => $row['topic'],
-            'illustration' => $row['illustration'],
-            'headers' => $row['headers'],
-            'articletype' => $row['type'],
-        );
-        $smcFunc['db_free_result']($request);
-    }
-    else
-        fatal_error($txt['tp-notanarticlefound'], false);
-
-    if(loadLanguage('TPortalAdmin') == false)
-        loadLanguage('TPortalAdmin', 'english');
-    loadtemplate('TPmodules');
 }
 
 function articleShow() {
