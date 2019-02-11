@@ -34,42 +34,45 @@ function TPmodules()
 	$subAction = TPUtil::filter('sa', 'get', 'string');
     switch($subAction) {
         case 'showcomments':
-            articleShowComments();
+            return articleShowComments();
             break;
         case 'comment':
-            articleInsertComment();
+            return articleInsertComment();
             break;
         case 'killcomment':
-            articleDeleteComment();
+            return articleDeleteComment();
             break;
         case 'editcomment':
-            articleEditComment();
+            return articleEditComment();
             break;
         case 'rate_article':
-            articleRate();
+            return articleRate();
             break;
         case 'editarticle':
-            articleEdit();
+            return articleEdit();
             break;
         case 'tpattach':
-            articleAttachment();
+            return articleAttachment();
             break;
         case 'myarticles':
-            articleShow();
+            return articleShow();
             break;
 	    case 'submitarticle':
         case 'addarticle_html':
         case 'addarticle_bbc': 
-            articleInsert();
+            return articleNew();
             break;
         case 'publish':
-            articlePublish();
+            return articlePublish();
             break;
         case 'savearticle':
-            articleSave();
+            return articleSave();
             break;
         case 'uploadimage':
-            articleUploadImage();
+            return articleUploadImage();
+            break;
+        case 'submitsuccess':
+            return articleSubmitSuccess();
             break;
         default:
 		    //redirectexit('action=forum');
@@ -560,7 +563,7 @@ function tp_profile_articles($memID)
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sort} {raw:sorter} LIMIT {int:start}, 10',
+		ORDER BY art.{raw:sort} {raw:sorter} OFFSET {int:start} LIMIT 10',
 		array('auth' => $memID, 
 		'sort' => $sorting, 
 		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',

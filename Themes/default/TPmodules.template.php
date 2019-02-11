@@ -527,7 +527,7 @@ function template_submitarticle()
 	global $context, $txt, $scripturl;
 
 	echo '
-	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=submitarticle2" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
+	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=editarticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				<input name="TPadmin_submit" type="hidden" value="set">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<div id="users-addarticle" class="bordercolor">
