@@ -1437,31 +1437,28 @@ function do_articles()
 	}
 	TPadd_linktree($scripturl.'?action=tpadmin;sa=articles', $txt['tp-articles']);
 	// are we inside a category?
-	if(isset($_GET['cu']) && is_numeric($_GET['cu']))
-	{
+	if(isset($_GET['cu']) && is_numeric($_GET['cu'])) {
 		$where = $_GET['cu'];
 	}
 	// show the no category articles?
-	if(isset($_GET['sa']) && $_GET['sa'] == 'strays')
-	{
+	if(isset($_GET['sa']) && $_GET['sa'] == 'strays') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=strays', $txt['tp-strays']);
 		$show_nocategory = true;
 	}
+
 	// submissions?
-	if(isset($_GET['sa']) && $_GET['sa'] == 'submission')
-	{
+	if(isset($_GET['sa']) && $_GET['sa'] == 'submission') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=submission', $txt['tp-submissions']);
 		$show_submission = true;
 	}
+
 	// single article?
-	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle')
-	{
+	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa='.$_GET['sa'], $txt['tp-editarticle']);
 		$whatarticle = substr($_GET['sa'], 11);
 	}
 	// are we starting a new one?
-	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'addarticle_')
-	{
+	if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'addarticle_') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa='.$_GET['sa'], $txt['tp-addarticle']);
 		$context['TPortal']['editarticle'] = array(
             'id' => '',
@@ -1509,15 +1506,14 @@ function do_articles()
 				}
 			// ]]></script>';
 		// Add in BBC editor before we call in template so the headers are there
-		if(substr($_GET['sa'], 11) == 'bbc')
-		{
+		if(substr($_GET['sa'], 11) == 'bbc') {
 			$context['TPortal']['editor_id'] = 'tp_article_body';
 			TP_prebbcbox($context['TPortal']['editor_id']);
 		}
 	}
+
 	// fetch categories and subcategories
-	if(!isset($show_nocategory))
-	{
+	if(!isset($show_nocategory)) {
 		$request = $smcFunc['db_query']('', '
 			SELECT DISTINCT var.id AS id, var.value1 AS name, var.value2 AS parent
 			FROM {db_prefix}tp_variables AS var
@@ -1527,27 +1523,26 @@ function do_articles()
 			array('type' => 'category', 'whereval' => isset($where) ? $where : 0)
 		);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['basecats'] = isset($where) ? array($where) : array('0', '9999');
 			$cats = array();
 			$context['TPortal']['cats'] = array();
 			$sorted = array();
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$sorted[$row['id']] = $row;
 				$cats[] = $row['id'];
 			}
 			$smcFunc['db_free_result']($request);
-			if(count($sorted) > 1)
+			if(count($sorted) > 1) {
 				$context['TPortal']['cats'] = chain('id', 'parent', 'name', $sorted);
-			else
+            }
+			else {
 				$context['TPortal']['cats'] = $sorted;
+            }
 		}
 	}
 
-	if(isset($show_submission) && $context['TPortal']['total_submissions'] > 0)
-	{
+	if(isset($show_submission) && $context['TPortal']['total_submissions'] > 0) {
 		// check if we have any start values
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
@@ -1570,19 +1565,16 @@ function do_articles()
 			)
 		);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['arts_submissions']=array();
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$context['TPortal']['arts_submissions'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 		}
 	}
 
-	if(isset($show_nocategory) && $context['TPortal']['total_nocategory'] > 0)
-	{
+	if(isset($show_nocategory) && $context['TPortal']['total_nocategory'] > 0) {
 		// check if we have any start values
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
@@ -1604,19 +1596,16 @@ function do_articles()
 			)
 		);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['arts_nocat'] = array();
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$context['TPortal']['arts_nocat'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 		}
 	}
 	// ok, fetch single article
-	if(isset($whatarticle))
-	{
+	if(isset($whatarticle)) {
 		$request = $smcFunc['db_query']('', '
 			SELECT	art.*,  COALESCE(mem.real_name, art.author) AS real_name, art.author_id AS author_id,
 				art.type as articletype, art.id_theme as id_theme
@@ -1628,8 +1617,7 @@ function do_articles()
 			)
 		);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
 			$context['TPortal']['editing_article'] = true;
 			$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
@@ -1641,8 +1629,7 @@ function do_articles()
         }
 
 		// Add in BBC editor before we call in template so the headers are there
-		if($context['TPortal']['editarticle']['articletype'] == 'bbc')
-		{
+		if($context['TPortal']['editarticle']['articletype'] == 'bbc') {
 			$context['TPortal']['editor_id'] = 'tp_article_body';
 			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['editarticle']['body']));
 		}
@@ -1653,17 +1640,17 @@ function do_articles()
 			WHERE subtype2 = {int:subtype}
 			AND type = {string:type} LIMIT 1',
 			array(
-				'subtype' => $whatarticle, 'type' => 'editorchoice',
+				'subtype' => is_numeric($whatarticle) ? $whatarticle : 0, 'type' => 'editorchoice',
 			)
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$row = $smcFunc['db_fetch_assoc']($request);
 			$smcFunc['db_free_result']($request);
 			$context['TPortal']['editorchoice'] = $row['value1'];
 		}
-		else
+		else {
 			$context['TPortal']['editorchoice'] = 1;
+        }
 
 		$context['html_headers'] .= '
 			<script type="text/javascript"><!-- // --><![CDATA[
