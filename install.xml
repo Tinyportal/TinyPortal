@@ -26,7 +26,7 @@
 			require_once($sourcedir . '/BoardIndex.php');
 			return 'BoardIndex';
 		}]]></search>
-			<add><![CDATA[		$tpAction = whichTPAction();
+			<add><![CDATA[		$tpAction = TPortal_integrate::hookDefaultAction();
 		if (!empty($tpAction))
 			return $tpAction;
 			]]></add>
@@ -61,7 +61,7 @@
 		$id_theme = $modSettings['theme_guests'];]]></search>
 			<add><![CDATA[
 	// TinyPortal
-	tpLoadTheme($id_theme);
+	TPortal_integrate::hookLoadTheme($id_theme);
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>

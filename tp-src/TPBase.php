@@ -96,7 +96,7 @@ class TPBase
             COALESCE(mem.real_name, \'\') AS real_name, mem.avatar,
             COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type, mem.email_address AS email_address
             FROM {db_prefix}tp_comments AS c
-            LEFT JOIN {db_prefix}members AS mem ON ( c.member_id'. ( ( PGSQL == true ) ? '::Integer' : ' ' ) .' = mem.id_member)
+            LEFT JOIN {db_prefix}members AS mem ON ( c.member_id'. ( ( TP_PGSQL == true ) ? '::Integer' : ' ' ) .' = mem.id_member)
             LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member)
             WHERE c.item_type = {string:type}
             AND c.item_id = {int:item_id}

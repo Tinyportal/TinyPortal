@@ -135,7 +135,7 @@ class TPUtil
         }
     }
 
-    public static function filter($key, $type = 'get', $filterType = 'string', $options = array()) {
+    public static function filter($key, $type, $filterType = 'string', $options = array()) {
         
         switch($type) {
             case 'get':
@@ -146,6 +146,7 @@ class TPUtil
                 break;
             case 'request':
                 $data = $_REQUEST;
+                break;
             default:
                 return false;
                 break;

@@ -15,39 +15,20 @@
  *
  */
 
-global $hooks, $mod_name;
+global $hooks, $mod_name, $forum_version;
 
 $hooks = array(
-	'integrate_pre_include'                     => '$sourcedir/TPassimilate.php,$sourcedir/TPortal.php',
-	'integrate_load_permissions'                => 'tpAddPermissions',
-	'integrate_load_illegal_guest_permissions'  => 'tpAddIllegalPermissions',
-	'integrate_buffer'                          => 'tpAddCopy,tpImageRewrite',
-	'integrate_menu_buttons'                    => 'tpAddMenuItems',
-	'integrate_display_buttons'                 => 'tpAddPromoteButton',
-	'integrate_actions'                         => 'tpAddActions',
-	'integrate_profile_areas'                   => 'tpAddProfileMenu',
-    'integrate_whos_online'                     => 'tpWhosOnline',
-    'integrate_pre_log_stats'                   => 'tpStatsIgnore',
+    'integrate_pre_include'                     => '$sourcedir/TPortal.php,$sourcedir/TPortal.integrate.php',
+    'integrate_pre_load'                        => 'TPortal_Integrate::hookPreLoad'
 );
+
+if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
+    define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+}
 
 $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------
-global $forum_version;
-if(strpos($forum_version, '2.0') !== false) {
-	define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
-}
-else {
-    $hooks['integrate_redirect']                = 'tpIntegrateRedirect';
-	$hooks['integrate_pre_profile_areas']       = 'tpAddProfileMenu';
-    $hooks['integrate_pre_load_theme']          = 'tpLoadTheme';
-    unset($hooks['integrate_profile_areas']);
-    // We can use a hook of sorts for the default actions now
-    if(isset($context['uninstalling'])) {
-        updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
-    }
-}
-
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 	require_once(dirname(__FILE__) . '/SSI.php');
 elseif (!defined('SMF'))

@@ -1554,19 +1554,6 @@ function TPstrip_linktree()
 	$context['linktree'][] = array('url' => $scripturl, 'name' => $context['forum_name']);
 }
 
-// TinyPortal startpage
-function TPortal()
-{
-	global $context;
-
-	// For wireless, we use the Wireless template...
-	if (defined('WIRELESS') && WIRELESS ) {
-		loadTemplate('TPwireless');
-		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp';
-	}
-	else
-		loadTemplate('TPortal');
-}
 
 function normalizeNewline($text)
 {
@@ -3060,7 +3047,7 @@ function TPGetMemberColour($member_ids)
     }
 	
     // SMF2.1 and php < 7.0 need this
-    if (TP_SMF21_VERSION && empty($db_connection)) {
+    if (TP_SMF21 && empty($db_connection)) {
         $db_options = array();
         // Add in the port if needed
         if (!empty($db_port)) {

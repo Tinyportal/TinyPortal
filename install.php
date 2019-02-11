@@ -52,7 +52,7 @@ $utf8 = (bool)( $db_type == 'mysql' && !empty($modSettings['global_character_set
 $smf_prefix = trim(strstr($db_prefix, '.'), '.');
 
 global $forum_version;
-if(strpos($forum_version, '2.0') !== false) {
+if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
     $forumVersion = 'SMF 2.0.x';
 }
 else {
