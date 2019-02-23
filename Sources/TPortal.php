@@ -43,7 +43,6 @@ function TPortal_init()
 		loadLanguage('TPortal', 'english');
 
 	$context['TPortal'] = array();
-	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 
 	if(!isset($context['forum_name']))
 		$context['forum_name'] = '';
@@ -53,6 +52,8 @@ function TPortal_init()
 
 	// Add all the TP settings into ['TPortal']
 	setupTPsettings();
+    // Setup querystring
+	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
 
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
