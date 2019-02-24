@@ -44,9 +44,10 @@ function TPSearchArticle()
 {
 	global $scripturl, $txt, $context, $smcFunc;
 
-	$start      = 0;
-    $usebody    = false;
-    $usetitle   = false;
+	$start          = 0;
+    $max_results    = 20;
+    $usebody        = false;
+    $usetitle       = false;
 
     if(empty($_REQUEST['start'])) {
         $start = 0;
@@ -156,10 +157,10 @@ function TPSearchArticle()
 		}
 		$order_by   = 'score DESC, ';
 	}
+    $num_results                            = 0;
 	$context['TPortal']['searchresults']    = array();
 	$context['TPortal']['searchterm']       = $what;
 	$context['TPortal']['searchpage']       = $start;
-    $num_results                            = 0;
 	$now        = forum_time();
 	$request    = $smcFunc['db_query']('', '
         SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
@@ -171,10 +172,11 @@ function TPSearchArticle()
             OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > {int:now} )
             OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > {int:now} AND a.pub_start < {int:now}))
         AND a.off = 0
-        ORDER BY {raw:order_by} a.date DESC LIMIT 20 OFFSET {int:start}',
+        ORDER BY {raw:order_by} a.date DESC LIMIT {int:limit} OFFSET {int:start}',
         array (
             'select'    => $select,
             'query'     => $query,
+            'limit'     => $max_results,
             'start'     => $start,
             'now'       => $now,
             'order_by'  => $order_by,
@@ -202,15 +204,33 @@ function TPSearchArticle()
 				'body' 		=> $row['body'],
 				'author' 	=> '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 			);
-            $num_results++;
 		}
 		$smcFunc['db_free_result']($request);
 	}
 
+    $request    = $smcFunc['db_query']('', '
+        SELECT COUNT(id) AS num_results
+        FROM {db_prefix}tp_articles AS a
+        LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
+        WHERE {raw:query}
+        AND ((a.pub_start = 0 AND a.pub_end = 0)
+            OR (a.pub_start != 0 AND a.pub_start < {int:now} AND a.pub_end = 0)
+            OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > {int:now} )
+            OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > {int:now} AND a.pub_start < {int:now}))
+        AND a.off = 0',
+        array (
+            'query'     => $query,
+            'now'       => $now,
+        )
+	);
+
+    $num_results = $smcFunc['db_fetch_assoc']($request)['num_results'];
+	$smcFunc['db_free_result']($request);
+
     $params = base64_encode(json_encode(array( 'search' => $what, 'title' => $usetitle, 'body' => $usebody)));
     
     // Now that we know how many results to expect we can start calculating the page numbers.
-    $context['page_index']  = constructPageIndex($scripturl . '?action=tpsearch;sa=searcharticle2;params=' . $params, $start, $num_results, 20, false);
+    $context['page_index']  = constructPageIndex($scripturl . '?action=tpsearch;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
 
 }
 
