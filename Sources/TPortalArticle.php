@@ -15,11 +15,13 @@
  *
  */
 
-if (!defined('SMF'))
-        die('Hacking attempt...');
+if (!defined('SMF')) {
+    die('Hacking attempt...');
+}
+
 // TinyPortal module entrance
-function TPortalArticle()
-{
+function TPortalArticle() {{{
+
 	global $settings, $context, $scripturl, $txt, $user_info, $boarddir, $smcFunc;
 
 	if(loadLanguage('TPmodules') == false)
@@ -85,9 +87,10 @@ function TPortalArticle()
 		    redirectexit('action=forum');
             break;
     }
-}
+}}}
 
-function articleInsertComment() {
+function articleInsertComment() {{{
+
     global $context;
 
     // check the session
@@ -111,9 +114,10 @@ function articleInsertComment() {
         redirectexit('page='.$article.'#tp-comment');
     }
 
-}
+}}}
 
-function articleShowComments() {
+function articleShowComments() {{{
+
     global $smcFunc;
 
     if(!empty($_GET['tpstart']) && is_numeric($_GET['tpstart'])) {
@@ -184,9 +188,11 @@ function articleShowComments() {
     $context['TPortal']['subaction'] = 'showcomments';
     TPadd_linktree($scripturl.'?action=tpmod;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
     loadtemplate('TPmodules');
-}
 
-function articleDeleteComment() {
+}}}
+
+function articleDeleteComment() {{{
+
     global $context;
 
 	// edit or deleting a comment?
@@ -205,9 +211,9 @@ function articleDeleteComment() {
         }
     }
 
-}
+}}}
 
-function articleEditComment() {
+function articleEditComment() {{{
     global $context;
 
 	if($context['user']['is_logged']) {
@@ -233,9 +239,9 @@ function articleEditComment() {
 		}
 	}
 
-}
+}}}
 
-function articleRate() {
+function articleRate() {{{
     global $context, $smcFunc;
 
 	// rating is underway
@@ -287,13 +293,13 @@ function articleRate() {
 		}
 	}
 
-}
+}}}
 
-function articleAttachment() {
+function articleAttachment() {{{
 	tpattach();
-}
+}}}
 
-function articleEdit() {
+function articleEdit() {{{
 	global $context, $smcFunc;
 
 	checkSession('post');
@@ -510,9 +516,9 @@ function articleEdit() {
         redirectexit('action=tpmod;sa=submitsuccess');
     }
 
-}
+}}}
 
-function articleShow() {
+function articleShow() {{{
     global $context, $smcFunc;
 	// show own articles?
     // not for guests
@@ -546,22 +552,22 @@ function articleShow() {
         )
     );
 
-    if($smcFunc['db_num_rows']($request2) > 0)
-    {
+    if($smcFunc['db_num_rows']($request2) > 0) {
         $context['TPortal']['myarticles']=array();
-        while($row = $smcFunc['db_fetch_assoc']($request2))
-        {
+        while($row = $smcFunc['db_fetch_assoc']($request2)) {
             $context['TPortal']['myarticles'][] = $row;
         }
         $smcFunc['db_free_result']($request2);
     }
 
-    if(loadLanguage('TPortalAdmin') == false)
+    if(loadLanguage('TPortalAdmin') == false) {
         loadLanguage('TPortalAdmin', 'english');
+    }
     loadtemplate('TPmodules');
-}
 
-function articleNew() {
+}}}
+
+function articleNew() {{{
     global $context, $smcFunc, $settings;
 
     require_once(SOURCEDIR. '/TPcommon.php');
@@ -588,18 +594,19 @@ function articleNew() {
     $context['TPortal']['subaction'] = 'submitarticle';
     loadtemplate('TPmodules');
     $context['sub_template'] = 'submitarticle';
-}
 
-function articleSubmitSuccess() {
+}}}
+
+function articleSubmitSuccess() {{{
     global $context;
 
     $context['TPortal']['subaction'] = 'submitsuccess';
     loadtemplate('TPmodules');
     $context['sub_template'] = 'submitsuccess';
 
-}
+}}}
 
-function articleSubmit() {
+function articleSubmit() {{{
 
     // article
     require_once(SOURCEDIR. '/TPcommon.php');
@@ -694,9 +701,10 @@ function articleSubmit() {
     else {
         redirectexit('action=tpmod;sa=submitsuccess');
     }
-}
 
-function articlePublish() {
+}}}
+
+function articlePublish() {{{
     global $context;
     
     // promoting topics
@@ -722,9 +730,10 @@ function articlePublish() {
     updateTPSettings(array('frontpage_topics' => $newstring));
 
     redirectexit('topic='. $t . '.0');
-}
 
-function articleSave() {
+}}}
+
+function articleSave() {{{
     global $context;
     // save an article
     if(isset($_REQUEST['send'])) {
@@ -833,10 +842,10 @@ function articleSave() {
         fatal_error($txt['tp-notallowed'], false);
     }
 
-}
+}}}
 
-function articleUploadImage() 
-{
+function articleUploadImage() {{{
+
     require_once(SOURCEDIR.'/TPcommon.php');
     $name = TPuploadpicture( 'image', $context['user']['id'].'uid' );
     tp_createthumb( 'tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name );
@@ -846,5 +855,7 @@ function articleUploadImage()
     echo json_encode( $response );
     // we want to just exit
     die;
-}
+
+}}}
+
 ?>
