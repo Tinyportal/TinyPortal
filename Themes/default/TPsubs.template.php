@@ -450,29 +450,25 @@ function TPortal_userbox()
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
 	else if(TP_SMF21) {
-	    echo '
-			<ul class="floatleft welcome">
-				<li>', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '</li>
-			</ul>';
+	    echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
    	}
     else {
-		echo '
-		<div style="line-height: 1.4em;">', $bullet , sprintf($txt['welcome_guest'], $txt['guest_title']), '<br>', $bullet2, $context['current_time'], '</div>
-		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-			<input type="text" name="user" size="10" /> <input type="password" name="passwrd" size="10" /><br>
-			<select name="cookielength">
-				<option value="60">', $txt['one_hour'], '</option>
-				<option value="1440">', $txt['one_day'], '</option>
-				<option value="10080">', $txt['one_week'], '</option>
-				<option value="302400">', $txt['one_month'], '</option>
-				<option value="-1" selected="selected">', $txt['forever'], '</option>
-			</select>
-			<input type="submit" value="', $txt['login'], '" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-		</form>
-		<div style="line-height: 1.4em;">', $txt['quick_login_dec'], '</div>
-		<br>';
+		echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
 	}
+    echo '
+        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+            <input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
+            <select name="cookielength">
+                <option value="60">', $txt['one_hour'], '</option>
+                <option value="1440">', $txt['one_day'], '</option>
+                <option value="10080">', $txt['one_week'], '</option>
+                <option value="302400">', $txt['one_month'], '</option>
+                <option value="-1" selected="selected">', $txt['forever'], '</option>
+            </select>
+            <input type="submit" class="button_submit" value="', $txt['login'], '" />
+            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+        </form>
+        <div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
 	echo '
 	</div>';
 }
