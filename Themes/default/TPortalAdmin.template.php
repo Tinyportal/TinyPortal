@@ -1356,8 +1356,8 @@ function template_artsettings()
 							<label for="field_name">', $txt['tp-allow-links-article-comments'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hide_article_stumbleupon" type="radio" value="1" ' , $context['TPortal']['allow_links_article_comments']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-							<input name="tp_hide_article_stumbleupon" type="radio" value="0" ' , $context['TPortal']['allow_links_article_comments']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+							<input name="tp_allow_links_article_comments" type="radio" value="1" ' , $context['TPortal']['allow_links_article_comments']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input name="tp_allow_links_article_comments" type="radio" value="0" ' , $context['TPortal']['allow_links_article_comments']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 
 					</dl>

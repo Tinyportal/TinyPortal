@@ -265,6 +265,7 @@ $txt['tp-hidearticle-digg'] = 'Hide Digg button?';
 $txt['tp-hidearticle-delicious'] = 'Hide Delicious button?';
 $txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button?';
 $txt['tp-hidearticle-link'] = 'Hide the edit article link under articles?';
+$txt['tp-allow-links-article-comments'] = "Allow Article Comments to contain links?";
 
 // Blocks admin...
 $txt['tp-addcenterblock']='Add upper block';
