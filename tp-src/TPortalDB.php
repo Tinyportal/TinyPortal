@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 
 class TPortalDB 
 {
-	public function __call($call, $vars) {
+	public function __call($call, $vars) {{{
 		global $smcFunc;
 		if(array_key_exists($call, $smcFunc)) {
 			// It's faster to call directly, failover to call_user_func_array
@@ -46,7 +46,8 @@ class TPortalDB
 			}
 		}
 		return false;
-	}
+
+	}}}
 }
 
 ?>

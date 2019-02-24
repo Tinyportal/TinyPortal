@@ -24,8 +24,7 @@ class TPBase
 	protected $dB = null;
     protected $modSettings = null;
 
-	function __construct()
-	{
+	function __construct() {{{
         global $modSettings;
 
 		if(is_null($this->dB)) {
@@ -34,10 +33,9 @@ class TPBase
 
         $this->modSettings = $modSettings;
 
-	}
+	}}}
 
-    protected function getComments($type, $user_id, $item_id)
-    {
+    protected function getComments($type, $user_id, $item_id) {{{
 
         // fetch and update last access by member(to log which comment is new)
         $now        = time();
@@ -125,10 +123,9 @@ class TPBase
 
         return $comments;
 
-    }
+    }}}
 
-    protected function getComment($comment_id, $item_type)
-    {
+    protected function getComment($comment_id, $item_type) {{{
 
         // fetch any comments
         $request =  $this->dB->db_query('', '
@@ -149,10 +146,9 @@ class TPBase
         }
 
         return $comment;
-    }
+    }}}
 
-    protected function insertComment($type, $user_id, $item_id, $comment, $title)
-    {
+    protected function insertComment($type, $user_id, $item_id, $comment, $title) {{{
 
 		// check if the article indeed exists
 		$request =  $this->dB->db_query('', '
@@ -206,10 +202,9 @@ class TPBase
 
         return false;
 
-    }
+    }}}
 
-    protected function deleteComment($id, $type)
-    {
+    protected function deleteComment($id, $type) {{{
         
         $this->dB->db_query('', '
 			DELETE FROM {db_prefix}tp_comments
@@ -221,8 +216,7 @@ class TPBase
 			)
 		);
 
-    }
-
+    }}}
 
 }
 
