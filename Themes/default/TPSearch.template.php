@@ -99,6 +99,11 @@ function template_article_search_results()
             </div>';
         $bb++;
     }
+    echo '
+    <div class="pagesection">
+        <span>', $context['page_index'], '</span>
+    </div>';
+
 }
 
 ?>
