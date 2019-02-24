@@ -1096,11 +1096,9 @@ function tpshout_frontpage()
 
 function shoutHasLinks()
 {
-
 	global $context;
 	$shout = !empty($_POST['tp_shout']) ? $_POST['tp_shout'] : '';
-	$pattern = '%^((https?://)|(www\.))([a-z0-9-].?)+(:[0-9]+)?(/.*)?$%i';
-	if (preg_match_all($pattern, $shout, $matches, PREG_PATTERN_ORDER)) {
+    if(TPUtil::hasLinks($shout)) {
 		loadTemplate('TPShout');
 		$context['TPortal']['shoutError'] = true;
 		$context['TPortal']['rendershouts'] = 'Links are not allowed!';

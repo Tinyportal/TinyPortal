@@ -96,6 +96,21 @@ class TPUtil
         return preg_match("~\/[a-z]*>~i", $string ) != 0;
     }}}
 
+    public static function hasLinks($string) {{{
+
+        if(empty($string)) {
+            return false;
+        }
+
+        $pattern = '%^((https?://)|(www\.))([a-z0-9-].?)+(:[0-9]+)?(/.*)?$%i';
+        if (preg_match_all($pattern, $string, $matches, PREG_PATTERN_ORDER)) {
+            return true;
+        }
+
+        return false;
+
+    }}}
+
     public static function xssClean( $string ) {{{
 
         // URL decode
