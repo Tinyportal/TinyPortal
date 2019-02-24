@@ -104,6 +104,9 @@ function articleInsertComment() {{{
     $article    = $_POST['tp_article_id'];
     $title      = strip_tags($_POST['tp_article_comment_title']);
     $comment    = substr(TPUtil::htmlspecialchars($_POST['tp_article_bodytext']), 0, 65536);
+    if(!empty($context['TPortal']['allow_links_article_comments']) && TPUtil::hasLinks($comment)) {
+        redirectexit('page='.$article.'#tp-comment');
+    }
 
     require_once(SOURCEDIR.'/Subs-Post.php');
     preparsecode($comment);
