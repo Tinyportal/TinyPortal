@@ -447,10 +447,10 @@ function template_main()
 
 				if((allowedTo('tp_editownarticle') && $art['locked']==0) && !allowedTo('tp_articles'))
 					echo '
-					<a href="' . $scripturl . '?action=tpmod;sa=editarticle'.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
+					<a href="' . $scripturl . '?action=tpmod;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
 				elseif(allowedTo('tp_articles'))
 					echo '
-					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle'.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
+					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
 
 					echo '
 						</div>';

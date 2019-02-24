@@ -1711,12 +1711,12 @@ function article_options($render = true)
 		// give 'em a edit link? :)
 		if(allowedTo('tp_articles') && $context['TPortal']['hide_editarticle_link']=='0') {
 			$data .= '
-					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
+					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
 		// their own article?
-		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && $context['TPortal']['article']['author_id'] == $context['user']['id'] && $context['TPortal']['hide_editarticle_link'] == '0' && $context['TPortal']['article']['locked'] == '0') {
+		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && empty($context['TPortal']['hide_editarticle_link']) && empty($context['TPortal']['article']['locked'])) {
 			$data .= '
-					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
+					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
 
 	}
