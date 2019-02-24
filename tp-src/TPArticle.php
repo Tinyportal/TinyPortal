@@ -19,12 +19,12 @@ if (!defined('SMF'))
 	die('Hacking attempt...');
 
 
-class TPArticle extends TPBase {
+class TPArticle extends TPBase 
+{
 
     private $dBStructure = array();
 
-    public function __construct()
-    {
+    public function __construct() {{{
         parent::__construct();
 
         $this->dBStructure = array ( 
@@ -61,10 +61,10 @@ class TPArticle extends TPBase {
             'pub_start'     => 'int',
             'pub_end'       => 'int',
         );
-    }
 
-    public function getArticle($article)
-    {
+    }}}
+
+    public function getArticle($article) {{{
 
         $now        = time();
         if(is_array($article)) {
@@ -110,30 +110,25 @@ class TPArticle extends TPBase {
 
         return $articles;
 
-    }
+    }}}
 
-    public function getArticleComments($user_id, $item_id)
-    {
+    public function getArticleComments($user_id, $item_id) {{{
        return parent::getComments('1', $user_id, $item_id);
-    }
+    }}}
 
-    public function getArticleComment($comment_id)
-    {
+    public function getArticleComment($comment_id) {{{
        return parent::getComment($comment_id, 'article_comment');
-    }
+    }}}
 
-    public function insertArticleComment($user_id, $item_id, $comment, $title)
-    {
+    public function insertArticleComment($user_id, $item_id, $comment, $title) {{{
         return parent::insertComment('1', $user_id, $item_id, $comment, $title);
-    }
+    }}}
 
-    public function deleteArticleComment($comment_id)
-    {
+    public function deleteArticleComment($comment_id) {{{
         return parent::deleteComment($comment_id, 'article_comment');
-    }
+    }}}
 
-    public function updateArticleViews($article_id)
-    {
+    public function updateArticleViews($article_id) {{{
 
         // update views
         $this->dB->db_query('', '
@@ -145,10 +140,9 @@ class TPArticle extends TPBase {
             )
         );
 
-    }
+    }}}
 
-    public function updateArticle($article_id, $article_data)
-    {
+    public function updateArticle($article_id, $article_data) {{{
 
         $update_data = $article_data;
         array_walk($update_data, function(&$update_data, $key) {
@@ -164,10 +158,9 @@ class TPArticle extends TPBase {
             $article_data
         );
 
-    }
+    }}}
 
-    public function insertArticle($article_data)
-    {
+    public function insertArticle($article_data) {{{
         $insert_data = array();
         foreach(array_keys($article_data) as $key) {
             $insert_data[$key] = $this->dBStructure[$key];
@@ -182,10 +175,9 @@ class TPArticle extends TPBase {
 			
         return $this->dB->db_insert_id('{db_prefix}tp_articles', 'id');
 
-    }
+    }}}
 
-    public function deleteArticle($article_id)
-    {
+    public function deleteArticle($article_id) {{{
 			$this->dB->db_query('', '
 				DELETE FROM {db_prefix}tp_articles
 				WHERE id = {int:article_id}',
@@ -193,10 +185,9 @@ class TPArticle extends TPBase {
                     'article_id' => $article_id
                 )
 			);
-    }
+    }}}
 
-    public function getTotalAuthorArticles($author_id)
-    {
+    public function getTotalAuthorArticles($author_id) {{{
         $num_articles   = 0;
         $request        = $this->dB->db_query('', '
             SELECT COUNT(id) AS articles FROM {db_prefix}tp_articles
@@ -212,10 +203,9 @@ class TPArticle extends TPBase {
         }
 
         return $num_articles;
-    }
+    }}}
 
-    public function getTotalArticles( $group = '' )
-    {
+    public function getTotalArticles( $group = '' ) {{{
         $num_articles   = 0;
         $now            = time();
 
@@ -241,14 +231,12 @@ class TPArticle extends TPBase {
         }
        
         return $num_articles;
-    }
+    }}}
 
-    public function getArticlesInCategory( $category ) 
-    {
+    public function getArticlesInCategory( $category ) {{{
 
-        
 
-    }
+    }}}
 
 }
 

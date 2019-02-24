@@ -21,29 +21,24 @@ if (!defined('SMF'))
 
 class TPMentions extends TPBase {
 
-    public function __construct()
-    {
+    public function __construct() {{{
         parent::__construct();
+    }}}
 
-    }
-
-    public function addJS()
-    {
+    public function addJS() {{{
         // Mentions
         if (!empty($this->modSettings['enable_mentions']) && allowedTo('mention')) {
             loadJavaScriptFile('jquery.atwho.min.js',           array('defer' => true, 'minimize' => false), 'tp_atwho');
             loadJavaScriptFile('jquery.caret.min.js',           array('defer' => true, 'minimize' => false), 'tp_caret');
             loadJavaScriptFile('tinyportal/shoutMentions.js',   array('defer' => true, 'minimize' => false), 'tp_mentions');
         }
-    }
+    }}}
 
-    public function getMention( $mention_id ) 
-    {
+    public function getMention( $mention_id ) {{{
 
-    }
+    }}}
 
-    public function addMention( $mention )
-    {
+    public function addMention( $mention ) {{{
         if (!empty($this->modSettings['enable_mentions'])) {
             require_once(SOURCEDIR . '/Subs-Post.php');
             require_once(SOURCEDIR . '/Mentions.php');
@@ -90,12 +85,11 @@ class TPMentions extends TPBase {
                 }
             }
         }
-    }
+    }}}
 
-    public function removeMention( $mention_id )
-    {
+    public function removeMention( $mention_id ) {{{
 
-    }
+    }}}
 }
 
 ?>

@@ -22,7 +22,7 @@ if (!defined('SMF')) {
 class TPUtil
 {
 
-	public static function __callStatic($call, $vars) {
+	public static function __callStatic($call, $vars) {{{
 		global $smcFunc;
 		if(array_key_exists($call, $smcFunc)) {
 			// It's faster to call directly, failover to call_user_func_array
@@ -48,10 +48,10 @@ class TPUtil
 			}
 		}
 		return false;
-	}
 
+	}}}
 
-    public static function shortenString(&$string, $length) {
+    public static function shortenString(&$string, $length) {{{
 
         if (!empty($length) && self::strlen($string) > $length) {
             $cutOffPos  = max(strpos($string, ' ', $length), strpos($string, '>', $length));
@@ -90,13 +90,13 @@ class TPUtil
 
         return false;
 
-    }
+    }}}
 
-    public static function isHTML( $string ) {
+    public static function isHTML( $string ) {{{
         return preg_match("~\/[a-z]*>~i", $string ) != 0;
-    }
+    }}}
 
-    public static function xssClean( $string ) {
+    public static function xssClean( $string ) {{{
 
         // URL decode
         $string = urldecode($string);
@@ -133,9 +133,10 @@ class TPUtil
         else {
             return false;
         }
-    }
 
-    public static function filter($key, $type, $filterType = 'string', $options = array()) {
+    }}}
+
+    public static function filter($key, $type, $filterType = 'string', $options = array()) {{{
         
         switch($type) {
             case 'get':
@@ -157,9 +158,9 @@ class TPUtil
         }
 
         return filter_var($data[$key], self::filterType($filterType), $options);
-    }
+    }}}
 
-    private static function filterType($type) {
+    private static function filterType($type) {{{
         switch (strtolower($type)) {
             case 'string':
                 $filter = FILTER_SANITIZE_STRING;
@@ -183,7 +184,7 @@ class TPUtil
                 $filter = FILTER_SANITIZE_STRING;
         }
         return $filter;
-    }
+    }}}
 
 }
 
