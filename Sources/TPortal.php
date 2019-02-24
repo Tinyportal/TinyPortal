@@ -54,7 +54,7 @@ function TPortal_init()
 
 	$context['TPortal'] = array();
 
-	if(!isset($context['forum_name']))
+	if(!isset($context['forum_name'])) {
 		$context['forum_name'] = '';
     }
 
@@ -68,7 +68,7 @@ function TPortal_init()
 	require_once(SOURCEDIR.'/TPSubs.php');
 	
 	// go back on showing attachments..
-	if(isset($_GET['action']) && $_GET['action'] == 'dlattach')
+	if(isset($_GET['action']) && $_GET['action'] == 'dlattach') {
 		return;
     }
 
