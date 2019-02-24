@@ -311,7 +311,7 @@ $tables = array(
             array('name' => 'link', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'description', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'allowed', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'eventid', 'type' => 'int', 'size' => 11, 'default' => null),
+            array('name' => 'eventid', 'type' => 'int', 'size' => 11, 'default' => 0),
             array('name' => 'on', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(
