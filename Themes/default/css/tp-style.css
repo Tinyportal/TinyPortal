@@ -102,6 +102,14 @@ h2.author_h2
 {
 	line-height: 1.4em;
 }
+.article_inner ul
+{
+    list-style-type: disc;
+}
+.article_inner ol
+{
+    list-style-type: decimal;
+}
 .article_info
 {
 	padding: 1em 1em 0.75em 1em;
