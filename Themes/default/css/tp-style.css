@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 1.6.2
+ * @version 1.6.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -101,6 +101,14 @@ h2.author_h2
 .article_inner
 {
 	line-height: 1.4em;
+}
+.article_inner ul
+{
+    list-style-type: disc;
+}
+.article_inner ol
+{
+    list-style-type: decimal;
 }
 .article_info
 {
