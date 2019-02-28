@@ -228,7 +228,7 @@ function template_main()
 							<input name="blockvar2' .$context['TPortal']['blockedit']['id']. '" type="radio" value="0" ' , ($context['TPortal']['blockedit']['var2']=='0' || $context['TPortal']['blockedit']['var2']=='') ? ' checked' : '' ,'>'.$txt['tp-no'].'<br><br>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='16'){
-					echo '<br>'.$txt['tp-sitemapmodules'].'<ul>';
+					echo '<br>'.$txt['tp-sitemapmodules'].'<ul class="disc">';
 					if($context['TPortal']['show_download']=='1')
 						echo '<li>'.$txt['tp-dldownloads'].'</li>';
 					if($context['TPortal']['show_gallery']=='1')

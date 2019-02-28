@@ -3267,7 +3267,7 @@ function template_blockedit()
   	                                ';
 			}
 			elseif($context['TPortal']['blockedit']['type']=='16'){
-				echo $txt['tp-sitemapmodules'].'</div><div><ul>';
+				echo $txt['tp-sitemapmodules'].'</div><div><ul class="disc">';
 				if($context['TPortal']['show_download']=='1')
 					echo '<li>&nbsp;'.$txt['tp-dldownloads'].'</li>';
 
