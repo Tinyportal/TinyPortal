@@ -2752,7 +2752,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		{
 			echo '
 			<div class="post">
-				<ul class="dl_recentitems">';
+				<ul class="dl_recentitems disc">';
 			foreach($context['TPortal']['dlrecenttp'] as $dl)
 			{
 				echo '<li><a href="'.$dl['href'].'">'.$dl['name'].'</a>';

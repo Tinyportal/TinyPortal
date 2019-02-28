@@ -277,31 +277,7 @@ $txt['tp-allowupshrink'] = 'Allow block to collapse';
 $txt['tp-addbottomblock'] = 'Add bottom block';
 $txt['tp-blocks'] = 'Blocks';
 $txt['tp-blocksettings'] = 'Block Settings';
-$txt['tp-blocktypes'] = '
-	<ul>
-		<li>userbox - user information + login form for guests</li>
-		<li>searchbox - search field</li>
-		<li>themebox - theme selector block with thumbnails</li>
-		<li>phpbox - execute PHP codes</li>
-		<li>ssi function - run chosen SSI function</li>
-		<li>sitemapbox - show active modules + any menu manager item set to sitemap</li>
-		<li>categorybox - show a listing of articles from a category</li>
-		<li>newsbox - show the news</li>
-		<li>bbc/htmlbox - execute html or bbc codes</li>
-		<li>shoutbox - show the shoutbox module</li>
-		<li>scriptbox - execute html+javascript codes</li>
-		<li>module function - run chosen module function</li>
-		<li>admin tools - show your TP permissions</li>
-		<li>statsbox - show forum statistics</li>
-		<li>onlinebox - show online users</li>
-		<li>menubox - show menu items from the menu manager</li>
-		<li>recentbox - show recent topics</li>
-		<li>rss feed - show a RSS feed</li>
-		<li>articlebox - show a single article</li>
-	</ul>
-  ';
-$txt['tp-actionarray'] = 'Show for this action<br> (custom action name)';
-$txt['tp-actionreverse'] = 'Inverse criteria';
+
 $txt['tp-activate']='Activate';
 $txt['tp-activated']='Activated';
 $txt['tp-blockwillshow']='Block will show on the:';
