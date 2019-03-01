@@ -875,13 +875,14 @@ function do_menus()
             else if( $mtype == 'menu' )
             {
 				$idtype = substr($row['value3'], 4);
+				$menuicon = $row['value8'];
             }
 
 			if($row['value2'] == '')
 				$newlink = '0';
 			else
 				$newlink = $row['value2'];
-
+			
 			if($mtype == 'head')
 			{
 				$mtype = 'head';
@@ -898,6 +899,7 @@ function do_menus()
 				'off' => $row['value5'],
 				'sub' => $row['value4'],
 				'position' => $row['value7'],
+				'menuicon' => $row['value8'],
 				'subtype' => $row['subtype'],
 				'newlink' => $newlink,
 			);
@@ -915,6 +917,7 @@ function do_menus()
 						'off' => $status,
 						'sub' => $row['value4'],
 						'position' => $row['value7'],
+						'menuicon' => $row['value8'],
 						'subtype' => $row['subtype'],
 						'newlink' => $newlink ,
 					);
@@ -2448,6 +2451,16 @@ function do_postchecks()
 							'varid' => $where,
 						)
 					);
+				elseif($what == 'tp_menu_icon')
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_variables
+						SET value8 = {string:val8}
+						WHERE id = {int:varid}',
+						array(
+							'val8' => $value,
+							'varid' => $where,
+						)
+					);
 				elseif(substr($what, 0, 15) == 'tp_menu_newlink')
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_variables
@@ -2698,6 +2711,7 @@ function do_postchecks()
 			$mlink = isset($_POST['tp_menu_link']) ? $_POST['tp_menu_link'] : '';
 			$mhead = isset($_POST['tp_menu_head']) ? $_POST['tp_menu_head'] : '';
 			$mnewlink = isset($_POST['tp_menu_newlink']) ? $_POST['tp_menu_newlink'] : '0';
+			$menuicon = isset($_POST['tp_menu_icon']) ? $_POST['tp_menu_icon'] : '0';
 
 			if($mtype == 'cats')
 				$mtype = 'cats'.$mcat;
@@ -2724,9 +2738,10 @@ function do_postchecks()
 					'value4' => 'string',
 					'value5' => 'int',
 					'subtype2'=> 'int',
-                    'value7' => 'string'
+                    'value7' => 'string',
+                    'value8' => 'string'
 				),
-				array($mtitle, $mnewlink, $mtype, 'menubox', $msub, -1, $mid, $mpos),
+				array($mtitle, $mnewlink, $mtype, 'menubox', $msub, -1, $mid, $mpos, $menuicon),
 				array('id')
 			);
 

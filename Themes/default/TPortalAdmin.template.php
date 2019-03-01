@@ -585,6 +585,7 @@ function template_addmenu()
             $context['TPortal']['editmenuitem']['newlink']  = '0';
             $context['TPortal']['editmenuitem']['type']     = 'cats';
             $context['TPortal']['editmenuitem']['position'] = 'home';
+            $context['TPortal']['editmenuitem']['menuicon'] = 'tinyportal/menu_tpmenu.png';
 
 			echo '
 	            <form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -643,7 +644,7 @@ function template_linkmanager()
 
 function template_menucore()
 {
-    global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+    global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $forum_version;
 
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
@@ -746,7 +747,17 @@ function template_menucore()
                         }
                         echo '
                         </select>
-						</dd>
+						</dd>';
+				if(strstr($forum_version, '2.1')) { 
+					echo '	
+                        <dt>
+                            <label for="tp_menu_icon"><h4>'.$txt['tp-menu-icon'].':</h4><label>
+                        </dt>
+                        <dd>
+							<input name="tp_menu_icon" id="tp_menu_icon" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'">
+						</dd>';
+					} 
+					echo '	
 					</dl>
 				<div>
 					</div>
@@ -766,7 +777,9 @@ function template_menucore()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
+						$("#tp_menu_icon").hide()
                         $(\'label[for="tp_menu_position"]\').hide();
+						$(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
@@ -778,6 +791,8 @@ function template_menucore()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
                         $("#tp_menu_position").show()
+						$("#tp_menu_icon").show()
+						$(\'label[for="tp_menu_icon"]\').show();
                         $(\'label[for="tp_menu_position"]\').show();
                         $(\'label[for="tp_menu_sub"]\').hide();
                         $(\'label[for="tp_menu_newlink"]\').hide();
@@ -790,6 +805,8 @@ function template_menucore()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
+						$("#tp_menu_icon").hide()
+						$(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
@@ -802,6 +819,8 @@ function template_menucore()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
+						$("#tp_menu_icon").hide()
+						$(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
@@ -814,7 +833,9 @@ function template_menucore()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
-                        $(\'label[for="tp_menu_position"]\').hide();
+						$("#tp_menu_icon").hide()
+                        $(\'label[for="tp_menu_icon"]\').hide();
+						$(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
                         $(\'label[for="tp_item"]\').show();
@@ -826,6 +847,8 @@ function template_menucore()
                         $("#tp_menu_newlink").hide()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
+						$("#tp_menu_icon").hide()
+                        $(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();
@@ -838,6 +861,8 @@ function template_menucore()
                         $("#tp_menu_article").show()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
+						$("#tp_menu_icon").hide()
+                        $(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
                         $(\'label[for="tp_menu_newlink"]\').hide();

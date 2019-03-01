@@ -463,6 +463,7 @@ $txt['tp-showmenus'] = 'Use menu:';
 $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
 $txt['tp-menu-after'] ='Add Menu after';
+$txt['tp-menu-icon'] ='Menu icon';
 
 // Shoutbox Manager
 $txt['tp-deleteallshouts'] = 'Delete all shouts?';
