@@ -922,7 +922,7 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 		'id' => $submitter,
 		'name' => '',
 		'email' => '',
-		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && $board_info['posts_count'],
+		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && isset($board_info['posts_count']),
 	);
 
 	if(createPost($msgOptions, $topicOptions, $posterOptions))
