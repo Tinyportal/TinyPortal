@@ -256,6 +256,7 @@ function TPortalDLManager()
 			{
 				$sticky = false;
 				$announce = false;
+				$icon = 'xx';
 				// sticky and announce?
 				if(isset($_POST['create_topic_sticky']))
 					$sticky = true;
@@ -269,7 +270,7 @@ function TPortalDLManager()
 
 				$body .= '[hr][b]'.$txt['tp-download'].':[/b][br]'.$scripturl.'?action=tpmod;dl=item'.$newitem;
 				// ok, create the topic then
-				$top = TP_createtopic($title, $body, 'theme', $brd, $sticky ? 1 : 0 , $context['user']['id']);
+				$top = TP_createtopic($title, $body, $icon, $brd, $sticky ? 1 : 0 , $context['user']['id']);
 				// go to announce screen?
 				if($top > 0)
 				{
