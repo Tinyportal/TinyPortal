@@ -464,6 +464,7 @@ $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
 $txt['tp-menu-after'] ='Add Menu after';
 $txt['tp-menu-icon'] ='Menu icon';
+$txt['tp-menu-icon2'] ='<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling Tinyportal, so any file manually placed there will be lost upon uninstall!</small>';
 
 // Shoutbox Manager
 $txt['tp-deleteallshouts'] = 'Delete all shouts?';
