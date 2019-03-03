@@ -2034,6 +2034,11 @@ img.theme_icon
 	margin: 0 0 0 0 !important;
 }
 
+.tp_container .windowbg
+{
+	margin: 6px 0 6px 0;
+}
+
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
 table.tp_grid td, table.tp_grid th
 {
@@ -2091,6 +2096,13 @@ div.tp_half21
 	overflow: hidden;
 	padding: 8px 12px 6px 12px;
 }
+.tp_block21
+{
+	padding: 6px 8px; 
+	margin-bottom: 0px !important;
+	margin-top: 6px;
+}
+
 .inner a, .article_inner a
 {
 	/* These are technically the same, but use both */
