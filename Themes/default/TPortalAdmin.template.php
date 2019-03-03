@@ -652,7 +652,7 @@ function template_menucore()
 		<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
-                            <label for="tp_title"><h4>'.$txt['tp-title'].':</h4><label>
+                            <label for="tp_title"><b>'.$txt['tp-title'].':</b><label>
 						</dt>
 						<dd>
                             <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
@@ -660,7 +660,7 @@ function template_menucore()
 					</dl>
 					
 					<dl class="settings">
-						<dt><label for="tp_menu_name"><h4>'.$txt['tp-type'].':</h4><label></dt>
+						<dt><label for="tp_menu_name"><b>'.$txt['tp-type'].':</b><label></dt>
                         <dd>
                         <select size="1" name="tp_menu_type" id="tp_menu_type">
                             <option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
@@ -690,7 +690,7 @@ function template_menucore()
 					<hr>
 					<dl class="settings">
 						<dt>
-                            <label for="tp_item"><h4>'.$txt['tp-item'].':</h4><label>
+                            <label for="tp_item"><b>'.$txt['tp-item'].':</b><label>
 						</dt>
 					<dd>';
 		// (category)
@@ -719,7 +719,7 @@ function template_menucore()
 		echo '  </select>
                     <input "size="40" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 					</dd>
-						<dt><label for="tp_menu_newlink"><h4>'.$txt['tp-windowmenu'].'?</h4><label>
+						<dt><label for="tp_menu_newlink"><b>'.$txt['tp-windowmenu'].'?</b><label>
                         <dd>
                         <select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
                             <option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
@@ -727,7 +727,7 @@ function template_menucore()
                         </select>
 						</dd>
 						<dt>
-                            <label for="tp_menu_sub"><h4>'.$txt['tp-sub_item'].':</h4><label>
+                            <label for="tp_menu_sub"><b>'.$txt['tp-sub_item'].':</b><label>
                         </dt>
                         <dd>
                         <select size="1" name="tp_menu_sub" id="tp_menu_sub">
@@ -738,7 +738,7 @@ function template_menucore()
                         </select>
 						</dd>
                         <dt>
-                            <label for="tp_menu_position"><h4>'.$txt['tp-menu-after'].':</h4><label>
+                            <label for="tp_menu_position"><b>'.$txt['tp-menu-after'].':</b><label>
                         </dt>
                         <dd>
                         <select size="1" name="tp_menu_position" id="tp_menu_position">';
@@ -751,7 +751,8 @@ function template_menucore()
 				if(strstr($forum_version, '2.1')) { 
 					echo '	
                         <dt>
-                            <label for="tp_menu_icon"><h4>'.$txt['tp-menu-icon'].':</h4><label>
+                            <label for="tp_menu_icon"><b>'.$txt['tp-menu-icon'].':</b><br>
+							'.$txt['tp-menu-icon2'].'<label>
                         </dt>
                         <dd>
 							<input name="tp_menu_icon" id="tp_menu_icon" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'">
