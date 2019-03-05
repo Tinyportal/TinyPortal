@@ -82,14 +82,14 @@ $txt['tp-blockfailure'] = 'Block does not exist';
 $txt['tp-tportaladmin'] = 'TinyPortal Admin';
 
 // Frontpage...
-$txt['tp-allowguests'] = 'Allow guests and members to see forum-posts on the frontpage from the news board(s)?<br><small>(Even if they are not allowed to see the board!)</small> ';
+$txt['tp-allowguests'] = 'Allow guests and members to see forum-topics on the frontpage from the news board(s)?<br><small>(Even if they are not allowed to see the board!)</small> ';
 $txt['tp-displayleftpanel'] = 'Display left panel';
 $txt['tp-displayrightpanel'] = 'Display right panel';
 $txt['tp-displaytoppanel'] = 'Display top panel';
 $txt['tp-displaycenterpanel'] = 'Display upper panel';
 $txt['tp-displaylowerpanel'] = 'Display lower panel';
 $txt['tp-displaybottompanel'] = 'Display bottom panel';
-$txt['tp-bothforum']='Forum-posts and articles - sorted on date';
+$txt['tp-bothforum']='Forum-topics and articles - sorted on date';
 $txt['tp-fckeditor']='Yes';
 $txt['tp-fckopt']='Image directory for image uploads through editor:';
 $txt['tp-fckopt1']='One for all';
@@ -104,15 +104,15 @@ $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage:';
 $txt['tp-frontpage_settings']= 'Frontpage Settings';
 $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><span class="smalltext">(For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s "single page" option.)</span>';
-$txt['tp-showforumposts']='Display forum-posts on frontpage from:';
+$txt['tp-showforumposts']='Display forum-topics on frontpage from:';
 $txt['tp-numberofposts']='Number of articles/posts to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
 $txt['tp-whattoshow']='What to display on frontpage:';
 $txt['tp-whizzyeditor']='Yes, WhizzyWig';
 $txt['tp-onlyarticles']='Only articles';
-$txt['tp-lengthofposts']='Number of characters to display per forum-post:';
+$txt['tp-lengthofposts']='Number of characters to display per forum-topic:';
 $txt['tp-singlepage']='Featured article with frontpanel';
-$txt['tp-onlyforum']='Only forum-posts';
+$txt['tp-onlyforum']='Only forum-topics';
 $txt['tp-displaynews']='Display userinfo/news at the top';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor?';
 $txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor?';
@@ -120,7 +120,7 @@ $txt['tp-imageproxycheck'] = 'Perform the final image proxy check?';
 $txt['tp-imageproxycheckdesc'] = '(This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.)';
 $txt['tp-frontmodule'] = 'TP module';
 $txt['tp-nofrontmodule'] =  'No modules available.';
-$txt['tp-forumposts_avatar'] = 'Show avatars in forum-posts?';
+$txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics?';
 
 // Articles admin...
 $txt['tp-addcategory']='Add category';
