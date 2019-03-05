@@ -1731,6 +1731,8 @@ h3.h3dl
 {
 	overflow: hidden;
 	padding: 1%;
+	width: 45%;
+	display: inline-block;
 }
 .dlpost
 {
@@ -2034,7 +2036,7 @@ img.theme_icon
 	margin: 0 0 0 0 !important;
 }
 
-.tp_container .windowbg
+.tp_container .windowbg, .dl_container .windowbg, .dl_container .roundframe  
 {
 	margin: 6px 0 6px 0;
 }
@@ -2353,6 +2355,10 @@ ul.tp-subcategories li
     float: left;
 	padding-left: 0px;
 	width: 95%;
+}
+.recentdl
+{
+	width: 100%;
 } 
 }
 
