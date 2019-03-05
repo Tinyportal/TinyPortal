@@ -82,7 +82,7 @@ $txt['tp-blockfailure'] = 'Block does not exist';
 $txt['tp-tportaladmin'] = 'TinyPortal Admin';
 
 // Frontpage...
-$txt['tp-allowguests'] = 'Allow guests and members to see forum-topics on the frontpage from the news board(s)?<br><small>(Even if they are not allowed to see the board!)</small> ';
+$txt['tp-allowguests'] = 'Allow guests and members to see forum-topics on the frontpage, even if they are not allowed to see the boards themselves?';
 $txt['tp-displayleftpanel'] = 'Display left panel';
 $txt['tp-displayrightpanel'] = 'Display right panel';
 $txt['tp-displaytoppanel'] = 'Display top panel';
@@ -105,7 +105,7 @@ $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage:';
 $txt['tp-frontpage_settings']= 'Frontpage Settings';
 $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><span class="smalltext">(For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s "single page" option.)</span>';
 $txt['tp-showforumposts']='Display forum-topics on frontpage from:';
-$txt['tp-numberofposts']='Number of articles/posts to display on frontpage:';
+$txt['tp-numberofposts']='Number of articles/topics to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
 $txt['tp-whattoshow']='What to display on frontpage:';
 $txt['tp-whizzyeditor']='Yes, WhizzyWig';
