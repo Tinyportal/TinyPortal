@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 1.6.2
+ * @version 1.6.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -102,13 +102,25 @@ h2.author_h2
 {
 	line-height: 1.4em;
 }
-.article_inner ul
+.article_inner ul, ul.disc 
 {
-    list-style: unset !important;
+	list-style-type: disc;
+    padding: 0 0 0 40px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
 }
-.article_inner ol
+.article_inner ol, ol.decimal 
 {
     list-style-type: decimal;
+    padding: 0 0 0 40px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
 }
 .article_info
 {
@@ -708,7 +720,7 @@ img.tp_social
 ul.dl_recentitems	
 {
 	padding-inline-start: 20px;
-	margin-top: 0px;
+	margin: 0px;
 }
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li
@@ -1718,6 +1730,8 @@ h3.h3dl
 {
 	overflow: hidden;
 	padding: 1%;
+	width: 45%;
+	display: inline-block;
 }
 .dlpost
 {
@@ -2021,6 +2035,11 @@ img.theme_icon
 	margin: 0 0 0 0 !important;
 }
 
+.tp_container .windowbg, .dl_container .windowbg, .dl_container .roundframe  
+{
+	margin: 6px 0 6px 0;
+}
+
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
 table.tp_grid td, table.tp_grid th
 {
@@ -2078,6 +2097,13 @@ div.tp_half21
 	overflow: hidden;
 	padding: 8px 12px 6px 12px;
 }
+.tp_block21
+{
+	padding: 6px 8px; 
+	margin-bottom: 0px !important;
+	margin-top: 6px;
+}
+
 .inner a, .article_inner a
 {
 	/* These are technically the same, but use both */

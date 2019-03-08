@@ -487,14 +487,16 @@ $clickme.click( function(e) {
 				<dt>'.$txt['tp-dlfilename'].'
 				</dt>
 				<dd>';
-		if($cat['file']=='- empty item -' || $cat['file']=='- empty item - ftp'){
+		if($cat['file']=='- empty item -' || $cat['file']==''|| $cat['file']=='- empty item - ftp')
+		{
 			if($cat['file']=='- empty item - ftp')
+			{
 				echo '
 					<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
-
-				echo '
-					<select size="1" name="dladmin_file'.$cat['id'].'">
-						<option value="">' . $txt['tp-noneicon'] . '</option>';
+			}
+			echo '
+				<select size="1" name="dladmin_file'.$cat['id'].'">
+					<option value="- empty item -">' . $txt['tp-noneicon'] . '</option>';
 
 			foreach($context['TPortal']['tp-downloads'] as $file)
 			{

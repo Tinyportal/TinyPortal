@@ -1816,6 +1816,7 @@ function doTPfrontpage()
 						'sub' => $row['value4'],
 						'icon' => $icon,
 						'newlink' => $row['value2'],
+						'menuicon' => $row['value8'],
 						'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
 					);
 				}
@@ -2776,6 +2777,7 @@ function TPortal_menubox()
                         'sub' => $row['value4'],
                         'icon' => $icon,
                         'newlink' => $row['value2'],
+                        'menuicon' => $row['value8'],
                         'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
                         );
             }

@@ -932,7 +932,7 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 		'id' => $submitter,
 		'name' => '',
 		'email' => '',
-		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && $board_info['posts_count'],
+		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && isset($board_info['posts_count']),
 	);
 
 	if(createPost($msgOptions, $topicOptions, $posterOptions))
@@ -2656,7 +2656,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 		{
 			echo '
 			<div class="post">
-				<ul class="dl_recentitems">';
+				<ul class="dl_recentitems disc">';
 			foreach($context['TPortal']['dlrecenttp'] as $dl)
 			{
 				echo '<li><a href="'.$dl['href'].'">'.$dl['name'].'</a>';
@@ -2811,71 +2811,71 @@ function tp_getblockstyles21()
 			'class' => 'titlebg+windowbg',
 			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
+			'code_top' => '<div class="windowbg" style="padding: 6px 8px; margin-bottom: 0px !important"><div>',
 			'code_bottom' => '</div></div>',
 		),
 		'1' => array(
 			'class' => 'catbg+windowbg',
-			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div><div class="windowbg" style="padding: 6px 8px;">',
+			'code_top' => '<div><div class="windowbg tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'2' => array(
 			'class' => 'catbg+roundframe',
-			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div><div class="roundframe" style="padding: 6px 8px;">',
+			'code_top' => '<div><div class="roundframe tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'3' => array(
 			'class' => 'titletp+windowbg',
-			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
+			'code_title_left' => '<div class="tp_half21"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
+			'code_top' => '<div class="windowbg tp_block21"><div>',
 			'code_bottom' => '</div></div>',
 		),
 		'4' => array(
 			'class' => 'cattp+windowbg',
-			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_left' => '<div class="tp_half21"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg" style="padding: 6px 8px;"><div>',
+			'code_top' => '<div class="windowbg tp_block21"><div>',
 			'code_bottom' => '</div></div>',
 		),
 		'5' => array(
 			'class' => 'titlebg+windowbg2',
 			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg noup" style="padding: 6px 8px;"><div>',
+			'code_top' => '<div class="windowbg noup tp_block21"><div>',
 			'code_bottom' => '</div></div>',
 		),
 		'6' => array(
 			'class' => 'catbg+windowbg2',
-			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div><div class="windowbg noup" style="padding: 6px 8px;">',
+			'code_top' => '<div><div class="windowbg noup tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 
 		'7' => array(
 			'class' => 'catbg+roundframe2',
-			'code_title_left' => '<div class="cat_bar" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="roundframe noup" style="padding: 6px 8px;"><div>',
+			'code_top' => '<div class="roundframe noup tp_block21"><div>',
 			'code_bottom' => '</div></div>',
 		),
 		'8' => array(
 			'class' => 'titletp+windowbg2',
-			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
+			'code_title_left' => '<div class="tp_half21"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div><div class="windowbg noup" style="padding: 6px 8px;">',
+			'code_top' => '<div><div class="windowbg noup tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'9' => array(
 			'class' => 'cattp+roundframe2',
-			'code_title_left' => '<div class="tp_half21" style="margin-top:5px;"><h3 class="catbg">',
+			'code_title_left' => '<div class="tp_half21"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="roundframe noup" style="padding: 6px 8px;"><div>',
+			'code_top' => '<div class="roundframe noup tp_block21"><div>',
 			'code_bottom' => '</div></div>',
 		),
 	);
