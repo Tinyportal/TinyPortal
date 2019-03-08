@@ -2989,7 +2989,7 @@ function updateTPSettings($addSettings, $check = false)
 	{
 		foreach ($addSettings as $variable => $value)
 		{
-			$request = $smcFunc['db_query']('', 'SELECT value FROM {db_prefix}tp_settings	WHERE name = "' . $variable . '"');
+			$request = $smcFunc['db_query']('', 'SELECT value FROM {db_prefix}tp_settings WHERE name = \'' . $variable . '\'');
 
 			if($smcFunc['db_num_rows']($request)==0)
 			{
