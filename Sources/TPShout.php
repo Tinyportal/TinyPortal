@@ -35,11 +35,11 @@ function TPShoutLoad()
     }
 
     // if in admin screen, turn off blocks
-    if($context['TPortal']['action'] == 'tpadmin' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
+    if($context['TPortal']['action'] == 'tpshout' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
         $in_admin = true;
     }
 
-    if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin)) {
+    if($context['TPortal']['hidebars_admin_only'] =='1' && isset($in_admin)) {
         tp_hidebars();
     }
 
