@@ -82,14 +82,14 @@ $txt['tp-blockfailure'] = 'Block does not exist';
 $txt['tp-tportaladmin'] = 'TinyPortal Admin';
 
 // Frontpage...
-$txt['tp-allowguests'] = 'Allow guests and members to see forum-posts on the frontpage from the news board(s)?<br><small>(Even if they are not allowed to see the board!)</small> ';
+$txt['tp-allowguests'] = 'Allow guests and members to see forum-topics on the frontpage, even if they are not allowed to see the boards themselves?';
 $txt['tp-displayleftpanel'] = 'Display left panel';
 $txt['tp-displayrightpanel'] = 'Display right panel';
 $txt['tp-displaytoppanel'] = 'Display top panel';
 $txt['tp-displaycenterpanel'] = 'Display upper panel';
 $txt['tp-displaylowerpanel'] = 'Display lower panel';
 $txt['tp-displaybottompanel'] = 'Display bottom panel';
-$txt['tp-bothforum']='Forum-posts and articles - sorted on date';
+$txt['tp-bothforum']='Forum-topics and articles - sorted on date';
 $txt['tp-fckeditor']='Yes';
 $txt['tp-fckopt']='Image directory for image uploads through editor:';
 $txt['tp-fckopt1']='One for all';
@@ -104,15 +104,15 @@ $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage:';
 $txt['tp-frontpage_settings']= 'Frontpage Settings';
 $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><span class="smalltext">(For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s "single page" option.)</span>';
-$txt['tp-showforumposts']='Display forum-posts on frontpage from:';
-$txt['tp-numberofposts']='Number of articles/posts to display on frontpage:';
+$txt['tp-showforumposts']='Display forum-topics on frontpage from:';
+$txt['tp-numberofposts']='Number of articles/topics to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
 $txt['tp-whattoshow']='What to display on frontpage:';
 $txt['tp-whizzyeditor']='Yes, WhizzyWig';
 $txt['tp-onlyarticles']='Only articles';
-$txt['tp-lengthofposts']='Number of characters to display per forum-post:';
+$txt['tp-lengthofposts']='Number of characters to display per forum-topic:';
 $txt['tp-singlepage']='Featured article with frontpanel';
-$txt['tp-onlyforum']='Only forum-posts';
+$txt['tp-onlyforum']='Only forum-topics';
 $txt['tp-displaynews']='Display userinfo/news at the top';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor?';
 $txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor?';
@@ -120,7 +120,7 @@ $txt['tp-imageproxycheck'] = 'Perform the final image proxy check?';
 $txt['tp-imageproxycheckdesc'] = '(This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.)';
 $txt['tp-frontmodule'] = 'TP module';
 $txt['tp-nofrontmodule'] =  'No modules available.';
-$txt['tp-forumposts_avatar'] = 'Show avatars in forum-posts?';
+$txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics?';
 
 // Articles admin...
 $txt['tp-addcategory']='Add category';
@@ -278,31 +278,7 @@ $txt['tp-allowupshrink'] = 'Allow block to collapse';
 $txt['tp-addbottomblock'] = 'Add bottom block';
 $txt['tp-blocks'] = 'Blocks';
 $txt['tp-blocksettings'] = 'Block Settings';
-$txt['tp-blocktypes'] = '
-	<ul>
-		<li>userbox - user information + login form for guests</li>
-		<li>searchbox - search field</li>
-		<li>themebox - theme selector block with thumbnails</li>
-		<li>phpbox - execute PHP codes</li>
-		<li>ssi function - run chosen SSI function</li>
-		<li>sitemapbox - show active modules + any menu manager item set to sitemap</li>
-		<li>categorybox - show a listing of articles from a category</li>
-		<li>newsbox - show the news</li>
-		<li>bbc/htmlbox - execute html or bbc codes</li>
-		<li>shoutbox - show the shoutbox module</li>
-		<li>scriptbox - execute html+javascript codes</li>
-		<li>module function - run chosen module function</li>
-		<li>admin tools - show your TP permissions</li>
-		<li>statsbox - show forum statistics</li>
-		<li>onlinebox - show online users</li>
-		<li>menubox - show menu items from the menu manager</li>
-		<li>recentbox - show recent topics</li>
-		<li>rss feed - show a RSS feed</li>
-		<li>articlebox - show a single article</li>
-	</ul>
-  ';
-$txt['tp-actionarray'] = 'Show for this action<br> (custom action name)';
-$txt['tp-actionreverse'] = 'Inverse criteria';
+
 $txt['tp-activate']='Activate';
 $txt['tp-activated']='Activated';
 $txt['tp-blockwillshow']='Block will show on the:';
@@ -488,6 +464,8 @@ $txt['tp-showmenus'] = 'Use menu:';
 $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
 $txt['tp-menu-after'] ='Add Menu after';
+$txt['tp-menu-icon'] ='Menu icon';
+$txt['tp-menu-icon2'] ='<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling Tinyportal, so any file manually placed there will be lost upon uninstall!</small>';
 
 // Shoutbox Manager
 $txt['tp-deleteallshouts'] = 'Delete all shouts?';
@@ -660,7 +638,7 @@ $txt['tp-disabletemplateevaldesc']   = 'Disable the PHP eval function for rendin
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
-// new in 1.6.2
+// new in 1.6.3
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 $txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
 $txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';

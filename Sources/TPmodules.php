@@ -74,6 +74,25 @@ function TPmodules()
         case 'submitsuccess':
             return articleSubmitSuccess();
             break;
+        case 'help':
+            $context['TPortal']['helpsection'] = 'introduction';
+            $option = TPUtil::filter('p', 'get', 'string');
+            if($option) {
+                $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
+                if(in_array($option, $helpOptions)) {
+                    $context['TPortal']['helpsection'] = $option;
+                }
+            }
+            $context['current_action'] = 'help';
+            require_once( $sourcedir .'/TPhelp.php');
+            TPhelp_init();
+            return;
+            break;
+        case 'credits':
+        	require_once( $sourcedir .'/TPhelp.php');
+		    TPCredits();
+            return;
+            break;
         default:
 		    //redirectexit('action=forum');
             break;
@@ -81,28 +100,14 @@ function TPmodules()
 
 	// get subaction
 	$tpsub = '';
-	if(isset($_GET['sa']))
-	{
+	if(isset($_GET['sa'])) {
 		$context['TPortal']['subaction'] = $_GET['sa'];
 		$tpsub = $_GET['sa'];
 	}
-	elseif(isset($_GET['sub']))
-	{
+	elseif(isset($_GET['sub'])) {
 		$context['TPortal']['subaction'] = $_GET['sub'];
 		$tpsub = $_GET['sub'];
 	}
-
-	// for help pages
-	if(isset($_GET['p']))
-	{
-		$helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
-		if(in_array($_GET['p'], $helpOptions))
-			$context['TPortal']['helpsection'] = $_GET['p'];
-		else
-			$context['TPortal']['helpsection'] = 'introduction';
-	}
-	else
-		$context['TPortal']['helpsection'] = 'introduction';
 
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = true;
@@ -111,8 +116,7 @@ function TPmodules()
 	require_once($sourcedir. '/TPcommon.php');
 
 	// download manager?
-	if(isset($_GET['dl']))
-	{
+	if(isset($_GET['dl'])) {
 		$context['TPortal']['dlsub'] = $_GET['dl'] == '' ? '0' : $_GET['dl'];
 	}
 
@@ -284,12 +288,6 @@ function TPmodules()
 			redirectexit('action=tpmod;dl=item'.$dl);
 		}
 	}
-	elseif($tpsub == 'help')
-	{
-		$context['current_action'] = 'help';
-		require_once( $sourcedir .'/TPhelp.php');
-		TPhelp_init();
-	}
 	elseif($tpsub == 'dlsubmitsuccess')
 	{
 		$context['TPortal']['subaction'] = 'dlsubmitsuccess';
@@ -453,11 +451,6 @@ function TPmodules()
 		}
 		else
 			fatal_error($txt['tp-notablock'], false);
-	}
-	elseif($tpsub == 'credits')
-	{
-		require_once( $sourcedir .'/TPhelp.php');
-		TPCredits();
 	}
 	else
 	{
