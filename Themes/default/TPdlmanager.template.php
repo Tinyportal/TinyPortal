@@ -275,7 +275,7 @@ function template_main()
 			if($context['TPortal']['dlaction']=='cat' && sizeof($context['TPortal']['dlitem'])>0)
 			{
 				echo '
-				<div class="padding-div" style="overflow: hidden;">';
+				<div class="dl_pageindex padding-div">';
 
 				if(!empty($context['TPortal']['sortlinks']))
 					echo '
@@ -329,6 +329,8 @@ function template_main()
 				}
 				echo '
 				</div>
+			
+				<p class="clearthefloat"></p>
 				<div class="padding-div">';
 					if($context['TPortal']['dlaction']!='item' && !empty($context['TPortal']['pageindex']))
 						echo $context['TPortal']['pageindex'];
@@ -637,7 +639,7 @@ function template_main()
 			}
 		}
 		echo '
-				<div style="padding:1%;">
+				<div class="padding-div">
 					<input type="submit" class="button button_submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
 				</div>
 			</div>
@@ -800,34 +802,74 @@ function template_main()
 			echo '
 		<form accept-charset="', $context['character_set'], '" name="dl_useredit" action="'.$scripturl.'?action=tpmod;dl=admin" enctype="multipart/form-data" onsubmit="syncTextarea();" method="post">
 			<div id="useredit-upfiles" class="tborder">
-					<div class="titlebg" style="padding:1%;">'.$txt['tp-useredit'].'</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">
-						<a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-preview'].']</a>
-						'.$txt['tp-dluploadtitle'].'
-					  </div>
-					  <div class="windowbg2 float-items" style="width:71%;">
-					    <input style="width: 97%;max-width: 100%;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
-					  </div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2" style="padding:1%;">
-						<br>';
+				<div></div>
+				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
+				<div class="windowbg noup padding-div">
+					<dl class="settings">
+						<dt>
+							'.$txt['tp-uploadedby'].':
+						</dt>
+						<dd>
+							'.$context['TPortal']['admcurrent']['member'].'
+						</dd>
+						<dt>'.$txt['tp-dlviews'].':</dt>
+						<dd>
+							'.$cat['views'].' / '.$cat['downloads'].'
+						</dd>
+						<dt>
+							'.$txt['tp-dluploadtitle'].'
+						</dt>
+						<dd>
+							<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
+						</dd>
+						<dt>'.$txt['tp-dluploadcategory'].'</dt>
+						<dd>
+							<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px;">';
+
+			foreach($context['TPortal']['uploadcats'] as $ucats)
+			{
+				echo '
+							<option value="'.$ucats['id'].'" ', $ucats['id']==abs($cat['category']) ? 'selected' : '' ,'>', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
+			}
+			echo '
+							</select>
+						</dd>					  
+					</dl>
+				<hr>
+				<div>
+					<div><b>'.$txt['tp-dluploadtext'].'</b><br><br></div>';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', $context['TPortal']['show_wysiwyg']);
+					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox($context['TPortal']['editor_id']);
 				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" style="width: 99%; height: 300px;">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
+					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body">'.$cat['description'].'</textarea>';
 
 			echo '
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dluploadicon'].'</div>
-					  <div class="windowbg2 float-items" style="width:71%;">
+				</div>
+			<hr>
+				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
+				</div><br>
+				<dl class="settings">
+					<dt>'.$txt['tp-dlfilename'].'</dt>
+					<dd>'.$cat['file'].'</dd>
+					<dt></dt>
+
+					<dt>'.$txt['tp-dlfilesize'].'</dt>
+					<dd>'.($cat['filesize']*1024).' bytes</dd>
+					<dt>'.$txt['tp-uploadnewfileexisting'].':</dt>
+					<dd>
+						<input name="tp_dluploadfile_edit" style="width: 90%;" type="file" value="">
+						<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'">
+					</dd>
+				</dl>
+				<hr>
+				<dl class="settings">
+					<dt>'.$txt['tp-dluploadicon'].'</dt>
+					<dd>
 						<select size="1" name="dladmin_icon'.$cat['id'].'" onchange="dlcheck(this.value)">
-							<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
+						<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
 
 			// output the icons
 			$selicon = substr($cat['icon'], strrpos($cat['icon'], '/')+1);
@@ -837,78 +879,61 @@ function template_main()
 
 			echo '
 						</select>
-						<br><br><img name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
+						<img align="top" style="margin-left: 2ex;" name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
 						<script type="text/javascript">
 						function dlcheck(icon)
 							{
 								document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 							}
-						</script>
-					   </div><p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:50%;">'.$txt['tp-dlviews'].':</div>
-					  <div class="windowbg2 float-items" style="width:46%;">'.$cat['views'].' / '.$cat['downloads'].'</div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dlfilename'].'</div>
-					  <div class="windowbg2 float-items" style="width:71%;">'.$cat['file'].'
-						<br><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a>
-					  </div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-uploadnewfileexisting'].':</div>
-					  <div class="windowbg2 float-items" style="width:71%;">
-						<input name="tp_dluploadfile_edit" style="width: 90%;" type="file" value="">
-						<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'">
-					  </div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">&nbsp;</div>
-					  <div class="windowbg2 float-items" style="width:71%;">'.($cat['filesize']*1024).' bytes</div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-uploadedby'].':</div>
-					  <div class="windowbg2 float-items" style="width:71%;">'.$context['TPortal']['admcurrent']['member'].'</div>
-					  <p class="clearthefloat"></p>
-					</div>
-					' , $cat['approved']=='0' ? '
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;"><img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  /></div>
-					  <div class="windowbg2 float-items" style="width:71%;"><b>'.$txt['tp-dlnotapprovedyet'].'</b></div><p class="clearthefloat"></p></div>' : '' , ' ';
+						</script><br><br>
+					</dd>
+					<dt>'.$txt['tp-uploadnewpicexisting'].':</dt>
+					<dd>
+						<input name="tp_dluploadpic_link" type="text" size="60"  value="'.$cat['sshot'].'"><br>
+						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
+				   	</dd>
+					<dt>'.$txt['tp-uploadnewpic'].':</dt>
+					<dd>
+						<input name="tp_dluploadpic_edit" style="width: 90%;" type="file" value="">
+						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'">
+					</dd>
+				</dl>
+				' , $cat['approved']=='0' ? '
+				<dl class="settings">
+					<dt>
+						<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  />
+					</dt>
+					<dd>
+						<b>'.$txt['tp-dlnotapprovedyet'].'</b>
+					</dd>
+				</dl>' : '' , ' ';
 		}
 		// any extra files?
 		if(isset($cat['subitem']) && sizeof($cat['subitem'])>0)
 		{
 			echo '
-
-
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dlmorefiles'].'</div>
-					  <div class="windowbg2 float-items" style="width:71%;"><ul>	';
+				<hr>
+				<dl class="settings">
+					<dt>'.$txt['tp-dlmorefiles'].'</dt>
+					<dd>';
 			foreach($cat['subitem'] as $sub)
 			{
-				echo '<li><b><a href="' , $sub['href'], '">' , $sub['name'] , '</a></b> (',$sub['file'],')
-							', $sub['filesize'] ,' &nbsp;&nbsp;<input style="vertical-align: middle;" name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
-							&nbsp;&nbsp;<input style="vertical-align: middle;" name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
-							</li>';
+				echo '<div><b><a href="' , $sub['href'], '">' , $sub['name'] , '</a></b><br>(',$sub['file'],')
+							', $sub['filesize'] ,' &nbsp;&nbsp;<br><input name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
+							&nbsp;&nbsp;<input name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
+							<br></div>';
 			}
-			echo '</ul></div><p class="clearthefloat"></p></div>';
+			echo '</dd>
+				</dl>';
 		}
 		// no, but maybe it can be a additional file itself?
 		else
 		{
 			echo '
-
-
-
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;"><b>'.$txt['tp-dlmorefiles2'].'</b></div>
-					  <div class="windowbg2 float-items" style="width:71%;">
+				<hr>
+				<dl class="settings">
+					<dt>'.$txt['tp-dlmorefiles2'].'</dt>
+					<dd>
 						<select size="1" name="dladmin_subitem'.$cat['id'].'" style="margin-top: 4px;">
 							<option value="0" selected>'.$txt['tp-no'].'</option>';
 
@@ -917,51 +942,19 @@ function template_main()
 							<option value="'.$subs['id'].'">'.$txt['tp-yes'].', '.$subs['name'].'</option>';
 			echo '
 						</select>
-				    </div><p class="clearthefloat"></p></div>';
-
+				    </dd>
+				</dl>';
 		}
-		// which category?
+
 		echo '
-
-
-					<div class="windowbg2">
-					 <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-dluploadcategory'].'</div>
-					 <div class="windowbg2 float-items" style="width:71%;">
-						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px;">';
-
-		foreach($context['TPortal']['uploadcats'] as $ucats)
-		{
-			echo '
-							<option value="'.$ucats['id'].'" ', $ucats['id']==abs($cat['category']) ? 'selected' : '' ,'>', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' '.$ucats['name'].'</option>';
-		}
-		echo '
-						</select>
-					 </div>
-					 <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;">'.$txt['tp-uploadnewpic'].':</div>
-					  <div class="windowbg2 float-items" style="width:71%;">
-						<input name="tp_dluploadpic_edit" style="width: 90%;" type="file" value="">
-						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'">
-					  </div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg2">
-					  <div class="windowbg2 float-items" align="right" style="width:25%;word-break:break-all;">'.$txt['tp-uploadnewpicexisting'].':</div>
-					  <div class="windowbg2 float-items" style="width:71%;">
-						<input style="width:97%;" name="tp_dluploadpic_link" size="60" type="text" value="'.$cat['sshot'].'"><br><br>
-						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
-				   	  </div>
-					  <p class="clearthefloat"></p>
-					</div>
-					<div class="windowbg" style="padding:1%;">
-						<input name="dlsend" type="submit" value="'.$txt['tp-submit'].'">
-						<input name="sc" type="hidden" value="'.$context['session_id'].'">
-						<input name="dl_useredit" type="hidden" value="'.$cat['id'].'">
-					</div>
+				<div class="padding-div"><input name="dlsend" type="submit"  class="button button_submit" value="'.$txt['tp-submit'].'">
+				<input name="sc" type="hidden" value="'.$context['session_id'].'">
+				<input name="dl_useredit" type="hidden" value="'.$cat['id'].'">
+				</div>
 			</div>
-		</form></div>';
+		</div>
+		</form>
+	</div>';
 	}
 
 	if($context['TPortal']['dlaction']=='search')

@@ -1013,6 +1013,11 @@ a.avatar img
 {
 	padding-bottom: 3px;
 }
+.dl_pageindex
+{
+	overflow: hidden;
+    border-bottom: 1px solid #ccc;
+}
 .dl_number
 {
 	float: left;
@@ -1174,12 +1179,13 @@ img.dl_icon
 {
 	padding: 0 5px;
 }
-.morefiles ul, .morefiles li
+.morefiles
 {
-	list-style: none;
+	padding: 10px 0 0 0;
 }
 .morefiles li
 {
+	list-style: none;
 	padding: 2px 0 6px 20px;
 	margin: 0;
 	background: url(../images/tinyportal/glyph_download.png) no-repeat;
@@ -1736,13 +1742,14 @@ h3.h3dl
 }
 .dlpost
 {
-	padding-top: 5px;
-	margin-top: 10px;
+	padding: 5px 0 5px 0;
+	margin-top: 5px;
 }
 .dlitemgrid
 {
 	width: 48%;
-	float: left;
+	display: inline-block;
+	vertical-align: top;
 	padding: 1em 1% 1em 0;
 	overflow: hidden;
 }
