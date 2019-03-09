@@ -446,13 +446,13 @@ function TPortalDLManager()
 			$context['TPortal']['boards'] = array();
 			// fetch all boards
 			$request = $smcFunc['db_query']('', '
-				SELECT b.ID_BOARD, b.name, b.board_order FROM {db_prefix}boards as b
+				SELECT b.id_board, b.name, b.board_order FROM {db_prefix}boards as b
 				WHERE {query_see_board}
 				ORDER BY b.board_order ASC');
 			if ($smcFunc['db_num_rows']($request) > 0)
 			{
 				while($row = $smcFunc['db_fetch_assoc']($request))
-					$context['TPortal']['boards'][] = array('id' => $row['ID_BOARD'], 'name' => $row['name']);
+					$context['TPortal']['boards'][] = array('id' => $row['id_board'], 'name' => $row['name']);
 
 				$smcFunc['db_free_result']($request);
 			}
@@ -2980,11 +2980,12 @@ function TPortalDLAdmin()
 		// fetch items within a category
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.*, dl.author_id as author_id,m.real_name as real_name
-			FROM ({db_prefix}tp_dlmanager AS dl, {db_prefix}members AS m)
+			FROM {db_prefix}tp_dlmanager AS dl
+            INNER JOIN {db_prefix}members AS m
+            ON dl.author_id = m.id_member
 			WHERE abs(dl.category) = {int:cat}
 			AND dl.type = {string:type}
 			AND dl.subitem = {int:sub}
-			AND dl.author_id = m.id_member
 			ORDER BY dl.id DESC',
 			array('cat' => $cat, 'type' => 'dlitem', 'sub' => 0)
 		);
