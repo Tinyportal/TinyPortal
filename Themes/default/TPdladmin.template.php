@@ -391,7 +391,7 @@ $clickme.click( function(e) {
 				<div class="fullwidth-on-res-layout float-items" style="width:42%;">
 					<div id="show-on-respnsive-layout">'.$txt['tp-dlfile'].'</div>
 					<div id="size-on-respnsive-layout"><div style="width:48%;word-break:break-all;" class="float-items">
-				   '.$cat['file'].'
+				   '. (($cat['file']=='- empty item -' || $cat['file']=='') ? $txt['tp-noneicon'] : $cat['file']) .'
 					</div>
 					<div style="width:48%;" class="float-items">
 					by '.$cat['author'].'
@@ -599,8 +599,8 @@ $clickme.click( function(e) {
 					<dd>';
 			foreach($cat['subitem'] as $sub)
 			{
-				echo '<div><a href="' , $sub['href'], '">' , $sub['name'] , '</a> (',$sub['file'],')
-						', $sub['filesize'] ,' &nbsp;&nbsp;<br><input name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
+				echo '<div><b><a href="' , $sub['href'], '">' , $sub['name'] , '</a></b><br>(',$sub['file'],')
+						', $sub['filesize'] ,'<br><input name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
 						&nbsp;&nbsp;<input name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
 						<br></div>';
 			}
@@ -637,7 +637,7 @@ $clickme.click( function(e) {
 						<input name="dladmin_delete'.$cat['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
 					</dd>
 				</dl>
-			<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
+			<div class="padding-div"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
 			</div>
 	   </div>
 	';
