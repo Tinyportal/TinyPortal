@@ -39,54 +39,6 @@ function TPortalArticle() {{{
 	// clear the linktree first
 	TPstrip_linktree();
 
-	$subAction = TPUtil::filter('sa', 'get', 'string');
-    switch($subAction) {
-        case 'showcomments':
-            return articleShowComments();
-            break;
-        case 'addcomment':
-        case 'comment':
-            return articleInsertComment();
-            break;
-        case 'killcomment':
-            return articleDeleteComment();
-            break;
-        case 'editcomment':
-            return articleEditComment();
-            break;
-        case 'rate_article':
-            return articleRate();
-            break;
-        case 'editarticle':
-            return articleEdit();
-            break;
-        case 'tpattach':
-            return articleAttachment();
-            break;
-        case 'myarticles':
-            return articleShow();
-            break;
-	    case 'submitarticle':
-        case 'addarticle_html':
-        case 'addarticle_bbc': 
-            return articleNew();
-            break;
-        case 'publish':
-            return articlePublish();
-            break;
-        case 'savearticle':
-            return articleSave();
-            break;
-        case 'uploadimage':
-            return articleUploadImage();
-            break;
-        case 'submitsuccess':
-            return articleSubmitSuccess();
-            break;
-        default:
-		    redirectexit('action=forum');
-            break;
-    }
 }}}
 
 function TPortalArticleActions(&$subActions) {{{
