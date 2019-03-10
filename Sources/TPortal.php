@@ -38,7 +38,7 @@ function TPortal()
 
     $context['TPortal']['subaction'] = $subAction;
     // If it exists in our new subactions array load it
-    if(array_key_exists($subAction, $subActions)) {
+    if(!empty($subAction) && array_key_exists($subAction, $subActions)) {
         if (!empty($subActions[$subAction][0])) {
             require_once(SOURCEDIR . '/' . $subActions[$subAction][0]);
         }
