@@ -3091,10 +3091,11 @@ function TPortalDLAdmin()
 		$context['TPortal']['dl_admitems'] = array();
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.id, dl.name, dl.file, dl.created, dl.filesize, dl.author_id as author_id, m.real_name as real_name
-			FROM ({db_prefix}tp_dlmanager AS dl, {db_prefix}members AS m)
-			WHERE dl.type = {string:type}
-			AND dl.category < 0
-			AND dl.author_id = m.id_member',
+			FROM {db_prefix}tp_dlmanager AS dl
+            INNER JOIN {db_prefix}members AS m
+			    ON dl.author_id = m.id_member
+            WHERE dl.type = {string:type}
+			    AND dl.category < 0',
 			array('type' => 'dlitem')
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
