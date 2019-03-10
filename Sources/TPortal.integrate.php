@@ -29,7 +29,7 @@ class TPortal_Integrate
             spl_autoload_register('TPortal_Integrate::TPortalAutoLoadClass');
         }
 
-        $hooks = array(
+        $hooks = array (
             'load_permissions'                => 'TPortal_Integrate::hookPermissions',
             'load_illegal_guest_permissions'  => 'TPortal_Integrate::hookIllegalPermissions',
             'buffer'                          => 'TPortal_Integrate::hookBuffer',
@@ -39,7 +39,10 @@ class TPortal_Integrate
             'profile_areas'                   => 'TPortal_Integrate::hookProfileArea',
             'whos_online'                     => 'TPortal_Integrate::hookWhosOnline',
             'pre_log_stats'                   => 'TPortal_Integrate::hookPreLogStats',
-            'tp_subactions'                   => '$sourcedir/TPortalArticle.php|TPortalArticleActions',
+            'tp_subactions'                   => array ( 
+                    '$sourcedir/TPortalArticle.php|TPortalArticleActions',
+                    '$sourcedir/TPSearch.php|TPSearchActions',
+                ),
         );
 
         if(TP_SMF21) {
@@ -52,7 +55,14 @@ class TPortal_Integrate
         }
 
 		foreach ($hooks as $hook => $callable) {
-			add_integration_function('integrate_' . $hook, $callable, false);
+            if(is_array($callable)) {
+                foreach($callable as $call ) {
+			        add_integration_function('integrate_' . $hook, $call, false);
+                }
+            }
+            else {
+			    add_integration_function('integrate_' . $hook, $callable, false);
+            }
 		}
         
     }
@@ -560,7 +570,6 @@ class TPortal_Integrate
                 'forum'     => array('BoardIndex.php',      'BoardIndex'),
                 'tportal'   => array('TPortal.php',         'TPortal'),
                 'tpshout'   => array('TPShout.php',         'TPShout'),
-                'tpsearch'  => array('TPSearch.php',        'TPSearch'),
             ),
             $actionArray
         );

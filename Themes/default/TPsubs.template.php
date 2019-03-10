@@ -886,7 +886,7 @@ function template_TPsearch_above()
 		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tpsearch;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
+				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
 	}
 	else {
         echo '
@@ -897,7 +897,7 @@ function template_TPsearch_above()
 		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tpsearch;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
+				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
 				<a href="' . $scripturl. '?action=tportal;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
     }
 
