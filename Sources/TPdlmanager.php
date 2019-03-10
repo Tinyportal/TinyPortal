@@ -1795,9 +1795,9 @@ function TPdownloadme()
 			);
 
 		$smcFunc['db_query']('', '
-			UPDATE LOW_PRIORITY {db_prefix}tp_dlmanager
+			UPDATE {db_prefix}tp_dlmanager
 			SET downloads = downloads + 1
-			WHERE id = {int:item} LIMIT 1',
+			WHERE id = {int:item}',
 			array('item' => $item));
 		ob_end_clean();
 		if (!empty($modSettings['enableCompressedOutput']) && @version_compare(PHP_VERSION, '4.2.0') >= 0 && @filesize($filename) <= 4194304)
