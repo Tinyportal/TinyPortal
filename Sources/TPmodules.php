@@ -23,28 +23,10 @@ function TPmodules()
 {
 	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
 
-	$ID_MEMBER = $context['user']['id'];
-
 	if(loadLanguage('TPmodules') == false)
 		loadLanguage('TPmodules', 'english');
 	if(loadLanguage('TPortalAdmin') == false)
 		loadLanguage('TPortalAdmin', 'english');
-
-	$subAction  = TPUtil::filter('sa', 'get', 'string');
-    $subActions = array (
-        'credits'           => array('TPhelp.php', 'TPCredits', array()),
-        'help'              => array('TPhelp.php', 'TPhelp_init', array()),
-    );
-    
-    call_integration_hook('integrate_tp_subactions', array(&$subActions));
-
-    if (!empty($subActions[$subAction][0])) {
-        require_once(SOURCEDIR . '/' . $subActions[$subAction][0]);
-    }
-
-	$context['TPortal']['subaction'] = $subAction;
-
-    call_user_func_array($subActions[$subAction][1], $subActions[$subAction][2]);
 
 	// get subaction
 	$tpsub = '';
@@ -188,16 +170,16 @@ function TPmodules()
 			$voters = explode(',', $row[1]);
 			$ratings = explode(',', $row[0]);
 			// check if we haven't rated anyway
-			if(!in_array($ID_MEMBER,$voters))
+			if(!in_array($context['user']['id'],$voters))
 			{
 				if($row[0] != '')
 				{
-					$new_voters = $row[1].','.$ID_MEMBER;
+					$new_voters = $row[1].','.$context['user']['id'];
 					$new_ratings = $row[0].','.$_POST['tp_dlitem_rating'];
 				}
 				else
 				{
-					$new_voters = $ID_MEMBER;
+					$new_voters = $context['user']['id'];
 					$new_ratings = $_POST['tp_dlitem_rating'];
 				}
 				// update ratings and raters
@@ -215,7 +197,7 @@ function TPmodules()
 				);
 			}
 			// go back to the download
-			redirectexit('action=tpmod;dl=item'.$dl);
+			redirectexit('action=tportal;dl=item'.$dl);
 		}
 	}
 	elseif($tpsub == 'dlsubmitsuccess')
@@ -377,7 +359,7 @@ function TPmodules()
 					);
 				}
 			}
-			redirectexit('action=tpmod;sa=editblock'.$whatID);
+			redirectexit('action=tportal;sa=editblock'.$whatID);
 		}
 		else
 			fatal_error($txt['tp-notablock'], false);
@@ -386,7 +368,6 @@ function TPmodules()
 	{
 		redirectexit('action=forum');
 	}
-
 }
 
 // profile summary
@@ -537,7 +518,7 @@ function tp_profile_articles($memID)
 					'locked' => $row['locked'],
 					'catID' => $row['category'],
 					'category' => '<a href="'.$scripturl.'?mycat='.$row['category'].'">' . (isset($context['TPortal']['catnames'][$row['category']]) ? $context['TPortal']['catnames'][$row['category']] : '') .'</a>',
-					'editlink' => allowedTo('tp_articles') ? $scripturl.'?action=tpadmin;sa=editarticle'.$row['id'] : $scripturl.'?action=tpmod;sa=editarticle'.$row['id'],
+					'editlink' => allowedTo('tp_articles') ? $scripturl.'?action=tpadmin;sa=editarticle'.$row['id'] : $scripturl.'?action=tportal;sa=editarticle'.$row['id'],
 				);
 		}
 		$smcFunc['db_free_result']($request);
@@ -678,16 +659,16 @@ function tp_profile_download($memID)
 
 			$editlink = '';
 			if(allowedTo('tp_dlmanager'))
-				$editlink = $scripturl.'?action=tpmod;dl=adminitem'.$row['id'];
+				$editlink = $scripturl.'?action=tportal;dl=adminitem'.$row['id'];
 			elseif($memID == $context['user']['id'])
-				$editlink = $scripturl.'?action=tpmod;dl=useredit'.$row['id'];
+				$editlink = $scripturl.'?action=tportal;dl=useredit'.$row['id'];
 
 			$context['TPortal']['profile_uploads'][] = array(
 				'id' => $row['id'],
 				'name' => $row['name'],
 				'created' => timeformat($row['created']),
 				'category' => $row['category'],
-				'href' => $scripturl . '?action=tpmod;dl=item'.$row['id'],
+				'href' => $scripturl . '?action=tportal;dl=item'.$row['id'],
 				'views' => $row['views'],
 				'rating_votes' => $rating_votes,
 				'rating_average' => $rating_average,

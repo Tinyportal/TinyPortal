@@ -57,7 +57,7 @@ function TPhelp_init()
 		$context['admin_tabs']['tinyportal'][$tab] = array(
 			'title' => $txt['tphelp_' . $tab],
 			'description' => '',
-			'href' => $scripturl . '?action=tpmod;sa=help;p=' . $tab,
+			'href' => $scripturl . '?action=tportal;sa=help;p=' . $tab,
 			'is_selected' => $p == $tab ? true : false,
 		);
 	}

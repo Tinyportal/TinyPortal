@@ -30,10 +30,10 @@ function template_main()
 		</div>
 		<div>';
 		$dlbuttons = array(
-			'frontdl' => array('text' => 'tp-downloads', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl' ),
-			'search' => array('text' => 'tp-search', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=search'),
-			'stats' => array('text' => 'tp-stats', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=stats'),
-			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'lang' => true, 'url' => $scripturl . '?action=tpmod;dl=upload'),
+			'frontdl' => array('text' => 'tp-downloads', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl' ),
+			'search' => array('text' => 'tp-search', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=search'),
+			'stats' => array('text' => 'tp-stats', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=stats'),
+			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=upload'),
 		);
 
 		if(in_array($context['TPortal']['dlaction'],array('frontdl','search','stats','upload')))
@@ -67,7 +67,7 @@ function template_main()
 				<div class="screenshot" style="margin: 4px 4px 4px 1em;float: right; width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$context['TPortal']['featured']['sshot'].') no-repeat;"></div>';
 
 			echo '
-				<h4 class="h4dl"><a href="' . $scripturl . '?action=tpmod;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
+				<h4 class="h4dl"><a href="' . $scripturl . '?action=tportal;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
 				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['author_id'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
 				<p>' . $context['TPortal']['featured']['description'] , '</p>
 			</div>';
@@ -304,9 +304,9 @@ function template_main()
 
 					// edit the file?
 					if(allowedTo('tp_dlmanager'))
-						$details[] = '<a href="' . $scripturl . '?action=tpmod;dl=adminitem' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
+						$details[] = '<a href="' . $scripturl . '?action=tportal;dl=adminitem' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
 					elseif($dlitem['author_id']==$context['user']['id'])
-						$details[] ='<a href="' . $scripturl . '?action=tpmod;dl=useredit' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
+						$details[] ='<a href="' . $scripturl . '?action=tportal;dl=useredit' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
 
 					if(isset($dlitem['ingress']))
 						echo '
@@ -364,9 +364,9 @@ function template_main()
 
 			// edit the file?
 			if(allowedTo('tp_dlmanager'))
-				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tpmod;dl=adminitem' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
+				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tportal;dl=adminitem' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 			elseif($dlitem['author_id']==$context['user']['id'])
-				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tpmod;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
+				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tportal;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 
 			echo '
 				</h4><hr>
@@ -382,7 +382,7 @@ function template_main()
 			if($dlitem['can_rate'])
 			{
 				echo '
-					<form class="ratingoption" style="padding-left: 0;" name="tp_dlitem_rating" action="',$scripturl,'?action=tpmod;sa=rate_dlitem" method="post">
+					<form class="ratingoption" style="padding-left: 0;" name="tp_dlitem_rating" action="',$scripturl,'?action=tportal;sa=rate_dlitem" method="post">
 						' , $txt['tp-ratedownload'] , '
 						<select size="1" name="tp_dlitem_rating">';
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--)
@@ -461,7 +461,7 @@ function template_main()
 		<div class="windowbg noup" style="padding:0px">
 			<span class="topslice"><span></span></span>
 			  <div">
-				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tpmod;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
+				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tportal;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
@@ -800,10 +800,10 @@ function template_main()
 		foreach($context['TPortal']['dl_useredit'] as $cat)
 		{
 			echo '
-		<form accept-charset="', $context['character_set'], '" name="dl_useredit" action="'.$scripturl.'?action=tpmod;dl=admin" enctype="multipart/form-data" onsubmit="syncTextarea();" method="post">
+		<form accept-charset="', $context['character_set'], '" name="dl_useredit" action="'.$scripturl.'?action=tportal;dl=admin" enctype="multipart/form-data" onsubmit="syncTextarea();" method="post">
 			<div id="useredit-upfiles" class="tborder">
 				<div></div>
-				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
+				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' - <a href="'.$scripturl.'?action=tportal;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 				<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
@@ -849,7 +849,7 @@ function template_main()
 			echo '
 				</div>
 			<hr>
-				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tpmod;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
+				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tportal;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
 				</div><br>
 				<dl class="settings">
 					<dt>'.$txt['tp-dlfilename'].'</dt>
@@ -960,7 +960,7 @@ function template_main()
 	if($context['TPortal']['dlaction']=='search')
 	{
 	   echo '
-		<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" enctype="multipart/form-data" method="post">
+		<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tportal;dl=results" enctype="multipart/form-data" method="post">
 			<div class="tborder" id="dlfiles-search">
 				<div class="cat_bar">
 					<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
@@ -993,7 +993,7 @@ function template_main()
 			<span class="upperframe"><span></span></span>
 			<div class="roundframe noup">
 				<div class="padding-div">
-					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tpmod;dl=results" method="post">
+					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tportal;dl=results" method="post">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
 						<input id="searchbox" type="text" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
@@ -1013,7 +1013,7 @@ function template_main()
 		{
 			echo '
 				<div class="windowbg padding-div" style="margin-bottom:5px;">
-					<h4 class="tpresults"><a href="' . $scripturl . '?action=tpmod;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
+					<h4 class="tpresults"><a href="' . $scripturl . '?action=tportal;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
 					<hr>
 					<div class="tpresults" style="padding-top: 4px;">
 						<div class="middletext">' , $res['body'] . '</div>

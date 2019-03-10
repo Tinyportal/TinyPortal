@@ -24,7 +24,7 @@ function template_main()
 			case 'editcomment':
 				if(isset($context['TPortal']['comment_edit'])){
 					echo '
-		<form accept-charset="', $context['character_set'], '"  name="tp_edit_comment" action="'.$scripturl.'?action=tpmod;sa=editcomment" method="post" style="margin: 1ex;">
+		<form accept-charset="', $context['character_set'], '"  name="tp_edit_comment" action="'.$scripturl.'?action=tportal;sa=editcomment" method="post" style="margin: 1ex;">
 			<input name="tp_editcomment_title" type="text" value="'.$context['TPortal']['comment_edit']['title'].'"> <br>
 			<textarea name="tp_editcomment_body" rows="6" cols="20" style="width: 90%;" wrap="on">'.$context['TPortal']['comment_edit']['body'].'</textarea>
 			<br><input id="tp_editcomment_submit" type="submit" value="'.$txt['tp-submit'].'">
@@ -42,7 +42,7 @@ function template_main()
 			case 'editarticle':
 				$mg=$context['TPortal']['editarticle'];
 				echo '
-		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
+		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 			<div id="users-editarticle" class="bordercolor users-area">
 				<div class="cat_bar">
 					<h3 class="catbg">'.$txt['tp-editarticle'].'&nbsp;' ,$mg['subject'], '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a> </h3>
@@ -151,7 +151,7 @@ function template_main()
 				break;
 			case 'editblock':
 				echo '
-		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=saveblock'.$context['TPortal']['blockedit']['id'].'" method="post" onsubmit="submitonce(this);">
+		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=saveblock'.$context['TPortal']['blockedit']['id'].'" method="post" onsubmit="submitonce(this);">
 			<div id="super-user" class="bordercolor">
 				<div class="catbg">
 					<div style="padding:1%;">'.$txt['tp-editblock'].' </div>
@@ -334,7 +334,7 @@ function template_main()
 			echo '
 			<tr class="windowbg">
 			<td class="shouts">
-				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
+				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tportal;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
 			</td>
 			</tr>';
 
@@ -397,7 +397,7 @@ function template_main()
 			echo '
 			<tr class="windowbg">
 			<td class="comments">
-				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>
+				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>
 			</td>
 			</tr>';
 			echo '
@@ -419,7 +419,7 @@ function template_main()
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="myarticles">
 				<div class="font-strong" style="padding:0px;">
-					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tpmod;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
+					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
 				</div>
 			</th>
 			</tr>
@@ -447,7 +447,7 @@ function template_main()
 
 				if((allowedTo('tp_editownarticle') && $art['locked']==0) && !allowedTo('tp_articles'))
 					echo '
-					<a href="' . $scripturl . '?action=tpmod;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
+					<a href="' . $scripturl . '?action=tportal;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
 				elseif(allowedTo('tp_articles'))
 					echo '
 					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
@@ -527,7 +527,7 @@ function template_submitarticle()
 	global $context, $txt, $scripturl;
 
 	echo '
-	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=editarticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
+	<form style="clear: both;" accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=editarticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				<input name="TPadmin_submit" type="hidden" value="set">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<div id="users-addarticle" class="bordercolor">

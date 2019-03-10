@@ -41,7 +41,7 @@ function TPsetupAdminAreas()
 		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
 			'title' => 'TPdownloads',
 			'description' => '',
-			'href' => $scripturl . '?action=tpmod;dl=admin',
+			'href' => $scripturl . '?action=tportal;dl=admin',
 			'is_selected' => isset($_GET['dl']),
 		);
 		$admin_set = true;
@@ -233,7 +233,7 @@ function tp_getbuttons()
 	if(!empty($context['TPortal']['show_download']))
 		$buts['downloads'] = array(
 			'title' => $txt['tp-downloads'],
-			'href' => $scripturl . '?action=tpmod;dl',
+			'href' => $scripturl . '?action=tportal;dl',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
@@ -242,7 +242,7 @@ function tp_getbuttons()
 	if($context['user']['is_logged'])
 		$buts['tpeditwonarticle'] = array(
 			'title' => $txt['tp-myarticles'],
-			'href' => $scripturl . '?action=tpmod;sa=myarticles',
+			'href' => $scripturl . '?action=tportal;sa=myarticles',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
@@ -361,7 +361,7 @@ function tp_getbuttons()
 	{
 		$buts['tpdlmanager'] = array(
 			'title' => $txt['permissionname_tp_dlmanager'],
-			'href' => $scripturl . '?action=tpmod;dl=admin',
+			'href' => $scripturl . '?action=tportal;dl=admin',
 			'show' => !empty($context['TPortal']['show_download']),
 			'active_button' => false,
 			'sub_buttons' => array(
@@ -1059,7 +1059,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			function tpImageUpload(file) {
 				var form = new FormData();
 				form.append(\'image\', file);
-				return fetch(\''.$scripturl.'?action=tpmod;sa=uploadimage\', {
+				return fetch(\''.$scripturl.'?action=tportal;sa=uploadimage\', {
 					method: \'post\',
 					credentials: \'same-origin\',
 					body: form,
@@ -2635,7 +2635,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'name' => $row['name'],
 					'category' => $row['category'],
 					'file' => $row['file'],
-					'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
+					'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
@@ -2644,7 +2644,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'date' => timeformat($row['created']),
 					'screenshot' => $ico ,
 					'catname' => $row['catname'],
-					'cathref' => $scripturl.'?action=tpmod;dl=cat'.$row['category'],
+					'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
 					'filesize' => $fs,
 				);
 			}

@@ -330,7 +330,7 @@ function template_modules()
 		foreach($context['TPortal']['adm_modules'] as $mod)
 			echo '
 					<dl class="settings">
-						<dt><a href="', $scripturl, '?action=tpmod;', $mod['subquery'], '"><strong>',$mod['title'],'</strong></a> - <a href="', $scripturl, '?action=tpmod;', $mod['subquery'], '=admin">Admin</a></dt>
+						<dt><a href="', $scripturl, '?action=tportal;', $mod['subquery'], '"><strong>',$mod['title'],'</strong></a> - <a href="', $scripturl, '?action=tportal;', $mod['subquery'], '=admin">Admin</a></dt>
 						<dd><img src="' .$settings['tp_images_url']. '/' , $mod['active']==1 ? 'TPgreen' : 'TPred' , '.png" alt="" />
 						<input name="tpmodule_state' , $mod['id'] , '" type="radio" value="1" ' , $mod['active']==1 ? 'checked="checked" /><b>'.$txt['tp-on'].'</b>' : '>'.$txt['tp-on'] , '
 						<input name="tpmodule_state' , $mod['id'] , '" type="radio" value="0" ' , $mod['active']==0 ? 'checked="checked" /><b>'.$txt['tp-off'].'</b>' : '>'.$txt['tp-off'] , '<br>

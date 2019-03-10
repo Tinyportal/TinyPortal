@@ -201,7 +201,7 @@ class TPortal_Integrate
         }
 
 
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tpmod;sa=credits" title="TP 2.0.0">&copy; 2005-2018</a>';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal</a> <a href="' . $scripturl . '?action=tportal;sa=credits" title="TP 2.0.0">&copy; 2005-2018</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;
@@ -225,7 +225,7 @@ class TPortal_Integrate
         if( TP_SMF21 ) {
             $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
             $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
-            $replace= '<a href="'.$scripturl.'?action=tpmod;sa=help">'.$tmp.'</a>';
+            $replace= '<a href="'.$scripturl.'?action=tportal;sa=help">'.$tmp.'</a>';
             $buffer = str_replace($find, $replace.' | '.$find, $buffer);
         }
 
@@ -368,7 +368,7 @@ class TPortal_Integrate
             $buttons['help']['sub_buttons'] = array(
                 'tphelp' => array(
                     'title' => $txt['tp-tphelp'],
-                    'href' => $scripturl.'?action=tpmod;sa=help',
+                    'href' => $scripturl.'?action=tportal;sa=help',
                     'show' => true,
                 ),
             );
@@ -558,7 +558,7 @@ class TPortal_Integrate
             array (
                 'tpadmin'   => array('TPortalAdmin.php',    'TPortalAdmin'),
                 'forum'     => array('BoardIndex.php',      'BoardIndex'),
-                'tpmod'     => array('TPmodules.php',       'TPmodules'),
+                'tportal'   => array('TPortal.php',         'TPortal'),
                 'tpshout'   => array('TPShout.php',         'TPShout'),
                 'tpsearch'  => array('TPSearch.php',        'TPSearch'),
             ),
@@ -580,13 +580,13 @@ class TPortal_Integrate
         // Action and board are both empty... maybe the portal page?
         if (empty($board) && empty($topic) && $context['TPortal']['front_type'] != 'boardindex') {
             require_once($sourcedir . '/TPortal.php');
-            $theAction = 'TPortal';
+            $theAction = 'TPortalMain';
         }
 
         // If frontpage set to boardindex but it's an article or category
         if (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex' && (isset($_GET['cat']) || isset($_GET['page']))) {
             require_once($sourcedir . '/TPortal.php');
-            $theAction = 'TPortal';
+            $theAction = 'TPortalMain';
         }
         // Action and board are still both empty...and no portal startpage - BoardIndex!
         elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex') {
@@ -731,10 +731,10 @@ class TPortal_Integrate
 
         if(allowedTo(array('tp_settings')) && (($context['TPortal']['front_type']=='forum_selected' || $context['TPortal']['front_type']=='forum_selected_articles'))) {
             if(!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
-                $normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+                $normal_buttons['publish'] = array('active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']);
             }
             else {
-                $normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tpmod;sa=publish;t=' . $context['current_topic']);
+                $normal_buttons['unpublish'] = array('active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']);
             }
         }
     }

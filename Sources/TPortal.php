@@ -24,8 +24,35 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
-// TinyPortal startpage
 function TPortal()
+{
+	global $context;
+
+	$subAction  = TPUtil::filter('sa', 'get', 'string');
+    $subActions = array (
+        'credits'           => array('TPhelp.php', 'TPCredits', array()),
+        'help'              => array('TPhelp.php', 'TPhelp_init', array()),
+    );
+    
+    call_integration_hook('integrate_tp_subactions', array(&$subActions));
+
+    $context['TPortal']['subaction'] = $subAction;
+    // If it exists in our new subactions array load it
+    if(array_key_exists($subAction, $subActions)) {
+        if (!empty($subActions[$subAction][0])) {
+            require_once(SOURCEDIR . '/' . $subActions[$subAction][0]);
+        }
+
+        call_user_func_array($subActions[$subAction][1], $subActions[$subAction][2]);
+    }
+    else {
+        require_once(SOURCEDIR . '/TPmodules.php');
+        TPmodules();
+    }
+}
+
+// TinyPortal startpage
+function TPortalMain()
 {
 	global $context;
 
@@ -34,8 +61,9 @@ function TPortal()
 		loadTemplate('TPwireless');
 		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp';
 	}
-	else
+	else {
 		loadTemplate('TPortal');
+    }
 }
 
 // TinyPortal init
@@ -536,7 +564,7 @@ function doTPpage()
 							'avatar' => array (
 								'name' => &$row['avatar'],
 								'image' => $avatar,
-								'href'  => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachement_type']) ? $scripturl . '?action=tpmod;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
+								'href'  => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachement_type']) ? $scripturl . '?action=tportal;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
 								'url'   => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
 							),
 						);
@@ -1322,7 +1350,7 @@ function doTPfrontpage()
                 )['image'];
 
 				if(!empty($row['thumb_id'])) {
-					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
+					$row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
                 }
 
 				if($counter == 0) {
@@ -1537,7 +1565,7 @@ function doTPfrontpage()
 				$row['useintro'] = '0';
 
 				if(!empty($row['thumb_id'])) {
-					$row['illustration'] = $scripturl . '?action=tpmod;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
+					$row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
                 }
 
 				$posts[$row['timestamp'].'0' . sprintf("%06s", $row['id'])] = $row;
@@ -2477,7 +2505,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 
 						document.getElementById( blockimage ).src = "'.$settings['tp_images_url'].'" + (state ? "/TPcollapse.png" : "/TPexpand.png");
 						var tempImage = new Image();
-						tempImage.src = "'.$scripturl.'?action=tpmod;upshrink=" + targetId + ";state=" + state + ";" + (new Date().getTime());
+						tempImage.src = "'.$scripturl.'?action=tportal;upshrink=" + targetId + ";state=" + state + ";" + (new Date().getTime());
 
 					}
 				}
