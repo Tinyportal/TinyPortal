@@ -28,15 +28,28 @@ function TPSearch()
 
     if( (is_array($_POST) && count($_POST) > 0)  || (!empty($_REQUEST['params'])) ) {
         TPSearchArticle();
-        TPadd_linktree($scripturl.'?action=tpsearch;sa=searcharticle' , $txt['tp-searcharticles2']);
+        TPadd_linktree($scripturl.'?action=tportal;sa=searcharticle' , $txt['tp-searcharticles2']);
         loadtemplate('TPSearch');
         $context['sub_template'] = 'article_search_results';
     } 
     else {
-	    TPadd_linktree($scripturl.'?action=tpsearch;sa=searcharticle' , $txt['tp-searcharticles2']);
+	    TPadd_linktree($scripturl.'?action=tportal;sa=searcharticle' , $txt['tp-searcharticles2']);
 	    loadtemplate('TPSearch');
         $context['sub_template'] = 'article_search_form';
     }
+
+}
+
+function TPSearchActions(&$subActions)
+{
+
+   $subActions = array_merge(
+        array (
+            'searcharticle'     => array('TPSearch.php', 'TPSearch', array()),
+            'searcharticle2'    => array('TPSearch.php', 'TPSearch', array()),
+        ),
+        $subActions
+    );
 
 }
 
@@ -230,7 +243,7 @@ function TPSearchArticle()
     $params = base64_encode(json_encode(array( 'search' => $what, 'title' => $usetitle, 'body' => $usebody)));
     
     // Now that we know how many results to expect we can start calculating the page numbers.
-    $context['page_index']  = constructPageIndex($scripturl . '?action=tpsearch;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
+    $context['page_index']  = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
 
 }
 

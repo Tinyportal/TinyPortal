@@ -2010,8 +2010,8 @@ function do_modules()
 			$smcFunc['db_free_result']($request);
 		}
 		$context['TPortal']['internal_modules'][] = array(
-			'adminlink' => '<a href="'.$scripturl.'?action=tpmod;dl=admin">'.$txt['tp-mod-dladmin'].'</a>',
-			'modulelink' => '<a href="'.$scripturl.'?action=tpmod;dl=0">'.$txt['tp-mod-dlmanager'].'</a>',
+			'adminlink' => '<a href="'.$scripturl.'?action=tportal;dl=admin">'.$txt['tp-mod-dladmin'].'</a>',
+			'modulelink' => '<a href="'.$scripturl.'?action=tportal;dl=0">'.$txt['tp-mod-dlmanager'].'</a>',
 			'state' => $context['TPortal']['show_download'],
 			'fieldname' => 'tp_show_download',
 		);

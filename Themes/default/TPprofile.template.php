@@ -146,7 +146,7 @@ $clickme.click( function(e) {
 			'.$txt['tp-dlsettings'].'
 		</div>
 			<div style="padding: 2ex;">
-				<form name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savesettings" method="post">
+				<form name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=savesettings" method="post">
 					<input type="hidden" name="sc" value="', $context['session_id'], '" />
 					<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
 					<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />

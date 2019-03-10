@@ -22,7 +22,7 @@ if (!defined('SMF')) {
 // TinyPortal module entrance
 function TPortalArticle() {{{
 
-	global $settings, $context, $scripturl, $txt, $user_info, $boarddir, $smcFunc;
+	global $settings, $context, $txt;
 
 	if(loadLanguage('TPmodules') == false)
 		loadLanguage('TPmodules', 'english');
@@ -39,59 +39,36 @@ function TPortalArticle() {{{
 	// clear the linktree first
 	TPstrip_linktree();
 
-	$subAction = TPUtil::filter('sa', 'get', 'string');
-    switch($subAction) {
-        case 'showcomments':
-            return articleShowComments();
-            break;
-        case 'addcomment':
-        case 'comment':
-            return articleInsertComment();
-            break;
-        case 'killcomment':
-            return articleDeleteComment();
-            break;
-        case 'editcomment':
-            return articleEditComment();
-            break;
-        case 'rate_article':
-            return articleRate();
-            break;
-        case 'editarticle':
-            return articleEdit();
-            break;
-        case 'tpattach':
-            return articleAttachment();
-            break;
-        case 'myarticles':
-            return articleShow();
-            break;
-	    case 'submitarticle':
-        case 'addarticle_html':
-        case 'addarticle_bbc': 
-            return articleNew();
-            break;
-        case 'publish':
-            return articlePublish();
-            break;
-        case 'savearticle':
-            return articleSave();
-            break;
-        case 'uploadimage':
-            return articleUploadImage();
-            break;
-        case 'submitsuccess':
-            return articleSubmitSuccess();
-            break;
-        default:
-		    redirectexit('action=forum');
-            break;
-    }
+}}}
+
+function TPortalArticleActions(&$subActions) {{{
+
+    $subActions = array_merge(
+        array (
+            'showcomments'      => array('TPortalArticle.php', 'articleShowComments', array()),
+            'comment'           => array('TPortalArticle.php', 'articleInsertComment', array()),
+            'killcomment'       => array('TPortalArticle.php', 'articleDeleteComment', array()),
+            'editcomment'       => array('TPortalArticle.php', 'articleEditComment', array()),
+            'rate_article'      => array('TPortalArticle.php', 'articleRate', array()),
+            'editarticle'       => array('TPortalArticle.php', 'articleEdit', array()),
+            'tpattach'          => array('TPortalArticle.php', 'articleAttachment', array()),
+            'myarticles'        => array('TPortalArticle.php', 'articleShow', array()),
+            'submitarticle'     => array('TPortalArticle.php', 'articleNew', array()),
+            'addarticle_html'   => array('TPortalArticle.php', 'articleNew', array()),
+            'addarticle_bbc'    => array('TPortalArticle.php', 'articleNew', array()),
+            'publish'           => array('TPortalArticle.php', 'articlePublish', array()),
+            'savearticle'       => array('TPortalArticle.php', 'articleSave', array()),
+            'uploadimage'       => array('TPortalArticle.php', 'articleUploadImage', array()),
+            'submitsuccess'     => array('TPortalArticle.php', 'articleSubmitSuccess', array()),
+        ),
+        $subActions
+    );
+
 }}}
 
 function articleInsertComment() {{{
 
-    global $context;
+    global $context, $txt;
 
     // check the session
     checkSession('post');
@@ -120,8 +97,7 @@ function articleInsertComment() {{{
 }}}
 
 function articleShowComments() {{{
-
-    global $smcFunc;
+    global $smcFunc, $scripturl, $user_info, $txt, $context;
 
     if(!empty($_GET['tpstart']) && is_numeric($_GET['tpstart'])) {
         $tpstart = $_GET['tpstart'];
@@ -185,18 +161,18 @@ function articleShowComments() {{{
     }
 
     // construct the pages
-    $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tpmod;sa=showcomments', $tpstart, $check[0], 15);
+    $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
     $context['TPortal']['unreadcomments'] = true;
     $context['TPortal']['showall'] = $showall;
     $context['TPortal']['subaction'] = 'showcomments';
-    TPadd_linktree($scripturl.'?action=tpmod;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
+    TPadd_linktree($scripturl.'?action=tportal;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
     loadtemplate('TPmodules');
 
 }}}
 
 function articleDeleteComment() {{{
 
-    global $context;
+    global $context, $txt;
 
 	// edit or deleting a comment?
 	if($context['user']['is_logged']) {
@@ -217,7 +193,7 @@ function articleDeleteComment() {{{
 }}}
 
 function articleEditComment() {{{
-    global $context;
+    global $context, $txt;
 
 	if($context['user']['is_logged']) {
 		// check that you indeed can edit or delete
@@ -516,13 +492,14 @@ function articleEdit() {{{
 	    return $_POST['tpadmin_form'].';article='.$where;
     }
     else {
-        redirectexit('action=tpmod;sa=submitsuccess');
+        redirectexit('action=tportal;sa=submitsuccess');
     }
 
 }}}
 
 function articleShow() {{{
-    global $context, $smcFunc;
+    global $context, $smcFunc, $scripturl, $txt;
+
 	// show own articles?
     // not for guests
     if($context['user']['is_guest'])
@@ -540,7 +517,7 @@ function articleShow() {{{
     $mystart = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
     // sorting?
     $sort = $context['TPortal']['tpsort'] = (!empty($_GET['tpsort']) && in_array($_GET['tpsort'], array('date', 'id', 'subject'))) ? $_GET['tpsort'] : 'date';
-    $context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpmod;sa=myarticles;tpsort=' . $sort, $mystart, $allmy, 15);
+    $context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=myarticles;tpsort=' . $sort, $mystart, $allmy, 15);
 
     $context['TPortal']['subaction'] = 'myarticles';
     $context['TPortal']['myarticles'] = array();
@@ -610,6 +587,7 @@ function articleSubmitSuccess() {{{
 }}}
 
 function articleSubmit() {{{
+    global $context, $user_info, $smcFunc, $txt;
 
     // article
     require_once(SOURCEDIR. '/TPcommon.php');
@@ -682,7 +660,7 @@ function articleSubmit() {{{
     }
 
     if(isset($_POST['pre_approved'])) {
-        redirectexit('action=tpmod;sa=addsuccess');
+        redirectexit('action=tportal;sa=addsuccess');
     }
 
     if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles')) {
@@ -691,7 +669,7 @@ function articleSubmit() {{{
             $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
             tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
         }
-        redirectexit('action=tpmod;sa=editarticle'.$newitem);
+        redirectexit('action=tportal;sa=editarticle'.$newitem);
     }
     elseif(allowedTo('tp_articles')) {
         // did we get a picture as well?
@@ -702,7 +680,7 @@ function articleSubmit() {{{
         redirectexit('action=tpadmin;sa=editarticle'.$newitem);
     }
     else {
-        redirectexit('action=tpmod;sa=submitsuccess');
+        redirectexit('action=tportal;sa=submitsuccess');
     }
 
 }}}
@@ -737,7 +715,9 @@ function articlePublish() {{{
 }}}
 
 function articleSave() {{{
-    global $context;
+
+    global $context, $smcFunc;
+
     // save an article
     if(isset($_REQUEST['send'])) {
         foreach ($_POST as $what => $value) {
@@ -831,7 +811,7 @@ function articleSave() {{{
             $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
             tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
         }
-        redirectexit('action=tpmod;sa=editarticle'.$val);
+        redirectexit('action=tportal;sa=editarticle'.$val);
     }
     elseif(allowedTo('tp_articles')) {
         // did we get a picture as well?
@@ -848,6 +828,7 @@ function articleSave() {{{
 }}}
 
 function articleUploadImage() {{{
+    $context;
 
     require_once(SOURCEDIR.'/TPcommon.php');
     $name = TPuploadpicture( 'image', $context['user']['id'].'uid' );

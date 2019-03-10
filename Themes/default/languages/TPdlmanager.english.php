@@ -18,7 +18,7 @@
 //  SVN Rev67
 global $scripturl;
 
-$txt['tp-authorID'] = 'Author';
+$txt['tp-author_id'] = 'Author';
 $txt['tp-created'] = 'Created';
 $txt['tp-dladmin'] = 'Administration';
 $txt['tp-dldownloads'] = 'Downloads';
@@ -164,7 +164,7 @@ $txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories?
 $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dlwysiwyg'] = 'Show text-editor?';
 
-$txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tpmod;dl=adminsettings">settings screen</a>?';
+$txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tportal;dl=adminsettings">settings screen</a>?';
 
 $txt['tp-dlnonint'] = 'Sorry, you attempted to specify a non-integer value!';
 $txt['tp-dlfilenotdel'] = 'Unable to delete the actual file, but the item was deleted.';

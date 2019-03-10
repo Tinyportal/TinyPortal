@@ -373,7 +373,7 @@ function TPortal_userbox()
 			<li><hr><a href="', $scripturl, '?action=unread">' .$bullet.$txt['tp-unread'].'</a></li>
 			<li><a href="', $scripturl, '?action=unreadreplies">'.$bullet.$txt['tp-replies'].'</a></li>
 			<li><a href="', $scripturl, '?action=profile;u='.$context['user']['id'].';area=showposts">'.$bullet.$txt['tp-showownposts'].'</a></li>
-			<li><a href="', $scripturl, '?action=tpmod;sa=showcomments">'.$bullet.$txt['tp-showcomments'].'</a><hr></li>
+			<li><a href="', $scripturl, '?action=tportal;sa=showcomments">'.$bullet.$txt['tp-showcomments'].'</a><hr></li>
 			';
 
 		// Is the forum in maintenance mode?
@@ -405,12 +405,12 @@ function TPortal_userbox()
 
 		if(allowedTo('tp_editownarticle'))
 					echo '
-		<li><a href="', $scripturl, '?action=tpmod;sa=myarticles">' . $bullet3.$txt['tp-myarticles']. '</a></li>';
+		<li><a href="', $scripturl, '?action=tportal;sa=myarticles">' . $bullet3.$txt['tp-myarticles']. '</a></li>';
 
 		// upload a file?
         if(allowedTo('tp_dlupload') || allowedTo('tp_dlmanager'))
              echo '
-			<li><a href="', $scripturl, '?action=tpmod;dl=upload">' . $bullet3.$txt['permissionname_tp_dlupload']. '</a></li>';
+			<li><a href="', $scripturl, '?action=tportal;dl=upload">' . $bullet3.$txt['permissionname_tp_dlupload']. '</a></li>';
 
 		// tpadmin checks
 		if (allowedTo('tp_settings'))
@@ -431,11 +431,11 @@ function TPortal_userbox()
 		if (allowedTo('tp_dlmanager'))
 		{
 					echo '
-			<li><a href="' . $scripturl . '?action=tpmod;dl=admin">' . $bullet5.$txt['permissionname_tp_dlmanager'] . '</a></li>';
+			<li><a href="' . $scripturl . '?action=tportal;dl=admin">' . $bullet5.$txt['permissionname_tp_dlmanager'] . '</a></li>';
 					// any submissions?
 					if($context['TPortal']['submitcheck']['uploads']>0)
 						echo '
-			<li><a href="' . $scripturl . '?action=tpmod;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
+			<li><a href="' . $scripturl . '?action=tportal;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
 		}
 
 		// add adminhooks
@@ -783,7 +783,7 @@ function TPortal_sitemap()
 	<div class="tborder">
 		<ul class="tpsitemap">';
 	if($context['TPortal']['show_download'] == '1')
-		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tpmod;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
+		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tportal;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
 
 	if(!empty($context['TPortal']['sitemap']) && !empty($context['TPortal']['menu']))
 	{
@@ -886,7 +886,7 @@ function template_TPsearch_above()
 		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tpsearch;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
+				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
 	}
 	else {
         echo '
@@ -897,8 +897,8 @@ function template_TPsearch_above()
 		<div class="windowbg2 noup">
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tpsearch;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
-				<a href="' . $scripturl. '?action=tpmod;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
+				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
+				<a href="' . $scripturl. '?action=tportal;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
     }
 
 	// any others?
@@ -1066,7 +1066,7 @@ function TPblock($block, $theme, $side, $double=false)
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
-				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tportal;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
 				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 2px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			}
@@ -1076,7 +1076,7 @@ function TPblock($block, $theme, $side, $double=false)
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
-				echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 8px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tportal;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 8px 4px 0 0;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
 				echo '<a href="',$scripturl,'?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin: 8px 4px 0 0;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			}
@@ -1142,7 +1142,7 @@ function TPblock($block, $theme, $side, $double=false)
 
 		// can you edit the block?
 		if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
-			echo '<a href="',$scripturl,'?action=tpmod;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin-right: 4px;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
+			echo '<a href="',$scripturl,'?action=tportal;sa=editblock'.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin-right: 4px;" border="0" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 		elseif($block['can_manage'] && !$context['TPortal']['blocks_edithide'])
 			echo '<a href="',$scripturl,'?action=tpadmin;blockedit'.substr($side,0,1).'='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img border="0" style="margin-right: 4px;" align="right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 
@@ -1712,7 +1712,7 @@ function article_options($render = true)
 		// their own article?
 		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && empty($context['TPortal']['hide_editarticle_link']) && empty($context['TPortal']['article']['locked'])) {
 			$data .= '
-					<span class="article_rating"><a href="' . $scripturl . '?action=tpmod;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
+					<span class="article_rating"><a href="' . $scripturl . '?action=tportal;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
 
 	}
@@ -1893,7 +1893,7 @@ function article_comments($render = true)
 					<a id="comment'.$comment['id'].'"></a>';
 				// can we edit the comment or are the owner of it?
 				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest']) {
-					$data .= '<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment;comment=' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
+					$data .= '<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tportal;sa=killcomment;comment=' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
                 }
 				// not a guest
 				if ($comment['poster_id'] > 0) {
@@ -1925,7 +1925,7 @@ function article_comments($render = true)
 	if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) {
 		$data .= '
 			<div class="tp_pad">
-				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tpmod;sa=comment" method="post" style="margin: 0; padding: 0;">
+				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tportal;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
 ';
@@ -2009,7 +2009,7 @@ function render_rating($total, $votes, $id, $can_rate = false, $render = true)
 	if($context['TPortal']['single_article']) {
 		if($context['user']['is_logged'] && $can_rate) {
 				$data .= '
-			<form action="' . $scripturl . '?action=tpmod;sa=rate_article" style="margin: 0; padding: 0; display: inline;" method="post">
+			<form action="' . $scripturl . '?action=tportal;sa=rate_article" style="margin: 0; padding: 0; display: inline;" method="post">
 				<select size="1" name="tp_article_rating">';
 
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--) {

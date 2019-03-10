@@ -23,7 +23,7 @@ What you need to install TinyPortal
 SMF version must be SMF2.x.
 2. Zip files are provided for install both on the 
 [Simple Machines Site](https://custom.simplemachines.org/mods/index.php?mod=97) and the 
-[TinyPortal Site](https://www.tinyportal.net/index.php?action=tpmod;dl=cat61).
+[TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;dl=cat61).
 
 
 License Information:
