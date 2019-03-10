@@ -2561,7 +2561,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 			$mycats[] = $ca['id'];
 	}
 
-	if($sort == 'authorID')
+	if($sort == 'author_id')
 		$sort = 'author_id';
 
 	// empty?
@@ -2579,9 +2579,9 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 
 		if($sort == 'weekdownloads')
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name, dlm.category,
-					dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.icon,
-					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
+				SELECT dlm.id, dlm.description, dlm.author_id as author_id, dlm.name, dlm.category,
+					dlm.file, dlm.downloads, dlm.views, dlm.author_id as author_id, dlm.icon,
+					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN {db_prefix}members AS mem
 				    ON dlm.author_id = mem.id_member
@@ -2594,9 +2594,9 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 			);
 		else
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.description, dlm.author_id as authorID, dlm.name,
+				SELECT dlm.id, dlm.description, dlm.author_id as author_id, dlm.name,
 					dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id, dlm.icon,
-					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as realName
+					dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname, mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN {db_prefix}members AS mem
 				    ON dlm.author_id = mem.id_member
@@ -2638,8 +2638,8 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
-					'authorID' => $row['author_id'],
+					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+					'author_id' => $row['author_id'],
 					'icon' => $row['icon'],
 					'date' => timeformat($row['created']),
 					'screenshot' => $ico ,

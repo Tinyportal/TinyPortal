@@ -18,7 +18,7 @@
 //  SVN Rev67
 global $scripturl;
 
-$txt['tp-authorID'] = 'Author';
+$txt['tp-author_id'] = 'Author';
 $txt['tp-created'] = 'Created';
 $txt['tp-dladmin'] = 'Administration';
 $txt['tp-dldownloads'] = 'Downloads';

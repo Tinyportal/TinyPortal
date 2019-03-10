@@ -3542,6 +3542,9 @@ function TPortalDLUser($item)
 		if(loadLanguage('TPortalAdmin') == false)
 			loadLanguage('TPortalAdmin', 'english');
 
+        if($context['TPortal']['dl_wysiwyg'] == 'html') {
+            TPwysiwyg_setup();
+        }
 	}
 	else
 		redirectexit('action=tpmod;dl');
