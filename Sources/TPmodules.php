@@ -30,73 +30,21 @@ function TPmodules()
 	if(loadLanguage('TPortalAdmin') == false)
 		loadLanguage('TPortalAdmin', 'english');
 
-    require_once($sourcedir.'/TPortalArticle.php');
-	$subAction = TPUtil::filter('sa', 'get', 'string');
-    switch($subAction) {
-        case 'showcomments':
-            return articleShowComments();
-            break;
-        case 'comment':
-            return articleInsertComment();
-            break;
-        case 'killcomment':
-            return articleDeleteComment();
-            break;
-        case 'editcomment':
-            return articleEditComment();
-            break;
-        case 'rate_article':
-            return articleRate();
-            break;
-        case 'editarticle':
-            return articleEdit();
-            break;
-        case 'tpattach':
-            return articleAttachment();
-            break;
-        case 'myarticles':
-            return articleShow();
-            break;
-	    case 'submitarticle':
-        case 'addarticle_html':
-        case 'addarticle_bbc': 
-            return articleNew();
-            break;
-        case 'publish':
-            return articlePublish();
-            break;
-        case 'savearticle':
-            return articleSave();
-            break;
-        case 'uploadimage':
-            return articleUploadImage();
-            break;
-        case 'submitsuccess':
-            return articleSubmitSuccess();
-            break;
-        case 'help':
-            $context['TPortal']['helpsection'] = 'introduction';
-            $option = TPUtil::filter('p', 'get', 'string');
-            if($option) {
-                $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
-                if(in_array($option, $helpOptions)) {
-                    $context['TPortal']['helpsection'] = $option;
-                }
-            }
-            $context['current_action'] = 'help';
-            require_once( $sourcedir .'/TPhelp.php');
-            TPhelp_init();
-            return;
-            break;
-        case 'credits':
-        	require_once( $sourcedir .'/TPhelp.php');
-		    TPCredits();
-            return;
-            break;
-        default:
-		    //redirectexit('action=forum');
-            break;
+	$subAction  = TPUtil::filter('sa', 'get', 'string');
+    $subActions = array (
+        'credits'           => array('TPhelp.php', 'TPCredits', array()),
+        'help'              => array('TPhelp.php', 'TPhelp_init', array()),
+    );
+    
+    call_integration_hook('integrate_tp_subactions', array(&$subActions));
+
+    if (!empty($subActions[$subAction][0])) {
+        require_once(SOURCEDIR . '/' . $subActions[$subAction][0]);
     }
+
+	$context['TPortal']['subaction'] = $subAction;
+
+    call_user_func_array($subActions[$subAction][1], $subActions[$subAction][2]);
 
 	// get subaction
 	$tpsub = '';

@@ -89,6 +89,31 @@ function TPortalArticle() {{{
     }
 }}}
 
+function TPortalArticleActions(&$subActions) {{{
+
+    $subActions = array_merge(
+        array (
+            'showcomments'      => array('TPortalArticle.php', 'articleShowComments', array()),
+            'comment'           => array('TPortalArticle.php', 'articleInsertComment', array()),
+            'killcomment'       => array('TPortalArticle.php', 'articleDeleteComment', array()),
+            'editcomment'       => array('TPortalArticle.php', 'articleEditComment', array()),
+            'rate_article'      => array('TPortalArticle.php', 'articleRate', array()),
+            'editarticle'       => array('TPortalArticle.php', 'articleEdit', array()),
+            'tpattach'          => array('TPortalArticle.php', 'articleAttachment', array()),
+            'myarticles'        => array('TPortalArticle.php', 'articleShow', array()),
+            'submitarticle'     => array('TPortalArticle.php', 'articleNew', array()),
+            'addarticle_html'   => array('TPortalArticle.php', 'articleNew', array()),
+            'addarticle_bbc'    => array('TPortalArticle.php', 'articleNew', array()),
+            'publish'           => array('TPortalArticle.php', 'articlePublish', array()),
+            'savearticle'       => array('TPortalArticle.php', 'articleSave', array()),
+            'uploadimage'       => array('TPortalArticle.php', 'articleUploadImage', array()),
+            'submitsuccess'     => array('TPortalArticle.php', 'articleSubmitSuccess', array()),
+        ),
+        $subActions
+    );
+
+}}}
+
 function articleInsertComment() {{{
 
     global $context;

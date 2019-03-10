@@ -39,6 +39,7 @@ class TPortal_Integrate
             'profile_areas'                   => 'TPortal_Integrate::hookProfileArea',
             'whos_online'                     => 'TPortal_Integrate::hookWhosOnline',
             'pre_log_stats'                   => 'TPortal_Integrate::hookPreLogStats',
+            'tp_subactions'                   => '$sourcedir/TPortalArticle.php|TPortalArticleActions',
         );
 
         if(TP_SMF21) {

@@ -23,6 +23,16 @@ function TPhelp_init()
 {
 	global $context, $scripturl, $txt;
 
+    $context['TPortal']['helpsection'] = 'introduction';
+    $option = TPUtil::filter('p', 'get', 'string');
+    if($option) {
+        $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
+        if(in_array($option, $helpOptions)) {
+            $context['TPortal']['helpsection'] = $option;
+        }
+    }
+    $context['current_action'] = 'help';
+
 	$context['TPortal']['helptabs'] = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
 
 	tp_hidebars();
