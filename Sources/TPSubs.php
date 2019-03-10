@@ -25,7 +25,7 @@ function TPcheckAdminAreas()
 	TPcollectPermissions();
 	foreach($context['TPortal']['adminlist'] as $adm => $val)
 	{
-		if(allowedTo($adm))
+		if(allowedTo($adm) || !empty($context['TPortal']['show_download']))
 			return true;
 	}
 	return false;
