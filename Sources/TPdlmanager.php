@@ -3527,6 +3527,14 @@ function TPortalDLUser($item)
 		if(loadLanguage('TPortalAdmin') == false)
 			loadLanguage('TPortalAdmin', 'english');
 
+        if($context['TPortal']['dl_wysiwyg'] == 'bbc') {
+            $context['TPortal']['editor_id'] = 'tp_dluploadtext';
+            TP_prebbcbox($context['TPortal']['editor_id']);
+        }
+        elseif($context['TPortal']['dl_wysiwyg'] == 'html' ) {
+            TPwysiwyg_setup();
+        }
+
 	}
 	else
 		redirectexit('action=tpmod;dl');
