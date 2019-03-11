@@ -3512,6 +3512,7 @@ function TPortalDLUser($item)
 		$author_id = $row['author_id'];
 		$catparent = $row['category'];
 		$itemname = $row['name'];
+        $description = $row['description'];
 
 		$smcFunc['db_free_result']($request);
 		$request = $smcFunc['db_query']('', '
@@ -3543,8 +3544,8 @@ function TPortalDLUser($item)
 			loadLanguage('TPortalAdmin', 'english');
 
         if($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-            $context['TPortal']['editor_id'] = 'tp_dluploadtext';
-            TP_prebbcbox($context['TPortal']['editor_id']);
+			$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
+            TP_prebbcbox($context['TPortal']['editor_id'], $description);
         }
         elseif($context['TPortal']['dl_wysiwyg'] == 'html' ) {
             TPwysiwyg_setup();
