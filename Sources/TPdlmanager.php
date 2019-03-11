@@ -3529,7 +3529,7 @@ function TPortalDLUser($item)
 			loadLanguage('TPortalAdmin', 'english');
 
         if($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-            $context['TPortal']['editor_id'] = 'tp_dluploadtext';
+			$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
             TP_prebbcbox($context['TPortal']['editor_id'], $description);
         }
         elseif($context['TPortal']['dl_wysiwyg'] == 'html' ) {
