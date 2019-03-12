@@ -496,7 +496,7 @@ function template_main()
 		elseif($context['TPortal']['dl_wysiwyg']=='bbc')
 			TP_bbcbox($context['TPortal']['editor_id']);
 		else
-			echo '<textarea name="tp_dluploadtext" rows=5 cols=50 wrap="on"></textarea>';
+			echo '<textarea id="tp_article_body" name="tp_dluploadtext" wrap="auto"></textarea>';
 
 		echo '			</div>
 						<hr><br>
@@ -632,9 +632,7 @@ function template_main()
 				echo '		</select>
 						</dd>
 					</dl>
-				<div style="padding: 5px;">
-					<textarea name="create_topic_body" style="width: 100%; height: 200px;" rows=5 cols=50 wrap="on"></textarea>
-				</div>
+					<textarea name="create_topic_body" id="tp_article_intro" wrap="auto"></textarea>
 			</dl>';
 			}
 		}
@@ -844,7 +842,7 @@ function template_main()
 				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
 					TP_bbcbox($context['TPortal']['editor_id']);
 				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body">'.$cat['description'].'</textarea>';
+					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body" wrap="auto">'.$cat['description'].'</textarea>';
 
 			echo '
 				</div>
