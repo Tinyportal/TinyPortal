@@ -251,7 +251,7 @@ function template_main()
 						<img style="float: left; margin: 0 10px 5px 0;" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
 							<div class="details">' ,	$dlcat['files']>0 ? $dlcat['files'].' '.$txt['tp-dlfiles'] : '0 '.$txt['tp-dlfiles'] , '</div>
 							<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
-							<div class="post middletext">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>
+							<div class="post">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>';
@@ -313,7 +313,7 @@ function template_main()
 						<div class="dlpost">' . $dlitem['ingress'] . '</div>';
 
 					echo '
-						<div class="post">' , $dlitem['description'] , '</div>
+						<div class="dlpost">' , $dlitem['description'] , '</div>
 						<p class="clearthefloat"></p>';
 
 					if(isset($dlitem['filesize']))
@@ -407,7 +407,7 @@ function template_main()
 			}
 			echo '
 					<hr />
-					<div class="post">
+					<div class="dlpost">
 						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
 						' . $dlitem['description'] . '
 					</div>';
@@ -418,7 +418,7 @@ function template_main()
 				echo '
 					<div class="morefiles">
 						<h4>'.$txt['tp-dlmorefiles'].'</h4>
-						<div class="post">
+						<div class="dlpost">
 							<ul>';
 				foreach($dlitem['subitem'] as $sub)
 				{
@@ -1014,7 +1014,7 @@ function template_main()
 					<h4 class="tpresults"><a href="' . $scripturl . '?action=tpmod;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
 					<hr>
 					<div class="tpresults" style="padding-top: 4px;">
-						<div class="middletext">' , $res['body'] . '</div>
+						<div>' , $res['body'] . '</div>
 						<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
 					</div>
 				</div>';
