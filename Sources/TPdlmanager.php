@@ -504,9 +504,9 @@ function TPortalDLManager()
 		if(sizeof($mycats) > 0)
 		{
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
-					dlm.author_id as author_id, dlm.created, dlm.screenshot, dlm.filesize,
-					dlcat.name AS catname, mem.real_name as real_name, LEFT(dlm.description,100) as 	description
+				SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views,
+					dlm.author_id AS author_id, dlm.created, dlm.screenshot, dlm.filesize,
+					dlcat.name AS catname, mem.real_name AS real_name, LEFT(dlm.description,100) AS description
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN  {db_prefix}members AS mem
 				    ON dlm.author_id = mem.id_member
@@ -543,6 +543,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_last_added'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
+						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'file' => $row['file'],
@@ -1036,7 +1037,7 @@ function TPortalDLManager()
 						if(!empty($row['screenshot']))
 							$ico = $boardurl.'/tp-files/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
-							$ico = '';
+							$ico = $row['icon'];
 					}
 					else
 						$ico = $row['icon'];

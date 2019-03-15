@@ -1,4 +1,5 @@
 /**
+/**
  * @package TinyPortal
  * @version 1.6.3
  * @author IchBin - http://www.tinyportal.net
@@ -830,9 +831,8 @@ ul.tp-subcategories li
 	list-style: none;
 	margin: 1px 3px;
 	float: left;
-	width: 31%;
+	width: 32%;
 	padding: 0;
-	font-size: 0.85em;
 }
 ul.tp-subcategories ul li
 {
@@ -1043,9 +1043,14 @@ a.avatar img
 img.dl_icon
 {
 	float: left;
-	margin-right: 8px;
-	margin-bottom: 5px;
-	vertical-align: top;
+	padding: 0 1em .3em 0;
+	max-width: 100px;
+}
+img.dl_caticon
+{
+	float: left;
+	margin: 0.7em 1em .5em 0;
+	max-width: 50px;
 }
 .dl_cats
 {
@@ -1090,7 +1095,7 @@ img.dl_icon
  }
 .tp-subcats
 {
-	padding-left: 5%;
+	padding-left: 60px;
 }
 .dlcategory .details
 {
@@ -1099,7 +1104,7 @@ img.dl_icon
 .dlcategory h4
 {
 	line-height: 1.5em;
-	padding: 0 0 0 35px;
+	padding: 0 0 0 60px;
 	margin: 0.5em 0 0 0;
 	font-size: 1.1em;
 }
@@ -1123,6 +1128,10 @@ img.dl_icon
 {
 	padding: 10px 0 4px 0;
 }
+.dlitemgrid .itemdetails
+{
+	padding: 10px 0 4px 0;
+}
 .dlitems
 {
 	margin-top: 0em;
@@ -1131,10 +1140,17 @@ img.dl_icon
 {
 	padding: 5px 10px;
 }
+select[name="tp_dlitem_rating"] {
+	width: initial;
+}
 #fileitem .screenshot
 {
 	float: right;
 	margin: 0 1em 1em 1em;
+}
+div.screenshot {
+	margin: 4px 4px 4px 1em;
+	float: right;	
 }
 #fileitem
 {
@@ -1735,14 +1751,18 @@ h3.h3dl
 .recentdl
 {
 	overflow: hidden;
-	padding: 1%;
-	width: 45%;
+	padding: 1% 1% 0 1%;
+	width: 47%;
 	display: inline-block;
 }
 .dlpost
 {
-	padding: 5px 0 5px 0;
-	margin-top: 5px;
+	padding: 0 0 .5em 0;
+}
+.dlcatpost
+{
+	padding: 0 0 .5em 60px;
+	margin: 0.5em 0 0 0;
 }
 .dlitemgrid
 {
@@ -1943,12 +1963,12 @@ box-sizing:border-box;
 }
 #tp_article_body
 {
-	width: 95%;
+	width: 98%; 
 	height: 300px;
 }
 #tp_article_intro
 {
-	width: 95%;
+	width: 98%; 
 	height: 140px;
 }
 #tp_customlayout
