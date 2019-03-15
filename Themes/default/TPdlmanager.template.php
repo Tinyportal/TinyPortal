@@ -114,6 +114,8 @@ function template_main()
 
 					if(!empty($last['screenshot']))
 						echo '<div style="margin-right: 15px; background: url('.$last['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+					elseif(!empty($last['icon']) && strpos($last['icon'], 'blank.gif') == false)
+						echo '<div style="margin-right: 15px; background: url('.$last['icon'].') 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
 					else
 						echo '<div style="margin-right: 15px; background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
 
@@ -235,7 +237,7 @@ function template_main()
 							{
 								$content .= '
 							<li>
-								<img style="margin: 0;" alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" border="0" />
+								<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" border="0" />
 									<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
 								if($dlchild['files']>0)
 									$content .= ' (' . $dlchild['files'].')';
@@ -247,17 +249,20 @@ function template_main()
 
 					echo '
 					<div class="dlcategory"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
-						<div style="overflow: visible;">
-						<img style="float: left; margin: 0 10px 5px 0;" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
-							<div class="details">' ,	$dlcat['files']>0 ? $dlcat['files'].' '.$txt['tp-dlfiles'] : '0 '.$txt['tp-dlfiles'] , '</div>
+						<div>
+						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" /></div>
+							<div style="overflow: visible;">
+							<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ''.$dlcat['files'].' '.$txt['tp-dlfiles'],'</div>
 							<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
-							<div class="post">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>
-						</div>
-						<p class="clearthefloat"></p>
-					</div>';
+							<div class="dlcatpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 					if(!empty($content))
 						echo '
 					<div class="dlcategory tp-subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
+						echo '
+						<p class="clearthefloat"></p>
+						</div>
+					</div>';
+
 				}
 		echo '
 			</div>'; 	
@@ -294,9 +299,10 @@ function template_main()
 				foreach($context['TPortal']['dlitem'] as $dlitem)
 				{
 				echo '
-					<div class="dlitemgrid">
-						<h4 class="h4dl" style="padding-bottom: 0; font-size: 1.3em;"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>
-						<div  style="float: left; padding: 1em 1em 1em 0; ">' , $dlitem['icon']!='' ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	</div>';
+					<div class="dlitemgrid">';
+				echo '
+					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
+				echo '<h4 class="h4dl" style="font-size: 1.1em; font-weight: bold;"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>';
 
 					unset($details);
 					$details=array();
@@ -313,7 +319,6 @@ function template_main()
 						<div class="dlpost">' . $dlitem['ingress'] . '</div>';
 
 					echo '
-						<div class="dlpost">' , $dlitem['description'] , '</div>
 						<p class="clearthefloat"></p>';
 
 					if(isset($dlitem['filesize']))
@@ -341,9 +346,7 @@ function template_main()
 			else
 			{
 				echo '
-			<div class="padding-div">'.$txt['tp-nofiles'].'</div>
-			</div>
-			'; 
+			<div class="padding-div">'.$txt['tp-nofiles'].'</div>'; 
 			}
 		}
 	}
@@ -358,7 +361,10 @@ function template_main()
 			echo '
 			<div class="windowbg">
 				<span class="topslice"><span></span></span>
-				<div class="content">
+				<div class="content">';
+			echo '
+				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
+			echo '
 				<h4 class="h4dl">
 				<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
 
@@ -369,20 +375,23 @@ function template_main()
 				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tpmod;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 
 			echo '
-				</h4><hr>
+				</h4>
+				<p class="clearthefloat"></p>
+				<hr>
+					<p class="floatright"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
 					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
-						<li>'  , $txt['tp-dlfilesize'] , ': ', isset($dlitem['filesize']) ? $dlitem['filesize']: '' , '</li>
-						<li>'. $txt['tp-views']. ': ' . $dlitem['views'].' </li>
-						<li>'.$txt['tp-downloads'].': '.$dlitem['downloads'].' </li>
-						<li>' , $txt['tp-created'] . ': ' .  timeformat($dlitem['created']).'</li>
-						<li>' , $txt['tp-itemlastdownload'] , ': ' . timeformat($dlitem['date_last']).'</li>
+						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
+						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>
+						<li>'.$txt['tp-downloads'].': '.$dlitem['downloads'].'</li>
+						<li>'.$txt['tp-created'].': '.timeformat($dlitem['created']).'</li>
+						<li>'.$txt['tp-itemlastdownload'].': '.timeformat($dlitem['date_last']).'</li>
 					</ul>
 					<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $dlitem['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')</div>';
 
 			if($dlitem['can_rate'])
 			{
 				echo '
-					<form class="ratingoption" style="padding-left: 0;" name="tp_dlitem_rating" action="',$scripturl,'?action=tpmod;sa=rate_dlitem" method="post">
+					<form name="tp_dlitem_rating" action="',$scripturl,'?action=tpmod;sa=rate_dlitem" method="post">
 						' , $txt['tp-ratedownload'] , '
 						<select size="1" name="tp_dlitem_rating">';
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--)
@@ -407,10 +416,7 @@ function template_main()
 			}
 			echo '
 					<hr />
-					<div class="dlpost">
-						<p class="floatright" style="padding: 0 0 0.1em 1em;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
-						' . $dlitem['description'] . '
-					</div>';
+					<div class="dlpost">'.$dlitem['description'].'</div>';
 
 			// any extra files attached?
 			if(isset($dlitem['subitem']) && is_array($dlitem['subitem']))
@@ -801,7 +807,7 @@ function template_main()
 		<form accept-charset="', $context['character_set'], '" name="dl_useredit" action="'.$scripturl.'?action=tpmod;dl=admin" enctype="multipart/form-data" onsubmit="syncTextarea();" method="post">
 			<div id="useredit-upfiles" class="tborder">
 				<div></div>
-				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
+				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 				<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>

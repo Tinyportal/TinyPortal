@@ -504,7 +504,7 @@ function TPortalDLManager()
 		if(sizeof($mycats) > 0)
 		{
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
+				SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views,
 					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 					dlcat.name AS catname, mem.real_name as realName, LEFT(dlm.description,100) as 	description
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
@@ -541,6 +541,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_last_added'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
+						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'file' => $row['file'],
@@ -1024,7 +1025,7 @@ function TPortalDLManager()
 						if(!empty($row['screenshot']))
 							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
 						else
-							$ico = '';
+							$ico = $row['icon'];
 					}
 					else
 						$ico = $row['icon'];
@@ -1034,7 +1035,6 @@ function TPortalDLManager()
 						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'description' => '',
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
 						'dlhref' => $scripturl.'?action=tpmod;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
