@@ -1664,7 +1664,10 @@ function doTPfrontpage() {{{
 	$panels = array(4 => 'front');
 
 	if ($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
+        while($row = $smcFunc['db_fetch_assoc']($request)) {
+            // decode the block settings
+            $set = json_decode($row['settings'], true);
+
 			// some tests to minimize sql calls
 			if($row['type'] == 7) {
 				$test_themebox = true;
@@ -1696,11 +1699,11 @@ function doTPfrontpage() {{{
 				'type' => $blocktype[$row['type']],
 				'body' => $row['body'],
 				'visible' => $row['visible'],
-				'var1' => $row['var1'],
-				'var2' => $row['var2'],
-				'var3' => $row['var3'],
-				'var4' => $row['var4'],
-				'var5' => $row['var5'],
+				'var1' => $set['var1'],
+				'var2' => $set['var2'],
+				'var3' => $set['var3'],
+				'var4' => $set['var4'],
+				'var5' => $set['var5'],
 				'id' => $row['id'],
 				'lang' => $row['lang'],
 				'access2' => $row['access2'],
