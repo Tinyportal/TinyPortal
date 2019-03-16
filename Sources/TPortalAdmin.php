@@ -3009,8 +3009,6 @@ function do_postchecks()
 						'pos' => 'int',
 						'off' => 'int',
 						'visible' => 'string',
-						'var1' => 'int',
-						'var2' => 'int',
 						'lang' => 'string',
 						'access2' => 'string',
 						'editgroups' => 'string',

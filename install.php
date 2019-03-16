@@ -1208,14 +1208,14 @@ function addDefaults()
 	}
 
     $columns = $smcFunc['db_list_columns']('{db_prefix}tp_blocks');
-    if(array_key_exists('var1', $columns)) {
+    if(in_array('var1', $columns)) {
         // Check for blocks in table, if none insert default blocks.
         $request = $smcFunc['db_query']('', '
-            SELECT id, var1, var2, var3, var4, var5 FROM {db_prefix}tp_blocks'
+            SELECT id, var1, var2, var3, var4, var5 FROM {db_prefix}tp_blocks WHERE 1=1'
         );
         if($smcFunc['db_num_rows']($request) != 0) {
             while($row = $smcFunc['db_fetch_assoc']($request)) {
-                $id = array_shift($row);
+                $id     = array_shift($row);
                 $data   = json_encode($row);
                 $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks 
                         SET settings = {string:data} 
