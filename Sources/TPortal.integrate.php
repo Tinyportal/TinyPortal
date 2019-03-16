@@ -42,6 +42,7 @@ class TPortal_Integrate
             'tp_subactions'                   => array ( 
                     '$sourcedir/TPArticle.php|TPArticleActions',
                     '$sourcedir/TPSearch.php|TPSearchActions',
+                    '$sourcedir/TPBlock.php|TPBlockActions',
                 ),
         );
 
