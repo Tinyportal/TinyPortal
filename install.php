@@ -1222,7 +1222,7 @@ function addDefaults()
 		$vars = array(
 			'var1' =>array(
 				'value1' => 'Portal features',
-				'value2' => '',
+				'value2' => '0',
 				'value3' => '-1,0',
 				'type' => 'category',
 				'value4' => '',
@@ -1235,7 +1235,7 @@ function addDefaults()
 			),
 			'var2' =>array(
 				'value1' => 'General Articles',
-				'value2' => '',
+				'value2' => '0',
 				'value3' => '-1,0',
 				'type' => 'category',
 				'value4' => '',
