@@ -105,8 +105,7 @@ function template_main()
 			<div id="dlrecent">
 			<div class="title_bar">
 			<h3 class="titlebg">' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</h3>
-			</div>
-			<div class="grid_wrapper">';
+			</div>';
 
 			$count=1;
 			if(!empty($context['TPortal']['dl_last_added']))
@@ -114,7 +113,7 @@ function template_main()
 				foreach($context['TPortal']['dl_last_added'] as $last)
 				{
 					echo '
-					<div class="recentdl grid_box">';
+					<div class="recentdl">';
 
 					if(!empty($last['screenshot']))
 						echo '<div style="margin-right: 15px; background: url('.$last['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
@@ -133,7 +132,6 @@ function template_main()
 				}
 			}
 			echo '
-			</div>
 			</div>';
 		}
 		if(($context['TPortal']['dl_showstats']==1) && (!empty($context['TPortal']['dl_most_downloaded'])))
@@ -150,7 +148,7 @@ function template_main()
 				foreach($context['TPortal']['dl_week_downloaded'] as $wost)
 				{
 					echo '
-					<div class="recentdl grid_box">';
+					<div class="recentdl">';
 					
 					if(!empty($wost['screenshot']))
 						echo '<div style="margin-right: 15px; background: url('.$wost['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
@@ -159,7 +157,7 @@ function template_main()
 					else
 						echo '<div style="margin-right: 15px; background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
 					echo '
-						<div>
+						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].' '.$wost['date'].'</div>
 							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
@@ -182,7 +180,7 @@ function template_main()
 				foreach($context['TPortal']['dl_most_downloaded'] as $wost)
 				{
 					echo '
-					<div class="recentdl grid_box">';
+					<div class="recentdl">';
 					
 					if(!empty($wost['screenshot']))
 						echo '<div style="margin-right: 15px; background: url('.$wost['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
@@ -191,7 +189,7 @@ function template_main()
 					else
 						echo '<div style="margin-right: 15px; background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
 					echo '
-						<div>
+						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].' '.$wost['date'].'</div>
 							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
