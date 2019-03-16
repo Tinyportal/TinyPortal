@@ -560,15 +560,15 @@ function TPortalDLManager()
 				$smcFunc['db_free_result']($request);
 			}
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
-					dlm.author_id as authorID, dlm.created, dlm.filesize, dlcat.name AS catname,
+				SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views,
+					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize, dlcat.name AS catname,
 					mem.real_name as realName
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}members AS mem)
 				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_string:cat})
 				AND dlm.author_id = mem.id_member
-				ORDER BY dlm.downloads DESC LIMIT 10',
+				ORDER BY dlm.downloads DESC LIMIT 6',
 				array('type' => 'dlitem', 'cat' => $mycats)
 			);
 
@@ -584,9 +584,20 @@ function TPortalDLManager()
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
 						$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
 
+					if($context['TPortal']['dl_usescreenshot'] == 1)
+					{
+						if(!empty($row['screenshot']))
+							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+						else
+							$ico = '';
+					}
+					else
+						$ico = '';
+						
 					$context['TPortal']['dl_most_downloaded'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
+						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
@@ -595,6 +606,7 @@ function TPortalDLManager()
 						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
 						'authorID' => $row['authorID'],
 						'date' => timeformat($row['created']),
+						'screenshot' => $ico,
 						'catname' => $row['catname'],
 						'cathref' => $scripturl.'?action=tpmod;dl=cat'.$row['category'],
 						'filesize' => $fs,
@@ -607,7 +619,7 @@ function TPortalDLManager()
 			$week = (int) date("W",$now);
 			$year = (int) date("Y",$now);
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views,
+				SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, data.downloads, dlm.views,
 					dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 					dlcat.name AS catname, mem.real_name as realName
 				FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
@@ -618,7 +630,7 @@ function TPortalDLManager()
 				AND data.year = {int:yr}
 				AND data.week = {int:week}
 				AND dlm.author_id = mem.id_member
-				ORDER BY data.downloads DESC LIMIT 10',
+				ORDER BY data.downloads DESC LIMIT 6',
 				array('type' => 'dlitem', 'cat' => $mycats, 'yr' => $year, 'week' => $week)
 			);
 
@@ -647,6 +659,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_week_downloaded'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
+						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
@@ -824,7 +837,7 @@ function TPortalDLManager()
 		$week = (int) date("W",$now);
 		$year = (int) date("Y",$now);
 		$request = $smcFunc['db_query']('', '
-			SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
+			SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 			dlcat.name AS catname, mem.real_name as realName
 			FROM ({db_prefix}tp_dlmanager AS dlm, {db_prefix}tp_dldata AS data, {db_prefix}members AS mem)
 			LEFT JOIN {db_prefix}tp_dlmanager AS dlcat ON dlcat.id=dlm.category
@@ -853,6 +866,7 @@ function TPortalDLManager()
 				$context['TPortal']['dl_week_downloaded'][] = array(
 					'id' => $row['id'],
 					'name' => $row['name'],
+					'icon' => $row['icon'],
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'href' => $scripturl.'?action=tpmod;dl=item'.$row['id'],
