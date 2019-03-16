@@ -369,6 +369,10 @@ foreach ($tables as $table => $col) {
                 }
             }
         }
+        else if ($table == 'tp_blocks') {
+			$column = array('name' => 'settings', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : ''));
+            $smcFunc['db_add_column']('{db_prefix}' . $table, $column);
+        }
         else if ($table == 'tp_dlmanager') {
             updateDownLoads();
         }
@@ -1207,8 +1211,8 @@ function addDefaults()
     if(array_key_exists('var1', $columns)) {
         // Check for blocks in table, if none insert default blocks.
         $request = $smcFunc['db_query']('', '
-                SELECT id, var1, var2, var3, var4, var5 FROM {db_prefix}tp_blocks'
-                );
+            SELECT id, var1, var2, var3, var4, var5 FROM {db_prefix}tp_blocks'
+        );
         if($smcFunc['db_num_rows']($request) != 0) {
             while($row = $smcFunc['db_fetch_assoc']($request)) {
                 $id = array_shift($row);
