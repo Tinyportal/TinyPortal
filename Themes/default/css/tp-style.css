@@ -39,8 +39,6 @@
 {
 	padding-left: 3px;
 }
-/* http://www.positioniseverything.net/easyclearing.html */
-
 .clearfix:after
 {
 	clear: both;
@@ -49,7 +47,6 @@
 	visibility: hidden;
 	height: 0;
 }
-
 .clearfix
 {
 	display: inline-block;
@@ -1017,24 +1014,6 @@ a.avatar img
 	overflow: hidden;
     border-bottom: 1px solid #ccc;
 }
-.dl_number
-{
-	float: left;
-	font-size: 1.8em;
-	color: #965;
-	margin: 0 8px 0 0;
-}
-.dl_number2
-{
-	float: left;
-	font-size: 1.4em;
-	color: #888;
-	margin: 0 8px 0 0;
-}
-.dl_number_right
-{
-	margin-left: 2em;
-}
 .dl_cats h4
 {
 	margin: 0;
@@ -1753,6 +1732,7 @@ h3.h3dl
 	overflow: hidden;
 	padding: 1% 1% 0 1%;
 	width: 47%;
+	min-width: 300px;
 	display: inline-block;
 }
 .dlpost

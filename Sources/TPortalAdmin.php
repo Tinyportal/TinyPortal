@@ -2967,11 +2967,10 @@ function do_postchecks()
 						'pos' => 'int',
 						'off' => 'int',
 						'visible' => 'string',
-						'var1' => 'int',
-						'var2' => 'int',
 						'lang' => 'string',
 						'access2' => 'string',
 						'editgroups' => 'string',
+                        'settings' => 'string',
 					),
 					array(
 						$cp['type'],
@@ -2983,11 +2982,17 @@ function do_postchecks()
 						0,
 						1,
 						1,
-						$cp['var1'],
-						$cp['var2'],
 						$cp['lang'],
 						$cp['access2'],
-						$cp['editgroups']
+						$cp['editgroups'],
+                        json_encode(array(
+                            'var1' => json_decode($cp['settings'], true)['var1'],
+                            'var2' => json_decode($cp['settings'], true)['var2'],
+                            'var3' => 0,
+                            'var4' => 0,
+                            'var5' => 0
+                            )
+                        ),
 					),
 					array('id')
 				);
@@ -3004,14 +3009,14 @@ function do_postchecks()
 						'pos' => 'int',
 						'off' => 'int',
 						'visible' => 'string',
-						'var1' => 'int',
-						'var2' => 'int',
 						'lang' => 'string',
 						'access2' => 'string',
 						'editgroups' => 'string',
+                        'settings' => 'string',
 					),
 					array(
-						$type, 'theme', $title, $body, '-1,0,1', $panel, 0, 1, 1, 0, 0, '', 'actio=allpages', '',
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, 0, 1, 1, '', 'actio=allpages', '', 
+                        json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')
 				);
@@ -3086,13 +3091,36 @@ function do_postchecks()
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
-					else
+                    elseif(in_array($setting, array( 'var1', 'var2', 'var3', 'var4', 'var5')) ) {
+                        // Check for blocks in table, if none insert default blocks.
+                        $request = $dB->db_query('', '
+                            SELECT settings FROM {db_prefix}tp_blocks
+                            WHERE id = {int:varid} LIMIT 1',
+                            array('varid' => $where)
+                        );
+                            
+                        $data = array();
+                        if($dB->db_num_rows($request) > 0) {
+                            $row    = $dB->db_fetch_assoc($request);
+                            $data   = json_decode($row['settings'], true);
+                            $dB->db_free_result($request);
+                        }
+                        $data[$setting] = $value;
+                        $dB->db_query('', '
+                            UPDATE {db_prefix}tp_blocks 
+                            SET settings = {string:data}
+                            WHERE id = {int:blockid}',
+                            array('data' => json_encode($data), 'blockid' => $where)
+                        );
+                    }
+					else {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks
 							SET '. $setting .' = {raw:val}
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
+                    }
 				}
 				elseif(substr($what, 0, 8) == 'tp_group')
 					$tpgroups[] = substr($what, 8);

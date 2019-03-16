@@ -60,9 +60,7 @@ function TPortalDLManager()
 	if(!$context['TPortal']['show_download'])
 		fatal_error($txt['tp-dlmanageroff'], false);
 
-	$context['TPortal']['upshrinkpanel'] = '';
-
-	// add visual options to thsi section
+	// add visual options to this section
 	$context['TPortal']['dl_visual'] = array();
 	$dl_visual = explode(',',$context['TPortal']['dl_visual_options']);
 	$dv = array('left', 'right', 'center', 'lower', 'top', 'bottom');
@@ -562,7 +560,7 @@ function TPortalDLManager()
 				$smcFunc['db_free_result']($request);
 			}
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views,
+				SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views,
 					dlm.author_id as author_id, dlm.created, dlm.filesize, dlcat.name AS catname,
 					mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager AS dlm
@@ -572,7 +570,7 @@ function TPortalDLManager()
                     ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_string:cat})
-				ORDER BY dlm.downloads DESC LIMIT 10',
+				ORDER BY dlm.downloads DESC LIMIT 6',
 				array('type' => 'dlitem', 'cat' => $mycats)
 			);
 
@@ -588,9 +586,20 @@ function TPortalDLManager()
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
 						$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
 
+					if($context['TPortal']['dl_usescreenshot'] == 1)
+					{
+						if(!empty($row['screenshot']))
+							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+						else
+							$ico = '';
+					}
+					else
+						$ico = '';
+						
 					$context['TPortal']['dl_most_downloaded'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
+						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
@@ -599,6 +608,7 @@ function TPortalDLManager()
 						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
+						'screenshot' => $ico,
 						'catname' => $row['catname'],
 						'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
 						'filesize' => $fs,
@@ -611,7 +621,7 @@ function TPortalDLManager()
 			$week = (int) date("W",$now);
 			$year = (int) date("Y",$now);
 			$request = $smcFunc['db_query']('', '
-				SELECT dlm.id, dlm.name, dlm.category, dlm.file, data.downloads, dlm.views,
+				SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, data.downloads, dlm.views,
 					dlm.author_id as author_id, dlm.created, dlm.screenshot, dlm.filesize,
 					dlcat.name AS catname, mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager AS dlm
@@ -625,7 +635,8 @@ function TPortalDLManager()
 				AND dlm.category IN ({array_string:cat})
 				AND data.year = {int:yr}
 				AND data.week = {int:week}
-				ORDER BY data.downloads DESC LIMIT 10',
+				AND dlm.author_id = mem.id_member
+				ORDER BY data.downloads DESC LIMIT 6',
 				array('type' => 'dlitem', 'cat' => $mycats, 'yr' => $year, 'week' => $week)
 			);
 
@@ -654,6 +665,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_week_downloaded'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
+						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
@@ -833,7 +845,7 @@ function TPortalDLManager()
 		$week = (int) date("W",$now);
 		$year = (int) date("Y",$now);
 		$request = $smcFunc['db_query']('', '
-			SELECT dlm.id, dlm.name, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as author_id, dlm.created, dlm.screenshot, dlm.filesize,
+			SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
 			dlcat.name AS catname, mem.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dlm
             LEFT JOIN {db_prefix}tp_dldata AS data
@@ -865,6 +877,7 @@ function TPortalDLManager()
 				$context['TPortal']['dl_week_downloaded'][] = array(
 					'id' => $row['id'],
 					'name' => $row['name'],
+					'icon' => $row['icon'],
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
