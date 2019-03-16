@@ -60,9 +60,7 @@ function TPortalDLManager()
 	if(!$context['TPortal']['show_download'])
 		fatal_error($txt['tp-dlmanageroff'], false);
 
-	$context['TPortal']['upshrinkpanel'] = '';
-
-	// add visual options to thsi section
+	// add visual options to this section
 	$context['TPortal']['dl_visual'] = array();
 	$dl_visual = explode(',',$context['TPortal']['dl_visual_options']);
 	$dv = array('left', 'right', 'center', 'lower', 'top', 'bottom');

@@ -125,7 +125,7 @@ function template_main()
 					echo '
 						<div class="dl_most_downloaded">
 							<a href="'.$last['href'].'"><b>'.$last['name'].'</b></a>
-							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $last['author'].' '.$last['date'].'</div>
+							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $last['author'].'<br>'.$last['date'].'</div>
 							<div class="smalltext">'.$last['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
 						</div>
 					</div>';
@@ -159,7 +159,7 @@ function template_main()
 					echo '
 						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
-							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].' '.$wost['date'].'</div>
+							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
 							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
 						</div>
 					</div>';
@@ -191,7 +191,7 @@ function template_main()
 					echo '
 						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
-							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].' '.$wost['date'].'</div>
+							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
 							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
 						</div>
 					</div>';
