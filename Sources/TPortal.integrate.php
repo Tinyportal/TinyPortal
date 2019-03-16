@@ -40,7 +40,7 @@ class TPortal_Integrate
             'whos_online'                     => 'TPortal_Integrate::hookWhosOnline',
             'pre_log_stats'                   => 'TPortal_Integrate::hookPreLogStats',
             'tp_subactions'                   => array ( 
-                    '$sourcedir/TPortalArticle.php|TPortalArticleActions',
+                    '$sourcedir/TPArticle.php|TPArticleActions',
                     '$sourcedir/TPSearch.php|TPSearchActions',
                 ),
         );

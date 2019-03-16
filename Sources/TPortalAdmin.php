@@ -3196,7 +3196,7 @@ function do_postchecks()
 		}
 		// Editing an article?
 		elseif(substr($from, 0, 11) == 'editarticle') {
-            require_once(SOURCEDIR . '/TPortalArticle.php');
+            require_once(SOURCEDIR . '/TPArticle.php');
             return articleEdit();
 		}
 	}

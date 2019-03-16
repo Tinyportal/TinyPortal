@@ -198,8 +198,7 @@ $clickme.click( function(e) {
 					</dd>
 				</dl>
 			<hr>
-					<div style="padding:1%;">
-						<div>
+					<div>
 							<div><b>'.$txt['tp-dlintrotext'].':</b></div><br>';
 					if($context['TPortal']['dl_wysiwyg'] == 'html')
 						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
@@ -208,7 +207,6 @@ $clickme.click( function(e) {
 					else
 						echo '<textarea id="tp_article_body" name="tp_dl_introtext" >'.$context['TPortal']['dl_introtext'].'</textarea>';
 					echo '
-						</div>
 					</div>
 			<hr><br>
 				<dl class="settings">
@@ -913,7 +911,7 @@ $clickme.click( function(e) {
 		// output the icons
 		foreach($context['TPortal']['dlicons'] as $dlicon => $value)
 			echo '
-						<option value="'.$value.'">'.substr($value,0,strlen($value)-4).'</option>';
+						<option value="'.$value.'">'.$value.'</option>';
 
 		echo '
 					</select>

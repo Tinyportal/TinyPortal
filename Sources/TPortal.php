@@ -15,8 +15,9 @@
  *
  */
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
 // Load the language file straight away for the check in SMF2.0 and Load.php
 global $txt;
@@ -24,8 +25,7 @@ if(loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
-function TPortal()
-{
+function TPortal() {{{
 	global $context;
 
 	$subAction  = TPUtil::filter('sa', 'get', 'string');
@@ -49,11 +49,11 @@ function TPortal()
         require_once(SOURCEDIR . '/TPmodules.php');
         TPmodules();
     }
-}
+
+}}}
 
 // TinyPortal startpage
-function TPortalMain()
-{
+function TPortalMain() {{{
 	global $context;
 
 	// For wireless, we use the Wireless template...
@@ -64,11 +64,11 @@ function TPortalMain()
 	else {
 		loadTemplate('TPortal');
     }
-}
+
+}}}
 
 // TinyPortal init
-function TPortal_init()
-{
+function TPortal_init() {{{
 	global $context, $txt, $user_info, $settings, $boarddir, $modSettings, $db_type;
 
 	// has init been run before? if so return!
@@ -109,7 +109,7 @@ function TPortal_init()
     }
 
 	fetchTPhooks();
-	doModules();
+    doModules();
 
 	// set up the layers, but not for certain actions
 	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer'])) {
@@ -165,11 +165,9 @@ function TPortal_init()
     require_once(SOURCEDIR.'/TPShout.php');
     TPShoutLoad();
 
-}
+}}}
 
-
-function tpWhichHideBars()
-{
+function tpWhichHideBars() {{{
 	global $maintenance, $context;
 
 	// if we are in maintance mode, just hide panels
@@ -212,10 +210,9 @@ function tpWhichHideBars()
 		tp_hidebars('all');
     }
 
-}
+}}}
 
-function tpLoadCSS()
-{
+function tpLoadCSS() {{{
 	global $context, $settings;
 
 	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
@@ -258,142 +255,149 @@ function tpLoadCSS()
 
             </style>';
     }
-}
+
+}}}
+
+function setupTPsettings() {{{
+    global $maintenance, $context, $txt, $settings, $smcFunc, $modSettings;
+
+    $context['TPortal']['always_loaded'] = array();
+
+    // Try to load it from the cache
+    if (($context['TPortal'] = cache_get_data('tpSettings', 90)) == null) {
+        // get the settings
+        $request =  $smcFunc['db_query']('', '
+                SELECT name, value FROM {db_prefix}tp_settings', array()
+                );
+        if ($smcFunc['db_num_rows']($request) > 0) {
+            while($row = $smcFunc['db_fetch_row']($request)) {
+                $context['TPortal'][$row[0]] = $row[1];
+                // ok, any module that like to load?
+                if(substr($row[0], 0, 11) == 'load_module')
+                    $context['TPortal']['always_loaded'][] = $row[1];
+            }
+            $smcFunc['db_free_result']($request);
+        }
+
+        if (!empty($modSettings['cache_enable'])) {
+            cache_put_data('tpSettings', $context['TPortal'], 90);
+        }
+    }
+
+    // setup the userbox settings
+    $userbox = explode(',', $context['TPortal']['userbox_options']);
+    foreach($userbox as $u => $val) {
+        $context['TPortal']['userbox'][$val] = 1;
+    }
+
+    // setup sizes for DL and articles
+    $context['TPortal']['dl_screenshotsize'] = explode(',', $context['TPortal']['dl_screenshotsizes']);
+    $context['TPortal']['art_imagesize'] = explode(',', $context['TPortal']['art_imagesizes']);
+
+    // another special case: sitemap items
+    $context['TPortal']['sitemap'] = array();
+    foreach($context['TPortal'] as $what => $value) {
+        if(substr($what, 0, 14) == 'sitemap_items_' && !empty($value)) {
+            $context['TPortal']['sitemap_items'] .= ','. $value;
+        }
+    }
+
+    if(isset($context['TPortal']['sitemap_items'])) {
+        $context['TPortal']['sitemap'] = explode(',', $context['TPortal']['sitemap_items']);
+    }
+
+    // yet another special case: category list
+    $context['TPortal']['category_list'] = array();
+    if(isset($context['TPortal']['cat_list'])) {
+        $context['TPortal']['category_list'] = explode(',', $context['TPortal']['cat_list']);
+    }
+
+    // setup path for TP images, fallback on default theme - but not if its set already!
+    if(!isset($settings['tp_images_url'])) {
+        // check if the them has a folder
+        if(file_exists($settings['theme_dir'].'/images/tinyportal/TParticle.png')) {
+            $settings['tp_images_url'] = $settings['images_url'] . '/tinyportal';
+        }
+        else {
+            $settings['tp_images_url'] = $settings['default_images_url'] . '/tinyportal';
+        }
+    }
+
+    // hooks setting up
+    $context['TPortal']['hooks'] = array(
+            'topic_check' => array(),
+            'board_check' => array(),
+            'tp_layer' => 'tp',
+            'tp_block' => 'TPblock',
+            );
 
 
-function setupTPsettings()
-{
-	global $maintenance, $context, $txt, $settings, $smcFunc, $modSettings;
+    // start of things
+    $context['TPortal']['mystart'] = 0;
+    if(isset($_GET['p']) && $_GET['p'] != '' && is_numeric($_GET['p'])) {
+        $context['TPortal']['mystart'] = TPUtil::filter('p', 'get', 'int');
+    }
 
-	$context['TPortal']['always_loaded'] = array();
+    $context['tp_html_headers'] = '';
 
-	// Try to load it from the cache
-	if (($context['TPortal'] = cache_get_data('tpSettings', 90)) == null)
-	{
-		// get the settings
-		$request =  $smcFunc['db_query']('', '
-			SELECT name, value FROM {db_prefix}tp_settings', array()
-		);
-		if ($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_row']($request))
-			{
-				$context['TPortal'][$row[0]] = $row[1];
-				// ok, any module that like to load?
-				if(substr($row[0], 0, 11) == 'load_module')
-					$context['TPortal']['always_loaded'][] = $row[1];
-			}
-			$smcFunc['db_free_result']($request);
-		}
+    // any sorting taking place?
+    if(isset($_GET['tpsort'])) {
+        $context['TPortal']['tpsort'] = $_GET['tpsort'];
+    }
+    else {
+        $context['TPortal']['tpsort'] = '';
+    }
 
-		if (!empty($modSettings['cache_enable']))
-			cache_put_data('tpSettings', $context['TPortal'], 90);
-	}
+    // if not in forum start off empty
+    $context['TPortal']['is_front'] = false;
+    $context['TPortal']['is_frontpage'] = false;
+    if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+        TPstrip_linktree();
+        // a switch to make it clear what is "forum" and not
+        $context['TPortal']['not_forum'] = true;
+    }
+    // are we actually on frontpage then?
+    if(!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action'])) {
+        $context['TPortal']['is_front'] = true;
+        $context['TPortal']['is_frontpage'] = true;
+    }
 
-	// setup the userbox settings
-	$userbox = explode(',', $context['TPortal']['userbox_options']);
-	foreach($userbox as $u => $val)
-		$context['TPortal']['userbox'][$val] = 1;
+    // Set the page title.
+    if($context['TPortal']['is_front'] && !empty($context['TPortal']['frontpage_title'])) {
+        $context['page_title'] = $context['TPortal']['frontpage_title'];
+    }
 
-	// setup sizes for DL and articles
-	$context['TPortal']['dl_screenshotsize'] = explode(',', $context['TPortal']['dl_screenshotsizes']);
-	$context['TPortal']['art_imagesize'] = explode(',', $context['TPortal']['art_imagesizes']);
+    if(isset($_GET['action']) && $_GET['action'] == 'tpadmin') {
+        $context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
+    }
 
-	// another special case: sitemap items
-	$context['TPortal']['sitemap'] = array();
-	foreach($context['TPortal'] as $what => $value)
-	{
-		if(substr($what, 0, 14) == 'sitemap_items_' && !empty($value))
-			$context['TPortal']['sitemap_items'] .= ','. $value;
-	}
-	if(isset($context['TPortal']['sitemap_items']))
-	{
-		$context['TPortal']['sitemap'] = explode(',', $context['TPortal']['sitemap_items']);
-	}
-	// yet another special case: category list
-	$context['TPortal']['category_list'] = array();
-	if(isset($context['TPortal']['cat_list']))
-		$context['TPortal']['category_list'] = explode(',', $context['TPortal']['cat_list']);
+    // if we are in maintance mode, just hide panels
+    if (!empty($maintenance) && !allowedTo('admin_forum')) {
+        tp_hidebars('all');
+    }
 
-	// setup path for TP images, fallback on default theme - but not if its set already!
-	if(!isset($settings['tp_images_url']))
-	{
-		// check if the them has a folder
-		if(file_exists($settings['theme_dir'].'/images/tinyportal/TParticle.png'))
-			$settings['tp_images_url'] = $settings['images_url'] . '/tinyportal';
-		else
-			$settings['tp_images_url'] = $settings['default_images_url'] . '/tinyportal';
-	}
+    // save the action value
+    $context['TPortal']['action'] = !empty($_GET['action']) ? TPUtil::filter('action', 'get', 'string') : '';
 
-	// hooks setting up
-	$context['TPortal']['hooks'] = array(
-		'topic_check' => array(),
-		'board_check' => array(),
-		'tp_layer' => 'tp',
-		'tp_block' => 'TPblock',
-	);
+    // save the frontapge setting for SMF
+    $settings['TPortal_front_type'] = $context['TPortal']['front_type'];
+    if(empty($context['page_title'])) {
+        $context['page_title'] = $context['forum_name'];
+    }
 
+    if(empty($context['TPortal']['standalone'])) {
+        $request = $smcFunc['db_query']('', '
+                SELECT value
+                FROM {db_prefix}tp_settings
+                WHERE name = \'standalone_mode\''
+                );
+        $context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
+        $smcFunc['db_free_result']($request);
+    }
 
-	// start of things
-	$context['TPortal']['mystart'] = 0;
-	if(isset($_GET['p']) && $_GET['p'] != '' && is_numeric($_GET['p']))
-		$context['TPortal']['mystart'] = TPUtil::filter('p', 'get', 'int');
+}}}
 
-	$context['tp_html_headers'] = '';
-
-   // any sorting taking place?
-   if(isset($_GET['tpsort']))
-		$context['TPortal']['tpsort'] = $_GET['tpsort'];
-   else
-		$context['TPortal']['tpsort'] = '';
-
-	// if not in forum start off empty
-	$context['TPortal']['is_front'] = false;
-	$context['TPortal']['is_frontpage'] = false;
-	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
-	{
-		TPstrip_linktree();
-		// a switch to make it clear what is "forum" and not
-		$context['TPortal']['not_forum'] = true;
-	}
-	// are we actually on frontpage then?
-	if(!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action']))
-	{
-		$context['TPortal']['is_front'] = true;
-		$context['TPortal']['is_frontpage'] = true;
-	}
-
-	// Set the page title.
-	if($context['TPortal']['is_front'] && !empty($context['TPortal']['frontpage_title']))
-		$context['page_title'] = $context['TPortal']['frontpage_title'];
-	if(isset($_GET['action']) && $_GET['action'] == 'tpadmin')
-		$context['page_title'] = $context['forum_name'] . ' - ' . $txt['tp-admin'];
-
-	// if we are in maintance mode, just hide panels
-	if (!empty($maintenance) && !allowedTo('admin_forum'))
-		tp_hidebars('all');
-
-	// save the action value
-	$context['TPortal']['action'] = !empty($_GET['action']) ? TPUtil::filter('action', 'get', 'string') : '';
-
-	// save the frontapge setting for SMF
-	$settings['TPortal_front_type'] = $context['TPortal']['front_type'];
-	if(empty($context['page_title']))
-		$context['page_title'] = $context['forum_name'];
-
-	if(empty($context['TPortal']['standalone'])) {
-		$request = $smcFunc['db_query']('', '
-			SELECT value
-			FROM {db_prefix}tp_settings
-			WHERE name = \'standalone_mode\''
-		);
-		$context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
-		$smcFunc['db_free_result']($request);
-	}
-}
-
-function fetchTPhooks()
-{
+function fetchTPhooks() {{{
 	global $context, $smcFunc, $boarddir;
 
 	// are we inside a board?
@@ -446,10 +450,10 @@ function fetchTPhooks()
         }
 	}
 	$smcFunc['db_free_result']($request2);
-}
 
-function doTPpage()
-{
+}}}
+
+function doTPpage() {{{
 
 	global $context, $scripturl, $txt, $modSettings, $boarddir, $smcFunc, $user_info;
 
@@ -774,10 +778,10 @@ function doTPpage()
     }
 
     return;
-}
 
-function doTPcat()
-{
+}}}
+
+function doTPcat() {{{
 	//return if not quite a category
 	if((isset($_GET['area']) && $_GET['area'] == 'manageboards') || isset($_GET['action'])) {
 		return;
@@ -1030,11 +1034,10 @@ function doTPcat()
 		return;
     }
 
-}
+}}}
 
 // do the frontpage
-function doTPfrontpage()
-{
+function doTPfrontpage() {{{
 	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt, $db_type;
 
 	// check we aren't in any other section because 'cat' is used in SMF and TP
@@ -1783,8 +1786,9 @@ function doTPfrontpage()
 			AND art.approved = 1'
 		);
 
-		if (!isset($context['TPortal']['blockarticle_titles']))
+		if (!isset($context['TPortal']['blockarticle_titles'])) {
 			$context['TPortal']['blockarticle_titles'] = array();
+        }
 
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			while($row = $smcFunc['db_fetch_assoc']($request)) {
@@ -1799,38 +1803,35 @@ function doTPfrontpage()
 			$smcFunc['db_free_result']($request);
 		}
     }
+
 	// get menubox items
-	if(isset($test_menubox))
-	{
+	if(isset($test_menubox)) {
 		$context['TPortal']['menu'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_variables
 			WHERE type = {string:type} ORDER BY value5 ASC',
 			array('type' => 'menubox')
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
+
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$icon = '';
-				if($row['value5'] != -1 && $row['value2'] != '-1')
-				{
+				if($row['value5'] != -1 && $row['value2'] != '-1') {
 					$mtype = substr($row['value3'], 0, 4);
 					$idtype = substr($row['value3'], 4);
                     if($mtype != 'cats' && $mtype != 'arti' && $mtype != 'head' && $mtype != 'spac') {
 						$mtype = 'link';
 						$idtype = $row['value3'];
 					}
-					if($mtype == 'cats')
-					{
-						if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
-							$icon=$context['TPortal']['article_categories']['icon'][$idtype];
+					if($mtype == 'cats' && isset($context['TPortal']['article_categories']['icon'][$idtype])) {
+						$icon=$context['TPortal']['article_categories']['icon'][$idtype];
 					}
-					if($mtype == 'head')
-					{
+
+					if($mtype == 'head') {
 						$mtype = 'head';
 						$idtype = $row['value1'];
 					}
+
 					$menupos = $row['value5'];
 
 					$context['TPortal']['menu'][$row['subtype2']][] = array(
@@ -1854,8 +1855,7 @@ function doTPfrontpage()
 	}
 
 	// check the panels
-	foreach($panels as $p => $panel)
-	{
+	foreach($panels as $p => $panel) {
 		// any blocks at all?
 		if($count[$panel] < 1)
 			$context['TPortal'][$panel.'panel'] = 0;
@@ -1864,18 +1864,16 @@ function doTPfrontpage()
 
 	$context['TPortal']['frontblocks'] = $blocks;
 
-	if (defined('WIRELESS') && WIRELESS)
-	{
+	if (defined('WIRELESS') && WIRELESS) {
 		$context['TPortal']['single_article'] = false;
 		loadtemplate('TPwireless');
 		// decide what subtemplate
 		$context['sub_template'] = WIRELESS_PROTOCOL . '_tp_frontpage';
 	}
-}
+}}}
 
 // do the blocks
-function doTPblocks()
-{
+function doTPblocks() {{{
 	global $context, $scripturl, $user_info, $smcFunc, $modSettings, $db_type;
 
 	$now = time();
@@ -2175,15 +2173,60 @@ function doTPblocks()
 	}
 
 	$context['TPortal']['blocks'] = $blocks;
-}
+
+}}}
+
+function doModules() {{{
+    global $context, $boarddir, $smcFunc;
+    // fetch any block render hooks and notifications from tpmodules
+    $context['TPortal']['tpmodules'] = array(
+        'blockrender' => array(),
+        'adminhook' => array(),
+        'frontsection' => array(),
+    );
+    $context['TPortal']['modulepermissions'] = array('tp_settings', 'tp_blocks', 'tp_articles', 'tp_alwaysapproved', 'tp_submithtml', 'tp_submitbbc', 'tp_editownarticle');
+    $request = $smcFunc['db_query']('', '
+        SELECT id, modulename, blockrender, autoload_run, adminhook,
+        frontsection, permissions
+        FROM {db_prefix}tp_modules WHERE active = {int:active}',
+        array('active' => 1)
+    );
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while($row = $smcFunc['db_fetch_assoc']($request)) {
+            if(!empty($row['permissions'])) {
+                $all = explode(',', $row['permissions']);
+                foreach($all as $one) {
+                    $real = explode('|', $one);
+                    $context['TPortal']['modulepermissions'][] = $real[0];
+                    unset($real);
+                }
+            }
+            if(!empty($row['blockrender'])) {
+                $context['TPortal']['tpmodules']['blockrender'][$row['id']] = array(
+                        'id' => $row['id'],
+                        'name' => $row['modulename'],
+                        'function' => $row['blockrender'],
+                        'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
+                );
+            }
+            if(!empty($row['frontsection'])) {
+                $context['TPortal']['tpmodules']['frontsection'][$row['id']] = array(
+                    'id' => $row['id'],
+                    'name' => $row['modulename'],
+                    'function' => $row['frontsection'],
+                    'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
+                );
+            }
+        }
+        $smcFunc['db_free_result']($request);
+    }
+}}}
 
 // TPortal side bar, left or right.
-function TPortal_panel($side)
-{
+function TPortal_panel($side) {{{
 	global $context, $scripturl, $settings;
 
-	if(function_exists('ctheme_tportal_panel'))
-	{
+	if(function_exists('ctheme_tportal_panel')) {
 		ctheme_tportal_panel($side);
 		return;
 	}
@@ -2193,38 +2236,28 @@ function TPortal_panel($side)
 
 	$panelside = $paneltype = ($side == 'front' ? 'frontblocks' : 'blocks');
 
-	// $code = '
-	// <div class="tp_'.$side.'panel" style="overflow: hidden;">';
-/*
-$code outputs an empty div in every panel after the div that contains the panel blocks
-$code has no closing tag </div>
-and gets output by calling return $code; at the end of this function that make the div take the closing tag from TPBlockLayout.template.php.
-Takes the closing tag of tptopbarHeader in the case of Top Panel Blocks, the closing tag of tpleftbarHeader in the case of Left Panel Blocks etc.
-Also I belive the code below is meant to be the closing tag but because is before return $code; then it's closing tptopbarHeader not $code div.
-[code]	// the upshrink routine for blocks
-	echo '</div>[/code]
-*/
-
 	// set the grid type
-	if($flow == 'grid')
-	{
-		$grid_selected=$context['TPortal']['blockgrid_' . $side];
-		if($grid_selected == 'colspan3')
+	if($flow == 'grid') {
+		$grid_selected = $context['TPortal']['blockgrid_' . $side];
+		if($grid_selected == 'colspan3') {
 			$grid_recycle = 4;
-		elseif($grid_selected == 'rowspan1')
+        }
+		elseif($grid_selected == 'rowspan1') {
 			$grid_recycle = 5;
+        }
 
 		$grid_entry = 0;
 		// fetch the grids..
 		TP_blockgrids();
 	}
+
 	// check if we left out the px!!
-	if(is_numeric($context['TPortal']['blockwidth_'.$side]))
+	if(is_numeric($context['TPortal']['blockwidth_'.$side])) {
 		$context['TPortal']['blockwidth_'.$side] .= 'px';
+    }
 
 	// for the cols, calculate numbers
-	if($flow == 'horiz2')
-	{
+	if($flow == 'horiz2') {
 		$flowgrid = array(
 			'1' => array(1, 0),
 			'2' => array(1, 1),
@@ -2245,8 +2278,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 		);
 		$switch = ceil(count($context['TPortal'][$panelside][$side]) / 2);
 	}
-	elseif($flow == 'horiz3')
-	{
+	elseif($flow == 'horiz3') {
 		$flowgrid = array(
 			'1' => array(1, 0, 0),
 			'2' => array(1, 1, 0),
@@ -2266,8 +2298,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 			'16' => array(6, 5, 5),
 		);
 	}
-	elseif($flow == 'horiz4')
-	{
+	elseif($flow == 'horiz4') {
 		$flowgrid = array(
 			'1' => array(1, 0, 0, 0),
 			'2' => array(1, 1, 0, 0),
@@ -2286,41 +2317,45 @@ Also I belive the code below is meant to be the closing tag but because is befor
 			'15' => array(4, 4, 4, 3),
 			'16' => array(4, 4, 4, 4),
 		);
-
 	}
-	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4')))
-	{
-		$pad = $context['TPortal']['padding'];
-		if($flow == 'horiz2')
-			$wh = 50;
-		elseif($flow == 'horiz3')
-			$wh = 33;
-		elseif($flow == 'horiz4')
-			$wh = 25;
 
+	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
+		$pad = $context['TPortal']['padding'];
+        switch($flow) {
+            case 'horiz2':
+			    $wh = 50;
+                break;
+            case 'horiz3':
+			    $wh = 33;
+                break;
+            case 'horiz4':
+			    $wh = 25;
+                break;
+        }
 		echo '<div style="width:100%;"><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;float:left;">';
 	}
 	$flowmain = 0;
 	$flowsub = 0;
 	$bcount = 0;
 	$flowcount = isset($context['TPortal'][$panelside][$side]) ? count($context['TPortal'][$panelside][$side]) : 0;
-	if(!isset($context['TPortal'][$panelside][$side]))
+	if(!isset($context['TPortal'][$panelside][$side])) {
 		$context['TPortal'][$panelside][$side] = array();
-
+    }
 
 	$n = count($context['TPortal'][$paneltype][$side]);
 	$context['TPortal'][$panelside][$side] = (array) $context['TPortal'][$panelside][$side];
-	foreach ($context['TPortal'][$panelside][$side] as $i => &$block)
-	{
-		if(!isset($block['frame']))
+	foreach ($context['TPortal'][$panelside][$side] as $i => &$block) {
+		if(!isset($block['frame'])) {
 			continue;
+        }
 
 		$theme = $block['frame'] == 'theme';
 
 		// check if a language title string exists
 		$newtitle = TPgetlangOption($block['lang'], $context['user']['language']);
-		if(!empty($newtitle))
+		if(!empty($newtitle)) {
 			$block['title'] = $newtitle;
+        }
 
 		$use = true;
 		// special title links and variables for special types
@@ -2332,16 +2367,20 @@ Also I belive the code below is meant to be the closing tag but because is befor
 			case 'onlinebox':
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=who">'.$block['title'].'</a>';
 				$block['title'] = $mp;
-				if($block['var1'] == 0)
+				if($block['var1'] == 0) {
 					$context['TPortal']['useavataronline'] = 0;
-				else
+                }
+				else {
 					$context['TPortal']['useavataronline'] = 1;
+                }
 				break;
 			case 'userbox':
-				if($context['user']['is_logged'])
+				if($context['user']['is_logged']) {
 					$mp = ''.$block['title'].'';
-				else
+                }
+				else {
 					$mp = '<a class="subject"  href="'.$scripturl.'?action=login">'.$block['title'].'</a>';
+                }
 				$block['title'] = $mp;
 				break;
 			case 'statsbox':
@@ -2352,10 +2391,12 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=recent">'.$block['title'].'</a>';
 				$context['TPortal']['recentboxnum'] = $block['body'];
 				$context['TPortal']['useavatar'] = $block['var1'];
-				if($block['var1'] == '')
+				if($block['var1'] == '') {
 					$context['TPortal']['useavatar'] = 1;
-				if(!empty($block['var2']))
+                }
+				if(!empty($block['var2'])) {
 					$context['TPortal']['recentbox_options'] = explode(',', $block['var2']);
+                }
 				break;
 			case 'scriptbox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -2380,8 +2421,9 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				break;
 			case 'newsbox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				if($context['random_news_line'] == '')
+				if($context['random_news_line'] == '') {
 					$use = false;
+                }
 				break;
 			case 'articlebox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -2406,7 +2448,6 @@ Also I belive the code below is meant to be the closing tag but because is befor
 				$context['TPortal']['moduleid'] = $block['var1'];
 				$context['TPortal']['modulevar2'] = $block['var2'];
 				$context['TPortal']['modulebody'] = $block['body'];
-
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -2419,69 +2460,72 @@ Also I belive the code below is meant to be the closing tag but because is befor
 
 
 		// render them horisontally
-		if($flow == 'horiz')
-		{
+		if($flow == 'horiz') {
 			$pad = $context['TPortal']['padding'];
-			if($i == ($flowcount-1))
+			if($i == ($flowcount-1)) {
 				$pad=0;
-
+            }
 			echo '<div class="panelsColumnsHorizontally" style="float: left; width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px; padding-bottom: '.$pad.'px;">';
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 			echo '</div></div>';
 		}
 		// render them horisontally
-		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4')))
-		{
+		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
 			$pad = $context['TPortal']['padding'];
-
 			if($flow == 'horiz2') {
 				$wh = 50;
 			}
-			elseif($flow == 'horiz3')
-			{
+			elseif($flow == 'horiz3') {
 					$wh = 33;
 			}
-			elseif($flow == 'horiz4')
+			elseif($flow == 'horiz4') {
 				$wh = 25;
+            }
 
-			if(isset($flowgrid) && $flowsub == $flowgrid[$flowcount][$flowmain])
-			{
+			if(isset($flowgrid) && $flowsub == $flowgrid[$flowcount][$flowmain]) {
 				$flowsub = 0;
 				$flowmain++;
-				if($flow == 'horiz2' && $flowmain == 1) {$pad = 0;}
-				elseif($flow == 'horiz3' && $flowmain == 2) {$pad = 0;$wh = 34;}
-                elseif($flow == 'horiz4' && $flowmain == 3) {$pad = 0;}
+				if($flow == 'horiz2' && $flowmain == 1) {
+                    $pad = 0;
+                }
+				elseif($flow == 'horiz3' && $flowmain == 2) {
+                    $pad = 0;
+                    $wh = 34;
+                }
+                elseif($flow == 'horiz4' && $flowmain == 3) {
+                    $pad = 0;
+                }
 				echo '</div><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">';
 			}
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 		}
 		// according to a grid
-		elseif($flow == 'grid')
-		{
+		elseif($flow == 'grid') {
 			echo TP_blockgrid($block, $theme, $grid_entry, $side, $grid_entry == ($grid_recycle - 1) ? true : false, $grid_selected);
 			$grid_entry++;
-			if($grid_recycle == $grid_entry)
+			if($grid_recycle == $grid_entry) {
 				$grid_entry = 0;
+            }
 			// what if its the last block, but in the middle of the recycle?
-			if($i == $n - 1)
-			{
-				if($grid_entry > 0)
-				{
-					for($a = $grid_entry; $a < $grid_recycle; $a++)
+			if($i == $n - 1) {
+				if($grid_entry > 0) {
+					for($a = $grid_entry; $a < $grid_recycle; $a++) {
 						echo TP_blockgrid(0, 0, $a, $side, $a == ($grid_recycle-1) ? true : false, $grid_selected,true);
-
+                    }
 				}
 			}
 		}
 		// or just plain vertically
-		else
+		else {
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
+        }
 
 		$bcount++;
 		$flowsub++;
 	}
-	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4')))
+	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
 		echo '</div><p class="clearthefloat"></p></div>';
+    }
 
 	// the upshrink routine for blocks
 	// echo '</div>
@@ -2512,17 +2556,17 @@ Also I belive the code below is meant to be the closing tag but because is befor
 			// ]]></script>';
 
 	// return $code;
-}
+}}}
 
-function tpSetupUpshrinks()
-{
+function tpSetupUpshrinks() {{{
 	global $context, $settings, $smcFunc;
 
 	$context['tp_panels'] = array();
 	if(isset($_COOKIE['tp_panels'])){
 		$shrinks = explode(',', $_COOKIE['tp_panels']);
-		foreach($shrinks as $sh => $val)
+		foreach($shrinks as $sh => $val) {
 			$context['tp_panels'][] = $val;
+        }
 	}
 
 	// the generic panel upshrink code
@@ -2577,25 +2621,23 @@ function tpSetupUpshrinks()
 	$panels = array('Left', 'Right', 'Top', 'Center', 'Lower', 'Bottom');
 	$context['TPortal']['upshrinkpanel'] = '';
 
-	if($context['TPortal']['showcollapse'] == 1)
-	{
-		foreach($panels as $pa => $pan)
-		{
+	if($context['TPortal']['showcollapse'] == 1) {
+		foreach($panels as $pa => $pan) {
 			$side = strtolower($pan);
-			if($context['TPortal'][$side.'panel'] == 1)
-			{
+			if($context['TPortal'][$side.'panel'] == 1) {
 				// add to the panel
-				if($pan == 'Left' || $pan == 'Right')
+				if($pan == 'Left' || $pan == 'Right') {
 					$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', 'tp' . strtolower($pan) . 'barContainer', strtolower($pan).'-tp-upshrink_description');
-				else
+                }
+				else {
 					$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', '', strtolower($pan).'-tp-upshrink_description');
-
+                }
 			}
 		}
 	}
+
 	// get user values
-	if($context['user']['is_logged'])
-	{
+	if($context['user']['is_logged']) {
 		// set some values based on user-prefs
 		$result = $smcFunc['db_query']('', '
 			SELECT type, value, item
@@ -2604,10 +2646,9 @@ function tpSetupUpshrinks()
 			AND id_member = {int:id_mem}',
 			array('type' => 2, 'id_mem' => $context['user']['id'])
 		);
-		if($smcFunc['db_num_rows']($result) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($result))
-			{
+
+		if($smcFunc['db_num_rows']($result) > 0) {
+			while($row = $smcFunc['db_fetch_assoc']($result)) {
 				$context['TPortal']['usersettings']['wysiwyg'] = $row['value'];
 			}
 			$smcFunc['db_free_result']($result);
@@ -2615,60 +2656,65 @@ function tpSetupUpshrinks()
 		$context['TPortal']['use_wysiwyg'] = (int) $context['TPortal']['use_wysiwyg'];
 		$context['TPortal']['show_wysiwyg'] = $context['TPortal']['use_wysiwyg'];
 
-		if ($context['TPortal']['use_wysiwyg'] > 0)
-		{
+		if ($context['TPortal']['use_wysiwyg'] > 0) {
 			$context['TPortal']['allow_wysiwyg'] = true;
 			if (isset($context['TPortal']['usersettings']['wysiwyg'])) {
 				$context['TPortal']['show_wysiwyg'] = (int) $context['TPortal']['usersettings']['wysiwyg'];
 			}
 		}
-		else
-		{
+		else {
 			$context['TPortal']['show_wysiwyg'] = $context['TPortal']['use_wysiwyg'];
 			$context['TPortal']['allow_wysiwyg'] = false;
 		}
 
 		// check that we are not in admin section
-		if((isset($_GET['action']) && $_GET['action'] == 'tpadmin') && ((isset($_GET['sa']) && $_GET['sa'] == 'settings') || !isset($_GET['sa'])))
+		if((isset($_GET['action']) && $_GET['action'] == 'tpadmin') && ((isset($_GET['sa']) && $_GET['sa'] == 'settings') || !isset($_GET['sa']))) {
 			$in_admin = true;
+        }
 	}
 	// get the cookie for upshrinks
 	$context['TPortal']['upshrinkblocks'] = array();
-	if(isset($_COOKIE['tp-upshrinks'])){
+	if(isset($_COOKIE['tp-upshrinks'])) {
 		$shrinks = explode(',', $_COOKIE['tp-upshrinks']);
-		foreach($shrinks as $sh => $val)
+		foreach($shrinks as $sh => $val) {
 			$context['TPortal']['upshrinkblocks'][] = $val;
+        }
 	}
 	return;
-}
 
-function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $empty = false)
-{
+}}}
+
+function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $none = false) {{{
 	global $context;
 
 	// first, set the table, equal in all grids
-	if($pos == 0)
+	if($pos == 0) {
 		echo '<div style="width:100%;">';
+    }
 
-	if(isset($context['TPortal']['grid'][$gridtype][$pos]['doubleheight']))
+	if(isset($context['TPortal']['grid'][$gridtype][$pos]['doubleheight'])) {
 		$dh = true;
-	else
+    }
+	else {
 		$dh = false;
+    }
 
 	// render if its not empty
-	if(!$empty)
+	if($none == false) {
 		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] , call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side, $dh) , $context['TPortal']['grid'][$gridtype][$pos]['after'];
-	else
+    }
+	else {
 		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] . '&nbsp;' . $context['TPortal']['grid'][$gridtype][$pos]['after'];
+    }
 
 	// last..if its the last block,close the table
-	if($last)
+	if($last) {
 		echo '<p class="clearthefloat"></p></div>';
+    }
 
-}
+}}}
 
-function TP_blockgrids()
-{
+function TP_blockgrids() {{{
 	global $context;
 
 	$context['TPortal']['grid'] = array();
@@ -2682,78 +2728,25 @@ function TP_blockgrids()
 	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
 	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="gridColumns" align="top" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
 	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
-}
 
-function doModules()
-{
-	global $context, $boarddir, $smcFunc;
-
-    // fetch any block render hooks and notifications from tpmodules
-	$context['TPortal']['tpmodules'] = array(
-		'blockrender' => array(),
-		'adminhook' => array(),
-		'frontsection' => array(),
-	);
-	$context['TPortal']['modulepermissions'] = array('tp_settings', 'tp_blocks', 'tp_articles', 'tp_alwaysapproved', 'tp_submithtml', 'tp_submitbbc', 'tp_editownarticle');
-
-	$request = $smcFunc['db_query']('', '
-		SELECT id, modulename, blockrender, autoload_run, adminhook,
-		frontsection, permissions
-		FROM {db_prefix}tp_modules WHERE active = {int:active}',
-		array('active' => 1)
-	);
-
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			if(!empty($row['permissions'])) {
-				$all = explode(',', $row['permissions']);
-				foreach($all as $one) {
-					$real = explode('|', $one);
-					$context['TPortal']['modulepermissions'][] = $real[0];
-					unset($real);
-				}
-			}
-			if(!empty($row['blockrender'])) {
-				$context['TPortal']['tpmodules']['blockrender'][$row['id']] = array(
-						'id' => $row['id'],
-						'name' => $row['modulename'],
-						'function' => $row['blockrender'],
-						'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-				);
-            }
-			if(!empty($row['frontsection'])) {
-				$context['TPortal']['tpmodules']['frontsection'][$row['id']] = array(
-					'id' => $row['id'],
-					'name' => $row['modulename'],
-					'function' => $row['frontsection'],
-					'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-				);
-            }
-		}
-		$smcFunc['db_free_result']($request);
-	}
-}
+}}}
 
 // TPortal leftblocks
-function TPortal_leftbar()
-{
+function TPortal_leftbar() {{{
 	TPortal_sidebar('left');
-}
+}}}
 
 // TPortal centerbar
-function TPortal_centerbar()
-{
+function TPortal_centerbar() {{{
 	TPortal_sidebar('center');
-}
+}}}
 
 // TPortal rightbar
-function TPortal_rightbar()
-{
+function TPortal_rightbar() {{{
 	TPortal_sidebar('right');
-}
+}}}
 
-function TPortal_menubox()
-{
+function TPortal_menubox() {{{
 
     global $context, $smcFunc;
 
@@ -2765,13 +2758,10 @@ function TPortal_menubox()
         ORDER BY subtype + 0 ASC',
         array('type' => 'menubox')
     );
-    if($smcFunc['db_num_rows']($request) > 0)
-    {
-        while ($row = $smcFunc['db_fetch_assoc']($request))
-        {
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while ($row = $smcFunc['db_fetch_assoc']($request)) {
             $icon = '';
-            if($row['value5'] < 1)
-            {
+            if($row['value5'] < 1) {
                 $mtype = substr($row['value3'], 0, 4);
                 $idtype = substr($row['value3'], 4);
                 if($mtype == 'menu') {
@@ -2782,37 +2772,34 @@ function TPortal_menubox()
                     $idtype = $row['value3'];
                 }
 
-                if($mtype == 'cats')
-                {
-                    if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
-                        $icon = $context['TPortal']['article_categories']['icon'][$idtype];
+                if($mtype == 'cats' && isset($context['TPortal']['article_categories']['icon'][$idtype])) {
+                    $icon = $context['TPortal']['article_categories']['icon'][$idtype];
                 }
-                if($mtype == 'head')
-                {
+                if($mtype == 'head') {
                     $mtype = 'head';
                     $idtype = $row['value1'];
                 }
                 $menupos = $row['value5'];
 
                 $context['TPortal']['menu'][$row['subtype2']][] = array(
-                        'id' => $row['id'],
-                        'menuID' => $row['subtype2'],
-                        'name' => $row['value1'],
-                        'pos' => $menupos,
-                        'type' => $mtype,
-                        'IDtype' => $idtype,
-                        'off' => '0',
-                        'sub' => $row['value4'],
-                        'icon' => $icon,
-                        'newlink' => $row['value2'],
-                        'menuicon' => $row['value8'],
-                        'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
-                        );
+                    'id' => $row['id'],
+                    'menuID' => $row['subtype2'],
+                    'name' => $row['value1'],
+                    'pos' => $menupos,
+                    'type' => $mtype,
+                    'IDtype' => $idtype,
+                    'off' => '0',
+                    'sub' => $row['value4'],
+                    'icon' => $icon,
+                    'newlink' => $row['value2'],
+                    'menuicon' => $row['value8'],
+                    'sitemap' => (in_array($row['id'],$context['TPortal']['sitemap'])) ? true : false,
+                );
             }
         }
         $smcFunc['db_free_result']($request);
     }
-}
+}}}
 
 // Backwards compat function for SMF2.0
 if(!function_exists('set_avatar_data')) {

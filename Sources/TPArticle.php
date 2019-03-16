@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 }
 
 // TinyPortal module entrance
-function TPortalArticle() {{{
+function TPArticle() {{{
 
 	global $settings, $context, $txt;
 
@@ -41,25 +41,25 @@ function TPortalArticle() {{{
 
 }}}
 
-function TPortalArticleActions(&$subActions) {{{
+function TPArticleActions(&$subActions) {{{
 
     $subActions = array_merge(
         array (
-            'showcomments'      => array('TPortalArticle.php', 'articleShowComments', array()),
-            'comment'           => array('TPortalArticle.php', 'articleInsertComment', array()),
-            'killcomment'       => array('TPortalArticle.php', 'articleDeleteComment', array()),
-            'editcomment'       => array('TPortalArticle.php', 'articleEditComment', array()),
-            'rate_article'      => array('TPortalArticle.php', 'articleRate', array()),
-            'editarticle'       => array('TPortalArticle.php', 'articleEdit', array()),
-            'tpattach'          => array('TPortalArticle.php', 'articleAttachment', array()),
-            'myarticles'        => array('TPortalArticle.php', 'articleShow', array()),
-            'submitarticle'     => array('TPortalArticle.php', 'articleNew', array()),
-            'addarticle_html'   => array('TPortalArticle.php', 'articleNew', array()),
-            'addarticle_bbc'    => array('TPortalArticle.php', 'articleNew', array()),
-            'publish'           => array('TPortalArticle.php', 'articlePublish', array()),
-            'savearticle'       => array('TPortalArticle.php', 'articleSave', array()),
-            'uploadimage'       => array('TPortalArticle.php', 'articleUploadImage', array()),
-            'submitsuccess'     => array('TPortalArticle.php', 'articleSubmitSuccess', array()),
+            'showcomments'      => array('TPArticle.php', 'articleShowComments', array()),
+            'comment'           => array('TPArticle.php', 'articleInsertComment', array()),
+            'killcomment'       => array('TPArticle.php', 'articleDeleteComment', array()),
+            'editcomment'       => array('TPArticle.php', 'articleEditComment', array()),
+            'rate_article'      => array('TPArticle.php', 'articleRate', array()),
+            'editarticle'       => array('TPArticle.php', 'articleEdit', array()),
+            'tpattach'          => array('TPArticle.php', 'articleAttachment', array()),
+            'myarticles'        => array('TPArticle.php', 'articleShow', array()),
+            'submitarticle'     => array('TPArticle.php', 'articleNew', array()),
+            'addarticle_html'   => array('TPArticle.php', 'articleNew', array()),
+            'addarticle_bbc'    => array('TPArticle.php', 'articleNew', array()),
+            'publish'           => array('TPArticle.php', 'articlePublish', array()),
+            'savearticle'       => array('TPArticle.php', 'articleSave', array()),
+            'uploadimage'       => array('TPArticle.php', 'articleUploadImage', array()),
+            'submitsuccess'     => array('TPArticle.php', 'articleSubmitSuccess', array()),
         ),
         $subActions
     );

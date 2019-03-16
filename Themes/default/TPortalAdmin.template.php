@@ -249,7 +249,7 @@ function template_submission()
 					<div style="text-align:center;width:6%;" class="smalltext fullwidth-on-res-layout float-items">
 						<div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
 						<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id']. '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
-						<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  /></a>
+						<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /></a>
 					</div>
 					<p class="clearthefloat"></p>
 				</div>
@@ -1684,7 +1684,7 @@ echo '					<div class="float-items" style="width:120px;">
 						<a href="' . $scripturl . '?cat=' . $cat['id'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>
 						<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>
 						<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;copy;cu=' . $cat['id'] . '" title="' . $txt['tp-copycategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPcopy.png" alt="" /></a>
-						&nbsp;&nbsp;<a href="' . $scripturl . '?action=tpadmin;catdelete='.$cat['id'].';' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="javascript:return confirm(\''.$txt['tp-confirmcat1'].'  \n'.$txt['tp-confirmcat2'].'\')" title="' . $txt['tp-delete'] . '"><img src="' . $settings['tp_images_url'] . '/tp-delete_shout.png" alt="" /></a>
+						&nbsp;&nbsp;<a href="' . $scripturl . '?action=tpadmin;catdelete='.$cat['id'].';' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="javascript:return confirm(\''.$txt['tp-confirmcat1'].'  \n'.$txt['tp-confirmcat2'].'\')" title="' . $txt['tp-delete'] . '"><img src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="" /></a>
 					</div>
 					<div class="float-items' , '" style="max-width:76%;">
 					' , str_repeat("-",$cat['indent']) , '
@@ -2121,7 +2121,7 @@ function template_articles()
 									<div style="width:6%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
 									    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
 										<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id'] , !empty($_GET['cu']) ? ';cu=' . $_GET['cu'] : '' , '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
-										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  />
+										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  />
 										</a>
 									</div>
 									<p class="clearthefloat"></p>
@@ -2244,7 +2244,7 @@ function template_strays()
 									  <div style="width:6%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
 									    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'<strong></div>
 										<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$alink['id']. '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
-										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  />
+										<img title="'.$txt['tp-delete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  />
 										</a>
 									  </div>
 									  <div style="width:4%;" class="smalltext fullwidth-on-res-layout float-items" align="center">
@@ -3930,7 +3930,7 @@ function template_blocks()
 						</div>
 	                    <div style="width:10%;" align="center" class="smalltext fullwidth-on-res-layout float-items">
 						    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-delete'].'</strong></div>
-							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';blockdelete=' .$lblock['id']. '" onclick="javascript:return confirm(\''.$txt['tp-blockconfirmdelete'].'\')"><img title="'.$txt['tp-delete'].'"  border="0" src="' .$settings['tp_images_url']. '/tp-delete_shout.png" alt="'.$txt['tp-delete'].'"  /></a>
+							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';blockdelete=' .$lblock['id']. '" onclick="javascript:return confirm(\''.$txt['tp-blockconfirmdelete'].'\')"><img title="'.$txt['tp-delete'].'"  border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /></a>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
