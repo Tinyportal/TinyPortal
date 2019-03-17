@@ -1182,28 +1182,6 @@ function addDefaults()
             array('id')
         );
         $smcFunc['db_free_result']($request);
-
-		$smcFunc['db_insert']('ignore',
-			'{db_prefix}tp_blocks',
-			array(
-				'type' => 'int',
-				'frame' => 'string',
-				'title' => 'string',
-				'body' => 'string',
-				'access' => 'string',
-				'bar' => 'int',
-				'pos' => 'int',
-				'off' => 'int',
-				'visible' => 'string',
-				'lang' => 'string',
-				'access2' => 'string',
-				'editgroups' => 'string',
-				'settings' => 'string',
-			),
-			$blocks,
-			array('id')
-		);
-		$smcFunc['db_free_result']($request);
 		$render .= '<li>Added some sample values for some default blocks</li>';
 	}
 
