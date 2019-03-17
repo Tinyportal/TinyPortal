@@ -95,7 +95,6 @@ function editBlock( $blockID ) {{{
         loadLanguage('TPortalAdmin', 'english');
     }
     loadtemplate('TPmodules');
-}
 
 }}}
 
