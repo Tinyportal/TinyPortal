@@ -449,12 +449,13 @@ function TPortal_userbox()
 		</ul>';
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
-	else if(TP_SMF21) {
-	    echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
-   	}
-    else {
-		echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
-	}
+	else  {
+		if(TP_SMF21) {
+			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
+		}
+		else {
+			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
+		}
     echo '
         <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
             <input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
@@ -469,6 +470,7 @@ function TPortal_userbox()
             <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
         </form>
         <div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
+	}
 	echo '
 	</div>';
 }
