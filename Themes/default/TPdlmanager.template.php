@@ -562,7 +562,7 @@ function template_main()
 		// output the icons
 		foreach($context['TPortal']['dlicons'] as $dlicon => $value)
 			echo '
-							<option value="'.$value.'">'.substr($value,0,strlen($value)-4).'</option>';
+							<option value="'.$value.'">'.$value.'</option>';
 
 		echo '
 						</select>

@@ -738,7 +738,7 @@ function template_menucore()
                         echo '
                         </select>
 						</dd>';
-				if(strstr($forum_version, '2.1')) { 
+				if(TP_SMF21) { 
 					echo '	
                         <dt>
                             <label for="tp_menu_icon"><b>'.$txt['tp-menu-icon'].':</b><br>
