@@ -379,12 +379,12 @@ function do_blocks()
 			SET off = 
             ( 
                 SELECT 
-                    CASE WHEN off = 1
+                    CASE WHEN tpb.off = 1
 				        THEN 0
 				        ELSE 1
 			        END
-                FROM {db_prefix}tp_blocks 
-                WHERE id = {int:blockid} 
+                FROM ( SELECT * FROM {db_prefix}tp_blocks ) AS tpb
+                WHERE tpb.id = {int:blockid} 
                 LIMIT 1
             )
 			WHERE id = {int:blockid}',
@@ -1043,9 +1043,9 @@ function do_articles()
 				UPDATE {db_prefix}tp_articles
 				SET off = 
                 (
-                    SELECT CASE WHEN off = 1 THEN 0 ELSE 1 END
-                    FROM {db_prefix}tp_articles
-                    WHERE id = {int:artid} 
+                    SELECT CASE WHEN tpa.off = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
                     LIMIT 1
                 )
 				WHERE id = {int:artid}',
@@ -1063,9 +1063,9 @@ function do_articles()
 				UPDATE {db_prefix}tp_articles
 				SET locked = 
                 (
-                    SELECT CASE WHEN locked = 1 THEN 0 ELSE 1 END
-                    FROM {db_prefix}tp_articles
-                    WHERE id = {int:artid} 
+                    SELECT CASE WHEN tpa.locked = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
                     LIMIT 1
                 )				
 				WHERE id = {int:artid}',
@@ -1083,9 +1083,9 @@ function do_articles()
 				UPDATE {db_prefix}tp_articles
 				SET sticky = 
                 (
-                    SELECT CASE WHEN sticky = 1 THEN 0 ELSE 1 END
-                    FROM {db_prefix}tp_articles
-                    WHERE id = {int:artid} 
+                    SELECT CASE WHEN tpa.sticky = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
                     LIMIT 1
                 )				
 				WHERE id = {int:artid}',
@@ -1103,9 +1103,9 @@ function do_articles()
 				UPDATE {db_prefix}tp_articles
 				SET frontpage = 
                 (
-                    SELECT CASE WHEN frontpage = 1 THEN 0 ELSE 1 END
-                    FROM {db_prefix}tp_articles
-                    WHERE id = {int:artid} 
+                    SELECT CASE WHEN tpa.frontpage = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
                     LIMIT 1
                 )
 				WHERE id = {int:artid}',
@@ -1124,9 +1124,9 @@ function do_articles()
 				UPDATE {db_prefix}tp_articles
 				SET featured = 
                 (
-                    SELECT CASE WHEN featured = 1 THEN 0 ELSE 1 END
-                    FROM {db_prefix}tp_articles
-                    WHERE id = {int:artid} 
+                    SELECT CASE WHEN tpa.featured = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
                     LIMIT 1
                 )
 				WHERE id = {int:artid}',
