@@ -307,7 +307,7 @@ function tp_profile_articles($memID)
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sort} {raw:sorter} OFFSET {int:start} LIMIT 10',
+		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 10 OFFSET {int:start}',
 		array('auth' => $memID, 
 		'sort' => $sorting, 
 		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
@@ -575,76 +575,4 @@ function tp_download($memID)
 	tp_profile_download($memID);
 }
 
-function tp_shoutb($memID)
-{
-	global $txt, $context;
-
-	loadtemplate('TPprofile');
-	$context['page_title'] = $txt['shoutboxprofile'];
-	tpshout_profile($memID);
-}
-
-// fetch all the shouts for output
-function tpshout_profile($memID)
-{
-    global $context, $scripturl, $txt, $smcFunc;
-
-	$context['page_title'] = $txt['shoutboxprofile'] ;
-
-	if(isset($context['TPortal']['mystart']))
-		$start = $context['TPortal']['mystart'];
-	else
-		$start = 0;
-
-	$context['TPortal']['memID'] = $memID;
-
-	$sorting = 'value2';
-
-	$max = 0;
-	// get all shouts
-	$request = $smcFunc['db_query']('', '
-		SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
-		WHERE value5 = {int:val5} AND type = {string:type}',
-		array('val5' => $memID, 'type' => 'shoutbox')
-	);
-	$result = $smcFunc['db_fetch_row']($request);
-	$max = $result[0];
-	$smcFunc['db_free_result']($request);
-
-	$context['TPortal']['all_shouts'] = $max;
-	$context['TPortal']['profile_shouts'] = array();
-
-	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_shoutbox
-		WHERE value5 = {int:val5}
-		AND type = {string:type}
-		ORDER BY {raw:sort} DESC LIMIT {int:start}, 10',
-		array('val5' => $memID, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start)
-	);
-	if($smcFunc['db_num_rows']($request) > 0){
-		while($row = $smcFunc['db_fetch_assoc']($request)){
-			$context['TPortal']['profile_shouts'][] = array(
-				'id' => $row['id'],
-				'shout' => parse_bbc(censorText($row['value1'])),
-				'created' => timeformat($row['value2']),
-				'ip' => $row['value4'],
-				'editlink' => allowedTo('tp_shoutbox') ? $scripturl.'?action=tpshout;shout=admin;u='.$memID : '',
-			);
-		}
-		$smcFunc['db_free_result']($request);
-	}
-	// construct pageindexes
-	if($max > 0)
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '10', true);
-	else
-		$context['TPortal']['pageindex'] = '';
-
-
-	loadtemplate('TPShout');
-
-	if(loadLanguage('TPShout') == false)
-		loadLanguage('TPShout', 'english');
-
-	$context['sub_template'] = 'tpshout_profile';
-}
 ?>

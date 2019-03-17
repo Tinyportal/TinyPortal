@@ -1227,10 +1227,11 @@ function doTPfrontpage() {{{
 		// Find the post ids.
 		if($context['TPortal']['front_type'] == 'forum_only') {
 			$request =  $smcFunc['db_query']('', '
-				SELECT t.id_first_msg as ID_FIRST_MSG
-				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
-				WHERE t.id_board = b.id_board
-				AND t.id_board IN({raw:board})
+				SELECT t.id_first_msg AS id_first_message
+				FROM {db_prefix}topics AS t
+                INNER JOIN {db_prefix}boards AS b
+                    ON t.id_board = b.id_board
+				WHERE t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
 				LIMIT {int:max}',
@@ -1241,10 +1242,11 @@ function doTPfrontpage() {{{
         }
 		else {
 			$request =  $smcFunc['db_query']('', '
-				SELECT t.id_first_msg as ID_FIRST_MSG
-				FROM ({db_prefix}topics as t, {db_prefix}boards as b)
-				WHERE t.id_board = b.id_board
-				AND t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? 0 : '{raw:topics}') .')
+				SELECT t.id_first_msg AS id_first_message
+				FROM {db_prefix}topics AS t
+                INNER JOIN {db_prefix}boards AS b
+                    ON t.id_board = b.id_board
+				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? 0 : '{raw:topics}') .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC',
 				array(
@@ -1255,7 +1257,7 @@ function doTPfrontpage() {{{
 
 		$posts = array();
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			$posts[] = $row['ID_FIRST_MSG'];
+			$posts[] = $row['id_first_message'];
         }
 		$smcFunc['db_free_result']($request);
 
@@ -1283,13 +1285,14 @@ function doTPfrontpage() {{{
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, t.id_board AS category, b.name AS category_name,
 				t.num_replies AS numReplies, t.id_topic AS id, m.id_member AS author_id, t.num_views AS views, t.num_replies AS replies, t.locked,
 				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename, mem.email_address AS email_address
-			FROM ({db_prefix}topics AS t, {db_prefix}messages AS m)
+			FROM {db_prefix}topics AS t
+            INNER JOIN {db_prefix}messages AS m
+			    ON m.id_msg = t.id_first_msg
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type !=3)
 			LEFT JOIN {db_prefix}attachments AS thumb ON (t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3)
 			LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 			WHERE t.id_first_msg IN ({array_int:posts})
-			AND m.id_msg = t.id_first_msg
 			ORDER BY m.{raw:catsort} DESC
 			LIMIT {int:max} OFFSET {int:start}',
 			array(
@@ -1318,11 +1321,9 @@ function doTPfrontpage() {{{
 					)
 				);
 
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				$length = $context['TPortal']['frontpage_limit_len'];
-				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
-				{
+				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
 					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
 
 					// The first space or line break. (<br />, etc.)
@@ -1338,8 +1339,9 @@ function doTPfrontpage() {{{
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
 				$row['boardnews'] = 1;
-				if(!isset($context['TPortal']['frontpage_visopts']))
+				if(!isset($context['TPortal']['frontpage_visopts'])) {
 					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
+                }
 
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
 				$row['useintro'] = '0';

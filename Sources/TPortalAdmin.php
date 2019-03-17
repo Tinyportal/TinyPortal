@@ -1044,7 +1044,7 @@ function do_articles()
 				SET off = 
                 (
                     SELECT CASE WHEN tpa.off = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * {db_prefix}tp_articles ) AS tpa
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
                     WHERE tpa.id = {int:artid} 
                     LIMIT 1
                 )
