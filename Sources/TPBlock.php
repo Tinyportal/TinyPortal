@@ -19,7 +19,7 @@ if (!defined('SMF')) {
         die('Hacking attempt...');
 }
 
-function TPBlock() {{{
+function TPBlock_init() {{{
 	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
 
 	if(loadLanguage('TPmodules') == false) {
@@ -40,7 +40,6 @@ function TPBlock() {{{
 	TPstrip_linktree();
 
 }}}
-
 
 function editBlock( $blockID ) {{{
 	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
