@@ -1542,7 +1542,7 @@ function doTPfrontpage() {{{
                 loadMemberContext($row['author_id']);
 
                 // Store this member's information.
-                if(array_key_exists($row['author_id'], $memberContext)) {
+                if(!is_null($memberContext) && array_key_exists($row['author_id'], $memberContext)) {
                     $avatar         = $memberContext[$row['author_id']];
                     $row['avatar']  = $avatar['avatar']['image'];
                 }
@@ -1988,6 +1988,9 @@ function doTPblocks() {{{
 	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
+
+            // decode the block settings
+            $set = json_decode($row['settings'], true);
 			// some tests to minimize sql calls
 			if($row['type'] == 7) {
 				$test_themebox = true;
@@ -2020,11 +2023,11 @@ function doTPblocks() {{{
 				'type' => isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type'],
 				'body' => $row['body'],
 				'visible' => $row['visible'],
-				'var1' => $row['var1'],
-				'var2' => $row['var2'],
-				'var3' => $row['var3'],
-				'var4' => $row['var4'],
-				'var5' => $row['var5'],
+				'var1' => $set['var1'],
+				'var2' => $set['var2'],
+				'var3' => $set['var3'],
+				'var4' => $set['var4'],
+				'var5' => $set['var5'],
 				'id' => $row['id'],
 				'lang' => $row['lang'],
 				'access2' => $row['access2'],
