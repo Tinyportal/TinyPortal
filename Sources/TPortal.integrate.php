@@ -486,7 +486,7 @@ class TPortal_Integrate
             if(!$context['TPortal']['profile_shouts_hide']) {
                 $profile_areas['tp']['areas']['tpshoutbox'] = array(
                     'label' => $txt['shoutboxprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPShout.php',
                     'function' => 'tp_shoutb',
                     'icon' => 'menu_tpshout',
                     'permission' => array(
@@ -550,7 +550,7 @@ class TPortal_Integrate
             if(!$context['TPortal']['profile_shouts_hide']) {
                 $profile_areas['tp']['areas']['tpshoutbox'] = array(
                     'label' => $txt['shoutboxprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPShout.php',
                     'function' => 'tp_shoutb',
                     'permission' => array(
                         'own' => 'profile_view_own',

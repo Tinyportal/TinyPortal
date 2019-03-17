@@ -1108,4 +1108,70 @@ function shoutHasLinks()
 	return false;
 }
 
+function tp_shoutb($memID)
+{
+    global $txt, $context;
+    loadtemplate('TPprofile');
+    $context['page_title'] = $txt['shoutboxprofile'];
+    tpshout_profile($memID);
+}
+
+// fetch all the shouts for output
+function tpshout_profile($memID)
+{
+    global $context, $scripturl, $txt, $smcFunc;
+    $context['page_title'] = $txt['shoutboxprofile'] ;
+    if(isset($context['TPortal']['mystart'])) {
+        $start = $context['TPortal']['mystart'];
+    }
+    else {
+        $start = 0;
+    }
+    $context['TPortal']['memID'] = $memID;
+    $sorting = 'time';
+    $max = 0;
+    // get all shouts
+    $request = $smcFunc['db_query']('', '
+        SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
+        WHERE member_id = {int:member_id} AND type = {string:type}',
+        array('member_id' => $memID, 'type' => 'shoutbox')
+    );
+    $result = $smcFunc['db_fetch_row']($request);
+    $max    = $result[0];
+    $smcFunc['db_free_result']($request);
+    $context['TPortal']['all_shouts'] = $max;
+    $context['TPortal']['profile_shouts'] = array();
+    $request = $smcFunc['db_query']('', '
+        SELECT * FROM {db_prefix}tp_shoutbox
+        WHERE member_id = {int:member_id}
+        AND type = {string:type}
+        ORDER BY {raw:sort} DESC LIMIT 10 OFFSET {int:start}',
+        array('member_id' => $memID, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start)
+    );
+    if($smcFunc['db_num_rows']($request) > 0){
+        while($row = $smcFunc['db_fetch_assoc']($request)){
+            $context['TPortal']['profile_shouts'][] = array(
+                'id' => $row['id'],
+                'shout' => parse_bbc(censorText($row['content'])),
+                'created' => timeformat($row['time']),
+                'ip' => $row['member_ip'],
+                'editlink' => allowedTo('tp_shoutbox') ? $scripturl.'?action=tpshout;shout=admin;u='.$memID : '',
+            );
+        }
+        $smcFunc['db_free_result']($request);
+    }
+    // construct pageindexes
+    if($max > 0) {
+        $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '10', true);
+    }
+    else {
+        $context['TPortal']['pageindex'] = '';
+    }
+    loadtemplate('TPShout');
+    if(loadLanguage('TPShout') == false) {
+        loadLanguage('TPShout', 'english');
+    }
+    $context['sub_template'] = 'tpshout_profile';
+}
+
 ?>
