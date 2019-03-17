@@ -1006,7 +1006,7 @@ function TPortalDLManager()
 				WHERE dl.type = {string:type}
 				AND dl.category = {int:cat}
 				AND dl.subitem = {int:sub}
-				ORDER BY dl.'.$dlsort.' '. $dlsort_way .' OFFSET {int:start} LIMIT 10',
+				ORDER BY dl.'.$dlsort.' '. $dlsort_way .' LIMIT 10 OFFSET {int:start}',
 				array('type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0, 'start' => $start)
 			);
 
