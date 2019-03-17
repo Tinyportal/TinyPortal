@@ -307,7 +307,7 @@ function tp_profile_articles($memID)
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sort} {raw:sorter} OFFSET {int:start} LIMIT 10',
+		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 10 OFFSET {int:start}',
 		array('auth' => $memID, 
 		'sort' => $sorting, 
 		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
