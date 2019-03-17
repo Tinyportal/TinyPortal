@@ -845,7 +845,7 @@ function TPortalDLManager()
 		$week = (int) date("W",$now);
 		$year = (int) date("Y",$now);
 		$request = $smcFunc['db_query']('', '
-			SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id as authorID, dlm.created, dlm.screenshot, dlm.filesize,
+			SELECT dlm.id, dlm.name, dlm.icon, dlm.category, dlm.file, dlm.downloads, dlm.views, dlm.author_id AS author_id, dlm.created, dlm.screenshot, dlm.filesize,
 			dlcat.name AS catname, mem.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dlm
             LEFT JOIN {db_prefix}tp_dldata AS data
