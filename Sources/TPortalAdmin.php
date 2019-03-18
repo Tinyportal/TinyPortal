@@ -716,10 +716,11 @@ function do_blocks()
 			WHERE 1=1 ORDER BY bar, pos, id ASC',
 			array()
 		);
-		if ($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
-				$context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = array(
+		if ($smcFunc['db_num_rows']($request) > 0) {
+			while($row = $smcFunc['db_fetch_assoc']($request)) {
+				// decode the block settings
+                $set = json_decode($row['settings'], true);
+                $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = array(
 					'frame' => $row['frame'],
 					'title' => $row['title'],
 					'type' => (isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type']),
@@ -729,13 +730,14 @@ function do_blocks()
 					'pos' => $row['pos'],
 					'off' => $row['off'],
 					'visible' => $row['visible'],
-					'var1' => $row['var1'],
-					'var2' => $row['var2'],
+					'var1' => $set['var1'],
+					'var2' => $set['var2'],
 					'lang' => $row['lang'],
 					'access2' => $row['access2'],
 					'loose' => $row['access2'] != '' ? true : false,
 					'editgroups' => $row['editgroups']
 				);
+            }
 
 			$smcFunc['db_free_result']($request);
 		}
@@ -3093,20 +3095,20 @@ function do_postchecks()
 						);
                     elseif(in_array($setting, array( 'var1', 'var2', 'var3', 'var4', 'var5')) ) {
                         // Check for blocks in table, if none insert default blocks.
-                        $request = $dB->db_query('', '
+						$request = $smcFunc['db_query']('', '
                             SELECT settings FROM {db_prefix}tp_blocks
                             WHERE id = {int:varid} LIMIT 1',
                             array('varid' => $where)
                         );
                             
                         $data = array();
-                        if($dB->db_num_rows($request) > 0) {
-                            $row    = $dB->db_fetch_assoc($request);
+                        if($smcFunc['db_num_rows']($request) > 0) {
+                            $row    = $smcFunc['db_fetch_assoc']($request);
                             $data   = json_decode($row['settings'], true);
-                            $dB->db_free_result($request);
+                            $smcFunc['db_free_result']($request);
                         }
                         $data[$setting] = $value;
-                        $dB->db_query('', '
+						$smcFunc['db_query']('', '
                             UPDATE {db_prefix}tp_blocks 
                             SET settings = {string:data}
                             WHERE id = {int:blockid}',
