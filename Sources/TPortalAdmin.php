@@ -555,8 +555,14 @@ function do_blocks()
 		if ($smcFunc['db_num_rows']($request) > 0)
 		{
 			$row = $smcFunc['db_fetch_assoc']($request);
-			$acc2 = explode(',', $row['access2']);
+            $acc2 = explode(',', $row['access2']);
 			$context['TPortal']['blockedit'] = $row;
+            $context['TPortal']['blockedit']['var1']    = json_decode($row['settings'],true)['var1'];
+            $context['TPortal']['blockedit']['var2']    = json_decode($row['settings'],true)['var2'];
+            $context['TPortal']['blockedit']['var3']    = json_decode($row['settings'],true)['var3'];
+            $context['TPortal']['blockedit']['var4']    = json_decode($row['settings'],true)['var4'];
+            $context['TPortal']['blockedit']['var5']    = json_decode($row['settings'],true)['var5'];
+
 			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
 			$context['TPortal']['blockedit']['body'] = $row['body'];
 			unset($context['TPortal']['blockedit']['access2']);
