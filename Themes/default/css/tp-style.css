@@ -1735,6 +1735,7 @@ h3.h3dl
 	width: 47%;
 	min-width: 300px;
 	display: inline-block;
+	vertical-align: top;
 }
 .dlpost
 {
