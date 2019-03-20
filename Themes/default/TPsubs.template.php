@@ -15,978 +15,7 @@
  *
  */
 
-// TPortal searchblock
-function TPortal_searchbox()
-{
-	global $context, $txt, $scripturl;
-
-	echo '
-	<form accept-charset="', $context['character_set'], '" action="', $scripturl, '?action=search2" method="post" style="padding: 0; text-align: center; margin: 0; ">
-		<input type="text" name="search" value="" class="block_search" />
-		<input type="submit" name="submit" value="', $txt['search'], '" class="block_search_submit button_submit" /><br>
-		<br><span class="smalltext"><a href="', $scripturl, '?action=search;advanced">', $txt['search_advanced'], '</a></span>
-		<input type="hidden" name="advanced" value="0" />
-	</form>';
-}
-
-// TPortal onlineblock
-function TPortal_onlinebox()
-{
-	global $context;
-
-	if($context['TPortal']['useavataronline'] == 1)
-		tpo_whos();
-	else
-		echo '
-	<div style="line-height: 1.4em;">' , ssi_whosOnline() , '</div>';
-}
-
-function tpo_whos($buddy_only = false)
-{
-	global $txt, $scripturl;
-
-	$whos = tpo_whosOnline();
-	echo '
-	<div>
-	' . $whos['num_guests'] .' ' , $whos['num_guests'] == 1 ? $txt['guest'] : $txt['guests'] , ',
-	' . $whos['num_users_online'] .' ' , $whos['num_users_online'] == 1 ? $txt['user'] : $txt['users'] , '
-	</div>';
-	if(isset($whos['users_online']) && count($whos['users_online']) > 0)
-	{
-		$ids = array();
-		$names = array();
-		$times = array();
-		foreach($whos['users_online'] as $w => $wh)
-		{
-			// For reasons historical, SMF produces the timestamp as
-			// the timestamp followed by the user's name, so let's fix it.
-			$timestamp = (int) strtr($w, array($wh['username'] => ''));
-			$ids[] = $wh['id'];
-			$names[$wh['id']] = $wh['name'];
-			$times[$wh['id']] = timeformat($timestamp);
-		}
-		$avy = progetAvatars($ids);
-		foreach($avy as $a => $av)
-			echo '
-		<a class="avatar_single2" title="'.$names[$a].'" href="' . $scripturl . '?action=profile;u='.$a.'">' . $av . '</a>';
-	}
-}
-
-function tpo_whosOnline()
-{
-	global $sourcedir;
-
-	require_once($sourcedir . '/Subs-MembersOnline.php');
-	$membersOnlineOptions = array(
-		'show_hidden' => allowedTo('moderate_forum'),
-		'sort' => 'log_time',
-		'reverse_sort' => true,
-	);
-	$return = getMembersOnlineStats($membersOnlineOptions);
-	return $return;
-}
-
-function progetAvatars($ids)
-{
-	global $user_info, $smcFunc, $modSettings, $scripturl;
-	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
-	$request = $smcFunc['db_query']('', '
-		SELECT
-			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address AS email_address,
-			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type
-		FROM {db_prefix}members AS mem
-		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
-		WHERE mem.id_member IN ({array_int:ids})',
-		array('ids' => $ids)
-	);
-
-	$avy = array();
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-            $avy[$row['id_member']] = set_avatar_data( array(      
-                    'avatar' => $row['avatar'],
-                    'email' => $row['email_address'],
-                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                    'id_attach' => $row['id_attach'],
-                    'attachment_type' => $row['attachment_type'],
-                )
-            )['image'];
-		}
-		$smcFunc['db_free_result']($request);
-	}
-
-	return $avy;
-}
-function TPortal_tpmodulebox($blockid)
-{
-	global $context;
-
-	// fetch the correct block
-	if(!empty($context['TPortal']['moduleid'])) {
-		$tpm = $context['TPortal']['moduleid'];
-		if(!empty($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpmodules']['blockrender'][$tpm]['function'])) {
-			call_user_func($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']);
-        }
-	}
-}
-
-// php blocktype
-function TPortal_phpbox()
-{
-	global $context;
-
-	// execute what is in the block, no echoing
-	if(!empty($context['TPortal']['phpboxbody']));
-		eval(tp_convertphp($context['TPortal']['phpboxbody'],true));
-}
-
-// an article
-function TPortal_articlebox()
-{
-	global $context;
-
-	if(isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]))
-		echo '<div class="block_article">', 	template_blockarticle() , '</div>';
-}
-
-// php blocktype
-function TPortal_scriptbox()
-{
-	global $context;
-
-    echo $context['TPortal']['scriptboxbody'];
-}
-
-// TPortal recent topics block
-function TPortal_recentbox()
-{
-	global $scripturl, $context, $settings, $txt, $modSettings;
-
-	// is it a number?
-	if(!is_numeric($context['TPortal']['recentboxnum']))
-		$context['TPortal']['recentboxnum']='10';
-
-	// leave out the recycle board, if any
-	if(isset($modSettings['recycle_board']))
-		$bb = $modSettings['recycle_board'];
-	else
-		$bb = 0;
-
-	$include_boards = null;
-
-	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $include_boards, $output_method = 'array');
-	if($context['TPortal']['useavatar'] == 0)
-	{
-		// Output the topics
-		echo '
-		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll'] == 1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
-		$coun = 1;
-		foreach($what as $wi => $w)
-		{
-			echo '
-			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
-				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
-				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
-			if(!$w['new'])
-			{
-			if (!TP_SMF21)
-				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-			else
-				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
-			}
-			echo '<br><span class="smalltext">['.$w['time'].']</span>
-			</li>';
-			$coun++;
-		}
-		echo '
-		</ul>';
-	}
-	else
-	{
-		$member_ids = array();
-		foreach($what as $wi => $w)
-		{
-			$member_ids[] = $w['poster']['id'];
-		}
-
-		if(!empty($member_ids))
-			$avatars = progetAvatars($member_ids);
-		else
-			$avatars = array();
-
-		// Output the topics
-		$coun = 1;
-		echo '
-		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
-		foreach($what as $wi => $w)
-		{
-			echo '
-			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
-					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
-				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
-			if(!$w['new'])
-			{
-			if (!TP_SMF21)
-				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-			else
-				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
-			}
-			echo '<br><span class="smalltext">['.$w['time'].']</span>
-			</li>';
-			$coun++;
-		}
-		echo '
-		</ul>';
-	}
-}
-
-// TPortal categories
-function TPortal_catmenu()
-{
-	global $context, $scripturl, $boardurl, $settings;
-
-	if(isset($context['TPortal']['menu'][$context['TPortal']['menuid']]) && !empty($context['TPortal']['menu'][$context['TPortal']['menuid']])){
-		echo '
-	<ul class="tp_catmenu">';
-
-		foreach($context['TPortal']['menu'][$context['TPortal']['menuid']] as $cn)
-		{
-			echo '
-		<li', $cn['type']=='head' ? ' class="tp_catmenu_header"' : '' ,'>';
-			if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
-				echo str_repeat("&nbsp;&nbsp;", ($cn['sub'] + 1));
-			elseif($context['TPortal']['menuvar1'] == '1')
-				echo str_repeat("&nbsp;&nbsp;", ($cn['sub'] + 1));
-			elseif($context['TPortal']['menuvar1'] == '2')
-				echo str_repeat("&nbsp;&nbsp;", ($cn['sub'] + 1));
-
-			if((!isset($cn['icon']) || (isset($cn['icon']) && $cn['icon'] == '')) && $cn['type'] != 'head' && $cn['type'] != 'spac')
-			{
-				if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
-					echo '
-			<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" />&nbsp;';
-				elseif($context['TPortal']['menuvar1'] == '1')
-					echo '
-			<img src="'.$settings['tp_images_url'].'/bullet3.png" alt="" />';
-
-			}
-			elseif(isset($cn['icon']) && $cn['icon'] != '' && $cn['type'] != 'head' && $cn['type'] != 'spac')
-			{
-				echo '
-			<img alt="*" src="'.$cn['icon'].'" />&nbsp;';
-			}
-			switch($cn['type'])
-			{
-				case 'cats' :
-					echo '
-			<a href="'. $scripturl. '?cat='.$cn['IDtype'].'"' .( $cn['newlink']=='1' ? ' target="_blank"' : ''). '>'.$cn['name'].'</a>';
-					break;
-				case 'arti' :
-					echo '
-			<a href="'. $scripturl. '?page='.$cn['IDtype'].'"' .($cn['newlink']=='1' ? ' target="_blank"' : '') . '>'.$cn['name'].'</a>';
-					break;
-				case 'link' :
-					echo '
-			<a href="'.$cn['IDtype'].'"' . ($cn['newlink']=='1' ? ' target="_blank"' : '') . '>'.$cn['name'].'</a>';
-					break;
-				case 'head' :
-					echo '
-			<a class="tp_catmenu_header" name="header'.$cn['id'].'"><b>'.$cn['IDtype'].'</b></a>';
-					break;
-				case 'spac' :
-					echo '
-			<a name="spacer'.$cn['id'].'">&nbsp;</a>';
-					break;
-				default :
-					echo '
-			<a href="'.$cn['IDtype'].'"' . ($cn['newlink']=='1' ? ' target="_blank"' : '') . '>'.$cn['name'].'</a>';
-					break;
-			}
-			echo '</li>';
-		}
-		echo '
-	</ul>';
-	}
-}
-
-// dummy for old templates
-function TPortal_sidebar()
-{
-	return;
-}
-
-// Tportal userbox
-function TPortal_userbox()
-{
-	global $context, $settings, $scripturl, $txt, $user_info;
-
-	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt="" style="margin:0 4px 0 0;" />';
-	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
-	$bullet3 = '<img src="'.$settings['tp_images_url'].'/TPdivider3.png" alt="" style="margin:0 4px 0 0;" />';
-	$bullet4 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt="" style="margin:0 4px 0 0;" />';
-	$bullet5 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt=""  style="margin:0 4px 0 0;" />';
-
-	echo'
-	<div class="tp_userblocknew">';
-
-
-	// If the user is logged in, display stuff like their name, new messages, etc.
-
-	if ($context['user']['is_logged'])
-	{
-
-		if (!empty($context['user']['avatar']) &&  isset($context['TPortal']['userbox']['avatar']))
-			echo '
-				<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
-		echo '
-		<strong><a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">', $context['user']['name'], '</a></strong>
-		<ul class="reset">';
-
-		// Only tell them about their messages if they can read their messages!
-		if ($context['allow_pm'])
-		{
-			echo '
-			<li><a href="', $scripturl, '?action=pm">' .$bullet.$txt['tp-pm'].' ',  $context['user']['messages'], '</a></li>';
-			if($context['user']['unread_messages'] > 0)
-				echo '
-			<li style="font-weight: bold; "><a href="', $scripturl, '?action=pm">' . $bullet. $txt['tp-pm2'].' ',$context['user']['unread_messages'] , '</a></li>';
-		}
-		// Are there any members waiting for approval?
-		if (!empty($context['unapproved_members']))
-			echo '
-				<li><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">'. $bullet. $txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
-		// Are there any moderation reports?
-	if(!TP_SMF21)
-		{
-		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
-			echo '
-				<li><a href="', $scripturl, '?action=moderate;area=reports">'.$bullet.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
-		}
-	else {
-		if (!empty($user_info['mod_cache']) && $user_info['mod_cache']['bq'] != '0=1' && !empty($context['open_mod_reports']))
-			echo '
-				<li><a href="', $scripturl, '?action=moderate;area=reports">'.$bullet.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
-		}
-		if(isset($context['TPortal']['userbox']['unread']))
-			echo '
-			<li><hr><a href="', $scripturl, '?action=unread">' .$bullet.$txt['tp-unread'].'</a></li>
-			<li><a href="', $scripturl, '?action=unreadreplies">'.$bullet.$txt['tp-replies'].'</a></li>
-			<li><a href="', $scripturl, '?action=profile;u='.$context['user']['id'].';area=showposts">'.$bullet.$txt['tp-showownposts'].'</a></li>
-			<li><a href="', $scripturl, '?action=tportal;sa=showcomments">'.$bullet.$txt['tp-showcomments'].'</a><hr></li>
-			';
-
-		// Is the forum in maintenance mode?
-		if ($context['in_maintenance'] && $context['user']['is_admin'])
-			echo '
-			<li>' .$bullet2.$txt['tp_maintenace']. '</li>';
-		// Show the total time logged in?
-		if (!empty($context['user']['total_time_logged_in']) && isset($context['TPortal']['userbox']['logged']))
-		{
-			echo '
-			<li>' .$bullet2.$txt['tp-loggedintime'] . '</li>
-			<li>'.$bullet2.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
-		}
-		if (isset($context['TPortal']['userbox']['time']))
-		echo '
-			<li>' . $bullet2.$context['current_time'].' <hr></li>';
-
-		// admin parts etc.
-         if(!isset($context['TPortal']['can_submit_article']))
-            $context['TPortal']['can_submit_article']=0;
-
-		// can we submit an article?
-       	if(allowedTo('tp_submithtml'))
-			echo '
-		<li><a href="', $scripturl, '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_html">' . $bullet3.$txt['tp-submitarticle']. '</a></li>';
-       	if(allowedTo('tp_submitbbc'))
-					echo '
-		<li><a href="', $scripturl, '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_bbc">' . $bullet3.$txt['tp-submitarticlebbc']. '</a></li>';
-
-		if(allowedTo('tp_editownarticle'))
-					echo '
-		<li><a href="', $scripturl, '?action=tportal;sa=myarticles">' . $bullet3.$txt['tp-myarticles']. '</a></li>';
-
-		// upload a file?
-        if(allowedTo('tp_dlupload') || allowedTo('tp_dlmanager'))
-             echo '
-			<li><a href="', $scripturl, '?action=tportal;dl=upload">' . $bullet3.$txt['permissionname_tp_dlupload']. '</a></li>';
-
-		// tpadmin checks
-		if (allowedTo('tp_settings'))
-			echo '
-			<li><hr><a href="' . $scripturl . '?action=tpadmin;sa=settings">' . $bullet4.$txt['permissionname_tp_settings'] . '</a></li>';
-		if (allowedTo('tp_blocks'))
-					echo '
-			<li><a href="' . $scripturl . '?action=tpadmin;sa=blocks">' . $bullet4.$txt['permissionname_tp_blocks'] . '</a></li>';
-		if (allowedTo('tp_articles'))
-		{
-					echo '
-			<li><a href="' . $scripturl . '?action=tpadmin;sa=articles">' . $bullet4.$txt['permissionname_tp_articles'] . '</a></li>';
-					// any submissions?
-					if($context['TPortal']['submitcheck']['articles']>0)
-						echo '
-			<li><a href="' . $scripturl . '?action=tpadmin;sa=submission"><b>' . $bullet4.$context['TPortal']['submitcheck']['articles'] . ' ' .$txt['tp-articlessubmitted'] . '</b></a></li>';
-		}
-		if (allowedTo('tp_dlmanager'))
-		{
-					echo '
-			<li><a href="' . $scripturl . '?action=tportal;dl=admin">' . $bullet5.$txt['permissionname_tp_dlmanager'] . '</a></li>';
-					// any submissions?
-					if($context['TPortal']['submitcheck']['uploads']>0)
-						echo '
-			<li><a href="' . $scripturl . '?action=tportal;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
-		}
-
-		// add adminhooks
-		if(is_countable($context['TPortal']['tpmodules']['adminhook']) && count($context['TPortal']['tpmodules']['adminhook']) > 0)
-		{
-			foreach($context['TPortal']['tpmodules']['adminhook'] as $link)
-				echo '<li><a href="' . $scripturl . '?'.$link['action'].'">' . $bullet5.$link['title']. '</a></li>';
-		}
-
-		echo '
-		</ul>';
-	}
-	// Otherwise they're a guest - so politely ask them to register or login.
-	else  {
-		if(TP_SMF21) {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
-		}
-		else {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
-		}
-    echo '
-        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-            <input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
-            <select name="cookielength">
-                <option value="60">', $txt['one_hour'], '</option>
-                <option value="1440">', $txt['one_day'], '</option>
-                <option value="10080">', $txt['one_week'], '</option>
-                <option value="302400">', $txt['one_month'], '</option>
-                <option value="-1" selected="selected">', $txt['forever'], '</option>
-            </select>
-            <input type="submit" class="button_submit" value="', $txt['login'], '" />
-            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-        </form>
-        <div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
-	}
-	echo '
-	</div>';
-}
-
-// TPortal themebox
-function TPortal_themebox()
-{
-	global $context, $settings, $scripturl, $txt, $smcFunc;
-
-	$what = explode(',', $context['TPortal']['themeboxbody']);
-	$temaid = array();
-	$temanavn = array();
-	$temapaths = array();
-	foreach($what as $wh => $wht)
-	{
-		$all = explode('|', $wht);
-		if($all[0] > -1)
-		{
-			$temaid[] = $all[0];
-			$temanavn[] = isset($all[1]) ? $all[1] : '';
-			$temapaths[] = isset($all[2]) ? $all[2] : '';
-		}
-	}
-
-	if(isset($context['TPortal']['querystring']))
-		$tp_where = $smcFunc['htmlspecialchars'](strip_tags($context['TPortal']['querystring']));
-	else
-		$tp_where = 'action=forum';
-
-	if($tp_where != '')
-		$tp_where .= ';';
-
-	// remove multiple theme=x in the string.
-	$tp_where=preg_replace("'theme=[^>]*?;'si", "", $tp_where);
-
-	 if(is_countable($temaid) && count($temaid) > 0){
-        echo '
-		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="" style="padding: 0; margin: 0; text-align: center;">
-			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
-         for($a=0 ; $a<(count($temaid)); $a++)
-		 {
-                echo '
-				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
-         }
-		 echo '
-			</select><br>' , $context['user']['is_logged'] ?
-			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
-			<input class="button_submit" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
-			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
-			<div style="text-align: center; width: 95%; overflow: hidden;">';
-			
-		if (!TP_SMF21)
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
-		else
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
-			
-		echo '
-			</div>
-		</form>
-		<script type="text/javascript"><!-- // --><![CDATA[
-			var extra = \'\';
-			var themepath = new Array();';
-		 for($a=0 ; $a<(count($temaid)); $a++){
-		    if (!TP_SMF21)
-				echo '
-					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
-					';
-			else
-				echo '
-					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.png";
-					';
-			}
-
-		echo '
-			function jumpit()
-			{
-				window.location = document.jumpurl1.jumpurl3.value + extra;
-				return false;
-			}
-			function realtheme()
-			{
-				if (extra === ";permanent")
-					extra = "";
-				else
-					extra = ";permanent";
-			}
-			function check(icon)
-			{
-				document.chosen.src= themepath[icon]
-				document.jumpurl1.jumpurl3.value = \'' . $scripturl . '?'. $tp_where.'theme=\' + icon
-			}
-		// ]]></script>';
-	}
-	else
-		echo $txt['tp-nothemeschosen'];
-}
-
-// TPortal newsbox
-function TPortal_newsbox()
-{
-	global $context;
-
-	// Show a random news item? (or you could pick one from news_lines...)
-	echo '<div class="tp_newsblock">', $context['random_news_line'], '</div>';
-}
-
-// TPortal stats box
-function TPortal_statsbox()
-{
-	global $context, $settings, $scripturl, $txt, $modSettings;
-
-	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt=""  style="margin:0 4px 0 0;" />';
-	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
-
-	echo'
-	<div class="tp_statsblock">';
-
-	if(isset($context['TPortal']['userbox']['stats']))
-		// members stats
-		echo '
-		<h5 class="mlist"><a href="'.$scripturl.'?action=mlist">'.$txt['members'].'</a></h5>
-		<ul>
-			<li>' . $bullet. $txt['total_members'].': ' , isset($modSettings['memberCount']) ? $modSettings['memberCount'] : $modSettings['totalMembers'] , '</li>
-			<li>' . $bullet. $txt['tp-latest']. ': <a href="', $scripturl, '?action=profile;u=', $modSettings['latestMember'], '"><strong>', $modSettings['latestRealName'], '</strong></a></li>
-		</ul>';
-	if(isset($context['TPortal']['userbox']['stats_all']))
-		// more stats
-		echo '
-		<h5 class="stats"><a href="'.$scripturl.'?action=stats">'.$txt['tp-stats'].'</a></h5>
-		<ul>
-			<li>'.  $bullet. $txt['total_posts'].': '.$modSettings['totalMessages']. '</li>
-			<li>'.  $bullet. $txt['total_topics'].': '.$modSettings['totalTopics']. '</li>
-			<li>' . $bullet. $txt['tp-mostonline-today'].': '.$modSettings['mostOnlineToday'].'</li>
-			<li>' . $bullet. $txt['tp-mostonline'].': '.$modSettings['mostOnline'].'</li>
-			<li>('.timeformat($modSettings['mostDate']).')</li>
-		</ul>';
-
-	if(isset($context['TPortal']['userbox']['online']))
-	{
-		// add online users
-		echo '
-		<h5 class="online"><a href="'.$scripturl.'?action=who">'.$txt['online_users'].'</a></h5>
-		<div class="tp_stats_users" style="line-height: 1.3em;">';
-
-		$online = ssi_whosOnline('array');
-		echo  $bullet. $txt['tp-users'].': '.$online['num_users']. '<br>
-			'. $bullet. $txt['tp-guests'].': '.$online['guests'].'<br>
-			'. $bullet. $txt['tp-total'].': '.$online['total_users'].'<br>
-			<div style="max-height: 23em; overflow: auto;">';
-
-		foreach($online['users'] as $user)
-		{
-			echo  $bullet2 , $user['hidden'] ? '<i>' . $user['link'] . '</i>' : $user['link'];
-			echo '<br>';
-		}
-		echo '
-			</div></div>';
-	}
-	echo '
-	</div>';
-}
-
-// TPortal ssi box
-function TPortal_ssi()
-{
-	global $context;
-	echo '<div style="padding: 5px;" class="smalltext">';
-	if($context['TPortal']['ssifunction'] == 'toptopics')
-		ssi_topTopics();
-	elseif($context['TPortal']['ssifunction'] == 'topboards')
-		ssi_topBoards();
-	elseif($context['TPortal']['ssifunction'] == 'topposters')
-		ssi_topPoster(5);
-	elseif($context['TPortal']['ssifunction'] == 'topreplies')
-		ssi_topTopicsReplies();
-	elseif($context['TPortal']['ssifunction'] == 'topviews')
-		ssi_topTopicsViews();
-	elseif($context['TPortal']['ssifunction'] == 'calendar')
-		ssi_todaysCalendar();
-
-	echo '</div>';
-}
-
-// TPortal module
-function TPortal_module()
-{
-   global $context, $scripturl, $txt;
-
-	switch($context['TPortal']['moduleblock'])
-	{
-		case 'dl-stats':
-			dl_recentitems('8', 'date', 'echo');
-			break;
-		case 'dl-stats2':
-			dl_recentitems('8', 'downloads', 'echo');
-			break;
-		case 'dl-stats3':
-			dl_recentitems('8', 'views', 'echo');
-			break;
-		case 'dl-stats4':
-			$it = array();
-			$it = dl_recentitems('1', 'date', 'array');
-			if(is_countable($it) && count($it) > 0)
-			{
-				foreach($it as $item)
-				{
-					echo '
-					<img src="'.$item['icon'].'" align="right" style="margin-left: 4px; " alt="" />
-						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
-						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
-						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
-				}
-			}
-			break;
-		case 'dl-stats5':
-			$it = array();
-			$it = dl_recentitems('1', 'downloads', 'array');
-			if(is_countable($it) && count($it) > 0)
-			{
-				foreach($it as $item)
-				{
-					echo '
-					<img src="'.$item['icon'].'" align="right" style="margin-left: 4px; " alt="" />
-						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
-						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
-						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
-				}
-			}
-			break;
-		case 'dl-stats6':
-			$it = array();
-			$it = dl_recentitems('1', 'views', 'array');
-			if(is_countable($it) && count($it) > 0)
-			{
-				foreach($it as $item)
-				{
-					echo '
-					<img src="'.$item['icon'].'" align="right" style="margin-left: 4px; " alt="" />
-						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
-						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
-						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
-				}
-			}
-			break;
-		case 'dl-stats7':
-			$it = array();
-			$it = art_recentitems('5','date');
-			if(is_countable($it) && count($it) > 0)
-			{
-				foreach($it as $item)
-				{
-					echo '<span class="smalltext"><a title="'.$item['date'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
-						</span><br>';
-				}
-			}
-			break;
-		case 'dl-stats8':
-			$it = array();
-			$it = art_recentitems('5', 'views');
-			if(is_countable($it) && count($it) > 0)
-			{
-				foreach($it as $item)
-				{
-					echo '<span class="smalltext"><a title="'.$item['views'].' '.$txt['tp-views'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
-						</span><br>';
-				}
-			}
-			break;
-		case 'dl-stats9':
-			$it = array();
-			$it = art_recentitems('5', 'comments');
-			if(is_countable($it) && count($it) > 0)
-			{
-				foreach($it as $item)
-				{
-					echo '<span class="smalltext"><a title="'.$item['comments'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
-						('.$item['comments'].')<br></span>';
-				}
-			}
-				break;
-     }
-}
-// Tportal RSS block
-function TPortal_rss()
-{
-	global $context;
-
-	echo '<div style="padding: 5px; ' , !empty($context['TPortal']['rsswidth']) ? 'max-width: ' . $context['TPortal']['rsswidth'] .';' : '' , '" class="middletext">' , TPparseRSS('', $context['TPortal']['rss_utf8']) , '</div>';
-}
-
-// Tportal sitemap menu
-function TPortal_sitemap()
-{
-    global $context, $settings, $scripturl, $txt;
-
-	$current = '';
-    // check where we are
-    if(isset($_GET['action']) && $_GET['action'] == 'tpmod')
-	{
-		if(isset($_GET['dl']))
-			$current = 'dl';
-		elseif(isset($_GET['link']))
-			$current = 'link';
-		elseif(isset($_GET['show']))
-			$current = 'show';
-		elseif(isset($_GET['team']))
-			$current = 'team';
-		else
-			$current = '';
-    }
-         echo '
-	<div class="tborder">
-		<ul class="tpsitemap">';
-	if($context['TPortal']['show_download'] == '1')
-		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tportal;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
-
-	if(!empty($context['TPortal']['sitemap']) && !empty($context['TPortal']['menu']))
-	{
-		foreach($context['TPortal']['menu'] as $main)
-		{
-			foreach($main as $cn)
-			{
-				// check if we can find the link on current tpage
-				$catclass = '';
-				if($cn['type'] == 'cats')
-				{
-					if(isset($_GET['cat']) && $cn['IDtype'] == $_GET['cat'])
-						$catclass = 'tpsitemapheader';
-				}
-				elseif($cn['type'] == 'arti'){
-					if(isset($_GET['page']) && $cn['IDtype'] == $_GET['page'])
-						$catclass = 'tpsitemapheader';
-				}
-				elseif($cn['type'] == 'link'){
-					if(!empty($context['TPortal']['querystring']))
-						$qs = $scripturl.'?'.$context['TPortal']['querystring'];
-					else
-						$qs = $scripturl;
-
-					if($qs == $cn['IDtype'])
-						$catclass = 'tpsitemapheader';
-				}
-
-				if($cn['sitemap'] == '1'){
-					switch($cn['type']){
-							case 'cats' :
-								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?cat='.$cn['IDtype'].'" ' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
-								break;
-							case 'arti' :
-								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?page='.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
-								break;
-							case 'link' :
-								echo '<li><a class="' , $catclass ,'" href="'.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
-								break;
-					}
-				}
-			}
-		}
-	}
-	echo '
-		</ul>
-	</div>';
-}
-
-// category listing blocktype
-function TPortal_categorybox()
-{
-    global $context, $txt, $scripturl;
-
-	if(isset($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])){
-		echo '<div class="middletext" ', (count($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])>$context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height']!='0') ? ' style="overflow: auto; width: 100%; height: '.$context['TPortal']['blocklisting_height'].'em;"' : '' ,'>';
-		foreach($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']] as $listing){
-			if($listing['category'] == $context['TPortal']['blocklisting'])
-				echo '<b><a href="'.$scripturl.'?page='.$listing['shortname'].'">'.$listing['subject'].'</a></b> ' , $context['TPortal']['blocklisting_author']=='1' ? $txt['by'].' '.$listing['poster'] : '' , '<br>';
-		}
-		echo '</div>';
-	}
- }
-
-// a dummy layer for layer articles
-function template_nolayer_above()
-{
-	global $context;
-
-	echo '
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<meta name="keywords" content="' . $context['meta_keywords'] . '" />
-		<title>' , $context['page_title'] , '</title>
-		' , $context['tp_html_headers'] , '
-	</head>
-	<body><div id="nolayer_frame">';
-}
-
-function template_nolayer_below()
-{
-	echo '<small id="nolayer_copyright">',theme_copyright(),'</small>
-	</div></body></html>';
-}
-
-// article search page 1
-
-function template_TPsearch_above()
-{
-	global $context, $txt, $scripturl;
-
-	if($context['TPortal']['show_download']==0) {
-		echo '
-	<div style="padding: 0 5px;">
-		<div class="cat_bar">
-			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
-		</div>
-		<div class="windowbg2 noup">
-			<span class="topslice"><span></span></span>
-			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
-	}
-	else {
-        echo '
-	<div style="padding: 0 5px;">
-		<div class="cat_bar">
-			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
-		</div>
-		<div class="windowbg2 noup">
-			<span class="topslice"><span></span></span>
-			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
-				<a href="' . $scripturl. '?action=tportal;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
-    }
-
-	// any others?
-	if(!empty($context['TPortal']['searcharray']) && count($context['TPortal']['searcharray']) > 0) {
-		echo implode(' | ', $context['TPortal']['searcharray']);
-    }
-
-	echo '
-			</p>
-			<span class="botslice"><span></span></span>
-		</div>
-	</div>';
-
-}
-
-function template_TPsearch_below()
-{
-	return;
-}
-
-function template_tperror_above()
-{
-	global $context;
-
-	echo '
-	<div class="title_bar">
-		<h3 class="titlebg"><span class="left"></span><span class="error">'.$context['TPortal']['tperror'].'</span></h3>
-	</div>';
-
-}
-function template_notpublished()
-{
-	global $context;
-	echo '
-<div style="padding-bottom: 4px;">
-	<span class="clear upperframe"><span></span></span>
-	<div class="roundframe"><div class="innerframe">
-		<div style="line-height: 1.5em; text-align: center;">'.$context['TPortal']['tperror'].'</div>
-	</div></div>
-	<span class="lowerframe"><span></span></span>
-</div>';
-
-}
-function template_tperror_below()
-{
-	return;
-}
-function template_tpnotify_above()
-{
-	global $context;
-
-	echo '<div style="color: green; padding: 1em; background-color: #fdfffd; border: 2px solid; margin-bottom: 1em;">
-			<div style="padding: 1em;">'.$context['TPortal']['tpnotify'].'</div>
-		</div>';
-
-}
-function template_tpnotify_below()
-{
-	return;
-}
-
-
-// the TP tabs routine
-function template_tptabs_above()
-{
-	global $context;
-
-	if(!empty($context['TPortal']['tptabs']))
-	{
-		$buts = array();
-		echo '
-	<div class="tptabs">';
-		foreach($context['TPortal']['tptabs'] as $tab)
-			$buts[] = '<a' . ($tab['is_selected'] ? ' class="tpactive"' : '') . ' href="' . $tab['href'] . '">' . $tab['title'] . '</a>';
-
-		echo implode(' | ', $buts) , '
-	</div>';
-	}
-}
-
-function template_tptabs_below()
-{
-	global $context;
-
-}
-
+// Block template
 function TPblock($block, $theme, $side, $double=false)
 {
 	global $context , $scripturl, $settings, $txt;
@@ -1162,7 +191,986 @@ function TPblock($block, $theme, $side, $double=false)
 	</div>';
 }
 
-// and its built-in types..
+// blocktype 1: User
+function TPortal_userbox()
+{
+	global $context, $settings, $scripturl, $txt, $user_info;
+
+	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet3 = '<img src="'.$settings['tp_images_url'].'/TPdivider3.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet4 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt="" style="margin:0 4px 0 0;" />';
+	$bullet5 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt=""  style="margin:0 4px 0 0;" />';
+
+	echo'
+	<div class="tp_userblocknew">';
+
+
+	// If the user is logged in, display stuff like their name, new messages, etc.
+
+	if ($context['user']['is_logged'])
+	{
+
+		if (!empty($context['user']['avatar']) &&  isset($context['TPortal']['userbox']['avatar']))
+			echo '
+				<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
+		echo '
+		<strong><a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">', $context['user']['name'], '</a></strong>
+		<ul class="reset">';
+
+		// Only tell them about their messages if they can read their messages!
+		if ($context['allow_pm'])
+		{
+			echo '
+			<li><a href="', $scripturl, '?action=pm">' .$bullet.$txt['tp-pm'].' ',  $context['user']['messages'], '</a></li>';
+			if($context['user']['unread_messages'] > 0)
+				echo '
+			<li style="font-weight: bold; "><a href="', $scripturl, '?action=pm">' . $bullet. $txt['tp-pm2'].' ',$context['user']['unread_messages'] , '</a></li>';
+		}
+		// Are there any members waiting for approval?
+		if (!empty($context['unapproved_members']))
+			echo '
+				<li><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">'. $bullet. $txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
+		// Are there any moderation reports?
+	if(!TP_SMF21)
+		{
+		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
+			echo '
+				<li><a href="', $scripturl, '?action=moderate;area=reports">'.$bullet.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
+		}
+	else {
+		if (!empty($user_info['mod_cache']) && $user_info['mod_cache']['bq'] != '0=1' && !empty($context['open_mod_reports']))
+			echo '
+				<li><a href="', $scripturl, '?action=moderate;area=reports">'.$bullet.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
+		}
+		if(isset($context['TPortal']['userbox']['unread']))
+			echo '
+			<li><hr><a href="', $scripturl, '?action=unread">' .$bullet.$txt['tp-unread'].'</a></li>
+			<li><a href="', $scripturl, '?action=unreadreplies">'.$bullet.$txt['tp-replies'].'</a></li>
+			<li><a href="', $scripturl, '?action=profile;u='.$context['user']['id'].';area=showposts">'.$bullet.$txt['tp-showownposts'].'</a></li>
+			<li><a href="', $scripturl, '?action=tportal;sa=showcomments">'.$bullet.$txt['tp-showcomments'].'</a><hr></li>
+			';
+
+		// Is the forum in maintenance mode?
+		if ($context['in_maintenance'] && $context['user']['is_admin'])
+			echo '
+			<li>' .$bullet2.$txt['tp_maintenace']. '</li>';
+		// Show the total time logged in?
+		if (!empty($context['user']['total_time_logged_in']) && isset($context['TPortal']['userbox']['logged']))
+		{
+			echo '
+			<li>' .$bullet2.$txt['tp-loggedintime'] . '</li>
+			<li>'.$bullet2.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
+		}
+		if (isset($context['TPortal']['userbox']['time']))
+		echo '
+			<li>' . $bullet2.$context['current_time'].' <hr></li>';
+
+		// admin parts etc.
+         if(!isset($context['TPortal']['can_submit_article']))
+            $context['TPortal']['can_submit_article']=0;
+
+		// can we submit an article?
+       	if(allowedTo('tp_submithtml'))
+			echo '
+		<li><a href="', $scripturl, '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_html">' . $bullet3.$txt['tp-submitarticle']. '</a></li>';
+       	if(allowedTo('tp_submitbbc'))
+					echo '
+		<li><a href="', $scripturl, '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_bbc">' . $bullet3.$txt['tp-submitarticlebbc']. '</a></li>';
+
+		if(allowedTo('tp_editownarticle'))
+					echo '
+		<li><a href="', $scripturl, '?action=tportal;sa=myarticles">' . $bullet3.$txt['tp-myarticles']. '</a></li>';
+
+		// upload a file?
+        if(allowedTo('tp_dlupload') || allowedTo('tp_dlmanager'))
+             echo '
+			<li><a href="', $scripturl, '?action=tportal;dl=upload">' . $bullet3.$txt['permissionname_tp_dlupload']. '</a></li>';
+
+		// tpadmin checks
+		if (allowedTo('tp_settings'))
+			echo '
+			<li><hr><a href="' . $scripturl . '?action=tpadmin;sa=settings">' . $bullet4.$txt['permissionname_tp_settings'] . '</a></li>';
+		if (allowedTo('tp_blocks'))
+					echo '
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=blocks">' . $bullet4.$txt['permissionname_tp_blocks'] . '</a></li>';
+		if (allowedTo('tp_articles'))
+		{
+					echo '
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=articles">' . $bullet4.$txt['permissionname_tp_articles'] . '</a></li>';
+					// any submissions?
+					if($context['TPortal']['submitcheck']['articles']>0)
+						echo '
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=submission"><b>' . $bullet4.$context['TPortal']['submitcheck']['articles'] . ' ' .$txt['tp-articlessubmitted'] . '</b></a></li>';
+		}
+		if (allowedTo('tp_dlmanager'))
+		{
+					echo '
+			<li><a href="' . $scripturl . '?action=tportal;dl=admin">' . $bullet5.$txt['permissionname_tp_dlmanager'] . '</a></li>';
+					// any submissions?
+					if($context['TPortal']['submitcheck']['uploads']>0)
+						echo '
+			<li><a href="' . $scripturl . '?action=tportal;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
+		}
+
+		// add adminhooks
+		if(is_countable($context['TPortal']['tpmodules']['adminhook']) && count($context['TPortal']['tpmodules']['adminhook']) > 0)
+		{
+			foreach($context['TPortal']['tpmodules']['adminhook'] as $link)
+				echo '<li><a href="' . $scripturl . '?'.$link['action'].'">' . $bullet5.$link['title']. '</a></li>';
+		}
+
+		echo '
+		</ul>';
+	}
+	// Otherwise they're a guest - so politely ask them to register or login.
+	else  {
+		if(TP_SMF21) {
+			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $txt['guest_title'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
+		}
+		else {
+			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
+		}
+    echo '
+        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+            <input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
+            <select name="cookielength">
+                <option value="60">', $txt['one_hour'], '</option>
+                <option value="1440">', $txt['one_day'], '</option>
+                <option value="10080">', $txt['one_week'], '</option>
+                <option value="302400">', $txt['one_month'], '</option>
+                <option value="-1" selected="selected">', $txt['forever'], '</option>
+            </select>
+            <input type="submit" class="button_submit" value="', $txt['login'], '" />
+            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+        </form>
+        <div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
+	}
+	echo '
+	</div>';
+}
+
+// blocktype 2: News
+function TPortal_newsbox()
+{
+	global $context;
+
+	// Show a random news item? (or you could pick one from news_lines...)
+	echo '<div class="tp_newsblock">', $context['random_news_line'], '</div>';
+}
+
+// blocktype 3: Stats
+function TPortal_statsbox()
+{
+	global $context, $settings, $scripturl, $txt, $modSettings;
+
+	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt=""  style="margin:0 4px 0 0;" />';
+	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
+
+	echo'
+	<div class="tp_statsblock">';
+
+	if(isset($context['TPortal']['userbox']['stats']))
+		// members stats
+		echo '
+		<h5 class="mlist"><a href="'.$scripturl.'?action=mlist">'.$txt['members'].'</a></h5>
+		<ul>
+			<li>' . $bullet. $txt['total_members'].': ' , isset($modSettings['memberCount']) ? $modSettings['memberCount'] : $modSettings['totalMembers'] , '</li>
+			<li>' . $bullet. $txt['tp-latest']. ': <a href="', $scripturl, '?action=profile;u=', $modSettings['latestMember'], '"><strong>', $modSettings['latestRealName'], '</strong></a></li>
+		</ul>';
+	if(isset($context['TPortal']['userbox']['stats_all']))
+		// more stats
+		echo '
+		<h5 class="stats"><a href="'.$scripturl.'?action=stats">'.$txt['tp-stats'].'</a></h5>
+		<ul>
+			<li>'.  $bullet. $txt['total_posts'].': '.$modSettings['totalMessages']. '</li>
+			<li>'.  $bullet. $txt['total_topics'].': '.$modSettings['totalTopics']. '</li>
+			<li>' . $bullet. $txt['tp-mostonline-today'].': '.$modSettings['mostOnlineToday'].'</li>
+			<li>' . $bullet. $txt['tp-mostonline'].': '.$modSettings['mostOnline'].'</li>
+			<li>('.timeformat($modSettings['mostDate']).')</li>
+		</ul>';
+
+	if(isset($context['TPortal']['userbox']['online']))
+	{
+		// add online users
+		echo '
+		<h5 class="online"><a href="'.$scripturl.'?action=who">'.$txt['online_users'].'</a></h5>
+		<div class="tp_stats_users" style="line-height: 1.3em;">';
+
+		$online = ssi_whosOnline('array');
+		echo  $bullet. $txt['tp-users'].': '.$online['num_users']. '<br>
+			'. $bullet. $txt['tp-guests'].': '.$online['guests'].'<br>
+			'. $bullet. $txt['tp-total'].': '.$online['total_users'].'<br>
+			<div style="max-height: 23em; overflow: auto;">';
+
+		foreach($online['users'] as $user)
+		{
+			echo  $bullet2 , $user['hidden'] ? '<i>' . $user['link'] . '</i>' : $user['link'];
+			echo '<br>';
+		}
+		echo '
+			</div></div>';
+	}
+	echo '
+	</div>';
+}
+
+// blocktype 4: search
+function TPortal_searchbox()
+{
+	global $context, $txt, $scripturl;
+
+	echo '
+	<form accept-charset="', $context['character_set'], '" action="', $scripturl, '?action=search2" method="post" style="padding: 0; text-align: center; margin: 0; ">
+		<input type="text" name="search" value="" class="block_search" />
+		<input type="submit" name="submit" value="', $txt['search'], '" class="block_search_submit button_submit" /><br>
+		<br><span class="smalltext"><a href="', $scripturl, '?action=search;advanced">', $txt['search_advanced'], '</a></span>
+		<input type="hidden" name="advanced" value="0" />
+	</form>';
+}
+
+// blocktype 6: online
+function TPortal_onlinebox()
+{
+	global $context;
+
+	if($context['TPortal']['useavataronline'] == 1)
+		tpo_whos();
+	else
+		echo '
+	<div style="line-height: 1.4em;">' , ssi_whosOnline() , '</div>';
+}
+
+// blocktype 7: Themes
+function TPortal_themebox()
+{
+	global $context, $settings, $scripturl, $txt, $smcFunc;
+
+	$what = explode(',', $context['TPortal']['themeboxbody']);
+	$temaid = array();
+	$temanavn = array();
+	$temapaths = array();
+	foreach($what as $wh => $wht)
+	{
+		$all = explode('|', $wht);
+		if($all[0] > -1)
+		{
+			$temaid[] = $all[0];
+			$temanavn[] = isset($all[1]) ? $all[1] : '';
+			$temapaths[] = isset($all[2]) ? $all[2] : '';
+		}
+	}
+
+	if(isset($context['TPortal']['querystring']))
+		$tp_where = $smcFunc['htmlspecialchars'](strip_tags($context['TPortal']['querystring']));
+	else
+		$tp_where = 'action=forum';
+
+	if($tp_where != '')
+		$tp_where .= ';';
+
+	// remove multiple theme=x in the string.
+	$tp_where=preg_replace("'theme=[^>]*?;'si", "", $tp_where);
+
+	 if(is_countable($temaid) && count($temaid) > 0){
+        echo '
+		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="" style="padding: 0; margin: 0; text-align: center;">
+			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
+         for($a=0 ; $a<(count($temaid)); $a++)
+		 {
+                echo '
+				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
+         }
+		 echo '
+			</select><br>' , $context['user']['is_logged'] ?
+			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
+			<input class="button_submit" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
+			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
+			<div style="text-align: center; width: 95%; overflow: hidden;">';
+			
+		if (!TP_SMF21)
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
+		else
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
+			
+		echo '
+			</div>
+		</form>
+		<script type="text/javascript"><!-- // --><![CDATA[
+			var extra = \'\';
+			var themepath = new Array();';
+		 for($a=0 ; $a<(count($temaid)); $a++){
+		    if (!TP_SMF21)
+				echo '
+					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
+					';
+			else
+				echo '
+					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.png";
+					';
+			}
+
+		echo '
+			function jumpit()
+			{
+				window.location = document.jumpurl1.jumpurl3.value + extra;
+				return false;
+			}
+			function realtheme()
+			{
+				if (extra === ";permanent")
+					extra = "";
+				else
+					extra = ";permanent";
+			}
+			function check(icon)
+			{
+				document.chosen.src= themepath[icon]
+				document.jumpurl1.jumpurl3.value = \'' . $scripturl . '?'. $tp_where.'theme=\' + icon
+			}
+		// ]]></script>';
+	}
+	else
+		echo $txt['tp-nothemeschosen'];
+}
+
+// blocktype 9: Menu
+function TPortal_catmenu()
+{
+	global $context, $scripturl, $boardurl, $settings;
+
+	if(isset($context['TPortal']['menu'][$context['TPortal']['menuid']]) && !empty($context['TPortal']['menu'][$context['TPortal']['menuid']])){
+		echo '
+	<ul class="tp_catmenu">';
+
+		foreach($context['TPortal']['menu'][$context['TPortal']['menuid']] as $cn)
+		{
+			echo '
+		<li', $cn['type']=='head' ? ' class="tp_catmenu_header"' : '' ,'>';
+			if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
+				echo str_repeat("&nbsp;&nbsp;", ($cn['sub'] + 1));
+			elseif($context['TPortal']['menuvar1'] == '1')
+				echo str_repeat("&nbsp;&nbsp;", ($cn['sub'] + 1));
+			elseif($context['TPortal']['menuvar1'] == '2')
+				echo str_repeat("&nbsp;&nbsp;", ($cn['sub'] + 1));
+
+			if((!isset($cn['icon']) || (isset($cn['icon']) && $cn['icon'] == '')) && $cn['type'] != 'head' && $cn['type'] != 'spac')
+			{
+				if($context['TPortal']['menuvar1'] == '' || $context['TPortal']['menuvar1'] == '0')
+					echo '
+			<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" />&nbsp;';
+				elseif($context['TPortal']['menuvar1'] == '1')
+					echo '
+			<img src="'.$settings['tp_images_url'].'/bullet3.png" alt="" />';
+
+			}
+			elseif(isset($cn['icon']) && $cn['icon'] != '' && $cn['type'] != 'head' && $cn['type'] != 'spac')
+			{
+				echo '
+			<img alt="*" src="'.$cn['icon'].'" />&nbsp;';
+			}
+			switch($cn['type'])
+			{
+				case 'cats' :
+					echo '
+			<a href="'. $scripturl. '?cat='.$cn['IDtype'].'"' .( $cn['newlink']=='1' ? ' target="_blank"' : ''). '>'.$cn['name'].'</a>';
+					break;
+				case 'arti' :
+					echo '
+			<a href="'. $scripturl. '?page='.$cn['IDtype'].'"' .($cn['newlink']=='1' ? ' target="_blank"' : '') . '>'.$cn['name'].'</a>';
+					break;
+				case 'link' :
+					echo '
+			<a href="'.$cn['IDtype'].'"' . ($cn['newlink']=='1' ? ' target="_blank"' : '') . '>'.$cn['name'].'</a>';
+					break;
+				case 'head' :
+					echo '
+			<a class="tp_catmenu_header" name="header'.$cn['id'].'"><b>'.$cn['IDtype'].'</b></a>';
+					break;
+				case 'spac' :
+					echo '
+			<a name="spacer'.$cn['id'].'">&nbsp;</a>';
+					break;
+				default :
+					echo '
+			<a href="'.$cn['IDtype'].'"' . ($cn['newlink']=='1' ? ' target="_blank"' : '') . '>'.$cn['name'].'</a>';
+					break;
+			}
+			echo '</li>';
+		}
+		echo '
+	</ul>';
+	}
+}
+
+// blocktype 10: PHP code
+function TPortal_phpbox()
+{
+	global $context;
+
+	// execute what is in the block, no echoing
+	if(!empty($context['TPortal']['phpboxbody']));
+		eval(tp_convertphp($context['TPortal']['phpboxbody'],true));
+}
+
+// blocktype 11: HTML & Javascript code
+function TPortal_scriptbox()
+{
+	global $context;
+
+    echo $context['TPortal']['scriptboxbody'];
+}
+
+// blocktype 12: Recent Topics
+function TPortal_recentbox()
+{
+	global $scripturl, $context, $settings, $txt, $modSettings;
+
+	// is it a number?
+	if(!is_numeric($context['TPortal']['recentboxnum']))
+		$context['TPortal']['recentboxnum']='10';
+
+	// leave out the recycle board, if any
+	if(isset($modSettings['recycle_board']))
+		$bb = $modSettings['recycle_board'];
+	else
+		$bb = 0;
+
+	$include_boards = null;
+
+	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $include_boards, $output_method = 'array');
+	if($context['TPortal']['useavatar'] == 0)
+	{
+		// Output the topics
+		echo '
+		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll'] == 1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
+		$coun = 1;
+		foreach($what as $wi => $w)
+		{
+			echo '
+			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
+				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
+				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
+			if(!$w['new'])
+			{
+			if (!TP_SMF21)
+				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
+			else
+				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
+			}
+			echo '<br><span class="smalltext">['.$w['time'].']</span>
+			</li>';
+			$coun++;
+		}
+		echo '
+		</ul>';
+	}
+	else
+	{
+		$member_ids = array();
+		foreach($what as $wi => $w)
+		{
+			$member_ids[] = $w['poster']['id'];
+		}
+
+		if(!empty($member_ids))
+			$avatars = progetAvatars($member_ids);
+		else
+			$avatars = array();
+
+		// Output the topics
+		$coun = 1;
+		echo '
+		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
+		foreach($what as $wi => $w)
+		{
+			echo '
+			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
+					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
+				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
+			if(!$w['new'])
+			{
+			if (!TP_SMF21)
+				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
+			else
+				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
+			}
+			echo '<br><span class="smalltext">['.$w['time'].']</span>
+			</li>';
+			$coun++;
+		}
+		echo '
+		</ul>';
+	}
+}
+// blocktype 13: SSI functions
+function TPortal_ssi()
+{
+	global $context;
+	echo '<div style="padding: 5px;" class="smalltext">';
+	if($context['TPortal']['ssifunction'] == 'toptopics')
+		ssi_topTopics();
+	elseif($context['TPortal']['ssifunction'] == 'topboards')
+		ssi_topBoards();
+	elseif($context['TPortal']['ssifunction'] == 'topposters')
+		ssi_topPoster(5);
+	elseif($context['TPortal']['ssifunction'] == 'topreplies')
+		ssi_topTopicsReplies();
+	elseif($context['TPortal']['ssifunction'] == 'topviews')
+		ssi_topTopicsViews();
+	elseif($context['TPortal']['ssifunction'] == 'calendar')
+		ssi_todaysCalendar();
+
+	echo '</div>';
+}
+
+// blocktype 14: Article / Download functions
+function TPortal_module()
+{
+   global $context, $scripturl, $txt;
+
+	switch($context['TPortal']['moduleblock'])
+	{
+		case 'dl-stats':
+			dl_recentitems('8', 'date', 'echo');
+			break;
+		case 'dl-stats2':
+			dl_recentitems('8', 'downloads', 'echo');
+			break;
+		case 'dl-stats3':
+			dl_recentitems('8', 'views', 'echo');
+			break;
+		case 'dl-stats4':
+			$it = array();
+			$it = dl_recentitems('1', 'date', 'array');
+			if(is_countable($it) && count($it) > 0)
+			{
+				foreach($it as $item)
+				{
+					echo '
+					<img src="'.$item['icon'].'" align="right" style="margin-left: 4px; " alt="" />
+						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
+						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
+						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
+				}
+			}
+			break;
+		case 'dl-stats5':
+			$it = array();
+			$it = dl_recentitems('1', 'downloads', 'array');
+			if(is_countable($it) && count($it) > 0)
+			{
+				foreach($it as $item)
+				{
+					echo '
+					<img src="'.$item['icon'].'" align="right" style="margin-left: 4px; " alt="" />
+						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
+						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
+						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
+				}
+			}
+			break;
+		case 'dl-stats6':
+			$it = array();
+			$it = dl_recentitems('1', 'views', 'array');
+			if(is_countable($it) && count($it) > 0)
+			{
+				foreach($it as $item)
+				{
+					echo '
+					<img src="'.$item['icon'].'" align="right" style="margin-left: 4px; " alt="" />
+						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
+						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
+						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
+				}
+			}
+			break;
+		case 'dl-stats7':
+			$it = array();
+			$it = art_recentitems('5','date');
+			if(is_countable($it) && count($it) > 0)
+			{
+				foreach($it as $item)
+				{
+					echo '<span class="smalltext"><a title="'.$item['date'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
+						</span><br>';
+				}
+			}
+			break;
+		case 'dl-stats8':
+			$it = array();
+			$it = art_recentitems('5', 'views');
+			if(is_countable($it) && count($it) > 0)
+			{
+				foreach($it as $item)
+				{
+					echo '<span class="smalltext"><a title="'.$item['views'].' '.$txt['tp-views'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
+						</span><br>';
+				}
+			}
+			break;
+		case 'dl-stats9':
+			$it = array();
+			$it = art_recentitems('5', 'comments');
+			if(is_countable($it) && count($it) > 0)
+			{
+				foreach($it as $item)
+				{
+					echo '<span class="smalltext"><a title="'.$item['comments'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
+						('.$item['comments'].')<br></span>';
+				}
+			}
+				break;
+     }
+}
+
+// blocktype 15: RSS block
+function TPortal_rss()
+{
+	global $context;
+
+	echo '<div style="padding: 5px; ' , !empty($context['TPortal']['rsswidth']) ? 'max-width: ' . $context['TPortal']['rsswidth'] .';' : '' , '" class="middletext">' , TPparseRSS('', $context['TPortal']['rss_utf8']) , '</div>';
+}
+
+// blocktype 16: sitemap
+function TPortal_sitemap()
+{
+    global $context, $settings, $scripturl, $txt;
+
+	$current = '';
+    // check where we are
+    if(isset($_GET['action']) && $_GET['action'] == 'tpmod')
+	{
+		if(isset($_GET['dl']))
+			$current = 'dl';
+		elseif(isset($_GET['link']))
+			$current = 'link';
+		elseif(isset($_GET['show']))
+			$current = 'show';
+		elseif(isset($_GET['team']))
+			$current = 'team';
+		else
+			$current = '';
+    }
+         echo '
+	<div class="tborder">
+		<ul class="tpsitemap">';
+	if($context['TPortal']['show_download'] == '1')
+		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tportal;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" border="0" alt="" /> '.$txt['tp-downloads'].'</a></li>';
+
+	if(!empty($context['TPortal']['sitemap']) && !empty($context['TPortal']['menu']))
+	{
+		foreach($context['TPortal']['menu'] as $main)
+		{
+			foreach($main as $cn)
+			{
+				// check if we can find the link on current tpage
+				$catclass = '';
+				if($cn['type'] == 'cats')
+				{
+					if(isset($_GET['cat']) && $cn['IDtype'] == $_GET['cat'])
+						$catclass = 'tpsitemapheader';
+				}
+				elseif($cn['type'] == 'arti'){
+					if(isset($_GET['page']) && $cn['IDtype'] == $_GET['page'])
+						$catclass = 'tpsitemapheader';
+				}
+				elseif($cn['type'] == 'link'){
+					if(!empty($context['TPortal']['querystring']))
+						$qs = $scripturl.'?'.$context['TPortal']['querystring'];
+					else
+						$qs = $scripturl;
+
+					if($qs == $cn['IDtype'])
+						$catclass = 'tpsitemapheader';
+				}
+
+				if($cn['sitemap'] == '1'){
+					switch($cn['type']){
+							case 'cats' :
+								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?cat='.$cn['IDtype'].'" ' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
+								break;
+							case 'arti' :
+								echo '<li><a class="' , $catclass ,'" href="'. $scripturl. '?page='.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
+								break;
+							case 'link' :
+								echo '<li><a class="' , $catclass ,'" href="'.$cn['IDtype'].'"' , $cn['newlink']=='1' ? 'target="_blank"' : '' , '><img src="' .$settings['tp_images_url']. '/TPdivider.png" border="0" alt="" /> '.$cn['name'].'</a></li>';
+								break;
+					}
+				}
+			}
+		}
+	}
+	echo '
+		</ul>
+	</div>';
+}
+
+// blocktype 18: Single Article 
+function TPortal_articlebox()
+{
+	global $context;
+
+	if(isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]))
+		echo '<div class="block_article">', 	template_blockarticle() , '</div>';
+}
+
+// blocktype 19: Articles in a Category
+function TPortal_categorybox()
+{
+    global $context, $txt, $scripturl;
+
+	if(isset($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])){
+		echo '<div class="middletext" ', (count($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']])>$context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height']!='0') ? ' style="overflow: auto; width: 100%; height: '.$context['TPortal']['blocklisting_height'].'em;"' : '' ,'>';
+		foreach($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']] as $listing){
+			if($listing['category'] == $context['TPortal']['blocklisting'])
+				echo '<b><a href="'.$scripturl.'?page='.$listing['shortname'].'">'.$listing['subject'].'</a></b> ' , $context['TPortal']['blocklisting_author']=='1' ? $txt['by'].' '.$listing['poster'] : '' , '<br>';
+		}
+		echo '</div>';
+	}
+ }
+
+// blocktype 20: TP module
+function TPortal_tpmodulebox($blockid)
+{
+	global $context;
+
+	// fetch the correct block
+	if(!empty($context['TPortal']['moduleid'])) {
+		$tpm = $context['TPortal']['moduleid'];
+		if(!empty($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpmodules']['blockrender'][$tpm]['function'])) {
+			call_user_func($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']);
+        }
+	}
+}
+
+// dummy for old templates
+function TPortal_sidebar()
+{
+	return;
+}
+
+// Some functions, not templates
+function tpo_whos($buddy_only = false)
+{
+	global $txt, $scripturl;
+
+	$whos = tpo_whosOnline();
+	echo '
+	<div>
+	' . $whos['num_guests'] .' ' , $whos['num_guests'] == 1 ? $txt['guest'] : $txt['guests'] , ',
+	' . $whos['num_users_online'] .' ' , $whos['num_users_online'] == 1 ? $txt['user'] : $txt['users'] , '
+	</div>';
+	if(isset($whos['users_online']) && count($whos['users_online']) > 0)
+	{
+		$ids = array();
+		$names = array();
+		$times = array();
+		foreach($whos['users_online'] as $w => $wh)
+		{
+			// For reasons historical, SMF produces the timestamp as
+			// the timestamp followed by the user's name, so let's fix it.
+			$timestamp = (int) strtr($w, array($wh['username'] => ''));
+			$ids[] = $wh['id'];
+			$names[$wh['id']] = $wh['name'];
+			$times[$wh['id']] = timeformat($timestamp);
+		}
+		$avy = progetAvatars($ids);
+		foreach($avy as $a => $av)
+			echo '
+		<a class="avatar_single2" title="'.$names[$a].'" href="' . $scripturl . '?action=profile;u='.$a.'">' . $av . '</a>';
+	}
+}
+
+function tpo_whosOnline()
+{
+	global $sourcedir;
+
+	require_once($sourcedir . '/Subs-MembersOnline.php');
+	$membersOnlineOptions = array(
+		'show_hidden' => allowedTo('moderate_forum'),
+		'sort' => 'log_time',
+		'reverse_sort' => true,
+	);
+	$return = getMembersOnlineStats($membersOnlineOptions);
+	return $return;
+}
+
+function progetAvatars($ids)
+{
+	global $user_info, $smcFunc, $modSettings, $scripturl;
+	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
+	$request = $smcFunc['db_query']('', '
+		SELECT
+			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address AS email_address,
+			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type
+		FROM {db_prefix}members AS mem
+		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
+		WHERE mem.id_member IN ({array_int:ids})',
+		array('ids' => $ids)
+	);
+
+	$avy = array();
+	if($smcFunc['db_num_rows']($request) > 0)
+	{
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
+            $avy[$row['id_member']] = set_avatar_data( array(      
+                    'avatar' => $row['avatar'],
+                    'email' => $row['email_address'],
+                    'filename' => !empty($row['filename']) ? $row['filename'] : '',
+                    'id_attach' => $row['id_attach'],
+                    'attachment_type' => $row['attachment_type'],
+                )
+            )['image'];
+		}
+		$smcFunc['db_free_result']($request);
+	}
+
+	return $avy;
+}
+
+// a dummy layer for layer articles
+function template_nolayer_above()
+{
+	global $context;
+
+	echo '
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+		<meta name="keywords" content="' . $context['meta_keywords'] . '" />
+		<title>' , $context['page_title'] , '</title>
+		' , $context['tp_html_headers'] , '
+	</head>
+	<body><div id="nolayer_frame">';
+}
+
+function template_nolayer_below()
+{
+	echo '<small id="nolayer_copyright">',theme_copyright(),'</small>
+	</div></body></html>';
+}
+
+// article search page 1
+function template_TPsearch_above()
+{
+	global $context, $txt, $scripturl;
+
+	if($context['TPortal']['show_download']==0) {
+		echo '
+	<div style="padding: 0 5px;">
+		<div class="cat_bar">
+			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
+		</div>
+		<div class="windowbg2 noup">
+			<span class="topslice"><span></span></span>
+			<p style="margin: 0; padding: 0 1em;">
+				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
+	}
+	else {
+        echo '
+	<div style="padding: 0 5px;">
+		<div class="cat_bar">
+			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
+		</div>
+		<div class="windowbg2 noup">
+			<span class="topslice"><span></span></span>
+			<p style="margin: 0; padding: 0 1em;">
+				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
+				<a href="' . $scripturl. '?action=tportal;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
+    }
+
+	// any others?
+	if(!empty($context['TPortal']['searcharray']) && count($context['TPortal']['searcharray']) > 0) {
+		echo implode(' | ', $context['TPortal']['searcharray']);
+    }
+
+	echo '
+			</p>
+			<span class="botslice"><span></span></span>
+		</div>
+	</div>';
+
+}
+
+function template_TPsearch_below()
+{
+	return;
+}
+
+// Error page
+function template_tperror_above()
+{
+	global $context;
+
+	echo '
+	<div class="title_bar">
+		<h3 class="titlebg"><span class="left"></span><span class="error">'.$context['TPortal']['tperror'].'</span></h3>
+	</div>';
+
+}
+
+// Error article not published
+function template_notpublished()
+{
+	global $context;
+	echo '
+<div style="padding-bottom: 4px;">
+	<span class="clear upperframe"><span></span></span>
+	<div class="roundframe"><div class="innerframe">
+		<div style="line-height: 1.5em; text-align: center;">'.$context['TPortal']['tperror'].'</div>
+	</div></div>
+	<span class="lowerframe"><span></span></span>
+</div>';
+
+}
+
+function template_tperror_below()
+{
+	return;
+}
+
+function template_tpnotify_above()
+{
+	global $context;
+
+	echo '<div style="color: green; padding: 1em; background-color: #fdfffd; border: 2px solid; margin-bottom: 1em;">
+			<div style="padding: 1em;">'.$context['TPortal']['tpnotify'].'</div>
+		</div>';
+
+}
+
+function template_tpnotify_below()
+{
+	return;
+}
+
+// the TP tabs routine
+function template_tptabs_above()
+{
+	global $context;
+
+	if(!empty($context['TPortal']['tptabs']))
+	{
+		$buts = array();
+		echo '
+	<div class="tptabs">';
+		foreach($context['TPortal']['tptabs'] as $tab)
+			$buts[] = '<a' . ($tab['is_selected'] ? ' class="tpactive"' : '') . ' href="' . $tab['href'] . '">' . $tab['title'] . '</a>';
+
+		echo implode(' | ', $buts) , '
+	</div>';
+	}
+}
+
+function template_tptabs_below()
+{
+	global $context;
+
+}
+
+// article layout types
 function article_renders($type = 1, $single = false, $first = false)
 {
 	global $context;
@@ -1826,6 +1834,7 @@ function article_avatar($render = true)
         return $data;
     }
 }
+
 function article_bookmark($render = true)
 {
 	global $scripturl, $settings, $context;
@@ -2215,6 +2224,7 @@ function blockarticle_moreauthor($render = true)
 		echo '';
 
 }
+
 function category_childs()
 {
 	global $context, $scripturl;
