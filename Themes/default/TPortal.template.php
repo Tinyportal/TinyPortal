@@ -48,7 +48,7 @@ function template_main_nolayer()
 	echo tp_renderarticle($context['TPortal']['article']);
 }
 
-// the frontpage template
+// Frontpage template
 function template_frontpage()
 {
 	global $context;
@@ -75,7 +75,6 @@ function template_frontpage()
 		echo '
 	<div class="tp_pageindex_upper">' , $context['TPortal']['pageindex'] , '</div>';
 
-
 	// use a customised template or the built-in?
 	render_template_layout($grid[(!empty($front['options']['layout']) ? $front['options']['layout'] : $context['TPortal']['frontpage_layout'])]['code'], 'category_');
 
@@ -86,10 +85,9 @@ function template_frontpage()
 
 	if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
 		echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
-
 }
 
-// This is the template for single article
+// Single article template
 function template_article($article, $single = false)
 {
 	global $context;
@@ -100,7 +98,7 @@ function template_article($article, $single = false)
 	render_template(article_renders((!empty($article['category_opts']['catlayout']) ? $article['category_opts']['catlayout'] : 1) , true, true));
 }
 
-// the templates for article categories
+// Article categories template
 function template_category()
 {
 	global $context, $scripturl;
@@ -118,7 +116,6 @@ function template_category()
 			);
 			if($cats['selected'])
 				$buts[$cats['id']]['active'] = true;
-
 		}
 		echo '<div style="overflow: hidden;">' , tp_template_button_strip($buts, 'top'), '</div>';
 	}
