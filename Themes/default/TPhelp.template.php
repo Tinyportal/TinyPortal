@@ -25,6 +25,7 @@ function template_main()
 		template_tphelp();
 }
 
+// Credits Page
 function template_tpcredits()
 {
 	global $txt;
@@ -33,9 +34,9 @@ function template_tpcredits()
 	<div class="tborder">
 		<div class="cat_bar">
 			<h3 class="catbg">' . $txt['tp-credits'] . '</h3>
-		</div>
+		</div><div></div>
 		<p class="information">' , $txt['tp-creditack2']  , '</p>
-		<div class="windowbg2">
+		<div class="windowbg">
 			<span class="topslice"><span></span></span>
 			<div class="content" style="line-height: 1.6em; padding: 0 1em;">
 				'.$txt['tp-credit1'].'
@@ -45,6 +46,7 @@ function template_tpcredits()
 	</div>';
 }
 
+// Main TP Help page
 function template_tphelp()
 {
 	global $context, $txt;
