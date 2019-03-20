@@ -15,6 +15,12 @@
  *
  */
 
+// ** Sections **
+// Frontpage template
+// Single article template
+// Article categories template
+
+
 function template_main()
 {
 	global $context;

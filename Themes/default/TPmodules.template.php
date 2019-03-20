@@ -368,6 +368,7 @@ function template_dlsubmitsuccess()
 					<div class="padding-div">&nbsp;</div></div>
 		</div>';
 }
+
 function template_submitsuccess()
 {
 	global $txt;
