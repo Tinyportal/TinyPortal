@@ -251,7 +251,7 @@ function tp_getbuttons()
 	if(allowedTo('tp_submithtml'))
 		$buts['tpeditwonarticle']['sub_buttons']['submithtml'] = array(
 			'title' => $txt['tp-submitarticle'],
-			'href' => $scripturl . '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_html',
+			'href' => $scripturl . '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_html',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
@@ -260,7 +260,7 @@ function tp_getbuttons()
 	if(allowedTo('tp_submitbbc'))
 		$buts['tpeditwonarticle']['sub_buttons']['submitbbc'] = array(
 			'title' => $txt['tp-submitarticlebbc'],
-			'href' => $scripturl . '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_bbc',
+			'href' => $scripturl . '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_bbc',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
@@ -287,12 +287,6 @@ function tp_getbuttons()
 				'tpfrontpage' => array(
 					'title' => $txt['tp-frontpage'],
 					'href' => $scripturl . '?action=tpadmin;sa=frontpage',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpmodules' => array(
-					'title' => $txt['tp-modules'],
-					'href' => $scripturl . '?action=tpadmin;sa=modules',
 					'show' => true,
 					'active_button' => false,
 				),
