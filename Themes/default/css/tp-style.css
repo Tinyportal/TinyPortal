@@ -88,7 +88,7 @@ h2.author_h2
 {
 	font-size: 1.3em;
 	font-weight: normal;
-	border-top: solid 1px #ccc;
+	border-top: 1px solid rgba(204, 204, 204, 0.5);
 	padding: 0.7em 0;
 }
 .article_bodytext
@@ -124,12 +124,12 @@ h2.author_h2
 	padding: 1em 1em 0.75em 1em;
 	color: #888;
 	line-height: 1.6em;
-	border-bottom: solid 1px #ddd;
+	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
 	overflow: hidden;
 }
 .article_text 
 {
-	border-bottom: solid 1px #ddd;
+	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
 }
 ul.gtags li
 {
@@ -229,7 +229,7 @@ h3.article_title span.article_shortdate span
    width: 128px;
    height: 128px;
    overflow: hidden;
-   border: 1px solid #ccc;
+   border: 1px solid rgba(204, 204, 204, 0.5);
 }
 /* render 4 */
 .render4
@@ -738,7 +738,7 @@ ul.tp_catmenu li.tp_catmenu_header
 {
 	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
-	border: solid 1px #ccc;
+	border: 1px solid rgba(204, 204, 204, 0.5);
 	padding: 4px;
 	margin-bottom: 4px;
 	max-height: 10em;
@@ -748,7 +748,7 @@ ul.tp_catmenu li.tp_catmenu_header
 {
 	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
-	border: solid 1px #ccc;
+	border: 1px solid rgba(204, 204, 204, 0.5);
 	padding: 4px;
 	margin-bottom: 4px;
 	max-height: 20em;
@@ -1011,7 +1011,7 @@ a.avatar img
 .dl_pageindex
 {
 	overflow: hidden;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
 }
 .dl_cats h4
 {
@@ -1339,7 +1339,7 @@ table.admintable, table.formtable, table.multiplerow
 
 table.multiplerow td
 {
-	border: solid 1px #ccc;
+	border: 1px solid rgba(204, 204, 204, 0.5);
 }
 .admintable td, .admintable th, .admintable caption
 {
@@ -1485,33 +1485,6 @@ h2.catbg, h2.catbg2, h2.titlebg
 	line-height: 31px;
 	font-size: 1.2em;
 	font-weight: bold;
-}
-h2.catbg a, h2.catbg
-{
-	color: white;
-}
-h2.catbg2 a, h2.catbg2
-{
-	color: #feb;
-}
-h2.catbg a:hover
-{
-	color: #fd9;
-	text-decoration: none;
-}
-h2.catbg2 a:hover
-{
-	color: #fff;
-	text-decoration: none;
-}
-h2.titlebg a, h2.titlebg
-{
-	color: black;
-}
-h2.titlebg a:hover
-{
-	color: #FFA500;
-	text-decoration: none;
 }
 h2.catbg img.icon
 {
@@ -1662,6 +1635,7 @@ h2.tphelp
 	font-weight: bold;
 	background: url(../images/theme/main_block.png) no-repeat -10px -200px;
 	padding-right: 0;
+	border-radius: 6px 6px 0 0;
 }
 .tp_half h3.titlebg span.l
 {
@@ -1685,6 +1659,7 @@ h2.tphelp
 	font-weight: bold;
 	background: url(../images/theme/main_block.png) no-repeat -10px -160px;
 	padding-right: 0;
+	border-radius: 6px 6px 0 0;
 }
 .tp_half h3.catbg span.l
 {
@@ -1912,18 +1887,18 @@ box-sizing:border-box;
 
 .addborder
 {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid rgba(204, 204, 204, 0.5);
 }
 .addborderleft div
 {
-	border-left:1px solid #ccc;
+	border-left:1px solid rgba(204, 204, 204, 0.5);
 } 
 .admin-area
 {
 	width: 100%;
     float: left;
 	box-sizing: border-box;
-    border:1px solid #ccc;
+	border: 1px solid rgba(204, 204, 204, 0.5);
 }
 .admin-area img
 {
@@ -2001,7 +1976,7 @@ box-sizing:border-box;
 }
 .panels-optionsbg
 {
-	background-color: #ffffff;
+	background-color: rgba(255, 255, 255, 0.2);
 	overflow: hidden;
 	padding: 5px;
 }
@@ -2050,7 +2025,7 @@ img.theme_icon
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
 table.tp_grid td, table.tp_grid th
 {
-	border: 1px solid #ddd;
+	border: 1px solid rgba(221, 221, 221, 0.5);
 }
 table.tp_grid tr.windowbg:nth-of-type(odd)
 {
