@@ -79,11 +79,11 @@ function TPShoutLoad()
         // ]]></script>';
     }
 
-    if(file_exists($settings['theme_dir'].'/css/TPShout.css')) {
-        $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
+    if(file_exists($settings['theme_dir'].'/css/tp-shout.css')) {
+        $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/tp-shout.css?fin160" />';
     }
     else {
-        $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
+        $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/tp-shout.css?fin160" />';
     }
 
     if($context['TPortal']['shoutbox_usescroll'] > 0) {
