@@ -603,4 +603,151 @@ function template_submitsuccess()
 					<div class="padding-div">&nbsp;</div></div>
 		</div>';
 }
+
+function template_editcomment()
+{
+    global $txt, $scripturl, $context;
+
+    if(isset($context['TPortal']['comment_edit'])){
+        echo '
+            <form accept-charset="', $context['character_set'], '"  name="tp_edit_comment" action="'.$scripturl.'?action=tportal;sa=editcomment" method="post" style="margin: 1ex;">
+                <input name="tp_editcomment_title" type="text" value="'.$context['TPortal']['comment_edit']['title'].'"> <br>
+                <textarea name="tp_editcomment_body" rows="6" cols="20" style="width: 90%;" wrap="on">'.$context['TPortal']['comment_edit']['body'].'</textarea>
+                <br>
+                <input id="tp_editcomment_submit" type="submit" value="'.$txt['tp-submit'].'">
+                <input name="tp_editcomment_type" type="hidden" value="article_comment">
+                <input name="tp_editcomment_id" type="hidden" value="'.$context['TPortal']['comment_edit']['id'].'">
+            </form>
+        ';
+    }
+
+
+}
+
+function template_showcomments()
+{
+    global $context, $txt, $scripturl;
+
+    if(!empty($context['TPortal']['showall'])) {
+			echo '
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
+		<div></div>
+			<div id="show-art-comm" class="windowbg padding-div">
+			<table class="table_grid tp_grid" style="width:100%">
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="comments">
+					<div style="word-break:break-all;">
+						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
+						<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
+						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
+						<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+						<p class="clearthefloat"></p>
+					</div>
+					</th>
+					</tr>
+				</thead>
+				<tbody>';
+
+			if(!empty($context['TPortal']['artcomments']['new'])) {
+				foreach($context['TPortal']['artcomments']['new'] as $mes) {
+					echo '
+                        <tr class="windowbg">
+                            <td class="comments">
+                            <div>
+                                <div class="float-items" style="width:30%;">
+                                    <a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . ' ' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '</a>
+                                </div>
+                                <div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+                                <div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'],0,150) , '...</div></div>
+                                <div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
+                            </div>
+                            <p class="clearthefloat"></p>
+                            </div>
+                            </td>
+                        </tr>';
+                }
+			}
+			echo '
+			<tr class="windowbg">
+			    <td class="shouts">
+				    <div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tportal;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
+			    </td>
+			</tr>';
+
+			echo '
+			</tbody>
+		</table>
+		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
+		</div>
+		';
+		}
+		else {
+			echo '
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '</h3></div>
+		<div></div>
+			<div id="latest-art-comm" class="windowbg padding-div">
+			<table class="table_grid tp_grid" style="width:100%">
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="comments">
+			<div>
+				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
+				<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
+				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
+				<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+				<p class="clearthefloat"></p>
+			</div>
+				</th>
+				</tr>
+			</thead>
+			<tbody>';
+
+			if(!empty($context['TPortal']['artcomments']['new'])) {
+				foreach($context['TPortal']['artcomments']['new'] as $mes) {
+					echo '
+			<tr class="windowbg">
+			<td class="comments">
+			<div>
+				<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
+				' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
+				</a><div class="smalltext"> ' , $mes['title'] , '</div>
+				</div>
+				<div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+				<div class="float-items" style="width:30%;">' , $mes['title'] , '<br> ' , $mes['comment'] , '</div>
+				<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div></div>
+				<p class="clearthefloat"></p>
+			</div>
+			</td>
+			</tr>';
+                }
+			}
+			else {
+				echo '
+			<tr class="windowbg">
+			<td class="comments">
+				<div style="padding:1%;">' . $txt['tp-nocomments2'] . '</div>
+			</td>
+			</tr>';
+			echo '
+			</tbody>
+		</table>
+		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
+		</div>';
+            }	
+		}
+}
+
+function template_addsuccess()
+{
+    global $txt;
+
+    echo '
+        <div class="tborder">
+            <div style="padding: 30px 10px 30px 10px;text-align:center;" class="windowbg">'.$txt['tp-addsuccess'].'</div>
+        </div>
+    ';
+
+}
+
 ?>

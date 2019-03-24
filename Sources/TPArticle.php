@@ -80,8 +80,8 @@ function articleInsertComment() {{{
     }
 
     $commenter  = $context['user']['id'];
-    $article    = $_POST['tp_article_id'];
-    $title      = strip_tags($_POST['tp_article_comment_title']);
+	$article    = TPUtil::filter('tp_article_id', 'post', 'int');
+	$title      = TPUtil::filter('tp_article_comment_title', 'post', 'string');
     $comment    = substr(TPUtil::htmlspecialchars($_POST['tp_article_bodytext']), 0, 65536);
     if(!empty($context['TPortal']['allow_links_article_comments']) && TPUtil::hasLinks($comment)) {
         redirectexit('page='.$article.'#tp-comment');
@@ -166,9 +166,12 @@ function articleShowComments() {{{
     $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
     $context['TPortal']['unreadcomments'] = true;
     $context['TPortal']['showall'] = $showall;
-    $context['TPortal']['subaction'] = 'showcomments';
+    $context['TPortal']['sub_template'] = 'showcomments';
     TPadd_linktree($scripturl.'?action=tportal;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
     loadTemplate('TParticle');
+    if(loadLanguage('TParticle') == false) {
+        loadLanguage('TParticle', 'english');
+    };
 
 }}}
 
@@ -213,8 +216,11 @@ function articleEditComment() {{{
                     'title' => $row['value1'],
                     'body' => $row['value2'],
                 );
-                $context['TPortal']['subaction'] = 'editcomment';
-                loadTemplate('TParticle');
+                $context['TPortal']['sub_template'] = 'editcomment';
+                loadTemplate('TParticle')
+                if(loadLanguage('TParticle') == false) {
+                    loadLanguage('TParticle', 'english');
+                };
 			}
 			fatal_error($txt['tp-notallowed'], false);
 		}
