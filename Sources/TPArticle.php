@@ -217,7 +217,7 @@ function articleEditComment() {{{
                     'body' => $row['value2'],
                 );
                 $context['TPortal']['sub_template'] = 'editcomment';
-                loadTemplate('TParticle')
+                loadTemplate('TParticle');
                 if(loadLanguage('TParticle') == false) {
                     loadLanguage('TParticle', 'english');
                 };
