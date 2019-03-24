@@ -15,13 +15,18 @@
  *
  */
 
+// ** Sections **
+// Search Articles Page
+// Article search results Page
+
+// Search Articles Page
 function template_article_search_form()
 {
 	global $context, $settings, $txt, $scripturl;
 
     echo '
     <form accept-charset="', $context['character_set'], '" name="TPsearcharticle" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
-        <div class="tborder" style="margin: auto;">
+        <div class="tborder">
             <div class="cat_bar">
                 <h3 class="catbg">' , $txt['tp-searcharticles2'] , '</h3>
             </div>
@@ -45,11 +50,11 @@ function template_article_search_form()
             </div>
             <span class="lowerframe"><span></span></span>
         </div>
-    </form>
-    ';
+    </form>';
 
 }
 
+// Article search results Page
 function template_article_search_results()
 {
 
@@ -65,7 +70,7 @@ function template_article_search_results()
         <div class="roundframe noup">
             <div class="tp_pad">'.$txt['tp-searcharticleshelp'].'</div>
                 <div class="tp_pad">
-                <form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
+                <form accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
                 <div class="tp_pad">
                     <b>'.$txt['tp-search'].':</b><br>
                     <input id="searchbox" type="text" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" required/><br>
@@ -103,7 +108,6 @@ function template_article_search_results()
     <div class="pagesection">
         <span>', $context['page_index'], '</span>
     </div>';
-
 }
 
 ?>

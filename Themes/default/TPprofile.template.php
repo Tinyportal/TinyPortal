@@ -14,7 +14,14 @@
  * Copyright (C) 2019 - The TinyPortal Team
  *
  */
+ 
+// ** Sections **
+// Portal Summary Page
+// Articles Page
+// Articles Settings Page
+// Uploaded Files Page
 
+// Portal Summary Page
 function template_tp_summary()
 {
 	global $settings, $txt, $context, $scripturl;
@@ -37,6 +44,7 @@ function template_tp_summary()
 	</div>';
 }
 
+// Articles Page
 function template_tp_articles()
 {
 	global $settings, $txt, $context, $scripturl, $user_info;
@@ -119,7 +127,7 @@ function template_tp_articles()
 			
 		if(!empty($context['TPortal']['pageindex']))
 			echo '
-			<div style="padding: 3ex;">
+			<div class="padding-div">
 				'.$context['TPortal']['pageindex'].'
 			</div>';
 		echo '
@@ -139,13 +147,14 @@ $clickme.click( function(e) {
 </script>
 	</div>';
 	}
+// Articles Settings Page
 	elseif($context['TPortal']['profile_action'] == 'settings') {
 		echo '
 	<div id="tp_profile_articles_settings" class="bordercolor windowbg padding-div">
-		<div class="font-strong" style="padding:1%;">
+		<div class="font-strong padding-div">
 			'.$txt['tp-dlsettings'].'
 		</div>
-			<div style="padding: 2ex;">
+			<div class="padding-div">
 				<form name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=savesettings" method="post">
 					<input type="hidden" name="sc" value="', $context['session_id'], '" />
 					<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
@@ -162,7 +171,7 @@ $clickme.click( function(e) {
 							<input name="tpwysiwyg" type="radio" value="0" ' , ($context['TPortal']['selected_member_choice'] =='0' || $context['TPortal']['selected_member_choice'] == '1') ? 'checked' : '' , '> '.$txt['tp-no'].'<br>
 							</dd>
 					</dl>
-						<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
+						<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
 				</div>';
             }
 			echo '
@@ -173,6 +182,7 @@ $clickme.click( function(e) {
 	}
 }
 
+// Uploaded Files Page
 function template_tp_download()
 {
 	global $settings, $txt, $context, $scripturl;

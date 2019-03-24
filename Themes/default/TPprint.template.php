@@ -76,13 +76,6 @@ function template_tp_print_above()
 			}
 		</style>';
 
-	/* Internet Explorer 4/5 and Opera 6 just don't do font sizes properly. (they are big...)
-		Thus, in Internet Explorer 4, 5, and Opera 6 this will show fonts one size smaller than usual.
-		Note that this is affected by whether IE 6 is in standards compliance mode.. if not, it will also be big.
-		Standards compliance mode happens when you use xhtml... */
-	if ($context['browser']['needs_size_fix'])
-		echo '
-		<link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/fonts-compat.css" />';
 	echo '
 		<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />
 		<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';

@@ -15,6 +15,13 @@
  *
  */
 
+// ** Sections **
+// Shoutbox administration Page
+// Shoutbox settings Page
+// Shoutbox Block template
+// Shoutbox single shout template
+// View shouts Profile page
+ 
 function template_tpshout_above()
 {
 	return;
@@ -42,7 +49,7 @@ function template_tpshout_bigscreen()
 	echo '
 	<div class="tborder">
 		<div class="catbg" style="padding: 5px 5px 5px 1em;">' , $txt['tp-tabs10'] , '</div>
-		<div class="windowbg" style="padding: 1em;">';
+		<div class="windowbg tp-pad">';
 
 	echo '
 			<div id="bigshout" style="width: 99%; height: 100%;">', $shouts, '</div>';
@@ -58,16 +65,17 @@ function template_tpshout_bigscreen()
 
 }
 
+// Shoutbox administration Page
 function template_tpshout_admin()
 {
 	global $context, $scripturl, $txt;
 
 	 echo '
-	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpshout;shout=admin"  method="post" style="margin: 0px;">
+	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpshout;shout=admin"  method="post">
 		<input name="TPadmin_blocks" type="hidden" value="set" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="singlemenuedit">
-			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxsettings'].'</h3></div>
+			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxadmin'].'</h3></div>
 			<div id="tpshout_admin" class="admintable admin-area">
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
@@ -77,41 +85,42 @@ function template_tpshout_admin()
 							<p class="clearthefloat"></p>
 						</div>';
 
-
-	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts)
-	{
-		echo '			<div style="border-bottom:1px solid #ccc;">
-							<div class="fullwidth-on-res-layout float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '" style="width:30%;">
+	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts) {
+				echo '
+					<div style="border-bottom:1px solid #ccc;">
+						<div class="fullwidth-on-res-layout float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '" style="width:30%;">
 							'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
 							'. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
-							</div>
-							<div class="float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '">
-							<textarea style="vertical-align: middle; width: 99%;" rows="5" cols="40" wrap="auto" name="tp_shoutbox_item'.$admin_shouts['id'].'">' .html_entity_decode($admin_shouts['body']).'</textarea>
-							</div>
-							<div class="float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '">
-							<input name="tp_shoutbox_hidden'.$admin_shouts['id'].'" type="hidden" value="1">
-								<div style="text-align: right;"><strong><input style="vertical-align: middle;" name="tp_shoutbox_remove'.$admin_shouts['id'].'" type="checkbox" value="ON"> '.$txt['tp-remove'].'</strong></div>
-						   </div>
-						   <p class="clearthefloat"></p>
-						</div>';
-	}
-
-		echo '			<div style="">
-							<div class="normaltext float-items" style="width:47%;">
-								<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
-							</div>
-							<div class="smalltext float-items" align="right"  style="width:47%;">
-								<b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
-						   </div>
-						   <p class="clearthefloat"></p>
 						</div>
+						<div class="float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '">
+							<textarea style="vertical-align: middle; width: 99%;" rows="5" cols="40" wrap="auto" name="tp_shoutbox_item'.$admin_shouts['id'].'">' .html_entity_decode($admin_shouts['body']).'</textarea>
+						</div>
+						<div class="float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '">
+							<input name="tp_shoutbox_hidden'.$admin_shouts['id'].'" type="hidden" value="1">
+							<div style="text-align: right;"><strong><input style="vertical-align: middle;" name="tp_shoutbox_remove'.$admin_shouts['id'].'" type="checkbox" value="ON"> '.$txt['tp-remove'].'</strong></div>
+					   </div>
+					   <p class="clearthefloat"></p>
+					</div>';
+	}
+		echo '
+					<div>
+						<div class="normaltext float-items" style="width:47%;">
+							<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
+						</div>
+						<div class="smalltext float-items" align="right"  style="width:47%;">
+							<b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
+					   </div>
+					   <p class="clearthefloat"></p>
 					</div>
-					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
+				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			</div>
-	</form><p class="clearthefloat"></p>';
+		</div>
+		<p class="clearthefloat"></p>
+	</form>';
 }
 
+// Shoutbox settings Page
 function template_tpshout_admin_settings()
 {
 	global $context, $scripturl, $txt, $settings;
@@ -263,12 +272,14 @@ function template_tpshout_admin_settings()
 						</dd>
 					</dl>
 				</div>
-			   <div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+			   <div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			</div>
 		</div>
-	</form><p class="clearthefloat"></p>';
+		<p class="clearthefloat"></p>
+	</form>';
 }
 
+// Shoutbox Block template
 function template_tpshout_shoutblock()
 {
 	global $context, $scripturl, $txt, $settings, $modSettings, $user_info;
@@ -363,67 +374,7 @@ function template_tpshout_shoutblock()
 	}
 }
 
-function template_tpshout_frontpage()
-{
-
-	global $context;
-
-	echo 'test';
-}
-
-function template_tpshout_profile()
-{
-
-	global $settings, $txt, $context;
-
-	echo '
-		<div class="cat_bar"><h3 class="catbg">'.$txt['shoutboxprofile'].'</h3></div>
-		<p class="information">'.$txt['shoutboxprofile2'].'</p>
-		<div></div>
-		<div id="tpshout_profile" class="windowbg">
-			<div class="windowbg addborder" style="padding: 2ex;">';
-	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
-	echo '
-			</div><br>
-		<table class="table_grid tp_grid" style="width:100%">
-			<thead>
-				<tr class="title_bar titlebg2">
-				<th scope="col" class="shouts">
-					<div align="left" class="float-items" align="center" style="width:30%;">'.$txt['date'].'</div>
-					<div align="left" class="smalltext float-items" style="width:60%;">',$txt['tp-shout'],'</div>
-					<div class="float-items" align="center" style="width:10%;">'. $txt['tp-edit'] .'</div>
-				</th>
-				</tr>
-			</thead>
-			<tbody>';
-	if(isset($context['TPortal']['profile_shouts']) && sizeof($context['TPortal']['profile_shouts'])>0){
-		foreach($context['TPortal']['profile_shouts'] as $art){
-			echo '
-				<tr class="windowbg">
-				<td class="shouts">
-					<div align="left" class="smalltext float-items" style="width:30%;" >',$art['created'],'</div>
-					<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
-					<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
-				</td>
-				</tr>';
-		}
-	}
-	else
-		echo '
-				<tr class="windowbg">
-					<td class="tpshout_date" colspan="3">
-					<div align="center" class="smalltext">',$txt['tpsummary_noshout'],'</div>	
-					</td>
-				</tr>';
-
-	echo '
-			</tbody>
-		</table>
-	<div style="padding: 3ex;">'.$context['TPortal']['pageindex'].'</div>
-		</div>';
-
-}
-
+// Shoutbox single shout template
 function template_singleshout($row)
 {
 	global $scripturl, $context, $settings, $txt;
@@ -496,10 +447,62 @@ function template_singleshout($row)
 
 function template_tpshout_ajax()
 {
-
 	global $context;
+
 	echo '
 	<div id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError' : 'bigshout') . '">'. $context['TPortal']['rendershouts']. '</div>';
+}
+
+// View shouts Profile page
+function template_tpshout_profile()
+{
+	global $settings, $txt, $context;
+
+	echo '
+		<div class="cat_bar"><h3 class="catbg">'.$txt['shoutboxprofile'].'</h3></div>
+		<p class="information">'.$txt['shoutboxprofile2'].'</p>
+		<div></div>
+		<div id="tpshout_profile" class="windowbg">
+			<div class="windowbg addborder">';
+	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
+	echo '
+			</div><br>
+			<table class="table_grid tp_grid" style="width:100%">
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="shouts">
+						<div align="left" class="float-items" align="center" style="width:30%;">'.$txt['date'].'</div>
+						<div align="left" class="smalltext float-items" style="width:60%;">',$txt['tp-shout'],'</div>
+						<div class="float-items" align="center" style="width:10%;">'. $txt['tp-edit'] .'</div>
+					</th>
+					</tr>
+				</thead>
+				<tbody>';
+		if(isset($context['TPortal']['profile_shouts']) && sizeof($context['TPortal']['profile_shouts'])>0){
+			foreach($context['TPortal']['profile_shouts'] as $art){
+				echo '
+					<tr class="windowbg">
+					<td class="shouts">
+						<div align="left" class="smalltext float-items" style="width:30%;" >',$art['created'],'</div>
+						<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
+						<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
+					</td>
+					</tr>';
+			}
+		}
+		else
+			echo '
+					<tr class="windowbg">
+					<td class="tpshout_date" colspan="3">
+						<div align="center" class="smalltext">',$txt['tpsummary_noshout'],'</div>	
+					</td>
+					</tr>';
+
+		echo '
+				</tbody>
+			</table>
+			<div class="padding-div">'.$context['TPortal']['pageindex'].'</div>
+		</div>';
 }
 
 ?>

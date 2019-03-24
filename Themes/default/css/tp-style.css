@@ -2018,7 +2018,7 @@ img.theme_icon
 	margin: 0 0 0 0 !important;
 }
 
-.tp_container .windowbg, .dl_container .windowbg, .dl_container .roundframe  
+.tp_responsive .windowbg, .dl_container .windowbg, .dl_container .roundframe
 {
 	margin: 6px 0 6px 0;
 }
