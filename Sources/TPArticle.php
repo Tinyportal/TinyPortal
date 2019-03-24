@@ -565,7 +565,7 @@ function articleNew() {{{
         isAllowedTo('tp_submitbbc');
         $context['TPortal']['submitbbc'] = 1;
         $context['html_headers'] .= '
-            <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
+            <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?'.TPVERSION.'"></script>';
 
         // Add in BBC editor before we call in template so the headers are there
         $context['TPortal']['editor_id'] = 'tp_article_body';
@@ -580,6 +580,12 @@ function articleNew() {{{
     }
 
     $context['TPortal']['subaction'] = 'submitarticle';
+	if(loadLanguage('TParticle') == false) {
+		loadLanguage('TParticle', 'english');
+    }
+	if(loadLanguage('TPortalAdmin') == false) {
+		loadLanguage('TPortalAdmin', 'english');
+    }
     loadTemplate('TParticle');
     $context['sub_template'] = 'submitarticle';
 

@@ -20,16 +20,31 @@ function template_submitarticle()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 	$tpmonths=array(' ','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-	$mg = $context['TPortal']['editarticle'];
+    if(!empty($context['TPortal']['editarticle'])) {
+	    $mg = $context['TPortal']['editarticle'];
+    }
+    else {
+        $mg = false;
+    }
 
 	if(!isset($context['TPortal']['category_name'])) {
 		$context['TPortal']['category_name'] = $txt['tp-uncategorised'];
     }
 
+    $action = 'tportal;sa=savearticle';
+    if(allowedTo('admin_forum')) {
+        $action = 'tpadmin';
+    }
+
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action=tpadmin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">
+	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action='.$action.'" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">
+		<input type="hidden" name="sc" value="', $context['session_id'], '" />';
+
+    if(allowedTo('admin_forum')) {
+	    echo '<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">';
+    }
+
+    echo'
 		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" border="0" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , '' , $mg['id']==0 ? '' : '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>';
 	echo '</h3></div>
 		<div id="edit-add-single-article" class="admintable admin-area">
@@ -46,44 +61,53 @@ function template_submitarticle()
 					<br>
 					<div>';
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
-				if($mg['articletype'] == 'php')
-					echo '
-							<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
-				elseif($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+				if($mg['articletype'] == 'php') {
+					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
+                }
+				elseif($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html')) {
 					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
-				elseif($tp_use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
-					echo '
-							<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
-				elseif($mg['articletype'] == 'bbc')
+                }
+				elseif($tp_use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html')) {
+					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
+                }
+				elseif($mg['articletype'] == 'bbc') {
 					TP_bbcbox($context['TPortal']['editor_id']);
-				else
+                }
+				else {
 					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">' ;
-					echo '
+                }
+				echo '
 					</div>
 				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			<hr><br>
-				<dl class="settings">
-					<dt>
+				<dl class="settings">';
+
+
+                if(allowedTo('admin_forum')) {
+                    echo '<dt>
 						<label for="field_name">', $txt['tp-status'], '</label>
 					</dt>
 					<dd>';
-					if (!empty($context['TPortal']['editing_article']))
-					{
-						// show checkboxes since we have these features aren't available until the article is saved.
-						echo '
-							<img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" border="0" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
-							<img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" border="0" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
-							<img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" border="0" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />';
-					}
-					else
-					{
-						// Must be a new article, so lets show the check boxes instead.
-						echo '
-							<input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /> '. $txt['tp-setfrontpage']. '<br>
-							<input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /> '. $txt['tp-setsticky']. '<br>
-							<input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /> '. $txt['tp-setlock']. '';
-					}
-						echo '<br><br>
+                    if (!empty($context['TPortal']['editing_article'])) {
+                        // show checkboxes since we have these features aren't available until the article is saved.
+                        echo '
+                            <img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" border="0" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
+                            <img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" border="0" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
+                            <img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" border="0" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />';
+                    }
+                    else {
+                        // Must be a new article, so lets show the check boxes instead.
+                        echo '
+                            <input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /> '. $txt['tp-setfrontpage']. '<br>
+                            <input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /> '. $txt['tp-setsticky']. '<br>
+                            <input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /> '. $txt['tp-setlock']. '';
+                    }
+                }
+                echo '<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">';
+			    if(allowedTo('admin_forum')) {
+                    echo '<br><br>';
+
+                    echo '
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-approved'], '</label>
@@ -104,53 +128,46 @@ function template_submitarticle()
 						<label for="field_name">', $txt['tp-created'], '</label>
 					</dt>
 					<dd>';
-				// day
-				echo '
-							<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">
-							<select size="1" name="tp_article_day">';
+				
+                // day
 				$day = date("j",$mg['date']);
 				$month = date("n",$mg['date']);
 				$year = date("Y",$mg['date']);
 				$hour = date("G",$mg['date']);
+                echo '<select size="1" name="tp_article_day">';
 				$minute = date("i",$mg['date']);
-				for($a=1; $a<32;$a++)
-					echo '
-								<option value="'.$a.'" ' , $day==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+				for($a=1; $a<32;$a++) {
+					echo '<option value="'.$a.'" ' , $day==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+                }
+				echo '</select>';
+
 				// month
-				echo '
-							<select size="1" name="tp_article_month">';
-				for($a=1; $a<13; $a++)
-					echo '
-								<option value="'.$a.'" ' , $month==$a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
-				echo '
-							</select>';
+				echo '<select size="1" name="tp_article_month">';
+				for($a=1; $a<13; $a++) {
+					echo '<option value="'.$a.'" ' , $month==$a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
+                }
+				echo '</select>';
 				// year
-				echo '
-							<select size="1" name="tp_article_year">';
-				$now=date("Y",time())+1;
-				for($a=2004; $a<$now; $a++)
-					echo '
-								<option value="'.$a.'" ' , $year==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+				echo '<select size="1" name="tp_article_year">';
+				$now    = date("Y",time())+1;
+				for($a=2004; $a<$now; $a++) {
+					echo '<option value="'.$a.'" ' , $year==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+                }
+				echo '</select>';
+
 				// hours
-				echo ' -
-							<select size="1" name="tp_article_hour">';
-				for($a=0; $a<24;$a++)
-					echo '
-								<option value="'.$a.'" ' , $hour==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+				echo ' - <select size="1" name="tp_article_hour">';
+				for($a=0; $a<24;$a++) {
+					echo '<option value="'.$a.'" ' , $hour==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+                }
+				echo '</select>';
+
 				// minutes
-				echo ' <b>:</b>
-							<select size="1" name="tp_article_minute">';
-				for($a=0; $a<60;$a++)
-					echo '
-								<option value="'.$a.'" ' , $minute==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select><br><br>
+				echo ' <b>:</b><select size="1" name="tp_article_minute">';
+				for($a=0; $a<60;$a++) {
+					echo '<option value="'.$a.'" ' , $minute==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+                }
+				echo '</select><br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-published'], '</label>
@@ -162,10 +179,10 @@ function template_submitarticle()
 							<input name="tp_article_pub_start" type="hidden" value="'.$mg['pub_start'].'">
 							<select size="1" name="tp_article_pubstartday">
 								<option value="0">' . $txt['tp-notset'] . '</option>';
-				$day = !empty($mg['pub_start']) ? date("j",$mg['pub_start']) : 0;
-				$month = !empty($mg['pub_start']) ? date("n",$mg['pub_start']) : 0;
-				$year = !empty($mg['pub_start']) ? date("Y",$mg['pub_start']) : 0;
-				$hour = !empty($mg['pub_start']) ? date("G",$mg['pub_start']) : 0;
+				$day    = !empty($mg['pub_start']) ? date("j",$mg['pub_start']) : 0;
+				$month  = !empty($mg['pub_start']) ? date("n",$mg['pub_start']) : 0;
+				$year   = !empty($mg['pub_start']) ? date("Y",$mg['pub_start']) : 0;
+				$hour   = !empty($mg['pub_start']) ? date("G",$mg['pub_start']) : 0;
 				$minute = !empty($mg['pub_start']) ? date("i",$mg['pub_start']) : 0;
 				for($a=1; $a<32;$a++)
 					echo '
@@ -253,25 +270,34 @@ function template_submitarticle()
 				echo '
 							</select>
 							</div>
-					</dd>
-					<dt>
-						<label for="field_name">', $txt['tp-category'], '</label>
-					</dt>
-					<dd>
-						<div>
-							<select size="1" name="tp_article_category">
-								<option value="0">'.$txt['tp-none2'].'</option>';
-				foreach($context['TPortal']['allcats'] as $cats)
-				{
-					if($cats['id']<9999 && $cats['id']>0)
-						echo '
-								<option value="'.$cats['id'].'" ', $cats['id'] == $mg['category'] ? 'selected' : '' ,'>'. str_repeat("-", isset($cats['indent']) ? $cats['indent'] : 0) .' '.$cats['name'].'</option>';
-				}
-				echo '
-							</select>
-							<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>
-						</div><br>
-					</dd>
+					</dd>';
+                }
+
+
+                if(!empty($context['TPortal']['allcats'])) {
+                    echo '
+                        <dt>
+                            <label for="field_name">', $txt['tp-category'], '</label>
+                        </dt>
+                        <dd>
+                            <div>
+                                <select size="1" name="tp_article_category">
+                                    <option value="0">'.$txt['tp-none2'].'</option>';
+                    foreach($context['TPortal']['allcats'] as $cats) {
+                        if($cats['id'] < 9999 && $cats['id'] > 0) {
+                            echo '<option value="'.$cats['id'].'" ', $cats['id'] == $mg['category'] ? 'selected' : '' ,'>'. str_repeat("-", isset($cats['indent']) ? $cats['indent'] : 0) .' '.$cats['name'].'</option>';
+                        }
+                    }
+                    echo '</select>';
+                    if(allowedTo('admin_forum')) {
+                        echo '<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>';
+                    }
+                    echo '
+                            </div><br>
+                        </dd>';
+                }
+
+                echo '
 					<dt>
 						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
@@ -281,20 +307,17 @@ function template_submitarticle()
 					</dd>
 				</dl>
 					';
-				if($mg['articletype'] == 'php' || $mg['articletype'] == '' || $mg['articletype'] == 'html')
-				{
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
-                        '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
-					if($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html'))
+				if($mg['articletype'] == 'php' || $mg['articletype'] == '' || $mg['articletype'] == 'html')	{
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					if($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html')) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
-					else
-						echo '
-							<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
-					echo '
-						</div>';
+                    }
+					else {
+						echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
+                    }
+					echo '</div>';
 				}
-				elseif($mg['articletype'] == 'bbc' || $mg['articletype'] == 'import')
-				{
+				elseif($mg['articletype'] == 'bbc' || $mg['articletype'] == 'import') {
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
                     '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
@@ -302,6 +325,8 @@ function template_submitarticle()
 					</div>
                     </div>';
 				}
+                
+                if(allowedTo('admin_forum')) {
 				echo '<br><hr>
 				<dl class="settings">
 					<dt>
@@ -343,8 +368,9 @@ function template_submitarticle()
 					<dd>
 							<select size="10" name="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
 								<option value=""' , $mg['illustration']=='' ? ' selected="selected"' : '' , '>' . $txt['tp-none2'] . '</option>';
-			foreach($context['TPortal']['articons']['illustrations'] as $ill)
+			foreach($context['TPortal']['articons']['illustrations'] as $ill) {
 				echo '<option value="'.$ill['file'].'"' , $ill['file']==$mg['illustration'] ? ' selected="selected"' : '' , '>'.$ill['file'].'</option>';
+            }
 			echo '
 							</select>
 							<p>' . $txt['tp-uploadicon'] . ':<br><input type="file" name="tp_article_illupload"></p>
@@ -562,7 +588,10 @@ function template_submitarticle()
 										<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
 								</div>
 				    </div>
-				</div>
+				</div>';
+                }
+
+                echo'
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 			</div>
