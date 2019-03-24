@@ -24,11 +24,13 @@ function TPArticle() {{{
 
 	global $settings, $context, $txt;
 
-	if(loadLanguage('TPmodules') == false)
-		loadLanguage('TPmodules', 'english');
+	if(loadLanguage('TParticle') == false) {
+		loadLanguage('TParticle', 'english');
+    }
 
-	if(loadLanguage('TPortalAdmin') == false)
+	if(loadLanguage('TPortalAdmin') == false) {
 		loadLanguage('TPortalAdmin', 'english');
+    }
 
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = true;
@@ -166,7 +168,7 @@ function articleShowComments() {{{
     $context['TPortal']['showall'] = $showall;
     $context['TPortal']['subaction'] = 'showcomments';
     TPadd_linktree($scripturl.'?action=tportal;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
 
 }}}
 
@@ -212,7 +214,7 @@ function articleEditComment() {{{
                     'body' => $row['value2'],
                 );
                 $context['TPortal']['subaction'] = 'editcomment';
-                loadtemplate('TPmodules');
+                loadTemplate('TParticle');
 			}
 			fatal_error($txt['tp-notallowed'], false);
 		}
@@ -543,7 +545,7 @@ function articleShow() {{{
     if(loadLanguage('TPortalAdmin') == false) {
         loadLanguage('TPortalAdmin', 'english');
     }
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
 
 }}}
 
@@ -572,7 +574,7 @@ function articleNew() {{{
     }
 
     $context['TPortal']['subaction'] = 'submitarticle';
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
     $context['sub_template'] = 'submitarticle';
 
 }}}
@@ -581,7 +583,10 @@ function articleSubmitSuccess() {{{
     global $context;
 
     $context['TPortal']['subaction'] = 'submitsuccess';
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
+	if(loadLanguage('TParticle') == false) {
+		loadLanguage('TParticle', 'english');
+    }
     $context['sub_template'] = 'submitsuccess';
 
 }}}

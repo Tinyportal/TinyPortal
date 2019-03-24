@@ -101,10 +101,14 @@ function TPortalAdmin()
 	if(isset($_GET['sa'])) {
 		$context['TPortal']['subaction'] = $tpsub = $_GET['sa'];
 		if(substr($_GET['sa'], 0, 11) == 'editarticle') {
-			$tpsub = 'articles';
+			loadTemplate('TParticle');
+            $context['sub_template'] = 'submitarticle';
+            $tpsub = 'articles';
 			$context['TPortal']['subaction'] = 'editarticle';
 		}
 		elseif(substr($_GET['sa'], 0, 11) == 'addarticle_') {
+            loadTemplate('TParticle');
+            $context['sub_template'] = 'submitarticle';
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = $_GET['sa'];
             if($_GET['sa'] == 'addarticle_html') {

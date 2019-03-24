@@ -369,19 +369,6 @@ function template_dlsubmitsuccess()
 		</div>';
 }
 
-function template_submitsuccess()
-{
-	global $txt;
-
-	echo '
-		<div class="tborder">
-                <div class="cat_bar">
-				    <h3 class="catbg">'.$txt['tp-submitsuccess2'].'</h3>
-                </div>
-					<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-submitsuccess'].'
-					<div class="padding-div">&nbsp;</div></div>
-		</div>';
-}
 
 function template_submitarticle()
 {
