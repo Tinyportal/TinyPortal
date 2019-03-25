@@ -14,13 +14,11 @@
  *
  */
 
-.tp_shoutavatar
-{
+.tp_shoutavatar {
 	margin: 0 5px 0 0;
 	overflow: hidden;
 }
-.tp_shoutbody
-{
+.tp_shoutbody {
 	background: #fff;
 	border: solid 1px #888;
 	border-top: none;
@@ -30,13 +28,11 @@
 	font-size: 0.9em;
 	overflow: auto;
 }
-.tp_shoutmember, .tp_shoutavatar img
-{
+.tp_shoutmember, .tp_shoutavatar img {
 	font-weight: bold;
 	float: left;
 }
-.tp_shoutavatar .avy2 img
-{
+.tp_shoutavatar .avy2 img {
 	width: 34px;
 	border-radius: 2px;
 	max-height: 100%;
@@ -44,14 +40,12 @@
 	float: left;
 	padding: 1px;
 }
-.tp_shoutavatar.tfull .avy2 img
-{
+.tp_shoutavatar.tfull .avy2 img {
 	width: 100%;
 	max-height: 100%;
 	margin: 0 10px 10px 0;
 }
-.tp_shoutavatar h4
-{
+.tp_shoutavatar h4 {
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
 }
@@ -80,102 +74,57 @@ textarea.shoutbox_editor0 {
 	position: relative;
 	padding: 1.5em 1em;
 	margin: 14px 10px 10px 0;
-	background: #fff;
+	background: #ffffff;
+	background: rgba(255, 255, 255, 0.3);
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
-	border: #999 solid 1px;
+	border: 1px solid #999;
 	word-wrap: break-word;
 	word-break: break-word;
 }
-.bubble:after
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 10px 8px;
-border-color: #FFFFFF transparent;
-display: block;
-width: 0;
-z-index: 1;
-top: -8px;
-left: 16px;
+.bubble:after {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 0 10px 8px;
+	border-color: #ffffff transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	top: -8px;
+	left: 16px;
 }
-.bubble:before
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 10px 8px;
-border-color: #999 transparent;
-display: block;
-width: 0;
-z-index: 0;
-top: -9px;
-left: 16px;
+.bubble:before {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 0 10px 8px;
+	border-color: #999 transparent;
+	display: block;
+	width: 0;
+	z-index: 0;
+	top: -9px;
+	left: 16px;
 }
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
-
- /*.bubble {	background-color: #888; } 
-.bubble:after { content: '';
-position: absolute;
-border-style: solid;
-border-width: 0 10px 8px;
-border-color: #888 transparent;
-display: block;
-width: 0;
-z-index: 1;
-top: -8px;
-left: 16px; } */
-
-/* sticky styles */
-/* blue */
-.shout_stickybg2 {
-	background: #ffffff; /* Old browsers */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f8), color-stop(100%,#e0e0e8)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #f0f0f8 0%,#e0e0e8 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #f0f0f8 0%,#e0e0e8 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #f0f0f8 0%,#e0e0e8 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #f0f0f8 0%,#e0e0e8 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f8, endColorstr='#e0e0e8,GradientType=0 ); /* IE6-9 */
+/*
+.bubble {
+	background-color: #404040; 
+} 
+.bubble:after { 
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 0 10px 8px;
+	border-color: #404040 transparent;
+	display: block;
+	width: 0;
+	z-index: 1;
+	top: -8px;
+	left: 16px;
 }
-.speech.shout_stickybg2:after {	border-color: transparent transparent #f0f0f8 #f0f0f8 ; }
-
-/* yellow */
-.shout_stickybg3 {
-	background: #ffffff; /* Old browsers */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff8f0), color-stop(100%,#efe8e0)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #fff8f0 0%,#efe8e0 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #fff8f0 0%,#efe8e0 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #fff8f0 0%,#efe8e0 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #fff8f0 0%,#efe8e0 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff8f0, endColorstr='#efe8e0,GradientType=0 ); /* IE6-9 */
-}
-.speech.shout_stickybg3:after {	border-color: transparent transparent #fff8f0 #f8f4f0 ; }
-
-/* red */
-.shout_stickybg4 {
-	background: #ffffff; /* Old browsers */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff0f0), color-stop(100%,#efe0e0)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #fff0f0 0%,#efe0e0 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #fff0f0 0%,#efe0e0 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #fff0f0 0%,#efe0e0 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #fff0f0 0%,#efe0e0 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff0f0, endColorstr='#efe0e0,GradientType=0 ); /* IE6-9 */
-}
-.speech.shout_stickybg4:after {	border-color: transparent transparent #fff0f0 #fff0f0 ; }
-
-/* green */
-.shout_stickybg5 {
-	background: #ffffff; /* Old browsers */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0fff0), color-stop(100%,#e0efe0)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #f0fff0 0%,#e0efe0 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #f0fff0 0%,#e0efe0 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #f0fff0 0%,#e0efe0 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #f0fff0 0%,#e0efe0 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0fff0, endColorstr='#e0efe0,GradientType=0 ); /* IE6-9 */
-}
-.speech.shout_stickybg5:after {	border-color: transparent transparent #f0fff0 #f0fff0 ; }
+*/
 
 /* for layout option 2 */
 .shoutbody_layout1 {
