@@ -26,6 +26,8 @@
 		'Paste Text': 'Tekst plakken',
 		'Bullet list': 'Opsomming',
 		'Numbered list': 'Genummerde lijst',
+		'Add indent': 'Inspringen',
+		'Remove one indent': 'Inspringen verwijderen',
 		'Undo': 'Ongedaan maken',
 		'Redo': 'Opnieuw uitvoeren',
 		'Rows:': 'Rijen',
