@@ -635,12 +635,12 @@ class chain
 
    function makeBranch($parent_id, $level, $maxlevel)
    {
-       if(!is_array($this->table)) 
+       if(!is_array($this->table))
               $this->table = array();
-	   
-       if(!array_key_exists($parent_id, $this->table)) 
+
+       if(!array_key_exists($parent_id, $this->table))
               return;
-	   
+
        $rows = $this->table[$parent_id];
        foreach($rows as $key=>$value)
        {
@@ -935,12 +935,13 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 
 function TPwysiwyg_setup()
 {
-	global $context, $boardurl;
+	global $context, $boardurl, $txt;
 
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/sceditor.min.js"></script>
 		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/formats/xhtml.js"></script>
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/languages/'.$txt['lang_dictionary'].'.js"></script>
 		<style>
 			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
 			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
@@ -1099,6 +1100,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
 		echo '
 				format: \'xhtml\',
+				locale: "' . $txt['lang_dictionary'] . '",
 				style: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/\'
 			});
@@ -2227,7 +2229,7 @@ function tp_collectArticleIcons()
 						'id' => $count,
 						'file' => $file,
 						'image' => '<img src="'.$boardurl.'/tp-files/tp-articles/illustrations/'.$file.'" alt="'.$file.'" />',
-						'background' => $boardurl.'/tp-files/tp-articles/illustrations/'.$file,						
+						'background' => $boardurl.'/tp-files/tp-articles/illustrations/'.$file,
 					);
 				$count++;
 			}
@@ -2339,7 +2341,7 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 		// Censor the subject.
 		censorText($row['subject']);
 		censorText($row['body']);
-        $row['avy'] = set_avatar_data( array(      
+        $row['avy'] = set_avatar_data( array(
                     'avatar' => $row['avy'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -3141,7 +3143,7 @@ function TPGetMemberColour($member_ids)
 	if (empty($member_ids)) {
 		return false;
     }
-	
+
     // SMF2.1 and php < 7.0 need this
     if (strpos($forum_version, '2.1') !== false && empty($db_connection)) {
         $db_options = array();
@@ -3157,13 +3159,13 @@ function TPGetMemberColour($member_ids)
     }
 
 	$member_ids = is_array($member_ids) ? $member_ids : array($member_ids);
-	
+
     $request = $smcFunc['db_query']('', '
             SELECT mem.id_member, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
             FROM {db_prefix}members AS mem
             LEFT JOIN {db_prefix}membergroups AS mgrp
                 ON (mgrp.id_group = mem.id_group)
-            LEFT JOIN {db_prefix}membergroups AS pgrp 
+            LEFT JOIN {db_prefix}membergroups AS pgrp
                 ON (pgrp.id_group = mem.id_post_group)
             WHERE mem.id_member IN ({array_int:member_ids})',
 		    array(
