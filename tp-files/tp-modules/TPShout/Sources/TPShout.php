@@ -646,7 +646,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 			$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
 			$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
 			$row['value1'] = parse_bbc(censorText($row['value1']), true);
-			$row['online_color'] = !empty($memberdata[$row['value5']]['mg_online_color']) ? $memberdata[$row['value5']]['mg_online_color'] : $memberdata[$row['value5']]['pg_online_color'];
+			$row['online_color'] = !empty($memberdata[$row['value5']]['mg_online_color']) ? $memberdata[$row['value5']]['mg_online_color'] : (!empty($memberdata[$row['value5']]['pg_online_color']) ? $memberdata[$row['value5']]['pg_online_color'] : '');
 			$ns[] = template_singleshout($row);
 		}
 		$nshouts .= implode('', $ns);

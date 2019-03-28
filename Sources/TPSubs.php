@@ -955,7 +955,7 @@ function TPwysiwyg_setup()
 					this.wysiwygEditorInsertHtml(\'<div style="float:left;">\', \'</div>\');
 				},
 				txtExec: [\'<div style="float:left;">\', \'</div>\'],
-				tooltip: \'Insert float left div\'
+				tooltip: \''.$txt['editor_tp_floatleft'].'\'
 			});
 			sceditor.command.set(\'floatright\', {
 				exec: function() {
@@ -963,7 +963,7 @@ function TPwysiwyg_setup()
 					this.wysiwygEditorInsertHtml(\'<div style="float:right;">\', \'</div>\');
 				},
 				txtExec: [\'<div style="float:right;">\', \'</div>\'],
-				tooltip: \'Insert float right div\'
+				tooltip: \''.$txt['editor_tp_floatright'].'\'
 			});
 			// Taken from SMF2.1 https://github.com/SimpleMachines/SMF2.1/blob/24a10ca4fcac45f0bd73b6185618217aaa531cd2/Themes/default/scripts/jquery.sceditor.smf.js#L289
 			sceditor.command.set( \'youtube\', {
