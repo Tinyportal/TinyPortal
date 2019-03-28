@@ -945,12 +945,13 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
 
 function TPwysiwyg_setup()
 {
-	global $context, $boardurl;
+	global $context, $boardurl, $txt;
 
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/sceditor.min.js"></script>
 		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/formats/xhtml.js"></script>
+		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/languages/'.$txt['lang_dictionary'].'.js"></script>
 		<style>
 			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
 			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
@@ -964,7 +965,7 @@ function TPwysiwyg_setup()
 					this.wysiwygEditorInsertHtml(\'<div style="float:left;">\', \'</div>\');
 				},
 				txtExec: [\'<div style="float:left;">\', \'</div>\'],
-				tooltip: \'Insert float left div\'
+				tooltip: \''.$txt['editor_tp_floatleft'].'\'
 			});
 			sceditor.command.set(\'floatright\', {
 				exec: function() {
@@ -972,7 +973,7 @@ function TPwysiwyg_setup()
 					this.wysiwygEditorInsertHtml(\'<div style="float:right;">\', \'</div>\');
 				},
 				txtExec: [\'<div style="float:right;">\', \'</div>\'],
-				tooltip: \'Insert float right div\'
+				tooltip: \''.$txt['editor_tp_floatright'].'\'
 			});
 			// Taken from SMF2.1 https://github.com/SimpleMachines/SMF2.1/blob/24a10ca4fcac45f0bd73b6185618217aaa531cd2/Themes/default/scripts/jquery.sceditor.smf.js#L289
 			sceditor.command.set( \'youtube\', {
@@ -1109,6 +1110,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 				toolbar: \'bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright\',';
 		echo '
 				format: \'xhtml\',
+				locale: "' . $txt['lang_dictionary'] . '",
 				style: \''.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/content/default.min.css\',
 				emoticonsRoot: \''.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/\'
 			});
