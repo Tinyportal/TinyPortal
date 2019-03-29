@@ -951,7 +951,7 @@ function TPwysiwyg_setup()
 		<link rel="stylesheet" href="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/themes/default.min.css" />
 		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/sceditor.min.js"></script>
 		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/minified/formats/xhtml.js"></script>
-		<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/languages/'.$txt['lang_dictionary'].'.js"></script>
+		<script src="'.$boardurl.'/Themes/default/scripts/tinyportal/sceditor/languages/'.$txt['lang_dictionary'].'.js"></script>
 		<style>
 			.sceditor-button-floatleft div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatleft.png); width:24px; height:24px; margin: -3px; }
 			.sceditor-button-floatright div { background: url('.$boardurl.'/Themes/default/images/tinyportal/floatright.png); width:24px; height:24px; margin: -3px; }
