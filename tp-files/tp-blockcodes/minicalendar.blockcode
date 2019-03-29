@@ -76,12 +76,12 @@ for($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $da
 		@list($link, $classes, $content) = $days[$day];
 		if(is_null($content))
 			$content  = $day;
-		$calendar .= '<td '.($classes ? ' class="'.htmlspecialchars($classes).'">' : '>').
+		$calendar .= '<td '.($classes ? ' class="'.htmlspecialchars($classes).'" style="padding:1px 8px 1px 1px;">' : ' style="padding:1px 8px 1px 1px;">').
 		($link ? '<a href="'.htmlspecialchars($link).'?">'.$content.'</a>' : $content).'</td>';
 	}
 	else 
 	{
-		$calendar .= "<td class=\"smalltext\" style=\"padding-right:8px;\"><a";
+		$calendar .= "<td class=\"smalltext\" style=\"padding:1px 8px 1px 1px;\"><a";
 		if(((($weekday+$first_day) % 7)==0)||((($weekday+$first_day) % 7)==6))
 		{
 			$calendar .= ' style="color:#C00000;"';
