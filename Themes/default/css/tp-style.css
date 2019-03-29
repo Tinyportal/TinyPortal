@@ -1,7 +1,6 @@
 /**
-/**
  * @package TinyPortal
- * @version 1.6.3
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1899,7 +1898,7 @@ box-sizing:border-box;
 	width: 100%;
     float: left;
 	box-sizing: border-box;
-    border: 1px solid rgba(204, 204, 204, 0.5);
+	border: 1px solid rgba(204, 204, 204, 0.5);
 }
 .admin-area img
 {
@@ -1977,7 +1976,7 @@ box-sizing:border-box;
 }
 .panels-optionsbg
 {
-	background-color: #ffffff;
+	background-color: rgba(255, 255, 255, 0.2);
 	overflow: hidden;
 	padding: 5px;
 }
@@ -2026,7 +2025,7 @@ img.theme_icon
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
 table.tp_grid td, table.tp_grid th
 {
-	border: 1px solid rgba(221, 221, 221, .3);
+	border: 1px solid rgba(221, 221, 221, 0.5);
 }
 table.tp_grid tr.windowbg:nth-of-type(odd)
 {
