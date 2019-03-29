@@ -81,6 +81,7 @@ for($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $da
 	else 
 	{
 		$calendar .= "<td class=\"smalltext\" style=\"padding:1px 6px 1px 1px;\"><a";
+		$calendar .= "<td class=\"smalltext\" style=\"padding:1px 8px 1px 1px;\"><a";
 		if(((($weekday+$first_day) % 7)==0)||((($weekday+$first_day) % 7)==6))
 		{
 			$calendar .= ' style="color:#C00000;"';

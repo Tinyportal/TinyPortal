@@ -528,12 +528,6 @@ function tp_profile_download($memID)
 		$context['TPortal']['pageindex'] = '';
 }
 
-function tp_profile_gallery($memID)
-{
-	global $txt, $context;
-	$context['page_title'] = $txt['galleryprofile'] ;
-}
-
 function tp_profile_links($memID)
 {
 	global $txt, $context;

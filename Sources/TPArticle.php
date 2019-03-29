@@ -24,11 +24,13 @@ function TPArticle() {{{
 
 	global $settings, $context, $txt;
 
-	if(loadLanguage('TPmodules') == false)
-		loadLanguage('TPmodules', 'english');
+	if(loadLanguage('TParticle') == false) {
+		loadLanguage('TParticle', 'english');
+    }
 
-	if(loadLanguage('TPortalAdmin') == false)
+	if(loadLanguage('TPortalAdmin') == false) {
 		loadLanguage('TPortalAdmin', 'english');
+    }
 
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = true;
@@ -57,7 +59,7 @@ function TPArticleActions(&$subActions) {{{
             'addarticle_html'   => array('TPArticle.php', 'articleNew', array()),
             'addarticle_bbc'    => array('TPArticle.php', 'articleNew', array()),
             'publish'           => array('TPArticle.php', 'articlePublish', array()),
-            'savearticle'       => array('TPArticle.php', 'articleSave', array()),
+            'savearticle'       => array('TPArticle.php', 'articleEdit', array()),
             'uploadimage'       => array('TPArticle.php', 'articleUploadImage', array()),
             'submitsuccess'     => array('TPArticle.php', 'articleSubmitSuccess', array()),
         ),
@@ -78,8 +80,8 @@ function articleInsertComment() {{{
     }
 
     $commenter  = $context['user']['id'];
-    $article    = $_POST['tp_article_id'];
-    $title      = strip_tags($_POST['tp_article_comment_title']);
+	$article    = TPUtil::filter('tp_article_id', 'post', 'int');
+	$title      = TPUtil::filter('tp_article_comment_title', 'post', 'string');
     $comment    = substr(TPUtil::htmlspecialchars($_POST['tp_article_bodytext']), 0, 65536);
     if(!empty($context['TPortal']['allow_links_article_comments']) && TPUtil::hasLinks($comment)) {
         redirectexit('page='.$article.'#tp-comment');
@@ -164,9 +166,12 @@ function articleShowComments() {{{
     $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
     $context['TPortal']['unreadcomments'] = true;
     $context['TPortal']['showall'] = $showall;
-    $context['TPortal']['subaction'] = 'showcomments';
+    $context['TPortal']['sub_template'] = 'showcomments';
     TPadd_linktree($scripturl.'?action=tportal;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
+    if(loadLanguage('TParticle') == false) {
+        loadLanguage('TParticle', 'english');
+    };
 
 }}}
 
@@ -211,8 +216,11 @@ function articleEditComment() {{{
                     'title' => $row['value1'],
                     'body' => $row['value2'],
                 );
-                $context['TPortal']['subaction'] = 'editcomment';
-                loadtemplate('TPmodules');
+                $context['TPortal']['sub_template'] = 'editcomment';
+                loadTemplate('TParticle');
+                if(loadLanguage('TParticle') == false) {
+                    loadLanguage('TParticle', 'english');
+                };
 			}
 			fatal_error($txt['tp-notallowed'], false);
 		}
@@ -286,6 +294,7 @@ function articleEdit() {{{
 
 	$options        = array();
 	$article_data   = array();
+    $article_data['approved'] = 0; // Preset to false
 	foreach($_POST as $what => $value) {
 		if(substr($what, 0, 11) == 'tp_article_') {
 			$setting = substr($what, 11);
@@ -393,12 +402,16 @@ function articleEdit() {{{
 					case 'year':
 					case 'minute':
 					case 'hour':
-					case 'timestamp':
 						$timestamp = mktime($_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year']);
 						if(!isset($savedtime)) {
 							$article_data['date'] = $timestamp;
 						}
 						break;
+					case 'timestamp':
+						if(!isset($savedtime)) {
+						    $article_data['date'] = empty($_POST['tp_article_timestamp']) ? time() : $_POST['tp_article_timestamp'];
+                        }
+                        break;
 					case 'pubstartday':
 					case 'pubstartmonth':
 					case 'pubstartyear':
@@ -484,7 +497,7 @@ function articleEdit() {{{
 		tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
 	}
 	// if this was a new article
-	if($_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
+	if(array_key_exists('tp_article_approved', $_POST) && $_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
 		tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0) , $where);
 	}
 
@@ -543,7 +556,7 @@ function articleShow() {{{
     if(loadLanguage('TPortalAdmin') == false) {
         loadLanguage('TPortalAdmin', 'english');
     }
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
 
 }}}
 
@@ -555,15 +568,16 @@ function articleNew() {{{
     // a BBC article?
     if(isset($_GET['bbc']) || $_GET['sa'] == 'addarticle_bbc') {
         isAllowedTo('tp_submitbbc');
-        $context['TPortal']['submitbbc'] = 1;
+        $context['TPortal']['articletype'] = 'bbc';
         $context['html_headers'] .= '
-            <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
+            <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?'.TPVERSION.'"></script>';
 
         // Add in BBC editor before we call in template so the headers are there
         $context['TPortal']['editor_id'] = 'tp_article_body';
         TP_prebbcbox($context['TPortal']['editor_id']);
     }
     else if($_GET['sa'] == 'addarticle_html') {
+        $context['TPortal']['articletype'] = 'html';
         isAllowedTo('tp_submithtml');
         TPwysiwyg_setup();
     }
@@ -572,7 +586,13 @@ function articleNew() {{{
     }
 
     $context['TPortal']['subaction'] = 'submitarticle';
-    loadtemplate('TPmodules');
+	if(loadLanguage('TParticle') == false) {
+		loadLanguage('TParticle', 'english');
+    }
+	if(loadLanguage('TPortalAdmin') == false) {
+		loadLanguage('TPortalAdmin', 'english');
+    }
+    loadTemplate('TParticle');
     $context['sub_template'] = 'submitarticle';
 
 }}}
@@ -581,7 +601,10 @@ function articleSubmitSuccess() {{{
     global $context;
 
     $context['TPortal']['subaction'] = 'submitsuccess';
-    loadtemplate('TPmodules');
+    loadTemplate('TParticle');
+	if(loadLanguage('TParticle') == false) {
+		loadLanguage('TParticle', 'english');
+    }
     $context['sub_template'] = 'submitsuccess';
 
 }}}
@@ -711,119 +734,6 @@ function articlePublish() {{{
     updateTPSettings(array('frontpage_topics' => $newstring));
 
     redirectexit('topic='. $t . '.0');
-
-}}}
-
-function articleSave() {{{
-
-    global $context, $smcFunc;
-
-    // save an article
-    if(isset($_REQUEST['send'])) {
-        foreach ($_POST as $what => $value) {
-            if(substr($what, 0, 16) == 'tp_article_title') {
-                $val = substr($what, 16);
-                if(is_numeric($val) && $val > 0) {
-                    $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_articles
-                        SET subject = {string:subject}
-                        WHERE id = {int:artid}',
-                        array('subject' => $value, 'artid' => $val)
-                    );
-                }
-            }
-            elseif(substr($what, 0, 15) == 'tp_article_body' && substr($what, -4) != 'mode') {
-                // If we came from WYSIWYG then turn it back into BBC regardless.
-                if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what])) {
-                    require_once(SOURCEDIR . '/Subs-Editor.php');
-                    $_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
-                    // We need to unhtml it now as it gets done shortly.
-                    $_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
-                    // We need this for everything else.
-                    $value = $_POST[$what] = $_REQUEST[$what];
-                }
-                $val = substr($what, 15);
-                if(is_numeric($val) && $val > 0) {
-                    $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_articles
-                        SET body = {string:body}
-                        WHERE id = {int:artid}',
-                        array('body' => $value, 'artid' => $val)
-                    );
-                }
-            }
-            elseif(substr($what, 0, 19) == 'tp_article_useintro') {
-                $val = substr($what, 19);
-                if(is_numeric($val) && $val > 0) {
-                    $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_articles
-                        SET useintro = {string:useintro}
-                        WHERE id = {int:artid}',
-                        array('useintro' => $value, 'artid' => $val)
-                    );
-                }
-            }
-            elseif(substr($what, 0, 16) == 'tp_article_intro') {
-                $val = (int) substr($what, 16);
-                $smcFunc['db_query']('', '
-                    UPDATE {db_prefix}tp_articles
-                    SET intro = {string:intro}
-                    WHERE id = {int:artid}',
-                    array('intro' => $value, 'artid' => $val)
-                );
-            }
-            elseif($what == 'tp_wysiwyg') {
-                $result = $smcFunc['db_query']('', '
-                    SELECT id FROM {db_prefix}tp_data
-                    WHERE type = {int:type}
-                    AND id_member = {int:id_mem}',
-                    array('type' => 2, 'id_mem' => $context['user']['id'])
-                );
-                if($smcFunc['db_num_rows']($result) > 0) {
-                    $row = $smcFunc['db_fetch_assoc']($result);
-                    $wysid = $row['id'];
-                    $smcFunc['db_free_result']($result);
-                }
-
-                if(isset($wysid)) {
-                    $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_data
-                        SET value = {int:val}
-                        WHERE id = {int:dataid}',
-                        array('val' => $value, 'dataid' => $wysid)
-                    );
-                }
-                else {
-                    $smcFunc['db_query']('INSERT',
-                        '{db_prefix}tp_data}',
-                        array('type' => 'int', 'id_member' => 'int', 'value' => 'int', 'item' => 'int'),
-                        array(2, $context['user']['id'], $value, 0),
-                        array('id')
-                    );
-                }
-            } 
-        }
-    }
-
-    if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles')) {
-        // did we get a picture as well?
-        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
-        }
-        redirectexit('action=tportal;sa=editarticle'.$val);
-    }
-    elseif(allowedTo('tp_articles')) {
-        // did we get a picture as well?
-        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
-        }
-        redirectexit('action=tpadmin;sa=editarticle'.$val);
-    }
-    else {
-        fatal_error($txt['tp-notallowed'], false);
-    }
 
 }}}
 

@@ -1011,7 +1011,7 @@ a.avatar img
 .dl_pageindex
 {
 	overflow: hidden;
-    border-bottom: 1px solid rgba(204, 204, 204, 0.5);
+	border: 1px solid rgba(204, 204, 204, 0.5);
 }
 .dl_cats h4
 {
@@ -1891,7 +1891,7 @@ box-sizing:border-box;
 }
 .addborderleft div
 {
-	border-left:1px solid rgba(204, 204, 204, 0.5);
+	border-left: 1px solid rgba(204, 204, 204, 0.5);
 } 
 .admin-area
 {
