@@ -36,6 +36,16 @@ function template_submitarticle()
         $action = 'tpadmin';
     }
 
+    if(empty($mg['articletype']) && !empty($context['TPortal']['articletype'])) {
+        $article_type = $context['TPortal']['articletype'];
+    }
+    elseif(!empty($mg['articletype'])) {
+        $article_type = $mg['articletype'];
+    }
+    else {
+        $article_type = false;
+    }
+
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action='.$action.'" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />';
@@ -61,24 +71,29 @@ function template_submitarticle()
 					<br>
 					<div>';
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
-				if($mg['articletype'] == 'php') {
+				if($article_type == 'php') {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
                 }
-				elseif($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html')) {
+				elseif($tp_use_wysiwyg > 0 && ($article_type == '' || $article_type == 'html')) {
 					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
                 }
-				elseif($tp_use_wysiwyg == 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html')) {
+				elseif($tp_use_wysiwyg == 0 && ($article_type == '' || $article_type == 'html')) {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
                 }
-				elseif($mg['articletype'] == 'bbc') {
+				elseif($article_type == 'bbc') {
 					TP_bbcbox($context['TPortal']['editor_id']);
                 }
 				else {
 					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">' ;
                 }
 				echo '
-					</div>
-				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+					</div>';
+
+                if(allowedTo('admin_forum')) {
+                    echo '<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>';
+                }
+
+                echo'
 			<hr><br>
 				<dl class="settings">';
 
@@ -307,9 +322,9 @@ function template_submitarticle()
 					</dd>
 				</dl>
 					';
-				if($mg['articletype'] == 'php' || $mg['articletype'] == '' || $mg['articletype'] == 'html')	{
+				if($article_type == 'php' || $article_type == '' || $article_type == 'html')	{
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
-					if($tp_use_wysiwyg > 0 && ($mg['articletype'] == '' || $mg['articletype'] == 'html')) {
+					if($tp_use_wysiwyg > 0 && ($article_type == '' || $article_type == 'html')) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
                     }
 					else {
@@ -317,7 +332,7 @@ function template_submitarticle()
                     }
 					echo '</div>';
 				}
-				elseif($mg['articletype'] == 'bbc' || $mg['articletype'] == 'import') {
+				elseif($article_type == 'bbc' || $article_type == 'import') {
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
                     '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
@@ -333,10 +348,10 @@ function template_submitarticle()
 						<label for="field_name">', $txt['tp-switchmode'], '</label>
 					</dt>
 					<dd>
-							<input align="middle" name="tp_article_type" type="radio" value="html"' , $mg['articletype']=='' || $mg['articletype']=='html' ? ' checked="checked"' : '' ,'> '.$txt['tp-gohtml'] .'<br>
-							<input align="middle" name="tp_article_type" type="radio" value="php"' , $mg['articletype']=='php' ? ' checked="checked"' : '' ,'> '.$txt['tp-gophp'] .'<br>
-							<input align="middle" name="tp_article_type" type="radio" value="bbc"' , $mg['articletype']=='bbc' ? ' checked="checked"' : '' ,'> '.$txt['tp-gobbc'] .'<br>
-							<input align="middle" name="tp_article_type" type="radio" value="import"' , $mg['articletype']=='import' ? ' checked="checked"' : '' ,'> '.$txt['tp-goimport'] .'<br><br>
+							<input align="middle" name="tp_article_type" type="radio" value="html"' , $article_type == '' || $article_type == 'html' ? ' checked="checked"' : '' ,'> '.$txt['tp-gohtml'] .'<br>
+							<input align="middle" name="tp_article_type" type="radio" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'> '.$txt['tp-gophp'] .'<br>
+							<input align="middle" name="tp_article_type" type="radio" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'> '.$txt['tp-gobbc'] .'<br>
+							<input align="middle" name="tp_article_type" type="radio" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'> '.$txt['tp-goimport'] .'<br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-display'], '</label>
