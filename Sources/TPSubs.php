@@ -15,29 +15,28 @@
  *
  */
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
-function TPcheckAdminAreas()
-{
+function TPcheckAdminAreas() {{{
 	global $context;
 
 	TPcollectPermissions();
-	foreach($context['TPortal']['adminlist'] as $adm => $val)
-	{
-		if(allowedTo($adm) || !empty($context['TPortal']['show_download']))
+	foreach($context['TPortal']['adminlist'] as $adm => $val) {
+		if(allowedTo($adm) || !empty($context['TPortal']['show_download'])) {
 			return true;
+        }
 	}
 	return false;
-}
 
-function TPsetupAdminAreas()
-{
+}}}
+
+function TPsetupAdminAreas() {{{
 	global $context, $scripturl, $smcFunc;
 
 	$context['admin_tabs']['custom_modules'] = array();
-	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download']))
-	{
+	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download'])) {
 		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
 			'title' => 'TPdownloads',
 			'description' => '',
@@ -94,10 +93,10 @@ function TPsetupAdminAreas()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-}
 
-function TP_addPerms()
-{
+}}}
+
+function TP_addPerms() {{{
 	global $smcFunc;
 
 	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups',
@@ -130,10 +129,10 @@ function TP_addPerms()
 		$smcFunc['db_free_result']($request);
 	}
 	return $admperms;
-}
 
-function TPcollectPermissions()
-{
+}}}
+
+function TPcollectPermissions() {{{
 	global $context, $smcFunc;
 
 	$context['TPortal']['permissonlist'] = array();
@@ -219,10 +218,10 @@ function TPcollectPermissions()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-}
 
-function tp_getbuttons()
-{
+}}}
+
+function tp_getbuttons() {{{
 	global $scripturl, $txt, $context;
 
 	if(loadLanguage('TPortal') == false)
@@ -373,10 +372,9 @@ function tp_getbuttons()
 		);
 	}
 	return $buts;
-}
+}}}
 
-function TPcollectSnippets()
-{
+function TPcollectSnippets() {{{
 	global $boarddir;
 
 	// fetch any blockcodes in blockcodes folder
@@ -400,10 +398,10 @@ function TPcollectSnippets()
 		closedir($handle);
 	}
 	return $codefiles;
-}
 
-function TPparseModfile($file , $returnarray)
-{
+}}}
+
+function TPparseModfile($file , $returnarray) {{{
 	$file = strtr($file, array("\r" => ''));
 	$snippet = array();
 
@@ -429,10 +427,10 @@ function TPparseModfile($file , $returnarray)
 		$file = substr_replace($file, '', strpos($file, $code_match[0]), strlen($code_match[0]));
 	}
 	return $snippet;
-}
 
-function TP_article_categories($use_sorted = false)
-{
+}}}
+
+function TP_article_categories($use_sorted = false) {{{
 	global $smcFunc, $context, $txt;
 
 	$context['TPortal']['catnames'] = array();
@@ -553,8 +551,7 @@ function TP_article_categories($use_sorted = false)
 				$row['value2'] = 9999;
 			// check access
 			$show = get_perm($row['value3']);
-			if($show)
-			{
+			if($show) {
 				$sorted[$row['id']] = array(
 					'id' => $row['id'],
 					'shortname' => !empty($row['value8']) ? $row['value8'] : $row['id'],
@@ -588,27 +585,26 @@ function TP_article_categories($use_sorted = false)
 		$smcFunc['db_free_result']($request);
 	}
 	$context['TPortal']['article_categories'] = array();
-	if($use_sorted)
- 	{
+	if($use_sorted) {
 		// sort them
-		if(count($sorted)>1)
+		if(count($sorted)>1) {
 			$context['TPortal']['article_categories'] = chain('id', 'parent', 'name', $sorted);
-		else
+        }
+		else {
 			$context['TPortal']['article_categories'] = $sorted;
+        }
 		unset($context['TPortal']['article_categories'][0]);
 	}
-	else
-	{
+	else {
 		$context['TPortal']['article_categories'] = $sorted;
 		unset($context['TPortal']['article_categories'][0]);
 	}
-}
+}}}
 
-function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25)
-{
+function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25) {{{
    $c = new chain($primary_field, $parent_field, $sort_field, $rows, $root_id, $maxlevel);
    return $c->chain_table;
-}
+}}}
 
 class chain
 {
@@ -3080,6 +3076,326 @@ function TPGetMemberColour($member_ids)
     return $mcol;
 }
 
+// profile summary
+function tp_profile_summary($memID)
+{
+	global $txt, $context, $smcFunc;
+	$context['page_title'] = $txt['tpsummary'];
+	// get all articles written by member
+	$request =  $smcFunc['db_query']('', '
+		SELECT COUNT(*) FROM {db_prefix}tp_articles
+		WHERE author_id = {int:author}',
+		array('author' => $memID)
+	);
+	$result = $smcFunc['db_fetch_row']($request);
+	$max_art = $result[0];
+	$smcFunc['db_free_result']($request);
+	$max_upload = 0;
+	if($context['TPortal']['show_download'])
+	{
+		// get all uploads
+		$request =  $smcFunc['db_query']('', '
+			SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
+			WHERE author_id = {int:author} AND type = {string:type}',
+			array('author' => $memID, 'type' => 'dlitem')
+		);
+		$result = $smcFunc['db_fetch_row']($request);
+		$max_upload = $result[0];
+		$smcFunc['db_free_result']($request);
+	}
+	$context['TPortal']['tpsummary']=array(
+		'articles' => $max_art,
+		'uploads' => $max_upload,
+	);
+}
+
+// articles and comments made by the member
+function tp_profile_articles($memID)
+{
+	global $txt, $context, $scripturl, $smcFunc;
+	$context['page_title'] = $txt['articlesprofile'];
+	if(isset($context['TPortal']['mystart']))
+		$start = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
+	else
+		$start = 0;
+	$context['TPortal']['memID'] = $memID;
+	if($context['TPortal']['tpsort'] != '')
+		$sorting = $context['TPortal']['tpsort'];
+	else
+		$sorting = 'date';
+	$max = 0;
+	// get all articles written by member
+	$request =  $smcFunc['db_query']('', '
+		SELECT COUNT(*) FROM {db_prefix}tp_articles
+		WHERE author_id = {int:auth}',
+		array('auth' => $memID)
+	);
+	$result = $smcFunc['db_fetch_row']($request);
+	$max = $result[0];
+	$smcFunc['db_free_result']($request);
+	// get all not approved articles
+	$request =  $smcFunc['db_query']('', '
+		SELECT COUNT(*) FROM {db_prefix}tp_articles
+		WHERE author_id = {int:auth} AND approved = {int:approved}',
+		array('auth' => $memID, 'approved' => 0)
+	);
+	$result = $smcFunc['db_fetch_row']($request);
+	$max_approve = $result[0];
+	$smcFunc['db_free_result']($request);
+	// get all articles currently being off
+	$request = $smcFunc['db_query']('', '
+		SELECT COUNT(*) FROM {db_prefix}tp_articles
+		WHERE author_id = {int:auth} AND off = {int:off} AND approved = {int:approved}',
+		array('auth' => $memID, 'off' => 1,  'approved' => 1)
+	);
+	$result = $smcFunc['db_fetch_row']($request);
+	$max_off = $result[0];
+	$smcFunc['db_free_result']($request);
+	$context['TPortal']['all_articles'] = $max - $max_approve - $max_off;
+	$context['TPortal']['approved_articles'] = $max_approve;
+	$context['TPortal']['off_articles'] = $max_off;
+	if(!in_array($sorting, array('date', 'subject', 'views', 'category', 'comments')))
+		$sorting = 'date';
+	$request = $smcFunc['db_query']('', '
+		SELECT art.id, art.date, art.subject, art.approved, art.off, art.comments, art.views, art.rating, art.voters,
+			art.author_id as authorID, art.category, art.locked
+		FROM {db_prefix}tp_articles AS art
+		WHERE art.author_id = {int:auth}
+		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 10 OFFSET {int:start}',
+		array('auth' => $memID, 
+		'sort' => $sorting, 
+		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
+		'start' => $start
+		)
+	);
+	if($smcFunc['db_num_rows']($request) > 0){
+		while($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$rat = array();
+			$rating_votes = 0;
+			$rat = explode(',', $row['rating']);
+			$rating_votes = count($rat);
+			if($row['rating'] == '')
+				$rating_votes = 0;
+			$total = 0;
+			foreach($rat as $mm => $mval)
+			{
+				if(is_numeric($mval))
+					$total = $total + $mval;
+			}
+			if($rating_votes > 0 && $total > 0)
+				$rating_average = floor($total / $rating_votes);
+			else
+				$rating_average = 0;
+			$can_see = true;
+			if(($row['approved'] != 1 || $row['off'] == 1))
+				$can_see = allowedTo('tp_articles');
+			if($can_see)
+				$context['TPortal']['profile_articles'][] = array(
+					'id' => $row['id'],
+					'subject' => $row['subject'],
+					'date' => timeformat($row['date']),
+					'timestamp' => $row['date'],
+					'href' => '' . $scripturl . '?page='.$row['id'],
+					'comments' => $row['comments'],
+					'views' => $row['views'],
+					'rating_votes' => $rating_votes,
+					'rating_average' => $rating_average,
+					'approved' => $row['approved'],
+					'off' => $row['off'],
+					'locked' => $row['locked'],
+					'catID' => $row['category'],
+					'category' => '<a href="'.$scripturl.'?mycat='.$row['category'].'">' . (isset($context['TPortal']['catnames'][$row['category']]) ? $context['TPortal']['catnames'][$row['category']] : '') .'</a>',
+					'editlink' => allowedTo('tp_articles') ? $scripturl.'?action=tpadmin;sa=editarticle'.$row['id'] : $scripturl.'?action=tportal;sa=editarticle'.$row['id'],
+				);
+		}
+		$smcFunc['db_free_result']($request);
+	}
+	// construct pageindexes
+	if($max > 0)
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tparticles;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
+	else
+		$context['TPortal']['pageindex'] = '';
+	// setup subaction
+	$context['TPortal']['profile_action'] = '';
+	if(isset($_GET['sa']) && $_GET['sa'] == 'settings')
+		$context['TPortal']['profile_action'] = 'settings';
+	
+	// Create the tabs for the template.
+	$context[$context['profile_menu_name']]['tab_data'] = array(
+		'title' => $txt['articlesprofile'],
+		'description' => $txt['articlesprofile2'],
+		'tabs' => array(
+			'articles' => array(),
+			'settings' => array(),
+			),
+	);
+	// setup values for personal settings - for now only editor choice
+	// type = 1 -
+	// type = 2 - editor choice
+	$result = $smcFunc['db_query']('', '
+		SELECT id, value FROM {db_prefix}tp_data
+		WHERE type = {int:type} AND id_member = {int:id_mem} LIMIT 1',
+		array('type' => 2, 'id_mem' => $memID)
+	);
+	if($smcFunc['db_num_rows']($result) > 0)
+	{
+		$row = $smcFunc['db_fetch_assoc']($result);
+		$context['TPortal']['selected_member_choice'] = $row['value'];
+		$context['TPortal']['selected_member_choice_id'] = $row['id'];
+		$smcFunc['db_free_result']($result);
+	}
+	else
+	{
+		$context['TPortal']['selected_member_choice'] = 0;
+		$context['TPortal']['selected_member_choice_id'] = 0;
+	}
+	$context['TPortal']['selected_member'] = $memID;
+	if(loadLanguage('TPortalAdmin') == false)
+		loadLanguage('TPortalAdmin', 'english');
+}
+
+function tp_profile_download($memID)
+{
+	global $txt, $context, $scripturl, $smcFunc;
+	$context['page_title'] = $txt['downloadprofile'] ;
+	// is dl manager on?
+	if($context['TPortal']['show_download']==0)
+      fatal_lang_error('tp-dlmanageroff', false);
+	if(isset($context['TPortal']['mystart']))
+		$start = $context['TPortal']['mystart'];
+	else
+		$start = 0;
+	$context['TPortal']['memID'] = $memID;
+	if($context['TPortal']['tpsort'] != '')
+		$sorting = $context['TPortal']['tpsort'];
+	else
+		$sorting = 'date';
+	$max = 0;
+	// get all uploads
+	$request = $smcFunc['db_query']('', '
+		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
+		WHERE author_id = {int:auth} AND type = {string:type}',
+		array('auth' => $memID, 'type' => 'dlitem')
+	);
+	$result = $smcFunc['db_fetch_row']($request);
+	$max = $result[0];
+	$smcFunc['db_free_result']($request);
+	// get all not approved uploads
+	$request = $smcFunc['db_query']('', '
+		SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
+		WHERE author_id = {int:auth}
+		AND type = {string:type}
+		AND category < 0',
+		array('auth' => $memID, 'type' => 'dlitem')
+	);
+	$result = $smcFunc['db_fetch_row']($request);
+	$max_approve = $result[0];
+	$smcFunc['db_free_result']($request);
+	$context['TPortal']['all_downloads'] = $max;
+	$context['TPortal']['approved_downloads'] = $max_approve;
+	$context['TPortal']['profile_uploads'] = array();
+	if(!in_array($sorting, array('name', 'created', 'views', 'downloads', 'category')))
+		$sorting = 'created';
+	$request = $smcFunc['db_query']('', '
+		SELECT id, name, category, downloads, views, created, filesize, rating, voters
+		FROM {db_prefix}tp_dlmanager
+		WHERE author_id = {int:auth}
+		AND type = {string:type}
+		ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, 15',
+		array('auth' => $memID, 
+		'type' => 'dlitem', 
+		'sort' => $sorting,
+		'sorter' => in_array($sorting, array('created', 'views', 'downloads')) ? 'DESC' : 'ASC',
+		'start' => $start)
+	);
+	if($smcFunc['db_num_rows']($request) > 0)
+	{
+		while($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$rat = array();
+			$rating_votes = 0;
+			$rat = explode(',', $row['rating']);
+			$rating_votes = count($rat);
+			if($row['rating'] == '')
+				$rating_votes = 0;
+			$total = 0;
+			foreach($rat as $mm => $mval)
+			{
+				if(is_numeric($mval))
+					$total = $total + $mval;
+			}
+			if($rating_votes > 0 && $total > 0)
+				$rating_average = floor($total / $rating_votes);
+			else
+				$rating_average = 0;
+			$editlink = '';
+			if(allowedTo('tp_dlmanager'))
+				$editlink = $scripturl.'?action=tportal;dl=adminitem'.$row['id'];
+			elseif($memID == $context['user']['id'])
+				$editlink = $scripturl.'?action=tportal;dl=useredit'.$row['id'];
+			$context['TPortal']['profile_uploads'][] = array(
+				'id' => $row['id'],
+				'name' => $row['name'],
+				'created' => timeformat($row['created']),
+				'category' => $row['category'],
+				'href' => $scripturl . '?action=tportal;dl=item'.$row['id'],
+				'views' => $row['views'],
+				'rating_votes' => $rating_votes,
+				'rating_average' => $rating_average,
+				'approved' => $row['category']>0 ? '1' : '0',
+				'downloads' => $row['downloads'],
+				'catID' => abs($row['category']),
+				'category' => $row['category'],
+				'editlink' => $editlink,
+			);
+		}
+		$smcFunc['db_free_result']($request);
+	}
+	// construct pageindexes
+	if($max > 0)
+		$context['TPortal']['pageindex']=TPageIndex($scripturl.'?action=profile;area=tpdownload;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
+	else
+		$context['TPortal']['pageindex'] = '';
+}
+
+function tp_profile_links($memID)
+{
+	global $txt, $context;
+	$context['page_title'] = $txt['linksprofile'] ;
+}
+
+function tp_pro_shoutbox()
+{
+	global $txt, $context;
+	$context['page_title'] = $txt['tp-shouts'];
+}
+
+// Tinyportal
+function tp_summary($memID)
+{
+	global $txt, $context;
+	loadtemplate('TPprofile');
+	$context['page_title'] = $txt['tpsummary'];
+	tp_profile_summary($memID);
+}
+
+function tp_articles($memID)
+{
+	global $txt, $context;
+	TP_article_categories();
+	loadtemplate('TPprofile');
+	$context['page_title'] = $txt['articlesprofile'];
+	tp_profile_articles($memID);
+}
+
+function tp_download($memID)
+{
+	global $txt, $context;
+	loadtemplate('TPprofile');
+	$context['page_title'] = $txt['downloadprofile'];
+	tp_profile_download($memID);
+}
 
 if (!function_exists('is_countable')) {
     function is_countable($var) {

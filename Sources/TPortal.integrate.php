@@ -432,7 +432,7 @@ class TPortal_Integrate
         if( TP_SMF21 ) {
             $profile_areas['tp']['areas']['tpsummary'] = array(
                 'label' => $txt['tpsummary'],
-                'file' => 'TPmodules.php',
+                'file' => 'TPSubs.php',
                 'function' => 'tp_summary',
                 'icon' => 'menu_tp',
                 'permission' => array(
@@ -444,7 +444,7 @@ class TPortal_Integrate
             if (!$context['TPortal']['use_wysiwyg']=='0') {
                 $profile_areas['tp']['areas']['tparticles'] = array(
                     'label' => $txt['articlesprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPSubs.php',
                     'function' => 'tp_articles',
                     'icon' => 'menu_tparticle',
                     'permission' => array(
@@ -460,7 +460,7 @@ class TPortal_Integrate
             else {
                 $profile_areas['tp']['areas']['tparticles'] = array(
                     'label' => $txt['articlesprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPSubs.php',
                     'function' => 'tp_articles',
                     'icon' => 'menu_tparticle',
                     'permission' => array(
@@ -473,7 +473,7 @@ class TPortal_Integrate
             if(!empty($context['TPortal']['show_download'])) {
                 $profile_areas['tp']['areas']['tpdownload'] = array(
                     'label' => $txt['downloadprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPSubs.php',
                     'function' => 'tp_download',
                     'icon' => 'menu_tpdownload',
                     'permission' => array(
@@ -500,7 +500,7 @@ class TPortal_Integrate
             // Profile area for 2.0 - no icons 
             $profile_areas['tp']['areas']['tpsummary'] = array(
                 'label' => $txt['tpsummary'],
-                'file' => 'TPmodules.php',
+                'file' => 'TPSubs.php',
                 'function' => 'tp_summary',
                 'permission' => array(
                     'own' => 'profile_view_own',
@@ -511,7 +511,7 @@ class TPortal_Integrate
             if (!$context['TPortal']['use_wysiwyg']=='0') {
                 $profile_areas['tp']['areas']['tparticles'] = array(
                     'label' => $txt['articlesprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPSubs.php',
                     'function' => 'tp_articles',
                     'permission' => array(
                         'own' => 'profile_view_own',
@@ -526,7 +526,7 @@ class TPortal_Integrate
             else {
                 $profile_areas['tp']['areas']['tparticles'] = array(
                     'label' => $txt['articlesprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPSubs.php',
                     'function' => 'tp_articles',
                     'permission' => array(
                         'own' => 'profile_view_own',
@@ -538,7 +538,7 @@ class TPortal_Integrate
             if(!empty($context['TPortal']['show_download'])) {
                 $profile_areas['tp']['areas']['tpdownload'] = array(
                     'label' => $txt['downloadprofile'],
-                    'file' => 'TPmodules.php',
+                    'file' => 'TPSubs.php',
                     'function' => 'tp_download',
                     'permission' => array(
                         'own' => 'profile_view_own',
