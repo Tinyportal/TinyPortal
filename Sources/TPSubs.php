@@ -3407,40 +3407,29 @@ function TPSaveSettings() {{{
     global $context, $smcFunc;
     // check the session
     checkSession('post');
-    if(isset($_POST['item'])) {
-        $item = $_POST['item'];
-    }
-    else {
-        $item = 0;
-    }
-    if(isset($_POST['memberid'])) {
-        $mem = $_POST['memberid'];
-    }
-    else {
-        $mem = 0; 
-    }
-    if(!isset($mem) || (isset($mem) && !is_numeric($mem))) {
-        fatalerror('Member doesn\'t exist.');
-    }
-    foreach($_POST as $what => $value) {
-        if($what == 'tpwysiwyg' && $item > 0) {
+    $member_id  = TPUtil::filter('memberid', 'post', 'int');
+    $item       = TPUtil::filter('item', 'post', 'int');
+    $value      = TPUtil::filter('tpwysiwyg', 'post', 'int');
+    if( $value !== false ) {
+        if( $item > 0 ) {
             $smcFunc['db_query']('', '
-                    UPDATE {db_prefix}tp_data
-                    SET value = {int:val} WHERE id = {int:id}',
-                    array('val' => $value, 'id' => $item)
-                    );
+                UPDATE {db_prefix}tp_data
+                SET value = {int:val} WHERE id = {int:id}',
+                array('val' => $value, 'id' => $item)
+            );
         }
-        elseif($what == 'tpwysiwyg' && $item == 0) {
+        elseif ($member_id != false) {
             $smcFunc['db_insert']('INSERT',
-                    '{db_prefix}tp_data',
-                    array('type' => 'int', 'id_member' => 'int', 'value' => 'int'),
-                    array(2, $mem, $value),
-                    array('id')
-                    );
+                '{db_prefix}tp_data',
+                array('type' => 'int', 'id_member' => 'int', 'value' => 'int'),
+                array(2, $member_id, $value),
+                array('id')
+            );
         }
     }
+
     // go back to profile page
-    redirectexit('action=profile;u='.$mem.';area=tparticles;sa=settings');
+    redirectexit('action=profile;u='.$member_id.';area=tparticles;sa=settings');
 
 }}}
 

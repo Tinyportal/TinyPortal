@@ -80,8 +80,8 @@ function TPortal() {{{
         redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
     }
     else {
-        require_once(SOURCEDIR . '/TPmodules.php');
-        TPmodules();
+        require_once(SOURCEDIR . '/TPdlmanager.php');
+        TPdlmanager();
     }
 
 
