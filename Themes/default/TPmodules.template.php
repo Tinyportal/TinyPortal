@@ -122,12 +122,6 @@ function template_dlsubmitsuccess()
 		</div>';
 }
 
-function template_updatelog()
-{
-	global $context;
-
-	echo '<div class="tborder">' . $context['TPortal']['updatelog'] , '<hr /></div>';
-}
 
 
 ?>
