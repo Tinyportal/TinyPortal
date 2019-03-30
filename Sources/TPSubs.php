@@ -3302,7 +3302,7 @@ function tp_profile_download($memID)
 		FROM {db_prefix}tp_dlmanager
 		WHERE author_id = {int:auth}
 		AND type = {string:type}
-		ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, 15',
+		ORDER BY {raw:sort} {raw:sorter} LIMIT 15 OFFSET {int:start}',
 		array('auth' => $memID, 
 		'type' => 'dlitem', 
 		'sort' => $sorting,
