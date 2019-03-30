@@ -44,9 +44,10 @@ function template_main()
 				echo '
 		<form accept-charset="', $context['character_set'], '"  name="TPadmin3" action="' . $scripturl . '?action=tpmod;sa=savearticle" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 			<div id="users-editarticle" class="bordercolor users-area">
+				<div></div>
 				<div class="cat_bar">
 					<h3 class="catbg">'.$txt['tp-editarticle'].'&nbsp;' ,$mg['subject'], '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a> </h3>
-				</div><div></div>
+				</div>
 				<div class="windowbg noup tp_pad">				';
 				if($mg['locked']==1)
 				{
@@ -321,8 +322,8 @@ function template_main()
 		case 'showcomments':
 		if(!empty($context['TPortal']['showall'])){
 			echo '
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
 		<div></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
 			<div id="show-art-comm" class="windowbg padding-div">
 			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
@@ -378,8 +379,8 @@ function template_main()
 		else
 		{
 			echo '
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '</h3></div>
 		<div></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '</h3></div>
 			<div id="latest-art-comm" class="windowbg padding-div">
 			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
@@ -609,9 +610,10 @@ function template_submitarticle()
 				<input name="TPadmin_submit" type="hidden" value="set">
 				<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<div id="users-addarticle" class="bordercolor">
+			<div></div>
 			<div class="cat_bar">
 				<h3 class="catbg">' , (isset($context['TPortal']['submitbbc'])) ? $txt['tp-submitarticlebbc'] : $txt['tp-submitarticle'] , '</h3>
-			</div><div></div>
+			</div>
 			<div class="windowbg noup tp_pad">
 				<div class="font-strong">'.$txt['tp-arttitle'].'</div>
 				<input style="width: 92%;" name="tp_article_title" type="text" value="">

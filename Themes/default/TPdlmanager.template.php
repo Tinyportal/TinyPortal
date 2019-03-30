@@ -478,9 +478,10 @@ function template_main()
 
 	   echo '
 	 <div id="tpUpload" class="tborder">
+		<div></div>
         <div class="cat_bar">
             <h3 class="catbg">'.$txt['tp-dlupload'].'</h3>
-        </div><div></div>
+        </div>
 		<div class="windowbg noup" style="padding:0px">
 			<span class="topslice"><span></span></span>
 			  <div">

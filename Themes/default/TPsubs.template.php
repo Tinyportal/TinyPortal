@@ -1183,10 +1183,10 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		$code = '
 	<div style="overflow: hidden;">
+		<div></div>
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
-		<div></div>
 		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
 			<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? '' : '') . '">
 			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
@@ -1216,10 +1216,11 @@ function article_renders($type = 1, $single = false, $first = false)
 		if($first)
 			$code = '
 	<div style="margin-bottom: 5px; overflow: hidden;">
+		<div></div>
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
-			<div></div><div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
 			<div class="article_info">
 			' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1321,10 +1322,10 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle" style="margin-bottom: 0.5em;">
 		<div class="article_picturecolumn">{article_picturecolumn}</div>
 		<div class="render4">
+			<div></div>
 			<div class="cat_bar">
 				<h3 class="catbg">{article_title} </h3>
 			</div>
-		<div></div>
 		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg noup" ' : '') . '>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
@@ -1362,10 +1363,11 @@ function article_renders($type = 1, $single = false, $first = false)
 		else
 			$code = '
 	<div class="tparticle" style="margin-bottom: 1em;">
+		<div></div>
 		<div class="' . $divheader . '">
 			<h3 class="article_title ' . $headerstyle . '">{article_shortdate} <strong>{article_title}</strong> </h3>
 		</div>
-			<div></div><div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">
+			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">
 			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="topslice"><span></span></span>' : '') . '
 				<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
