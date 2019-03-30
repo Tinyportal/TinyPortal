@@ -20,8 +20,8 @@ function template_tp_summary()
 	global $settings, $txt, $context, $scripturl;
 
 	echo '
-	<div class="cat_bar"><h3 class="catbg">'.$txt['tpsummary'].'</h3></div>
 	<div></div>
+	<div class="cat_bar"><h3 class="catbg">'.$txt['tpsummary'].'</h3></div>
 	<div id="tp_summary" class="windowbg padding-div">
 		<div>
 			<div class="float-items" style="width:38%;">'.$txt['tpsummary_art'].'</div>
@@ -176,9 +176,9 @@ function template_tp_download()
 	global $settings, $txt, $context, $scripturl;
 
 	echo '
+		<div></div>
 		<div class="cat_bar"><h3 class="catbg">'.$txt['downloadsprofile'].'</h3></div>
 		<p class="information">'.$txt['downloadsprofile2'].'</p>
-		<div></div>
 		<div id="tp_profile_uploaded" class="windowbg padding-div">
 			<div class="windowbg addborder tp_pad">';
 

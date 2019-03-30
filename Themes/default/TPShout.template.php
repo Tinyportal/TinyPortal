@@ -375,9 +375,9 @@ function template_tpshout_profile()
 	global $settings, $txt, $context;
 
 	echo '
+		<div></div>
 		<div class="cat_bar"><h3 class="catbg">'.$txt['shoutboxprofile'].'</h3></div>
 		<p class="information">'.$txt['shoutboxprofile2'].'</p>
-		<div></div>
 		<div id="tpshout_profile" class="windowbg padding-div">
 			<div class="windowbg addborder tp_pad">';
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
