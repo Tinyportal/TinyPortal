@@ -853,6 +853,16 @@ function TPortalDLManager()
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
+				if($context['TPortal']['dl_usescreenshot'] == 1)
+				{
+					if(!empty($row['screenshot']))
+						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+					else
+						$ico = '';
+				}
+				else
+					$ico = '';
+				
 				$fs = '';
 				if($context['TPortal']['dl_fileprefix'] == 'K')
 					$fs = ceil($row['filesize'] / 1000).' Kb';
@@ -873,7 +883,7 @@ function TPortalDLManager()
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['authorID'].'">'.$row['realName'].'</a>',
 					'authorID' => $row['authorID'],
 					'date' => timeformat($row['created']),
-					'screenshot' => !empty($row['screenshot']) ? $row['screenshot'] : '' ,
+					'screenshot' => $ico,
 					'catname' => $row['catname'],
 					'cathref' => $scripturl.'?action=tpmod;dl=cat'.$row['category'],
 					'filesize' => $fs,
