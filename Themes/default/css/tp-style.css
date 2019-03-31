@@ -1137,6 +1137,10 @@ div.screenshot {
 	margin: 4px 4px 4px 1em;
 	float: right;	
 }
+div.dl_screenshot {
+	margin-right: 15px;
+	float: left;
+}
 #fileitem
 {
 	padding: 1em;
