@@ -845,7 +845,7 @@ function TPortalDLManager()
 			AND data.year = {int:year}
 			AND data.week = {int:week}
 			AND dlm.author_id = mem.id_member
-			ORDER BY dlm.downloads DESC LIMIT 10',
+			ORDER BY dlm.downloads DESC LIMIT 6',
 			array('type' => 'dlitem', 'cat' => $currentcat, 'year' => $year, 'week' => $week)
 		);
 
