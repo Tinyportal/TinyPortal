@@ -46,7 +46,7 @@ function template_main()
 				template_button_strip($dlbuttons, 'right');
 
 		echo '
-			</div>';
+			</div><div></div>';
 
 	if($context['TPortal']['dlaction']=='' || $context['TPortal']['dlaction']=='cat')
 	{
