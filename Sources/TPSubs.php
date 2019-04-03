@@ -229,7 +229,7 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if($context['user']['is_logged'])
+	if($context['user']['is_logged'] && (allowedTo('tp_submithtml') || allowedTo('tp_submitbbc') || allowedTo('tp_articles')))
 		$buts['tpeditwonarticle'] = array(
 			'title' => $txt['tp-myarticles'],
 			'href' => $scripturl . '?action=tpmod;sa=myarticles',
@@ -238,7 +238,7 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if(allowedTo('tp_submithtml'))
+	if(allowedTo('tp_submithtml') || allowedTo('tp_articles'))
 		$buts['tpeditwonarticle']['sub_buttons']['submithtml'] = array(
 			'title' => $txt['tp-submitarticle'],
 			'href' => $scripturl . '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_html',
@@ -247,7 +247,7 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if(allowedTo('tp_submitbbc'))
+	if(allowedTo('tp_submitbbc') || allowedTo('tp_articles'))
 		$buts['tpeditwonarticle']['sub_buttons']['submitbbc'] = array(
 			'title' => $txt['tp-submitarticlebbc'],
 			'href' => $scripturl . '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_bbc',
