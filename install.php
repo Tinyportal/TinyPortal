@@ -967,7 +967,7 @@ function articleUpdates()
 }
 function addDefaults()
 {
-	global $smcFunc, $render, $settings;
+	global $smcFunc, $render, $boardurl;
 
 	// remove the module server
 	$result = $smcFunc['db_query']('', '
