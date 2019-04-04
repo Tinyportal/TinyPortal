@@ -44,7 +44,7 @@
 		<remove-file name="$themedir/TPShout.template.php" />
 		<remove-file name="$themedir/TPsubs.template.php" />
 		<remove-file name="$themedir/TPwireless.template.php" />
-		<remove-file name="$themedir/css/TPShout.css" />
+		<remove-file name="$themedir/css/tp-shout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
 		<remove-file name="$themedir/css/tp-responsive.css" />
 		<remove-file name="$languagedir/TPdlmanager.english.php" />
@@ -104,7 +104,7 @@
 		<remove-file name="$themedir/TPShout.template.php" />
 		<remove-file name="$themedir/TPsubs.template.php" />
 		<remove-file name="$themedir/TPwireless.template.php" />
-		<remove-file name="$themedir/css/TPShout.css" />
+		<remove-file name="$themedir/css/tp-shout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
 		<remove-file name="$themedir/css/tp-responsive.css" />
 		<remove-file name="$languagedir/TPdlmanager.english.php" />

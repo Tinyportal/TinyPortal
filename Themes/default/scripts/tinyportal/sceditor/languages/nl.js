@@ -26,6 +26,8 @@
 		'Paste Text': 'Tekst plakken',
 		'Bullet list': 'Opsomming',
 		'Numbered list': 'Genummerde lijst',
+		'Add indent': 'Inspringen',
+		'Remove one indent': 'Inspringen verwijderen',
 		'Undo': 'Ongedaan maken',
 		'Redo': 'Opnieuw uitvoeren',
 		'Rows:': 'Rijen',
@@ -43,6 +45,8 @@
 		'Insert a link': 'Link',
 		'Unlink': 'Link verwijderen',
 		'More': 'Meer',
+		'Left-to-Right': 'Links naar rechts',
+		'Right-to-Left': 'Rechts naar links',
 		'Insert an emoticon': 'Emoticon',
 		'Video URL:': 'Video URL',
 		'Insert': 'Invoegen',
@@ -50,6 +54,7 @@
 		'Insert current date': 'Huidige datum',
 		'Insert current time': 'Huidige tijd',
 		'Print': 'Print',
+		'Maximize': 'Maximaliseren',
 		'View source': 'Bron bekijken',
 
 		dateFormat: 'day.month.year'
