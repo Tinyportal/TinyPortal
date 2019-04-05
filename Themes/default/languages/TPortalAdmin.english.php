@@ -258,8 +258,6 @@ $txt['tp-noicon'] = '- Do not use a icon -';
 $txt['tp-editorheight'] = 'Height of WYSIWYG editor:';
 $txt['tp-hidearticle-facebook'] = 'Hide Facebook button?';
 $txt['tp-hidearticle-twitter'] = 'Hide Twitter button?';
-$txt['tp-hidearticle-google'] = 'Hide Google button?';
-$txt['tp-hidearticle-google2'] = '<span class="smalltext" style="color: #CC0000;">Google+ is discontinued per March 31, 2019</span>';
 $txt['tp-hidearticle-reddit'] = 'Hide Reddit button?';
 $txt['tp-hidearticle-digg'] = 'Hide Digg button?';
 $txt['tp-hidearticle-delicious'] = 'Hide Delicious button?';
