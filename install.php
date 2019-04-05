@@ -590,7 +590,13 @@ $settings_array = array(
     'art_imagesizes' => '80,40,400,200',
     'dl_showstats' => '1',
     'dl_showfeatured' => '1',
-    'dl_introtext' => '',
+    'dl_introtext' => '<p><strong>Welcome to the TinyPortal download manager!</strong></p>
+<p><br></p>
+<p>TPdownload is a built-in module for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict member groups access level per each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;Tinyportal &gt; Manage TPdownloads&quot;<br></p>
+<p>If you do not wish to use TPdownloads you can deactivate it from the menu &quot;TinyPortal &gt; Settings &gt; Modules&quot; </p>
+<p><br></p>
+<p>We hope you enjoy using TinyPortal.&nbsp; If you have any problems, please feel free to <a href="https://www.tinyportal.net/index.php">ask us for assistance</a>.<br></p>
+<p><br>Thanks!<br>The TinyPortal team</p>',
     'dl_showcategorytext' => '1',
     'dl_featured' => '',
     'dl_wysiwyg' => 'html',
@@ -1038,7 +1044,7 @@ function articleUpdates()
 
 function addDefaults()
 {
-	global $smcFunc, $render;
+	global $smcFunc, $render, $boardurl;
 
 	// remove the module server
 	$result = $smcFunc['db_query']('', '
@@ -1056,8 +1062,8 @@ function addDefaults()
 	if ($smcFunc['db_num_rows']($request) < 1) {
 		$smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_dlmanager',
-			array('name' => 'string', 'access' => 'string', 'type' => 'string'),
-			array('General', '-1,0,1', 'dlcat'),
+			array('name' => 'string', 'icon' => 'string', 'access' => 'string', 'type' => 'string'),
+			array('General', ''.$boardurl.'/tp-downloads/icons/folder.png.' ,'-1,0,1', 'dlcat'),
 			array('id')
 		);
     }
