@@ -239,7 +239,7 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if($context['user']['is_logged'])
+	if($context['user']['is_logged'] && (allowedTo('tp_submithtml') || allowedTo('tp_submitbbc') || allowedTo('tp_articles')))
 		$buts['tpeditwonarticle'] = array(
 			'title' => $txt['tp-myarticles'],
 			'href' => $scripturl . '?action=tportal;sa=myarticles',
@@ -248,7 +248,7 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if(allowedTo('tp_submithtml'))
+	if(allowedTo('tp_submithtml') || allowedTo('tp_articles'))
 		$buts['tpeditwonarticle']['sub_buttons']['submithtml'] = array(
 			'title' => $txt['tp-submitarticle'],
 			'href' => $scripturl . '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_html',
@@ -257,7 +257,7 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	if(allowedTo('tp_submitbbc'))
+	if(allowedTo('tp_submitbbc') || allowedTo('tp_articles'))
 		$buts['tpeditwonarticle']['sub_buttons']['submitbbc'] = array(
 			'title' => $txt['tp-submitarticlebbc'],
 			'href' => $scripturl . '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_bbc',
@@ -641,10 +641,10 @@ class chain
    {
        if(!is_array($this->table))
               $this->table = array();
-	   
+
        if(!array_key_exists($parent_id, $this->table))
               return;
-	   
+
        $rows = $this->table[$parent_id];
        foreach($rows as $key=>$value)
        {
@@ -2232,7 +2232,7 @@ function tp_collectArticleIcons()
 						'id' => $count,
 						'file' => $file,
 						'image' => '<img src="'.$boardurl.'/tp-files/tp-articles/illustrations/'.$file.'" alt="'.$file.'" />',
-						'background' => $boardurl.'/tp-files/tp-articles/illustrations/'.$file,						
+						'background' => $boardurl.'/tp-files/tp-articles/illustrations/'.$file,
 					);
 				$count++;
 			}
@@ -3041,7 +3041,7 @@ function TPGetMemberColour($member_ids)
 	if (empty($member_ids)) {
 		return false;
     }
-	
+
     // SMF2.1 and php < 7.0 need this
     if (TP_SMF21 && empty($db_connection)) {
         $db_options = array();
@@ -3057,13 +3057,13 @@ function TPGetMemberColour($member_ids)
     }
 
 	$member_ids = is_array($member_ids) ? $member_ids : array($member_ids);
-	
+
     $request = $smcFunc['db_query']('', '
             SELECT mem.id_member, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
             FROM {db_prefix}members AS mem
             LEFT JOIN {db_prefix}membergroups AS mgrp
                 ON (mgrp.id_group = mem.id_group)
-            LEFT JOIN {db_prefix}membergroups AS pgrp 
+            LEFT JOIN {db_prefix}membergroups AS pgrp
                 ON (pgrp.id_group = mem.id_post_group)
             WHERE mem.id_member IN ({array_int:member_ids})',
 		    array(

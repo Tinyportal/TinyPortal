@@ -858,7 +858,8 @@ function TPortalDLManager()
 			AND (dlm.category = {int:cat} OR dlm.parent = {int:cat})
 			AND data.year = {int:year}
 			AND data.week = {int:week}
-			ORDER BY dlm.downloads DESC LIMIT 10',
+			ORDER BY dlm.downloads DESC LIMIT 6',
+
 			array('type' => 'dlitem', 'cat' => $currentcat, 'year' => $year, 'week' => $week)
 		);
 
@@ -866,6 +867,16 @@ function TPortalDLManager()
 		{
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
+				if($context['TPortal']['dl_usescreenshot'] == 1)
+				{
+					if(!empty($row['screenshot']))
+						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+					else
+						$ico = '';
+				}
+				else
+					$ico = '';
+				
 				$fs = '';
 				if($context['TPortal']['dl_fileprefix'] == 'K')
 					$fs = ceil($row['filesize'] / 1000).' Kb';
@@ -886,7 +897,7 @@ function TPortalDLManager()
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 					'author_id' => $row['author_id'],
 					'date' => timeformat($row['created']),
-					'screenshot' => !empty($row['screenshot']) ? $row['screenshot'] : '' ,
+					'screenshot' => $ico,
 					'catname' => $row['catname'],
 					'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
 					'filesize' => $fs,
