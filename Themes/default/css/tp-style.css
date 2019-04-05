@@ -131,6 +131,11 @@ h2.author_h2
 {
 	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
 }
+.article_extra 
+{
+	padding: 0 1em;
+	border-top: 1px solid rgba(221, 221, 221, 0.5);
+}
 ul.gtags li
 {
 	list-style: none;
@@ -1130,6 +1135,10 @@ div.screenshot {
 	margin: 4px 4px 4px 1em;
 	float: right;	
 }
+div.dl_screenshot {
+	margin-right: 15px;
+	float: left;
+}
 #fileitem
 {
 	padding: 1em;
@@ -1755,38 +1764,14 @@ div.useravatar img
 	padding: 1.5em 1em;
 	margin: 14px 10px 10px 0;
 	background: #fff;
+	background: rgba(255, 255, 255, 0.2);
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
-	border: #999 solid 1px;
+	border: 1px solid #999;
+	border: 1px solid rgba(153, 153, 153, 0.3);
 	word-wrap: break-word;
 	word-break: break-word;
-}
-.textcomment .body:after 
-{
-	content: '';
-	position: absolute;
-	border-style: solid;
-	border-width: 0 10px 8px;
-	border-color: #FFFFFF transparent;
-	display: block;
-	width: 0;
-	z-index: 1;
-	top: -8px;
-	left: 16px;
-}
-.textcomment .body:before 
-{
-	content: '';
-	position: absolute;
-	border-style: solid;
-	border-width: 0 10px 8px;
-	border-color: #999 transparent;
-	display: block;
-	width: 0;
-	z-index: 0;
-	top: -9px;
-	left: 16px;
 }
 .othercomment .textcomment .body
 {

@@ -116,11 +116,11 @@ function template_main()
 					<div class="recentdl">';
 
 					if(!empty($last['screenshot']))
-						echo '<div style="margin-right: 15px; background: url('.$last['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$last['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					elseif(!empty($last['icon']) && strpos($last['icon'], 'blank.gif') == false)
-						echo '<div style="margin-right: 15px; background: url('.$last['icon'].') 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$last['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					else
-						echo '<div style="margin-right: 15px; background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 
 					echo '
 						<div class="dl_most_downloaded">
@@ -151,11 +151,11 @@ function template_main()
 					<div class="recentdl">';
 					
 					if(!empty($wost['screenshot']))
-						echo '<div style="margin-right: 15px; background: url('.$wost['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
-						echo '<div style="margin-right: 15px; background: url('.$wost['icon'].') 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$wost['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					else
-						echo '<div style="margin-right: 15px; background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					echo '
 						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
@@ -183,11 +183,11 @@ function template_main()
 					<div class="recentdl">';
 					
 					if(!empty($wost['screenshot']))
-						echo '<div style="margin-right: 15px; background: url('.$wost['screenshot'].') no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
-						echo '<div style="margin-right: 15px; background: url('.$wost['icon'].') 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$wost['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					else
-						echo '<div style="margin-right: 15px; background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; float: left; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="windowbg3"></div>';
+						echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					echo '
 						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
@@ -395,7 +395,7 @@ function template_main()
 				</h4>
 				<p class="clearthefloat"></p>
 				<hr>
-					<p class="floatright"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
+					<p style="float:right;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
 					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
 						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
 						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>
@@ -478,9 +478,10 @@ function template_main()
 
 	   echo '
 	 <div id="tpUpload" class="tborder">
+		<div></div>
         <div class="cat_bar">
             <h3 class="catbg">'.$txt['tp-dlupload'].'</h3>
-        </div><div></div>
+        </div>
 		<div class="windowbg noup" style="padding:0px">
 			<span class="topslice"><span></span></span>
 			  <div">
