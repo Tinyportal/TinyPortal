@@ -34,15 +34,13 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 elseif (!defined('SMF'))
 	exit('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 
-if (SMF == 'SSI')
-{
+if (SMF == 'SSI') {
 	// Let's start the main job
 	install_mod();
 	// and then let's throw out the template! :P
 	obExit(null, null, true);
 }
-else
-{
+else {
 	setup_hooks();
 }
 
@@ -75,7 +73,8 @@ function setup_hooks ()
 	global $context, $hooks;
 
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
-	foreach ($hooks as $hook => $function)
+
+	foreach ($hooks as $hook => $function) {
 		if(strpos($function, ',') === false) {
 			$integration_function($hook, $function);
 		}
@@ -85,6 +84,11 @@ function setup_hooks ()
 				$integration_function($hook, $func);
 			}
 		}
+    }
+
+    if(!empty($context['uninstalling'])) {
+        updateSettings(array('integrate_default_action' => ''));
+    }
 
 	$context['installation_done'] = true;
 }

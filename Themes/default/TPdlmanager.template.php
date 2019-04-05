@@ -1051,4 +1051,18 @@ function template_main()
 	</div>';
 }
 
+function template_dlsubmitsuccess()
+{
+    global $txt;
+
+    echo '
+        <div class="tborder">
+                <div class="cat_bar">
+                    <h3 class="catbg">'.$txt['tp-dlsubmitsuccess2'].'</h3>
+                </div>
+                    <div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-dlsubmitsuccess'].'
+                    <div class="padding-div">&nbsp;</div></div>
+        </div>';
+}
+
 ?>

@@ -51,7 +51,8 @@ function template_submitarticle()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />';
 
     if(allowedTo('admin_forum')) {
-	    echo '<input name="tpadmin_form" type="hidden" value="editarticle' . $mg['id'] . '">';
+	    echo '<input name="article" type="hidden" value="'. $mg['id'] . '">';
+	    echo '<input name="tpadmin_form" type="hidden" value="editarticle">';
     }
 
     echo'

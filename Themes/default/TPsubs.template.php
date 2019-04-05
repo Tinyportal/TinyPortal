@@ -2447,4 +2447,11 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 			<p class="clearthefloat"></p></ul>
 		</div>';
 }
+
+function template_updatelog()
+{
+	global $context;
+
+	echo '<div class="tborder">' . $context['TPortal']['updatelog'] , '<hr /></div>';
+}
 ?>

@@ -215,45 +215,45 @@ function template_tp_download()
 				</tr>
 			</thead>
 			<tbody>';
-if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['profile_uploads'])>0)
-{
-	foreach($context['TPortal']['profile_uploads'] as $art)
-	{
-		echo '
-			<tr class="windowbg">
-			<td class="uploads">
-				<div style="width:30%;" class="fullwidth-on-res-layout float-items">
-				  <a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['name'], $art['approved'] == 0 ? ')' : '' ,  '</a>
-				</div>
-				<a href="" class="clickme">'.$txt['tp-more'].'</a>
-				<div class="box" style="width:70%;float:left;">
-				  <div style="width:33.5%;" class="fullwidth-on-res-layout smalltext float-items">
-				    <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
-				    <div id="size-on-respnsive-layout">',$art['created'],'</div>
-				  </div>
-				  <div style="width:16.5%;" class="fullwidth-on-res-layout float-items" align="center">
-				    <div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
-				    ',$art['views'],'
-				  </div>
-				  <div style="width:28%;" class="fullwidth-on-res-layout float-items">
-				    <div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-ratings'].'</div>
-				    ' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')
-				  </div>
-				  <div style="width:16%;" class="fullwidth-on-res-layout float-items" align="center">
-				    <div id="show-on-respnsive-layout" style="word-break:break-all;">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
-				    ',$art['downloads'],'
-				   </div>
-				   <div style="width:6%;" class="fullwidth-on-res-layout float-items" align="center">
-				    <div id="show-on-respnsive-layout">'. $txt['tp-edit'] .'</div>
-				     ' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
-				   </div>
-			       <p class="clearthefloat"></p>
-				</div>
-				<p class="clearthefloat"></p>
-			</td>
-			</tr>';
-	}
-}
+    if(isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['profile_uploads'])>0)
+    {
+        foreach($context['TPortal']['profile_uploads'] as $art)
+        {
+            echo '
+                <tr class="windowbg">
+                <td class="uploads">
+                    <div style="width:30%;" class="fullwidth-on-res-layout float-items">
+                      <a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['name'], $art['approved'] == 0 ? ')' : '' ,  '</a>
+                    </div>
+                    <a href="" class="clickme">'.$txt['tp-more'].'</a>
+                    <div class="box" style="width:70%;float:left;">
+                      <div style="width:33.5%;" class="fullwidth-on-res-layout smalltext float-items">
+                        <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
+                        <div id="size-on-respnsive-layout">',$art['created'],'</div>
+                      </div>
+                      <div style="width:16.5%;" class="fullwidth-on-res-layout float-items" align="center">
+                        <div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
+                        ',$art['views'],'
+                      </div>
+                      <div style="width:28%;" class="fullwidth-on-res-layout float-items">
+                        <div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-ratings'].'</div>
+                        ' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $art['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')
+                      </div>
+                      <div style="width:16%;" class="fullwidth-on-res-layout float-items" align="center">
+                        <div id="show-on-respnsive-layout" style="word-break:break-all;">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
+                        ',$art['downloads'],'
+                       </div>
+                       <div style="width:6%;" class="fullwidth-on-res-layout float-items" align="center">
+                        <div id="show-on-respnsive-layout">'. $txt['tp-edit'] .'</div>
+                         ' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
+                       </div>
+                       <p class="clearthefloat"></p>
+                    </div>
+                    <p class="clearthefloat"></p>
+                </td>
+                </tr>';
+        }
+    }
 	echo '
 			</tbody>
 		</table>
