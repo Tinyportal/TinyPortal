@@ -461,7 +461,7 @@ function TPortal_userbox()
 		echo '
 		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
 			<input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
-			<select name="cookielength">
+			<select name="cookielength" style="max-width: 45%!important;">
 				<option value="60">', $txt['one_hour'], '</option>
 				<option value="1440">', $txt['one_day'], '</option>
 				<option value="10080">', $txt['one_week'], '</option>
