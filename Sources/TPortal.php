@@ -570,7 +570,7 @@ function doTPpage() {{{
 
 				require_once(SOURCEDIR . '/TPcommon.php');
 
-                $context['TPortal']['article']['countarticles'] = $tpArticle->getTotalAuthorArticles($context['TPortal']['article']['author_id']);
+                $context['TPortal']['article']['countarticles'] = $tpArticle->getTotalAuthorArticles($context['TPortal']['article']['author_id'], true, true);
 
 				// We'll use this in the template to allow comment box
 				if (allowedTo('tp_artcomment')) {

@@ -187,12 +187,23 @@ class TPArticle extends TPBase
 			);
     }}}
 
-    public function getTotalAuthorArticles($author_id) {{{
+    public function getTotalAuthorArticles($author_id, $off = false, $approved = true) {{{
+
+        $where          = '';
         $num_articles   = 0;
+
+        if($off == true) {
+            $where .= ' AND off = 0 ';
+        }
+
+        if($approved == false) {
+            $where .= ' AND approved = 0 ';
+        }
+
         $request        = $this->dB->db_query('', '
             SELECT COUNT(id) AS articles FROM {db_prefix}tp_articles
             WHERE author_id = {int:author}
-            AND off = 0',
+            '.$where,
             array(
                 'author' => $author_id
             )
