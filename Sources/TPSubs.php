@@ -256,11 +256,11 @@ function tp_getbuttons()
 			'sub_buttons' => array(),
 		);
 
-	// the admin fucntions
-	if($context['user']['is_logged'])
+	// the admin functions - divider
+	if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox'))
 		$buts['divde1'] = array(
 			'title' => '<hr />',
-			'href' => '#top',
+			'href' => '#',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
