@@ -1178,6 +1178,7 @@ function article_renders($type = 1, $single = false, $first = false)
     $useFrame = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
 	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg';
 	$divheader = isset($context['TPortal']['article']['boardnews']) ? 'cat_bar' : 'title_bar';
+	$divbody = isset($context['TPortal']['article']['boardnews']) ? 'windowbg noup' : 'windowbg';
 
 	if($type == 1)
 	{
@@ -1187,7 +1188,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
-		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? '' : '') . '">
 			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
 				{article_author}
@@ -1220,7 +1221,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 			' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1245,7 +1246,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		';
 		else
 			$code = '
-	<div class="tparticle windowbg" style="margin: 12px 0 0 0; padding: 12px 16px; border-radius: 6px;">
+	<div class="tparticle windowbg noup" style="margin: 12px 0 0 0; padding: 12px 16px; border-radius: 6px;">
 	<div class="article_iconcolumn">{article_iconcolumn}</div>
 		<div class="render2">
 			<h3 class="article_title" style="margin-left: 1em;">{article_title}</h3>
@@ -1288,7 +1289,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="title_bar">
 				<h3 class="titlebg article_title" style="margin-left: 1em; border: none;">{article_title} </h3>
 			</div>
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg noup" ' : '') . '>
+			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info" style="border-bottom: solid 1px #ddd; margin-top: 2px;">
 				{article_author}
 				{article_category}
@@ -1319,14 +1320,14 @@ function article_renders($type = 1, $single = false, $first = false)
 	elseif($type == 4)
 	{
 		$code = '
-	<div class="tparticle" style="margin-bottom: 0.5em;">
+	<div class="tparticle">
 		<div class="article_picturecolumn">{article_picturecolumn}</div>
 		<div class="render4">
 			<div></div>
 			<div class="cat_bar">
 				<h3 class="catbg">{article_title} </h3>
 			</div>
-		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg noup" ' : '') . '>
+		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1362,12 +1363,12 @@ function article_renders($type = 1, $single = false, $first = false)
 		</div>';
 		else
 			$code = '
-	<div class="tparticle" style="margin-bottom: 1em;">
+	<div class="tparticle">
 		<div></div>
 		<div class="' . $divheader . '">
 			<h3 class="article_title ' . $headerstyle . '">{article_shortdate} <strong>{article_title}</strong> </h3>
 		</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">
+			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? '' .$divbody. '' : '') . '">
 			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="topslice"><span></span></span>' : '') . '
 				<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
