@@ -81,6 +81,10 @@
 {
 	padding: 1em;
 }
+.blockarticle > .article_padding
+{
+	padding: 0px;
+}
 .tp_readmore
 {
 	padding-top: 1em;
@@ -1582,7 +1586,6 @@ ul.recent_topics li
 }
 .blockbody
 {
-	padding: 4px;
 	line-height: 1.3em;
 	min-height: 0%;
 	overflow-wrap: break-word;
@@ -2072,7 +2075,7 @@ div.tp_half21
 }
 .tp_block21
 {
-	padding: 6px 8px; 
+	padding: 8px 12px; 
 	margin-bottom: 0px !important;
 	margin-top: 6px;
 }

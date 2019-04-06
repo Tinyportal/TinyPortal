@@ -54,7 +54,7 @@ function template_frontpage()
 	global $context;
 
 	if($context['TPortal']['frontblock_type'] == 'first' || $context['TPortal']['front_type'] == 'frontblock')
-		echo '<div id="tpfrontpanel_top" style="margin: 0 0 4px 0; padding: 0;">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+		echo '<div id="tpfrontpanel_top">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 
 	if(!isset($context['TPortal']['category']))
 	{
