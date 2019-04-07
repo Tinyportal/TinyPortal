@@ -409,7 +409,19 @@ function TPortal_statsbox()
 			echo '<br>';
 		}
 		echo '
-			</div></div>';
+		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+			<input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
+			<select name="cookielength" style="max-width: 45%!important;">
+				<option value="60">', $txt['one_hour'], '</option>
+				<option value="1440">', $txt['one_day'], '</option>
+				<option value="10080">', $txt['one_week'], '</option>
+				<option value="302400">', $txt['one_month'], '</option>
+				<option value="-1" selected="selected">', $txt['forever'], '</option>
+			</select>
+			<input type="submit" class="button_submit" value="', $txt['login'], '" />
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+		</form>
+		<div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
 	}
 	echo '
 	</div>';
@@ -1179,6 +1191,7 @@ function article_renders($type = 1, $single = false, $first = false)
     $useFrame = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
 	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg';
 	$divheader = isset($context['TPortal']['article']['boardnews']) ? 'cat_bar' : 'title_bar';
+	$divbody = isset($context['TPortal']['article']['boardnews']) ? 'windowbg noup' : 'windowbg';
 
 	if($type == 1)
 	{
@@ -1188,7 +1201,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
-		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? '' : '') . '">
 			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
 				{article_author}
@@ -1221,7 +1234,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
 		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
 		' . ($useFrame ? '</div>' : '') . '
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg" ' : '') . '>
+			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 			' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1246,7 +1259,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		';
 		else
 			$code = '
-	<div class="tparticle windowbg" style="margin: 12px 0 0 0; padding: 12px 16px; border-radius: 6px;">
+	<div class="tparticle windowbg noup" style="margin: 12px 0 0 0; padding: 12px 16px; border-radius: 6px;">
 	<div class="article_iconcolumn">{article_iconcolumn}</div>
 		<div class="render2">
 			<h3 class="article_title" style="margin-left: 1em;">{article_title}</h3>
@@ -1289,7 +1302,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="title_bar">
 				<h3 class="titlebg article_title" style="margin-left: 1em; border: none;">{article_title} </h3>
 			</div>
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg noup" ' : '') . '>
+			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info" style="border-bottom: solid 1px #ddd; margin-top: 2px;">
 				{article_author}
 				{article_category}
@@ -1320,14 +1333,14 @@ function article_renders($type = 1, $single = false, $first = false)
 	elseif($type == 4)
 	{
 		$code = '
-	<div class="tparticle" style="margin-bottom: 0.5em;">
+	<div class="tparticle">
 		<div class="article_picturecolumn">{article_picturecolumn}</div>
 		<div class="render4">
 			<div></div>
 			<div class="cat_bar">
 				<h3 class="catbg">{article_title} </h3>
 			</div>
-		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="windowbg noup" ' : '') . '>
+		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1363,12 +1376,12 @@ function article_renders($type = 1, $single = false, $first = false)
 		</div>';
 		else
 			$code = '
-	<div class="tparticle" style="margin-bottom: 1em;">
+	<div class="tparticle">
 		<div></div>
 		<div class="' . $divheader . '">
 			<h3 class="article_title ' . $headerstyle . '">{article_shortdate} <strong>{article_title}</strong> </h3>
 		</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '">
+			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? '' .$divbody. '' : '') . '">
 			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="topslice"><span></span></span>' : '') . '
 				<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
@@ -1853,11 +1866,9 @@ function article_bookmark($render = true)
 		if ($context['TPortal']['hide_article_twitter']=='0') {
 			$data .= '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_google']=='0' && time() < strtotime('2019-04-01 00:00:00')) {
-			$data .= '<a href="http://plusone.google.com/_/+1/confirm?hl=en&url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/gplus.png" alt="g+" title="Share on Google Plus" /></a>';
-		}
-		if ($context['TPortal']['hide_article_reddit']=='0') {
-			$data .= '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
+		if ($context['TPortal']['hide_article_reddit']=='0')
+		{
+			echo '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
 		}
 		if ($context['TPortal']['hide_article_digg']=='0') {
 			$data .= '<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img class="tp_social" title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
