@@ -2014,7 +2014,7 @@ img.theme_icon
 
 .tp_container .windowbg, .dl_container .windowbg 
 {
-	margin-bottom: 6px;
+	margin-bottom: 6px !important;
 }
 
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
