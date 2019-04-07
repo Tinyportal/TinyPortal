@@ -1210,6 +1210,11 @@ function addDefaults()
             $render .= '<li>Updated tp_blocks settings</li>';
             $smcFunc['db_free_result']($request);
         }
+        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var1');
+        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var2');
+        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var3');
+        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var4');
+        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var5');
     }
 
 	// Check for date in variables table, if none insert default values.

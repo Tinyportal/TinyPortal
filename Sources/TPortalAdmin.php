@@ -626,7 +626,6 @@ function do_blocks()
 			get_boards();
 			get_articles();
 			tp_getDLcats();
-			tp_getTPmodules();
 
 			$context['TPortal']['edit_categories'] = array();
 
