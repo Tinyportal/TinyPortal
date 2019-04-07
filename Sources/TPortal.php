@@ -277,13 +277,14 @@ function tpLoadCSS() {{{
 	if(!empty($context['TPortal']['padding'])) {
 		$context['html_headers'] .= '
             <style type="text/css">
-                .block_leftcontainer,
-                .block_rightcontainer,
-                .block_centercontainer,
-                .block_uppercontainer,
-                .block_lowercontainer,
-                .block_topcontainer,
-                .block_bottomcontainer {
+				.block_leftcontainer,
+				.block_rightcontainer,
+				.block_topcontainer,
+				.block_uppercontainer,
+				.block_centercontainer,
+				.block_frontcontainer,
+				.block_lowercontainer,
+				.block_bottomcontainer {
                     padding-bottom: ' . $context['TPortal']['padding'] . 'px;
                 }
 

@@ -80,6 +80,10 @@
 {
 	padding: 1em;
 }
+.blockarticle > .article_padding
+{
+	padding: 0px;
+}
 .tp_readmore
 {
 	padding-top: 1em;
@@ -1977,6 +1981,9 @@ img.theme_icon
    width: 35px;
    height: 35px;
 }
+.windowbg.noup {
+	margin-top: 0px !important;
+}
 
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
@@ -2002,9 +2009,9 @@ img.theme_icon
 	margin: 0 0 0 0 !important;
 }
 
-.tp_responsive .windowbg, .dl_container .windowbg, .dl_container .roundframe
+.tp_container .windowbg, .dl_container .windowbg 
 {
-	margin: 6px 0 6px 0;
+	margin-bottom: 6px;
 }
 
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
@@ -2066,7 +2073,7 @@ div.tp_half21
 }
 .tp_block21
 {
-	padding: 6px 8px; 
+	padding: 4px 8px 8px 8px; 
 	margin-bottom: 0px !important;
 	margin-top: 6px;
 }
