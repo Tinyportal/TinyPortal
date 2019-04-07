@@ -360,6 +360,7 @@ class TPortal_Integrate
 
 
         // Add the admin button
+		if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox')) {
         $buttons = array_merge(
                 array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
                 array (
@@ -373,7 +374,22 @@ class TPortal_Integrate
                 ),
                 $buttons
         );
-
+		}
+		else {
+		$buttons = array_merge(
+				array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
+				array (
+					'tpadmin' => array (
+						'icon' => 'tinyportal/menu_tp.png',
+						'title' => $txt['tp-tphelp'],
+						'href' => '#',
+						'show' =>  TPcheckAdminAreas(),
+						'sub_buttons' => tp_getbuttons(),
+					),
+				),
+				$buttons
+		);
+	}
         // Add the help
         if(array_key_exists('help', $buttons)) {
             $buttons['help']['sub_buttons'] = array(
