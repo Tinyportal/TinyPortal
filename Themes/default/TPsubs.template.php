@@ -334,7 +334,7 @@ function TPortal_userbox()
     echo '
         <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
             <input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
-            <select name="cookielength">
+            <select name="cookielength" style="max-width: 45%!important;">
                 <option value="60">', $txt['one_hour'], '</option>
                 <option value="1440">', $txt['one_day'], '</option>
                 <option value="10080">', $txt['one_week'], '</option>
@@ -409,19 +409,7 @@ function TPortal_statsbox()
 			echo '<br>';
 		}
 		echo '
-		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-			<input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
-			<select name="cookielength" style="max-width: 45%!important;">
-				<option value="60">', $txt['one_hour'], '</option>
-				<option value="1440">', $txt['one_day'], '</option>
-				<option value="10080">', $txt['one_week'], '</option>
-				<option value="302400">', $txt['one_month'], '</option>
-				<option value="-1" selected="selected">', $txt['forever'], '</option>
-			</select>
-			<input type="submit" class="button_submit" value="', $txt['login'], '" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-		</form>
-		<div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
+			</div></div>';
 	}
 	echo '
 	</div>';
@@ -1866,9 +1854,8 @@ function article_bookmark($render = true)
 		if ($context['TPortal']['hide_article_twitter']=='0') {
 			$data .= '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
 		}
-		if ($context['TPortal']['hide_article_reddit']=='0')
-		{
-			echo '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
+		if ($context['TPortal']['hide_article_reddit']=='0') {
+			$data .= '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
 		}
 		if ($context['TPortal']['hide_article_digg']=='0') {
 			$data .= '<a href="http://digg.com/submit?url=' . $scripturl.'?page='. $context['TPortal']['article']['id'] . '&title=' . $context['TPortal']['article']['subject'].'" target="_blank"><img class="tp_social" title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
