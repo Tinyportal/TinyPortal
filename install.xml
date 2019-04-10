@@ -83,13 +83,6 @@
 		</operation>
 	</file>
 	
-	<file name="$boarddir/SSI.php">
-		<operation>
-			<search position="before"><![CDATA[require_once($sourcedir . '/Security.php');]]></search>
-			<add><![CDATA[require_once($sourcedir . '/TPortal.php');]]></add>
-		</operation>
-	</file>
-	
 	<file name="$sourcedir/QueryString.php">
 		<operation>
 			<search position="replace"><![CDATA[?:board|topic)=]]></search>
