@@ -246,6 +246,32 @@ class TPArticle extends TPBase
 
     public function getArticlesInCategory( $category ) {{{
 
+        $articles   = array();
+        $request    =  $this->dB->db_query('', '
+            SELECT id, subject, shortname
+            FROM {db_prefix}tp_articles
+            WHERE category = {int:cat}
+            ORDER BY date DESC',
+            array(
+                'cat' => $category,
+            )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            while($row = $this->dB->db_fetch_assoc($request)) {
+                if(empty($row['shortname'])) {
+                    $row['shortname'] = $row['id'];
+                }
+                $articles[] = array(
+                    'id'        => $row['id'],
+                    'subject'   => $row['subject'],
+                    'shortname' => $row['shortname'],
+                );
+            }
+        }
+        $this->dB->db_free_result($request);
+
+        return $articles; 
 
     }}}
 

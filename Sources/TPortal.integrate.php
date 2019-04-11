@@ -30,6 +30,7 @@ class TPortal_Integrate
         }
 
         $hooks = array (
+            'SSI'                             => '$sourcedir/TPSSI.php|ssi_TPIntegrate',
             'load_permissions'                => 'TPortal_Integrate::hookPermissions',
             'load_illegal_guest_permissions'  => 'TPortal_Integrate::hookIllegalPermissions',
             'buffer'                          => 'TPortal_Integrate::hookBuffer',
