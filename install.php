@@ -646,6 +646,9 @@ $settings_array = array(
 	'use_groupcolor' => '0',
 	'disable_template_eval' => '1',
     'allow_links_article_comments' => '1',
+    'image_upload_path'     => 'tp-files/tp-images/',
+    'download_upload_path'  => 'tp-files/tp-downloads/',
+    'blockcode_upload_path' => 'tp-files/tp-blockcodes/',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');

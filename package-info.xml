@@ -31,6 +31,7 @@
 		<remove-file name="$sourcedir/TPortalAdmin.php" />
 		<remove-file name="$sourcedir/TPArticle.php" />
 		<remove-file name="$sourcedir/TPSubs.php" />
+		<remove-file name="$sourcedir/TPSSI.php" />
 		<remove-file name="$themedir/TPBlockLayout.template.php" />
 		<remove-file name="$themedir/TParticle.template.php" />
 		<remove-file name="$themedir/TPdladmin.template.php" />
@@ -80,6 +81,7 @@
 		<remove-dir name="$themedir/images/tinyportal" />
 		<remove-dir name="$boarddir/tp-src" />
 		<remove-dir name="$themedir/scripts/tinyportal" />
+		<remove-file name="$sourcedir/TPSSI.php" />
 		<remove-file name="$sourcedir/TPBlock.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
 		<remove-file name="$sourcedir/TPdlmanager.php" />
