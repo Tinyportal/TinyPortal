@@ -168,4 +168,38 @@ function tp_groups()
 	}
 	return $grp;
 }
+
+function TPUpshrink() {{{
+
+    global $settings;
+
+    if(isset($_GET['upshrink']) && isset($_GET['state'])) {
+        $blockid    = TPUtil::filter('upshrink', 'get', 'string');
+        $state      = TPUtil::filter('state', 'get', 'string');
+        if(isset($_COOKIE['tp-upshrinks'])) {
+            $shrinks = explode(',', $_COOKIE['tp-upshrinks']);
+            if($state == 0 && !in_array($blockid, $shrinks)) {
+                $shrinks[] = $blockid;
+            }
+            elseif($state == 1 && in_array($blockid, $shrinks)) {
+                $spos = array_search($blockid, $shrinks);
+                if($spos > -1) {
+                    unset($shrinks[$spos]);
+                }
+            }
+            $newshrink = implode(',', $shrinks);
+            setcookie ('tp-upshrinks', $newshrink , time()+7776000);
+        }
+        else {
+            if($state == 0) {
+                setcookie ('tp-upshrinks', $blockid, (time()+7776000));
+            }
+        }
+        // Don't output anything...
+        $tid = time();
+        redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
+    }
+
+}}}
+
 ?>

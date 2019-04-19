@@ -36,7 +36,7 @@ function TPortal() {{{
         'savesettings'      => array('TPSubs.php', 'TPSaveSettings' , array()),
     );
     
-    call_integration_hook('integrate_tp_subactions', array(&$subActions));
+    call_integration_hook('integrate_tp_pre_subactions', array(&$subActions));
 
     $context['TPortal']['subaction'] = $subAction;
     // If it exists in our new subactions array load it
@@ -47,43 +47,8 @@ function TPortal() {{{
 
         call_user_func_array($subActions[$subAction][1], $subActions[$subAction][2]);
     }
-    elseif(isset($_GET['getsnippets'])) {
-        // call the editor setup
-        require_once($sourcedir. '/TPcommon.php');
-        get_snippets_xml();
-        // save the upshrink value
-    }
-    elseif(isset($_GET['upshrink']) && isset($_GET['state'])) {
-        $blockid    = TPUtil::filter('upshrink', 'get', 'string');
-        $state      = TPUtil::filter('state', 'get', 'string');
-        if(isset($_COOKIE['tp-upshrinks'])) {
-            $shrinks = explode(',', $_COOKIE['tp-upshrinks']);
-            if($state == 0 && !in_array($blockid, $shrinks)) {
-                $shrinks[] = $blockid;
-            }
-            elseif($state == 1 && in_array($blockid, $shrinks)) {
-                $spos = array_search($blockid, $shrinks);
-                if($spos > -1) {
-                    unset($shrinks[$spos]);
-                }
-            }
-            $newshrink = implode(',', $shrinks);
-            setcookie ('tp-upshrinks', $newshrink , time()+7776000);
-        }
-        else {
-            if($state == 0) {
-                setcookie ('tp-upshrinks', $blockid, (time()+7776000));
-            }
-        }
-        // Don't output anything...
-        $tid = time();
-        redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
-    }
-    else {
-        require_once(SOURCEDIR . '/TPdlmanager.php');
-        TPdlmanager();
-    }
 
+    call_integration_hook('integrate_tp_post_subactions');
 
 }}}
 
@@ -105,6 +70,8 @@ function TPortalMain() {{{
 // TinyPortal init
 function TPortal_init() {{{
 	global $context, $txt, $user_info, $settings, $boarddir, $modSettings, $db_type;
+
+    call_integration_hook('integrate_tp_pre_init');
 
 	// has init been run before? if so return!
 	if(isset($context['TPortal']['redirectforum'])) {
@@ -197,8 +164,7 @@ function TPortal_init() {{{
 		fatal_error($txt['tp-categorynotexist'], false);
     }
 
-    require_once(SOURCEDIR.'/TPShout.php');
-    TPShoutLoad();
+    call_integration_hook('integrate_tp_post_init');
 
 }}}
 
