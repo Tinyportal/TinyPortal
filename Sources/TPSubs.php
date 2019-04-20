@@ -45,54 +45,6 @@ function TPsetupAdminAreas() {{{
 		);
 		$admin_set = true;
 	}
-	// any from modules?
-	$request = $smcFunc['db_query']('', '
-		SELECT modulename, subquery, permissions, languages
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}',
-		array(
-			'active' => 1
-		)
-	);
-
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$perms = explode(',', $row['permissions']);
-			$setperm = array();
-			$admin_set = false;
-            if(is_countable($perms)) {
-                for($a = 0; $a < count($perms); $a++) {
-                    $pr = explode('|', $perms[$a]);
-                    $setperm[$pr[0]] = $pr[1];
-                    // admin permission?
-                    if (isset($pr[1]) && $pr[1] == 1) {
-                        if (allowedTo($pr[0])) {
-                            if(!$admin_set) {
-                                if($row['subquery'] == 'shout') {
-                                    $context['admin_tabs']['custom_modules'][$pr[0]] = array(
-                                        'title'         => $row['modulename'],
-                                        'description'   => '',
-                                        'href'          => $scripturl . '?action=tpshout;'.$row['subquery'].'=admin',
-                                        'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
-                                    );
-                                }
-                                else {
-                                    $context['admin_tabs']['custom_modules'][$pr[0]] = array(
-                                        'title'         => $row['modulename'],
-                                        'description'   => '',
-                                        'href'          => $scripturl . '?action=tpadmin;'.$row['subquery'].'=admin',
-                                        'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
-                                    );
-                                }
-                            }
-                            $admin_set = true;
-                        }
-                    }
-                }
-            }
-		}
-		$smcFunc['db_free_result']($request);
-	}
 
 }}}
 
@@ -183,41 +135,6 @@ function TPcollectPermissions() {{{
 		'tp_submithtml' => 1,
 		'tp_submitbbc' => 1,
 	);
-	// done, now onto custom modules
-	$request = $smcFunc['db_query']('', '
-		SELECT modulename, permissions, languages
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}',
-		array(
-			'active' => 1
-		)
-	);
-
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$perms      = explode(',', $row['permissions']);
-			$setperm    = array();
-            if(is_countable($perms)) {
-                for($a=0; $a < count($perms); $a++) {
-                    $pr = explode('|', $perms[$a]);
-                    $setperm[$pr[0]] = 0;
-                    // admin permission?
-                    if($pr[1] == 1) {
-                        $context['TPortal']['adminlist'][$pr[0]] = 1;
-                    }
-                }
-            }
-			$context['TPortal']['permissonlist'][] = array(
-				'title' => strtolower($row['modulename']),
-				'perms' => $setperm
-			);
-
-			$context['TPortal']['tppermissonlist'][$pr[0]] = array(false, strtolower($row['modulename']), strtolower($row['modulename']));
-			if(loadLanguage($row['modulename'], '', false) == false)
-				loadLanguage($row['modulename'], 'english', false);
-		}
-		$smcFunc['db_free_result']($request);
-	}
 
 }}}
 
@@ -2074,20 +1991,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	// collect modules and their permissions
-	$result =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_modules
-		WHERE 1=1',
-		array()
-	);
-	if($smcFunc['db_num_rows']($result) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($result))
-		{
-			$context['TPortal']['admmodules'][] = $row;
-		}
-		$smcFunc['db_free_result']($result);
-	}
+
 	TPsetupAdminAreas();
 	validateSession();
 }

@@ -306,8 +306,6 @@ function do_subaction($tpsub)
 		do_articles();
 	elseif(in_array($tpsub, array('blocks', 'panels')))
 		do_blocks();
-	elseif(in_array($tpsub, array('modules')))
-		do_modules();
 	elseif(in_array($tpsub, array('menubox', 'addmenu')))
 		do_menus();
 	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')))
@@ -2001,33 +1999,6 @@ function do_articles()
 
 }
 
-function do_modules()
-{
-	global $context, $txt, $scripturl, $smcFunc;
-
-	isAllowedTo('tp_settings');
-
-	$context['TPortal']['adm_modules'] = array();
-		// fetch modules
-		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_modules
-			WHERE 1=1',
-			array()
-		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-				$context['TPortal']['adm_modules'][] = $row;
-			$smcFunc['db_free_result']($request);
-		}
-		$context['TPortal']['internal_modules'][] = array(
-			'adminlink' => '<a href="'.$scripturl.'?action=tportal;dl=admin">'.$txt['tp-mod-dladmin'].'</a>',
-			'modulelink' => '<a href="'.$scripturl.'?action=tportal;dl=0">'.$txt['tp-mod-dlmanager'].'</a>',
-			'state' => $context['TPortal']['show_download'],
-			'fieldname' => 'tp_show_download',
-		);
-}
-
 function do_news($tpsub = 'overview')
 {
 	global $context, $txt, $scripturl;
@@ -2299,31 +2270,6 @@ function do_postchecks()
 				return $from.';cu=' . $_POST['tpadmin_form_category'];
 			else
 				return $from;
-		}
-		// modules
-		elseif($from == 'modules')
-		{
-			checkSession('post');
-			isAllowedTo('tp_settings');
-
-			foreach($_POST as $what => $value)
-			{
-				if($what == 'tp_show_download')
-					$updateArray['show_download'] = $value;
-				elseif(substr($what, 0, 14) == 'tpmodule_state')
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_modules
-						SET active = {int:active}
-						WHERE id = {int:modid}',
-						array(
-							'active' => $value,
-							'modid' => substr($what, 14),
-						)
-					);
-			}
-			updateTPSettings($updateArray);
-
-			return $from;
 		}
 		// all the items
 		elseif($from == 'menuitems')

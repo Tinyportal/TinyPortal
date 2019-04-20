@@ -111,7 +111,6 @@ function TPortal_init() {{{
     }
 
 	fetchTPhooks();
-    doModules();
 
 	// set up the layers, but not for certain actions
 	if(!isset($_REQUEST['preview']) && !isset($_REQUEST['quote']) && !isset($_REQUEST['xml']) && !isset($aoptions['nolayer'])) {
@@ -2191,52 +2190,6 @@ function doTPblocks() {{{
 
 	$context['TPortal']['blocks'] = $blocks;
 
-}}}
-
-function doModules() {{{
-    global $context, $boarddir, $smcFunc;
-    // fetch any block render hooks and notifications from tpmodules
-    $context['TPortal']['tpmodules'] = array(
-        'blockrender' => array(),
-        'adminhook' => array(),
-        'frontsection' => array(),
-    );
-    $context['TPortal']['modulepermissions'] = array('tp_settings', 'tp_blocks', 'tp_articles', 'tp_alwaysapproved', 'tp_submithtml', 'tp_submitbbc', 'tp_editownarticle');
-    $request = $smcFunc['db_query']('', '
-        SELECT id, modulename, blockrender, autoload_run, adminhook,
-        frontsection, permissions
-        FROM {db_prefix}tp_modules WHERE active = {int:active}',
-        array('active' => 1)
-    );
-    if($smcFunc['db_num_rows']($request) > 0) {
-        while($row = $smcFunc['db_fetch_assoc']($request)) {
-            if(!empty($row['permissions'])) {
-                $all = explode(',', $row['permissions']);
-                foreach($all as $one) {
-                    $real = explode('|', $one);
-                    $context['TPortal']['modulepermissions'][] = $real[0];
-                    unset($real);
-                }
-            }
-            if(!empty($row['blockrender'])) {
-                $context['TPortal']['tpmodules']['blockrender'][$row['id']] = array(
-                        'id' => $row['id'],
-                        'name' => $row['modulename'],
-                        'function' => $row['blockrender'],
-                        'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-                );
-            }
-            if(!empty($row['frontsection'])) {
-                $context['TPortal']['tpmodules']['frontsection'][$row['id']] = array(
-                    'id' => $row['id'],
-                    'name' => $row['modulename'],
-                    'function' => $row['frontsection'],
-                    'sourcefile' => $boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'],
-                );
-            }
-        }
-        $smcFunc['db_free_result']($request);
-    }
 }}}
 
 // TPortal side bar, left or right.

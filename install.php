@@ -226,37 +226,6 @@ $tables = array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
-    'tp_modules' => array(
-        'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'version', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'modulename', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'title', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'subquery', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'autoload_run', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'autoload_admin', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'autorun', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'autorun_admin', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'db', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'permissions', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'active', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-            array('name' => 'languages', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'blockrender', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'adminhook', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'logo', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'tpversion', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'smfversion', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'description', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'author', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'email', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'website', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'profile', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'frontsection', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-        ),
-        'indexes' => array(
-            array('type' => 'primary', 'columns' => array('id')),
-        ),
-    ),
     'tp_dldata' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'bigint', 'size' => 20, 'auto' => true,),
@@ -437,6 +406,9 @@ foreach ($tables as $table => $col) {
     }
     checkTextColumnNull($table);
 }
+
+// Remove the tp_modules database table
+$smcFunc['db_drop_table']('{db_prefix}tp_modules');
 
 $request = $smcFunc['db_query']('', '
     SELECT * FROM {db_prefix}tp_settings
@@ -753,88 +725,6 @@ addDefaults();
 if($db_type == 'mysql') {
     articleUpdates();
 }
-
-// make sure TPShout is available
-$request = $smcFunc['db_query']('', '
-	SELECT id FROM {db_prefix}tp_modules
-	WHERE modulename = {string:name}',
-	array('name' => 'TPShout')
-);
-if($smcFunc['db_num_rows']($request) > 0)
-{
-	$row = $smcFunc['db_fetch_row']($request);
-	$smcFunc['db_free_result']($request);
-	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_modules
-		SET logo = {string:logo}',
-		array('logo' => 'tpshoutbox.png')
-	);
-}
-else
-{
-	$newmod = array(
-		'version' => '1.4',
-		'modulename' => 'TPShout',	// must be exactly equal to the folder.
-		'title' => 'TP Simple Shout',
-		'subquery' => 'shout',	// the subcall that let TP knows which module is running.
-		'autoload_run' => 'TPShout.php',
-		'autoload_admin' => 'TPShout.php',
-		'autorun' => '',
-		'autorun_admin' => '',
-		'db' => '',
-		'permissions' => 'tp_can_admin_shout|1',	//permiss
-		'active' => 1,
-		'languages' => 'english',
-		'blockrender' => 'tpshout_fetch',
-		'adminhook' => 'tpshout_adminhook',
-		'logo' => 'tpshoutbox.png',
-		'tpversion' => '1.4R',
-		'smfversion' => '2.0.x',
-		'description' => '[b]TP Simple Shoutbox[/b] is the original shoutbox from v0.9 series of TinyPortal, now converted to a TP module. It allows shout in BBC format, scrolling of shouts, insert of BBC codes and smilies and an admin interface to delete or modify shouts.<br />	',
-		'author' => 'IchBin',
-		'email' => 'ichbin@ichbin.us',
-		'website' => 'http://www.tinyportal.net',
-		'profile' => 'tpshout_profile',
-		'frontsection' => 'tpshout_frontpage',
-	);
-
-	require_once($sourcedir . '/Subs-Post.php');
-	preparsecode($newmod['description']);
-
-	// ok, insert this into modules table.
-	$smcFunc['db_insert']('INSERT',
-		'{db_prefix}tp_modules',
-		array(
-			'version' => 'string',
-			'modulename' => 'string',
-			'title' => 'string',
-			'subquery' => 'string',
-			'autoload_run' => 'string',
-			'autoload_admin' => 'string',
-			'autorun' => 'string',
-			'autorun_admin' => 'string',
-			'db' => 'string',
-			'permissions' => 'string',
-			'active' => 'int',
-			'languages' => 'string',
-			'blockrender' => 'string',
-			'adminhook' => 'string',
-			'logo' => 'string',
-			'tpversion' => 'string',
-			'smfversion' => 'string',
-			'description' => 'string',
-			'author' => 'string',
-			'email' => 'string',
-			'website' => 'string',
-			'profile' => 'string',
-			'frontsection' => 'string',
-		),
-		$newmod,
-		array('id')
-	);
-}
-
-tpListImages();
 
 // check if blocks access2 needs converting
 if(isset($convertaccess))
@@ -1289,81 +1179,6 @@ function addDefaults()
 		$smcFunc['db_free_result']($request);
 		$render .= '<li>Added some sample values to the variables table</li>';
 	}
-}
-
-function tpListImages()
-{
-    global $sourcedir, $smcFunc;
-
-    // make sure TPListImages is available
-    $request = $smcFunc['db_query']('', '
-        SELECT id FROM {db_prefix}tp_modules
-        WHERE modulename = {string:name}',
-        array('name' => 'TPListImages')
-    );
-
-    if($smcFunc['db_num_rows']($request) == 0) {
-        $newmod = array(
-            'version'           => '1.0.0',
-            'modulename'        => 'TPListImages',	            // must be exactly equal to the folder.
-            'title'             => 'TP List Images',
-            'subquery'          => 'listimage',	                // the subcall that let TP knows which module is running.
-            'autoload_run'      => 'TPListImages.php',
-            'autoload_admin'    => 'TPListImages.php',
-            'autorun'           => '',
-            'autorun_admin'     => '',
-            'db'                => '',
-            'permissions'       => 'tp_can_list_images|1',	// permissions
-            'active'            => 1,
-            'languages'         => 'english',
-            'blockrender'       => '',
-            'adminhook'         => '',
-            'logo'              => 'tpshoutbox.png',
-            'tpversion'         => '2.0.0',
-            'smfversion'        => '2.x.x',
-            'description'       => '[b]TP List Images[/b] Allows you to remove uploaded images from the Tiny Portal Image Directory.<br >	',
-            'author'            => 'tinoest',
-            'email'             => 'tinoest@gmail.com',
-            'website'           => 'http://www.tinyportal.net',
-            'profile'           => '',
-            'frontsection'      => '',
-        );
-
-        require_once($sourcedir . '/Subs-Post.php');
-        preparsecode($newmod['description']);
-
-        // ok, insert this into modules table.
-        $smcFunc['db_insert']('INSERT',
-            '{db_prefix}tp_modules',
-            array(
-                'version' => 'string',
-                'modulename' => 'string',
-                'title' => 'string',
-                'subquery' => 'string',
-                'autoload_run' => 'string',
-                'autoload_admin' => 'string',
-                'autorun' => 'string',
-                'autorun_admin' => 'string',
-                'db' => 'string',
-                'permissions' => 'string',
-                'active' => 'int',
-                'languages' => 'string',
-                'blockrender' => 'string',
-                'adminhook' => 'string',
-                'logo' => 'string',
-                'tpversion' => 'string',
-                'smfversion' => 'string',
-                'description' => 'string',
-                'author' => 'string',
-                'email' => 'string',
-                'website' => 'string',
-                'profile' => 'string',
-                'frontsection' => 'string',
-            ),
-            $newmod,
-            array('id')
-        );
-    }
 }
 
 function checkTextColumnNull($table)
