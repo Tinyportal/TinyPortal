@@ -51,35 +51,25 @@ function TPsetupAdminAreas() {{{
 function TP_addPerms() {{{
 	global $smcFunc;
 
-	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups',
-		'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys',
-		'manage_attachments', 'tp_articles', 'tp_blocks', 'tp_dlmanager', 'tp_settings');
-	$request = $smcFunc['db_query']('', '
-		SELECT permissions
-		FROM {db_prefix}tp_modules
-		WHERE {int:active}',
-		array(
-			'active' => 1
-		)
-	);
+	$admperms = array(
+        'admin_forum', 
+        'manage_permissions', 
+        'moderate_forum', 
+        'manage_membergroups',
+        'manage_bans', 
+        'send_mail', 
+        'edit_news', 
+        'manage_boards', 
+        'manage_smileys',
+        'manage_attachments', 
+        'tp_articles', 
+        'tp_blocks', 
+        'tp_dlmanager', 
+        'tp_settings'
+    );
+    
+    call_integration_hook('integrate_tp_admin_permissions', array(&$admperms));
 
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$perms = explode(',', $row['permissions']);
-			$setperm = array();
-            if(is_countable($perms)) {
-                for($a = 0; $a < count($perms); $a++) {
-                    $pr = explode('|', $perms[$a]);
-                    $setperm[$pr[0]] = $pr[1];
-                    // admin permission?
-                    if($pr[1] == 1) {
-                        $admperms[] = $pr[0];
-                    }
-                }
-            }
-		}
-		$smcFunc['db_free_result']($request);
-	}
 	return $admperms;
 
 }}}
@@ -1259,8 +1249,7 @@ function tp_collectArticleAttached($art)
 }
 
 
-function TP_fetchprofile_areas()
-{
+function TP_fetchprofile_areas() {{{
 	global $smcFunc;
 
 	$areas = array(
@@ -1269,66 +1258,32 @@ function TP_fetchprofile_areas()
 		'tp_download' => array('name' => 'tp_download', 'permission' => 'tp_dlmanager'),
 	);
 
-	// done, now onto custom modules
-	$request = $smcFunc['db_query']('', '
-		SELECT modulename, profile
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}',
-		array(
-			'active' => 1
-		)
-	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$areas[strtolower($row['modulename'])] = array('name' => strtolower($row['modulename']), 'permission' => $row['profile']);
-		}
-		$smcFunc['db_free_result']($request);
-	}
+    call_integration_hook('integrate_tp_profile_areas', array(&$areas));
+    
 	return $areas;
-}
+}}}
 
-function TP_fetchprofile_areas2($memID)
-{
+function TP_fetchprofile_areas2($member_id) {{{
 	global $context, $scripturl, $txt, $user_info, $smcFunc;
 
-	if (!$user_info['is_guest'] && (($context['user']['is_owner'] && allowedTo('profile_view_own')) || allowedTo(array('profile_view_any', 'moderate_forum', 'manage_permissions','tp_dlmanager','tp_blocks','tp_articles','tp_gallery','tp_linkmanager'))))
-	{
+	if (!$user_info['is_guest'] && (($context['user']['is_owner'] && allowedTo('profile_view_own')) || allowedTo(array('profile_view_any', 'moderate_forum', 'manage_permissions','tp_dlmanager','tp_blocks','tp_articles','tp_gallery','tp_linkmanager')))) {
 		$context['profile_areas']['tinyportal'] = array(
 			'title' => $txt['tp-profilesection'],
 			'areas' => array()
 		);
 
-		$context['profile_areas']['tinyportal']['areas']['tp_summary'] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa=tp_summary">' . $txt['tpsummary'] . '</a>';
-		if ($context['user']['is_owner'] || allowedTo('tp_articles'))
-			$context['profile_areas']['tinyportal']['areas']['tp_articles'] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa=tp_articles">' . $txt['articlesprofile'] . '</a>';
-		if(($context['user']['is_owner'] || allowedTo('tp_dlmanager')) && $context['TPortal']['show_download'])
-			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa=tp_download">' . $txt['downloadprofile'] . '</a>';
-	}
-	// done, now onto custom modules
-	$request =  $smcFunc['db_query']('', '
-		SELECT modulename, autoload_run, profile
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}
-		AND profile != ""',
-		array(
-			'active' => 1
-		)
-	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			if($context['user']['is_owner'] || allowedTo($row['profile']))
-			{
-				$context['profile_areas']['tinyportal']['areas'][strtolower($row['profile'])] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa='.strtolower($row['profile']).';tpmodule">' . $txt['tp-from']. $row['modulename'] . '</a>';
-			}
-		}
-		$smcFunc['db_free_result']($request);
+		$context['profile_areas']['tinyportal']['areas']['tp_summary'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_summary">' . $txt['tpsummary'] . '</a>';
+		if ($context['user']['is_owner'] || allowedTo('tp_articles')) {
+			$context['profile_areas']['tinyportal']['areas']['tp_articles'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_articles">' . $txt['articlesprofile'] . '</a>';
+        }
+		if(($context['user']['is_owner'] || allowedTo('tp_dlmanager')) && $context['TPortal']['show_download']) {
+			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_download">' . $txt['downloadprofile'] . '</a>';
+        }
+    
+        call_integration_hook('integrate_tp_profile', array(&$member_id));
 	}
 
-}
+}}}
 
 function get_perm($perm, $moderate = '')
 {
@@ -1868,28 +1823,25 @@ function TPparseRSS($override = '', $encoding = 0)
 }
 
 // Set up the administration sections.
-function TPadminIndex($tpsub = '', $module_admin = false)
-{
+function TPadminIndex($tpsub = '', $module_admin = false) {{{
 	global $txt, $context, $scripturl, $smcFunc;
 
 	if(loadLanguage('TPortalAdmin') == false)
 		loadLanguage('TPortalAdmin', 'english');
 
-	if($module_admin)
-	{
+	if($module_admin) {
 		// make sure tpadmin is still active
 		$_GET['action'] = 'tpadmin';
 	}
+
 	$context['admin_tabs'] = array();
 	$context['admin_header']['tp_settings'] = $txt['tp-adminheader1'];
 	$context['admin_header']['tp_articles'] = $txt['tp-articles'];
 	$context['admin_header']['tp_blocks'] = $txt['tp-adminpanels'];
 	$context['admin_header']['tp_menubox'] = $txt['tp-menumanager'];
-	$context['admin_header']['tp_modules'] = $txt['tp-modules'];
 	$context['admin_header']['custom_modules'] = $txt['custom_modules'];
 
-	if (allowedTo('tp_settings'))
-	{
+	if (allowedTo('tp_settings')) {
 		$context['admin_tabs']['tp_settings'] = array(
 			'settings' => array(
 				'title' => $txt['tp-settings'],
@@ -1905,8 +1857,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_articles'))
-	{
+
+	if (allowedTo('tp_articles')) {
 		$context['admin_tabs']['tp_articles'] = array(
 			'articles' => array(
 				'title' => $txt['tp-articles'],
@@ -1940,8 +1892,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_blocks'))
-	{
+
+	if (allowedTo('tp_blocks')) {
 		$context['admin_tabs']['tp_blocks'] = array(
 			'panelsettings' => array(
 				'title' => $txt['tp-allpanels'],
@@ -1963,8 +1915,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_blocks'))
-	{
+
+	if (allowedTo('tp_blocks')) {
 		$context['admin_tabs']['tp_menubox'] = array(
 			'menubox' => array(
 				'title' => $txt['tp-menumanager'],
@@ -1980,21 +1932,11 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_settings'))
-	{
-		$context['admin_tabs']['tp_modules'] = array(
-			'modules' => array(
-				'title' => $txt['tp-modules'],
-				'description' => $txt['tp-moduledesc1'],
-				'href' => $scripturl . '?action=tpadmin;sa=modules',
-				'is_selected' => $tpsub == 'modules' && !isset($_GET['import']) && !isset($_GET['tags']),
-			),
-		);
-	}
 
 	TPsetupAdminAreas();
 	validateSession();
-}
+
+}}}
 
 function tp_collectArticleIcons()
 {
