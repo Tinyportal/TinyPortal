@@ -3822,6 +3822,21 @@ function TP_dlftpfiles()
 		$context['TPortal']['tp-downloads'] = $sorted;
 }
 
+function TPDownloadAdminAreas() {{{
+
+    global $context, $scripturl;
+
+	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download'])) {
+		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
+			'title' => 'TPdownloads',
+			'description' => '',
+			'href' => $scripturl . '?action=tportal;dl=admin',
+			'is_selected' => isset($_GET['dl']),
+		);
+		$admin_set = true;
+	}
+
+}}}
 
 
 ?>

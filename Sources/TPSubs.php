@@ -33,18 +33,11 @@ function TPcheckAdminAreas() {{{
 }}}
 
 function TPsetupAdminAreas() {{{
-	global $context, $scripturl, $smcFunc;
+	global $context;
 
 	$context['admin_tabs']['custom_modules'] = array();
-	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download'])) {
-		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
-			'title' => 'TPdownloads',
-			'description' => '',
-			'href' => $scripturl . '?action=tportal;dl=admin',
-			'is_selected' => isset($_GET['dl']),
-		);
-		$admin_set = true;
-	}
+
+    call_integration_hook('integrate_tp_admin_areas');
 
 }}}
 
