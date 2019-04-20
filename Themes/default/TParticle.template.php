@@ -606,6 +606,9 @@ function template_submitarticle()
 				    </div>
 				</div>';
                 }
+                else {
+                    echo '<input name="tp_article_type" type="hidden" value="'.$article_type.'">';
+                }
 
                 echo'
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>

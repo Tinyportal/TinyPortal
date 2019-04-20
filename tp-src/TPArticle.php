@@ -187,12 +187,23 @@ class TPArticle extends TPBase
 			);
     }}}
 
-    public function getTotalAuthorArticles($author_id) {{{
+    public function getTotalAuthorArticles($author_id, $off = false, $approved = true) {{{
+
+        $where          = '';
         $num_articles   = 0;
+
+        if($off == true) {
+            $where .= ' AND off = 0 ';
+        }
+
+        if($approved == false) {
+            $where .= ' AND approved = 0 ';
+        }
+
         $request        = $this->dB->db_query('', '
             SELECT COUNT(id) AS articles FROM {db_prefix}tp_articles
             WHERE author_id = {int:author}
-            AND off = 0',
+            '.$where,
             array(
                 'author' => $author_id
             )
@@ -235,6 +246,32 @@ class TPArticle extends TPBase
 
     public function getArticlesInCategory( $category ) {{{
 
+        $articles   = array();
+        $request    =  $this->dB->db_query('', '
+            SELECT id, subject, shortname
+            FROM {db_prefix}tp_articles
+            WHERE category = {int:cat}
+            ORDER BY date DESC',
+            array(
+                'cat' => $category,
+            )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            while($row = $this->dB->db_fetch_assoc($request)) {
+                if(empty($row['shortname'])) {
+                    $row['shortname'] = $row['id'];
+                }
+                $articles[] = array(
+                    'id'        => $row['id'],
+                    'subject'   => $row['subject'],
+                    'shortname' => $row['shortname'],
+                );
+            }
+        }
+        $this->dB->db_free_result($request);
+
+        return $articles; 
 
     }}}
 

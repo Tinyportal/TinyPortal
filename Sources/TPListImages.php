@@ -15,17 +15,20 @@ if (!defined('SMF'))
 
 global $context;
 
-if(!isset($context['tp_panels']))
-	$context['tp_panels'] = array();
+if(isset($_GET['listimage'])) {
 
-$context['template_layers'][]   = 'tpadm';
-$context['template_layers'][]   = 'subtab';
-TPadminIndex();
-$context['current_action']      = 'admin';
-$context['sub_template']        = 'tpListImages_admin';
+    if(!isset($context['tp_panels']))
+        $context['tp_panels'] = array();
 
-if($context['TPortal']['hidebars_admin_only'] == '1') {
-    tp_hidebars();
+    $context['template_layers'][]   = 'tpadm';
+    $context['template_layers'][]   = 'subtab';
+    TPadminIndex();
+    $context['current_action']      = 'admin';
+    $context['sub_template']        = 'tpListImages_admin';
+
+    if($context['TPortal']['hidebars_admin_only'] == '1') {
+        tp_hidebars();
+    }
 }
 
 function template_tpListImages_admin()
@@ -194,4 +197,19 @@ function TPMembers()
 	return $users;
 }
 
+function TPListImageAdminAreas() {{{
+
+    global $context, $scripturl;
+
+	if (allowedTo('tp_listimage')) {
+		$context['admin_tabs']['custom_modules']['tplistimage'] = array(
+			'title' => 'TPListImage',
+			'description' => '',
+			'href' => $scripturl . '?action=tpadmin;listimage=list',
+			'is_selected' => isset($_GET['listimage']),
+		);
+		$admin_set = true;
+	}
+
+}}}
 ?>

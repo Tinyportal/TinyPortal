@@ -33,101 +33,36 @@ function TPcheckAdminAreas() {{{
 }}}
 
 function TPsetupAdminAreas() {{{
-	global $context, $scripturl, $smcFunc;
+	global $context;
 
 	$context['admin_tabs']['custom_modules'] = array();
-	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download'])) {
-		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
-			'title' => 'TPdownloads',
-			'description' => '',
-			'href' => $scripturl . '?action=tportal;dl=admin',
-			'is_selected' => isset($_GET['dl']),
-		);
-		$admin_set = true;
-	}
-	// any from modules?
-	$request = $smcFunc['db_query']('', '
-		SELECT modulename, subquery, permissions, languages
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}',
-		array(
-			'active' => 1
-		)
-	);
 
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$perms = explode(',', $row['permissions']);
-			$setperm = array();
-			$admin_set = false;
-            if(is_countable($perms)) {
-                for($a = 0; $a < count($perms); $a++) {
-                    $pr = explode('|', $perms[$a]);
-                    $setperm[$pr[0]] = $pr[1];
-                    // admin permission?
-                    if (isset($pr[1]) && $pr[1] == 1) {
-                        if (allowedTo($pr[0])) {
-                            if(!$admin_set) {
-                                if($row['subquery'] == 'shout') {
-                                    $context['admin_tabs']['custom_modules'][$pr[0]] = array(
-                                        'title'         => $row['modulename'],
-                                        'description'   => '',
-                                        'href'          => $scripturl . '?action=tpshout;'.$row['subquery'].'=admin',
-                                        'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
-                                    );
-                                }
-                                else {
-                                    $context['admin_tabs']['custom_modules'][$pr[0]] = array(
-                                        'title'         => $row['modulename'],
-                                        'description'   => '',
-                                        'href'          => $scripturl . '?action=tpadmin;'.$row['subquery'].'=admin',
-                                        'is_selected'   => isset($_GET[$row['subquery']]) ? true : false,
-                                    );
-                                }
-                            }
-                            $admin_set = true;
-                        }
-                    }
-                }
-            }
-		}
-		$smcFunc['db_free_result']($request);
-	}
+    call_integration_hook('integrate_tp_admin_areas');
 
 }}}
 
 function TP_addPerms() {{{
 	global $smcFunc;
 
-	$admperms = array('admin_forum', 'manage_permissions', 'moderate_forum', 'manage_membergroups',
-		'manage_bans', 'send_mail', 'edit_news', 'manage_boards', 'manage_smileys',
-		'manage_attachments', 'tp_articles', 'tp_blocks', 'tp_dlmanager', 'tp_settings');
-	$request = $smcFunc['db_query']('', '
-		SELECT permissions
-		FROM {db_prefix}tp_modules
-		WHERE {int:active}',
-		array(
-			'active' => 1
-		)
-	);
+	$admperms = array(
+        'admin_forum', 
+        'manage_permissions', 
+        'moderate_forum', 
+        'manage_membergroups',
+        'manage_bans', 
+        'send_mail', 
+        'edit_news', 
+        'manage_boards', 
+        'manage_smileys',
+        'manage_attachments', 
+        'tp_articles', 
+        'tp_blocks', 
+        'tp_dlmanager', 
+        'tp_settings'
+    );
+    
+    call_integration_hook('integrate_tp_admin_permissions', array(&$admperms));
 
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$perms = explode(',', $row['permissions']);
-			$setperm = array();
-            if(is_countable($perms)) {
-                for($a = 0; $a < count($perms); $a++) {
-                    $pr = explode('|', $perms[$a]);
-                    $setperm[$pr[0]] = $pr[1];
-                    // admin permission?
-                    if($pr[1] == 1) {
-                        $admperms[] = $pr[0];
-                    }
-                }
-            }
-		}
-		$smcFunc['db_free_result']($request);
-	}
 	return $admperms;
 
 }}}
@@ -183,41 +118,6 @@ function TPcollectPermissions() {{{
 		'tp_submithtml' => 1,
 		'tp_submitbbc' => 1,
 	);
-	// done, now onto custom modules
-	$request = $smcFunc['db_query']('', '
-		SELECT modulename, permissions, languages
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}',
-		array(
-			'active' => 1
-		)
-	);
-
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$perms      = explode(',', $row['permissions']);
-			$setperm    = array();
-            if(is_countable($perms)) {
-                for($a=0; $a < count($perms); $a++) {
-                    $pr = explode('|', $perms[$a]);
-                    $setperm[$pr[0]] = 0;
-                    // admin permission?
-                    if($pr[1] == 1) {
-                        $context['TPortal']['adminlist'][$pr[0]] = 1;
-                    }
-                }
-            }
-			$context['TPortal']['permissonlist'][] = array(
-				'title' => strtolower($row['modulename']),
-				'perms' => $setperm
-			);
-
-			$context['TPortal']['tppermissonlist'][$pr[0]] = array(false, strtolower($row['modulename']), strtolower($row['modulename']));
-			if(loadLanguage($row['modulename'], '', false) == false)
-				loadLanguage($row['modulename'], 'english', false);
-		}
-		$smcFunc['db_free_result']($request);
-	}
 
 }}}
 
@@ -667,94 +567,6 @@ function chainCMP($a, $b)
        return 0;
    }
    return($a[$a['key']] < $b[$b['key']]) ? -1 : 1;
-}
-
-// some general functions making it possible to use in applications within TP
-function tp_getArticles($category = 0, $current = '-1', $output = 'echo', $display = 'list', $order = 'date', $sort = 'desc')
-{
-	global $smcFunc, $scripturl;
-
-	// if category is not a number, return
-	if(!is_numeric($category))
-		return;
-
-	$articles = array();
-	$render = '';
-
-	if($output != 'array')
-		$render .= '<ul class="tp_articleList">';
-
-	$request =  $smcFunc['db_query']('', '
-		SELECT id, subject, shortname
-		FROM {db_prefix}tp_articles
-		WHERE category = {int:cat}
-		ORDER BY {string:order} {string:sort}',
-		array(
-			'cat' => $category, 'order' => $order, 'sort' => $sort,
-		)
-	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while ($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			if(empty($row['shortname']))
-				$row['shortname'] = $row['id'];
-
-			$render .= '<li';
-			if($current == $row['id'] || strtolower($current) == $row['shortname'])
-				 $render .= ' class="current_art"';
-			$render .= '><a href="' . $scripturl . '?page=' . $row['shortname'] . '">' . $row['subject'] . '</a></li>';
-			$articles[] = array(
-				'id' => $row['id'],
-				'subject' => $row['subject'],
-				'href' => $scripturl. '?page=' .$row['shortname'],
-				'link' => '<a href="' . $scripturl. '?page=' .$row['shortname'] . '">' . $row['subject']. '</a>',
-				'selected' => ($current == $row['id'] || strtolower($current) == $row['shortname']) ? true : false,
-			);
-		}
-		$smcFunc['db_free_result']($request);
-	}
-	if($output == 'array')
-		return $articles;
-
-	// render it
-	if($display == 'list')
-		echo $render;
-	else
-	{
-		$art = array();
-		$i = 0;
-		$curr = 0;
-		foreach($articles as $rt)
-		{
-			$art[$i] = '<a href="' . $rt['href']. '">'.$rt['subject'].'</a>';
-			if($rt['selected'])
-				$curr = $i;
-			$i++;
-		}
-		if($curr > 0)
-			$art_previous = $art[$curr - 1];
-		else
-			$art_previous = $art[0];
-
-		if($curr < $i - 1)
-			$art_next = $art[$curr + 1];
-		else
-			$art_next = $art[$i];
-
-		echo '
-		<form name="articlejump" id="articlejump" action="#">
-			&#171; ' . $art_previous , '
-			<select name="articlejump_menu" onchange="javascript:location=document.articlejump.articlejump_menu.options[document.articlejump.articlejump_menu.selectedIndex].value;">';
-		foreach($articles as $art)
-		{
-			echo '<option value="' . $art['href']. '"' , $art['selected'] ? ' selected="selected"' : '' , '>'.$art['subject'].'</option>';
-		}
-		echo '
-			</select>  &nbsp;
-			' . $art_next . ' &#187;
-		</form>';
-	}
 }
 
 function tp_cleantitle($text)
@@ -1430,8 +1242,7 @@ function tp_collectArticleAttached($art)
 }
 
 
-function TP_fetchprofile_areas()
-{
+function TP_fetchprofile_areas() {{{
 	global $smcFunc;
 
 	$areas = array(
@@ -1440,66 +1251,32 @@ function TP_fetchprofile_areas()
 		'tp_download' => array('name' => 'tp_download', 'permission' => 'tp_dlmanager'),
 	);
 
-	// done, now onto custom modules
-	$request = $smcFunc['db_query']('', '
-		SELECT modulename, profile
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}',
-		array(
-			'active' => 1
-		)
-	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$areas[strtolower($row['modulename'])] = array('name' => strtolower($row['modulename']), 'permission' => $row['profile']);
-		}
-		$smcFunc['db_free_result']($request);
-	}
+    call_integration_hook('integrate_tp_profile_areas', array(&$areas));
+    
 	return $areas;
-}
+}}}
 
-function TP_fetchprofile_areas2($memID)
-{
+function TP_fetchprofile_areas2($member_id) {{{
 	global $context, $scripturl, $txt, $user_info, $smcFunc;
 
-	if (!$user_info['is_guest'] && (($context['user']['is_owner'] && allowedTo('profile_view_own')) || allowedTo(array('profile_view_any', 'moderate_forum', 'manage_permissions','tp_dlmanager','tp_blocks','tp_articles','tp_gallery','tp_linkmanager'))))
-	{
+	if (!$user_info['is_guest'] && (($context['user']['is_owner'] && allowedTo('profile_view_own')) || allowedTo(array('profile_view_any', 'moderate_forum', 'manage_permissions','tp_dlmanager','tp_blocks','tp_articles','tp_gallery','tp_linkmanager')))) {
 		$context['profile_areas']['tinyportal'] = array(
 			'title' => $txt['tp-profilesection'],
 			'areas' => array()
 		);
 
-		$context['profile_areas']['tinyportal']['areas']['tp_summary'] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa=tp_summary">' . $txt['tpsummary'] . '</a>';
-		if ($context['user']['is_owner'] || allowedTo('tp_articles'))
-			$context['profile_areas']['tinyportal']['areas']['tp_articles'] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa=tp_articles">' . $txt['articlesprofile'] . '</a>';
-		if(($context['user']['is_owner'] || allowedTo('tp_dlmanager')) && $context['TPortal']['show_download'])
-			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa=tp_download">' . $txt['downloadprofile'] . '</a>';
-	}
-	// done, now onto custom modules
-	$request =  $smcFunc['db_query']('', '
-		SELECT modulename, autoload_run, profile
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:active}
-		AND profile != ""',
-		array(
-			'active' => 1
-		)
-	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			if($context['user']['is_owner'] || allowedTo($row['profile']))
-			{
-				$context['profile_areas']['tinyportal']['areas'][strtolower($row['profile'])] = '<a href="' . $scripturl . '?action=profile;u=' . $memID . ';sa='.strtolower($row['profile']).';tpmodule">' . $txt['tp-from']. $row['modulename'] . '</a>';
-			}
-		}
-		$smcFunc['db_free_result']($request);
+		$context['profile_areas']['tinyportal']['areas']['tp_summary'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_summary">' . $txt['tpsummary'] . '</a>';
+		if ($context['user']['is_owner'] || allowedTo('tp_articles')) {
+			$context['profile_areas']['tinyportal']['areas']['tp_articles'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_articles">' . $txt['articlesprofile'] . '</a>';
+        }
+		if(($context['user']['is_owner'] || allowedTo('tp_dlmanager')) && $context['TPortal']['show_download']) {
+			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_download">' . $txt['downloadprofile'] . '</a>';
+        }
+    
+        call_integration_hook('integrate_tp_profile', array(&$member_id));
 	}
 
-}
+}}}
 
 function get_perm($perm, $moderate = '')
 {
@@ -2039,28 +1816,25 @@ function TPparseRSS($override = '', $encoding = 0)
 }
 
 // Set up the administration sections.
-function TPadminIndex($tpsub = '', $module_admin = false)
-{
+function TPadminIndex($tpsub = '', $module_admin = false) {{{
 	global $txt, $context, $scripturl, $smcFunc;
 
 	if(loadLanguage('TPortalAdmin') == false)
 		loadLanguage('TPortalAdmin', 'english');
 
-	if($module_admin)
-	{
+	if($module_admin) {
 		// make sure tpadmin is still active
 		$_GET['action'] = 'tpadmin';
 	}
+
 	$context['admin_tabs'] = array();
 	$context['admin_header']['tp_settings'] = $txt['tp-adminheader1'];
 	$context['admin_header']['tp_articles'] = $txt['tp-articles'];
 	$context['admin_header']['tp_blocks'] = $txt['tp-adminpanels'];
 	$context['admin_header']['tp_menubox'] = $txt['tp-menumanager'];
-	$context['admin_header']['tp_modules'] = $txt['tp-modules'];
 	$context['admin_header']['custom_modules'] = $txt['custom_modules'];
 
-	if (allowedTo('tp_settings'))
-	{
+	if (allowedTo('tp_settings')) {
 		$context['admin_tabs']['tp_settings'] = array(
 			'settings' => array(
 				'title' => $txt['tp-settings'],
@@ -2076,8 +1850,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_articles'))
-	{
+
+	if (allowedTo('tp_articles')) {
 		$context['admin_tabs']['tp_articles'] = array(
 			'articles' => array(
 				'title' => $txt['tp-articles'],
@@ -2111,8 +1885,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_blocks'))
-	{
+
+	if (allowedTo('tp_blocks')) {
 		$context['admin_tabs']['tp_blocks'] = array(
 			'panelsettings' => array(
 				'title' => $txt['tp-allpanels'],
@@ -2134,8 +1908,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_blocks'))
-	{
+
+	if (allowedTo('tp_blocks')) {
 		$context['admin_tabs']['tp_menubox'] = array(
 			'menubox' => array(
 				'title' => $txt['tp-menumanager'],
@@ -2151,34 +1925,11 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_settings'))
-	{
-		$context['admin_tabs']['tp_modules'] = array(
-			'modules' => array(
-				'title' => $txt['tp-modules'],
-				'description' => $txt['tp-moduledesc1'],
-				'href' => $scripturl . '?action=tpadmin;sa=modules',
-				'is_selected' => $tpsub == 'modules' && !isset($_GET['import']) && !isset($_GET['tags']),
-			),
-		);
-	}
-	// collect modules and their permissions
-	$result =  $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_modules
-		WHERE 1=1',
-		array()
-	);
-	if($smcFunc['db_num_rows']($result) > 0)
-	{
-		while($row = $smcFunc['db_fetch_assoc']($result))
-		{
-			$context['TPortal']['admmodules'][] = $row;
-		}
-		$smcFunc['db_free_result']($result);
-	}
+
 	TPsetupAdminAreas();
 	validateSession();
-}
+
+}}}
 
 function tp_collectArticleIcons()
 {
@@ -2948,28 +2699,6 @@ function tp_getDLcats()
 	}
 }
 
-function tp_getTPmodules()
-{
-	global $context, $smcFunc;
-
-	$context['TPortal']['tpmods'] = array();
-	$request =  $smcFunc['db_query']('', '
-		SELECT title, subquery
-		FROM {db_prefix}tp_modules
-		WHERE active = {int:act}',
-		array('act' => 1)
-	);
-	$count = 0;
-	if ($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			$context['TPortal']['tpmods'][$count] = array('title' => $row['title'], 'subquery' => $row['subquery']);
-			$count++;
-		}
-		$smcFunc['db_free_result']($request);
-	}
-
-}
-
 function updateTPSettings($addSettings, $check = false)
 {
 	global $context, $smcFunc;
@@ -3112,87 +2841,79 @@ function tp_profile_summary($memID)
 }
 
 // articles and comments made by the member
-function tp_profile_articles($memID)
-{
+function tp_profile_articles($member_id) {{{
 	global $txt, $context, $scripturl, $smcFunc;
+
 	$context['page_title'] = $txt['articlesprofile'];
-	if(isset($context['TPortal']['mystart']))
+    $context['TPortal']['memID'] = $member_id;
+
+    $tpArticle  = new TPArticle();
+	$start      = 0;
+	$sorting    = 'date';
+	
+    if(isset($context['TPortal']['mystart'])) {
 		$start = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
-	else
-		$start = 0;
-	$context['TPortal']['memID'] = $memID;
-	if($context['TPortal']['tpsort'] != '')
-		$sorting = $context['TPortal']['tpsort'];
-	else
-		$sorting = 'date';
-	$max = 0;
+    }
+	
+    if($context['TPortal']['tpsort'] != '') {
+        $sorting = $context['TPortal']['tpsort'];
+        if(!in_array($sorting, array('date', 'subject', 'views', 'category', 'comments'))) {
+            $sorting = 'date';
+        }
+    }
+	
 	// get all articles written by member
-	$request =  $smcFunc['db_query']('', '
-		SELECT COUNT(*) FROM {db_prefix}tp_articles
-		WHERE author_id = {int:auth}',
-		array('auth' => $memID)
-	);
-	$result = $smcFunc['db_fetch_row']($request);
-	$max = $result[0];
-	$smcFunc['db_free_result']($request);
+    $max        = $tpArticle->getTotalAuthorArticles($member_id, false, true);
+
 	// get all not approved articles
-	$request =  $smcFunc['db_query']('', '
-		SELECT COUNT(*) FROM {db_prefix}tp_articles
-		WHERE author_id = {int:auth} AND approved = {int:approved}',
-		array('auth' => $memID, 'approved' => 0)
-	);
-	$result = $smcFunc['db_fetch_row']($request);
-	$max_approve = $result[0];
-	$smcFunc['db_free_result']($request);
+    $max_approve= $tpArticle->getTotalAuthorArticles($member_id, false, false);
+
 	// get all articles currently being off
-	$request = $smcFunc['db_query']('', '
-		SELECT COUNT(*) FROM {db_prefix}tp_articles
-		WHERE author_id = {int:auth} AND off = {int:off} AND approved = {int:approved}',
-		array('auth' => $memID, 'off' => 1,  'approved' => 1)
-	);
-	$result = $smcFunc['db_fetch_row']($request);
-	$max_off = $result[0];
-	$smcFunc['db_free_result']($request);
-	$context['TPortal']['all_articles'] = $max - $max_approve - $max_off;
-	$context['TPortal']['approved_articles'] = $max_approve;
-	$context['TPortal']['off_articles'] = $max_off;
-	if(!in_array($sorting, array('date', 'subject', 'views', 'category', 'comments')))
-		$sorting = 'date';
+    $max_off    = $tpArticle->getTotalAuthorArticles($member_id, true, false);
+
+	$context['TPortal']['all_articles']         = $max - $max_approve - $max_off;
+	$context['TPortal']['approved_articles']    = $max_approve;
+	$context['TPortal']['off_articles']         = $max_off;
+
 	$request = $smcFunc['db_query']('', '
 		SELECT art.id, art.date, art.subject, art.approved, art.off, art.comments, art.views, art.rating, art.voters,
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
 		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 10 OFFSET {int:start}',
-		array('auth' => $memID, 
+		array('auth' => $member_id, 
 		'sort' => $sorting, 
 		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
 		'start' => $start
 		)
 	);
+
 	if($smcFunc['db_num_rows']($request) > 0){
-		while($row = $smcFunc['db_fetch_assoc']($request))
-		{
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$rat = array();
 			$rating_votes = 0;
 			$rat = explode(',', $row['rating']);
 			$rating_votes = count($rat);
-			if($row['rating'] == '')
+			if($row['rating'] == '') {
 				$rating_votes = 0;
+            }
 			$total = 0;
-			foreach($rat as $mm => $mval)
-			{
-				if(is_numeric($mval))
+			foreach($rat as $mm => $mval) {
+				if(is_numeric($mval)) {
 					$total = $total + $mval;
+                }
 			}
-			if($rating_votes > 0 && $total > 0)
+			if($rating_votes > 0 && $total > 0) {
 				$rating_average = floor($total / $rating_votes);
-			else
+            }
+			else {
 				$rating_average = 0;
+            }
 			$can_see = true;
-			if(($row['approved'] != 1 || $row['off'] == 1))
+			if(($row['approved'] != 1 || $row['off'] == 1)) {
 				$can_see = allowedTo('tp_articles');
-			if($can_see)
+            }
+			if($can_see) {
 				$context['TPortal']['profile_articles'][] = array(
 					'id' => $row['id'],
 					'subject' => $row['subject'],
@@ -3210,18 +2931,22 @@ function tp_profile_articles($memID)
 					'category' => '<a href="'.$scripturl.'?mycat='.$row['category'].'">' . (isset($context['TPortal']['catnames'][$row['category']]) ? $context['TPortal']['catnames'][$row['category']] : '') .'</a>',
 					'editlink' => allowedTo('tp_articles') ? $scripturl.'?action=tpadmin;sa=editarticle'.$row['id'] : $scripturl.'?action=tportal;sa=editarticle'.$row['id'],
 				);
+            }
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	// construct pageindexes
-	if($max > 0)
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tparticles;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
-	else
-		$context['TPortal']['pageindex'] = '';
+	
+    // construct pageindexes
+	$context['TPortal']['pageindex'] = '';
+	if($max > 0) {
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tparticles;u='.$member_id.';tpsort='.$sorting, $start, $max, '10');
+    }
+
 	// setup subaction
 	$context['TPortal']['profile_action'] = '';
-	if(isset($_GET['sa']) && $_GET['sa'] == 'settings')
+	if(isset($_GET['sa']) && $_GET['sa'] == 'settings') {
 		$context['TPortal']['profile_action'] = 'settings';
+    }
 	
 	// Create the tabs for the template.
 	$context[$context['profile_menu_name']]['tab_data'] = array(
@@ -3238,24 +2963,25 @@ function tp_profile_articles($memID)
 	$result = $smcFunc['db_query']('', '
 		SELECT id, value FROM {db_prefix}tp_data
 		WHERE type = {int:type} AND id_member = {int:id_mem} LIMIT 1',
-		array('type' => 2, 'id_mem' => $memID)
+		array('type' => 2, 'id_mem' => $member_id)
 	);
-	if($smcFunc['db_num_rows']($result) > 0)
-	{
+	if($smcFunc['db_num_rows']($result) > 0) {
 		$row = $smcFunc['db_fetch_assoc']($result);
 		$context['TPortal']['selected_member_choice'] = $row['value'];
 		$context['TPortal']['selected_member_choice_id'] = $row['id'];
 		$smcFunc['db_free_result']($result);
 	}
-	else
-	{
+	else {
 		$context['TPortal']['selected_member_choice'] = 0;
 		$context['TPortal']['selected_member_choice_id'] = 0;
 	}
-	$context['TPortal']['selected_member'] = $memID;
-	if(loadLanguage('TPortalAdmin') == false)
+	
+    $context['TPortal']['selected_member'] = $member_id;
+	if(loadLanguage('TPortalAdmin') == false) {
 		loadLanguage('TPortalAdmin', 'english');
-}
+    }
+
+}}}
 
 function tp_profile_download($memID)
 {

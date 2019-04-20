@@ -1174,4 +1174,20 @@ function tpshout_profile($memID)
     $context['sub_template'] = 'tpshout_profile';
 }
 
+function TPShoutAdminAreas() {{{
+
+    global $context, $scripturl;
+
+	if (allowedTo('tp_shout')) {
+		$context['admin_tabs']['custom_modules']['tpshout'] = array(
+			'title' => 'TPShout',
+			'description' => '',
+			'href' => $scripturl . '?action=tpshout;shout=admin',
+			'is_selected' => isset($_GET['shout']),
+		);
+		$admin_set = true;
+	}
+
+}}}
+
 ?>

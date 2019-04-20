@@ -636,6 +636,15 @@ $txt['tp-disabletemplateevaldesc']   = 'Disable the PHP eval function for rendin
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
 $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
+$txt['tp-imageuploadpath'] = 'Path where TinyPortal images are uploaded to on your server';
+$txt['tp-imageuploadpathdesc'] = 'File path where the images uploaded via TinyPortal are stored';
+
+$txt['tp-blockcodeuploadpath'] = 'Path where TinyPortal blockcodes are uploaded to on your server';
+$txt['tp-blockcodeuploadpathdesc'] = 'File path where the blockcodes uploaded via TinyPortal are stored';
+
+$txt['tp-downloaduploadpath'] = 'Path where TinyPortal downloads are uploaded to on your server';
+$txt['tp-downloaduploadpathdesc'] = 'File path where the downlaods uploaded via TinyPortal are stored';
+
 // new in 1.6.3
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 $txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';

@@ -30,20 +30,33 @@ class TPortal_Integrate
         }
 
         $hooks = array (
-            'load_permissions'                => 'TPortal_Integrate::hookPermissions',
-            'load_illegal_guest_permissions'  => 'TPortal_Integrate::hookIllegalPermissions',
-            'buffer'                          => 'TPortal_Integrate::hookBuffer',
-            'menu_buttons'                    => 'TPortal_Integrate::hookMenuButtons',
-            'display_buttons'                 => 'TPortal_Integrate::hookDisplayButton',
-            'actions'                         => 'TPortal_Integrate::hookActions',
-            'profile_areas'                   => 'TPortal_Integrate::hookProfileArea',
-            'whos_online'                     => 'TPortal_Integrate::hookWhosOnline',
-            'pre_log_stats'                   => 'TPortal_Integrate::hookPreLogStats',
-            'tp_subactions'                   => array ( 
-                    '$sourcedir/TPArticle.php|TPArticleActions',
-                    '$sourcedir/TPSearch.php|TPSearchActions',
-                    '$sourcedir/TPBlock.php|TPBlockActions',
-                ),
+            'SSI'                               => '$sourcedir/TPSSI.php|ssi_TPIntegrate',
+            'load_permissions'                  => 'TPortal_Integrate::hookPermissions',
+            'load_illegal_guest_permissions'    => 'TPortal_Integrate::hookIllegalPermissions',
+            'buffer'                            => 'TPortal_Integrate::hookBuffer',
+            'menu_buttons'                      => 'TPortal_Integrate::hookMenuButtons',
+            'display_buttons'                   => 'TPortal_Integrate::hookDisplayButton',
+            'actions'                           => 'TPortal_Integrate::hookActions',
+            'profile_areas'                     => 'TPortal_Integrate::hookProfileArea',
+            'whos_online'                       => 'TPortal_Integrate::hookWhosOnline',
+            'pre_log_stats'                     => 'TPortal_Integrate::hookPreLogStats',
+            'tp_pre_subactions'                 => array ( 
+                '$sourcedir/TPArticle.php|TPArticleActions',
+                '$sourcedir/TPSearch.php|TPSearchActions',
+                '$sourcedir/TPBlock.php|TPBlockActions',
+            ),
+            'tp_post_subactions'                 => array ( 
+                '$sourcedir/TPcommon.php|TPUpshrink',
+                '$sourcedir/TPdlmanager.php|TPdlmanager',
+            ),           
+            'tp_post_init'                      => array (
+                '$sourcedir/TPShout.php|TPShoutLoad',
+            ),
+            'tp_admin_areas'                      => array (
+                '$sourcedir/TPdlmanager.php|TPDownloadAdminAreas',
+                '$sourcedir/TPShout.php|TPShoutAdminAreas',
+                '$sourcedir/TPListImages.php|TPListImageAdminAreas',
+            ),
         );
 
         if(TP_SMF21) {

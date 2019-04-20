@@ -293,6 +293,27 @@ function template_settings()
                         <input name="tp_disable_template_eval" type="radio" value="0" ' , $context['TPortal']['disable_template_eval']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
                     <dt>
+						<label for="field_name">', $txt['tp-imageuploadpath'], '</label>
+						<div class="smalltext">' , $txt['tp-imageuploadpathdesc'] , '</div>
+					</dt>
+					<dd>
+						<input name="tp_image_upload_path" type="text" value="' , !empty($context['TPortal']['image_upload_path']) ? $context['TPortal']['image_upload_path'] : '' , '">
+					</dd>
+                    <dt>
+						<label for="field_name">', $txt['tp-downloaduploadpath'], '</label>
+						<div class="smalltext">' , $txt['tp-downloaduploadpathdesc'] , '</div>
+					</dt>
+					<dd>
+						<input name="tp_download_upload_path" type="text" value="' , !empty($context['TPortal']['download_upload_path']) ? $context['TPortal']['download_upload_path'] : '' , '">
+					</dd>
+                    <dt>
+						<label for="field_name">', $txt['tp-blockcodeuploadpath'], '</label>
+						<div class="smalltext">' , $txt['tp-blockcodeuploadpathdesc'] , '</div>
+					</dt>
+					<dd>
+						<input name="tp_blockcode_upload_path" type="text" value="' , !empty($context['TPortal']['blockcode_upload_path']) ? $context['TPortal']['blockcode_upload_path'] : '' , '">
+					</dd>
+                    <dt>
 						<label for="field_name">', $txt['tp-copyrightremoval'], '</label>
 						<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
 					</dt>
