@@ -1190,4 +1190,18 @@ function TPShoutAdminAreas() {{{
 
 }}}
 
+function TPShoutBlock($row) {{{
+    global $context, $sourcedir;
+
+    $set = json_decode($row['settings'], TRUE);
+
+    $context['TPortal']['tpmodules']['blockrender'][$set['var1']] = array(
+        'id' => $row['id'],
+        'name' => $row['title'],
+        'function' => 'tpshout_fetch',
+        'sourcefile' => $sourcedir .'/TPShout.php',
+    );
+
+}}}
+
 ?>

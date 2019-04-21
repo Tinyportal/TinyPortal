@@ -1961,8 +1961,9 @@ function doTPblocks() {{{
     }
     $access = rtrim($access,' OR ');
 
-	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks'])))
+	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 		$access = '1=1';
+    }
 
 	// get the blocks
 	$request = $smcFunc['db_query']('', '
@@ -1998,7 +1999,6 @@ function doTPblocks() {{{
 	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
-
             // decode the block settings
             $set = json_decode($row['settings'], true);
 			// some tests to minimize sql calls
@@ -2020,6 +2020,9 @@ function doTPblocks() {{{
 					$fetch_article_titles[] = $row['body'];
                 }
 			}
+            elseif($row['type'] == 20) {
+                call_integration_hook('integrate_tp_blocks', array(&$row));
+            }
 
 			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
@@ -2080,21 +2083,17 @@ function doTPblocks() {{{
 			AND art.approved = 1
 			AND art.category > 0 AND art.category < 9999'
 		);
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($article = $smcFunc['db_fetch_assoc']($request))
-			{
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while($article = $smcFunc['db_fetch_assoc']($request)) {
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 
 				// setup the avatar code
-				if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
-				{
+				if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize') {
 					$avatar_width = !empty($modSettings['avatar_max_width_external']) ? ' width="' . $modSettings['avatar_max_width_external'] . '"' : '';
 					$avatar_height = !empty($modSettings['avatar_max_height_external']) ? ' height="' . $modSettings['avatar_max_height_external'] . '"' : '';
 				}
-				else
-				{
+				else {
 					$avatar_width = '';
 					$avatar_height = '';
 				}
@@ -2117,8 +2116,7 @@ function doTPblocks() {{{
 	}
 
    // any cat listings from blocks?
-    if(isset($test_catbox) && $fetchtitles != '')
-	{
+    if(isset($test_catbox) && $fetchtitles != '') {
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.id, art.subject, art.date, art.category, art.author_id AS author_id, art.shortname,
 	 		COALESCE(mem.real_name,art.author) as real_name 

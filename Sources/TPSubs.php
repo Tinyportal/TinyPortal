@@ -42,7 +42,6 @@ function TPsetupAdminAreas() {{{
 }}}
 
 function TP_addPerms() {{{
-	global $smcFunc;
 
 	$admperms = array(
         'admin_forum', 
@@ -275,17 +274,14 @@ function tp_getbuttons() {{{
 }}}
 
 function TPcollectSnippets() {{{
-	global $boarddir;
+	global $context;
 
 	// fetch any blockcodes in blockcodes folder
 	$codefiles = array();
-	if ($handle = opendir($boarddir.'/tp-files/tp-blockcodes'))
-	{
-		while (false !== ($file = readdir($handle)))
-		{
-			if($file != '.' && $file != '..' && $file != '.htaccess' && substr($file, (strlen($file) - 10), 10) == '.blockcode')
-			{
-				$snippet = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $file), array('name', 'author', 'version', 'date', 'description'));
+	if ($handle = opendir($context['TPortal']['blockcode_upload_path'])) {
+		while (false !== ($file = readdir($handle))) {
+			if($file != '.' && $file != '..' && $file != '.htaccess' && substr($file, (strlen($file) - 10), 10) == '.blockcode') {
+				$snippet = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $file), array('name', 'author', 'version', 'date', 'description'));
 				$codefiles[] = array(
 					'file' => substr($file, 0, strlen($file) - 10),
 					'name' => isset($snippet['name']) ? $snippet['name'] : '',

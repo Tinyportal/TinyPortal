@@ -2901,7 +2901,7 @@ function do_postchecks()
 					}
 				}
 				else
-					$od = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $type.'.blockcode') , array('code'));
+					$od = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $type.'.blockcode') , array('code'));
 			}
 			if(isset($od['code']))
 			{
@@ -3160,7 +3160,7 @@ function do_postchecks()
 			if(isset($_POST['blockcode_overwrite']))
 			{
 				// get the blockcode
-				$newval = TPparseModfile(file_get_contents($boarddir . '/tp-files/tp-blockcodes/' . $_POST['tp_blockcode'].'.blockcode') , array('code'));
+				$newval = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $_POST['tp_blockcode'].'.blockcode') , array('code'));
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_blocks
 					SET body = {string:body}
