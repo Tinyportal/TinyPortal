@@ -201,7 +201,7 @@ function TPListImageAdminAreas() {{{
 
     global $context, $scripturl;
 
-	if (allowedTo('tp_listimage')) {
+	if (allowedTo('tp_can_list_images')) {
 		$context['admin_tabs']['custom_modules']['tplistimage'] = array(
 			'title' => 'TPListImage',
 			'description' => '',

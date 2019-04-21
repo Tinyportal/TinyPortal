@@ -1178,7 +1178,7 @@ function TPShoutAdminAreas() {{{
 
     global $context, $scripturl;
 
-	if (allowedTo('tp_shout')) {
+	if (allowedTo('tp_can_admin_shout')) {
 		$context['admin_tabs']['custom_modules']['tpshout'] = array(
 			'title' => 'TPShout',
 			'description' => '',
