@@ -2053,38 +2053,13 @@ function doTPblocks() {{{
 		$smcFunc['db_free_result']($request);
 	}
 
-	$fetchart = '';
-	if(count($fetch_articles) > 0) {
-		$fetchart = '(art.id='. implode(' OR art.id=', $fetch_articles).')';
-    }
-
-	$fetchtitles = '';
-	if(count($fetch_article_titles) > 0) {
-		$fetchtitles= '(art.category='. implode(' OR art.category=', $fetch_article_titles).')';
-    }
-
     // if a block displays an article
-    if(isset($test_articlebox) && $fetchart != '') {
+    if(isset($test_articlebox)) {
 		$context['TPortal']['blockarticles'] = array();
-		$request =  $smcFunc['db_query']('', '
-			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
-			COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
-			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
-			FROM {db_prefix}tp_articles as art
-			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
-			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id)
-			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
-			WHERE ' . $fetchart. '
-			AND art.off = 0
-			AND ((art.pub_start = 0 AND art.pub_end = 0)
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1
-			AND art.category > 0 AND art.category < 9999'
-		);
-		if($smcFunc['db_num_rows']($request) > 0) {
-			while($article = $smcFunc['db_fetch_assoc']($request)) {
+        $tpArticle  = new TPArticle();
+        $articles   = $tpArticle->getArticle($fetch_articles);
+        if(is_array($articles)) {
+            foreach($articles as $article) {
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 
@@ -2111,33 +2086,30 @@ function doTPblocks() {{{
 				// since these are inside blocks, some stuff has to be left out
 				$context['TPortal']['blockarticles'][$article['id']]['frame'] = 'none';
 			}
-			$smcFunc['db_free_result']($request);
 		}
 	}
 
-   // any cat listings from blocks?
-    if(isset($test_catbox) && $fetchtitles != '') {
-		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, art.subject, art.date, art.category, art.author_id AS author_id, art.shortname,
-	 		COALESCE(mem.real_name,art.author) as real_name 
-            FROM {db_prefix}tp_articles AS art
-			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
-			WHERE  '. 	$fetchtitles . '
-			AND art.off = 0
-			AND ((art.pub_start = 0 AND art.pub_end = 0)
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.approved = 1'
-		);
-
-		if (!isset($context['TPortal']['blockarticle_titles']))
+    // any cat listings from blocks?
+    if(isset($test_catbox)) {
+        $tpArticle  = new TPArticle();
+        $categories = $tpArticle->getArticlesInCategory($fetch_article_titles);
+		
+        if (!isset($context['TPortal']['blockarticle_titles'])) {
 			$context['TPortal']['blockarticle_titles'] = array();
+        }
 
-		if ($smcFunc['db_num_rows']($request) > 0)
-		{
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
+        if(is_array($categories)) {
+            foreach($categories as $row) {
+                if(empty($row['author'])) {
+                    global $memberContext;
+                    loadMemberData($row['author_id']);
+                    loadMemberContext($row['author_id']);
+                    $row['real_name'] = $memberContext[$row['author_id']]['username'];
+                }
+                else {
+                    $row['real_name'] = $row['author'];
+                }
+
 				$context['TPortal']['blockarticle_titles'][$row['category']][$row['date'].'_'.$row['id']] = array(
 					'id' => $row['id'],
 					'subject' => $row['subject'],
@@ -2146,44 +2118,47 @@ function doTPblocks() {{{
 					'poster' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 				);
 			}
-			$smcFunc['db_free_result']($request);
 		}
     }
+
 	// get menubox items
-	if(isset($test_menubox))
-	{
+	if(isset($test_menubox)) {
         TPortal_menubox();
 	}
 
 	// for tpadmin
-	$context['TPortal']['adminleftpanel'] = $context['TPortal']['leftpanel'];
-	$context['TPortal']['adminrightpanel'] = $context['TPortal']['rightpanel'];
+	$context['TPortal']['adminleftpanel']   = $context['TPortal']['leftpanel'];
+	$context['TPortal']['adminrightpanel']  = $context['TPortal']['rightpanel'];
 	$context['TPortal']['admincenterpanel'] = $context['TPortal']['centerpanel'];
 	$context['TPortal']['adminbottompanel'] = $context['TPortal']['bottompanel'];
-	$context['TPortal']['admintoppanel'] = $context['TPortal']['toppanel'];
-	$context['TPortal']['adminlowerpanel'] = $context['TPortal']['lowerpanel'];
+	$context['TPortal']['admintoppanel']    = $context['TPortal']['toppanel'];
+	$context['TPortal']['adminlowerpanel']  = $context['TPortal']['lowerpanel'];
 
 	// if admin specifies no blocks, no blocks are shown! likewise, if in admin or tpadmin screen, turn off blocks
-	if (in_array($context['TPortal']['action'], array('help', 'moderate', 'theme', 'tpadmin', 'admin', 'ban', 'boardrecount', 'cleanperms', 'detailedversion', 'dumpdb', 'featuresettings', 'featuresettings2', 'findmember', 'maintain', 'manageattachments', 'manageboards', 'managecalendar', 'managesearch', 'membergroups', 'modlog', 'news', 'optimizetables', 'packageget', 'packages', 'permissions', 'pgdownload', 'postsettings', 'regcenter', 'repairboards', 'reports', 'serversettings', 'serversettings2', 'smileys', 'viewErrorLog', 'viewmembers')))
-		$in_admin = true;
-	if($context['TPortal']['action'] == 'tpmod' && isset($_GET['dl']) && substr($_GET['dl'], 0, 5) == 'admin')
-	{
+	if (in_array($context['TPortal']['action'], array('help', 'moderate', 'theme', 'tpadmin', 'admin', 'ban', 'boardrecount', 'cleanperms', 'detailedversion', 'dumpdb', 'featuresettings', 'featuresettings2', 'findmember', 'maintain', 'manageattachments', 'manageboards', 'managecalendar', 'managesearch', 'membergroups', 'modlog', 'news', 'optimizetables', 'packageget', 'packages', 'permissions', 'pgdownload', 'postsettings', 'regcenter', 'repairboards', 'reports', 'serversettings', 'serversettings2', 'smileys', 'viewErrorLog', 'viewmembers'))) {
+	    $in_admin = true;
+    }
+
+	if($context['TPortal']['action'] == 'tpmod' && isset($_GET['dl']) && substr($_GET['dl'], 0, 5) == 'admin') {
 		$in_admin = true;
 		$context['current_action'] = 'admin';
 	}
-	if(($context['user']['is_admin'] && isset($_GET['noblocks'])) || ($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin)))
+
+	if(($context['user']['is_admin'] && isset($_GET['noblocks'])) || ($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin))) {
 		tp_hidebars();
+    }
 
 	// check the panels
-	foreach($panels as $p => $panel)
-	{
+	foreach($panels as $p => $panel) {
 		// any blocks at all?
-		if($count[$panel] < 1)
+		if($count[$panel] < 1) {
 			$context['TPortal'][$panel.'panel'] = 0;
+        }
 
 		// check the hide setting
-		if(!isset($context['TPortal']['not_forum']) && $context['TPortal']['hide_' . $panel . 'bar_forum']==1)
+		if(!isset($context['TPortal']['not_forum']) && $context['TPortal']['hide_' . $panel . 'bar_forum']==1) {
 			tp_hidebars($panel);
+        }
 	}
 
 	$context['TPortal']['blocks'] = $blocks;

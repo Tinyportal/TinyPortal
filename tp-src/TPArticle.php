@@ -246,11 +246,18 @@ class TPArticle extends TPBase
 
     public function getArticlesInCategory( $category ) {{{
 
+        if(is_array($category)) {
+            $where = 'category = {array_int:cat}';
+        }
+        else {
+            $where = 'category = {int:cat}';
+        }
+
         $articles   = array();
         $request    =  $this->dB->db_query('', '
-            SELECT id, subject, shortname
+            SELECT id, subject, date, category, author_id, shortname, author
             FROM {db_prefix}tp_articles
-            WHERE category = {int:cat}
+            WHERE 1=1 AND '.$where.'
             ORDER BY date DESC',
             array(
                 'cat' => $category,
@@ -262,11 +269,7 @@ class TPArticle extends TPBase
                 if(empty($row['shortname'])) {
                     $row['shortname'] = $row['id'];
                 }
-                $articles[] = array(
-                    'id'        => $row['id'],
-                    'subject'   => $row['subject'],
-                    'shortname' => $row['shortname'],
-                );
+                $articles[] = $row;
             }
         }
         $this->dB->db_free_result($request);
