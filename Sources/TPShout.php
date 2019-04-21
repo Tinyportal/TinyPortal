@@ -1178,7 +1178,7 @@ function TPShoutAdminAreas() {{{
 
     global $context, $scripturl;
 
-	if (allowedTo('tp_shout')) {
+	if (allowedTo('tp_can_admin_shout')) {
 		$context['admin_tabs']['custom_modules']['tpshout'] = array(
 			'title' => 'TPShout',
 			'description' => '',
@@ -1187,6 +1187,20 @@ function TPShoutAdminAreas() {{{
 		);
 		$admin_set = true;
 	}
+
+}}}
+
+function TPShoutBlock($row) {{{
+    global $context, $sourcedir;
+
+    $set = json_decode($row['settings'], TRUE);
+
+    $context['TPortal']['tpmodules']['blockrender'][$set['var1']] = array(
+        'id' => $row['id'],
+        'name' => $row['title'],
+        'function' => 'tpshout_fetch',
+        'sourcefile' => $sourcedir .'/TPShout.php',
+    );
 
 }}}
 

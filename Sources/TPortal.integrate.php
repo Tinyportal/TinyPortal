@@ -52,11 +52,15 @@ class TPortal_Integrate
             'tp_post_init'                      => array (
                 '$sourcedir/TPShout.php|TPShoutLoad',
             ),
-            'tp_admin_areas'                      => array (
+            'tp_admin_areas'                    => array (
                 '$sourcedir/TPdlmanager.php|TPDownloadAdminAreas',
                 '$sourcedir/TPShout.php|TPShoutAdminAreas',
                 '$sourcedir/TPListImages.php|TPListImageAdminAreas',
             ),
+            'tp_blocks'                         => array (
+                '$sourcedir/TPShout.php|TPShoutBlock',
+            ),
+
         );
 
         if(TP_SMF21) {
