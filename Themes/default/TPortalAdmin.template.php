@@ -183,7 +183,7 @@ function template_settings()
 						<input name="tp_frontpage_title" id="tp_frontpage_title"type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
 					</dd>
 					<dt>
-						<', $txt['tp-redirectforum'], '
+						', $txt['tp-redirectforum'], '
 					</dt>
 					<dd>
 						<input name="tp_redirectforum" id="tp_redirectforum1" type="radio" value="1" ' , $context['TPortal']['redirectforum']=='1' ? 'checked' : '' , '><label for="tp_redirectforum1"> '.$txt['tp-redirectforum1'].'</label>
