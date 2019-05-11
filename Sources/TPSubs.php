@@ -2248,7 +2248,7 @@ function art_recentitems($max = 5, $type = 'date' ){
 	if($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
 			$rat = explode(',', $row['rating']);
-            if(is_countable($count)) {
+            if(is_countable($rat)) {
 			    $rating_votes = count($rat);
             }
             else {
