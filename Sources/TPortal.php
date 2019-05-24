@@ -2056,11 +2056,12 @@ function TPortal_panel($side) {{{
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=recent">'.$block['title'].'</a>';
 				$context['TPortal']['recentboxnum'] = $block['body'];
 				$context['TPortal']['useavatar'] = $block['var1'];
+				$context['TPortal']['boardmode'] = $block['var3'];
 				if($block['var1'] == '') {
 					$context['TPortal']['useavatar'] = 1;
                 }
 				if(!empty($block['var2'])) {
-					$context['TPortal']['recentbox_options'] = explode(',', $block['var2']);
+					$context['TPortal']['recentboards'] = explode(',', $block['var2']);
                 }
 				break;
 			case 'scriptbox':

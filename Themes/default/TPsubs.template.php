@@ -630,15 +630,23 @@ function TPortal_recentbox()
 	if(!is_numeric($context['TPortal']['recentboxnum']))
 		$context['TPortal']['recentboxnum']='10';
 
+	// exclude boards
+	if (isset($context['TPortal']['recentboards']) && $context['TPortal']['boardmode'] == 0)
+		$exclude_boards = $context['TPortal']['recentboards'];
+	else {
 	// leave out the recycle board, if any
-	if(isset($modSettings['recycle_board']))
-		$bb = $modSettings['recycle_board'];
+		if(isset($modSettings['recycle_board']) && $modSettings['recycle_enable'] = 1 )
+		$bb = array($modSettings['recycle_board']);
+		$exclude_boards = $bb;
+	}
+	
+	// include boards
+	if (isset($context['TPortal']['recentboards']) && !$context['TPortal']['boardmode'] == 0)
+		$include_boards = $context['TPortal']['recentboards'];
 	else
-		$bb = 0;
+		$include_boards = null;
 
-	$include_boards = null;
-
-	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards = array($bb),  $include_boards, $output_method = 'array');
+	$what = ssi_recentTopics($num_recent = $context['TPortal']['recentboxnum'] , $exclude_boards,  $include_boards, $output_method = 'array');
 	if($context['TPortal']['useavatar'] == 0)
 	{
 		// Output the topics
