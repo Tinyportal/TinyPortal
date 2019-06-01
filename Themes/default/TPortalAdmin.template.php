@@ -357,14 +357,6 @@ function template_frontpage()
 							<input name="tp_front_type" id="tp_front_type9" type="radio" value="module"  ' , $context['TPortal']['front_type']=='module' ? 'checked' : '' , '><label for="tp_front_type9"> '.$txt['tp-frontmodule'].'</label><br>
 							<hr />
 							<div style="padding-left: 2em;">';
-			if(sizeof($context['TPortal']['tpmodules']['frontsection'])>0)
-			{
-				foreach($context['TPortal']['tpmodules']['frontsection'] as $tpm)
-					echo '<input name="tp_front_module" type="radio" value="' . $tpm['id'] . '" ' , $context['TPortal']['front_module']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'], '<br>';
-			}
-			else
-				echo '<hr /><span class="smalltext">' . $txt['tp-nofrontmodule'] . '</span>';
-
 			echo '      <br></dd>
 						<dt>
 							', $txt['tp-frontblockoption'], '
