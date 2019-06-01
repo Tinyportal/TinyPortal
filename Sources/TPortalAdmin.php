@@ -2147,16 +2147,18 @@ function do_postchecks()
 							unset($clean);
 						}
 						// SSI boards
-						elseif(substr($what, 0, 11) == 'tp_ssiboard')
-						{
-							if($value != 0)
-								$ssi[$value] = $value;
+						elseif(substr($what, 0, 11) == 'tp_ssiboard') {
+                            $data   = file_get_contents("php://input");
+                            $output = TPUtil::http_parse_query($data)['tp_ssiboard'];
+                            if(is_array($output)) {
+                                $ssi = $output;
+                            }
 						}
 					}
-					if($from == 'settings' && $what == 'tp_frontpage_title')
+					if($from == 'settings' && $what == 'tp_frontpage_title') {
 						$updateArray['frontpage_title'] = $clean;
-					else
-					{
+                    }
+					else {
 						if(isset($clean))
 							$updateArray[$where] = $clean;
 					}
@@ -2184,8 +2186,7 @@ function do_postchecks()
 			}
 
 			// check the frontpage visual setting..
-			if($from == 'frontpage')
-			{
+			if($from == 'frontpage') {
 				$updateArray['frontpage_visual'] = implode(',', $w);
 				$updateArray['SSI_board'] = implode(',', $ssi);
 			}
