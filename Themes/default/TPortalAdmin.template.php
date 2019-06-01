@@ -499,52 +499,20 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-showforumposts'], '</label>
 						</dt>
 						<dd>';
+		echo '
+							<select size="5" name="tp_ssiboard" multiple="multiple">';
+            if(is_countable($context['TPortal']['boards'])) {
+                $tn = count($context['TPortal']['boards']);
+            }
+            else {
+                $tn = 0;
+            }
 
-		echo '
-							<select size="1" name="tp_ssiboard1">';
-		$tn=sizeof($context['TPortal']['boards']);
-		for($n=0 ; $n<$tn; $n++){
-			echo '
-								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][0]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][0] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
-		}
-		echo '
-							</select><br>';
-		// board 2
-		echo '
-							<select size="1" name="tp_ssiboard2"><option value="0">',$txt['tp-none-'],'</option>';
-		for($n=0 ; $n<$tn; $n++){
-			echo '
-								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][1]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][1] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
-		}
-		echo '
-							</select><br>';
-		// board 3
-		echo '
-							<select size="1" name="tp_ssiboard3"><option value="0">',$txt['tp-none-'],'</option>';
-		for($n=0 ; $n<$tn; $n++){
-			echo '
-								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][2]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][2] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
-		}
-		echo '
-							</select><br>';
-		// board 4
-		echo '
-							<select size="1" name="tp_ssiboard4"><option value="0">',$txt['tp-none-'],'</option>';
-		for($n=0 ; $n<$tn; $n++){
-			echo '
-								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][3]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][3] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
-		}
-		echo '
-							</select><br>';
-		// board 5
-		echo '
-							<select size="1" name="tp_ssiboard5"><option value="0">',$txt['tp-none-'],'</option>';
-		for($n=0 ; $n<$tn; $n++){
-			echo '
-								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][4]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][4] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
-		}
-
-
+            for($n=0 ; $n<$tn; $n++) {
+                echo '
+								<option value="'.$context['TPortal']['boards'][$n]['id'].'"' , is_array($context['TPortal']['SSI_boards']) && in_array($context['TPortal']['boards'][$n]['id'] , $context['TPortal']['SSI_boards']) ? ' selected="selected"' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
+            }
+		
 		echo '
 							</select><br><br>
 						</dd>
