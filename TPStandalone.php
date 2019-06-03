@@ -3,7 +3,7 @@
  * TPStandalone.php
  *
  * @package TinyPortal
- * @version 1.6.3
+ * @version 1.6.4
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
