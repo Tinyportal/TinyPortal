@@ -307,8 +307,8 @@ function getBlocks() {{{
 		' . (!empty($_GET['shout']) ? '{string:shout} IN ( access2 ) OR ' : '') . '
 		' . (!empty($front) ? '{string:front} IN ( access2 ) OR ' : '') . '
 		' . (!empty($down) ? '{string:down} IN ( access2 ) OR ' : '') . '
-		' . (!empty($context['TPortal']['uselangoption']) ? '{string:lang} IN ( access2 ) OR ' : '') . '
 		' . $access2 . ')
+		' . (!empty($context['TPortal']['uselangoption']) ? 'AND FIND_IN_SET({string:lang}, access2)' : '') . '
 		AND ' . $access . '
 		ORDER BY bar, pos, id ASC',
 		array(
