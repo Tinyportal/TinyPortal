@@ -1645,6 +1645,11 @@ function doTPfrontpage() {{{
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
+	$sqlarray[] = 'actio=allpages';
+
+	// set the language access
+	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+	
 	// set the membergroup access
     $access = '';
     if($db_type == 'mysql') {
@@ -1666,8 +1671,10 @@ function doTPfrontpage() {{{
 		SELECT * FROM {db_prefix}tp_blocks
 		WHERE off = 0
 		AND bar = 4
+		' . (!empty($context['TPortal']['uselangoption']) ? 'AND FIND_IN_SET({string:lang}, access2)' : '') . '
 		AND '. $access .'
-		ORDER BY pos,id ASC'
+		ORDER BY pos,id ASC',
+		array('lang' => 'tlang=' . $user_info['language'])
 	);
 
 	$count = array('front' => 0);
