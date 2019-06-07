@@ -1923,7 +1923,7 @@ function doTPfrontpage()
 				if(!empty($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']) && file_exists($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']))
 					require_once($context['TPortal']['tpmodules']['blockrender'][$row['var1']]['sourcefile']);
 			}
-			$can_edit = get_perm($row['editgroups'], '');
+			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage)
 				$can_edit = false;
@@ -1931,7 +1931,7 @@ function doTPfrontpage()
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
 				'title' => strip_tags($row['title'], '<center>'),
-				'type' => $blocktype[$row['type']],
+				'type' => isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type'],
 				'body' => $row['body'],
 				'visible' => $row['visible'],
 				'var1' => $row['var1'],
@@ -1966,11 +1966,11 @@ function doTPfrontpage()
 		$context['TPortal']['blockarticles'] = array();
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
-				IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
-				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
+			IFNULL(mem.real_name,art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered, mem.last_login as lastLogin,
+			IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, var.value9, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
-			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type !=3)
+			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id)
 			LEFT JOIN {db_prefix}tp_variables as var ON (var.id= art.category)
 			WHERE ' . $fetchart.'
 			AND art.off = 0
@@ -1978,7 +1978,6 @@ function doTPfrontpage()
 			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
 			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
 			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.category > 0
 			AND art.approved = 1
 			AND art.category > 0 AND art.category < 9999'
 		);
@@ -1988,12 +1987,24 @@ function doTPfrontpage()
 			{
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
+
+				// setup the avatar code
+				if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
+				{
+					$avatar_width = !empty($modSettings['avatar_max_width_external']) ? ' width="' . $modSettings['avatar_max_width_external'] . '"' : '';
+					$avatar_height = !empty($modSettings['avatar_max_height_external']) ? ' height="' . $modSettings['avatar_max_height_external'] . '"' : '';
+				}
+				else
+				{
+					$avatar_width = '';
+					$avatar_height = '';
+				}
                 $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(      
-                            'avatar' => $row['avatar'],
-                            'email' => $row['email_address'],
-                            'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'ID_ATTACH' => $row['ID_ATTACH'],
-                            'attachmentType' => $row['attachmentType'],
+                            'avatar' => $article['avatar'],
+                            'email' => $article['email_address'],
+                            'filename' => !empty($article['filename']) ? $article['filename'] : '',
+                            'ID_ATTACH' => $article['ID_ATTACH'],
+                            'attachmentType' => $article['attachmentType'],
                         )
                 )['image'];
 
@@ -2050,7 +2061,7 @@ function doTPfrontpage()
 			FROM {db_prefix}tp_variables as var
 			LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id 
 			LEFT JOIN {db_prefix}tp_variables AS cat ON substring(var.value3,5) = cat.id
-			WHERE type = {string:type} 
+			WHERE var.type = {string:type} 
 			ORDER BY value5 ASC',
 			array('type' => 'menubox')
 		);
