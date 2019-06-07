@@ -198,36 +198,36 @@ function template_settings()
 						<label for="tp_useroundframepanels">', $txt['tp-useroundframepanels'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_useroundframepanels" type="radio" value="1" ' , $context['TPortal']['useroundframepanels']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_useroundframepanels" name="tp_useroundframepanels" type="radio" value="1" ' , $context['TPortal']['useroundframepanels']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_useroundframepanels" type="radio" value="0" ' , $context['TPortal']['useroundframepanels']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-hidecollapse'], '</label>
+						<label for="tp_showcollapse">', $txt['tp-hidecollapse'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_showcollapse" name="tp_showcollapse" type="radio" value="1" ' , $context['TPortal']['showcollapse']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_showcollapse" name="tp_showcollapse" name="tp_showcollapse" type="radio" value="1" ' , $context['TPortal']['showcollapse']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_showcollapse" type="radio" value="0" ' , $context['TPortal']['showcollapse']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-hideediticon'], '</label>
+						<label for="tp_blocks_edithide">', $txt['tp-hideediticon'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_blocks_edithide" type="radio" value="1" ' , $context['TPortal']['blocks_edithide']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_blocks_edithide" name="tp_blocks_edithide" type="radio" value="1" ' , $context['TPortal']['blocks_edithide']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_blocks_edithide" type="radio" value="0" ' , $context['TPortal']['blocks_edithide']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-uselangoption'], '</label>
+						<label for="tp_uselangoption">', $txt['tp-uselangoption'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_uselangoption" type="radio" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_uselangoption" name="tp_uselangoption" type="radio" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_uselangoption" type="radio" value="0" ' , $context['TPortal']['uselangoption']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-use_groupcolor'], '</label>
+						<label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label>
 						<div class="smalltext">'.$txt['tp-use_groupcolordesc'].'</div>
 					</dt>
 					<dd>
-						<input name="tp_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['use_groupcolor']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_use_groupcolor" name="tp_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['use_groupcolor']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_use_groupcolor" type="radio" value="0" ' , $context['TPortal']['use_groupcolor']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 				</dl>
@@ -240,56 +240,56 @@ function template_settings()
 						<input name="tp_maxstars" id="tp_maxstars" size="4" type="text" value="'.$context['TPortal']['maxstars'].'">
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-stars'], '</label>
+						<label for="tp_showstars">', $txt['tp-stars'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_showstars" type="radio" value="1" ' , $context['TPortal']['showstars']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_showstars" name="tp_showstars" type="radio" value="1" ' , $context['TPortal']['showstars']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_showstars" type="radio" value="0" ' , $context['TPortal']['showstars']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 				</dl>
 					<hr>
 				<dl class="settings">
 					<dt>
-						<label for="field_name">', $txt['tp-useoldsidebar'], '</label>
+						<label for="tp_oldsidebar">', $txt['tp-useoldsidebar'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_oldsidebar" type="radio" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_oldsidebar" name="tp_oldsidebar" type="radio" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_oldsidebar" type="radio" value="0" ' , $context['TPortal']['oldsidebar']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-admin_showblocks'], '</label>
+						<label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
 					</dt>
 					<dd>
-						<input name="tp_admin_showblocks" type="radio" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_admin_showblocks" name="tp_admin_showblocks" type="radio" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_admin_showblocks" type="radio" value="0" ' , $context['TPortal']['admin_showblocks']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-imageproxycheck'], '</label>
+						<label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label>
 						<div class="smalltext">'.$txt['tp-imageproxycheckdesc'].'</div>
 					</dt>
 					<dd>
-						<input name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_imageproxycheck" name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>';
                     db_extend('extra');
                     if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
                         echo '
                         <dt>
-                            <label for="field_name">', $txt['tp-fulltextsearch'], '</label>
+                            <label for="tp_fulltextsearch">', $txt['tp-fulltextsearch'], '</label>
                             <div class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</div>
                         </dt>
                         <dd>
-                            <input name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+                            <input id="tp_fulltextsearch" name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
                             <input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
                         </dd>';
                     }
 					echo '
 					<dt>
-						<label for="field_name">', $txt['tp-disabletemplateeval'], '</label>
+						<label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label>
 						<div class="smalltext">' , $txt['tp-disabletemplateevaldesc'] , '</div>
 					</dt>
 					<dd>
-                        <input name="tp_disable_template_eval" type="radio" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+                        <input id="tp_disable_template_eval" name="tp_disable_template_eval" type="radio" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
                         <input name="tp_disable_template_eval" type="radio" value="0" ' , $context['TPortal']['disable_template_eval']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
                     <dt>
@@ -1538,48 +1538,48 @@ function template_panels()
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							<label for="field_name">', $txt['tp-hidebarsadminonly'], '</label>
+							<label for="tp-hidebarsadminonly">', $txt['tp-hidebarsadminonly'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hidebars_admin_only" type="radio" value="1" ' , $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input id="tp-hidebarsadminonly" name="tp_hidebars_admin_only" type="radio" value="1" ' , $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_admin_only" type="radio" value="0" ' , $context['TPortal']['hidebars_admin_only']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 						<dt>
 							<br><strong>'.$txt['tp-hidebarsall'].'</strong>
 						</dt>
 						<dt>
-							<label for="field_name">', $txt['tp-hidebarsprofile'], '</label>
+							<label for="tp-hidebarsprofile">', $txt['tp-hidebarsprofile'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hidebars_profile" type="radio" value="1" ' , $context['TPortal']['hidebars_profile']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input id="tp-hidebarsprofile" name="tp_hidebars_profile" type="radio" value="1" ' , $context['TPortal']['hidebars_profile']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_profile" type="radio" value="0" ' , $context['TPortal']['hidebars_profile']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 						<dt>
-							<label for="field_name">', $txt['tp-hidebarspm'], '</label>
+							<label for="tp-hidebarspm">', $txt['tp-hidebarspm'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hidebars_pm" type="radio" value="1" ' , $context['TPortal']['hidebars_pm']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input id="tp-hidebarspm" name="tp_hidebars_pm" type="radio" value="1" ' , $context['TPortal']['hidebars_pm']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_pm" type="radio" value="0" ' , $context['TPortal']['hidebars_pm']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 						<dt>
-							<label for="field_name">', $txt['tp-hidebarsmemberlist'], '</label>
+							<label for="tp-hidebarsmemberlist">', $txt['tp-hidebarsmemberlist'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hidebars_memberlist" type="radio" value="1" ' , $context['TPortal']['hidebars_memberlist']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input id="tp-hidebarsmemberlist" name="tp_hidebars_memberlist" type="radio" value="1" ' , $context['TPortal']['hidebars_memberlist']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_memberlist" type="radio" value="0" ' , $context['TPortal']['hidebars_memberlist']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 						<dt>
-							<label for="field_name">', $txt['tp-hidebarssearch'], '</label>
+							<label for="tp-hidebarssearch">', $txt['tp-hidebarssearch'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hidebars_search" type="radio" value="1" ' , $context['TPortal']['hidebars_search']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input id="tp-hidebarssearch" name="tp_hidebars_search" type="radio" value="1" ' , $context['TPortal']['hidebars_search']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_search" type="radio" value="0" ' , $context['TPortal']['hidebars_search']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 						<dt>
-							<label for="field_name">', $txt['tp-hidebarscalendar'], '</label>
+							<label for="tp-hidebarscalendar">', $txt['tp-hidebarscalendar'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_hidebars_calendar" type="radio" value="1" ' , $context['TPortal']['hidebars_calendar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input id="tp-hidebarscalendar" name="tp_hidebars_calendar" type="radio" value="1" ' , $context['TPortal']['hidebars_calendar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_calendar" type="radio" value="0" ' , $context['TPortal']['hidebars_calendar']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 					<dl class="settings">
@@ -1639,61 +1639,61 @@ function template_panels()
 						<label for="tp_'.$panl.'bar_width">'.$txt['tp-panelwidth'].':</label>
 					</dt>
 					<dd>
-						<input name="tp_'.$panl.'bar_width" id="tp_'.$panl.'bar_width" size="5" maxsize="5" type="text" value="' , $context['TPortal'][$panl. 'bar_width'] , '"><br>
+						<input id="tp_'.$panl.'bar_width" name="tp_'.$panl.'bar_width" id="tp_'.$panl.'bar_width" size="5" maxsize="5" type="text" value="' , $context['TPortal'][$panl. 'bar_width'] , '"><br>
 					</dd>';
 				echo '
 					<dt>
-						'.$txt['tp-use'.$panl.'panel'].'
+						<label for="tp_'.$panl.'panel">'.$txt['tp-use'.$panl.'panel'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_'.$panl.'panel" type="radio" value="1" ' , $context['TPortal']['admin'.$panl.'panel']==1 ? 'checked' : '' , '> '.$txt['tp-on'].'
+						<input id="tp_'.$panl.'panel" name="tp_'.$panl.'panel" type="radio" value="1" ' , $context['TPortal']['admin'.$panl.'panel']==1 ? 'checked' : '' , '> '.$txt['tp-on'].'
 						<input name="tp_'.$panl.'panel" type="radio" value="0" ' , $context['TPortal']['admin'.$panl.'panel']==0 ? 'checked' : '' , '> '.$txt['tp-off'].'<br>
 					</dd>
 					<dt>
-						'.$txt['tp-hide_'.$panl.'bar_forum'].'
+						<label for="tp_hide_'.$panl.'bar_forum">'.$txt['tp-hide_'.$panl.'bar_forum'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_hide_'.$panl.'bar_forum" type="radio" value="1" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
+						<input id="tp_hide_'.$panl.'bar_forum" name="tp_hide_'.$panl.'bar_forum" type="radio" value="1" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
 						<input name="tp_hide_'.$panl.'bar_forum" type="radio" value="0" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
 						<br><br>
 					</dd>';
 		}
 		echo '
 					<dt>
-						'.$txt['tp-vertical'].'<br>
+						<label for="tp_block_layout_'.$panl.'1">'.$txt['tp-vertical'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_block_layout_'.$panl.'" type="radio" value="vert" ' , $context['TPortal']['block_layout_'.$panl]=='vert' ? 'checked' : '' , '>
+						<input id="tp_block_layout_'.$panl.'1" name="tp_block_layout_'.$panl.'" type="radio" value="vert" ' , $context['TPortal']['block_layout_'.$panl]=='vert' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						'.$txt['tp-horisontal'].'<br>
+						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horisontal'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_block_layout_'.$panl.'" type="radio" value="horiz" ' , $context['TPortal']['block_layout_'.$panl]=='horiz' ? 'checked' : '' , '>
+						<input id="tp_block_layout_'.$panl.'2" name="tp_block_layout_'.$panl.'" type="radio" value="horiz" ' , $context['TPortal']['block_layout_'.$panl]=='horiz' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						'.$txt['tp-horisontal2cols'].'<br>
+						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-horisontal2cols'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_block_layout_'.$panl.'" type="radio" value="horiz2" ' , $context['TPortal']['block_layout_'.$panl]=='horiz2' ? 'checked' : '' , '>
+						<input id="tp_block_layout_'.$panl.'3" name="tp_block_layout_'.$panl.'" type="radio" value="horiz2" ' , $context['TPortal']['block_layout_'.$panl]=='horiz2' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						'.$txt['tp-horisontal3cols'].'<br>
+						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-horisontal3cols'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_block_layout_'.$panl.'" type="radio" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '>
+						<input id="tp_block_layout_'.$panl.'4" name="tp_block_layout_'.$panl.'" type="radio" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						'.$txt['tp-horisontal4cols'].'<br>
+						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-horisontal4cols'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_block_layout_'.$panl.'" type="radio" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '>
+						<input id="tp_block_layout_'.$panl.'5" name="tp_block_layout_'.$panl.'" type="radio" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						'.$txt['tp-grid'].'<br>
+						<label for="tp_block_layout_'.$panl.'6">'.$txt['tp-grid'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_block_layout_'.$panl.'" type="radio" value="grid" ' , $context['TPortal']['block_layout_'.$panl]=='grid' ? 'checked' : '' , '>
+						<input id="tp_block_layout_'.$panl.'6" name="tp_block_layout_'.$panl.'" type="radio" value="grid" ' , $context['TPortal']['block_layout_'.$panl]=='grid' ? 'checked' : '' , '>
 					</dd>
 					<dt></dt>
 					<dd>
@@ -3287,15 +3287,15 @@ function template_menucore()
 		<div class="windowbg noup padding-div">
 			<dl class="settings">
 				<dt>
-					<label for="tp_title"><b>'.$txt['tp-title'].':</b><label>
+					<label for="tp_menu_name"><b>'.$txt['tp-title'].':</b><label>
 				</dt>
 				<dd>
-					<input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
+					<input id="tp_menu_name" name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 				</dd>
 			</dl>	
 			<dl class="settings">
 				<dt>
-					<label for="tp_menu_name"><b>'.$txt['tp-type'].':</b><label>
+					<label for="tp_menu_type"><b>'.$txt['tp-type'].':</b><label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_type" id="tp_menu_type">
