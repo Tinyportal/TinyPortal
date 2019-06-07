@@ -1120,7 +1120,7 @@ function template_settings()
 						<div class="smalltext">' , $txt['tp-frontpagetitle2'] , '</div>
 					</dt>
 					<dd>
-						<input name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
+						<input size="50" name="tp_frontpage_title" type="text" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '">
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-redirectforum'], '</label>
@@ -1229,7 +1229,7 @@ function template_settings()
 						<div class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</div>
 					</dt>
 					<dd>
-						<input name="tp_copyrightremoval" type="text" value="' , !empty($context['TPortal']['copyrightremoval']) ? $context['TPortal']['copyrightremoval'] : '' , '">
+						<input size="50" name="tp_copyrightremoval" type="text" value="' , !empty($context['TPortal']['copyrightremoval']) ? $context['TPortal']['copyrightremoval'] : '' , '">
 					</dd>
 				</div>
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -2948,7 +2948,7 @@ function template_addblock()
 									<dt><h3>' , $txt['tp-title'] , ':</h3>
 									</dt>
 									<dd>
-										<input type="input" name="tp_addblocktitle" size="60" value="" />
+										<input type="input" name="tp_addblocktitle" size="50" value="" />
 									</dd>
 								</dl>
 								<dl class="settings">
@@ -3508,7 +3508,7 @@ function template_blockedit()
 						<div>';
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang){
 				if($lang!='')
-					echo '<input name="tp_lang_'.$lang.'" type="text" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'],ENT_QUOTES) , '"> '. $lang.'<br>';
+					echo '<input size="50" name="tp_lang_'.$lang.'" type="text" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'],ENT_QUOTES) , '"> '. $lang.'<br>';
 			}
 			echo '		</div>
 					<br></dd>
