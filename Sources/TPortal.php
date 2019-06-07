@@ -1987,6 +1987,7 @@ function doTPfrontpage()
 			{
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
+
 				// setup the avatar code
 				if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
 				{
