@@ -147,7 +147,7 @@ function TPortal_articlebox()
 	global $context;
 
 	if(isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]))
-		echo '<div class="block_article">', 	template_blockarticle() , '</div>';
+		echo '<div class="block_article">', template_blockarticle() , '</div>';
 }
 
 // php blocktype
@@ -1987,7 +1987,6 @@ function tp_grids()
 function template_blockarticle()
 {
 	global $context;
-
 	// use a customised template or the built-in?
 	if(!empty($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['template']))
 		render_template($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['template']);
@@ -1996,7 +1995,6 @@ function template_blockarticle()
 }
 function blockarticle_renders()
 {
-
 	$code = '
 	<div class="blockarticle render1">
 		<div class="article_info">
