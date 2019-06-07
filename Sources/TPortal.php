@@ -1867,6 +1867,11 @@ function doTPfrontpage()
 	$blocktype = array('no','userbox','newsbox','statsbox','searchbox','html',
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
+	
+	$sqlarray[] = 'actio=allpages';
+
+	// set the language access
+	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
 
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
@@ -1880,8 +1885,10 @@ function doTPfrontpage()
 		SELECT * FROM {db_prefix}tp_blocks
 		WHERE off = 0
 		AND bar = 4
+		' . (!empty($context['TPortal']['uselangoption']) ? 'AND FIND_IN_SET({string:lang}, access2)' : '') . '
 		AND '. $access .'
-		ORDER BY pos,id ASC'
+		ORDER BY pos,id ASC',
+		array('lang' => 'tlang=' . $user_info['language'])
 	);
 
 	$count = array('front' => 0);
@@ -2195,8 +2202,8 @@ function doTPblocks()
 		' . (!empty($_GET['shout']) ? 'FIND_IN_SET({string:shout}, access2) OR ' : '') . '
 		' . (!empty($front) ? 'FIND_IN_SET({string:front}, access2) OR ' : '') . '
 		' . (!empty($down) ? 'FIND_IN_SET({string:down}, access2) OR ' : '') . '
-		' . (!empty($context['TPortal']['uselangoption']) ? 'FIND_IN_SET({string:lang}, access2) OR ' : '') . '
 		' . $access2 . ')
+		' . (!empty($context['TPortal']['uselangoption']) ? 'AND FIND_IN_SET({string:lang}, access2)' : '') . '
 		AND ' . $access . '
 		ORDER BY bar, pos, id ASC',
 		array(

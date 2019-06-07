@@ -3507,11 +3507,30 @@ function template_blockedit()
 					<dd>
 						<div>';
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang){
-				if($lang!=$context['user']['language'] && $lang!='')
+				if($lang!='')
 					echo '<input name="tp_lang_'.$lang.'" type="text" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'],ENT_QUOTES) , '"> '. $lang.'<br>';
 			}
 			echo '		</div>
-					</dd>
+					<br></dd>
+					<dt><label for="field_name">' . $txt['tp-lang'] . ':</label><br>';
+
+			// alert if the settings is off, supply link if allowed
+			if(empty($context['TPortal']['uselangoption']))
+			{
+				echo '
+				<p class="error">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=settings#uselangoption">['. $txt['tp-settings'] .']</a>' : '' , '</p>';
+			}					
+				echo '
+					</dt>
+					<dd>';
+			$a=1;
+			foreach($context['TPortal']['langfiles'] as $bb => $lang)
+			{
+				echo '
+										<input type="checkbox" name="langtype' . $a . '" value="'.$lang.'" ' , in_array($lang, $context['TPortal']['blockedit']['access2']['lang']) ? 'checked="checked"' : '' , '> '.$lang.'<br>';
+				$a++;
+			}
+			echo ' </dd>
 				</dl>
 
 			</div>';
@@ -3627,26 +3646,6 @@ function template_blockedit()
 				echo '<br>
 
 						</dd>
-					</dl>
-					<dl class="settings">
-						<dt><label for="field_name"><h4>' . $txt['tp-lang'] . ':</h4></label></dt>
-						<dd>';
-
-				// alert if the settings is off, supply link if allowed
-				if(empty($context['TPortal']['uselangoption']))
-				{
-					echo '
-					<p class="error">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=settings#uselangoption">['. $txt['tp-settings'] .']</a>' : '' , '</p>';
-				}
-
-				$a=1;
-				foreach($context['TPortal']['langfiles'] as $bb => $lang)
-				{
-					echo '
-											<input type="checkbox" name="langtype' . $a . '" value="'.$lang.'" ' , in_array($lang, $context['TPortal']['blockedit']['access2']['lang']) ? 'checked="checked"' : '' , '> '.$lang.'<br>';
-					$a++;
-				}
-				echo ' </dd>
 					</dl>
 					<dl class="settings">
 						<dt><label for="field_name"><h4>' . $txt['tp-dlmanager'] . ':</h4></dt>
