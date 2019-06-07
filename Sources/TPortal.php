@@ -2039,8 +2039,12 @@ function doTPfrontpage()
 	{
 		$context['TPortal']['menu'] = array();
 		$request =  $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_variables
-			WHERE type = {string:type} ORDER BY value5 ASC',
+			SELECT var.*, art.shortname, cat.value8 as catshort
+			FROM {db_prefix}tp_variables as var
+			LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id 
+			LEFT JOIN {db_prefix}tp_variables AS cat ON substring(var.value3,5) = cat.id
+			WHERE type = {string:type} 
+			ORDER BY value5 ASC',
 			array('type' => 'menubox')
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -2056,10 +2060,19 @@ function doTPfrontpage()
 						$mtype = 'link';
 						$idtype = $row['value3'];
 					}
+					if($mtype == 'arti')
+					{
+						if(!empty($row['shortname']))
+							$idtype = $row['shortname'];
+					}
+					
 					if($mtype == 'cats')
 					{
 						if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
-							$icon=$context['TPortal']['article_categories']['icon'][$idtype];
+							$icon = $context['TPortal']['article_categories']['icon'][$idtype];
+
+						if(!empty($row['catshort']))
+							$idtype = $row['catshort'];					
 					}
 					if($mtype == 'head')
 					{
@@ -2995,10 +3008,12 @@ function TPortal_menubox()
 
     $context['TPortal']['menu'] = array();
     $request =  $smcFunc['db_query']('', '
-        SELECT *
-        FROM {db_prefix}tp_variables
-        WHERE type = {string:type}
-        ORDER BY subtype + 0 ASC',
+        SELECT var.*, art.shortname, cat.value8 as catshort
+        FROM {db_prefix}tp_variables as var
+		LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id 
+		LEFT JOIN {db_prefix}tp_variables AS cat ON substring(var.value3,5) = cat.id
+        WHERE var.type = {string:type}
+        ORDER BY var.subtype + 0 ASC',
         array('type' => 'menubox')
     );
     if($smcFunc['db_num_rows']($request) > 0)
@@ -3017,11 +3032,17 @@ function TPortal_menubox()
                     $mtype = 'link';
                     $idtype = $row['value3'];
                 }
-
+                if($mtype == 'arti')
+                {
+                    if(!empty($row['shortname']))
+                        $idtype = $row['shortname'];
+                }
                 if($mtype == 'cats')
                 {
                     if(isset($context['TPortal']['article_categories']['icon'][$idtype]))
                         $icon = $context['TPortal']['article_categories']['icon'][$idtype];
+                    if(!empty($row['catshort']))
+                        $idtype = $row['catshort'];								
                 }
                 if($mtype == 'head')
                 {
