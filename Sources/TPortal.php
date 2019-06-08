@@ -1843,7 +1843,7 @@ function doTPfrontpage() {{{
 			FROM {db_prefix}tp_variables as var
 			LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id 
 			LEFT JOIN {db_prefix}tp_variables AS cat ON substring(var.value3,5) = cat.id
-			WHERE type = {string:type} 
+			WHERE var.type = {string:type} 
 			ORDER BY value5 ASC',
 			array('type' => 'menubox')
 		);
