@@ -263,8 +263,8 @@ function getBlocks() {{{
     }
 
     
-	if(!empty($context['TPortal']['uselangoption']) {
-		$sqlarray[] = 'tlang=' . $user_info['language'],
+	if(!empty($context['TPortal']['uselangoption'])) {
+		$sqlarray[] = 'tlang=' . $user_info['language'];
     }
 
 	// frontpage
