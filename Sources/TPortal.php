@@ -1650,7 +1650,7 @@ function doTPfrontpage() {{{
 	
     // set the language access
 	if($db_type == 'mysql') {
-        $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+        $access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
 	}
     else {
         $access2 = '';
