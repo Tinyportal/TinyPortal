@@ -174,4 +174,6 @@ $txt['tp-dlnotuploaded'] = 'File was not uploaded.';
 $txt['tp-dlnotitle'] = '-no title-';
 $txt['tp-nocats'] = 'No categories found.';
 $txt['tp-nofiles'] = 'Currently there are no files in this category.';
+
+$txt['tp-showdownload'] = 'Show Downloads?';
 ?>

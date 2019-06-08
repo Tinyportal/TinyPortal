@@ -313,13 +313,6 @@ function TPortal_userbox()
 			<li><a href="' . $scripturl . '?action=tportal;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
 		}
 
-		// add adminhooks
-		if(is_countable($context['TPortal']['tpmodules']['adminhook']) && count($context['TPortal']['tpmodules']['adminhook']) > 0)
-		{
-			foreach($context['TPortal']['tpmodules']['adminhook'] as $link)
-				echo '<li><a href="' . $scripturl . '?'.$link['action'].'">' . $bullet5.$link['title']. '</a></li>';
-		}
-
 		echo '
 		</ul>';
 	}

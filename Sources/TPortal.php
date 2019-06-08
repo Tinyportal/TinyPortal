@@ -1645,13 +1645,15 @@ function doTPfrontpage() {{{
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
-	$sqlarray[] = 'actio=allpages';
-
-	// set the language access
+    $sqlarray[] = 'actio=allpages';
+    $sqlarray[] = 'tlang=' . $user_info['language'];
+	
+    // set the language access
 	if($db_type == 'mysql') {
-		$access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
+        $access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
 	}
     else {
+        $access2 = '';
         foreach($sqlarray as $k => $v) {
             $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
         }
@@ -1679,10 +1681,9 @@ function doTPfrontpage() {{{
 		SELECT * FROM {db_prefix}tp_blocks
 		WHERE off = 0
 		AND bar = 4
-		' . (!empty($context['TPortal']['uselangoption']) ? 'AND FIND_IN_SET({string:lang}, access2)' : '') . '
 		AND '. $access .'
-		ORDER BY pos,id ASC',
-		array('lang' => 'tlang=' . $user_info['language'])
+		' . (!empty($context['TPortal']['uselangoption']) ? 'AND '.$access2 : '') . '
+		ORDER BY pos,id ASC'
 	);
 
 	$count = array('front' => 0);
