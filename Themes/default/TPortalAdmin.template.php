@@ -2762,7 +2762,7 @@ function template_blockedit()
 						<dd>
 							<div>';
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang){
-				if($lang!='')
+				if($lang!=$context['user']['language'] && $lang!='')
 					echo '<input size="50" name="tp_lang_'.$lang.'" type="text" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'],ENT_QUOTES) , '"> '. $lang.'<br>';
 			}
 			echo '			</div>
