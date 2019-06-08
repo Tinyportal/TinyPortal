@@ -1648,7 +1648,15 @@ function doTPfrontpage() {{{
 	$sqlarray[] = 'actio=allpages';
 
 	// set the language access
-	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+	if($db_type == 'mysql') {
+		$access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
+	}
+    else {
+        foreach($sqlarray as $k => $v) {
+            $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
+        }
+    }
+    $access2 = rtrim($access2,' OR ');
 	
 	// set the membergroup access
     $access = '';
