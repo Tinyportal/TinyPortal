@@ -262,6 +262,11 @@ function getBlocks() {{{
         $sqlarray[] = 'actio='.$action['action'];
     }
 
+    
+	if(!empty($context['TPortal']['uselangoption']) {
+		$sqlarray[] = 'tlang=' . $user_info['language'],
+    }
+
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
 		$front = true;
@@ -308,12 +313,10 @@ function getBlocks() {{{
 		' . (!empty($front) ? '{string:front} IN ( access2 ) OR ' : '') . '
 		' . (!empty($down) ? '{string:down} IN ( access2 ) OR ' : '') . '
 		' . $access2 . ')
-		' . (!empty($context['TPortal']['uselangoption']) ? 'AND FIND_IN_SET({string:lang}, access2)' : '') . '
 		AND ' . $access . '
 		ORDER BY bar, pos, id ASC',
 		array(
 			'bar' => 4,
-			'lang' => 'tlang=' . $user_info['language'],
 			'page' => !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '',
 			'cat' => !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '',
 			'front' => 'actio=frontpage',
