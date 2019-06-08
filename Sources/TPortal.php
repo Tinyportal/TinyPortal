@@ -1647,7 +1647,6 @@ function doTPfrontpage() {{{
 
     $sqlarray[] = 'actio=allpages';
 	
-    // set the language access
 	if($db_type == 'mysql') {
         $access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
 	}
@@ -1664,7 +1663,7 @@ function doTPfrontpage() {{{
 
         // set the language access
         if($db_type == 'mysql') {
-            $access2 .= '(FIND_IN_SET(\'' .$tmp. '\', access2))';
+            $access2 .= 'AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
         }
         else {
             $access2 .= " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
