@@ -1646,7 +1646,6 @@ function doTPfrontpage() {{{
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
     $sqlarray[] = 'actio=allpages';
-    $sqlarray[] = 'tlang=' . $user_info['language'];
 	
     // set the language access
 	if($db_type == 'mysql') {
@@ -1659,7 +1658,19 @@ function doTPfrontpage() {{{
         }
     }
     $access2 = rtrim($access2,' OR ');
-	
+
+    if(!empty($context['TPortal']['uselangoption'])) { 
+         $tmp = 'tlang=' . $user_info['language'];
+
+        // set the language access
+        if($db_type == 'mysql') {
+            $access2 .= '(FIND_IN_SET(\'' .$tmp. '\', access2))';
+        }
+        else {
+            $access2 .= " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+        }
+    }
+
 	// set the membergroup access
     $access = '';
     if($db_type == 'mysql') {
@@ -1682,7 +1693,7 @@ function doTPfrontpage() {{{
 		WHERE off = 0
 		AND bar = 4
 		AND '. $access .'
-		' . (!empty($context['TPortal']['uselangoption']) ? 'AND '.$access2 : '') . '
+		AND '.$access2. '
 		ORDER BY pos,id ASC'
 	);
 
