@@ -3832,7 +3832,7 @@ function TPDownloadAdminAreas() {{{
 
     global $context, $scripturl;
 
-	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download'])) {
+	if (allowedTo('tp_dlmanager')) {
 		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
 			'title' => 'TPdownloads',
 			'description' => '',
