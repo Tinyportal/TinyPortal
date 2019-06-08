@@ -275,6 +275,11 @@ $clickme.click( function(e) {
 				echo '
 						</select><br><br>
 					</dd>
+					<dt>',$txt['tp-showdownload'],'</dt>
+                    <dd>
+                        <input name="tp_show_download" type="radio" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
+						<input name="tp_show_download" type="radio" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
+                    </dd>
 				</dl>
 					<div style="padding:1%;">
 						<input type="hidden" name="dlsettings" value="1" />

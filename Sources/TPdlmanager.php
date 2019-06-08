@@ -2529,6 +2529,7 @@ function TPortalDLAdmin()
 			$myid = $sid;
 			$go = 2;
 		}
+
 		// get all values from forms
 		foreach($_POST as $what => $value)
 		{
@@ -2896,6 +2897,11 @@ function TPortalDLAdmin()
 				$changeArray['dlmanager_theme'] = $value;
 				$go = 1;
 			}
+            elseif($what == 'tp_show_download')
+            {
+				$changeArray['show_download'] = $value;
+                $go = 1;
+            }
 		}
 
 		// Update all the changes settings finally
