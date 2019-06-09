@@ -2941,6 +2941,11 @@ function template_blockedit()
 			</div>
 		</fieldset>';
 		}
+        else {
+            echo '<div>
+                <input type="hidden" name="actiontype2" id="actiontype2" value="frontpage" />
+            </div>';
+        }
 			echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 			</div>

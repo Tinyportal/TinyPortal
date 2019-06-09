@@ -276,11 +276,13 @@ function getBlocks() {{{
         $access2 .= 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
     }
     else {
+        $access2 = '(';
         foreach($sqlarray as $k => $v) {
             $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
         }
+        $access2 = rtrim($access2,' OR ');
+        $access2 .= ' )';
     }
-    $access2 = rtrim($access2,' OR ');
 
 	if(!empty($context['TPortal']['uselangoption'])) {
         $tmp = 'tlang=' . $user_info['language'];
