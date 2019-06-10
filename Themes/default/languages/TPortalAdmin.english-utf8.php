@@ -643,7 +643,7 @@ $txt['tp-blockcodeuploadpath'] = 'Path where TinyPortal blockcodes are uploaded 
 $txt['tp-blockcodeuploadpathdesc'] = 'File path where the blockcodes uploaded via TinyPortal are stored';
 
 $txt['tp-downloaduploadpath'] = 'Path where TinyPortal downloads are uploaded to on your server';
-$txt['tp-downloaduploadpathdesc'] = 'File path where the downlaods uploaded via TinyPortal are stored';
+$txt['tp-downloaduploadpathdesc'] = 'File path where the downloads uploaded via TinyPortal are stored';
 
 // new in 1.6.3
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
