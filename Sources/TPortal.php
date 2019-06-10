@@ -1096,6 +1096,7 @@ function doTPfrontpage() {{{
 	switch($context['TPortal']['front_type']) {
         case 'articles_only': 
 		// first, get all available
+        $artgroups = '';
 		if(!$context['user']['is_admin']) {
             global $db_type;
             if($db_type == 'mysql') {
@@ -1646,17 +1647,19 @@ function doTPfrontpage() {{{
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
     $sqlarray[] = 'actio=allpages';
+    $sqlarray[] = 'actio=frontpage';
 	
 	if($db_type == 'mysql') {
         $access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
 	}
     else {
-        $access2 = '';
+        $access2 = '(';
         foreach($sqlarray as $k => $v) {
             $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
         }
+        $access2 = rtrim($access2,' OR ');
+        $access2 .= ' )';
     }
-    $access2 = rtrim($access2,' OR ');
 
     if(!empty($context['TPortal']['uselangoption'])) { 
          $tmp = 'tlang=' . $user_info['language'];
@@ -1703,6 +1706,7 @@ function doTPfrontpage() {{{
 
 	if ($smcFunc['db_num_rows']($request) > 0) {
         while($row = $smcFunc['db_fetch_assoc']($request)) {
+
             // decode the block settings
             $set = json_decode($row['settings'], true);
 
