@@ -273,7 +273,7 @@ function getBlocks() {{{
 	// set the location access
     $access2 = '';
     if($db_type == 'mysql') {
-        $access2 .= 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+        $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
     }
     else {
         $access2 = '(';
@@ -283,17 +283,16 @@ function getBlocks() {{{
         $access2 = rtrim($access2,' OR ');
         $access2 .= ' )';
     }
-
+	// set the language access
 	if(!empty($context['TPortal']['uselangoption'])) {
         $tmp = 'tlang=' . $user_info['language'];
         if($db_type == 'mysql') {
-            $access2 .= ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
+            $access3 = ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
         }
         else {
-            $access2 .= " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+            $access3 .= " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
         }
     }
-
 	// set the membergroup access
     $access = '';
     if($db_type == 'mysql') {
@@ -322,6 +321,7 @@ function getBlocks() {{{
 		' . (!empty($down) ? '{string:down} IN ( access2 ) OR ' : '') . '
 		' . $access2 . ')
 		AND ' . $access . '
+		' . $access3 . '
 		ORDER BY bar, pos, id ASC',
 		array(
 			'bar' => 4,
