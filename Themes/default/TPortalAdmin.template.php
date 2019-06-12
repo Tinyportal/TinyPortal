@@ -2600,6 +2600,7 @@ function template_editarticle($type = '')
 					</dt>
 					<dd>
 							<input name="tp_article_frame" type="radio" value="theme" ' , $mg['frame']=='theme' ? 'checked' : '' , '> '.$txt['tp-useframe'].'<br>
+							<input name="tp_article_frame" type="radio" value="frame" ' , $mg['frame']=='frame' ? 'checked' : '' , '> '.$txt['tp-useframe2'].'<br>
 							<input name="tp_article_frame" type="radio" value="title" ' , $mg['frame']=='title' ? 'checked' : '' , '> '.$txt['tp-usetitle'].' <br>
 							<input name="tp_article_frame" type="radio" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '> '.$txt['tp-noframe'].'<br><br>
 					</dd>
