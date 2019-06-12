@@ -1175,7 +1175,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	global $context;
 	$code = '';
 	// decide the header style, different for forumposts
-    $useFrame = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
+    $useheader = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
 	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg';
 	$divheader = isset($context['TPortal']['article']['boardnews']) ? 'cat_bar' : 'title_bar';
 	$divbody = isset($context['TPortal']['article']['boardnews']) ? 'windowbg noup' : 'windowbg';
@@ -1185,11 +1185,11 @@ function article_renders($type = 1, $single = false, $first = false)
 		$code = '
 	<div style="overflow: hidden;">
 		<div></div>
-		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
-		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
-		' . ($useFrame ? '</div>' : '') . '
-		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
-			<div class="article_info' . ($context['TPortal']['article']['frame'] == 'theme' ? '' : '') . '">
+		' . ($useheader ? '<div class="'. $divheader .'">' : '') . '
+		   <h3' . ($useheader ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
+		' . ($useheader ? '</div>' : '') . '
+		<div' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' class="' .$divbody. '" ' : '') . '>
+			<div class="article_info' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? '' : '') . '">
 			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
 				{article_author}
 				{article_category}
@@ -1218,10 +1218,10 @@ function article_renders($type = 1, $single = false, $first = false)
 			$code = '
 	<div style="margin-bottom: 5px; overflow: hidden;">
 		<div></div>
-		' . ($useFrame ? '<div class="'. $divheader .'">' : '') . '
-		   <h3' . ($useFrame ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
-		' . ($useFrame ? '</div>' : '') . '
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
+		' . ($useheader ? '<div class="'. $divheader .'">' : '') . '
+		   <h3' . ($useheader ? ' class="' . $headerstyle . '"' : ' class="article_title"') . '>{article_title} </h3>
+		' . ($useheader ? '</div>' : '') . '
+			<div' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 			' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1271,8 +1271,8 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_moreauthor}
 				</div>
 			</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . '
+			<div class="' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' windowbg2' : '') . '">{article_morelinks}</div>
+			<div class="' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' windowbg2' : '') . '">{article_comments}</div>' : '') . '
 		</div>
 	</div>';
 	}
@@ -1289,7 +1289,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="title_bar">
 				<h3 class="titlebg article_title" style="margin-left: 1em; border: none;">{article_title} </h3>
 			</div>
-			<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
+			<div' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info" style="border-bottom: solid 1px #ddd; margin-top: 2px;">
 				{article_author}
 				{article_category}
@@ -1302,15 +1302,15 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 			</div>
-			' . (($context['TPortal']['article']['frame'] == 'theme' && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
+			' . ((in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
 			' . ($single ? '
 			<div>
 				<div class="tp_container">
 					{article_bookmark}
 					{article_moreauthor}
 				</div>
-				<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_morelinks}</div>
-				<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg2' : '') . '">{article_comments}</div>
+				<div class="' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' windowbg2' : '') . '">{article_morelinks}</div>
+				<div class="' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' windowbg2' : '') . '">{article_comments}</div>
 			</div>' : '') . '
 		</div>
 		</div>
@@ -1327,7 +1327,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			<div class="cat_bar">
 				<h3 class="catbg">{article_title} </h3>
 			</div>
-		<div' . ($context['TPortal']['article']['frame'] == 'theme' ? ' class="' .$divbody. '" ' : '') . '>
+		<div' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 				{article_author}
@@ -1341,7 +1341,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 			</div>
-			' . (($context['TPortal']['article']['frame'] == 'theme' && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
+			' . ((in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
 			' . ($single ? '
 
 			<div class="tp_container">
@@ -1368,8 +1368,8 @@ function article_renders($type = 1, $single = false, $first = false)
 		<div class="' . $divheader . '">
 			<h3 class="article_title ' . $headerstyle . '">{article_shortdate} <strong>{article_title}</strong> </h3>
 		</div>
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? '' .$divbody. '' : '') . '">
-			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="topslice"><span></span></span>' : '') . '
+			<div class="' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? '' .$divbody. '' : '') . '">
+			' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? '<span class="topslice"><span></span></span>' : '') . '
 				<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
 					{article_author}
@@ -1391,7 +1391,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_morelinks}
 				{article_comments}' : '') . '
 			</div>
-			' . ($context['TPortal']['article']['frame'] == 'theme' ? '<span class="botslice"><span></span></span>' : '') . '
+			' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
 	</div>
 		';
@@ -1400,7 +1400,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		if(!$single)
 			$code = '
-		<div class="article_title' . ($context['TPortal']['article']['frame'] == 'theme' ? ' windowbg' : '') .'" style="margin: 0 0 3px 0; padding: 1em;">
+		<div class="article_title' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? ' windowbg' : '') .'" style="margin: 0 0 3px 0; padding: 1em;">
 			<div><strong style="font-size: 105%;">{article_title}</strong></div>
 			<div class="catlayout6_text">
 				{article_text}
@@ -1409,7 +1409,7 @@ function article_renders($type = 1, $single = false, $first = false)
 		else
 			$code = '
 		<div class="tborder">
-			<div class="' . ($context['TPortal']['article']['frame'] == 'theme' ? 'windowbg' : '') . '" style="margin: 12px 0 0 0; padding: 12px 16px;">
+			<div class="' . (in_array($context['TPortal']['article']['frame'], array('theme', 'frame')) ? 'windowbg' : '') . '" style="margin: 12px 0 0 0; padding: 12px 16px;">
 				<div class="cat_bar">
 					<h3 class="article_title catbg">{article_title}</h3>
 				</div>

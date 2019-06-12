@@ -1868,11 +1868,6 @@ function doTPfrontpage()
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 	
-	$sqlarray[] = 'actio=allpages';
-
-	// set the language access
-	$access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
-
 	// set the membergroup access
 	$mygroups = $user_info['groups'];
 	$access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $mygroups) . ', access))';
