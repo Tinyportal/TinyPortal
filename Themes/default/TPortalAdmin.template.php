@@ -2658,17 +2658,24 @@ function template_editarticle($type = '')
 							<br>
 							<dl class="settings">
 								<dt>
-									<label for="field_name">', $txt['tp-articleoptions1'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[1].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
 									<label for="field_name">', $txt['tp-articleoptions2'], '</label><br>
 								</dt>
 								<dd>
 									<input name="tp_article_options_'.$opts[2].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[2]]) ? 'checked' : '' , '>
 								</dd>
+								<dt>
+									<label for="field_name">', $txt['tp-articleoptions3'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[3].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[3]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
+									<label for="field_name">', $txt['tp-articleoptions1'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[1].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>
+								</dd>
+
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions12'], '</label><br>
 								</dt>
@@ -2680,12 +2687,6 @@ function template_editarticle($type = '')
 								</dt>
 								<dd>
 									<input name="tp_article_options_'.$opts[13].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="field_name">', $txt['tp-articleoptions3'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[3].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[3]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="field_name">', $txt['tp-articleoptions4'], '</label><br>
