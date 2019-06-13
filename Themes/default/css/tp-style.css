@@ -2009,7 +2009,7 @@ img.theme_icon
 	margin: 0 0 0 0 !important;
 }
 
-.tp_container .windowbg, .dl_container .windowbg 
+#centerContainer .windowbg, .dl_container .windowbg 
 {
 	margin-bottom: 6px !important;
 }

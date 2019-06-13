@@ -129,26 +129,32 @@ $txt['tp-article']='Article';
 $txt['tp-articleoff'] = 'Article is NOT active';
 $txt['tp-articleon'] = 'Article is active';
 $txt['tp-articleoptions'] = 'Viewing options:';
-$txt['tp-articleoptions1'] = 'Display date';
-$txt['tp-articleoptions10'] = 'Display top panel';
-$txt['tp-articleoptions11'] = 'Display lower panel';
-$txt['tp-articleoptions12'] = 'Display all articles in same category';
-$txt['tp-articleoptions13'] = 'Display links to other categories';
-$txt['tp-articleoptions14'] = 'Display comments underneath article';
-$txt['tp-articleoptions15'] = 'Allow to comment?';
-$txt['tp-articleoptions16'] = 'Do not collapse comments initially';
-$txt['tp-articleoptions17'] = 'Display number of views';
-$txt['tp-articleoptions18'] = 'Display ratings';
-$txt['tp-articleoptions19'] = 'Allow to rate?';
-$txt['tp-articleoptions20'] = 'Do not use SMF templates';
 $txt['tp-articleoptions2'] = 'Display title';
 $txt['tp-articleoptions3'] = 'Display author';
+$txt['tp-articleoptions1'] = 'Display date';
+$txt['tp-articleoptions17'] = 'Display number of views';
+
 $txt['tp-articleoptions4'] = 'Display linktree';
+$txt['tp-articleoptions12'] = 'Display all articles in same category';
+$txt['tp-articleoptions13'] = 'Display links to other categories';
+
+$txt['tp-articleoptions19'] = 'Allow to rate?';
+$txt['tp-articleoptions18'] = 'Display ratings';
+
+$txt['tp-articleoptions15'] = 'Allow to comment?';
+$txt['tp-articleoptions14'] = 'Display comments underneath article';
+$txt['tp-articleoptions16'] = 'Do not collapse comments initially';
+
 $txt['tp-articleoptions5'] = 'Display top';
-$txt['tp-articleoptions6'] = 'Display upper panel';
-$txt['tp-articleoptions7'] = 'Display right panel';
 $txt['tp-articleoptions8'] = 'Display left panel';
+$txt['tp-articleoptions7'] = 'Display right panel';
+$txt['tp-articleoptions10'] = 'Display top panel';
+$txt['tp-articleoptions6'] = 'Display upper panel';
+$txt['tp-articleoptions11'] = 'Display lower panel';
 $txt['tp-articleoptions9'] = 'Display bottom panel';
+
+$txt['tp-articleoptions20'] = 'Do not use SMF templates';
+
 $txt['tp-author']='Author';
 $txt['tp-catarray'] = ' Show when viewing this category listing';
 $txt['tp-catboxauthor'] = 'Show author?';
@@ -314,7 +320,7 @@ $txt['tp-blockcodes_overwrite'] = 'Overwrite?';
 $txt['tp-tpmodarray'] = ' Display inside this TP section';
 $txt['tp-notallowupshrink'] = 'Do not allow block to collapse';
 $txt['tp-text']='-text-';
-$txt['tp-useframe']='Use frame style from theme';
+$txt['tp-useframe']='Use frame and title style from theme';
 $txt['tp-useframe2']='Use frame style, but not title style';
 $txt['tp-noframe']='Do not use title/frame styles';
 $txt['tp-blockframehelp'] = 'Frame options';

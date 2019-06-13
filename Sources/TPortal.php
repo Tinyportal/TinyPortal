@@ -1646,30 +1646,15 @@ function doTPfrontpage() {{{
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
-    $sqlarray[] = 'actio=allpages';
-    $sqlarray[] = 'actio=frontpage';
-	
-	if($db_type == 'mysql') {
-        $access2 = '(FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2))';
-	}
-    else {
-        $access2 = '(';
-        foreach($sqlarray as $k => $v) {
-            $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
-        }
-        $access2 = rtrim($access2,' OR ');
-        $access2 .= ' )';
-    }
-
     if(!empty($context['TPortal']['uselangoption'])) { 
          $tmp = 'tlang=' . $user_info['language'];
 
         // set the language access
         if($db_type == 'mysql') {
-            $access2 .= ' AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
+            $access2 = ' AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
         }
         else {
-            $access2 .= " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+            $access2 = " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
         }
     }
 
@@ -1695,7 +1680,7 @@ function doTPfrontpage() {{{
 		WHERE off = 0
 		AND bar = 4
 		AND '. $access .'
-		AND '.$access2. '
+		'.$access2. '
 		ORDER BY pos,id ASC'
 	);
 
