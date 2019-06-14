@@ -1646,17 +1646,6 @@ function doTPfrontpage() {{{
 		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
 		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
 
-    if(!empty($context['TPortal']['uselangoption'])) { 
-         $tmp = 'tlang=' . $user_info['language'];
-
-        // set the language access
-        if($db_type == 'mysql') {
-            $access2 = ' AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
-        }
-        else {
-            $access2 = " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
-        }
-    }
 
 	// set the membergroup access
     $access = '';
@@ -1672,6 +1661,19 @@ function doTPfrontpage() {{{
 
     if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 		$access = '1=1';
+    }
+
+    $access2 = '';
+    if(!empty($context['TPortal']['uselangoption'])) { 
+         $tmp = 'tlang=' . $user_info['language'];
+
+        // set the language access
+        if($db_type == 'mysql') {
+            $access2 = ' AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
+        }
+        else {
+            $access2 = " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+        }
     }
 
 	// get the blocks

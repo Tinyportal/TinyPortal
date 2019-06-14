@@ -270,29 +270,6 @@ function getBlocks() {{{
 
 	$sqlarray[] = 'actio=allpages';
 
-	// set the location access
-    $access2 = '';
-    if($db_type == 'mysql') {
-        $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
-    }
-    else {
-        $access2 = '(';
-        foreach($sqlarray as $k => $v) {
-            $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
-        }
-        $access2 = rtrim($access2,' OR ');
-        $access2 .= ' )';
-    }
-	// set the language access
-	if(!empty($context['TPortal']['uselangoption'])) {
-        $tmp = 'tlang=' . $user_info['language'];
-        if($db_type == 'mysql') {
-            $access3 = ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
-        }
-        else {
-            $access3 .= " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
-        }
-    }
 	// set the membergroup access
     $access = '';
     if($db_type == 'mysql') {
@@ -307,6 +284,32 @@ function getBlocks() {{{
 
 	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 		$access = '1=1';
+    }
+
+	// set the location access
+    $access2 = '';
+    if($db_type == 'mysql') {
+        $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
+    }
+    else {
+        $access2 = '(';
+        foreach($sqlarray as $k => $v) {
+            $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
+        }
+        $access2 = rtrim($access2,' OR ');
+        $access2 .= ' )';
+    }
+
+    $access3 = '';
+	// set the language access
+	if(!empty($context['TPortal']['uselangoption'])) {
+        $tmp = 'tlang=' . $user_info['language'];
+        if($db_type == 'mysql') {
+            $access3 = ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
+        }
+        else {
+            $access3 = " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+        }
     }
 
 	// get the blocks
