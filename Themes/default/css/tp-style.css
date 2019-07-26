@@ -1838,7 +1838,7 @@ input,select
 	margin-right: 0.5em; 
 	margin-top: -1.5em;
 }
-.tp_upshrink21 {
+.tp_upshrink21, .navigate_section .tp_upshrink21 {
 	float: right; 
 	margin-top:6px; 
 	padding-left:10px;
