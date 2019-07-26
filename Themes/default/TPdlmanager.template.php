@@ -208,7 +208,7 @@ function template_main()
 
 		if($context['TPortal']['dl_showlatest'] ==0)
 			echo '
-			<script type="text/javascript"><!-- // --><![CDATA[
+			<script><!-- // --><![CDATA[
 			function dlshowtab( target )
 			{
 				document.getElementById(\'dlpop\').style.display= \'none\';
@@ -222,7 +222,7 @@ function template_main()
 		else
 			echo '
 
-			<script type="text/javascript"><!-- // --><![CDATA[
+			<script><!-- // --><![CDATA[
 			function dlshowtab( target )
 			{
 				document.getElementById(\'dlrecent\').style.display= \'none\';
@@ -254,7 +254,7 @@ function template_main()
 							{
 								$content .= '
 							<li>
-								<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" border="0" />
+								<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
 									<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
 								if($dlchild['files']>0)
 									$content .= ' (' . $dlchild['files'].')';
@@ -318,7 +318,7 @@ function template_main()
 				echo '
 					<div class="dlitemgrid">';
 				echo '
-					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
+					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
 				echo '<h4 class="h4dl" style="font-size: 1.1em; font-weight: bold;"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>';
 
 					unset($details);
@@ -380,7 +380,7 @@ function template_main()
 				<span class="topslice"><span></span></span>
 				<div class="content">';
 			echo '
-				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
+				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
 			echo '
 				<h4 class="h4dl">
 				<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
@@ -670,7 +670,7 @@ function template_main()
 			<span class="botslice"><span></span></span>
 		</div>
 	</div>
-	<script type="text/javascript">
+	<script>
 		function dlcheck(icon)
 		{
 			document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
@@ -902,7 +902,7 @@ function template_main()
 			echo '
 						</select>
 						<img align="top" style="margin-left: 2ex;" name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
-						<script type="text/javascript">
+						<script>
 						function dlcheck(icon)
 							{
 								document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
@@ -923,7 +923,7 @@ function template_main()
 				' , $cat['approved']=='0' ? '
 				<dl class="settings">
 					<dt>
-						<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  />
+						<img title="'.$txt['tp-approve'].'" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  />
 					</dt>
 					<dd>
 						<b>'.$txt['tp-dlnotapprovedyet'].'</b>

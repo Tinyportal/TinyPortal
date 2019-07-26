@@ -190,14 +190,14 @@ function TP_loadCSS()
 	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
 	$context['html_headers'] .= '<!--[if lt IE 9]>';
 	$context['html_headers'] .= '
-	<style type="text/css">
+	<style>
 		  body {min-width:900px;}
 	</style>
 	';
 	$context['html_headers'] .= '<![endif]-->';
 	$context['html_headers'] .= '<!--[if lt IE 7]>';
 	$context['html_headers'] .= '
-	<style type="text/css">
+	<style>
 	      #centerContainer {float: left;}
 		  body {width:900px;}
 	</style>
@@ -206,14 +206,14 @@ function TP_loadCSS()
 	// load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css'))
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';
+	<link rel="stylesheet" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';
 	else
 		$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />';
+	<link rel="stylesheet" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />';
 
 	if(!empty($context['TPortal']['padding']))
 		$context['html_headers'] .= '
-	<style type="text/css">
+	<style>
 		.block_leftcontainer,
 		.block_rightcontainer,
 		.block_topcontainer,
@@ -2730,7 +2730,7 @@ Also I belive the code below is meant to be the closing tag but because is befor
 
 	// the upshrink routine for blocks
 	// echo '</div>
-		echo '<script type="text/javascript"><!-- // --><![CDATA[
+		echo '<script><!-- // --><![CDATA[
 				function toggle( targetId )
 				{
 					var state = 0;
@@ -2772,7 +2772,7 @@ function tp_setupUpshrinks()
 
 	// the generic panel upshrink code
 	$context['html_headers'] .= '
-	  <script type="text/javascript"><!-- // --><![CDATA[
+	  <script><!-- // --><![CDATA[
 		' . (count($context['tp_panels']) > 0 ? '
 		var tpPanels = new Array(\'' . (implode("','",$context['tp_panels'])) . '\');' : '
 		var tpPanels = new Array();') . '

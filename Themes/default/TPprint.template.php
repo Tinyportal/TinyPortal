@@ -24,7 +24,7 @@ function template_tp_print_above()
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
 		<title>', $txt['print_page'], ' - ', $context['page_title'] , '</title>
-		<style type="text/css">
+		<style>
 			body
 			{
 				color: black;
@@ -82,10 +82,10 @@ function template_tp_print_above()
 		Standards compliance mode happens when you use xhtml... */
 	if ($context['browser']['needs_size_fix'])
 		echo '
-		<link rel="stylesheet" type="text/css" href="', $settings['default_theme_url'], '/fonts-compat.css" />';
+		<link rel="stylesheet" href="', $settings['default_theme_url'], '/fonts-compat.css" />';
 	echo '
-		<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />
-		<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';
+		<link rel="stylesheet" href="' . $settings['default_theme_url'] . '/css/tp-style.css?fin160" />
+		<link rel="stylesheet" href="' . $settings['theme_url'] . '/css/tp-style.css?fin160" />';
 
 	echo '
 	</head>
@@ -105,7 +105,7 @@ function template_tp_print_below()
 
 	echo '
 			<br><br>
-			<div align="center" class="smalltext">', theme_copyright(), '
+			<div class="tpcenter smalltext">', theme_copyright(), '
 				<p>' , $context['TPortal']['print'] , '</p>
 			</div>
 	</body>

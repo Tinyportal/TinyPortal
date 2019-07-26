@@ -734,8 +734,8 @@ function do_blocks()
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
 
 	$context['html_headers'] .= '
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin20"></script>
-	<script type="text/javascript"><!-- // --><![CDATA[
+	<script src="'. $settings['default_theme_url']. '/scripts/editor.js?fin20"></script>
+	<script><!-- // --><![CDATA[
 		function getXMLHttpRequest()
 		{
 			if (window.XMLHttpRequest)
@@ -1291,7 +1291,7 @@ function do_articles()
 				// get membergroups
 				get_grps();
 			$context['html_headers'] .= '
-			<script type="text/javascript"><!-- // --><![CDATA[
+			<script><!-- // --><![CDATA[
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name;
@@ -1470,7 +1470,7 @@ function do_articles()
 			'pub_end' => 0,
         );
 		$context['html_headers'] .= '
-			<script type="text/javascript"><!-- // --><![CDATA[
+			<script><!-- // --><![CDATA[
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name;
@@ -1634,7 +1634,7 @@ function do_articles()
 			$context['TPortal']['editorchoice'] = 1;
 
 		$context['html_headers'] .= '
-			<script type="text/javascript"><!-- // --><![CDATA[
+			<script><!-- // --><![CDATA[
 				function changeIllu(node,name)
 				{
 					node.src = \'' . $boardurl . '/tp-files/tp-articles/illustrations/\' + name;
@@ -1776,8 +1776,8 @@ function do_articles()
     }
 
 	$context['html_headers'] .= '
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
-	<script type="text/javascript"><!-- // --><![CDATA[
+	<script src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>
+	<script><!-- // --><![CDATA[
 		function getXMLHttpRequest()
 		{
 			if (window.XMLHttpRequest)

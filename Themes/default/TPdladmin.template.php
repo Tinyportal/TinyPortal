@@ -51,10 +51,10 @@ $clickme.click( function(e) {
 				<div class="catbg3">
 					<div class="float-items pos" style="width:10%;"><strong>'.$txt['tp-pos'].'</strong></div>
 					<div class="float-items name" style="width:30%;"><strong>'.$txt['tp-dlname'].'</strong></div>
-					<div class="float-items title-admin-area" style="width:15%;" align="center"><strong>'.$txt['tp-dlicon'].'</strong></div>
-					<div class="float-items title-admin-area" style="width:15%;" align="center"><strong>'.$txt['tp-dlfiles'].'</strong></div>
-					<div class="float-items title-admin-area" style="width:15%;" align="center"><strong>'.$txt['tp-dlsubmitted'].'</strong></div>
-					<div class="float-items title-admin-area" style="width:15%;" align="center"><strong>'.$txt['tp-dledit'].'</strong></div>
+					<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlicon'].'</strong></div>
+					<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlfiles'].'</strong></div>
+					<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlsubmitted'].'</strong></div>
+					<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dledit'].'</strong></div>
 					<p class="clearthefloat"></p>
 				</div>
 			</th>
@@ -75,27 +75,27 @@ $clickme.click( function(e) {
 					  <input name="tp_dlcatpos'.$cat['id'].'" size="2" type="text" value="'.$cat['pos'].'">
 					</div>
 					<div class="adm-name float-items" style="width:30%;">
-					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top" border="0" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top"   style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<a href="" class="clickme">'.$txt['tp-more'].'</a>
 					<div class="box" style="width:60%;float:left;">
-						<div class="smalltext fullwidth-on-res-layout float-items" style="width:25%;" align="center">
+						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%">
 							<div id="show-on-respnsive-layout"><strong>'.$txt['tp-dlicon'].'</strong></div>
 							', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 						</div>
-						<div class="fullwidth-on-res-layout float-items" style="width:25%;" align="center">
+						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%">
 							<div id="show-on-respnsive-layout"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
 							'.$cat['items'].'
 						</div>
-						<div class="fullwidth-on-res-layout float-items" style="width:25%;" align="center">
+						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%">
 							<div id="show-on-respnsive-layout"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
 							'.$cat['submitted'].'
 						</div>
-						<div class="smalltext fullwidth-on-res-layout float-items" style="width:25%;" align="center">
+						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
 							<div id="show-on-respnsive-layout" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
 							<a href="',$scripturl, '?action=tpmod;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
-							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
+							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'"   src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
+							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete"   src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
@@ -297,10 +297,10 @@ $clickme.click( function(e) {
 			<th scope="col" class="articles">
 			<div class="catbg3">
 				<div style="width:30%;" class="float-items pos"><strong>'.$txt['tp-dlname'].' / '.$txt['tp-pos'].'</strong></div>
-				<div style="width:10%;" class="float-items title-admin-area" align="center"><strong>'.$txt['tp-dlicon'].'</strong></div>
-				<div style="width:20%;" class="float-items title-admin-area" align="center"><strong>'.$txt['tp-dlviews'].'</strong></div>
+				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlicon'].'</strong></div>
+				<div style="width:20%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlviews'].'</strong></div>
 				<div style="width:30%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfile'].'</strong></div>
-				<div style="width:10%;" class="float-items title-admin-area" align="center"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
+				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
 				<p class="clearthefloat"></p>
 			</div>
 			</th>
@@ -322,23 +322,23 @@ $clickme.click( function(e) {
 						<input type="hidden" name="admineditcatval" value="'.$cat['parent'].'" />
 					</div>
 					<div style="width:75%;" class="float-items">
-						<img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top" border="0" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+						<img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top"   style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<p class="clearthefloat"></p>
 			    </div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			<div class="box" style="width:70%;float:left;">				
-			    <div style="width:14.5%;" class="fullwidth-on-res-layout float-items" align="center">
+			    <div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div id="show-on-respnsive-layout">'.$txt['tp-dlicon'].'</div>
 					', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 			    </div>
 			    <div style="width:29%;" class="fullwidth-on-res-layout float-items">
 					<div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
 					<div id="size-on-respnsive-layout">
-						<div style="width:48%;" class="float-items" align="center">
+						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['items'].'
 					</div>
-					<div style="width:48%;" class="float-items" align="center">
+					<div style="width:48%;" class="float-items tpcenter">
 					'.$cat['submitted'].'
 					</div>
 					<p class="clearthefloat"></p>
@@ -347,8 +347,8 @@ $clickme.click( function(e) {
 			<div style="width:56.5%;" class="fullwidth-on-res-layout float-items">
 				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
 				<a href="',$scripturl, '?action=tpmod;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
-				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" border="0" src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
+				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'"   src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
+				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete"   src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
 			</div><p class="clearthefloat"></p>
 		</div>
 		</td>
@@ -370,17 +370,17 @@ $clickme.click( function(e) {
 				</div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			<div class="box" style="width:70%;float:left;">				
-				<div style="width:14.5%;" class="fullwidth-on-res-layout float-items" align="center">
+				<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div id="show-on-respnsive-layout">'.$txt['tp-dlicon'].'</div>
 				   ', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 				</div>
 			    <div class="fullwidth-on-res-layout float-items" style="width:29%;">
 					<div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
 					<div id="size-on-respnsive-layout">
-						<div style="width:48%;" class="float-items" align="center">
+						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['views'].'
 						</div>
-						<div style="width:48%;" class="float-items" align="center">
+						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['downloads'].'
 						</div>
 						<p class="clearthefloat"></p>
@@ -397,7 +397,7 @@ $clickme.click( function(e) {
 					<p class="clearthefloat"></p>
 				</div>
 			</div>
-			<div style="width:14.5%;" class="fullwidth-on-res-layout float-items" align="center">
+			<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 				<div id="show-on-respnsive-layout">'.$txt['tp-dlfilesize'].'</div>
 				'. $cat['filesize'].'kb
 			</div>
@@ -548,7 +548,7 @@ $clickme.click( function(e) {
 				echo '
 						</select>
 						<img align="top" style="margin-left: 2ex;" name="dlicon" src="'.$cat['icon'].'" alt="" />
-					<script type="text/javascript">
+					<script>
 					function dlcheck(icon)
 						{
 							document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
@@ -579,7 +579,7 @@ $clickme.click( function(e) {
 					<dt><b> '.$txt['tp-dlapprove'].'</b>
 					</dt>
 					<dd>
-						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
+						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'"   src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
 					</dd>
 				</dl>' : '' , '
 				<hr>
@@ -656,7 +656,7 @@ $clickme.click( function(e) {
 							<div class="title-admin-area float-items" style="width:20%;"><strong>'.$txt['tp-dlfilename'].'</strong></div>
 							<div class="title-admin-area float-items" style="width:20%;"><strong>'.$txt['tp-created'].'</strong></div>
 							<div class="title-admin-area float-items" style="width:20%;"><strong>'.$txt['tp-uploadedby'].'</strong></div>
-							<div class="title-admin-area float-items" style="width:10%;" align="center"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
+							<div class="title-admin-area float-items tpcenter" style="width:10%;"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
 							<p class="clearthefloat"></p>
 						</div>
 					</th>
@@ -684,7 +684,7 @@ $clickme.click( function(e) {
 							<div id="show-on-respnsive-layout">'.$txt['tp-uploadedby'].'</div>
 							'.$cat['author'].'
 						</div>
-						<div class="fullwidth-on-res-layout  float-items" style="width:10%;" align="center">
+						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:10%;">
 							<div id="show-on-respnsive-layout">'.$txt['tp-dlfilesize'].'</div>
 							'. $cat['filesize'].'kb
 						</div>
@@ -803,7 +803,7 @@ $clickme.click( function(e) {
 				echo '
 				</select>
 				<br><br><img name="dlicon" src="'.$cat['icon'].'" alt="" />
-				<script type="text/javascript">
+				<script>
 					function dlcheck(icon)
 					{
 						document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
@@ -916,7 +916,7 @@ $clickme.click( function(e) {
 		echo '
 					</select>
 					<br><br><img name="dlicon" src="'.$boardurl.'/tp-downloads/icons/blank.gif" alt="" />
-				<script type="text/javascript">
+				<script>
 					function dlcheck(icon)
 					{
 						document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
