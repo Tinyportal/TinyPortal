@@ -1250,6 +1250,10 @@ div.slider div.knob {
 	border: solid 1px white;
 	cursor: pointer;
 }
+.tpcenter
+{
+	text-align: center;
+}
 .tptabs
 {
 	margin: 0;
@@ -1873,7 +1877,10 @@ box-sizing:border-box;
    max-height: 200px;
    overflow: auto;
  }
-
+.youtubecontainer iframe
+{
+	border-style: none;
+}
 /************* TP ADMIN STYLES ********************/
 
 .addborder

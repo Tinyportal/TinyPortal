@@ -42,7 +42,7 @@ foreach($what as $w)
 	if(!$w['new'])
 	{
 	if (strstr($forum_version, '2.0'))
-		echo '<a href="'.$w['href'].'"><img border="0" src="'.$settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
+		echo '<a href="'.$w['href'].'"><img src="'.$settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
 	else
 		echo '<a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
 	}

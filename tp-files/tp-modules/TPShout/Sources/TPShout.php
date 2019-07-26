@@ -37,7 +37,7 @@ if($context['TPortal']['hidebars_admin_only']=='1' && isset($in_admin))
 
 // bbc code for shoutbox
 $context['html_headers'] .= '
-	<script type="text/javascript"><!-- // --><![CDATA[
+	<script><!-- // --><![CDATA[
 		var tp_images_url = "' .$settings['tp_images_url'] . '";
 		var tp_session_id = "' . $context['session_id'] . '";
 		var tp_session_var = "' . $context['session_var'] . '";
@@ -56,25 +56,25 @@ else
 $context['html_headers'] .= '
 	// ]]></script>
 
-	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/TPShout.js?11"></script>';
+	<script src="'. $settings['default_theme_url']. '/scripts/TPShout.js?11"></script>';
 
 if(!empty($context['TPortal']['shoutbox_refresh']))
 	$context['html_headers'] .= '
-	<script type="text/javascript"><!-- // --><![CDATA[
+	<script><!-- // --><![CDATA[
 		window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
 	// ]]></script>';
 
 if(file_exists($settings['theme_dir'].'/css/TPShout.css'))
 	$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
+	<link rel="stylesheet" href="'. $settings['theme_url']. '/css/TPShout.css?fin160" />';
 else
 	$context['html_headers'] .= '
-	<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
+	<link rel="stylesheet" href="'. $settings['default_theme_url']. '/css/TPShout.css?fin160" />';
 
 if($context['TPortal']['shoutbox_usescroll'] > 0)
 	$context['html_headers'] .= '
-	<script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
-	<script type="text/javascript">
+	<script src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+	<script>
 		$j(document).ready(function(){
 			$j("marquee").marquee("tp_marquee").mouseover(function () {
 					$j(this).trigger("stop");
@@ -86,7 +86,7 @@ if($context['TPortal']['shoutbox_usescroll'] > 0)
 if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 	if($context['TPortal']['shout_submit_returnkey'] == 1) {
 		$context['html_headers'] .= '
-		<script type="text/javascript"><!-- // --><![CDATA[
+		<script><!-- // --><![CDATA[
 			$(document).ready(function() {
 				$("#tp_shout").keypress(function(event) {
 					if(event.which == 13 && !event.shiftKey)
@@ -96,7 +96,7 @@ if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 		// ]]></script>';
 	} else if($context['TPortal']['shout_submit_returnkey'] == 2) {
 		$context['html_headers'] .= '
-		<script type="text/javascript"><!-- // --><![CDATA[
+		<script><!-- // --><![CDATA[
 		$(document).ready(function() {
 			$("#tp_shout").keydown(function (event) {
 				if((event.metaKey || event.ctrlKey) &&  event.keyCode == 13) {
@@ -668,7 +668,7 @@ function shout_bcc_code($collapse = true)
 	loadLanguage('Post');
 
 	echo '
-	<script type="text/javascript"><!-- // --><![CDATA[
+	<script><!-- // --><![CDATA[
 		function tp_bbc_highlight(something, mode)
 		{
 			something.style.backgroundImage = "url(" + smf_images_url + (mode ? "/bbc/bbc_hoverbg.gif)" : "/bbc/bbc_bg.gif)");

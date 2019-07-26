@@ -75,7 +75,7 @@ function install_mod ()
 	if (isset($_GET['action']))
 		$context['uninstalling'] = $_GET['action'] == 'uninstall' ? true : false;
 	$context['html_headers'] .= '
-	<style type="text/css">
+	<style>
     .buttonlist ul {
       margin:0 auto;
 			display:table;

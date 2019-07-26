@@ -36,7 +36,7 @@ function TPdlmanager_init()
 		$context['TPortal']['not_forum'] = true;
 
 		$context['html_headers'] .= '
-			<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
+			<script src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
 
 		// see if its admin section
 		if(substr($context['TPortal']['dlsub'], 0, 5) == 'admin' || $context['TPortal']['dlsub']=='submission')

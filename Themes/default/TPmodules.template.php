@@ -284,7 +284,7 @@ function template_main()
 
 			echo '
 				<div class="windowbg">
-					<div align="center" style="padding:1%;"><input type="submit" value="'.$txt['tp-send'].'" name="send"></div>
+					<div class="tpcenter" style="padding:1%;><input type="submit" value="'.$txt['tp-send'].'" name="send"></div>
 				</div>
 			</div>
 		</form>';
@@ -330,10 +330,10 @@ function template_main()
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="comments">
 					<div style="word-break:break-all;">
-						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
-						<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
-						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
-						<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+						<div class="float-items" style="width:30%; text-align:left">' . $txt['tp-article'] . '</div>
+						<div class="float-items" style="width:15%; text-align:left">' . $txt['tp-author'] . '</div>
+						<div class="float-items" style="width:30%; text-align:left">' . $txt['tp-comments'] . '</div>
+						<div class="float-items" style="width:25%; text-align:left">' . $txt['by'] . '</div>
 						<p class="clearthefloat"></p>
 					</div>
 					</th>
@@ -365,7 +365,7 @@ function template_main()
 			echo '
 			<tr class="windowbg">
 			<td class="shouts">
-				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
+				<div style="padding:1%; text-align:right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
 			</td>
 			</tr>';
 
@@ -387,10 +387,10 @@ function template_main()
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="comments">
 			<div>
-				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
-				<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
-				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
-				<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+				<div class="float-items" style="width:30%; text-align:left">' . $txt['tp-article'] . '</div>
+				<div class="float-items" style="width:15%; text-align:left">' . $txt['tp-author'] . '</div>
+				<div class="float-items" style="width:30%; text-align:left">' . $txt['tp-comments'] . '</div>
+				<div class="float-items" style="width:25%; text-align:left">' . $txt['by'] . '</div>
 				<p class="clearthefloat"></p>
 			</div>
 				</th>
@@ -428,7 +428,7 @@ function template_main()
 			echo '
 			<tr class="windowbg">
 			<td class="comments">
-				<div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>
+				<div style="padding:1%; text-align:right"><a href="' . $scripturl . '?action=tpmod;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>
 			</td>
 			</tr>';
 			echo '
@@ -498,7 +498,7 @@ function template_main()
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="myarticles">
 				<div class="font-strong" style="padding:0px;">
-					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tpmod;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
+					<div class="float-items title-admin-area tpcenter">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tpmod;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
 				</div>
 			</th>
 			</tr>

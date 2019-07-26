@@ -795,9 +795,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 	{
 		loadtemplate($template);
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" href="'. $settings['theme_url']. '/'. $template. '.css?fin160" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin160" />';
 
 		if( loadLanguage('TPortalAdmin') == false)
 			loadlangauge('TPortalAdmin', 'english');
@@ -815,9 +815,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 			loadLanguage($template, 'english');
 
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" href="'. $settings['theme_url']. '/'. $template. '.css?fin160" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin160" />';
 
 		$context['template_layers'][] = $layer;
 		$context['sub_template'] = $subtemplate;
@@ -869,7 +869,7 @@ function tp_renderbbc($message)
 
 	echo '
 			<tr>
-				<td valign="middle" colspan="2" class="windowbg2">';
+				<td colspan="2" class="windowbg2">';
 
 		echo '
 				</td>
@@ -948,7 +948,7 @@ function TPwysiwyg_setup()
 		</style>';
 
 	$context['html_headers'] .= '
-		<script type="text/javascript"><!-- // --><![CDATA[
+		<script><!-- // --><![CDATA[
 			sceditor.command.set(\'floatleft\', {
 				exec: function() {
 					// this is set to the editor instance
@@ -970,13 +970,13 @@ function TPwysiwyg_setup()
 				exec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+						editor.insert(\'<div class="youtubecontainer"><iframe allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
 					});
 				},
 				txtExec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+						editor.insert(\'<div class="youtubecontainer"><iframe allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
 					});
 				},
 			});
@@ -984,7 +984,7 @@ function TPwysiwyg_setup()
 	if($context['TPortal']['use_dragdrop']) {
 		$context['html_headers'] .= '
 			<script src="'.$boardurl.'/tp-files/tp-plugins/javascript/sceditor/minified/plugins/dragdrop.js"></script>
-			<script type="text/javascript"><!-- // --><![CDATA[
+			<script><!-- // --><![CDATA[
 			function detectIE() {
 				var ua = window.navigator.userAgent;
 
@@ -1046,7 +1046,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
 
 	if($context['TPortal']['use_dragdrop']) {
-		echo '<script type="text/javascript"><!-- // --><![CDATA[
+		echo '<script><!-- // --><![CDATA[
 			function tpImageUpload(file) {
 				var form = new FormData();
 				form.append(\'image\', file);
@@ -1085,7 +1085,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			// ]]></script>';
 	}
 
-	echo '	<script type="text/javascript"><!-- // --><![CDATA[
+	echo '	<script><!-- // --><![CDATA[
 			var textarea = document.getElementById(\''.$textarea.'\');
 			sceditor.create(textarea, {';
 		if($context['TPortal']['use_dragdrop']) {
@@ -1134,7 +1134,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  border="none" alt="" />';
+				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '" alt="" />';
 		}
 		echo '
 		</div>
