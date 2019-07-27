@@ -23,8 +23,7 @@ IchBin
 global $smcFunc, $scripturl, $modSettings, $settings, $txt;
 
 // Height and width of avatar
-$width = '40px';
-$height = '100%';
+$width = '40';
 // Number of top posters displayed
 $topPoster = 8;
 
@@ -51,7 +50,7 @@ $topPoster = 8;
 			'posts' => $row['posts'],
 			'show' => $row['show_online'],
 			'avatar' => array(
-	    		'image' => empty($row['avatar']) ? ($row['id_attach'] > 0 ? 'src="' . (empty($row['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" width="'.$width.'" height="'.$height.'" title="'.$row['real_name'].'" />' : '') : (stristr($row['avatar'], 'http://') ? 'src="' . $row['avatar'] . '" alt="" width="'.$width.'" height="'.$height.'" title="'.$row['real_name'].'" />' : 'src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="" width="'.$width.'" height="'.$height.'" title="'.$row['real_name'].'" />'),
+	    		'image' => empty($row['avatar']) ? ($row['id_attach'] > 0 ? 'src="' . (empty($row['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) . '" alt="" width="'.$width.'"  title="'.$row['real_name'].'" />' : '') : (stristr($row['avatar'], 'http://') ? 'src="' . $row['avatar'] . '" alt="" width="'.$width.'"  title="'.$row['real_name'].'" />' : 'src="' . $modSettings['avatar_url'] . '/' . htmlspecialchars($row['avatar']) . '" alt="" width="'.$width.'" title="'.$row['real_name'].'" />'),
 	    	),
 		);
 	}

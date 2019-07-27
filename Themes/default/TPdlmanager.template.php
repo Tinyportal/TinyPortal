@@ -567,7 +567,7 @@ function template_main()
 
 		echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dluploadpic'].'
@@ -901,7 +901,7 @@ function template_main()
 
 			echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
 						<script>
 						function dlcheck(icon)
 							{
