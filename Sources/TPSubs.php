@@ -1043,7 +1043,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 	echo '
 	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . ';" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
 
 	if($context['TPortal']['use_dragdrop']) {
 		echo '<script><!-- // --><![CDATA[
