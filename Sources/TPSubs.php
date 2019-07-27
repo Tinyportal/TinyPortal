@@ -677,7 +677,7 @@ function tp_renderbbc($message)
 
 	echo '
 			<tr>
-				<td valign="middle" colspan="2" class="windowbg2">';
+				<td class="windowbg2" colspan="2">';
 
 		echo '
 				</td>
@@ -778,13 +778,13 @@ function TPwysiwyg_setup()
 				exec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+						editor.insert(\'<div class="youtubecontainer"><iframe allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
 					});
 				},
 				txtExec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+						editor.insert(\'<div class="youtubecontainer"><iframe allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
 					});
 				},
 			});
@@ -942,7 +942,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-files/tp-images/', substr($im,6) , '"  border="none" alt="" />';
+				echo '<img src="'.$boardurl.'/tp-files/tp-images/', substr($im,6) , '"  alt="" />';
 		}
 		echo '
 		</div>

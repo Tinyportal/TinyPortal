@@ -75,7 +75,7 @@ $clickme.click( function(e) {
 					  <input name="tp_dlcatpos'.$cat['id'].'" size="2" type="text" value="'.$cat['pos'].'">
 					</div>
 					<div class="adm-name float-items" style="width:30%;">
-					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top" border="0" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<a href="" class="clickme">'.$txt['tp-more'].'</a>
 					<div class="box" style="width:60%;float:left;">
@@ -94,8 +94,8 @@ $clickme.click( function(e) {
 						<div class="smalltext fullwidth-on-res-layout float-items" style="width:25%;" align="center">
 							<div id="show-on-respnsive-layout" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
 							<a href="',$scripturl, '?action=tportal;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
-							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
+							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
+							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
@@ -327,7 +327,7 @@ $clickme.click( function(e) {
 						<input type="hidden" name="admineditcatval" value="'.$cat['parent'].'" />
 					</div>
 					<div style="width:75%;" class="float-items">
-						<img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top" border="0" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+						<img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top" style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<p class="clearthefloat"></p>
 			    </div>
@@ -352,8 +352,8 @@ $clickme.click( function(e) {
 			<div style="width:56.5%;" class="fullwidth-on-res-layout float-items">
 				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
 				<a href="',$scripturl, '?action=tportal;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
-				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" border="0" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" border="0" src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
+				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
+				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete" src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
 			</div><p class="clearthefloat"></p>
 		</div>
 		</td>
@@ -584,7 +584,7 @@ $clickme.click( function(e) {
 					<dt><b> '.$txt['tp-dlapprove'].'</b>
 					</dt>
 					<dd>
-						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
+						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
 					</dd>
 				</dl>' : '' , '
 				<hr>

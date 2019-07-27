@@ -115,7 +115,7 @@ function template_tp_articles()
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:4%;">
 						<div id="show-on-respnsive-layout">'.$txt['tp-edit'].'</div>
-						', allowedTo('tp_editownarticle') ? '<a href="'. $art['editlink'] .'"><img border="0" src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
+						', allowedTo('tp_editownarticle') ? '<a href="'. $art['editlink'] .'"><img src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
 					</div><p class="clearthefloat"></p></div><p class="clearthefloat"></p>
 			</td>
 			</tr>';
@@ -245,7 +245,7 @@ function template_tp_download()
                        </div>
                        <div style="width:6%;" class="fullwidth-on-res-layout float-items" align="center">
                         <div id="show-on-respnsive-layout">'. $txt['tp-edit'] .'</div>
-                         ' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
+                         ' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
                        </div>
                        <p class="clearthefloat"></p>
                     </div>

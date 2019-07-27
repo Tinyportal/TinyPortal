@@ -485,7 +485,7 @@ function template_tpshout_profile()
 					<td class="shouts">
 						<div align="left" class="smalltext float-items" style="width:30%;" >',$art['created'],'</div>
 						<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
-						<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
+						<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
 					</td>
 					</tr>';
 			}
