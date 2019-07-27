@@ -133,7 +133,7 @@ function template_blockoverview()
 				{
 					echo '
 				<div class="tp_col8">
-					<p><a href="' . $scripturl . '?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</a></b> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
+					<p><a href="' . $scripturl . '?action=tpadmin;blockedit='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
 					<hr /><br><div id="tp'.$block['id'].'" style="overflow: hidden;">
 						<input type="hidden" value="control" name="' . rand(10000,19999) .'tpblock'.$block['id'].'" />';
 
@@ -655,7 +655,7 @@ function template_menucore()
 		<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
-                            <label for="tp_title"><b>'.$txt['tp-title'].':</b><label>
+                            <label for="tp_title"><b>'.$txt['tp-title'].':</b></label>
 						</dt>
 						<dd>
                             <input name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
@@ -663,7 +663,7 @@ function template_menucore()
 					</dl>
 					
 					<dl class="settings">
-						<dt><label for="tp_menu_name"><b>'.$txt['tp-type'].':</b><label></dt>
+						<dt><label for="tp_menu_name"><b>'.$txt['tp-type'].':</b></label></dt>
                         <dd>
                         <select size="1" name="tp_menu_type" id="tp_menu_type">
                             <option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
@@ -693,7 +693,7 @@ function template_menucore()
 					<hr>
 					<dl class="settings">
 						<dt>
-                            <label for="tp_item"><b>'.$txt['tp-item'].':</b><label>
+                            <label for="tp_item"><b>'.$txt['tp-item'].':</b></label>
 						</dt>
 					<dd>';
 		// (category)
@@ -722,7 +722,7 @@ function template_menucore()
 		echo '  </select>
                     <input "size="40" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 					</dd>
-						<dt><label for="tp_menu_newlink"><b>'.$txt['tp-windowmenu'].'?</b><label>
+						<dt><label for="tp_menu_newlink"><b>'.$txt['tp-windowmenu'].'?</b></label>
                         <dd>
                         <select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
                             <option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
@@ -730,7 +730,7 @@ function template_menucore()
                         </select>
 						</dd>
 						<dt>
-                            <label for="tp_menu_sub"><b>'.$txt['tp-sub_item'].':</b><label>
+                            <label for="tp_menu_sub"><b>'.$txt['tp-sub_item'].':</b></label>
                         </dt>
                         <dd>
                         <select size="1" name="tp_menu_sub" id="tp_menu_sub">
@@ -741,7 +741,7 @@ function template_menucore()
                         </select>
 						</dd>
                         <dt>
-                            <label for="tp_menu_position"><b>'.$txt['tp-menu-after'].':</b><label>
+                            <label for="tp_menu_position"><b>'.$txt['tp-menu-after'].':</b></label>
                         </dt>
                         <dd>
                         <select size="1" name="tp_menu_position" id="tp_menu_position">';
@@ -940,21 +940,21 @@ function template_panels()
 							<input name="tp_hidebars_calendar" type="radio" value="1" ' , $context['TPortal']['hidebars_calendar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hidebars_calendar" type="radio" value="0" ' , $context['TPortal']['hidebars_calendar']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
-					<dl class="settings">
 					</dl>
+					<dl class="settings">
 						<dt>
 							<label for="field_name">', $txt['tp-hidebarscustom'], '</label>
 						</dt>
 						<dd>
 							<textarea cols="40" style="width: 94%; height: 100px;" name="tp_hidebars_custom">' . $context['TPortal']['hidebars_custom'].'</textarea>
 						</dd>
-					<dl class="settings">
 					</dl>
+					<dl class="settings">
 						<dt>
 							<label for="field_name">', $txt['tp-padding_between'], '</label>
 						</dt>
 						<dd>
-							<input name="tp_padding" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['padding'], '">
+							<input name="tp_padding" size="5" maxlength="5" type="text" value="' ,$context['TPortal']['padding'], '">
 							<span class="smalltext">'.$txt['tp-inpixels'].'</span>
 						</dd>
 					</dl>
@@ -1000,7 +1000,7 @@ function template_panels()
 									<span class="normaltext">'.$txt['tp-panelwidth'].':</span>
 								</dt>
 								<dd>
-									<input name="tp_'.$panl.'bar_width" size="5" maxsize="5" type="text" value="' , $context['TPortal'][$panl. 'bar_width'] , '"><br>
+									<input name="tp_'.$panl.'bar_width" size="5" maxlength="5" type="text" value="' , $context['TPortal'][$panl. 'bar_width'] , '"><br>
 								</dd>';
 				echo '
 								<dt>
@@ -1033,13 +1033,13 @@ function template_panels()
 									<span class="middletext">'.$txt['tp-blockwidth'].':</span>
 								</dt>
 								<dd>
-									<input name="tp_blockwidth_'.$panl.'" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['blockwidth_'.$panl], '"><br>
+									<input name="tp_blockwidth_'.$panl.'" size="5" maxlength="5" type="text" value="' ,$context['TPortal']['blockwidth_'.$panl], '"><br>
 								</dd>
 								<dt>
 									<span class="middletext">'.$txt['tp-blockheight'].':</span>
 								</dt>
 								<dd>
-									<input name="tp_blockheight_'.$panl.'" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['blockheight_'.$panl], '">
+									<input name="tp_blockheight_'.$panl.'" size="5" maxlength="5" type="text" value="' ,$context['TPortal']['blockheight_'.$panl], '">
 								</dd>
 							</dl>
 							<div>'.$txt['tp-panelstylehelp'].'<br>
@@ -1518,7 +1518,7 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-numberofposts'], '</label>
 						</dt>
 						<dd>
-						  <input name="tp_frontpage_limit" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['frontpage_limit'], '"><br><br>
+						  <input name="tp_frontpage_limit" size="5" maxlength="5" type="text" value="' ,$context['TPortal']['frontpage_limit'], '"><br><br>
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-sortingoptions'], '</label>
@@ -1602,7 +1602,7 @@ function template_frontpage()
 							<label for="field_name">', $txt['tp-lengthofposts'], '</label>
 						</dt>
 						<dd>
-						  <input name="tp_frontpage_limit_len" size="5" maxsize="5" type="text" value="' ,$context['TPortal']['frontpage_limit_len'], '"><br><br>
+						  <input name="tp_frontpage_limit_len" size="5" maxlength="5" type="text" value="' ,$context['TPortal']['frontpage_limit_len'], '"><br><br>
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-forumposts_avatar'], '</label>
@@ -2368,7 +2368,7 @@ function template_editarticle($type = '')
 					</dt>
 					<dd>
 							<b><a href="' . $scripturl . '?action=profile;u='.$mg['authorID'].'" target="_blank">'.$mg['realName'].'</a></b>
-							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxsize="12" name="tp_article_authorid" value="' . $mg['authorID'] . '" /><br><br>
+							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" value="' . $mg['authorID'] . '" /><br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-created'], '</label>
@@ -3788,7 +3788,7 @@ function template_blocks()
 					<td class="blocks">
 					<div id="blocksDiv">
 						<div style="width:10%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
-							<input name="pos' .$lblock['id']. '" type="text" size="1em" maxlength="3" value="' .($n*10). '">
+							<input name="pos' .$lblock['id']. '" type="text" size="3" maxlength="3" value="' .($n*10). '">
 							<a name="block' .$lblock['id']. '"></a>';
 					echo '
 						    <a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.png" value="' .(($n*10)+11). '" /></a>';

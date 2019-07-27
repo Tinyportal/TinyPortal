@@ -75,7 +75,7 @@ $clickme.click( function(e) {
 					  <input name="tp_dlcatpos'.$cat['id'].'" size="2" type="text" value="'.$cat['pos'].'">
 					</div>
 					<div class="adm-name float-items" style="width:30%;">
-					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top"   style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" style="margin: 0;vertical-align:top" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<a href="" class="clickme">'.$txt['tp-more'].'</a>
 					<div class="box" style="width:60%;float:left;">
@@ -156,12 +156,12 @@ $clickme.click( function(e) {
 					<dt>'.$txt['tp-dlscreenshotsize1'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_screenshotsize0" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br><br>
+						<input name="tp_dl_screenshotsize0" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br><br>
 					</dd>
 					<dt>'.$txt['tp-dlscreenshotsize2'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_screenshotsize2" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text" size="3" maxsize="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br><br>
+						<input name="tp_dl_screenshotsize2" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br><br>
 					</dd>
 					<dt>'.$txt['tp-dlmustapprove'].'
 					</dt>
@@ -322,7 +322,7 @@ $clickme.click( function(e) {
 						<input type="hidden" name="admineditcatval" value="'.$cat['parent'].'" />
 					</div>
 					<div style="width:75%;" class="float-items">
-						<img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" align="top"   style="margin: 0;" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+						<img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" style="margin: 0;vertical-align:top" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<p class="clearthefloat"></p>
 			    </div>
@@ -547,7 +547,7 @@ $clickme.click( function(e) {
 
 				echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="'.$cat['icon'].'" alt="" />
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="'.$cat['icon'].'" alt="" />
 					<script>
 					function dlcheck(icon)
 						{

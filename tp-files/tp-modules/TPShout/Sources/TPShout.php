@@ -712,7 +712,7 @@ function shout_bcc_code($collapse = true)
 
 	if($collapse) {
 		echo '  <a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;" align="left" />
+		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
 	            </a>
                 <div id="shoutbox_bbc" style="text-align:left;">';
     }
@@ -741,7 +741,7 @@ function shout_bcc_code($collapse = true)
                         echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
 
                     // Okay... we have the link. Now for the image and the closing </a>!
-                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></a>';
                 }
                 // I guess it's a divider...
                 elseif ($found_button) {
@@ -786,7 +786,7 @@ function shout_bcc_code($collapse = true)
                         echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
 
                     // Okay... we have the link. Now for the image and the closing </a>!
-                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></a>';
                 }
                 // I guess it's a divider...
                 elseif ($found_button1)
@@ -845,7 +845,7 @@ function shout_bcc_code($collapse = true)
 					echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['shout_post_box_name'], '); return false;">';
 
 				// Okay... we have the link. Now for the image and the closing </a>!
-				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" align="bottom" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;" /></a>';
+				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></a>';
 			}
 			// I guess it's a divider...
 			elseif ($found_button2)
@@ -975,7 +975,7 @@ function print_shout_smileys($collapse = true)
 	if($collapse)
 		echo '
 	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;" align="left" />
+		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
 	</a>
 	<div id="shoutbox_smiley" style="text-align:left;">
 		';
@@ -998,7 +998,7 @@ function print_shout_smileys($collapse = true)
 			<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
 
 				echo '
-					<a href="javascript:void(0);" onclick="replaceText(\' ', $smiley['code'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" align="bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></a>';
+					<a href="javascript:void(0);" onclick="replaceText(\' ', $smiley['code'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></a>';
 				$sm_counter++;
 			}
 		}

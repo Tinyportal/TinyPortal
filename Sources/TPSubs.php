@@ -1043,7 +1043,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 	echo '
 	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . ';" name="'.$textarea.'" id="'.$textarea.'">'.$body.'</textarea>';
 
 	if($context['TPortal']['use_dragdrop']) {
 		echo '<script><!-- // --><![CDATA[
@@ -1352,7 +1352,7 @@ function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 	global $context, $settings;
 
 	$what = '
-	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
+	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" onclick="togglepanel(\''.$id.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
 	</a>';
 	if($string)
@@ -1366,7 +1366,7 @@ function tp_hidepanel2($id, $id2, $alt)
 	global $txt, $context, $settings;
 
 	$what = '
-	<a title="'.$txt[$alt].'" style="cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
+	<a title="'.$txt[$alt].'" style="cursor: pointer;" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" alt="*" />
 	</a>';
 
