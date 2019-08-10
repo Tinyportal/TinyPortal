@@ -120,8 +120,11 @@ function template_tp_below()
 
 	if($context['TPortal']['lowerpanel']==1)
 		echo '
+				<p class="clearthefloat"></p>
 				<div id="tplowerbarHeader" style="' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
-				' , TPortal_panel('lower') , '<p class="clearthefloat"></p></div>';
+				' , TPortal_panel('lower') , '
+				<p class="clearthefloat"></p>
+				</div>';
 // end centerContainer
 	echo '</div>';
 // end mainContainer
