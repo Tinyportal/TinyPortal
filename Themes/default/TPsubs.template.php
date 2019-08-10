@@ -1067,7 +1067,7 @@ function TPblock($block, $theme, $side, $double=false)
 			if(strstr($forum_version, '2.1'))
 			{
 			if($block['visible'] == '' || $block['visible'] == '1')
-				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png"   alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+				echo '<a href="javascript:%20void(0);%20return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
@@ -1078,7 +1078,7 @@ function TPblock($block, $theme, $side, $double=false)
 			else
 			{
 			if($block['visible'] == '' || $block['visible'] == '1')
-				echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png"   alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+				echo '<a href="javascript:%20void(0);%20return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png"   alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 
 			// can you edit the block?
 			if($block['can_edit'] && !$context['TPortal']['blocks_edithide'])
@@ -1097,7 +1097,7 @@ function TPblock($block, $theme, $side, $double=false)
 				echo '
 		<div style="padding: 4px;">';
 				if($block['visible'] == '' || $block['visible'] == '1')
-					echo '<a href="javascript: void(0); return false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks']) ? 'TPcollapse' : 'TPexpand' , '.png"   alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+					echo '<a href="javascript:%20void(0);%20return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks']) ? 'TPcollapse' : 'TPexpand' , '.png"   alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 				echo '&nbsp;
 		</div>';
 			}
@@ -1791,7 +1791,7 @@ function article_comments($render = true)
 				// can we edit the comment or are the owner of it?
 				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest'])
 					echo '
-						<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
+						<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tpmod;sa=killcomment' . $comment['id'] . '" onclick="javascript:return%20confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
 				// not a guest
 				if ($comment['posterID'] > 0) 
 					echo '	
