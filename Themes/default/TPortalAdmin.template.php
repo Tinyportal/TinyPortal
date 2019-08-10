@@ -196,7 +196,7 @@ function template_submission()
 	if(isset($context['TPortal']['arts_submissions']))
 	{
 		echo '
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
@@ -376,7 +376,7 @@ function template_menubox()
 		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div>
 		<div></div>
 			<div class="windowbg noup padding-div">
-			<table class="table_grid tp_grid" style="width:100%";>
+			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="menuitems">			
@@ -528,7 +528,7 @@ function template_menubox()
 			{
 				if($mbox['id']==0)
 					echo '
-			<table class="table_grid tp_grid" style="width:100%";>
+			<table class="table_grid tp_grid" style="width:100%">
 			<tbody>
 				<tr class="windowbg">
 				<td class="menu">
@@ -1638,7 +1638,7 @@ function template_categories()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-article'], ' ' , $txt['tp-tabs5'] . '</h3></div>
 		<div id="edit-category" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col">
@@ -1973,7 +1973,7 @@ function template_articles()
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
 	{
 		echo '
-		<table class="table_grid tp_grid" style="width:100%";>
+		<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
@@ -2035,7 +2035,7 @@ function template_articles()
 	if(isset($context['TPortal']['arts']))
 	{
 		echo '
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
@@ -2154,7 +2154,7 @@ function template_strays()
 		echo '
 				<div class="windowbg noup padding-div">
 					<div>
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col">
@@ -3750,7 +3750,7 @@ function template_blocks()
 
 			if($tn>0)
 				echo '
-			<table class="table_grid tp_grid" style="width:100%";>
+			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="blocks">

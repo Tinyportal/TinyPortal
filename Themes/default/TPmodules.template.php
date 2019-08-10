@@ -493,7 +493,7 @@ function template_main()
             <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
         </div>
 		<div class="windowbg padding-div">
-	<table class="table_grid tp_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="myarticles">
