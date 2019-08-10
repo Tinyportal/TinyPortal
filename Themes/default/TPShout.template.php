@@ -81,7 +81,7 @@ function template_tpshout_admin()
 					<div class="formtable padding-div">
 						<div class="addborder">
 							<div style="width:47%;" class="float-items"><strong>'.$txt['tp-shoutboxitems'].'</strong></div>
-							<div class="smalltext float-items" style="width:47%;text-align: right"><b>'. $context['TPortal']['shoutbox_pageindex'].'</b></div>
+							<div class="smalltext float-items" style="width:47%;text-align:right">'.$context['TPortal']['shoutbox_pageindex'].'</div>
 							<p class="clearthefloat"></p>
 						</div>';
 
@@ -107,9 +107,7 @@ function template_tpshout_admin()
 						<div class="normaltext float-items" style="width:47%;">
 							<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
 						</div>
-						<div class="smalltext float-items" style="width:47%;text-align: right">
-							<b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
-					   </div>
+						<div class="smalltext float-items" style="width:47%;text-align: right">'.$context['TPortal']['shoutbox_pageindex'].'</div>
 					   <p class="clearthefloat"></p>
 					</div>
 				</div>
@@ -172,7 +170,7 @@ function template_tpshout_admin_settings()
 							'.$txt['tp-shoutboxduration'].'
 						</dt>
 						<dd>
-							<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" /><br><br>
+							<input type="text" size="6" name="tp_shoutbox_scrollduration" value="'.$context['TPortal']['shoutbox_scrollduration'].'" /><br><br>
 						</dd>
 						<dt>
 							'.$txt['tp-shout-autorefresh'].'

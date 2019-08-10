@@ -293,7 +293,7 @@ $txt['tp-editgroups'] = 'Block can be edited by extra membergroups';
 $txt['tp-editsave'] = 'Edit - Save';
 $txt['tp-blockconfirmdelete'] = 'Are you sure you want to delete this block?';
 $txt['tp-editblocks'] = 'Blocks';
-$txt['tp-editgrouphelp'] = 'Choose your extra membergroups that can edit this block only. <br><span class="smalltext">(Note that "manage_blocks" and "admin" permission always give this right regardless.)<span>';
+$txt['tp-editgrouphelp'] = 'Choose your extra membergroups that can edit this block only. <br><span class="smalltext">(Note that "manage_blocks" and "admin" permission always give this right regardless.)</span>';
 $txt['tp-langarray'] = 'Show for this language (note that the block HAS to be set somewhere for this to go in effect)';
 $txt['tp-langhelp'] = 'Add custom block title for any installed language - except for default. ';
 $txt['tp-looseblocks'] = 'Block not shown anywhere';

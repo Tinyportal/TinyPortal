@@ -44,7 +44,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="user-download" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col">
@@ -296,7 +296,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="any-subcats" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
@@ -652,7 +652,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsubmissions'].'</h3></div>
 		<div id="any-submitted" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<table class="table_grid tp_grid" style="width:100%";>
+				<table class="table_grid tp_grid" style="width:100%">
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="submissions">
