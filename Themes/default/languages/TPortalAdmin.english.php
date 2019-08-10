@@ -198,7 +198,7 @@ $txt['tp-catlayout7'] = 'use custom template';
 $txt['tp-catlayout8'] = 'articles + icons2';
 $txt['tp-articlesettings'] = 'Article Settings';
 $txt['tp-parent'] = 'Parent:';
-$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:<br><span class="smalltext">(Note that this setting only works if display is set to \'Only articles\' on the frontpage.)<span>';
+$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:<br><span class="smalltext">(Note that this setting only works if display is set to \'Only articles\' on the frontpage.)</span>';
 $txt['tp-sortoptions1'] = 'Sort by date';
 $txt['tp-sortoptions2'] = 'Sort by author';
 $txt['tp-sortoptions3'] = 'Sort by position';

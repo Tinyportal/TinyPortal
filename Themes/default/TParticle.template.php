@@ -138,7 +138,7 @@ function template_submitarticle()
 					</dt>
 					<dd>
 							<b><a href="' . $scripturl . '?action=profile;u='.$mg['author_id'].'" target="_blank">'.$mg['real_name'].'</a></b>
-							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxsize="12" name="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
+							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-created'], '</label>
@@ -349,10 +349,10 @@ function template_submitarticle()
 						', $txt['tp-switchmode'], '
 					</dt>
 					<dd>
-							<input align="middle" name="tp_article_type" id="gohtml" type="radio" value="html"' , $article_type == '' || $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
-							<input align="middle" name="tp_article_type" id="gophp" type="radio" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> '.$txt['tp-gophp'] .'</label><br>
-							<input align="middle" name="tp_article_type" id="gobbc" type="radio" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> '.$txt['tp-gobbc'] .'</label><br>
-							<input align="middle" name="tp_article_type" id="goimport" type="radio" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
+							<input name="tp_article_type" id="gohtml" type="radio" value="html"' , $article_type == '' || $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
+							<input name="tp_article_type" id="gophp" type="radio" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> '.$txt['tp-gophp'] .'</label><br>
+							<input name="tp_article_type" id="gobbc" type="radio" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> '.$txt['tp-gobbc'] .'</label><br>
+							<input name="tp_article_type" id="goimport" type="radio" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
 					</dd>
 					<dt>
 						', $txt['tp-display'], '
@@ -380,7 +380,7 @@ function template_submitarticle()
 				<dl class="settings">
 					<dt>
 						<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label><br>
-						<div><img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /></div>
+						<img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" />
 					</dt>
 					<dd>
 							<select size="10" name="tp_article_illustration" id="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
@@ -687,10 +687,10 @@ function template_showcomments()
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="comments">
 					<div style="word-break:break-all;">
-						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
-						<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
-						<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
-						<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
+						<div class="float-items tpleft" style="width:15%;">' . $txt['tp-author'] . '</div>
+						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-comments'] . '</div>
+						<div class="float-items tpleft" style="width:25%;">' . $txt['by'] . '</div>
 						<p class="clearthefloat"></p>
 					</div>
 					</th>
@@ -741,10 +741,10 @@ function template_showcomments()
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="comments">
 			<div>
-				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-article'] . '</div>
-				<div align="left" class="float-items" style="width:15%;">' . $txt['tp-author'] . '</div>
-				<div align="left" class="float-items" style="width:30%;">' . $txt['tp-comments'] . '</div>
-				<div align="left" class="float-items" style="width:25%;">' . $txt['by'] . '</div>
+				<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
+				<div class="float-items tpleft" style="width:15%;">' . $txt['tp-author'] . '</div>
+				<div class="float-items tpleft" style="width:30%;">' . $txt['tp-comments'] . '</div>
+				<div class="float-items tpleft" style="width:25%;">' . $txt['by'] . '</div>
 				<p class="clearthefloat"></p>
 			</div>
 				</th>
