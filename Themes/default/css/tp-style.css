@@ -1250,7 +1250,7 @@ div.slider div.knob {
 }
 div.tpleft
 {
-	text-align: center;
+	text-align: left;
 }
 div.tpcenter
 {
@@ -1258,7 +1258,7 @@ div.tpcenter
 }
 div.tpright
 {
-	text-align: center;
+	text-align: right;
 }
 .tptabs
 {
