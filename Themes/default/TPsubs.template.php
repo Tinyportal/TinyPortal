@@ -510,7 +510,7 @@ function TPortal_themebox()
 
 	 if(is_countable($temaid) && count($temaid) > 0){
         echo '
-		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="" style="padding: 0; margin: 0; text-align: center;">
+		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
          for($a=0 ; $a<(count($temaid)); $a++)
 		 {
@@ -525,9 +525,9 @@ function TPortal_themebox()
 			<div style="text-align: center; width: 95%; overflow: hidden;">';
 			
 		if (strstr($forum_version, '2.0'))
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="thumbnail" id="chosen" name="chosen" style="max-width: 100%;" /> ';
 		else
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="thumbnail" id="chosen" name="chosen" style="max-width: 100%;" />';
 			
 		echo '
 			</div>

@@ -1127,7 +1127,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			$imgs = array_reverse($imgfiles);
 		}
 		echo '
-		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
+		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</h3></div>
 		<div class="windowbg2 smalltext tp_pad">' , $txt['tp-quicklist2'] , '</div>
 		<div class="windowbg tpquicklist">
 		<div class="tpthumb">';

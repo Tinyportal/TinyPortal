@@ -59,7 +59,7 @@ function template_tp_articles()
 
 		echo '
 				</div><br>
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
