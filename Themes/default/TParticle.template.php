@@ -114,9 +114,9 @@ function template_submitarticle()
                     else {
                         // Must be a new article, so lets show the check boxes instead.
                         echo '
-                            <input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /> '. $txt['tp-setfrontpage']. '<br>
-                            <input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /> '. $txt['tp-setsticky']. '<br>
-                            <input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /> '. $txt['tp-setlock']. '';
+                            <input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /><label for="artFront'. $mg['id']. '">'. $txt['tp-setfrontpage']. '</label><br>
+                            <input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /><label for="artSticky'. $mg['id']. '">'. $txt['tp-setsticky']. '</label><br>
+                            <input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /><label for="artLock'. $mg['id']. '">'. $txt['tp-setlock']. '</label>';
                     }
                 }
                 echo '<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">';
@@ -126,22 +126,22 @@ function template_submitarticle()
                     echo '
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-approved'], '</label>
+						<label for="tp_article_approved">', $txt['tp-approved'], '</label>
 					</dt>
 					<dd>
 							
-							<input name="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
+							<input name="tp_article_approved" id="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
 							<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'<br><br>
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-author'], '</label>
+						<label for="tp_article_authorid">', $txt['tp-author'], '</label>
 					</dt>
 					<dd>
 							<b><a href="' . $scripturl . '?action=profile;u='.$mg['author_id'].'" target="_blank">'.$mg['real_name'].'</a></b>
-							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
+							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" id="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-created'], '</label>
+						', $txt['tp-created'], '
 					</dt>
 					<dd>';
 				
@@ -293,11 +293,11 @@ function template_submitarticle()
                 if(!empty($context['TPortal']['allcats'])) {
                     echo '
                         <dt>
-                            <label for="field_name">', $txt['tp-category'], '</label>
+                            <label for="tp_article_category">', $txt['tp-category'], '</label>
                         </dt>
                         <dd>
                             <div>
-                                <select size="1" name="tp_article_category">
+                                <select size="1" name="tp_article_category" id="tp_article_category">
                                     <option value="0">'.$txt['tp-none2'].'</option>';
                     foreach($context['TPortal']['allcats'] as $cats) {
                         if($cats['id'] < 9999 && $cats['id'] > 0) {
@@ -306,7 +306,7 @@ function template_submitarticle()
                     }
                     echo '</select>';
                     if(allowedTo('admin_forum')) {
-                        echo '<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>';
+                        echo '&nbsp;<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>';
                     }
                     echo '
                             </div><br>
