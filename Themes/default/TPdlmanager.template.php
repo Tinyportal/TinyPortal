@@ -85,12 +85,12 @@ function template_main()
 					<div>';
 			if($context['TPortal']['dl_showlatest']==1)
 				echo '
-				<a href="javascript: void(0); " onclick="dlshowtab(\'dlrecent\');">' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>';
+				<a href="javascript:void(0);" onclick="dlshowtab(\'dlrecent\');">' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>';
 			if($context['TPortal']['dl_showstats']==1)
 			{
 				echo '
-				 ' , $context['TPortal']['dl_showlatest']==1 ? '&nbsp;|&nbsp; ' : '' , '<a href="javascript: void(0);" onclick="dlshowtab(\'dlweekpop\');">' , $txt['tp-mostpopweek'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>
-				&nbsp;|&nbsp; <a href="javascript: void(0); " onclick="dlshowtab(\'dlpop\');">' , $txt['tp-mostpop'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>';
+				 ' , $context['TPortal']['dl_showlatest']==1 ? '&nbsp;|&nbsp; ' : '' , '<a href="javascript:void(0);" onclick="dlshowtab(\'dlweekpop\');">' , $txt['tp-mostpopweek'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>
+				&nbsp;|&nbsp; <a href="javascript:void(0);" onclick="dlshowtab(\'dlpop\');">' , $txt['tp-mostpop'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</a>';
 			}
 			echo '
 				</div>
@@ -158,7 +158,7 @@ function template_main()
 						echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					echo '
 						<div class="dl_most_downloaded">
-							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
+							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
 							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
 						</div>
@@ -190,7 +190,7 @@ function template_main()
 						echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					echo '
 						<div class="dl_most_downloaded">
-							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp'.$wost['name'].'</b></a>
+							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
 							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
 						</div>
@@ -254,7 +254,7 @@ function template_main()
 							{
 								$content .= '
 							<li>
-								<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" border="0" />
+								<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
 									<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
 								if($dlchild['files']>0)
 									$content .= ' (' . $dlchild['files'].')';
@@ -318,7 +318,7 @@ function template_main()
 				echo '
 					<div class="dlitemgrid">';
 				echo '
-					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
+					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
 				echo '<h4 class="h4dl" style="font-size: 1.1em; font-weight: bold;"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>';
 
 					unset($details);
@@ -380,7 +380,7 @@ function template_main()
 				<span class="topslice"><span></span></span>
 				<div class="content">';
 			echo '
-				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" border="0" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
+				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
 			echo '
 				<h4 class="h4dl">
 				<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
@@ -567,7 +567,7 @@ function template_main()
 
 		echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dluploadpic'].'
@@ -609,7 +609,6 @@ function template_main()
 			<hr>
 			<br>
 				<dl class="settings">
-					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>'.$txt['tp-dlmissingboards'].'
@@ -691,7 +690,7 @@ function template_main()
 			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatscats'].'</h3></div>
 			<div style="width:100%;">
 			  <div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" /></div>
-			  <div class="float-items" class="windowbg" style="width:91%;">';
+			  <div class="float-items" style="width:91%;">';
 
 		// top categories
 		echo '<div>';
@@ -722,7 +721,7 @@ function template_main()
 				</div><p class="clearthefloat"></p></div>
 				<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatsviews'].'</h3></div>
 				<div style="width:100%;"><div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.png" alt="" /></div>
-				<div class="float-items" class="windowbg2" style="width:91%;">';
+				<div class="float-items" style="width:91%;">';
 
 		// top views
 		echo '<div>';
@@ -901,7 +900,7 @@ function template_main()
 
 			echo '
 						</select>
-						<img align="top" style="margin-left: 2ex;" name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="', substr($cat['icon'],0,4)=='http' ? $cat['icon'] :  $boardurl. '/' . $cat['icon'] , '" alt="" />
 						<script type="text/javascript">
 						function dlcheck(icon)
 							{
@@ -923,7 +922,7 @@ function template_main()
 				' , $cat['approved']=='0' ? '
 				<dl class="settings">
 					<dt>
-						<img title="'.$txt['tp-approve'].'" border="0" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  />
+						<img title="'.$txt['tp-approve'].'" src="' .$settings['tp_images_url']. '/TPexclamation.png" alt="'.$txt['tp-dlapprove'].'"  />
 					</dt>
 					<dd>
 						<b>'.$txt['tp-dlnotapprovedyet'].'</b>

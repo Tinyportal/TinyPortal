@@ -1248,6 +1248,18 @@ div.slider div.knob {
 	border: solid 1px white;
 	cursor: pointer;
 }
+div.tpleft
+{
+	text-align: left;
+}
+div.tpcenter
+{
+	text-align: center;
+}
+div.tpright
+{
+	text-align: right;
+}
 .tptabs
 {
 	margin: 0;
@@ -1836,7 +1848,7 @@ input,select
 	margin-right: 0.5em;
 	margin-top: -1.5em;
 }
-.tp_upshrink21 {
+.tp_upshrink21, .navigate_section .tp_upshrink21 {
 	float: right;
 	margin-top:6px;
 	padding-left:10px;
@@ -1871,6 +1883,10 @@ box-sizing:border-box;
    max-height: 200px;
    overflow: auto;
  }
+.youtubecontainer iframe
+{
+	border-style: none;
+}
 
 /************* TP ADMIN STYLES ********************/
 

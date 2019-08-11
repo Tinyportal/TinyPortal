@@ -2024,7 +2024,7 @@ function TPortal_panel($side) {{{
 			    $wh = 25;
                 break;
         }
-		echo '<div style="width:100%;"><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;float:left;">';
+		echo '<div style="width:100%;"><div class="panelsColumns" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;float:left;">';
 	}
 	$flowmain = 0;
 	$flowsub = 0;
@@ -2188,7 +2188,7 @@ function TPortal_panel($side) {{{
                 elseif($flow == 'horiz4' && $flowmain == 3) {
                     $pad = 0;
                 }
-				echo '</div><div class="panelsColumns" align="top" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">';
+				echo '</div><div class="panelsColumns" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">';
 			}
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 		}
@@ -2411,16 +2411,16 @@ function TP_blockgrids() {{{
 	global $context;
 
 	$context['TPortal']['grid'] = array();
-	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="gridColumns" align="top" style="padding-bottom:5px;">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div><div class="gridColumns" align="top" style="width:32.3%;padding-right:0.7%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="gridColumns" align="top" style="width:32.3%;padding-right:0.7%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="gridColumns" align="top" style="width:34%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
+	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="gridColumns" style="padding-bottom:5px;">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div><div class="gridColumns" style="width:32.3%;padding-right:0.7%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="gridColumns" style="width:32.3%;padding-right:0.7%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="gridColumns" style="width:34%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
 
-	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="gridC" align="top" style="width:32.3%;padding-right: 0.7%; padding-bottom: 5px;float:left;">', 'after' => '</div>', 'doubleheight' => true);
-	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="gridC" align="top" style="width:67%;padding-bottom: 5px;float:left;"><div class="gridColumns" align="top" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="gridColumns" align="top" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="gridColumns" align="top" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
+	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="gridC" style="width:32.3%;padding-right: 0.7%; padding-bottom: 5px;float:left;">', 'after' => '</div>', 'doubleheight' => true);
+	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="gridC" style="width:67%;padding-bottom: 5px;float:left;"><div class="gridColumns" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="gridColumns" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="gridColumns" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="gridColumns" style="width:50%;padding-bottom: 5px;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
 
 }}}
 

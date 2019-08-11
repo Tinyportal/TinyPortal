@@ -677,7 +677,7 @@ function tp_renderbbc($message)
 
 	echo '
 			<tr>
-				<td valign="middle" colspan="2" class="windowbg2">';
+				<td class="windowbg2" colspan="2">';
 
 		echo '
 				</td>
@@ -778,13 +778,13 @@ function TPwysiwyg_setup()
 				exec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+						editor.insert(\'<div class="youtubecontainer"><iframe allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
 					});
 				},
 				txtExec: function (caller) {
 					var editor = this;
 					editor.commands.youtube._dropDown(editor, caller, function (id, time) {
-						editor.insert(\'<div class="youtubecontainer"><iframe frameborder="0" allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
+						editor.insert(\'<div class="youtubecontainer"><iframe allowfullscreen src="https://www.youtube.com/embed/\' + id + \'?wmode=opaque&start=\' + time + \'" data-youtube-id="\' + id + \'"></iframe></div>&nbsp;\');
 					});
 				},
 			});
@@ -935,14 +935,14 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			$imgs = array_reverse($imgfiles);
 		}
 		echo '
-		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</div></h3>
+		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</h3></div>
 		<div class="windowbg2 smalltext tp_pad">' , $txt['tp-quicklist2'] , '</div>
 		<div class="windowbg tpquicklist">
 		<div class="tpthumb">';
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-files/tp-images/', substr($im,6) , '"  border="none" alt="" />';
+				echo '<img src="'.$boardurl.'/tp-files/tp-images/', substr($im,6) , '"  alt="" />';
 		}
 		echo '
 		</div>
@@ -1161,7 +1161,7 @@ function tp_hidepanel($id, $inline = false, $string = false, $margin='')
 	global $context, $settings;
 
 	$what = '
-	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\')">
+	<a style="' . (!$inline ? 'float: right;' : '') . ' cursor: pointer;" onclick="togglepanel(\''.$id.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" ' . (!empty($margin) ? 'style="margin: '.$margin.';"' : '') . 'alt="*" />
 	</a>';
 	if($string)
@@ -1175,7 +1175,7 @@ function tp_hidepanel2($id, $id2, $alt)
 	global $txt, $context, $settings;
 
 	$what = '
-	<a title="'.$txt[$alt].'" style="cursor: pointer;" name="toggle_'.$id.'" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
+	<a title="'.$txt[$alt].'" style="cursor: pointer;" onclick="togglepanel(\''.$id.'\');togglepanel(\''.$id2.'\')">
 		<img id="toggle_' . $id . '" src="' . $settings['tp_images_url'] . '/TPupshrink' . (in_array($id, $context['tp_panels']) ? '2' : '') . '.png" alt="*" />
 	</a>';
 
