@@ -609,7 +609,6 @@ function template_main()
 			<hr>
 			<br>
 				<dl class="settings">
-					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>'.$txt['tp-dlmissingboards'].'
@@ -691,7 +690,7 @@ function template_main()
 			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatscats'].'</h3></div>
 			<div style="width:100%;">
 			  <div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" /></div>
-			  <div class="float-items" class="windowbg" style="width:91%;">';
+			  <div class="float-items" style="width:91%;">';
 
 		// top categories
 		echo '<div>';
@@ -722,7 +721,7 @@ function template_main()
 				</div><p class="clearthefloat"></p></div>
 				<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatsviews'].'</h3></div>
 				<div style="width:100%;"><div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.png" alt="" /></div>
-				<div class="float-items" class="windowbg2" style="width:91%;">';
+				<div class="float-items" style="width:91%;">';
 
 		// top views
 		echo '<div>';

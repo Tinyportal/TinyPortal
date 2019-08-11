@@ -720,7 +720,7 @@ function template_showcomments()
 			echo '
 			<tr class="windowbg">
 			    <td class="shouts">
-				    <div align="right" style="padding:1%;"><a href="' . $scripturl . '?action=tportal;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
+				    <div class="padding-div tpright"><a href="' . $scripturl . '?action=tportal;sa=showcomments">' . $txt['tp-showcomments'] . '</a></div>
 			    </td>
 			</tr>';
 
