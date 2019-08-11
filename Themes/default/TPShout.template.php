@@ -73,7 +73,7 @@ function template_tpshout_admin()
 					<div class="formtable padding-div">
 						<div class="addborder">
 							<div style="width:47%;" class="float-items"><strong>'.$txt['tp-shoutboxitems'].'</strong></div>
-							<div class="smalltext float-items" style="width:47%; text-align: right"><b>'. $context['TPortal']['shoutbox_pageindex'].'</b></div>
+							<div class="smalltext float-items" style="width:47%; text-align: right">'. $context['TPortal']['shoutbox_pageindex'].'</div>
 							<p class="clearthefloat"></p>
 						</div>';
 
@@ -101,7 +101,7 @@ function template_tpshout_admin()
 								<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
 							</div>
 							<div class="smalltext float-items" style="width:47%; text-align:right">
-								<b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
+								'.$context['TPortal']['shoutbox_pageindex'].'
 						   </div>
 						   <p class="clearthefloat"></p>
 						</div>
@@ -220,12 +220,11 @@ function template_tpshout_admin_settings()
 						</dd>
 					</dl>
 					<hr>
+					'.$txt['tp-shoutboxcolors'].'
 					<dl class="settings">
-						<dt>'.$txt['tp-shoutboxcolors'].'
-						</dt>
 						<dt>
 							'.$txt['tp-shoutbox_use_groupcolor'].'
-							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<div class="smalltext" style="color:red;">'.$txt['tp-use_groupcolordesc'].'</div>' : '' , '
+							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<span class="smalltext" style="color:red;">'.$txt['tp-use_groupcolordesc'].'</span>' : '' , '
 						</dt>
 						<dd>
 							<input name="tp_shoutbox_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['shoutbox_use_groupcolor']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'

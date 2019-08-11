@@ -99,7 +99,6 @@ $clickme.click( function(e) {
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
-					</div>
 					<p class="clearthefloat"></p>
 				</div>
 			</td>

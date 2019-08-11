@@ -549,7 +549,6 @@ function template_main()
 					</dt>
 					<dd><input name="tp-dluploadnot" type="hidden" value="ON"><input name="tp-dlupload_ftpstray" type="hidden" value="'.$_GET['ftp'].'">
 					</dd>';
-
 		}
 		echo '</dl>';
 
@@ -606,10 +605,8 @@ function template_main()
 			if(empty($context['TPortal']['dl_createtopic_boards']))
 			{
 				echo '
-			<hr>
-			<br>
+			<hr><br>
 				<dl class="settings">
-					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>'.$txt['tp-dlmissingboards'].'
@@ -619,10 +616,8 @@ function template_main()
 			else
 			{
 				echo '
-			<hr>
-			<br>
+			<hr><br>
 				<dl class="settings">
-					</dd>
 					<dt>'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd><input type="checkbox" name="create_topic" /><br>
@@ -656,8 +651,7 @@ function template_main()
 				echo '		</select>
 						</dd>
 					</dl>
-					<textarea name="create_topic_body" id="tp_article_intro" wrap="auto"></textarea>
-			</dl>';
+					<textarea name="create_topic_body" id="tp_article_intro" wrap="auto"></textarea>';
 			}
 		}
 		echo '
@@ -691,7 +685,7 @@ function template_main()
 			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatscats'].'</h3></div>
 			<div style="width:100%;">
 			  <div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" /></div>
-			  <div class="float-items" class="windowbg" style="width:91%;">';
+			  <div class="float-items" style="width:91%;">';
 
 		// top categories
 		echo '<div>';
@@ -722,7 +716,7 @@ function template_main()
 				</div><p class="clearthefloat"></p></div>
 				<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatsviews'].'</h3></div>
 				<div style="width:100%;"><div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPinfo.png" alt="" /></div>
-				<div class="float-items" class="windowbg2" style="width:91%;">';
+				<div class="float-items" style="width:91%;">';
 
 		// top views
 		echo '<div>';
@@ -735,7 +729,7 @@ function template_main()
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
 							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></div>
-							<div class="float-items" style="width="15%";">'.$cats['views'].'</div>
+							<div class="float-items" style="width=15%;">'.$cats['views'].'</div>
 					        <p class="clearthefloat"></p>';
 					$counter++;
 				}
@@ -991,7 +985,7 @@ function template_main()
 				<div class="roundframe noup">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input id="searchbox" type="text" name="dl_search" required/><br>
+						<input id="searchbox" type="text" name="dl_search" required /><br>
 						<input type="checkbox" checked="checked"/> '.$txt['tp-searcharea-name'].'<br>
 						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/> '.$txt['tp-searcharea-descr'].'<br>
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
