@@ -107,6 +107,10 @@ $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><s
 $txt['tp-showforumposts']='Display forum-topics on frontpage from:';
 $txt['tp-numberofposts']='Number of articles/topics to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
+
+$txt['tp-recentboards']='Board Id\'s (comma separated, blank will include all)';
+$txt['tp-recentincexc']='Include or exclude boards';
+
 $txt['tp-whattoshow']='What to display on frontpage:';
 $txt['tp-whizzyeditor']='Yes, WhizzyWig';
 $txt['tp-onlyarticles']='Only articles';
