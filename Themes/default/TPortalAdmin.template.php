@@ -2350,30 +2350,12 @@ function template_blockedit()
 						<dd>
 							<input style="width: 50px;" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '">
 						</dd>
-						<dt>Board Id\'s (comma separated, blank will include all)</dt>
+						<dt>'.$txt['tp-recentboards'].'</dt>
 						<dd>
 							<input name="tp_block_var2" size="20" type="text" value="' , $context['TPortal']['blockedit']['var2'] ,'">
 						</dd>';
-//						<dt><b>Boards:</b></dt>
-//						<dd>
-//							<div class="tp_largelist">';
-//				$a=1;
-//				if(!empty($context['TPortal']['boards']))
-//				{
-//					echo '<input type="checkbox" name="boardtype' , $a, '" value="-1" id="allboards" ' , in_array('-1', $context['TPortal']['blockedit']['access2']['board']) ? 'checked="checked"' : '' , '><label for="allboards"> '.$txt['tp-allboards'].'</label><br><br>';
-//					$a++;
-//					foreach($context['TPortal']['boards'] as $bb)
-//					{
-//						echo '
-//								<input type="checkbox" name="boardtype' , $a, '" id="boardtype' , $a, '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['access2']['board']) ? 'checked="checked"' : '' , '><label for="boardtype' , $a, '"> '.$bb['name'].'</label><br>';
-//						$a++;
-//					}
-//				}
-//				echo '
-//							 </div>
-//						</dd>
 				echo '
-						<dt>Include or exclude boards</dt>
+						<dt>'.$txt['tp-recentincexc'].'</dt>
 						<dd>
 							<input name="tp_block_var3" type="radio" value="1" ' , ($context['TPortal']['blockedit']['var3']=='1' || $context['TPortal']['blockedit']['var3']=='') ? ' checked' : '' ,'> Include boards<br>
 							<input name="tp_block_var3" type="radio" value="0" ' , $context['TPortal']['blockedit']['var3']=='0' ? 'checked' : '' ,'> Exclude boards
