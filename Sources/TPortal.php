@@ -20,7 +20,7 @@ if (!defined('SMF'))
 
 // Load the language file straight away for the check in SMF2.0 and Load.php
 global $txt;
-if(loadLanguage('TPortal') == false) {
+if(defined('SMF') && ( SMF != 'SSI' ) && loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
