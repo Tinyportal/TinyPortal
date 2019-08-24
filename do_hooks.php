@@ -32,12 +32,10 @@ $hooks = array(
 
 $mod_name = 'TinyPortal';
 
-if(file_exists('SSI.php')) {
-    require_once('SSI.php');
-}
-else {
-    die('Please place in the same location as SSI.php');
-}
+if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
+	require_once(dirname(__FILE__) . '/SSI.php');
+elseif (!defined('SMF'))
+	exit('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 
 // ---------------------------------------------------------------------------------------------------------------------
 global $forum_version;
@@ -54,11 +52,6 @@ else {
         updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
     }
 }
-
-if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
-	require_once(dirname(__FILE__) . '/SSI.php');
-elseif (!defined('SMF'))
-	exit('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 
 if (SMF == 'SSI')
 {
