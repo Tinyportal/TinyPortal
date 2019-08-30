@@ -32,14 +32,6 @@ $hooks = array(
 
 $mod_name = 'TinyPortal';
 
-if(file_exists('SSI.php')) {
-    require_once('SSI.php');
-}
-else {
-    die('Please place in the same location as SSI.php');
-}
-
-
 if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 	require_once(dirname(__FILE__) . '/SSI.php');
 elseif (!defined('SMF'))
