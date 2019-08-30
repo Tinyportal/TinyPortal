@@ -21,7 +21,7 @@ if (!defined('SMF')) {
 
 // Load the language file straight away for the check in SMF2.0 and Load.php
 global $txt;
-if(loadLanguage('TPortal') == false) {
+if(function_exists('loadLanguage') && loadLanguage('TPortal') == false) {
     loadLanguage('TPortal', 'english');
 }
 
@@ -2529,8 +2529,5 @@ if(!function_exists('loadJavaScriptFile')) {
         $context['html_headers'] .= '<script type="text/javascript" src="'.$fileName.'"></script>';
     }
 }
-
-
-
 
 ?>
