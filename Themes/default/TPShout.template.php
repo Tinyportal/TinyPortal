@@ -81,7 +81,7 @@ function template_tpshout_admin()
 					<div class="formtable padding-div">
 						<div class="addborder">
 							<div style="width:47%;" class="float-items"><strong>'.$txt['tp-shoutboxitems'].'</strong></div>
-							<div class="smalltext float-items" align="right" style="width:47%;"><b>'. $context['TPortal']['shoutbox_pageindex'].'</b></div>
+							<div class="smalltext float-items" style="width:47%;text-align:right">'.$context['TPortal']['shoutbox_pageindex'].'</div>
 							<p class="clearthefloat"></p>
 						</div>';
 
@@ -107,9 +107,7 @@ function template_tpshout_admin()
 						<div class="normaltext float-items" style="width:47%;">
 							<input name="tp_shoutsdelall" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>&nbsp;&nbsp;
 						</div>
-						<div class="smalltext float-items" align="right"  style="width:47%;">
-							<b>'.$context['TPortal']['shoutbox_pageindex'].'</b>
-					   </div>
+						<div class="smalltext float-items" style="width:47%;text-align: right">'.$context['TPortal']['shoutbox_pageindex'].'</div>
 					   <p class="clearthefloat"></p>
 					</div>
 				</div>
@@ -172,7 +170,7 @@ function template_tpshout_admin_settings()
 							'.$txt['tp-shoutboxduration'].'
 						</dt>
 						<dd>
-							<input type="text" size="6" name="tp_shoutbox_scrollduration" value="' . $context['TPortal']['shoutbox_scrollduration'] . '" /><br><br>
+							<input type="text" size="6" name="tp_shoutbox_scrollduration" value="'.$context['TPortal']['shoutbox_scrollduration'].'" /><br><br>
 						</dd>
 						<dt>
 							'.$txt['tp-shout-autorefresh'].'
@@ -195,7 +193,7 @@ function template_tpshout_admin_settings()
 						'.$txt['shoutbox_layout'].':<br>
 						</dt>
 						<dd>
-						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" align="right"/></div></div>
+						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"/></div></div>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></div></div>
 						<p class="clearthefloat"></p>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="2" ' , $context['TPortal']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></div></div>
@@ -471,9 +469,9 @@ function template_tpshout_profile()
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="shouts">
-						<div align="left" class="float-items" align="center" style="width:30%;">'.$txt['date'].'</div>
-						<div align="left" class="smalltext float-items" style="width:60%;">',$txt['tp-shout'],'</div>
-						<div class="float-items" align="center" style="width:10%;">'. $txt['tp-edit'] .'</div>
+						<div class="float-items" style="width:30%;text-align:left">'.$txt['date'].'</div>
+						<div class="smalltext float-items" style="width:60%;text-align:left">',$txt['tp-shout'],'</div>
+						<div class="float-items" style="width:10%">'. $txt['tp-edit'] .'</div>
 					</th>
 					</tr>
 				</thead>
@@ -483,9 +481,9 @@ function template_tpshout_profile()
 				echo '
 					<tr class="windowbg">
 					<td class="shouts">
-						<div align="left" class="smalltext float-items" style="width:30%;" >',$art['created'],'</div>
+						<div class="smalltext float-items" style="width:30%;text-align:left" >',$art['created'],'</div>
 						<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
-						<div class="float-items" align="center" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img border="0" src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
+						<div class="float-items" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
 					</td>
 					</tr>';
 			}
@@ -494,7 +492,7 @@ function template_tpshout_profile()
 			echo '
 					<tr class="windowbg">
 					<td class="tpshout_date" colspan="3">
-						<div align="center" class="smalltext">',$txt['tpsummary_noshout'],'</div>	
+						<div class="smalltext">',$txt['tpsummary_noshout'],'</div>	
 					</td>
 					</tr>';
 

@@ -107,6 +107,10 @@ $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><s
 $txt['tp-showforumposts']='Display forum-topics on frontpage from:';
 $txt['tp-numberofposts']='Number of articles/topics to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
+
+$txt['tp-recentboards']='Board Id\'s (comma separated, blank will include all)';
+$txt['tp-recentincexc']='Include or exclude boards';
+
 $txt['tp-whattoshow']='What to display on frontpage:';
 $txt['tp-whizzyeditor']='Yes, WhizzyWig';
 $txt['tp-onlyarticles']='Only articles';
@@ -154,7 +158,6 @@ $txt['tp-articleoptions11'] = 'Display lower panel';
 $txt['tp-articleoptions9'] = 'Display bottom panel';
 
 $txt['tp-articleoptions20'] = 'Do not use SMF templates';
-
 $txt['tp-author']='Author';
 $txt['tp-catarray'] = ' Show when viewing this category listing';
 $txt['tp-catboxauthor'] = 'Show author?';
@@ -199,7 +202,7 @@ $txt['tp-catlayout7'] = 'use custom template';
 $txt['tp-catlayout8'] = 'articles + icons2';
 $txt['tp-articlesettings'] = 'Article Settings';
 $txt['tp-parent'] = 'Parent:';
-$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:<br><span class="smalltext">(Note that this setting only works if display is set to \'Only articles\' on the frontpage.)<span>';
+$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:<br><span class="smalltext">(Note that this setting only works if display is set to \'Only articles\' on the frontpage.)</span>';
 $txt['tp-sortoptions1'] = 'Sort by date';
 $txt['tp-sortoptions2'] = 'Sort by author';
 $txt['tp-sortoptions3'] = 'Sort by position';
@@ -293,7 +296,7 @@ $txt['tp-editgroups'] = 'Block can be edited by extra membergroups';
 $txt['tp-editsave'] = 'Edit - Save';
 $txt['tp-blockconfirmdelete'] = 'Are you sure you want to delete this block?';
 $txt['tp-editblocks'] = 'Blocks';
-$txt['tp-editgrouphelp'] = 'Choose your extra membergroups that can edit this block only. <br><span class="smalltext">(Note that "manage_blocks" and "admin" permission always give this right regardless.)<span>';
+$txt['tp-editgrouphelp'] = 'Choose your extra membergroups that can edit this block only. <br><span class="smalltext">(Note that "manage_blocks" and "admin" permission always give this right regardless.)</span>';
 $txt['tp-langarray'] = 'Show for this language (note that the block HAS to be set somewhere for this to go in effect)';
 $txt['tp-langhelp'] = 'Add custom block title for any installed language - except for default. ';
 $txt['tp-looseblocks'] = 'Block not shown anywhere';
