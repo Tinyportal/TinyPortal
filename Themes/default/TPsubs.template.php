@@ -1774,7 +1774,7 @@ function article_comments($render = true)
 	if(in_array('comments', $context['TPortal']['article']['visual_options']))
 	{
 		echo '
-	<a name="tp-comment">
+	<a name="tp-comment"></a>
 	<div></div>
 	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
@@ -1850,7 +1850,7 @@ function article_morelinks($render = true)
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others']))
 		{
 			echo '
-	<h2 class="titlebg article_extra"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
+	<h2 class="titlebg article_extra"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</a></h2>
 	<div style="overflow: hidden;">
 		<ul class="disc">';
 			foreach($context['TPortal']['article']['others'] as $art)
