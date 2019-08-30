@@ -37,22 +37,6 @@ if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
 elseif (!defined('SMF'))
 	exit('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
 
-// ---------------------------------------------------------------------------------------------------------------------
-global $forum_version;
-if(strpos($forum_version, '2.0') !== false) {
-	define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
-}
-else {
-    $hooks['integrate_redirect']                = 'tpIntegrateRedirect';
-	$hooks['integrate_pre_profile_areas']       = 'tpAddProfileMenu';
-    $hooks['integrate_pre_load_theme']          = 'tpLoadTheme';
-    unset($hooks['integrate_profile_areas']);
-    // We can use a hook of sorts for the default actions now
-    if(isset($context['uninstalling'])) {
-        updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
-    }
-}
-
 if (SMF == 'SSI')
 {
 	// Let's start the main job
@@ -67,7 +51,7 @@ else
 
 function install_mod ()
 {
-	global $context, $mod_name;
+	global $context, $mod_name, $hooks;
 
 	$context['mod_name'] = $mod_name;
 	$context['sub_template'] = 'install_script';
@@ -84,6 +68,33 @@ function install_mod ()
 
 	// Sorry, only logged in admins...
 	isAllowedTo('admin_forum');
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    $smf21 = true;
+    global $forum_version;
+    if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
+        $smf21 = false;
+    }
+    elseif(defined('SMF_VERSION') && strpos(SMF_VERSION, '2.0') !== false) {
+        $smf21 = false;
+    }
+    elseif(!function_exists('ssi_version')) {
+        $smf21 = false;
+    }
+
+    if($smf21 == false) {
+        define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+    }
+    else {
+        $hooks['integrate_redirect']                = 'tpIntegrateRedirect';
+        $hooks['integrate_pre_profile_areas']       = 'tpAddProfileMenu';
+        $hooks['integrate_pre_load_theme']          = 'tpLoadTheme';
+        unset($hooks['integrate_profile_areas']);
+        // We can use a hook of sorts for the default actions now
+        if(isset($context['uninstalling'])) {
+            updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
+        }
+    }
 
 	if (isset($context['uninstalling']))
 		setup_hooks();
