@@ -70,8 +70,19 @@ function install_mod ()
 	isAllowedTo('admin_forum');
 
     // ---------------------------------------------------------------------------------------------------------------------
+    $smf21 = true;
     global $forum_version;
-    if(strpos($forum_version, '2.0') !== false) {
+    if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
+        $smf21 = false;
+    }
+    elseif(defined('SMF_VERSION') && strpos(SMF_VERSION, '2.0') !== false) {
+        $smf21 = false;
+    }
+    elseif(!function_exists('ssi_version')) {
+        $smf21 = false;
+    }
+
+    if($smf21 == false) {
         define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
     }
     else {
