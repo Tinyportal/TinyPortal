@@ -69,9 +69,16 @@ function install_mod ()
 	// Sorry, only logged in admins...
 	isAllowedTo('admin_forum');
 
+	if (isset($context['uninstalling']))
+		setup_hooks();
+}
+
+function setup_hooks ()
+{
+	global $context, $hooks, $forum_version;
+
     // ---------------------------------------------------------------------------------------------------------------------
     $smf21 = true;
-    global $forum_version;
     if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
         $smf21 = false;
     }
@@ -94,16 +101,8 @@ function install_mod ()
         if(isset($context['uninstalling'])) {
             updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
         }
-    }
-
-	if (isset($context['uninstalling']))
-		setup_hooks();
-}
-
-function setup_hooks ()
-{
-	global $context, $hooks;
-
+    }	
+	
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
 	foreach ($hooks as $hook => $function)
 		if(strpos($function, ',') === false) {
