@@ -143,7 +143,7 @@ function template_install_script ()
 	<div class="tborder login"">
 		<div class="cat_bar">
 			<h3 class="catbg">
-				Welcome to the install script of the mod: ' . $context['mod_name'] . '
+				Welcome to the hooks install/uninstall script of ' . $context['mod_name'] . '
 			</h3>
 		</div>
 		<span class="upperframe"><span></span></span>
@@ -155,12 +155,12 @@ function template_install_script ()
 				<ul>
 					<li>
 						<a class="active" href="' . $boardurl . '/do_hooks.php?action=install">
-							<span>Install</span>
+							<span>Install hooks</span>
 						</a>
 					</li>
 					<li>
 						<a class="active" href="' . $boardurl . '/do_hooks.php?action=uninstall">
-							<span>Uninstall</span>
+							<span>Uninstall hooks</span>
 						</a>
 					</li>
 				</ul>
