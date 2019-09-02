@@ -25,7 +25,6 @@ $hooks = array(
 	'integrate_menu_buttons'                    => 'tpAddMenuItems',
 	'integrate_display_buttons'                 => 'addPromoteButton',
 	'integrate_actions'                         => 'addTPActions',
-	'integrate_profile_areas'                   => 'tpAddProfileMenu',
     'integrate_whos_online'                     => 'tpWhosOnline',
     'integrate_pre_log_stats'                   => 'tpStatsIgnore',
 );
@@ -85,24 +84,25 @@ function setup_hooks ()
     elseif(defined('SMF_VERSION') && strpos(SMF_VERSION, '2.0') !== false) {
         $smf21 = false;
     }
-    elseif(!function_exists('ssi_version')) {
+    elseif( (SMF == 'SSI') && !function_exists('ssi_version')) {
         $smf21 = false;
     }
 
     if($smf21 == false) {
         define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+        $hooks['integrate_profile_areas']           = 'tpAddProfileMenu';
     }
     else {
         $hooks['integrate_redirect']                = 'tpIntegrateRedirect';
         $hooks['integrate_pre_profile_areas']       = 'tpAddProfileMenu';
         $hooks['integrate_pre_load_theme']          = 'tpLoadTheme';
-        unset($hooks['integrate_profile_areas']);
+        
         // We can use a hook of sorts for the default actions now
         if(isset($context['uninstalling'])) {
             updateSettings(array('integrate_default_action' => empty($context['uninstalling']) ? 'whichTPAction' : ''));
         }
-    }	
-	
+    }
+
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
 	foreach ($hooks as $hook => $function)
 		if(strpos($function, ',') === false) {
