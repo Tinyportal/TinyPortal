@@ -26,7 +26,7 @@ if(defined('SMF') && ( SMF != 'SSI' ) && loadLanguage('TPortal') == false) {
 
 // Backwards compatible check for Forum Version
 global $forum_version;
-if(!isset($forum_version)) { 
+if(defined('SMF') && ( SMF != 'SSI' ) && !isset($forum_version)) { 
 $forum_version = SMF_FULL_VERSION;
 }
 
