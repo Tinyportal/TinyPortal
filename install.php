@@ -970,7 +970,7 @@ function addDefaults()
 		$smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_dlmanager',
 			array('name' => 'string', 'icon' => 'string', 'access' => 'string', 'type' => 'string'),
-			array('General', ''.$boardurl.'/tp-downloads/icons/folder.png.' ,'-1,0,1', 'dlcat'),
+			array('General', ''.$boardurl.'/tp-files/tp-downloads/icons/folder.png' ,'-1,0,1', 'dlcat'),
 			array('id')
 		);
     }
