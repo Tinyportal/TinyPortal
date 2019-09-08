@@ -3172,12 +3172,12 @@ function template_menubox()
 							</dl>
 						</div>
 					</td>
-					</tr>
-				</tbody>
-				</table>';
+					</tr>';
 			}
 		}
 		echo '
+				</tbody>
+				</table>
 				<div><br>
 					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
