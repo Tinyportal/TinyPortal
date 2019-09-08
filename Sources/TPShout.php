@@ -49,6 +49,7 @@ function TPShoutLoad()
             var tp_images_url = "' .$settings['tp_images_url'] . '";
             var tp_session_id = "' . $context['session_id'] . '";
             var tp_session_var = "' . $context['session_var'] . '";
+            var tp_shout_key_press = false;
             var current_header_smiley = ';
 
     if(empty($options['expand_header_smiley'])) {
@@ -107,7 +108,10 @@ function TPShoutLoad()
                 $(document).ready(function() {
                     $("#tp_shout").keypress(function(event) {
                         if(event.which == 13 && !event.shiftKey) {
-                            TPupdateShouts("save");
+                            tp_shout_key_press = true;
+                            // set a 100 millisecond timeout for the next key press
+                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                            TPupdateShouts(\'save\');
                         }
                     });
                 });
@@ -119,6 +123,9 @@ function TPShoutLoad()
             $(document).ready(function() {
                 $("#tp_shout").keydown(function (event) {
                     if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+                        tp_shout_key_press = true;
+                        // set a 100 millisecond timeout for the next key press
+                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
                         TPupdateShouts(\'save\');
                     }
                     else if (event.keyCode == 13) {
