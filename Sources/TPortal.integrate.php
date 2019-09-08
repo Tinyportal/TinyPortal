@@ -75,14 +75,36 @@ class TPortal_Integrate
 		foreach ($hooks as $hook => $callable) {
             if(is_array($callable)) {
                 foreach($callable as $call ) {
-			        add_integration_function('integrate_' . $hook, $call, false);
+			        self::TPAddIntegrationFunction('integrate_' . $hook, $call, false);
                 }
             }
             else {
-			    add_integration_function('integrate_' . $hook, $callable, false);
+			    self::TPAddIntegrationFunction('integrate_' . $hook, $callable, false);
             }
 		}
         
+    }
+
+    public static function TPAddIntegrationFunction($hook, $call, $perm)
+    {
+
+        // SMF 2.1 doesn't support the seperate file call so lets include it manually here. 
+        if(TP_SMF21 == false && (strpos($call, '|') !== false) ) {
+            $tmp = explode('|', $call);
+            if( is_array($tmp) && isset($tmp[0]) && isset($tmp[1]) ) {
+                global $sourcedir;
+                $filePath = str_replace('$sourcedir', $sourcedir, $tmp[0]);
+                if( file_exists($filePath) ) {
+                    require_once($filePath);
+                }
+                if( is_callable($tmp[1]) ) {
+                    $call = $tmp[1];
+                }
+            }
+        }
+
+	    add_integration_function($hook, $call, $perm);
+
     }
 
     public static function TPortalAutoLoadClass($className)
