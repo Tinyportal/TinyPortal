@@ -101,13 +101,26 @@ if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 			$("#tp_shout").keydown(function (event) {
 				if((event.metaKey || event.ctrlKey) &&  event.keyCode == 13) {
 					TPupdateShouts(\'save\');
+                }
+                else if (event.keyCode == 13) {
 					event.preventDefault();
-					return false;
 				}
 			});
 		});
 		// ]]></script>';
 	}
+}
+else {
+    $context['html_headers'] .= '
+    <script type="text/javascript"><!-- // --><![CDATA[
+        $(document).ready(function() {
+            $("#tp_shout").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                }
+            });
+        });
+    // ]]></script>';
 }
 
 if(isset($_REQUEST['shout']))
