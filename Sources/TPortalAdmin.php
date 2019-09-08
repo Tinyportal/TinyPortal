@@ -2150,8 +2150,14 @@ function do_postchecks()
 						elseif(substr($what, 0, 11) == 'tp_ssiboard') {
                             $data   = file_get_contents("php://input");
                             $output = TPUtil::http_parse_query($data)['tp_ssiboard'];
-                            if(is_array($output)) {
+                            if(is_string($output)) {
+                                $ssi[] = $output;
+                            } 
+                            else if(is_array) {
                                 $ssi = $output;
+                            }
+                            else {
+                                $ssi = array();
                             }
 						}
 					}

@@ -22,17 +22,15 @@ $hooks = array(
     'integrate_pre_load'                        => 'TPortal_Integrate::hookPreLoad'
 );
 
-if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
-    define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
-}
-
 $mod_name = 'TinyPortal';
 
 // ---------------------------------------------------------------------------------------------------------------------
-if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF'))
+if (file_exists(dirname(__FILE__) . '/SSI.php') && !defined('SMF')) {
 	require_once(dirname(__FILE__) . '/SSI.php');
-elseif (!defined('SMF'))
+}
+elseif (!defined('SMF')) {
 	exit('<b>Error:</b> Cannot install - please verify you put this in the same place as SMF\'s index.php.');
+}
 
 if (SMF == 'SSI') {
 	// Let's start the main job
@@ -70,7 +68,22 @@ function install_mod ()
 
 function setup_hooks ()
 {
-	global $context, $hooks;
+	global $context, $hooks, $forum_version;
+    
+    $smf21 = true;
+    if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
+        $smf21 = false;
+    }
+    elseif(defined('SMF_VERSION') && strpos(SMF_VERSION, '2.0') !== false) {
+        $smf21 = false;
+    }
+    elseif( (SMF == 'SSI') && !function_exists('ssi_version')) {
+        $smf21 = false;
+    }
+
+    if($smf21 == false) {
+        define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+    }
 
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
 
