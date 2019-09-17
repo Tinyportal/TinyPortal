@@ -1787,13 +1787,10 @@ div.useravatar img
 {
 	color: #008;
 }
-.editor 
+#quickReplyOptions .quickReplyContent textarea
 {
-	height: 100px;
-	width: 635px;
-	max-width: 95%;
-	min-width: 90%;
-	margin: 0.25em 0 1em 0;
+	box-sizing: border-box;
+	width: 100%;
 }
 .sceditor-container 
 {
