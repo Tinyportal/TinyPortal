@@ -1075,7 +1075,7 @@ function doTPcat()
 					SELECT art.id, IF(art.useintro > 0, art.intro, art.body) AS body, mem.email_address AS email_address,
 						art.date, art.category, art.subject, art.author_id as authorID, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
-						art.fileimport, art.topic, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type,
+						art.fileimport, art.topic, art.locked, art.illustration, IFNULL(art.type, "html") as rendertype ,IFNULL(art.type, "html") as type,
 						IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 						IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType
 					FROM {db_prefix}tp_articles AS art

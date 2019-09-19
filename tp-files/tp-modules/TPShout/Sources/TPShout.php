@@ -89,8 +89,10 @@ if(!empty($context['TPortal']['shout_submit_returnkey'])) {
 		<script><!-- // --><![CDATA[
 			$(document).ready(function() {
 				$("#tp_shout").keypress(function(event) {
-					if(event.which == 13 && !event.shiftKey)
+					if(event.which == 13 && !event.shiftKey) {
 						TPupdateShouts("save");
+					event.preventDefault();
+					}
 				});
 			});
 		// ]]></script>';
