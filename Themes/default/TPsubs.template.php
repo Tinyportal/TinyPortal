@@ -185,16 +185,19 @@ function TPortal_recentbox()
 		foreach($what as $wi => $w)
 		{
 			echo '
-			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
+			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
+			if (!strstr($forum_version, '2.0'))  {
+				if($w['is_new'])
+				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;>' . $txt['new'] . '</a> '; 
+				}
+			echo '
 				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
-			if(!$w['new'])
-			{
-			if (strstr($forum_version, '2.0'))
-				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-			else
-				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
-			}
+			if (strstr($forum_version, '2.0')) 
+				{
+				if($w['is_new'])
+					echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>'; 
+				}
 			echo '<br><span class="smalltext">['.$w['time'].']</span>
 			</li>';
 			$coun++;
@@ -222,16 +225,19 @@ function TPortal_recentbox()
 		foreach($what as $wi => $w)
 		{
 			echo '
-			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
+			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
+			if (!strstr($forum_version, '2.0'))  {
+				if($w['is_new'])
+				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a>'; 
+				}
+			echo '
 					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
-			if(!$w['new'])
-			{
-			if (strstr($forum_version, '2.0'))
-				echo ' <a href="'.$w['href'].'"><img src="'. $settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-			else
-				echo ' <a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
-			}
+			if (strstr($forum_version, '2.0')) 
+				{
+				if($w['is_new'])
+					echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>'; 
+				}
 			echo '<br><span class="smalltext">['.$w['time'].']</span>
 			</li>';
 			$coun++;
