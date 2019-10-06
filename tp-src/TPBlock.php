@@ -68,7 +68,7 @@ class TPBlock extends TPBase {
             19  => 'articlebox',
             20  => 'categorybox',
             21  => 'tpmodulebox',
-        };
+        );
 
         $this->blockPanel = array(
             'left',
@@ -147,7 +147,7 @@ class TPBlock extends TPBase {
 
     public function getBlockType( $type_id = null ) {{{
 
-        if(!is_null($type_id) && array_key_exists($type_id, $this->blockTypes)) {
+        if(!is_null($type_id) && array_key_exists($type_id, $this->blockType)) {
             $types = $this->blockType[$type_id];
         }
         else {
