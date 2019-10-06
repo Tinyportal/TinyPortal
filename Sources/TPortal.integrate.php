@@ -88,7 +88,7 @@ class TPortal_Integrate
     public static function TPAddIntegrationFunction($hook, $call, $perm)
     {
 
-        // SMF 2.1 doesn't support the seperate file call so lets include it manually here. 
+        // SMF 2.0.x doesn't support the seperate file call so lets include it manually here. 
         if(TP_SMF21 == false && (strpos($call, '|') !== false) ) {
             $tmp = explode('|', $call);
             if( is_array($tmp) && isset($tmp[0]) && isset($tmp[1]) ) {
@@ -400,19 +400,19 @@ class TPortal_Integrate
 
         // Add the admin button
 		if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox')) {
-        $buttons = array_merge(
-                array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
-                array (
-                    'tpadmin' => array (
-                        'icon' => 'tinyportal/menu_tp.png',
-                        'title' => $txt['tp-tphelp'],
-                        'href' => $scripturl.'?action=tpadmin',
-                        'show' =>  TPcheckAdminAreas(),
-                        'sub_buttons' => tp_getbuttons(),
+            $buttons = array_merge(
+                    array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
+                    array (
+                        'tpadmin' => array (
+                            'icon' => 'tinyportal/menu_tp.png',
+                            'title' => $txt['tp-tphelp'],
+                            'href' => $scripturl.'?action=tpadmin',
+                            'show' =>  TPcheckAdminAreas(),
+                            'sub_buttons' => tp_getbuttons(),
+                        ),
                     ),
-                ),
-                $buttons
-        );
+                    $buttons
+            );
 		}
         else {
             $buttons = array_merge(

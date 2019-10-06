@@ -111,9 +111,6 @@ function TPdlmanager()
         loadtemplate('TPdlmanager');
         $context['sub_template'] = 'dlsubmitsuccess';
     }
-    else {
-        redirectexit('action=forum');
-    }
 
 }
 
