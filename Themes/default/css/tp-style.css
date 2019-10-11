@@ -1539,16 +1539,11 @@ h2.catbg img.icon
 }
 
 /* avatar styles */
-span.tpavatar
-{
+.tpavatar {
 	float: left;
-	margin-top: 2px;
-	margin-right: 10px;
-	padding: 1px;
-	display: block;
-	overflow: auto;
+	padding: 3px 11px 0 0;
 }
-span.tpavatar img
+.tpavatar img
 {
 	width: 40px;
 	height: auto;
