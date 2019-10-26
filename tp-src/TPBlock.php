@@ -21,7 +21,10 @@ if (!defined('SMF'))
 
 class TPBlock extends TPBase {
 
-    private $dBStructure = array();
+    private $dBStructure    = array();
+    private $blockType      = array();
+    private $blockBar       = array();
+    private $blockPanel     = array();
 
     public function __construct() {{{
         parent::__construct();
@@ -42,6 +45,51 @@ class TPBlock extends TPBase {
             'editgroups'    => 'text',
             'settings'      => 'text',
         );
+
+        $this->blockType = array( 
+            1   => 'no',
+            2   => 'userbox', 
+            3   => 'newsbox',
+            4   => 'statsbox',
+            5   => 'searchbox',
+            6   => 'html',
+            7   => 'onlinebox',
+            8   => 'themebox',
+            9   => 'oldshoutbox',
+            10  => 'catmenu',
+            11  => 'phpbox',
+            12  => 'scriptbox',
+            13  => 'recentbox',
+            14  => 'ssi',
+            15  => 'module',
+            16  => 'rss',
+            17  => 'sitemap',
+            18  => 'admin',
+            19  => 'articlebox',
+            20  => 'categorybox',
+            21  => 'tpmodulebox',
+        );
+
+        $this->blockPanel = array(
+            'left',
+            'right',
+            'center',
+            'top',
+            'bottom',
+            'lower',
+            'front',
+        );
+        
+        $this->blockBar = array(
+            1 => 'left',
+            2 => 'right',
+            3 => 'center',
+            4 => 'front',
+            5 => 'bottom',
+            6 => 'top',
+            7 => 'lower',
+        );
+
 
     }}}
 
@@ -96,6 +144,46 @@ class TPBlock extends TPBase {
         );
 
     }}}
+
+    public function getBlockType( $type_id = null ) {{{
+
+        if(!is_null($type_id) && array_key_exists($type_id, $this->blockType)) {
+            $types = $this->blockType[$type_id];
+        }
+        else {
+            $types = $this->blockType;
+        }
+
+        return $types;
+
+    }}}
+
+    public function getBlockPanel( $panel_id = null ) {{{
+
+        if(!is_null($panel_id) && array_key_exists($panel_id, $this->blockPanel)) {
+            $panels = $this->blockPanel[$panel_id];
+        }
+        else {
+            $panels = $this->blockPanel;
+        }
+
+        return $panels;
+
+    }}}
+
+    public function getBlockBar( $bar_id = null ) {{{
+
+        if(!is_null($bar_id) && array_key_exists($bar_id, $this->blockBar)) {
+            $bars = $this->blockBar[$bar_id];
+        }
+        else {
+            $bars = $this->blockBar;
+        }
+
+        return $bars;
+
+    }}}
+
 }
 
 ?>

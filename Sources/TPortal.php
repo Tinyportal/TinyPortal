@@ -1642,10 +1642,6 @@ function doTPfrontpage() {{{
 
 	// collect up frontblocks
 	$blocks = array('front' => array());
-	$blocktype = array('no','userbox','newsbox','statsbox','searchbox','html',
-		'onlinebox','themebox','oldshoutbox','catmenu','phpbox','scriptbox','recentbox',
-		'ssi','module','rss','sitemap','oldadmin','articlebox','categorybox','tpmodulebox');
-
 
 	// set the membergroup access
     $access = '';
@@ -1691,6 +1687,8 @@ function doTPfrontpage() {{{
 	$fetch_article_titles = array();
 	$panels = array(4 => 'front');
 
+    $tpBlock = new TPBlock();
+
 	if ($smcFunc['db_num_rows']($request) > 0) {
         while($row = $smcFunc['db_fetch_assoc']($request)) {
 
@@ -1725,7 +1723,7 @@ function doTPfrontpage() {{{
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
 				'title' => strip_tags($row['title'], '<center>'),
-				'type' => $blocktype[$row['type']],
+				'type' => $tpBlock->getBlockType($row['type']),
 				'body' => $row['body'],
 				'visible' => $row['visible'],
 				'var1' => $set['var1'],
