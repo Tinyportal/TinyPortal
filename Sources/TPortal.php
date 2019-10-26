@@ -871,7 +871,7 @@ function doTPcat() {{{
 				    SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body, mem.email_address AS email_address,
 						art.date, art.category, art.subject, art.author_id as author_id, art.frame, art.comments, art.options,
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
-						art.fileimport, art.topic, art.illustration, COALESCE(art.type, \'html\') AS rendertype , COALESCE(art.type, \'html\') AS type,
+						art.fileimport, art.topic, art.locked, art.illustration, COALESCE(art.type, \'html\') AS rendertype , COALESCE(art.type, \'html\') AS type,
 						COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
 						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type
 					FROM {db_prefix}tp_articles AS art

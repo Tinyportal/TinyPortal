@@ -176,7 +176,7 @@ function template_settings()
 
 				<dl class="settings">
 					<dt>
-						<label for="tp_frontpage_title">', $txt['tp-frontpagetitle'], '</label>
+						<label for="tp_frontpage_title">', $txt['tp-frontpagetitle'], '</label><br>
 						<span class="smalltext">' , $txt['tp-frontpagetitle2'] , '</span>
 					</dt>
 					<dd>
@@ -223,7 +223,7 @@ function template_settings()
 						<input name="tp_uselangoption" type="radio" value="0" ' , $context['TPortal']['uselangoption']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label>
+						<label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label><br>
 						<span class="smalltext">'.$txt['tp-use_groupcolordesc'].'</span>
 					</dt>
 					<dd>
@@ -264,7 +264,7 @@ function template_settings()
 						<input name="tp_admin_showblocks" type="radio" value="0" ' , $context['TPortal']['admin_showblocks']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
 					<dt>
-						<label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label>
+						<label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label><br>
 						<span class="smalltext">'.$txt['tp-imageproxycheckdesc'].'</span>
 					</dt>
 					<dd>
@@ -275,7 +275,7 @@ function template_settings()
                     if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
                         echo '
                         <dt>
-                            <label for="tp_fulltextsearch">', $txt['tp-fulltextsearch'], '</label>
+                            <label for="tp_fulltextsearch">', $txt['tp-fulltextsearch'], '</label><br>
                             <span class="smalltext">' , $txt['tp-fulltextsearchdesc'] , '</span>
                         </dt>
                         <dd>
@@ -285,7 +285,7 @@ function template_settings()
                     }
 					echo '
 					<dt>
-						<label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label>
+						<label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label><br>
 						<span class="smalltext">' , $txt['tp-disabletemplateevaldesc'] , '</span>
 					</dt>
 					<dd>
@@ -293,28 +293,28 @@ function template_settings()
                         <input name="tp_disable_template_eval" type="radio" value="0" ' , $context['TPortal']['disable_template_eval']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 					</dd>
                     <dt>
-						<label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
+						<label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label><br>
 						<span class="smalltext">' , $txt['tp-imageuploadpathdesc'] , '</span>
 					</dt>
 					<dd>
-						<input name="tp_image_upload_path" id="tp_image_upload_path" type="text" value="' , !empty($context['TPortal']['image_upload_path']) ? $context['TPortal']['image_upload_path'] : '' , '">
+						<input size="50" name="tp_image_upload_path" id="tp_image_upload_path" type="text" value="' , !empty($context['TPortal']['image_upload_path']) ? $context['TPortal']['image_upload_path'] : '' , '">
 					</dd>
                     <dt>
-						<label for="tp_download_upload_path">', $txt['tp-downloaduploadpath'], '</label>
+						<label for="tp_download_upload_path">', $txt['tp-downloaduploadpath'], '</label><br>
 						<span class="smalltext">' , $txt['tp-downloaduploadpathdesc'] , '</span>
 					</dt>
 					<dd>
-						<input name="tp_download_upload_path" id="tp_download_upload_path" type="text" value="' , !empty($context['TPortal']['download_upload_path']) ? $context['TPortal']['download_upload_path'] : '' , '">
+						<input size="50" name="tp_download_upload_path" id="tp_download_upload_path" type="text" value="' , !empty($context['TPortal']['download_upload_path']) ? $context['TPortal']['download_upload_path'] : '' , '">
 					</dd>
                     <dt>
-						<label for="tp_blockcode_upload_path">', $txt['tp-blockcodeuploadpath'], '</label>
+						<label for="tp_blockcode_upload_path">', $txt['tp-blockcodeuploadpath'], '</label><br>
 						<span class="smalltext">' , $txt['tp-blockcodeuploadpathdesc'] , '</span>
 					</dt>
 					<dd>
-						<input name="tp_blockcode_upload_path" id="tp_blockcode_upload_path" type="text" value="' , !empty($context['TPortal']['blockcode_upload_path']) ? $context['TPortal']['blockcode_upload_path'] : '' , '">
+						<input size="50" name="tp_blockcode_upload_path" id="tp_blockcode_upload_path" type="text" value="' , !empty($context['TPortal']['blockcode_upload_path']) ? $context['TPortal']['blockcode_upload_path'] : '' , '">
 					</dd>
                     <dt>
-						<label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label>
+						<label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label><br>
 						<span class="smalltext">' , $txt['tp-copyrightremovaldesc'] , '</span>
 					</dt>
 					<dd>
@@ -1842,23 +1842,23 @@ function template_blocks()
 							</div>
 							<select size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
-								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="2"' ,$lblock['type']=='newsbox' ? ' selected' : '' , '>', $txt['tp-blocktype2'] , '</option>
-								<option value="3"' ,$lblock['type']=='statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
-								<option value="4"' ,$lblock['type']=='searchbox' ? ' selected' : '' , '>', $txt['tp-blocktype4'] , '</option>
-								<option value="5"' ,$lblock['type']=='html' ? ' selected' : '' , '>', $txt['tp-blocktype5'] , '</option>
-								<option value="6"' ,$lblock['type']=='onlinebox' ? ' selected' : '' , '>', $txt['tp-blocktype6'] , '</option>
-								<option value="7"' ,$lblock['type']=='themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
-								<option value="9"' ,$lblock['type']=='catmenu' ? ' selected' : '' , '>', $txt['tp-blocktype9'] , '</option>
-								<option value="10"' ,$lblock['type']=='phpbox' ? ' selected' : '' , '>', $txt['tp-blocktype10'] , '</option>
-								<option value="11"' ,$lblock['type']=='scriptbox' ? ' selected' : '' , '>', $txt['tp-blocktype11'] , '</option>
-								<option value="12"' ,$lblock['type']=='recentbox' ? ' selected' : '' , '>', $txt['tp-blocktype12'] , '</option>
-								<option value="13"' ,$lblock['type']=='ssi' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
-								<option value="14"' ,$lblock['type']=='module' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
-								<option value="15"' ,$lblock['type']=='rss' ? ' selected' : '' , '>', $txt['tp-blocktype15'] , '</option>
-								<option value="16"' ,$lblock['type']=='sitemap' ? ' selected' : '' , '>', $txt['tp-blocktype16'] , '</option>
 								<option value="18"' ,$lblock['type']=='articlebox' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$lblock['type']=='categorybox' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
+								<option value="14"' ,$lblock['type']=='module' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
+								<option value="5"' ,$lblock['type']=='html' ? ' selected' : '' , '>', $txt['tp-blocktype5'] , '</option>
+								<option value="11"' ,$lblock['type']=='scriptbox' ? ' selected' : '' , '>', $txt['tp-blocktype11'] , '</option>
+								<option value="10"' ,$lblock['type']=='phpbox' ? ' selected' : '' , '>', $txt['tp-blocktype10'] , '</option>
+								<option value="9"' ,$lblock['type']=='catmenu' ? ' selected' : '' , '>', $txt['tp-blocktype9'] , '</option>
+								<option value="2"' ,$lblock['type']=='newsbox' ? ' selected' : '' , '>', $txt['tp-blocktype2'] , '</option>
+								<option value="6"' ,$lblock['type']=='onlinebox' ? ' selected' : '' , '>', $txt['tp-blocktype6'] , '</option>
+								<option value="12"' ,$lblock['type']=='recentbox' ? ' selected' : '' , '>', $txt['tp-blocktype12'] , '</option>
+								<option value="15"' ,$lblock['type']=='rss' ? ' selected' : '' , '>', $txt['tp-blocktype15'] , '</option>
+								<option value="4"' ,$lblock['type']=='searchbox' ? ' selected' : '' , '>', $txt['tp-blocktype4'] , '</option>
+								<option value="16"' ,$lblock['type']=='sitemap' ? ' selected' : '' , '>', $txt['tp-blocktype16'] , '</option>
+								<option value="13"' ,$lblock['type']=='ssi' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
+								<option value="3"' ,$lblock['type']=='statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
+								<option value="7"' ,$lblock['type']=='themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
+								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
 								<option value="20"' ,$lblock['type']=='tpmodulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
 			// theme hooks
 			if(function_exists('ctheme_tp_blocks'))
@@ -2139,23 +2139,23 @@ function template_addblock()
 						<dt><h3>' , $txt['tp-chooseblock'] , '</h3></dt>
 						<dd>
 							<div class="tp_largelist2">
-								<input type="radio" name="tp_addblock" id="tp_addblock1" value="1" checked /><label for="tp_addblock1">' . $txt['tp-blocktype1'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock2" value="2" /><label for="tp_addblock2">' . $txt['tp-blocktype2'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock3" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock4" value="4" /><label for="tp_addblock4">' . $txt['tp-blocktype4'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock5" value="5" /><label for="tp_addblock5">' . $txt['tp-blocktype5'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock6" value="6" /><label for="tp_addblock6">' . $txt['tp-blocktype6'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock7" value="7" /><label for="tp_addblock7">' . $txt['tp-blocktype7'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock9" value="9" /><label for="tp_addblock9">' . $txt['tp-blocktype9'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock10" value="10" /><label for="tp_addblock10">' . $txt['tp-blocktype10'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock11" value="11" /><label for="tp_addblock11">' . $txt['tp-blocktype11'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock12" value="12" /><label for="tp_addblock12">' . $txt['tp-blocktype12'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock13" value="13" /><label for="tp_addblock13">' . $txt['tp-blocktype13'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock14" value="14" /><label for="tp_addblock14">' . $txt['tp-blocktype14'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock15" value="15" /><label for="tp_addblock15">' . $txt['tp-blocktype15'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock16" value="16" /><label for="tp_addblock16">' . $txt['tp-blocktype16'] . '</label><br>
-								<input type="radio" name="tp_addblock" id="tp_addblock18" value="18" /><label for="tp_addblock18">' . $txt['tp-blocktype18'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock18" value="18" checked /><label for="tp_addblock18">' . $txt['tp-blocktype18'] . '</label><br>
 								<input type="radio" name="tp_addblock" id="tp_addblock19" value="19" /><label for="tp_addblock19">' . $txt['tp-blocktype19'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock14" value="14" /><label for="tp_addblock14">' . $txt['tp-blocktype14'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock5" value="5" /><label for="tp_addblock5">' . $txt['tp-blocktype5'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock11" value="11" /><label for="tp_addblock11">' . $txt['tp-blocktype11'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock10" value="10" /><label for="tp_addblock10">' . $txt['tp-blocktype10'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock9" value="9" /><label for="tp_addblock9">' . $txt['tp-blocktype9'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock2" value="2" /><label for="tp_addblock2">' . $txt['tp-blocktype2'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock6" value="6" /><label for="tp_addblock6">' . $txt['tp-blocktype6'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock12" value="12" /><label for="tp_addblock12">' . $txt['tp-blocktype12'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock15" value="15" /><label for="tp_addblock15">' . $txt['tp-blocktype15'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock4" value="4" /><label for="tp_addblock4">' . $txt['tp-blocktype4'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock16" value="16" /><label for="tp_addblock16">' . $txt['tp-blocktype16'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock13" value="13" /><label for="tp_addblock13">' . $txt['tp-blocktype13'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock3" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock7" value="7" /><label for="tp_addblock7">' . $txt['tp-blocktype7'] . '</label><br>
+								<input type="radio" name="tp_addblock" id="tp_addblock1" value="1" /><label for="tp_addblock1">' . $txt['tp-blocktype1'] . '</label><br>
 								<input type="radio" name="tp_addblock" id="tp_addblock20" value="20" /><label for="tp_addblock20">' . $txt['tp-blocktype20'] . '</label><br>
 							</div>
 						</dd>
@@ -2240,24 +2240,25 @@ function template_blockedit()
 						<dd>
 							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type">
 								<option value="0"' ,$context['TPortal']['blockedit']['type']=='0' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
-								<option value="1"' ,$context['TPortal']['blockedit']['type']=='1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="2"' ,$context['TPortal']['blockedit']['type']=='2' ? ' selected' : '' , '>', $txt['tp-blocktype2'] , '</option>
-								<option value="3"' ,$context['TPortal']['blockedit']['type']=='3' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
-								<option value="4"' ,$context['TPortal']['blockedit']['type']=='4' ? ' selected' : '' , '>', $txt['tp-blocktype4'] , '</option>
-								<option value="5"' ,$context['TPortal']['blockedit']['type']=='5' ? ' selected' : '' , '>', $txt['tp-blocktype5'] , '</option>
-								<option value="6"' ,$context['TPortal']['blockedit']['type']=='6' ? ' selected' : '' , '>', $txt['tp-blocktype6'] , '</option>
-								<option value="7"' ,$context['TPortal']['blockedit']['type']=='7' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
-								<option value="9"' ,$context['TPortal']['blockedit']['type']=='9' ? ' selected' : '' , '>', $txt['tp-blocktype9'] , '</option>
-								<option value="10"' ,$context['TPortal']['blockedit']['type']=='10' ? ' selected' : '' , '>', $txt['tp-blocktype10'] , '</option>
-								<option value="11"' ,$context['TPortal']['blockedit']['type']=='11' ? ' selected' : '' , '>', $txt['tp-blocktype11'] , '</option>
-								<option value="12"' ,$context['TPortal']['blockedit']['type']=='12' ? ' selected' : '' , '>', $txt['tp-blocktype12'] , '</option>
-								<option value="13"' ,$context['TPortal']['blockedit']['type']=='13' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
-								<option value="14"' ,$context['TPortal']['blockedit']['type']=='14' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
-								<option value="15"' ,$context['TPortal']['blockedit']['type']=='15' ? ' selected' : '' , '>', $txt['tp-blocktype15'] , '</option>
-								<option value="16"' ,$context['TPortal']['blockedit']['type']=='16' ? ' selected' : '' , '>', $txt['tp-blocktype16'] , '</option>
 								<option value="18"' ,$context['TPortal']['blockedit']['type']=='18' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$context['TPortal']['blockedit']['type']=='19' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
+								<option value="14"' ,$context['TPortal']['blockedit']['type']=='14' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
+								<option value="5"' ,$context['TPortal']['blockedit']['type']=='5' ? ' selected' : '' , '>', $txt['tp-blocktype5'] , '</option>
+								<option value="11"' ,$context['TPortal']['blockedit']['type']=='11' ? ' selected' : '' , '>', $txt['tp-blocktype11'] , '</option>
+								<option value="10"' ,$context['TPortal']['blockedit']['type']=='10' ? ' selected' : '' , '>', $txt['tp-blocktype10'] , '</option>
+								<option value="9"' ,$context['TPortal']['blockedit']['type']=='9' ? ' selected' : '' , '>', $txt['tp-blocktype9'] , '</option>
+								<option value="2"' ,$context['TPortal']['blockedit']['type']=='2' ? ' selected' : '' , '>', $txt['tp-blocktype2'] , '</option>
+								<option value="6"' ,$context['TPortal']['blockedit']['type']=='6' ? ' selected' : '' , '>', $txt['tp-blocktype6'] , '</option>
+								<option value="12"' ,$context['TPortal']['blockedit']['type']=='12' ? ' selected' : '' , '>', $txt['tp-blocktype12'] , '</option>
+								<option value="15"' ,$context['TPortal']['blockedit']['type']=='15' ? ' selected' : '' , '>', $txt['tp-blocktype15'] , '</option>
+								<option value="4"' ,$context['TPortal']['blockedit']['type']=='4' ? ' selected' : '' , '>', $txt['tp-blocktype4'] , '</option>
+								<option value="16"' ,$context['TPortal']['blockedit']['type']=='16' ? ' selected' : '' , '>', $txt['tp-blocktype16'] , '</option>
+								<option value="13"' ,$context['TPortal']['blockedit']['type']=='13' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
+								<option value="3"' ,$context['TPortal']['blockedit']['type']=='3' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
+								<option value="7"' ,$context['TPortal']['blockedit']['type']=='7' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
+								<option value="1"' ,$context['TPortal']['blockedit']['type']=='1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
 								<option value="20"' ,$context['TPortal']['blockedit']['type']=='20' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
+
 		// theme hooks
 		if(function_exists('ctheme_tp_blocks'))
 		{
@@ -2267,11 +2268,15 @@ function template_blockedit()
 		echo '
 							</select>
 						</dd>
+						<dt>
+							<br><div class="padding-div"><input type="submit" class="button button_submit" value="' . $txt['tp-send'] . '" /></div>
+						</dt>
+						<dd>
+							<div>
+								<div id="blocknotice" class="smallpadding error middletext" style="display: none;">' , $txt['tp-blocknotice'] , '</div>
+							</div>
+						</dd>
 					</dl>
-					<div class="padding-div"><input type="submit" class="button button_submit" value="' . $txt['tp-send'] . '" /></div>
-					<div>
-						<div id="blocknotice" class="smallpadding error middletext" style="display: none;">' , $txt['tp-blocknotice'] , '</div>
-					</div>
 					<div class="windowbg2 padding-div">
 					 <div>';
 // Block types: 5 (BBC code), 10 (PHP Code) and 11 (HTML & Javascript code)
@@ -2279,16 +2284,16 @@ function template_blockedit()
 			{
 				if($context['TPortal']['blockedit']['type']=='11')
 				{
-					echo '</div><div><b>',$txt['tp-body'],'</b> <br><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
+					echo '</div><hr><div><b>',$txt['tp-body'],'</b> <br><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
 				}
 				elseif($context['TPortal']['blockedit']['type']=='5')
 				{
 						echo '
-						</div><div>';
+						</div><hr><div>';
 					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else
-						echo '<b>'.$txt['tp-body'].'</b>';
+						echo '<hr><b>'.$txt['tp-body'].'</b>';
 
 				if($context['TPortal']['blockedit']['type']=='10')
 				{
@@ -2375,14 +2380,14 @@ function template_blockedit()
 						</div><div>';
 						echo '
 						<hr><dl class="settings">
-						<dt></dt>
+						<dt>'.$txt['tp-showssibox'].'</dt>
 						<dd>
 							<input name="tp_block_body" type="radio" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '> ' .$txt['tp-none-']. '<br>
-							<input name="tp_block_body" type="radio" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '> '.$txt['tp-ssi-topboards']. '<br>
-							<input name="tp_block_body" type="radio" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '> '.$txt['tp-ssi-topposters']. '<br>
-							<input name="tp_block_body" type="radio" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '> '.$txt['tp-ssi-topreplies']. '<br>
-							<input name="tp_block_body" type="radio" value="topviews" ' , $context['TPortal']['blockedit']['body']=='topviews' ? 'checked' : '' , '> '.$txt['tp-ssi-topviews']. '<br>
-							<input name="tp_block_body" type="radio" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '> '.$txt['tp-ssi-calendar']. '<br>
+							<input name="tp_block_body" id="tp_block_body1" type="radio" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-ssi-topboards']. '</label><br>
+							<input name="tp_block_body" id="tp_block_body2" type="radio" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-ssi-topposters']. '</label><br>
+							<input name="tp_block_body" id="tp_block_body3" type="radio" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-ssi-topreplies']. '</label><br>
+							<input name="tp_block_body" id="tp_block_body4" type="radio" value="topviews" ' , $context['TPortal']['blockedit']['body']=='topviews' ? 'checked' : '' , '><label for="tp_block_body4"> '.$txt['tp-ssi-topviews']. '</label><br>
+							<input name="tp_block_body" id="tp_block_body5" type="radio" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '><label for="tp_block_body5"> '.$txt['tp-ssi-calendar']. '</label><br>
 						</dd>
 					</dl>';
 			}
@@ -2391,11 +2396,12 @@ function template_blockedit()
 					echo '
 						</div><div>
 						<hr><dl class="settings">
-						<dt></dt>
+						<dt>'.$txt['tp-showmodulebox'].'</dt>
 						<dd>';
-				foreach($context['TPortal']['tpmodules']['blockrender'] as $tpm)
+				foreach($context['TPortal']['tpmodules']['blockrender'] as $tpm) {
 					echo '
-						<br><input name="tp_block_var1" type="radio" value="' . $tpm['id'] . '" ' , $context['TPortal']['blockedit']['var1']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'];
+						<input name="tp_block_var1" type="radio" value="' . $tpm['id'] . '" ' , $context['TPortal']['blockedit']['var1']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'].'<br>';
+					}
 					echo '
 						</dd>
 					</dl>'; 
@@ -2406,17 +2412,18 @@ function template_blockedit()
 						echo '
 						</div><div>
 						<hr><dl class="settings">
-						<dt></dt>
+						<dt>'.$txt['tp-showstatsbox'].'</dt>
 						<dd>
-							<input name="tp_block_body" type="radio" value="dl-stats" ' , $context['TPortal']['blockedit']['body']=='dl-stats' ? 'checked' : '' , '> '.$txt['tp-module1'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats2" ' , $context['TPortal']['blockedit']['body']=='dl-stats2' ? 'checked' : '' , '> '.$txt['tp-module2'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats3" ' , $context['TPortal']['blockedit']['body']=='dl-stats3' ? 'checked' : '' , '> '.$txt['tp-module3'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats4" ' , $context['TPortal']['blockedit']['body']=='dl-stats4' ? 'checked' : '' , '> '.$txt['tp-module4'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats5" ' , $context['TPortal']['blockedit']['body']=='dl-stats5' ? 'checked' : '' , '> '.$txt['tp-module5'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats6" ' , $context['TPortal']['blockedit']['body']=='dl-stats6' ? 'checked' : '' , '> '.$txt['tp-module6'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats7" ' , $context['TPortal']['blockedit']['body']=='dl-stats7' ? 'checked' : '' , '> '.$txt['tp-module7'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats8" ' , $context['TPortal']['blockedit']['body']=='dl-stats8' ? 'checked' : '' , '> '.$txt['tp-module8'].'<br>
-							<input name="tp_block_body" type="radio" value="dl-stats9" ' , $context['TPortal']['blockedit']['body']=='dl-stats9' ? 'checked' : '' , '> '.$txt['tp-module9'].'<br>
+							<input name="tp_block_body" type="radio" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '> ' .$txt['tp-none-']. '<br>
+							<input name="tp_block_body" id="tp_block_body1" type="radio" value="dl-stats" ' , $context['TPortal']['blockedit']['body']=='dl-stats' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-module1'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body2" type="radio" value="dl-stats2" ' , $context['TPortal']['blockedit']['body']=='dl-stats2' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-module2'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body3" type="radio" value="dl-stats3" ' , $context['TPortal']['blockedit']['body']=='dl-stats3' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-module3'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body4" type="radio" value="dl-stats4" ' , $context['TPortal']['blockedit']['body']=='dl-stats4' ? 'checked' : '' , '><label for="tp_block_body4"> '.$txt['tp-module4'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body5" type="radio" value="dl-stats5" ' , $context['TPortal']['blockedit']['body']=='dl-stats5' ? 'checked' : '' , '><label for="tp_block_body5"> '.$txt['tp-module5'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body6" type="radio" value="dl-stats6" ' , $context['TPortal']['blockedit']['body']=='dl-stats6' ? 'checked' : '' , '><label for="tp_block_body6"> '.$txt['tp-module6'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body7" type="radio" value="dl-stats7" ' , $context['TPortal']['blockedit']['body']=='dl-stats7' ? 'checked' : '' , '><label for="tp_block_body7"> '.$txt['tp-module7'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body8" type="radio" value="dl-stats8" ' , $context['TPortal']['blockedit']['body']=='dl-stats8' ? 'checked' : '' , '><label for="tp_block_body8"> '.$txt['tp-module8'].'</label><br>
+							<input name="tp_block_body" id="tp_block_body9" type="radio" value="dl-stats9" ' , $context['TPortal']['blockedit']['body']=='dl-stats9' ? 'checked' : '' , '><label for="tp_block_body9"> '.$txt['tp-module9'].'</label><br>
 						</dd>
 					</dl>';
 			}
@@ -2497,8 +2504,7 @@ function template_blockedit()
 			elseif($context['TPortal']['blockedit']['type']=='16'){
 				echo '
 					</div><div>
-					<hr>
-					<dl class="settings">
+					<hr><dl class="settings">
 						<dt>'.$txt['tp-sitemapmodules'].'<ul class="disc"></dt>
 						<dd>';
 				if($context['TPortal']['show_download']=='1')
@@ -2515,7 +2521,7 @@ function template_blockedit()
 
 				echo '
 					</div><div>
-					<dl class="settings">
+					<hr><dl class="settings">
 						<dt>',$txt['tp-showarticle'],'</dt>
 						<dd>
 							<select name="tp_block_body">';
@@ -3172,12 +3178,12 @@ function template_menubox()
 							</dl>
 						</div>
 					</td>
-					</tr>
-				</tbody>
-				</table>';
+					</tr>';
 			}
 		}
 		echo '
+				</tbody>
+				</table>
 				<div><br>
 					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
