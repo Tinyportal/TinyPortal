@@ -2153,7 +2153,7 @@ function do_postchecks()
                             if(is_string($output)) {
                                 $ssi[] = $output;
                             } 
-                            else if(is_array) {
+                            else if(is_array($output)) {
                                 $ssi = $output;
                             }
                             else {
