@@ -66,6 +66,10 @@ class TPArticle extends TPBase
 
     public function getArticle($article) {{{
 
+        if(empty($article)) {
+            return;
+        }
+
         $now        = time();
         if(is_array($article)) {
             $where      = 'art.id IN ({array_string:page})';
@@ -247,7 +251,7 @@ class TPArticle extends TPBase
     public function getArticlesInCategory( $category ) {{{
 
         if(is_array($category)) {
-            $where = 'category = {array_int:cat}';
+            $where = 'category IN ({array_int:cat})';
         }
         else {
             $where = 'category = {int:cat}';
