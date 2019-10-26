@@ -151,7 +151,8 @@ function TPShoutLoad()
 
 }
 
-function TPShout() {
+function TPShout()
+{
     
     global $context, $settings, $options, $modSettings;
 
@@ -318,7 +319,7 @@ function tpshout_admin()
 	$context['template_layers'][] = 'subtab';
 	loadlanguage('TPortalAdmin');
 
-	TPadminIndex('shout', true);
+	TPadminIndex('shout');
 	$context['current_action'] = 'admin';
 
 	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks'])) {
