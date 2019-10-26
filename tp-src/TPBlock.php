@@ -47,27 +47,27 @@ class TPBlock extends TPBase {
         );
 
         $this->blockType = array( 
-            1   => 'no',
-            2   => 'userbox', 
-            3   => 'newsbox',
-            4   => 'statsbox',
-            5   => 'searchbox',
-            6   => 'html',
-            7   => 'onlinebox',
-            8   => 'themebox',
-            9   => 'oldshoutbox',
-            10  => 'catmenu',
-            11  => 'phpbox',
-            12  => 'scriptbox',
-            13  => 'recentbox',
-            14  => 'ssi',
-            15  => 'module',
-            16  => 'rss',
-            17  => 'sitemap',
-            18  => 'admin',
-            19  => 'articlebox',
-            20  => 'categorybox',
-            21  => 'tpmodulebox',
+            0   => 'no',
+            1   => 'userbox', 
+            2   => 'newsbox',
+            3   => 'statsbox',
+            4   => 'searchbox',
+            5   => 'html',
+            6   => 'onlinebox',
+            7   => 'themebox',
+            8   => 'oldshoutbox',
+            9   => 'catmenu',
+            10  => 'phpbox',
+            11  => 'scriptbox',
+            12  => 'recentbox',
+            13  => 'ssi',
+            14  => 'module',
+            15  => 'rss',
+            16  => 'sitemap',
+            17  => 'admin',
+            18  => 'articlebox',
+            19  => 'categorybox',
+            20  => 'tpmodulebox',
         );
 
         $this->blockPanel = array(
@@ -81,13 +81,13 @@ class TPBlock extends TPBase {
         );
         
         $this->blockBar = array(
-            1 => 'left',
-            2 => 'right',
-            3 => 'center',
-            4 => 'front',
-            5 => 'bottom',
-            6 => 'top',
-            7 => 'lower',
+            0 => 'left',
+            1 => 'right',
+            2 => 'center',
+            3 => 'front',
+            4 => 'bottom',
+            5 => 'top',
+            6 => 'lower',
         );
 
 
