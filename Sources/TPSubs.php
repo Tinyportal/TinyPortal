@@ -1781,7 +1781,18 @@ function TPparseRSS($override = '', $encoding = 0)
 	if($override != '')
 		$backend = $override;
 
-	$xml = simplexml_load_file($backend);
+	$allow_url = ini_get('allow_url_fopen');
+	if ($allow_url){
+  		$xml = simplexml_load_file($backend);
+	} else {
+  		$curl = curl_init();
+  		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+  		curl_setopt($curl, CURLOPT_URL, $backend);
+  		$ret = curl_exec($curl);
+  		curl_close($curl);
+		$xml = simplexml_load_string($ret);
+	}
+	
 	if($xml !== false) {
 		switch (strtolower($xml->getName())) {
 			case 'rss':
