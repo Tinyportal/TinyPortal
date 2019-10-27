@@ -81,13 +81,13 @@ class TPBlock extends TPBase {
         );
         
         $this->blockBar = array(
-            0 => 'left',
-            1 => 'right',
-            2 => 'center',
-            3 => 'front',
-            4 => 'bottom',
-            5 => 'top',
-            6 => 'lower',
+            1 => 'left',
+            2 => 'right',
+            3 => 'center',
+            4 => 'front',
+            5 => 'bottom',
+            6 => 'top',
+            7 => 'lower',
         );
 
 

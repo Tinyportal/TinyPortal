@@ -459,7 +459,7 @@ function do_blocks()
 	}
 	else {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
-		foreach($tpBlock->getBlockPanel as $p => $pan) {
+		foreach($tpBlock->getBlockPanel() as $p => $pan) {
 			if(isset($_GET[$pan])) {
 				$context['TPortal']['panelside'] = $pan;
             }
@@ -470,11 +470,13 @@ function do_blocks()
 			WHERE 1=1 ORDER BY bar, pos, id ASC',
 			array()
 		);
+        
+        $bars = $tpBlock->getBlockBar();
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				// decode the block settings
                 $set = json_decode($row['settings'], true);
-                $context['TPortal']['admin_'.$tpBlock->getBlockBar($row['bar']).'block']['blocks'][] = array(
+                $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = array(
 					'frame' => $row['frame'],
 					'title' => $row['title'],
 				    'type' => $tpBlock->getBlockType($row['type']),
