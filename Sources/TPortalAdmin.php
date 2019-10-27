@@ -117,7 +117,7 @@ function TPortalAdmin()
 		}
 		do_subaction($tpsub);
 	}
-	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
+	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
 		$context['TPortal']['subaction'] = $tpsub = 'blocks';
 		do_blocks($tpsub);
 	}
@@ -321,13 +321,10 @@ function do_blocks()
 	global $context, $smcFunc, $txt, $settings, $scripturl;
 
 	isAllowedTo('tp_blocks');
+    
+    $tpBlock    = new TPBlock();
 
-	$panels     = array( 'left', 'right', 'center', 'top', 'bottom', 'lower', 'front');
-	$blocktype  = array( 'no', 'userbox', 'newsbox', 'statsbox', 'searchbox', 'html', 'onlinebox', 'themebox', 'oldshoutbox', 'catmenu', 'phpbox', 'scriptbox', 'recentbox', 'ssi', 'module', 'rss', 'sitemap', 'admin', 'articlebox', 'categorybox', 'tpmodulebox');
-	$bars       = array( 1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
-
-	if(isset($_GET['addblock']))
-	{
+	if(isset($_GET['addblock'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-addblock']);
 		// collect all available PHP block snippets
@@ -337,19 +334,17 @@ function do_blocks()
 			FROM {db_prefix}tp_blocks WHERE 1=1',
 			array()
 		);
-		if ($smcFunc['db_num_rows']($request) > 0)
-		{
+		if ($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['copyblocks'] = array();
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				$context['TPortal']['copyblocks'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 		}
 	}
+
 	// Move the block up or down in the panel list of blocks
-	if(isset($_GET['addpos']))
-	{
+	if(isset($_GET['addpos'])) {
 		checksession('get');
 		$what = is_numeric($_GET['addpos']) ? $_GET['addpos'] : 0;
 		$smcFunc['db_query']('', '
@@ -360,8 +355,8 @@ function do_blocks()
 		);
 		redirectexit('action=tpadmin;sa=blocks');
 	}
-	if(isset($_GET['subpos']))
-	{
+
+	if(isset($_GET['subpos'])) {
 		checksession('get');
 		$what = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;
 		$smcFunc['db_query']('', '
@@ -371,9 +366,9 @@ function do_blocks()
 		);
 		redirectexit('action=tpadmin;sa=blocks');
 	}
+
 	// change the on/off
-	if(isset($_GET['blockon']))
-	{
+	if(isset($_GET['blockon'])) {
 		checksession('get');
 		$what = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
 		$smcFunc['db_query']('', '
@@ -396,122 +391,38 @@ function do_blocks()
 		);
 		redirectexit('action=tpadmin;sa=blocks');
 	}
+
 	// remove it?
-	if(isset($_GET['blockdelete']))
-	{
+	if(isset($_GET['blockdelete'])) {
 		checksession('get');
-		$what = is_numeric($_GET['blockdelete']) ? $_GET['blockdelete'] : 0;
-		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_blocks
-			WHERE id = {int:blockid}',
-			array(
-				'blockid' => $what
-			)
-		);
+        
+		$id         = is_numeric($_GET['blockdelete']) ? $_GET['blockdelete'] : 0;
+        $tpBlock->deleteBlock($id);
+        unset($tpBlock);
+
 		redirectexit('action=tpadmin;sa=blocks');
 	}
-	// do the moving stuff
-	if(isset($_GET['blockright']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blockright']) ? $_GET['blockright'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 2, 'blockid' => $what
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
+
+   
+    foreach( array ( 'blockright', 'blockleft', 'blockcenter', 'blockfront', 'blockbottom', 'blocktop', 'blocklower') as $block_location ) {
+        if(array_key_exists($block_location, $_GET)) {
+            checksession('get');
+            $id     = is_numeric($_GET['blockright']) ? $_GET['blockright'] : 0;
+            $loc    = $tpBlock->getBlockBarId(str_replace('block', '', $block_location));
+            $smcFunc['db_query']('', '
+                UPDATE {db_prefix}tp_blocks
+                SET bar = {int:bar}
+                WHERE id = {int:blockid}',
+                array(
+                    'bar' => $loc, 'blockid' => $what
+                )
+            );
+            redirectexit('action=tpadmin;sa=blocks');
+        }
 	}
-	elseif(isset($_GET['blockleft']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blockleft']) ? $_GET['blockleft'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 1, 'blockid' => $what,
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
-	}
-	elseif(isset($_GET['blockcenter']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blockcenter']) ? $_GET['blockcenter'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 3, 'blockid' => $what,
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
-	}
-	elseif(isset($_GET['blockfront']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blockfront']) ? $_GET['blockfront'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 4, 'blockid' => $what,
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
-	}
-	elseif(isset($_GET['blockbottom']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blockbottom']) ? $_GET['blockbottom'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 5, 'blockid' => $what,
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
-	}
-	elseif(isset($_GET['blocktop']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blocktop']) ? $_GET['blocktop'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 6, 'blockid' => $what,
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
-	}
-	elseif(isset($_GET['blocklower']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['blocklower']) ? $_GET['blocklower'] : 0;
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET bar = {int:bar}
-			WHERE id = {int:blockid}',
-			array(
-				'bar' => 7, 'blockid' => $what,
-			)
-		);
-		redirectexit('action=tpadmin;sa=blocks');
-	}
+
 	// are we on overview screen?
-	if(isset($_GET['overview']))
-	{
+	if(isset($_GET['overview'])) {
 		// fetch all blocks member group permissions
 		$request = $smcFunc['db_query']('', '
 			SELECT id, title, bar, access, type
@@ -540,182 +451,18 @@ function do_blocks()
 		get_grps(true,true);
 	}
 
-	// are we editing a block?
-	if(isset($_GET['blockedit']))
-	{
-		checksession('get');
-		$blockedit = is_numeric($_GET['blockedit']) ? $_GET['blockedit'] : 0;
-		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
-		TPadd_linktree($scripturl.'?action=tpadmin;blockedit='.$blockedit . ';'.$context['session_var'].'='.$context['session_id'], $txt['tp-editblock']);
-		$request = $smcFunc['db_query']('', '
-			SELECT * FROM {db_prefix}tp_blocks
-			WHERE id = {int:blockid}',
-			array(
-				'blockid' => $blockedit
-			)
-		);
-		if ($smcFunc['db_num_rows']($request) > 0)
-		{
-			$row = $smcFunc['db_fetch_assoc']($request);
-            $acc2 = explode(',', $row['access2']);
-			$context['TPortal']['blockedit'] = $row;
-            $context['TPortal']['blockedit']['var1']    = json_decode($row['settings'],true)['var1'];
-            $context['TPortal']['blockedit']['var2']    = json_decode($row['settings'],true)['var2'];
-            $context['TPortal']['blockedit']['var3']    = json_decode($row['settings'],true)['var3'];
-            $context['TPortal']['blockedit']['var4']    = json_decode($row['settings'],true)['var4'];
-            $context['TPortal']['blockedit']['var5']    = json_decode($row['settings'],true)['var5'];
-
-			$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
-			$context['TPortal']['blockedit']['body'] = $row['body'];
-			unset($context['TPortal']['blockedit']['access2']);
-			$context['TPortal']['blockedit']['access2'] = array(
-				'action' => array(),
-				'board' => array(),
-				'page' => array(),
-				'cat' => array(),
-				'lang' => array(),
-				'tpmod' => array(),
-				'dlcat' => array(),
-				'custo' => array(),
-			);
-			foreach($acc2 as $ss => $svalue)
-			{
-				if(substr($svalue, 0, 6)== 'actio=')
-					$context['TPortal']['blockedit']['access2']['action'][]=substr($svalue,6);
-				elseif(substr($svalue, 0,6) == 'board=')
-					$context['TPortal']['blockedit']['access2']['board'][] = substr($svalue,6);
-				elseif(substr($svalue, 0, 6) == 'tpage=')
-					$context['TPortal']['blockedit']['access2']['page'][]  = substr($svalue,6);
-				elseif(substr($svalue, 0, 6) == 'tpcat=')
-					$context['TPortal']['blockedit']['access2']['cat'][] = substr($svalue,6);
-				elseif(substr($svalue, 0, 6) == 'tpmod=')
-					$context['TPortal']['blockedit']['access2']['tpmod'][] = substr($svalue,6);
-				elseif(substr($svalue, 0, 6) == 'tlang=')
-					$context['TPortal']['blockedit']['access2']['lang'][] = substr($svalue,6);
-				elseif(substr($svalue, 0, 6) == 'dlcat=')
-					$context['TPortal']['blockedit']['access2']['dlcat'][] = substr($svalue,6);
-				elseif(substr($svalue, 0, 6) == 'custo=')
-					$context['TPortal']['blockedit']['access2']['custo'] = substr($svalue,6);
-			}
-
-			// Add in BBC editor before we call in template so the headers are there
-			if($context['TPortal']['blockedit']['type'] == '5')
-			{
-				$context['TPortal']['editor_id'] = 'tp_block_body';
-				TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
-			}
-
-			if($context['TPortal']['blockedit']['lang'] != '')
-			{
-				$context['TPortal']['blockedit']['langfiles'] = array();
-				$lang = explode('|', $context['TPortal']['blockedit']['lang']);
-				$num = count($lang);
-				for($i = 0; $i < $num; $i = $i + 2)
-				{
-					$context['TPortal']['blockedit']['langfiles'][$lang[$i]] = $lang[$i+1];
-				}
-			}
-			$smcFunc['db_free_result']($request);
-			// collect all available PHP block snippets
-			$context['TPortal']['blockcodes'] = TPcollectSnippets();
-
-			get_grps();
-			get_langfiles();
-			get_boards();
-			get_articles();
-			tp_getDLcats();
-
-			$context['TPortal']['edit_categories'] = array();
-
-			$request = $smcFunc['db_query']('', '
-				SELECT id, value1 as name
-				FROM {db_prefix}tp_variables
-				WHERE type = {string:type}
-				ORDER BY value1',
-				array(
-					'type' => 'category'
-				)
-			);
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
-				while($row = $smcFunc['db_fetch_assoc']($request))
-					$context['TPortal']['article_categories'][] = $row;
-
-				$smcFunc['db_free_result']($request);
-			}
-			// get all themes for selection
-			$context['TPthemes'] = array();
-			$request = $smcFunc['db_query']('', '
-				SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
-				FROM {db_prefix}themes AS th
-				LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
-				WHERE th.variable = {string:thvar}
-				AND tb.variable = {string:tbvar}
-				AND th.id_member = {int:id_member}
-				ORDER BY th.value ASC',
-				array(
-					'thvar' => 'name', 'tbvar' => 'images_url', 'id_member' => 0,
-				)
-			);
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
-				while ($row = $smcFunc['db_fetch_assoc']($request))
-				{
-					$context['TPthemes'][] = array(
-						'id' => $row['id_theme'],
-						'path' => $row['path'],
-						'name' => $row['name']
-					);
-				}
-				$smcFunc['db_free_result']($request);
-			}
-			$request = $smcFunc['db_query']('', '
-				SELECT * FROM {db_prefix}tp_variables
-				WHERE type = {string:type}
-				ORDER BY value1 ASC',
-				array(
-					'type' => 'menus'
-				)
-			);
-			$context['TPortal']['menus'] = array();
-			$context['TPortal']['menus'][0] = array(
-				'id' => 0,
-				'name' => 'Internal',
-				'var1' => '',
-				'var2' => ''
-			);
-
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
-				while ($row = $smcFunc['db_fetch_assoc']($request))
-				{
-					$context['TPortal']['menus'][$row['id']] = array(
-						'id' => $row['id'],
-						'name' => $row['value1'],
-						'var1' => $row['value2'],
-						'var2' => $row['value3']
-					);
-				}
-			}
-		}
-		// if not throw an error
-		else
-			fatal_error($txt['tp-blockfailure'], false);
-	}
 	// or maybe adding it?
-	elseif(isset($_GET['addblock']))
-	{
+	if(isset($_GET['addblock'])) {
 		get_articles();
 		// check which side its mean to be on
 		$context['TPortal']['blockside'] = $_GET['addblock'];
 	}
-	else
-	{
+	else {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
-		foreach($panels as $p => $pan)
-		{
-			if(isset($_GET[$pan]))
+		foreach($tpBlock->getBlockPanel as $p => $pan) {
+			if(isset($_GET[$pan])) {
 				$context['TPortal']['panelside'] = $pan;
+            }
 		}
 
 		$request = $smcFunc['db_query']('', '
@@ -727,10 +474,10 @@ function do_blocks()
 			while($row = $smcFunc['db_fetch_assoc']($request)) {
 				// decode the block settings
                 $set = json_decode($row['settings'], true);
-                $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = array(
+                $context['TPortal']['admin_'.$tpBlock->getBlockBar($row['bar']).'block']['blocks'][] = array(
 					'frame' => $row['frame'],
 					'title' => $row['title'],
-					'type' => (isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type']),
+				    'type' => $tpBlock->getBlockType($row['type']),
 					'body' => $row['body'],
 					'id' => $row['id'],
 					'access' => $row['access'],
@@ -2987,7 +2734,7 @@ function do_postchecks()
 
 			$where = $smcFunc['db_insert_id']('{db_prefix}tp_blocks', 'id');
 			if(!empty($where))
-				redirectexit('action=tpadmin;blockedit='.$where.';sesc='. $context['session_id']);
+				redirectexit('action=tportal&sa=editblock&id='.$where.';sesc='. $context['session_id']);
 			else
 				redirectexit('action=tpadmin;sa=blocks');
 		}
@@ -3184,7 +2931,7 @@ function do_postchecks()
 			}
 			updateTPSettings($updateArray);
 
-			redirectexit('action=tpadmin;blockedit='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
+			redirectexit('action=tportal&sa=editblock&id='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
 		// Editing an article?
 		elseif(substr($from, 0, 11) == 'editarticle') {

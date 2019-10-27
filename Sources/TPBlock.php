@@ -41,73 +41,209 @@ function TPBlock_init() {{{
 
 }}}
 
-function editBlock( $blockID ) {{{
+function TPBlockActions(&$subActions) {{{
+
+   $subActions = array_merge(
+        array (
+            'showblock'      => array('TPBlock.php', 'showBlock',   array()),
+            'editblock'      => array('TPBlock.php', 'editBlock',   array()),
+            'deleteblock'    => array('TPBlock.php', 'deleteBlock', array()),
+            'saveblock'      => array('TPBlock.php', 'saveBlock',   array()),
+        ),
+        $subActions
+    );
+
+}}}
+
+function editBlock( $block_id = 0 ) {{{
+
 	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
 
-    if(!is_numeric($blockID)) {
+    if(empty($block_id)) {
+	    $block_id  = TPUtil::filter('id', 'get', 'int');
+    }
+
+    if(!is_numeric($block_id)) {
         fatal_error($txt['tp-notablock'], false);
-    }
-    // get one block
-    $context['TPortal']['subaction'] = 'editblock';
-    $context['TPortal']['blockedit'] = array();
-    $request =  $smcFunc['db_query']('', '
-        SELECT * FROM {db_prefix}tp_blocks
-        WHERE id = {int:blockid} LIMIT 1',
-        array('blockid' => $blockID)
-    );
-    if($smcFunc['db_num_rows']($request) > 0) {
-        $row = $smcFunc['db_fetch_assoc']($request);
-
-        $can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
-
-        // check permission
-        if(allowedTo('tp_blocks') || $can_edit) {
-            $ok=true;
-        }
-        else {
-            fatal_error($txt['tp-blocknotallowed'], false);
-        }
-
-        $context['TPortal']['editblock'] = array();
-        $context['TPortal']['blockedit']['id'] = $row['id'];
-        $context['TPortal']['blockedit']['title'] = $row['title'];
-        $context['TPortal']['blockedit']['body'] = $row['body'];
-        $context['TPortal']['blockedit']['frame'] = $row['frame'];
-        $context['TPortal']['blockedit']['type'] = $row['type'];
-        $context['TPortal']['blockedit']['var1'] = $row['var1'];
-        $context['TPortal']['blockedit']['var2'] = $row['var2'];
-        $context['TPortal']['blockedit']['visible'] = $row['visible'];
-        $context['TPortal']['blockedit']['editgroups'] = $row['editgroups'];
-        $smcFunc['db_free_result']($request);
-    }
-    else {
-        fatal_error($txt['tp-notablock'], false);
-    }
-
-    // Add in BBC editor before we call in template so the headers are there
-    if($context['TPortal']['blockedit']['type'] == '5') {
-        $context['TPortal']['editor_id'] = 'blockbody' . $context['TPortal']['blockedit']['id'];
-        TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
     }
 
     if(loadLanguage('TPortalAdmin') == false) {
         loadLanguage('TPortalAdmin', 'english');
     }
-    loadtemplate('TPmodules');
+
+	checksession('get');
+
+    require_once(SOURCEDIR.'/TPortalAdmin.php');
+
+	TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
+	TPadd_linktree($scripturl.'?action=tportal&sa=editblock&id='.$block_id . ';'.$context['session_var'].'='.$context['session_id'], $txt['tp-editblock']);
+	$request = $smcFunc['db_query']('', '
+		SELECT * FROM {db_prefix}tp_blocks
+		WHERE id = {int:blockid}',
+		array(
+			'blockid' => $block_id
+		)
+	);
+
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		$row = $smcFunc['db_fetch_assoc']($request);
+		$acc2 = explode(',', $row['access2']);
+		$context['TPortal']['blockedit'] = $row;
+		$context['TPortal']['blockedit']['var1']    = json_decode($row['settings'],true)['var1'];
+		$context['TPortal']['blockedit']['var2']    = json_decode($row['settings'],true)['var2'];
+		$context['TPortal']['blockedit']['var3']    = json_decode($row['settings'],true)['var3'];
+		$context['TPortal']['blockedit']['var4']    = json_decode($row['settings'],true)['var4'];
+		$context['TPortal']['blockedit']['var5']    = json_decode($row['settings'],true)['var5'];
+		$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
+		$context['TPortal']['blockedit']['body'] = $row['body'];
+		unset($context['TPortal']['blockedit']['access2']);
+		$context['TPortal']['blockedit']['access2'] = array(
+			'action' => array(),
+			'board' => array(),
+			'page' => array(),
+			'cat' => array(),
+			'lang' => array(),
+			'tpmod' => array(),
+			'dlcat' => array(),
+			'custo' => array(),
+		);
+
+		foreach($acc2 as $ss => $svalue) {
+			if(substr($svalue, 0, 6)== 'actio=')
+				$context['TPortal']['blockedit']['access2']['action'][]=substr($svalue,6);
+			elseif(substr($svalue, 0,6) == 'board=')
+				$context['TPortal']['blockedit']['access2']['board'][] = substr($svalue,6);
+			elseif(substr($svalue, 0, 6) == 'tpage=')
+				$context['TPortal']['blockedit']['access2']['page'][]  = substr($svalue,6);
+			elseif(substr($svalue, 0, 6) == 'tpcat=')
+				$context['TPortal']['blockedit']['access2']['cat'][] = substr($svalue,6);
+			elseif(substr($svalue, 0, 6) == 'tpmod=')
+				$context['TPortal']['blockedit']['access2']['tpmod'][] = substr($svalue,6);
+			elseif(substr($svalue, 0, 6) == 'tlang=')
+				$context['TPortal']['blockedit']['access2']['lang'][] = substr($svalue,6);
+			elseif(substr($svalue, 0, 6) == 'dlcat=')
+				$context['TPortal']['blockedit']['access2']['dlcat'][] = substr($svalue,6);
+			elseif(substr($svalue, 0, 6) == 'custo=')
+				$context['TPortal']['blockedit']['access2']['custo'] = substr($svalue,6);
+		}
+
+		// Add in BBC editor before we call in template so the headers are there
+		if($context['TPortal']['blockedit']['type'] == '5') {
+			$context['TPortal']['editor_id'] = 'tp_block_body';
+			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
+		}
+
+		if($context['TPortal']['blockedit']['lang'] != '') {
+			$context['TPortal']['blockedit']['langfiles'] = array();
+			$lang = explode('|', $context['TPortal']['blockedit']['lang']);
+			$num = count($lang);
+			for($i = 0; $i < $num; $i = $i + 2)
+			{
+				$context['TPortal']['blockedit']['langfiles'][$lang[$i]] = $lang[$i+1];
+			}
+		}
+		$smcFunc['db_free_result']($request);
+		// collect all available PHP block snippets
+		$context['TPortal']['blockcodes'] = TPcollectSnippets();
+		get_grps();
+		get_langfiles();
+		get_boards();
+		get_articles();
+		tp_getDLcats();
+		$context['TPortal']['edit_categories'] = array();
+		$request = $smcFunc['db_query']('', '
+			SELECT id, value1 as name
+			FROM {db_prefix}tp_variables
+			WHERE type = {string:type}
+			ORDER BY value1',
+			array(
+				'type' => 'category'
+			)
+		);
+
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while($row = $smcFunc['db_fetch_assoc']($request))
+				$context['TPortal']['article_categories'][] = $row;
+			$smcFunc['db_free_result']($request);
+		}
+		// get all themes for selection
+		$context['TPthemes'] = array();
+		$request = $smcFunc['db_query']('', '
+			SELECT th.value AS name, th.id_theme as id_theme, tb.value AS path
+			FROM {db_prefix}themes AS th
+			LEFT JOIN {db_prefix}themes AS tb ON th.id_theme = tb.id_theme
+			WHERE th.variable = {string:thvar}
+			AND tb.variable = {string:tbvar}
+			AND th.id_member = {int:id_member}
+			ORDER BY th.value ASC',
+			array(
+				'thvar' => 'name', 'tbvar' => 'images_url', 'id_member' => 0,
+			)
+		);
+
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
+				$context['TPthemes'][] = array(
+					'id' => $row['id_theme'],
+					'path' => $row['path'],
+					'name' => $row['name']
+				);
+			}
+			$smcFunc['db_free_result']($request);
+		}
+		$request = $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_variables
+			WHERE type = {string:type}
+			ORDER BY value1 ASC',
+			array(
+				'type' => 'menus'
+			)
+		);
+		$context['TPortal']['menus'] = array();
+		$context['TPortal']['menus'][0] = array(
+			'id' => 0,
+			'name' => 'Internal',
+			'var1' => '',
+			'var2' => ''
+		);
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
+				$context['TPortal']['menus'][$row['id']] = array(
+					'id' => $row['id'],
+					'name' => $row['value1'],
+					'var1' => $row['value2'],
+					'var2' => $row['value3']
+				);
+			}
+		}
+	}
+	// if not throw an error
+	else {
+		fatal_error($txt['tp-blockfailure'], false);
+	}
+
+	$context['sub_template'] = 'editblock';
+
+
+    loadtemplate('TPBlockLayout');
 
 }}}
 
-function saveBlock( $blockID ) {{{
+function saveBlock( $block_id = 0 ) {{{
 	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
 
+    if(empty($block_id)) {
+	    $block_id  = TPUtil::filter('id', 'get', 'int');
+    }
+
     // save a block?
-    if(!is_numeric($blockID)) {
+    if(!is_numeric($block_id)) {
         fatal_error($txt['tp-notablock'], false);
     }
     $request =  $smcFunc['db_query']('', '
         SELECT editgroups FROM {db_prefix}tp_blocks
         WHERE id = {int:blockid} LIMIT 1',
-        array('blockid' => $blockID)
+        array('blockid' => $block_id)
     );
 
     if($smcFunc['db_num_rows']($request) > 0) {
@@ -197,21 +333,6 @@ function saveBlock( $blockID ) {{{
     else {
         fatal_error($txt['tp-notablock'], false);
     }
-
-}}}
-
-function TPBlockActions(&$subActions) {{{
-
-   $subActions = array_merge(
-        array (
-            'showblock'      => array('TPBlock.php', 'showBlock',   array()),
-            'editblock'      => array('TPBlock.php', 'editBlock',   array()),
-            'deleteblock'    => array('TPBlock.php', 'deleteBlock', array()),
-            'saveblock'      => array('TPBlock.php', 'saveBlock',   array()),
-        ),
-        $subActions
-    );
-
 
 }}}
 

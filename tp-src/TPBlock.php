@@ -95,6 +95,25 @@ class TPBlock extends TPBase {
 
     public function getBlock( $block_id ) {{{
 
+        if(empty($block_id)) {
+            return;
+        }
+
+        $block = array();
+
+        $request =  $this->dB->db_query('', '
+            SELECT * FROM {db_prefix}tp_blocks
+            WHERE id = {int:blockid} LIMIT 1',
+            array (
+                'blockid' => $block_id
+            )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            $block = $this->dB->db_fetch_assoc($request);
+        }
+
+        return $block;
 
     }}}
 
@@ -184,6 +203,18 @@ class TPBlock extends TPBase {
 
     }}}
 
+    public function getBlockBarId( $bar_location = null ) {{{
+
+        if(!is_null($bar_location) && array_search($bar_location, $this->blockBar)) {
+            $bars = array_search($bar_location, $this->blockBar);
+        }
+        else {
+            $bars = $this->blockBar;
+        }
+
+        return $bars;
+
+    }}}
 }
 
 ?>

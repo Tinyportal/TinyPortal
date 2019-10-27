@@ -35,7 +35,7 @@ function TPortal() {{{
         'updatelog'         => array('TPSubs.php', 'TPUpdateLog'    , array()),
         'savesettings'      => array('TPSubs.php', 'TPSaveSettings' , array()),
     );
-    
+   
     call_integration_hook('integrate_tp_pre_subactions', array(&$subActions));
 
     $context['TPortal']['subaction'] = $subAction;
