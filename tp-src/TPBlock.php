@@ -205,7 +205,7 @@ class TPBlock extends TPBase {
 
     public function getBlockBarId( $bar_location = null ) {{{
 
-        if(!is_null($bar_location) && array_search($bar_location, $this->blockBar)) {
+        if(!is_null($bar_location)) {
             $bars = array_search($bar_location, $this->blockBar);
         }
         else {

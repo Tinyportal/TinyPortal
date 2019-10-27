@@ -407,14 +407,14 @@ function do_blocks()
     foreach( array ( 'blockright', 'blockleft', 'blockcenter', 'blockfront', 'blockbottom', 'blocktop', 'blocklower') as $block_location ) {
         if(array_key_exists($block_location, $_GET)) {
             checksession('get');
-            $id     = is_numeric($_GET['blockright']) ? $_GET['blockright'] : 0;
+            $id     = is_numeric($_GET[$block_location]) ? $_GET[$block_location] : 0;
             $loc    = $tpBlock->getBlockBarId(str_replace('block', '', $block_location));
             $smcFunc['db_query']('', '
                 UPDATE {db_prefix}tp_blocks
                 SET bar = {int:bar}
                 WHERE id = {int:blockid}',
                 array(
-                    'bar' => $loc, 'blockid' => $what
+                    'bar' => $loc, 'blockid' => $id
                 )
             );
             redirectexit('action=tpadmin;sa=blocks');
