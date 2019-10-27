@@ -644,7 +644,7 @@ $txt['tp-sticky6'] = 'Normal style + green background';
 $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
 
 $txt['tp-fulltextsearch']       = 'Enable TinyPortal Full Text search';
-$txt['tp-fulltextsearchdesc']   = 'This setting will enable advanced search options for the Article Search Functionality: this allows for the use of multiple search terms in the TP search function as well as the use of complex search operators. See for explanation the article on Search functionality. If this is set to "No" the search can only be done for a single search term.';
+$txt['tp-fulltextsearchdesc']   = 'This setting will enable advanced search options for the Article Search Functionality: this allows for the use of multiple search terms in the TP search function as well as the use of complex search operators. See for explanation the article on Search functionality. If this is set to \'No\' the search can only be done for a single search term.';
 $txt['tp-disabletemplateeval']       = 'Disable the PHP eval function for templates';
 $txt['tp-disabletemplateevaldesc']   = 'Disable the PHP eval function for rending article templates';
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';

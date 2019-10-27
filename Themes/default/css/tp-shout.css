@@ -22,38 +22,38 @@
 	background: #fff;
 	border: solid 1px #888;
 	border-top: none;
-	line-height: 1.3em;
-	margin: 0 5px 0px 0;
-	padding: 8px;
 	font-size: 0.9em;
+	line-height: 1.3em;
+	margin: 0 5px 0 0;
 	overflow: auto;
+	padding: 8px;
 }
 .tp_shoutmember, .tp_shoutavatar img {
-	font-weight: bold;
 	float: left;
+	font-weight: bold;
 }
 .tp_shoutavatar .avy2 img {
-	width: 34px;
 	border-radius: 2px;
-	max-height: 100%;
-	margin: 0 6px 0 0;
 	float: left;
+	margin: 0 6px 0 0;
+	max-height: 100%;
 	padding: 1px;
+	width: 34px;
 }
 .tp_shoutavatar.tfull .avy2 img {
-	width: 100%;
-	max-height: 100%;
 	margin: 0 10px 10px 0;
+	max-height: 100%;
+	width: 100%;
 }
 .tp_shoutavatar h4 {
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
 }
 #shoutError {
-	border: 1px solid #CC0000;
-	padding: 3px;
 	background-color: #FF9999;
+	border: 1px solid #CC0000;
 	margin-top: 5px;
+	padding: 3px;
 }
 #bigshout {
 	height: 100%;
@@ -64,66 +64,65 @@
 }
 /* for layout option 0 */
 textarea.shoutbox_editor0 {
-	width: 100%;
-    max-width: 95%;
-	margin-top: 1em;
 	height: 80px;
     margin: 0.25em 0 1em 0;
+	margin-top: 1em;
+    max-width: 95%;
+	width: 100%;
 }
 .bubble {
-	position: relative;
-	padding: 1.5em 1em;
-	margin: 14px 10px 10px 0;
-	background: #fff;
 	-webkit-border-radius: 10px;
+	background: #fff;
+	border: 1px solid #999;
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
-	border: 1px solid #999;
-	word-wrap: break-word;
+	margin: 14px 10px 10px 0;
+	padding: 1.5em 1em;
+	position: relative;
 	word-break: break-word;
+	word-wrap: break-word;
 }
 .bubble:after {
-	content: '';
-	position: absolute;
+	border-color: #ffffff transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
-	border-color: #ffffff transparent;
+	content: '';
 	display: block;
+	left: 16px;
+	position: absolute;
+	top: -8px;
 	width: 0;
 	z-index: 1;
-	top: -8px;
-	left: 16px;
 }
 .bubble:before {
-	content: '';
-	position: absolute;
+	border-color: #999 transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
-	border-color: #999 transparent;
+	content: '';
 	display: block;
+	left: 16px;
+	position: absolute;
+	top: -9px;
 	width: 0;
 	z-index: 0;
-	top: -9px;
-	left: 16px;
 }
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
 
 /*
 .bubble {
 	background-color: #404040; 
-
 } 
 .bubble:after { 
-	content: '';
-	position: absolute;
+	border-color: #404040 transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
-	border-color: #404040 transparent;
+	content: '';
 	display: block;
+	left: 16px;
+	position: absolute;
+	top: -8px;
 	width: 0;
 	z-index: 1;
-	top: -8px;
-	left: 16px;
 }
 */
 /* for layout option 2 */
@@ -132,13 +131,12 @@ textarea.shoutbox_editor0 {
 	padding: 5px 0;
 }
 textarea.shoutbox_editor1 {
-	width: 100%;
-    max-width: 95%;
-	margin-top: 1em;
 	height: 80px;
     margin: 0.25em 0 1em 0;
+	margin-top: 1em;
+    max-width: 95%;
+	width: 100%;
 }
-
 /* for layout option 3 and 4 */
 .shout_date {
 	clear: both;
@@ -160,8 +158,8 @@ textarea.shoutbox_editor1 {
 	display : block;
 }
 .shoutbody_layout2, .shoutbody_layout3 {
-	padding: 5px;
 	line-height: 1.3em;
+	padding: 5px;
 }
 input.shoutbox_editor2, input.shoutbox_editor3 {
 	width: 65%;
