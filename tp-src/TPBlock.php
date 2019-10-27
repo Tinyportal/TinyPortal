@@ -95,6 +95,25 @@ class TPBlock extends TPBase {
 
     public function getBlock( $block_id ) {{{
 
+        if(empty($block_id)) {
+            return;
+        }
+
+        $block = array();
+
+        $request =  $this->dB->db_query('', '
+            SELECT * FROM {db_prefix}tp_blocks
+            WHERE id = {int:blockid} LIMIT 1',
+            array (
+                'blockid' => $block_id
+            )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            $block = $this->dB->db_fetch_assoc($request);
+        }
+
+        return $block;
 
     }}}
 
