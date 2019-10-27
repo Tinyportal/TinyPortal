@@ -103,7 +103,8 @@ $txt['tp-frontblocksingle']='Hide frontpanel, unless otherwise selected.';
 $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage:';
 $txt['tp-frontpage_settings']= 'Frontpage Settings';
-$txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage: <br><span class="smalltext">(For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s "single page" option.)</span>';
+$txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage:';
+$txt['tp-frontpageoptionsdesc'] = 'For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s \'single page\' option.';
 $txt['tp-showforumposts']='Display forum-topics on frontpage from:';
 $txt['tp-numberofposts']='Number of articles/topics to display on frontpage:';
 $txt['tp-numberofrecenttopics']='Number of recent topics to display: ';
@@ -121,7 +122,7 @@ $txt['tp-displaynews']='Display userinfo/news at the top';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor?';
 $txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor?';
 $txt['tp-imageproxycheck'] = 'Perform the final image proxy check?';
-$txt['tp-imageproxycheckdesc'] = '(This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.)';
+$txt['tp-imageproxycheckdesc'] = 'This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.';
 $txt['tp-frontmodule'] = 'TP module';
 $txt['tp-nofrontmodule'] =  'No modules available.';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics?';
@@ -202,7 +203,8 @@ $txt['tp-catlayout7'] = 'use custom template';
 $txt['tp-catlayout8'] = 'articles + icons2';
 $txt['tp-articlesettings'] = 'Article Settings';
 $txt['tp-parent'] = 'Parent:';
-$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:<br><span class="smalltext">(Note that this setting only works if display is set to \'Only articles\' on the frontpage.)</span>';
+$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage:';
+$txt['tp-sortingoptionsdesc'] = 'Sorting order for articles on frontpage: Note that this setting only works if display is set to \'Only articles\' on the frontpage.';
 $txt['tp-sortoptions1'] = 'Sort by date';
 $txt['tp-sortoptions2'] = 'Sort by author';
 $txt['tp-sortoptions3'] = 'Sort by position';
@@ -413,7 +415,7 @@ $txt['tp-grid'] = 'Display the blocks according to a grid';
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
 $txt['tp-blockheight'] = '<b>Force</b> this height on each block(use 00px or 00%)';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel:';
-$txt['tp-panelstylehelp2'] = '(This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.)';
+$txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
 // TP Settings
 $txt['tp-generalsettings'] = 'General Settings';
@@ -602,7 +604,7 @@ $txt['tp-selectedforum'] = 'Promoted topics only';
 $txt['tp-selectbothforum'] = 'Promoted topics + articles - sorted on date';
 
 $txt['tp-frontpagetitle'] = 'Use a custom browser tab title for your Frontpage: ';
-$txt['tp-frontpagetitle2'] = ' (leave the textfield empty for no title)';
+$txt['tp-frontpagetitle2'] = 'This lets you select a specific name to display on the browser tab for your Frontpage (leave the textfield empty for no title).';
 $txt['tp-redirectforum'] = 'How to redirect after login:';
 $txt['tp-redirectforum1'] = 'Redirect to forum';
 $txt['tp-redirectforum2'] = 'Redirect to frontpage';
@@ -642,7 +644,7 @@ $txt['tp-sticky6'] = 'Normal style + green background';
 $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
 
 $txt['tp-fulltextsearch']       = 'Enable TinyPortal Full Text search';
-$txt['tp-fulltextsearchdesc']   = 'Enable Full Text Search for the Article Search Functionality';
+$txt['tp-fulltextsearchdesc']   = 'This setting will enable advanced search options for the Article Search Functionality: this allows for the use of multiple search terms in the TP search function as well as the use of complex search operators. See for explanation the article on Search functionality. If this is set to "No" the search can only be done for a single search term.';
 $txt['tp-disabletemplateeval']       = 'Disable the PHP eval function for templates';
 $txt['tp-disabletemplateevaldesc']   = 'Disable the PHP eval function for rending article templates';
 $txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
@@ -660,5 +662,5 @@ $txt['tp-downloaduploadpathdesc'] = 'File path where the downloads uploaded via 
 // new in 1.6.3
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 $txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
-$txt['tp-use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';
+$txt['tp-use_groupcolordesc'] = 'This setting will activate the use of the member group colour for user names throughout the forum. Users names will be displayed in the forum in the color of the primary user group that a member is assigned to. Note that there is a similar settings in the shoutbox that will only activate this in the shoutbox: The general TP setting takes preference over the shoutbox setting.';
 ?>
