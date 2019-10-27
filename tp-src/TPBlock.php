@@ -203,6 +203,18 @@ class TPBlock extends TPBase {
 
     }}}
 
+    public function getBlockBarId( $bar_location = null ) {{{
+
+        if(!is_null($bar_location) && array_search($bar_location, $this->blockBar)) {
+            $bars = array_search($bar_location, $this->blockBar);
+        }
+        else {
+            $bars = $this->blockBar;
+        }
+
+        return $bars;
+
+    }}}
 }
 
 ?>
