@@ -823,7 +823,7 @@ function articleChanges()
     $smcFunc['db_change_column']('{db_prefix}tp_articles', 'parse', array( 'name' => 'parse', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
     $smcFunc['db_change_column']('{db_prefix}tp_articles', 'ID_THEME', array( 'name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
     $smcFunc['db_change_column']('{db_prefix}tp_articles', 'authorID', array( 'name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => '0'));
-    $smcFunc['db_change_column']('{db_prefix}tp_articles', 'body', array( 'name' => 'body', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')));
+    $smcFunc['db_change_column']('{db_prefix}tp_articles', 'body', array( 'name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')));
 	$render .= '<li>Updated old columns in articles table</li>';
 }
 
