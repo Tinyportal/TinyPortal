@@ -847,6 +847,20 @@ ul.tp-subcategories ul li
 	width: auto;
 	padding: 0;
 }
+.tptooltip::before {
+	content: '';
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: url(../images/tinyportal/TPexclamation.png) no-repeat;
+	padding-right: .3em;
+	vertical-align: middle;
+}
+
+.tptooltip {
+  position: relative;
+  display: inline-block;
+}
 .tp-thumb
 {
 	margin: 2px;
@@ -1849,7 +1863,7 @@ input,select
 	padding-left:10px;
 }
 /* blocks in panels set to display in columns (the default is vertically)*/
-.panelsColumns{
+.panelsColumns {
 -webkit-box-sizing:border-box;
 box-sizing:border-box;
 }
