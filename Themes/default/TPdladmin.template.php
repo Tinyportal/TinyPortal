@@ -130,12 +130,12 @@ $clickme.click( function(e) {
 			<div class="windowbg noup padding-div">
 					<dl class="settings">
 					<dt>
-						'.$txt['tp-dlallowedtypes'].':
+						'.$txt['tp-dlallowedtypes'].'
 					</dt>
 					<dd>
 						<input size=60 name="tp_dl_allowed_types" type="text" value="'.$context['TPortal']['dl_allowed_types'].'"><br><br>
 					</dd>
-					<dt>'.$txt['tp-dlallowedsize'].':
+					<dt>'.$txt['tp-dlallowedsize'].'
 					</dt>
 					<dd>
 						<input name="tp_dluploadsize" type="text" value="'.$context['TPortal']['dl_max_upload_size'].'"> Kb<br><br>
@@ -176,7 +176,7 @@ $clickme.click( function(e) {
 						<input name="tp_dl_createtopic" type="radio" value="0" ', $context['TPortal']['dl_createtopic']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlcreatetopicboards'].':
+						'.$txt['tp-dlcreatetopicboards'].'
 					</dt>
 					<dd>
 						<div class="dl_perm tp_largelist" id="dl_createboard" ' , in_array('dl_createboard',$context['tp_panels']) ? ' style="display: none;"' : '' , '>
@@ -199,7 +199,7 @@ $clickme.click( function(e) {
 				</dl>
 			<hr>
 					<div>
-							<div><b>'.$txt['tp-dlintrotext'].':</b></div><br>';
+							<div><b>'.$txt['tp-dlintrotext'].'</b></div><br>';
 					if($context['TPortal']['dl_wysiwyg'] == 'html')
 						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 					elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
@@ -218,7 +218,7 @@ $clickme.click( function(e) {
 						<input name="tp_dl_showfeatured" type="radio" value="0" ', $context['TPortal']['dl_showfeatured']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlfeatured'].' :
+						'.$txt['tp-dlfeatured'].'
 					</dt>
 					<dd>
 						<select name="tp_dl_featured" size="5">';
@@ -281,7 +281,7 @@ $clickme.click( function(e) {
 						<input name="tp_show_download" type="radio" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
                     </dd>
 				</dl>
-					<div style="padding:1%;">
+					<div class="padding-div;">
 						<input type="hidden" name="dlsettings" value="1" />
 						<input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'">
 					</div>
@@ -775,7 +775,7 @@ $clickme.click( function(e) {
 				<div><b>'.$txt['tp-title'].':</b><br>
 				<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
 				</div>
-				<div><b>'.$txt['tp-shortname'].':</b><br>
+				<div><b>'.$txt['tp-shortname'].'</b><br>
 				<input style="width: 40ex;" name="dladmin_link'.$cat['id'].'" type="text" value="'.$cat['shortname'].'"><br><br>
 				</div>
 				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';

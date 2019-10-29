@@ -431,7 +431,7 @@ function template_frontpage()
 							echo '<br style="clear: both;" />
 				</div>
 				<div>
-					<h4>', $txt['reset_custom_template_layout'] ,'</h4>
+					<h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
 					<textarea id="tp_customlayout" name="tp_frontpage_template">' . $context['TPortal']['frontpage_template'] . '</textarea><br><br>
 				</div>
 				<hr>
@@ -461,7 +461,7 @@ function template_frontpage()
 					<hr>
 					<dl class="settings">
 						<dt>
-							<label for="field_name">', $txt['tp-allowguests'], '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-allowguestsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['tp-allowguests'], '
 						</dt>
 						<dd>
 							  <input name="tp_allow_guestnews" type="radio" value="1" ' , $context['TPortal']['allow_guestnews']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
@@ -985,7 +985,7 @@ function template_editcategory()
 							</div>';
 				echo '	</div>
 						<br style="clear: both;" />
-						<h4>', $txt['reset_custom_template_layout'] ,'</h4>
+						</h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><h4>', $txt['reset_custom_template_layout'] ,'
 						<textarea id="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
 					</div>
 					<hr>
@@ -1263,6 +1263,13 @@ function template_artsettings()
 							<input name="tp_print_articles" type="radio" value="1" ' , $context['TPortal']['print_articles']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_print_articles" type="radio" value="0" ' , $context['TPortal']['print_articles']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
+                        <dt>
+							<label for="field_name">', $txt['tp-allow-links-article-comments'], '</label>
+						</dt>
+						<dd>
+							<input name="tp_allow_links_article_comments" type="radio" value="1" ' , $context['TPortal']['allow_links_article_comments']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
+							<input name="tp_allow_links_article_comments" type="radio" value="0" ' , $context['TPortal']['allow_links_article_comments']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+						</dd>
 					</dl>
 					<hr>
 					<dl class="settings">
@@ -1307,13 +1314,6 @@ function template_artsettings()
 						<dd>
 							<input name="tp_hide_article_stumbleupon" type="radio" value="1" ' , $context['TPortal']['hide_article_stumbleupon']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
 							<input name="tp_hide_article_stumbleupon" type="radio" value="0" ' , $context['TPortal']['hide_article_stumbleupon']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
-						</dd>
-                        <dt>
-							<label for="field_name">', $txt['tp-allow-links-article-comments'], '</label>
-						</dt>
-						<dd>
-							<input name="tp_allow_links_article_comments" type="radio" value="1" ' , $context['TPortal']['allow_links_article_comments']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-							<input name="tp_allow_links_article_comments" type="radio" value="0" ' , $context['TPortal']['allow_links_article_comments']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
 						</dd>
 					</dl>
 				</div>
@@ -1567,7 +1567,7 @@ function template_panels()
 					</dl>
 					<dl class="settings">
 						<dt>
-							<label for="tp_hidebars_custom">'.$txt['tp-hidebarscustom'].'</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-hidebarscustomdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hidebars_custom">'.$txt['tp-hidebarscustom'].'</label>
 						</dt>
 						<dd>
 							<textarea cols="40" style="width: 94%; height: 100px;" name="tp_hidebars_custom" id="tp_hidebars_custom">' . $context['TPortal']['hidebars_custom'].'</textarea>

@@ -774,7 +774,7 @@ function doTPpage() {{{
 				$now = time();
 				if((!empty($article['pub_start']) && $article['pub_start'] > $now) || (!empty($article['pub_end']) && $article['pub_end'] < $now)) {
 					$context['tportal']['article_expired'] = $article['id'];
-					$context['TPortal']['tperror'] = '<span class="error largetext">'.$txt['tp-expired-start'] . '</span><p>'. timeformat($article['pub_start']) . '&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;' . timeformat($article['pub_end']).'</p>';
+					$context['TPortal']['tperror'] = '<span class="error largetext">'. $txt['tp-expired-start']. '</span><p>' .timeformat($article['pub_start']). '' .$txt['tp-expired-start2']. '' . timeformat($article['pub_end']).'</p>';
 				}
 			}
 			return $article['id'];
