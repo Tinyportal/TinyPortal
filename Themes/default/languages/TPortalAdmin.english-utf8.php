@@ -300,9 +300,11 @@ $txt['tp-editgroups'] = 'Block can be edited by extra membergroups';
 $txt['tp-editsave'] = 'Edit - Save';
 $txt['tp-blockconfirmdelete'] = 'Are you sure you want to delete this block?';
 $txt['tp-editblocks'] = 'Blocks';
-$txt['tp-editgrouphelp'] = 'Choose your extra membergroups that can edit this block only. <br><span class="smalltext">(Note that "manage_blocks" and "admin" permission always give this right regardless.)</span>';
+$txt['tp-editgrouphelp'] = 'Choose the membergroups that can edit this block.';
+$txt['tp-editgrouphelpdesc'] = 'Choose your extra membergroups that can edit this block only. Note that \'manage_blocks\' and \'admin\' permission will always give this right regardless.';
 $txt['tp-langarray'] = 'Show for this language (note that the block HAS to be set somewhere for this to go in effect)';
-$txt['tp-langhelp'] = 'Add custom block title for any installed language - except for default. ';
+$txt['tp-langhelp'] = 'Block title per language. ';
+$txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language - except for default. ';
 $txt['tp-looseblocks'] = 'Block not shown anywhere';
 $txt['tp-move'] = 'Move Block';
 $txt['tp-movecenter']='Move to upper panel';
@@ -312,7 +314,8 @@ $txt['tp-moveleft']='Move to the left panel';
 $txt['tp-movelower'] = 'Move to lower panel';
 $txt['tp-moveright']='Move to the right panel';
 $txt['tp-moveup'] = 'Move to top panel';
-$txt['tp-membergrouphelp']='Choose your membergroups that will able to see this block.<br><span class="smalltext">(Note that if <b>none</b> are chosen, it will only display it to admin.)</span>';
+$txt['tp-membergrouphelp']='Choose the membergroups that will able to see this block.';
+$txt['tp-membergrouphelpdesc']='Choose your membergroups that will able to see this block. Note that if none are chosen, it will only display it to admin.';
 $txt['tp-membergrouptext']='Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
 $txt['tp-typeofblock'] = 'You have successfully created a new block. Here you can set what type this new block should be.';
 $txt['tp-panelclosed']= 'Note: this panel has been turned off in panel settings.';
@@ -347,7 +350,7 @@ $txt['tp-blocknotice'] = 'NB! The type of block has changed.<br>Please save firs
 $txt['tp-allboards'] = 'Display on all boards';
 $txt['tp-blocksusepaneltyle'] = 'Use Panel style';
 $txt['tp-blockstylehelp'] = 'Choose style for the block';
-$txt['tp-blockstylehelp2'] = '(This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.)';
+$txt['tp-blockstylehelpdesc'] = 'This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.';
 
 $txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
 
@@ -632,6 +635,7 @@ $txt['tp-details'] = 'Details';
 $txt['tp-others'] = 'Others';
 $txt['tp-artcat'] = 'Article categories';
 $txt['tp-lang'] = 'Languages';
+$txt['tp-langdesc'] = 'Upon installation of Tinyportal the Language visibility option will be switched OFF by default. When you access the block settings for a block you will see the language visibility option with a warning message, pointing out that the  language visibility setting is off. As long as the setting is off the blocks will show regardless of the user language. Language visibility is an additional setting for controlling when blocks are visible in the panels: the settings that choose where the block should appear will always be respected. If the settings do not allow the block to show, setting language visibility will also not make it show.';
 $txt['tp-dlmanager'] = 'DL manager';
 $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 

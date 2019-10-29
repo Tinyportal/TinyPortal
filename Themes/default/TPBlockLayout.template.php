@@ -579,8 +579,7 @@ function template_editblock()
 					</div>
 				</div>
 				<div><hr>
-					<div>'.$txt['tp-blockstylehelp'].':<br>
-						<div class="smalltext">'.$txt['tp-blockstylehelp2'].'</div>
+					<div><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-blockstylehelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].':<br>
 					</div>				
 					<br><input name="tp_block_var5" id="tp_block_var5" type="radio" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
@@ -624,7 +623,7 @@ function template_editblock()
 					</dl>
 					<br>
 					<dl class="settings">
-						<dt> '.$txt['tp-membergrouphelp'].'</dt>
+						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-membergrouphelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a> '.$txt['tp-membergrouphelp'].'</dt>
 						<dd><div>
 							  <div class="tp_largelist">';
 			// loop through and set membergroups
@@ -651,7 +650,7 @@ function template_editblock()
 			//edit membergroups
 			echo '
 					<dl class="settings">
-						<dt>'.$txt['tp-editgrouphelp'].'</dt>
+						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-editgrouphelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-editgrouphelp'].'</dt>
 						<dd>
 							<div>
 								<div class="tp_largelist">';
@@ -671,7 +670,7 @@ function template_editblock()
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="field_name">'.$txt['tp-langhelp'].'</label></dt>
+						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langhelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">'.$txt['tp-langhelp'].'</label></dt>
 						<dd>
 							<div>';
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang){
@@ -680,7 +679,7 @@ function template_editblock()
 			}
 			echo '			</div>
 						<br></dd>
-						<dt>' . $txt['tp-lang'] . ':';
+						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . ':';
 				// alert if the settings is off, supply link if allowed
 				if(empty($context['TPortal']['uselangoption']))
 				{
