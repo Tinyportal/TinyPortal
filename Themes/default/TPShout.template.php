@@ -190,7 +190,7 @@ function template_tpshout_admin_settings()
 					<hr>
 					<dl class="settings">
 						<dt>
-						'.$txt['shoutbox_layout'].':<br>
+						'.$txt['shoutbox_layout'].'<br>
 						</dt>
 						<dd>
 						<div class="float-items"><div><input name="tp_shoutbox_layout" type="radio" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"/></div></div>
@@ -228,7 +228,7 @@ function template_tpshout_admin_settings()
 					</dl>
 					<hr>
 					<dl class="settings">
-						<dt>'.$txt['tp-shoutboxcolors'].'
+						<dt><h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shoutboxcolorsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-shoutboxcolors'].'</h4>
 						</dt>
 						<dt>
 							'.$txt['tp-shoutbox_use_groupcolor'].'

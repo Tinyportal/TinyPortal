@@ -301,7 +301,7 @@ $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
 $txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . (!empty($context['forum_name']) ? $context['forum_name'] : '*') . '</a>.';
 $txt['tp-showlatest'] = 'Show 50 latest';
 
-$txt['tp-expired-start'] = 'The article is currently not published!';
+$txt['tp-expired-start'] = 'This article is not published!';
 $txt['tp-expired-start2'] = ' until ';
 
 $txt['tp-nomodule'] = 'No output from module.';

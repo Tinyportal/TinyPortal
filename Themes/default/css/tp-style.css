@@ -668,7 +668,7 @@ ul.tp-subcategories ul li {
 	width: auto;
 }
 .tptooltip::before {
-	background: url(../images/tinyportal/TPexclamation.png) no-repeat;
+	background: url(../images/tinyportal/TPquestion.png) no-repeat;
 	content: '';
 	display: inline-block;
 	height: 16px;
@@ -1460,7 +1460,7 @@ div.useravatar img {
 /************* TP STYLES ********************/
 .clearthefloat {
    clear:both;
-   margin:0px   
+   margin:0px;
    padding:0px;
 }
 input#searchbox {

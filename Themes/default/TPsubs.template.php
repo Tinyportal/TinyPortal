@@ -1101,7 +1101,7 @@ function template_tperror_above()
 
 	echo '
 	<div class="title_bar">
-		<h3 class="titlebg"><span class="left"></span><span class="error">'.$context['TPortal']['tperror'].'</span></h3>
+		<h3 class="titlebg">'.$context['TPortal']['tperror'].'</h3>
 	</div>';
 
 }

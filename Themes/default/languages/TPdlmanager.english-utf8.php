@@ -82,7 +82,7 @@ $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval
 $txt['tp-searcharea-descr'] = 'Search descriptions';
 $txt['tp-searcharea-name'] = 'Search titles';
 $txt['tp-dosubmit'] = 'Save';
-$txt['tp-dlvisualoptions'] = 'Visual options:';
+$txt['tp-dlvisualoptions'] = 'Visual options';
 $txt['tp-dlsearch'] = 'Search in Downloads';
 $txt['tp-dlsearchresults'] = 'Downloads search results';
 
@@ -113,20 +113,20 @@ $txt['tp-dlicon'] = 'Icon';
 $txt['tp-dlmakeitem'] = 'Assign this';
 $txt['tp-dlmorefiles'] = 'Download additional files:';
 $txt['tp-dlmorefiles2'] = 'Attach to another item:';
-$txt['tp-dlmustapprove'] = 'All uploads must be approved? ';
+$txt['tp-dlmustapprove'] = 'All uploads must be approved';
 $txt['tp-dlname'] = 'Name';
 $txt['tp-dlparent'] = 'Parent category';
 $txt['tp-dlshowlatest'] = 'Show "latest files" on frontpage of Download manager:';
 $txt['tp-dlsubmitted'] = 'Approval';
-$txt['tp-dluploadcategory'] = 'Category:';
-$txt['tp-dluploadicon'] = 'Icon:';
-$txt['tp-dluploadtitle'] = 'Title: ';
-$txt['tp-dluseformat'] = 'Show filesize in format:';
+$txt['tp-dluploadcategory'] = 'Category';
+$txt['tp-dluploadicon'] = 'Icon';
+$txt['tp-dluploadtitle'] = 'Title ';
+$txt['tp-dluseformat'] = 'Show filesize in format';
 $txt['tp-dlviews'] = 'Views/Downloads';
 $txt['tp-download'] = 'Download';
 $txt['tp-ftpstrays'] = 'These files are not assigned in the dl_manager table:';
 $txt['tp-leftbar'] = 'Show left panel';
-$txt['tp-newcatassign'] = 'New category:';
+$txt['tp-newcatassign'] = 'New category';
 $txt['tp-nocategory'] = '- no category -';
 $txt['tp-noneicon'] = 'None';
 $txt['tp-onlyftpstrays'] = 'Only showing files that do not have an entry in the dl manager:';
@@ -135,7 +135,7 @@ $txt['tp-sayno'] = 'No';
 $txt['tp-uploadnewfileexisting'] = 'Upload a new file <br><span class="smalltext"> (the existing will be replaced!)</span>';
 $txt['tp-uploadnewpic'] = 'Upload a new picture<br><span class="smalltext">(the existing will be replaced)</span>';
 $txt['tp-uploadnewpicexisting']='Existing screenshot/picture';
-$txt['tp-shortname'] = 'Query title:';
+$txt['tp-shortname'] = 'Query title';
 
 $txt['tp-topbar'] = 'Show top panel';
 $txt['tp-bottombar'] = 'Show bottom panel';
@@ -144,26 +144,26 @@ $txt['tp-showtop'] = 'Show header top';
 $txt['tp-categories'] = 'Categories';
 $txt['tp-childcategories'] = 'Child categories';
 
-$txt['tp-dlcreatetopic'] = 'Create new topic?';
+$txt['tp-dlcreatetopic'] = 'Create new topic';
 $txt['tp-dlcreatetopic_sticky'] = 'Set as sticky?';
 $txt['tp-dlcreatetopic_announce'] = 'Announce it?';
 $txt['tp-dlchooseboard'] = 'Choose board to post topic in';
-$txt['tp-dlusescreenshot'] = 'Use screenshot instead of icon where available?';
-$txt['tp-dlscreenshotsize1'] = 'Resize screenshot for thumbnail:';
-$txt['tp-dlscreenshotsize2'] = 'Resize screenshot for featured:';
+$txt['tp-dlusescreenshot'] = 'Use screenshot instead of icon where available';
+$txt['tp-dlscreenshotsize1'] = 'Resize screenshot for thumbnail';
+$txt['tp-dlscreenshotsize2'] = 'Resize screenshot for featured';
 $txt['tp-dlperms'] = 'Permissions';
 $txt['tp-dlperms2'] = 'Select and set permissions on all membergroups from one place. "Manage Downloads" give admin rights for all downloads,
 "Upload file" give permission to actually upload, while "create topic" give permission to start a forum topic at the the time of upload.';
 $txt['tp-dlcreatetopicboards'] = 'Boards to use for support topics';
 $txt['tp-mostpopweek'] = 'Most downloaded this week';
 $txt['tp-mostpop'] = 'Most downloaded files ever';
-$txt['tp-dluselatest'] = 'Show recent files?';
-$txt['tp-dlusefeatured'] = 'Show featured file on frontpage of Download manager?';
-$txt['tp-dlusestats'] = 'Show most downloaded/weekly?';
+$txt['tp-dluselatest'] = 'Show recent files';
+$txt['tp-dlusefeatured'] = 'Show featured file on frontpage of Download manager';
+$txt['tp-dlusestats'] = 'Show most downloaded/weekly';
 $txt['tp-dlintrotext'] = 'Text for introduction';
-$txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories?';
+$txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories';
 $txt['tp-dlfeatured'] = 'Featured Download';
-$txt['tp-dlwysiwyg'] = 'Show text-editor?';
+$txt['tp-dlwysiwyg'] = 'Show text-editor';
 
 $txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tportal;dl=adminsettings">settings screen</a>?';
 
@@ -175,5 +175,5 @@ $txt['tp-dlnotitle'] = '-no title-';
 $txt['tp-nocats'] = 'No categories found.';
 $txt['tp-nofiles'] = 'Currently there are no files in this category.';
 
-$txt['tp-showdownload'] = 'Show Downloads?';
+$txt['tp-showdownload'] = 'Show Downloads';
 ?>
