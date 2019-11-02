@@ -1569,9 +1569,13 @@ function render_template_layout($code, $prefix = '')
             foreach($match[0] as $suffix) {
                 $func = (string)"$prefix$suffix";
                 if(function_exists($func)) {
+                    ob_start();
                     $func();
+                    $output = ob_get_clean();
+                    $code   = str_replace( '{'.$suffix.'}', $output, $code);
                 }
             }
+            echo $code;
         }
     } 
     else {
@@ -1722,7 +1726,7 @@ function TPgetlangOption($langlist, $set)
 	return $setlang;
 }
 
-function category_col($column, $featured = false)
+function category_col($column, $featured = false, $render = true)
 {
     global $context;
 
@@ -1738,14 +1742,14 @@ function category_col($column, $featured = false)
 
     foreach($context['TPortal']['category'][$column] as $article => $context['TPortal']['article']) {
         if(!empty($context['TPortal']['article']['template'])) {
-            render_template($context['TPortal']['article']['template']);
+            render_template($context['TPortal']['article']['template'], $render);
         }
         else {
             if(function_exists('ctheme_article_renders')) {
-                render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured));
+                render_template(ctheme_article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured), $render);
             }
             else {
-                render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured));
+                render_template(article_renders($context['TPortal']['category']['options']['catlayout'], false, $featured), $render);
             }
         }
         unset($context['TPortal']['article']);
@@ -1753,21 +1757,21 @@ function category_col($column, $featured = false)
 }
 
 // the featured or first article
-function category_featured()
+function category_featured( $render = true)
 {
-    return category_col('featured', true);
+    return category_col('featured', true, $render);
 
 }
 // the first half
-function category_col1()
+function category_col1($render = true)
 {
-    return category_col('col1');
+    return category_col('col1', false, $render);
 }
 
 // the second half
-function category_col2()
+function category_col2($render = true)
 {
-    return category_col('col2');
+    return category_col('col2', false, $render);
 }
 
 function TPparseRSS($override = '', $encoding = 0)
