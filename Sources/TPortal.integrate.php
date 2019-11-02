@@ -92,8 +92,7 @@ class TPortal_Integrate
         if(TP_SMF21 == false && (strpos($call, '|') !== false) ) {
             $tmp = explode('|', $call);
             if( is_array($tmp) && isset($tmp[0]) && isset($tmp[1]) ) {
-                global $sourcedir;
-                $filePath = str_replace('$sourcedir', $sourcedir, $tmp[0]);
+                $filePath = str_replace('$sourcedir', SOURCEDIR, $tmp[0]);
                 if( file_exists($filePath) ) {
                     require_once($filePath);
                 }
@@ -634,29 +633,29 @@ class TPortal_Integrate
 
     public static function hookDefaultAction()
     {
-        global $topic, $board, $sourcedir, $context;
+        global $topic, $board, $context;
 
         $theAction = false;
         // first..if the action is set, but empty, don't go any further
         if (isset($_REQUEST['action']) && $_REQUEST['action']=='') {
-            require_once($sourcedir . '/BoardIndex.php');
+            require_once(SOURCEDIR . '/BoardIndex.php');
             $theAction = 'BoardIndex';
         }
 
         // Action and board are both empty... maybe the portal page?
         if (empty($board) && empty($topic) && $context['TPortal']['front_type'] != 'boardindex') {
-            require_once($sourcedir . '/TPortal.php');
+            require_once(SOURCEDIR . '/TPortal.php');
             $theAction = 'TPortalMain';
         }
 
         // If frontpage set to boardindex but it's an article or category
         if (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex' && (isset($_GET['cat']) || isset($_GET['page']))) {
-            require_once($sourcedir . '/TPortal.php');
+            require_once(SOURCEDIR . '/TPortal.php');
             $theAction = 'TPortalMain';
         }
         // Action and board are still both empty...and no portal startpage - BoardIndex!
         elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex') {
-            require_once($sourcedir . '/BoardIndex.php');
+            require_once(SOURCEDIR . '/BoardIndex.php');
             $theAction = 'BoardIndex';
         }
 
@@ -807,9 +806,9 @@ class TPortal_Integrate
 
     public static function hookLoadTheme(&$id_theme)
     {
-        global $sourcedir, $smcFunc, $modSettings;
+        global $smcFunc, $modSettings;
 
-        require_once($sourcedir.'/TPSubs.php');
+        require_once(SOURCEDIR . '/TPSubs.php');
 
         $theme = 0;
 

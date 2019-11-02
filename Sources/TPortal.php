@@ -483,8 +483,13 @@ function doTPpage() {{{
 		$_SESSION['login_url'] = $scripturl . '?page=' . $page;
 
         $tpArticle  = new TPArticle();
-        $article    = $tpArticle->getArticle($page)[0];
-        if(is_array($article)) {
+        $article    = $tpArticle->getArticle($page);
+        // We only want the first article
+        if(!empty($article) && isset($article[0])) {
+            $article = $article[0];
+        }
+
+        if(is_array($article) && !empty($article)) {
             $shown  = false;
 			$valid  = true;
 
