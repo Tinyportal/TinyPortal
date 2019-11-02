@@ -269,6 +269,12 @@ class TPUtil
         return $filter;
     }}}
 
+    private static function checkboxChecked($checkbox) {{{
+
+       return self::filter($checkbox, 'post', 'int');
+
+    }}}
+
 }
 
 ?>
