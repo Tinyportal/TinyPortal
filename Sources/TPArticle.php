@@ -346,7 +346,7 @@ function articleEdit() {{{
 					case 'body':
 						// If we came from WYSIWYG then turn it back into BBC regardless.
 						if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body'])) {
-							require_once($sourcedir . '/Subs-Editor.php');
+							require_once(SOURCEDIR . '/Subs-Editor.php');
 							$_REQUEST['tp_article_body'] = html_to_bbc($_REQUEST['tp_article_body']);
 							// We need to unhtml it now as it gets done shortly.
 							$_REQUEST['tp_article_body'] = un_htmlspecialchars($_REQUEST['tp_article_body']);
