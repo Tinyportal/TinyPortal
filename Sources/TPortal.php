@@ -69,7 +69,7 @@ function TPortalMain() {{{
 
 // TinyPortal init
 function TPortal_init() {{{
-	global $context, $txt, $user_info, $settings, $boarddir, $modSettings, $db_type;
+	global $context, $txt, $user_info, $settings, $boarddir, $modSettings;
 
     call_integration_hook('integrate_tp_pre_init');
 
@@ -1053,7 +1053,7 @@ function doTPcat() {{{
 
 // do the frontpage
 function doTPfrontpage() {{{
-	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt, $db_type;
+	global $context, $scripturl, $user_info, $modSettings, $smcFunc, $txt;
 
 	// check we aren't in any other section because 'cat' is used in SMF and TP
 	if(isset($_GET['action']) || isset($_GET['board']) || isset($_GET['topic'])) {
@@ -1103,8 +1103,7 @@ function doTPfrontpage() {{{
 		// first, get all available
         $artgroups = '';
 		if(!$context['user']['is_admin']) {
-            global $db_type;
-            if($db_type == 'mysql') {
+            if(TP_PGSQL == false) {
 			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
             }
             else {
@@ -1394,8 +1393,7 @@ function doTPfrontpage() {{{
 		// first, get all available
 		$artgroups = '';
 		if(!$context['user']['is_admin']) {
-            global $db_type;
-            if($db_type == 'mysql') {
+            if(TP_PGSQL == false) {
 			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
             }
             else {
@@ -1650,7 +1648,7 @@ function doTPfrontpage() {{{
 
 	// set the membergroup access
     $access = '';
-    if($db_type == 'mysql') {
+    if(TP_PGSQL == false) {
         $access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
     }
     else {
@@ -1669,7 +1667,7 @@ function doTPfrontpage() {{{
          $tmp = 'tlang=' . $user_info['language'];
 
         // set the language access
-        if($db_type == 'mysql') {
+        if(TP_PGSQL == false) {
             $access2 = ' AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
         }
         else {
