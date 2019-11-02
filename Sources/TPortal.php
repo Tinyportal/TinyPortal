@@ -1154,6 +1154,7 @@ function doTPfrontpage() {{{
 				'col2' => array(),
 				'options' => array(
 					'catlayout' => $context['TPortal']['frontpage_catlayout'],
+				    'layout' => $context['TPortal']['frontpage_layout'],
 				)
 			);
 
@@ -1213,6 +1214,7 @@ function doTPfrontpage() {{{
 				'col2' => array(),
 				'options' => array(
 					'catlayout' => $context['TPortal']['frontpage_catlayout'],
+				    'layout' => $context['TPortal']['frontpage_layout'],
 				)
 			);
 
@@ -1333,6 +1335,7 @@ function doTPfrontpage() {{{
 				'col2' => array(),
 				'options' => array(
 					'catlayout' => $context['TPortal']['frontpage_catlayout'],
+				    'layout' => $context['TPortal']['frontpage_layout'],
 					)
 				);
 
