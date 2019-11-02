@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 }
 
 function TPBlock_init() {{{
-	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
+	global $context, $txt;
 
 	if(loadLanguage('TPmodules') == false) {
 		loadLanguage('TPmodules', 'english');
@@ -34,7 +34,7 @@ function TPBlock_init() {{{
 	$context['TPortal']['not_forum'] = true;
 
 	// call the editor setup
-	require_once($sourcedir. '/TPcommon.php');
+	require_once(SOURCEDIR. '/TPcommon.php');
 
 	// clear the linktree first
 	TPstrip_linktree();
@@ -57,7 +57,7 @@ function TPBlockActions(&$subActions) {{{
 
 function editBlock( $block_id = 0 ) {{{
 
-	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
+	global $settings, $context, $scripturl, $txt, $boarddir, $smcFunc;
 
     if(empty($block_id)) {
 	    $block_id  = TPUtil::filter('id', 'get', 'int');
@@ -230,7 +230,7 @@ function editBlock( $block_id = 0 ) {{{
 }}}
 
 function saveBlock( $block_id = 0 ) {{{
-	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
+	global $settings, $context, $scripturl, $txt, $boarddir, $smcFunc;
 
     if(empty($block_id)) {
 	    $block_id  = TPUtil::filter('id', 'get', 'int');
@@ -274,7 +274,7 @@ function saveBlock( $block_id = 0 ) {{{
             elseif(substr($what, 0, 9) == 'blockbody' && substr($what, -4) != 'mode') {
                 // If we came from WYSIWYG then turn it back into BBC regardless.
                 if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what])) {
-                    require_once($sourcedir . '/Subs-Editor.php');
+                    require_once(SOURCEDIR . '/Subs-Editor.php');
                     $_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
                     // We need to unhtml it now as it gets done shortly.
                     $_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
@@ -339,7 +339,7 @@ function saveBlock( $block_id = 0 ) {{{
 // do the blocks
 function getBlocks() {{{
 
-	global $context, $scripturl, $user_info, $smcFunc, $modSettings, $db_type;
+	global $context, $scripturl, $user_info, $smcFunc, $modSettings;
 
 	$now = time();
 	// setup the containers
@@ -393,7 +393,7 @@ function getBlocks() {{{
 
 	// set the membergroup access
     $access = '';
-    if($db_type == 'mysql') {
+    if(TP_PGSQL == false) {
         $access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
     }
     else {
@@ -409,7 +409,7 @@ function getBlocks() {{{
 
 	// set the location access
     $access2 = '';
-    if($db_type == 'mysql') {
+    if(TP_PGSQL == false) {
         $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
     }
     else {
@@ -425,7 +425,7 @@ function getBlocks() {{{
 	// set the language access
 	if(!empty($context['TPortal']['uselangoption'])) {
         $tmp = 'tlang=' . $user_info['language'];
-        if($db_type == 'mysql') {
+        if(TP_PGSQL == false) {
             $access3 = ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
         }
         else {
