@@ -247,22 +247,19 @@ function template_settings()
 						<label for="tp_oldsidebar">', $txt['tp-useoldsidebar'], '</label>
 					</dt>
 					<dd>
-						<input id="tp_oldsidebar" name="tp_oldsidebar" type="radio" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-						<input name="tp_oldsidebar" type="radio" value="0" ' , $context['TPortal']['oldsidebar']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+						<input id="tp_oldsidebar" name="tp_oldsidebar" type="checkbox" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '>
 					</dd>
 					<dt>
 						<label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
 					</dt>
 					<dd>
-						<input id="tp_admin_showblocks" name="tp_admin_showblocks" type="radio" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-						<input name="tp_admin_showblocks" type="radio" value="0" ' , $context['TPortal']['admin_showblocks']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+						<input id="tp_admin_showblocks" name="tp_admin_showblocks" type="checkbox" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '>
 					</dd>
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-imageproxycheckdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label>
 					</dt>
 					<dd>
-						<input id="tp_imageproxycheck" name="tp_imageproxycheck" type="radio" value="1" ' , $context['TPortal']['imageproxycheck']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-						<input name="tp_imageproxycheck" type="radio" value="0" ' , $context['TPortal']['imageproxycheck']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+						<input id="tp_imageproxycheck" name="tp_imageproxycheck" type="checkbox" value="1" ' , $context['TPortal']['imageproxycheck'] == '1' ? 'checked' : '' , '>
 					</dd>';
                     db_extend('extra');
                     if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
@@ -271,8 +268,7 @@ function template_settings()
                             <a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-fulltextsearchdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_fulltextsearch">', $txt['tp-fulltextsearch'], '</label>
                         </dt>
                         <dd>
-                            <input id="tp_fulltextsearch" name="tp_fulltextsearch" type="radio" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-                            <input name="tp_fulltextsearch" type="radio" value="0" ' , $context['TPortal']['fulltextsearch']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+                            <input id="tp_fulltextsearch" name="tp_fulltextsearch" type="checkbox" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '>
                         </dd>';
                     }
 					echo '
@@ -280,8 +276,7 @@ function template_settings()
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-disabletemplateevaldesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label>
 					</dt>
 					<dd>
-                        <input id="tp_disable_template_eval" name="tp_disable_template_eval" type="radio" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '> '.$txt['tp-yes'].'
-                        <input name="tp_disable_template_eval" type="radio" value="0" ' , $context['TPortal']['disable_template_eval']=='0' ? 'checked' : '' , '> '.$txt['tp-no'].'
+                        <input id="tp_disable_template_eval" name="tp_disable_template_eval" type="checkbox" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
 					</dd>
                     <dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-imageuploadpathdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
