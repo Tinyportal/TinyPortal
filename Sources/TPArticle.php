@@ -494,7 +494,7 @@ function articleEdit() {{{
 	// check if uploadad picture
 	if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
 		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-		tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+		tp_createthumb($context['TPortal']['image_upload_path'].'/'. $name, 50, 50, $context['TPortal']['image_upload_path'].'/thumbs/thumb_'. $name);
 	}
 	// if this was a new article
 	if(array_key_exists('tp_article_approved', $_POST) && $_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
@@ -689,16 +689,16 @@ function articleSubmit() {{{
     if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles')) {
         // did we get a picture as well?
         if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+            $name = TPuploadpicture( 'qup_tp_article_body', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
+            tp_createthumb($context['TPortal']['image_upload_path'].'/'. $name, 50, 50, $context['TPortal']['image_upload_path'].'/thumbs/thumb_'. $name);
         }
         redirectexit('action=tportal;sa=editarticle'.$newitem);
     }
     elseif(allowedTo('tp_articles')) {
         // did we get a picture as well?
         if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-            $name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
-            tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+            $name = TPuploadpicture( 'qup_tp_article_body', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
+            tp_createthumb($context['TPortal']['image_upload_path'].'/'. $name, 50, 50, $context['TPortal']['image_upload_path'].'/thumbs/thumb_'. $name);
         }
         redirectexit('action=tpadmin;sa=editarticle'.$newitem);
     }
@@ -738,12 +738,12 @@ function articlePublish() {{{
 }}}
 
 function articleUploadImage() {{{
-    $context;
+    global $context, $boarddir, $boardurl;
 
     require_once(SOURCEDIR.'/TPcommon.php');
-    $name = TPuploadpicture( 'image', $context['user']['id'].'uid' );
-    tp_createthumb( 'tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name );
-    $response['data'] = 'tp-images/'.$name;
+    $name = TPuploadpicture( 'image', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
+    tp_createthumb( $context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'].'thumbs/thumb_'.$name );
+    $response['data'] = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $name;
     $response['success'] = 'true';
     header( 'Content-type: application/json' );
     echo json_encode( $response );
