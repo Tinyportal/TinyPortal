@@ -2947,7 +2947,7 @@ function do_postchecks()
 			// check if uploadad picture
 			if(isset($_FILES['qup_blockbody']) && file_exists($_FILES['qup_blockbody']['tmp_name']))
 			{
-				$name = TPuploadpicture('qup_blockbody', $context['user']['id'].'uid');
+                $name = TPuploadpicture( 'qup_blockbody', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
 				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
 			}
 			updateTPSettings($updateArray);

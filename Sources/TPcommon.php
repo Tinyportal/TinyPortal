@@ -93,8 +93,18 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 	loadLanguage('TPdlmanager');
 
 	// check that nothing happended
-	if(!file_exists($_FILES[$widthhat]['tmp_name']) || !is_uploaded_file($_FILES[$widthhat]['tmp_name']))
+	if(!file_exists($_FILES[$widthhat]['tmp_name']) || !is_uploaded_file($_FILES[$widthhat]['tmp_name'])) {
 		fatal_error($txt['tp-dlnotuploaded'], false);
+    }
+
+    if(is_null($maxsize)) {
+        $maxsize = 1800;
+    }
+    
+    if(is_null($exts)) {
+        $exts = 'jpg,gif,png';
+    }
+
 	// process the file
 	$filename=$_FILES[$widthhat]['name'];
 	$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
@@ -102,8 +112,7 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 	$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 
 	$filesize = filesize($_FILES[$widthhat]['tmp_name']);
-	if($filesize > (1024 * $maxsize))
-	{
+	if($filesize > (1024 * $maxsize)) {
 		unlink($_FILES[$widthhat]['tmp_name']);
 		fatal_error($txt['tp-dlmaxerror'] . $maxsize.' Kb.', false);
 	}
@@ -111,30 +120,40 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 	// check the extension
 	$allowed = explode(',', $exts);
 	$match = false;
-	foreach($allowed as $extension => $value)
-	{
+	foreach($allowed as $extension => $value) {
 		$ext = '.'.$value;
 		$extlen = strlen($ext);
 		if(strtolower(substr($name, strlen($name)-$extlen, $extlen)) == strtolower($ext))
 			$match = true;
 	}
-	if(!$match)
-	{
+
+	if(!$match) {
 		unlink($_FILES[$widthhat]['tmp_name']);
 		fatal_error($txt['tp-dlallowedtypes'] . ': ' . $exts, false);
 	}
 
 	// check that no other file exists with same name
-	if(file_exists($boarddir.'/'.$destdir.'/'.$name))
+	if(file_exists($boarddir.'/'.$destdir.'/'.$name)) {
 		$name = time().$name;
+    }
 
 	// add prefix
 	$sname = $prefix.$name;
 
-	if(move_uploaded_file($_FILES[$widthhat]['tmp_name'],$boarddir.'/'.$destdir.'/'.$sname))
+    if(is_dir($destdir)) {
+        $dstPath = $destdir . '/' . $sname;
+    }
+    else { 
+        $dstPath = $boarddir . '/'. $destdir .'/' . $sname;
+    }
+
+	if(move_uploaded_file($_FILES[$widthhat]['tmp_name'], $dstPath  )) {
 		return $sname;
-	else
+    }
+	else {
 		return;
+    }
+
 }
 
 function tp_groups()
