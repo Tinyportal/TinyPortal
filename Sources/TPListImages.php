@@ -13,21 +13,24 @@ if (!defined('SMF'))
 	die('Hacking attempt...');
 
 
-global $context;
+function template_list_images()
+{
+    global $context;
 
-if(isset($_GET['listimage'])) {
+    if(isset($_GET['listimage'])) {
 
-    if(!isset($context['tp_panels']))
-        $context['tp_panels'] = array();
+        if(!isset($context['tp_panels']))
+            $context['tp_panels'] = array();
 
-    $context['template_layers'][]   = 'tpadm';
-    $context['template_layers'][]   = 'subtab';
-    TPadminIndex();
-    $context['current_action']      = 'admin';
-    $context['sub_template']        = 'tpListImages_admin';
+        $context['template_layers'][]   = 'tpadm';
+        $context['template_layers'][]   = 'subtab';
+        TPadminIndex();
+        $context['current_action']      = 'admin';
+        $context['sub_template']        = 'tpListImages_admin';
 
-    if($context['TPortal']['hidebars_admin_only'] == '1') {
-        tp_hidebars();
+        if($context['TPortal']['hidebars_admin_only'] == '1') {
+            tp_hidebars();
+        }
     }
 }
 
