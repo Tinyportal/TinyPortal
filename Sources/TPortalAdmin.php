@@ -1871,17 +1871,22 @@ function do_postchecks()
 			$w = array();
 			$ssi = array();
 
-
-            $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch');
-            foreach($checkboxes as $v) {
-                if(TPUtil::checkboxChecked('tp_'.$v)) {
-                    $updateArray[$v] = "1";
-                }
-                else {
-                    $updateArray[$v] = "";
-                }
-                // remove the variable so we don't process it twice before the old logic is removed
-                unset($_POST['tp_'.$v]);
+            switch($from) {
+                case 'settings':
+                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch');
+                    foreach($checkboxes as $v) {
+                        if(TPUtil::checkboxChecked('tp_'.$v)) {
+                            $updateArray[$v] = "1";
+                        }
+                        else {
+                            $updateArray[$v] = "";
+                        }
+                        // remove the variable so we don't process it twice before the old logic is removed
+                        unset($_POST['tp_'.$v]);
+                    }
+                    break;
+                default:
+                    break;
             }
 
 			foreach($_POST as $what => $value)
