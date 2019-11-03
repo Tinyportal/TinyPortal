@@ -1544,6 +1544,10 @@ function doTPfrontpage() {{{
 
 		// insert the forumposts into $posts
 		if(is_array($forumPosts) && count($forumPosts) > 0) {
+            
+            // Needed for html_to_bbc
+            require_once(SOURCEDIR . '/Subs-Editor.php');
+
 			$length = $context['TPortal']['frontpage_limit_len'];
             foreach($forumPosts as $k => $row) {
                 // FIXME 
@@ -1554,6 +1558,10 @@ function doTPfrontpage() {{{
                 $row['views']           = 0;
                 $row['date_registered'] = 0;
                 $row['id']              = $row['topic'];
+
+                // Turn the body back to bbc so the parse_bbc called lated doesn't break....
+                $row['body']            = html_to_bbc($row['body']);
+
                 // FIXME 
 
                 // Load their context data.
@@ -1593,6 +1601,7 @@ function doTPfrontpage() {{{
 				$posts[$row['timestamp'].'0' . sprintf("%06s", $row['id'])] = $row;
 			}
 		}
+
 		// next up is articles
 		if(count($aposts) > 0) {
             $tpArticle  = new TPArticle();
