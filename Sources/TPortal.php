@@ -1559,7 +1559,7 @@ function doTPfrontpage() {{{
                 $row['date_registered'] = 0;
                 $row['id']              = $row['topic'];
 
-                // Turn the body back to bbc so the parse_bbc called lated doesn't break....
+                // Turn the body back to bbc so the parse_bbc called later doesn't break....
                 $row['body']            = html_to_bbc($row['body']);
 
                 // FIXME 
