@@ -493,7 +493,7 @@ function articleEdit() {{{
 	unset($tpArticle);
 	// check if uploadad picture
 	if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'].'uid');
+        $name = TPuploadpicture( 'qup_tp_article_body', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
 		tp_createthumb($context['TPortal']['image_upload_path'].'/'. $name, 50, 50, $context['TPortal']['image_upload_path'].'/thumbs/thumb_'. $name);
 	}
 	// if this was a new article
