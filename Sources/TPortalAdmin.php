@@ -135,6 +135,7 @@ function TPortalAdmin()
     }
 	elseif(array_key_exists('listimage', $_GET) && in_array($_GET['listimage'], array( 'admin', 'list', 'remove'))) {
         require_once(SOURCEDIR . '/TPListImages.php');
+        template_list_images();
         return;
     }
     else {
@@ -1870,6 +1871,24 @@ function do_postchecks()
 			isAllowedTo('tp_settings');
 			$w = array();
 			$ssi = array();
+
+            switch($from) {
+                case 'settings':
+                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch');
+                    foreach($checkboxes as $v) {
+                        if(TPUtil::checkboxChecked('tp_'.$v)) {
+                            $updateArray[$v] = "1";
+                        }
+                        else {
+                            $updateArray[$v] = "";
+                        }
+                        // remove the variable so we don't process it twice before the old logic is removed
+                        unset($_POST['tp_'.$v]);
+                    }
+                    break;
+                default:
+                    break;
+            }
 
 			foreach($_POST as $what => $value)
 			{

@@ -118,6 +118,11 @@ class TPUtil
 
     }}}
 
+    public static function checkboxChecked($checkbox) {{{
+
+        return self::filter($checkbox, 'post', 'string');
+
+    }}}
 
     public static function shortenString(&$string, $length) {{{
 
@@ -269,11 +274,6 @@ class TPUtil
         return $filter;
     }}}
 
-    private static function checkboxChecked($checkbox) {{{
-
-       return self::filter($checkbox, 'post', 'int');
-
-    }}}
 
 }
 
