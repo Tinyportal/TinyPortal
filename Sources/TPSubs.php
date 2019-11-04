@@ -177,14 +177,26 @@ function tp_getbuttons() {{{
 	if(allowedTo('tp_settings'))
 	{
 		$buts['tpsettings'] = array(
-			'title' => $txt['tp-settings'],
+			'title' => $txt['tp-generalsettings'],
 			'href' => $scripturl . '?action=tpadmin;sa=settings',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(
+				'tpsettings' => array(
+					'title' => $txt['tp-settings'],
+					'href' => $scripturl . '?action=tpadmin;sa=settings',
+					'show' => true,
+					'active_button' => false,
+				),
 				'tpfrontpage' => array(
 					'title' => $txt['tp-frontpage'],
 					'href' => $scripturl . '?action=tpadmin;sa=frontpage',
+					'show' => true,
+					'active_button' => false,
+				),
+				'tparticlesettings' => array(
+					'title' => $txt['tp-articles'],
+					'href' => $scripturl . '?action=tpadmin;sa=artsettings',
 					'show' => true,
 					'active_button' => false,
 				),

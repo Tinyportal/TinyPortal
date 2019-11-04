@@ -260,6 +260,7 @@ $txt['tp-rates'] = 'rates';
 $txt['tp-haverated'] = 'You have rated.';
 
 $txt['tp-admin'] = 'TP Admin';
+$txt['tp-generalsettings'] = 'General settings';
 $txt['tp-settings'] = 'Settings';
 $txt['tp-blocks'] = 'Blocks';
 $txt['tp-modules'] = 'Modules';
@@ -285,7 +286,7 @@ $txt['tp-categories'] = 'Categories';
 $txt['tp-panels'] = 'Panels';
 $txt['tp-strays'] = 'Uncategorized';
 $txt['tp-permissions'] = 'Permissions';
-$txt['tp-menumanager'] = 'Menu Manager';
+$txt['tp-menumanager'] = 'Menu manager';
 $txt['tp-submissions'] = 'Submissions';
 $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-myarticles'] = 'My articles';
@@ -295,7 +296,7 @@ $txt['tp-noton'] = 'This article isn\'t active.';
 $txt['tp-nocategory'] = 'This article isn\'t assigned to a category yet.';
 $txt['tp_modreports'] = 'Modreports:';
 
-$txt['tp-blockoverview'] = 'Block Access';
+$txt['tp-blockoverview'] = 'Block access';
 $txt['tp-ungroupedmembers']='Ungrouped members';
 $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
 $txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . (!empty($context['forum_name']) ? $context['forum_name'] : '*') . '</a>.';

@@ -169,7 +169,7 @@ function template_editblock()
 				<div class="formtable">
 					<dl class="settings">
 						<dt>
-							<b><label for="field_name">', $txt['tp-status'], ':<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></label></b>
+							<b><label for="field_name">', $txt['tp-status'], '<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></label></b>
 						</dt>
 						<dd>
 							<input type="radio" value="0" name="tp_block_off"',$context['TPortal']['blockedit']['off']==0 ? ' checked="checked"' : '' ,' />'.$txt['tp-on'].'
@@ -177,11 +177,11 @@ function template_editblock()
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><label for="tp_block_title"><b>'.$txt['tp-title'].':</b></label></dt>
+						<dt><label for="tp_block_title"><b>'.$txt['tp-title'].'</b></label></dt>
 						<dd>
 							<input size=60 name="tp_block_title" id="tp_block_title" type="text" value="' .$newtitle. '"><br><br>
 						</dd>
-						<dt><label for="tp_block_type"><b>',$txt['tp-type'].':</b></label></dt>
+						<dt><label for="tp_block_type"><b>',$txt['tp-type'].'</b></label></dt>
 						<dd>
 							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type">
 								<option value="0"' ,$context['TPortal']['blockedit']['type']=='0' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
@@ -579,7 +579,7 @@ function template_editblock()
 					</div>
 				</div>
 				<div><hr>
-					<div><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-blockstylehelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].':<br>
+					<div><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-blockstylehelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
 					</div>				
 					<br><input name="tp_block_var5" id="tp_block_var5" type="radio" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
@@ -605,7 +605,7 @@ function template_editblock()
 				</div>
 				<br>
 					<dl class="settings">
-						<dt>'.$txt['tp-blockframehelp'].':</dt>
+						<dt>'.$txt['tp-blockframehelp'].'</dt>
 						<dd>
 							<input name="tp_block_frame" id="useframe" type="radio" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '><label for="useframe"> '.$txt['tp-useframe'].'</label><br>
 							<input name="tp_block_frame" id="useframe2" type="radio" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '><label for="useframe2"> '.$txt['tp-useframe2'].' </label><br>
@@ -615,7 +615,7 @@ function template_editblock()
 					</dl>
 					<br>
 					<dl class="settings">
-						<dt> '.$txt['tp-allowupshrink'].': </dt>
+						<dt> '.$txt['tp-allowupshrink'].' </dt>
 						<dd>
 							<input name="tp_block_visible" id="allowupshrink" type="radio" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '><label for="allowupshrink"> '.$txt['tp-allowupshrink'].'</label><br>
 							<input name="tp_block_visible" id="notallowupshrink" type="radio" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '><label for="notallowupshrink"> '.$txt['tp-notallowupshrink'].'</label>
@@ -679,7 +679,7 @@ function template_editblock()
 			}
 			echo '			</div>
 						<br></dd>
-						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . ':';
+						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . '';
 				// alert if the settings is off, supply link if allowed
 				if(empty($context['TPortal']['uselangoption']))
 				{
@@ -715,7 +715,7 @@ function template_editblock()
 							<input type="hidden" name="fromblockpost" value="'.$context['TPortal']['return_url'].'" />';
 					echo '
 					<dl class="settings">
-						<dt><b>' . $txt['tp-actions'] . ':</b></dt>
+						<dt><b>' . $txt['tp-actions'] . '</b></dt>
 						<dd>
 							<div>
 								<input name="actiontype1" id="actiontype1" type="checkbox" value="allpages" ' ,in_array('allpages',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype1"> '.$txt['tp-allpages'].'</label><br><br>
@@ -752,7 +752,7 @@ function template_editblock()
 							</dd>
 					</dl>
 					<dl class="settings">
-						<dt><b>Boards:</b></dt>
+						<dt><b>' . $txt['tp-boards'] . '</b></dt>
 						<dd>
 							<div class="tp_largelist">';
 				$a=1;
@@ -772,7 +772,7 @@ function template_editblock()
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><b>' . $txt['tp-articles'] . ':</b></dt>
+						<dt><b>' . $txt['tp-articles'] . '</b></dt>
 						<dd>
 							 <div class="tp_largelist">';
 				$a=1;
@@ -788,7 +788,7 @@ function template_editblock()
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><b>' . $txt['tp-artcat'] . ':</b></dt>
+						<dt><b>' . $txt['tp-artcat'] . '</b></dt>
 						<dd>
 						    <div class="tp_largelist">';
 				$a=1;
@@ -807,7 +807,7 @@ function template_editblock()
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><b>' . $txt['tp-dlmanager'] . ':</b></dt>
+						<dt><b>' . $txt['tp-dlmanager'] . '</b></dt>
 						<dd>
 							<div class="tp_largelist">';
 				$a=1;
@@ -824,25 +824,6 @@ function template_editblock()
 				// if none is chosen, have a control value
 				echo '		</div><input id="toggledlcat" type="checkbox" onclick="invertAll(this, this.form, \'dlcattype\');" /><label for="toggledlcat">'.$txt['tp-checkall'];
 				echo '</label<br>
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt><b>'.$txt['tp-modules'].'</b></dt>
-						<dd>
-							<div>';
-				$a=1;
-				if(!empty($context['TPortal']['tpmods']))
-				{
-					$a++;
-					foreach($context['TPortal']['tpmods'] as $bb)
-					{
-						echo '
-								<input type="checkbox" name="tpmodtype' , $a, '" id="tpmodtype' , $a, '" value="'.$bb['subquery'].'" ' , in_array($bb['subquery'], $context['TPortal']['blockedit']['access2']['tpmod']) ? 'checked="checked"' : '' , '><label for="tpmodtype' , $a, '"> '.$bb['title'].'</label><br>';
-						$a++;
-					}
-				}
-				echo '
-							</div>
 						</dd>
 					</dl>
 				</fieldset>

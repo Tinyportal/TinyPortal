@@ -978,11 +978,11 @@ function template_editcategory()
 					<hr>
 					<dl class="settings">
 						<dt>
-							<label for="field_name">', $txt['tp-showchilds'], '</label>
+							', $txt['tp-showchilds'], '
 						</dt>
 						<dd>
-							<input name="tp_category_showchild" type="radio" value="0"' , ((isset($mg['showchild']) && $mg['showchild']==0) || !isset($mg['showchild'])) ? ' checked="checked"' : '' , '> ' , $txt['tp-no'] , '
-							<input name="tp_category_showchild" type="radio" value="1"' , (isset($mg['showchild']) && $mg['showchild']==1) ? ' checked="checked"' : '' , '> ' , $txt['tp-yes'] , '<br><br>
+							<input name="tp_category_showchild" type="radio" value="1"' , (isset($mg['showchild']) && $mg['showchild']==1) ? ' checked="checked"' : '' , '> ' , $txt['tp-yes'] , '
+							<input name="tp_category_showchild" type="radio" value="0"' , ((isset($mg['showchild']) && $mg['showchild']==0) || !isset($mg['showchild'])) ? ' checked="checked"' : '' , '> ' , $txt['tp-no'] , '<br><br>
 						<dd>
 						<dt>
 							<strong>', $txt['tp-allpanels'], '</strong>
@@ -1026,7 +1026,7 @@ function template_editcategory()
 					</dl>
 					<dl class="settings">
 						<dt>
-							<span class="font-strong">'.$txt['tp-allowedgroups']. ':</span>
+							<span class="font-strong">'.$txt['tp-allowedgroups']. '</span>
 						</dt>
 						<dd>
 							<div class="tp_largelist2">';
@@ -1496,14 +1496,14 @@ function template_panels()
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
+							<strong>'.$txt['tp-hidebarsall'].'</strong>
+						</dt>
+`						<dt>
 							<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'], '</label>
 						</dt>
 						<dd>
 							<input id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" type="checkbox" value="1" ' , $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' , '>
 						</dd>
-						<dt>
-							<br><strong>'.$txt['tp-hidebarsall'].'</strong>
-						</dt>
 						<dt>
 							<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'], '</label>
 						</dt>
@@ -1588,7 +1588,7 @@ function template_panels()
 			if(in_array($panl, array("left","right")))
 				echo '
 					<dt>
-						<label for="tp_'.$panl.'bar_width">'.$txt['tp-panelwidth'].':</label>
+						<label for="tp_'.$panl.'bar_width">'.$txt['tp-panelwidth'].'</label>
 					</dt>
 					<dd>
 						<input id="tp_'.$panl.'bar_width" name="tp_'.$panl.'bar_width" size="5" maxlength="5" type="text" value="' , $context['TPortal'][$panl. 'bar_width'] , '"><br>
@@ -2498,7 +2498,7 @@ function template_menucore()
 		<div class="windowbg noup padding-div">
 			<dl class="settings">
 				<dt>
-					<label for="tp_menu_name"><b>'.$txt['tp-title'].':</b></label>
+					<label for="tp_menu_name"><b>'.$txt['tp-title'].'</b></label>
 				</dt>
 				<dd>
 					<input id="tp_menu_name" name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
@@ -2506,7 +2506,7 @@ function template_menucore()
 			</dl>	
 			<dl class="settings">
 				<dt>
-					<label for="tp_menu_type"><b>'.$txt['tp-type'].':</b></label>
+					<label for="tp_menu_type"><b>'.$txt['tp-type'].'</b></label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_type" id="tp_menu_type">
@@ -2537,7 +2537,7 @@ function template_menucore()
 			<hr>
 			<dl class="settings">
 				<dt>
-					<label for="tp_item"><b>'.$txt['tp-item'].':</b></label>
+					<label for="tp_item"><b>'.$txt['tp-item'].'</b></label>
 				</dt>
 				<dd>';
 		// (category)
@@ -2583,7 +2583,7 @@ function template_menucore()
 					</select>
 				</dd>
 				<dt>
-					<label for="tp_menu_sub"><b>'.$txt['tp-sub_item'].':</b></label>
+					<label for="tp_menu_sub"><b>'.$txt['tp-sub_item'].'</b></label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_sub" id="tp_menu_sub">
@@ -2594,7 +2594,7 @@ function template_menucore()
 					</select>
 				</dd>
 				<dt>
-					<label for="tp_menu_position"><b>'.$txt['tp-menu-after'].':</b></label>
+					<label for="tp_menu_position"><b>'.$txt['tp-menu-after'].'</b></label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_position" id="tp_menu_position">';
@@ -2608,7 +2608,7 @@ function template_menucore()
 		if(TP_SMF21) { 
 			echo '	
 				<dt>
-					<label for="tp_menu_icon"><b>'.$txt['tp-menu-icon'].':</b><br>
+					<label for="tp_menu_icon"><b>'.$txt['tp-menu-icon'].'</b><br>
 						'.$txt['tp-menu-icon2'].'</label>
 				</dt>
 				<dd>
