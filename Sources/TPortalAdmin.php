@@ -1874,7 +1874,7 @@ function do_postchecks()
 
             switch($from) {
                 case 'settings':
-                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch');
+                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
                     foreach($checkboxes as $v) {
                         if(TPUtil::checkboxChecked('tp_'.$v)) {
                             $updateArray[$v] = "1";
@@ -1886,6 +1886,46 @@ function do_postchecks()
                         unset($_POST['tp_'.$v]);
                     }
                     break;
+				case 'frontpage':
+                    $checkboxes = array('forumposts_avatar', 'use_attachment');
+                    foreach($checkboxes as $v) {
+                        if(TPUtil::checkboxChecked('tp_'.$v)) {
+                            $updateArray[$v] = "1";
+                        }
+                        else {
+                            $updateArray[$v] = "";
+                        }
+                        // remove the variable so we don't process it twice before the old logic is removed
+                        unset($_POST['tp_'.$v]);
+                    }
+                    break;
+				case 'artsettings':
+                    $checkboxes = array('use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon');
+                    foreach($checkboxes as $v) {
+                        if(TPUtil::checkboxChecked('tp_'.$v)) {
+                            $updateArray[$v] = "1";
+                        }
+                        else {
+                            $updateArray[$v] = "";
+                        }
+                        // remove the variable so we don't process it twice before the old logic is removed
+                        unset($_POST['tp_'.$v]);
+                    }
+                    break;
+				case 'panels':
+                    $checkboxes = array('hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar');
+                    foreach($checkboxes as $v) {
+                        if(TPUtil::checkboxChecked('tp_'.$v)) {
+                            $updateArray[$v] = "1";
+                        }
+                        else {
+                            $updateArray[$v] = "";
+                        }
+                        // remove the variable so we don't process it twice before the old logic is removed
+                        unset($_POST['tp_'.$v]);
+                    }
+                    break;
+
                 default:
                     break;
             }
