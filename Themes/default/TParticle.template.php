@@ -62,7 +62,7 @@ function template_submitarticle()
 		<div class="windowbg noup">
 			<div class="formtable padding-div">
 			<div>
-						<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-title'] , ':</label></div>
+						<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-title'] , '</label></div>
 						<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
 					</div>
 					<div>
@@ -364,7 +364,7 @@ function template_submitarticle()
 							<input name="tp_article_frame" id="noframe" type="radio" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-status'], ': <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />
+						', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />
 					</dt>
 					<dd>
 							  <input name="tp_article_off" id="tp_article_off" type="radio" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label><br>
@@ -390,7 +390,7 @@ function template_submitarticle()
             }
 			echo '
 							</select>
-							<p>' . $txt['tp-uploadicon'] . ':<br><input type="file" name="tp_article_illupload"></p>
+							<p>' . $txt['tp-uploadicon'] . '<br><input type="file" name="tp_article_illupload"></p>
 					</dd>
 				</dl>
 					';
