@@ -48,7 +48,7 @@ function template_tpshout_bigscreen()
 
 	echo '
 	<div class="tborder">
-		<div class="catbg" style="padding: 5px 5px 5px 1em;">' , $txt['tp-tabs10'] , '</div>
+		<div class="title_bar"><h3 class="titlebg">' , $txt['tp-shoutbox'] , '</h3></div>
 		<div class="windowbg tp-pad">';
 
 	echo '
@@ -134,7 +134,7 @@ function template_tpshout_admin_settings()
 					<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							'.$txt['tp-sticky-title'].'
+							'.$txt['tp-shoutboxtitle'].'
 						</dt>
 						<dd>
 							<textarea style="width: 90%; height: 50px;" name="tp_shoutbox_stitle">' , !empty($context['TPortal']['shoutbox_stitle']) ? $context['TPortal']['shoutbox_stitle'] : '', '</textarea><br><br>
@@ -232,7 +232,7 @@ function template_tpshout_admin_settings()
 						</dt>
 						<dt>
 							'.$txt['tp-shoutbox_use_groupcolor'].'
-							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<div class="smalltext" style="color:red;">'.$txt['tp-use_groupcolordesc'].'</div>' : '' , '
+							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<div class="smalltext" style="color:red;">'.$txt['tp-shoutbox_use_groupcolordesc'].'</div>' : '' , '
 						</dt>
 						<dd>
 							<input name="tp_shoutbox_use_groupcolor" type="radio" value="1" ' , $context['TPortal']['shoutbox_use_groupcolor']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'

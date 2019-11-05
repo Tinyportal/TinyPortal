@@ -23,8 +23,8 @@ function TPShoutLoad()
 
     global $context, $settings, $options, $modSettings;
 
-    if(loadLanguage('TPShout') == false) {
-        loadLanguage('TPShout', 'english');
+    if(loadLanguage('TPortal') == false) {
+        loadLanguage('TPortal', 'english');
     }
 
     $tpMention = new TPMentions();
@@ -613,7 +613,7 @@ function tpshout_admin()
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
 			),
 			'shoutbox' => array(
-				'text' => 'tp-tabs10',
+				'text' => 'tp-shoutbox',
 				'url' => $scripturl . '?action=tpshout;shout=admin',
 				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
 			),
@@ -1190,8 +1190,8 @@ function tpshout_profile($memID)
         $context['TPortal']['pageindex'] = '';
     }
     loadtemplate('TPShout');
-    if(loadLanguage('TPShout') == false) {
-        loadLanguage('TPShout', 'english');
+    if(loadLanguage('TPortal') == false) {
+        loadLanguage('TPortal', 'english');
     }
     $context['sub_template'] = 'tpshout_profile';
 }

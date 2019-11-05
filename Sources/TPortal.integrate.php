@@ -151,9 +151,9 @@ class TPortal_Integrate
 
     }
 
-    public static function hookPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) {
-        loadLanguage('TPShout');
-
+    public static function hookPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) 
+	{
+    
         $permissionList['membergroup'] = array_merge(
             array(
                 'tp_settings' => array(false, 'tp', 'tp'),
@@ -527,7 +527,7 @@ class TPortal_Integrate
 
             if(!empty($context['TPortal']['show_download'])) {
                 $profile_areas['tp']['areas']['tpdownload'] = array(
-                    'label' => $txt['downloadprofile'],
+                    'label' => $txt['downloadsprofile'],
                     'file' => 'TPSubs.php',
                     'function' => 'tp_download',
                     'icon' => 'menu_tpdownload',
@@ -592,7 +592,7 @@ class TPortal_Integrate
 
             if(!empty($context['TPortal']['show_download'])) {
                 $profile_areas['tp']['areas']['tpdownload'] = array(
-                    'label' => $txt['downloadprofile'],
+                    'label' => $txt['downloadsprofile'],
                     'file' => 'TPSubs.php',
                     'function' => 'tp_download',
                     'permission' => array(
