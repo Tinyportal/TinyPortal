@@ -104,7 +104,7 @@ $txt['tp-frontblocks'] = 'Frontpanel only';
 $txt['tp-frontblocksingle']='Hide frontpanel, unless otherwise selected.';
 $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage';
-$txt['tp-frontpage_settings']= 'Frontpage Settings';
+$txt['tp-frontpage_settings']= 'Frontpage settings';
 $txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage';
 $txt['tp-frontpageoptionsdesc'] = 'For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s \'single page\' option.';
 $txt['tp-showforumposts']='Display forum-topics on frontpage from';
@@ -203,7 +203,7 @@ $txt['tp-catlayout5'] = 'normal + links';
 $txt['tp-catlayout6'] = 'just links';
 $txt['tp-catlayout7'] = 'use custom template';
 $txt['tp-catlayout8'] = 'articles + icons2';
-$txt['tp-articlesettings'] = 'Article Settings';
+$txt['tp-articlesettings'] = 'Article settings';
 $txt['tp-parent'] = 'Parent';
 $txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage';
 $txt['tp-sortingoptionsdesc'] = 'Sorting order for articles on frontpage: Note that this setting only works if display is set to \'Only articles\' on the frontpage.';
@@ -386,11 +386,11 @@ $txt['tp-panelsettings'] = 'Panel Settings';
 $txt['tp-panel'] = 'Panel';
 $txt['tp-hidebarsall'] = 'Hide panels when in these sections';
 
-$txt['tp-hidebarsprofile'] = 'Profile screen';
-$txt['tp-hidebarspm'] = 'Personal Messages screen';
-$txt['tp-hidebarsmemberlist'] = 'Memberlist screen';
-$txt['tp-hidebarssearch'] = 'Search screen';
-$txt['tp-hidebarscalendar'] = 'Calendar screen';
+$txt['tp-hidebarsprofile'] = 'Hide panels in Profile';
+$txt['tp-hidebarspm'] = 'Hide panels in Personal Messages';
+$txt['tp-hidebarsmemberlist'] = 'Hide panels in Memberlist';
+$txt['tp-hidebarssearch'] = 'Hide panels in Search';
+$txt['tp-hidebarscalendar'] = 'Hide panels in Calendar';
 $txt['tp-hidebarscustom'] = 'Hide panels in these custom actions';
 $txt['tp-hidebarscustomdesc'] = 'This setting will indeed \'hide\' the panels per specified custom section. Separate the actions with comma: For example: \'gallery,arcade,shop\'';
 $txt['tp-padding_between']='Padding between panels';
@@ -423,7 +423,7 @@ $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';
 $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
 // TP Settings
-$txt['tp-generalsettings'] = 'General Settings';
+$txt['tp-generalsettings'] = 'General settings';
 $txt['tp-hidecollapse'] = 'Allow the panels to be collapsed';
 $txt['tp-hideediticon'] = 'Hide the block edit link';
 
@@ -463,12 +463,12 @@ $txt['tp-adminportalhelp'] = '';
 $txt['tp-subscriptiontab'] = '';
 
 // Menu manager
-$txt['tp-addmenuitem']='Add Menu Item';
-$txt['tp-addmenu'] = 'Add Menu';
+$txt['tp-addmenuitem']='Add menu item';
+$txt['tp-addmenu'] = 'Add menu';
 $txt['tp-header'] = 'Header';
 $txt['tp-editmenu'] = 'Edit menu item';
 $txt['tp-windowmenu'] = 'Open in a new window';
-$txt['tp-menumanager'] = 'Menu Manager';
+$txt['tp-menumanager'] = 'Menu manager';
 $txt['tp-suremenu']='Are you sure you want to delete this menu item?';
 $txt['tp-nowindowmenu'] = 'Same window';
 $txt['tp-link']='Link';
@@ -480,7 +480,7 @@ $txt['tp-showmenustyle'] = 'Menu style';
 $txt['tp-showmenus'] = 'Use menu';
 $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
-$txt['tp-menu-after'] ='Add Menu after';
+$txt['tp-menu-after'] ='Add menu after';
 $txt['tp-menu-icon'] ='Menu icon';
 $txt['tp-menu-icon2'] ='<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling Tinyportal, so any file manually placed there will be lost upon uninstall!</small>';
 
@@ -580,6 +580,7 @@ $txt['tp-helpstrays'] = 'Articles that have not yet been assigned to a category.
 $txt['tp-addsubcategory'] = 'Add a category under this one';
 $txt['tp-copycategory'] = 'Make a copy of this category';
 $txt['tp-actions'] = 'Actions';
+$txt['tp-boards'] = 'Boards';
 $txt['tp-editcategory'] = 'Edit Article Category';
 $txt['tp-shortname'] = 'Short name';
 $txt['tp-helpaddcategory'] = 'Add a new article category. Next screen will allow specifics about it.';
@@ -633,9 +634,9 @@ $txt['tp-internal'] = 'Internal';
 $txt['tp-details'] = 'Details';
 $txt['tp-others'] = 'Others';
 $txt['tp-artcat'] = 'Article categories';
-$txt['tp-lang'] = 'Languages';
+$txt['tp-lang'] = 'Block visible for these languages';
 $txt['tp-langdesc'] = 'Upon installation of Tinyportal the Language visibility option will be switched OFF by default. When you access the block settings for a block you will see the language visibility option with a warning message, pointing out that the  language visibility setting is off. As long as the setting is off the blocks will show regardless of the user language. Language visibility is an additional setting for controlling when blocks are visible in the panels: the settings that choose where the block should appear will always be respected. If the settings do not allow the block to show, setting language visibility will also not make it show.';
-$txt['tp-dlmanager'] = 'DL manager';
+$txt['tp-dlmanager'] = 'TPDownloads';
 $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 
 // new in 1.109
