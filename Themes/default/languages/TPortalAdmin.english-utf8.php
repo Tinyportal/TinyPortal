@@ -14,9 +14,36 @@
  * Copyright (C) 2019 - The TinyPortal Team
  *
  */
-// Responsive themes form
+ 
+// Settings..//
+$txt['tp-generalsettings'] = 'General settings';
 $txt['tp-formres'] ='Select non responsive themes';
 $txt['tp-deselectthemes'] ='Deselect all themes';
+
+$txt['tp-frontpagetitle'] = 'Use a custom browser tab title for your Frontpage';
+$txt['tp-frontpagetitle2'] = 'This lets you select a specific name to display on the browser tab for your Frontpage (leave the textfield empty for no title).';
+$txt['tp-redirectforum'] = 'How to redirect after login';
+$txt['tp-redirectforum1'] = 'Redirect to forum';
+$txt['tp-redirectforum2'] = 'Redirect to frontpage';
+$txt['tp-useroundframepanels'] = 'Use the roundframe style for left/right panels';
+$txt['tp-hidecollapse'] = 'Allow the panels to be collapsed';
+$txt['tp-hideediticon'] = 'Hide the block edit link';
+$txt['tp-uselangoption'] = 'Use language visibility option for blocks';
+$txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
+$txt['tp-use_groupcolordesc'] = 'This setting will activate the use of the member group colour for user names throughout the forum. Users names will be displayed in the forum in the color of the primary user group that a member is assigned to. Note that there is a similar settings in the shoutbox that will only activate this in the shoutbox: The general TP setting takes preference over the shoutbox setting.';
+
+$txt['tp-maxrating'] = 'Max rating';
+$txt['tp-stars'] = 'Display stars instead of numbers';
+
+$txt['tp-useoldsidebar'] = 'Use old sidebar for admin';
+$txt['tp-admin_showblocks'] = 'Admin can see all blocks';
+$txt['tp-uselangoption2'] = 'NB! The language visibility setting is turned off. Note that the language choices will not work unless its turned on.';
+
+
+
+
+
+
 // Navigation links called from source files
 $txt['tp-modules'] = 'Modules';
 $txt['tp-adminnews1'] = 'News';
@@ -315,8 +342,7 @@ $txt['tp-movelower'] = 'Move to lower panel';
 $txt['tp-moveright']='Move to the right panel';
 $txt['tp-moveup'] = 'Move to top panel';
 $txt['tp-membergrouphelp']='Choose the membergroups that will able to see this block.';
-$txt['tp-membergrouphelpdesc']='Choose your membergroups that will able to see this block. Note that if none are chosen, it will only display it to admin.';
-$txt['tp-membergrouptext']='Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
+$txt['tp-membergrouphelpdesc']='Choose your membergroups that will able to see this block. Note that if none are chosen, it will only display it to admin.';$txt['tp-membergrouptext']='Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
 $txt['tp-typeofblock'] = 'You have successfully created a new block. Here you can set what type this new block should be.';
 $txt['tp-panelclosed']= 'Note: this panel has been turned off in panel settings.';
 $txt['tp-frontpanel-notice'] = 'Note: the frontpage is not a panel and it cannot be turned off as it has it\'s own unique set of settings. Because of this, all visual option settings for blocks within the frontpage area are ignored.';
@@ -423,13 +449,8 @@ $txt['tp-blockheight'] = '<b>Force</b> this height on each block(use 00px or 00%
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';
 $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
-// TP Settings
-$txt['tp-generalsettings'] = 'General settings';
-$txt['tp-hidecollapse'] = 'Allow the panels to be collapsed';
-$txt['tp-hideediticon'] = 'Hide the block edit link';
 
-$txt['tp-maxrating'] = 'Max rating';
-$txt['tp-stars'] = 'Display stars instead of numbers';
+
 
 $txt['tp-themesavail']='Themes available in the themebox';
 $txt['tp-hidebarsadminonly'] = 'Hide panels when in admin section';
@@ -485,14 +506,44 @@ $txt['tp-menu-after'] ='Add menu after';
 $txt['tp-menu-icon'] ='Menu icon';
 $txt['tp-menu-icon2'] ='<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling Tinyportal, so any file manually placed there will be lost upon uninstall!</small>';
 
-// Shoutbox Manager
-$txt['tp-deleteallshouts'] = 'Delete all shouts?';
+// Shoutbox settings
+$txt['tp-shoutboxsettings'] = 'Shoutbox settings';
+
+$txt['tp-shoutboxtitle'] = 'Place a fixed message or announcement at the top of the shoutbox (BBC allowed)';
 $txt['tp-shoutbox_showsmile'] = 'Display smilies buttons';
 $txt['tp-shoutbox_showicons'] = 'Display BBC buttons';
-$txt['tp-editshoutbox'] = 'Edit Shoutbox';
-$txt['tp-tabs10']='Shoutbox';
-$txt['tp-allshoutsbyip'] = 'All shouts by this IP';
+$txt['tp-shout-allow-links'] = 'Allow links to be posted';
+$txt['tp-shoutboxusescroll'] = 'Use scrolling';
+$txt['tp-shoutboxduration'] = 'Speed for the scrolling (1 - 5)';
+$txt['tp-shout-autorefresh'] = 'Auto refresh (in seconds)<br><span style="color:#CC0000">Setting this too low can eat server resources</span> (0 = disabled)';
+$txt['shout_submit_returnkey'] = 'Submit Shout on enter key';
+$txt['tp-yes-ctrl'] = 'Yes with ctrl/cmd';
+$txt['shoutbox_layout'] = 'Shoutbox layout';
+
+$txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
+$txt['tp-shoutboxlimit'] = 'Limit posts in shoutbox to ';
+$txt['tp-shoutboxmaxlength'] = 'Maximum shout length in characters';
+$txt['tp-shoutboxtimeformat'] = 'Time format';
+
+$txt['tp-shoutboxcolors'] = 'Shoutbox color settings';
+$txt['tp-shoutboxcolorsdesc'] = 'Shoutbox color settings: Use hex color codes. An example of a Hex color representation is \'hashtag\'123456. To use the default theme colors leave these fields blank.';
+$txt['tp-shoutbox_use_groupcolor'] = 'Use membergroup color for user names';
+$txt['tp-shoutbox_use_groupcolordesc'] = '(The general TP setting takes preference over the shoutbox setting.)';
+$txt['tp-shoutboxtextcolor'] = 'Default shout text color';
+$txt['tp-shoutboxtimecolor'] = 'Time text color';
+$txt['tp-shoutboxlinecolor1'] = 'Layouts 3 and 4: background color odd lines';
+$txt['tp-shoutboxlinecolor2'] = 'Layouts 3 and 4: background color even lines';
+
+$txt['tp-show_profile_shouts'] = 'Hide shouts in the profile';
+
+$txt['tp-shoutboxadmin'] = 'Shoutbox administration';
+$txt['tp-shoutboxitems'] = 'Edit/Remove last shouts';
+$txt['tp-deleteallshouts'] = 'Delete all shouts?';
 $txt['tp-allshoutsbymember'] = 'All shouts by this member';
+$txt['tp-allshoutsbyip'] = 'All shouts by this IP';
+$txt['tp-allshouts'] = 'Show all shouts';
+
+$txt['tp-allowguestshout'] = 'Allow guest shouts';
 
 // Downloads Manager
 $txt['tp-module1'] = 'Downloads: x latest files';
@@ -560,7 +611,6 @@ $txt['custom_modules'] = 'TP Modules';
 $txt['tp-searchadmin'] = 'Search';
 $txt['tp-tpmenu'] = 'Menu';
 $txt['tp-menus'] = 'Sections';
-$txt['tp-useoldsidebar'] = 'Use old sidebar for admin';
 
 $txt['tp-helpsettings'] = 'Here you can tweak various general settings for the portal.';
 $txt['tp-helppanels'] = 'Blocks are located in panels and each panel has its own set of settings.';
@@ -610,17 +660,9 @@ $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin f
 $txt['tp-selectedforum'] = 'Promoted topics only';
 $txt['tp-selectbothforum'] = 'Promoted topics + articles - sorted on date';
 
-$txt['tp-frontpagetitle'] = 'Use a custom browser tab title for your Frontpage';
-$txt['tp-frontpagetitle2'] = 'This lets you select a specific name to display on the browser tab for your Frontpage (leave the textfield empty for no title).';
-$txt['tp-redirectforum'] = 'How to redirect after login';
-$txt['tp-redirectforum1'] = 'Redirect to forum';
-$txt['tp-redirectforum2'] = 'Redirect to frontpage';
-$txt['tp-useroundframepanels'] = 'Use the roundframe style for left/right panels';
 $txt['tp-allowedgroups'] = 'Membergroups that can see this category';
 
-$txt['tp-admin_showblocks'] = 'Admin can see all blocks';
-$txt['tp-uselangoption'] = 'Use language visibility option for blocks';
-$txt['tp-uselangoption2'] = 'NB! The language visibility setting is turned off. Note that the language choices will not work unless its turned on.';
+
 
 $txt['tp-created'] = 'Created at';
 $txt['tp-published'] = 'Publish';
@@ -642,7 +684,6 @@ $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 
 // new in 1.109
 $txt['tp-sticky'] = 'Sticky';
-$txt['tp-sticky-title'] = 'Place a fixed message or announcement at the top of the shoutbox (BBC allowed)';
 
 $txt['tp-sticky1'] = 'Information style';
 $txt['tp-sticky2'] = 'Normal style';
@@ -670,6 +711,4 @@ $txt['tp-downloaduploadpathdesc'] = 'File path where the downloads uploaded via 
 
 // new in 1.6.3
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
-$txt['tp-use_groupcolor'] = 'Use membergroup color for user names throughout the forum';
-$txt['tp-use_groupcolordesc'] = 'This setting will activate the use of the member group colour for user names throughout the forum. Users names will be displayed in the forum in the color of the primary user group that a member is assigned to. Note that there is a similar settings in the shoutbox that will only activate this in the shoutbox: The general TP setting takes preference over the shoutbox setting.';
 ?>

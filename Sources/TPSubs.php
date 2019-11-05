@@ -1278,7 +1278,7 @@ function TP_fetchprofile_areas2($member_id) {{{
 			$context['profile_areas']['tinyportal']['areas']['tp_articles'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_articles">' . $txt['articlesprofile'] . '</a>';
         }
 		if(($context['user']['is_owner'] || allowedTo('tp_dlmanager')) && $context['TPortal']['show_download']) {
-			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_download">' . $txt['downloadprofile'] . '</a>';
+			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_download">' . $txt['downloadsprofile'] . '</a>';
         }
     
         call_integration_hook('integrate_tp_profile', array(&$member_id));
@@ -3009,7 +3009,7 @@ function tp_profile_articles($member_id) {{{
 function tp_profile_download($memID)
 {
 	global $txt, $context, $scripturl, $smcFunc;
-	$context['page_title'] = $txt['downloadprofile'] ;
+	$context['page_title'] = $txt['downloadsprofile'] ;
 	// is dl manager on?
 	if($context['TPortal']['show_download']==0)
       fatal_lang_error('tp-dlmanageroff', false);
@@ -3110,12 +3110,6 @@ function tp_profile_download($memID)
 		$context['TPortal']['pageindex'] = '';
 }
 
-function tp_profile_links($memID)
-{
-	global $txt, $context;
-	$context['page_title'] = $txt['linksprofile'] ;
-}
-
 function tp_pro_shoutbox()
 {
 	global $txt, $context;
@@ -3144,7 +3138,7 @@ function tp_download($memID)
 {
 	global $txt, $context;
 	loadtemplate('TPprofile');
-	$context['page_title'] = $txt['downloadprofile'];
+	$context['page_title'] = $txt['downloadsprofile'];
 	tp_profile_download($memID);
 }
 
