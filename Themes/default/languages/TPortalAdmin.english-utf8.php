@@ -14,9 +14,27 @@
  * Copyright (C) 2019 - The TinyPortal Team
  *
  */
+
+
+// Menu...//
+$txt['tp-adminheader1'] = 'Settings & Frontpage';
+$txt['tp-settings'] = 'Settings';
+$txt['tp-frontpage'] = 'Frontpage';
+
+
+$txt['tp-tabs4'] = 'Submissions';
+
+$txt['tp-adminpanels'] = 'Panels and Blocks';
+
+$txt['tp-menumanager'] = 'Menu manager';
+$txt['tp-addmenu'] = 'Add menu';
+
+
+$txt['tp-dlmanager'] = 'TPDownloads';
  
-// Settings..//
+// Settings...
 $txt['tp-generalsettings'] = 'General settings';
+$txt['tp-helpsettings'] = 'Here you can tweak various general settings for the portal.';
 $txt['tp-formres'] ='Select non responsive themes';
 $txt['tp-deselectthemes'] ='Deselect all themes';
 
@@ -25,6 +43,7 @@ $txt['tp-frontpagetitle2'] = 'This lets you select a specific name to display on
 $txt['tp-redirectforum'] = 'How to redirect after login';
 $txt['tp-redirectforum1'] = 'Redirect to forum';
 $txt['tp-redirectforum2'] = 'Redirect to frontpage';
+
 $txt['tp-useroundframepanels'] = 'Use the roundframe style for left/right panels';
 $txt['tp-hidecollapse'] = 'Allow the panels to be collapsed';
 $txt['tp-hideediticon'] = 'Hide the block edit link';
@@ -38,125 +57,115 @@ $txt['tp-stars'] = 'Display stars instead of numbers';
 $txt['tp-useoldsidebar'] = 'Use old sidebar for admin';
 $txt['tp-admin_showblocks'] = 'Admin can see all blocks';
 $txt['tp-uselangoption2'] = 'NB! The language visibility setting is turned off. Note that the language choices will not work unless its turned on.';
+$txt['tp-imageproxycheck'] = 'Perform the final image proxy check';
+$txt['tp-imageproxycheckdesc'] = 'This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.';
+$txt['tp-fulltextsearch'] = 'Enable TinyPortal Full Text search';
+$txt['tp-fulltextsearchdesc'] = 'This setting will enable advanced search options for the Article Search Functionality: this allows for the use of multiple search terms in the TP search function as well as the use of complex search operators. See for explanation the article on Search functionality. If this is set to \'No\' the search can only be done for a single search term.';
+$txt['tp-disabletemplateeval'] = 'Disable the PHP eval function for templates';
+$txt['tp-disabletemplateevaldesc']= 'Disable the PHP eval function for rending article templates';
+$txt['tp-imageuploadpath'] = 'Path where TinyPortal images are uploaded to on your server';
+$txt['tp-imageuploadpathdesc'] = 'File path where the images uploaded via TinyPortal are stored';
+$txt['tp-blockcodeuploadpath'] = 'Path where TinyPortal blockcodes are uploaded to on your server';
+$txt['tp-blockcodeuploadpathdesc'] = 'File path where the blockcodes uploaded via TinyPortal are stored';
+$txt['tp-downloaduploadpath'] = 'Path where TinyPortal downloads are uploaded to on your server';
+$txt['tp-downloaduploadpathdesc'] = 'File path where the downloads uploaded via TinyPortal are stored';
+$txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
+$txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
 
+//Frontpage...
+$txt['tp-frontpage_settings']= 'Frontpage settings';
+$txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
 
+$txt['tp-whattoshow']='What to display on frontpage';
+$txt['tp-selectedforum'] = 'Promoted topics only';
+$txt['tp-selectbothforum'] = 'Promoted topics + articles - sorted on date';
+$txt['tp-onlyforum']='Only forum-topics';
+$txt['tp-bothforum']='Forum-topics and articles - sorted on date';
+$txt['tp-onlyarticles']='Only articles';
+$txt['tp-singlepage']='Featured article with frontpanel';
+$txt['tp-frontblocks'] = 'Frontpanel only';
+$txt['tp-boardindex'] = 'Go directly to forum index';
+$txt['tp-frontmodule'] = 'TP module';
 
+$txt['tp-frontblockoption']='How frontpanel will be shown with content';
+$txt['tp-frontblocksingle']='Hide frontpanel, unless otherwise selected.';
+$txt['tp-frontblockfirst']='Frontpanel will be added before content';
+$txt['tp-frontblocklast']='Frontpanel will be added after content';
 
-
-
-// Navigation links called from source files
-$txt['tp-modules'] = 'Modules';
-$txt['tp-adminnews1'] = 'News';
-$txt['tp-settings'] = 'Settings';
-$txt['tp-adminpanels'] = 'Panels and Blocks';
-$txt['tp-adminheader1'] = 'Settings & Frontpage';
-$txt['tp-left'] = 'Left';
-$txt['tp-right'] = 'Right';
-$txt['tp-center'] = 'Upper';
-$txt['tp-front'] = 'Front';
-$txt['tp-top'] = 'Top';
-$txt['tp-bottom'] = 'Bottom';
-$txt['tp-lower'] = 'Lower';
-$txt['tp-allpanels'] = 'Panels';
-$txt['tp-leftpanel'] = 'Left Panel';
-$txt['tp-rightpanel'] = 'Right Panel';
-$txt['tp-centerpanel'] = 'Upper Panel';
-$txt['tp-toppanel'] = 'Top Panel';
-$txt['tp-bottompanel'] = 'Bottom Panel';
-$txt['tp-lowerpanel'] = 'Lower Panel';
-$txt['tp-frontpanel'] = 'Front Panel';
-$txt['tp-allblocks'] = 'Blocks';
-$txt['tp-tabs1']='Articles & Categories';
-$txt['tp-tabs2']='+HTML';
-$txt['tp-tabs3']='+PHP';
-$txt['tp-tabs4']='Submissions';
-$txt['tp-tabs5']='Categories';
-$txt['tp-tabs6']='Add category';
-$txt['tp-tabs11']='Cat List';
-$txt['tp-addarticle']='Add article';
-$txt['tp-guests'] = 'Guests';
-$txt['tp-addbbc'] = '+BBC';
-$txt['tp-addimport'] = '+External';
-$txt['tp-adminicons'] = 'Icons';
-
-// Header, Links & Help descriptions...
-$txt['tp-articlehelp'] = 'Articles can be created, either as HTML, PHP, BBC, or even import one. You can edit them and also the visual options for each article. They will allow you to turn on/off many visual attributes of the article. Setting a specific theme is also possible. In addition you create and mange categories for articles here.';
-$txt['tp-articledesc1'] = 'Manage your articles. You can create HTML, PHP, BBC, or even import an article.';
-$txt['tp-articledesc2'] = 'Manage the categories in which your articles can be placed.';
-$txt['tp-articledesc3'] = 'Manage the settings for all created and existing articles.';
-$txt['tp-articledesc4'] = 'Manage submissions for all articles. Decide who can submit articles, and approve the ones you want.';
-$txt['tp-articledesc5'] = 'Manage the icons and pictures used by articles and specfic article layouts.';
-$txt['tp-modulehelp'] = ' Here you manage everything about your modules.';
-$txt['tp-moduledesc1'] = 'Manage your modules. You can toggle eaxch module on/off, and read about what it can do.';
-$txt['tp-moduledesc2'] = 'Upload or remove your modules here. Stay updated on versions used.';
-$txt['tp-moduledesc3'] = 'Manage your settings for all modules.';
-$txt['tp-settingdesc1'] = 'Administrate your TinyPortal installation from here.';
-$txt['tp-frontpagehelp'] = 'Frontpage is the first page a user will see of your portal. All settings for the frontpage determine how you want your user to see the first page of your portal. Your frontpage can be different from the rest of your portal or forum.';
-$txt['tp-frontpagedesc1'] = 'All of the settings here control everything about what appears on your frontpage.';
-$txt['tp-panelhelp'] = 'This admin section of TinyPortal controls all your settings for your left, right, top, upper, lower and bottom panels for your blocks, creation of all types of blocks, block settings, visual options for blocks, and activation of each one. This allows you to display images, scripts, or information in certain areas around your forum, in turn making it into a portal.';
-$txt['tp-paneldesc1'] = 'Decide how your panels should display its blocks, how wide you want it, and if you want it hidden in specfic areas or not.';
-$txt['tp-blocksdesc1'] = 'Decide which panel you want specfic blocks to to show up in, toggle them on or off, or quick edit your blocks from here.';
-$txt['tp-creditsdesc1'] = 'Those that have helped TP become what it is today.';
-$txt['tp-adminheader2'] = 'Administrate your TinyPortal installation from here.';
-$txt['tp-adminheader3'] = 'Settings screen allow you to set a number of different options for the portal. The more specific settings you will find in the relevant manager screen.';
-$txt['tp-adminheader8'] = 'Blocks have many options, the overview screen will give you some of them, opening the single block edit screen much more. Shoutbox block has its own screen for managing shouts, located in this section.';
-$txt['tp-adminheader9'] = 'Manage blocks - move, create, delete and edit.';
-$txt['tp-adminnews2'] = '';
-$txt['tp-adminnews3'] = '';
-$txt['tp-adminonly'] = 'You have no access. Only Admins can view this section.';
-$txt['tp-adminpanels2'] = 'Settings for the panels';
-$txt['tp-blockfailure'] = 'Block does not exist';
-$txt['tp-tportaladmin'] = 'TinyPortal Admin';
-
-// Frontpage...
-$txt['tp-allowguests'] = 'Allow full display of forum-topics on the frontpage';
-$txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum-topics on the frontpage, even if they are not allowed to see the boards themselves? [Yes]: users will get to see it, regardless of your SMF setting.
- [No]: users will \'not\' get to see it, regardless of your SMF setting.';
+$txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage';
+$txt['tp-frontpageoptionsdesc'] = 'For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s \'single page\' option.';
 $txt['tp-displayleftpanel'] = 'Display left panel';
 $txt['tp-displayrightpanel'] = 'Display right panel';
 $txt['tp-displaytoppanel'] = 'Display top panel';
 $txt['tp-displaycenterpanel'] = 'Display upper panel';
 $txt['tp-displaylowerpanel'] = 'Display lower panel';
 $txt['tp-displaybottompanel'] = 'Display bottom panel';
-$txt['tp-bothforum']='Forum-topics and articles - sorted on date';
-$txt['tp-fckeditor']='Yes';
-$txt['tp-fckopt']='Image directory for image uploads through editor';
-$txt['tp-fckopt1']='One for all';
-$txt['tp-fckopt2']='One by GroupID';
-$txt['tp-fckopt3']='One by UserID';
-$txt['tp-frontblockfirst']='Frontpanel will be added before content';
-$txt['tp-frontblocklast']='Frontpanel will be added after content';
-$txt['tp-frontblockoption']='How frontpanel will be shown with content';
-$txt['tp-frontblocks'] = 'Frontpanel only';
-$txt['tp-frontblocksingle']='Hide frontpanel, unless otherwise selected.';
-$txt['tp-frontpage'] = 'Frontpage';
-$txt['tp-frontpage_layout'] = 'Articles layout for the frontpage';
-$txt['tp-frontpage_settings']= 'Frontpage settings';
-$txt['tp-frontpageoptions'] = 'Additional panels to display on frontpage';
-$txt['tp-frontpageoptionsdesc'] = 'For frontpage only, this overrides any panel that has been turned on, but is also overridden by an article\'s \'single page\' option.';
-$txt['tp-showforumposts']='Display forum-topics on frontpage from';
-$txt['tp-numberofposts']='Number of articles/topics to display on frontpage';
-$txt['tp-numberofrecenttopics']='Number of recent topics to display ';
-
-$txt['tp-recentboards']='Board Id\'s (comma separated, blank will include all)';
-$txt['tp-recentincexc']='Include or exclude boards';
-
-$txt['tp-whattoshow']='What to display on frontpage';
-$txt['tp-whizzyeditor']='Yes, WhizzyWig';
-$txt['tp-onlyarticles']='Only articles';
-$txt['tp-lengthofposts']='Number of characters to display per forum-topic';
-$txt['tp-singlepage']='Featured article with frontpanel';
-$txt['tp-onlyforum']='Only forum-topics';
 $txt['tp-displaynews']='Display userinfo/news at the top';
-$txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor';
-$txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor';
-$txt['tp-imageproxycheck'] = 'Perform the final image proxy check';
-$txt['tp-imageproxycheckdesc'] = 'This defaults to ON and is only effective when SMF Image Proxy is Enabled. Deactivating this option may resolve conflicts with certain Mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.';
-$txt['tp-frontmodule'] = 'TP module';
-$txt['tp-nofrontmodule'] =  'No modules available.';
-$txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics';
 
-// Articles admin...
+$txt['tp-frontpage_layout'] = 'Articles layout for the frontpage';
+
+$txt['tp-articlelayouts'] = 'Layout type';
+$txt['tp-catlayout1'] = 'normal articles';
+$txt['tp-catlayout2'] = '1st normal + avatars';
+$txt['tp-catlayout3'] = '1st avatar + links';
+$txt['tp-catlayout4'] = 'articles + icons';
+$txt['tp-catlayout5'] = 'normal + links';
+$txt['tp-catlayout6'] = 'just links';
+$txt['tp-catlayout7'] = 'use custom template';
+$txt['tp-catlayout8'] = 'articles + icons2';
+$txt['reset_custom_template_layout'] = 'Custom template code';
+$txt['reset_custom_template_layoutdesc'] = 'In this code block you can completely define your own layout according to your requirements. Some understanding of HTML coding is required though. To activate this code block it is required that you select \'Use custom template\' option for Layout. To reset the custom layout to the defaulkt setting, clear all text in the box and save)';
+
+$txt['tp-numberofposts']='Number of articles/topics to display on frontpage';
+$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage';
+$txt['tp-sortingoptionsdesc'] = 'Sorting order for articles on frontpage: Note that this setting only works if display is set to \'Only articles\' on the frontpage.';
+$txt['tp-sortoptions1'] = 'Sort by date';
+$txt['tp-sortoptions2'] = 'Sort by author';
+$txt['tp-sortoptions3'] = 'Sort by position';
+$txt['tp-sortoptions4'] = 'Sort by id number';
+$txt['tp-sortdirection1'] ='Descending';
+$txt['tp-sortdirection2'] = 'Ascending';
+
+$txt['tp-allowguests'] = 'Allow full display of forum-topics on the frontpage';
+$txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum-topics on the frontpage, even if they are not allowed to see the boards themselves? [Yes]: users will get to see it, regardless of your SMF setting.
+ [No]: users will \'not\' get to see it, regardless of your SMF setting.';
+$txt['tp-showforumposts']='Display forum-topics on frontpage from';
+$txt['tp-lengthofposts']='Number of characters to display per forum-topic';
+$txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics';
+$txt['tp-useattachment'] = 'Use first post attachment preview as icon';
+
+// Navigation links...
+$txt['tp-tabs5'] = 'Categories';
+$txt['tp-tabs6'] = 'Add category';
+$txt['tp-uncategorised'] = 'Uncategorized';
+$txt['tp-tabs2'] = '+HTML';
+$txt['tp-tabs3'] = '+PHP';
+$txt['tp-addbbc'] = '+BBC';
+$txt['tp-addimport'] = '+External';
+$txt['tp-tabs11'] = 'Cat List';
+
+//Article settings...
+$txt['tp-articlesettings'] = 'Article settings';
+$txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
+$txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor';
+$txt['tp-editorheight'] = 'Height of WYSIWYG editor';
+$txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor';
+
+$txt['tp-hidearticle-link'] = 'Hide the edit article link under articles';
+$txt['tp-printarticles'] = 'Display print link in articles?';
+$txt['tp-allow-links-article-comments'] = "Allow article comments to contain links";
+
+$txt['tp-hidearticle-facebook'] = 'Hide Facebook button';
+$txt['tp-hidearticle-twitter'] = 'Hide Twitter button';
+$txt['tp-hidearticle-reddit'] = 'Hide Reddit button';
+$txt['tp-hidearticle-digg'] = 'Hide Digg button';
+$txt['tp-hidearticle-delicious'] = 'Hide Delicious button';
+$txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button';
+
+//Articles admin...
+$txt['tp-articles'] = 'Articles';
+$txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
+
 $txt['tp-addcategory']='Add category';
 $txt['tp-artarray'] = ' Show when viewing this article';
 $txt['tp-article']='Article';
@@ -196,12 +205,8 @@ $txt['tp-category']='Category';
 $txt['tp-confirmcat1'] = 'Are you sure you want to delete this category ?';
 $txt['tp-dldownloads'] = 'Downloads';
 $txt['tp-editarticle'] = 'Edit article';
-$txt['tp-editarticlefull'] = 'Edit article in full';
-$txt['tp-editarticlefull2'] = 'Editor';
 $txt['tp-editarticleoptions'] = 'Edit visual options for the article';
 $txt['tp-editarticleoptions2'] = 'Options';
-$txt['tp-assignedarticles'] = 'Articles Assigned To A Category';
-$txt['tp-unassignedarticles'] = 'Articles Unassigned To A Category';
 $txt['tp-editarticlesin'] = 'Edit articles in ';
 $txt['tp-confirmcat2'] = '(Note that all articles belonging to this category will NOT be deleted - they will instead end up in the Stray Articles section)';
 $txt['tp-articleconfirmdelete'] = 'Are you sure you want to delete this article?';
@@ -217,29 +222,11 @@ $txt['tp-access2help'] = 'Choose where the block should appear.';
 $txt['tp-setsticky'] = 'Set as sticky/non-sticky article';
 $txt['tp-islocked'] = 'This article is locked for editing';
 $txt['tp-setlock'] = 'Lock this article for editing';
-$txt['tp-printarticles'] = 'Display print link in articles?';
 $txt['tp-illustration'] = 'Article icon <span class="smalltext">(128x128 px)</span>';
 $txt['tp-illustration2'] = 'Choose another image';
 $txt['tp-nocat'] = '-no parent-';
 $txt['tp-catlayouts'] = 'Articles layout for the category';
-$txt['tp-catlayout1'] = 'normal articles';
-$txt['tp-catlayout2'] = '1st normal + avatars';
-$txt['tp-catlayout3'] = '1st avatar + links';
-$txt['tp-catlayout4'] = 'articles + icons';
-$txt['tp-catlayout5'] = 'normal + links';
-$txt['tp-catlayout6'] = 'just links';
-$txt['tp-catlayout7'] = 'use custom template';
-$txt['tp-catlayout8'] = 'articles + icons2';
-$txt['tp-articlesettings'] = 'Article settings';
 $txt['tp-parent'] = 'Parent';
-$txt['tp-sortingoptions'] = 'Sorting order for articles on frontpage';
-$txt['tp-sortingoptionsdesc'] = 'Sorting order for articles on frontpage: Note that this setting only works if display is set to \'Only articles\' on the frontpage.';
-$txt['tp-sortoptions1'] = 'Sort by date';
-$txt['tp-sortoptions2'] = 'Sort by author';
-$txt['tp-sortoptions3'] = 'Sort by position';
-$txt['tp-sortoptions4'] = 'Sort by id number';
-$txt['tp-sortdirection1'] ='Descending';
-$txt['tp-sortdirection2'] = 'Ascending';
 $txt['tp-editsinglecategory'] = 'Edit single category';
 $txt['tp-articlecount'] = 'Articles per page';
 $txt['tp-access'] = 'Access';
@@ -255,7 +242,7 @@ $txt['tp-adminlabels'] = 'Labels';
 $txt['tp-adminlabels2'] = 'Manage the labels of articles, used in search.';
 $txt['tp-adminpresets'] = 'Presets';
 $txt['tp-adminpresets2'] = 'Manage the saved presets and see overview of linked article options';
-$txt['tp-articles'] = 'Articles';
+
 $txt['tp-removesub'] = 'Remove as sub-category? ';
 $txt['tp-subcatof']='Set as sub-category of ';
 $txt['tp-submissionsettings'] = 'Submissions';
@@ -273,7 +260,6 @@ $txt['tp-setfrontpage'] = 'Toggle show on frontpage';
 $txt['tp-allowedgrp']= 'Allowed to submit';
 $txt['tp-date']='Date';
 $txt['tp-icon']='Icon';
-$txt['tp-articlelayouts'] = 'Layout type';
 $txt['tp-sorting'] = 'Sort options';
 $txt['tp-setasfeatured'] = 'Set as featured';
 $txt['tp-shortname_article'] = 'Short name';
@@ -295,124 +281,19 @@ $txt['tp-articleoptions24'] = 'Use settings from category instead!';
 $txt['tp-editcategory'] = 'Edit';
 $txt['tp-showsociallinks'] = 'Show Social Bookmarks buttons';
 $txt['tp-noicon'] = '- Do not use a icon -';
-$txt['tp-editorheight'] = 'Height of WYSIWYG editor';
-$txt['tp-hidearticle-facebook'] = 'Hide Facebook button';
-$txt['tp-hidearticle-twitter'] = 'Hide Twitter button';
-$txt['tp-hidearticle-reddit'] = 'Hide Reddit button';
-$txt['tp-hidearticle-digg'] = 'Hide Digg button';
-$txt['tp-hidearticle-delicious'] = 'Hide Delicious button';
-$txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button';
-$txt['tp-hidearticle-link'] = 'Hide the edit article link under articles';
-$txt['tp-allow-links-article-comments'] = "Allow article comments to contain links";
 
-// Blocks admin...
-$txt['tp-addcenterblock']='Add upper block';
-$txt['tp-addfrontblock']='Add front page block';
-$txt['tp-addleftblock'] = 'Add left block';
-$txt['tp-addlowerblock']='Add lower block';
-$txt['tp-addrightblock'] = 'Add right block';
-$txt['tp-addtopblock'] = 'Add top block';
-$txt['tp-allowupshrink'] = 'Allow block to collapse';
-$txt['tp-addbottomblock'] = 'Add bottom block';
-$txt['tp-blocks'] = 'Blocks';
-$txt['tp-blocksettings'] = 'Block Settings';
-
-$txt['tp-activate']='Activate';
-$txt['tp-activated']='Activated';
-$txt['tp-blockwillshow']='Block will show on the:';
-$txt['tp-boardarray'] = ' Show when inside this board';
-$txt['tp-boardarray2'] = ' Do NOT show when inside this board';
-$txt['tp-boardindex'] = 'Go directly to forum index';
-$txt['tp-editgroups'] = 'Block can be edited by extra membergroups';
-$txt['tp-editsave'] = 'Edit - Save';
-$txt['tp-blockconfirmdelete'] = 'Are you sure you want to delete this block?';
-$txt['tp-editblocks'] = 'Blocks';
-$txt['tp-editgrouphelp'] = 'Choose the membergroups that can edit this block.';
-$txt['tp-editgrouphelpdesc'] = 'Choose your extra membergroups that can edit this block only. Note that \'manage_blocks\' and \'admin\' permission will always give this right regardless.';
-$txt['tp-langarray'] = 'Show for this language (note that the block HAS to be set somewhere for this to go in effect)';
-$txt['tp-langhelp'] = 'Block title per language. ';
-$txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language - except for default. ';
-$txt['tp-looseblocks'] = 'Block not shown anywhere';
-$txt['tp-move'] = 'Move Block';
-$txt['tp-movecenter']='Move to upper panel';
-$txt['tp-movedown'] = 'Move to bottom panel';
-$txt['tp-movefront'] = 'Move to front panel';
-$txt['tp-moveleft']='Move to the left panel';
-$txt['tp-movelower'] = 'Move to lower panel';
-$txt['tp-moveright']='Move to the right panel';
-$txt['tp-moveup'] = 'Move to top panel';
-$txt['tp-membergrouphelp']='Choose the membergroups that will able to see this block.';
-$txt['tp-membergrouphelpdesc']='Choose your membergroups that will able to see this block. Note that if none are chosen, it will only display it to admin.';$txt['tp-membergrouptext']='Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
-$txt['tp-typeofblock'] = 'You have successfully created a new block. Here you can set what type this new block should be.';
-$txt['tp-panelclosed']= 'Note: this panel has been turned off in panel settings.';
-$txt['tp-frontpanel-notice'] = 'Note: the frontpage is not a panel and it cannot be turned off as it has it\'s own unique set of settings. Because of this, all visual option settings for blocks within the frontpage area are ignored.';
-$txt['tp-noaccess'] = 'This block is not set to display on any page or section yet.';
-$txt['tp-editblock'] = 'Edit Block';
-$txt['tp-editblockloc'] = 'Go to visible options';
-$txt['tp-allpages']='Display on all pages and sections';
-$txt['tp-blockcodes'] = 'Insert Block Code Snippet';
-$txt['tp-offblocks'] = 'Block is off';
-$txt['tp-blockcodes_overwrite'] = 'Overwrite?';
-$txt['tp-tpmodarray'] = ' Display inside this TP section';
-$txt['tp-notallowupshrink'] = 'Do not allow block to collapse';
-$txt['tp-text']='-text-';
-$txt['tp-useframe']='Use frame and title style from theme';
-$txt['tp-useframe2']='Use frame style, but not title style';
-$txt['tp-noframe']='Do not use title/frame styles';
-$txt['tp-blockframehelp'] = 'Frame options';
-$txt['tp-usetitle']='Use just the title style';
-$txt['tp-recent'] = 'Recent';
-$txt['tp-no_title'] = '-no title-';
-$txt['tp-bottomsideblocks'] = 'Bottom Panel Blocks';
-$txt['tp-centersideblocks']='Upper Panel Blocks';
-$txt['tp-leftsideblocks']='Left Panel Blocks';
-$txt['tp-lowersideblocks'] = 'Lower Panel Blocks';
-$txt['tp-topsideblocks'] = 'Top Panel Blocks';
-$txt['tp-rightsideblocks']='Right Panel Blocks';
-$txt['tp-frontsideblocks']='Front Panel Blocks';
-$txt['tp-gobackurl'] = 'Go back to block location';
-$txt['tp-gobackallblocks'] = 'Go to all blocks';
-$txt['tp-blocknotice'] = 'NB! The type of block has changed.<br>Please save first to see the new options!';
-$txt['tp-allboards'] = 'Display on all boards';
-$txt['tp-blocksusepaneltyle'] = 'Use Panel style';
-$txt['tp-blockstylehelp'] = 'Choose style for the block';
-$txt['tp-blockstylehelpdesc'] = 'This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.';
-
-$txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
-
-// Block Types...
-$txt['tp-userbox1']='Avatar (if any)';
-$txt['tp-userbox2']='Logged-in time';
-$txt['tp-userbox3']='Time';
-$txt['tp-userbox4']='Unread replies/unread posts';
-$txt['tp-userbox5'] = 'Member Stats';
-$txt['tp-userbox6'] = 'Online users';
-$txt['tp-userbox7'] = 'Forum Stats';
-$txt['tp-module7'] = 'Articles: newest additions';
-$txt['tp-module8'] = 'Articles: most viewed';
-$txt['tp-module9'] = 'Articles: most comments';
-$txt['tp-ssi-calendar'] = 'Todays calendar';
-$txt['tp-ssi-recentpoll'] = 'Most recent poll';
-$txt['tp-ssi-topboards'] = 'Top Boards';
-$txt['tp-ssi-toppoll'] = 'Top Poll';
-$txt['tp-ssi-topposters'] = 'Top Posters';
-$txt['tp-ssi-topreplies'] = 'Top Replies';
-$txt['tp-ssi-topviews'] = 'Top Views';
-$txt['tp-rssblock'] = 'RSS feed ';
-$txt['tp-rssblock-showonlytitle'] = 'Display only titles?';
-$txt['tp-showstatsbox']='Display these stats in the article/downloads box';
-$txt['tp-showssibox']='Display this SSI function in the box';
-$txt['tp-showmodulebox']='Select the TinPortal module to show in the box';
-$txt['tp-showuserbox']='Display these items in the statbox';
-$txt['tp-showuserbox2']='Display these items in the userbox';
-$txt['tp-oldcatmenu'] = 'Use flat menu style';
-$txt['tp-newcatmenu'] = 'Use dropdown style';
+$txt['tp-fckeditor']='Yes';
+$txt['tp-numberofrecenttopics']='Number of recent topics to display ';
+$txt['tp-recentboards']='Board Id\'s (comma separated, blank will include all)';
+$txt['tp-recentincexc']='Include or exclude boards';
+$txt['tp-nofrontmodule'] =  'No modules available.';
 
 // Panels admin
 $txt['tp-panelsettings'] = 'Panel Settings';
+$txt['tp-helppanels'] = 'Blocks are located in panels and each panel has its own set of settings.';
 $txt['tp-panel'] = 'Panel';
 $txt['tp-hidebarsall'] = 'Hide panels when in these sections';
-
+$txt['tp-hidebarsadminonly'] = 'Hide panels when in admin section';
 $txt['tp-hidebarsprofile'] = 'Hide panels in Profile';
 $txt['tp-hidebarspm'] = 'Hide panels in Personal Messages';
 $txt['tp-hidebarsmemberlist'] = 'Hide panels in Memberlist';
@@ -422,13 +303,13 @@ $txt['tp-hidebarscustom'] = 'Hide panels in these custom actions';
 $txt['tp-hidebarscustomdesc'] = 'This setting will indeed \'hide\' the panels per specified custom section. Separate the actions with comma: For example: \'gallery,arcade,shop\'';
 $txt['tp-padding_between']='Padding between panels';
 $txt['tp-inpixels']='in pixels';
-$txt['tp-panelwidth'] = 'Width of this panel';
 
+$txt['tp-panelwidth'] = 'Width of this panel';
 $txt['tp-useleftpanel']='Use left panel?';
 $txt['tp-userightpanel']='Use right panel?';
+$txt['tp-usetoppanel']='Use top panel?';
 $txt['tp-usecenterpanel']='Use upper panel?';
 $txt['tp-uselowerpanel']='Use lower panel?';
-$txt['tp-usetoppanel']='Use top panel?';
 $txt['tp-usebottompanel']='Use bottom panel?';
 
 $txt['tp-hide_leftbar_forum']='Hide left panel when in forum?';
@@ -446,14 +327,150 @@ $txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
 $txt['tp-grid'] = 'Display the blocks according to a grid';
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
 $txt['tp-blockheight'] = '<b>Force</b> this height on each block(use 00px or 00%)';
+
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';
 $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
+// Navigation links called from source files
+$txt['tp-modules'] = 'Modules';
 
+$txt['tp-left'] = 'Left';
+$txt['tp-right'] = 'Right';
+$txt['tp-top'] = 'Top';
+$txt['tp-center'] = 'Upper';
+$txt['tp-front'] = 'Front';
+$txt['tp-bottom'] = 'Bottom';
+$txt['tp-lower'] = 'Lower';
+$txt['tp-allpanels'] = 'Panels';
+$txt['tp-leftpanel'] = 'Left Panel';
+$txt['tp-rightpanel'] = 'Right Panel';
+$txt['tp-toppanel'] = 'Top Panel';
+$txt['tp-centerpanel'] = 'Upper Panel';
+$txt['tp-frontpanel'] = 'Front Panel';
+$txt['tp-lowerpanel'] = 'Lower Panel';
+$txt['tp-bottompanel'] = 'Bottom Panel';
+$txt['tp-allblocks'] = 'Blocks';
+$txt['tp-addarticle'] = 'Add article';
+$txt['tp-guests'] = 'Guests';
+$txt['tp-adminicons'] = 'Icons';
 
+// Header, Links & Help descriptions...
+$txt['tp-articlehelp'] = 'Articles can be created, either as HTML, PHP, BBC, or even import one. You can edit them and also the visual options for each article. They will allow you to turn on/off many visual attributes of the article. Setting a specific theme is also possible. In addition you create and mange categories for articles here.';
+$txt['tp-articledesc1'] = 'Manage your articles. You can create HTML, PHP, BBC, or even import an article.';
+$txt['tp-articledesc2'] = 'Manage the categories in which your articles can be placed.';
+$txt['tp-articledesc3'] = 'Manage the settings for all created and existing articles.';
+$txt['tp-articledesc4'] = 'Manage submissions for all articles. Decide who can submit articles, and approve the ones you want.';
+$txt['tp-articledesc5'] = 'Manage the icons and pictures used by articles and specfic article layouts.';
+$txt['tp-settingdesc1'] = 'Administrate your TinyPortal installation from here.';
+$txt['tp-frontpagedesc1'] = 'All of the settings here control everything about what appears on your frontpage.';
+$txt['tp-paneldesc1'] = 'Decide how your panels should display its blocks, how wide you want it, and if you want it hidden in specfic areas or not.';
+$txt['tp-blocksdesc1'] = 'Decide which panel you want specfic blocks to to show up in, toggle them on or off, or quick edit your blocks from here.';
+$txt['tp-adminonly'] = 'You have no access. Only Admins can view this section.';
+$txt['tp-blockfailure'] = 'Block does not exist';
+$txt['tp-helpmenuitems'] = 'Here you can create and change the menu items for the menu. The menu item types available are: Category, Article, Link, Header, Spacer or Menu button (only in the <i>Internal</i> menu)<br>';
 
+// Blocks admin...
+$txt['tp-blocks'] = 'Blocks';
+$txt['tp-blocksettings'] = 'Block Settings';
+
+$txt['tp-addleftblock'] = 'Add left block';
+$txt['tp-addrightblock'] = 'Add right block';
+$txt['tp-addtopblock'] = 'Add top block';
+$txt['tp-addcenterblock'] = 'Add upper block';
+$txt['tp-addfrontblock'] = 'Add front page block';
+$txt['tp-addlowerblock'] = 'Add lower block';
+$txt['tp-addbottomblock'] = 'Add bottom block';
+
+$txt['tp-allowupshrink'] = 'Allow block to collapse';
+$txt['tp-activate'] = 'Activate';
+$txt['tp-activated'] = 'Activated';
+$txt['tp-blockwillshow'] = 'Block will show on the:';
+$txt['tp-boardarray'] = ' Show when inside this board';
+$txt['tp-boardarray2'] = ' Do NOT show when inside this board';
+$txt['tp-editgroups'] = 'Block can be edited by extra membergroups';
+$txt['tp-editsave'] = 'Edit - Save';
+$txt['tp-blockconfirmdelete'] = 'Are you sure you want to delete this block?';
+$txt['tp-editblocks'] = 'Blocks';
+$txt['tp-editgrouphelp'] = 'Choose the membergroups that can edit this block.';
+$txt['tp-editgrouphelpdesc'] = 'Choose your extra membergroups that can edit this block only. Note that \'manage_blocks\' and \'admin\' permission will always give this right regardless.';
+$txt['tp-langarray'] = 'Show for this language (note that the block HAS to be set somewhere for this to go in effect)';
+$txt['tp-langhelp'] = 'Block title per language. ';
+$txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language - except for default. ';
+$txt['tp-looseblocks'] = 'Block not shown anywhere';
+$txt['tp-move'] = 'Move Block';
+$txt['tp-movecenter']='Move to upper panel';
+$txt['tp-movedown'] = 'Move to bottom panel';
+$txt['tp-movefront'] = 'Move to front panel';
+$txt['tp-moveleft'] = 'Move to the left panel';
+$txt['tp-movelower'] = 'Move to lower panel';
+$txt['tp-moveright'] = 'Move to the right panel';
+$txt['tp-moveup'] = 'Move to top panel';
+$txt['tp-membergrouphelp'] = 'Choose the membergroups that will able to see this block.';
+$txt['tp-membergrouphelpdesc'] = 'Choose your membergroups that will able to see this block. Note that if none are chosen, it will only display it to admin.';$txt['tp-membergrouptext'] = 'Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
+$txt['tp-typeofblock'] = 'You have successfully created a new block. Here you can set what type this new block should be.';
+$txt['tp-panelclosed'] = 'Note: this panel has been turned off in panel settings.';
+$txt['tp-frontpanel-notice'] = 'Note: the frontpage is not a panel and it cannot be turned off as it has it\'s own unique set of settings. Because of this, all visual option settings for blocks within the frontpage area are ignored.';
+$txt['tp-noaccess'] = 'This block is not set to display on any page or section yet.';
+$txt['tp-editblock'] = 'Edit Block';
+$txt['tp-editblockloc'] = 'Go to visible options';
+$txt['tp-allpages'] = 'Display on all pages and sections';
+$txt['tp-blockcodes'] = 'Insert Block Code Snippet';
+$txt['tp-offblocks'] = 'Block is off';
+$txt['tp-blockcodes_overwrite'] = 'Overwrite?';
+$txt['tp-tpmodarray'] = ' Display inside this TP section';
+$txt['tp-notallowupshrink'] = 'Do not allow block to collapse';
+$txt['tp-text'] = '-text-';
+$txt['tp-useframe'] = 'Use frame and title style from theme';
+$txt['tp-useframe2'] = 'Use frame style, but not title style';
+$txt['tp-noframe'] = 'Do not use title/frame styles';
+$txt['tp-blockframehelp'] = 'Frame options';
+$txt['tp-usetitle'] = 'Use just the title style';
+$txt['tp-recent'] = 'Recent';
+$txt['tp-no_title'] = '-no title-';
+$txt['tp-bottomsideblocks'] = 'Bottom Panel Blocks';
+$txt['tp-centersideblocks'] = 'Upper Panel Blocks';
+$txt['tp-leftsideblocks'] = 'Left Panel Blocks';
+$txt['tp-lowersideblocks'] = 'Lower Panel Blocks';
+$txt['tp-topsideblocks'] = 'Top Panel Blocks';
+$txt['tp-rightsideblocks'] = 'Right Panel Blocks';
+$txt['tp-frontsideblocks'] = 'Front Panel Blocks';
+$txt['tp-gobackurl'] = 'Go back to block location';
+$txt['tp-gobackallblocks'] = 'Go to all blocks';
+$txt['tp-blocknotice'] = 'NB! The type of block has changed.<br>Please save first to see the new options!';
+$txt['tp-allboards'] = 'Display on all boards';
+$txt['tp-blocksusepaneltyle'] = 'Use Panel style';
+$txt['tp-blockstylehelp'] = 'Choose style for the block';
+$txt['tp-blockstylehelpdesc'] = 'This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.';
+$txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
+
+// Block Types...
+$txt['tp-userbox1'] = 'Avatar (if any)';
+$txt['tp-userbox2'] = 'Logged-in time';
+$txt['tp-userbox3'] = 'Time';
+$txt['tp-userbox4'] = 'Unread replies/unread posts';
+$txt['tp-userbox5'] = 'Member Stats';
+$txt['tp-userbox6'] = 'Online users';
+$txt['tp-userbox7'] = 'Forum Stats';
+$txt['tp-module7'] = 'Articles: newest additions';
+$txt['tp-module8'] = 'Articles: most viewed';
+$txt['tp-module9'] = 'Articles: most comments';
+$txt['tp-ssi-calendar'] = 'Todays calendar';
+$txt['tp-ssi-recentpoll'] = 'Most recent poll';
+$txt['tp-ssi-topboards'] = 'Top Boards';
+$txt['tp-ssi-toppoll'] = 'Top Poll';
+$txt['tp-ssi-topposters'] = 'Top Posters';
+$txt['tp-ssi-topreplies'] = 'Top Replies';
+$txt['tp-ssi-topviews'] = 'Top Views';
+$txt['tp-rssblock'] = 'RSS feed ';
+$txt['tp-rssblock-showonlytitle'] = 'Display only titles?';
+$txt['tp-showstatsbox'] = 'Display these stats in the article/downloads box';
+$txt['tp-showssibox'] = 'Display this SSI function in the box';
+$txt['tp-showmodulebox'] = 'Select the TinPortal module to show in the box';
+$txt['tp-showuserbox'] = 'Display these items in the statbox';
+$txt['tp-showuserbox2'] = 'Display these items in the userbox';
+$txt['tp-oldcatmenu'] = 'Use flat menu style';
+$txt['tp-newcatmenu'] = 'Use dropdown style';
 $txt['tp-themesavail']='Themes available in the themebox';
-$txt['tp-hidebarsadminonly'] = 'Hide panels when in admin section';
 
 // Modules Admin
 $txt['tp-installmenow'] = 'Install the module?';
@@ -467,44 +484,34 @@ $txt['tp-subqueryalreadyinstalled'] = 'This module use the same subquery as anot
 $txt['tp-removemodulesettings'] = 'Remove module settings when un-installing modules? ';
 $txt['tp-uploadedmodules'] = 'Uploaded modules';
 $txt['tp-upload_tpmodule'] = 'Upload a module';
-$txt['tp-moduleact']='Module Activation';
-$txt['tp-moduleman']='Module Management';
-$txt['tp-moduleset']='Module Manager Settings';
+$txt['tp-moduleact'] = 'Module Activation';
+$txt['tp-moduleman'] = 'Module Management';
+$txt['tp-moduleset'] = 'Module Manager Settings';
 $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-subquery'] = 'Query used';
 $txt['tp-installed'] = 'Installed';
 
-// News...
-$txt['tp-latest_news'] = 'News';
-$txt['tp-latest_news2'] = 'Latest news from: &nbsp; www.tinyportal.net';
-
-// Portal Fuctions, dunno if this is still planned
-$txt['tp-adminportal'] = 'Portal Functions';
-$txt['tp-portaltab'] = 'Portal';
-$txt['tp-adminportalhelp'] = '';
-$txt['tp-subscriptiontab'] = '';
-
 // Menu manager
 $txt['tp-addmenuitem']='Add menu item';
-$txt['tp-addmenu'] = 'Add menu';
+
 $txt['tp-header'] = 'Header';
 $txt['tp-editmenu'] = 'Edit menu item';
 $txt['tp-windowmenu'] = 'Open in a new window';
-$txt['tp-menumanager'] = 'Menu manager';
-$txt['tp-suremenu']='Are you sure you want to delete this menu item?';
+
+$txt['tp-suremenu'] = 'Are you sure you want to delete this menu item?';
 $txt['tp-nowindowmenu'] = 'Same window';
-$txt['tp-link']='Link';
+$txt['tp-link'] = 'Link';
 $txt['tp-spacer'] = 'Spacer';
-$txt['tp-menu']='Menu button';
-$txt['tp-item']='Item';
+$txt['tp-menu'] = 'Menu button';
+$txt['tp-item'] = 'Item';
 $txt['tp-sitemap_on'] = 'Sitemap?';
 $txt['tp-showmenustyle'] = 'Menu style';
 $txt['tp-showmenus'] = 'Use menu';
 $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
-$txt['tp-menu-after'] ='Add menu after';
-$txt['tp-menu-icon'] ='Menu icon';
-$txt['tp-menu-icon2'] ='<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling Tinyportal, so any file manually placed there will be lost upon uninstall!</small>';
+$txt['tp-menu-after'] = 'Add menu after';
+$txt['tp-menu-icon'] = 'Menu icon';
+$txt['tp-menu-icon2'] = '<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling Tinyportal, so any file manually placed there will be lost upon uninstall!</small>';
 
 // Shoutbox settings
 $txt['tp-shoutboxsettings'] = 'Shoutbox settings';
@@ -556,36 +563,36 @@ $txt['tp-mod-dladmin'] = 'Downloads Admin';
 $txt['tp-mod-dlmanager'] = 'Downloads Manager';
 
 // General Miscellious, used by varies parts of TP
-$txt['tp-approve']='Approve';
-$txt['tp-approved']='Approved';
-$txt['tp-body']='Body';
-$txt['tp-bodytext']='Body text';
+$txt['tp-approve'] = 'Approve';
+$txt['tp-approved'] = 'Approved';
+$txt['tp-body'] = 'Body';
+$txt['tp-bodytext'] = 'Body text';
 $txt['tp-checkall'] = '<em>Toggle all</em>';
 $txt['tp-confirm'] = 'Are you sure?';
-$txt['tp-deactivate']='De-activate';
-$txt['tp-deactivated']='De-activated';
-$txt['tp-delete']='Delete';
-$txt['tp-display']='Display';
+$txt['tp-deactivate'] = 'De-activate';
+$txt['tp-deactivated'] = 'De-activated';
+$txt['tp-delete'] = 'Delete';
+$txt['tp-display'] = 'Display';
 $txt['tp-sortdown'] = 'Move down';
 $txt['tp-sortup'] = 'Move up';
-$txt['tp-on']='On';
+$txt['tp-on'] = 'On';
 $txt['tp-off'] = 'Off';
-$txt['tp-yes']='Yes';
-$txt['tp-no']='No';
-$txt['tp-type']='Type';
+$txt['tp-yes'] = 'Yes';
+$txt['tp-no'] = 'No';
+$txt['tp-type'] = 'Type';
 $txt['tp-unread'] = 'Unread';
 $txt['tp-unreadreplies'] = 'Unread replies';
 $txt['tp-memberlist'] = 'Memberlist';
 $txt['tp-stats'] = 'Stats';
 $txt['tp-status'] ='Status';
 $txt['tp-sub_item'] ='Position';
-$txt['tp-title']='Title';
+$txt['tp-title'] ='Title';
 $txt['tp-remove'] = 'Remove';
 $txt['tp-pos'] = 'Pos';
-$txt['tp-send']='Save';
+$txt['tp-send'] ='Save';
 $txt['tp-useonfrontpage'] = 'Override frontpage settings when displayed on frontpage?';
-$txt['tp-more']='More ';
-$txt['tp-hide']='Hide ';
+$txt['tp-more'] = 'More ';
+$txt['tp-hide'] = 'Hide ';
 $txt['tp-blocktype0'] = '- not set -';
 $txt['tp-blocktype1'] = 'User';
 $txt['tp-blocktype2'] = 'News';
@@ -612,15 +619,7 @@ $txt['tp-searchadmin'] = 'Search';
 $txt['tp-tpmenu'] = 'Menu';
 $txt['tp-menus'] = 'Sections';
 
-$txt['tp-helpsettings'] = 'Here you can tweak various general settings for the portal.';
-$txt['tp-helppanels'] = 'Blocks are located in panels and each panel has its own set of settings.';
-$txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
-$txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
-$txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
-$txt['tp-helpmenuitems'] = 'Here you can create and change the menu items for the menu. The menu item types available are: Category, Article, Link, Header, Spacer or Menu button (only in the <i>Internal</i> menu)<br>';
-
 $txt['tp-assignnewauthor'] = 'Author ID(change to re-assign to another)';
-$txt['tp-uncategorised'] = 'Uncategorized';
 $txt['tp-uncategorised2'] = 'Uncategorized articles';
 $txt['tp-createnew'] = 'Assign selected to a new category -> ';
 $txt['tp-createnew2'] = 'Approve and assign selected to a new category -> ';
@@ -644,7 +643,6 @@ $txt['tp-chooseblock'] = 'Choose type of block';
 $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-choosepanel'] = 'Choose panel';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
-$txt['tp-useattachment'] = 'Use first post attachment preview as icon';
 $txt['tp-rssblock-useutf8'] = 'What encoding to use in this feed ';
 $txt['tp-utf8'] = 'UTF-8';
 $txt['tp-iso'] = 'ISO-8859-1 (default)';
@@ -657,12 +655,7 @@ $txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 se
 $txt['tp-permissions'] = 'Permissions';
 $txt['tp-permdesc1'] = 'Permissions for TP functions. Note that some are admin functions, others user functions.';
 
-$txt['tp-selectedforum'] = 'Promoted topics only';
-$txt['tp-selectbothforum'] = 'Promoted topics + articles - sorted on date';
-
 $txt['tp-allowedgroups'] = 'Membergroups that can see this category';
-
-
 
 $txt['tp-created'] = 'Created at';
 $txt['tp-published'] = 'Publish';
@@ -670,8 +663,6 @@ $txt['tp-pub_start'] = 'from';
 $txt['tp-pub_end'] = 'until';
 
 $txt['tp-notset'] = '- not set -';
-$txt['reset_custom_template_layout'] = 'Custom template code';
-$txt['reset_custom_template_layoutdesc'] = 'In this code block you can completely define your own layout according to your requirements. Some understanding of HTML coding is required though. To activate this code block it is required that you select \'Use custom template\' option for Layout. To reset the custom layout to the defaulkt setting, clear all text in the box and save)';
 
 $txt['tp-internal'] = 'Internal';
 $txt['tp-details'] = 'Details';
@@ -679,7 +670,7 @@ $txt['tp-others'] = 'Others';
 $txt['tp-artcat'] = 'Article categories';
 $txt['tp-lang'] = 'Block visible for these languages';
 $txt['tp-langdesc'] = 'Upon installation of Tinyportal the Language visibility option will be switched OFF by default. When you access the block settings for a block you will see the language visibility option with a warning message, pointing out that the  language visibility setting is off. As long as the setting is off the blocks will show regardless of the user language. Language visibility is an additional setting for controlling when blocks are visible in the panels: the settings that choose where the block should appear will always be respected. If the settings do not allow the block to show, setting language visibility will also not make it show.';
-$txt['tp-dlmanager'] = 'TPDownloads';
+
 $txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
 
 // new in 1.109
@@ -692,22 +683,6 @@ $txt['tp-sticky4'] = 'Normal style + yellow background';
 $txt['tp-sticky5'] = 'Normal style + red background';
 $txt['tp-sticky6'] = 'Normal style + green background';
 $txt['tp-unstickallshouts'] = 'Unsticky all stickied shouts?';
-
-$txt['tp-fulltextsearch']       = 'Enable TinyPortal Full Text search';
-$txt['tp-fulltextsearchdesc']   = 'This setting will enable advanced search options for the Article Search Functionality: this allows for the use of multiple search terms in the TP search function as well as the use of complex search operators. See for explanation the article on Search functionality. If this is set to \'No\' the search can only be done for a single search term.';
-$txt['tp-disabletemplateeval']       = 'Disable the PHP eval function for templates';
-$txt['tp-disabletemplateevaldesc']   = 'Disable the PHP eval function for rending article templates';
-$txt['tp-copyrightremoval'] = 'TinyPortal Copyright Removal';
-$txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPortal Copyright Notice';
-
-$txt['tp-imageuploadpath'] = 'Path where TinyPortal images are uploaded to on your server';
-$txt['tp-imageuploadpathdesc'] = 'File path where the images uploaded via TinyPortal are stored';
-
-$txt['tp-blockcodeuploadpath'] = 'Path where TinyPortal blockcodes are uploaded to on your server';
-$txt['tp-blockcodeuploadpathdesc'] = 'File path where the blockcodes uploaded via TinyPortal are stored';
-
-$txt['tp-downloaduploadpath'] = 'Path where TinyPortal downloads are uploaded to on your server';
-$txt['tp-downloaduploadpathdesc'] = 'File path where the downloads uploaded via TinyPortal are stored';
 
 // new in 1.6.3
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
