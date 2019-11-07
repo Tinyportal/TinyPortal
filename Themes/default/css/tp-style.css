@@ -502,15 +502,6 @@ ul#tp_child_articles li {
 #tptopbarHeader, #tpbottombarHeader, #tpleftbarHeader, #tprightbarHeader, #tplowerbarHeader, #tpcenterbarHeader, #tpcontentHeader, #tpfrontpanel_top {
 	padding-bottom: 0;
 }
-/* reset for themes that apply padding to window */
-#tptopbarHeader div[class~="windowbg"],
-#tpcenterbarHeader div[class~="windowbg"],
-#tpleftbarContainer div[class~="windowbg"],
-#tprightbarContainer div[class~="windowbg"],
-#tplowerbarHeader div[class~="windowbg"],
-#tpbottombarHeader div[class~="windowbg"] {
-	padding: 0;
-}
 #tpleftbarHeader {
 	padding-right: 2px;
 }
