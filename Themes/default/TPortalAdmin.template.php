@@ -21,7 +21,6 @@
 // Frontpage Settings page
 // Articles page
 // Articles in category Page
-// Edit article / Add article Page
 // Article Categories page
 // Add category Page
 // Category List Page

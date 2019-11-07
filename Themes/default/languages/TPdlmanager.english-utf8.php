@@ -15,7 +15,6 @@
  *
  */
 
-//  SVN Rev67
 global $scripturl;
 
 $txt['tp-adminftp_newfiles'] = 'Files were added successfully. Check out the category they were inserted into.';
@@ -36,6 +35,8 @@ $txt['tp-created'] = 'Created';
 $txt['tp-dl1file'] = 'File';
 $txt['tp-dlaccess'] = 'Allowed membergroups';
 $txt['tp-dladmin'] = 'Administration';
+$txt['tp-dlmanoff'] = 'TPdownloads is NOT active';
+$txt['tp-dlmanon'] = 'TPdownloads is active';
 $txt['tp-dlallowedsize'] = 'Max upload size';
 $txt['tp-dlallowedtypes'] = 'Allowed file extensions';
 $txt['tp-dlapprove'] = 'Approval?';

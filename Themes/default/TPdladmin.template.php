@@ -130,6 +130,13 @@ $clickme.click( function(e) {
 			<div class="windowbg noup padding-div">
 					<dl class="settings">
 					<dt>
+						',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  />
+					</dt>
+					<dd>
+						<input name="tp_show_download" id="tp_show_download_on" type="radio" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'><label for="tp_show_download_on"> '.$txt['tp-dlmanon'].'</label><br>
+						<input name="tp_show_download" id="tp_show_download_off" type="radio" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'><label for="tp_show_download_off"> '.$txt['tp-dlmanoff'].'</label><br><br>
+					</dd>
+					<dt>
 						'.$txt['tp-dlallowedtypes'].'
 					</dt>
 					<dd>
@@ -275,11 +282,6 @@ $clickme.click( function(e) {
 				echo '
 						</select><br><br>
 					</dd>
-					<dt>',$txt['tp-showdownload'],'</dt>
-                    <dd>
-                        <input name="tp_show_download" type="radio" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
-						<input name="tp_show_download" type="radio" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-                    </dd>
 				</dl>
 					<div class="padding-div;">
 						<input type="hidden" name="dlsettings" value="1" />
