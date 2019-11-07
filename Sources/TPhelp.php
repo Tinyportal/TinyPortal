@@ -33,7 +33,7 @@ function TPhelp_init()
     }
     $context['current_action'] = 'help';
 
-	$context['TPortal']['helptabs'] = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
+	$context['TPortal']['helptabs'] = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules');
 
 	tp_hidebars();
 	// a switch to make it clear what is "forum" and not

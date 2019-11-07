@@ -15,7 +15,6 @@
  *
  */
 
-//  SVN Rev67
 global $scripturl;
 
 $txt['tp-adminftp_newfiles'] = 'Files were added successfully. Check out the category they were inserted into.';

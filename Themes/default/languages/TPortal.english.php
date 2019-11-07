@@ -17,7 +17,7 @@
 
 global $txt, $context, $scripturl;
 
-// Permissions... //
+// Permissions
 $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
 
@@ -74,7 +74,7 @@ $txt['permissionname_tp_can_list_images'] = 'Manage TPlistimages';
 $txt['permissionhelp_tp_can_list_images'] = 'Allows users to remove uploaded images from the Tiny Portal Image Directory.';
 $txt['cannot_tp_can_list_images'] = 'Sorry, you aren\'t allowed to manage article images.';
 
-// Panels... //
+// Panels
 $txt['bottom-tp-upshrink_description'] = 'Bottom Panel';
 $txt['center-tp-upshrink_description'] = 'Upper Panel';
 $txt['front-tp-upshrink_description'] = 'Frontpage';
@@ -83,7 +83,7 @@ $txt['lower-tp-upshrink_description'] = 'Lower Panel';
 $txt['right-tp-upshrink_description'] = 'Right Panel';
 $txt['top-tp-upshrink_description'] = 'Top Panel';
 
-// Who... //
+// Who
 $txt['tp-who-article'] = 'Viewing the Article &quot;<a href="%3$s?page=%2$s">%1$s</a>&quot;.';
 $txt['tp-who-articles'] = 'Viewing Articles';
 $txt['tp-who-article-search'] = 'Searching Articles.';
@@ -96,7 +96,7 @@ $txt['whoall_tpmod_dl'] = 'Viewing the File Manager.';
 $txt['whoall_tpmod_dlcat'] = 'Viewing a File category.';
 $txt['whoall_tpmod_dlitem'] = 'Viewing a files item.';
 
-// Articles... //
+// Articles
 $txt['tp-author'] = 'Author';
 $txt['tp-by'] = 'Written by';
 $txt['tp_rate'] = 'Rate it!';
@@ -108,7 +108,7 @@ $txt['tp-comments'] = 'Comments';
 $txt['tp-confirmcommentdelete'] = 'Are you sure you want to delete this comment?';
 $txt['tp-confirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-delete'] = 'Delete';
-$txt['tp-editarticle']= 'Edit article';
+$txt['tp-editarticle'] = 'Edit article';
 $txt['tp-incategory'] = ' in ';
 $txt['tp-noimportarticle'] = 'Sorry, the article could not be loaded.';
 $txt['tp-noname'] = '-no name-';
@@ -120,7 +120,7 @@ $txt['tp-ratings'] = 'Ratings';
 $txt['tp-ratingvotes'] = 'Rates';
 $txt['tp-readmore'] = 'Read More';
 $txt['tp-submit'] = 'Save';
-$txt['tp-submitarticlebbc']='Write BBC article';
+$txt['tp-submitarticlebbc'] = 'Write BBC article';
 $txt['tp-viewcat'] = 'Viewing a';
 $txt['tp-viewcat2'] = 'category of articles.';
 $txt['tp-viewpage'] = 'Viewing an';
@@ -128,11 +128,11 @@ $txt['tp-viewpage2'] = 'article.';
 $txt['tp-views'] = 'Views';
 $txt['tp-written'] = 'written';
 
-// Blocks... //
+// Blocks
 $txt['block-upshrink_description'] = 'Collapse or expand block';
 $txt['edit_description'] = 'Edit block contents';
 $txt['tp-changetheme'] = 'Change';
-$txt['tp-guest']='Guest';
+$txt['tp-guest'] = 'Guest';
 $txt['tp-guests'] = 'Guests';
 $txt['tp-itemviews'] = 'Views';
 $txt['tp-latest'] = 'Latest';
@@ -140,18 +140,18 @@ $txt['tp-loggedintime'] = 'Total Logged In:';
 $txt['tp-mostonline'] = 'Online Ever';
 $txt['tp-mostonline-today'] = 'Online Today';
 $txt['tp-nothemeschosen'] = 'No themes are chosen';
-$txt['tp-pm']='PM: ';
-$txt['tp-pm2']='New: ';
-$txt['tp-replies']='Show replies';
+$txt['tp-pm'] = 'PM: ';
+$txt['tp-pm2'] = 'New: ';
+$txt['tp-replies'] = 'Show replies';
 $txt['tp-showownposts'] = 'Show own posts';
 $txt['tp-showshouts'] = 'Show last';
 $txt['tp-stats'] = 'Stats';
-$txt['tp-submitarticle']='Write HTML article';
+$txt['tp-submitarticle'] = 'Write HTML article';
 $txt['tp-total'] = 'Total';
-$txt['tp-unread']='Show unread';
+$txt['tp-unread'] = 'Show unread';
 $txt['tp-users'] = 'Users';
 
-// Search... //
+// Search
 $txt['tp-nosearchentered'] = 'Nothing to search for!';
 $txt['tp-search'] = 'Search';
 $txt['tp-searcharticles'] = 'Extended search';
@@ -166,15 +166,15 @@ $txt['tp-searchdownloads'] = 'Search Downloads Manager';
 $txt['tp-searchinbody'] = 'Search in article texts';
 $txt['tp-searchintitle'] = 'Search in titles';
 
-// Profile... //
+// Profile
 $txt['articlesprofile'] = 'Articles';
 $txt['articlesprofile2'] = 'All the articles the member has written. Note that articles currently not active will give an error when viewed and are also marked in italic style. Articles not approved yet are likewise marked with surrounding parentheses.';
 $txt['downloadsprofile'] = 'Uploaded files';
 $txt['downloadsprofile2'] = 'All the files uploaded in File Manager. Files not yet approved are shown in italic style.';
 $txt['shoutboxprofile'] = 'View shouts';
 $txt['shoutboxprofile2'] = 'All shouts made by the member.';
-$txt['tp-category']='Category';
-$txt['tp-more']='More ';
+$txt['tp-category'] = 'Category';
+$txt['tp-more'] = 'More ';
 $txt['tp-prof_allarticles'] = 'Total number of articles written:';
 $txt['tp-prof_alldownloads'] = 'Total number of submitted files:';
 $txt['tp-prof_allshouts'] = 'Total number of shouts:';
@@ -189,7 +189,7 @@ $txt['tpsummary_dl'] = 'Total number of uploaded files:';
 $txt['tpsummary_shout'] = 'Total number of shouts:';
 $txt['tp-wysiwygchoice'] = 'Use WYSIWYG editor';
 
-// File Manager... //
+// File Manager
 $txt['tp-dlhaverated'] = 'You have rated this file.';
 $txt['tp-dlmanageroff'] = 'The DL Manager module is not active.';
 $txt['tp-dlsettings'] = 'Settings';
@@ -197,7 +197,7 @@ $txt['tp-dluploaded'] = 'New upload(s)';
 $txt['tp-downloads'] = 'Downloads';
 $txt['tp-uploadedby'] = 'Uploaded by ';
 
-// Shoutbox... //
+// Shoutbox
 $txt['shout!'] = 'Shout!';
 $txt['tp-shout'] = 'Shout';
 $txt['tp-shouts'] = 'Shouts:';
@@ -208,11 +208,11 @@ $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tpsummary_noshout'] = 'No shout messages found';
 $txt['alert_shout_mention'] = 'You have been mentioned by {user_mention} in a {text}!';
 
-// SCE Editor //
+// SCE Editor
 $txt['editor_tp_floatleft'] = 'Insert float left div';
 $txt['editor_tp_floatright'] = 'Insert float right div';
 
-// Various... //
+// Various
 $txt['tp-adminpanels'] = 'Panels and Blocks';
 $txt['tp-forum'] = 'Forum';
 $txt['tp-tphelp'] = 'TinyPortal';
@@ -223,11 +223,11 @@ $txt['tp-profilesection'] = 'TinyPortal';
 $txt['tp-acronymdays'] = 'd ';
 $txt['tp-acronymhours'] = 'h ';
 $txt['tp-acronymminutes'] = 'm ';
-$txt['tp_unapproved_members']='Unapproved: ';
+$txt['tp_unapproved_members'] = 'Unapproved: ';
 $txt['tp_maintenace'] = 'Maintenance Mode';
 $txt['tp_articles_help'] = '';
 $txt['tp_modreports'] = 'Modreports:';
-$txt['tp-addarticle']='Add';
+$txt['tp-addarticle'] = 'Add';
 $txt['tp-admin'] = 'TP Admin';
 $txt['tp-article'] = 'Article';
 $txt['tp-articles'] = 'Articles';
@@ -280,7 +280,7 @@ $txt['tp-showrelated'] = 'Related';
 $txt['tp-strays'] = 'Uncategorized';
 $txt['tp-submissions'] = 'Submissions';
 $txt['tp-toggle'] = 'Toggle panel';
-$txt['tp-ungroupedmembers']='Ungrouped members';
+$txt['tp-ungroupedmembers'] = 'Ungrouped members';
 $txt['tp-unpublish'] = 'Remove from frontpage';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list: ';
 
