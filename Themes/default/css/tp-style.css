@@ -502,6 +502,15 @@ ul#tp_child_articles li {
 #tptopbarHeader, #tpbottombarHeader, #tpleftbarHeader, #tprightbarHeader, #tplowerbarHeader, #tpcenterbarHeader, #tpcontentHeader, #tpfrontpanel_top {
 	padding-bottom: 0;
 }
+/* reset for themes that apply padding to window */
+#tptopbarHeader div[class~="windowbg"],
+#tpcenterbarHeader div[class~="windowbg"],
+#tpleftbarContainer div[class~="windowbg"],
+#tprightbarContainer div[class~="windowbg"],
+#tplowerbarHeader div[class~="windowbg"],
+#tpbottombarHeader div[class~="windowbg"] {
+	padding: 0;
+}
 #tpleftbarHeader {
 	padding-right: 2px;
 }
@@ -1311,10 +1320,10 @@ span.article_shortdate {
 }
 p.tphelp {
 	line-height: 1.4em;
+	padding-top: .5em
 }
 b.tphelp {
 	font-size: 1.2em;
-	padding-left: 5px;
 }
 h2.tphelp {
 	border-bottom: solid 1px #888;
