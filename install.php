@@ -446,14 +446,11 @@ $settings_array = array(
     'version' => '2.0.0',
     'padding' => '4',
     'margins' => '2',
-    'topbar_align' => 'center',
     'leftbar_width' => '200',
     'rightbar_width' => '230',
     'use_SSI' => '1',
     'frontpage_limit' => '5',
     'SSI_board' => '1',
-    'temaer' => '',
-    'temanames' => '',
     'temapaths' => '',
     'showtop' => '1',
     'frontpage_limit_len' => '300',
@@ -471,8 +468,6 @@ $settings_array = array(
     'hide_rightbar_forum' => '0',
     'hide_centerbar_forum' => '0',
     'show_download' => '1',
-    'show_gallery' => '0',
-    'show_arcade' => '1',
     'dl_total_items' => '0',
     'dl_maxfiles' => '10',
     'dl_allowed_types' => 'zip,rar,doc,jpg,gif,png',
@@ -488,8 +483,6 @@ $settings_array = array(
     'dl_showlatest' => '1',
     'frontpage_layout' => '1',
     'opt_wysiwyg' => '1',
-    'show_linkmanager' => '0',
-    'show_teampage' => '0',
     'sitemap_items' => '3',
     'cat_list' => '1',
     'dl_visual_options' => 'left,right,center,top',
@@ -502,7 +495,6 @@ $settings_array = array(
     'dlmanager_theme' => '0',
     'teampage_theme' => '0',
     'linkmanager_theme' => '0',
-    'tpgallery_theme' => '0',
     'blocks_edithide' => '0',
     'profile_shouts_hide' => '0',
     'frontblock_type' => 'first',
@@ -557,7 +549,6 @@ $settings_array = array(
     'article_layout_cols' => '1',
     'frontpage_catlayout' => '1',
     'showcollapse' => '1',
-    'remove_modulesettings' => '0',
     'fulltextsearch' => '0',
     'front_module' => '',
     'forumposts_avatar' => '1',
@@ -578,8 +569,8 @@ $settings_array = array(
     'dl_showfeatured' => '1',
     'dl_introtext' => '<p><strong>Welcome to the TinyPortal download manager!</strong></p>
 <p><br></p>
-<p>TPdownload is a built-in module for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict member groups access level per each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;Tinyportal &gt; Manage TPdownloads&quot;<br></p>
-<p>If you do not wish to use TPdownloads you can deactivate it from the menu &quot;TinyPortal &gt; Settings &gt; Modules&quot; </p>
+<p>TPdownloads is a built-in module for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict member groups access level for each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;Tinyportal &gt; Manage TPdownloads&quot; and select the [Settings] button.<br></p>
+<p>If you do not wish to use TPdownloads you can also deactivate it in the settings. The TPdownloads menu option will no longer be displayed in the menu when TPdownloads is deactivated.</p>
 <p><br></p>
 <p>We hope you enjoy using TinyPortal.&nbsp; If you have any problems, please feel free to <a href="https://www.tinyportal.net/index.php">ask us for assistance</a>.<br></p>
 <p><br>Thanks!<br>The TinyPortal team</p>',

@@ -38,7 +38,6 @@
 // Menu Manager Page: single menus
 // Add Menu / Add Menu item Page
 // Edit menu item Page
-// Modules Page
 
 function getElementById($id,$url){
 
@@ -2731,55 +2730,6 @@ function template_menucore()
         });
         </script>';
 
-}
-
-// Modules Page
-function template_modules()
-{
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
-
-		echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input name="tpadmin_form" type="hidden" value="modules">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-modules'] . '</h3></div>
-		<div id="modules" class="admintable admin-area">
-			<div class="windowbg noup padding-div">';
-
-		// Internal TP modules
-		foreach($context['TPortal']['internal_modules'] as $modul)
-			echo '
-				<dl class="settings">
-					<dt><b>',$modul['modulelink'],'</b> - ',$modul['adminlink'],'</dt>
-					<dd><img src="' .$settings['tp_images_url']. '/' , $modul['state']==1 ? 'TPgreen' : 'TPred' , '.png" alt="" />
-					<input name="' , $modul['fieldname'] , '" type="radio" value="1" ' , $modul['state']==1 ? 'checked><b>'.$txt['tp-on'].'</b>' : '>'.$txt['tp-on'] , '
-					<input name="' , $modul['fieldname'] , '" type="radio" value="0" ' , $modul['state']==0 ? 'checked><b>'.$txt['tp-off'].'</b>' : '>'.$txt['tp-off'] , '
-					</dd>
-				</dl>';
-
-		// New TP modules
-		foreach($context['TPortal']['adm_modules'] as $mod)
-			echo '
-				<dl class="settings">
-					<dt>
-						<a href="', $scripturl, '?action=tportal;', $mod['subquery'], '"><strong>',$mod['title'],'</strong></a> - <a href="', $scripturl, '?action=tportal;', $mod['subquery'], '=admin">Admin</a>
-					</dt>
-					<dd>
-						<img src="' .$settings['tp_images_url']. '/' , $mod['active']==1 ? 'TPgreen' : 'TPred' , '.png" alt="" />
-						<input name="tpmodule_state' , $mod['id'] , '" type="radio" value="1" ' , $mod['active']==1 ? 'checked="checked" /><b>'.$txt['tp-on'].'</b>' : '>'.$txt['tp-on'] , '
-						<input name="tpmodule_state' , $mod['id'] , '" type="radio" value="0" ' , $mod['active']==0 ? 'checked="checked" /><b>'.$txt['tp-off'].'</b>' : '>'.$txt['tp-off'] , '<br>
-					</dd>
-					<dt>
-						', $txt['tp-author'] , ': <a href="mailto:', $mod['email'], '">', $mod['author'], '</a>
-					</dt>
-					<dd>
-						<div class="post">', !empty($mod['description']) ? parse_bbc($mod['description']) : '' , '</div>
-					</dd>
-				</dl>';
-		echo '  <div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
-			</div>
-		</div>
-	</form>';
 }
 
 ?>
