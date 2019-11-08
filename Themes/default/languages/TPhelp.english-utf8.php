@@ -22,7 +22,6 @@ $txt['tphelp_frontpage'] = 'Frontpage';
 $txt['tphelp_panels'] = 'Panels';
 $txt['tphelp_blocks'] = 'Blocks';
 $txt['tphelp_modules'] = 'Modules';
-$txt['tphelp_plugins'] = 'Plugins';
 
 // Page Information
 $txt['tphelp_introduction_main'] = '
@@ -66,7 +65,7 @@ $txt['tphelp_articles_main'] = '
 
 <p class="tphelp">When submitting an article, you must fill in the title & body to suit your needs. Afterwards, the article submitted needs approval by the admin or the admin\'s article moderation team before it can be viewed by the public, unless otherwise set by the admin. All visual options such as panel use, the theme it is displayed in, and other statistics are controlled by the admin or his/her team. All currently non-active articles will give an error when viewed, and are also marked in italic style. Articles not yet approved yet are likewise marked with surrounding parentheses around the title within the subject area...</p>
 
-<p class="tphelp">Through the use of plugins, other article options may be added. You will find any of the changes/settings located in your "<i>Profile > TinyPortal > Articles > Settings</i>".</p>
+<p class="tphelp">You will find relevant settings located in your "<i>Profile > TinyPortal > Articles > Settings</i>".</p>
 
 <div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For the complete documentation, please browse our <a href="https://www.tinyportal.net/docs/index.php?cat=92" target="_blank"><b class="tphelp">Article Documentation</b></a>.</div>
 ';
