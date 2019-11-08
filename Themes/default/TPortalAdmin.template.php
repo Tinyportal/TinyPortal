@@ -854,7 +854,7 @@ function template_editcategory()
 							<label for="tp_category_value1">', $txt['tp-name'], '</label>
 						</dt>
 						<dd>
-							<input size="40" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '">
+							<input size="60" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '">
 						<dd>
 						<dt>
 							<label for="tp_category_value2">', $txt['tp-parent'], '</label>
@@ -970,7 +970,7 @@ function template_editcategory()
 							</div>';
 				echo '	</div>
 						<br style="clear: both;" />
-						</h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><h4>', $txt['reset_custom_template_layout'] ,'
+						<h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
 						<textarea id="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
 					</div>
 					<hr>

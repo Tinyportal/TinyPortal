@@ -61,12 +61,12 @@ $txt['tp-noneicon'] = 'None';
 $txt['tp-dltabs2'] = 'Add category';
 $txt['tp-dlcatadd'] = 'Add category';
 $txt['tp-dlcatedit'] = 'Edit category';
-$txt['tp-shortname'] = 'Query title';
-$txt['tp-chooseicon'] = '- choose icon -';
 $txt['tp-dlparent'] = 'Parent category';
+$txt['tp-shortname'] = 'Short name';
+$txt['tp-chooseicon'] = '- choose icon -';
 $txt['tp-nocategory'] = '- no category -';
 $txt['tp-nocats'] = 'No categories found.';
-$txt['tp-dlaccess'] = 'Allowed membergroups';
+$txt['tp-dlaccess'] = 'Membergroups that can see this category';
 
 //Upload
 $txt['tp-dltabs3'] = 'Upload';
