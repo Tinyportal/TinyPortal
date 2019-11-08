@@ -26,7 +26,7 @@ function TPhelp_init()
     $context['TPortal']['helpsection'] = 'introduction';
     $option = TPUtil::filter('p', 'get', 'string');
     if($option) {
-        $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
+        $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules');
         if(in_array($option, $helpOptions)) {
             $context['TPortal']['helpsection'] = $option;
         }
