@@ -16,18 +16,15 @@
  */
 
 // Navigation
-// Rev 89
-$txt['tphelp_introduction']= 'Introduction';
-$txt['tphelp_articles']= 'Articles';
-$txt['tphelp_frontpage']= 'Frontpage';
-$txt['tphelp_panels']= 'Panels';
-$txt['tphelp_blocks']= 'Blocks';
-$txt['tphelp_modules']= 'Modules';
-$txt['tphelp_plugins']= 'Plugins';
+$txt['tphelp_introduction'] = 'Introduction';
+$txt['tphelp_articles'] = 'Articles';
+$txt['tphelp_frontpage'] = 'Frontpage';
+$txt['tphelp_panels'] = 'Panels';
+$txt['tphelp_blocks'] = 'Blocks';
+$txt['tphelp_modules'] = 'Modules';
 
-// Page Information... //
-// Rev 89
-$txt['tphelp_introduction_main']= '
+// Page Information
+$txt['tphelp_introduction_main'] = '
 <h2 class="tphelp">&nbsp; Introduction To TinyPortal</h2>
 <p class="tphelp">
 <a href="https://www.tinyportal.net" target="_blank">TinyPortal</a> (TP) is a magnificent modification of <a href="https://simplemachines.org" target="_blank">Simple Machines Forum</a> (SMF). It will turn your simple SMF forum into a fully operational portal. It will expand your SMF forum with Frontpage options, Articles, Panels filled with Blocks, with an on-going list of Module add-ons to choose from.</p>
@@ -38,22 +35,21 @@ $txt['tphelp_introduction_main']= '
 
 <p class="tphelp">Best of all, it\'s FREE!</p><br>
 
-<div class="information" style="margin-top: 1em; padding: 2ex;"><b class="tphelp">TinyPortal Features Include</b>:</div>
+<div class="information" style="margin-top: 1em;"><b class="tphelp">TinyPortal Features Include</b>:</div>
 
-<p class="tphelp">- <b class="tphelp">Articles</b>: are HTML, PHP, BBC, imported or external pages with optional author information and visual options to show alone, with panels & blocks, and/or with other articles. All articles can be categorized, or have comments and ratings.</p>
-<p class="tphelp">- <b class="tphelp">Frontpage</b>: is the first page or index page of your TP & SMF site. TP gives you ability to dress up your frontpage any way you see fit using forum posts, articles, panels & blocks, and even modules. If you\'re not interested in all that, you can choose for your frontpage to go directly to your forum index. </p>
-<p class="tphelp">- <b class="tphelp">Panels</b>: are several sections or containers that hold all of your blocks. There is the left panel, right panel, top panel, upper panel, frontpanel, lower panel and bottom panel. These panels help control the layout of your TP & SMF driven forum.</p>
-<p class="tphelp">- <b class="tphelp">Blocks</b>: these are small boxes of information or functions in HTML, PHP, or BBC. They can be placed in any order, in any panel and section/action of the TP & SMF driven site.</p>
-<p class="tphelp">- <b class="tphelp">Menu manager</b>: A built-in Menu Manager allows you to create multiple menu\'s. These menu\'s are displayed in a block. You get all the features of blocks to display these menu\'s in different places along with choosing who gets to see the blocks based on permissions. You can create different types of links: links to articles, categories, or even just a custom link. You can choose to have the link open in the current window or a new window.</p>
-<p class="tphelp">- <b class="tphelp">Modules</b>: are enhancements to TinyPortal written by various developers that add new abilities to the overall functions of the site. Examples of a module would be: File Manager, Gallery Manager, and Chat.</p>
-<p class="tphelp">- <b class="tphelp">Downloads Manager</b>: A built-in module for TP that lets you offer files for your members to browse and download. Its works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict member groups access level per each category. You may also allow members to upload files, controlling which membergroups are allowed and what types of files they may upload.</p>
-<p class="tphelp">- <b class="tphelp">Shoutbox</b>: TPShout is the built in shoutbox that offers instant chat functionality to your forum users.
+<p class="tphelp"><b class="tphelp">Articles</b>: are HTML, PHP, BBC, imported or external pages with optional author information and visual options to show alone, with panels & blocks, and/or with other articles. All articles can be categorized, or have comments and ratings.</p>
+<p class="tphelp"><b class="tphelp">Frontpage</b>: is the first page or index page of your TP & SMF site. TP gives you ability to dress up your frontpage any way you see fit using forum posts, articles, panels & blocks, and even modules. If you\'re not interested in all that, you can choose for your frontpage to go directly to your forum index. </p>
+<p class="tphelp"><b class="tphelp">Panels</b>:<br>are several sections or containers that hold all of your blocks. There is the left panel, right panel, top panel, upper panel, frontpanel, lower panel and bottom panel. These panels help control the layout of your TP & SMF driven forum.</p>
+<p class="tphelp"><b class="tphelp">Blocks</b>: these are small boxes of information or functions in HTML, PHP, or BBC. They can be placed in any order, in any panel and section/action of the TP & SMF driven site.</p>
+<p class="tphelp"><b class="tphelp">Menu manager</b>: A built-in Menu Manager allows you to create multiple menu\'s. These menu\'s are displayed in a block. You get all the features of blocks to display these menu\'s in different places along with choosing who gets to see the blocks based on permissions. You can create different types of links: links to articles, categories, or even just a custom link. You can choose to have the link open in the current window or a new window.</p>
+<p class="tphelp"><b class="tphelp">Modules</b>: are enhancements to TinyPortal written by various developers that add new abilities to the overall functions of the site. Examples of a module would be: File Manager, Gallery Manager, and Chat.</p>
+<p class="tphelp"><b class="tphelp">Downloads Manager</b>: A built-in module for TP that lets you offer files for your members to browse and download. Its works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict member groups access level per each category. You may also allow members to upload files, controlling which membergroups are allowed and what types of files they may upload.</p>
+<p class="tphelp"><b class="tphelp">Shoutbox</b>: TPShout is the built in shoutbox that offers instant chat functionality to your forum users.
 It\'s a box in which you can leave messages for others to see and thus maintain a simple "chat" on the site. Combined with permissions you will have much freedom in who can participate as well. And as your visitors will discover, it\'s actually quite fun to leave a smiley or two in it.</p>
-<p class="tphelp">- <b class="tphelp">Plugins</b>: are modifications to existing TinyPortal features or modules that extend its abilities. <b>NOT available at this time</b>.</p>
 
 <div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="https://www.tinyportal.net/docs" target="_blank"><b class="tphelp">Documentation</b></a>.</div>';
 
-$txt['tphelp_articles_main']= '
+$txt['tphelp_articles_main'] = '
 <h2 class="tphelp">&nbsp; Articles</h2>
 
 <b class="tphelp">Admin</b>:
@@ -69,12 +65,12 @@ $txt['tphelp_articles_main']= '
 
 <p class="tphelp">When submitting an article, you must fill in the title & body to suit your needs. Afterwards, the article submitted needs approval by the admin or the admin\'s article moderation team before it can be viewed by the public, unless otherwise set by the admin. All visual options such as panel use, the theme it is displayed in, and other statistics are controlled by the admin or his/her team. All currently non-active articles will give an error when viewed, and are also marked in italic style. Articles not yet approved yet are likewise marked with surrounding parentheses around the title within the subject area...</p>
 
-<p class="tphelp">Through the use of plugins, other article options may be added. You will find any of the changes/settings located in your "<i>Profile > TinyPortal > Articles > Settings</i>".</p>
+<p class="tphelp">You will find relevant settings located in your "<i>Profile > TinyPortal > Articles > Settings</i>".</p>
 
 <div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For the complete documentation, please browse our <a href="https://www.tinyportal.net/docs/index.php?cat=92" target="_blank"><b class="tphelp">Article Documentation</b></a>.</div>
 ';
 
-$txt['tphelp_frontpage_main']= '
+$txt['tphelp_frontpage_main'] = '
 <h2 class="tphelp">&nbsp; Front page</h2>
 <b class="tphelp">Admin</b>:
 <p class="tphelp">You have almost an complete control of what you want on your front page. You can pick from showing articles, panels, blocks, forum posts, single article, or even a featured article. Or better yet, a mix of these options mentioned. Heck, if you don\'t want to dress up your frontpage, you could even choose to go straight to the forum index. How cool is that?</p>
@@ -90,9 +86,7 @@ $txt['tphelp_frontpage_main']= '
 <div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For the complete documentation, please browse our <a href="https://www.tinyportal.net/docs/index.php?cat=95" target="_blank"><b class="tphelp">Frontpage Documentation</b></a>.</div>
 ';
 
-
-
-$txt['tphelp_panels_main']= '
+$txt['tphelp_panels_main'] = '
 <h2 class="tphelp">&nbsp; Panels</h2>
 <b class="tphelp">Admin</b>:
 <p class="tphelp">You can control how much padding you want between your panels, and/or decide which sections/actions you want to hide all your panels in. Panels do have additional settings like setting the width, hide while in forum, and various layouts for your blocks inside.
@@ -104,7 +98,7 @@ For these panel settings, go to: "<i>TinyPortal > Manage blocks > Panels</i>".</
 <div class="information" style="margin-top: 1em; padding: 2ex;">This is a summary. For the complete documentation, please browse our <a href="https://www.tinyportal.net/docs/index.php?cat=94" target="_blank"><b class="tphelp">Panel Documentation</b></a>.</div>
 ';
 
-$txt['tphelp_blocks_main']= '
+$txt['tphelp_blocks_main'] = '
 <h2 class="tphelp">&nbsp; Blocks</h2>
 <b class="tphelp">Admin</b>:
 <p class="tphelp">Blocks are your boxes of code that add more information, entertainment, and excitement to your site. Blocks are placed inside panels, which can be switched on or off in different articles or actions in your forum and frontpage.</p>
@@ -121,7 +115,7 @@ $txt['tphelp_blocks_main']= '
 
 <div class="information" style="margin-top: 1em; padding: 2ex;">For code snippets by the TP community, please browse our <a href="https://www.tinyportal.net/index.php?board=46.0"><b class="tphelp">Code Snippets</b></a>.</div>';
 
-$txt['tphelp_modules_main']= '<h2 class="tphelp">&nbsp; Modules</h2>
+$txt['tphelp_modules_main'] = '<h2 class="tphelp">&nbsp; Modules</h2>
 
 <b class="tphelp">Admin</b>:
 <p class="tphelp">Modules add more functionality to your TP/SMF site by adding new features like a file manager, shoutbox, or menu manager. Each serves its own purpose, and expands your site to a whole new realm. You can access your module list by going to: "<i>Admin > TinyPortal > Modules</i>". Here you can view your module name, description, and options to activate or disable.</p>
@@ -141,17 +135,7 @@ $txt['tphelp_modules_main']= '<h2 class="tphelp">&nbsp; Modules</h2>
 <div class="information" style="margin-top: 1em; padding: 2ex;">For modules by the TP community, please browse our <a href="https://www.tinyportal.net/index.php?board=130.0"><b class="tphelp">Module Board</b></a>.</div>
 ';
 
-$txt['tphelp_plugins_main']= '
-<h2 class="tphelp">&nbsp; Plugins</h2>
-<b class="tphelp">Admin</b>:
-<p class="tphelp">... no longer available...</p>
-
-<p><br></p>
-
-<div class="information" style="margin-top: 1em; padding: 2ex;">For more information, please visit our <a href="https://www.tinyportal.net/docs" target="_blank"><b class="tphelp">Documentation</b></a>.
-</div>';
-
-// Credits...
+// Credits
 $txt['tp-credit1'] = '
 <h4>Founder</h4>
 Bjorn "Bloc" Kristiansen

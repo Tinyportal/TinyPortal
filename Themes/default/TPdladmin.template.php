@@ -15,6 +15,10 @@
  *
  */
 
+//Settings page
+//Edit category page
+//Add category page
+
 function template_main()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl;
@@ -121,7 +125,7 @@ $clickme.click( function(e) {
 		</div>';
 	}
 
-// Settings
+//Settings page
 	elseif($context['TPortal']['dlsub']=='adminsettings')
 	{
 		echo '
@@ -130,46 +134,60 @@ $clickme.click( function(e) {
 			<div class="windowbg noup padding-div">
 					<dl class="settings">
 					<dt>
-						'.$txt['tp-dlallowedtypes'].'
+						',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  />
 					</dt>
 					<dd>
-						<input size=60 name="tp_dl_allowed_types" type="text" value="'.$context['TPortal']['dl_allowed_types'].'"><br><br>
+						<input name="tp_show_download" id="tp_show_download_on" type="radio" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'><label for="tp_show_download_on"> '.$txt['tp-dlmanon'].'</label><br>
+						<input name="tp_show_download" id="tp_show_download_off" type="radio" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'><label for="tp_show_download_off"> '.$txt['tp-dlmanoff'].'</label><br><br>
 					</dd>
-					<dt>'.$txt['tp-dlallowedsize'].'
+					<dt>
+						<label for="tp_dl_allowed_types">'.$txt['tp-dlallowedtypes'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadsize" type="text" value="'.$context['TPortal']['dl_max_upload_size'].'"> Kb<br><br>
+						<input size=60 name="tp_dl_allowed_types" id="tp_dl_allowed_types" type="text" value="'.$context['TPortal']['dl_allowed_types'].'"><br><br>
 					</dd>
-					<dt>'.$txt['tp-dluseformat'].'
+					<dt>
+						<label for="tp_dluploadsize">'.$txt['tp-dlallowedsize'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dl_fileprefix" type="radio" value="K" ', $context['TPortal']['dl_fileprefix']=='K' ? 'checked' : '' ,'> Kb<br>
-						<input name="tp_dl_fileprefix" type="radio" value="M" ', $context['TPortal']['dl_fileprefix']=='M' ? 'checked' : '' ,'> Mb<br>
-						<input name="tp_dl_fileprefix" type="radio" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'> Gb<br><br>
+						<input name="tp_dluploadsize" id="tp_dluploadsize" type="text" value="'.$context['TPortal']['dl_max_upload_size'].'"> Kb<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlusescreenshot'].'
+					<dt>
+						<label for="tp_dl_fileprefix">'.$txt['tp-dluseformat'].'</label>
+					</dt>
+					<dd>
+						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix1" type="radio" value="K" ', $context['TPortal']['dl_fileprefix']=='K' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix1">Kb</label><br>
+						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix2" type="radio" value="M" ', $context['TPortal']['dl_fileprefix']=='M' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix2">Mb</label><br>
+						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix3" type="radio" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix3">Gb</label><br><br>
+					</dd>
+					<dt>
+						'.$txt['tp-dlusescreenshot'].'
 					</dt>
 					<dd>
 						<input name="tp_dl_usescreenshot" type="radio" value="1" ', $context['TPortal']['dl_usescreenshot']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input name="tp_dl_usescreenshot" type="radio" value="0" ', $context['TPortal']['dl_usescreenshot']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlscreenshotsize1'].'
+					<dt>
+						'.$txt['tp-dlscreenshotsize1'].'
 					</dt>
 					<dd>
 						<input name="tp_dl_screenshotsize0" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlscreenshotsize2'].'
+					<dt>
+						'.$txt['tp-dlscreenshotsize2'].'
 					</dt>
 					<dd>
 						<input name="tp_dl_screenshotsize2" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlmustapprove'].'
+					<dt>
+						'.$txt['tp-dlmustapprove'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_approveonly" type="radio" value="1" ', $context['TPortal']['dl_approve']=='1' ? 'checked' : '' ,'> '.$txt['tp-approveyes'].'<br>
-						<input name="tp_dl_approveonly" type="radio" value="0" ', $context['TPortal']['dl_approve']=='0' ? 'checked' : '' ,'> '.$txt['tp-approveno'].'<br><br>
+						<input name="tp_dl_approveonly" id="tp-approveyes" type="radio" value="1" ', $context['TPortal']['dl_approve']=='1' ? 'checked' : '' ,'><label for="tp-approveyes"> '.$txt['tp-approveyes'].'<br>
+						<input name="tp_dl_approveonly" id="tp-approveno" type="radio" value="0" ', $context['TPortal']['dl_approve']=='0' ? 'checked' : '' ,'><label for="tp-approveno"> '.$txt['tp-approveno'].'<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlcreatetopic'].'
+					<dt>
+						'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>
 						<input name="tp_dl_createtopic" type="radio" value="1" ', $context['TPortal']['dl_createtopic']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
@@ -198,8 +216,9 @@ $clickme.click( function(e) {
 					</dd>
 				</dl>
 			<hr>
-					<div>
-							<div><b>'.$txt['tp-dlintrotext'].'</b></div><br>';
+				<div>
+					<div><b>'.$txt['tp-dlintrotext'].'</b>
+					</div><br>';
 					if($context['TPortal']['dl_wysiwyg'] == 'html')
 						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 					elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
@@ -207,7 +226,7 @@ $clickme.click( function(e) {
 					else
 						echo '<textarea id="tp_article_body" name="tp_dl_introtext" >'.$context['TPortal']['dl_introtext'].'</textarea>';
 					echo '
-					</div>
+				</div>
 			<hr><br>
 				<dl class="settings">
 					<dt>
@@ -218,10 +237,10 @@ $clickme.click( function(e) {
 						<input name="tp_dl_showfeatured" type="radio" value="0" ', $context['TPortal']['dl_showfeatured']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlfeatured'].'
+						<label for="tp_dl_featured">'.$txt['tp-dlfeatured'].'</label>
 					</dt>
 					<dd>
-						<select name="tp_dl_featured" size="5">';
+						<select name="tp_dl_featured" id="tp_dl_featured" size="5">';
 
 				foreach($context['TPortal']['all_dlitems'] as $item)
 				{
@@ -252,7 +271,8 @@ $clickme.click( function(e) {
 						<input name="tp_dl_showcategorytext" type="radio" value="1" ', $context['TPortal']['dl_showcategorytext']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input name="tp_dl_showcategorytext" type="radio" value="0" ', $context['TPortal']['dl_showcategorytext']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
-					<dt>'.$txt['tp-dlvisualoptions'].'
+					<dt>
+						'.$txt['tp-dlvisualoptions'].'
 					</dt>
 					<dd>
 						<input name="tp_dl_visual_options1" type="checkbox" value="left" ', isset($context['TPortal']['dl_left']) ? 'checked' : '' ,'> '.$txt['tp-leftbar'].'<br>
@@ -263,10 +283,11 @@ $clickme.click( function(e) {
 						<input name="tp_dl_visual_options5" type="checkbox" value="bottom" ', isset($context['TPortal']['dl_bottom']) ? 'checked' : '' ,'> '.$txt['tp-bottombar'].'<br>
 						<input name="tp_dl_visual_options8" type="hidden" value="not"><br><br>
 					</dd>
-					<dt>',$txt['tp-chosentheme'],'
+					<dt>
+						<label for="tp_dltheme">',$txt['tp-chosentheme'],'</label>
 					</dt>
 					<dd>
-						<select size="1" name="tp_dltheme">';
+						<select size="1" name="tp_dltheme" id="tp_dltheme">';
   					echo '<option value="0" ', $context['TPortal']['dlmanager_theme']=='0' ? 'selected' : '' ,'>'.$txt['tp-noneicon'].'</option>';
 
 				foreach($context['TPthemes'] as $them)
@@ -275,11 +296,6 @@ $clickme.click( function(e) {
 				echo '
 						</select><br><br>
 					</dd>
-					<dt>',$txt['tp-showdownload'],'</dt>
-                    <dd>
-                        <input name="tp_show_download" type="radio" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
-						<input name="tp_show_download" type="radio" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
-                    </dd>
 				</dl>
 					<div class="padding-div;">
 						<input type="hidden" name="dlsettings" value="1" />
@@ -434,33 +450,23 @@ $clickme.click( function(e) {
 		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
-				// Edit uploaded file
+//Edit file page
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
 				<dl class="settings">
-				<dt>
-					'.$txt['tp-uploadedby'].':
-				</dt>
-				<dd>
-					'.$context['TPortal']['admcurrent']['member'].'<br>
-				</dd>
-				<dt>
-					'.$txt['tp-dlviews'].':
-				</dt>
-				<dd>
-					 '.$cat['views'].' / '.$cat['downloads'].'<br>
-				</dd>
-				<dt>'.$txt['tp-dluploadtitle'].'
-				</dt>
-				<dd>
-					<input style="width:97%;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
-				</dd>
-					<dt>'.$txt['tp-dluploadcategory'].'
+					<dt>
+						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
 					<dd>
-						<select size="1" name="dladmin_category'.$cat['id'].'" style="margin-top: 4px">';
+						<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
+					</dd>
+					<dt>
+						<label for="dladmin_category"><b>'.$txt['tp-dluploadcategory'].'</b>
+					</dt>
+					<dd>
+						<select size="1" name="dladmin_category'.$cat['id'].'" id="dladmin_category"> style="margin-top: 4px">';
 
 		foreach($context['TPortal']['admuploadcats'] as $ucats)
 		{
@@ -468,8 +474,20 @@ $clickme.click( function(e) {
 						<option value="'.$ucats['id'].'" ', $ucats['id'] == abs($cat['category']) ? 'selected' : '' ,'>', (!empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '') ,' '.$ucats['name'].'</option>';
 		}
 		echo '
-						</select><br>
-					</dd>							
+						</select><br><br>
+					</dd>
+				<dt>
+					'.$txt['tp-uploadedby'].'
+				</dt>
+				<dd>
+					'.$context['TPortal']['admcurrent']['member'].'<br>
+				</dd>
+				<dt>
+					'.$txt['tp-dlviews'].'
+				</dt>
+				<dd>
+					 '.$cat['views'].' / '.$cat['downloads'].'<br>
+				</dd>					
 				</dl>
 				<hr>			
 				<div>
@@ -487,7 +505,8 @@ $clickme.click( function(e) {
 				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tportal;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
 				</div><br>
 			<dl class="settings">
-				<dt>'.$txt['tp-dlfilename'].'
+				<dt>
+					<label for="dladmin_file">'.$txt['tp-dlfilename'].'</label>
 				</dt>
 				<dd>';
 		if($cat['file']=='- empty item -' || $cat['file']==''|| $cat['file']=='- empty item - ftp')
@@ -498,7 +517,7 @@ $clickme.click( function(e) {
 					<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
 			}
 			echo '
-				<select size="1" name="dladmin_file'.$cat['id'].'">
+				<select size="1" name="dladmin_file'.$cat['id'].'" id="dladmin_file">
 					<option value="- empty item -">' . $txt['tp-noneicon'] . '</option>';
 
 			foreach($context['TPortal']['tp-downloads'] as $file)
@@ -518,28 +537,30 @@ $clickme.click( function(e) {
 					</select>';
 		}
 		else
-			echo '<input name="dladmin_file'.$cat['id'].'" type="text" size="50" style="margin-bottom: 0.5em" value="'.$cat['file'].'">';
+			echo '<input name="dladmin_file'.$cat['id'].'" ="dladmin_file" type="text" size="50" style="margin-bottom: 0.5em" value="'.$cat['file'].'">';
 
 		echo '
 				</dd>
-				<dt>'.$txt['tp-dlfilesize'].'</dt>
+				<dt>
+					'.$txt['tp-dlfilesize'].'</dt>
 				<dd>
 					'.($cat['filesize']*1024).' bytes<br>
 				</dd>
 				<dt>
-					'.$txt['tp-uploadnewfileexisting'].':
+					<label for="tp_dluploadfile_edit">'.$txt['tp-uploadnewfileexisting'].'</label>
 				</dt>
 				<dd>
-					<input name="tp_dluploadfile_edit" type="file" value="">
+					<input name="tp_dluploadfile_edit" id="tp_dluploadfile_edit" type="file" value="">
 					<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'"><br>
 				</dd>
 			</dl>
 				<hr>
 				<dl class="settings">
-					<dt>'.$txt['tp-dluploadicon'].'
+					<dt>
+						<label for="dladmin_icon">'.$txt['tp-dluploadicon'].'</label>
 					</dt>
 					<dd>
-						<select size="1" name="dladmin_icon'.$cat['id'].'" onchange="dlcheck(this.value)">';
+						<select size="1" name="dladmin_icon'.$cat['id'].'" id="dladmin_icon" onchange="dlcheck(this.value)">';
 
 			echo '
 						<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
@@ -562,29 +583,32 @@ $clickme.click( function(e) {
 					</dd>
 				</dl>
 				<dl class="settings">
-					<dt>'.$txt['tp-uploadnewpicexisting'].':
+					<dt>
+						<label for="tp_dluploadpic_link">'.$txt['tp-uploadnewpicexisting'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadpic_link" size="50" type="text" value="'.$cat['screenshot'].'">
+						<input name="tp_dluploadpic_link" id="tp_dluploadpic_link" size="50" type="text" value="'.$cat['screenshot'].'">
 					</dd>
 					<dd>
 						<div class="padding-div">' , $cat['sshot']!='' ? '<img style="max-width:95%;" src="'.$cat['sshot'].'" alt="" />' : '' , '</div>
 					</dd>
 				</dl>
 				<dl class="settings">
-					<dt>'.$txt['tp-uploadnewpic'].':
+					<dt>
+						<label for="tp_dluploadpic_edit">'.$txt['tp-uploadnewpic'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadpic_edit" type="file" value="">
+						<input name="tp_dluploadpic_edit" id="tp_dluploadpic_edit" type="file" value="">
 						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'"><br>
 					</dd>
 				</dl>
 				' , $cat['approved']=='0' ? '
 				<dl class="settings">
-					<dt><b> '.$txt['tp-dlapprove'].'</b>
+					<dt>
+						<label for="dl_admin_approve"><b> '.$txt['tp-dlapprove'].'</b></label>
 					</dt>
 					<dd>
-						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
+						<input style="vertical-align: middle;" name="dl_admin_approve'.$cat['id'].'" id="dl_admin_approve" type="checkbox" value="ON">&nbsp;&nbsp;<img title="'.$txt['tp-approve'].'" src="' .$settings['tp_images_url']. '/TPthumbup.png" alt="'.$txt['tp-dlapprove'].'"  />
 					</dd>
 				</dl>' : '' , '
 				<hr>
@@ -597,13 +621,13 @@ $clickme.click( function(e) {
 		{
 
 		echo '
-					<dt>'.$txt['tp-dlmorefiles'].'
+					<dt>
+						<label for="dladmin_delete">'.$txt['tp-dlmorefiles'].'</label>
 					</dt>
 					<dd>';
-			foreach($cat['subitem'] as $sub)
-			{
+			foreach($cat['subitem'] as $sub) {
 				echo '<div><b><a href="' , $sub['href'], '">' , $sub['name'] , '</a></b><br>(',$sub['file'],')
-						', $sub['filesize'] ,'<br><input name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
+						', $sub['filesize'] ,'<br><input name="dladmin_delete'.$sub['id'].'" id="dladmin_delete" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
 						&nbsp;&nbsp;<input name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
 						<br></div>';
 			}
@@ -611,13 +635,13 @@ $clickme.click( function(e) {
 					</dd>';
 		}
 		// no, but maybe it can be a additional file itself?
-		else
-		{
+		else {
 			echo '
-					<dt>'.$txt['tp-dlmorefiles2'].'
+					<dt>
+						<label for="dladmin_subitem">'.$txt['tp-dlmorefiles2'].'</label>
 					</dt>
 					<dd>
-						<select size="1" name="dladmin_subitem'.$cat['id'].'" style="margin-top: 4px;">
+						<select size="1" name="dladmin_subitem'.$cat['id'].'" id="dladmin_subitem" style="margin-top: 4px;">
 						<option value="0" selected>'.$txt['tp-no'].'</option>';
 
 			foreach($context['TPortal']['admitems'] as $subs)
@@ -627,9 +651,7 @@ $clickme.click( function(e) {
 						</select><br>
 					</dd>';
 		}
-
 			echo '
-
 				</dl>
 				<hr>
 				<dl class="settings">
@@ -637,7 +659,7 @@ $clickme.click( function(e) {
 						<b>'.$txt['tp-dldelete'].'</b>
 					</dt>
 					<dd>
-						<input name="dladmin_delete'.$cat['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
+						<input name="dladmin_delete'.$cat['id'].'"  type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
 					</dd>
 				</dl>
 			<div class="padding-div"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
@@ -767,61 +789,24 @@ $clickme.click( function(e) {
 		{
 			foreach($context['TPortal']['admcats'] as $cat)
 			{
-				// edit category
+//Edit category page
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatedit'].'</h3></div>
 		<div id="editupcat" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<div><b>'.$txt['tp-title'].':</b><br>
-				<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
-				</div>
-				<div><b>'.$txt['tp-shortname'].'</b><br>
-				<input style="width: 40ex;" name="dladmin_link'.$cat['id'].'" type="text" value="'.$cat['shortname'].'"><br><br>
-				</div>
-				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';
-
-				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
-				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox($context['TPortal']['editor_id']);
-				else
-					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
-
-
-				echo '<br><br>
-				</div>
 				<dl class="settings">
-				<dt>
-					'.$txt['tp-icon'].':
-				</dt>
-				<dd>
-					<div><select size="1" name="dladmin_icon'.$cat['id'].'" onchange="dlcheck(this.value)">
-					<option value="blank.gif" selected>'.$txt['tp-chooseicon'].'</option>
-					<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
-
-				// output the icons
-				$selicon = substr($cat['icon'], strrpos($cat['icon'], '/')+1);
-				foreach($context['TPortal']['dlicons'] as $dlicon => $value)
-					echo '
-						<option ', ($selicon == $value) ? 'selected="selected" ' : '','value="'.$value.'">'. $value.'</option>';
-
-				echo '
-				</select>
-				<br><br><img name="dlicon" src="'.$cat['icon'].'" alt="" />
-				<script type="text/javascript">
-					function dlcheck(icon)
-					{
-						document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
-					}
-				</script>
-				<br><br></div>
-				</dd>
-				<dt>'.$txt['tp-dlparent'].':
-				</dt>
-				<dd>';
+					<dt>
+						<label for="dladmin_name">'.$txt['tp-dlname'].'</label>
+					</dt>
+					<dd>
+						<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'"  id="dladmin_name" type="text" value="'.$cat['name'].'"><br>
+					<dt>
+						<label for="dladmin_parent">'.$txt['tp-dlparent'].'</label>
+					</dt>
+					<dd>';
 				// which parent category?
 				echo '
-					<select size="1" name="dladmin_parent'.$cat['id'].'" style="margin-top: 4px;">
+					<select size="1" name="dladmin_parent'.$cat['id'].'" id="dladmin_parent" style="margin-top: 4px;">
 						<option value="0" ', $cat['parent']==0 ? 'selected' : '' ,'>'.$txt['tp-nocategory'].'</option>';
 
 				if(count($context['TPortal']['admuploadcats'])>0)
@@ -838,18 +823,63 @@ $clickme.click( function(e) {
 				else
 					echo '
 						<option value="0">'.$txt['tp-none-'].'</option>';
-
 			}
 			echo '
 					</select><br>
-				</dd>
-			</dl>
+					</dd>
+					<dt>
+						<label for="dladmin_link">'.$txt['tp-shortname'].'</label>
+					</dt>
+					<dd>
+						<input name="dladmin_link'.$cat['id'].'" id="dladmin_link" type="text" value="'.$cat['shortname'].'"><br>
+					</dd>
+					<dt>
+						<label for="dladmin_icon">'.$txt['tp-icon'].'</label>
+					</dt>
+					<dd>
+						<div><select size="1" name="dladmin_icon'.$cat['id'].'" id="dladmin_icon" onchange="dlcheck(this.value)">
+						<option value="blank.gif" selected>'.$txt['tp-chooseicon'].'</option>
+						<option value="blank.gif">'.$txt['tp-noneicon'].'</option>';
+
+				// output the icons
+				$selicon = substr($cat['icon'], strrpos($cat['icon'], '/')+1);
+				foreach($context['TPortal']['dlicons'] as $dlicon => $value)
+					echo '
+						<option ', ($selicon == $value) ? 'selected="selected" ' : '','value="'.$value.'">'. $value.'</option>';
+
+				echo '
+					</select>
+					<br><br><img name="dlicon" src="'.$cat['icon'].'" alt="" />
+					<script type="text/javascript">
+						function dlcheck(icon)
+						{
+							document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
+						}
+					</script>
+					<br><br>
+						</div>
+					</dd>
+				</dl>
+				<hr>
+				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';
+
+				if($context['TPortal']['dl_wysiwyg'] == 'html')
+					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
+					TP_bbcbox($context['TPortal']['editor_id']);
+				else
+					echo '<textarea name="dladmin_text'.$cat['id'].'" id="tp_article_body">'. html_entity_decode($cat['description'],ENT_QUOTES).'</textarea>';
+
+
+				echo '
+				</div>
+
 		<hr />
 			<dl class="settings">
-				<dt>'.$txt['tp-dlaccess'].':
+				<dt>
+					<span class="font-strong">'.$txt['tp-dlaccess'].'</span>
 				</dt>
-				<dd>';
-
+				<dd><div class="tp_largelist2">';
     		// access groups
     		// loop through and set membergroups
 			if(!empty($cat['access']))
@@ -862,14 +892,14 @@ $clickme.click( function(e) {
     			if($mg['posts']=='-1' && $mg['id']!='1')
     			{
 					echo '
-					<input name="dladmin_group'.$mg['id'].'" type="checkbox" value="'.$cat['id'].'"';
+					<input name="dladmin_group'.$mg['id'].'" id="dladmin_group'.$mg['id'].'" type="checkbox" value="'.$cat['id'].'"';
              		if(in_array($mg['id'],$tg))
              			echo ' checked';
-             		echo '> '.$mg['name'].' <br>';
+             		echo '><label for="dladmin_group'.$mg['id'].'"> '.$mg['name'].' </label><br>';
          		}
     		}
    			// if none is chosen, have a control value
-			echo '<br><input type="checkbox" onclick="invertAll(this, this.form, \'dladmin_group\');" />'.$txt['tp-checkall'].'
+			echo '</div><br><input type="checkbox" onclick="invertAll(this, this.form, \'dladmin_group\');" />'.$txt['tp-checkall'].'
 					<input name="dladmin_group-2" type="hidden" value="'.$cat['id'].'">
 				</dd>
 			</dl>';
@@ -881,34 +911,45 @@ $clickme.click( function(e) {
 	}
 	elseif($context['TPortal']['dlsub']=='adminaddcat')
 	{
-		// add category
+//Add category page
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatadd'].'</h3></div>
 		<div id="dl-addcat" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<div><b>'.$txt['tp-title'].':</b><br>
-				<input style="width: 100ex;max-width:98%!important;" name="newdladmin_name" type="text" value=""><br><br>
-				</div>
-				<div><b>'.$txt['tp-shortname'].':</b><br>
-				<input style="width: 50ex;" name="newdladmin_link" type="text" value=""><br><br>
-				</div>
-				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';
-
-				if($context['TPortal']['dl_wysiwyg'] == 'html')
-					TPwysiwyg('newdladmin_text', '', true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
-				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-					TP_bbcbox($context['TPortal']['editor_id']);
-				else
-					echo '<textarea name="newdladmin_text" id="tp_article_body"></textarea>';
-
-
-			echo '<br><br></div>
 				<dl class="settings">
 					<dt>
-						'.$txt['tp-icon'].':
+						<label for="newdladmin_name">'.$txt['tp-name'].'</label>
 					</dt>
 					<dd>
-						<div><select size="1" name="newdladmin_icon" onchange="dlcheck(this.value)">';
+						<input size="100" name="newdladmin_name" id="newdladmin_name" type="text" value="">
+					</dd>
+					<dt>
+						<label for="newdladmin_parent">'.$txt['tp-dlparent'].'</label>
+					</dt>
+					<dd>';
+		// which parent category?
+		echo '
+					<select size="1" name="newdladmin_parent" id="newdladmin_parent" style="margin-top: 4px;">
+						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
+
+		foreach($context['TPortal']['admuploadcats'] as $ucats)
+		{
+			echo '
+			     		<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '') ,' '.$ucats['name'].'</option>';
+		}
+		echo '
+					</select><br>
+					</dd>
+					<dt>
+						<label for="newdladmin_link">'.$txt['tp-shortname'].'</label>
+					</dt>
+					<dd><input name="newdladmin_link" id="newdladmin_link" type="text" value="">
+					</dd>
+					<dt>
+						<label for="newdladmin_icon" >'.$txt['tp-icon'].'</label>
+					</dt>
+					<dd>
+						<div><select size="1" name="newdladmin_icon" id="newdladmin_icon"  onchange="dlcheck(this.value)">';
 
 		echo '
 				<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
@@ -928,31 +969,25 @@ $clickme.click( function(e) {
 					}
 				</script>
 				<br><br></div>
-					<dd>
-					<dt>'.$txt['tp-dlparent'].':
-					</dt>
-					<dd>';
-		// which parent category?
-		echo '
-					<select size="1" name="newdladmin_parent" style="margin-top: 4px;">
-						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
-
-		foreach($context['TPortal']['admuploadcats'] as $ucats)
-		{
-			echo '
-			     		<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '') ,' '.$ucats['name'].'</option>';
-		}
-		echo '
-					</select><br>
 					</dd>
 				</dl>
-			<hr />
+				<hr>
+				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';
+
+				if($context['TPortal']['dl_wysiwyg'] == 'html')
+					TPwysiwyg('newdladmin_text', '', true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
+					TP_bbcbox($context['TPortal']['editor_id']);
+				else
+					echo '<textarea name="newdladmin_text" id="tp_article_body"></textarea>';
+			echo '</div>
+			<hr>
 				<dl class="settings">
 					<dt>
-						'.$txt['tp-dlaccess'].':
+						<span class="font-strong">'.$txt['tp-dlaccess'].'</span>
 					</dt>
-					<dd>';
-
+					<dd>
+						<div class="tp_largelist2">';
     		// access groups
     		// loop through and set membergroups
 			if(!empty($cat['access']))
@@ -965,14 +1000,14 @@ $clickme.click( function(e) {
     			if($mg['posts']=='-1' && $mg['id']!='1')
     			{
 					echo '
-					<input name="newdladmin_group'.$mg['id'].'" type="checkbox" value="1"';
+					<input name="newdladmin_group'.$mg['id'].'" id="newdladmin_group'.$mg['id'].'" type="checkbox" value="1"';
              		if(in_array($mg['id'],$tg))
              			echo ' checked';
-             		echo '> '.$mg['name'].' <br>';
+             		echo '><label for="newdladmin_group'.$mg['id'].'"> '.$mg['name'].' </label><br>';
          		}
     		}
    			// if none is chosen, have a control value
-			echo '<br><input type="checkbox" onclick="invertAll(this, this.form, \'newdladmin_group\');" />'.$txt['tp-checkall'].'
+			echo '</div><br><input type="checkbox" onclick="invertAll(this, this.form, \'newdladmin_group\');" />'.$txt['tp-checkall'].'
 					<input name="dladmin_group-2" type="hidden" value="1">
 					</dd>
 				</dl>';

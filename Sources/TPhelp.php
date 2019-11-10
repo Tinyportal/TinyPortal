@@ -26,14 +26,14 @@ function TPhelp_init()
     $context['TPortal']['helpsection'] = 'introduction';
     $option = TPUtil::filter('p', 'get', 'string');
     if($option) {
-        $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
+        $helpOptions = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules');
         if(in_array($option, $helpOptions)) {
             $context['TPortal']['helpsection'] = $option;
         }
     }
     $context['current_action'] = 'help';
 
-	$context['TPortal']['helptabs'] = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules', 'plugins');
+	$context['TPortal']['helptabs'] = array('introduction', 'articles', 'frontpage', 'panels', 'blocks', 'modules');
 
 	tp_hidebars();
 	// a switch to make it clear what is "forum" and not

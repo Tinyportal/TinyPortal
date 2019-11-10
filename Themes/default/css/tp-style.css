@@ -1311,10 +1311,10 @@ span.article_shortdate {
 }
 p.tphelp {
 	line-height: 1.4em;
+	padding-top: .5em
 }
 b.tphelp {
 	font-size: 1.2em;
-	padding-left: 5px;
 }
 h2.tphelp {
 	border-bottom: solid 1px #888;
