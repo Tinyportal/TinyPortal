@@ -331,18 +331,22 @@ function template_editblock()
 			}
 // Block type: TP module
 			elseif($context['TPortal']['blockedit']['type']=='20'){
+                if(isset($context['TPortal']['tpblocks']['blockrender'])) {
 					echo '
 						</div><div>
 						<hr><dl class="settings">
 						<dt>'.$txt['tp-showmodulebox'].'</dt>
 						<dd>';
-				foreach($context['TPortal']['tpmodules']['blockrender'] as $tpm) {
-					echo '
-						<input name="tp_block_var1" type="radio" value="' . $tpm['id'] . '" ' , $context['TPortal']['blockedit']['var1']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'].'<br>';
+
+				    foreach($context['TPortal']['tpblocks']['blockrender'] as $tpm) {
+					    echo '
+						    <input name="tp_block_var1" type="radio" value="' . $tpm['id'] . '" ' , $context['TPortal']['blockedit']['var1']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'].'<br>';
 					}
+
 					echo '
 						</dd>
 					</dl>'; 
+                }
 			}
 // Block type: Article / Download functions
 			elseif($context['TPortal']['blockedit']['type']=='14'){
