@@ -372,6 +372,10 @@ function do_blocks()
 	if(isset($_GET['blockon'])) {
 		checksession('get');
 		$what = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}tp_blocks
 			SET off = 
@@ -390,7 +394,10 @@ function do_blocks()
 				'blockid' => $what
 			)
 		);
-		redirectexit('action=tpadmin;sa=blocks');
+        if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        redirectexit('action=tpadmin;sa=blocks');
 	}
 
 	// remove it?
@@ -793,11 +800,14 @@ function do_articles()
 		);
 	}
 	// first check any ajax stuff
-	if(isset($_GET['arton']))
-	{
+	if(isset($_GET['arton'])) {
 		checksession('get');
 		$what = is_numeric($_GET['arton']) ? $_GET['arton'] : '0';
-		if($what > 0)
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+        if($what > 0) {
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET off = 
@@ -810,14 +820,20 @@ function do_articles()
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
-		else
-			return;
+        }
+        if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+		return;
 	}
-	elseif(isset($_GET['artlock']))
-	{
+	elseif(isset($_GET['artlock'])) {
 		checksession('get');
 		$what = is_numeric($_GET['artlock']) ? $_GET['artlock'] : '0';
-		if($what > 0)
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+    	if($what > 0) {
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET locked = 
@@ -830,14 +846,20 @@ function do_articles()
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
-		else
-			return;
+        }
+        if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+		return;
 	}
-	elseif(isset($_GET['artsticky']))
-	{
+	elseif(isset($_GET['artsticky'])) {
 		checksession('get');
 		$what = is_numeric($_GET['artsticky']) ? $_GET['artsticky'] : '0';
-		if($what > 0)
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+        if($what > 0) {
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET sticky = 
@@ -850,14 +872,20 @@ function do_articles()
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
-		else
-			return;
+		}
+	    if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        return;
 	}
-	elseif(isset($_GET['artfront']))
-	{
+	elseif(isset($_GET['artfront'])) {
 		checksession('get');
 		$what = is_numeric($_GET['artfront']) ? $_GET['artfront'] : '0';
-		if($what > 0)
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+		if($what > 0) {
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET frontpage = 
@@ -870,15 +898,20 @@ function do_articles()
 				WHERE id = {int:artid}',
 				array('artid' => $what)
 			);
-		else
-			return;
+        }
+		if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        return;
 	}
-	elseif(isset($_GET['artfeat']))
-	{
+	elseif(isset($_GET['artfeat'])) {
 		checksession('get');
 		$what = is_numeric($_GET['artfeat']) ? $_GET['artfeat'] : '0';
-		if($what > 0)
-		{
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+        if($what > 0) {
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_articles
 				SET featured = 
@@ -892,11 +925,12 @@ function do_articles()
 				array('artid' => $what)
 			);
 		}
-		else
-			return;
+		if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        return;
 	}
-	elseif(isset($_GET['catdelete']))
-	{
+	elseif(isset($_GET['catdelete'])) {
 		checksession('get');
 		$what = is_numeric($_GET['catdelete']) ? $_GET['catdelete'] : '0';
 		if($what > 0)
