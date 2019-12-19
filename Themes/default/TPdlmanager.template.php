@@ -412,7 +412,7 @@ function template_main()
 			if($dlitem['can_rate'])
 			{
 				echo '
-					<form name="tp_dlitem_rating" action="',$scripturl,'?action=tpmod;sa=rate_dlitem" method="post">
+					<form name="tp_dlitem_rating" action="',$scripturl,'?action=tportal;sa=rate_dlitem" method="post">
 						' , $txt['tp-ratedownload'] , '
 						<select size="1" name="tp_dlitem_rating">';
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--)
@@ -836,7 +836,7 @@ function template_main()
 		<form accept-charset="', $context['character_set'], '" name="dl_useredit" action="'.$scripturl.'?action=tportal;dl=admin" enctype="multipart/form-data" onsubmit="syncTextarea();" method="post">
 			<div id="useredit-upfiles" class="tborder">
 				<div></div>
-				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tpmod;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
+				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 				<div class="windowbg noup padding-div">
 					<dl class="settings">
 						<dt>
