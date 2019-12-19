@@ -515,8 +515,9 @@ function articleShow() {{{
 
 	// show own articles?
     // not for guests
-    if($context['user']['is_guest'])
+    if($context['user']['is_guest']) {
         fatal_error($txt['tp-noarticlesfound'], false);
+    }
 
     // get all articles
     $request = $smcFunc['db_query']('', '
@@ -556,7 +557,9 @@ function articleShow() {{{
     if(loadLanguage('TPortalAdmin') == false) {
         loadLanguage('TPortalAdmin', 'english');
     }
+    
     loadTemplate('TParticle');
+    $context['sub_template'] = 'showarticle';
 
 }}}
 

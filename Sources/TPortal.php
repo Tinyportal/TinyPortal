@@ -2164,7 +2164,6 @@ function TPortal_panel($side) {{{
 				break;
 		}
 
-
 		// render them horisontally
 		if($flow == 'horiz') {
 			$pad = $context['TPortal']['padding'];

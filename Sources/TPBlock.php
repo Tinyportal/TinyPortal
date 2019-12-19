@@ -132,6 +132,9 @@ function editBlock( $block_id = 0 ) {{{
 			$context['TPortal']['editor_id'] = 'tp_block_body';
 			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
 		}
+        elseif($row['type'] == 20) {
+            call_integration_hook('integrate_tp_blocks', array(&$row));
+        }
 
 		if($context['TPortal']['blockedit']['lang'] != '') {
 			$context['TPortal']['blockedit']['langfiles'] = array();

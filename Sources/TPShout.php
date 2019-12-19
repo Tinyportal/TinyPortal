@@ -1223,6 +1223,9 @@ function TPShoutBlock($row) {{{
         'function' => 'tpshout_fetch',
         'sourcefile' => $sourcedir .'/TPShout.php',
     );
+    
+    $tpm = $row['id'];
+    $context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
 
 }}}
 
