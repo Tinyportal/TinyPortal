@@ -110,14 +110,15 @@ function template_tp_above()
 			<div id="centerContainer">
 				<div id="tpcontentHeader">';
 
-	if($context['TPortal']['centerpanel']==1)
+	if($context['TPortal']['centerpanel']==1) {
 		echo '
 					<div id="tpcenterbarHeader" style="' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 						' , TPortal_panel('center') , '
 						<p class="clearthefloat"></p>
 					</div>';
+    }
 	echo '
-				</div>';
+                </div><!--tpcontentHeader-->';
 }
 
 function template_tp_below()
