@@ -59,6 +59,8 @@ function TPblock($block, $theme, $side, $double=false)
 		} else {
 			echo '<div class="block_' . $side . 'container" id="module_dlstats">';
 		}
+	} elseif ($block['type']=='tpmodulebox') {
+        //debug_print_backtrace();
 	} elseif ($block['type']=='html') {
 		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='phpbox') {
@@ -933,8 +935,8 @@ function TPortal_tpmodulebox($blockid)
 	// fetch the correct block
 	if(!empty($context['TPortal']['moduleid'])) {
 		$tpm = $context['TPortal']['moduleid'];
-		if(!empty($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpmodules']['blockrender'][$tpm]['function'])) {
-			call_user_func($context['TPortal']['tpmodules']['blockrender'][$tpm]['function']);
+		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
+			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']);
         }
 	}
 }
