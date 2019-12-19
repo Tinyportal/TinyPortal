@@ -747,11 +747,11 @@ class TPortal_Integrate
             }
         }
         
-        if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['dl'])) {
+        if(isset($actions['action']) && $actions['action'] == 'tportal' && isset($actions['dl'])) {
             return $txt['tp-who-downloads'];
         }
 
-        if(isset($actions['action']) && $actions['action'] == 'tpmod' && isset($actions['sa']) && ( $actions['sa'] == 'searcharticle' || $actions['sa'] == 'searcharticle2' )) {
+        if(isset($actions['action']) && $actions['action'] == 'tportal' && isset($actions['sa']) && ( $actions['sa'] == 'searcharticle' || $actions['sa'] == 'searcharticle2' )) {
             return $txt['tp-who-article-search'];
         }
 
@@ -869,7 +869,7 @@ class TPortal_Integrate
             }
         }
         // how about dlmanager, any custom theme there?
-        else if(isset($_GET['action']) && $_GET['action'] == 'tpmod' && isset($_GET['dl'])) {
+        else if(isset($_GET['action']) && $_GET['action'] == 'tportal' && isset($_GET['dl'])) {
             if (($theme = cache_get_data('tpDLTheme', 120)) == null) {
                 // fetch the custom theme if any
                 $request =  $smcFunc['db_query']('', '
