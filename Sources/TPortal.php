@@ -335,11 +335,11 @@ function setupTPsettings() {{{
 
     // hooks setting up
     $context['TPortal']['hooks'] = array(
-            'topic_check' => array(),
-            'board_check' => array(),
-            'tp_layer' => 'tp',
-            'tp_block' => 'TPblock',
-            );
+        'topic_check' => array(),
+        'board_check' => array(),
+        'tp_layer' => 'tp',
+        'tp_block' => 'TPblock',
+    );
 
 
     // start of things
@@ -1729,6 +1729,9 @@ function doTPfrontpage() {{{
 					$fetch_article_titles[] = $row['body'];
                 }
 			}
+            elseif($row['type'] == 20) {
+                call_integration_hook('integrate_tp_blocks', array(&$row));
+            }
 			$can_edit = get_perm($row['editgroups'], '');
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage) {
@@ -2150,7 +2153,7 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['blocklisting_author'] = $block['var2'];
 				break;
 			case 'tpmodulebox':
-				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
+            	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleid'] = $block['var1'];
 				$context['TPortal']['modulevar2'] = $block['var2'];
 				$context['TPortal']['modulebody'] = $block['body'];
