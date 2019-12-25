@@ -60,8 +60,6 @@
 		<remove-file name="$languagedir/TPortal.english-utf8.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
-		<remove-file name="$languagedir/TPShout.english.php" />
-		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<remove-dir  name="$boarddir/tp-src" />
 		<remove-dir  name="$themedir/scripts/tinyportal" />
 		<code>do_hooks.php</code>
@@ -121,8 +119,6 @@
 		<remove-file name="$languagedir/TPortal.english-utf8.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
-		<remove-file name="$languagedir/TPShout.english.php" />
-		<remove-file name="$languagedir/TPShout.english-utf8.php" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>
