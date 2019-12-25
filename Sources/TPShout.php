@@ -647,7 +647,7 @@ function tpshout_bigscreen($state = false, $number = 10)
     }
     else {
         $context['TPortal']['rendershouts'] = tpshout_fetch(false, $number, false);
-        TP_setThemeLayer('tpshout', 'TPShout', 'tpshout_bigscreen');
+        TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
 }
