@@ -401,7 +401,7 @@ function setupTPsettings() {{{
                 FROM {db_prefix}tp_settings
                 WHERE name = \'standalone_mode\''
                 );
-        $context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
+        $context['TPortal']['standalone'] = isset($smcFunc['db_fetch_assoc']($request)['value']) ? $smcFunc['db_fetch_assoc']($request)['value'] : false;
         $smcFunc['db_free_result']($request);
     }
 
@@ -1801,11 +1801,11 @@ function doTPfrontpage() {{{
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
                 $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(      
-                            'avatar' => $row['avatar'],
-                            'email' => $row['email_address'],
+                            'avatar' => isset($row['avatar']) ? $row['avatar'] : '',
+                            'email' => isset($row['email_address']) ? $row['email_address'] : '',
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'id_attach' => $row['id_attach'],
-                            'attachement_type' => $row['attachement_type'],
+                            'id_attach' => isset($row['id_attach']) ? $row['id_attach'] : '',
+                            'attachement_type' => isset($row['attachement_type']) ? $row['attachement_type'] : '',
                         )
                 )['image'];
 
