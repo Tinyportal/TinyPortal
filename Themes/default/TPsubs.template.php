@@ -1197,6 +1197,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_views}
 				{article_rating}
 				{article_options}
+				{article_print}
 			' . (!$single ? '</div>' : '') .  '
 			</div>
 			<div class="article_padding article_text" style="clear: both;">{article_text}
@@ -1230,6 +1231,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_views}
 				{article_rating}
 				{article_options}
+				{article_print}
 			</div>
 			<div class="article_padding">{article_text}
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
@@ -1257,6 +1259,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_views}
 				{article_rating}
 				{article_options}
+				{article_print}
 			</div>
 			<div class="article_padding">{article_text}
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
@@ -1297,6 +1300,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_views}
 				{article_rating}
 				{article_options}
+				{article_print}
 			</div>
 			<div class="article_padding">{article_text}
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
@@ -1334,6 +1338,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_views}
 				{article_rating}
 				{article_options}
+				{article_print}
 			</div>
 			<div class="article_padding">{article_text}
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
@@ -1376,6 +1381,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_views}
 					{article_rating}
 					{article_options}
+					{article_print}
 				</div>
 			<div style="padding: 0 5px;">
 				<div class="article_padding">{article_text}</div>
@@ -1418,6 +1424,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_views}
 					{article_rating}
 					{article_options}
+					{article_print}
 				</div>
 				<div class="article_text" style="border-bottom:none">{article_text}</div>
 				<div class="tp_container">
@@ -1454,6 +1461,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_views}
 				{article_rating}
 				{article_options}
+				{article_print}
 			</div>
 			<div class="article_padding">{article_text}
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
@@ -1710,9 +1718,10 @@ function article_options($render = true)
 	global $scripturl, $txt, $context;
 
     $data = '';
+
 	if(!isset($context['TPortal']['article']['boardnews'])) {
 		// give 'em a edit link? :)
-		if(allowedTo('tp_articles') && $context['TPortal']['hide_editarticle_link']=='0') {
+		if(allowedTo('tp_articles') && empty($context['TPortal']['hide_editarticle_link'])) {
 			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
@@ -1721,17 +1730,30 @@ function article_options($render = true)
 			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tportal;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
-
 	}
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
+}
+
+function article_print($render = true)
+{
+	global $scripturl, $txt, $context;
+
+    $data = '';
 
 	if($context['TPortal']['print_articles'] != 0 ) {
 		if(isset($context['TPortal']['article']['boardnews']) && !$context['user']['is_guest']) {
 			$data .= '
-		<span class="article_rating"><a href="' . $scripturl . '?action=printpage;topic=' . $context['TPortal']['article']['id'] . '">' . $txt['print_page'] . '</a></span>';
+					<span class="article_rating"><a href="' . $scripturl . '?action=printpage;topic=' . $context['TPortal']['article']['id'] . '">' . $txt['print_page'] . '</a></span>';
         }
 		elseif (!$context['user']['is_guest']) {
 			$data .= '
-		<span class="article_rating"><a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . ';print">' . $txt['tp-print'] . '</a></span>';
+					<span class="article_rating"><a href="' . $scripturl . '?page=' . $context['TPortal']['article']['id'] . ';print">' . $txt['tp-print'] . '</a></span>';
         }
 	}
 
