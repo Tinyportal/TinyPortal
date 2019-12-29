@@ -1122,7 +1122,7 @@ function doTPfrontpage() {{{
 				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
+				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
 				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
@@ -1191,7 +1191,7 @@ function doTPfrontpage() {{{
 				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
+				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
 				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
