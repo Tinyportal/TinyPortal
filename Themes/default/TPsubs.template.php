@@ -301,7 +301,7 @@ function TPortal_userbox()
 					// any submissions?
 					if($context['TPortal']['submitcheck']['articles']>0)
 						echo '
-			<li><a href="' . $scripturl . '?action=tpadmin;sa=submission"><b>' . $bullet4.$context['TPortal']['submitcheck']['articles'] . ' ' .$txt['tp-articlessubmitted'] . '</b></a></li>';
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=submission"><b>' . $bullet4 . ' ' .$txt['tp-articlessubmitted'] . ' ' .$context['TPortal']['submitcheck']['articles'] . '</b></a></li>';
 		}
 		if (allowedTo('tp_dlmanager'))
 		{
@@ -801,7 +801,7 @@ function TPortal_module()
 			{
 				foreach($it as $item)
 				{
-					echo '<span class="smalltext"><a title="'.$item['views'].' '.$txt['tp-views'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
+					echo '<span class="smalltext"><a title="'.$txt['tp-views'].': '.$item['views'].'" href="'.$scripturl.'?page='.$item['id'].'">'.$item['subject'].'</a>
 						</span><br>';
 				}
 			}
@@ -1632,7 +1632,7 @@ function article_views($render = true)
 
 	if(in_array('views',$context['TPortal']['article']['visual_options'])) {
 		$data = '
-		<span class="article_views">' . $context['TPortal']['article']['views'] . ' ' . $txt['tp-views'] . '</span>';
+		<span class="article_views"> ' . $txt['tp-views'] . ': ' . $context['TPortal']['article']['views'] . '</span>';
     }
 
     if($render) {
@@ -2024,13 +2024,13 @@ function render_rating($total, $votes, $id, $can_rate = false, $render = true)
     }
 
 	if($total == 0 && $votes > 0) {
-		$data .= ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+		$data .= ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $txt['tp-ratingvotes'] . ' ' . $votes . ')';
     }
 	elseif($total == 0 && $votes == 0) {
-		$data .= ' '.  $txt['tp-ratingaverage'] . ' 0 (0 ' . $txt['tp-ratingvotes'] . ')';
+		$data .= ' '.  $txt['tp-ratingaverage'] . ' 0 (' . $txt['tp-ratingvotes'] . ' 0)';
     }
 	else {
-		$data .= ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $votes . ' ' . $txt['tp-ratingvotes'] . ')';
+		$data .= ' '.  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src=" '. $settings['tp_images_url'].'/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />' , ceil($total/$votes))) : ceil($total/$votes)) . ' (' . $txt['tp-ratingvotes'] . ' ' . $votes . ')';
     }
 
 	// can we rate it?
@@ -2202,7 +2202,7 @@ function blockarticle_views($render = true)
 
 	if(in_array('views',$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['visual_options']))
 		echo '
-		<span class="article_views">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['views'] . ' ' . $txt['tp-views'] . '</span>';
+		<span class="article_views">' . $txt['tp-views'] . ': ' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['views'] . '</span>';
 	else
 		echo '';
 

@@ -152,6 +152,7 @@ $txt['tp-itemdownloads'] = 'Downloads';
 $txt['tp-last_access'] = 'Last access';
 $txt['tp-created'] = 'Created';
 $txt['tp-author_id'] = 'Author';
+$txt['tp-authorby'] = 'by';
 $txt['tp-itemlastdownload'] = ' Last accessed';
 $txt['tp-ratedownload'] = 'Give this download a rating of';
 $txt['tp-dlhaverated'] = 'You have rated this item.';
@@ -186,5 +187,6 @@ $txt['tp-confirm'] = 'Are you sure?';
 $txt['tp-dosubmit'] = 'Save';
 $txt['tp-download'] = 'Download';
 $txt['tp-downloads'] = 'Downloads';
+$txt['tp-downloadss2'] = 'Click here to download the file'
 
 ?>

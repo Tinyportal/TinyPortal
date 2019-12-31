@@ -34,7 +34,7 @@ function template_main()
 		</div>
 		<div>';
 		$dlbuttons = array(
-			'frontdl' => array('text' => 'tp-downloads', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl' ),
+			'frontdl' => array('text' => 'tp-downloadss1', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl' ),
 			'search' => array('text' => 'tp-search', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=search'),
 			'stats' => array('text' => 'tp-stats', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=stats'),
 			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=upload'),
@@ -130,7 +130,7 @@ function template_main()
 						<div class="dl_most_downloaded">
 							<a href="'.$last['href'].'"><b>'.$last['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $last['author'].'<br>'.$last['date'].'</div>
-							<div class="smalltext">'.$last['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
+							<div class="smalltext"> '.strtolower($txt['tp-downloads']).': '.$last['downloads'].'</div>
 						</div>
 					</div>';
 				}
@@ -164,7 +164,7 @@ function template_main()
 						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
-							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
+							<div class="smalltext">'.strtolower($txt['tp-downloads']).': '.$wost['downloads'].'</div>
 						</div>
 					</div>';
 					$count++;
@@ -196,7 +196,7 @@ function template_main()
 						<div class="dl_most_downloaded">
 							<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 							<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
-							<div class="smalltext">'.$wost['downloads'].' '.strtolower($txt['tp-downloads']).'</div>
+							<div class="smalltext">'.strtolower($txt['tp-downloads']).': '.$wost['downloads'].' </div>
 						</div>
 					</div>';
 					$count++;
@@ -273,7 +273,7 @@ function template_main()
 						<div>
 						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" /></div>
 							<div style="overflow: visible;">
-							<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ''.$dlcat['files'].' '.$txt['tp-dlfiles'],'</div>
+							<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ' '.$txt['tp-dlfiles'],': '.$dlcat['files'].'</div>
 							<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
 							<div class="dlcatpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 					if(!empty($content))
@@ -345,8 +345,8 @@ function template_main()
 					if(isset($dlitem['filesize']))
 						$details[] = $dlitem['filesize'];
 
-					$details[] = $dlitem['views'] . ' ' . $txt['tp-views'];
-					$details[] = $dlitem['downloads'] . ' ' . $txt['tp-downloads'];
+					$details[] = $txt['tp-views'] . ': ' . $dlitem['views'];
+					$details[] = $txt['tp-downloads'] . ': ' . $dlitem['downloads'];
 					$det2[] = $txt['tp-itemlastdownload'] . ' ' . timeformat($dlitem['date_last']);
 					$det2[] = $dlitem['author'];
 					echo '
@@ -399,7 +399,7 @@ function template_main()
 				</h4>
 				<p class="clearthefloat"></p>
 				<hr>
-					<p style="float:right;"><a href="'.$dlitem['href'].'"><img src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
+					<p style="float:right;"><a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
 					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
 						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
 						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>
@@ -407,7 +407,7 @@ function template_main()
 						<li>'.$txt['tp-created'].': '.timeformat($dlitem['created']).'</li>
 						<li>'.$txt['tp-itemlastdownload'].': '.timeformat($dlitem['date_last']).'</li>
 					</ul>
-					<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $dlitem['rating_votes'] . ' ' . $txt['tp-ratingvotes'] . ')</div>';
+					<div id="rating">' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $dlitem['rating_average'])) : $dlitem['rating_average']) . ' (' . $txt['tp-ratingvotes'] . ' ' . $dlitem['rating_votes'] . ')</div>';
 
 			if($dlitem['can_rate'])
 			{
