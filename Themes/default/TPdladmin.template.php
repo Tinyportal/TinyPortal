@@ -95,7 +95,7 @@ $clickme.click( function(e) {
 							<div id="show-on-respnsive-layout" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
 							<a href="',$scripturl, '?action=tpmod;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'"   src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete"   src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
+							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '"   src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
@@ -347,7 +347,7 @@ $clickme.click( function(e) {
 				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
 				<a href="',$scripturl, '?action=tpmod;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'"   src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="delete"   src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
+				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '"   src="' .$settings['tp_images_url']. '/TPdelete.png" alt=""  /></a>
 			</div><p class="clearthefloat"></p>
 		</div>
 		</td>
@@ -391,7 +391,7 @@ $clickme.click( function(e) {
 				   '. (($cat['file']=='- empty item -' || $cat['file']=='') ? $txt['tp-noneicon'] : $cat['file']) .'
 					</div>
 					<div style="width:48%;" class="float-items">
-					by '.$cat['author'].'
+					'.$txt['tp-authorby'].' '.$cat['author'].'
 					</div>
 					<p class="clearthefloat"></p>
 				</div>
@@ -631,7 +631,7 @@ $clickme.click( function(e) {
 						<b>'.$txt['tp-dldelete'].'</b>
 					</dt>
 					<dd>
-						<input name="dladmin_delete'.$cat['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
+						<input name="dladmin_delete'.$cat['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">&nbsp;&nbsp;<img title="'.$txt['tp-dldelete'].'" border="0" src="' .$settings['tp_images_url']. '/TPthumbdown.png" alt="'.$txt['tp-dldelete'].'"  />
 					</dd>
 				</dl>
 			<div class="padding-div"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
