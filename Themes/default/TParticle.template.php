@@ -857,21 +857,21 @@ function template_showarticle()
 					elseif(allowedTo('tp_articles')) {
 						echo '
 						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
-						echo '
-							</div>';
-						if($art['off'] == 0 && $art['approved'] == 1) {
-							echo '
-							<a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>'; 
-						}
-						else {
-							echo '
-						(<i>' . html_entity_decode($art['subject']). '</i>)';
-						}
-						echo '
+                    }
+                    echo '
+                        </div>';
+                    if($art['off'] == 0 && $art['approved'] == 1) {
+                        echo '
+                        <a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>'; 
+                    }
+                    else {
+                        echo '
+                    (<i>' . html_entity_decode($art['subject']). '</i>)';
+                    }
+					echo '
 						</div>
 					</td>
 					</tr>';
-					}
 				}
 			}
 			else {
