@@ -154,6 +154,17 @@ $txt['tp-islocked'] = 'This article is locked for editing';
 $txt['tp-featured'] = 'Featured';
 $txt['tp-editarticleoptions2'] = 'Options';
 $txt['tp-articleconfirmdelete'] = 'Are you sure you want to delete this article?';
+$txt['tp-select'] = 'Select';
+$txt['tp-inboards2'] = 'Boards:';
+$txt['tp-sort-on-position'] = 'Sort on position';
+$txt['tp-sort-on-subject'] = 'Sort on subject';
+$txt['tp-sort-on-author'] = 'Sort on author';
+$txt['tp-sort-on-date'] = 'Sort on date';
+$txt['tp-sort-on-active'] = 'Sort on active';
+$txt['tp-sort-on-frontpage'] = 'Sort on frontpage';
+$txt['tp-sort-on-sticky'] = 'Sort on sticky';
+$txt['tp-sort-on-locked'] = 'Sort on locked';
+$txt['tp-sort-on-type'] = 'Sort on type';
 
 // Edit article
 $txt['tp-preview'] = 'View article';

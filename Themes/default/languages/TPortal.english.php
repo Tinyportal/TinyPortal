@@ -101,7 +101,7 @@ $txt['tp-author'] = 'Author';
 $txt['tp-by'] = 'Written by';
 $txt['tp_rate'] = 'Rate it!';
 $txt['tp-articlenotexist'] = 'This article is not available. You may not have permission to see the article, it isn\'t active, hasn\'t been approved yet, or simply does not exist.';
-$txt['tp-articlessubmitted'] = 'New article(s)';
+$txt['tp-articlessubmitted'] = 'New article(s): ';
 $txt['tp-cannotcomment'] = 'You don\'t have permission to comment, or comments have been turned off for this article.';
 $txt['tp-categorynotexist'] = 'The category doesn\'t exist.';
 $txt['tp-comments'] = 'Comments';
@@ -117,7 +117,7 @@ $txt['tp-print'] = 'Print';
 $txt['tp-printgoback'] = 'Go back to article';
 $txt['tp-ratingaverage'] = 'Rating: ';
 $txt['tp-ratings'] = 'Ratings';
-$txt['tp-ratingvotes'] = 'Rates';
+$txt['tp-ratingvotes'] = 'Rates: ';
 $txt['tp-readmore'] = 'Read More';
 $txt['tp-submit'] = 'Save';
 $txt['tp-submitarticlebbc'] = 'Write BBC article';
@@ -195,6 +195,7 @@ $txt['tp-dlmanageroff'] = 'The DL Manager module is not active.';
 $txt['tp-dlsettings'] = 'Settings';
 $txt['tp-dluploaded'] = 'New upload(s)';
 $txt['tp-downloads'] = 'Downloads';
+$txt['tp-downloadss1'] = 'Downloads files';
 $txt['tp-uploadedby'] = 'Uploaded by ';
 
 // Shoutbox
