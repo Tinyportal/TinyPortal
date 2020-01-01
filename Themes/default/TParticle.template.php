@@ -609,6 +609,16 @@ function template_submitarticle()
                 }
                 else {
                     echo '<input name="tp_article_type" type="hidden" value="'.$article_type.'">';
+				// set defaults for submissions?
+					echo '	<input name="tp_article_authorid" type="hidden" value="' . $context['user']['id'] . '">
+							<input name="tp_article_frame" type="hidden" value="theme">
+							<input name="tp_article_options_date" type="hidden" value="date">
+							<input name="tp_article_options_title" type="hidden" value="title">
+							<input name="tp_article_options_author" type="hidden" value="author">
+							<input name="tp_article_options_linktree" type="hidden" value="linktree">
+							<input name="tp_article_options_views" type="hidden" value="views">
+							<input name="tp_article_options_inherit" type="hidden" value="inherit">
+							<input name="tp_article_options_social" type="hidden" value="social">';
                 }
 
                 echo'
