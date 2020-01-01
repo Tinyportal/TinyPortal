@@ -184,6 +184,12 @@ function template_settings()
 					<dd>
 						<input name="tp_redirectforum" id="tp_redirectforum2" type="radio" value="0" ' , $context['TPortal']['redirectforum']=='0' ? 'checked' : '' , '><label for="tp_redirectforum2"> '.$txt['tp-redirectforum2'].'</label>
 					</dd>
+					<dt>
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-hideadminmenudesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hideadminmenu">', $txt['tp-hideadminmenu'], '</label>
+					</dt>
+					<dd>
+						<input id="tp_hideadminmenu" name="tp_hideadminmenu" type="checkbox" value="1" ' , $context['TPortal']['hideadminmenu']=='1' ? 'checked' : '' , '>
+					</dd>
 				</dl>
 					<hr>
 				<dl class="settings">
