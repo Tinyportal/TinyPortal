@@ -1908,7 +1908,7 @@ function do_postchecks()
 
             switch($from) {
                 case 'settings':
-                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
+                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
                     foreach($checkboxes as $v) {
                         if(TPUtil::checkboxChecked('tp_'.$v)) {
                             $updateArray[$v] = "1";

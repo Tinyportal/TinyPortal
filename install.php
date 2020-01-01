@@ -607,6 +607,7 @@ $settings_array = array(
     'frontpage_topics' => '',
     'frontpage_title' => '',
     'redirectforum' => '1',
+    'hideadminmenu' => '0',
     'useroundframepanels' => '0',
     'panelstyle_left' => '0',
     'panelstyle_right' => '0',
