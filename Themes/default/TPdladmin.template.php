@@ -15,7 +15,10 @@
  *
  */
 
+//Admin page
 //Settings page
+//Submissions page
+//FTP page
 //Edit category page
 //Add category page
 
@@ -43,6 +46,7 @@ $clickme.click( function(e) {
 	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tportal;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
 
 	if($context['TPortal']['dlsub']=='admin')
+//Admin page
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
@@ -201,7 +205,7 @@ $clickme.click( function(e) {
 						';
 					$brds=explode(",",$context['TPortal']['dl_createtopic_boards']);
 					foreach($context['TPortal']['boards'] as $brd)
-						echo '<div class="perm"><input type="checkbox" value="'.$brd['id'].'" name="tp_dlboards'.$brd['id'].'" ' , in_array($brd['id'],$brds) ? ' checked="checked"' : '' , ' /> ' . $brd['name'].'</div>';
+						echo '<div class="perm"><input type="checkbox" value="'.$brd['id'].'" name="tp_dlboards'.$brd['id'].'" id="tp_dlboards'.$brd['id'].'" ' , in_array($brd['id'],$brds) ? ' checked="checked"' : '' , ' /><label for="tp_dlboards'.$brd['id'].'"> ' . $brd['name'].'</label></div>';
 
 					echo '<br style="clear: both;" />
 						</div><br>
@@ -210,9 +214,9 @@ $clickme.click( function(e) {
 						'.$txt['tp-dlwysiwyg'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_wysiwyg" type="radio" value="" ', $context['TPortal']['dl_wysiwyg']=='' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
-						<input name="tp_dl_wysiwyg" type="radio" value="html" ', $context['TPortal']['dl_wysiwyg']=='html' ? 'checked' : '' ,'> '.$txt['tp-yes'].', HTML<br>
-						<input name="tp_dl_wysiwyg" type="radio" value="bbc" ', $context['TPortal']['dl_wysiwyg']=='bbc' ? 'checked' : '' ,'> '.$txt['tp-yes'].', BBC<br><br>
+						<input name="tp_dl_wysiwyg" id="tp_dl_wysiwyg1" type="radio" value="" ', $context['TPortal']['dl_wysiwyg']=='' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg1"> '.$txt['tp-no'].'</label><br>
+						<input name="tp_dl_wysiwyg" id="tp_dl_wysiwyg2" type="radio" value="html" ', $context['TPortal']['dl_wysiwyg']=='html' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg2"> '.$txt['tp-yes'].', HTML</label><br>
+						<input name="tp_dl_wysiwyg" id="tp_dl_wysiwyg3" type="radio" value="bbc" ', $context['TPortal']['dl_wysiwyg']=='bbc' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg3"> '.$txt['tp-yes'].', BBC</label><br><br>
 					</dd>
 				</dl>
 			<hr>
@@ -667,7 +671,7 @@ $clickme.click( function(e) {
 	   </div>
 	';
 	}
-	// any submitted items? - submission
+//Submissions page
 	elseif($context['TPortal']['dlsub']=='adminsubmission')
 	{
 		echo '
@@ -737,7 +741,7 @@ $clickme.click( function(e) {
 		</div>
 	</div>';
 	}
-	// check out files FTP
+//FTP page
 	elseif($context['TPortal']['dlsub']=='adminftp')
 	{
 		echo '
