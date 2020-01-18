@@ -1329,7 +1329,7 @@ function doTPfrontpage()
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
+				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
@@ -1399,7 +1399,7 @@ function doTPfrontpage()
 				art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 				art.frame, art.comments, art.options, art.intro, art.useintro,
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.illustration,art.type as rendertype ,
+				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
 				IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 				IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
@@ -1801,7 +1801,7 @@ function doTPfrontpage()
 					art.date, art.category, art.subject, art.author_id as authorID, var.value1 as category_name, var.value8 as category_shortname,
 					art.frame, art.comments, art.options, art.intro, art.useintro, art.sticky, art.featured,
 					art.comments_var, art.views, art.rating, art.voters, art.shortname,
-					art.fileimport, art.topic, art.illustration, art.type as rendertype,
+					art.fileimport, art.topic, art.locked, art.illustration, art.type as rendertype,
 					IFNULL(mem.real_name, art.author) as realName, mem.avatar, mem.posts, mem.date_registered as dateRegistered,mem.last_login as lastLogin,
 					IFNULL(a.id_attach, 0) AS ID_ATTACH, a.filename, a.attachment_type as attachmentType, mem.email_address AS email_address
 				FROM {db_prefix}tp_articles AS art

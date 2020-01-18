@@ -206,6 +206,7 @@ $txt['whoall_tpmod_dlcat'] = 'Viewing a File category.';
 $txt['whoall_tpmod_dlitem'] = 'Viewing a files item.';
 $txt['tp-dlsettings'] = 'Settings';
 $txt['tp-downloads'] = 'Downloads';
+$txt['tp-downloadss1'] = 'Downloads files';
 $txt['tp-dlhaverated'] = 'You have rated this file.';
 
 $txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the File manager';

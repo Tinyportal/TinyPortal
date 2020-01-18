@@ -156,6 +156,17 @@ $txt['tp-articleoptions9'] = 'Display bottom panel';
 $txt['tp-articleoptions20'] = 'Do not use SMF templates';
 
 $txt['tp-author']='Author';
+$txt['tp-select'] = 'Select';
+$txt['tp-inboards2'] = 'Boards:';
+$txt['tp-sort-on-position'] = 'Sort on position';
+$txt['tp-sort-on-subject'] = 'Sort on subject';
+$txt['tp-sort-on-author'] = 'Sort on author';
+$txt['tp-sort-on-date'] = 'Sort on date';
+$txt['tp-sort-on-active'] = 'Sort on active';
+$txt['tp-sort-on-frontpage'] = 'Sort on frontpage';
+$txt['tp-sort-on-sticky'] = 'Sort on sticky';
+$txt['tp-sort-on-locked'] = 'Sort on locked';
+$txt['tp-sort-on-type'] = 'Sort on type';
 $txt['tp-catarray'] = ' Show when viewing this category listing';
 $txt['tp-catboxauthor'] = 'Show author?';
 $txt['tp-catboxheight'] = 'Height of the article box before scrollbar:';

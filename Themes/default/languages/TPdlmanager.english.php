@@ -18,8 +18,10 @@
 //  SVN Rev67
 global $scripturl;
 
+$txt['tp-authorby'] = 'by';
 $txt['tp-authorID'] = 'Author';
 $txt['tp-created'] = 'Created';
+$txt['tp-downloadss2'] = 'Click here to download the file';
 $txt['tp-dladmin'] = 'Administration';
 $txt['tp-dldownloads'] = 'Downloads';
 $txt['tp-dlexterror'] = 'Currently you can only upload one of the following file formats';
