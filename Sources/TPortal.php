@@ -461,7 +461,7 @@ function setupTPsettings()
 			FROM {db_prefix}tp_settings
 			WHERE name = \'standalone_mode\''
 		);
-		$context['TPortal']['standalone'] = $smcFunc['db_fetch_assoc']($request)['value'];
+		$context['TPortal']['standalone'] = isset($smcFunc['db_fetch_assoc']($request)['value']) ? $smcFunc['db_fetch_assoc']($request)['value'] : false;
 		$smcFunc['db_free_result']($request);
 	}
 }
@@ -2975,7 +2975,7 @@ function doModules()
             }
 		}
 
-		if(file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'])) {
+		if(isset($row['autoload_run']) && isset($row['modulename']) && file_exists($boarddir .'/tp-files/tp-modules/' . $row['modulename']. '/Sources/'. $row['autoload_run'])) {
 			if(!empty($row['adminhook'])) {
 				$perms = explode(',', $row['permissions']);
                 if(is_countable($perms)) {
