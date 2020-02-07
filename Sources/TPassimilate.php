@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2019 - The TinyPortal Team
+ * Copyright (C) 2020 - The TinyPortal Team
  *
  */
 
@@ -115,7 +115,7 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 1.6.5</a> &copy; <a href="' . $scripturl . '?action=tpmod;sa=credits" title="Credits">2005-2019</a>';
+	$string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 1.6.5</a> &copy; <a href="' . $scripturl . '?action=tpmod;sa=credits" title="Credits">2005-2020</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
