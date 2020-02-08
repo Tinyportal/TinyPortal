@@ -319,7 +319,7 @@ function template_submitarticle()
 					</dt>
 					<dd>
 							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
-							<input name="tp_article_useintro" type="radio" value="0" ', $mg['useintro']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
+							<input name="tp_article_useintro" type="radio" value="0" ', !$mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
 					</dd>
 				</dl>
 					';

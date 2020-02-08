@@ -619,9 +619,9 @@ function articleSubmit() {{{
     require_once(SOURCEDIR. '/TPcommon.php');
 
     if(isset($_POST['tp_article_approved']) || allowedTo('tp_alwaysapproved'))
-        $artpp = '0';
-    else
         $artpp = '1';
+    else
+        $artpp = '0';
 
     $arttype = isset($_POST['submittedarticle']) ? $_POST['submittedarticle'] : '';
     $arts = strip_tags($_POST['tp_article_title']);
