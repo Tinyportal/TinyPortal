@@ -95,9 +95,8 @@ function template_submitarticle()
                 }
 
                 echo'
-			<hr><br>
+			<hr>
 				<dl class="settings">';
-
 
                 if(allowedTo('admin_forum')) {
                     echo '<dt>
@@ -343,7 +342,7 @@ function template_submitarticle()
 				}
                 
                 if(allowedTo('admin_forum')) {
-				echo '<br><hr>
+				echo '<hr>
 				<dl class="settings">
 					<dt>
 						', $txt['tp-switchmode'], '
@@ -412,9 +411,23 @@ function template_submitarticle()
 						<div class="article-details">';
 				// article details options
 				echo '
+							<dl class="settings">
+								<dt>
+									<label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
+								</dt>
+								<dd>
+									<input id="toggleoptions" type="checkbox" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
+								</dd>
+							</dl>
 							<div class="title_bar"><h3 class="titlebg">' . $txt['tp-details'] . '</h3></div>
 							<br>
 							<dl class="settings">
+								<dt>
+									<label for="tp_article_options_'.$opts[4].'">', $txt['tp-articleoptions4'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[4].'" id="tp_article_options_'.$opts[4].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[4]]) ? 'checked' : '' , '>
+								</dd>
 								<dt>
 									<label for="tp_article_options_'.$opts[2].'">', $txt['tp-articleoptions2'], '</label><br>
 								</dt>
@@ -434,6 +447,36 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[1].'" id="tp_article_options_'.$opts[1].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
+									<label for="tp_article_options_'.$opts[17].'">', $txt['tp-articleoptions17'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[17].'" id="tp_article_options_'.$opts[17].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[17]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
+									<label for="tp_article_options_'.$opts[19].'">', $txt['tp-articleoptions19'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[19].'" id="tp_article_options_'.$opts[19].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[19]]) ? 'checked' : '' , '><br>
+								</dd>
+								<dt>
+									<label for="tp_article_options_'.$opts[18].'">', $txt['tp-articleoptions18'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[18].'" id="tp_article_options_'.$opts[18].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[18]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
+									<label for="tp_article_options_'.$opts[21].'">', $txt['tp-articleoptions21'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[21].'" id="tp_article_options_'.$opts[21].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[21]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
+									<label for="tp_article_options_'.$opts[23].'">', $txt['tp-showsociallinks'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[23].'" id="tp_article_options_'.$opts[23].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
 									<label for="tp_article_options_'.$opts[12].'">', $txt['tp-articleoptions12'], '</label><br>
 								</dt>
 								<dd>
@@ -446,10 +489,10 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[13].'" id="tp_article_options_'.$opts[13].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
-									<label for="tp_article_options_'.$opts[4].'">', $txt['tp-articleoptions4'], '</label><br>
+									<label for="tp_article_options_'.$opts[15].'">', $txt['tp-articleoptions15'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[4].'" id="tp_article_options_'.$opts[4].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[4]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[15].'" id="tp_article_options_'.$opts[15].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[15]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="tp_article_options_'.$opts[14].'">', $txt['tp-articleoptions14'], '</label><br>
@@ -458,54 +501,21 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[14].'" id="tp_article_options_'.$opts[14].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[14]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
-									<label for="tp_article_options_'.$opts[15].'">', $txt['tp-articleoptions15'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[15].'" id="tp_article_options_'.$opts[15].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[15]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[5].'">', $txt['tp-articleoptions5'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[5].'" id="tp_article_options_'.$opts[5].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
 									<label for="tp_article_options_'.$opts[16].'">', $txt['tp-articleoptions16'], '</label><br>
 								</dt>
 								<dd>
 									<input name="tp_article_options_'.$opts[16].'" id="tp_article_options_'.$opts[16].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[16]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[17].'">', $txt['tp-articleoptions17'], '</label><br>
+								</dd>';							
+								/*<dt>
+									<label for="tp_article_options_'.$opts[5].'">', $txt['tp-articleoptions5'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[17].'" id="tp_article_options_'.$opts[17].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[17]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[18].'">', $txt['tp-articleoptions18'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[18].'" id="tp_article_options_'.$opts[18].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[18]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[19].'">', $txt['tp-articleoptions19'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[19].'" id="tp_article_options_'.$opts[19].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[19]]) ? 'checked' : '' , '><br><br>
-								</dd>
-							</dl>
+									<input name="tp_article_options_'.$opts[5].'" id="tp_article_options_'.$opts[5].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
+								</dd>*/
+					echo '	</dl>
 								<div class="title_bar">
 								<h3 class="titlebg">' . $txt['tp-panels'] . '</h3>
 								</div><br>
-							<dl class="settings">
-								<dt>
-									<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[22].'" id="tp_article_options_'.$opts[22].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
-								</dd>
-							</dl>
-						<hr /><br>
 							<dl class="settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
@@ -555,38 +565,20 @@ function template_submitarticle()
 								<dd>
 									<input name="tp_article_options_'.$opts[9].'" id="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
 								</dd>
-							</dl><br>
-								<div class="title_bar">
-								<h3 class="titlebg">' . $txt['tp-others'] . '</h3>
-								</div><br>
+							</dl>
+						<hr>
 							<dl class="settings">
 								<dt>
-									<label for="tp_article_options_'.$opts[20].'">', $txt['tp-articleoptions20'], '</label><br>
+									<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
 								</dt>
 								<dd>
-									<input name="tp_article_options_'.$opts[20].'" id="tp_article_options_'.$opts[20].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[21].'">', $txt['tp-articleoptions21'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[21].'" id="tp_article_options_'.$opts[21].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[21]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[23].'">', $txt['tp-showsociallinks'], '</label><br>
-								</dt>
-								<dd>
-									<input name="tp_article_options_'.$opts[23].'" id="tp_article_options_'.$opts[23].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>
+									<input name="tp_article_options_'.$opts[22].'" id="tp_article_options_'.$opts[22].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
-						<br><hr>
+							<div class="title_bar">
+								<h3 class="titlebg">' . $txt['tp-others'] . '</h3>
+							</div><br>
 							<dl class="settings">
-								<dt>
-									<label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
-								</dt>
-								<dd>
-									<input id="toggleoptions" type="checkbox" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
-								</dd>
 								<dt>
 									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
 								</dt>
@@ -599,12 +591,18 @@ function template_submitarticle()
 									echo '
 								</select>
 								</dd>
+								<dt>
+									<label for="tp_article_options_'.$opts[20].'">', $txt['tp-articleoptions20'], '</label><br>
+								</dt>
+								<dd>
+									<input name="tp_article_options_'.$opts[20].'" id="tp_article_options_'.$opts[20].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>
+								</dd>
 							</dl>
 								<div>
 										' , $txt['tp-articleheaders'] , '<br>
 										<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
 								</div>
-				    </div>
+						</div>
 				</div>';
                 }
                 else {
@@ -619,7 +617,7 @@ function template_submitarticle()
 							<input name="tp_article_options_views" type="hidden" value="views">
 							<input name="tp_article_options_inherit" type="hidden" value="inherit">
 							<input name="tp_article_options_social" type="hidden" value="social">';
-                }
+				}
 
                 echo'
 					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
