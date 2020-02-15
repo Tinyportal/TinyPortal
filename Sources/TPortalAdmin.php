@@ -2560,7 +2560,7 @@ function do_postchecks()
 						);
 						$row = $smcFunc['db_fetch_assoc']($request);
 						$smcFunc['db_free_result']($request);
-						if($row['value2'] == $where)
+						if(isset($row['value2']) && $row['value2'] == $where)
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_variables
 								SET value2 = {string:val2}
