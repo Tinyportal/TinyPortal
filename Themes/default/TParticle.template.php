@@ -43,7 +43,7 @@ function template_submitarticle()
         $article_type = $mg['articletype'];
     }
     else {
-        $article_type = false;
+        $article_type = 'html'; // Default to HTML
     }
 
 	echo '
@@ -75,10 +75,10 @@ function template_submitarticle()
 				if($article_type == 'php') {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
                 }
-				elseif($tp_use_wysiwyg > 0 && ($article_type == '' || $article_type == 'html')) {
+				elseif(($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
 					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
                 }
-				elseif($tp_use_wysiwyg == 0 && ($article_type == '' || $article_type == 'html')) {
+				elseif(($tp_use_wysiwyg == 0) && ($article_type == 'html')) {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
                 }
 				elseif($article_type == 'bbc') {
@@ -322,9 +322,9 @@ function template_submitarticle()
 					</dd>
 				</dl>
 					';
-				if($article_type == 'php' || $article_type == '' || $article_type == 'html')	{
+				if($article_type == 'php' || $article_type == 'html')	{
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
-					if($tp_use_wysiwyg > 0 && ($article_type == '' || $article_type == 'html')) {
+					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
                     }
 					else {
@@ -348,7 +348,7 @@ function template_submitarticle()
 						', $txt['tp-switchmode'], '
 					</dt>
 					<dd>
-							<input name="tp_article_type" id="gohtml" type="radio" value="html"' , $article_type == '' || $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
+							<input name="tp_article_type" id="gohtml" type="radio" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
 							<input name="tp_article_type" id="gophp" type="radio" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> '.$txt['tp-gophp'] .'</label><br>
 							<input name="tp_article_type" id="gobbc" type="radio" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> '.$txt['tp-gobbc'] .'</label><br>
 							<input name="tp_article_type" id="goimport" type="radio" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
@@ -850,7 +850,7 @@ function template_showarticle()
 					}
 					if((allowedTo('tp_editownarticle') && $art['locked']==0) && !allowedTo('tp_articles')) {
 						echo '
-						<a href="' . $scripturl . '?action=tportal;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
+						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
 					} 
 					elseif(allowedTo('tp_articles')) {
 						echo '
