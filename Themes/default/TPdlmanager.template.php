@@ -535,10 +535,17 @@ function template_main()
 						 ('.$context['TPortal']['dl_allowed_types'].')
 					</dt>
 					<dd>';
-		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager'))
+		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager')) {
 			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file"><br>
 					</dd>';
 
+            echo '<dt>
+						<label for="tp-dlexternalfile">'.$txt['tp-dlexternalfile'].'</label><br>
+					</dt>
+					<dd>
+                        <input name="tp-dlexternalfile" id="tp-dlexternalfile" type="text" size"40"><br>
+					</dd>';
+        }
 		// file already uploaded?
 		if(allowedTo('tp_dlmanager') && !isset($_GET['ftp'])){
 			echo '

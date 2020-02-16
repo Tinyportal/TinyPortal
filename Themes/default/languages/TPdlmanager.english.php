@@ -79,6 +79,7 @@ $txt['tp-dluploadcategory'] = 'Category';
 $txt['tp-dluploadtext'] = 'Description (HTML allowed)';
 $txt['tp-dluploadfile'] = 'File to upload:';
 $txt['tp-dlnoupload'] = 'Do not upload anything, just create an empty item.';
+$txt['tp-dlexternalfile'] = 'External URL:';
 $txt['tp-dluploadicon'] = 'Icon';
 $txt['tp-dluploadpic'] = 'Additional picture for screenshot:';
 $txt['tp-dlcreatetopic'] = 'Create new topic';
