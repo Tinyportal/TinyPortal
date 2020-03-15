@@ -145,107 +145,109 @@ function TPortalAdmin()
 
 	// done with all POST values, go to the correct screen
 	$context['TPortal']['subtabs'] = '';
-	if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory'))) {
-		$context['TPortal']['subtabs'] = array(
-			'categories' => array(
-				'lang' => true,
-				'text' => 'tp-tabs5',
-				'url' => $scripturl . '?action=tpadmin;sa=categories',
-				'active' => $tpsub == 'categories',
-			),
-			'addcategory' => array(
-				'lang' => true,
-				'text' => 'tp-tabs6',
-				'url' => $scripturl . '?action=tpadmin;sa=addcategory',
-				'active' => $tpsub == 'addcategory',
-			),
-			'articles' => array(
-				'lang' => true,
-				'text' => 'tp-articles',
-				'url' => $scripturl . '?action=tpadmin;sa=articles',
-				'active' => ($context['TPortal']['subaction'] == 'articles' || $context['TPortal']['subaction'] == 'editarticle') && $context['TPortal']['subaction'] != 'strays',
-			),
-			'articles_nocat' => array(
-				'lang' => true,
-				'text' => 'tp-uncategorised' ,
-				'url' => $scripturl . '?action=tpadmin;sa=articles;sa=strays',
-				'active' => $context['TPortal']['subaction'] == 'strays',
-			),
-			'addarticle' => array(
-				'lang' => true,
-				'text' => 'tp-tabs2',
-				'url' => $scripturl . '?action=tpadmin;sa=addarticle_html' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-				'active' => $context['TPortal']['subaction'] == 'addarticle_html',
-			),
-			'addarticle_php' => array(
-				'lang' => true,
-				'text' => 'tp-tabs3',
-				'url' => $scripturl . '?action=tpadmin;sa=addarticle_php' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-				'active' => $context['TPortal']['subaction'] == 'addarticle_php',
-			),
-			'addarticle_bbc' => array(
-				'lang' => true,
-				'text' => 'tp-addbbc',
-				'url' => $scripturl . '?action=tpadmin;sa=addarticle_bbc' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-				'active' => $context['TPortal']['subaction'] == 'addarticle_bbc',
-			),
-			'article_import' => array(
-				'lang' => true,
-				'text' => 'tp-addimport',
-				'url' => $scripturl . '?action=tpadmin;sa=addarticle_import' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-				'active' => $context['TPortal']['subaction'] == 'addarticle_import',
-			),
-			'clist' => array(
-				'lang' => true,
-				'text' => 'tp-tabs11',
-				'url' => $scripturl . '?action=tpadmin;sa=clist',
-				'active' => $tpsub == 'clist',
-			),
-		);
-    }
-	elseif(in_array($tpsub,array('addcategory','categories','clist'))) {
-		$context['TPortal']['subtabs'] = array(
-			'categories' => array(
-				'lang' => true,
-				'text' => 'tp-tabs5',
-				'url' => $scripturl . '?action=tpadmin;sa=categories',
-				'active' => $tpsub == 'categories',
-			),
-			'addcategory' => array(
-				'lang' => true,
-				'text' => 'tp-tabs6',
-				'url' => $scripturl . '?action=tpadmin;sa=addcategory',
-				'active' => $tpsub == 'addcategory',
-			),
-			'clist' => array(
-				'lang' => true,
-				'text' => 'tp-tabs11',
-				'url' => $scripturl . '?action=tpadmin;sa=clist',
-				'active' => $tpsub == 'clist',
-			),
-		);
-    }
-	elseif(in_array($tpsub,array('blocks','panels'))) {
-		$context['TPortal']['subtabs'] = array(
-			'blocks' => array(
-				'lang' => true,
-				'text' => 'tp-blocks',
-				'url' => $scripturl . '?action=tpadmin;sa=blocks',
-				'active' => $tpsub == 'blocks' && !isset($_GET['overview']),
-			),
-			'panels' => array(
-				'lang' => true,
-				'text' => 'tp-panels',
-				'url' => $scripturl . '?action=tpadmin;sa=panels',
-				'active' => $tpsub == 'panels',
-			),
-			'blockoverview' => array(
-				'lang' => true,
-				'text' => 'tp-blockoverview',
-				'url' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-				'active' => $tpsub == 'blocks' && isset($_GET['overview']),
-			),
-		);
+    if ($context['user']['is_admin']) {
+        if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory'))) {
+            $context['TPortal']['subtabs'] = array(
+                    'categories' => array(
+                        'lang' => true,
+                        'text' => 'tp-tabs5',
+                        'url' => $scripturl . '?action=tpadmin;sa=categories',
+                        'active' => $tpsub == 'categories',
+                        ),
+                    'addcategory' => array(
+                        'lang' => true,
+                        'text' => 'tp-tabs6',
+                        'url' => $scripturl . '?action=tpadmin;sa=addcategory',
+                        'active' => $tpsub == 'addcategory',
+                        ),
+                    'articles' => array(
+                        'lang' => true,
+                        'text' => 'tp-articles',
+                        'url' => $scripturl . '?action=tpadmin;sa=articles',
+                        'active' => ($context['TPortal']['subaction'] == 'articles' || $context['TPortal']['subaction'] == 'editarticle') && $context['TPortal']['subaction'] != 'strays',
+                        ),
+                    'articles_nocat' => array(
+                        'lang' => true,
+                        'text' => 'tp-uncategorised' ,
+                        'url' => $scripturl . '?action=tpadmin;sa=articles;sa=strays',
+                        'active' => $context['TPortal']['subaction'] == 'strays',
+                        ),
+                    'addarticle' => array(
+                            'lang' => true,
+                            'text' => 'tp-tabs2',
+                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_html' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+                            'active' => $context['TPortal']['subaction'] == 'addarticle_html',
+                            ),
+                    'addarticle_php' => array(
+                            'lang' => true,
+                            'text' => 'tp-tabs3',
+                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_php' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+                            'active' => $context['TPortal']['subaction'] == 'addarticle_php',
+                            ),
+                    'addarticle_bbc' => array(
+                            'lang' => true,
+                            'text' => 'tp-addbbc',
+                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_bbc' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+                            'active' => $context['TPortal']['subaction'] == 'addarticle_bbc',
+                            ),
+                    'article_import' => array(
+                            'lang' => true,
+                            'text' => 'tp-addimport',
+                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_import' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+                            'active' => $context['TPortal']['subaction'] == 'addarticle_import',
+                            ),
+                    'clist' => array(
+                            'lang' => true,
+                            'text' => 'tp-tabs11',
+                            'url' => $scripturl . '?action=tpadmin;sa=clist',
+                            'active' => $tpsub == 'clist',
+                            ),
+                    );
+        }
+        elseif(in_array($tpsub,array('addcategory','categories','clist'))) {
+            $context['TPortal']['subtabs'] = array(
+                    'categories' => array(
+                        'lang' => true,
+                        'text' => 'tp-tabs5',
+                        'url' => $scripturl . '?action=tpadmin;sa=categories',
+                        'active' => $tpsub == 'categories',
+                        ),
+                    'addcategory' => array(
+                        'lang' => true,
+                        'text' => 'tp-tabs6',
+                        'url' => $scripturl . '?action=tpadmin;sa=addcategory',
+                        'active' => $tpsub == 'addcategory',
+                        ),
+                    'clist' => array(
+                        'lang' => true,
+                        'text' => 'tp-tabs11',
+                        'url' => $scripturl . '?action=tpadmin;sa=clist',
+                        'active' => $tpsub == 'clist',
+                        ),
+                    );
+        }
+        elseif(in_array($tpsub,array('blocks','panels'))) {
+            $context['TPortal']['subtabs'] = array(
+                    'blocks' => array(
+                        'lang' => true,
+                        'text' => 'tp-blocks',
+                        'url' => $scripturl . '?action=tpadmin;sa=blocks',
+                        'active' => $tpsub == 'blocks' && !isset($_GET['overview']),
+                        ),
+                    'panels' => array(
+                        'lang' => true,
+                        'text' => 'tp-panels',
+                        'url' => $scripturl . '?action=tpadmin;sa=panels',
+                        'active' => $tpsub == 'panels',
+                        ),
+                    'blockoverview' => array(
+                        'lang' => true,
+                        'text' => 'tp-blockoverview',
+                        'url' => $scripturl . '?action=tpadmin;sa=blocks;overview',
+                        'active' => $tpsub == 'blocks' && isset($_GET['overview']),
+                        ),
+                    );
+        }
     }
 
     if(array_search('tpadm', $context['template_layers']) === FALSE) {
@@ -799,203 +801,9 @@ function do_articles()
 			array('cat' => 0, 'category' => $acats)
 		);
 	}
-	// first check any ajax stuff
-	if(isset($_GET['arton'])) {
-		checksession('get');
-		$what = is_numeric($_GET['arton']) ? $_GET['arton'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-        if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET off = 
-                (
-                    SELECT CASE WHEN tpa.off = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-        }
-        if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-		return;
-	}
-	elseif(isset($_GET['artlock'])) {
-		checksession('get');
-		$what = is_numeric($_GET['artlock']) ? $_GET['artlock'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-    	if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET locked = 
-                (
-                    SELECT CASE WHEN tpa.locked = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )				
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-        }
-        if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-		return;
-	}
-	elseif(isset($_GET['artsticky'])) {
-		checksession('get');
-		$what = is_numeric($_GET['artsticky']) ? $_GET['artsticky'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-        if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET sticky = 
-                (
-                    SELECT CASE WHEN tpa.sticky = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )				
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-		}
-	    if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-        return;
-	}
-	elseif(isset($_GET['artfront'])) {
-		checksession('get');
-		$what = is_numeric($_GET['artfront']) ? $_GET['artfront'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-		if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET frontpage = 
-                (
-                    SELECT CASE WHEN tpa.frontpage = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-        }
-		if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-        return;
-	}
-	elseif(isset($_GET['artfeat'])) {
-		checksession('get');
-		$what = is_numeric($_GET['artfeat']) ? $_GET['artfeat'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-        if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET featured = 
-                (
-                    SELECT CASE WHEN tpa.featured = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-		}
-		if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-        return;
-	}
-	elseif(isset($_GET['catdelete'])) {
-		checksession('get');
-		$what = is_numeric($_GET['catdelete']) ? $_GET['catdelete'] : '0';
-		if($what > 0)
-		{
-			// first get info
-			$request = $smcFunc['db_query']('', '
-				SELECT id, value2 FROM {db_prefix}tp_variables
-				WHERE id = {int:varid} LIMIT 1',
-				array('varid' => $what)
-			);
-			$row = $smcFunc['db_fetch_assoc']($request);
-			$smcFunc['db_free_result']($request);
 
-			$newcat = !empty($row['value2']) ? $row['value2'] : 0;
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_variables
-				SET value2 = {int:val2}
-				WHERE value2 = {int:varid}',
-				array(
-					'val2' => $newcat, 'varid' => $what
-				)
-			);
-
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}tp_variables
-				WHERE id = {int:varid}',
-				array('varid' => $what)
-			);
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET category = {int:cat}
-				WHERE category = {int:catid}',
-				array('cat' => $newcat, 'catid' => $what)
-			);
-			redirectexit('action=tpadmin;sa=categories');
-		}
-		else
-			redirectexit('action=tpadmin;sa=categories');
-	}
-	elseif(isset($_GET['artdelete']))
-	{
-		checksession('get');
-		$what = is_numeric($_GET['artdelete']) ? $_GET['artdelete'] : '0';
-		$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
-		if($cu == -1)
-		{
-			$strays=true;
-			$cu = '';
-		}
-		if($what > 0)
-		{
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}tp_articles
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-			$smcFunc['db_query']('', '
-				DELETE FROM {db_prefix}tp_variables
-				WHERE value5 = {int:artid}',
-				array('artid' => $what)
-			);
-		}
-
-		redirectexit('action=tpadmin' . (!empty($cu) ? ';cu='.$cu : '') . (isset($strays) ? ';sa=strays'.$cu : ';sa=articles'));
-	}
+    require_once(SOURCEDIR.'/TPArticle.php');
+    articleAjax();
 
 	// for the non-category articles, do a count.
 	$request = $smcFunc['db_query']('', '
@@ -1020,22 +828,18 @@ function do_articles()
 	$smcFunc['db_free_result']($request);
 
 	// we are on categories screen
-	if(in_array($context['TPortal']['subaction'], array('categories', 'addcategory')))
-	{
+	if(in_array($context['TPortal']['subaction'], array('categories', 'addcategory'))) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=categories', $txt['tp-categories']);
 		// first check if we simply want to copy or set as child
-		if(isset($_GET['cu']) && is_numeric($_GET['cu']))
-		{
+		if(isset($_GET['cu']) && is_numeric($_GET['cu'])) {
 			$ccat = $_GET['cu'];
-			if(isset($_GET['copy']))
-			{
+			if(isset($_GET['copy'])) {
 				$request = $smcFunc['db_query']('', '
 					SELECT * FROM {db_prefix}tp_variables
 					WHERE id = {int:varid}',
 					array('varid' => $ccat)
 				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$row['value1'] .= '__copy';
 					$smcFunc['db_free_result']($request);
@@ -1070,15 +874,13 @@ function do_articles()
 				}
 				redirectexit('action=tpadmin;sa=categories');
 			}
-			elseif(isset($_GET['child']))
-			{
+			elseif(isset($_GET['child'])) {
 				$request = $smcFunc['db_query']('', '
 					SELECT * FROM {db_prefix}tp_variables
 					WHERE id = {int:varid}',
 					array('varid' => $ccat)
 				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$row['value1'] .= '__copy';
 					$smcFunc['db_free_result']($request);
@@ -1114,8 +916,7 @@ function do_articles()
 				redirectexit('action=tpadmin;sa=categories');
 			}
 			// guess we only want the category then
-			else
-			{
+			else {
 				// get membergroups
 				get_grps();
 			$context['html_headers'] .= '
@@ -1131,22 +932,21 @@ function do_articles()
 					WHERE id = {int:varid} LIMIT 1',
 					array('varid' => $ccat)
 				);
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
+				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$o = explode('|', $row['value7']);
-					foreach($o as $t => $opt)
-					{
+					foreach($o as $t => $opt) {
 						$b = explode('=', $opt);
-						if(isset($b[1]))
+						if(isset($b[1])) {
 							$row[$b[0]] = $b[1];
+                        }
 					}
 					$smcFunc['db_free_result']($request);
 					$check = array('layout', 'catlayout', 'toppanel', 'bottompanel', 'leftpanel', 'rightpanel', 'upperpanel', 'lowerpanel', 'showchild');
-					foreach($check as $c => $ch)
-					{
-						if(!isset($row[$ch]))
+					foreach($check as $c => $ch) {
+						if(!isset($row[$ch])) {
 							$row[$ch] = 0;
+                        }
 					}
 					$context['TPortal']['editcategory'] = $row;
 				}
@@ -1162,19 +962,19 @@ function do_articles()
 				$context['TPortal']['editcats'] = array();
 				$allsorted = array();
 				$alcats = array();
-				if($smcFunc['db_num_rows']($request) > 0)
-				{
-					while ($row = $smcFunc['db_fetch_assoc']($request))
-					{
+				if($smcFunc['db_num_rows']($request) > 0) {
+					while ($row = $smcFunc['db_fetch_assoc']($request)) {
 						$row['indent'] = 0;
 						$allsorted[$row['id']] = $row;
 						$alcats[] = $row['id'];
 					}
 					$smcFunc['db_free_result']($request);
-					if(count($allsorted) > 1)
+					if(count($allsorted) > 1) {
 						$context['TPortal']['editcats'] = chain('id', 'parent', 'name', $allsorted);
-					else
+					}
+                    else {
 						$context['TPortal']['editcats'] = $allsorted;
+                    }
 				}
 				TPadd_linktree($scripturl.'?action=tpadmin;sa=categories;cu='. $ccat, $txt['tp-editcategory']);
 			}
@@ -1193,23 +993,22 @@ function do_articles()
 		$context['TPortal']['editcats'] = array();
 		$allsorted = array();
 		$alcats = array();
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
+		if($smcFunc['db_num_rows']($request) > 0) {
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$row['indent'] = 0;
 				$allsorted[$row['id']] = $row;
 				$alcats[] = $row['id'];
 			}
 			$smcFunc['db_free_result']($request);
-			if(count($allsorted) > 1)
+			if(count($allsorted) > 1) {
 				$context['TPortal']['editcats'] = chain('id', 'parent', 'name', $allsorted);
-			else
+            }
+			else {
 				$context['TPortal']['editcats'] = $allsorted;
+            }
 		}
 		// get the filecount as well
-		if(count($alcats) > 0)
-		{
+		if(count($alcats) > 0) {
 			$request = $smcFunc['db_query']('', '
 				SELECT	art.category as id, COUNT(art.id) as files
 				FROM {db_prefix}tp_articles as art
@@ -1218,16 +1017,17 @@ function do_articles()
 				array('cats' => $alcats)
 			);
 
-			if($smcFunc['db_num_rows']($request) > 0)
-			{
+			if($smcFunc['db_num_rows']($request) > 0) {
 				$context['TPortal']['cats_count'] = array();
-				while ($row = $smcFunc['db_fetch_assoc']($request))
+				while ($row = $smcFunc['db_fetch_assoc']($request)) {
 					$context['TPortal']['cats_count'][$row['id']] = $row['files'];
+                }
 				$smcFunc['db_free_result']($request);
 			}
 		}
-		if($context['TPortal']['subaction'] == 'addcategory')
+		if($context['TPortal']['subaction'] == 'addcategory') {
 			TPadd_linktree($scripturl.'?action=tpadmin;sa=addcategory', $txt['tp-addcategory']);
+        }
 
 		return;
 	}
@@ -1458,8 +1258,7 @@ function do_articles()
 
 	}
 	// fetch article count for these
-	if(isset($cats))
-	{
+	if(isset($cats)) {
 		$request = $smcFunc['db_query']('', '
 			SELECT	art.category as id, COUNT(art.id) as files
 			FROM {db_prefix}tp_articles as art
@@ -1469,8 +1268,7 @@ function do_articles()
 		);
 
 		$context['TPortal']['cats_count'] = array();
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			while ($row = $smcFunc['db_fetch_assoc']($request))
 				$context['TPortal']['cats_count'][$row['id']] = $row['files'];
 			$smcFunc['db_free_result']($request);
@@ -1490,20 +1288,21 @@ function do_articles()
 	$context['TPortal']['allcats'] = array();
 	$allsorted = array();
 
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
-		while ($row = $smcFunc['db_fetch_assoc']($request))
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
 			$allsorted[$row['id']] = $row;
+        }
 
 		$smcFunc['db_free_result']($request);
-		if(count($allsorted) > 1)
+		if(count($allsorted) > 1) {
 			$context['TPortal']['allcats'] = chain('id', 'parent', 'name', $allsorted);
-		else
+        }
+		else {
 			$context['TPortal']['allcats'] = $allsorted;
+        }
 	}
 	// not quite done yet lol, now we need to sort out if articles are to be listed
-	if(isset($where))
-	{
+	if(isset($where)) {
 		// check if we have any start values
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
@@ -1552,11 +1351,9 @@ function do_articles()
 		);
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=articles;cu='.$where, $txt['tp-blocktype19']);
 
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
+		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['arts']=array();
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$context['TPortal']['arts'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
@@ -1577,10 +1374,8 @@ function do_articles()
                 'thvar' => 'name', 'tbvar' => 'images_url', 'id_member' => 0,
                 )
             );
-    if($smcFunc['db_num_rows']($request) > 0)
-    {
-        while ($row = $smcFunc['db_fetch_assoc']($request))
-        {
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while ($row = $smcFunc['db_fetch_assoc']($request)) {
             $context['TPthemes'][] = array(
                     'id' => $row['id_theme'],
                     'path' => $row['path'],
@@ -1776,10 +1571,12 @@ function do_articles()
 		}
 	// ]]></script>';
 
-	if($context['TPortal']['subaction'] == 'artsettings')
+	if($context['TPortal']['subaction'] == 'artsettings') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=artsettings', $txt['tp-settings']);
-	elseif($context['TPortal']['subaction'] == 'articons')
+    }
+	elseif($context['TPortal']['subaction'] == 'articons') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=articons', $txt['tp-adminicons']);
+    }
 
 }
 

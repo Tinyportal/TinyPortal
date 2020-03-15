@@ -755,4 +755,204 @@ function articleUploadImage() {{{
 
 }}}
 
+function articleAjax() {{{
+    global $context, $boarddir, $boardurl;
+
+	// first check any ajax stuff
+	if(isset($_GET['arton'])) {
+		checksession('get');
+		$what = is_numeric($_GET['arton']) ? $_GET['arton'] : '0';
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+        if($what > 0) {
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_articles
+				SET off = 
+                (
+                    SELECT CASE WHEN tpa.off = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
+                    LIMIT 1
+                )
+				WHERE id = {int:artid}',
+				array('artid' => $what)
+			);
+        }
+        if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+		return;
+	}
+	elseif(isset($_GET['artlock'])) {
+		checksession('get');
+		$what = is_numeric($_GET['artlock']) ? $_GET['artlock'] : '0';
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+    	if($what > 0) {
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_articles
+				SET locked = 
+                (
+                    SELECT CASE WHEN tpa.locked = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
+                    LIMIT 1
+                )				
+				WHERE id = {int:artid}',
+				array('artid' => $what)
+			);
+        }
+        if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+		return;
+	}
+	elseif(isset($_GET['artsticky'])) {
+		checksession('get');
+		$what = is_numeric($_GET['artsticky']) ? $_GET['artsticky'] : '0';
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+        if($what > 0) {
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_articles
+				SET sticky = 
+                (
+                    SELECT CASE WHEN tpa.sticky = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
+                    LIMIT 1
+                )				
+				WHERE id = {int:artid}',
+				array('artid' => $what)
+			);
+		}
+	    if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        return;
+	}
+	elseif(isset($_GET['artfront'])) {
+		checksession('get');
+		$what = is_numeric($_GET['artfront']) ? $_GET['artfront'] : '0';
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+		if($what > 0) {
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_articles
+				SET frontpage = 
+                (
+                    SELECT CASE WHEN tpa.frontpage = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
+                    LIMIT 1
+                )
+				WHERE id = {int:artid}',
+				array('artid' => $what)
+			);
+        }
+		if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        return;
+	}
+	elseif(isset($_GET['artfeat'])) {
+		checksession('get');
+		$what = is_numeric($_GET['artfeat']) ? $_GET['artfeat'] : '0';
+        if(TP_SMF21 == FALSE) {
+            global $modSettings;
+            $modSettings['disableQueryCheck'] = true;
+        }
+        if($what > 0) {
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_articles
+				SET featured = 
+                (
+                    SELECT CASE WHEN tpa.featured = 1 THEN 0 ELSE 1 END
+                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                    WHERE tpa.id = {int:artid} 
+                    LIMIT 1
+                )
+				WHERE id = {int:artid}',
+				array('artid' => $what)
+			);
+		}
+		if(TP_SMF21 == FALSE) {
+            $modSettings['disableQueryCheck'] = true;
+        }
+        return;
+	}
+	elseif(isset($_GET['catdelete'])) {
+		checksession('get');
+		$what = is_numeric($_GET['catdelete']) ? $_GET['catdelete'] : '0';
+		if($what > 0) {
+			// first get info
+			$request = $smcFunc['db_query']('', '
+				SELECT id, value2 FROM {db_prefix}tp_variables
+				WHERE id = {int:varid} LIMIT 1',
+				array('varid' => $what)
+			);
+			$row = $smcFunc['db_fetch_assoc']($request);
+			$smcFunc['db_free_result']($request);
+
+			$newcat = !empty($row['value2']) ? $row['value2'] : 0;
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_variables
+				SET value2 = {int:val2}
+				WHERE value2 = {int:varid}',
+				array(
+					'val2' => $newcat, 'varid' => $what
+				)
+			);
+
+			$smcFunc['db_query']('', '
+				DELETE FROM {db_prefix}tp_variables
+				WHERE id = {int:varid}',
+				array('varid' => $what)
+			);
+			$smcFunc['db_query']('', '
+				UPDATE {db_prefix}tp_articles
+				SET category = {int:cat}
+				WHERE category = {int:catid}',
+				array('cat' => $newcat, 'catid' => $what)
+			);
+			redirectexit('action=tpadmin;sa=categories');
+		}
+		else {
+			redirectexit('action=tpadmin;sa=categories');
+		}
+	}
+	elseif(isset($_GET['artdelete'])) {
+		checksession('get');
+		$what = is_numeric($_GET['artdelete']) ? $_GET['artdelete'] : '0';
+		$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
+		if($cu == -1) {
+			$strays=true;
+			$cu = '';
+		}
+		if($what > 0) {
+			$smcFunc['db_query']('', '
+				DELETE FROM {db_prefix}tp_articles
+				WHERE id = {int:artid}',
+				array('artid' => $what)
+			);
+			$smcFunc['db_query']('', '
+				DELETE FROM {db_prefix}tp_variables
+				WHERE value5 = {int:artid}',
+				array('artid' => $what)
+			);
+		}
+		redirectexit('action=tpadmin' . (!empty($cu) ? ';cu='.$cu : '') . (isset($strays) ? ';sa=strays'.$cu : ';sa=articles'));
+	}
+
+}}}
+
+
 ?>

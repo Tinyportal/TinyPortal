@@ -190,10 +190,10 @@ function TPortalDLManager()
 
 	// any uploads being sent?
 	$context['TPortal']['uploads'] = array();
-	if(isset($_FILES['tp-dluploadfile']['tmp_name']) || isset($_POST['tp-dluploadnot']))
+	if(isset($_FILES['tp-dluploadfile']['tmp_name']) || isset($_POST['tp-dluploadnot']) || isset($_POST['tp-dlexternalfile']))
 	{
 		// skip the uplaod checks etc . if just an empty item
-		if(!isset($_POST['tp-dluploadnot']))
+		if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile']))
 		{
 			// check if uploaded quick-list picture
 			if(isset($_FILES['qup_tp_dluploadtext']) && file_exists($_FILES['qup_tp_dluploadtext']['tmp_name']))
@@ -228,23 +228,26 @@ function TPortalDLManager()
 
 		$icon = !empty($_POST['tp_dluploadicon']) ? $boardurl.'/tp-files/tp-downloads/icons/'.$_POST['tp_dluploadicon'] : '';
 
-		if(!isset($_POST['tp-dluploadnot']))
-		{
+		if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
 			// process the file
 			$filename = $_FILES['tp-dluploadfile']['name'];
 			$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
 			$name = strtr($name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
 			$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
 		}
-		else
+		elseif(!empty($_POST['tp-dlexternalfile'])) {
+			$name = $_POST['tp-dlexternalfile'];
+		}
+        else {
 			$name = '- empty item -';
+        }
 
 	    if(isset($_POST['tp-dlupload_ftpstray']))
     		$name = '- empty item - ftp';
 
 		$status = 'normal';
 
-		if(!isset($_POST['tp-dluploadnot']))
+		if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile']))
 		{
 			// check the size
 			$dlfilesize = filesize($_FILES['tp-dluploadfile']['tmp_name']);
@@ -259,7 +262,7 @@ function TPortalDLManager()
 		else
 			$dlfilesize = 0;
 
-		if(!isset($_POST['tp-dluploadnot']))
+		if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile']))
 		{
 			// check the extension
 			$allowed = explode(',', $context['TPortal']['dl_allowed_types']);
@@ -283,7 +286,7 @@ function TPortalDLManager()
 		// ok, go ahead
 		if($status == 'normal')
 		{
-			if(!isset($_POST['tp-dluploadnot']))
+		    if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile']))
 			{
 				// check that no other file exists with same name
 				if(file_exists($boarddir.'/tp-files/tp-downloads/'.$name))
@@ -2465,15 +2468,14 @@ function TPortalDLAdmin()
 			$screenshot = '';
 
 		// a new file uploaded?
-		if(!empty($_FILES['tp_dluploadfile_edit']['tmp_name']) && is_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name']))
-		{
+		if(!empty($_FILES['tp_dluploadfile_edit']['tmp_name']) && is_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'])) {
 			$shot = true;
 		}
-		else
+		else {
 			$shot = false;
+        }
 
-		if($shot)
-		{
+		if($shot) {
 			$sid = $_POST['tp_dluploadfile_editID'];
 			$shotname = $_FILES['tp_dluploadfile_edit']['name'];
 			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
