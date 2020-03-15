@@ -35,6 +35,9 @@ function template_submitarticle()
     if(allowedTo('admin_forum')) {
         $action = 'tpadmin';
     }
+    else if(isset($mg['id'])) {
+        $action .= ';article='.$mg['id'];
+    }
 
     if(empty($mg['articletype']) && !empty($context['TPortal']['articletype'])) {
         $article_type = $context['TPortal']['articletype'];
