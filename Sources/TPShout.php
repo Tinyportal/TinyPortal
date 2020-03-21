@@ -1213,19 +1213,19 @@ function TPShoutAdminAreas() {{{
 }}}
 
 function TPShoutBlock($row) {{{
-    global $context, $sourcedir;
+    global $context, $txt, $sourcedir;
 
     $set = json_decode($row['settings'], TRUE);
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
         'id' => $row['id'],
-        'name' => $row['title'],
+        'name' => $txt['tp-showmodulebox'],
         'function' => 'tpshout_fetch',
         'sourcefile' => $sourcedir .'/TPShout.php',
     );
     
-    $tpm = $row['id'];
-    $context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
+    //$tpm = $row['id'];
+    //$context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
 
 }}}
 
