@@ -1219,13 +1219,13 @@ function TPShoutBlock($row) {{{
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
         'id' => $row['id'],
-        'name' => $row['title'],
+        'name' => 'ShoutBox',
         'function' => 'tpshout_fetch',
         'sourcefile' => $sourcedir .'/TPShout.php',
     );
     
-    $tpm = $row['id'];
-    $context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
+    //$tpm = $row['id'];
+    //$context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
 
 }}}
 
