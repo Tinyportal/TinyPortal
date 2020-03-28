@@ -543,7 +543,7 @@ function getBlocks() {{{
                             'email' => $article['email_address'],
                             'filename' => !empty($article['filename']) ? $article['filename'] : '',
                             'id_attach' => $article['id_attach'],
-                            'attachement_type' => $article['attachement_type'],
+                            'attachment_type' => $article['attachment_type'],
                         )
                 )['image'];
 				// sort out the options
