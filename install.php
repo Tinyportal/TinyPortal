@@ -431,13 +431,12 @@ $request = $smcFunc['db_query']('', '
 );
 
 $row = $smcFunc['db_fetch_assoc']($request);
-
-if($row['value'] < 104)
-	$convertblocks = true;
-/*if($row['value'] < 105)
-	$convertmodule = true;*/
-if($row['value'] < 1090)
-	$convertaccess = true;
+if(isset($row['value'])) {
+    if($row['value'] < 104)
+        $convertblocks = true;
+    if($row['value'] < 1090)
+        $convertaccess = true;
+}
 
 $smcFunc['db_free_result']($request);
 
