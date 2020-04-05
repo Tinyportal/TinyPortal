@@ -378,7 +378,7 @@ function getBlocks() {{{
 	}
 
 	if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
-			$down = true;
+        $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
 	}
     $action = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
 
@@ -389,10 +389,16 @@ function getBlocks() {{{
 
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
-		$front = true;
+	    $sqlarray[] = 'actio=frontpage';
     }
 
 	$sqlarray[] = 'actio=allpages';
+	$sqlarray[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
+    $sqlarray[] = !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '';
+    
+    if(!empty($_GET['shout'])) {
+        $sqlarray[] = 'tpmod=shout';
+    }
 
 	// set the membergroup access
     $access = '';
@@ -441,22 +447,11 @@ function getBlocks() {{{
 		SELECT * FROM {db_prefix}tp_blocks
 		WHERE off = 0
 		AND bar != {int:bar}
-		AND (' . (!empty($_GET['page']) ? '{string:page} IN ( access2 ) OR ' : '') . '
-		' . (!empty($_GET['cat']) ? '{string:cat} IN ( access2 ) OR ' : '') . '
-		' . (!empty($_GET['shout']) ? '{string:shout} IN ( access2 ) OR ' : '') . '
-		' . (!empty($front) ? '{string:front} IN ( access2 ) OR ' : '') . '
-		' . (!empty($down) ? '{string:down} IN ( access2 ) OR ' : '') . '
-		' . $access2 . ')
-		AND ' . $access . '
-		' . $access3 . '
+		AND (' . $access2 . ')
+		AND ' . $access . ' ' . $access3 . '
 		ORDER BY bar, pos, id ASC',
 		array(
 			'bar' => 4,
-			'page' => !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '',
-			'cat' => !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '',
-			'front' => 'actio=frontpage',
-			'down' => (!empty($down) ? 'dlcat=' . substr($_GET['dl'], 3) : ''),
-			'shout' => 'tpmod=shout',
 		)
 	);
 	$context['TPortal']['hide_frontbar_forum'] = 0;
@@ -543,7 +538,7 @@ function getBlocks() {{{
                             'email' => $article['email_address'],
                             'filename' => !empty($article['filename']) ? $article['filename'] : '',
                             'id_attach' => $article['id_attach'],
-                            'attachement_type' => $article['attachement_type'],
+                            'attachment_type' => $article['attachment_type'],
                         )
                 )['image'];
 				// sort out the options

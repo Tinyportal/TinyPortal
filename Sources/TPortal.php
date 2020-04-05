@@ -533,7 +533,7 @@ function doTPpage() {{{
                         'email' => $article['email_address'],
                         'filename' => !empty($article['filename']) ? $article['filename'] : '',
                         'id_attach' => $article['id_attach'],
-                        'attachement_type' => $article['attachement_type'],
+                        'attachment_type' => $article['attachment_type'],
                      )
                 )['image'];
 
@@ -567,7 +567,7 @@ function doTPpage() {{{
                                     'email'             => $row['email_address'],
                                     'filename'          => !empty($row['filename']) ? $row['filename'] : '',
                                     'id_attach'         => $row['id_attach'],
-                                    'attachement_type'  => $row['attachment_type'],
+                                    'attachment_type'  => $row['attachment_type'],
                                 )
                         )['image'];
 
@@ -583,7 +583,7 @@ function doTPpage() {{{
 							'avatar' => array (
 								'name' => &$row['avatar'],
 								'image' => $avatar,
-								'href'  => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachement_type']) ? $scripturl . '?action=tportal;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
+								'href'  => $row['avatar'] == '' ? ($row['id_attach'] > 0 ? (empty($row['attachment_type']) ? $scripturl . '?action=tportal;sa=tpattach;attach=' . $row['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $row['filename']) : '') : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar']),
 								'url'   => $row['avatar'] == '' ? '' : (stristr($row['avatar'], 'https://') ? $row['avatar'] : $modSettings['avatar_url'] . '/' . $row['avatar'])
 							),
 						);
@@ -878,7 +878,7 @@ function doTPcat() {{{
 						art.comments_var, art.views, art.rating, art.voters, art.shortname, art.useintro, art.intro,
 						art.fileimport, art.topic, art.locked, art.illustration, COALESCE(art.type, \'html\') AS rendertype , COALESCE(art.type, \'html\') AS type,
 						COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
-						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type
+						COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type
 					FROM {db_prefix}tp_articles AS art
 					LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 					LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
@@ -914,7 +914,7 @@ function doTPcat() {{{
                                     'email' => $row['email_address'],
                                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
                                     'id_attach' => $row['id_attach'],
-                                    'attachement_type' => $row['attachement_type'],
+                                    'attachment_type' => $row['attachment_type'],
                                 )
                         )['image'];
 
@@ -1124,7 +1124,7 @@ function doTPfrontpage() {{{
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
 				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
-				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1167,7 +1167,7 @@ function doTPfrontpage() {{{
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
                             'id_attach' => $row['id_attach'],
-                            'attachement_type' => $row['attachement_type'],
+                            'attachment_type' => $row['attachment_type'],
                         )
                 )['image'];
 
@@ -1193,7 +1193,7 @@ function doTPfrontpage() {{{
 				art.comments_var, art.views, art.rating, art.voters, art.shortname,
 				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
 				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
-				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, mem.email_address AS email_address
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles AS art
 			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
@@ -1227,7 +1227,7 @@ function doTPfrontpage() {{{
                         'email' => $row['email_address'],
                         'filename' => !empty($row['filename']) ? $row['filename'] : '',
                         'id_attach' => $row['id_attach'],
-                        'attachement_type' => $row['attachement_type'],
+                        'attachment_type' => $row['attachment_type'],
                     )
             )['image'];
 
@@ -1299,7 +1299,7 @@ function doTPfrontpage() {{{
 		$request =  $smcFunc['db_query']('', '
 			SELECT m.subject, m.body,
 				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time AS date, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
-				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachement_type, t.id_board AS category, b.name AS category_name,
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type, t.id_board AS category, b.name AS category_name,
 				t.num_replies AS numReplies, t.id_topic AS id, m.id_member AS author_id, t.num_views AS views, t.num_replies AS replies, t.locked,
 				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename, mem.email_address AS email_address
 			FROM {db_prefix}topics AS t
@@ -1368,7 +1368,7 @@ function doTPfrontpage() {{{
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
                             'id_attach' => $row['id_attach'],
-                            'attachement_type' => $row['attachement_type'],
+                            'attachment_type' => $row['attachment_type'],
                         )
                 )['image'];
 
@@ -1616,7 +1616,7 @@ function doTPfrontpage() {{{
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
                             'id_attach' => $row['id_attach'],
-                            'attachement_type' => $row['attachement_type'],
+                            'attachment_type' => $row['attachment_type'],
                         )
                 )['image'];
                 // we need some trick to put featured/sticky on top
@@ -1781,7 +1781,7 @@ function doTPfrontpage() {{{
 		$request =  $smcFunc['db_query']('', '
 			SELECT art.*, var.value1, var.value2, var.value3, var.value4, var.value5, var.value7, var.value8, art.type as rendertype,
 				COALESCE(mem.real_name,art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered, mem.last_login as last_login,
-				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachement_type, var.value9, mem.email_address AS email_address
+				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type, var.value9, mem.email_address AS email_address
 			FROM {db_prefix}tp_articles as art
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type !=3)
@@ -1805,7 +1805,7 @@ function doTPfrontpage() {{{
                             'email' => isset($row['email_address']) ? $row['email_address'] : '',
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
                             'id_attach' => isset($row['id_attach']) ? $row['id_attach'] : '',
-                            'attachement_type' => isset($row['attachement_type']) ? $row['attachement_type'] : '',
+                            'attachment_type' => isset($row['attachment_type']) ? $row['attachment_type'] : '',
                         )
                 )['image'];
 
