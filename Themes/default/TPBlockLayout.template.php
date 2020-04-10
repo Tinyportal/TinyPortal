@@ -296,7 +296,7 @@ function template_editblock()
 						</dd>
 						<dt>'.$txt['tp-recentboards'].'</dt>
 						<dd>
-							<input name="tp_block_var2" size="20" type="text" value="' , $context['TPortal']['blockedit']['var2'] ,'">
+							<input name="tp_block_var2" size="20" type="text" pattern="[0-9,]+" value="' , $context['TPortal']['blockedit']['var2'] ,'">
 						</dd>';
 				echo '
 						<dt>'.$txt['tp-recentincexc'].'</dt>
