@@ -148,6 +148,7 @@ function editBlock( $block_id = 0 ) {{{
 		$smcFunc['db_free_result']($request);
 		// collect all available PHP block snippets
 		$context['TPortal']['blockcodes'] = TPcollectSnippets();
+        get_catnames();
 		get_grps();
 		get_langfiles();
 		get_boards();
