@@ -3423,8 +3423,23 @@ function TPortalDLAdmin()
 				if(substr($row['screenshot'], 0, 10) == 'tp-images/')
 					$sshot = $boardurl.'/'.$row['screenshot'];
 				else
-				$sshot = $boardurl.'/tp-files/tp-images/dlmanager/listing/'.$row['screenshot'];
+				    $sshot = $boardurl.'/tp-files/tp-images/dlmanager/listing/'.$row['screenshot'];
 			}
+
+            if (TPUtil::hasLinks($row['file'])) {
+                $headers    = get_headers($row['file'], 1);
+                $headers    = array_change_key_case($headers);
+                $file_size  = 0;
+                if(isset($headers['content-length']) && isset($headers['content-length'][1])) {
+                    $file_size = floor((int)$headers['content-length'][1] / 1024);
+                }
+            }
+            else if(substr($row['file'],0,14)!='- empty item -') {
+                $file_size  = floor(filesize($boarddir.'/tp-files/tp-downloads/'.$row['file']) / 1024);
+            }
+            else {
+                $file_size = 0;
+            }
 
 			$context['TPortal']['dl_admitems'][] = array(
 				'id' => $row['id'],
@@ -3437,7 +3452,7 @@ function TPortalDLAdmin()
 				'description' => $row['description'],
 				'created' => timeformat($row['created']),
 				'last_access' => timeformat($row['last_access']),
-				'filesize' => (substr($row['file'],0,14)!='- empty item -') ? floor(filesize($boarddir.'/tp-files/tp-downloads/'.$row['file']) / 1024) : '0',
+				'filesize' => $file_size,
 				'downloads' => $row['downloads'],
 				'sshot' => !empty($sshot) ? $sshot : '',
 				'screenshot' => $row['screenshot'],
