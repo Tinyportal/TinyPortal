@@ -1838,14 +1838,12 @@ function TPdownloadme()
 		WHERE id = {int:item} LIMIT 1',
 		array('item' => $item)
 	);
-	if($smcFunc['db_num_rows']($request) > 0)
-	{
+	if($smcFunc['db_num_rows']($request) > 0) {
 		$row = $smcFunc['db_fetch_assoc']($request);
 		$myfilename = $row['name'];
 		$newname = TPDlgetname($row['file']);
 		$real_filename = $row['file'];
-		if($row['subitem'] > 0)
-		{
+		if($row['subitem'] > 0) {
 			$parent = $row['subitem'];
 			$req3 = $smcFunc['db_query']('', '
 				SELECT category FROM {db_prefix}tp_dlmanager
@@ -1858,36 +1856,41 @@ function TPdownloadme()
 				SELECT * FROM {db_prefix}tp_dlmanager
 				WHERE id = {int:cat}',
 				array('cat' => $cat));
-			if($smcFunc['db_num_rows']($request2) > 0)
-			{
+			if($smcFunc['db_num_rows']($request2) > 0) {
 				$row2 = $smcFunc['db_fetch_assoc']($request2);
 				$show = get_perm($row2['access'], 'tp_dlmanager');
 				$smcFunc['db_free_result']($request2);
 			}
 		}
-		else
-		{
+		else {
 			$cat = $row['category'];
 			$request2 = $smcFunc['db_query']('', '
 				SELECT * FROM {db_prefix}tp_dlmanager
 				WHERE id = {int:cat}',
 				array('cat' => $cat));
-			if($smcFunc['db_num_rows']($request2) > 0)
-			{
+			if($smcFunc['db_num_rows']($request2) > 0) {
 				$row2 = $smcFunc['db_fetch_assoc']($request2);
 				$show = get_perm($row2['access'], 'tp_dlmanager');
 				$smcFunc['db_free_result']($request2);
 			}
 		}
-		$filename = $boarddir.'/tp-files/tp-downloads/'.$real_filename;
+
+        $external = false;
+        if(TPUtil::hasLinks($real_filename)) {
+            $filename = $real_filename; 
+            $external = true;
+        }
+        else {
+		    $filename = $boarddir.'/tp-files/tp-downloads/'.$real_filename;
+        }
 		$smcFunc['db_free_result']($request);
 	}
-	else
+	else {
 		$show = false;
+    }
 
 	// can we actually download?
-	if($show == 1 || allowedTo('tp_dlmanager'))
-	{
+	if($show == 1 || allowedTo('tp_dlmanager')) {
 		$now = time();
 		$year = (int) date("Y",$now);
 		$week = (int) date("W",$now);
@@ -1901,8 +1904,7 @@ function TPdownloadme()
 			array('year' => $year, 'week' => $week, 'item' => $item)
 		);
 
-		if($smcFunc['db_num_rows']($req) > 0)
-		{
+		if($smcFunc['db_num_rows']($req) > 0) {
 			$row = $smcFunc['db_fetch_assoc']($req);
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_dldata
@@ -1911,114 +1913,121 @@ function TPdownloadme()
 				array('dlitem' => $row['id'])
 			);
 		}
-		else
+		else {
 			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_dldata',
 				array('week' => 'int', 'year' => 'int', 'downloads' => 'int', 'item' => 'int'),
 				array($week, $year, 1, $item),
 				array('id')
 			);
+        }
 
 		$smcFunc['db_query']('', '
 			UPDATE {db_prefix}tp_dlmanager
 			SET downloads = downloads + 1
 			WHERE id = {int:item}',
-			array('item' => $item));
+			array('item' => $item)
+        );
+
 		ob_end_clean();
-		if (!empty($modSettings['enableCompressedOutput']) && @version_compare(PHP_VERSION, '4.2.0') >= 0 && @filesize($filename) <= 4194304)
-			@ob_start('ob_gzhandler');
-		else
-		{
-			ob_start();
-			header('Content-Encoding: none');
-		}
 
-		if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime(array_shift(explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']))) >= filemtime($filename))
-		{
-			ob_end_clean();
-			header('HTTP/1.1 304 Not Modified');
-			exit;
-		}
+        if($external == true) {
+            header('Location: ' . $filename);
+        }
+        else {
+            if (!empty($modSettings['enableCompressedOutput']) && @version_compare(PHP_VERSION, '4.2.0') >= 0 && @filesize($filename) <= 4194304) {
+                @ob_start('ob_gzhandler');
+            }
+            else {
+                ob_start();
+                header('Content-Encoding: none');
+            }
 
-		// Send the attachment headers.
-		header('Pragma: no-cache');
-		header('Cache-Control: max-age=' . 10 . ', private');
-		header('Cache-Control: no-store, no-cache, must-revalidate');
-		header('Cache-Control: post-check=0, pre-check=0', FALSE);
-		if (!$context['browser']['is_gecko'])
-			header('Content-Transfer-Encoding: binary');
-		header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 525600 * 60) . ' GMT');
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
-		header('Accept-Ranges: bytes');
-		header('Set-Cookie:');
-		header('Connection: close');
-		header('Content-Disposition: attachment; filename="' . $newname . '"');
-		header('Content-Type: application/octet-stream');
+            if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime(array_shift(explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']))) >= filemtime($filename)) {
+                ob_end_clean();
+                header('HTTP/1.1 304 Not Modified');
+                exit;
+            }
 
-		if (filesize($filename) != 0)
-		{
-			$size = @getimagesize($filename);
-			if (!empty($size) && $size[2] > 0 && $size[2] < 4)
-				header('Content-Type: image/' . ($size[2] != 1 ? ($size[2] != 2 ? 'png' : 'jpeg') : 'gif'));
-		}
+            // Send the attachment headers.
+            header('Pragma: no-cache');
+            header('Cache-Control: max-age=' . 10 . ', private');
+            header('Cache-Control: no-store, no-cache, must-revalidate');
+            header('Cache-Control: post-check=0, pre-check=0', FALSE);
+            if (!$context['browser']['is_gecko'])
+                header('Content-Transfer-Encoding: binary');
+            header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 525600 * 60) . ' GMT');
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
+            header('Accept-Ranges: bytes');
+            header('Set-Cookie:');
+            header('Connection: close');
+            header('Content-Disposition: attachment; filename="' . $newname . '"');
+            header('Content-Type: application/octet-stream');
 
-		if (empty($modSettings['enableCompressedOutput']) || filesize($filename) > 4194304)
-			header('Content-Length: ' . filesize($filename));
+            if (filesize($filename) != 0) {
+                $size = @getimagesize($filename);
+                if (!empty($size) && $size[2] > 0 && $size[2] < 4)
+                    header('Content-Type: image/' . ($size[2] != 1 ? ($size[2] != 2 ? 'png' : 'jpeg') : 'gif'));
+            }
 
-		@set_time_limit(0);
+            if (empty($modSettings['enableCompressedOutput']) || filesize($filename) > 4194304) {
+                header('Content-Length: ' . filesize($filename));
+            }
 
-		if (in_array(substr($real_filename, -4), array('.txt', '.css', '.htm', '.php', '.xml')))
-		{
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false) {
-				$callback = function($buffer) {
-					return preg_replace('~[\r]?\n~', "\r\n", $buffer);
-				};
-			} elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false) {
-				$callback = function($buffer) {
-					return preg_replace('~[\r]?\n~', "\r", $buffer);
-				};
-			} else {
-				$callback = function($buffer) {
-					return preg_replace('~\r~', "\r\n", $buffer);
-				};
-			}
-		}
+            @set_time_limit(0);
 
-		// Since we don't do output compression for files this large...
-		if (filesize($filename) > 4194304)
-		{
-			// Forcibly end any output buffering going on.
-			if (function_exists('ob_get_level'))
-			{
-				while (@ob_get_level() > 0)
-					@ob_end_clean();
-			}
-			else
-			{
-				@ob_end_clean();
-				@ob_end_clean();
-				@ob_end_clean();
-			}
+            if (in_array(substr($real_filename, -4), array('.txt', '.css', '.htm', '.php', '.xml'))) {
+                if (strpos($_SERVER['HTTP_USER_AGENT'], 'Windows') !== false) {
+                    $callback = function($buffer) {
+                        return preg_replace('~[\r]?\n~', "\r\n", $buffer);
+                    };
+                } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false) {
+                    $callback = function($buffer) {
+                        return preg_replace('~[\r]?\n~', "\r", $buffer);
+                    };
+                } else {
+                    $callback = function($buffer) {
+                        return preg_replace('~\r~', "\r\n", $buffer);
+                    };
+                }
+            }
 
-			$fp = fopen($filename, 'rb');
-			while (!feof($fp))
-			{
-				if (isset($callback))
-					echo $callback(fread($fp, 8192));
-				else
-					echo fread($fp, 8192);
-				flush();
-			}
-			fclose($fp);
-		}
-		// On some of the less-bright hosts, readfile() is disabled.  It's just a faster, more byte safe, version of what's in the if.
-		elseif (isset($callback) || @readfile($filename) == null)
-			echo isset($callback) ? $callback(file_get_contents($filename)) : file_get_contents($filename);
+            // Since we don't do output compression for files this large...
+            if (filesize($filename) > 4194304) {
+                // Forcibly end any output buffering going on.
+                if (function_exists('ob_get_level')) {
+                    while (@ob_get_level() > 0)
+                        @ob_end_clean();
+                }
+                else {
+                    @ob_end_clean();
+                    @ob_end_clean();
+                    @ob_end_clean();
+                }
+
+                $fp = fopen($filename, 'rb');
+                while (!feof($fp)) {
+                    if (isset($callback)) {
+                        echo $callback(fread($fp, 8192));
+                    }
+                    else {
+                        echo fread($fp, 8192);
+                    }
+                    flush();
+                }
+                fclose($fp);
+            }
+            // On some of the less-bright hosts, readfile() is disabled.  It's just a faster, more byte safe, version of what's in the if.
+            elseif (isset($callback) || @readfile($filename) == null) {
+                echo isset($callback) ? $callback(file_get_contents($filename)) : file_get_contents($filename);
+            }
+        }
 
 		obExit(false);
 	}
-	else
+	else {
 		redirectexit('action=tportal;dl');
+    }
 }
 
 // TinyPortal DLmanager admin
