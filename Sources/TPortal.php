@@ -500,7 +500,7 @@ function doTPpage() {{{
             }
 
 			// and for no category
-			if($article['category'] < 1 || $article['category'] > 9999 && $shown == false) {
+			if( ( $article['category'] < 1 || $article['category'] > 9999 ) && $shown == false) {
 				TP_error($txt['tp-nocategory']);
 				$shown = true;
             }
