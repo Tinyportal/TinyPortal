@@ -248,13 +248,27 @@ class TPArticle extends TPBase
         return $num_articles;
     }}}
 
-    public function getArticlesInCategory( $category ) {{{
+    public function getArticlesInCategory( $category, $active = true, $approved = true ) {{{
 
         if(is_array($category)) {
             $where = 'category IN ({array_int:cat})';
         }
         else {
             $where = 'category = {int:cat}';
+        }
+
+        if( $active == false ) {
+            $where .= ' AND off = 0 ';
+        }
+        else {
+            $where .= ' AND off = 1 ';
+        }
+
+        if( $approved == false ) {
+            $where .= ' AND approved = 0 ';
+        }
+        else {
+            $where .= ' AND approved = 1 ';
         }
 
         $articles   = array();
