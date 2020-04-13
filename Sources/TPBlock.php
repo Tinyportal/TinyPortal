@@ -553,8 +553,7 @@ function getBlocks() {{{
     // any cat listings from blocks?
     if(isset($test_catbox)) {
         $tpArticle  = new TPArticle();
-        $categories = $tpArticle->getArticlesInCategory($fetch_article_titles);
-		
+        $categories = $tpArticle->getArticlesInCategory($fetch_article_titles, false, true);
         if (!isset($context['TPortal']['blockarticle_titles'])) {
 			$context['TPortal']['blockarticle_titles'] = array();
         }
