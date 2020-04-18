@@ -756,7 +756,7 @@ function articleUploadImage() {{{
 }}}
 
 function articleAjax() {{{
-    global $context, $boarddir, $boardurl;
+    global $context, $boarddir, $boardurl, $smcFunc;
 
 	// first check any ajax stuff
 	if(isset($_GET['arton'])) {
