@@ -208,7 +208,7 @@ class TPArticle extends TPBase
     public function toggleColumnArticle($article_id, $column) {{{
 
         // We can only toggle certain fields so check that the column is in the list 
-        if(in_array($column, array('off', 'locked', 'sticky', 'frontpage', 'featured')) {
+        if(in_array($column, array('off', 'locked', 'sticky', 'frontpage', 'featured'))) {
 			if(TP_SMF21 == FALSE) {
 				global $modSettings;
 				$modSettings['disableQueryCheck'] = true;
