@@ -758,136 +758,38 @@ function articleUploadImage() {{{
 function articleAjax() {{{
     global $context, $boarddir, $boardurl, $smcFunc;
 
+    $tpArticle = new TPArticle();
+
 	// first check any ajax stuff
 	if(isset($_GET['arton'])) {
 		checksession('get');
-		$what = is_numeric($_GET['arton']) ? $_GET['arton'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-        if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET off = 
-                (
-                    SELECT CASE WHEN tpa.off = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-        }
-        if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-		return;
-	}
+		$id     = is_numeric($_GET['arton']) ? $_GET['arton'] : '0';
+        $col    = 'off';
+        $tpArticle->toggleColumnArticle($id, $col);
+    }
 	elseif(isset($_GET['artlock'])) {
 		checksession('get');
-		$what = is_numeric($_GET['artlock']) ? $_GET['artlock'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-    	if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET locked = 
-                (
-                    SELECT CASE WHEN tpa.locked = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )				
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-        }
-        if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-		return;
-	}
+		$id     = is_numeric($_GET['artlock']) ? $_GET['artlock'] : '0';
+        $col    = 'locked';
+        $tpArticle->toggleColumnArticle($id, $col);
+    }
 	elseif(isset($_GET['artsticky'])) {
 		checksession('get');
-		$what = is_numeric($_GET['artsticky']) ? $_GET['artsticky'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-        if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET sticky = 
-                (
-                    SELECT CASE WHEN tpa.sticky = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )				
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-		}
-	    if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-        return;
+		$id     = is_numeric($_GET['artsticky']) ? $_GET['artsticky'] : '0';
+        $col    = 'sticky';
+        $tpArticle->toggleColumnArticle($id, $col);
 	}
 	elseif(isset($_GET['artfront'])) {
 		checksession('get');
-		$what = is_numeric($_GET['artfront']) ? $_GET['artfront'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-		if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET frontpage = 
-                (
-                    SELECT CASE WHEN tpa.frontpage = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-        }
-		if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-        return;
+		$id     = is_numeric($_GET['artfront']) ? $_GET['artfront'] : '0';
+        $col    = 'frontpage';
+        $tpArticle->toggleColumnArticle($id, $col);
 	}
 	elseif(isset($_GET['artfeat'])) {
 		checksession('get');
-		$what = is_numeric($_GET['artfeat']) ? $_GET['artfeat'] : '0';
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-        if($what > 0) {
-			$smcFunc['db_query']('', '
-				UPDATE {db_prefix}tp_articles
-				SET featured = 
-                (
-                    SELECT CASE WHEN tpa.featured = 1 THEN 0 ELSE 1 END
-                    FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-                    WHERE tpa.id = {int:artid} 
-                    LIMIT 1
-                )
-				WHERE id = {int:artid}',
-				array('artid' => $what)
-			);
-		}
-		if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
-        }
-        return;
+		$id     = is_numeric($_GET['artfeat']) ? $_GET['artfeat'] : '0';
+        $col    = 'featured';
+        $tpArticle->toggleColumnArticle($id, $col);
 	}
 	elseif(isset($_GET['catdelete'])) {
 		checksession('get');
@@ -951,6 +853,8 @@ function articleAjax() {{{
 		}
 		redirectexit('action=tpadmin' . (!empty($cu) ? ';cu='.$cu : '') . (isset($strays) ? ';sa=strays'.$cu : ';sa=articles'));
 	}
+
+    unset($tpArticle);
 
 }}}
 
