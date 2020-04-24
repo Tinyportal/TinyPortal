@@ -22,7 +22,21 @@ if (!defined('SMF'))
 class TPArticle extends TPBase 
 {
 
-    private $dBStructure = array();
+    private static $_instance   = null;
+    private $dBStructure        = array();
+
+    public static function getInstance() {{{
+	
+    	if(self::$_instance == null) {
+			self::$_instance = new self();
+		}
+	
+    	return self::$_instance;
+	
+    }}}
+
+    // Empty Clone method
+    private function __clone() { }
 
     public function __construct() {{{
         parent::__construct();
@@ -189,6 +203,40 @@ class TPArticle extends TPBase
                     'article_id' => $article_id
                 )
 			);
+    }}}
+
+    public function toggleColumnArticle($article_id, $column) {{{
+
+        // We can only toggle certain fields so check that the column is in the list 
+        if(in_array($column, array('off', 'locked', 'sticky', 'frontpage', 'featured')) {
+			if(TP_SMF21 == FALSE) {
+				global $modSettings;
+				$modSettings['disableQueryCheck'] = true;
+			}
+			if($article_id > 0) {
+				$this->dB->db_query('', '
+						UPDATE {db_prefix}tp_articles
+						SET {raw:column} = 
+						(
+						 	SELECT CASE WHEN tpa.{raw:column} = 1 THEN 0 ELSE 1 END
+						 	FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+							WHERE tpa.id = {int:id} 
+						 	LIMIT 1
+						)				
+						WHERE id = {int:id}',
+					array (
+						'id' 		=> $article_id,
+						'column' 	=> $column
+					)
+						
+				);
+			}
+			if(TP_SMF21 == FALSE) {
+				$modSettings['disableQueryCheck'] = true;
+			}
+        }
+
+
     }}}
 
     public function getTotalAuthorArticles($author_id, $off = false, $approved = true) {{{

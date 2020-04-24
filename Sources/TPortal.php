@@ -482,7 +482,7 @@ function doTPpage() {{{
 
 		$_SESSION['login_url'] = $scripturl . '?page=' . $page;
 
-        $tpArticle  = new TPArticle();
+        $tpArticle  = TPArticle::getInstance();
         $article    = $tpArticle->getArticle($page);
         // We only want the first article
         if(!empty($article) && isset($article[0])) {
@@ -1112,7 +1112,7 @@ function doTPfrontpage() {{{
         }
 
 
-        $tpArticle          = new TPArticle();
+        $tpArticle          = TPArticle::getInstance();
         $articles_total     = $tpArticle->getTotalArticles($artgroups);
 		// make the pageindex!
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total, $max);
@@ -1604,7 +1604,7 @@ function doTPfrontpage() {{{
 
 		// next up is articles
 		if(count($aposts) > 0) {
-            $tpArticle  = new TPArticle();
+            $tpArticle  = TPArticle::getInstance();
             $articles   = $tpArticle->getArticle($aposts);
             foreach ( $articles as $k => $row ) {
                 // expand the vislaoptions
