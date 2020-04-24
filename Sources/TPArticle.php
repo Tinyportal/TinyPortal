@@ -90,7 +90,7 @@ function articleInsertComment() {{{
     require_once(SOURCEDIR.'/Subs-Post.php');
     preparsecode($comment);
 
-    $tpArticle = new TPArticle();
+    $tpArticle = TPArticle::getInstance();
     if($tpArticle->insertArticleComment($commenter, $article, $comment, $title))  {
         // go back to the article
         redirectexit('page='.$article.'#tp-comment');
@@ -187,7 +187,7 @@ function articleDeleteComment() {{{
 			fatal_error($txt['tp-noadmincomments'], false);
         }
 
-        $tpArticle  = new TPArticle();
+        $tpArticle  = TPArticle::getInstance();
         $comment    = $tpArticle->getArticleComment($comment);
 		if(is_array($comment)) {
             $tpArticle->deleteArticleComment($comment['id']);
@@ -207,7 +207,7 @@ function articleEditComment() {{{
 			fatal_error($txt['tp-noadmincomments'], false);
         }
 
-        $tpArticle  = new TPArticle();
+        $tpArticle  = TPArticle::getInstance();
         $comment    = $tpArticle->getArticleComment($comment);
 		if(is_array($comment)) {
 			if(allowedTo('tp_articles') || $comment['member_id'] == $context['user']['id']) {
@@ -456,7 +456,7 @@ function articleEdit() {{{
 	}
 
 	$where      = TPUtil::filter('article', 'request', 'string');
-	$tpArticle  = new TPArticle();
+	$tpArticle  = TPArticle::getInstance();
 	if(empty($where)) {
 		// We are inserting
 		$where = $tpArticle->insertArticle($article_data);
@@ -758,7 +758,7 @@ function articleUploadImage() {{{
 function articleAjax() {{{
     global $context, $boarddir, $boardurl, $smcFunc;
 
-    $tpArticle = new TPArticle();
+    $tpArticle = TPArticle::getInstance();
 
 	// first check any ajax stuff
 	if(isset($_GET['arton'])) {

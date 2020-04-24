@@ -22,7 +22,21 @@ if (!defined('SMF'))
 class TPArticle extends TPBase 
 {
 
-    private $dBStructure = array();
+    private static $_instance   = null;
+    private $dBStructure        = array();
+
+    public static function getInstance() {{{
+	
+    	if(self::$_instance == null) {
+			self::$_instance = new self();
+		}
+	
+    	return self::$_instance;
+	
+    }}}
+
+    // Empty Clone method
+    private function __clone() { }
 
     public function __construct() {{{
         parent::__construct();
