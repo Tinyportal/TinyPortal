@@ -1,4 +1,5 @@
 <?php
+use \TinyPortal\Article as TPArticle;
 
 function ssi_TPIntegrate() {{{
 
@@ -21,7 +22,7 @@ function ssi_TPCategoryArticles($category = 0, $current = '-1', $output = 'echo'
         $render .= '<ul class="tp_articleList">';
     }   
     
-    $tpArticle  = new TPArticle();
+    $tpArticle  = TPArticle::getInstance();
     $data       = $tpArticle->getArticlesInCategory($category);
     foreach($data as $article) {
         $render .= '<li';

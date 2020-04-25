@@ -14,8 +14,8 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
-use TinyPortal\Article as TPArticle;
-use TinyPortal\Util as TPUtil;
+use \TinyPortal\Article as TPArticle;
+use \TinyPortal\Util as TPUtil;
 
 
 if (!defined('SMF')) {
