@@ -14,6 +14,8 @@
  * @version 1.0.0
  *
  */
+namespace TinyPortal;
+
 if (!defined('SMF')) {
 	die('Hacking attempt...');
 }

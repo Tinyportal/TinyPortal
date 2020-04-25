@@ -14,10 +14,11 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
+namespace TinyPortal;
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
-
+}
 
 class TPMentions extends TPBase {
 

@@ -14,8 +14,9 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
 class TPortal_Integrate 
 {
@@ -109,15 +110,14 @@ class TPortal_Integrate
     public static function TPortalAutoLoadClass($className)
     {
 
-        $classPrefix = mb_substr($className, 0, 2);
+        $classPrefix    = mb_substr($className, 0, 10);
 
-        if( 'TP' !== $classPrefix ) {
+        if( 'TinyPortal' !== $classPrefix ) {
             return;
         }
 
-        $dir        = BOARDDIR . '/tp-src/';
-
-        $classFile  = $dir.$className . '.php';
+        $className  = str_replace('\\', '/', $className);
+        $classFile  = BOARDDIR . '/' . $className . '.php';
 
         if ( file_exists( $classFile ) ) {
             require_once($classFile);
