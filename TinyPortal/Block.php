@@ -22,15 +22,29 @@ if (!defined('SMF')) {
 
 class Block extends Base {
 
-    private $dBStructure    = array();
-    private $blockType      = array();
-    private $blockBar       = array();
-    private $blockPanel     = array();
+    private $dBStructure        = array();
+    private $blockType          = array();
+    private $blockBar           = array();
+    private $blockPanel         = array();
+    private static $_instance   = null;
+
+    public static function getInstance() {{{
+	
+    	if(self::$_instance == null) {
+			self::$_instance = new self();
+		}
+	
+    	return self::$_instance;
+	
+    }}}
+
+    // Empty Clone method
+    private function __clone() { }
 
     public function __construct() {{{
         parent::__construct();
 
-        $this->dbStructure = array (
+        $this->dBStructure = array (
             'id'            => 'int',
             'type'          => 'smallint',
             'frame'         => 'tinytext',
@@ -94,6 +108,28 @@ class Block extends Base {
 
     }}}
 
+    public function getBlocks( ) {{{
+
+        $blocks = array();
+
+        $request =  $this->dB->db_query('', '
+            SELECT * FROM {db_prefix}tp_blocks
+            WHERE 1=1',
+            array()
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            while ( $block = $this->dB->db_fetch_assoc($request) ) {
+                $blocks[] = $block;
+            }
+        }
+
+        $this->dB->db_free_result($request);
+
+        return $blocks;
+
+    }}}
+
     public function getBlock( $block_id ) {{{
 
         if(empty($block_id)) {
@@ -115,6 +151,36 @@ class Block extends Base {
         }
 
         return $block;
+
+    }}}
+
+    public function getBlockValue( $block_id , $key ) {{{
+
+        $value = null;
+
+        if(empty($block_id)) {
+            return $value;
+        }
+
+        if(array_key_exists($key, $this->dBStructure)) {
+            $request =  $this->dB->db_query('', '
+                SELECT * FROM {db_prefix}tp_blocks
+                WHERE id = {int:blockid} LIMIT 1',
+                array (
+                    'key'       => $key,
+                    'blockid'   => $block_id
+                )
+            );
+
+            if($this->dB->db_num_rows($request) > 0) {
+                $value = $this->dB->db_fetch_assoc($request);
+                if(is_array($value)) {
+                    $value = $value[$key];
+                }
+            }
+        }
+
+        return $value;
 
     }}}
 
@@ -143,6 +209,7 @@ class Block extends Base {
             }
         );
         $update_query = implode(', ', array_values($update_data));
+
         $block_data['block_id'] = (int)$block_id;
         $this->dB->db_query('', '
             UPDATE {db_prefix}tp_blocks
