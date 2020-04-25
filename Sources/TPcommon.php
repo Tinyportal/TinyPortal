@@ -86,7 +86,7 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	return $thumb;
 }
 
-function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
+function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-files/tp-images')
 {
 	global $boarddir, $txt;
 
