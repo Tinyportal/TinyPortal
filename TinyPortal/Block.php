@@ -154,33 +154,62 @@ class Block extends Base {
 
     }}}
 
-    public function getBlockValue( $block_id , $key ) {{{
+    public function getBlockData( $columns, $where ) {{{
 
-        $value = null;
+        $values = null;
 
-        if(empty($block_id)) {
-            return $value;
+        if(empty($columns)) {
+            return $values;
         }
-
-        if(array_key_exists($key, $this->dBStructure)) {
-            $request =  $this->dB->db_query('', '
-                SELECT * FROM {db_prefix}tp_blocks
-                WHERE id = {int:blockid} LIMIT 1',
-                array (
-                    'key'       => $key,
-                    'blockid'   => $block_id
-                )
-            );
-
-            if($this->dB->db_num_rows($request) > 0) {
-                $value = $this->dB->db_fetch_assoc($request);
-                if(is_array($value)) {
-                    $value = $value[$key];
+        elseif(is_array($columns)) {
+            foreach($columns as $column) {
+                if(!array_key_exists($column, $this->dBStructure)) {
+                    return $values;
                 }
+            }
+            $columns = implode(',', $columns);
+        }
+        else {
+            if(!array_key_exists($columns, $this->dBStructure)) {
+                return $values;
             }
         }
 
-        return $value;
+        if(empty($where)) {
+            $where      = '1=1';
+        }
+        elseif(is_array($where)) {
+            $where_data = array();
+            foreach($where as $key => $value) {
+                if(array_key_exists($key, $this->dBStructure)) {
+                    $where_data[] = $key.' = '.$value;
+                }
+                elseif(strpos($key, '!') === 0) {
+                    $where_data[] = substr($key, strpos($key, '!') + 1).' != '.$value; 
+                }
+            }
+            $where = implode(' AND ', array_values($where_data));
+        }
+        else {
+            return $values;
+        }
+
+        $request =  $this->dB->db_query('', '
+            SELECT {raw:columns} FROM {db_prefix}tp_blocks
+            WHERE {raw:where} LIMIT 1',
+            array (
+                'columns'       => $columns,
+                'where'         => $where,
+            )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            while ( $value = $this->dB->db_fetch_assoc($request) ) {
+                $values = $value;
+            }
+        }
+
+        return $values;
 
     }}}
 
