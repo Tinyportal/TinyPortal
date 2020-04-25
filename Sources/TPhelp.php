@@ -14,9 +14,11 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
+use \TinyPortal\Util as TPUtil;
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
         die('Hacking attempt...');
+}
 
 // TinyPortal module entrance
 function TPhelp_init()
