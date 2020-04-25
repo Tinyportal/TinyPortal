@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class TPMentions extends TPBase {
+class Mentions extends Base {
 
     public function __construct() {{{
         parent::__construct();

@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class TPBlock extends TPBase {
+class Block extends Base {
 
     private $dBStructure    = array();
     private $blockType      = array();

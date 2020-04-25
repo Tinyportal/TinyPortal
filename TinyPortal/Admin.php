@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class TPAdmin extends TPBase {
+class Admin extends Base {
 
     private $dBStructure    = array();
     private $tpSettings     = array();
