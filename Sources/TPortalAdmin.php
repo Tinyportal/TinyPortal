@@ -346,18 +346,23 @@ function do_blocks()
 		checksession('get');
 	    if(isset($_GET['addpos'])) {
 		    $id         = is_numeric($_GET['addpos']) ? $_GET['addpos'] : 0;
-            $current    = $tpBlock->getBlockValue($id, 'pos');
-            $current    += 1;
+            $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
+            $new        = $current['pos'] + 1;
+            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current['bar'], 'pos' => $new ) );
+            if(is_array($existing)) {
+                $tpBlock->updateBlock($existing['id'], array( 'pos' => $current['pos']));
+            }
         } 
         else {
 		    $id         = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;
-            $current    = $tpBlock->getBlockValue($id, 'pos');
-            $current    -= 1;
-            if( $current < 0 ) {
-                $current = 0;
+            $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
+            $new        = $current['pos'] - 1;
+            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current['bar'], 'pos' => $new ) );
+            if(is_array($existing)) {
+                $tpBlock->updateBlock($existing['id'], array( 'pos' => $current['pos']));
             }
         }
-        $tpBlock->updateBlock($id, array( 'pos' => $current));
+        $tpBlock->updateBlock($id, array( 'pos' => $new));
 		redirectexit('action=tpadmin;sa=blocks');
 	}
 
