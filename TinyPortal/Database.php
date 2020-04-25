@@ -38,7 +38,9 @@ class Database
     private function __clone() { }
 
 	public function __call($call, $vars) {{{
+
 		global $smcFunc;
+
 		if(array_key_exists($call, $smcFunc)) {
 			// It's faster to call directly, failover to call_user_func_array
 			switch(count($vars)) {
@@ -62,9 +64,11 @@ class Database
 					break;
 			}
 		}
+
 		return false;
 
 	}}}
+
 }
 
 ?>
