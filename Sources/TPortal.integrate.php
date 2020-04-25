@@ -14,6 +14,9 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
+
+use TinyPortal\Util as TPUtil;
+
 if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
