@@ -14,12 +14,29 @@
  * @version 1.0.0
  *
  */
+namespace TinyPortal;
+
 if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class TPortalDB 
+class Database
 {
+    private static $_instance   = null;
+
+    public static function getInstance() {{{
+	
+    	if(self::$_instance == null) {
+			self::$_instance = new self();
+		}
+	
+    	return self::$_instance;
+	
+    }}}
+
+    // Empty Clone method
+    private function __clone() { }
+
 	public function __call($call, $vars) {{{
 		global $smcFunc;
 		if(array_key_exists($call, $smcFunc)) {

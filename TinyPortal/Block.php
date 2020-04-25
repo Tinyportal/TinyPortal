@@ -14,12 +14,13 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
+namespace TinyPortal;
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
-
-class TPBlock extends TPBase {
+class Block extends Base {
 
     private $dBStructure    = array();
     private $blockType      = array();

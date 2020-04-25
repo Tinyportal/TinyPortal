@@ -14,6 +14,9 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
+use \TinyPortal\Article as TPArticle;
+use \TinyPortal\Util as TPUtil;
+
 
 if (!defined('SMF')) {
 	die('Hacking attempt...');
@@ -2870,7 +2873,7 @@ function tp_profile_articles($member_id) {{{
 	$context['page_title'] = $txt['articlesprofile'];
     $context['TPortal']['memID'] = $member_id;
 
-    $tpArticle  = new TPArticle();
+    $tpArticle  = TPArticle::getInstance();
 	$start      = 0;
 	$sorting    = 'date';
 	

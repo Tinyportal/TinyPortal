@@ -14,12 +14,14 @@
  * @version 1.0.0
  *
  */
+namespace TinyPortal;
+
 if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
 // Static method to call smcFunc calls which are not database related.
-class TPUtil
+class Util
 {
 
 	public static function __callStatic($call, $vars) {{{

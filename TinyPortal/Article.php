@@ -14,12 +14,13 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
+namespace TinyPortal;
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
-
-class TPArticle extends TPBase 
+class Article extends Base 
 {
 
     private static $_instance   = null;

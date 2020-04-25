@@ -11,7 +11,7 @@
 		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
-		<require-dir name="tp-src" destination="$boarddir" />
+		<require-dir name="TinyPortal" destination="$boarddir" />
 		<readme parsebbc="true">readme_install20.txt</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
@@ -60,7 +60,7 @@
 		<remove-file name="$languagedir/TPortal.english-utf8.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english.php" />
 		<remove-file name="$languagedir/TPortalAdmin.english-utf8.php" />
-		<remove-dir  name="$boarddir/tp-src" />
+		<remove-dir  name="$boarddir/TinyPortal" />
 		<remove-dir  name="$themedir/scripts/tinyportal" />
 		<code>do_hooks.php</code>
 	</uninstall>
@@ -69,7 +69,7 @@
 		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
 		<require-dir name="tp-files" destination="$boarddir" />
-		<require-dir name="tp-src" destination="$boarddir" />
+		<require-dir name="TinyPortal" destination="$boarddir" />
 		<readme parsebbc="true">readme_install21.txt</readme>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
@@ -77,7 +77,7 @@
 	<uninstall for="2.1.* - 2.1.99">
 		<readme parsebbc="true">readme_uninstall.txt</readme>
 		<remove-dir name="$themedir/images/tinyportal" />
-		<remove-dir name="$boarddir/tp-src" />
+		<remove-dir name="$boarddir/TinyPortal" />
 		<remove-dir name="$themedir/scripts/tinyportal" />
 		<remove-file name="$sourcedir/TPSSI.php" />
 		<remove-file name="$sourcedir/TPBlock.php" />

@@ -14,12 +14,13 @@
  * @version 1.0.0
  *
  */
+namespace TinyPortal;
+
 if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-
-class TPBase 
+class Base 
 {
 	protected $dB = null;
     protected $modSettings = null;
@@ -28,7 +29,7 @@ class TPBase
         global $modSettings;
 
 		if(is_null($this->dB)) {
-			$this->dB = new TPortalDB();
+			$this->dB = Database::getInstance();
 		}
 
         $this->modSettings = $modSettings;

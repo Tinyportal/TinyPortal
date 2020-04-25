@@ -14,12 +14,13 @@
  * Copyright (C) 2018 - The TinyPortal Team
  *
  */
+namespace TinyPortal;
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
-
-class TPMentions extends TPBase {
+class Mentions extends Base {
 
     public function __construct() {{{
         parent::__construct();
@@ -42,10 +43,10 @@ class TPMentions extends TPBase {
         if (!empty($this->modSettings['enable_mentions'])) {
             require_once(SOURCEDIR . '/Subs-Post.php');
             require_once(SOURCEDIR . '/Mentions.php');
-            $mentions = Mentions::getMentionedMembers($mention['content']);
+            $mentions = \Mentions::getMentionedMembers($mention['content']);
             if (is_array($mentions)) {
-                Mentions::insertMentions($mention['type'], $mention['id'], $mentions, $mention['member_id']);
-                $mention['content'] = Mentions::getBody($mention['content'], $mentions);
+                \Mentions::insertMentions($mention['type'], $mention['id'], $mentions, $mention['member_id']);
+                $mention['content'] = \Mentions::getBody($mention['content'], $mentions);
                 foreach($mentions as $id => $member) {
                     $insert_rows[] = array(
                         'alert_time'        => time(),
@@ -56,7 +57,7 @@ class TPMentions extends TPBase {
                         'content_id'        => $mention['id'],
                         'content_action'    => $mention['action'],
                         'is_read'           => 0,
-                        'extra' => TPUtil::json_encode(
+                        'extra' => Util::json_encode(
                             array (
                                 "text"          => $mention['text'],
                                 "user_mention"  => $mention['username'],

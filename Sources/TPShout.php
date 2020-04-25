@@ -14,9 +14,12 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
+use \TinyPortal\Mentions as TPMentions;
+use \TinyPortal\Util as TPUtil;
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
 function TPShoutLoad()
 {

@@ -14,9 +14,15 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
+use \TinyPortal\Admin as TPAdmin;
+use \TinyPortal\Article as TPArticle;
+use \TinyPortal\Block as TPBlock;
+use \TinyPortal\Util as TPUtil;
 
-if (!defined('SMF'))
+
+if (!defined('SMF')) {
 	die('Hacking attempt...');
+}
 
 // TinyPortal admin
 function TPortalAdmin()
