@@ -1781,7 +1781,7 @@ function template_blocks()
 						<td class="blocks">
 						<div id="blocksDiv">
 							<div style="width:10%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
-								<input name="pos' .$lblock['id']. '" type="text" size="3" maxlength="3" value="' .($n*10). '">
+								<input name="pos' .$lblock['id']. '" type="text" size="3" maxlength="3" value="' .$lblock['pos']. '">
 								<a name="block' .$lblock['id']. '"></a>';
 					echo '
 								<a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.png" value="' .(($n*10)+11). '" /></a>';
