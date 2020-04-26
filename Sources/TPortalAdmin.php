@@ -338,7 +338,7 @@ function do_blocks()
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-addblock']);
 		// collect all available PHP block snippets
 		$context['TPortal']['blockcodes']   = TPcollectSnippets();
-		$context['TPortal']['copyblocks'][] = $tpBlock->getBlocks();
+		$context['TPortal']['copyblocks']   = $tpBlock->getBlocks();
 	}
 
 	// Move the block up or down in the panel list of blocks
@@ -369,31 +369,15 @@ function do_blocks()
 	// change the on/off
 	if(isset($_GET['blockon'])) {
 		checksession('get');
-		$what = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
-        if(TP_SMF21 == FALSE) {
-            global $modSettings;
-            $modSettings['disableQueryCheck'] = true;
-        }
-		$smcFunc['db_query']('', '
-			UPDATE {db_prefix}tp_blocks
-			SET off = 
-            ( 
-                SELECT 
-                    CASE WHEN tpb.off = 1
-				        THEN 0
-				        ELSE 1
-			        END
-                FROM ( SELECT * FROM {db_prefix}tp_blocks ) AS tpb
-                WHERE tpb.id = {int:blockid} 
-                LIMIT 1
-            )
-			WHERE id = {int:blockid}',
-			array(
-				'blockid' => $what
-			)
-		);
-        if(TP_SMF21 == FALSE) {
-            $modSettings['disableQueryCheck'] = true;
+		$id         = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
+        $current    = $tpBlock->getBlockData(array( 'off' ), array( 'id' => $id) );
+        if(is_array($current)) {
+            if($current['off'] == 1) {
+                $tpBlock->updateBlock($id, array( 'off' => '0' ));
+            }
+            else {
+                $tpBlock->updateBlock($id, array( 'off' => '1' ));
+            }
         }
         redirectexit('action=tpadmin;sa=blocks');
 	}
@@ -411,14 +395,7 @@ function do_blocks()
             checksession('get');
             $id     = is_numeric($_GET[$block_location]) ? $_GET[$block_location] : 0;
             $loc    = $tpBlock->getBlockBarId(str_replace('block', '', $block_location));
-            $smcFunc['db_query']('', '
-                UPDATE {db_prefix}tp_blocks
-                SET bar = {int:bar}
-                WHERE id = {int:blockid}',
-                array(
-                    'bar' => $loc, 'blockid' => $id
-                )
-            );
+            $tpBlock->updateBlock($id, array( 'bar' => $loc ));
             redirectexit('action=tpadmin;sa=blocks');
         }
 	}
@@ -426,20 +403,10 @@ function do_blocks()
 	// are we on overview screen?
 	if(isset($_GET['overview'])) {
 		// fetch all blocks member group permissions
-		$request = $smcFunc['db_query']('', '
-			SELECT id, title, bar, access, type
-			FROM {db_prefix}tp_blocks
-			WHERE off = {int:off}
-			ORDER BY bar ,id',
-			array(
-				'off' => 0
-			)
-		);
-		if ($smcFunc['db_num_rows']($request) > 0)
-		{
+        $data   = $tpBlock->getBlockData(array('id', 'title', 'bar', 'access', 'type'), array( 'off' => 0 ) );
+		if(is_array($data)) {
 			$context['TPortal']['blockoverview'] = array();
-			while($row = $smcFunc['db_fetch_assoc']($request))
-			{
+            foreach($data as $row) {
 				$context['TPortal']['blockoverview'][] = array(
 					'id' => $row['id'],
 					'title' => $row['title'],
@@ -448,7 +415,6 @@ function do_blocks()
 					'access' => explode(',', $row['access']),
 				);
 			}
-			$smcFunc['db_free_result']($request);
 		}
 		get_grps(true,true);
 	}

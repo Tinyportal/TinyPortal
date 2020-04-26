@@ -62,6 +62,8 @@ function editBlock( $block_id = 0 ) {{{
 
 	global $settings, $context, $scripturl, $txt, $boarddir, $smcFunc;
 
+    $tpBlock = TPBlock::getInstance();
+
     if(empty($block_id)) {
 	    $block_id  = TPUtil::filter('id', 'get', 'int');
     }
@@ -80,16 +82,9 @@ function editBlock( $block_id = 0 ) {{{
 
 	TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
 	TPadd_linktree($scripturl.'?action=tportal&sa=editblock&id='.$block_id . ';'.$context['session_var'].'='.$context['session_id'], $txt['tp-editblock']);
-	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_blocks
-		WHERE id = {int:blockid}',
-		array(
-			'blockid' => $block_id
-		)
-	);
 
-	if ($smcFunc['db_num_rows']($request) > 0) {
-		$row = $smcFunc['db_fetch_assoc']($request);
+    $row = $tpBlock->getBlock($block_id);
+    if(is_array($row)) {
 		$acc2 = explode(',', $row['access2']);
 		$context['TPortal']['blockedit'] = $row;
 		$context['TPortal']['blockedit']['var1']    = json_decode($row['settings'],true)['var1'];
@@ -148,7 +143,6 @@ function editBlock( $block_id = 0 ) {{{
 				$context['TPortal']['blockedit']['langfiles'][$lang[$i]] = $lang[$i+1];
 			}
 		}
-		$smcFunc['db_free_result']($request);
 		// collect all available PHP block snippets
 		$context['TPortal']['blockcodes'] = TPcollectSnippets();
         get_catnames();
