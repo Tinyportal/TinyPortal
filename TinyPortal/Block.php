@@ -46,14 +46,14 @@ class Block extends Base {
 
         $this->dBStructure = array (
             'id'            => 'int',
-            'type'          => 'smallint',
-            'frame'         => 'tinytext',
-            'title'         => 'tinytext',
+            'type'          => 'int',   // smallint
+            'frame'         => 'text',  // tinytext
+            'title'         => 'text',  // tinytext
             'body'          => 'text',
             'access'        => 'text',
-            'bar'           => 'smallint',
-            'pos'           => 'int',
-            'off'           => 'smallint',
+            'bar'           => 'int',   // smallint
+            'pos'           => 'int',   
+            'off'           => 'int',   // smallint
             'visible'       => 'text',
             'lang'          => 'text',
             'access2'       => 'text',
@@ -195,8 +195,9 @@ class Block extends Base {
         }
 
         $request =  $this->dB->db_query('', '
-            SELECT {raw:columns} FROM {db_prefix}tp_blocks
-            WHERE {raw:where} LIMIT 1',
+            SELECT {raw:columns}
+            FROM {db_prefix}tp_blocks
+            WHERE {raw:where}',
             array (
                 'columns'       => $columns,
                 'where'         => $where,
