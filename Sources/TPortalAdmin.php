@@ -2511,6 +2511,23 @@ function do_postchecks()
 			else
 				$body = '';
 
+            $request = $smcFunc['db_query']('', '
+                SELECT pos FROM {db_prefix}tp_blocks
+                WHERE bar = {int:bar}
+                ORDER BY pos DESC LIMIT 1',
+                array(
+                    'bar' => $panel
+                )
+            );
+            if($smcFunc['db_num_rows']($request) > 0) {
+                $pos = $smcFunc['db_fetch_assoc']($request);
+                $pos = $pos['pos'] + 1;
+                $smcFunc['db_free_result']($request);
+            }
+            else {
+                $pos = 0;
+            }
+
 			if(isset($cp))
 				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_blocks',
@@ -2536,7 +2553,7 @@ function do_postchecks()
 						$cp['body'],
 						$cp['access'],
 						$panel,
-						0,
+						$pos,
 						1,
 						1,
 						$cp['lang'],
@@ -2572,7 +2589,7 @@ function do_postchecks()
                         'settings' => 'string',
 					),
 					array(
-                        $type, 'theme', $title, $body, '-1,0,1', $panel, 0, 1, 1, '', 'actio=allpages', '', 
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'actio=allpages', '', 
                         json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')
