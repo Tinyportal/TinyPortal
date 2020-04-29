@@ -21,56 +21,56 @@ global $txt, $context, $scripturl;
 $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
 
-$txt['permissionname_tp_settings'] = 'Manage settings';
+$txt['permissionname_tp_settings'] = $txt['group_perms_name_tp_settings'] = 'Manage settings';
 $txt['permissionhelp_tp_settings'] = 'Allows users to manage settings and news for TP.';
 $txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage settings.';
 
-$txt['permissionname_tp_blocks'] = 'Manage blocks';
+$txt['permissionname_tp_blocks'] = $txt['group_perms_name_tp_blocks'] = 'Manage blocks';
 $txt['permissionhelp_tp_blocks'] = 'Allows users to manage blocks. Be careful with this permission as it allows creation of PHP blocks.';
 $txt['cannot_tp_blocks'] = 'Sorry, you aren\'t allowed to manage blocks.';
 
-$txt['permissionname_tp_articles'] = 'Manage articles';
+$txt['permissionname_tp_articles'] = $txt['group_perms_name_tp_articles'] = 'Manage articles';
 $txt['permissionhelp_tp_articles'] = 'Allows users to manage articles, categories for articles and the catlist.';
 $txt['cannot_tp_articles'] = 'Sorry, you aren\'t allowed to manage articles.';
 
-$txt['permissionname_tp_alwaysapproved'] = 'Submissions are always approved';
+$txt['permissionname_tp_alwaysapproved'] = $txt['group_perms_name_tp_alwaysapproved'] = 'Submissions are always approved';
 $txt['permissionhelp_tp_alwaysapproved'] = 'Allows users to write articles that will be automatically approved.';
 $txt['cannot_tp_alwaysapproved'] = 'Article submission needs to be approved first.';
 
-$txt['permissionname_tp_submithtml'] = 'Can submit HTML articles';
+$txt['permissionname_tp_submithtml'] = $txt['group_perms_name_tp_submithtml'] = 'Can submit HTML articles';
 $txt['permissionhelp_tp_submithtml'] = 'Allows users to write and submit HTML type of articles.';
 $txt['cannot_tp_submithtml'] = 'Sorry, you aren\'t allowed to submit HTML articles.';
 
-$txt['permissionname_tp_submitbbc'] = 'Can submit BBC articles';
+$txt['permissionname_tp_submitbbc'] = $txt['group_perms_name_tp_submitbbc'] = 'Can submit BBC articles';
 $txt['permissionhelp_tp_submitbbc'] = 'Allows users to write and submit BBC type of articles.';
 $txt['cannot_tp_submitbbc'] = 'Sorry, you aren\'t allowed to submit BBC articles.';
 
-$txt['permissionname_tp_editownarticle'] = 'Can edit own articles';
+$txt['permissionname_tp_editownarticle'] = $txt['group_perms_name_tp_editownarticle'] = 'Can edit own articles';
 $txt['permissionhelp_tp_editownarticle'] = 'Allows users to edit their own articles.';
 $txt['cannot_tp_editownarticle'] = 'Sorry, you aren\'t allowed to edit your article.';
 
-$txt['permissionname_tp_artcomment'] = 'Can comment on articles';
+$txt['permissionname_tp_artcomment'] = $txt['group_perms_name_tp_artcomment'] = 'Can comment on articles';
 $txt['permissionhelp_tp_artcomment'] = 'Allows users to manage who can comment on articles.';
 
-$txt['permissionname_tp_can_admin_shout'] = 'Manage TPshout';
+$txt['permissionname_tp_can_admin_shout'] = $txt['group_perms_name_can_admin_shout'] = 'Manage TPshout';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
 
-$txt['permissionname_tp_can_shout'] = 'Can Post Shouts';
+$txt['permissionname_tp_can_shout'] = $txt['group_perms_name_tp_can_shout'] = 'Can Post Shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 
-$txt['permissionname_tp_dlmanager'] = 'Manage TPdownloads';
+$txt['permissionname_tp_dlmanager'] = $txt['group_perms_name_tp_dlmanager'] = 'Manage TPdownloads';
 $txt['permissionhelp_tp_dlmanager'] = 'Allows users to visit and operate any part of the File manager admin screens.';
 $txt['cannot_tp_dlmanager'] = 'Sorry, you aren\'t allowed to manage the File Manager module.';
 
-$txt['permissionname_tp_dlupload'] = 'Upload file';
+$txt['permissionname_tp_dlupload'] = $txt['group_perms_name_tp_dlupload'] = 'Upload file';
 $txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the File manager';
 $txt['cannot_tp_dlupload'] = 'Sorry, you aren\'t allowed to upload files to the File Manager.';
 
-$txt['permissionname_tp_dlcreatetopic'] = 'Create Download topic';
+$txt['permissionname_tp_dlcreatetopic'] = $txt['group_perms_name_tp_dlcreatetopic'] = 'Create Download topic';
 $txt['permissionhelp_tp_dlcreatetopic'] = 'Allows users to create a linked support topic, and also link the topic to the download. Uses pre-defined boards to choose from.';
 $txt['cannot_tp_dlcreatetopic'] = 'Sorry, you aren\'t allowed to create support topics.';
 
-$txt['permissionname_tp_can_list_images'] = 'Manage TPlistimages';
+$txt['permissionname_tp_can_list_images'] = $txt['group_perms_name_tp_can_list_images'] = 'Manage TPlistimages';
 $txt['permissionhelp_tp_can_list_images'] = 'Allows users to remove uploaded images from the Tiny Portal Image Directory.';
 $txt['cannot_tp_can_list_images'] = 'Sorry, you aren\'t allowed to manage article images.';
 
