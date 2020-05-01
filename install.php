@@ -355,6 +355,7 @@ foreach ($tables as $table => $col) {
         else if ($table == 'tp_blocks') {
 			$column = array('name' => 'settings', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : ''));
             $smcFunc['db_add_column']('{db_prefix}' . $table, $column);
+            updateBlocks();
         }
         else if ($table == 'tp_dlmanager') {
             updateDownLoads();
@@ -798,6 +799,57 @@ if($manual)
 else
 {
 	echo $render;
+}
+
+function updateBlocks()
+{
+	global $smcFunc, $render;
+	// Update old column names
+
+    // fetch any comments
+    $request =  $smcFunc['db_query']('', '
+        SELECT id, pos, bar 
+        FROM {db_prefix}tp_blocks
+        WHERE 1=1',
+        array (
+
+        )
+    );
+
+    $data   = array();
+    if($smcFunc['db_num_rows']($request) > 0) {
+        while($row = $smcFunc['db_fetch_assoc']($request)) {
+            $data[] = $row;
+        }
+
+        $pos  = array_column($data, 'pos');
+        $bar = array_column($data, 'bar');
+
+        array_multisort($bar, SORT_ASC, $pos, SORT_ASC, $data);
+
+        $newPos = 0;
+        $oldBar = null;
+
+        foreach($data as $row) {
+            if($row['bar'] != $oldBar) {
+                $newPos = 0;
+                $oldBar = $row['bar'];
+            }
+            $smcFunc['db_query']('', '
+                UPDATE {db_prefix}tp_blocks
+                SET pos = {int:pos}
+                WHERE id = {int:id}',
+                array(
+                    'id'    => $row['id'],
+                    'pos'   => $newPos++,
+                )
+            ); 
+        }
+    }
+
+	$smcFunc['db_free_result']($request);
+
+	$render .= '<li>Updated block order in blocks table</li>';
 }
 
 function updateDownLoads()
