@@ -109,9 +109,10 @@ function articleInsertComment() {{{
         $tpMention = TPMentions::getInstance();
         $tpMention->addMention($mention_data); 
 
-        // go back to the article
-        redirectexit('page='.$article.'#tp-comment');
     }
+
+    // go back to the article
+    redirectexit('page='.$article.'#tp-comment');
 
 }}}
 
