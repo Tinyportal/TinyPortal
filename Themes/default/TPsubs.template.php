@@ -1919,7 +1919,7 @@ function article_comments($render = true)
 					<div style="margin-bottom:8px;" class="' . ($context['TPortal']['article']['author_id']!=$comment['poster_id'] ? 'mycomment' : 'othercomment') . '">
 					<a id="comment'.$comment['id'].'"></a>';
 				// can we edit the comment or are the owner of it?
-				if(allowedTo('tp_articles') || $comment['posterID'] == $context['user']['id'] && !$context['user']['is_guest']) {
+				if(allowedTo('tp_articles') || $comment['poster_id'] == $context['user']['id'] && !$context['user']['is_guest']) {
 					$data .= '<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tportal;sa=killcomment;comment=' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
                 }
 				// not a guest
