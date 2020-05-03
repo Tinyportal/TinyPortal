@@ -208,6 +208,7 @@ $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tpsummary_noshout'] = 'No shout messages found';
 $txt['alert_shout_mention'] = 'You have been mentioned by {user_mention} in a {text}!';
+$txt['alert_tp_comment_mention'] = 'You have been mentioned by {user_mention} in a {text}!';
 
 // SCE Editor
 $txt['editor_tp_floatleft'] = 'Insert float left div';

@@ -30,8 +30,6 @@ function TPShoutLoad()
         loadLanguage('TPortal', 'english');
     }
 
-    $tpMention = new TPMentions();
-    $tpMention->addJS();
 
     if(TP_SMF21) {
         loadCSSFile('jquery.sceditor.css');
@@ -273,7 +271,7 @@ function postShout()
             $mention_data['event_title']    = 'Shoutbox Mention';
             $mention_data['text']           = 'Shout';
 
-            $tpMention = new TPMentions();
+            $tpMention = TPMentions::getInstance();
             $tpMention->addMention($mention_data); 
         }
     }

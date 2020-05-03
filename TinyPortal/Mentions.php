@@ -22,6 +22,21 @@ if (!defined('SMF')) {
 
 class Mentions extends Base {
 
+    private static $_instance   = null;
+
+    public static function getInstance() {{{
+	
+    	if(self::$_instance == null) {
+			self::$_instance = new self();
+		}
+	
+    	return self::$_instance;
+	
+    }}}
+
+    // Empty Clone method
+    private function __clone() { }
+
     public function __construct() {{{
         parent::__construct();
     }}}
@@ -29,9 +44,9 @@ class Mentions extends Base {
     public function addJS() {{{
         // Mentions
         if (!empty($this->modSettings['enable_mentions']) && allowedTo('mention')) {
-            loadJavaScriptFile('jquery.atwho.min.js',           array('defer' => true, 'minimize' => false), 'tp_atwho');
-            loadJavaScriptFile('jquery.caret.min.js',           array('defer' => true, 'minimize' => false), 'tp_caret');
-            loadJavaScriptFile('tinyportal/shoutMentions.js',   array('defer' => true, 'minimize' => false), 'tp_mentions');
+            loadJavaScriptFile('jquery.atwho.min.js',               array('defer' => true, 'minimize' => false), 'tp_atwho');
+            loadJavaScriptFile('jquery.caret.min.js',               array('defer' => true, 'minimize' => false), 'tp_caret');
+            loadJavaScriptFile('tinyportal/tinyPortalMentions.js',  array('defer' => true, 'minimize' => false), 'tp_mentions');
         }
     }}}
 

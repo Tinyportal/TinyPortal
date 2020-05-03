@@ -198,10 +198,10 @@ class Base
                 )
             );
 
-            return true;
+            return $this->dB->db_insert_id('{db_prefix}tp_comments', 'id');
 		}
 
-        return false;
+        return 0;
 
     }}}
 

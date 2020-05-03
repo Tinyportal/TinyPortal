@@ -16,6 +16,7 @@
  */
 use \TinyPortal\Article as TPArticle;
 use \TinyPortal\Block as TPBlock;
+use \TinyPortal\Mentions as TPMentions;
 use \TinyPortal\Util as TPUtil;
 
 if (!defined('SMF')) {
@@ -84,6 +85,9 @@ function TPortal_init() {{{
 	if(loadLanguage('TPortal') == false) {
 		loadLanguage('TPortal', 'english');
     }
+
+    $tpMention = TPMentions::getInstance();
+    $tpMention->addJS();
 
 	$context['TPortal'] = array();
 
