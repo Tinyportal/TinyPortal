@@ -131,6 +131,66 @@ class Article extends Base
 
     }}}
 
+    public function getArticleData( $columns, $where ) {{{
+
+        $values = null;
+
+        if(empty($columns)) {
+            return $values;
+        }
+        elseif(is_array($columns)) {
+            foreach($columns as $column) {
+                if(!array_key_exists($column, $this->dBStructure)) {
+                    return $values;
+                }
+            }
+            $columns = implode(',', $columns);
+        }
+        else {
+            if(!array_key_exists($columns, $this->dBStructure)) {
+                return $values;
+            }
+        }
+
+        if(empty($where)) {
+            $where      = '1=1';
+        }
+        elseif(is_array($where)) {
+            $where_data = array();
+            foreach($where as $key => $value) {
+                if(array_key_exists($key, $this->dBStructure)) {
+                    $where_data[] = $key.' = '.$value;
+                }
+                elseif(strpos($key, '!') === 0) {
+                    $where_data[] = substr($key, strpos($key, '!') + 1).' != '.$value; 
+                }
+            }
+            $where = implode(' AND ', array_values($where_data));
+        }
+        else {
+            return $values;
+        }
+
+        $request =  $this->dB->db_query('', '
+            SELECT {raw:columns}
+            FROM {db_prefix}tp_articles
+            WHERE {raw:where}',
+            array (
+                'columns'       => $columns,
+                'where'         => $where,
+            )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            while ( $value = $this->dB->db_fetch_assoc($request) ) {
+                $values = $value;
+            }
+        }
+
+        return $values;
+
+    }}}
+
     public function getArticleComments($user_id, $item_id) {{{
        return parent::getComments('1', $user_id, $item_id);
     }}}
