@@ -109,9 +109,9 @@ h2.author_h2 {
 	overflow: hidden;
 	padding: 1em 1em 0.75em 1em;
 }
-.article_text {
+/*.article_text {
 	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
-}
+}*/
 .article_extra {
 	border-top: 1px solid rgba(221, 221, 221, 0.5);
 	padding: 0 1em;
@@ -406,9 +406,12 @@ ul.tp_details li {
 	padding: 1em;
 }
 /* comments */
-.article_comment .single {
+.single {
 	overflow: hidden;
 	padding: 0.5em 0 0.5em 1em;
+}
+.article_comment {
+	padding: 1em 1em 0.3em 1em;
 }
 img.catlayout {
 	margin: 6px 2px 4px 16px;
@@ -602,10 +605,9 @@ ul.tp_catmenu li.tp_catmenu_header {
 	-webkit-box-sizing:border-box;
 	border: 1px solid rgba(204, 204, 204, 0.5);
 	box-sizing: border-box;
-	margin-bottom: 4px;
+	margin: 1em 0em 0em 1em;
 	max-height: 30em;
 	overflow: auto;
-	margin-top: 1em;
 }
 #tp_dlmanager ul.hoveritems, #tp_dlmanager ul.hoveritems li {
 	list-style: none;

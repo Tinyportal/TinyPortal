@@ -1807,7 +1807,7 @@ function article_moreauthor($render = true)
     $data = '';
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options'])) {
-		$data .= '<div class="windowbg2">';
+		$data .= '<div>';
 		if( $context['TPortal']['article']['date_registered'] > 1000 ) {
 			$data .= '
                 <div class="article_authorinfo tp_pad">
@@ -1817,7 +1817,7 @@ function article_moreauthor($render = true)
                         <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['article']['date_registered']) . $txt['tp-poster3'] .
                         $context['TPortal']['article']['posts'] . $txt['tp-poster4'] . timeformat($context['TPortal']['article']['last_login']) . '.
                     </div>
-                </div><br>';
+                </div>';
         }
 		else {
 			$data .= '
@@ -1865,7 +1865,7 @@ function article_bookmark($render = true)
 
 	if(in_array('social',$context['TPortal']['article']['visual_options'])) {
 		$data .= '
-	<div class="article_text">
+	<div>
 		<div class="article_socialbookmark">';
 		if ($context['TPortal']['hide_article_facebook']=='0') {
 		    $data .= '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
@@ -1908,15 +1908,18 @@ function article_comments($render = true)
 		$data .= '
 	<a name="tp-comment">
 	<div></div>
-	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . ':  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . ' ' . $context['TPortal']['article_comments_count'] . '</h2>
-	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
-		<div style="padding: 1em;">';
+	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . ':  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . ' ' . $context['TPortal']['article_comments_count'] . '</h2>';
+	}
+
+	if(!$context['TPortal']['article_comments_count'] == 0) {
+		$data .= '	
+	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
 
 		$counter = 1;
 		if(isset($context['TPortal']['article']['comment_posts'])) {
 			foreach($context['TPortal']['article']['comment_posts'] as $comment) {
 				$data .= '
-					<div style="margin-bottom:8px;" class="' . ($context['TPortal']['article']['author_id']!=$comment['poster_id'] ? 'mycomment' : 'othercomment') . '">
+					<div class="article_comment ' . ($context['TPortal']['article']['author_id']!=$comment['poster_id'] ? 'mycomment' : 'othercomment') . '">
 					<a id="comment'.$comment['id'].'"></a>';
 				// can we edit the comment or are the owner of it?
 				if(allowedTo('tp_articles') || $comment['poster_id'] == $context['user']['id'] && !$context['user']['is_guest']) {
@@ -1946,7 +1949,7 @@ function article_comments($render = true)
 			}
 		}
 		$data .= '
-			</div></div>';
+			</div>';
 	}
 
 	if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) {
@@ -1988,7 +1991,7 @@ function article_morelinks($render = true)
 	if(in_array('category',$context['TPortal']['article']['visual_options'])) {
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others'])) {
 			$data .= '
-	<h2 class="titlebg"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
+	<h2 class="titlebg article_extra"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
 
 	<div style="overflow: hidden;">
 		<ul class="disc">';
