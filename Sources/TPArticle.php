@@ -16,6 +16,7 @@
  */
 use \TinyPortal\Article as TPArticle;
 use \TinyPortal\Block as TPBlock;
+use \TinyPortal\Mentions as TPMentions;
 use \TinyPortal\Util as TPUtil;
 
 if (!defined('SMF')) {
@@ -73,7 +74,7 @@ function TPArticleActions(&$subActions) {{{
 
 function articleInsertComment() {{{
 
-    global $context, $txt;
+    global $user_info, $context, $txt;
 
     // check the session
     checkSession('post');
@@ -93,8 +94,21 @@ function articleInsertComment() {{{
     require_once(SOURCEDIR.'/Subs-Post.php');
     preparsecode($comment);
 
-    $tpArticle = TPArticle::getInstance();
-    if($tpArticle->insertArticleComment($commenter, $article, $comment, $title))  {
+    $tpArticle  = TPArticle::getInstance();
+    $comment_id = $tpArticle->insertArticleComment($commenter, $article, $comment, $title);
+    if($comment_id > 0)  {
+        $mention_data['id']             = $article;
+        $mention_data['content']        = $comment;
+        $mention_data['type']           = 'tp_comment';
+        $mention_data['member_id']      = $user_info['id'];
+        $mention_data['username']       = $user_info['username'];
+        $mention_data['action']         = 'mention';
+        $mention_data['event_title']    = 'Article Mention';
+        $mention_data['text']           = 'Article';
+
+        $tpMention = TPMentions::getInstance();
+        $tpMention->addMention($mention_data); 
+
         // go back to the article
         redirectexit('page='.$article.'#tp-comment');
     }
