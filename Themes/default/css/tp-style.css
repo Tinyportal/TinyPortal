@@ -598,6 +598,15 @@ ul.tp_catmenu li.tp_catmenu_header {
 	overflow: auto;
 	padding: 4px;
 }
+#articlecomments {
+	-webkit-box-sizing:border-box;
+	border: 1px solid rgba(204, 204, 204, 0.5);
+	box-sizing: border-box;
+	margin-bottom: 4px;
+	max-height: 30em;
+	overflow: auto;
+	margin-top: 1em;
+}
 #tp_dlmanager ul.hoveritems, #tp_dlmanager ul.hoveritems li {
 	list-style: none;
 	margin: 0;
@@ -728,7 +737,7 @@ a.avatar img {
 	overflow: hidden;
 }
 .article_socialbookmark {
-	padding-top: 0.7em;
+	padding: 1em;
 	text-align: center;
 }
 .article_socialbookmark a img {

@@ -1865,7 +1865,7 @@ function article_bookmark($render = true)
 
 	if(in_array('social',$context['TPortal']['article']['visual_options'])) {
 		$data .= '
-	<div style="margin: 1px 0; padding-bottom: 1em;">
+	<div class="article_text">
 		<div class="article_socialbookmark">';
 		if ($context['TPortal']['hide_article_facebook']=='0') {
 		    $data .= '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
@@ -1908,7 +1908,7 @@ function article_comments($render = true)
 		$data .= '
 	<a name="tp-comment">
 	<div></div>
-	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . '  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2>
+	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . ':  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . ' ' . $context['TPortal']['article_comments_count'] . '</h2>
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>
 		<div style="padding: 1em;">';
 
@@ -1988,7 +1988,7 @@ function article_morelinks($render = true)
 	if(in_array('category',$context['TPortal']['article']['visual_options'])) {
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others'])) {
 			$data .= '
-	<h2 class="titlebg" style="padding: 0 1em; border-top: solid 1px #ccc;"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
+	<h2 class="titlebg"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
 
 	<div style="overflow: hidden;">
 		<ul class="disc">';

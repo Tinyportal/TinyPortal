@@ -494,19 +494,20 @@ function template_main()
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
 			echo '<div class="padding-div" style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</b></div><br>
+		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</b></div>
 					<div class="formtable padding-div">
 						<dl class="settings">
 							<dt>
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input style="width:97%;" name="tp-dluploadtitle" id="tp-dluploadtitle" type="text" value="-no title-" size="40"><br><br>
+								<input style="width:97%;" name="tp-dluploadtitle" id="tp-dluploadtitle" type="text" value="-no title-" size="40">
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
 							</dt>
-							<dd><select size="1" name="tp-dluploadcat"  id="tp-dluploadcat" style="max-width:100%;">';
+							<dd>
+								<select size="1" name="tp-dluploadcat"  id="tp-dluploadcat" style="max-width:100%;">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
@@ -517,7 +518,7 @@ function template_main()
 							</dd>
 						</dl>
 						<hr>
-							<div><b>'.$txt['tp-dluploadtext'].'</b><br><br></div>
+							<div><b>'.$txt['tp-dluploadtext'].'</b></div>
 							<div>';
 
 		if($context['TPortal']['dl_wysiwyg']== 'html')
@@ -528,7 +529,7 @@ function template_main()
 			echo '<textarea id="tp_article_body" name="tp_dluploadtext" wrap="auto"></textarea>';
 
 		echo '	</div>
-				<hr><br>
+				<hr>
 				<dl class="settings">
 					<dt>
 						<label for="tp-dluploadfile">'.$txt['tp-dluploadfile'].'</label><br>
@@ -536,20 +537,21 @@ function template_main()
 					</dt>
 					<dd>';
 		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager')) {
-			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file"><br>
+			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file">
 					</dd>';
 
             echo '<dt>
-						<label for="tp-dlexternalfile">'.$txt['tp-dlexternalfile'].'</label><br>
+						<label for="tp-dlexternalfile">'.$txt['tp-dlexternalfile'].'</label>
 					</dt>
 					<dd>
-                        <input name="tp-dlexternalfile" id="tp-dlexternalfile" type="text" size"40"><br>
+                        <input name="tp-dlexternalfile" id="tp-dlexternalfile" type="text" size"40">
 					</dd>';
         }
 		// file already uploaded?
 		if(allowedTo('tp_dlmanager') && !isset($_GET['ftp'])){
 			echo '
-					<dt><label for="tp-dluploadnot">'. $txt['tp-dlnoupload'].'</label>
+					<dt>
+						<label for="tp-dluploadnot">'. $txt['tp-dlnoupload'].'</label>
 					</dt>
 					<dd>
 						<input name="tp-dluploadnot" id="tp-dluploadnot" type="checkbox" value="ON"><br>
@@ -567,7 +569,7 @@ function template_main()
 		}
 		echo '</dl>';
 
-		echo '<hr><br>
+		echo '<hr>
 				<dl class="settings">
 					<dt>
 						<label for="tp_dluploadicon">'.$txt['tp-dluploadicon'].'</label>
@@ -582,7 +584,7 @@ function template_main()
 
 		echo '
 						</select>
-						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" /><br>
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" />
 					</dd>
 					<dt>
 						<label for="tp_dluploadpic">'.$txt['tp-dluploadpic'].'</label>
@@ -597,7 +599,7 @@ function template_main()
 		if(!empty($context['TPortal']['attachitems']))
 		{
 			echo '
-				<hr><br>
+				<hr>
 				<dl class="settings">
 					<dt>
 						<label for="tp_dluploadattach">'.$txt['tp-dluploadattach'].'</label>
@@ -622,12 +624,12 @@ function template_main()
 			{
 				echo '
 			<hr>
-			<br>
 				<dl class="settings">
 					<dt>
 						'.$txt['tp-dlcreatetopic'].'
 					</dt>
-					<dd>'.$txt['tp-dlmissingboards'].'
+					<dd>
+						'.$txt['tp-dlmissingboards'].'
 					</dd>
 				</dl>';
 			}
@@ -635,13 +637,13 @@ function template_main()
 			{
 				echo '
 			<hr>
-			<br>
 				<dl class="settings">
 					</dd>
 					<dt>
 						<label for="create_topic">'.$txt['tp-dlcreatetopic'].'</label>
 					</dt>
-					<dd><input type="checkbox" name="create_topic" id="create_topic" /><br>
+					<dd>
+						<input type="checkbox" name="create_topic" id="create_topic" />
 					<dd>';
 
 			if(allowedTo('make_sticky') && !empty($modSettings['enableStickyTopics']))
@@ -649,7 +651,8 @@ function template_main()
 					<dt>
 						<label for="create_topic_sticky">'.$txt['tp-dlcreatetopic_sticky'].'</label>
 					</dt>
-					<dd><input type="checkbox" name="create_topic_sticky" id="create_topic_sticky" /><br>
+					<dd>
+						<input type="checkbox" name="create_topic_sticky" id="create_topic_sticky" /><br>
 					</dd>';
 			if(allowedTo('announce_topic'))
 				echo '
