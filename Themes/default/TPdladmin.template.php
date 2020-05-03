@@ -222,7 +222,7 @@ $clickme.click( function(e) {
 			<hr>
 				<div>
 					<div><b>'.$txt['tp-dlintrotext'].'</b>
-					</div><br>';
+					</div>';
 					if($context['TPortal']['dl_wysiwyg'] == 'html')
 						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 					elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
@@ -231,7 +231,7 @@ $clickme.click( function(e) {
 						echo '<textarea id="tp_article_body" name="tp_dl_introtext" >'.$context['TPortal']['dl_introtext'].'</textarea>';
 					echo '
 				</div>
-			<hr><br>
+			<hr>
 				<dl class="settings">
 					<dt>
 						'.$txt['tp-dlusefeatured'].'
@@ -464,7 +464,7 @@ $clickme.click( function(e) {
 						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
 					<dd>
-						<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'"><br><br>
+						<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
 					</dd>
 					<dt>
 						<label for="dladmin_category"><b>'.$txt['tp-dluploadcategory'].'</b>
@@ -480,22 +480,22 @@ $clickme.click( function(e) {
 		echo '
 						</select><br><br>
 					</dd>
-				<dt>
-					'.$txt['tp-uploadedby'].'
-				</dt>
-				<dd>
-					'.$context['TPortal']['admcurrent']['member'].'<br>
-				</dd>
-				<dt>
-					'.$txt['tp-dlviews'].'
-				</dt>
-				<dd>
-					 '.$cat['views'].' / '.$cat['downloads'].'<br>
-				</dd>					
+					<dt>
+						'.$txt['tp-uploadedby'].'
+					</dt>
+					<dd>
+						'.$context['TPortal']['admcurrent']['member'].'<br>
+					</dd>
+					<dt>
+						'.$txt['tp-dlviews'].'
+					</dt>
+					<dd>
+						 '.$cat['views'].' / '.$cat['downloads'].'<br>
+					</dd>					
 				</dl>
 				<hr>			
 				<div>
-					<div><b>'.$txt['tp-dluploadtext'].'</b><br><br></div>';
+					<div><b>'.$txt['tp-dluploadtext'].'</b></div>';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], $cat['description'], true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
@@ -928,6 +928,12 @@ $clickme.click( function(e) {
 						<input size="100" name="newdladmin_name" id="newdladmin_name" type="text" value="">
 					</dd>
 					<dt>
+						<label for="newdladmin_link">'.$txt['tp-shortname'].'</label>
+					</dt>
+					<dd>
+						<input name="newdladmin_link" id="newdladmin_link" type="text" value="">
+					</dd>
+					<dt>
 						<label for="newdladmin_parent">'.$txt['tp-dlparent'].'</label>
 					</dt>
 					<dd>';
@@ -943,11 +949,6 @@ $clickme.click( function(e) {
 		}
 		echo '
 					</select><br>
-					</dd>
-					<dt>
-						<label for="newdladmin_link">'.$txt['tp-shortname'].'</label>
-					</dt>
-					<dd><input name="newdladmin_link" id="newdladmin_link" type="text" value="">
 					</dd>
 					<dt>
 						<label for="newdladmin_icon" >'.$txt['tp-icon'].'</label>
@@ -972,7 +973,7 @@ $clickme.click( function(e) {
 						document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
 					}
 				</script>
-				<br><br></div>
+				</div>
 					</dd>
 				</dl>
 				<hr>
@@ -1011,14 +1012,18 @@ $clickme.click( function(e) {
          		}
     		}
    			// if none is chosen, have a control value
-			echo '</div><br><input type="checkbox" onclick="invertAll(this, this.form, \'newdladmin_group\');" />'.$txt['tp-checkall'].'
-					<input name="dladmin_group-2" type="hidden" value="1">
+			echo '		</div>
+						<input id="dladmin_group-2" type="checkbox" onclick="invertAll(this, this.form, \'newdladmin_group\');" /><label for="dladmin_group-2">'.$txt['tp-checkall'].'</label>
+						<input name="dladmin_group-2" type="hidden" value="1">
 					</dd>
 				</dl>';
 
 		echo '
-				<div style="padding:1%;"><input name="newdlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
-			</div></div>';
+				<div class="padding-div">
+					<input name="newdlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'">
+				</div>
+			</div>
+		</div>';
 	}
 	echo '
 	</form>
