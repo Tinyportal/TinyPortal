@@ -36,8 +36,7 @@ function TPsetupAdminAreas()
 	global $context, $scripturl, $smcFunc;
 
 	$context['admin_tabs']['custom_modules'] = array();
-	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download']))
-	{
+	if (allowedTo('tp_dlmanager') && !empty($context['TPortal']['show_download'])) {
 		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
 			'title' => 'TPdownloads',
 			'description' => '',
@@ -46,6 +45,7 @@ function TPsetupAdminAreas()
 		);
 		$admin_set = true;
 	}
+
 	// any from modules?
 	$request = $smcFunc['db_query']('', '
 		SELECT modulename, subquery, permissions, languages
@@ -84,6 +84,13 @@ function TPsetupAdminAreas()
 		}
 		$smcFunc['db_free_result']($request);
 	}
+
+    // Do they have access to any modules?
+    if(is_countable($context['admin_tabs']['custom_modules']) && (count($context['admin_tabs']['custom_modules']) == 0) ) {
+        unset($context['admin_tabs']['custom_modules']);
+        unset($context['admin_tabs']['tp_modules']);
+    }
+
 }
 
 function TP_addPerms()
@@ -2060,8 +2067,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	$context['admin_header']['tp_modules'] = $txt['tp-modules'];
 	$context['admin_header']['custom_modules'] = $txt['custom_modules'];
 
-	if (allowedTo('tp_settings'))
-	{
+	if (allowedTo('tp_settings')) {
 		$context['admin_tabs']['tp_settings'] = array(
 			'settings' => array(
 				'title' => $txt['tp-settings'],
@@ -2077,8 +2083,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_articles'))
-	{
+
+	if (allowedTo('tp_articles')) {
 		$context['admin_tabs']['tp_articles'] = array(
 			'articles' => array(
 				'title' => $txt['tp-articles'],
@@ -2112,8 +2118,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_blocks'))
-	{
+
+	if (allowedTo('tp_blocks')) {
 		$context['admin_tabs']['tp_blocks'] = array(
 			'panelsettings' => array(
 				'title' => $txt['tp-allpanels'],
@@ -2135,8 +2141,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_blocks'))
-	{
+
+	if (allowedTo('tp_blocks')) {
 		$context['admin_tabs']['tp_menubox'] = array(
 			'menubox' => array(
 				'title' => $txt['tp-menumanager'],
@@ -2152,8 +2158,8 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
-	if (allowedTo('tp_settings'))
-	{
+
+	if (allowedTo('tp_settings')) {
 		$context['admin_tabs']['tp_modules'] = array(
 			'modules' => array(
 				'title' => $txt['tp-modules'],
@@ -2163,22 +2169,25 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 			),
 		);
 	}
+
 	// collect modules and their permissions
 	$result =  $smcFunc['db_query']('', '
 		SELECT * FROM {db_prefix}tp_modules
 		WHERE 1',
 		array()
 	);
-	if($smcFunc['db_num_rows']($result) > 0)
-	{
+
+	if($smcFunc['db_num_rows']($result) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($result))
 		{
 			$context['TPortal']['admmodules'][] = $row;
 		}
 		$smcFunc['db_free_result']($result);
 	}
+    
 	TPsetupAdminAreas();
 	validateSession();
+
 }
 
 function tp_collectArticleIcons()

@@ -318,7 +318,7 @@ function do_subaction($tpsub, $checked = false)
 		do_articles();
 	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks') || $context['user']['is_admin'] || $checked) )
 		do_blocks();
-	elseif(in_array($tpsub, array('modules')) && ( allowedTo(array('tp_can_admin_shout', 'tp_dlmanager', 'tp_can_list_images', 'tp_dlupload', 'tp_dlcreatetopic') || $context['user']['is_admin'] || $checked)) )
+	elseif(in_array($tpsub, array('modules')) && ( allowedTo(array('tp_settings', 'tp_can_admin_shout', 'tp_dlmanager', 'tp_can_list_images', 'tp_dlupload', 'tp_dlcreatetopic') || $context['user']['is_admin'] || $checked)) )
 		do_modules();
 	elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks') || $context['user']['is_admin'] || $checked) )
 		do_menus();
