@@ -21,7 +21,7 @@ if (!defined('SMF'))
 // TinyPortal admin
 function TPortalAdmin()
 {
-	global $scripturl, $sourcedir, $context;
+	global $scripturl, $sourcedir, $context, $txt;
 
 	if(loadLanguage('TPortalAdmin') == false)
 		loadLanguage('TPortalAdmin', 'english');
