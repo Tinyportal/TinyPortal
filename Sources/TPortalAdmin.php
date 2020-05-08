@@ -115,9 +115,6 @@ function TPortalAdmin()
             elseif($_GET['sa'] == 'addarticle_bbc' && (allowedTo(array('tp_submitbbc','tp_articles')) || $context['user']['is_admin']) ) {
 		        do_subaction($tpsub, true);
             }
-            else {
-		        fatal_error($txt['tp-noadmin'], false);
-            }
 		}
 		do_subaction($tpsub);
 	}
