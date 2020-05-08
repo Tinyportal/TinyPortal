@@ -119,6 +119,7 @@ function TPortalAdmin()
 		        fatal_error($txt['tp-noadmin'], false);
             }
 		}
+		do_subaction($tpsub);
 	}
 	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
         if(allowedTo('tp_blocks') || $context['user']['is_admin']) {
@@ -326,11 +327,9 @@ function do_subaction($tpsub, $checked = false)
 		do_news($tpsub);
 	elseif($tpsub == 'settings' && (allowedTo('tp_settings') || $context['user']['is_admin'] || $checked) )
 		do_news('settings');
-	elseif(allowedTo(array('tp_articles', 'tp_blocks', 'tp_settings')) || $context['user']['is_admin'] || $checked)
-		do_news();
-    elseif(!$context['user']['is_admin'] || !$checked)
+    elseif(!$context['user']['is_admin'])
 		fatal_error($txt['tp-noadmin'], false);
-    else
+    else 
 		do_news();
 }
 
