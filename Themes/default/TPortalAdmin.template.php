@@ -1554,7 +1554,12 @@ function template_frontpage()
 
 		echo '
 							<select size="1" name="tp_ssiboard1">';
-		$tn=sizeof($context['TPortal']['boards']);
+
+        if(!isset($context['TPortal']['boards'])) {
+            $context['TPortal']['boards'] = array();
+        }
+
+		$tn = sizeof($context['TPortal']['boards']);
 		for($n=0 ; $n<$tn; $n++){
 			echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'" ' , isset($context['TPortal']['SSI_boards'][0]) && $context['TPortal']['boards'][$n]['id']==$context['TPortal']['SSI_boards'][0] ? 'selected' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
