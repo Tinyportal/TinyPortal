@@ -23,7 +23,7 @@ $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
 
 $txt['permissionname_tp_settings'] = $txt['group_perms_name_tp_settings'] = 'Manage settings';
 $txt['permissionhelp_tp_settings'] = 'Allows users to manage settings and news for TP.';
-$txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage settings.';
+$txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage TinyPortal settings.';
 
 $txt['permissionname_tp_blocks'] = $txt['group_perms_name_tp_blocks'] = 'Manage blocks';
 $txt['permissionhelp_tp_blocks'] = 'Allows users to manage blocks. Be careful with this permission as it allows creation of PHP blocks.';
@@ -50,10 +50,11 @@ $txt['permissionhelp_tp_editownarticle'] = 'Allows users to edit their own artic
 $txt['cannot_tp_editownarticle'] = 'Sorry, you aren\'t allowed to edit your article.';
 
 $txt['permissionname_tp_artcomment'] = $txt['group_perms_name_tp_artcomment'] = 'Can comment on articles';
-$txt['permissionhelp_tp_artcomment'] = 'Allows users to manage who can comment on articles.';
+$txt['permissionhelp_tp_artcomment'] = 'Allows users to add comments to articles.';
 
 $txt['permissionname_tp_can_admin_shout'] = $txt['group_perms_name_can_admin_shout'] = 'Manage TPshout';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
+$txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage the Shoutbox.';
 
 $txt['permissionname_tp_can_shout'] = $txt['group_perms_name_tp_can_shout'] = 'Can Post Shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
