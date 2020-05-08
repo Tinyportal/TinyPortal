@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.5
+ * @version 1.6.6
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -174,5 +174,5 @@ Thank you for efforts in making TinyPortal available around the globe.';
 $txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating such a outstanding software. Without SMF, TinyPortal would have not been possible.
 The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
  Thank you Bloc for allowing the TP Team to continue your work.';
-$txt['tp-credits'] = 'TinyPortal 1.6.5 - Credits';
+$txt['tp-credits'] = 'TinyPortal 1.6.6 - Credits';
 ?>
