@@ -299,19 +299,19 @@ function do_subaction($tpsub)
 {
     global $context, $txt;
 
-	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')) && (isAllowedTo('tp_articles') || $context['user']['is_admin']) )
+	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')) && (allowedTo('tp_articles') || $context['user']['is_admin']) )
 		do_articles();
-	elseif(in_array($tpsub, array('blocks', 'panels')) && (isAllowedTo('tp_blocks') || $context['user']['is_admin']) )
+	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks') || $context['user']['is_admin']) )
 		do_blocks();
 	elseif(in_array($tpsub, array('modules')))
 		do_modules();
-	elseif(in_array($tpsub, array('menubox', 'addmenu')) && (isAllowedTo('tp_blocks') || $context['user']['is_admin']))
+	elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks') || $context['user']['is_admin']))
 		do_menus();
-	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (isAllowedTo('tp_settings') || $context['user']['is_admin']))
+	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (allowedTo('tp_settings') || $context['user']['is_admin']))
 		do_news($tpsub);
-	elseif($tpsub == 'settings' && (isAllowedTo('tp_settings') || $context['user']['is_admin']))
+	elseif($tpsub == 'settings' && (allowedTo('tp_settings') || $context['user']['is_admin']))
 		do_news('settings');
-	elseif(isAllowedTo(array('tp_articles', 'tp_blocks', 'tp_settings')) || $context['user']['is_admin'])
+	elseif(allowedTo(array('tp_articles', 'tp_blocks', 'tp_settings')) || $context['user']['is_admin'])
 		do_news();
     elseif(!$context['user']['is_admin'])
 		fatal_error($txt['tp-noadmin'], false);
