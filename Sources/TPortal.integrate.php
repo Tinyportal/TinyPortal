@@ -401,7 +401,7 @@ class TPortal_Integrate
 
         // Add the admin button
 		if(!$context['TPortal']['hideadminmenu']=='1') {
-			if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox')) {
+			if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox') || allowedTo('tp_can_admin_shout') || allowedTo('tp_can_list_images')) {
 				$buttons = array_merge(
 						array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
 						array (
