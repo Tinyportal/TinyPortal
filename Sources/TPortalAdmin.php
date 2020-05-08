@@ -98,41 +98,56 @@ function TPortalAdmin()
 
 	$tpsub = '';
 
-	if(isset($_GET['sa']))
-	{
+	if(isset($_GET['sa'])) {
 		$context['TPortal']['subaction'] = $tpsub = $_GET['sa'];
-		if(substr($_GET['sa'], 0, 11) == 'editarticle')
-		{
+		if(substr($_GET['sa'], 0, 11) == 'editarticle' && (allowedTo(array('tp_article', 'tp_editownarticle') || $context['user']['is_admin']))) {
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = 'editarticle';
+		    do_subaction($tpsub, true);
 		}
-		elseif(substr($_GET['sa'], 0, 11) == 'addarticle_')
-		{
+		elseif(substr($_GET['sa'], 0, 11) == 'addarticle_') {
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = $_GET['sa'];
-            if($_GET['sa'] == 'addarticle_html') {
+            if($_GET['sa'] == 'addarticle_html' && (allowedTo(array('tp_submithtml','tp_articles')) || $context['user']['is_admin']) ) {
                 TPwysiwyg_setup();
+		        do_subaction($tpsub, true);
+            }
+            elseif($_GET['sa'] == 'addarticle_bbc' && (allowedTo(array('tp_submitbbc','tp_articles')) || $context['user']['is_admin']) ) {
+		        do_subaction($tpsub, true);
+            }
+            else {
+		        fatal_error($txt['tp-noadmin'], false);
             }
 		}
-		do_subaction($tpsub);
 	}
-	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos']))
-	{
-		$context['TPortal']['subaction'] = $tpsub = 'blocks';
-		do_blocks($tpsub);
+	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['blockedit']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
+        if(allowedTo('tp_blocks') || $context['user']['is_admin']) {
+		    $context['TPortal']['subaction'] = $tpsub = 'blocks';
+		    do_blocks($tpsub);
+        }
+        else {
+		    fatal_error($txt['tp-noadmin'], false);
+        }
 	}
-	elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete']))
-	{
-		$context['TPortal']['subaction'] = $tpsub = 'linkmanager';
-		do_menus($tpsub);
+	elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete'])) {
+        if(allowedTo('tp_blocks') || $context['user']['is_admin']) {
+		    $context['TPortal']['subaction'] = $tpsub = 'linkmanager';
+		    do_menus($tpsub);
+        }
+        else {
+		    fatal_error($txt['tp-noadmin'], false);
+        }
 	}
-	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse']))
-	{
-		$context['TPortal']['subaction'] = $tpsub = 'articles';
-		do_articles($tpsub);
-	}
-	else
-	{
+	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse'])) {
+        if(allowedTo('tp_articles') || $context['user']['is_admin']) {
+		    $context['TPortal']['subaction'] = $tpsub = 'articles';
+		    do_articles($tpsub);
+        }    
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }
+    }
+	else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';
 		do_news($tpsub);
 	}
@@ -295,25 +310,25 @@ function tp_notifyComments($memberlist, $message2, $subject)
 
 /* ******************************************************************************************************************** */
 
-function do_subaction($tpsub)
+function do_subaction($tpsub, $checked = false)
 {
     global $context, $txt;
 
-	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')) && (allowedTo('tp_articles') || $context['user']['is_admin']) )
+	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')) && (allowedTo('tp_articles') || $context['user']['is_admin'] || $checked) )
 		do_articles();
-	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks') || $context['user']['is_admin']) )
+	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks') || $context['user']['is_admin'] || $checked) )
 		do_blocks();
 	elseif(in_array($tpsub, array('modules')))
 		do_modules();
-	elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks') || $context['user']['is_admin']))
+	elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks') || $context['user']['is_admin'] || $checked) )
 		do_menus();
-	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (allowedTo('tp_settings') || $context['user']['is_admin']))
+	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (allowedTo('tp_settings') || $context['user']['is_admin'] || $checked) )
 		do_news($tpsub);
-	elseif($tpsub == 'settings' && (allowedTo('tp_settings') || $context['user']['is_admin']))
+	elseif($tpsub == 'settings' && (allowedTo('tp_settings') || $context['user']['is_admin'] || $checked) )
 		do_news('settings');
-	elseif(allowedTo(array('tp_articles', 'tp_blocks', 'tp_settings')) || $context['user']['is_admin'])
+	elseif(allowedTo(array('tp_articles', 'tp_blocks', 'tp_settings')) || $context['user']['is_admin'] || $checked)
 		do_news();
-    elseif(!$context['user']['is_admin'])
+    elseif(!$context['user']['is_admin'] || $checked)
 		fatal_error($txt['tp-noadmin'], false);
     else
 		do_news();
