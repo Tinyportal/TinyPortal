@@ -312,7 +312,7 @@ function do_subaction($tpsub, $checked = false)
 {
     global $context, $txt;
 
-	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')) && (allowedTo('tp_articles') || $context['user']['is_admin'] || $checked) )
+	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons', 'clist')) && (allowedTo('tp_articles') || $context['user']['is_admin'] || $checked) )
 		do_articles();
 	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks') || $context['user']['is_admin'] || $checked) )
 		do_blocks();
