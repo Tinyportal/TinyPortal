@@ -197,6 +197,10 @@ function articleDeleteComment() {{{
 
     global $context, $txt;
 
+    if (!allowedTo('tp_artcomment')) {
+        fatal_error($txt['tp-nocomments'], false);
+    }
+
 	// edit or deleting a comment?
 	if($context['user']['is_logged']) {
 		// check that you indeed can edit or delete
@@ -217,6 +221,10 @@ function articleDeleteComment() {{{
 
 function articleEditComment() {{{
     global $context, $txt;
+
+   if (!allowedTo('tp_artcomment')) {
+        fatal_error($txt['tp-nocomments'], false);
+    }
 
 	if($context['user']['is_logged']) {
 		// check that you indeed can edit or delete
