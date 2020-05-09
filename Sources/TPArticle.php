@@ -197,7 +197,7 @@ function articleDeleteComment() {{{
 
     global $context, $txt;
 
-   if (!allowedTo('tp_artcomment')) {
+    if (!allowedTo('tp_artcomment')) {
         fatal_error($txt['tp-nocomments'], false);
     }
 

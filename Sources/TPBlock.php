@@ -618,4 +618,194 @@ function getBlocks() {{{
 
 }}}
 
+function adminBlocks() {{{
+	global $context, $smcFunc, $txt, $settings, $scripturl;
+
+	isAllowedTo('tp_blocks');
+    
+    $tpBlock    = TPBlock::getInstance();
+
+	if(isset($_GET['addblock'])) {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-addblock']);
+		// collect all available PHP block snippets
+		$context['TPortal']['blockcodes']   = TPcollectSnippets();
+		$context['TPortal']['copyblocks']   = $tpBlock->getBlocks();
+	}
+
+	// Move the block up or down in the panel list of blocks
+	if(isset($_GET['addpos']) || isset($_GET['subpos'])) {
+		checksession('get');
+	    if(isset($_GET['addpos'])) {
+		    $id         = is_numeric($_GET['addpos']) ? $_GET['addpos'] : 0;
+            $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
+            $new        = $current['pos'] + 1;
+            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current['bar'], 'pos' => $new ) );
+            if(is_array($existing)) {
+                $tpBlock->updateBlock($existing['id'], array( 'pos' => $current['pos']));
+            }
+        } 
+        else {
+		    $id         = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;
+            $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
+            $new        = $current['pos'] - 1;
+            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current['bar'], 'pos' => $new ) );
+            if(is_array($existing)) {
+                $tpBlock->updateBlock($existing['id'], array( 'pos' => $current['pos']));
+            }
+        }
+        $tpBlock->updateBlock($id, array( 'pos' => $new));
+		redirectexit('action=tpadmin;sa=blocks');
+	}
+
+	// change the on/off
+	if(isset($_GET['blockon'])) {
+		checksession('get');
+		$id         = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
+        $current    = $tpBlock->getBlockData(array( 'off' ), array( 'id' => $id) );
+        if(is_array($current)) {
+            if($current['off'] == 1) {
+                $tpBlock->updateBlock($id, array( 'off' => '0' ));
+            }
+            else {
+                $tpBlock->updateBlock($id, array( 'off' => '1' ));
+            }
+        }
+        redirectexit('action=tpadmin;sa=blocks');
+	}
+
+	// remove it?
+	if(isset($_GET['blockdelete'])) {
+		checksession('get');
+		$id         = is_numeric($_GET['blockdelete']) ? $_GET['blockdelete'] : 0;
+        $tpBlock->deleteBlock($id);
+		redirectexit('action=tpadmin;sa=blocks');
+	}
+   
+    foreach( array ( 'blockright', 'blockleft', 'blockcenter', 'blockfront', 'blockbottom', 'blocktop', 'blocklower') as $block_location ) {
+        if(array_key_exists($block_location, $_GET)) {
+            checksession('get');
+            $id     = is_numeric($_GET[$block_location]) ? $_GET[$block_location] : 0;
+            $loc    = $tpBlock->getBlockBarId(str_replace('block', '', $block_location));
+            $tpBlock->updateBlock($id, array( 'bar' => $loc ));
+            redirectexit('action=tpadmin;sa=blocks');
+        }
+	}
+
+	// are we on overview screen?
+	if(isset($_GET['overview'])) {
+		// fetch all blocks member group permissions
+        $data   = $tpBlock->getBlockData(array('id', 'title', 'bar', 'access', 'type'), array( 'off' => 0 ) );
+		if(is_array($data)) {
+			$context['TPortal']['blockoverview'] = array();
+            foreach($data as $row) {
+				$context['TPortal']['blockoverview'][] = array(
+					'id' => $row['id'],
+					'title' => $row['title'],
+					'bar' => $row['bar'],
+					'type' => $row['type'],
+					'access' => explode(',', $row['access']),
+				);
+			}
+		}
+		get_grps(true,true);
+	}
+
+	// or maybe adding it?
+	if(isset($_GET['addblock'])) {
+		get_articles();
+		// check which side its mean to be on
+		$context['TPortal']['blockside'] = $_GET['addblock'];
+	}
+	else {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
+		foreach($tpBlock->getBlockPanel() as $p => $pan) {
+			if(isset($_GET[$pan])) {
+				$context['TPortal']['panelside'] = $pan;
+            }
+		}
+        $bars   = $tpBlock->getBlockBar();
+        $blocks = $tpBlock->getBlocks();
+		if (is_countable($blocks) && count($blocks) > 0) {
+            $bar    = array_column($blocks, 'bar');
+            $pos    = array_column($blocks, 'pos');
+            if(array_multisort($bar, SORT_ASC, $pos, SORT_ASC, $blocks)) {
+                foreach($blocks as $row) {
+                    // decode the block settings
+                    $set = json_decode($row['settings'], true);
+                    $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = array(
+                        'frame' => $row['frame'],
+                        'title' => $row['title'],
+                        'type' => $tpBlock->getBlockType($row['type']),
+                        'body' => $row['body'],
+                        'id' => $row['id'],
+                        'access' => $row['access'],
+                        'pos' => $row['pos'],
+                        'off' => $row['off'],
+                        'visible' => $row['visible'],
+                        'var1' => $set['var1'],
+                        'var2' => $set['var2'],
+                        'lang' => $row['lang'],
+                        'access2' => $row['access2'],
+                        'loose' => $row['access2'] != '' ? true : false,
+                        'editgroups' => $row['editgroups']
+                    );
+                }
+            }
+		}
+	}
+	get_articles();
+
+	if($context['TPortal']['subaction']=='panels') {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
+    }
+
+	$context['html_headers'] .= '
+	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin20"></script>
+	<script type="text/javascript"><!-- // --><![CDATA[
+		function getXMLHttpRequest()
+		{
+			if (window.XMLHttpRequest)
+				return new XMLHttpRequest;
+			else if (window.ActiveXObject)
+				return new ActiveXObject("MICROSOFT.XMLHTTP");
+			else
+				alert("Sorry, but your browser does not support Ajax");
+		}
+		window.onload = startToggle;
+		function startToggle()
+		{
+			var img = document.getElementsByTagName("img");
+			for(var i = 0; i < img.length; i++)
+			{
+				if (img[i].className == "toggleButton")
+					img[i].onclick = toggleBlock;
+			}
+		}
+		function toggleBlock(e)
+		{
+			var e = e ? e : window.event;
+			var target = e.target ? e.target : e.srcElement;
+			while(target.className != "toggleButton")
+				  target = target.parentNode;
+			var id = target.id.replace("blockonbutton", "");
+			var Ajax = getXMLHttpRequest();
+			Ajax.open("POST", "?action=tpadmin;blockon=" + id + ";' . $context['session_var'] . '=' . $context['session_id'].'");
+			Ajax.setRequestHeader("Content-type", "application/x-www-form-urlencode");
+			var source = target.src;
+			target.src = "' . $settings['tp_images_url'] . '/ajax.gif"
+			Ajax.onreadystatechange = function()
+			{
+				if(Ajax.readyState == 4)
+				{
+					target.src = source == "' . $settings['tp_images_url'] . '/TPactive1.png" ? "' . $settings['tp_images_url'] . '/TPactive2.png" : "' . $settings['tp_images_url'] . '/TPactive1.png";
+				}
+			}
+			var params = "?action=tpadmin;blockon=" + id + ";' . $context['session_var'] . '=' . $context['session_id'].'";
+			Ajax.send(params);
+		}
+	// ]]></script>';
+
+}}}
+
 ?>
