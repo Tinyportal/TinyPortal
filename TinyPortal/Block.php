@@ -206,7 +206,7 @@ class Block extends Base {
 
         if($this->dB->db_num_rows($request) > 0) {
             while ( $value = $this->dB->db_fetch_assoc($request) ) {
-                $values = $value;
+                $values[] = $value;
             }
         }
 

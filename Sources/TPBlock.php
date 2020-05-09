@@ -371,19 +371,19 @@ function adminBlocks() {{{
 	    if(isset($_GET['addpos'])) {
 		    $id         = is_numeric($_GET['addpos']) ? $_GET['addpos'] : 0;
             $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
-            $new        = $current['pos'] + 1;
-            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current['bar'], 'pos' => $new ) );
+            $new        = $current[0]['pos'] + 1;
+            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current[0]['bar'], 'pos' => $new ) );
             if(is_array($existing)) {
-                $tpBlock->updateBlock($existing['id'], array( 'pos' => $current['pos']));
+                $tpBlock->updateBlock($existing[0]['id'], array( 'pos' => $current[0]['pos']));
             }
         } 
         else {
 		    $id         = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;
             $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
-            $new        = $current['pos'] - 1;
-            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current['bar'], 'pos' => $new ) );
+            $new        = $current[0]['pos'] - 1;
+            $existing   = $tpBlock->getBlockData('id', array( 'bar' => $current[0]['bar'], 'pos' => $new ) );
             if(is_array($existing)) {
-                $tpBlock->updateBlock($existing['id'], array( 'pos' => $current['pos']));
+                $tpBlock->updateBlock($existing[0]['id'], array( 'pos' => $current[0]['pos']));
             }
         }
         $tpBlock->updateBlock($id, array( 'pos' => $new));
@@ -396,7 +396,7 @@ function adminBlocks() {{{
 		$id         = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
         $current    = $tpBlock->getBlockData(array( 'off' ), array( 'id' => $id) );
         if(is_array($current)) {
-            if($current['off'] == 1) {
+            if($current[0]['off'] == 1) {
                 $tpBlock->updateBlock($id, array( 'off' => '0' ));
             }
             else {
