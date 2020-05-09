@@ -1904,7 +1904,7 @@ function template_blocks()
 						</div>
 						<div  style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div id="show-on-respnsive-layout"><strong>'.$txt['tp-editsave'].'</strong></div>
-							<a href="' . $scripturl . '?action=tportal&sa=editblock&id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPmodify.png" alt="'.$txt['tp-edit'].'"  /></a>';
+							<a href="' . $scripturl . '?action=tpadmin&sa=editblock&id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPmodify.png" alt="'.$txt['tp-edit'].'"  /></a>';
 					echo '
 							<input class="tpbut" style="height:16px; vertical-align:top;" type="image" src="' .$settings['tp_images_url']. '/TPsave.png" alt="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">';
 					echo '
@@ -2187,7 +2187,7 @@ function template_blockoverview()
 				{
 					echo '
 				<div class="tp_col8">
-					<p><a href="' . $scripturl . '?action=tportal&sa=editblock&id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
+					<p><a href="' . $scripturl . '?action=tpadmin&sa=editblock&id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
 					<hr>
 					<div id="tp'.$block['id'].'" style="overflow: hidden;">
 						<input type="hidden" value="control" name="' . rand(10000,19999) .'tpblock'.$block['id'].'" />';

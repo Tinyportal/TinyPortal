@@ -64,6 +64,9 @@ class TPortal_Integrate
             'tp_blocks'                         => array (
                 '$sourcedir/TPShout.php|TPShoutBlock',
             ),
+            'tp_pre_admin_subactions'           => array ( 
+                '$sourcedir/TPBlock.php|TPBlockAdminActions',
+            ),
 
         );
 

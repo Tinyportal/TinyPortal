@@ -93,18 +93,34 @@ function TPortalAdmin()
 	// get the categories
 	get_catnames();
 
-	if(isset($_GET['id']))
+	if(isset($_GET['id'])) {
 		$context['TPortal']['subaction_id'] = $_GET['id'];
+    }
 
 	// check POST values
 	$return = do_postchecks();
-
-	if(!empty($return))
+ 
+	if(!empty($return)) {
 		redirectexit('action=tpadmin;sa=' . $return);
+    }
+	
+    $tpsub = '';
 
-	$tpsub = '';
+	$subAction  = TPUtil::filter('sa', 'get', 'string');
+    $subActions = array();
+   
+    call_integration_hook('integrate_tp_pre_admin_subactions', array(&$subActions));
 
-	if(isset($_GET['sa'])) {
+    $context['TPortal']['subaction'] = $subAction;
+    // If it exists in our new subactions array load it
+    if(!empty($subAction) && array_key_exists($subAction, $subActions)) {
+        if (!empty($subActions[$subAction][0])) {
+            require_once(SOURCEDIR . '/' . $subActions[$subAction][0]);
+        }
+
+        call_user_func_array($subActions[$subAction][1], $subActions[$subAction][2]);
+    }
+    elseif(isset($_GET['sa'])) {
 		$context['TPortal']['subaction'] = $tpsub = $_GET['sa'];
 		if(substr($_GET['sa'], 0, 11) == 'editarticle') {
 			loadTemplate('TParticle');
@@ -265,6 +281,8 @@ function TPortalAdmin()
 
 	loadTemplate('TPortalAdmin');
 	TPadminIndex($tpsub);
+
+    call_integration_hook('integrate_tp_post_admin_subactions');
 }
 
 /* ******************************************************************************************************************** */
@@ -2363,7 +2381,7 @@ function do_postchecks()
 
 			$where = $smcFunc['db_insert_id']('{db_prefix}tp_blocks', 'id');
 			if(!empty($where))
-				redirectexit('action=tportal&sa=editblock&id='.$where.';sesc='. $context['session_id']);
+				redirectexit('action=tpadmin&sa=editblock&id='.$where.';sesc='. $context['session_id']);
 			else
 				redirectexit('action=tpadmin;sa=blocks');
 		}
@@ -2560,7 +2578,7 @@ function do_postchecks()
 			}
 			updateTPSettings($updateArray);
 
-			redirectexit('action=tportal&sa=editblock&id='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
+			redirectexit('action=tpadmin&sa=editblock&id='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
 		// Editing an article?
 		elseif(substr($from, 0, 11) == 'editarticle') {
