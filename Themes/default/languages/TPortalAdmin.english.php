@@ -91,7 +91,6 @@ $txt['tp-displaytoppanel'] = 'Display top panel';
 $txt['tp-displaycenterpanel'] = 'Display upper panel';
 $txt['tp-displaylowerpanel'] = 'Display lower panel';
 $txt['tp-displaybottompanel'] = 'Display bottom panel';
-$txt['tp-displaynews'] = 'Display userinfo/news at the top';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage';
 $txt['tp-articlelayouts'] = 'Layout type';
 $txt['tp-catlayout1'] = 'normal articles';
