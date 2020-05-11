@@ -767,7 +767,7 @@ $clickme.click( function(e) {
 				// which parent category?
 				echo $txt['tp-assigncatparent'].'</span>
 					<select size="1" name="assign-ftp-cat" style="margin-top: 4px;">
-						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
+						<option value="0" selected>'.$txt['tp-dlnocategory'].'</option>';
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
 					foreach($context['TPortal']['admuploadcats'] as $ucats)
@@ -811,7 +811,7 @@ $clickme.click( function(e) {
 				// which parent category?
 				echo '
 					<select size="1" name="dladmin_parent'.$cat['id'].'" id="dladmin_parent" style="margin-top: 4px;">
-						<option value="0" ', $cat['parent']==0 ? 'selected' : '' ,'>'.$txt['tp-nocategory'].'</option>';
+						<option value="0" ', $cat['parent']==0 ? 'selected' : '' ,'>'.$txt['tp-dlnocategory'].'</option>';
 
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
@@ -940,7 +940,7 @@ $clickme.click( function(e) {
 		// which parent category?
 		echo '
 					<select size="1" name="newdladmin_parent" id="newdladmin_parent" style="margin-top: 4px;">
-						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
+						<option value="0" selected>'.$txt['tp-dlnocategory'].'</option>';
 
 		foreach($context['TPortal']['admuploadcats'] as $ucats)
 		{

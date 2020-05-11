@@ -1010,12 +1010,6 @@ function template_editcategory()
 							<input type="checkbox" name="tp_category_toppanel" id="tp_category_toppanel" value="1"' , !empty($mg['toppanel']) ? ' checked="checked"' : '' ,' />
 						<dd>
 						<dt>
-							<label for="tp_category_bottompanel">', $txt['tp-displaybottompanel'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" name="tp_category_bottompanel" id="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
-						<dt>
 							<label for="tp_category_centerpanel">', $txt['tp-displaycenterpanel'], '</label>
 						</dt>
 						<dd>
@@ -1026,6 +1020,12 @@ function template_editcategory()
 						</dt>
 						<dd>
 							<input type="checkbox" name="tp_category_lowerpanel" id="tp_category_lowerpanel" value="1"' , !empty($mg['lowerpanel']) ? ' checked="checked"' : '' ,' />
+						<dd>
+						<dt>
+							<label for="tp_category_bottompanel">', $txt['tp-displaybottompanel'], '</label>
+						</dt>
+						<dd>
+							<input type="checkbox" name="tp_category_bottompanel" id="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
 						<dd>
 					</dl>
 					<dl class="settings">
