@@ -1936,11 +1936,11 @@ function article_comments($render = true)
 					' . (($comment['is_new'] && $context['user']['is_logged'] && TP_SMF21) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
 				if ($comment['poster_id'] > 0) {
 					$data .= '					
-						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
+						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-bycom'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
 				}
                 else {
 					$data .= '
-						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-by'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>';
+						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-bycom'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>';
                 }
 				$data .= '	
 					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';

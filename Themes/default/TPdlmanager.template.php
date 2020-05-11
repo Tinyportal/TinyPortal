@@ -494,14 +494,14 @@ function template_main()
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
 			echo '<div class="padding-div" style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].'Kb</b></div>
+		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
 					<div class="formtable padding-div">
 						<dl class="settings">
 							<dt>
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input style="width:97%;" name="tp-dluploadtitle" id="tp-dluploadtitle" type="text" value="-no title-" size="40">
+								<input style="width:97%;" name="tp-dluploadtitle" id="tp-dluploadtitle" type="text" value="'.$txt['tp-dlnotitle'].'" size="40">
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
@@ -819,7 +819,7 @@ function template_main()
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
 							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></div>
-							<div class="float-items" style="width:15%;">'. floor($cats['size']/1000).'kb</div>
+							<div class="float-items" style="width:15%;">'. floor($cats['size']/1000).''.$txt['tp-kb'].'</div>
 							<p class="clearthefloat"></p>';
 					$counter++;
 				}
@@ -907,7 +907,7 @@ function template_main()
 						'.$txt['tp-dlfilesize'].'
 					</dt>
 					<dd>
-						'.($cat['filesize']*1024).' bytes
+						'.($cat['filesize']*1024).' '.$txt['tp-bytes'].'
 					</dd>
 					<dt>
 						'.$txt['tp-uploadnewfileexisting'].':</dt>

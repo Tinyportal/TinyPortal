@@ -2264,7 +2264,7 @@ function do_postchecks()
 			checkSession('post');
 			isAllowedTo('tp_blocks');
 
-			$title = empty($_POST['tp_addblocktitle']) ? '-no title-' : ($_POST['tp_addblocktitle']);
+			$title = empty($_POST['tp_addblocktitle']) ? $txt['tp-no_title'] : ($_POST['tp_addblocktitle']);
 			$panel = $_POST['tp_addblockpanel'];
 			$type = $_POST['tp_addblock'];
 			if(!is_numeric($type))
