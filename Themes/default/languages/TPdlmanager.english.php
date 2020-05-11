@@ -64,7 +64,7 @@ $txt['tp-dlcatedit'] = 'Edit category';
 $txt['tp-dlparent'] = 'Parent category';
 $txt['tp-shortname'] = 'Short name';
 $txt['tp-chooseicon'] = '- choose icon -';
-$txt['tp-nocategory'] = '- no category -';
+$txt['tp-dlnocategory'] = '- no category -';
 $txt['tp-nocats'] = 'No categories found.';
 $txt['tp-dlaccess'] = 'Membergroups that can see this category';
 
@@ -188,6 +188,6 @@ $txt['tp-confirm'] = 'Are you sure?';
 $txt['tp-dosubmit'] = 'Save';
 $txt['tp-download'] = 'Download';
 $txt['tp-downloads'] = 'Downloads';
-$txt['tp-downloadss2'] = 'Click here to download the file'
+$txt['tp-downloadss2'] = 'Click here to download the file';
 
 ?>
