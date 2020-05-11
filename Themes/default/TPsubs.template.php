@@ -1195,6 +1195,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_views}
+				{article_comments_total}
 				{article_rating}
 				{article_options}
 				{article_print}
@@ -1229,6 +1230,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_views}
+				{article_comments_total}
 				{article_rating}
 				{article_options}
 				{article_print}
@@ -1257,6 +1259,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_views}
+				{article_comments_total}
 				{article_rating}
 				{article_options}
 				{article_print}
@@ -1298,6 +1301,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_views}
+				{article_comments_total}
 				{article_rating}
 				{article_options}
 				{article_print}
@@ -1336,6 +1340,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_views}
+				{article_comments_total}
 				{article_rating}
 				{article_options}
 				{article_print}
@@ -1379,6 +1384,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_category}
 					{article_date}
 					{article_views}
+					{article_comments_total}
 					{article_rating}
 					{article_options}
 					{article_print}
@@ -1422,6 +1428,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_author}
 					{article_date}
 					{article_views}
+					{article_comments_total}
 					{article_rating}
 					{article_options}
 					{article_print}
@@ -1459,6 +1466,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_views}
+				{article_comments_total}
 				{article_rating}
 				{article_options}
 				{article_print}
@@ -1633,6 +1641,29 @@ function article_views($render = true)
 	if(in_array('views',$context['TPortal']['article']['visual_options'])) {
 		$data = '
 		<span class="article_views"> ' . $txt['tp-views'] . ': ' . $context['TPortal']['article']['views'] . '</span>';
+    }
+
+    if($render) {
+        echo $data;
+    }
+    else {
+        return $data;
+    }
+}
+
+function article_comments_total($render = true)
+{
+	global $scripturl, $txt, $context; 
+
+    $data = '';
+
+	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (!empty($context['TPortal']['article_comments_count']) > 0)) {
+		$data = '
+		<span class="article_views">' .	$txt['tp-comments'] . ':  ' . $context['TPortal']['article_comments_count'] . '</span>';
+    }
+	elseif(in_array('comments', $context['TPortal']['article']['visual_options']) && (empty($context['TPortal']['article_comments_count']))) {
+		$data = '
+		<span class="article_views"><a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' .	$txt['tp-comments'] . '</a></span>';
     }
 
     if($render) {
