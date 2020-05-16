@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.6
+ * @version 1.6.7
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -100,7 +100,7 @@ function TPortalAdmin()
 
 	if(isset($_GET['sa'])) {
 		$context['TPortal']['subaction'] = $tpsub = $_GET['sa'];
-		if(substr($_GET['sa'], 0, 11) == 'editarticle' && (allowedTo(array('tp_article', 'tp_editownarticle') || $context['user']['is_admin']))) {
+		if((substr($_GET['sa'], 0, 11) == 'editarticle') && ( allowedTo(array('tp_articles', 'tp_editownarticle')) || $context['user']['is_admin']) ) {
 			$tpsub = 'articles';
 			$context['TPortal']['subaction'] = 'editarticle';
 		    do_subaction($tpsub, true);

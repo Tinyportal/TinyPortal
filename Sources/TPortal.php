@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.6
+ * @version 1.6.7
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2790,14 +2790,14 @@ function tp_setupUpshrinks()
 					pstate = 1;
 					removeFromArray(targetID, tpPanels);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+					document.getElementById( img ).src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
 				}
 				else {
 					target.style.display = "none";
 					pstate = 0;
 					tpPanels.push(targetID);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+					document.getElementById( img ).src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
 				}
 			}
 		}

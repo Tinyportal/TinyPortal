@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.6
+ * @version 1.6.7
  * @author tinoest - http://www.tinyportal.net
  * @license MPL 2.0
  *
