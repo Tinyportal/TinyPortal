@@ -2304,14 +2304,20 @@ function tpSetupUpshrinks() {{{
 					pstate = 1;
 					removeFromArray(targetID, tpPanels);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+                    var image = document.getElementById(img);
+                    if(image !== null) {
+					    image.src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+                    }
 				}
 				else {
 					target.style.display = "none";
 					pstate = 0;
 					tpPanels.push(targetID);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById(img).src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+                    var image = document.getElementById(img);
+                    if(image !== null) {
+					    image.src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+                    }
 				}
 			}
 		}
