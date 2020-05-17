@@ -2782,7 +2782,6 @@ function tp_setupUpshrinks()
 			var panel = targetID;
 			var img = "toggle_" + targetID;
 			var ap = 0;
-
 			if ( document.getElementById ) {
 				target = document.getElementById( panel );
 				if ( target.style.display == "none" ) {
@@ -2790,14 +2789,20 @@ function tp_setupUpshrinks()
 					pstate = 1;
 					removeFromArray(targetID, tpPanels);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById( img ).src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+                    var image = document.getElementById(img);
+                    if(image !== null) {
+					    image.src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+                    }
 				}
 				else {
 					target.style.display = "none";
 					pstate = 0;
 					tpPanels.push(targetID);
 					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-					document.getElementById( img ).src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+                    var image = document.getElementById(img);
+                    if(image !== null) {
+					    image.src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+                    }
 				}
 			}
 		}
