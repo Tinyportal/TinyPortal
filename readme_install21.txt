@@ -1,4 +1,4 @@
-Installing TinyPortal v1.6.6 for SMF2.1
+Installing TinyPortal v1.6.7 for SMF2.1
 
 [size=14pt][color=red][b]Important:[/b][/color][/size]
 [list]
