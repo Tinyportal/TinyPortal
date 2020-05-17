@@ -218,7 +218,12 @@ function TPUpshrink() {{{
         }
         // Don't output anything...
         $tid = time();
-        redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
+		if (TP_SMF21) {
+			redirectexit($settings['images_url'] . '/blank.png?ti='.$tid);
+			}
+		else {
+			redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
+			}
     }
 
 }}}
