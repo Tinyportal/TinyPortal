@@ -2297,28 +2297,30 @@ function tpSetupUpshrinks() {{{
 			var img = "toggle_" + targetID;
 			var ap = 0;
 
-			if ( document.getElementById ) {
+			if ( document.getElementById && (0 !== panel.length) ) {
 				target = document.getElementById( panel );
-				if ( target.style.display == "none" ) {
-					target.style.display = "";
-					pstate = 1;
-					removeFromArray(targetID, tpPanels);
-					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-                    var image = document.getElementById(img);
-                    if(image !== null) {
-					    image.src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+                if ( target !== null ) {
+                    if ( target.style.display == "none" ) {
+                        target.style.display = "";
+                        pstate = 1;
+                        removeFromArray(targetID, tpPanels);
+                        document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
+                        var image = document.getElementById(img);
+                        if(image !== null) {
+                            image.src = \'' . $settings['tp_images_url'] . '/TPupshrink.png\';
+                        }
                     }
-				}
-				else {
-					target.style.display = "none";
-					pstate = 0;
-					tpPanels.push(targetID);
-					document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
-                    var image = document.getElementById(img);
-                    if(image !== null) {
-					    image.src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+                    else {
+                        target.style.display = "none";
+                        pstate = 0;
+                        tpPanels.push(targetID);
+                        document.cookie="tp_panels=" + tpPanels.join(",") + "; expires=Wednesday, 01-Aug-2040 08:00:00 GMT";
+                        var image = document.getElementById(img);
+                        if(image !== null) {
+                            image.src = \'' . $settings['tp_images_url'] . '/TPupshrink2.png\';
+                        }
                     }
-				}
+                }
 			}
 		}
 		function removeFromArray(value, array){
