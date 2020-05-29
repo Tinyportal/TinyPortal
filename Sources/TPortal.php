@@ -1551,7 +1551,6 @@ function doTPfrontpage() {{{
 
 		// insert the forumposts into $posts
 		if(is_array($forumPosts) && count($forumPosts) > 0) {
-            
             // Needed for html_to_bbc
             require_once(SOURCEDIR . '/Subs-Editor.php');
 
@@ -1562,9 +1561,24 @@ function doTPfrontpage() {{{
                 $row['real_name']       = $row['poster']['name'];
                 $row['author_id']       = $row['poster']['id'];
                 $row['category']        = $row['board']['name'];
-                $row['views']           = 0;
                 $row['date_registered'] = 0;
                 $row['id']              = $row['topic'];
+                $row['category_name']   = $row['board']['name'];
+                $row['category']        = $row['board']['id'];
+    
+        		$request =  $smcFunc['db_query']('', '
+		        	SELECT t.num_views AS views 
+                    FROM {db_prefix}topics AS t
+			        WHERE t.id_topic = ({int:id})',
+			        array(
+				        'id' => $row['id'],
+			        )
+		        );
+
+                $data                   = $smcFunc['db_fetch_assoc']($request);
+                $row['views']           = isset($data['views']) ? $data['views'] : 0;
+                $smcFunc['db_free_result']($request);
+
 
                 // Turn the body back to bbc so the parse_bbc called later doesn't break....
                 $row['body']            = html_to_bbc($row['body']);
