@@ -1501,7 +1501,7 @@ function article_date($render = true)
 
 	$data = '';
 	if(in_array('date',$context['TPortal']['article']['visual_options'])) {
-	    $data =  '<span class="article_date"> ' . (timeformat($context['TPortal']['article']['date'])) . '</span>';
+	    $data =  '<span class="article_date">' . (timeformat($context['TPortal']['article']['date'])) . '</span>';
     }
 
     if($render) {
@@ -1615,12 +1615,12 @@ function article_author($render = true)
 
 	if(in_array('author', $context['TPortal']['article']['visual_options'])) {
 		if($context['TPortal']['article']['date_registered'] > 1000) {
-			$data = '
-		'. $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a>';
+			$data = '<span class="article_author">
+		'. $txt['tp-by'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a></span>';
         }
 		else {
-			$data = '&nbsp;
-		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['real_name'];
+			$data = '<span class="article_author">
+		' . $txt['tp-by'] . ' ' . $context['TPortal']['article']['real_name'] . '</span>';
         }
 	}
 
@@ -1659,11 +1659,11 @@ function article_comments_total($render = true)
 
 	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (!empty($context['TPortal']['article_comments_count']) > 0)) {
 		$data = '
-		<span class="article_views">' .	$txt['tp-comments'] . ':  ' . $context['TPortal']['article_comments_count'] . '</span>';
+		<span class="article_comments">' .	$txt['tp-comments'] . ':  ' . $context['TPortal']['article_comments_count'] . '</span>';
     }
 	elseif(in_array('comments', $context['TPortal']['article']['visual_options']) && (empty($context['TPortal']['article_comments_count']))) {
 		$data = '
-		<span class="article_views"><a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' .	$txt['tp-comments'] . '</a></span>';
+		<span class="article_comments"><a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' .	$txt['tp-comments'] . '</a></span>';
     }
 
     if($render) {
@@ -1935,14 +1935,14 @@ function article_comments($render = true)
 
     $data = '';
 
-	if(in_array('comments', $context['TPortal']['article']['visual_options'])) {
+	if(in_array('comments', $context['TPortal']['article']['visual_options']) || !empty($context['TPortal']['can_artcomment'])) {
 		$data .= '
 	<a name="tp-comment">
 	<div></div>
 	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . ':  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . ' ' . $context['TPortal']['article_comments_count'] . '</h2>';
 	}
 
-	if(!$context['TPortal']['article_comments_count'] == 0) {
+	if(in_array('comments', $context['TPortal']['article']['visual_options']) && !$context['TPortal']['article_comments_count'] == 0) {
 		$data .= '	
 	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
 
