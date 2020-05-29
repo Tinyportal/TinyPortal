@@ -137,16 +137,31 @@ function TPortalAdmin()
 		do_subaction($tpsub);
 	}
 	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
-		$context['TPortal']['subaction'] = $tpsub = 'blocks';
-		do_blocks($tpsub);
+        if(allowedTo('tp_blocks')) {		
+            $context['TPortal']['subaction'] = $tpsub = 'blocks';
+		    do_blocks($tpsub);
+        }
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }
 	}
-	elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete'])) {
-		$context['TPortal']['subaction'] = $tpsub = 'linkmanager';
-		do_menus($tpsub);
+    elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete'])) {
+        if(allowedTo('tp_blocks')) {
+            $context['TPortal']['subaction'] = $tpsub = 'linkmanager';
+            do_menus($tpsub);
+        }
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }		
 	}
 	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse'])) {
-		$context['TPortal']['subaction'] = $tpsub = 'articles';
-		do_articles($tpsub);
+        if(allowedTo('tp_articles')) {
+		    $context['TPortal']['subaction'] = $tpsub = 'articles';
+		    do_articles($tpsub);
+        }    
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }
 	}
     elseif(array_key_exists('shout', $_GET) && $_GET['shout'] == 'admin') {
         require_once(SOURCEDIR . '/TPShout.php');
@@ -285,18 +300,30 @@ function TPortalAdmin()
 /* ******************************************************************************************************************** */
 function do_subaction($tpsub)
 {
-	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')))
+    global $context, $txt;
+
+	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons', 'clist')) && (allowedTo('tp_articles')) ) {
 		do_articles();
-	elseif(in_array($tpsub, array('blocks', 'panels')))
+    }
+	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks')) ) {
 		do_blocks();
-	elseif(in_array($tpsub, array('menubox', 'addmenu')))
+	}
+    elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks')) ) {
 		do_menus();
-	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')))
+	}
+    elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (allowedTo('tp_settings')) ) {
 		do_news($tpsub);
-	elseif($tpsub == 'settings')
+	}
+    elseif($tpsub == 'settings' && (allowedTo('tp_settings')) ) {
 		do_news('settings');
-	else
+    }
+    elseif(!$context['user']['is_admin']) {
+		fatal_error($txt['tp-noadmin'], false);
+    }
+    else {
 		do_news();
+    }
+
 }
 
 function do_blocks()
