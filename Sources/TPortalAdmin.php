@@ -44,7 +44,6 @@ function TPortalAdmin()
 		'top' => 0,
 		'bottom' => 0,
 		'lower' => 0,
-		'header' => 0,
 		'nolayer' => 0,
 		'sort' => 'date',
 		'sortorder' => 'desc'
@@ -64,8 +63,6 @@ function TPortalAdmin()
 		$context['TPortal']['frontpage_visualopts_admin']['bottom'] = 1;
 	if(in_array('lower',$w))
 		$context['TPortal']['frontpage_visualopts_admin']['lower'] = 1;
-	if(in_array('header',$w))
-		$context['TPortal']['frontpage_visualopts_admin']['header'] = 1;
 	if(in_array('nolayer',$w))
 		$context['TPortal']['frontpage_visualopts_admin']['nolayer'] = 1;
 	foreach($w as $r)
@@ -2264,7 +2261,7 @@ function do_postchecks()
 			checkSession('post');
 			isAllowedTo('tp_blocks');
 
-			$title = empty($_POST['tp_addblocktitle']) ? '-no title-' : ($_POST['tp_addblocktitle']);
+			$title = empty($_POST['tp_addblocktitle']) ? $txt['tp-no_title'] : ($_POST['tp_addblocktitle']);
 			$panel = $_POST['tp_addblockpanel'];
 			$type = $_POST['tp_addblock'];
 			if(!is_numeric($type))

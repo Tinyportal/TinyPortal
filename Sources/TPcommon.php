@@ -116,7 +116,7 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 	$filesize = filesize($_FILES[$widthhat]['tmp_name']);
 	if($filesize > (1024 * $maxsize)) {
 		unlink($_FILES[$widthhat]['tmp_name']);
-		fatal_error($txt['tp-dlmaxerror'] . $maxsize.' Kb.', false);
+		fatal_error($txt['tp-dlmaxerror'] . $maxsize. $txt['tp-kb'], false);
 	}
 
 	// check the extension
@@ -218,7 +218,12 @@ function TPUpshrink() {{{
         }
         // Don't output anything...
         $tid = time();
-        redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
+		if (TP_SMF21) {
+			redirectexit($settings['images_url'] . '/blank.png?ti='.$tid);
+			}
+		else {
+			redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
+			}
     }
 
 }}}

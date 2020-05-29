@@ -2317,7 +2317,7 @@ function art_recentitems($max = 5, $type = 'date' ){
 
 function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 {
-	global $boardurl, $context, $scripturl, $smcFunc;
+	global $txt, $boardurl, $context, $scripturl, $smcFunc;
 
 	// collect all categories to search in
 	$mycats = array();
@@ -2382,11 +2382,11 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 			{
 				$fs = '';
 				if($context['TPortal']['dl_fileprefix'] == 'K')
-					$fs = ceil($row['filesize'] / 1000).' Kb';
+					$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'M')
-					$fs = (ceil($row['filesize'] / 1000) / 1000).' Mb';
+					$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'G')
-					$fs = (ceil($row['filesize'] / 1000000) / 1000).' Gb';
+					$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
 
 				if($context['TPortal']['dl_usescreenshot'] == 1)
 				{

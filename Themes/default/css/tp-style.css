@@ -109,6 +109,9 @@ h2.author_h2 {
 	overflow: hidden;
 	padding: 1em 1em 0.75em 1em;
 }
+.article_info a, .article_info a:visited {
+	color: #888;
+}
 /*.article_text {
 	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
 }*/

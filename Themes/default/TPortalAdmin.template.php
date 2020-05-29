@@ -356,8 +356,7 @@ function template_frontpage()
 							<input name="tp_frontpage_visual_top" id="tp_frontpage_visual_top" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['top']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_top"> ',$txt['tp-displaytoppanel'],'</label><br>
 							<input name="tp_frontpage_visual_center" id="tp_frontpage_visual_center" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['center']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_center"> ',$txt['tp-displaycenterpanel'],'</label><br>
 							<input name="tp_frontpage_visual_lower" id="tp_frontpage_visual_lower" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['lower']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_lower"> ',$txt['tp-displaylowerpanel'],'</label><br>
-							<input name="tp_frontpage_visual_bottom" id="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_bottom"> ',$txt['tp-displaybottompanel'],'</label><br>
-							<input name="tp_frontpage_visual_header" id="tp_frontpage_visual_header" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['header']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_header"> ',$txt['tp-displaynews'],'</label><br><br>
+							<input name="tp_frontpage_visual_bottom" id="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_bottom"> ',$txt['tp-displaybottompanel'],'</label><br><br>
 						</dd>
 
 					</dl>
@@ -410,6 +409,7 @@ function template_frontpage()
 								{article_author}
 								{article_date}
 								{article_views}
+								{article_comments_total}
 								{article_rating}
 								{article_options}
 							</div>
@@ -962,6 +962,7 @@ function template_editcategory()
 											{article_author}
 											{article_date}
 											{article_views}
+											{article_comments_total}
 											{article_rating}
 											{article_options}
 										</div>
@@ -1010,12 +1011,6 @@ function template_editcategory()
 							<input type="checkbox" name="tp_category_toppanel" id="tp_category_toppanel" value="1"' , !empty($mg['toppanel']) ? ' checked="checked"' : '' ,' />
 						<dd>
 						<dt>
-							<label for="tp_category_bottompanel">', $txt['tp-displaybottompanel'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" name="tp_category_bottompanel" id="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
-						<dt>
 							<label for="tp_category_centerpanel">', $txt['tp-displaycenterpanel'], '</label>
 						</dt>
 						<dd>
@@ -1026,6 +1021,12 @@ function template_editcategory()
 						</dt>
 						<dd>
 							<input type="checkbox" name="tp_category_lowerpanel" id="tp_category_lowerpanel" value="1"' , !empty($mg['lowerpanel']) ? ' checked="checked"' : '' ,' />
+						<dd>
+						<dt>
+							<label for="tp_category_bottompanel">', $txt['tp-displaybottompanel'], '</label>
+						</dt>
+						<dd>
+							<input type="checkbox" name="tp_category_bottompanel" id="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
 						<dd>
 					</dl>
 					<dl class="settings">

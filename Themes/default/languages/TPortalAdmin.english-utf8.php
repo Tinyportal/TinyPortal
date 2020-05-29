@@ -91,7 +91,6 @@ $txt['tp-displaytoppanel'] = 'Display top panel';
 $txt['tp-displaycenterpanel'] = 'Display upper panel';
 $txt['tp-displaylowerpanel'] = 'Display lower panel';
 $txt['tp-displaybottompanel'] = 'Display bottom panel';
-$txt['tp-displaynews'] = 'Display userinfo/news at the top';
 $txt['tp-frontpage_layout'] = 'Articles layout for the frontpage';
 $txt['tp-articlelayouts'] = 'Layout type';
 $txt['tp-catlayout1'] = 'normal articles';
@@ -114,8 +113,7 @@ $txt['tp-sortoptions4'] = 'Sort by id number';
 $txt['tp-sortdirection1'] = 'Descending';
 $txt['tp-sortdirection2'] = 'Ascending';
 $txt['tp-allowguests'] = 'Allow full display of forum-topics on the frontpage';
-$txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum-topics on the frontpage, even if they are not allowed to see the boards themselves? [Yes]: users will get to see it, regardless of your SMF setting.
- [No]: users will \'not\' get to see it, regardless of your SMF setting.';
+$txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum-topics on the frontpage, even if they are not allowed to see the boards themselves? [Yes]: users will get to see it, regardless of your SMF setting. [No]: users will \'not\' get to see it, regardless of your SMF setting.';
 $txt['tp-showforumposts'] = 'Display forum-topics on frontpage from';
 $txt['tp-lengthofposts'] = 'Number of characters to display per forum-topic';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics';
@@ -147,7 +145,7 @@ $txt['tp-hidearticle-digg'] = 'Hide Digg button';
 $txt['tp-hidearticle-delicious'] = 'Hide Delicious button';
 $txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button';
 
-//Articles overview
+// Articles overview
 $txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
 $txt['tp-setfrontpage'] = 'Toggle show on frontpage';
 $txt['tp-setsticky'] = 'Set as sticky/non-sticky article';

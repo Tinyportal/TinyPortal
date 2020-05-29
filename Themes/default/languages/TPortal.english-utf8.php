@@ -100,6 +100,7 @@ $txt['whoall_tpmod_dlitem'] = 'Viewing a files item.';
 // Articles
 $txt['tp-author'] = 'Author';
 $txt['tp-by'] = 'Written by';
+$txt['tp-bycom'] = 'Comment by';
 $txt['tp_rate'] = 'Rate it!';
 $txt['tp-articlenotexist'] = 'This article is not available. You may not have permission to see the article, it isn\'t active, hasn\'t been approved yet, or simply does not exist.';
 $txt['tp-articlessubmitted'] = 'New article(s): ';
@@ -196,7 +197,7 @@ $txt['tp-dlmanageroff'] = 'The DL Manager module is not active.';
 $txt['tp-dlsettings'] = 'Settings';
 $txt['tp-dluploaded'] = 'New upload(s)';
 $txt['tp-downloads'] = 'Downloads';
-$txt['tp-downloadss1'] = 'Downloads files';
+$txt['tp-downloadss1'] = 'Files';
 $txt['tp-uploadedby'] = 'Uploaded by ';
 
 // Shoutbox
@@ -255,7 +256,7 @@ $txt['tp-modules'] = 'Modules';
 $txt['tp-morecategories'] = 'More';
 $txt['tp-myarticles'] = 'My articles';
 $txt['tp-newcomment'] = 'New comment';
-$txt['tp-noadmin'] = 'Sorry, you are not allowed to access TinyPortal admin pages.';
+$txt['tp-noadmin'] = 'Sorry, you are not allowed to access this TinyPortal admin page.';
 $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
 $txt['tp-nocategory'] = 'This article isn\'t assigned to a category yet.';
 $txt['tp-none'] = '-none-';

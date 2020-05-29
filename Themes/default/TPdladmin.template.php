@@ -154,15 +154,15 @@ $clickme.click( function(e) {
 						<label for="tp_dluploadsize">'.$txt['tp-dlallowedsize'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadsize" id="tp_dluploadsize" type="text" value="'.$context['TPortal']['dl_max_upload_size'].'"> Kb<br><br>
+						<input name="tp_dluploadsize" id="tp_dluploadsize" type="text" value="'.$context['TPortal']['dl_max_upload_size'].'"> '.$txt['tp-kb'].'<br><br>
 					</dd>
 					<dt>
 						<label for="tp_dl_fileprefix">'.$txt['tp-dluseformat'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix1" type="radio" value="K" ', $context['TPortal']['dl_fileprefix']=='K' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix1">Kb</label><br>
-						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix2" type="radio" value="M" ', $context['TPortal']['dl_fileprefix']=='M' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix2">Mb</label><br>
-						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix3" type="radio" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix3">Gb</label><br><br>
+						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix1" type="radio" value="K" ', $context['TPortal']['dl_fileprefix']=='K' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix1">'.$txt['tp-kb'].'</label><br>
+						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix2" type="radio" value="M" ', $context['TPortal']['dl_fileprefix']=='M' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix2">'.$txt['tp-mb'].'</label><br>
+						<input name="tp_dl_fileprefix" id="tp_dl_fileprefix3" type="radio" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix3">'.$txt['tp-gb'].'</label><br><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dlusescreenshot'].'
@@ -424,7 +424,7 @@ $clickme.click( function(e) {
 			</div>
 			<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 				<div id="show-on-respnsive-layout">'.$txt['tp-dlfilesize'].'</div>
-				'. $cat['filesize'].'kb
+				'. $cat['filesize'].''.$txt['tp-kb'].'
 			</div>
 			<p class="clearthefloat"></p>
 		</div>
@@ -531,11 +531,11 @@ $clickme.click( function(e) {
 					// check the file against
 					if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
 		  				echo '
-						<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].'Kb</option>';
+						<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].''.$txt['tp-kb'].'</option>';
 				}
 				else
 	  				echo '
-				  		<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].'Kb</option>';
+				  		<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].''.$txt['tp-kb'].'</option>';
 			}
 			echo '
 					</select>';
@@ -548,7 +548,7 @@ $clickme.click( function(e) {
 				<dt>
 					'.$txt['tp-dlfilesize'].'</dt>
 				<dd>
-					'.($cat['filesize']*1024).' bytes<br>
+					'.($cat['filesize']*1024).' '.$txt['tp-bytes'].'<br>
 				</dd>
 				<dt>
 					<label for="tp_dluploadfile_edit">'.$txt['tp-uploadnewfileexisting'].'</label>
@@ -717,7 +717,7 @@ $clickme.click( function(e) {
 						</div>
 						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:10%;">
 							<div id="show-on-respnsive-layout">'.$txt['tp-dlfilesize'].'</div>
-							'. $cat['filesize'].'kb
+							'. $cat['filesize'].''.$txt['tp-kb'].'
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
@@ -758,7 +758,7 @@ $clickme.click( function(e) {
 			$ccount=0;
 			foreach($context['TPortal']['tp-downloads'] as $file){
 				if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
-					echo '<div><input name="assign-ftp-checkbox'.$ccount.'" type="checkbox" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' Kb]  - <b><a href="'.$scripturl.'?action=tportal;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
+					echo '<div><input name="assign-ftp-checkbox'.$ccount.'" type="checkbox" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
 					$ccount++;
 			}
 			echo '<div style="padding: 5px;"><span class="smalltext">
@@ -767,7 +767,7 @@ $clickme.click( function(e) {
 				// which parent category?
 				echo $txt['tp-assigncatparent'].'</span>
 					<select size="1" name="assign-ftp-cat" style="margin-top: 4px;">
-						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
+						<option value="0" selected>'.$txt['tp-dlnocategory'].'</option>';
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
 					foreach($context['TPortal']['admuploadcats'] as $ucats)
@@ -811,7 +811,7 @@ $clickme.click( function(e) {
 				// which parent category?
 				echo '
 					<select size="1" name="dladmin_parent'.$cat['id'].'" id="dladmin_parent" style="margin-top: 4px;">
-						<option value="0" ', $cat['parent']==0 ? 'selected' : '' ,'>'.$txt['tp-nocategory'].'</option>';
+						<option value="0" ', $cat['parent']==0 ? 'selected' : '' ,'>'.$txt['tp-dlnocategory'].'</option>';
 
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
@@ -940,7 +940,7 @@ $clickme.click( function(e) {
 		// which parent category?
 		echo '
 					<select size="1" name="newdladmin_parent" id="newdladmin_parent" style="margin-top: 4px;">
-						<option value="0" selected>'.$txt['tp-nocategory'].'</option>';
+						<option value="0" selected>'.$txt['tp-dlnocategory'].'</option>';
 
 		foreach($context['TPortal']['admuploadcats'] as $ucats)
 		{
