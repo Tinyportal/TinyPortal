@@ -1879,29 +1879,29 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 
 	if (allowedTo('tp_articles')) {
 		$context['admin_tabs']['tp_articles'] = array(
-			'articles' => array(
-				'title' => $txt['tp-articles'],
-				'description' => $txt['tp-articledesc1'],
-				'href' => $scripturl . '?action=tpadmin;sa=articles',
-				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays'))),
-			),
 			'categories' => array(
 				'title' => $txt['tp-tabs5'],
 				'description' => $txt['tp-articledesc2'],
 				'href' => $scripturl . '?action=tpadmin;sa=categories',
 				'is_selected' => in_array($tpsub, array('categories', 'addcategory','clist')) ,
 			),
-			'artsettings' => array(
-				'title' => $txt['tp-settings'],
-				'description' => $txt['tp-articledesc3'],
-				'href' => $scripturl . '?action=tpadmin;sa=artsettings',
-				'is_selected' => $tpsub == 'artsettings',
+			'articles' => array(
+				'title' => $txt['tp-articles'],
+				'description' => $txt['tp-articledesc1'],
+				'href' => $scripturl . '?action=tpadmin;sa=articles',
+				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays'))),
 			),
 			'submission' => array(
 				'title' => (isset($context['TPortal']['submissions']) && $context['TPortal']['submissions'])>0 ? $txt['tp-tabs4'].' ['.$context['TPortal']['submissions'].']' : $txt['tp-tabs4'] ,
 				'description' => $txt['tp-articledesc4'],
 				'href' => $scripturl . '?action=tpadmin;sa=submission',
 				'is_selected' => $tpsub == 'submission',
+			),
+			'artsettings' => array(
+				'title' => $txt['tp-settings'],
+				'description' => $txt['tp-articledesc3'],
+				'href' => $scripturl . '?action=tpadmin;sa=artsettings',
+				'is_selected' => $tpsub == 'artsettings',
 			),
 			'icons' => array(
 				'title' => $txt['tp-adminicons'],
