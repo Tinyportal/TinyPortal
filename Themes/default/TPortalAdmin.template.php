@@ -1554,8 +1554,7 @@ function template_panels()
 						</dd>
 					</dl>
 					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
-				</div>
-				<hr>';
+				</div>';
 
 	$allpanels = array('left','right','top','center','front','lower','bottom');
 	$alternate = true;
@@ -1571,18 +1570,20 @@ function template_panels()
 	{
 		echo '
 				<div id="panels-options" class="padding-div">
-					<div class="title_bar"><h3 class="titlebg">';
+				<hr>
+				<dl class="settings">
+				<dt>
+					<div class="font-strong">';
 		if($panl!='front')
-			echo $txt['tp-'.$panl.'panel'].'</h3></div>
-					<a name="'.$panl.'"></a><br>
-					<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" />';
+			echo $txt['tp-'.$panl.'panel'].'</div></dt>
+				<dd>
+					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" /></dd>';
 		else
-			echo $txt['tp-'.$panl.'panel'].'</h3></div>
-					<a name="'.$panl.'"></a><br>
-					<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" />';
+			echo $txt['tp-'.$panl.'panel'].'</div></dt>
+					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" /></dd>';
 		echo '
 					<br>
-				<div>
+				</dl>
 				<dl class="settings">';
 		if($panl!='front')
 		{
@@ -1684,8 +1685,6 @@ function template_panels()
 					</div>';
 			echo '
 				</div>
-			</div>
-			<hr>
 		</div>';
 		$alternate = !$alternate;
 	}
@@ -1722,10 +1721,10 @@ function template_blocks()
 		for($i=0 ; $i<7 ; $i++)
 		{
 			echo '
-				<div class="title_bar"><h3 class="titlebg">
+				<div class="font_strong">
 					<b>'.$txt['tp-'.$side[$i].'sideblocks'].'</b>
 					<a href="'.$scripturl.'?action=tpadmin;addblock=' . $side[$i] . ';' . $context['session_var'] . '=' . $context['session_id'].'">
-					<span style="float: right;">[' , $txt['tp-addblock'] , ']</span></a></h3>
+					<span style="float: right;">[' , $txt['tp-addblock'] , ']</span></a>
 				</div>';
 			if(isset($context['TPortal']['admin' . $side[$i].'panel']) && $context['TPortal']['admin' . $side[$i].'panel']==0 && $side[$i]!='front')
 				echo '
@@ -1739,6 +1738,7 @@ function template_blocks()
 				$tn=0;
 
 			if($tn>0)
+			{
 				echo '
 				<table class="table_grid tp_grid" style="width:100%">
 					<thead>
@@ -1758,7 +1758,11 @@ function template_blocks()
 						</tr>
 					</thead>
 					<tbody>';
-
+			}
+			else
+			{
+				echo '<div class="tp_pad">' .$txt['tp-noblocks']. '</div><br>';
+			}
 			$n=0;
 			if($tn>0)
 			{
@@ -2045,7 +2049,7 @@ function template_blocks()
 				}
 			echo '
 					</tbody>
-				</table>';
+				</table><br>';
 			}
 		}
 		echo '

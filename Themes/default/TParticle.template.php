@@ -422,7 +422,8 @@ function template_submitarticle()
 									<input id="toggleoptions" type="checkbox" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
 								</dd>
 							</dl>
-							<div class="title_bar"><h3 class="titlebg">' . $txt['tp-details'] . '</h3></div>
+							<hr>
+							<div class="font-strong">' . $txt['tp-details'] . '</div>
 							<br>
 							<dl class="settings">
 								<dt>
@@ -516,9 +517,8 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[5].'" id="tp_article_options_'.$opts[5].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
 								</dd>*/
 					echo '	</dl>
-								<div class="title_bar">
-								<h3 class="titlebg">' . $txt['tp-panels'] . '</h3>
-								</div><br>
+								<hr>
+								<div class="font-strong">' . $txt['tp-panels'] . '</div><br>
 							<dl class="settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
@@ -569,7 +569,7 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[9].'" id="tp_article_options_'.$opts[9].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[9]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
-						<hr>
+						<br>
 							<dl class="settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
@@ -578,9 +578,8 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[22].'" id="tp_article_options_'.$opts[22].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
-							<div class="title_bar">
-								<h3 class="titlebg">' . $txt['tp-others'] . '</h3>
-							</div><br>
+							<hr>
+							<div class="font-strong">' . $txt['tp-others'] . '</div><br>
 							<dl class="settings">
 								<dt>
 									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
