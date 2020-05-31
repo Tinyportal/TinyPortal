@@ -92,7 +92,6 @@ function TPcollectPermissions() {{{
 	$context['TPortal']['permissonlist'][] = array(
 		'title' => 'tinyportal_submit',
 		'perms' => array(
-			'tp_alwaysapproved' => 0,
 			'tp_submithtml' => 0,
 			'tp_submitbbc' => 0,
 			'tp_editownarticle' => 0
@@ -106,7 +105,6 @@ function TPcollectPermissions() {{{
 		'tp_articles' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_dlmanager' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_dlupload' => array(false, 'tinyportal', 'tinyportal'),
-		'tp_alwaysapproved' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_submithtml' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_submitbbc' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_editownarticle' => array(false, 'tinyportal', 'tinyportal')

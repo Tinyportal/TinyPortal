@@ -644,7 +644,7 @@ function articleSubmit() {{{
     // article
     require_once(SOURCEDIR. '/TPcommon.php');
 
-    if(isset($_POST['tp_article_approved']) || allowedTo('tp_alwaysapproved'))
+    if(isset($_POST['tp_article_approved']))
         $artpp = '1';
     else
         $artpp = '0';
