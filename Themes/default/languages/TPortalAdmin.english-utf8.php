@@ -169,6 +169,7 @@ $txt['tp-sort-on-type'] = 'Sort on type';
 // Edit article
 $txt['tp-preview'] = 'View article';
 $txt['tp-shortname_article'] = 'Short name';
+$txt['tp-shortname_articledesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the url will be displayed as: .../index.php?page=20. if a value is added (for example \'Articles\') the url will show as: .../index.php?page=Articles';
 $txt['tp-importarticle'] = 'Path to external article';
 $txt['tp-addcategory'] = 'Add category';
 $txt['tp-author'] = 'Author';
@@ -577,6 +578,7 @@ $txt['tp-unread'] = 'Unread';
 $txt['tp-memberlist'] = 'Memberlist';
 $txt['tp-stats'] = 'Stats';
 $txt['tp-status'] = 'Status';
+$txt['tp-statusdesc'] = 'Three icons that can be toggled on or off: - Show On Frontpage: will make the article appear on the frontpage of TP. If you set the option of \'use intro\' the introtext content will be used instead. - Set as sticky / non-sticky article: will make the article appear on top of the article list in the category.  - Lock this article for editing: will lock the article.';
 $txt['tp-sub_item'] = 'Position';
 $txt['tp-title'] = 'Title';
 $txt['tp-remove'] = 'Remove';
@@ -589,5 +591,6 @@ $txt['tp-tpmenu'] = 'Menu';
 $txt['tp-menus'] = 'Sections';
 $txt['tp-name'] = 'Name';
 $txt['tp-shortname'] = 'Short name';
+$txt['tp-shortnamedesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the url will be displayed as: .../index.php?cat=20. if a value is added (for example \'Categoryname\') the url will show as: .../index.php?page=Categoryname';
 
 ?>

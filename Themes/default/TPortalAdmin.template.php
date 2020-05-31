@@ -863,6 +863,12 @@ function template_editcategory()
 							<input size="60" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '">
 						<dd>
 						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8">', $txt['tp-shortname'], '</label>
+						</dt>
+						<dd>
+							<input size="20" name="tp_category_value8" id="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '">
+						</dd>
+						<dt>
 							<label for="tp_category_value2">', $txt['tp-parent'], '</label>
 						</dt>
 						<dd>
@@ -897,12 +903,6 @@ function template_editcategory()
 						<dd>
 							<input size="6" name="tp_category_articlecount" id="tp_category_articlecount" type="text" value="' , empty($mg['articlecount']) ? $context['TPortal']['frontpage_limit'] : $mg['articlecount']  , '">
 						<dd>
-						<dt>
-							<label for="tp_category_value8">', $txt['tp-shortname'], '</label>
-						</dt>
-						<dd>
-							<input size="20" name="tp_category_value8" id="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '">
-						</dd>
 					</dl>
 					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 					<hr>
