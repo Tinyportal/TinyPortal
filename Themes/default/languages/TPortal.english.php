@@ -33,10 +33,6 @@ $txt['permissionname_tp_articles'] = $txt['group_perms_name_tp_articles'] = 'Man
 $txt['permissionhelp_tp_articles'] = 'Allows users to manage articles, categories for articles and the catlist.';
 $txt['cannot_tp_articles'] = 'Sorry, you aren\'t allowed to manage articles.';
 
-$txt['permissionname_tp_alwaysapproved'] = $txt['group_perms_name_tp_alwaysapproved'] = 'Submissions are always approved';
-$txt['permissionhelp_tp_alwaysapproved'] = 'Allows users to write articles that will be automatically approved.';
-$txt['cannot_tp_alwaysapproved'] = 'Article submission needs to be approved first.';
-
 $txt['permissionname_tp_submithtml'] = $txt['group_perms_name_tp_submithtml'] = 'Can submit HTML articles';
 $txt['permissionhelp_tp_submithtml'] = 'Allows users to write and submit HTML type of articles.';
 $txt['cannot_tp_submithtml'] = 'Sorry, you aren\'t allowed to submit HTML articles.';
