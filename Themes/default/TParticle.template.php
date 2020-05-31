@@ -64,16 +64,21 @@ function template_submitarticle()
 		<div id="edit-add-single-article" class="admintable admin-area">
 		<div class="windowbg noup">
 			<div class="formtable padding-div">
-			<div>
-						<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-title'] , '</label></div>
-						<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
-					</div>
-					<div>
-						<div class="font-strong"><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'&nbsp;</label></div>
-						<input size=20 name="tp_article_shortname" id="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
-					</div>
-					<br>
-					<div>';
+			<dl class="settings">
+				<dt>
+					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-title'] , '</label></div>
+				</dt>
+				<dd>
+				<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
+				</dd>
+				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'&nbsp;</label>
+				</dt>
+				<dd>
+					<input size=20 name="tp_article_shortname" id="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
+				</dd>
+			</dl>
+			<div>';
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 				if($article_type == 'php') {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
@@ -103,7 +108,7 @@ function template_submitarticle()
 
                 if(allowedTo('admin_forum')) {
                     echo '<dt>
-						<label for="field_name">', $txt['tp-status'], '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-statusdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
 					</dt>
 					<dd>';
                     if (!empty($context['TPortal']['editing_article'])) {
