@@ -235,6 +235,7 @@ $txt['tp-addarticle'] = 'Add';
 $txt['tp-admin'] = 'TP Admin';
 $txt['tp-article'] = 'Article';
 $txt['tp-articles'] = 'Articles';
+$txt['tp-articlesettings'] = 'Article settings';
 $txt['tp-authorinfo'] = 'About the author';
 $txt['tp-blockoverview'] = 'Block access';
 $txt['tp-blocks'] = 'Blocks';
