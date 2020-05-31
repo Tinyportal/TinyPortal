@@ -197,12 +197,6 @@ function tp_getbuttons() {{{
 					'show' => true,
 					'active_button' => false,
 				),
-				'tparticlesettings' => array(
-					'title' => $txt['tp-articles'],
-					'href' => $scripturl . '?action=tpadmin;sa=artsettings',
-					'show' => true,
-					'active_button' => false,
-				),
 			),
 		);
 	}
@@ -220,9 +214,9 @@ function tp_getbuttons() {{{
 					'show' => true,
 					'active_button' => false,
 				),
-				'tpstrays' => array(
-					'title' => $txt['tp-strays'],
-					'href' => $scripturl . '?action=tpadmin;sa=strays',
+				'tparticles' => array(
+					'title' => $txt['tp-articles'],
+					'href' => $scripturl . '?action=tpadmin;sa=articles',
 					'show' => true,
 					'active_button' => false,
 				),
@@ -232,6 +226,12 @@ function tp_getbuttons() {{{
 					'show' => true,
 					'active_button' => false,
 				),
+				'tparticlesettings' => array(
+					'title' => $txt['tp-articlesettings'],
+					'href' => $scripturl . '?action=tpadmin;sa=artsettings',
+					'show' => true,
+					'active_button' => false,
+				),				
 			),
 		);
 	}
@@ -246,6 +246,12 @@ function tp_getbuttons() {{{
 				'tppanels' => array(
 					'title' => $txt['tp-panels'],
 					'href' => $scripturl . '?action=tpadmin;sa=panels',
+					'show' => true,
+					'active_button' => false,
+				),
+				'tpblocks' => array(
+					'title' => $txt['tp-blocks'],
+					'href' => $scripturl . '?action=tpadmin;sa=blocks',
 					'show' => true,
 					'active_button' => false,
 				),
@@ -269,7 +275,7 @@ function tp_getbuttons() {{{
 		$buts['tpdlmanager'] = array(
 			'title' => $txt['permissionname_tp_dlmanager'],
 			'href' => $scripturl . '?action=tportal;dl=admin',
-			'show' => !empty($context['TPortal']['show_download']),
+			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(
 			),
