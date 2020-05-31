@@ -334,11 +334,8 @@ function template_frontpage()
 							<input name="tp_front_type" id="tp_front_type5" type="radio" value="articles_only" ' , $context['TPortal']['front_type']=='articles_only' ? 'checked' : '' , '><label for="tp_front_type5"> '.$txt['tp-onlyarticles'].'</label><br>
 							<input name="tp_front_type" id="tp_front_type6" type="radio" value="single_page"  ' , $context['TPortal']['front_type']=='single_page' ? 'checked' : '' , '><label for="tp_front_type6"> '.$txt['tp-singlepage'].'</label><br>
 							<input name="tp_front_type" id="tp_front_type7" type="radio" value="frontblock"  ' , $context['TPortal']['front_type']=='frontblock' ? 'checked' : '' , '><label for="tp_front_type7"> '.$txt['tp-frontblocks'].'</label><br>
-							<input name="tp_front_type" id="tp_front_type8" type="radio" value="boardindex"  ' , $context['TPortal']['front_type']=='boardindex' ? 'checked' : '' , '><label for="tp_front_type8"> '.$txt['tp-boardindex'].'</label><br>
-							<input name="tp_front_type" id="tp_front_type9" type="radio" value="module"  ' , $context['TPortal']['front_type']=='module' ? 'checked' : '' , '><label for="tp_front_type9"> '.$txt['tp-frontmodule'].'</label><br>
-							<hr />
-							<div style="padding-left: 2em;"></div>';
-			echo '      <br></dd>
+							<input name="tp_front_type" id="tp_front_type8" type="radio" value="boardindex"  ' , $context['TPortal']['front_type']=='boardindex' ? 'checked' : '' , '><label for="tp_front_type8"> '.$txt['tp-boardindex'].'</label><br><br>
+						</dd>
 						<dt>
 							', $txt['tp-frontblockoption'], '
 						</dt>
@@ -356,9 +353,8 @@ function template_frontpage()
 							<input name="tp_frontpage_visual_top" id="tp_frontpage_visual_top" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['top']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_top"> ',$txt['tp-displaytoppanel'],'</label><br>
 							<input name="tp_frontpage_visual_center" id="tp_frontpage_visual_center" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['center']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_center"> ',$txt['tp-displaycenterpanel'],'</label><br>
 							<input name="tp_frontpage_visual_lower" id="tp_frontpage_visual_lower" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['lower']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_lower"> ',$txt['tp-displaylowerpanel'],'</label><br>
-							<input name="tp_frontpage_visual_bottom" id="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_bottom"> ',$txt['tp-displaybottompanel'],'</label><br><br>
+							<input name="tp_frontpage_visual_bottom" id="tp_frontpage_visual_bottom" type="checkbox" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['bottom']>0 ? 'checked' : '' , '><label for="tp_frontpage_visual_bottom"> ',$txt['tp-displaybottompanel'],'</label><br>
 						</dd>
-
 					</dl>
 					<hr>
 					<div><strong>', $txt['tp-frontpage_layout'], '</strong></div>
@@ -815,7 +811,7 @@ function template_clist()
 	<form  accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="clist">
-		<div class="cat_bar"><h3 class="catbg">TinyPortal - '.$txt['tp-generalsettings'].'</h3></div>
+		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-tabs11'].'</h3></div>
 		<div id="clist" class="admintable admin-area">
 			<div class="windowbg noup">
 				<div class="padding-div"><strong>'.$txt['tp-clist'].'</strong></div>
@@ -1558,8 +1554,7 @@ function template_panels()
 						</dd>
 					</dl>
 					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
-				</div>
-				<hr>';
+				</div>';
 
 	$allpanels = array('left','right','top','center','front','lower','bottom');
 	$alternate = true;
@@ -1575,18 +1570,20 @@ function template_panels()
 	{
 		echo '
 				<div id="panels-options" class="padding-div">
-					<div class="title_bar"><h3 class="titlebg">';
+				<hr>
+				<dl class="settings">
+				<dt>
+					<div class="font-strong">';
 		if($panl!='front')
-			echo $txt['tp-'.$panl.'panel'].'</h3></div>
-					<a name="'.$panl.'"></a><br>
-					<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" />';
+			echo $txt['tp-'.$panl.'panel'].'</div></dt>
+				<dd>
+					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" /></dd>';
 		else
-			echo $txt['tp-'.$panl.'panel'].'</h3></div>
-					<a name="'.$panl.'"></a><br>
-					<img style="margin: 5px;" src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" />';
+			echo $txt['tp-'.$panl.'panel'].'</div></dt>
+					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" /></dd>';
 		echo '
 					<br>
-				<div>
+				</dl>
 				<dl class="settings">';
 		if($panl!='front')
 		{
@@ -1688,8 +1685,6 @@ function template_panels()
 					</div>';
 			echo '
 				</div>
-			</div>
-			<hr>
 		</div>';
 		$alternate = !$alternate;
 	}
@@ -1726,10 +1721,10 @@ function template_blocks()
 		for($i=0 ; $i<7 ; $i++)
 		{
 			echo '
-				<div class="title_bar"><h3 class="titlebg">
+				<div class="font_strong">
 					<b>'.$txt['tp-'.$side[$i].'sideblocks'].'</b>
 					<a href="'.$scripturl.'?action=tpadmin;addblock=' . $side[$i] . ';' . $context['session_var'] . '=' . $context['session_id'].'">
-					<span style="float: right;">[' , $txt['tp-addblock'] , ']</span></a></h3>
+					<span style="float: right;">[' , $txt['tp-addblock'] , ']</span></a>
 				</div>';
 			if(isset($context['TPortal']['admin' . $side[$i].'panel']) && $context['TPortal']['admin' . $side[$i].'panel']==0 && $side[$i]!='front')
 				echo '
@@ -1743,6 +1738,7 @@ function template_blocks()
 				$tn=0;
 
 			if($tn>0)
+			{
 				echo '
 				<table class="table_grid tp_grid" style="width:100%">
 					<thead>
@@ -1762,7 +1758,11 @@ function template_blocks()
 						</tr>
 					</thead>
 					<tbody>';
-
+			}
+			else
+			{
+				echo '<div class="tp_pad">' .$txt['tp-noblocks']. '</div><br>';
+			}
 			$n=0;
 			if($tn>0)
 			{
@@ -2049,7 +2049,7 @@ function template_blocks()
 				}
 			echo '
 					</tbody>
-				</table>';
+				</table><br>';
 			}
 		}
 		echo '

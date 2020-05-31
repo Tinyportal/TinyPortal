@@ -137,16 +137,31 @@ function TPortalAdmin()
 		do_subaction($tpsub);
 	}
 	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
-		$context['TPortal']['subaction'] = $tpsub = 'blocks';
-		do_blocks($tpsub);
+        if(allowedTo('tp_blocks')) {		
+            $context['TPortal']['subaction'] = $tpsub = 'blocks';
+		    do_blocks($tpsub);
+        }
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }
 	}
-	elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete'])) {
-		$context['TPortal']['subaction'] = $tpsub = 'linkmanager';
-		do_menus($tpsub);
+    elseif(isset($_GET['linkon']) || isset($_GET['linkoff']) || isset($_GET['linkedit']) || isset($_GET['linkdelete']) || isset($_GET['linkdelete'])) {
+        if(allowedTo('tp_blocks')) {
+            $context['TPortal']['subaction'] = $tpsub = 'linkmanager';
+            do_menus($tpsub);
+        }
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }		
 	}
 	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse'])) {
-		$context['TPortal']['subaction'] = $tpsub = 'articles';
-		do_articles($tpsub);
+        if(allowedTo('tp_articles')) {
+		    $context['TPortal']['subaction'] = $tpsub = 'articles';
+		    do_articles($tpsub);
+        }    
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }
 	}
     elseif(array_key_exists('shout', $_GET) && $_GET['shout'] == 'admin') {
         require_once(SOURCEDIR . '/TPShout.php');
@@ -164,109 +179,89 @@ function TPortalAdmin()
 
 	// done with all POST values, go to the correct screen
 	$context['TPortal']['subtabs'] = '';
-    if ($context['user']['is_admin']) {
-        if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'categories', 'addcategory'))) {
-            $context['TPortal']['subtabs'] = array(
-                    'categories' => array(
-                        'lang' => true,
-                        'text' => 'tp-tabs5',
-                        'url' => $scripturl . '?action=tpadmin;sa=categories',
-                        'active' => $tpsub == 'categories',
-                        ),
-                    'addcategory' => array(
-                        'lang' => true,
-                        'text' => 'tp-tabs6',
-                        'url' => $scripturl . '?action=tpadmin;sa=addcategory',
-                        'active' => $tpsub == 'addcategory',
-                        ),
-                    'articles' => array(
-                        'lang' => true,
-                        'text' => 'tp-articles',
-                        'url' => $scripturl . '?action=tpadmin;sa=articles',
-                        'active' => ($context['TPortal']['subaction'] == 'articles' || $context['TPortal']['subaction'] == 'editarticle') && $context['TPortal']['subaction'] != 'strays',
-                        ),
-                    'articles_nocat' => array(
-                        'lang' => true,
-                        'text' => 'tp-uncategorised' ,
-                        'url' => $scripturl . '?action=tpadmin;sa=articles;sa=strays',
-                        'active' => $context['TPortal']['subaction'] == 'strays',
-                        ),
-                    'addarticle' => array(
-                            'lang' => true,
-                            'text' => 'tp-tabs2',
-                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_html' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-                            'active' => $context['TPortal']['subaction'] == 'addarticle_html',
-                            ),
-                    'addarticle_php' => array(
-                            'lang' => true,
-                            'text' => 'tp-tabs3',
-                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_php' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-                            'active' => $context['TPortal']['subaction'] == 'addarticle_php',
-                            ),
-                    'addarticle_bbc' => array(
-                            'lang' => true,
-                            'text' => 'tp-addbbc',
-                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_bbc' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-                            'active' => $context['TPortal']['subaction'] == 'addarticle_bbc',
-                            ),
-                    'article_import' => array(
-                            'lang' => true,
-                            'text' => 'tp-addimport',
-                            'url' => $scripturl . '?action=tpadmin;sa=addarticle_import' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
-                            'active' => $context['TPortal']['subaction'] == 'addarticle_import',
-                            ),
-                    'clist' => array(
-                            'lang' => true,
-                            'text' => 'tp-tabs11',
-                            'url' => $scripturl . '?action=tpadmin;sa=clist',
-                            'active' => $tpsub == 'clist',
-                            ),
-                    );
-        }
-        elseif(in_array($tpsub,array('addcategory','categories','clist'))) {
-            $context['TPortal']['subtabs'] = array(
-                    'categories' => array(
-                        'lang' => true,
-                        'text' => 'tp-tabs5',
-                        'url' => $scripturl . '?action=tpadmin;sa=categories',
-                        'active' => $tpsub == 'categories',
-                        ),
-                    'addcategory' => array(
-                        'lang' => true,
-                        'text' => 'tp-tabs6',
-                        'url' => $scripturl . '?action=tpadmin;sa=addcategory',
-                        'active' => $tpsub == 'addcategory',
-                        ),
-                    'clist' => array(
-                        'lang' => true,
-                        'text' => 'tp-tabs11',
-                        'url' => $scripturl . '?action=tpadmin;sa=clist',
-                        'active' => $tpsub == 'clist',
-                        ),
-                    );
-        }
-        elseif(in_array($tpsub,array('blocks','panels'))) {
-            $context['TPortal']['subtabs'] = array(
-                    'blocks' => array(
-                        'lang' => true,
-                        'text' => 'tp-blocks',
-                        'url' => $scripturl . '?action=tpadmin;sa=blocks',
-                        'active' => $tpsub == 'blocks' && !isset($_GET['overview']),
-                        ),
-                    'panels' => array(
-                        'lang' => true,
-                        'text' => 'tp-panels',
-                        'url' => $scripturl . '?action=tpadmin;sa=panels',
-                        'active' => $tpsub == 'panels',
-                        ),
-                    'blockoverview' => array(
-                        'lang' => true,
-                        'text' => 'tp-blockoverview',
-                        'url' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-                        'active' => $tpsub == 'blocks' && isset($_GET['overview']),
-                        ),
-                    );
-        }
+    if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays')) && allowedTo('tp_articles')) {
+        $context['TPortal']['subtabs'] = array(
+				'articles' => array(
+					'lang' => true,
+					'text' => 'tp-articles',
+					'url' => $scripturl . '?action=tpadmin;sa=articles',
+					'active' => ($context['TPortal']['subaction'] == 'articles' || $context['TPortal']['subaction'] == 'editarticle') && $context['TPortal']['subaction'] != 'strays',
+					),
+				'articles_nocat' => array(
+					'lang' => true,
+					'text' => 'tp-uncategorised' ,
+					'url' => $scripturl . '?action=tpadmin;sa=articles;sa=strays',
+					'active' => $context['TPortal']['subaction'] == 'strays',
+					),
+				'addarticle' => array(
+					'lang' => true,
+					'text' => 'tp-tabs2',
+					'url' => $scripturl . '?action=tpadmin;sa=addarticle_html' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+					'active' => $context['TPortal']['subaction'] == 'addarticle_html',
+					),
+				'addarticle_php' => array(
+					'lang' => true,
+					'text' => 'tp-tabs3',
+					'url' => $scripturl . '?action=tpadmin;sa=addarticle_php' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+					'active' => $context['TPortal']['subaction'] == 'addarticle_php',
+					),
+				'addarticle_bbc' => array(
+					'lang' => true,
+					'text' => 'tp-addbbc',
+					'url' => $scripturl . '?action=tpadmin;sa=addarticle_bbc' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+					'active' => $context['TPortal']['subaction'] == 'addarticle_bbc',
+					),
+				'article_import' => array(
+					'lang' => true,
+					'text' => 'tp-addimport',
+					'url' => $scripturl . '?action=tpadmin;sa=addarticle_import' . (isset($_GET['cu']) ? ';cu='.$_GET['cu'] : ''),
+					'active' => $context['TPortal']['subaction'] == 'addarticle_import',
+					),
+				);
+    }
+    elseif(in_array($tpsub,array('addcategory','categories','clist')) && allowedTo('tp_articles')) {
+        $context['TPortal']['subtabs'] = array(
+                'categories' => array(
+                    'lang' => true,
+                    'text' => 'tp-tabs5',
+                    'url' => $scripturl . '?action=tpadmin;sa=categories',
+                    'active' => $tpsub == 'categories',
+                    ),
+                'addcategory' => array(
+                    'lang' => true,
+                    'text' => 'tp-tabs6',
+                    'url' => $scripturl . '?action=tpadmin;sa=addcategory',
+                    'active' => $tpsub == 'addcategory',
+                    ),
+                'clist' => array(
+                    'lang' => true,
+                    'text' => 'tp-tabs11',
+                    'url' => $scripturl . '?action=tpadmin;sa=clist',
+                    'active' => $tpsub == 'clist',
+                    ),
+                );
+    }
+    elseif(in_array($tpsub,array('blocks','panels')) && allowedTo('tp_blocks')) {
+        $context['TPortal']['subtabs'] = array(
+                'panels' => array(
+                    'lang' => true,
+                    'text' => 'tp-panels',
+                    'url' => $scripturl . '?action=tpadmin;sa=panels',
+                    'active' => $tpsub == 'panels',
+                    ),
+				'blocks' => array(
+                    'lang' => true,
+                    'text' => 'tp-blocks',
+                    'url' => $scripturl . '?action=tpadmin;sa=blocks',
+                    'active' => $tpsub == 'blocks' && !isset($_GET['overview']),
+                    ),
+                'blockoverview' => array(
+                    'lang' => true,
+                    'text' => 'tp-blockoverview',
+                    'url' => $scripturl . '?action=tpadmin;sa=blocks;overview',
+                    'active' => $tpsub == 'blocks' && isset($_GET['overview']),
+                    ),
+                );
     }
 
     if(array_search('tpadm', $context['template_layers']) === FALSE) {
@@ -285,18 +280,30 @@ function TPortalAdmin()
 /* ******************************************************************************************************************** */
 function do_subaction($tpsub)
 {
-	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons')))
+    global $context, $txt;
+
+	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons', 'clist')) && (allowedTo('tp_articles')) ) {
 		do_articles();
-	elseif(in_array($tpsub, array('blocks', 'panels')))
+    }
+	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks')) ) {
 		do_blocks();
-	elseif(in_array($tpsub, array('menubox', 'addmenu')))
+	}
+    elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks')) ) {
 		do_menus();
-	elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')))
+	}
+    elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (allowedTo('tp_settings')) ) {
 		do_news($tpsub);
-	elseif($tpsub == 'settings')
+	}
+    elseif($tpsub == 'settings' && (allowedTo('tp_settings')) ) {
 		do_news('settings');
-	else
+    }
+    elseif(!$context['user']['is_admin']) {
+		fatal_error($txt['tp-noadmin'], false);
+    }
+    else {
 		do_news();
+    }
+
 }
 
 function do_blocks()

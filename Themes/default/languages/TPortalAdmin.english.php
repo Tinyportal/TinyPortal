@@ -428,6 +428,7 @@ $txt['tp-lowersideblocks'] = 'Lower Panel Blocks';
 $txt['tp-bottomsideblocks'] = 'Bottom Panel Blocks';
 $txt['tp-blockconfirmdelete'] = 'Are you sure you want to delete this block?';
 $txt['tp-panelclosed'] = 'Note: this panel has been turned off in panel settings.';
+$txt['tp-noblocks'] = 'There are no blocks in this panel.';
 $txt['tp-noaccess'] = 'This block is not set to display on any page or section yet.';
 $txt['tp-editblock'] = 'Edit Block';
 $txt['tp-editblocks'] = 'Blocks';
