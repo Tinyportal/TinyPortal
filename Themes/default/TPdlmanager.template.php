@@ -35,12 +35,12 @@ function template_main()
 		<div>';
 		$dlbuttons = array(
 			'frontdl' => array('text' => 'tp-downloadss1', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl' ),
+			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=upload'),
 			'search' => array('text' => 'tp-search', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=search'),
 			'stats' => array('text' => 'tp-stats', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=stats'),
-			'upload' => array('text' => 'tp-dlupload', 'test' => 'can_tp_dlupload', 'lang' => true, 'url' => $scripturl . '?action=tportal;dl=upload'),
 		);
 
-		if(in_array($context['TPortal']['dlaction'],array('frontdl','search','stats','upload')))
+		if(in_array($context['TPortal']['dlaction'],array('frontdl','upload','search','stats')))
 			$dlbuttons[$context['TPortal']['dlaction']]['active'] = true;
 		else
 			$dlbuttons['frontdl']['active'] = true;
