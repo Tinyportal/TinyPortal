@@ -1862,7 +1862,9 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 	$context['admin_header']['tp_articles'] = $txt['tp-articles'];
 	$context['admin_header']['tp_blocks'] = $txt['tp-adminpanels'];
 	$context['admin_header']['tp_menubox'] = $txt['tp-menumanager'];
-	$context['admin_header']['custom_modules'] = $txt['custom_modules'];
+	if (allowedTo('tp_can_admin_shout') || allowedTo('tp_dlmanager') || allowedTo('tp_can_list_images')) {
+		$context['admin_header']['custom_modules'] = $txt['custom_modules'];
+	}
 
 	if (allowedTo('tp_settings')) {
 		$context['admin_tabs']['tp_settings'] = array(

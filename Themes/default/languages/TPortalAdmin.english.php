@@ -198,7 +198,7 @@ $txt['tp-details'] = 'Details';
 $txt['tp-articleoptions2'] = 'Display title';
 $txt['tp-articleoptions3'] = 'Display author';
 $txt['tp-articleoptions1'] = 'Display date';
-$txt['tp-articleoptions12'] = 'Display all articles in same category';
+$txt['tp-articleoptions12'] = 'Display all articles in category';
 $txt['tp-articleoptions13'] = 'Display links to other categories';
 $txt['tp-articleoptions4'] = 'Display breadcrumb navigation';
 $txt['tp-articleoptions14'] = 'Display comments underneath article';
@@ -244,6 +244,7 @@ $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category
 $txt['tp-editcategory'] = 'Edit';
+$txt['tp-viewcategory'] = 'View the category';
 $txt['tp-addsubcategory'] = 'Add a category under this one';
 $txt['tp-copycategory'] = 'Make a copy of this category';
 $txt['tp-helpaddcategory'] = 'Add a new article category. Next screen will allow specifics about it.';
