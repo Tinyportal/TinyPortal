@@ -125,6 +125,13 @@ function template_tp_articles()
 			</tr>';
 			}
 		}
+		else
+			echo '
+					<tr class="windowbg">
+					<td class="tpshout_date" colspan="6">
+						<div class="smalltext">',$txt['tp-noarticlesfound'],'</div>	
+					</td>
+					</tr>';
 	echo '
 		</tbody>
 	</table>';
