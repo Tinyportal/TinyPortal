@@ -371,7 +371,7 @@ $clickme.click( function(e) {
 			</div>
 			<div style="width:56.5%;" class="fullwidth-on-res-layout float-items">
 				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
-				<a href="',$scripturl, '?action=tportal;dl=cat',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
+				<a href="',$scripturl, '?action=tportal;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
 				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 			</div><p class="clearthefloat"></p>
@@ -390,7 +390,7 @@ $clickme.click( function(e) {
 		<td class="articles">
 			<div id="up-file" class="bigger-width">
 				<div style="width:30%;" class="fullwidth-on-res-layout float-items">
-					<a href="',$scripturl, '?action=tportal;dl=item',$cat['id'],'"><img title="'.$txt['tp-preview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
+					<a href="',$scripturl, '?action=tportal;dl=item',$cat['id'],'"><img title="'.$txt['tp-dlpreview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 				</div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
