@@ -702,8 +702,8 @@ function template_categories()
 					<tr class="title_bar titlebg2">
 					<th scope="col">
 						<div>
-							<div class="float-items" style="width:76%;"><strong>' , $txt['tp-artcat'] , '</strong></div>
-							<div class="title-admin-area float-items tpcenter" style="width:120px;"><strong>' , $txt['tp-actions'] , '</strong></div>
+							<div class="float-items" style="width:72%;"><strong>' , $txt['tp-artcat'] , '</strong></div>
+							<div class="title-admin-area float-items tpcenter" style="width:150px;"><strong>' , $txt['tp-actions'] , '</strong></div>
 							<p class="clearthefloat"></p>
 						</div>
 					</th>
@@ -722,7 +722,7 @@ function template_categories()
 						<div>';
 
 				echo '
-							<div class="float-items' , '" style="width:76%;">
+							<div class="float-items' , '" style="width:72%;">
 								' , str_repeat("-",$cat['indent']) , '
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '">' , $cat['name'] , '</a>
 								' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '<a href="' . $scripturl. '?action=tpadmin;sa=articles;cu='.$cat['id'].'" title="' .$txt['tp-articleoptions12']. '">(' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . ': '.$context['TPortal']['cats_count'][$cat['id']].')</a>' : '' , '
