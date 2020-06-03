@@ -71,6 +71,7 @@ $txt['tp-chooseicon'] = '- choose icon -';
 $txt['tp-dlnocategory'] = '- no category -';
 $txt['tp-nocats'] = 'No categories found.';
 $txt['tp-dlaccess'] = 'Membergroups that can see this category';
+$txt['tp-dlviewcat'] = 'View files in this category';
 
 //Upload
 $txt['tp-dltabs3'] = 'Upload';
