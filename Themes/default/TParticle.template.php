@@ -32,7 +32,7 @@ function template_submitarticle()
     }
 
     $action = 'tportal;sa=savearticle';
-    if(allowedTo('admin_forum')) {
+    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
         $action = 'tpadmin';
     }
     else if(isset($mg['id'])) {
@@ -53,7 +53,7 @@ function template_submitarticle()
 	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action='.$action.'" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />';
 
-    if(allowedTo('admin_forum')) {
+    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 	    echo '<input name="article" type="hidden" value="'. $mg['id'] . '">';
 	    echo '<input name="tpadmin_form" type="hidden" value="editarticle">';
     }
@@ -98,7 +98,7 @@ function template_submitarticle()
 				echo '
 					</div>';
 
-                if(allowedTo('admin_forum')) {
+                if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
                     echo '<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>';
                 }
 
@@ -106,7 +106,7 @@ function template_submitarticle()
 			<hr>
 				<dl class="settings">';
 
-                if(allowedTo('admin_forum')) {
+                if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
                     echo '<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-statusdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
 					</dt>
@@ -127,7 +127,7 @@ function template_submitarticle()
                     }
                 }
                 echo '<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">';
-			    if(allowedTo('admin_forum')) {
+			    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
                     echo '<br><br>';
 
                     echo '
@@ -312,7 +312,7 @@ function template_submitarticle()
                         }
                     }
                     echo '</select>';
-                    if(allowedTo('admin_forum')) {
+                    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
                         echo '&nbsp;<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>';
                     }
                     echo '
@@ -349,7 +349,7 @@ function template_submitarticle()
                     </div>';
 				}
                 
-                if(allowedTo('admin_forum')) {
+                if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '<hr>
 				<dl class="settings">
 					<dt>
