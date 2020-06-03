@@ -107,6 +107,7 @@ $txt['tp-confirmcommentdelete'] = 'Are you sure you want to delete this comment?
 $txt['tp-confirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-delete'] = 'Delete';
 $txt['tp-editarticle'] = 'Edit article';
+$txt['tp-viewarticle'] = 'View article';
 $txt['tp-incategory'] = ' in ';
 $txt['tp-noimportarticle'] = 'Sorry, the article could not be loaded.';
 $txt['tp-noname'] = '-no name-';
@@ -166,13 +167,15 @@ $txt['tp-searchintitle'] = 'Search in titles';
 
 // Profile
 $txt['articlesprofile'] = 'Articles';
-$txt['articlesprofile2'] = 'All the articles the member has written. Note that articles currently not active will give an error when viewed and are also marked in italic style. Articles not approved yet are likewise marked with surrounding parentheses.';
+$txt['articlesprofile2'] = 'All the articles the member has written. Note that articles currently not active or not approved cannot be viewed from here. These can be accessed from the My Articles page in TinyPortal';
 $txt['downloadsprofile'] = 'Uploaded files';
 $txt['downloadsprofile2'] = 'All the files uploaded in File Manager. Files not yet approved are shown in italic style.';
 $txt['shoutboxprofile'] = 'View shouts';
 $txt['shoutboxprofile2'] = 'All shouts made by the member.';
 $txt['tp-category'] = 'Category';
+$txt['tp-locked'] = 'Locked';
 $txt['tp-more'] = 'More ';
+$txt['tp-notlocked'] = 'Not Locked';
 $txt['tp-prof_allarticles'] = 'Total number of articles written:';
 $txt['tp-prof_alldownloads'] = 'Total number of submitted files:';
 $txt['tp-prof_allshouts'] = 'Total number of shouts:';

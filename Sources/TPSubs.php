@@ -2903,7 +2903,7 @@ function tp_profile_articles($member_id) {{{
 	// get all articles currently being off
     $max_off    = $tpArticle->getTotalAuthorArticles($member_id, true, false);
 
-	$context['TPortal']['all_articles']         = $max - $max_approve - $max_off;
+	$context['TPortal']['all_articles']         = $max;
 	$context['TPortal']['approved_articles']    = $max_approve;
 	$context['TPortal']['off_articles']         = $max_off;
 
@@ -2912,7 +2912,7 @@ function tp_profile_articles($member_id) {{{
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 10 OFFSET {int:start}',
+		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 15 OFFSET {int:start}',
 		array('auth' => $member_id, 
 		'sort' => $sorting, 
 		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
@@ -2971,7 +2971,7 @@ function tp_profile_articles($member_id) {{{
     // construct pageindexes
 	$context['TPortal']['pageindex'] = '';
 	if($max > 0) {
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tparticles;u='.$member_id.';tpsort='.$sorting, $start, $max, '10');
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tparticles;u='.$member_id.';tpsort='.$sorting, $start, $max, '15');
     }
 
 	// setup subaction
@@ -3114,7 +3114,7 @@ function tp_profile_download($memID)
 	}
 	// construct pageindexes
 	if($max > 0)
-		$context['TPortal']['pageindex']=TPageIndex($scripturl.'?action=profile;area=tpdownload;u='.$memID.';tpsort='.$sorting, $start, $max, '10');
+		$context['TPortal']['pageindex']=TPageIndex($scripturl.'?action=profile;area=tpdownload;u='.$memID.';tpsort='.$sorting, $start, $max, '15');
 	else
 		$context['TPortal']['pageindex'] = '';
 }

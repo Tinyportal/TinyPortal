@@ -72,13 +72,12 @@ function template_tp_articles()
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
 			<div class="font-strong" style="padding:0px;">
-				<div class="float-items pos tpleft" style="width:25%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['subject'].'</a></div>
-				<div class="float-items title-admin-area tpleft" style="width:20%;">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
+				<div class="float-items pos tpleft" style="width:25%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
+				<div class="float-items title-admin-area tpleft" style="width:24%;">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 				<div class="float-items title-admin-area tpcenter" style="width:10%;">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
 				<div class="float-items title-admin-area tpleft" style="width:15%;">'.$txt['tp-ratings'].'</div>
 				<div class="float-items title-admin-area tpcenter" style="width:10%;">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>
 				<div class="float-items title-admin-area tpleft" style="width:15%;">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
-				<div class="float-items title-admin-area tpcenter" style="width:5%;">'.$txt['tp-edit'].'</div>
 			    <p class="clearthefloat"></p>
 			</div>
 			</th>
@@ -90,10 +89,19 @@ function template_tp_articles()
 				echo '
 			<tr class="windowbg">
 			<td class="articles">
-				<div class="float-items fullwidth-on-res-layout" style="width:25%;"><a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['off']==1 ? '<i>' : '' ,  $art['subject'], $art['off']==1 ? '</i>' : '' , $art['approved']==0 ? ')' : '' ,  '</a></div>
+				<div class="float-items fullwidth-on-res-layout" style="width:25%;">', $art['off']==1 ? '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="'. $txt['tp-noton'] .'" alt="*" />&nbsp; ' : '' , '', $art['approved']==0 ? '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt['tp-notapproved'] .'" alt="*" />&nbsp; ' : '' , '';
+		if(($art['approved']==0) || ($art['off']==1)) { 
+				echo '
+					' ,$art['subject'], '</div>';
+		}
+		else {
+				echo '
+					<a href="'.$art['href'].'" target="_blank">' ,$art['subject'], '</a></div>';
+		} 
+			echo '
 				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 				<div class="box" style="width:75%;float:left;">
-					<div class="smalltext float-items fullwidth-on-res-layout" style="width:27%;">
+					<div class="smalltext float-items fullwidth-on-res-layout" style="width:32%;">
 						<div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 						<div id="size-on-respnsive-layout">',$art['date'],'</div>
 					</div>
@@ -103,7 +111,7 @@ function template_tp_articles()
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:20%;">
 						<div id="show-on-respnsive-layout">'.$txt['tp-ratings'].'</div>
-						' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $txt['tp-ratingvotes'] . ' ' . $art['rating_votes'] . ')
+						' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . '<br>' . $txt['tp-ratingvotes'] . ' ' . $art['rating_votes'] . '
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:13.5%;text-align:center;">
 						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>
@@ -113,10 +121,6 @@ function template_tp_articles()
 						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
 						',$art['category'],'
 					</div>
-					<div class="fullwidth-on-res-layout float-items" style="width:4%;">
-						<div id="show-on-respnsive-layout">'.$txt['tp-edit'].'</div>
-						', allowedTo('tp_editownarticle') ? '<a href="'. $art['editlink'] .'"><img src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
-					</div><p class="clearthefloat"></p></div><p class="clearthefloat"></p>
 			</td>
 			</tr>';
 			}
@@ -209,7 +213,6 @@ function template_tp_download()
 				<div style="width:10%;" class="font-strong float-items title-admin-area tpcenter">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=views">'.$txt['views'].'</a></div>
 				<div style="width:20%;" class="font-strong float-items title-admin-area tpleft">'.$txt['tp-ratings'].'</div>
 				<div style="width:10%;" class="font-strong float-items title-admin-area tpcenter">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
-				<div style="width:5%;" class="font-strong float-items title-admin-area tpcenter">'. $txt['tp-edit'] .'</div>
 			    <p class="clearthefloat"></p>
 				</th>
 				</tr>
@@ -242,10 +245,6 @@ function template_tp_download()
                       <div style="width:16%;" class="fullwidth-on-res-layout float-items tpcenter">
                         <div id="show-on-respnsive-layout" style="word-break:break-all;">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
                         ',$art['downloads'],'
-                       </div>
-                       <div style="width:6%;" class="fullwidth-on-res-layout float-items tpcenter">
-                        <div id="show-on-respnsive-layout">'. $txt['tp-edit'] .'</div>
-                         ' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img src="' .$settings['tp_images_url']. '/TPedit.png" alt="" /></a>' : '' , '
                        </div>
                        <p class="clearthefloat"></p>
                     </div>

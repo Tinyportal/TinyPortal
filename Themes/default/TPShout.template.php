@@ -475,8 +475,7 @@ function template_tpshout_profile()
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="shouts">
 						<div class="float-items" style="width:30%;text-align:left">'.$txt['date'].'</div>
-						<div class="smalltext float-items" style="width:60%;text-align:left">',$txt['tp-shout'],'</div>
-						<div class="float-items" style="width:10%">'. $txt['tp-edit'] .'</div>
+						<div class="smalltext float-items" style="width:70%;text-align:left">',$txt['tp-shout'],'</div>
 					</th>
 					</tr>
 				</thead>
@@ -487,8 +486,7 @@ function template_tpshout_profile()
 					<tr class="windowbg">
 					<td class="shouts">
 						<div class="smalltext float-items" style="width:30%;text-align:left" >',$art['created'],'</div>
-						<div class="smalltext float-items" style="width:60%;" >',$art['shout'],'</div>
-						<div class="float-items" style="width:10%;" >' , $art['editlink']!='' ? '<a href="'.$art['editlink'].'"><img src="'.$settings['tp_images_url'].'/TPedit.png" alt="" /></a>' : '' , '</div>
+						<div class="smalltext float-items" style="width:70%;" >',$art['shout'],'</div>
 					</td>
 					</tr>';
 			}

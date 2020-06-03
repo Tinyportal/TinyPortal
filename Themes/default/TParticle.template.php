@@ -66,7 +66,7 @@ function template_submitarticle()
 			<div class="formtable padding-div">
 			<dl class="settings">
 				<dt>
-					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-title'] , '</label></div>
+					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></div>
 				</dt>
 				<dd>
 				<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
@@ -820,16 +820,16 @@ function template_showarticle()
 	global $txt, $context, $settings, $scripturl;
 
 	echo '
-        <div class="cat_bar">
-            <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
+        <div class="title_bar">
+            <h3 class="titlebg">' .$txt['tp-myarticles'] . '</h3>
         </div>
 		<div class="windowbg padding-div">
-	<table class="table_grid tp_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid" style="width:100%";>
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="myarticles">
 				<div class="font-strong" style="padding:0px;">
-					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['subject'].'</a></div>
+					<div align="center" class="float-items title-admin-area">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
 				</div>
 			</th>
 			</tr>
@@ -843,31 +843,33 @@ function template_showarticle()
 						<div style="overflow: hidden; padding: 3px;">
 							<div style="float: right;">';
 					if($art['approved'] == 0) {
-							echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" alt="*" /> ';
-					}
-					if($art['off']==0 && $art['approved'] == 1) { 
-							echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.png" alt="*" /> ';
-					}
-					else {
-							echo '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" alt="*" /> ';
-					}
-
-					if($art['locked']==1) {
-							echo '<img src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="*" /> ';
+							echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt['tp-notapproved'] .'" alt="*" />&nbsp; ';
 					}
 					if((allowedTo('tp_editownarticle') && $art['locked']==0) && !allowedTo('tp_articles')) {
 						echo '
-						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
+						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'" title="'. $txt['tp-editarticle'] .'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>&nbsp; ';
 					} 
 					elseif(allowedTo('tp_articles')) {
 						echo '
-						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>';
+						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'" title="'. $txt['tp-editarticle'] .'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>&nbsp; ';
                     }
+					if($art['off']==0 && $art['approved'] == 1) { 
+							echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.png" title="" alt="*" />&nbsp; ';
+					}
+					else {
+							echo '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="'. $txt['tp-noton'] .'" alt="*" />&nbsp; ';
+					}
                     echo '
                         </div>';
+					
+					if($art['locked']==1) { 
+						echo '
+						<img title="'.$txt['tp-islocked'].'" src="' .$settings['tp_images_url']. '/TPlock1.png" alt="'.$txt['tp-islocked'].'"  />&nbsp';
+					}
+				
                     if($art['off'] == 0 && $art['approved'] == 1) {
                         echo '
-                        <a href="' . $scripturl . '?page='.$art['id'].'">' . html_entity_decode($art['subject']) . '</a>'; 
+                        <a href="' . $scripturl . '?page='.$art['id'].'" title="'. $txt['tp-viewarticle'] .'">' . html_entity_decode($art['subject']) . '</a>'; 
                     }
                     else {
                         echo '
