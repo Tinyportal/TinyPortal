@@ -1168,7 +1168,7 @@ function tpshout_profile($memID)
         SELECT * FROM {db_prefix}tp_shoutbox
         WHERE member_id = {int:member_id}
         AND type = {string:type}
-        ORDER BY {raw:sort} DESC LIMIT 10 OFFSET {int:start}',
+        ORDER BY {raw:sort} DESC LIMIT 15 OFFSET {int:start}',
         array('member_id' => $memID, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start)
     );
     if($smcFunc['db_num_rows']($request) > 0){
@@ -1185,7 +1185,7 @@ function tpshout_profile($memID)
     }
     // construct pageindexes
     if($max > 0) {
-        $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '10', true);
+        $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=profile;area=tpshoutbox;u='.$memID.';tpsort='.$sorting, $start, $max, '15', true);
     }
     else {
         $context['TPortal']['pageindex'] = '';

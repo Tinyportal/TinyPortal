@@ -148,10 +148,10 @@ $txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button';
 // Articles overview
 $txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
 $txt['tp-setfrontpage'] = 'Toggle show on frontpage';
-$txt['tp-setsticky'] = 'Set as sticky/non-sticky article';
-$txt['tp-setlock'] = 'Lock this article for editing';
+$txt['tp-setsticky'] = 'Toggle sticky/non-sticky';
+$txt['tp-setlock'] = 'Toggle unlocked/locked';
 $txt['tp-islocked'] = 'This article is locked for editing';
-$txt['tp-featured'] = 'Featured';
+$txt['tp-featured'] = 'Toggle Featured on/off';
 $txt['tp-editarticleoptions2'] = 'Options';
 $txt['tp-articleconfirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-select'] = 'Select';
@@ -168,6 +168,7 @@ $txt['tp-sort-on-type'] = 'Sort on type';
 
 // Edit article
 $txt['tp-preview'] = 'View article';
+$txt['tp-arttitle'] = 'Title';
 $txt['tp-shortname_article'] = 'Short name';
 $txt['tp-shortname_articledesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the url will be displayed as: .../index.php?page=20. if a value is added (for example \'Articles\') the url will show as: .../index.php?page=Articles';
 $txt['tp-importarticle'] = 'Path to external article';
