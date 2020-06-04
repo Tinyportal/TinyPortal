@@ -182,20 +182,7 @@ function tp_getbuttons() {{{
 			'href' => $scripturl . '?action=tpadmin;sa=settings',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(
-				'tpsettings' => array(
-					'title' => $txt['tp-settings'],
-					'href' => $scripturl . '?action=tpadmin;sa=settings',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpfrontpage' => array(
-					'title' => $txt['tp-frontpage'],
-					'href' => $scripturl . '?action=tpadmin;sa=frontpage',
-					'show' => true,
-					'active_button' => false,
-				),
-			),
+			'sub_buttons' => array(),
 		);
 	}
 	if(allowedTo('tp_articles'))
@@ -205,32 +192,7 @@ function tp_getbuttons() {{{
 			'href' => $scripturl . '?action=tpadmin;sa=articles',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(
-				'tpcategories' => array(
-					'title' => $txt['tp-categories'],
-					'href' => $scripturl . '?action=tpadmin;sa=categories',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tparticles' => array(
-					'title' => $txt['tp-articles'],
-					'href' => $scripturl . '?action=tpadmin;sa=articles',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpsubmissions' => array(
-					'title' => $txt['tp-submissions'],
-					'href' => $scripturl . '?action=tpadmin;sa=submission',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tparticlesettings' => array(
-					'title' => $txt['tp-articlesettings'],
-					'href' => $scripturl . '?action=tpadmin;sa=artsettings',
-					'show' => true,
-					'active_button' => false,
-				),				
-			),
+			'sub_buttons' => array(),
 		);
 	}
 	if(allowedTo('tp_blocks'))
@@ -240,32 +202,7 @@ function tp_getbuttons() {{{
 			'href' => $scripturl . '?action=tpadmin;sa=blocks',
 			'show' => true,
 			'active_button' => false,
-			'sub_buttons' => array(
-				'tppanels' => array(
-					'title' => $txt['tp-panels'],
-					'href' => $scripturl . '?action=tpadmin;sa=panels',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpblocks' => array(
-					'title' => $txt['tp-blocks'],
-					'href' => $scripturl . '?action=tpadmin;sa=blocks',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpblockaccess' => array(
-					'title' => $txt['tp-blockoverview'],
-					'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-					'show' => true,
-					'active_button' => false,
-				),
-				'tpmenumanager' => array(
-					'title' => $txt['tp-menumanager'],
-					'href' => $scripturl . '?action=tpadmin;sa=menubox',
-					'show' => true,
-					'active_button' => false,
-				),
-			),
+			'sub_buttons' => array(),
 		);
 	}
 	if(allowedTo('tp_dlmanager'))
@@ -1896,12 +1833,6 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 				'description' => $txt['tp-articledesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=articles',
 				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays'))),
-			),
-			'submission' => array(
-				'title' => (isset($context['TPortal']['submissions']) && $context['TPortal']['submissions'])>0 ? $txt['tp-tabs4'].' ['.$context['TPortal']['submissions'].']' : $txt['tp-tabs4'] ,
-				'description' => $txt['tp-articledesc4'],
-				'href' => $scripturl . '?action=tpadmin;sa=submission',
-				'is_selected' => $tpsub == 'submission',
 			),
 			'artsettings' => array(
 				'title' => $txt['tp-settings'],
