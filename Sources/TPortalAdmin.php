@@ -287,22 +287,6 @@ function TPortalAdmin()
                     ),
                 );
     }
-    elseif(in_array($tpsub,array('settings','frontpage')) && allowedTo('tp_settings')) {
-        $context['TPortal']['subtabs'] = array(
-                'settings' => array(
-                    'lang' => true,
-                    'text' => 'tp-settings',
-                    'url' => $scripturl . '?action=tpadmin;sa=settings',
-                    'active' => $tpsub == 'settings',
-                    ),
-				'frontpage' => array(
-                    'lang' => true,
-                    'text' => 'tp-frontpage',
-                    'url' => $scripturl . '?action=tpadmin;sa=frontpage',
-                    'active' => $tpsub == 'frontpage',
-                    ),
-                );
-    }
 
     if(array_search('tpadm', $context['template_layers']) === FALSE) {
         // TP Admin menu layer

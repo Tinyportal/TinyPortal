@@ -1834,12 +1834,6 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 				'href' => $scripturl . '?action=tpadmin;sa=articles',
 				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays'))),
 			),
-			'submission' => array(
-				'title' => (isset($context['TPortal']['submissions']) && $context['TPortal']['submissions'])>0 ? $txt['tp-tabs4'].' ['.$context['TPortal']['submissions'].']' : $txt['tp-tabs4'] ,
-				'description' => $txt['tp-articledesc4'],
-				'href' => $scripturl . '?action=tpadmin;sa=submission',
-				'is_selected' => $tpsub == 'submission',
-			),
 			'artsettings' => array(
 				'title' => $txt['tp-settings'],
 				'description' => $txt['tp-articledesc3'],
