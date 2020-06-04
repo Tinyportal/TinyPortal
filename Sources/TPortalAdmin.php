@@ -179,7 +179,7 @@ function TPortalAdmin()
 
 	// done with all POST values, go to the correct screen
 	$context['TPortal']['subtabs'] = '';
-    if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays')) && allowedTo('tp_articles')) {
+    if(in_array($tpsub,array('articles', 'addarticle_php', 'addarticle_html', 'addarticle_bbc', 'addarticle_import', 'strays', 'submission')) && allowedTo('tp_articles')) {
         $context['TPortal']['subtabs'] = array(
 				'articles' => array(
 					'lang' => true,
@@ -192,6 +192,12 @@ function TPortalAdmin()
 					'text' => 'tp-uncategorised' ,
 					'url' => $scripturl . '?action=tpadmin;sa=articles;sa=strays',
 					'active' => $context['TPortal']['subaction'] == 'strays',
+					),
+				'submissions' => array(
+					'lang' => true,
+					'text' => 'tp-tabs4' ,
+					'url' => $scripturl . '?action=tpadmin;sa=articles;sa=submission',
+					'active' => $context['TPortal']['subaction'] == 'submission',
 					),
 				'addarticle' => array(
 					'lang' => true,
@@ -241,7 +247,7 @@ function TPortalAdmin()
                     ),
                 );
     }
-    elseif(in_array($tpsub,array('blocks','panels')) && allowedTo('tp_blocks')) {
+    elseif(in_array($tpsub,array('blocks','panels','menubox','addmenu')) && allowedTo('tp_blocks')) {
         $context['TPortal']['subtabs'] = array(
                 'panels' => array(
                     'lang' => true,
@@ -255,11 +261,45 @@ function TPortalAdmin()
                     'url' => $scripturl . '?action=tpadmin;sa=blocks',
                     'active' => $tpsub == 'blocks' && !isset($_GET['overview']),
                     ),
+				'addblock' => array(
+                    'lang' => true,
+                    'text' => 'tp-addblock',
+                    'url' => $scripturl . '?action=tpadmin;addblock=;' . $context['session_var'] . '=' . $context['session_id'].'',
+                    'active' => $tpsub == 'addblock',
+                    ),
                 'blockoverview' => array(
                     'lang' => true,
                     'text' => 'tp-blockoverview',
                     'url' => $scripturl . '?action=tpadmin;sa=blocks;overview',
                     'active' => $tpsub == 'blocks' && isset($_GET['overview']),
+                    ),
+                'menumanager' => array(
+                    'lang' => true,
+                    'text' => 'tp-menumanager',
+                    'url' => $scripturl . '?action=tpadmin;sa=menubox',
+                    'active' => $tpsub == 'menubox',
+                    ),
+				'addmenu' => array(
+                    'lang' => true,
+                    'text' => 'tp-addmenu',
+                    'url' => $scripturl . '?action=tpadmin;sa=addmenu;fullmenu',
+                    'active' => $tpsub == 'addmenu' && !isset($_GET['overview']),
+                    ),
+                );
+    }
+    elseif(in_array($tpsub,array('settings','frontpage')) && allowedTo('tp_settings')) {
+        $context['TPortal']['subtabs'] = array(
+                'settings' => array(
+                    'lang' => true,
+                    'text' => 'tp-settings',
+                    'url' => $scripturl . '?action=tpadmin;sa=settings',
+                    'active' => $tpsub == 'settings',
+                    ),
+				'frontpage' => array(
+                    'lang' => true,
+                    'text' => 'tp-frontpage',
+                    'url' => $scripturl . '?action=tpadmin;sa=frontpage',
+                    'active' => $tpsub == 'frontpage',
                     ),
                 );
     }
