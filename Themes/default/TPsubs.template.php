@@ -1935,7 +1935,7 @@ function article_comments($render = true)
 
     $data = '';
 
-	if(in_array('comments', $context['TPortal']['article']['visual_options']) || !empty($context['TPortal']['can_artcomment'])) {
+	if((in_array('comments', $context['TPortal']['article']['visual_options'])) || (in_array('commentallow', $context['TPortal']['article']['visual_options']))) {
 		$data .= '
 	<a name="tp-comment">
 	<div></div>
