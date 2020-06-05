@@ -1657,7 +1657,7 @@ function article_comments_total($render = true)
 
     $data = '';
 
-	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (!empty($context['TPortal']['article_comments_count']) > 0)) {
+	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (isset($context['TPortal']['article_comments_count']))) {
 		$data = '
 		<span class="article_comments">' .	$txt['tp-comments'] . ':  ' . $context['TPortal']['article_comments_count'] . '</span>';
     }
@@ -1759,7 +1759,7 @@ function article_options($render = true)
 		// their own article?
 		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && empty($context['TPortal']['hide_editarticle_link']) && empty($context['TPortal']['article']['locked'])) {
 			$data .= '
-					<span class="article_rating"><a href="' . $scripturl . '?action=tportal;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
+					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
 	}
 
@@ -1933,7 +1933,7 @@ function article_comments($render = true)
 {
 	global $scripturl, $txt, $settings, $context;
 
-    $data = '';
+		$data = '';
 
 	if((in_array('comments', $context['TPortal']['article']['visual_options'])) || (in_array('commentallow', $context['TPortal']['article']['visual_options']))) {
 		$data .= '
