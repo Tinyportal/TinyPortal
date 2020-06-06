@@ -24,14 +24,12 @@
 		width: 59vw;
 	}
 }
-
-@media only screen and (max-width: 768px) {
+@media all and (max-width: 768px) {
 	.youtubecontainer {
 		display: inline-block;
 		height: calc(80vw/1.77);
 		margin: 0 auto;
 		width: 80vw;
-	}
 	}
 	.youtubecontainer iframe {
 		display:block;
@@ -40,6 +38,17 @@
 	}
 	.tp_responsive #tpadmin_content {
 		min-width:200px;
+	}
+	dl.tptitle dt
+	{
+		width: 100%;
+		float: none;
+	}
+	dl.tptitle dd
+	{
+		width: 100%;
+		float: none;
+	}
 }
 /** screen bigger then 900px **/
 @media all and (min-width: 900px) {

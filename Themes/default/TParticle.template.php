@@ -69,15 +69,15 @@ function template_submitarticle()
 		<div id="edit-add-single-article" class="admintable admin-area">
 		<div class="windowbg noup">
 			<div class="formtable padding-div">
-			<dl class="settings">
+			<dl class="settings tptitle">
 				<dt>
 					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></div>
 				</dt>
 				<dd>
-				<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
+					<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
 				</dd>
 				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'&nbsp;</label>
+					<div class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></div>
 				</dt>
 				<dd>
 					<input size=20 name="tp_article_shortname" id="tp_article_shortname" type="text" value="'.$mg['shortname'].'">
