@@ -57,7 +57,7 @@ function template_tp_articles()
 			<div class="windowbg addborder tp_pad">';
 
 		echo $txt['tp-prof_allarticles']. ' <b>'.$context['TPortal']['all_articles'].'</b><br>';
-		if($context['TPortal']['approved_articles']>0)
+		if($context['TPortal']['approved_articles']>0) 
 			echo $txt['tp-prof_waitapproval1'].' <b>'.$context['TPortal']['approved_articles'].'</b> '.$txt['tp-prof_waitapproval2'].'<br>';
 
 		if($context['TPortal']['off_articles']==0)
@@ -111,7 +111,7 @@ function template_tp_articles()
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:20%;">
 						<div id="show-on-respnsive-layout">'.$txt['tp-ratings'].'</div>
-						' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . '<br>' . $txt['tp-ratingvotes'] . ' ' . $art['rating_votes'] . '
+						' . ($art['rating_votes'] >0 ?  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) : '') . ' ' . $txt['tp-ratingvotes'] . ' ' . $art['rating_votes'] . '
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:13.5%;text-align:center;">
 						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>

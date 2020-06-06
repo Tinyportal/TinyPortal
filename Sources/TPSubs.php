@@ -2832,7 +2832,7 @@ function tp_profile_articles($member_id) {{{
     $max_approve= $tpArticle->getTotalAuthorArticles($member_id, false, false);
 
 	// get all articles currently being off
-    $max_off    = $tpArticle->getTotalAuthorArticles($member_id, true, false);
+    $max_off    = $tpArticle->getTotalAuthorArticles($member_id, true, true);
 
 	$context['TPortal']['all_articles']         = $max;
 	$context['TPortal']['approved_articles']    = $max_approve;
