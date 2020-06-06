@@ -849,7 +849,7 @@ function template_showarticle()
 					if($art['approved'] == 0) {
 							echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt['tp-notapproved'] .'" alt="*" />&nbsp; ';
 					}
-					if(allowedTo('tp_editownarticle') && $art['locked']==0) {
+					if((allowedTo('tp_editownarticle') || allowedTo('tp_articles')) && $art['locked']==0) {
 						echo '
 						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'" title="'. $txt['tp-editarticle'] .'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>&nbsp; ';
 					} 
