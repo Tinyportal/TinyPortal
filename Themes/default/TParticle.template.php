@@ -16,8 +16,10 @@
  */
 
 // ** Sections **
+// Submit Article
 // My Articles
 
+// Submit Article
 function template_submitarticle() 
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
@@ -851,7 +853,7 @@ function template_showarticle()
 						echo '
 						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'" title="'. $txt['tp-editarticle'] .'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>&nbsp; ';
 					} 
-					if($art['off']==0 && $art['approved'] == 1) { 
+					if($art['off']==0) { 
 							echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.png" title="" alt="*" />&nbsp; ';
 					}
 					else {

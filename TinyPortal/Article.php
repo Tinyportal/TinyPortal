@@ -306,7 +306,7 @@ class Article extends Base
         $num_articles   = 0;
 
         if($off == true) {
-            $where .= ' AND off = 0 ';
+            $where .= ' AND off = 1 ';
         }
 
         if($approved == false) {
