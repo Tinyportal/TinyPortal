@@ -496,7 +496,7 @@ function template_main()
 
 		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
 					<div class="formtable padding-div">
-						<dl class="settings">
+						<dl class="settings tptitle">
 							<dt>
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
@@ -848,7 +848,7 @@ function template_main()
 				<div></div>
 				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 				<div class="windowbg noup padding-div">
-					<dl class="settings">
+					<dl class="settings tptitle">
 						<dt>
 							<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 						</dt>

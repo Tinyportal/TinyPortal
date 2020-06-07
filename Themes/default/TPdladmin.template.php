@@ -459,7 +459,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<dl class="settings">
+				<dl class="settings tptitle">
 					<dt>
 						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
@@ -798,7 +798,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatedit'].'</h3></div>
 		<div id="editupcat" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<dl class="settings">
+				<dl class="settings tptitle">
 					<dt>
 						<label for="dladmin_name">'.$txt['tp-dlname'].'</label>
 					</dt>
@@ -920,7 +920,7 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatadd'].'</h3></div>
 		<div id="dl-addcat" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<dl class="settings">
+				<dl class="settings tptitle">
 					<dt>
 						<label for="newdladmin_name">'.$txt['tp-name'].'</label>
 					</dt>

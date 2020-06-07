@@ -20,6 +20,7 @@
 // General Settings page
 // Frontpage Settings page
 // Article Categories page
+// Edit Article Category Page
 // Add category Page
 // Category List Page
 // Articles page
@@ -585,7 +586,7 @@ function template_editcategory()
 		<div id="edit-art-category" class="admintable admin-area">
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
-					<dl class="settings">
+					<dl class="settings tptitle">
 						<dt>
 							<label for="tp_category_value1">', $txt['tp-name'], '</label>
 						</dt>
@@ -805,7 +806,7 @@ function template_addcategory()
 			<div class="information smalltext">' , $txt['tp-helpaddcategory'] , '</div><div></div>
 			<div class="windowbg noup ">
 				<div class="formtable padding-div">
-					<dl class="settings">
+					<dl class="settings tptitle">
 						<dt>
 							<b><label for="tp_cat_name">'.$txt['tp-name'].'</label>:</b>
 						</dt>

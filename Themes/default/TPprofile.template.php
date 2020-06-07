@@ -31,12 +31,12 @@ function template_tp_summary()
 	<div class="cat_bar"><h3 class="catbg">'.$txt['tpsummary'].'</h3></div>
 	<div id="tp_summary" class="windowbg padding-div">
 		<div>
-			<div class="float-items" style="width:38%;">'.$txt['tpsummary_art'].'</div>
+			<div class="float-items" style="width:38%;">'.$txt['tp-prof_allarticles'].'</div>
 			<div class="float-items" style="width:58%;font-weight: bold;">'.$context['TPortal']['tpsummary']['articles'].'</div>
 		    <p class="clearthefloat"></p>
 		</div>
 		<div>
-			<div class="float-items" style="width:38%;">'.$txt['tpsummary_dl'].'</div>
+			<div class="float-items" style="width:38%;">'.$txt['tp-prof_alldownloads'].'</div>
 			<div class="float-items" style="width:58%;font-weight: bold;">'.$context['TPortal']['tpsummary']['uploads'].'</div>
 		    <p class="clearthefloat"></p>
 		</div>
@@ -57,16 +57,20 @@ function template_tp_articles()
 			<div class="windowbg addborder tp_pad">';
 
 		echo $txt['tp-prof_allarticles']. ' <b>'.$context['TPortal']['all_articles'].'</b><br>';
-		if($context['TPortal']['approved_articles']>0) 
-			echo $txt['tp-prof_waitapproval1'].' <b>'.$context['TPortal']['approved_articles'].'</b> '.$txt['tp-prof_waitapproval2'].'<br>';
 
-		if($context['TPortal']['off_articles']==0)
-			echo $txt['tp-prof_offarticles2'].'<br>';
-		else
-			echo $txt['tp-prof_offarticles'].' <b>'.$context['TPortal']['off_articles'].'</b><br>';
+		if($context['TPortal']['all_articles']>0) {
+			if($context['TPortal']['approved_articles']>0) 
+				echo $txt['tp-prof_waitapproval1'].' <b>'.$context['TPortal']['approved_articles'].'</b> '.$txt['tp-prof_waitapproval2'].'<br>';
+
+			if($context['TPortal']['off_articles']==0)
+				echo $txt['tp-prof_offarticles2'].'<br>';
+			else
+				echo $txt['tp-prof_offarticles'].' <b>'.$context['TPortal']['off_articles'].'</b><br>';
+		}
 
 		echo '
 				</div><br>
+				
 	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">

@@ -22,6 +22,7 @@
 	float: left;
 	width: 50%;
 }
+}
 .tp_col16 {
 	float: left;
 	width: 100%;
@@ -1567,6 +1568,16 @@ input,select {
 #tp_article_intro {
 	height: 140px;
 	width: 98%; 
+}
+dl.tptitle dt
+{
+	width: 20%;
+	float: left;
+}
+dl.tptitle dd
+{
+	width: 80%;
+	float: right;
 }
 #tp_customlayout {
 	height: 200px;

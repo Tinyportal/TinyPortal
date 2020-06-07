@@ -185,9 +185,6 @@ $txt['tp-prof_offarticles2'] = 'All articles are marked as active.';
 $txt['tp-prof_waitapproval1'] = 'This member has ';
 $txt['tp-prof_waitapproval2'] = 'articles waiting approval.';
 $txt['tpsummary'] = 'Portal Summary';
-$txt['tpsummary_art'] = 'Total number of articles submitted:';
-$txt['tpsummary_dl'] = 'Total number of uploaded files:';
-$txt['tpsummary_shout'] = 'Total number of shouts:';
 $txt['tp-wysiwygchoice'] = 'Use WYSIWYG editor';
 
 // File Manager
