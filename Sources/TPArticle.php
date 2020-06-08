@@ -87,7 +87,7 @@ function articleInsertComment() {{{
 	$article    = TPUtil::filter('tp_article_id', 'post', 'int');
 	$title      = TPUtil::filter('tp_article_comment_title', 'post', 'string');
     $comment    = substr(TPUtil::htmlspecialchars($_POST['tp_article_bodytext']), 0, 65536);
-    if(!empty($context['TPortal']['allow_links_article_comments']) && TPUtil::hasLinks($comment)) {
+    if(!empty($context['TPortal']['allow_links_article_comments'])==0 && TPUtil::hasLinks($comment)) {
         redirectexit('page='.$article.'#tp-comment');
     }
 

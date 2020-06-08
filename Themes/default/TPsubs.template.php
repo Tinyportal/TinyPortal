@@ -1545,7 +1545,7 @@ function article_picturecolumn($render = true)
 		$data = '
 	<div class="article_picture" style="background-image: url(' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . ');"></div>';
     }
-	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1)) {
+	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && (isset($context['TPortal']['use_attachment'])==1)) {
 		$data = '
 	    <div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
 	}
@@ -1752,12 +1752,12 @@ function article_options($render = true)
 
 	if(!isset($context['TPortal']['article']['boardnews'])) {
 		// give 'em a edit link? :)
-		if(allowedTo('tp_articles') && empty($context['TPortal']['hide_editarticle_link'])) {
+		if(allowedTo('tp_articles') && ($context['TPortal']['hide_editarticle_link']!=1)) {
 			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
 		// their own article?
-		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && empty($context['TPortal']['hide_editarticle_link']) && empty($context['TPortal']['article']['locked'])) {
+		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && $context['TPortal']['hide_editarticle_link']!=1 && $context['TPortal']['article']['locked']!=1) {
 			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></span>';
         }
@@ -1777,7 +1777,7 @@ function article_print($render = true)
 
     $data = '';
 
-	if($context['TPortal']['print_articles'] != 0 ) {
+	if($context['TPortal']['print_articles']==1) {
 		if(isset($context['TPortal']['article']['boardnews']) && !$context['user']['is_guest']) {
 			$data .= '
 					<span class="article_rating"><a href="' . $scripturl . '?action=printpage;topic=' . $context['TPortal']['article']['id'] . '">' . $txt['print_page'] . '</a></span>';
@@ -1983,25 +1983,28 @@ function article_comments($render = true)
 			</div>';
 	}
 
-	if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) {
+	if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && isset($context['TPortal']['can_artcomment'])==1) {
 		$data .= '
 			<div class="tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tportal;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
-						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea>
-';
-
+						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea><br>'; 
+	
+	if (!empty($context['TPortal']['allow_links_article_comments'])==0) {
+		$data .= '<em>'. $txt['tp-nolinkcomments'] . '<em>';
+		}
+	
 		$data .= '
-						<div style="padding:1%;"><input id="tp_article_comment_submit" type="submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
+						<div class="tp_pad"><input id="tp_article_comment_submit" type="submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
 						<input name="tp_article_type" type="hidden" value="article_comment">
 						<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
 						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
 				</form>
 			</div>';
 	}
-	elseif (in_array('commentallow', $context['TPortal']['article']['visual_options']) && !empty($context['TPortal']['can_artcomment'])) {
+	elseif (in_array('commentallow', $context['TPortal']['article']['visual_options']) && isset($context['TPortal']['can_artcomment'])!=1) {
 		$data .= '
-			<div style="padding: 1ex;" class="windowbg"><em>' . $txt['tp-cannotcomment'] . '</em></div>';
+			<div class="tp_pad"><em>' . $txt['tp-cannotcomment'] . '</em></div>';
     }
 
     if($render) {
@@ -2022,7 +2025,7 @@ function article_morelinks($render = true)
 	if(in_array('category',$context['TPortal']['article']['visual_options'])) {
 		if(in_array('category',$context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others'])) {
 			$data .= '
-	<h2 class="titlebg article_extra"><a href="' . $scripturl . '?cat='. (!empty($context['TPortal']['article']['value8']) ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
+	<h2 class="titlebg article_extra"><a href="' . $scripturl . '?cat='. ($context['TPortal']['article']['value8']==1 ? $context['TPortal']['article']['value8'] : $context['TPortal']['article']['category']) .'">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['value1'] . ' &#187;</span></a></h2>
 
 	<div style="overflow: hidden;">
 		<ul class="disc">';
