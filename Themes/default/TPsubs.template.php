@@ -1974,6 +1974,7 @@ function article_comments($render = true)
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-bycom'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>';
                 }
 				$data .= '	
+					<p class="clearthefloat"></p>
 					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 				$data .= '
 				</div>';

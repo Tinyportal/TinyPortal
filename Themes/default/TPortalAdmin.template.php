@@ -582,7 +582,7 @@ function template_editcategory()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="editcategory">
 		<input name="tpadmin_form_id" type="hidden" value="' . $mg['id'] . '">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-editcategory'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-editcategory'] . ' ' ,html_entity_decode($mg['value1']), '&nbsp;-&nbsp;<a href="'.$scripturl.'?cat='.$mg['id'].'">['.$txt['tp-viewcategory'].']</a></h3></div>
 		<div id="edit-art-category" class="admintable admin-area">
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
