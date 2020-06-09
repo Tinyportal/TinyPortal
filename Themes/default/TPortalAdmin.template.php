@@ -513,6 +513,7 @@ function template_categories()
 		<input name="tpadmin_form" type="hidden" value="categories">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-tabs5'] . '</h3></div>
 		<div id="edit-category" class="admintable admin-area">
+			<div class="information smalltext">' , $txt['tp-helpcats'] , '</div><div></div>
 			<div class="windowbg noup padding-div">
 				<table class="table_grid tp_grid" style="width:100%">
 				<thead>
@@ -883,7 +884,7 @@ function template_articles()
 		<input name="tpadmin_form" type="hidden" value="articles">
 		<div class="cat_bar"><h3 class="catbg">' , $txt['tp-articles'] , !empty($context['TPortal']['categoryNAME']) ? $txt['tp-incategory']. ' ' . $context['TPortal']['categoryNAME'].' ' : '' ,  '</h3></div>
 		<div id="edit-articles" class="admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-helparticles'] , '</div><div></div>
+			<div class="information smalltext">' , empty($context['TPortal']['categoryNAME']) ? $txt['tp-helparticles'] : $txt['tp-helparticles2'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
 
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
