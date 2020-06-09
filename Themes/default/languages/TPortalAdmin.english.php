@@ -129,6 +129,10 @@ $txt['tp-addbbc'] = '+BBC';
 $txt['tp-addimport'] = '+External';
 $txt['tp-tabs11'] = 'Cat List';
 
+// Categories page
+$txt['tp-artcat'] = 'Article categories';
+$txt['tp-helpcats'] = 'These are your article categories and sub-categories with the number of articles each category holds. Selecting a category will bring you the edit category page. The actions icons allow you to quickly access some category functions.';
+
 // Article settings
 $txt['tp-articlesettings'] = 'Article settings';
 $txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
@@ -146,7 +150,8 @@ $txt['tp-hidearticle-delicious'] = 'Hide Delicious button';
 $txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button';
 
 // Articles overview
-$txt['tp-helparticles'] = 'These are your article categories and the amount of articles each holds. Also listed is the immediate subcategory (click further in to reveal more).';
+$txt['tp-helparticles'] = 'These are your article categories and sub-categories with the number of articles each category holds. Selecting a category will bring you the the articles listing for that category. The actions icons allow you to view the category page or directly edit the category settings.';
+$txt['tp-helparticles2'] = 'This page shows all list of all articles in the chosen category. Selecting an article will bring you the the edit article page. The actions icons allow you to quickly toggle some article settings. Note that if an article is locked the edit option is disabled until the lock is removed.';
 $txt['tp-setfrontpage'] = 'Toggle show on frontpage';
 $txt['tp-setsticky'] = 'Toggle sticky/non-sticky';
 $txt['tp-setlock'] = 'Toggle unlocked/locked';
@@ -485,7 +490,6 @@ $txt['tp-nofrontmodule'] =  'No modules available.';
 $txt['tp-catboxauthor'] = 'Show author?';
 $txt['tp-catboxheight'] = 'Height of the article box before scrollbar';
 $txt['tp-insert'] = 'Insert code';
-$txt['tp-artcat'] = 'Article categories';
 $txt['tp-unreadreplies'] = 'Unread replies';
 
 // Menu manager
