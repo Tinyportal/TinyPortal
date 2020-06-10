@@ -213,8 +213,19 @@ $txt['alert_tp_comment_mention'] = 'You have been mentioned by {user_mention} in
 $txt['editor_tp_floatleft'] = 'Insert float left div';
 $txt['editor_tp_floatright'] = 'Insert float right div';
 
-// Various
+// Menu texts
+$txt['tp-adminheader1'] = 'Settings & Frontpage';
+$txt['tp_menuarticles'] = 'Articles and Categories';
 $txt['tp-adminpanels'] = 'Panels and Blocks';
+$txt['tp-menumanager'] = 'Menu manager';
+$txt['custom_modules'] = 'TP Modules';
+
+// Various
+$txt['tp-adminheader1'] = 'Settings & Frontpage';
+$txt['tp_menuarticles'] = 'Articles and Categories';
+$txt['tp-adminpanels'] = 'Panels and Blocks';
+$txt['tp-menumanager'] = 'Menu manager';
+$txt['custom_modules'] = 'TP Modules';
 $txt['tp-forum'] = 'Forum';
 $txt['tp-tphelp'] = 'TinyPortal';
 $txt['tp-edit'] = 'Edit';
@@ -248,7 +259,6 @@ $txt['tp-fullscreenshot'] = 'Show full picture';
 $txt['tp-generalsettings'] = 'General settings';
 $txt['tp-haverated'] = 'You have rated.';
 $txt['tp-hide'] = 'Hide';
-$txt['tp-menumanager'] = 'Menu manager';
 $txt['tp-miscblocks'] = 'Menus';
 $txt['tp-modules'] = 'Modules';
 $txt['tp-morecategories'] = 'More';
