@@ -178,7 +178,7 @@ function tp_getbuttons() {{{
 	if(allowedTo('tp_settings'))
 	{
 		$buts['tpsettings'] = array(
-			'title' => $txt['tp-generalsettings'],
+			'title' => $txt['tp-adminheader1'],
 			'href' => $scripturl . '?action=tpadmin;sa=settings',
 			'show' => true,
 			'active_button' => false,
@@ -188,7 +188,7 @@ function tp_getbuttons() {{{
 	if(allowedTo('tp_articles'))
 	{
 		$buts['tparticles'] = array(
-			'title' => $txt['permissionname_tp_articles'],
+			'title' => $txt['tp_menuarticles'],
 			'href' => $scripturl . '?action=tpadmin;sa=articles',
 			'show' => true,
 			'active_button' => false,
@@ -198,8 +198,18 @@ function tp_getbuttons() {{{
 	if(allowedTo('tp_blocks'))
 	{
 		$buts['tpblocks'] = array(
-			'title' => $txt['permissionname_tp_blocks'],
+			'title' => $txt['tp-adminpanels'],
 			'href' => $scripturl . '?action=tpadmin;sa=blocks',
+			'show' => true,
+			'active_button' => false,
+			'sub_buttons' => array(),
+		);
+	}
+	if(allowedTo('tp_blocks'))
+	{
+		$buts['tpmenuman'] = array(
+			'title' => $txt['tp-menumanager'],
+			'href' => $scripturl . '?action=tpadmin;sa=menubox',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
