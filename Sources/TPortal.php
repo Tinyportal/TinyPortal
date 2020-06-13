@@ -1346,7 +1346,16 @@ function doTPfrontpage() {{{
 					)
 				);
 
+            $topic_ids = array();
 			while($row = $smcFunc['db_fetch_assoc']($request)) {
+                // FIX for duplicate attachments
+                if(in_array($row['id'], $topic_ids)) {
+                    continue;
+                }
+                else {
+                    $topic_ids[] = $row['id'];
+                }
+
 				$length = $context['TPortal']['frontpage_limit_len'];
 				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
 					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
