@@ -17,21 +17,25 @@
  *
  */
 
-$ssi_path 	= '/var/www/html/PSMF/SSI.php';
-$settings_path 	= '/var/www/html/PSMF/Settings.php';
+$ssi_path 	    = '';
+$settings_path 	= '';
 
 ob_start('tp_url_rewrite');
 
-global $boardurl;
+global $boardurl, $context;
 require_once($settings_path);
 
-$actual_boardurl = $boardurl;
+$context['TPortal'] = array();
+$actual_boardurl    = $boardurl;
 
 require_once($ssi_path);
 
 TPortal_init();
+
 writeLog();
+
 TPortalMain();
+
 obExit(true);
 
 function tp_url_rewrite($buffer) {{{
