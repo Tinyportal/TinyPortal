@@ -554,6 +554,9 @@ function do_articles()
             }
             $smcFunc['db_free_result']($request);
         }
+        else {
+            fatal_error($txt['tp-noadmin'], false);
+        }
     }
 
 	// do an update of stray articles and categories
