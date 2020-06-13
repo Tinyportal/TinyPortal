@@ -357,7 +357,7 @@ class TPortal_Integrate
         global $smcFunc, $context, $scripturl, $txt;
 
         // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items.
-        if(!isset($context['TPortal'])) {
+        if(!isset($context['TPortal']) || isset($context['uninstalling'])) {
             return;
         }
 
