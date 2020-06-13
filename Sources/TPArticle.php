@@ -316,7 +316,7 @@ function articleEdit() {{{
 	global $context, $smcFunc;
 
 	checkSession('post');
-	isAllowedTo(array('tp_articles', 'tp_submitbbc', 'tp_submithtml'));
+	isAllowedTo(array('tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml'));
 
 	$options        = array();
 	$article_data   = array();

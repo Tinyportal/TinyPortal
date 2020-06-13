@@ -306,7 +306,7 @@ function do_subaction($tpsub)
 {
     global $context, $txt;
 
-	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons', 'clist')) && (allowedTo('tp_articles')) ) {
+	if(in_array($tpsub, array('articles', 'strays', 'categories', 'addcategory', 'submission', 'artsettings', 'articons', 'clist')) && (allowedTo(array('tp_articles', 'tp_editownarticle'))) )  {
 		do_articles();
     }
 	elseif(in_array($tpsub, array('blocks', 'panels')) && (allowedTo('tp_blocks')) ) {
