@@ -1556,7 +1556,6 @@ function doTPfrontpage() {{{
 
 			$length = $context['TPortal']['frontpage_limit_len'];
             foreach($forumPosts as $k => $row) {
-                // FIXME 
                 $row['date']            = $row['timestamp'];
                 $row['real_name']       = $row['poster']['name'];
                 $row['author_id']       = $row['poster']['id'];
@@ -1567,8 +1566,10 @@ function doTPfrontpage() {{{
                 $row['category']        = $row['board']['id'];
     
         		$request =  $smcFunc['db_query']('', '
-		        	SELECT t.num_views AS views 
+		        	SELECT t.num_views AS views, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
                     FROM {db_prefix}topics AS t
+			        LEFT JOIN {db_prefix}attachments AS thumb 
+                        ON ( t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 )
 			        WHERE t.id_topic = ({int:id})',
 			        array(
 				        'id' => $row['id'],
@@ -1577,13 +1578,13 @@ function doTPfrontpage() {{{
 
                 $data                   = $smcFunc['db_fetch_assoc']($request);
                 $row['views']           = isset($data['views']) ? $data['views'] : 0;
+                $row['thumb_id']        = isset($data['thumb_id']) ? $data['thumb_id'] : 0;
+                $row['thumb_filename']  = isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
                 $smcFunc['db_free_result']($request);
 
 
                 // Turn the body back to bbc so the parse_bbc called later doesn't break....
                 $row['body']            = html_to_bbc($row['body']);
-
-                // FIXME 
 
                 // Load their context data.
                 loadMemberData($row['author_id']);
