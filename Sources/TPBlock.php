@@ -95,13 +95,7 @@ function getBlocks() {{{
 	if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
         $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
 	}
-    $action = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-
-    if(!empty($action) && array_key_exists('action', $action)) {
-        $sqlarray[] = 'actio='.$action['action'];
-    }
-
-
+    
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
 	    $sqlarray[] = 'actio=frontpage';
