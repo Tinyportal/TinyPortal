@@ -221,11 +221,6 @@ $txt['tp-menumanager'] = 'Menu manager';
 $txt['custom_modules'] = 'TP Modules';
 
 // Various
-$txt['tp-adminheader1'] = 'Settings & Frontpage';
-$txt['tp_menuarticles'] = 'Articles and Categories';
-$txt['tp-adminpanels'] = 'Panels and Blocks';
-$txt['tp-menumanager'] = 'Menu manager';
-$txt['custom_modules'] = 'TP Modules';
 $txt['tp-forum'] = 'Forum';
 $txt['tp-tphelp'] = 'TinyPortal';
 $txt['tp-edit'] = 'Edit';

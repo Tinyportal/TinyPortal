@@ -61,15 +61,14 @@ function template_tpListImages_admin()
     $users = TPMembers();
 
     echo '
-		<div class="title_bar">
-        <h3 class="titlebg">'.$txt['tp-listimage-settings'].'</h3>
-		</div>
-		<div class="windowbg noup padding-div">
 		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=list"  method="post" style="margin: 0px;">
-		<div class="smalltext padding-div">' , $txt['tp-listimage-intro'] , '</div>
-		<div class="padding-div">
-				<input type="hidden" name="sc" value="', $context['session_id'], '" />
-				<select name="id_member">';
+		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-listimage-settings'].'</h3></div>
+		<div id="tplistimages" class="admintable admin-area">
+			<div class="information smalltext">' , $txt['tp-listimage-intro'] , '</div><div></div>
+			<div class="windowbg noup">
+				<div class="padding-div">
+					<input type="hidden" name="sc" value="', $context['session_id'], '" />
+					<select name="id_member">';
 
             foreach ( $users as $id => $name)
                 echo '<option value="'.$id.'">'.$name.'</option>';
@@ -77,9 +76,11 @@ function template_tpListImages_admin()
     echo '
 				</select>
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
+				</div>
 			</div>
+		</div>
 		</form>
-		</div>';
+		';
     
     echo $ret;
 

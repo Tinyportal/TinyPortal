@@ -1829,20 +1829,30 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 			),
 		);
 	}
-
+	if (allowedTo('tp_editownarticle')) {
+		$context['admin_tabs']['tp_articles'] = array(
+			'myarticles' => array(
+				'title' => $txt['tp-myarticles'],
+				'description' => $txt['tp-articledesc1'],
+				'href' => $scripturl . '?action=tportal;sa=myarticles',
+				'is_selected' => $tpsub == 'myarticles',
+			),
+		);
+	}
+	
 	if (allowedTo('tp_articles')) {
 		$context['admin_tabs']['tp_articles'] = array(
-			'categories' => array(
-				'title' => $txt['tp-tabs5'],
-				'description' => $txt['tp-articledesc2'],
-				'href' => $scripturl . '?action=tpadmin;sa=categories',
-				'is_selected' => in_array($tpsub, array('categories', 'addcategory','clist')) ,
-			),
 			'articles' => array(
 				'title' => $txt['tp-articles'],
 				'description' => $txt['tp-articledesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=articles',
 				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays'))),
+			),
+			'categories' => array(
+				'title' => $txt['tp-tabs5'],
+				'description' => $txt['tp-articledesc2'],
+				'href' => $scripturl . '?action=tpadmin;sa=categories',
+				'is_selected' => in_array($tpsub, array('categories', 'addcategory','clist')) ,
 			),
 			'artsettings' => array(
 				'title' => $txt['tp-settings'],
