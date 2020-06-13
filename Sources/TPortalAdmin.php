@@ -537,6 +537,25 @@ function do_articles()
 {
 	global $context, $txt, $settings, $boardurl, $scripturl, $smcFunc;
 
+    if(allowedTo('tp_articles') == false) {
+        if(isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle') {
+		    $article = TPUtil::filter('article', 'get', 'string');
+        	$request = $smcFunc['db_query']('', '
+		        SELECT id FROM {db_prefix}tp_articles
+		        WHERE id = {int:article_id}
+                AND author_id = {int:member_id}',
+		        array(  
+                    'article_id'    => $article,
+                    'member_id'     => $context['user']['id']
+                )
+	        );
+	        if($smcFunc['db_num_rows']($request) == 0) {           
+                fatal_error($txt['tp-noadmin'], false);
+            }
+            $smcFunc['db_free_result']($request);
+        }
+    }
+
 	// do an update of stray articles and categories
 	$acats = array();
 	$request = $smcFunc['db_query']('', '
