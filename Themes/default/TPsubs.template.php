@@ -1547,7 +1547,7 @@ function article_picturecolumn($render = true)
     }
 	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && (isset($context['TPortal']['use_attachment'])==1)) {
 		$data = '
-	    <div class="article_picture" style="background-image: url(' . $context['TPortal']['article']['illustration'] . ');"></div>';
+	    <div class="article_picture"><img src="' . $context['TPortal']['article']['illustration'] . '"></div>';
 	}
     else {
 		$data = '
