@@ -16,26 +16,37 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
+ob_start('tp_url_rewrite');
+global $boardurl, $context, $txt;
 
+$txt['tp-tphelp']   = 'TinyPortal';
 
-$ssi_path 	= '/var/www/html/SMF2.0/SSI.php';
-$settings_path 	= '/var/www/html/SMF2.0/Settings.php';
+// Change to SMF 2.1 if running a 2.1 forum
+$forum_version      = 'SMF 2.0.17';
+$forum_path 	    = '';
 
-require_once($settings_path);
-global $boardurl;
-$actual_boardurl 	= $boardurl;
+require_once($forum_path . '/Settings.php');
 
-require_once($ssi_path);
-$boardurl 	= $actual_boardurl;
-$scripturl 	= $actual_boardurl;
+$context['TPortal'] = array();
+$actual_boardurl    = $boardurl;
 
-loadTheme(1, false);
+require_once($forum_path . '/SSI.php');
 
 TPortal_init();
+
 writeLog();
 
 call_user_func(whichTPAction());
 
 obExit(true);
+
+function tp_url_rewrite($buffer) {{{
+    global $actual_boardurl, $boardurl;
+    if (!empty($buffer) && stripos($buffer, $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']) !== false) {
+        $buffer = str_replace($boardurl, $actual_boardurl, $buffer);
+    }
+
+    return $buffer;
+}}}
 
 ?>
