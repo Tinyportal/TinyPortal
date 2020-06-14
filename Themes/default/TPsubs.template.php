@@ -1653,25 +1653,21 @@ function article_views($render = true)
 
 function article_comments_total($render = true)
 {
-	global $scripturl, $txt, $context; 
+	global $scripturl, $txt, $context;
 
-    $data = '';
+	$data = '';
 
-	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (isset($context['TPortal']['article_comments_count']))) {
+	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (isset($context['TPortal']['article']['comments']))) {
 		$data = '
-		<span class="article_comments">' .	$txt['tp-comments'] . ':  ' . $context['TPortal']['article_comments_count'] . '</span>';
-    }
-	elseif(in_array('comments', $context['TPortal']['article']['visual_options']) && (empty($context['TPortal']['article_comments_count']))) {
-		$data = '
-		<span class="article_comments"><a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' .	$txt['tp-comments'] . '</a></span>';
-    }
+		<span class="article_comments">' .  $txt['tp-comments'] . ':  ' . $context['TPortal']['article']['comments'] . '</span>';
+	}
 
-    if($render) {
-        echo $data;
-    }
-    else {
-        return $data;
-    }
+	if($render) {
+		echo $data;
+	}
+	else {
+		return $data;
+	}
 }
 
 function article_title($render = true)
