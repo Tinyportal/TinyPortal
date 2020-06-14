@@ -200,10 +200,80 @@ class Article extends Base
     }}}
 
     public function insertArticleComment($user_id, $item_id, $comment, $title) {{{
-        return parent::insertComment('1', $user_id, $item_id, $comment, $title);
+
+        $comment_id = 0;        
+
+		// check if the article indeed exists
+		$request =  $this->dB->db_query('', '
+            SELECT comments FROM {db_prefix}tp_articles
+            WHERE id = {int:artid}',
+            array (
+                'artid' => $item_id
+            )
+        );
+
+		if($this->dB->db_num_rows($request) > 0) {
+			$num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
+			$this->dB->db_free_result($request);
+            $comment_id = parent::insertComment('1', $user_id, $item_id, $comment, $title);
+
+            $num_comments++;
+            // count and increase the number of comments
+            $this->dB->db_query('', '
+                UPDATE {db_prefix}tp_articles
+                SET comments = {int:com}
+                WHERE id = {int:artid}',
+                array (
+                    'com'   => $num_comments,
+                    'artid' => $item_id
+                )
+            );
+        }
+
+        return $comment_id;
     }}}
 
     public function deleteArticleComment($comment_id) {{{
+
+		// check if the article indeed exists
+		$request =  $this->dB->db_query('', '
+            SELECT item_id FROM {db_prefix}tp_comments
+            WHERE id = {int:artid}',
+            array (
+                'artid' => $comment_id
+            )
+        );
+
+		if($this->dB->db_num_rows($request) > 0) {
+			$article_id = $this->dB->db_fetch_assoc($request)['item_id'];
+			$this->dB->db_free_result($request);
+            // check if the article indeed exists
+            $request =  $this->dB->db_query('', '
+                SELECT comments FROM {db_prefix}tp_articles
+                WHERE id = {int:artid}',
+                array (
+                    'artid' => $article_id
+                )
+            );
+
+            if($this->dB->db_num_rows($request) > 0) {
+			    $num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
+			    $this->dB->db_free_result($request);
+
+                $num_comments--;
+                // count and decrease the number of comments
+                $this->dB->db_query('', '
+                    UPDATE {db_prefix}tp_articles
+                    SET comments = {int:com}
+                    WHERE id = {int:artid}',
+                    array (
+                        'com'   => $num_comments,
+                        'artid' => $article_id
+                    )
+                );
+            }
+        }
+
         return parent::deleteComment($comment_id, 'article_comment');
     }}}
 
