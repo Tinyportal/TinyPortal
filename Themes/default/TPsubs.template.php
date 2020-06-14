@@ -1657,7 +1657,7 @@ function article_comments_total($render = true)
 
 	$data = '';
 
-	if(in_array('comments', $context['TPortal']['article']['visual_options']) && (isset($context['TPortal']['article']['comments']))) {
+	if((in_array('comments', $context['TPortal']['article']['visual_options'])) || (in_array('commentallow', $context['TPortal']['article']['visual_options']))) {
 		$data = '
 		<span class="article_comments">' .  $txt['tp-comments'] . ':  ' . $context['TPortal']['article']['comments'] . '</span>';
 	}
