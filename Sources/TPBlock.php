@@ -116,7 +116,8 @@ function getBlocks() {{{
     }
     else {
         foreach($user_info['groups'] as $k => $v) {
-            $access .= " '$v' = ANY (string_to_array(access, ',' ) ) OR ";
+            $str    = $smcFunc['db_quote']('{string:grp}' , array('grp' => $v));
+            $access .= " $str = ANY (string_to_array(access, ',' ) ) OR ";
         }
     }
     $access = rtrim($access,' OR ');
@@ -133,7 +134,8 @@ function getBlocks() {{{
     else {
         $access2 = '(';
         foreach($sqlarray as $k => $v) {
-            $access2 .= " '$v' = ANY (string_to_array(access2, ',' ) ) OR ";
+            $str        = $smcFunc['db_quote']('{string:sqla}' , array('sqla' => $v));
+            $access2    .= " $str = ANY (string_to_array(access2, ',' ) ) OR ";
         }
         $access2 = rtrim($access2,' OR ');
         $access2 .= ' )';
@@ -147,7 +149,8 @@ function getBlocks() {{{
             $access3 = ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
         }
         else {
-            $access3 = " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+            $str        = $smcFunc['db_quote']('{string:tmp}' , array('tmp' => $tmp));
+            $access3    = " AND $str = ANY (string_to_array(access2, ',' ) )";
         }
     }
 
