@@ -109,48 +109,19 @@ function getBlocks() {{{
         $sqlarray[] = 'tpmod=shout';
     }
 
-	// set the membergroup access
-    $access = '';
-    if(TP_PGSQL == false) {
-        $access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
-    }
-    else {
-        foreach($user_info['groups'] as $k => $v) {
-            $str    = $smcFunc['db_quote']('{string:grp}' , array('grp' => $v));
-            $access .= " $str = ANY (string_to_array(access, ',' ) ) OR ";
-        }
-    }
-    $access = rtrim($access,' OR ');
+
+    $access = TPUtil::find_in_set($user_info['groups'], 'access');
 
 	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 		$access = '1=1';
     }
 
-	// set the location access
-    $access2 = '';
-    if(TP_PGSQL == false) {
-        $access2 = 'FIND_IN_SET(\'' . implode('\', access2) OR FIND_IN_SET(\'', $sqlarray) . '\', access2)';
-    }
-    else {
-        $access2 = '(';
-        foreach($sqlarray as $k => $v) {
-            $str        = $smcFunc['db_quote']('{string:sqla}' , array('sqla' => $v));
-            $access2    .= " $str = ANY (string_to_array(access2, ',' ) ) OR ";
-        }
-        $access2 = rtrim($access2,' OR ');
-        $access2 .= ' )';
-    }
-
+    $access2 = TPUtil::find_in_set($sqlarray, 'access2');
     $access3 = '';
-	// set the language access
-	if(!empty($context['TPortal']['uselangoption'])) {
-        $tmp = 'tlang=' . $user_info['language'];
-        if(TP_PGSQL == false) {
-            $access3 = ' AND FIND_IN_SET(\'' .$tmp. '\', access2)';
-        }
-        else {
-            $str        = $smcFunc['db_quote']('{string:tmp}' , array('tmp' => $tmp));
-            $access3    = " AND $str = ANY (string_to_array(access2, ',' ) )";
+    if(!empty($context['TPortal']['uselangoption'])) {
+        $access3 = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'access2');
+        if(isset($access3)) {
+            $access3 = ' AND '. $access3;
         }
     }
 
