@@ -53,6 +53,30 @@ class Util
 
 	}}}
 
+    public static function find_in_set($data, $field) {{{
+
+        $dB = Database::getInstance();
+
+        array_walk($data, function (&$value, $key) use ($dB) {
+                $value = $dB->db_quote('{string:value}', array( 'value' => $value));
+            }
+        );
+
+        $str = '';
+        if(TP_PGSQL == false) {
+            $str = '(FIND_IN_SET(' . implode(', '.$field.') OR FIND_IN_SET(', $data) . ', '.$field.'))';
+        }
+        else {
+            foreach($data as $k => $v) {
+                $str .= " $v = ANY (string_to_array($field, ',' ) ) OR ";
+            }
+            $str = rtrim($str,' OR ');
+        }
+
+        return $str;
+
+    }}}
+
     public static function http_parse_query($queryString, $argSeparator = '&', $decType = PHP_QUERY_RFC1738) {{{
         $result             = array();
         $parts              = explode($argSeparator, $queryString);
