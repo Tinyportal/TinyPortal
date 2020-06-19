@@ -26,7 +26,7 @@ $now = time();
 $today = date('j',$now);
 $year = date("Y",$now);
 $month = date("n",$now);
-$days = array($today => array(NULL, NULL, '<a class="smalltext" style="color: steelblue; font-weight: bold; border: solid 1px black; background-color: white; padding: 0px 3px 0px 3px;" href="'.$scripturl.'?action=calendar;sa=view;month='.$month.';year='.$year.';day='.$today.'" target="_self">'.$today.'</a>'));
+$days = array($today => array(NULL, NULL, '<a class="smalltext" style="color: steelblue; font-weight: bold; border: solid 1px black; background-color: white;" href="'.$scripturl.'?action=calendar;sa=view;month='.$month.';year='.$year.';day='.$today.'" target="_self">'.$today.'</a>'));
 
 $day_name_length = 2;
 $month_href = $scripturl . '?action=calendar';
@@ -80,8 +80,7 @@ for($day=1,$days_in_month=gmdate('t',$first_of_month); $day<=$days_in_month; $da
 	}
 	else 
 	{
-		$calendar .= "<td class=\"smalltext\" style=\"padding:1px 6px 1px 1px;\"><a";
-		$calendar .= "<td class=\"smalltext\" style=\"padding:1px 8px 1px 1px;\"><a";
+		$calendar .= "<td class=\"smalltext\" style=\"padding:1px 5px 1px 4px;font-size: 0.85em;\"><a";
 		if(((($weekday+$first_day) % 7)==0)||((($weekday+$first_day) % 7)==6))
 		{
 			$calendar .= ' style="color:#C00000;"';

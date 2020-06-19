@@ -2663,12 +2663,13 @@ function get_catlayouts()
 	$context['TPortal']['admin_layoutboxes'] = array(
 		array('value' => '1', 'label' => $txt['tp-catlayout1']),
 		array('value' => '2', 'label' => $txt['tp-catlayout2']),
-		array('value' => '3', 'label' => $txt['tp-catlayout3']),
 		array('value' => '4', 'label' => $txt['tp-catlayout4']),
-		array('value' => '5', 'label' => $txt['tp-catlayout5']),
-		array('value' => '6', 'label' => $txt['tp-catlayout6']),
-		array('value' => '7', 'label' => $txt['tp-catlayout7']),
 		array('value' => '8', 'label' => $txt['tp-catlayout8']),
+		array('value' => '6', 'label' => $txt['tp-catlayout6']),
+		array('value' => '5', 'label' => $txt['tp-catlayout5']),
+		array('value' => '3', 'label' => $txt['tp-catlayout3']),
+		array('value' => '9', 'label' => $txt['tp-catlayout9']),
+		array('value' => '7', 'label' => $txt['tp-catlayout7']),
 	);
 }
 

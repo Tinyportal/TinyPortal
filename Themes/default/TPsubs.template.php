@@ -1489,6 +1489,47 @@ function article_renders($type = 1, $single = false, $first = false)
 	</div>
 </div>';
 	}
+	elseif($type == 9)
+	{
+		if($single)
+		$code = '
+	<div style="overflow: hidden;">
+		<div></div>
+		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
+		' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}&nbsp;</h3>' :  '<h3 class="article_title">{article_title} </h3>') . '
+		</div>
+		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
+			<div class="article_info' . ($useframestyle ? '' : '') . '">
+			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
+				{article_author}
+				{article_category}
+				{article_date}
+				{article_views}
+				{article_comments_total}
+				{article_rating}
+				{article_options}
+				{article_print}
+			' . (!$single ? '</div>' : '') .  '
+			</div>
+			<div class="article_padding article_text" style="clear: both;">{article_text}
+			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+			' . (!$single ? '</div><span class="botslice"><span></span></span>' : '') . '
+		</div>
+			' . ($single ? '
+			{article_bookmark}
+			{article_moreauthor}
+			{article_morelinks}
+			{article_comments}</div>' : '') . '
+	</div>
+		';
+		elseif(($first) && (TP_SMF21))
+			$code = '
+			<div></div><div class="windowbg tp_pad" style="margin-top:6px"><div class="align_right"><strong>{article_title}</strong></div>{article_date}</div>';
+		else
+			$code = '
+			<div class="windowbg tp_pad"><div class="align_right"><strong>{article_title}</strong></div>{article_date}</div>';
+	}
 	return $code;
 }
 
