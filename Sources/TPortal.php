@@ -35,7 +35,6 @@ function TPortal() {{{
 	$subAction  = TPUtil::filter('sa', 'get', 'string');
     $subActions = array (
         'credits'           => array('TPhelp.php', 'TPCredits'      , array()),
-        'help'              => array('TPhelp.php', 'TPhelp_init'    , array()),
         'updatelog'         => array('TPSubs.php', 'TPUpdateLog'    , array()),
         'savesettings'      => array('TPSubs.php', 'TPSaveSettings' , array()),
     );
