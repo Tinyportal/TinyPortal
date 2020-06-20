@@ -48,10 +48,10 @@ class TPortal_Integrate
                 '$sourcedir/TPArticle.php|TPArticleActions',
                 '$sourcedir/TPSearch.php|TPSearchActions',
                 '$sourcedir/TPBlock.php|TPBlockActions',
+                '$sourcedir/TPdlmanager.php|TPDownloadActions',
             ),
             'tp_post_subactions'                 => array ( 
                 '$sourcedir/TPcommon.php|TPUpshrink',
-                '$sourcedir/TPdlmanager.php|TPdlmanager',
             ),           
             'tp_post_init'                      => array (
                 '$sourcedir/TPShout.php|TPShoutLoad',

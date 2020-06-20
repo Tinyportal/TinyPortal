@@ -285,7 +285,7 @@ function TPortal_userbox()
 		// upload a file?
         if(allowedTo('tp_dlupload') || allowedTo('tp_dlmanager'))
              echo '
-			<li><a href="', $scripturl, '?action=tportal;dl=upload">' . $bullet3.$txt['permissionname_tp_dlupload']. '</a></li>';
+			<li><a href="', $scripturl, '?action=tportal;sa=download;dl=upload">' . $bullet3.$txt['permissionname_tp_dlupload']. '</a></li>';
 
 		// tpadmin checks
 		if (allowedTo('tp_settings'))
@@ -306,11 +306,11 @@ function TPortal_userbox()
 		if (allowedTo('tp_dlmanager'))
 		{
 					echo '
-			<li><a href="' . $scripturl . '?action=tportal;dl=admin">' . $bullet5.$txt['permissionname_tp_dlmanager'] . '</a></li>';
+			<li><a href="' . $scripturl . '?action=tportal;sa=download;dl=admin">' . $bullet5.$txt['permissionname_tp_dlmanager'] . '</a></li>';
 					// any submissions?
 					if($context['TPortal']['submitcheck']['uploads']>0)
 						echo '
-			<li><a href="' . $scripturl . '?action=tportal;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
+			<li><a href="' . $scripturl . '?action=tportal;sa=download;dl=adminsubmission"><b>' . $bullet5.$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
 		}
 
 		echo '
@@ -853,7 +853,7 @@ function TPortal_sitemap()
 	<div class="tborder">
 		<ul class="tpsitemap">';
 	if($context['TPortal']['show_download'] == '1')
-		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tportal;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" alt="" /> '.$txt['tp-downloads'].'</a></li>';
+		echo '<li><a class="tpsitemapheader" href="'.$scripturl.'?action=tportal;sa=download;dl"><img src="' .$settings['tp_images_url']. '/TPmodule2.png" alt="" /> '.$txt['tp-downloads'].'</a></li>';
 
 	if(!empty($context['TPortal']['sitemap']) && !empty($context['TPortal']['menu']))
 	{
@@ -1075,7 +1075,7 @@ function template_TPsearch_above()
 			<span class="topslice"><span></span></span>
 			<p style="margin: 0; padding: 0 1em;">
 				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
-				<a href="' . $scripturl. '?action=tportal;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
+				<a href="' . $scripturl. '?action=tportal;sa=download;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
     }
 
 	// any others?

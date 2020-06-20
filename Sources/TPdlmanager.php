@@ -20,6 +20,17 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
+function TPDownloadActions(&$subActions) {{{
+
+   $subActions = array_merge(
+        array (
+            'download'      => array('TPdlmanager.php', 'TPdlmanager',   array()),
+        ),
+        $subActions
+    );
+
+}}}
+
 // TinyPortal downloads entrance
 function TPdlmanager()
 {
@@ -105,7 +116,7 @@ function TPdlmanager()
                 );
             }
             // go back to the download
-            redirectexit('action=tportal;dl=item'.$dl);
+            redirectexit('action=tportal;sa=download;dl=item'.$dl);
         }
     }
     elseif($tpsub == 'dlsubmitsuccess') {
@@ -203,7 +214,7 @@ function TPortalDLManager()
 				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
 				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'].'uid');
 				tp_createthumb('tp-files/tp-images/'. $name, 50, 50, 'tp-files/tp-images/thumbs/thumb_'. $name);
-				redirectexit('action=tportal;dl='. $item_id);
+				redirectexit('action=tportal;sa=download;dl='. $item_id);
 			}
 			// check that nothing happended
 			if(!file_exists($_FILES['tp-dluploadfile']['tmp_name']) || !is_uploaded_file($_FILES['tp-dluploadfile']['tmp_name']))
@@ -349,7 +360,7 @@ function TPortalDLManager()
 
 			// record the event
 			if(($context['TPortal']['dl_approve'] == '1' && allowedTo('tp_dlmanager')) || $context['TPortal']['dl_approve']=='0')
-				tp_recordevent($now, $context['user']['id'], 'tp-createdupload', 'action=tportal;dl=item' . $newitem, 'Uploaded new file.', $acc , $newitem);
+				tp_recordevent($now, $context['user']['id'], 'tp-createdupload', 'action=tportal;sa=download;dl=item' . $newitem, 'Uploaded new file.', $acc , $newitem);
 
 			// should we create a topic?
 			if(isset($_POST['create_topic']) && (allowedTo('admin_forum') || !empty($context['TPortal']['dl_create_topic'])))
@@ -368,7 +379,7 @@ function TPortalDLManager()
 					$body = $_POST['create_topic_body'];
 
 
-				$body .= '[hr][b]'.$txt['tp-download'].':[/b][br]'.$scripturl.'?action=tportal;dl=item'.$newitem;
+				$body .= '[hr][b]'.$txt['tp-download'].':[/b][br]'.$scripturl.'?action=tportal;sa=download;dl=item'.$newitem;
 				// ok, create the topic then
 				$top = TP_createtopic($title, $body, $icon, $brd, $sticky ? 1 : 0 , $context['user']['id']);
 				// go to announce screen?
@@ -394,9 +405,9 @@ function TPortalDLManager()
 			}
 			else{
 				if(!isset($_POST['tp-dluploadnot']))
-					redirectexit('action=tportal;dl=item'.$newitem);
+					redirectexit('action=tportal;sa=download;dl=item'.$newitem);
 				else
-					redirectexit('action=tportal;dl=adminitem'.$newitem);
+					redirectexit('action=tportal;sa=download;dl=adminitem'.$newitem);
 			}
 		 }
 	}
@@ -416,7 +427,7 @@ function TPortalDLManager()
 				if(is_numeric($context['TPortal']['dlcat']))
 					$context['TPortal']['dlaction'] = 'cat';
 				else
-					redirectexit('action=tportal;dl');
+					redirectexit('action=tportal;sa=download;dl');
 		}
 		elseif(substr($context['TPortal']['dlsub'], 0, 4) == 'item')
 		{
@@ -439,13 +450,13 @@ function TPortalDLManager()
 						$smcFunc['db_free_result']($request);
 						// check that it is indeed a main item, if not : redirect to the main one.
 						if($row['subitem'] > 0)
-							redirectexit('action=tportal;dl=item'.$row['subitem']);
+							redirectexit('action=tportal;sa=download;dl=item'.$row['subitem']);
 					}
 					else
-						redirectexit('action=tportal;dl');
+						redirectexit('action=tportal;sa=download;dl');
 				}
 				else
-					redirectexit('action=tportal;dl');
+					redirectexit('action=tportal;sa=download;dl');
 		}
 		elseif($context['TPortal']['dlsub'] == 'stats')
 		{
@@ -473,7 +484,7 @@ function TPortalDLManager()
 			if(is_numeric($context['TPortal']['dlitem']))
 				$context['TPortal']['dlaction'] = 'get';
 			else
-				redirectexit('action=tportal;dl');
+				redirectexit('action=tportal;sa=download;dl');
 		}
 		elseif(substr($context['TPortal']['dlsub'], 0, 6) == 'upload')
 		{
@@ -578,7 +589,7 @@ function TPortalDLManager()
 		}
 	}
 	// add to the linktree
-	TPadd_linktree($scripturl.'?action=tportal;dl=0', $txt['tp-downloads']);
+	TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=0', $txt['tp-downloads']);
 
 	// set the title
 	$context['page_title'] = $txt['tp-downloads'];
@@ -647,7 +658,7 @@ function TPortalDLManager()
 						'category' => $row['category'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'file' => $row['file'],
-						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
+						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
 						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
@@ -655,7 +666,7 @@ function TPortalDLManager()
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
 						'catname' => $row['catname'],
-						'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
+						'cathref' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['category'],
 						'filesize' => $fs,
 					);
 				}
@@ -704,7 +715,7 @@ function TPortalDLManager()
 						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
+						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
 						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
@@ -712,7 +723,7 @@ function TPortalDLManager()
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
 						'catname' => $row['catname'],
-						'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
+						'cathref' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['category'],
 						'filesize' => $fs,
 					);
 				}
@@ -770,7 +781,7 @@ function TPortalDLManager()
 						'icon' => $row['icon'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
+						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
 						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
@@ -778,7 +789,7 @@ function TPortalDLManager()
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
 						'catname' => $row['catname'],
-						'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
+						'cathref' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['category'],
 						'filesize' => $fs,
 					);
 				}
@@ -814,7 +825,7 @@ function TPortalDLManager()
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'access' => $row['access'],
 						'icon' => $row['icon'],
-						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;dl='.$row['shortname'] : $scripturl.'?action=tportal;dl=cat'.$row['id'],
+						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;sa=download;dl='.$row['shortname'] : $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
 						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
 						'files' => $row['files'],
 					);
@@ -826,7 +837,7 @@ function TPortalDLManager()
 							'id' => $row['id'],
 							'name' => $row['name'],
 							'parent' => $row['parent'],
-							'href' => $scripturl.'?action=tportal;dl=cat'.$row['id'],
+							'href' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
 							'files' => $row['files'],
 						);
 				}
@@ -899,7 +910,7 @@ function TPortalDLManager()
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
+						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
 						'link' => $row['link'],
@@ -993,7 +1004,7 @@ function TPortalDLManager()
 					'icon' => $row['icon'],
 					'category' => $row['category'],
 					'file' => $row['file'],
-					'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
@@ -1001,7 +1012,7 @@ function TPortalDLManager()
 					'date' => timeformat($row['created']),
 					'screenshot' => $ico,
 					'catname' => $row['catname'],
-					'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
+					'cathref' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['category'],
 					'filesize' => $fs,
 				);
 			}
@@ -1034,14 +1045,14 @@ function TPortalDLManager()
 						redirectexit('action=login');;
 					}
 					else
-						redirectexit('action=tportal;dl');
+						redirectexit('action=tportal;sa=download;dl');
 				}
 			}
 	        $smcFunc['db_free_result']($request);
 	    }
 	    // nothing there, le them know
 	    else
-			redirectexit('action=tportal;dl');
+			redirectexit('action=tportal;sa=download;dl');
 
 		$request = $smcFunc['db_query']('', '
 			SELECT a.access AS access, a.icon AS icon,	a.link AS shortname, a.description AS description,
@@ -1070,7 +1081,7 @@ function TPortalDLManager()
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'access' => $row['access'],
 						'icon' => $row['icon'],
-						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;dl='.$row['shortname'] : $scripturl.'?action=tportal;dl=cat'.$row['id'],
+						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;sa=download;dl='.$row['shortname'] : $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
 						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
 						'files' => $row['files'],
 					);
@@ -1082,7 +1093,7 @@ function TPortalDLManager()
 						'id' => $row['id'],
 						'name' => $row['name'],
 						'parent' => $row['parent'],
-						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;dl='.$row['shortname'] : $scripturl.'?action=tportal;dl=cat'.$row['id'],
+						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;sa=download;dl='.$row['shortname'] : $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
 						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
 						'files' => $row['files'],
 					);
@@ -1132,14 +1143,14 @@ function TPortalDLManager()
 				{
 					if($context['TPortal']['dlsort'] == $v)
 					{
-						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tportal;dl=cat'.$currentcat.';dlsort='.$v.';';
+						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tportal;sa=download;dl=cat'.$currentcat.';dlsort='.$v.';';
 						if($context['TPortal']['dlsort_way'] == 'asc')
 							$context['TPortal']['sortlinks'] .= 'desc;p='.$start.'">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /></a> &nbsp;|&nbsp; ';
 						else
 							$context['TPortal']['sortlinks'] .= 'asc;p='.$start.'">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /></a> &nbsp;|&nbsp; ';
 					}
 					else
-						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tportal;dl=cat'.$currentcat.';dlsort='.$v.';desc;p='.$start.'">'.$txt['tp-'.$v].'</a> &nbsp;|&nbsp; ';
+						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tportal;sa=download;dl=cat'.$currentcat.';dlsort='.$v.';desc;p='.$start.'">'.$txt['tp-'.$v].'</a> &nbsp;|&nbsp; ';
 				}
 				$context['TPortal']['sortlinks'] = substr($context['TPortal']['sortlinks'], 0, strlen($context['TPortal']['sortlinks']) - 15);
 				$context['TPortal']['sortlinks'] .= '</span>';
@@ -1174,8 +1185,8 @@ function TPortalDLManager()
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'description' => '',
-						'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
-						'dlhref' => $scripturl.'?action=tportal;dl=get'.$row['id'],
+						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
+						'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
 						'link' => $row['link'],
@@ -1203,7 +1214,7 @@ function TPortalDLManager()
 				$currsorting .= ';'.$dlsort_way;
 
 			// construct a pageindex
-			$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;dl=cat'.$currentcat.$currsorting, $mystart , $rows2, 10);
+			$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=download;dl=cat'.$currentcat.$currsorting, $mystart , $rows2, 10);
 
 		// check backwards for parents
 		$done = 0;
@@ -1233,11 +1244,11 @@ function TPortalDLManager()
 			// add to the linktree
 			foreach($parts as $par)
 			{
-				TPadd_linktree($scripturl.'?action=tportal;dl=cat'.$par['id'], $par['name']);
+				TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=cat'.$par['id'], $par['name']);
 			}
 		}
 		// add to the linktree
-		TPadd_linktree($scripturl.'?action=tportal;dl=cat'.$currentcat, $currentname);
+		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=cat'.$currentcat, $currentname);
 		$context['TPortal']['dlheader'] = $currentname;
 	}
 	// tptags
@@ -1298,8 +1309,8 @@ function TPortalDLManager()
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'description' => '',
-					'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
-					'dlhref' => $scripturl.'?action=tportal;dl=get'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
+					'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
 					'link' => $row['link'],
@@ -1348,7 +1359,7 @@ function TPortalDLManager()
 				// check if you are allowed in here
 				$show = get_perm($row['access'], 'tp_dlmanager');
 				if(!$show)
-					redirectexit('action=tportal;dl');
+					redirectexit('action=tportal;sa=download;dl');
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1386,9 +1397,9 @@ function TPortalDLManager()
 			foreach($parts as $parent)
 			{
 				if(!empty($parent['shortname']))
-					TPadd_linktree($scripturl.'?action=tportal;dl='.$parent['shortname'] , $parent['name']);
+					TPadd_linktree($scripturl.'?action=tportal;sa=download;dl='.$parent['shortname'] , $parent['name']);
 				else
-					TPadd_linktree($scripturl.'?action=tportal;dl=cat'.$parent['id'] , $parent['name']);
+					TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=cat'.$parent['id'] , $parent['name']);
 			}
 		}
 
@@ -1436,8 +1447,8 @@ function TPortalDLManager()
 							'id' => $frow['id'],
 							'name' => $frow['name'],
 							'file' => $frow['file'],
-							'href' => $scripturl.'?action=tportal;dl=get'.$frow['id'],
-							'href2' => $scripturl.'?action=tportal;dl=item'.$frow['id'],
+							'href' => $scripturl.'?action=tportal;sa=download;dl=get'.$frow['id'],
+							'href2' => $scripturl.'?action=tportal;sa=download;dl=item'.$frow['id'],
 							'downloads' => $frow['downloads'],
 							'views' => $frow['views'],
 							'created' => $frow['created'],
@@ -1491,7 +1502,7 @@ function TPortalDLManager()
 					'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 					'category' => $row['category'],
 					'file' => $row['file'],
-					'href' => $scripturl.'?action=tportal;dl=get'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
 					'link' => $row['link'],
@@ -1517,8 +1528,8 @@ function TPortalDLManager()
 				$context['page_title'] = $row['name'];
 			}
 			$smcFunc['db_free_result']($request);
-			TPadd_linktree($scripturl.'?action=tportal;dl=cat'.$parent_cat, $catname);
-			TPadd_linktree($scripturl.'?action=tportal;dl=item'.$itemid, $itemname);
+			TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=cat'.$parent_cat, $catname);
+			TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=item'.$itemid, $itemname);
 			// update the views and last access!
 			$views++;
 			$now = time();
@@ -1693,14 +1704,14 @@ function TPdlresults()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	TPadd_linktree($scripturl.'?action=tportal;dl=search' , $txt['tp-dlsearch']);
+	TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=search' , $txt['tp-dlsearch']);
 }
 // searched the files?
 function TPdlsearch()
 {
 	global $txt, $scripturl;
 
-	TPadd_linktree($scripturl.'?action=tportal;dl=search', $txt['tp-dlsearch']);
+	TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=search', $txt['tp-dlsearch']);
 }
 
 // show some stats
@@ -1777,7 +1788,7 @@ function TPdlstats()
 
 				$context['TPortal']['topcats'][] = array(
 					'items' => $items,
-					'link' => '<a href="'.$scripturl.'?action=tportal;dl=cat'.$brow['id'].'">'.$brow['name'].'</a>',
+					'link' => '<a href="'.$scripturl.'?action=tportal;sa=download;dl=cat'.$brow['id'].'">'.$brow['name'].'</a>',
 				);
 				// add the category as viewable
 				$context['TPortal']['viewcats'][] = $brow['id'];
@@ -1807,7 +1818,7 @@ function TPdlstats()
 					'size' => $row['filesize'],
 					'views' => $row['views'],
 					'downloads' => $row['downloads'],
-					'link' => '<a href="'.$scripturl.'?action=tportal;dl=item'.$row['id'].'">'.$row['name'].'</a>',
+					'link' => '<a href="'.$scripturl.'?action=tportal;sa=download;dl=item'.$row['id'].'">'.$row['name'].'</a>',
 				);
 		}
 		$smcFunc['db_free_result']($request);
@@ -2028,7 +2039,7 @@ function TPdownloadme()
 		obExit(false);
 	}
 	else {
-		redirectexit('action=tportal;dl');
+		redirectexit('action=tportal;sa=download;dl');
     }
 }
 
@@ -2204,7 +2215,7 @@ function TPortalDLAdmin()
 			}
 		}
 		// done, set a value to make member aware of assigned category
-  		redirectexit('action=tportal;dl=adminftp;ftpcat='.$newcatnow);
+  		redirectexit('action=tportal;sa=download;dl=adminftp;ftpcat='.$newcatnow);
 	}
 
 	// check for new category
@@ -2259,7 +2270,7 @@ function TPortalDLAdmin()
 			array('id')
 		);
 		$newcat = $smcFunc['db_insert_id']($request);
-		redirectexit('action=tportal;dl=admineditcat'.$newcat);
+		redirectexit('action=tportal;sa=download;dl=admineditcat'.$newcat);
 	}
 
 	$myid = 0;
@@ -2290,7 +2301,7 @@ function TPortalDLAdmin()
 				$tag = substr($what, 17);
 				$itemid = $value;
 				// insert new one
-				$href = '?action=tportal;dl=item'.$itemid;
+				$href = '?action=tportal;sa=download;dl=item'.$itemid;
 				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="taglink">' . $title[0] . '</span>';
 				if(!empty($tag))
 				{
@@ -2341,7 +2352,7 @@ function TPortalDLAdmin()
 				$tag = substr($what, 16);
 				$itemid = $value;
 				// insert new one
-				$href = '?action=tportal;dl=cat'.$itemid;
+				$href = '?action=tportal;sa=download;dl=cat'.$itemid;
 				$title = $title[0].' ['.strtolower($txt['tp-downloads']).'] ';
 				$smcFunc['db_query']('INSERT',
 					'{db_prefix}tp_variables',
@@ -2649,7 +2660,7 @@ function TPortalDLAdmin()
 				);
 				if(isset($err))
 					fatal_error($err);
-				redirectexit('action=tportal;dl=admincat'.$category);
+				redirectexit('action=tportal;sa=download;dl=admincat'.$category);
 			}
 			elseif(substr($what, 0, 15) == 'dladmin_approve' && $value == 'ON')
 			{
@@ -2919,19 +2930,19 @@ function TPortalDLAdmin()
 
 		// if we came from useredit screen..
 		if(isset($_POST['dl_useredit']))
-		   redirectexit('action=tportal;dl=useredit'.$_POST['dl_useredit']);
+		   redirectexit('action=tportal;sa=download;dl=useredit'.$_POST['dl_useredit']);
 
 		if(!empty($newgo))
 			$go = $newgo;
 		// guess not, admin screen then
 		if($go == 1)
-			redirectexit('action=tportal;dl=adminsettings');
+			redirectexit('action=tportal;sa=download;dl=adminsettings');
 		elseif($go == 2)
-			redirectexit('action=tportal;dl=adminitem'.$myid);
+			redirectexit('action=tportal;sa=download;dl=adminitem'.$myid);
 		elseif($go == 3)
-			redirectexit('action=tportal;dl=admineditcat'.$myid);
+			redirectexit('action=tportal;sa=download;dl=admineditcat'.$myid);
 		elseif($go == 4)
-			redirectexit('action=tportal;dl=admincat'.$myid);
+			redirectexit('action=tportal;sa=download;dl=admincat'.$myid);
 	}
 	// ****************
 
@@ -3089,9 +3100,9 @@ function TPortalDLAdmin()
 					'items' => $items,
 					'submitted' => $sitems,
 					'total' => ($items + $sitems),
-					'href' => $scripturl.'?action=tportal;dl=admincat'.$brow['id'],
-					'href2' => $scripturl.'?action=tportal;dl=admineditcat'.$brow['id'],
-					'href3' => $scripturl.'?action=tportal;dl=admindelcat'.$brow['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=admincat'.$brow['id'],
+					'href2' => $scripturl.'?action=tportal;sa=download;dl=admineditcat'.$brow['id'],
+					'href3' => $scripturl.'?action=tportal;sa=download;dl=admindelcat'.$brow['id'],
 					'pos' => $brow['downloads'],
 				);
 			}
@@ -3150,9 +3161,9 @@ function TPortalDLAdmin()
 					'downloads' => $row['downloads'],
 					'sshot' => $row['screenshot'],
 					'link' => $row['link'],
-					'href' => $scripturl.'?action=tportal;dl=adminitem'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
 					'approved' => $row['category']<0 ? '0' : '1',
-					'approve' => $scripturl.'?action=tportal;dl=adminapprove'.$row['id'],
+					'approve' => $scripturl.'?action=tportal;sa=download;dl=adminapprove'.$row['id'],
 				);
 			}
 			$smcFunc['db_free_result']($request);
@@ -3190,9 +3201,9 @@ function TPortalDLAdmin()
 					'items' => $items,
 					'submitted' => $sitems,
 					'total' => ($items + $sitems),
-					'href' => $scripturl.'?action=tportal;dl=admincat'.$row['id'],
-					'href2' => $scripturl.'?action=tportal;dl=admineditcat'.$row['id'],
-					'href3' => $scripturl.'?action=tportal;dl=admindelcat'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=admincat'.$row['id'],
+					'href2' => $scripturl.'?action=tportal;sa=download;dl=admineditcat'.$row['id'],
+					'href3' => $scripturl.'?action=tportal;sa=download;dl=admindelcat'.$row['id'],
 				);
 			}
 			$smcFunc['db_free_result']($request);
@@ -3210,7 +3221,7 @@ function TPortalDLAdmin()
 		}
 
 		// make the linktree
-		TPadd_linktree($scripturl.'?action=tportal;dl=admin', $txt['tp-dladmin']);
+		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admin', $txt['tp-dladmin']);
 
 		if(isset($parents))
 		{
@@ -3218,11 +3229,11 @@ function TPortalDLAdmin()
 			// add to the linktree
 			foreach($parts as $parent)
 			{
-				TPadd_linktree($scripturl.'?action=tportal;dl=admincat'.$parent['id'] , $parent['name']);
+				TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admincat'.$parent['id'] , $parent['name']);
 			}
 		}
 		// add to the linktree
-		TPadd_linktree($scripturl.'?action=tportal;dl=admincat'.$cat , $catname);
+		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admincat'.$cat , $catname);
 	}
 	elseif($context['TPortal']['dlsub'] == 'adminsubmission')
 	{
@@ -3249,7 +3260,7 @@ function TPortalDLAdmin()
 					'name' => $row['name'],
 					'file' => $row['file'],
 					'filesize' => floor($row['filesize'] / 1024),
-					'href' => $scripturl.'?action=tportal;dl=adminitem'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 					'date' => timeformat($row['created']),
 				);
@@ -3280,7 +3291,7 @@ function TPortalDLAdmin()
 	}
 	elseif(substr($admsub, 0, 7) == 'editcat')
 	{
-		$context['TPortal']['dl_title'] = '<a href="'.$scripturl.'?action=tportal;dl=admin">'.$txt['tp-dladmin'].'</a>';
+		$context['TPortal']['dl_title'] = '<a href="'.$scripturl.'?action=tportal;sa=download;dl=admin">'.$txt['tp-dladmin'].'</a>';
 		$cat = substr($admsub, 7);
 		// edit category
 		$request = $smcFunc['db_query']('', '
@@ -3318,7 +3329,7 @@ function TPortalDLAdmin()
 	}
 	elseif(substr($admsub, 0, 6) == 'delcat')
 	{
-		$context['TPortal']['dl_title'] = '<a href="'.$scripturl.'?action=tportal;dl=admin">'.$txt['tp-dladmin'].'</a>';
+		$context['TPortal']['dl_title'] = '<a href="'.$scripturl.'?action=tportal;sa=download;dl=admin">'.$txt['tp-dladmin'].'</a>';
 		$cat = substr($admsub, 6);
 		// delete category and all item it's in
 		$request = $smcFunc['db_query']('', '
@@ -3332,7 +3343,7 @@ function TPortalDLAdmin()
 			WHERE id = {int:cat} LIMIT 1',
 			array('cat' => $cat)
 		);
-		redirectexit('action=tportal;dl=admin');
+		redirectexit('action=tportal;sa=download;dl=admin');
 	}
 	elseif(substr($admsub, 0, 8) == 'settings')
 	{
@@ -3353,7 +3364,7 @@ function TPortalDLAdmin()
 
 			// is it actually a subitem?
 			if($row['subitem']>0)
-				redirectexit('action=tportal;dl=adminitem'.$row['subitem']);
+				redirectexit('action=tportal;sa=download;dl=adminitem'.$row['subitem']);
 
 			// Add in BBC editor before we call in template so the headers are there
 			if($context['TPortal']['dl_wysiwyg'] == 'bbc')
@@ -3412,7 +3423,7 @@ function TPortalDLAdmin()
 						'id' => $frow['id'],
 						'name' => $frow['name'],
 						'file' => $frow['file'],
-						'href' => $scripturl.'?action=tportal;dl=item'.$frow['id'],
+						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$frow['id'],
 						'downloads' => $frow['downloads'],
 						'created' => $frow['created'],
 						'filesize' => $ffs,
@@ -3459,9 +3470,9 @@ function TPortalDLAdmin()
 				'sshot' => !empty($sshot) ? $sshot : '',
 				'screenshot' => $row['screenshot'],
 				'link' => $row['link'],
-				'href' => $scripturl.'?action=tportal;dl=adminitem'.$row['id'],
+				'href' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
 				'approved' => $row['category'] < 0 ? '0' : '1' ,
-				'approve' => $scripturl.'?action=tportal;dl=adminitem'.$row['id'],
+				'approve' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
 				'subitem' => $fdata,
 			);
 			$author_id = $row['author_id'];
@@ -3497,7 +3508,7 @@ function TPortalDLAdmin()
 		}
 
 		// make the linktree
-		TPadd_linktree($scripturl.'?action=tportal;dl=admin', $txt['tp-dldownloads']);
+		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admin', $txt['tp-dldownloads']);
 
 		if(isset($parents))
 		{
@@ -3505,11 +3516,11 @@ function TPortalDLAdmin()
 			// add to the linktree
 			foreach($parts as $parent)
 			{
-				TPadd_linktree($scripturl.'?action=tportal;dl=admincat'.$parent['id'] , $parent['name']);
+				TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admincat'.$parent['id'] , $parent['name']);
 			}
 		}
 		// add to the linktree
-		TPadd_linktree($scripturl.'?action=tportal;dl=adminitem'.$item , $itemname);
+		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=adminitem'.$item , $itemname);
 	}
 
 	loadTemplate('TPdladmin');
@@ -3533,32 +3544,32 @@ function TPortalDLAdmin()
 		$context['TPortal']['subtabs'] = array(
 			'admin' => array(
 				'text' => 'tp-dltabs4',
-				'url' => $scripturl . '?action=tportal;dl=admin',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=admin',
 				'active' => substr($context['TPortal']['dlsub'], 0, 5) == 'admin' && $context['TPortal']['dlsub'] != 'adminsettings' && $context['TPortal']['dlsub'] != 'adminaddcat' && $context['TPortal']['dlsub'] != 'adminftp' && $context['TPortal']['dlsub'] != 'adminsubmission',
 			),
 			'settings' => array(
 				'text' => 'tp-dltabs1',
-				'url' => $scripturl . '?action=tportal;dl=adminsettings',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=adminsettings',
 				'active' => $context['TPortal']['dlsub'] == 'adminsettings',
 			),
 			'addcategory' => array(
 				'text' => 'tp-dltabs2',
-				'url' => $scripturl . '?action=tportal;dl=adminaddcat',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=adminaddcat',
 				'active' => $context['TPortal']['dlsub'] == 'adminaddcat',
 			),
 			'upload' => array(
 				'text' => 'tp-dltabs3',
-				'url' => $scripturl . '?action=tportal;dl=upload',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=upload',
 				'active' => $context['TPortal']['dlsub'] == 'upload',
 			),
 			'submissions' => array(
 				'text' => 'tp-dlsubmissions' ,
-				'url' => $scripturl . '?action=tportal;dl=adminsubmission',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=adminsubmission',
 				'active' => $context['TPortal']['dlsub'] == 'adminsubmission',
 			),
 			'ftp' => array(
 				'text' => 'tp-dlftp',
-				'url' => $scripturl . '?action=tportal;dl=adminftp',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=adminftp',
 				'active' => $context['TPortal']['dlsub'] == 'adminftp',
 			),
 		);
@@ -3588,7 +3599,7 @@ function TPortalDLUser($item)
 
 		// is it actually a subitem?
 		if($row['subitem'] > 0)
-			redirectexit('action=tportal;dl=useredit'.$row['subitem']);
+			redirectexit('action=tportal;sa=download;dl=useredit'.$row['subitem']);
 
 		// get all items for a list but only your own
 		$context['TPortal']['useritems'] = array();
@@ -3639,7 +3650,7 @@ function TPortalDLUser($item)
 					'id' => $frow['id'],
 					'name' => $frow['name'],
 					'file' => $frow['file'],
-					'href' => $scripturl.'?action=tportal;dl=item'.$frow['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$frow['id'],
 					'downloads' => $frow['downloads'],
 					'created' => $frow['created'],
 					'filesize' => $ffs,
@@ -3663,9 +3674,9 @@ function TPortalDLUser($item)
 			'downloads' => $row['downloads'],
 			'sshot' => $row['screenshot'],
 			'link' => $row['link'],
-			'href' => $scripturl.'?action=tportal;dl=adminitem'.$row['id'],
+			'href' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
 			'approved' => $row['category'] < 0 ? '0' : '1' ,
-			'approve' => $scripturl.'?action=tportal;dl=adminitem'.$row['id'],
+			'approve' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
 			'subitem' => $fdata,
 		);
 		$author_id = $row['author_id'];
@@ -3689,7 +3700,7 @@ function TPortalDLUser($item)
 		else
 			$context['TPortal']['admcurrent']['member'] = '-' . $txt['guest_title'] . '-';
 		// add to the linktree
-		TPadd_linktree($scripturl.'?action=tportal;dl=useredit'.$item , $txt['tp-useredit'].': '.$itemname);
+		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=useredit'.$item , $txt['tp-useredit'].': '.$itemname);
 		$context['TPortal']['dlaction'] = 'useredit';
 		// fetch allowed categories
 		TP_dluploadcats();
@@ -3711,7 +3722,7 @@ function TPortalDLUser($item)
         }
 	}
 	else
-		redirectexit('action=tportal;dl');
+		redirectexit('action=tportal;sa=download;dl');
 }
 
 function dlupdatefilecount($category, $total = true)
@@ -3784,7 +3795,7 @@ function TP_dluploadcats()
 					'id' => $row['id'],
 					'name' => $row['name'],
 					'parent' => $row['parent'],
-					'href' => $scripturl . '?action=tportal;dl=cat'. $row['id'],
+					'href' => $scripturl . '?action=tportal;sa=download;dl=cat'. $row['id'],
 				);
 		}
 		$smcFunc['db_free_result']($request);
@@ -3861,7 +3872,7 @@ function TPDownloadAdminAreas() {{{
 		$context['admin_tabs']['custom_modules']['tpdownloads'] = array(
 			'title' => 'TPdownloads',
 			'description' => '',
-			'href' => $scripturl . '?action=tportal;dl=admin',
+			'href' => $scripturl . '?action=tportal;sa=download;dl=admin',
 			'is_selected' => isset($_GET['dl']),
 		);
 		$admin_set = true;

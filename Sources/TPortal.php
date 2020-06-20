@@ -30,16 +30,23 @@ if(function_exists('loadLanguage') && loadLanguage('TPortal') == false) {
 }
 
 function TPortal() {{{
-	global $context;
+	global $txt, $context;
 
 	$subAction  = TPUtil::filter('sa', 'get', 'string');
+    if($subAction == false) {
+        fatal_error($txt['tp-no-sa-url'], false);
+    }
     $subActions = array (
         'credits'           => array('TPhelp.php', 'TPCredits'      , array()),
         'updatelog'         => array('TPSubs.php', 'TPUpdateLog'    , array()),
         'savesettings'      => array('TPSubs.php', 'TPSaveSettings' , array()),
     );
-   
+  
     call_integration_hook('integrate_tp_pre_subactions', array(&$subActions));
+
+    if(!array_key_exists($subAction, $subActions)) {
+        fatal_error($txt['tp-no-sa-list'], false);
+    }
 
     $context['TPortal']['subaction'] = $subAction;
     // If it exists in our new subactions array load it
