@@ -275,7 +275,8 @@ function template_settings()
 					</dt>
 					<dd>
                         <input id="tp_disable_template_eval" name="tp_disable_template_eval" type="checkbox" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
-					</dd>
+					</dd>';
+/* Disabled for 2.0.0 to be completed later
                     <dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-imageuploadpathdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
 					</dt>
@@ -294,6 +295,8 @@ function template_settings()
 					<dd>
 						<input size="50" name="tp_blockcode_upload_path" id="tp_blockcode_upload_path" type="text" value="' , !empty($context['TPortal']['blockcode_upload_path']) ? $context['TPortal']['blockcode_upload_path'] : '' , '">
 					</dd>
+*/
+			echo '
                     <dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-copyrightremovaldesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label>
 					</dt>
