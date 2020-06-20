@@ -90,7 +90,7 @@ $txt['tp-dluploadpic'] = 'Additional picture for screenshot:';
 $txt['tp-dlcreatetopic'] = 'Create new topic';
 $txt['tp-dlcreatetopic_sticky'] = 'Set as sticky?';
 $txt['tp-dlcreatetopic_announce'] = 'Announce it?';
-$txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tportal;dl=adminsettings">settings screen</a>?';
+$txt['tp-dlmissingboards'] = 'You have not selected any boards yet. Would you like to go to the <a href="' . $scripturl . '?action=tportal;sa=download;dl=adminsettings">settings screen</a>?';
 $txt['tp-dlchooseboard'] = 'Choose board to post topic in';
 
 $txt['tp-adminonly'] = 'You are not allowed in this section.';

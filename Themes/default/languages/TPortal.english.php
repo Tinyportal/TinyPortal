@@ -259,6 +259,8 @@ $txt['tp-modules'] = 'Modules';
 $txt['tp-morecategories'] = 'More';
 $txt['tp-myarticles'] = 'My articles';
 $txt['tp-newcomment'] = 'New comment';
+$txt['tp-no-sa-url'] = 'No subaction found in url';
+$txt['tp-no-sa-list'] = 'This is not a valid subaction';
 $txt['tp-noadmin'] = 'Sorry, you are not allowed to access this TinyPortal admin page.';
 $txt['tp-noarticlesfound'] = 'Sorry, but no articles were found.';
 $txt['tp-nocategory'] = 'This article isn\'t assigned to a category yet.';
@@ -290,7 +292,5 @@ $txt['tp-toggle'] = 'Toggle panel';
 $txt['tp-ungroupedmembers'] = 'Ungrouped members';
 $txt['tp-unpublish'] = 'Remove from frontpage';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list: ';
-$txt['tp-no-sa-url'] = "No subaction found in url";
-$txt['tp-no-sa-list'] = "No subaction found in list";
 
 ?>
