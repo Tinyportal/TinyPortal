@@ -132,7 +132,7 @@ function tp_getbuttons() {{{
 	if(!empty($context['TPortal']['show_download']))
 		$buts['downloads'] = array(
 			'title' => $txt['tp-downloads'],
-			'href' => $scripturl . '?action=tportal;dl',
+			'href' => $scripturl . '?action=tportal;sa=download;dl',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
@@ -219,7 +219,7 @@ function tp_getbuttons() {{{
 	{
 		$buts['tpdlmanager'] = array(
 			'title' => $txt['permissionname_tp_dlmanager'],
-			'href' => $scripturl . '?action=tportal;dl=admin',
+			'href' => $scripturl . '?action=tportal;sa=download;dl=admin',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(
@@ -2361,7 +2361,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'name' => $row['name'],
 					'category' => $row['category'],
 					'file' => $row['file'],
-					'href' => $scripturl.'?action=tportal;dl=item'.$row['id'],
+					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
 					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
@@ -2370,7 +2370,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'date' => timeformat($row['created']),
 					'screenshot' => $ico ,
 					'catname' => $row['catname'],
-					'cathref' => $scripturl.'?action=tportal;dl=cat'.$row['category'],
+					'cathref' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['category'],
 					'filesize' => $fs,
 				);
 			}
@@ -3042,15 +3042,15 @@ function tp_profile_download($memID)
 				$rating_average = 0;
 			$editlink = '';
 			if(allowedTo('tp_dlmanager'))
-				$editlink = $scripturl.'?action=tportal;dl=adminitem'.$row['id'];
+				$editlink = $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'];
 			elseif($memID == $context['user']['id'])
-				$editlink = $scripturl.'?action=tportal;dl=useredit'.$row['id'];
+				$editlink = $scripturl.'?action=tportal;sa=download;dl=useredit'.$row['id'];
 			$context['TPortal']['profile_uploads'][] = array(
 				'id' => $row['id'],
 				'name' => $row['name'],
 				'created' => timeformat($row['created']),
 				'category' => $row['category'],
-				'href' => $scripturl . '?action=tportal;dl=item'.$row['id'],
+				'href' => $scripturl . '?action=tportal;sa=download;dl=item'.$row['id'],
 				'views' => $row['views'],
 				'rating_votes' => $rating_votes,
 				'rating_average' => $rating_average,

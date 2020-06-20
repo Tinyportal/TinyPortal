@@ -43,7 +43,7 @@ $clickme.click( function(e) {
 	// setup the screen
 	echo '
 <div id="dl_adminbox" class="">
-	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tportal;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
+	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tportal;sa=download;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
 
 	if($context['TPortal']['dlsub']=='admin')
 //Admin page
@@ -101,7 +101,7 @@ $clickme.click( function(e) {
 						</div>
 						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
 							<div id="show-on-respnsive-layout" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
-							<a href="',$scripturl, '?action=tportal;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
+							<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
 							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 						</div>
@@ -371,7 +371,7 @@ $clickme.click( function(e) {
 			</div>
 			<div style="width:56.5%;" class="fullwidth-on-res-layout float-items">
 				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
-				<a href="',$scripturl, '?action=tportal;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
+				<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
 				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 			</div><p class="clearthefloat"></p>
@@ -390,7 +390,7 @@ $clickme.click( function(e) {
 		<td class="articles">
 			<div id="up-file" class="bigger-width">
 				<div style="width:30%;" class="fullwidth-on-res-layout float-items">
-					<a href="',$scripturl, '?action=tportal;dl=item',$cat['id'],'"><img title="'.$txt['tp-dlpreview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
+					<a href="',$scripturl, '?action=tportal;sa=download;dl=item',$cat['id'],'"><img title="'.$txt['tp-dlpreview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 				</div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
@@ -456,7 +456,7 @@ $clickme.click( function(e) {
 			{
 //Edit file page
 				echo '
-		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
+		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;sa=download;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
 				<dl class="settings tptitle">
@@ -506,7 +506,7 @@ $clickme.click( function(e) {
 				echo '
 				</div>
 			<hr>
-				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tportal;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
+				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
 				</div><br>
 			<dl class="settings">
 				<dt>
@@ -752,13 +752,13 @@ $clickme.click( function(e) {
 
 		// alert if new files were added recently
 		if(!empty($_GET['ftpcat']))
-			echo '<div style="margin-bottom:1ex;text-align:center;border:dotted 2px red;padding:2ex;"><b><a href="'.$scripturl.'?action=tportal;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfiles'].'</a></b><br></div>';
+			echo '<div style="margin-bottom:1ex;text-align:center;border:dotted 2px red;padding:2ex;"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfiles'].'</a></b><br></div>';
 
 		if(count($context['TPortal']['tp-downloads'])>0){
 			$ccount=0;
 			foreach($context['TPortal']['tp-downloads'] as $file){
 				if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
-					echo '<div><input name="assign-ftp-checkbox'.$ccount.'" type="checkbox" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
+					echo '<div><input name="assign-ftp-checkbox'.$ccount.'" type="checkbox" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;sa=download;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
 					$ccount++;
 			}
 			echo '<div style="padding: 5px;"><span class="smalltext">
