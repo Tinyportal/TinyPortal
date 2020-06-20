@@ -279,7 +279,7 @@ class TPortal_Integrate
         if( TP_SMF21 ) {
             $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
             $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
-            $replace= '<a href="'.$scripturl.'?action=tportal;sa=help">'.$tmp.'</a>';
+            $replace= '<a href="https://www.tinyportal.net/docs/" target=_blank>'.$tmp.'</a>';
             $buffer = str_replace($find, $replace.' | '.$find, $buffer);
         }
 
@@ -365,9 +365,6 @@ class TPortal_Integrate
         if(isset($_GET['board']) || isset($_GET['topic'])) {
             $context['current_action'] = 'forum';
         }
-        elseif(isset($_GET['sa']) && $_GET['sa'] == 'help') {
-            $context['current_action'] = 'help';
-        }
 
         // This removes a edit in Load.php
         if( TP_SMF21 && (!empty($context['linktree'])) ) {
@@ -448,18 +445,6 @@ class TPortal_Integrate
 					$buttons
 			);
 		}
-
-        // Add the help
-        if(array_key_exists('help', $buttons)) {
-            $buttons['help']['sub_buttons'] = array(
-                'tphelp' => array(
-                    'title' => $txt['tp-tphelp'],
-                    'href' => $scripturl.'?action=tportal;sa=help',
-                    'show' => true,
-                ),
-            );
-        }
-
 
         $request = $smcFunc['db_query']('', '
             SELECT value1 AS name , value3 AS href , value7 AS position , value8 AS menuicon

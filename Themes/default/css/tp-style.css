@@ -1324,21 +1324,6 @@ ul.recent_topics li {
 span.article_shortdate {
 	font-weight: normal;
 }
-p.tphelp {
-	line-height: 1.4em;
-	padding-top: .5em
-}
-b.tphelp {
-	font-size: 1.2em;
-}
-h2.tphelp {
-	border-bottom: solid 1px #888;
-	font-size: 1.3em;
-	margin-bottom: 15px;
-	margin-left: 0;
-	padding-bottom: 5px;
-	padding-left: 0;
-}
 .tp_half h3.titlebg {
 	background: url(../images/theme/main_block.png) no-repeat -10px -200px;
 	border-radius: 6px 6px 0 0;

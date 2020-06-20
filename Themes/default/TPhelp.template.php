@@ -21,8 +21,6 @@ function template_main()
 
 	if ($context['TPortal']['subaction'] == 'credits')
 		template_tpcredits();
-	else
-		template_tphelp();
 }
 
 // Credits Page
@@ -44,28 +42,6 @@ function template_tpcredits()
 			<span class="botslice"><span></span></span>
 		</div>
 	</div>';
-}
-
-// Main TP Help page
-function template_tphelp()
-{
-	global $context, $txt;
-
-	echo '
-	<span class="upperframe"><span></span></span>
-	<div class="roundframe">
-		<div class="title_bar">
-			<h3 class="titlebg"><span class="left"></span>' . $txt['tphelp_' . $context['TPortal']['helpsection']] . '</h3>
-		</div>
-		<div style="padding: 1em;">';
-
-         // main tp help
-		echo $txt['tphelp_'. $context['TPortal']['helpsection'] . '_main'];
-
-		echo '
-		</div>
-	</div>
-	<span class="lowerframe"><span></span></span>';
 }
 
 ?>
