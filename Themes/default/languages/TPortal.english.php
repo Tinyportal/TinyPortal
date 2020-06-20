@@ -290,5 +290,7 @@ $txt['tp-toggle'] = 'Toggle panel';
 $txt['tp-ungroupedmembers'] = 'Ungrouped members';
 $txt['tp-unpublish'] = 'Remove from frontpage';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list: ';
+$txt['tp-no-sa-url'] = "No subaction found in url";
+$txt['tp-no-sa-list'] = "No subaction found in list";
 
 ?>
