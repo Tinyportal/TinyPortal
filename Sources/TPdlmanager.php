@@ -34,24 +34,24 @@ function TPDownloadActions(&$subActions) {{{
 // TinyPortal downloads entrance
 function TPdlmanager()
 {
-    global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
+	global $settings, $context, $scripturl, $txt, $user_info, $sourcedir, $boarddir, $smcFunc;
 
-    if(loadLanguage('TPmodules') == false)
+	if(loadLanguage('TPmodules') == false)
         loadLanguage('TPmodules', 'english');
 
-    if(loadLanguage('TPortalAdmin') == false)
+	if(loadLanguage('TPortalAdmin') == false)
         loadLanguage('TPortalAdmin', 'english');
 
-    // get subaction
-    $tpsub = '';
-    if(isset($_GET['sa'])) {
-        $context['TPortal']['subaction'] = $_GET['sa'];
-        $tpsub = $_GET['sa'];
-    }
-    elseif(isset($_GET['sub'])) {
-        $context['TPortal']['subaction'] = $_GET['sub'];
-        $tpsub = $_GET['sub'];
-    }
+	// get subaction
+	$tpsub = '';
+    if(isset($_GET['sub'])) {
+		$context['TPortal']['subaction'] = $_GET['sub'];
+		$tpsub = $_GET['sub'];
+	}
+	elseif(isset($_GET['sa'])) {
+		$context['TPortal']['subaction'] = $_GET['sa'];
+		$tpsub = $_GET['sa'];
+	}
 
     // a switch to make it clear what is "forum" and not
     $context['TPortal']['not_forum'] = true;
@@ -401,7 +401,7 @@ function TPortalDLManager()
 					array($title, $now, '', 'dl_not_approved', '', $newitem),
 					array('id')
 				);
-				redirectexit('action=tportal;sub=dlsubmitsuccess');
+				redirectexit('action=tportal;sa=download;sub=dlsubmitsuccess');
 			}
 			else{
 				if(!isset($_POST['tp-dluploadnot']))
