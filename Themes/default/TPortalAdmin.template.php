@@ -2230,17 +2230,15 @@ function template_menubox()
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="menuitems">			
-						<div class="font-strong">
-							<div style="width:7%;" class="pos float-items">'.$txt['tp-pos'].'</div>
-							<div style="width:15%;" class="name float-items">'.$txt['tp-title'].'</div>
-							<div style="width:10%;" class="title-admin-area float-items">'.$txt['tp-type'].'</div>
-							<div style="width:12%;" class="title-admin-area float-items tpcenter">'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </div>
-							<div style="width:15%;" class="title-admin-area float-items">'.$txt['tp-item'].'</div>
-							<div style="width:18%;" class="title-admin-area float-items">'.$txt['tp-sub_item'].'</div>
-							<div style="width:15%;" class="title-admin-area float-items">'.$txt['tp-sitemap_on'].'</div>
-							<div style="width:7%;" class="title-admin-area float-items">'.$txt['tp-delete'].' </div>
+							<div style="width:7%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
+							<div style="width:15%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
+							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-type'].'</strong></div>
+							<div style="width:12%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </strong></div>
+							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-item'].'</strong></div>
+							<div style="width:18%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>
+							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
+							<div style="width:7%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-delete'].' </strong></div>
 							<p class="clearthefloat"></p>
-						</div>
 					</th>
 					</tr>
 				</thead>
@@ -2356,6 +2354,15 @@ function template_menubox()
 					$n++;
 				}
 			}
+			else
+			{
+				echo '
+				<tr class="windowbg">
+					<td class="smalltext fullwidth-on-res-layout float-items">
+					<div>' .$txt['tp-nomenuitem']. '</div>
+					</td>
+				</tr>';
+			}			
 		echo '
 				</tbody>
 			</table>';
@@ -2370,25 +2377,33 @@ function template_menubox()
 		<input name="tpadmin_form" type="hidden" value="menus">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-menumanager'].'</h3></div>
 		<div id="single-menus" class="admintable admin-area">
-			<div class="windowbg noup padding-div">';
-
+			<div class="information smalltext">' , $txt['tp-helpmenus'] , '</div><div></div>
+			<div class="windowbg noup padding-div"><br>';
 			foreach($context['TPortal']['menus'] as $mbox)
 			{
 			if($mbox['id']==0)
 				echo '
 				<table class="table_grid tp_grid" style="width:100%">
+				<thead>
+					<tr class="title_bar titlebg2">
+					<th scope="col" class="menus">
+						<div>
+							<div class="float-items" style="width:65%;"><strong>' , $txt['tp-title'] , '</strong></div>
+							<div class="title-admin-area float-items tpcenter" style="width:15%;"><strong>' , $txt['tp-edit'] , '</strong></div>
+							<div class="title-admin-area float-items tpcenter" style="width:15%;"><strong>' , $txt['tp-delete'] , '</strong></div>
+							<p class="clearthefloat"></p>
+						</div>
+					</th>
+					</tr>
+				</thead>
 				<tbody>
 					<tr class="windowbg">
 					<td class="menu">
-						<div style="padding-div"><br>
-							<dl class="settings">
-								<dt>
-									<strong><i>' . $txt['tp-internalmenu'] . '</i></strong><br>
-								</dt>
-								<dd>
-									<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=0"><img height="16" title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPedit.png" alt="'.$txt['tp-edit'].'"  /><strong>' .$txt['tp-edit'].'</strong></a><br>
-								</dd>
-							</dl>
+						<div style="width:65%;" class="menu-name float-items">
+							<strong><i>' . $txt['tp-internalmenu'] . '</i></strong>
+						</div>
+						<div style="width:15%;" class="menu-actions float-items tpcenter">
+							<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=0"><img height="16" title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
 						</div>
 					</td>
 					</tr>';
@@ -2396,16 +2411,14 @@ function template_menubox()
 				echo '
 					<tr class="windowbg">
 					<td class="menu">
-						<div style="padding-div"><br>
-							<dl class="settings">
-								<dt>
-									<input name="tp_menu_name' .$mbox['id']. '" type="text" size="40" value="' .$mbox['name']. '"><br>
-								</dt>
-								<dd>
-									<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=' .$mbox['id']. '"><img height="16px"; title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPedit.png" alt="'.$txt['tp-edit'].'"  /><strong> '.$txt['tp-edit'].'</strong></a> &nbsp;&nbsp;&nbsp;
-									<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete=' .$mbox['id']. ';fullmenu" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img height="16px" title="'.$txt['tp-delete'].'" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /> <strong>'.$txt['tp-delete'].'</strong></a><br>
-								</dd>
-							</dl>
+						<div style="width:65%;" class="menu-name float-items">
+							<input name="tp_menu_name' .$mbox['id']. '" type="text" size="40" value="' .$mbox['name']. '"><br>
+						</div>
+						<div style="width:15%;" class="menu-actions float-items tpcenter">
+							<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=' .$mbox['id']. '"><img height="16px" title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'" /></a>
+						</div>
+						<div style="width:15%;" class="menu-actions float-items tpcenter">
+							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete='. $mbox['id']. ';fullmenu" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img height="16px" title="'.$txt['tp-delete'].'" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'" /></a><br>
 						</div>
 					</td>
 					</tr>';
@@ -2461,8 +2474,8 @@ function template_addmenu()
 		<input name="tpadmin_form" type="hidden" value="menuadd">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-addmenu'].'</h3></div>
 		<div id="add-menu" class="admintable admin-area">
-			<div class="windowbg noup padding-div">
-				<dl class="settings">
+			<div class="windowbg noup padding-div"><br>
+				<dl class="settings tptitle">
 					<dt><label for="tp_menu_title"><h4>'.$txt['tp-title'].'</h4><label>
 					</dt>
 					<dd><input name="tp_menu_title" id="tp_menu_title" type="text" size="40" value=""><br>
@@ -2497,8 +2510,8 @@ function template_menucore()
     echo'
 		<div id="new-item" class="admintable admin-area edit-menu-item">
 		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
-		<div class="windowbg noup padding-div">
-			<dl class="settings">
+		<div class="windowbg noup padding-div"><br>
+			<dl class="settings tptitle">
 				<dt>
 					<label for="tp_menu_name"><b>'.$txt['tp-title'].'</b></label>
 				</dt>
@@ -2506,7 +2519,7 @@ function template_menucore()
 					<input id="tp_menu_name" name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 				</dd>
 			</dl>	
-			<dl class="settings">
+			<dl class="settings tptitle">
 				<dt>
 					<label for="tp_menu_type"><b>'.$txt['tp-type'].'</b></label>
 				</dt>
@@ -2537,7 +2550,7 @@ function template_menucore()
 				</dd>
 			</dl>					
 			<hr>
-			<dl class="settings">
+			<dl class="settings tptitle">
 				<dt>
 					<label for="tp_item"><b>'.$txt['tp-item'].'</b></label>
 				</dt>
@@ -2576,7 +2589,7 @@ function template_menucore()
                     <input size="40" id="tp_menu_link" name="tp_menu_link" type="text" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 				</dd>
 				<dt>
-					<label for="tp_menu_newlink"><b>'.$txt['tp-windowmenu'].'?</b></label>
+					<label for="tp_menu_newlink"><b>'.$txt['tp-windowopen'].'</b></label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
