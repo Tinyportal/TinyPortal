@@ -16,6 +16,7 @@
  */
 use \TinyPortal\Article as TPArticle;
 use \TinyPortal\Block as TPBlock;
+use \TinyPortal\Integrate as TPIntegrate;
 use \TinyPortal\Mentions as TPMentions;
 use \TinyPortal\Util as TPUtil;
 
@@ -164,7 +165,7 @@ function TPortal_init() {{{
     }
 
 	// Show search/frontpage topic layers?
-	TPortal_Integrate::hookSearchLayers();
+	TPIntegrate::hookSearchLayers();
 
 	// set cookie change for selected upshrinks
 	tpSetupUpshrinks();

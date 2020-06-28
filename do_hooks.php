@@ -18,8 +18,7 @@
 global $hooks, $mod_name, $forum_version;
 
 $hooks = array(
-    'integrate_pre_include'                     => '$sourcedir/TPortal.php,$sourcedir/TPortal.integrate.php',
-    'integrate_pre_load'                        => 'TPortal_Integrate::hookPreLoad'
+    'integrate_pre_load'                        => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookPreLoad'
 );
 
 $mod_name = 'TinyPortal';
@@ -83,6 +82,8 @@ function setup_hooks ()
 
     if($smf21 == false) {
         define('SMF_INTEGRATION_SETTINGS', serialize(array('integrate_menu_buttons' => 'install_menu_button',)));
+        $hooks['integrate_pre_include'] = '$sourcedir/TPCompat.php';
+        $hooks['integrate_pre_load']    = 'TPHookPreLoad';
     }
 
 	$integration_function = empty($context['uninstalling']) ? 'add_integration_function' : 'remove_integration_function';
