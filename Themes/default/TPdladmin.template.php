@@ -220,7 +220,7 @@ $clickme.click( function(e) {
 						'.$txt['tp-dlfeatured'].' :
 					</dt>
 					<dd>
-						<select name="tp_dl_featured" size="5">';
+						<select size="1" name="tp_dl_featured">';
 
 				foreach($context['TPortal']['all_dlitems'] as $item)
 				{
