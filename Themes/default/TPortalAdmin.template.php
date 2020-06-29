@@ -520,11 +520,11 @@ function template_categories()
 			<div class="windowbg noup padding-div">
 				<table class="table_grid tp_grid" style="width:100%">
 				<thead>
-					<tr class="title_bar titlebg2">
+					<tr class="title_bar titlebg">
 					<th scope="col">
 						<div>
 							<div class="float-items" style="width:72%;"><strong>' , $txt['tp-artcat'] , '</strong></div>
-							<div class="title-admin-area float-items tpcenter" style="width:150px;"><strong>' , $txt['tp-actions'] , '</strong></div>
+							<div class="title-admin-area float-items tpcenter" style="width:150px;float:right;"><strong>' , $txt['tp-actions'] , '</strong></div>
 							<p class="clearthefloat"></p>
 						</div>
 					</th>
@@ -544,11 +544,11 @@ function template_categories()
 
 				echo '
 							<div class="float-items' , '" style="width:72%;">
-								' , str_repeat("-",$cat['indent']) , '
+								' , str_repeat("- ",$cat['indent']) , '
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '">' , $cat['name'] , '</a>
-								' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '<a href="' . $scripturl. '?action=tpadmin;sa=articles;cu='.$cat['id'].'" title="' .$txt['tp-articleoptions12']. '">(' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . ': '.$context['TPortal']['cats_count'][$cat['id']].')</a>' : '' , '
+								' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '(' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . ': '.$context['TPortal']['cats_count'][$cat['id']].')' : '' , '
 							</div>
-							<div class="float-items tpcenter" style="width:150px;">
+							<div class="float-items tpcenter" style="width:150px;float:right;">
 								<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' . $txt['tp-viewcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="" /></a>&nbsp;
 								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>&nbsp;
@@ -895,12 +895,12 @@ function template_articles()
 		echo '
 		<table class="table_grid tp_grid" style="width:100%">
 		<thead>
-			<tr class="title_bar titlebg2">
+			<tr class="title_bar titlebg">
 			<th scope="col" class="articles">
 				<div>
 					<div class="float-items" style="width:65%;"><strong>' , $txt['tp-artcat'] , '</strong></div>
 					<div class="title-admin-area float-items tpcenter" style="width:15%;"><strong>' , $txt['tp-articles'] , '</strong></div>
-					<div class="title-admin-area float-items tpcenter" style="width:20%;"><strong>' , $txt['tp-actions'] , '</strong></div>
+					<div class="title-admin-area float-items tpcenter" style="width:100px;float:right;"><strong>' , $txt['tp-actions'] , '</strong></div>
 					<p class="clearthefloat"></p>
 				</div>
 			</th>
@@ -908,45 +908,29 @@ function template_articles()
 		</thead>
 		<tbody>';
 		$alt=true;
-		foreach($context['TPortal']['cats'] as $c => $cat)
-		{
-			if(in_array($cat['parent'],$context['TPortal']['basecats']))
+			foreach($context['TPortal']['cats'] as $c => $cat)
 			{
 				echo '
-			<tr class="windowbg">
-			<td class="articles">
-				<div>
-					<div style="width:65%;" class="float-items">
-					  <a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$cat['id'].'" title="' .$txt['tp-articleoptions12']. '">' , $cat['name'] , '</a>
+					<tr class="windowbg">
+					<td class="articles">
+						<div>';
+
+				echo '
+					<div class="float-items' , '" style="width:65%;">
+						' , (!empty($cat['indent']) ? str_repeat("- ",$cat['indent']) : '') , '
+						<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$cat['id'].'" title="' .$txt['tp-articleoptions12']. '">' , $cat['name'] , '</a>
 					</div>
 					<div style="width:15%;" class="float-items tpcenter">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>
-					<div style="width:20%;" class="float-items tpcenter">
+					<div style="width:100px;float:right;" class="float-items tpcenter">
 						<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' .$txt['tp-viewcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
 						<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu=' . $cat['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' .$txt['tp-editcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="" /></a>
-					</div><p class="clearthefloat"></p>
-				</div>';
-				// check if we got children
-				foreach($context['TPortal']['cats'] as $d => $subcat)
-				{
-					if($subcat['parent']==$cat['id'])
-					{
-						echo '
-				<div>
-					<div style="width:65%;" class="float-items">&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPtree_article.png" alt="" />
-						<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$subcat['id'].'">' , $subcat['name'] , '</a>
 					</div>
-					<div style="width:15%;" class="float-items tpcenter">' , isset($context['TPortal']['cats_count'][$subcat['id']]) ? $context['TPortal']['cats_count'][$subcat['id']] : '0' , '</div>
-					<div style="width:20%;" class="float-items tpcenter">&nbsp;</div>
-					<p class="clearthefloat"></p>
-				</div>';
-					}
-				}
-	echo '
-			</td>
-			</tr>';
+							<p class="clearthefloat"></p>
+						</div>
+					</td>
+					</tr>';
 				$alt = !$alt;
 			}
-		}
 	echo '
 		</tbody>
 	</table><br>';
@@ -957,7 +941,7 @@ function template_articles()
 		echo '
 	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
-			<tr class="title_bar titlebg2">
+			<tr class="title_bar titlebg">
 			<th scope="col" class="articles">
 				<div class="catbg3">
 					<div style="width:7%;" class="pos float-items">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="'.$txt['tp-sort-on-position'].'" /> ' : '' , '<a title="'.$txt['tp-sort-on-position'].'" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=parse"><strong>' , $txt['tp-pos'] , '</strong></a></div>
@@ -1076,7 +1060,7 @@ function template_strays()
 				<div>
 					<table class="table_grid tp_grid" style="width:100%">
 					<thead>
-						<tr class="title_bar titlebg2">
+						<tr class="title_bar titlebg">
 						<th scope="col">
 							<div>
 								<div style="width:7%;" class="pos float-items"><strong>'.$txt['tp-select'].'</strong></div>
@@ -1213,7 +1197,7 @@ function template_submission()
 		echo '
 				<table class="table_grid tp_grid" style="width:100%">
 					<thead>
-						<tr class="title_bar titlebg2">
+						<tr class="title_bar titlebg">
 						<th scope="col" class="articles">
 							<div class="catbg3">
 								<div style="width:7%;" class="pos float-items"><strong>'.$txt['tp-select'].'</strong></div>
@@ -1737,7 +1721,7 @@ function template_blocks()
 				echo '
 				<table class="table_grid tp_grid" style="width:100%">
 					<thead>
-						<tr class="title_bar titlebg2">
+						<tr class="title_bar titlebg">
 						<th scope="col" class="blocks">
 							<div>
 								<div style="width:10%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
@@ -1745,7 +1729,7 @@ function template_blocks()
 								<div style="width:20%;" class="smalltext title-admin-area float-items" ><strong>'.$txt['tp-type'].'</strong></div>
 								<div style="width:10%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-activate'].'</strong></div>
 								<div style="width:20%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-move'].'</strong></div>
-								<div style="width:10%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-editsave'].'</strong></div>
+								<div style="width:10%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-actions'].'</strong></div>
 								<div style="width:10%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-delete'].'</strong></div>
 								<p class="clearthefloat"></p>
 							</div>
@@ -2228,7 +2212,7 @@ function template_menubox()
 			<span style="float: right;"><strong><a href="' . $scripturl . '?action=tpadmin;sa=addmenu;mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">['.$txt['tp-addmenuitem'].']</a></strong></span>
 			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
-					<tr class="title_bar titlebg2">
+					<tr class="title_bar titlebg">
 					<th scope="col" class="menuitems">			
 							<div style="width:7%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
 							<div style="width:15%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
@@ -2385,7 +2369,7 @@ function template_menubox()
 				echo '
 				<table class="table_grid tp_grid" style="width:100%">
 				<thead>
-					<tr class="title_bar titlebg2">
+					<tr class="title_bar titlebg">
 					<th scope="col" class="menus">
 						<div>
 							<div class="float-items" style="width:65%;"><strong>' , $txt['tp-title'] , '</strong></div>
