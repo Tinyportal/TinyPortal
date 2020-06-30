@@ -831,10 +831,11 @@ function articleAjax() {{{
 			$smcFunc['db_free_result']($request);
 
 			$newcat = !empty($row['value2']) ? $row['value2'] : 0;
+
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_variables
-				SET value2 = {int:val2}
-				WHERE value2 = {int:varid}',
+				SET value2 = {string:val2}
+				WHERE value2 = {string:varid}',
 				array(
 					'val2' => $newcat, 'varid' => $what
 				)
