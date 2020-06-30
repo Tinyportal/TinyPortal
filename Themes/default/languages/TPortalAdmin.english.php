@@ -495,13 +495,16 @@ $txt['tp-insert'] = 'Insert code';
 $txt['tp-unreadreplies'] = 'Unread replies';
 
 // Menu manager
+$txt['tp-helpmenus'] = 'The built in menu manager allows you to create multiple menu\'s. These menu\'s are typically displayed in a block. You get all the features of blocks to display these menu\'s in different places along with choosing who gets to see the blocks based on permissions. Here you can edit the Internal menu of create and manage new menu\'s';
 $txt['tp-internalmenu'] = 'Internal';
+$txt['tp-nomenuitem'] = 'There are no items in this menu.';
 $txt['tp-addmenuitem'] = 'Add menu item';
 $txt['tp-header'] = 'Header';
 $txt['tp-editmenu'] = 'Edit menu item';
-$txt['tp-windowmenu'] = 'Open in a new window';
-$txt['tp-suremenu'] = 'Are you sure you want to delete this menu item?';
+$txt['tp-windowopen'] = 'Open in';
+$txt['tp-suremenu'] = 'Are you sure you want to delete this item?';
 $txt['tp-nowindowmenu'] = 'Same window';
+$txt['tp-windowmenu'] = 'Open in a new window';
 $txt['tp-link'] = 'Link';
 $txt['tp-spacer'] = 'Spacer';
 $txt['tp-menu'] = 'Menu button';
