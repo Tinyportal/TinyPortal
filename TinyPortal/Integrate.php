@@ -14,14 +14,13 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
-
-use TinyPortal\Util as TPUtil;
+namespace TinyPortal;
 
 if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class TPortal_Integrate 
+class Integrate 
 {
 
     public static function hookPreLoad()
@@ -30,20 +29,20 @@ class TPortal_Integrate
         if(!defined('SMF_BACKWARDS_COMPAT')) {
             define('SMF_BACKWARDS_COMPAT', true);
             self::setup_smf_backwards_compat();
-            spl_autoload_register('TPortal_Integrate::TPortalAutoLoadClass');
+            spl_autoload_register('TinyPortal\Integrate::TPortalAutoLoadClass');
         }
 
         $hooks = array (
             'SSI'                               => '$sourcedir/TPSSI.php|ssi_TPIntegrate',
-            'load_permissions'                  => 'TPortal_Integrate::hookPermissions',
-            'load_illegal_guest_permissions'    => 'TPortal_Integrate::hookIllegalPermissions',
-            'buffer'                            => 'TPortal_Integrate::hookBuffer',
-            'menu_buttons'                      => 'TPortal_Integrate::hookMenuButtons',
-            'display_buttons'                   => 'TPortal_Integrate::hookDisplayButton',
-            'actions'                           => 'TPortal_Integrate::hookActions',
-            'profile_areas'                     => 'TPortal_Integrate::hookProfileArea',
-            'whos_online'                       => 'TPortal_Integrate::hookWhosOnline',
-            'pre_log_stats'                     => 'TPortal_Integrate::hookPreLogStats',
+            'load_permissions'                  => 'TinyPortal\Integrate::hookPermissions',
+            'load_illegal_guest_permissions'    => 'TinyPortal\Integrate::hookIllegalPermissions',
+            'buffer'                            => 'TinyPortal\Integrate::hookBuffer',
+            'menu_buttons'                      => 'TinyPortal\Integrate::hookMenuButtons',
+            'display_buttons'                   => 'TinyPortal\Integrate::hookDisplayButton',
+            'actions'                           => 'TinyPortal\Integrate::hookActions',
+            'profile_areas'                     => 'TinyPortal\Integrate::hookProfileArea',
+            'whos_online'                       => 'TinyPortal\Integrate::hookWhosOnline',
+            'pre_log_stats'                     => 'TinyPortal\Integrate::hookPreLogStats',
             'tp_pre_subactions'                 => array ( 
                 '$sourcedir/TPArticle.php|TPArticleActions',
                 '$sourcedir/TPSearch.php|TPSearchActions',
@@ -71,12 +70,12 @@ class TPortal_Integrate
         );
 
         if(TP_SMF21) {
-            $hooks['redirect']                = 'TPortal_Integrate::hookRedirect';
-            $hooks['pre_profile_areas']       = 'TPortal_Integrate::hookProfileArea';
-            $hooks['pre_load_theme']          = 'TPortal_Integrate::hookLoadTheme';
+            $hooks['redirect']                = 'TinyPortal\Integrate::hookRedirect';
+            $hooks['pre_profile_areas']       = 'TinyPortal\Integrate::hookProfileArea';
+            $hooks['pre_load_theme']          = 'TinyPortal\Integrate::hookLoadTheme';
             unset($hooks['profile_areas']);
             // We can use a hook of sorts for the default actions now
-            updateSettings(array('integrate_default_action' => 'TPortal_Integrate::hookDefaultAction'));
+            updateSettings(array('integrate_default_action' => 'TinyPortal\Integrate::hookDefaultAction'));
         }
 
 		foreach ($hooks as $hook => $callable) {
@@ -771,7 +770,8 @@ class TPortal_Integrate
         $no_stat_actions = array_merge($no_stat_actions, array('shout'));
 
         // We can also call init from here although it's not meant for this
-        TPortal_init();
+        require_once(SOURCEDIR . '/TPortal.php');
+        \TPortal_init();
     }
 
     public static function hookRedirect(&$setLocation, &$refresh, &$permanent)

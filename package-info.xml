@@ -20,8 +20,8 @@
 	<uninstall for="2.0 - 2.0.99">
 		<readme parsebbc="true">readme_uninstall.txt</readme>
 		<modification reverse="true">install.xml</modification>
-		<remove-file name="$sourcedir/TPortal.integrate.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
+		<remove-file name="$sourcedir/TPCompat.php" />
 		<remove-file name="$sourcedir/TPdlmanager.php" />
 		<remove-file name="$sourcedir/TPhelp.php" />
 		<remove-file name="$sourcedir/TPBlock.php" />
@@ -81,10 +81,10 @@
 		<remove-dir name="$themedir/scripts/tinyportal" />
 		<remove-file name="$sourcedir/TPSSI.php" />
 		<remove-file name="$sourcedir/TPBlock.php" />
+		<remove-file name="$sourcedir/TPCompat.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
 		<remove-file name="$sourcedir/TPdlmanager.php" />
 		<remove-file name="$sourcedir/TPhelp.php" />
-		<remove-file name="$sourcedir/TPortal.integrate.php" />
 		<remove-file name="$sourcedir/TPortal.php" />
 		<remove-file name="$sourcedir/TPortalAdmin.php" />
 		<remove-file name="$sourcedir/TPArticle.php" />
