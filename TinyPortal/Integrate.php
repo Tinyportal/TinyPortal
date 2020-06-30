@@ -821,7 +821,7 @@ class Integrate
         if(isset($_GET['page']) && !isset($_GET['action'])) {
             if (($theme = cache_get_data('tpArticleTheme', 120)) == null) {
                 // fetch the custom theme if any
-                $pag = TPUtil::filter('page', 'get', 'string');
+                $pag = Util::filter('page', 'get', 'string');
                 if (is_numeric($pag)) {
                     $request = $smcFunc['db_query']('', '
                         SELECT id_theme FROM {db_prefix}tp_articles
