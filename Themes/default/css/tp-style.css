@@ -1556,12 +1556,12 @@ input,select {
 }
 dl.tptitle dt
 {
-	width: 20%;
+	width: 40%;
 	float: left;
 }
 dl.tptitle dd
 {
-	width: 80%;
+	width: 60%;
 	float: right;
 }
 #tp_customlayout {

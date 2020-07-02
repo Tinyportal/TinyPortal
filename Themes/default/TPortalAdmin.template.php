@@ -716,7 +716,7 @@ function template_editcategory()
 						<textarea id="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
 					</div>
 					<hr>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt>
 							', $txt['tp-showchilds'], '
 						</dt>
@@ -764,7 +764,7 @@ function template_editcategory()
 							<input type="checkbox" name="tp_category_bottompanel" id="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
 						<dd>
 					</dl>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt>
 							<span class="font-strong">'.$txt['tp-allowedgroups']. '</span>
 						</dt>
@@ -1424,7 +1424,7 @@ function template_articons()
 			<div class="information smalltext">' , $txt['tp-adminiconsinfo'] , '</div><div></div>
 				<div class="windowbg noup padding-div">
 				<div class="formtable"><br>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt>
 							', $txt['tp-adminicons6'], '<br>
 						</dt>
@@ -2055,14 +2055,14 @@ function template_addblock()
 		<div id="add-block" class="admintable admin-area">
 			<div class="windowbg2">
 				<div class="formtable padding-div">
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt><h3>' , $txt['tp-title'] , ':</h3>
 						</dt>
 						<dd>
 							<input type="input" name="tp_addblocktitle" size="50" value="" />
 						</dd>
 					</dl>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt><h3>' , $txt['tp-choosepanel'] , '</h3></dt>
 						<dd>
 							<input type="radio" name="tp_addblockpanel" required id="tp_addblockpanel1" value="1" ' , $side=='left' ? 'checked' : '' , ' /><label for="tp_addblockpanel1"">' . $txt['tp-leftpanel'] . '</label><br>
@@ -2075,7 +2075,7 @@ function template_addblock()
 						</dd>
 					</dl>
 					<hr>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt><h3>' , $txt['tp-chooseblock'] , '</h3></dt>
 						<dd>
 							<div class="tp_largelist2">
@@ -2106,7 +2106,7 @@ function template_addblock()
 				ctheme_tp_blocks('listaddblocktypes');
 			}
 					echo '
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt><h3>' , $txt['tp-chooseblocktype'] , '</h3></dt>
 						<dd>
 							<div class="tp_largelist2">';
@@ -2123,7 +2123,7 @@ function template_addblock()
 							</div>
 						</dd>
 					</dl>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt><h3 class="padding-div">' , $txt['tp-chooseblockcopy'] , '</h3></dt>
 						<dd>
 							<div class="tp_largelist2">';
