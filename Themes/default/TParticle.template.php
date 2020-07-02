@@ -390,7 +390,7 @@ function template_submitarticle()
 					</dd>
 				</dl>
 				<hr>
-				<dl class="settings">
+				<dl class="tptitle settings">
 					<dt>
 						', $txt['tp-illustration'], '
 					</dt>
@@ -436,7 +436,7 @@ function template_submitarticle()
 						<div class="article-details">';
 				// article details options
 				echo '
-							<dl class="settings">
+							<dl class="tptitle settings">
 								<dt>
 									<label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
 								</dt>
@@ -447,7 +447,7 @@ function template_submitarticle()
 							<hr>
 							<div class="font-strong">' . $txt['tp-details'] . '</div>
 							<br>
-							<dl class="settings">
+							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[4].'">', $txt['tp-articleoptions4'], '</label><br>
 								</dt>
@@ -541,7 +541,7 @@ function template_submitarticle()
 					echo '	</dl>
 								<hr>
 								<div class="font-strong">' . $txt['tp-panels'] . '</div><br>
-							<dl class="settings">
+							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
 								</dt>
@@ -592,7 +592,7 @@ function template_submitarticle()
 								</dd>
 							</dl>
 						<br>
-							<dl class="settings">
+							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
 								</dt>
@@ -602,7 +602,7 @@ function template_submitarticle()
 							</dl>
 							<hr>
 							<div class="font-strong">' . $txt['tp-others'] . '</div><br>
-							<dl class="settings">
+							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
 								</dt>
