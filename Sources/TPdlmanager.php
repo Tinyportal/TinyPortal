@@ -3542,15 +3542,15 @@ function TPortalDLAdmin()
 	if (allowedTo('tp_dlmanager'))
 	{
 		$context['TPortal']['subtabs'] = array(
-			'admin' => array(
-				'text' => 'tp-dltabs4',
-				'url' => $scripturl . '?action=tportal;sa=download;dl=admin',
-				'active' => substr($context['TPortal']['dlsub'], 0, 5) == 'admin' && $context['TPortal']['dlsub'] != 'adminsettings' && $context['TPortal']['dlsub'] != 'adminaddcat' && $context['TPortal']['dlsub'] != 'adminftp' && $context['TPortal']['dlsub'] != 'adminsubmission',
-			),
 			'settings' => array(
 				'text' => 'tp-dltabs1',
 				'url' => $scripturl . '?action=tportal;sa=download;dl=adminsettings',
 				'active' => $context['TPortal']['dlsub'] == 'adminsettings',
+			),
+			'admin' => array(
+				'text' => 'tp-dltabs4',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=admin',
+				'active' => substr($context['TPortal']['dlsub'], 0, 5) == 'admin' && $context['TPortal']['dlsub'] != 'adminsettings' && $context['TPortal']['dlsub'] != 'adminaddcat' && $context['TPortal']['dlsub'] != 'adminftp' && $context['TPortal']['dlsub'] != 'adminsubmission',
 			),
 			'addcategory' => array(
 				'text' => 'tp-dltabs2',

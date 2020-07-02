@@ -98,7 +98,13 @@ function template_submitarticle()
 					TP_bbcbox($context['TPortal']['editor_id']);
                 }
 				else {
-					echo $txt['tp-importarticle'] , ' &nbsp;<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">' ;
+					echo '
+					<dl class="settings tptitle">
+						<dt>' , $txt['tp-importarticle'] , '</dt>
+						<dd>
+							<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">
+						</dd>
+					</dl>' ;
                 }
 				echo '
 					</div>';
@@ -109,7 +115,7 @@ function template_submitarticle()
 
                 echo'
 			<hr>
-				<dl class="settings">';
+				<dl class="tptitle settings">';
 
                 if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
                     echo '<dt>
@@ -356,7 +362,7 @@ function template_submitarticle()
                 
                 if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '<hr>
-				<dl class="settings">
+				<dl class="tptitle settings">
 					<dt>
 						', $txt['tp-switchmode'], '
 					</dt>
@@ -380,29 +386,35 @@ function template_submitarticle()
 					</dt>
 					<dd>
 							  <input name="tp_article_off" id="tp_article_off" type="radio" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label><br>
-							  <input name="tp_article_off" id="tp_article_on" type="radio" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br><br>
-					</dd>
-					<dt>
-						', $txt['tp-illustration'], '<br>
-					</dt>
-					<dd>
-						<div class="article_icon" style="background: top right url(' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , ')no-repeat;"></div>
+							  <input name="tp_article_off" id="tp_article_on" type="radio" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label>
 					</dd>
 				</dl>
+				<hr>
 				<dl class="settings">
 					<dt>
-						<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label><br>
-						<img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" />
+						', $txt['tp-illustration'], '
 					</dt>
 					<dd>
-							<select size="1" name="tp_article_illustration" id="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
+						<div class="article_icon" style="background: top right url(' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , ')no-repeat;"></div><br>
+					</dd>
+					<dt>
+						<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label>
+					</dt>
+					<dd>
+						<select size="1" name="tp_article_illustration" id="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
 								<option value=""' , $mg['illustration']=='' ? ' selected="selected"' : '' , '>' . $txt['tp-none2'] . '</option>';
 			foreach($context['TPortal']['articons']['illustrations'] as $ill) {
 				echo '<option value="'.$ill['file'].'"' , $ill['file']==$mg['illustration'] ? ' selected="selected"' : '' , '>'.$ill['file'].'</option>';
             }
 			echo '
-							</select>
-							<p>' . $txt['tp-uploadicon'] . '<br><input type="file" name="tp_article_illupload"></p>
+							</select><br>
+						<img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
+					</dd>
+					<dt>
+						' . $txt['tp-uploadicon'] . '
+					</dt>
+					<dd>
+						<input type="file" name="tp_article_illupload">
 					</dd>
 				</dl>
 					';

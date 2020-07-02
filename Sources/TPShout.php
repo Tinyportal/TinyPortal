@@ -611,12 +611,12 @@ function tpshout_admin()
 			'shoutbox_settings' => array(
 				'text' => 'tp-settings',
 				'url' => $scripturl . '?action=tpshout;shout=admin;settings',
-				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
+				'active' => (isset($_GET['action']) && ($_GET['action']=='tpshout' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && isset($_GET['settings'])) ? true : false,
 			),
 			'shoutbox' => array(
 				'text' => 'tp-shoutbox',
 				'url' => $scripturl . '?action=tpshout;shout=admin',
-				'active' => (isset($_GET['action']) && ($_GET['action']=='tpadmin' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
+				'active' => (isset($_GET['action']) && ($_GET['action']=='tpshout' || $_GET['action']=='tpadmin' ) && isset($_GET['shout']) && $_GET['shout']=='admin' && !isset($_GET['settings'])) ? true : false,
 			),
 		);
 		$context['admin_header']['tp_shout'] = $txt['tp_shout'];

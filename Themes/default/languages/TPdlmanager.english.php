@@ -20,7 +20,7 @@ global $scripturl;
 //Admin
 $txt['tp-dltabs4'] = 'Admin';
 $txt['tp-dlsubmitted'] = 'Approval';
-$txt['tp-dledit'] = 'Edit/Delete';
+$txt['tp-dledit'] = 'Actions';
 $txt['tp-dlfile'] = 'Filename / Uploader';
 $txt['tp-dlviews'] = 'Views/Downloads';
 $txt['tp-dlicon'] = 'Icon';
