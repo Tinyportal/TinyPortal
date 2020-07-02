@@ -2433,7 +2433,7 @@ function dl_getcats()
 
 function TP_bbcbox($input)
 {
-   echo'<hr><div id="tp_smilebox"></div>';
+   echo'<div id="tp_smilebox"></div>';
    echo'<div id="tp_messbox"></div>';
 
    echo template_control_richedit($input, 'tp_messbox', 'tp_smilebox');

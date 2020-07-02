@@ -168,7 +168,7 @@ function template_editblock()
 		<div id="editblock" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
 				<div class="formtable">
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt>
 							<b><label for="field_name">', $txt['tp-status'], '<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></label></b>
 						</dt>
@@ -177,7 +177,7 @@ function template_editblock()
 							<input type="radio" value="1" name="tp_block_off"',$context['TPortal']['blockedit']['off']==1 ? ' checked="checked"' : '' ,' />'.$txt['tp-off'].'
 						</dd>
 					</dl>
-					<dl class="settings">
+					<dl class="tptitle settings">
 						<dt><label for="tp_block_title"><b>'.$txt['tp-title'].'</b></label></dt>
 						<dd>
 							<input size=60 name="tp_block_title" id="tp_block_title" type="text" value="' .$newtitle. '"><br><br>
