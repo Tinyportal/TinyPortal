@@ -263,6 +263,7 @@ function getBlocks() {{{
 
 	// get menubox items
 	if(isset($test_menubox)) {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
         TPortal_menubox();
 	}
 
@@ -325,8 +326,11 @@ function adminBlocks() {{{
     
     $tpBlock    = TPBlock::getInstance();
 
-	if(isset($_GET['addblock'])) {
+	if($context['TPortal']['subaction']=='blocks') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
+	}
+	
+	if(isset($_GET['addblock'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-addblock']);
 		// collect all available PHP block snippets
 		$context['TPortal']['blockcodes']   = TPcollectSnippets();
@@ -394,6 +398,8 @@ function adminBlocks() {{{
 
 	// are we on overview screen?
 	if(isset($_GET['overview'])) {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-blockoverview']);
+		
 		// fetch all blocks member group permissions
         $data   = $tpBlock->getBlockData(array('id', 'title', 'bar', 'access', 'type'), array( 'off' => 0 ) );
 		if(is_array($data)) {
@@ -417,8 +423,12 @@ function adminBlocks() {{{
 		// check which side its mean to be on
 		$context['TPortal']['blockside'] = $_GET['addblock'];
 	}
+
+	if($context['TPortal']['subaction']=='panels') {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
+    }
+	
 	else {
-		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
 		foreach($tpBlock->getBlockPanel() as $p => $pan) {
 			if(isset($_GET[$pan])) {
 				$context['TPortal']['panelside'] = $pan;
@@ -455,10 +465,6 @@ function adminBlocks() {{{
 		}
 	}
 	get_articles();
-
-	if($context['TPortal']['subaction']=='panels') {
-		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
-    }
 
 	$context['html_headers'] .= '
 	<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?fin20"></script>

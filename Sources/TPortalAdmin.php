@@ -27,7 +27,7 @@ if (!defined('SMF')) {
 // TinyPortal admin
 function TPortalAdmin()
 {
-	global $scripturl, $sourcedir, $context;
+	global $scripturl, $sourcedir, $context, $txt;
 
 	if(loadLanguage('TPortalAdmin') == false)
 		loadLanguage('TPortalAdmin', 'english');
@@ -73,7 +73,7 @@ function TPortalAdmin()
 			$context['TPortal']['frontpage_visualopts_admin']['sortorder'] = substr($r, 10);
 	}
 
-	TPadd_linktree($scripturl.'?action=tpadmin', 'TP Admin');
+	TPadd_linktree($scripturl.'?action=tpadmin', $txt['tp-admin']);
 
 	// some GET values set up
 	$context['TPortal']['tpstart'] = isset($_GET['tpstart']) ? $_GET['tpstart'] : 0;
@@ -338,8 +338,9 @@ function do_blocks()
 
 function do_menus()
 {
-	global $context, $scripturl, $smcFunc;
-
+	global $txt, $context, $scripturl, $smcFunc;
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=menubox', $txt['tp-menumanager']);
+		
 	$mid = isset($_GET['mid']) && is_numeric($_GET['mid']) ? $_GET['mid'] : 0;
 	// first check any link stuff
 	if(isset($_GET['linkon']))
@@ -523,12 +524,20 @@ function do_menus()
 			$context['TPortal']['editcats'] = $allsorted;
 	}
 	// add to linktree
-	if(isset($_GET['mid']))
+	if(isset($_GET['mid'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=menubox;mid='. $_GET['mid'] , $context['TPortal']['menus'][$_GET['mid']]['name']);
+	}
+
 	elseif(isset($_GET['linkedit']) && is_numeric($_GET['linkedit']))
 	{
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=menubox;mid='. $context['TPortal']['editmenuitem']['menuID'] , $context['TPortal']['menus'][$context['TPortal']['editmenuitem']['menuID']]['name']);
 		TPadd_linktree($scripturl.'?action=tpadmin;linkedit='. $_GET['linkedit'] , $context['TPortal']['editmenuitem']['name']);
+	}
+	if(isset($_GET['fullmenu'])) {
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=addmenu', $txt['tp-addmenu']);
+	}
+	if(($context['TPortal']['subaction']=='addmenu') && (isset($_GET['mid']))){
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=addmenu', $txt['tp-addmenuitem']);
 	}
 }
 
@@ -616,7 +625,7 @@ function do_articles()
 	$smcFunc['db_free_result']($request);
 
 	// we are on categories screen
-	if(in_array($context['TPortal']['subaction'], array('categories', 'addcategory'))) {
+	if(in_array($context['TPortal']['subaction'], array('categories', 'addcategory', 'clist'))) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=categories', $txt['tp-categories']);
 		// first check if we simply want to copy or set as child
 		if(isset($_GET['cu']) && is_numeric($_GET['cu'])) {
@@ -815,6 +824,9 @@ function do_articles()
 		}
 		if($context['TPortal']['subaction'] == 'addcategory') {
 			TPadd_linktree($scripturl.'?action=tpadmin;sa=addcategory', $txt['tp-addcategory']);
+        }
+		if($context['TPortal']['subaction'] == 'clist') {
+			TPadd_linktree($scripturl.'?action=tpadmin;sa=clist', $txt['tp-tabs11']);
         }
 
 		return;

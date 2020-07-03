@@ -1467,25 +1467,26 @@ function template_panels()
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
+		<input type="hidden" name="sc" value="', $context['session_id'] ,'" />
 		<input name="tpadmin_form" type="hidden" value="panels">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-panelsettings'] . '</h3></div>
 			<div id="panels-admin" class="admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-helppanels'] , '</div><div></div>
+			<div class="information smalltext">', $txt['tp-helppanels'] ,'</div><div></div>
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							<strong>'.$txt['tp-hidebarsall'].'</strong>
+							<strong>', $txt['tp-hidebarsall'] ,'</strong>
 						</dt>
-`						<dt>
-							<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'], '</label>
+						<dd></dd>
+						<dt>
+							<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'] ,'</label>
 						</dt>
 						<dd>
-							<input id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" type="checkbox" value="1" ' , $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' , '>
+							<input id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" type="checkbox" value="1" ', $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' ,'>
 						</dd>
 						<dt>
-							<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'], '</label>
+							<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'] ,'</label>
 						</dt>
 						<dd>
 							<input id="tp_hidebars_profile" name="tp_hidebars_profile" type="checkbox" value="1" ' , $context['TPortal']['hidebars_profile']=='1' ? 'checked' : '' , '>
@@ -2265,7 +2266,8 @@ function template_menubox()
 									<div id="show-on-respnsive-layout"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].'</strong></div>
 									<a href="' . $scripturl . '?action=tpadmin;linkon=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-activate'].'" src="' .$settings['tp_images_url']. '/TPgreen' , $lbox['off']!=0 ? '2' : '' , '.png" alt="'.$txt['tp-activate'].'"  /></a>
 									<a href="' . $scripturl . '?action=tpadmin;linkoff=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-deactivate'].'" src="' .$settings['tp_images_url']. '/TPred' , $lbox['off']==0 ? '2' : '' , '.png" alt="'.$txt['tp-deactivate'].'"  /></a>
-									<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
+									<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">
+									<img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
 								</div>
 								<div style="width:19.2%; overflow:hidden;" class="smalltext fullwidth-on-res-layout float-items">
 									<div id="show-on-respnsive-layout"><strong>'.$txt['tp-item'].'</strong></div>

@@ -323,6 +323,12 @@ function tpshout_admin()
 	TPadminIndex('shout');
 	$context['current_action'] = 'admin';
 
+    // clear the linktree first
+    TPstrip_linktree();
+	
+	// Set the linktree
+	TPadd_linktree($scripturl.'?action=tpshout', 'TPshout');
+
 	if(isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks'])) {
 		$go = 0;
 		$changeArray = array();
