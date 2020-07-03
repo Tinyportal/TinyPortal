@@ -125,7 +125,7 @@ function TPdlmanager()
         $context['sub_template'] = 'dlsubmitsuccess';
     }
     else {
-		fatal_error($txt['tp-adminonly'], false);
+		redirectexit('action=tportal;sa=download;dl');
     }
 
 }
