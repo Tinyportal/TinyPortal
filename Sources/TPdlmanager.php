@@ -2056,6 +2056,9 @@ function TPortalDLAdmin()
 		checkSession('post');
 	else
 		isAllowedTo('tp_dlmanager');
+	// Set the linktree
+	TPadd_linktree($scripturl.'?action=tpadmin', $txt['tp-admin']);
+	TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admin', 'TPdownloads');
 
 	// add visual options to this section
 	$dl_visual = explode(',', $context['TPortal']['dl_visual_options']);
