@@ -1467,25 +1467,26 @@ function template_panels()
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
+		<input type="hidden" name="sc" value="', $context['session_id'] ,'" />
 		<input name="tpadmin_form" type="hidden" value="panels">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-panelsettings'] . '</h3></div>
 			<div id="panels-admin" class="admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-helppanels'] , '</div><div></div>
+			<div class="information smalltext">', $txt['tp-helppanels'] ,'</div><div></div>
 			<div class="windowbg noup">
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							<strong>'.$txt['tp-hidebarsall'].'</strong>
+							<strong>', $txt['tp-hidebarsall'] ,'</strong>
 						</dt>
-`						<dt>
-							<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'], '</label>
+						<dd></dd>
+						<dt>
+							<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'] ,'</label>
 						</dt>
 						<dd>
-							<input id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" type="checkbox" value="1" ' , $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' , '>
+							<input id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" type="checkbox" value="1" ', $context['TPortal']['hidebars_admin_only']=='1' ? 'checked' : '' ,'>
 						</dd>
 						<dt>
-							<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'], '</label>
+							<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'] ,'</label>
 						</dt>
 						<dd>
 							<input id="tp_hidebars_profile" name="tp_hidebars_profile" type="checkbox" value="1" ' , $context['TPortal']['hidebars_profile']=='1' ? 'checked' : '' , '>
