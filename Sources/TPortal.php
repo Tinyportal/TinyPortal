@@ -1117,12 +1117,7 @@ function doTPfrontpage() {{{
 		// first, get all available
         $artgroups = '';
 		if(!$context['user']['is_admin']) {
-            if(TP_PGSQL == false) {
-			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
-            }
-            else {
-			    $artgroups = 'AND ( \''. implode('\' = ANY (string_to_array( var.value3, \',\' )) OR \'', $user_info['groups']) . '\' = ANY (string_to_array(var.value3, \',\')))';
-            }
+            $artgroups = TPUtil::find_in_set($user_info['groups'], 'var.value3', 'AND');
         }
 
 
@@ -1419,12 +1414,7 @@ function doTPfrontpage() {{{
 		// first, get all available
 		$artgroups = '';
 		if(!$context['user']['is_admin']) {
-            if(TP_PGSQL == false) {
-			    $artgroups = 'AND (FIND_IN_SET(' . implode(', var.value3) OR FIND_IN_SET(', $user_info['groups']) . ', var.value3))';
-            }
-            else {
-			    $artgroups = 'AND ( \''. implode('\' = ANY (string_to_array( var.value3, \',\' )) OR \'', $user_info['groups']) . '\' = ANY (string_to_array(var.value3, \',\')))';
-            }
+            $artgroups = TPUtil::find_in_set($user_info['groups'], 'var.value3', 'AND');
         }
 
 		$totalmax = 200;
@@ -1697,16 +1687,7 @@ function doTPfrontpage() {{{
 	$blocks = array('front' => array());
 
 	// set the membergroup access
-    $access = '';
-    if(TP_PGSQL == false) {
-        $access = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
-    }
-    else {
-        foreach($user_info['groups'] as $k => $v) {
-            $access .= " '$v' = ANY (string_to_array(access, ',' ) ) OR ";
-        }
-    }
-    $access = rtrim($access,' OR ');
+    $access = TPUtil::find_in_set($user_info['groups'], 'access');
 
     if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 		$access = '1=1';
@@ -1714,14 +1695,9 @@ function doTPfrontpage() {{{
 
     $access2 = '';
     if(!empty($context['TPortal']['uselangoption'])) { 
-         $tmp = 'tlang=' . $user_info['language'];
-
-        // set the language access
-        if(TP_PGSQL == false) {
-            $access2 = ' AND (FIND_IN_SET(\'' .$tmp. '\', access2))';
-        }
-        else {
-            $access2 = " AND '$tmp' = ANY (string_to_array(access2, ',' ) )";
+        $access2 = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'access2');
+        if(isset($access2)) {
+            $access2 = ' AND '. $access2;
         }
     }
 
