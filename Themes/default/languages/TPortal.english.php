@@ -22,7 +22,7 @@ $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
 
 $txt['permissionname_tp_settings'] = $txt['group_perms_name_tp_settings'] = 'Manage settings';
-$txt['permissionhelp_tp_settings'] = 'Allows users to manage settings and news for TP.';
+$txt['permissionhelp_tp_settings'] = 'Allows users to manage settings for TP.';
 $txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage TinyPortal settings.';
 
 $txt['permissionname_tp_blocks'] = $txt['group_perms_name_tp_blocks'] = 'Manage blocks';
