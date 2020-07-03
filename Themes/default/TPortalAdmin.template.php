@@ -109,7 +109,11 @@ function template_overview()
 	global $context, $settings, $txt, $boardurl;
 
 	echo '
-	<div id="tp_overview" class="windowbg">';
+	<div class="title_bar">
+		<h3 class="titlebg">'.$txt['tp-tpadmin'].'</h3>
+	</div>
+	<div>
+		<div id="tp_overview" class="windowbg">';
 
 	if(is_array($context['admin_tabs']) && count($context['admin_tabs']) > 0 ) {
 		echo '<ul>';
@@ -121,7 +125,7 @@ function template_overview()
 		}
 		echo '</ul>';
 	}
-	echo '</div>';
+	echo '</div></div>';
 }
 
 // General Settings page
