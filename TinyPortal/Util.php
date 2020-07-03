@@ -53,9 +53,13 @@ class Util
 
 	}}}
 
-    public static function find_in_set($data, $field) {{{
+    public static function find_in_set($data, $field, $arg = 'OR') {{{
 
         $dB = Database::getInstance();
+
+        if( ($arg != "OR") && ($arg != "AND") ) {
+            return;
+        }
 
         array_walk($data, function (&$value, $key) use ($dB) {
                 $value = $dB->db_quote('{string:value}', array( 'value' => $value));
@@ -64,13 +68,23 @@ class Util
 
         $str = '';
         if(TP_PGSQL == false) {
-            $str = '(FIND_IN_SET(' . implode(', '.$field.') OR FIND_IN_SET(', $data) . ', '.$field.'))';
+            if($arg == 'OR') {
+                $str = '(FIND_IN_SET(' . implode(', '.$field.') '.$arg.' FIND_IN_SET(', $data) . ', '.$field.'))';
+            } 
+            else {
+                $str = 'AND (FIND_IN_SET(' . implode(', '.$field.') OR FIND_IN_SET(', $data) . ', '.$field.'))';
+            }
         }
         else {
-            foreach($data as $k => $v) {
-                $str .= " $v = ANY (string_to_array($field, ',' ) ) OR ";
+            if($arg == 'OR') {
+                foreach($data as $k => $v) {
+                    $str .= ' '.$v.' = ANY (string_to_array('.$field.', \',\' ) ) '.$arg.' ';
+                }
+                $str = rtrim($str,' '.$arg.' ');
             }
-            $str = rtrim($str,' OR ');
+            else {
+                $str = 'AND ( '. implode('\' = ANY (string_to_array( '.$field.', \',\' )) OR \'', $data) . ' = ANY (string_to_array('.$field.', \',\')))';
+            }
         }
 
         return $str;

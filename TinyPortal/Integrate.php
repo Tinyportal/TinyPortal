@@ -353,7 +353,7 @@ class Integrate
 
     public static function hookMenuButtons(&$buttons)
     {
-        global $smcFunc, $context, $scripturl, $txt;
+        global $context, $scripturl, $txt;
 
         // If SMF throws a fatal_error TP is not loaded. So don't even worry about menu items.
         if(!isset($context['TPortal']) || isset($context['uninstalling'])) {
@@ -445,7 +445,9 @@ class Integrate
 			);
 		}
 
-        $request = $smcFunc['db_query']('', '
+        $dB = Database::getInstance();
+
+        $request = $dB->db_query('', '
             SELECT value1 AS name , value3 AS href , value7 AS position , value8 AS menuicon
             FROM {db_prefix}tp_variables
             WHERE type = {string:type}
@@ -457,9 +459,9 @@ class Integrate
             )
         );
 
-        if($smcFunc['db_num_rows']($request) > 0) {
+        if($dB->db_num_rows($request) > 0) {
             $i = 0;
-            while($row = $smcFunc['db_fetch_assoc']($request)) {
+            while($row = $dB->db_fetch_assoc($request)) {
                 // Add the admin button
                 $i++;
                 $buttons = array_merge(
@@ -475,7 +477,7 @@ class Integrate
                         $buttons
                     );
             }
-            $smcFunc['db_free_result']($request);
+            $dB->db_free_result($request);
         }
     }
 
@@ -676,13 +678,15 @@ class Integrate
 
     public static function hookWhosOnline($actions)
     {
-        global $txt, $smcFunc, $scripturl;
+        global $txt, $scripturl;
 
         loadLanguage('TPortal');
 
+        $dB = Database::getInstance();
+
         if(isset($actions['page'])) {
             if(is_numeric($actions['page'])) {
-                $request = $smcFunc['db_query']('', '
+                $request = $dB->db_query('', '
                     SELECT subject FROM {db_prefix}tp_articles
                     WHERE id = {int:id}
                     LIMIT 1',
@@ -692,7 +696,7 @@ class Integrate
                 );
             }
             else {
-                $request = $smcFunc['db_query']('', '
+                $request = $dB->db_query('', '
                     SELECT subject FROM {db_prefix}tp_articles
                     WHERE shortname = {string:shortname}
                     LIMIT 1',
@@ -702,11 +706,11 @@ class Integrate
                 );
             }
             $article = array();
-            if($smcFunc['db_num_rows']($request) > 0) {
-                while($row = $smcFunc['db_fetch_assoc']($request)) {
+            if($dB->db_num_rows($request) > 0) {
+                while($row = $dB->db_fetch_assoc($request)) {
                     $article = $row;
                 }
-                $smcFunc['db_free_result']($request);
+                $dB->db_free_result($request);
             }
             if(!empty($article)) {
                 return sprintf($txt['tp-who-article'], $article['subject'], $actions['page'], $scripturl );
@@ -717,7 +721,7 @@ class Integrate
         }
         if(isset($actions['cat'])) {
             if(is_numeric($actions['cat'])) {
-                $request = $smcFunc['db_query']('', '
+                $request = $dB->db_query('', '
                     SELECT 	value1 FROM {db_prefix}tp_variables
                     WHERE id = {int:id}
                     LIMIT 1',
@@ -727,7 +731,7 @@ class Integrate
                 );
             }
             else {
-                $request = $smcFunc['db_query']('', '
+                $request = $dB->db_query('', '
                     SELECT value1 FROM {db_prefix}tp_variables
                     WHERE value8 = {string:shortname}
                     LIMIT 1',
@@ -737,11 +741,11 @@ class Integrate
                 );
             }
             $category = array();
-            if($smcFunc['db_num_rows']($request) > 0) {
-                while($row = $smcFunc['db_fetch_assoc']($request)) {
+            if($dB->db_num_rows($request) > 0) {
+                while($row = $dB->db_fetch_assoc($request)) {
                     $category = $row;
                 }
-                $smcFunc['db_free_result']($request);
+                $dB->db_free_result($request);
             }
             if(!empty($category)) {
                 return sprintf($txt['tp-who-category'], $category['value1'], $actions['cat'], $scripturl );
@@ -811,11 +815,12 @@ class Integrate
 
     public static function hookLoadTheme(&$id_theme)
     {
-        global $smcFunc, $modSettings;
+        global $modSettings;
 
         require_once(SOURCEDIR . '/TPSubs.php');
 
-        $theme = 0;
+        $theme  = 0;
+        $dB     = Database::getInstance();
 
         // are we on a article? check it for custom theme
         if(isset($_GET['page']) && !isset($_GET['action'])) {
@@ -823,22 +828,22 @@ class Integrate
                 // fetch the custom theme if any
                 $pag = Util::filter('page', 'get', 'string');
                 if (is_numeric($pag)) {
-                    $request = $smcFunc['db_query']('', '
+                    $request = $dB->db_query('', '
                         SELECT id_theme FROM {db_prefix}tp_articles
                         WHERE id = {int:page}',
                         array('page' => (int) $pag)
                     );
                 }
                 else {
-                    $request =  $smcFunc['db_query']('', '
+                    $request = $dB->db_query('', '
                         SELECT id_theme FROM {db_prefix}tp_articles
                         WHERE shortname = {string:short}',
                         array('short' => $pag)
                     );
                 }
-                if($smcFunc['db_num_rows']($request) > 0) {
-                    $theme = $smcFunc['db_fetch_row']($request)[0];
-                    $smcFunc['db_free_result']($request);
+                if($dB->db_num_rows($request) > 0) {
+                    $theme = $dB->db_fetch_row($request)[0];
+                    $dB->db_free_result($request);
                 }
 
                 if (!empty($modSettings['cache_enable'])) {
@@ -850,22 +855,22 @@ class Integrate
         else if(!isset($_GET['page']) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
             if (($theme = cache_get_data('tpFrontTheme', 120)) == null) {
                 // fetch the custom theme if any
-                $request = $smcFunc['db_query']('', '
+                $request = $dB->db_query('', '
                         SELECT COUNT(*) FROM {db_prefix}tp_settings
                         WHERE name = {string:name}
                         AND value = {string:value}',
                         array('name' => 'front_type', 'value' => 'single_page')
                     );
-                if($smcFunc['db_num_rows']($request) > 0) {
-                    $smcFunc['db_free_result']($request);
-                    $request = $smcFunc['db_query']('', '
+                if($dB->db_num_rows($request) > 0) {
+                    $dB->db_free_result($request);
+                    $request = $dB->db_query('', '
                         SELECT art.id_theme
                         FROM {db_prefix}tp_articles AS art
                         WHERE featured = 1' 
                     );
-                    if($smcFunc['db_num_rows']($request) > 0) {
-                        $theme = $smcFunc['db_fetch_row']($request)[0];
-                        $smcFunc['db_free_result']($request);
+                    if($dB->db_num_rows($request) > 0) {
+                        $theme = $dB->db_fetch_row($request)[0];
+                        $dB->db_free_result($request);
                     }
                 }
                 if (!empty($modSettings['cache_enable'])) {
@@ -877,14 +882,14 @@ class Integrate
         else if(isset($_GET['action']) && $_GET['action'] == 'tportal' && isset($_GET['dl'])) {
             if (($theme = cache_get_data('tpDLTheme', 120)) == null) {
                 // fetch the custom theme if any
-                $request =  $smcFunc['db_query']('', '
+                $request = $dB->db_query('', '
                     SELECT value FROM {db_prefix}tp_settings
                     WHERE name = {string:name}',
                     array('name' => 'dlmanager_theme')
                 );
-                if($smcFunc['db_num_rows']($request) > 0) {
-                    $theme = $smcFunc['db_fetch_row']($request)[0];
-                    $smcFunc['db_free_result']($request);
+                if($dB->db_num_rows($request) > 0) {
+                    $theme = $dB->db_fetch_row($request)[0];
+                    $dB->db_free_result($request);
                 }
                 if (!empty($modSettings['cache_enable'])) {
                     cache_put_data('tpDLTheme', $theme, 120);
