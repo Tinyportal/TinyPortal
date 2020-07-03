@@ -55,11 +55,7 @@ function template_main()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	echo '
-	<div id="tpadmin" class="tborder">
-        <div class="title_bar">
-            <h3 class="titlebg">'.$txt['tp-tpadmin'].'</h3>
-        </div>
-		<div style="padding-top: 5px;">';
+	<div id="tpadmin" class="tborder">';
 
 	$go = isset($context['TPortal']['subaction']) ? 'template_' . $context['TPortal']['subaction'] : '';
 
@@ -90,7 +86,7 @@ function template_main()
 	call_user_func($go, $param);
 
 	echo '
-		</div><p class="clearthefloat"></p>
+		<p class="clearthefloat"></p>
 <script>
 $(document).ready( function() {
 var $clickme = $(".clickme"),
@@ -514,7 +510,7 @@ function template_categories()
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post" enctype="multipart/form-data" onsubmit="syncTextarea();">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input name="tpadmin_form" type="hidden" value="categories">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-tabs5'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-artcat'] . '</h3></div>
 		<div id="edit-category" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpcats'] , '</div><div></div>
 			<div class="windowbg noup padding-div">

@@ -245,7 +245,7 @@ $txt['tp-submissionsettings'] = 'Submissions';
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 
 // Icons
-$txt['tp-adminicons7'] = 'Illustrative article icons to be used in category layouts.';
+$txt['tp-adminicons7'] = 'Article icons to be used in category layouts.';
 $txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: 500KB. Images will be resized so the shortest side is 128 px, while retaining aspect ratio. Note that the top right area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
@@ -599,7 +599,7 @@ $txt['tp-send'] = 'Save';
 $txt['tp-more'] = 'More ';
 $txt['tp-none-'] = '- none -';
 $txt['tp-hide'] = 'Hide ';
-$txt['tp-tpmenu'] = 'Menu';
+$txt['tp-adminmenu'] = 'TP Admin menu';
 $txt['tp-menus'] = 'Sections';
 $txt['tp-name'] = 'Name';
 $txt['tp-shortname'] = 'Short name';

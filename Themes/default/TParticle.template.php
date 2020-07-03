@@ -836,8 +836,8 @@ function template_showarticle()
 	global $txt, $context, $settings, $scripturl;
 
 	echo '
-        <div class="title_bar">
-            <h3 class="titlebg">' .$txt['tp-myarticles'] . '</h3>
+        <div class="cat_bar">
+            <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
         </div>
 		<div class="windowbg padding-div">
 	<table class="table_grid tp_grid" style="width:100%";>

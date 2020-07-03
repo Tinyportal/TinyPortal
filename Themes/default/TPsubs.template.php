@@ -2369,7 +2369,7 @@ function template_tpadm_above()
 	echo '
 	<div  id="tpadmin_menu">
 		<div class="cat_bar">
-			<h3 class="catbg">' . $txt['tp-tpmenu'] .'</h3>
+			<h3 class="catbg">' . $txt['tp-adminmenu'] .'</h3>
 		</div>
 		<span class="upperframe"><span></span></span>
 		<div class="roundframe noup">';
