@@ -87,8 +87,6 @@ class Util
             }
         }
 
-        var_dump($str);
-
         return $str;
 
     }}}

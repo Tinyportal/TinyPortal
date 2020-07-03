@@ -842,7 +842,7 @@ class Integrate
                     );
                 }
                 if($dB->db_num_rows($request) > 0) {
-                    $theme = $sB->db_fetch_row($request)[0];
+                    $theme = $dB->db_fetch_row($request)[0];
                     $dB->db_free_result($request);
                 }
 
