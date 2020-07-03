@@ -1846,7 +1846,7 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 				'title' => $txt['tp-articles'],
 				'description' => $txt['tp-articledesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=articles',
-				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays'))),
+				'is_selected' => (substr($tpsub,0,11)=='editarticle' || in_array($tpsub, array('articles','addarticle','addarticle_php', 'addarticle_bbc', 'addarticle_import','strays','submission'))),
 			),
 			'categories' => array(
 				'title' => $txt['tp-tabs5'],
@@ -1887,7 +1887,7 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 				'title' => $txt['tp-blockoverview'],
 				'description' => '',
 				'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-				'is_selected' => $tpsub == 'blocks' && isset($_GET['overview']),
+				'is_selected' => ($tpsub == 'blocks' && isset($_GET['overview'])) || substr($tpsub,0,9) == 'editblock',
 			),
 		);
 	}

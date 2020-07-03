@@ -174,7 +174,7 @@ function TPortalAdmin()
     }
     else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';
-		do_news($tpsub);
+		do_admin($tpsub);
 	}
 
 	// done with all POST values, go to the correct screen
@@ -315,17 +315,17 @@ function do_subaction($tpsub)
     elseif(in_array($tpsub, array('menubox', 'addmenu')) && (allowedTo('tp_blocks')) ) {
 		do_menus();
 	}
-    elseif(in_array($tpsub, array('frontpage', 'overview', 'news', 'credits', 'permissions')) && (allowedTo('tp_settings')) ) {
-		do_news($tpsub);
+    elseif(in_array($tpsub, array('frontpage', 'overview', 'credits', 'permissions')) && (allowedTo('tp_settings')) ) {
+		do_admin($tpsub);
 	}
     elseif($tpsub == 'settings' && (allowedTo('tp_settings')) ) {
-		do_news('settings');
+		do_admin('settings');
     }
     elseif(!$context['user']['is_admin']) {
 		fatal_error($txt['tp-noadmin'], false);
     }
     else {
-		do_news();
+		redirectexit('action=tpadmin');
     }
 
 }
@@ -1368,7 +1368,7 @@ function do_articles()
 
 }
 
-function do_news($tpsub = 'overview')
+function do_admin($tpsub = 'overview')
 {
 	global $context, $txt, $scripturl;
 
@@ -1388,9 +1388,7 @@ function do_news($tpsub = 'overview')
 	}
 	else
 	{
-		if($tpsub == 'news')
-			TPadd_linktree($scripturl.'?action=tpadmin;sa=news', $txt['news']);
-		elseif($tpsub == 'settings')
+		if($tpsub == 'settings')
 			TPadd_linktree($scripturl.'?action=tpadmin;sa=settings', $txt['tp-settings']);
 		elseif($tpsub == 'frontpage')
 			TPadd_linktree($scripturl.'?action=tpadmin;sa=frontpage', $txt['tp-frontpage']);
@@ -1438,11 +1436,8 @@ function do_postchecks()
 	{
 		// get it
 		$from = $_POST['tpadmin_form'];
-		//news
-		if($from == 'news')
-			return 'news';
 		// block permissions overview
-		elseif($from == 'blockoverview')
+		if($from == 'blockoverview')
 		{
 			checkSession('post');
 			isAllowedTo('tp_blocks');
