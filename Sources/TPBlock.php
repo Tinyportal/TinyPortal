@@ -326,7 +326,7 @@ function adminBlocks() {{{
     
     $tpBlock    = TPBlock::getInstance();
 
-	if($context['TPortal']['subaction']=='blocks') {
+	if(($context['TPortal']['subaction']=='blocks') && !isset($_GET['overview'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
 	}
 	
@@ -398,7 +398,7 @@ function adminBlocks() {{{
 
 	// are we on overview screen?
 	if(isset($_GET['overview'])) {
-		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-blockoverview']);
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks;overview', $txt['tp-blockoverview']);
 		
 		// fetch all blocks member group permissions
         $data   = $tpBlock->getBlockData(array('id', 'title', 'bar', 'access', 'type'), array( 'off' => 0 ) );

@@ -1700,7 +1700,7 @@ function article_comments_total($render = true)
 
 	if((in_array('comments', $context['TPortal']['article']['visual_options'])) || (in_array('commentallow', $context['TPortal']['article']['visual_options']))) {
 		$data = '
-		<span class="article_comments">' .  $txt['tp-comments'] . ':  ' . $context['TPortal']['article']['comments'] . '</span>';
+		<span class="article_comments"><a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '#tp-comment">' .  $txt['tp-comments'] . ':  ' . $context['TPortal']['article']['comments'] . '</a></span>';
 	}
 
 	if($render) {
