@@ -263,7 +263,6 @@ function getBlocks() {{{
 
 	// get menubox items
 	if(isset($test_menubox)) {
-		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
         TPortal_menubox();
 	}
 
