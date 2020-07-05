@@ -25,6 +25,25 @@ class Integrate
 
     public static function hookPreLoad()
     {
+        global $boardurl;
+
+        $paths = array (
+            // Downloads
+			'~^action=tpmod;dl=item([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=item%2$s',
+		);
+
+		foreach ($paths as $route => $destination) {
+			if (preg_match($route, $_SERVER['QUERY_STRING'], $matches)) {
+				if (count($matches) > 1) {
+                    $matches[0] = $boardurl;
+					$newUrl     = vsprintf($destination, $matches);
+                    header("Location: $newUrl", true, 301);
+                    exit;
+				}
+			}
+		}
+
+
         // We need to load our autoloader outside of the main function    
         if(!defined('SMF_BACKWARDS_COMPAT')) {
             define('SMF_BACKWARDS_COMPAT', true);
