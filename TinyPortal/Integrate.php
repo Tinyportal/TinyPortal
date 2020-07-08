@@ -30,6 +30,8 @@ class Integrate
         $paths = array (
             // Downloads
 			'~^action=tpmod;dl=item([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=item%2$s',
+			'~^action=tpmod;dl=cat([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=cat%2$s',
+			'~^action=tpmod;dl=get([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=get%2$s',
 		);
 
 		foreach ($paths as $route => $destination) {
