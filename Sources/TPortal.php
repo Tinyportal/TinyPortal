@@ -1998,7 +1998,6 @@ function TPortal_panel($side) {{{
 			'15' => array(8, 7),
 			'16' => array(8, 8),
 		);
-		$switch = ceil(count($context['TPortal'][$panelside][$side]) / 2);
 	}
 	elseif($flow == 'horiz3') {
 		$flowgrid = array(
