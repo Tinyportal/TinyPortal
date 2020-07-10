@@ -1,5 +1,5 @@
 <info>
-TinyPortal BlockCode file.
+TinyPortal BlockCode file for 2.0.0
 format: Boardmod
 </info>
 
@@ -12,11 +12,11 @@ Bloc
 </author>
 
 <version>
-0.1
+0.2
 </version>
 
 <date>
-01.oct.2009
+10.july.2020
 </date>
 
 <code>
@@ -25,15 +25,15 @@ global $settings, $db_prefix, $scripturl, $txt, $modSettings, $smcFunc;
 // set the limit
 $limit = 1;
 
-$request =  $smcFunc['db_query']('', 'SELECT s.* FROM {db_prefix}tp_shoutbox as s 	WHERE s.value7 = {int:val7}	ORDER BY s.value2 DESC LIMIT {int:limit}', array('val7' => 0, 'limit' => $limit));
+$request =  $smcFunc['db_query']('', 'SELECT s.* FROM {db_prefix}tp_shoutbox as s 	WHERE s.sticky = {int:val7}	ORDER BY s.time DESC LIMIT {int:limit}', array('val7' => 0, 'limit' => $limit));
 $fetched = array(); $members = array();
 if($smcFunc['db_num_rows']($request)>0)
 {
 	while($row = $smcFunc['db_fetch_assoc']($request))
 	{
 		$fetched[] = $row;
-		if(!empty($row['value5']) && !in_array($row['value5'], $members))
-			$members[] = $row['value5'];
+		if(!empty($row['member_id']) && !in_array($row['member_id'], $members))
+			$members[] = $row['member_id'];
 	}
 	$smcFunc['db_free_result']($request);
 	$request2 =  $smcFunc['db_query']('', 'SELECT mem.id_member, mem.real_name as realName, mem.avatar, COALESCE(a.id_attach,0) AS ID_ATTACH, a.filename, COALESCE(a.attachment_type,0) as attachmentType FROM {db_prefix}members AS mem LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member and a.attachment_type!=3) WHERE mem.id_member IN(' . implode(",",$members) . ')');
@@ -55,9 +55,9 @@ if(count($fetched)>0)
 	$ns = array();
 	foreach($fetched as $b => $row)
 	{
-		$row['avatar'] = !empty($memberdata[$row['value5']]['avatar']) ? $memberdata[$row['value5']]['avatar'] : '';
-		$row['realName'] = !empty($memberdata[$row['value5']]['realName']) ? $memberdata[$row['value5']]['realName'] : $row['value3'];
-		$row['value1'] = parse_bbc(censorText($row['value1']), true);
+		$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
+		$row['realName'] = !empty($memberdata[$row['member_id']]['realName']) ? $memberdata[$row['member_id']]['realName'] : $row['member_link'];
+		$row['content'] = parse_bbc(censorText($row['content']), true);
 		$ns[] = asingleshout($row);
 	}
 	$nshouts .= implode('', $ns);
@@ -71,11 +71,11 @@ function asingleshout($row)
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer">
 			<div class="tp_shoutavatar">
-				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['value5'] . '">' . $row['avatar'] . '</a></div>
+				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>
 				<h4>' . $row['realName'] . '</h4>
-				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['value2']).'</div>
+				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['time']).'</div>
 			</div>
-			<div class="bubble speech">' . $row['value1'] . '</div>
+			<div class="bubble speech">' . $row['content'] . '</div>
 		</div>
 	</div>';
      return $return;
@@ -83,5 +83,6 @@ function asingleshout($row)
 </code>
 
 <description>
-Show a single latest shout or x latest shouts. 
+Show a single latest shout or x latest shouts.
+TinyPortal 2.0.0 version 
 </description>
