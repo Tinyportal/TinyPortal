@@ -1060,6 +1060,9 @@ this is where you set the distance between blocks, use padding and target each p
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
 	padding-bottom: 4px;
 }
+.panelsColumnsHorizontally {
+	padding-right: 2px;
+}
 /* SMF2 styles */
 #tpadmin_menu {
 	float: left;
@@ -1643,6 +1646,9 @@ img.theme_icon {
 }
 #centerContainer .windowbg, .dl_container .windowbg {
 	margin-bottom: 6px !important;
+}
+#tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {
+	margin-bottom: 0px !important;
 }
 /* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
 table.tp_grid td, table.tp_grid th {
