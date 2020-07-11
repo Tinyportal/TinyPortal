@@ -15,6 +15,8 @@
  *
  */
 
+// Edit Block Page (including settings per block type)
+
 function template_tp_above()
 {
 	global $context, $settings;

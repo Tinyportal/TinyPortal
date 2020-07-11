@@ -32,7 +32,6 @@
 // Panel Settings Page
 // Block Settings Page
 // Add Block Page
-// Edit Block Page (including settings per block type)
 // Block Access Page
 // Menu Manager Page
 // Menu Manager Page: single menus
