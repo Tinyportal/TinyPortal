@@ -1916,7 +1916,7 @@ function do_postchecks()
 					'value8' => 'string',
 					'subtype2'=> 'int'
 				),
-				array(strip_tags($name), $parent, '', 'category', '', 0, '', 'catlayout=1|layout=1', 0, 0),
+				array(strip_tags($name), $parent, '', 'category', '', 0, '', 'sort=date|sortorder=desc|articlecount=5|layout=1|catlayout=1|showchild=0|leftpanel=1|rightpanel=1|toppanel=1|centerpanel=1|lowerpanel=1|bottompanel=1', 0, 0),
 				array('id')
 			);
 
