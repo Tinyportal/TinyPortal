@@ -644,7 +644,7 @@ function template_submitarticle()
 				}
 
                 echo'
-					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 			</div>
 		</div>
@@ -807,7 +807,7 @@ function template_showcomments()
 				echo '
 			<tr class="windowbg">
 			<td class="comments">
-				<div style="padding:1%;">' . $txt['tp-nocomments2'] . '</div>
+				<div class="padding-div">' . $txt['tp-nocomments2'] . '</div>
 			</td>
 			</tr>';
 			echo '
