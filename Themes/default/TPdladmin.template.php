@@ -464,7 +464,7 @@ $clickme.click( function(e) {
 						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
 					<dd>
-						<input size="100" name="dladmin_name'.$cat['id'].'" required id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
+						<input style="width: 92%;" name="dladmin_name'.$cat['id'].'" required id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
 					</dd>
 					<dt>
 						<label for="dladmin_category"><b>'.$txt['tp-dluploadcategory'].'</b>
@@ -803,7 +803,7 @@ $clickme.click( function(e) {
 						<label for="dladmin_name"><b>'.$txt['tp-dlname'].'</b></label>
 					</dt>
 					<dd>
-						<input size="100" name="dladmin_name'.$cat['id'].'" required id="dladmin_name" type="text" value="'.$cat['name'].'">
+						<input size="50" style="max-width:92%;" name="dladmin_name'.$cat['id'].'" required id="dladmin_name" type="text" value="'.$cat['name'].'">
 					</dd>
 					<dt>
 						<label for="dladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
@@ -926,7 +926,7 @@ $clickme.click( function(e) {
 						<label for="newdladmin_name"><b>'.$txt['tp-name'].'</b></label>
 					</dt>
 					<dd>
-						<input size="100" name="newdladmin_name" required id="newdladmin_name" type="text" value="">
+						<input size="50" style="max-width:92%;" name="newdladmin_name" required id="newdladmin_name" type="text" value="">
 					</dd>
 					<dt>
 						<label for="newdladmin_link"><b>'.$txt['tp-shortname'].'</b></label>

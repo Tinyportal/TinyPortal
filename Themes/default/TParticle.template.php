@@ -102,7 +102,7 @@ function template_submitarticle()
 					<dl class="settings tptitle">
 						<dt>' , $txt['tp-importarticle'] , '</dt>
 						<dd>
-							<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">
+							<input size="50" style="max-width:97%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">
 						</dd>
 					</dl>' ;
                 }

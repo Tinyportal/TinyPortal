@@ -487,7 +487,7 @@ function template_main()
         </div>
 		<div class="windowbg noup" style="padding:0px">
 			<span class="topslice"><span></span></span>
-			  <div">
+			  <div>
 				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tportal;sa=download;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				';
 
@@ -501,13 +501,13 @@ function template_main()
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input size="100" name="tp-dluploadtitle" required id="tp-dluploadtitle" type="text" value="">
+								<input style="width: 92%;" name="tp-dluploadtitle" required id="tp-dluploadtitle" type="text" value="">
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
 							</dt>
 							<dd>
-								<select size="1" name="tp-dluploadcat"  id="tp-dluploadcat" style="max-width:100%;">';
+								<select name="tp-dluploadcat"  id="tp-dluploadcat">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{

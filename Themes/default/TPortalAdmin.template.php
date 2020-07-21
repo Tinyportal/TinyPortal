@@ -594,7 +594,7 @@ function template_editcategory()
 							<b><label for="tp_category_value1">', $txt['tp-name'], '</label></b>
 						</dt>
 						<dd>
-							<input size="60" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '" required>
+							<input size="50" style="max-width:97%;" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '" required>
 						<dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8"><b>', $txt['tp-shortname'], '</b></label>
@@ -814,7 +814,7 @@ function template_addcategory()
 							<b><label for="tp_cat_name">'.$txt['tp-name'].'</label></b>
 						</dt>
 						<dd>
-							<input size="60" name="tp_cat_name" id="tp_cat_name" type="text" value="" required>
+							<input size="50" style="max-width:97%;" name="tp_cat_name" id="tp_cat_name" type="text" value="" required>
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><b><label for="tp_cat_shortname">', $txt['tp-shortname'], '</label></b>
@@ -2063,7 +2063,7 @@ function template_addblock()
 						<dt><h3>' , $txt['tp-title'] , ':</h3>
 						</dt>
 						<dd>
-							<input type="input" name="tp_addblocktitle" size="50" value="" required>
+							<input type="input" name="tp_addblocktitle" size="50" style="max-width:97%;" value="" required>
 						</dd>
 					</dl>
 					<dl class="tptitle settings">
@@ -2505,7 +2505,7 @@ function template_menucore()
 					<label for="tp_menu_name"><b>'.$txt['tp-title'].'</b></label>
 				</dt>
 				<dd>
-					<input name="tp_menu_name" required id="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
+					<input name="tp_menu_name" required id="tp_menu_name" type="text" size="50" style="max-width:97%;" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 				</dd>
 			</dl>	
 			<dl class="settings tptitle">
