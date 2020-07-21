@@ -74,7 +74,7 @@ function template_submitarticle()
 					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></div>
 				</dt>
 				<dd>
-					<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'">
+					<input style="width: 92%;" name="tp_article_subject" id="tp_article_subject" type="text" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'" required>
 				</dd>
 				<dt>
 					<div class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></div>
@@ -102,7 +102,7 @@ function template_submitarticle()
 					<dl class="settings tptitle">
 						<dt>' , $txt['tp-importarticle'] , '</dt>
 						<dd>
-							<input size="60" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">
+							<input size="50" style="max-width:97%;" name="tp_article_fileimport" type="text" value="' , $mg['fileimport'] , '">
 						</dd>
 					</dl>' ;
                 }
@@ -644,7 +644,7 @@ function template_submitarticle()
 				}
 
                 echo'
-					<div style="padding:1%;"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
+					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 			</div>
 		</div>
@@ -807,7 +807,7 @@ function template_showcomments()
 				echo '
 			<tr class="windowbg">
 			<td class="comments">
-				<div style="padding:1%;">' . $txt['tp-nocomments2'] . '</div>
+				<div class="padding-div">' . $txt['tp-nocomments2'] . '</div>
 			</td>
 			</tr>';
 			echo '

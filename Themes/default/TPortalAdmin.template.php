@@ -591,16 +591,16 @@ function template_editcategory()
 				<div class="formtable padding-div">
 					<dl class="settings tptitle">
 						<dt>
-							<label for="tp_category_value1">', $txt['tp-name'], '</label>
+							<b><label for="tp_category_value1">', $txt['tp-name'], '</label></b>
 						</dt>
 						<dd>
-							<input size="60" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '">
+							<input size="50" style="max-width:97%;" name="tp_category_value1" id="tp_category_value1" type="text" value="' ,html_entity_decode($mg['value1']), '" required>
 						<dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8">', $txt['tp-shortname'], '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8"><b>', $txt['tp-shortname'], '</b></label>
 						</dt>
 						<dd>
-							<input size="20" name="tp_category_value8" id="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '">
+							<input size="20" name="tp_category_value8" id="tp_category_value8" type="text" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '"><br><br>
 						</dd>
 						<dt>
 							<label for="tp_category_value2">', $txt['tp-parent'], '</label>
@@ -811,15 +811,19 @@ function template_addcategory()
 				<div class="formtable padding-div">
 					<dl class="settings tptitle">
 						<dt>
-							<b><label for="tp_cat_name">'.$txt['tp-name'].'</label>:</b>
+							<b><label for="tp_cat_name">'.$txt['tp-name'].'</label></b>
 						</dt>
 						<dd>
-							<input name="tp_cat_name" id="tp_cat_name" type="text" value=""><br><br>
-						</dd>';
-			// set up category to be sub of
-			echo '
+							<input size="50" style="max-width:97%;" name="tp_cat_name" id="tp_cat_name" type="text" value="" required>
+						</dd>
 						<dt>
-							<b><label for="tp_cat_parent">'.$txt['tp-subcatof'].'</label></b>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><b><label for="tp_cat_shortname">', $txt['tp-shortname'], '</label></b>
+						</dt>
+						<dd>
+							<input size="20" name="tp_cat_shortname" id="tp_cat_shortname" type="text" value=""><br><br>
+						</dd>
+						<dt>
+							<label for="tp_cat_parent">'.$txt['tp-parent'].'</label>
 						</dt>
 						<dd>
 							<select size="1" name="tp_cat_parent" id="tp_cat_parent">
@@ -1773,7 +1777,7 @@ function template_blocks()
 					echo '
 							</div>
 						<div style="width:20%;max-width:100%;" class="adm-name float-items">
-						     <input name="title' .$lblock['id']. '" type="text" size="25" value="' .html_entity_decode($newtitle). '">
+						     <input required name="title' .$lblock['id']. '" type="text" size="25" value="' .html_entity_decode($newtitle). '">
 						</div>
 						<div style="width:20%;" class="fullwidth-on-res-layout block-opt float-items">
 						    <div id="show-on-respnsive-layout">
@@ -2059,7 +2063,7 @@ function template_addblock()
 						<dt><h3>' , $txt['tp-title'] , ':</h3>
 						</dt>
 						<dd>
-							<input type="input" name="tp_addblocktitle" size="50" value="" />
+							<input type="input" name="tp_addblocktitle" size="50" style="max-width:97%;" value="" required>
 						</dd>
 					</dl>
 					<dl class="tptitle settings">
@@ -2397,7 +2401,7 @@ function template_menubox()
 					<tr class="windowbg">
 					<td class="menu">
 						<div style="width:65%;" class="menu-name float-items">
-							<input name="tp_menu_name' .$mbox['id']. '" type="text" size="40" value="' .$mbox['name']. '"><br>
+							<input name="tp_menu_name' .$mbox['id']. '" required type="text" size="40" value="' .$mbox['name']. '"><br>
 						</div>
 						<div style="width:15%;" class="menu-actions float-items tpcenter">
 							<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=' .$mbox['id']. '"><img height="16px" title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'" /></a>
@@ -2463,7 +2467,7 @@ function template_addmenu()
 				<dl class="settings tptitle">
 					<dt><label for="tp_menu_title"><h4>'.$txt['tp-title'].'</h4><label>
 					</dt>
-					<dd><input name="tp_menu_title" id="tp_menu_title" type="text" size="40" value=""><br>
+					<dd><input name="tp_menu_title" required id="tp_menu_title" type="text" size="40" value=""><br>
 					</dd>
 				</dl>
 				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
@@ -2501,7 +2505,7 @@ function template_menucore()
 					<label for="tp_menu_name"><b>'.$txt['tp-title'].'</b></label>
 				</dt>
 				<dd>
-					<input id="tp_menu_name" name="tp_menu_name" type="text" size="40" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
+					<input name="tp_menu_name" required id="tp_menu_name" type="text" size="50" style="max-width:97%;" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'">
 				</dd>
 			</dl>	
 			<dl class="settings tptitle">

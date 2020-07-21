@@ -1901,6 +1901,7 @@ function do_postchecks()
 			isAllowedTo('tp_articles');
 			$name = !empty($_POST['tp_cat_name']) ? $_POST['tp_cat_name'] : $txt['tp-noname'];
 			$parent = !empty($_POST['tp_cat_parent']) ? $_POST['tp_cat_parent'] : '0';
+			$shortname = !empty($_POST['tp_cat_shortname']) ? $_POST['tp_cat_shortname'] : '';
 
 			$smcFunc['db_insert']('INSERT',
 				'{db_prefix}tp_variables',
@@ -1916,7 +1917,7 @@ function do_postchecks()
 					'value8' => 'string',
 					'subtype2'=> 'int'
 				),
-				array(strip_tags($name), $parent, '', 'category', '', 0, '', 'sort=date|sortorder=desc|articlecount=5|layout=1|catlayout=1|showchild=0|leftpanel=1|rightpanel=1|toppanel=1|centerpanel=1|lowerpanel=1|bottompanel=1', 0, 0),
+				array(strip_tags($name), $parent, '', 'category', '', 0, '', 'sort=date|sortorder=desc|articlecount=5|layout=1|catlayout=1|showchild=0|leftpanel=1|rightpanel=1|toppanel=1|centerpanel=1|lowerpanel=1|bottompanel=1', $shortname, 0),
 				array('id')
 			);
 

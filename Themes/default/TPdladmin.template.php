@@ -15,12 +15,12 @@
  *
  */
 
-//Admin page
-//Settings page
-//Submissions page
-//FTP page
-//Edit category page
-//Add category page
+// Admin page
+// Settings page
+// Submissions page
+// FTP page
+// Edit category page
+// Add category page
 
 function template_main()
 {
@@ -46,7 +46,7 @@ $clickme.click( function(e) {
 	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tportal;sa=download;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
 
 	if($context['TPortal']['dlsub']=='admin')
-//Admin page
+// Admin page
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
@@ -124,12 +124,12 @@ $clickme.click( function(e) {
 		echo '
 		</tbody>
 	</table>
-			<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
+			<div class="padding-div"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
 			</div>
 		</div>';
 	}
 
-//Settings page
+// Settings page
 	elseif($context['TPortal']['dlsub']=='adminsettings')
 	{
 		echo '
@@ -279,12 +279,12 @@ $clickme.click( function(e) {
 						'.$txt['tp-dlvisualoptions'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_visual_options1" type="checkbox" value="left" ', isset($context['TPortal']['dl_left']) ? 'checked' : '' ,'> '.$txt['tp-leftbar'].'<br>
-						<input name="tp_dl_visual_options2" type="checkbox" value="right" ', isset($context['TPortal']['dl_right']) ? 'checked' : '' ,'> '.$txt['tp-rightbar'].'<br>
-						<input name="tp_dl_visual_options4" type="checkbox" value="top" ', isset($context['TPortal']['dl_top']) ? 'checked' : '' ,'> '.$txt['tp-topbar'].'<br>
-						<input name="tp_dl_visual_options3" type="checkbox" value="center" ', isset($context['TPortal']['dl_center']) ? 'checked' : '' ,'> '.$txt['tp-centerbar'].'<br>
-						<input name="tp_dl_visual_options6" type="checkbox" value="lower" ', isset($context['TPortal']['dl_lower']) ? 'checked' : '' ,'> '.$txt['tp-lowerbar'].'<br>
-						<input name="tp_dl_visual_options5" type="checkbox" value="bottom" ', isset($context['TPortal']['dl_bottom']) ? 'checked' : '' ,'> '.$txt['tp-bottombar'].'<br>
+						<input name="tp_dl_visual_options1" id="tp_dl_visual_options1" type="checkbox" value="left" ', isset($context['TPortal']['dl_left']) ? 'checked' : '' ,'><label for="tp_dl_visual_options1"> '.$txt['tp-leftbar'].'</label><br>
+						<input name="tp_dl_visual_options2" id="tp_dl_visual_options2" type="checkbox" value="right" ', isset($context['TPortal']['dl_right']) ? 'checked' : '' ,'><label for="tp_dl_visual_options2"> '.$txt['tp-rightbar'].'</label><br>
+						<input name="tp_dl_visual_options4" id="tp_dl_visual_options4" type="checkbox" value="top" ', isset($context['TPortal']['dl_top']) ? 'checked' : '' ,'><label for="tp_dl_visual_options4"> '.$txt['tp-topbar'].'</label><br>
+						<input name="tp_dl_visual_options3" id="tp_dl_visual_options3" type="checkbox" value="center" ', isset($context['TPortal']['dl_center']) ? 'checked' : '' ,'><label for="tp_dl_visual_options3"> '.$txt['tp-centerbar'].'</label><br>
+						<input name="tp_dl_visual_options6" id="tp_dl_visual_options6" type="checkbox" value="lower" ', isset($context['TPortal']['dl_lower']) ? 'checked' : '' ,'><label for="tp_dl_visual_options6"> '.$txt['tp-lowerbar'].'</label><br>
+						<input name="tp_dl_visual_options5" id="tp_dl_visual_options5" type="checkbox" value="bottom" ', isset($context['TPortal']['dl_bottom']) ? 'checked' : '' ,'><label for="tp_dl_visual_options5"> '.$txt['tp-bottombar'].'</label><br>
 						<input name="tp_dl_visual_options8" type="hidden" value="not"><br><br>
 					</dd>
 					<dt>
@@ -443,7 +443,7 @@ $clickme.click( function(e) {
 		echo '
 		</tbody>
 	</table>
-			<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'">
+			<div class="padding-div"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'">
 			</div>
 		</div>
 	</div>';
@@ -454,7 +454,7 @@ $clickme.click( function(e) {
 		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
-//Edit file page
+// Edit file page
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;sa=download;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 		<div id="edit-up-item" class="admintable admin-area">
@@ -464,7 +464,7 @@ $clickme.click( function(e) {
 						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
 					<dd>
-						<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
+						<input style="width: 92%;" name="dladmin_name'.$cat['id'].'" required id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
 					</dd>
 					<dt>
 						<label for="dladmin_category"><b>'.$txt['tp-dluploadcategory'].'</b>
@@ -671,7 +671,7 @@ $clickme.click( function(e) {
 	   </div>
 	';
 	}
-//Submissions page
+// Submissions page
 	elseif($context['TPortal']['dlsub']=='adminsubmission')
 	{
 		echo '
@@ -741,7 +741,7 @@ $clickme.click( function(e) {
 		</div>
 	</div>';
 	}
-//FTP page
+// FTP page
 	elseif($context['TPortal']['dlsub']=='adminftp')
 	{
 		echo '
@@ -793,17 +793,24 @@ $clickme.click( function(e) {
 		{
 			foreach($context['TPortal']['admcats'] as $cat)
 			{
-//Edit category page
+// Edit category page
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatedit'].'</h3></div>
 		<div id="editupcat" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
 				<dl class="settings tptitle">
 					<dt>
-						<label for="dladmin_name">'.$txt['tp-dlname'].'</label>
+						<label for="dladmin_name"><b>'.$txt['tp-dlname'].'</b></label>
 					</dt>
 					<dd>
-						<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'"  id="dladmin_name" type="text" value="'.$cat['name'].'"><br>
+						<input size="50" style="max-width:92%;" name="dladmin_name'.$cat['id'].'" required id="dladmin_name" type="text" value="'.$cat['name'].'">
+					</dd>
+					<dt>
+						<label for="dladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
+					</dt>
+					<dd>
+						<input name="dladmin_link'.$cat['id'].'" id="dladmin_link" type="text" value="'.$cat['shortname'].'"><br><br>
+					</dd>
 					<dt>
 						<label for="dladmin_parent">'.$txt['tp-dlparent'].'</label>
 					</dt>
@@ -830,12 +837,6 @@ $clickme.click( function(e) {
 			}
 			echo '
 					</select><br>
-					</dd>
-					<dt>
-						<label for="dladmin_link">'.$txt['tp-shortname'].'</label>
-					</dt>
-					<dd>
-						<input name="dladmin_link'.$cat['id'].'" id="dladmin_link" type="text" value="'.$cat['shortname'].'"><br>
 					</dd>
 					<dt>
 						<label for="dladmin_icon">'.$txt['tp-icon'].'</label>
@@ -865,7 +866,7 @@ $clickme.click( function(e) {
 					</dd>
 				</dl>
 				<hr>
-				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';
+				<div class="padding-div"><b>'.$txt['tp-dluploadtext'].':</b><br>';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('dladmin_text'.$cat['id'], html_entity_decode($cat['description'],ENT_QUOTES), true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
@@ -903,35 +904,35 @@ $clickme.click( function(e) {
          		}
     		}
    			// if none is chosen, have a control value
-			echo '</div><br><input type="checkbox" onclick="invertAll(this, this.form, \'dladmin_group\');" />'.$txt['tp-checkall'].'
+			echo '</div><br><input type="checkbox"  id="tp-checkall" onclick="invertAll(this, this.form, \'dladmin_group\');" /><label for="tp-checkall">'.$txt['tp-checkall'].'</label>
 					<input name="dladmin_group-2" type="hidden" value="'.$cat['id'].'">
 				</dd>
 			</dl>';
 		}
 		echo '
-				<div style="padding:1%;"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
+				<div class="padding-div"><input name="dlsend" type="submit" class="button button_submit" value="'.$txt['tp-submit'].'"></div>
 			</div>
 		</div>';
 	}
 	elseif($context['TPortal']['dlsub']=='adminaddcat')
 	{
-//Add category page
+// Add category page
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatadd'].'</h3></div>
 		<div id="dl-addcat" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
 				<dl class="settings tptitle">
 					<dt>
-						<label for="newdladmin_name">'.$txt['tp-name'].'</label>
+						<label for="newdladmin_name"><b>'.$txt['tp-name'].'</b></label>
 					</dt>
 					<dd>
-						<input size="100" name="newdladmin_name" id="newdladmin_name" type="text" value="">
+						<input size="50" style="max-width:92%;" name="newdladmin_name" required id="newdladmin_name" type="text" value="">
 					</dd>
 					<dt>
-						<label for="newdladmin_link">'.$txt['tp-shortname'].'</label>
+						<label for="newdladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
 					</dt>
 					<dd>
-						<input name="newdladmin_link" id="newdladmin_link" type="text" value="">
+						<input name="newdladmin_link" id="newdladmin_link" type="text" value=""><br><br>
 					</dd>
 					<dt>
 						<label for="newdladmin_parent">'.$txt['tp-dlparent'].'</label>
@@ -977,7 +978,7 @@ $clickme.click( function(e) {
 					</dd>
 				</dl>
 				<hr>
-				<div style="padding:1%;"><b>'.$txt['tp-body'].':</b><br>';
+				<div class="padding-div"><b>'.$txt['tp-dluploadtext'].':</b><br>';
 
 				if($context['TPortal']['dl_wysiwyg'] == 'html')
 					TPwysiwyg('newdladmin_text', '', true,'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
