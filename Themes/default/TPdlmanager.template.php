@@ -501,7 +501,7 @@ function template_main()
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input style="width:97%;" name="tp-dluploadtitle" id="tp-dluploadtitle" type="text" value="'.$txt['tp-dlnotitle'].'" size="40">
+								<input size="100" name="tp-dluploadtitle" required id="tp-dluploadtitle" type="text" value="">
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
@@ -512,7 +512,7 @@ function template_main()
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
 			echo '
-									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("-",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
+									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("- ",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
 		}
 		echo '				</select><br>
 							</dd>

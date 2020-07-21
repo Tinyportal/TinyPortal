@@ -464,7 +464,7 @@ $clickme.click( function(e) {
 						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
 					<dd>
-						<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
+						<input size="100" name="dladmin_name'.$cat['id'].'" required id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
 					</dd>
 					<dt>
 						<label for="dladmin_category"><b>'.$txt['tp-dluploadcategory'].'</b>
@@ -800,10 +800,17 @@ $clickme.click( function(e) {
 			<div class="windowbg noup padding-div">
 				<dl class="settings tptitle">
 					<dt>
-						<label for="dladmin_name">'.$txt['tp-dlname'].'</label>
+						<label for="dladmin_name"><b>'.$txt['tp-dlname'].'</b></label>
 					</dt>
 					<dd>
-						<input style="width: 100ex;max-width:98%!important;" name="dladmin_name'.$cat['id'].'"  id="dladmin_name" type="text" value="'.$cat['name'].'"><br>
+						<input size="100" name="dladmin_name'.$cat['id'].'" required id="dladmin_name" type="text" value="'.$cat['name'].'">
+					</dd>
+					<dt>
+						<label for="dladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
+					</dt>
+					<dd>
+						<input name="dladmin_link'.$cat['id'].'" id="dladmin_link" type="text" value="'.$cat['shortname'].'"><br><br>
+					</dd>
 					<dt>
 						<label for="dladmin_parent">'.$txt['tp-dlparent'].'</label>
 					</dt>
@@ -830,12 +837,6 @@ $clickme.click( function(e) {
 			}
 			echo '
 					</select><br>
-					</dd>
-					<dt>
-						<label for="dladmin_link">'.$txt['tp-shortname'].'</label>
-					</dt>
-					<dd>
-						<input name="dladmin_link'.$cat['id'].'" id="dladmin_link" type="text" value="'.$cat['shortname'].'"><br>
 					</dd>
 					<dt>
 						<label for="dladmin_icon">'.$txt['tp-icon'].'</label>
@@ -922,16 +923,16 @@ $clickme.click( function(e) {
 			<div class="windowbg noup padding-div">
 				<dl class="settings tptitle">
 					<dt>
-						<label for="newdladmin_name">'.$txt['tp-name'].'</label>
+						<label for="newdladmin_name"><b>'.$txt['tp-name'].'</b></label>
 					</dt>
 					<dd>
-						<input size="100" name="newdladmin_name" id="newdladmin_name" type="text" value="">
+						<input size="100" name="newdladmin_name" required id="newdladmin_name" type="text" value="">
 					</dd>
 					<dt>
-						<label for="newdladmin_link">'.$txt['tp-shortname'].'</label>
+						<label for="newdladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
 					</dt>
 					<dd>
-						<input name="newdladmin_link" id="newdladmin_link" type="text" value="">
+						<input name="newdladmin_link" id="newdladmin_link" type="text" value=""><br><br>
 					</dd>
 					<dt>
 						<label for="newdladmin_parent">'.$txt['tp-dlparent'].'</label>
