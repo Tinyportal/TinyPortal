@@ -110,7 +110,7 @@ function template_submitarticle()
 			</div><br>
 			<dl class="settings tptitle">
 					<dt>
-						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-useintrodesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
 					<dd>
 							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
@@ -140,42 +140,12 @@ function template_submitarticle()
 				echo '
 					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>';
 
-                if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
+                echo '<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">';
+ 
+			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 					echo '
 				<hr>
 				<dl class="tptitle settings">
-					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-statusdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
-					</dt>
-					<dd>';
-                    if (!empty($context['TPortal']['editing_article'])) {
-						// show checkboxes since we have these features aren't available until the article is saved.
-						echo '
-							<img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
-							<img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
-							<img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />';
-					}
-					else {
-                        // Must be a new article, so lets show the check boxes instead.
-						echo '
-                            <input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /><label for="artFront'. $mg['id']. '">'. $txt['tp-setfrontpage']. '</label><br>
-                            <input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /><label for="artSticky'. $mg['id']. '">'. $txt['tp-setsticky']. '</label><br>
-                            <input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /><label for="artLock'. $mg['id']. '">'. $txt['tp-setlock']. '</label>';
-                    }
-					echo '
-						<br><br>
-					</dd>';
-				}
-                echo '<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">';
-			    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-                    echo '
-					<dt>
-						<label for="tp_article_approved">', $txt['tp-approved'], '</label>
-					</dt>
-					<dd>
-						<input name="tp_article_approved" id="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
-						<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'<br><br>
-					</dd>
 					<dt>
 						<label for="tp_article_authorid">', $txt['tp-author'], '</label>
 					</dt>
@@ -229,9 +199,84 @@ function template_submitarticle()
 				echo '</select><br><br>
 					</dd>
 					<dt>
+						<label for="tp_article_approved">', $txt['tp-approved'], '</label>
+					</dt>
+					<dd>
+						<input name="tp_article_approved" id="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
+						<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'
+					</dd>
+				</dl>
+				<hr>
+				<dl class="tptitle settings">
+					<dt>
+						', $txt['tp-switchmode'], '
+					</dt>
+					<dd>
+						<input name="tp_article_type" id="gohtml" type="radio" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
+						<input name="tp_article_type" id="gophp" type="radio" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> '.$txt['tp-gophp'] .'</label><br>
+						<input name="tp_article_type" id="gobbc" type="radio" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> '.$txt['tp-gobbc'] .'</label><br>
+						<input name="tp_article_type" id="goimport" type="radio" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
+					</dd>
+					<dt>
+						', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />
+					</dt>
+					<dd>
+						<input name="tp_article_off" id="tp_article_on" type="radio" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br>
+						<input name="tp_article_off" id="tp_article_off" type="radio" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label>
+					</dd>
+				</dl>
+				<hr>
+				<dl class="tptitle settings">';
+
+				if(!empty($context['TPortal']['allcats'])) {
+					echo '
+				<dt>
+					<label for="tp_article_category">', $txt['tp-category'], '</label>
+				</dt>
+				<dd>
+					<div>
+						<select size="1" name="tp_article_category" id="tp_article_category">
+							<option value="0">'.$txt['tp-none2'].'</option>';
+				foreach($context['TPortal']['allcats'] as $cats) {
+					if($cats['id'] < 9999 && $cats['id'] > 0) {
+						echo '<option value="'.$cats['id'].'" ', $cats['id'] == $mg['category'] ? 'selected' : '' ,'>'. str_repeat("-", isset($cats['indent']) ? $cats['indent'] : 0) .' '.$cats['name'].'</option>';
+					}
+				}
+				echo '</select>';
+				if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
+					echo '&nbsp;<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>';
+				}
+				echo '
+						</div><br>
+					</dd>
+					<dt>
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-statusdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
+					</dt>
+					<dd>';
+				if (!empty($context['TPortal']['editing_article'])) {
+					// show checkboxes since we have these features aren't available until the article is saved.
+					echo '
+						<img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
+						<img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
+						<img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />';
+					}
+				else {
+					// Must be a new article, so lets show the check boxes instead.
+					echo '
+						<input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /><label for="artFront'. $mg['id']. '">'. $txt['tp-setfrontpage']. '</label><br>
+						<input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /><label for="artSticky'. $mg['id']. '">'. $txt['tp-setsticky']. '</label><br>
+						<input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /><label for="artLock'. $mg['id']. '">'. $txt['tp-setlock']. '</label>';
+					}
+					echo '
+						<br><br>
+					</dd>';
+				}
+			    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
+                    echo '
+					<dt>
 						<label for="field_name">', $txt['tp-published'], '</label>
 					</dt>
-					<dd><div class="description" style="line-height: 1.6em; padding: 5px;">
+					<dd><div class="description" style="line-height: 1.6em;">
 							<b>',$txt['tp-pub_start'],': </b><br>';
 				// day
 				echo '
@@ -329,45 +374,14 @@ function template_submitarticle()
 				echo '
 							</select>
 							</div>
-					</dd>';
-
-                if(!empty($context['TPortal']['allcats'])) {
-                    echo '
-                        <dt>
-                            <label for="tp_article_category">', $txt['tp-category'], '</label>
-                        </dt>
-                        <dd>
-                            <div>
-                                <select size="1" name="tp_article_category" id="tp_article_category">
-                                    <option value="0">'.$txt['tp-none2'].'</option>';
-                    foreach($context['TPortal']['allcats'] as $cats) {
-                        if($cats['id'] < 9999 && $cats['id'] > 0) {
-                            echo '<option value="'.$cats['id'].'" ', $cats['id'] == $mg['category'] ? 'selected' : '' ,'>'. str_repeat("-", isset($cats['indent']) ? $cats['indent'] : 0) .' '.$cats['name'].'</option>';
-                        }
-                    }
-                    echo '</select>';
-                    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-                        echo '&nbsp;<a href="', $scripturl, '?action=tpadmin;sa=categories;cu='.$mg['category'].';sesc=' .$context['session_id']. '">',$txt['tp-editcategory'],'</a>';
-                    }
-                    echo '
-                            </div><br>
-                        </dd>
+						</dd>
 					</dl>';
                 }
 			}
 
                 if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-				echo '<hr>
+				echo '
 				<dl class="tptitle settings">
-					<dt>
-						', $txt['tp-switchmode'], '
-					</dt>
-					<dd>
-							<input name="tp_article_type" id="gohtml" type="radio" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
-							<input name="tp_article_type" id="gophp" type="radio" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> '.$txt['tp-gophp'] .'</label><br>
-							<input name="tp_article_type" id="gobbc" type="radio" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> '.$txt['tp-gobbc'] .'</label><br>
-							<input name="tp_article_type" id="goimport" type="radio" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
-					</dd>
 					<dt>
 						', $txt['tp-display'], '
 					</dt>
@@ -377,16 +391,6 @@ function template_submitarticle()
 							<input name="tp_article_frame" id="usetitle" type="radio" value="title" ' , $mg['frame']=='title' ? 'checked' : '' , '><label for="usetitle"> '.$txt['tp-usetitle'].' </label><br>
 							<input name="tp_article_frame" id="noframe" type="radio" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
 					</dd>
-					<dt>
-						', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />
-					</dt>
-					<dd>
-							  <input name="tp_article_off" id="tp_article_off" type="radio" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label><br>
-							  <input name="tp_article_off" id="tp_article_on" type="radio" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label>
-					</dd>
-				</dl>
-				<hr>
-				<dl class="tptitle settings">
 					<dt>
 						', $txt['tp-illustration'], '
 					</dt>
@@ -427,6 +431,7 @@ function template_submitarticle()
 						$options[$val]=1;
 				}
 				echo '
+					<hr>
 					<div>
 						<div class="font-strong">'.$txt['tp-articleoptions'].'</div>
 						<div class="article-details">';
@@ -440,9 +445,7 @@ function template_submitarticle()
 									<input id="toggleoptions" type="checkbox" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
 								</dd>
 							</dl>
-							<hr>
 							<div class="font-strong">' . $txt['tp-details'] . '</div>
-							<br>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[4].'">', $txt['tp-articleoptions4'], '</label><br>
@@ -535,8 +538,7 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[5].'" id="tp_article_options_'.$opts[5].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
 								</dd>*/
 					echo '	</dl>
-								<hr>
-								<div class="font-strong">' . $txt['tp-panels'] . '</div><br>
+								<div class="font-strong">' . $txt['tp-panels'] . '</div>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
@@ -596,8 +598,7 @@ function template_submitarticle()
 									<input name="tp_article_options_'.$opts[22].'" id="tp_article_options_'.$opts[22].'" type="checkbox" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
-							<hr>
-							<div class="font-strong">' . $txt['tp-others'] . '</div><br>
+							<div class="font-strong">' . $txt['tp-others'] . '</div>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
