@@ -320,7 +320,7 @@ function articleEdit() {{{
 
 	$options        = array();
 	$article_data   = array();
-    if(allowedTo('tp_noapproval'))
+    if(allowedTo('tp_alwaysapproved'))
 		$article_data['approved'] = 1; // No approval needed
 	else
 		$article_data['approved'] = 0; // Preset to false
@@ -639,105 +639,6 @@ function articleSubmitSuccess() {{{
 		loadLanguage('TParticle', 'english');
     }
     $context['sub_template'] = 'submitsuccess';
-
-}}}
-
-function articleSubmit() {{{
-    global $context, $user_info, $smcFunc, $txt;
-
-    // article
-    require_once(SOURCEDIR. '/TPcommon.php');
-
-    if(isset($_POST['tp_article_approved']) || allowedTo('tp_noapproval'))
-        $artpp = '1';
-    else
-        $artpp = '0';
-
-    $arttype = isset($_POST['submittedarticle']) ? $_POST['submittedarticle'] : '';
-    $arts = strip_tags($_POST['tp_article_title']);
-    $artd = $_POST['tp_article_date'];
-    $artimp = isset($_POST['tp_article_fileimport']) ? $_POST['tp_article_fileimport'] : '';
-    $artbb = $_POST['tp_article_body'];
-    $artu = isset($_POST['tp_article_useintro']) ? $_POST['tp_article_useintro'] : 0;
-    $arti = isset($_POST['tp_article_intro']) ? $_POST['tp_article_intro'] : '';
-    $artc = !empty($_POST['tp_article_category']) ? $_POST['tp_article_category'] : 0;
-    $artf = $_POST['tp_article_frontpage'];
-    $artframe = 'theme';
-    $artoptions = 'date,title,author,linktree,category,catlist,comments,commentallow,views,rating,ratingallow,inherit,avatar,social';
-    $name = $user_info['name'];
-    $nameb = $context['user']['id'];
-    if($arts == '')
-        $arts = $txt['tp-no_title'];
-    // escape any php code
-    if($artu == -1 && !get_magic_quotes_gpc())
-        $artbb = addslashes($artbb);
-
-    $request = $smcFunc['db_insert']('INSERT',
-            '{db_prefix}tp_articles',
-            array(
-                'date' => 'int',
-                'body' => 'string',
-                'intro' => 'string',
-                'useintro' => 'int',
-                'category' => 'int',
-                'frontpage' => 'int',
-                'subject' => 'string',
-                'author_id' => 'int',
-                'author' => 'string',
-                'frame' => 'string',
-                'approved' => 'int',
-                'off' => 'int',
-                'options' => 'string',
-                'parse' => 'int',
-                'comments' => 'int',
-                'comments_var' => 'string',
-                'views' => 'int',
-                'rating' => 'string',
-                'voters' => 'string',
-                'id_theme' => 'int',
-                'shortname' => 'string',
-                'fileimport' => 'string',
-                'type' => 'string'),
-                array($artd, $artbb, $arti, $artu, $artc, $artf, $arts, $nameb, $name, $artframe, $artpp, '0', $artoptions, 0, 0, '', 0, '', '', 0, '', $artimp, $arttype),
-                array('id')
-                    );
-
-    $newitem = $smcFunc['db_insert_id']('{db_prefix}tp_articles', 'id');
-    // put this into submissions - id and type
-    $title = $arts;
-    $now = $artd;
-    if($artpp == '0') {
-        $smcFunc['db_insert']('INSERT',
-            '{db_prefix}tp_variables',
-            array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4'  => 'string', 'value5' => 'int'),
-            array($title, $now, '', 'art_not_approved', '' , $newitem),
-            array('id')
-        );
-    }
-
-    if(isset($_POST['pre_approved'])) {
-        redirectexit('action=tportal;sa=addsuccess');
-    }
-
-    if(allowedTo('tp_editownarticle') && !allowedTo('tp_articles')) {
-        // did we get a picture as well?
-        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-            $name = TPuploadpicture( 'qup_tp_article_body', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
-            tp_createthumb($context['TPortal']['image_upload_path'].'/'. $name, 50, 50, $context['TPortal']['image_upload_path'].'/thumbs/thumb_'. $name);
-        }
-        redirectexit('action=tportal;sa=editarticle'.$newitem);
-    }
-    elseif(allowedTo('tp_articles')) {
-        // did we get a picture as well?
-        if(isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-            $name = TPuploadpicture( 'qup_tp_article_body', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
-            tp_createthumb($context['TPortal']['image_upload_path'].'/'. $name, 50, 50, $context['TPortal']['image_upload_path'].'/thumbs/thumb_'. $name);
-        }
-        redirectexit('action=tpadmin;sa=editarticle'.$newitem);
-    }
-    else {
-        redirectexit('action=tportal;sa=submitsuccess');
-    }
 
 }}}
 

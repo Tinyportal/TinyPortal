@@ -1194,6 +1194,7 @@ function template_submission()
 		<input name="tpadmin_form" type="hidden" value="submission">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-submissionsettings']  . '</h3></div>
 		<div id="submissions" class="admintable admin-area">
+		<div class="information smalltext">' , $txt['tp-helpsubmissions'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
 	if(isset($context['TPortal']['arts_submissions']))
 	{

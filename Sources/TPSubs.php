@@ -95,7 +95,7 @@ function TPcollectPermissions() {{{
 			'tp_submithtml' => 0,
 			'tp_submitbbc' => 0,
 			'tp_editownarticle' => 0,
-			'tp_noapproval' => 0
+			'tp_alwaysapproved' => 0
 		)
 	);
 
@@ -107,7 +107,7 @@ function TPcollectPermissions() {{{
 		'tp_submithtml' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_submitbbc' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_editownarticle' => array(false, 'tinyportal', 'tinyportal'),
-		'tp_noapproval' => array(false, 'tinyportal', 'tinyportal'),
+		'tp_alwaysapproved' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_dlmanager' => array(false, 'tinyportal', 'tinyportal'),
 		'tp_dlupload' => array(false, 'tinyportal', 'tinyportal')
 	);

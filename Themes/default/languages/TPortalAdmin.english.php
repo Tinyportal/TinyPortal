@@ -233,7 +233,7 @@ $txt['tp-articleheaders'] = 'Header code to be used in articles without any temp
 
 // Uncategorized articles
 $txt['tp-uncategorised2'] = 'Uncategorized articles';
-$txt['tp-helpstrays'] = 'Articles that have not yet been assigned to a category. ';
+$txt['tp-helpstrays'] = 'Articles that have not yet been assigned to a category. The article category determines what member groups may actually view the article: as long as no category is assigned the article will not be visible to any guest or member.';
 $txt['tp-createnew'] = 'Assign selected to a new category -> ';
 $txt['tp-createnew2'] = 'Approve and assign selected to a new category -> ';
 $txt['tp-createnewcategory'] = 'New category';
@@ -242,6 +242,7 @@ $txt['tp-approveto'] = 'Approve and assign to ';
 
 // Submissions
 $txt['tp-submissionsettings'] = 'Submissions';
+$txt['tp-helpsubmissions'] = 'Articles that have been submitted or updated by members and need to be approved by an administrator. Unless a member is part of a membergroup that has permission to submit or update without approval all new articles and article updates must be approved prior to publication.';
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 
 // Icons
