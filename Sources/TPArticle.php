@@ -320,7 +320,11 @@ function articleEdit() {{{
 
 	$options        = array();
 	$article_data   = array();
-    $article_data['approved'] = 0; // Preset to false
+    if(allowedTo('tp_noapproval'))
+		$article_data['approved'] = 1; // No approval needed
+	else
+		$article_data['approved'] = 0; // Preset to false
+
 	foreach($_POST as $what => $value) {
 		if(substr($what, 0, 11) == 'tp_article_') {
 			$setting = substr($what, 11);
@@ -644,7 +648,7 @@ function articleSubmit() {{{
     // article
     require_once(SOURCEDIR. '/TPcommon.php');
 
-    if(isset($_POST['tp_article_approved']))
+    if(isset($_POST['tp_article_approved']) || allowedTo('tp_noapproval'))
         $artpp = '1';
     else
         $artpp = '0';

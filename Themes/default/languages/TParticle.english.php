@@ -42,7 +42,7 @@ $txt['tp-searchresults'] = 'Article search results';
 $txt['tp-showall'] = 'Show all comments';
 $txt['tp-submitarticle'] ='Write HTML article';
 $txt['tp-submitnotallowed'] = 'Sorry, but you are not allowed to submit an article.';
-$txt['tp-submitsuccess'] = 'Thanks for your submission. <br><br>The article will become active as soon as an administrator has approved it.';
+$txt['tp-submitsuccess'] = 'Your article submission or update has been completed. <br><br>A new article will need to be assigned to a category by an article administrator before it will be visible. Updates and new articles may require approval before publication. <br><br>You can check the status of your articles in the <a href="' . $scripturl . '?action=tportal;sa=myarticles"><u>My articles</u></a> page.';
 $txt['tp-submitsuccess2'] = 'The submission was successful.';
 
 ?>

@@ -45,6 +45,10 @@ $txt['permissionname_tp_editownarticle'] = $txt['group_perms_name_tp_editownarti
 $txt['permissionhelp_tp_editownarticle'] = 'Allows users to edit their own articles.';
 $txt['cannot_tp_editownarticle'] = 'Sorry, you aren\'t allowed to edit your article.';
 
+$txt['permissionname_tp_noapproval'] = $txt['group_perms_name_tp_noapproval'] = 'Article submissions and updates do not require approval';
+$txt['permissionhelp_tp_noapproval'] = 'Allows users to write articles that will be automatically approved. Subsequent updates will also not require admin approval.';
+$txt['cannot_tp_noapproval'] = 'Article submission or update needs to be approved first.';
+
 $txt['permissionname_tp_artcomment'] = $txt['group_perms_name_tp_artcomment'] = 'Can comment on articles';
 $txt['permissionhelp_tp_artcomment'] = 'Allows users to add comments to articles.';
 

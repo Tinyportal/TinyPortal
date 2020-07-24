@@ -107,56 +107,81 @@ function template_submitarticle()
 					</dl>' ;
                 }
 				echo '
-					</div>';
+			</div><br>
+			<dl class="settings tptitle">
+					<dt>
+						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+					</dt>
+					<dd>
+							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
+							<input name="tp_article_useintro" type="radio" value="0" ', !$mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
+					</dd>
+				</dl>
+					';
+				if($article_type == 'php' || $article_type == 'html')	{
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
+						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
+                    }
+					else {
+						echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
+                    }
+					echo '</div>';
+				}
+				elseif($article_type == 'bbc' || $article_type == 'import') {
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
+                    '<div class="font-strong">'.$txt['tp-introtext'].'</div>
+					<div>
+						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
+					</div>
+                    </div>';
+				}
+
+				echo '
+					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>';
 
                 if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-                    echo '<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>';
-                }
-
-                echo'
-			<hr>
-				<dl class="tptitle settings">';
-
-                if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-                    echo '<dt>
+					echo '
+				<hr>
+				<dl class="tptitle settings">
+					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-statusdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
 					</dt>
 					<dd>';
                     if (!empty($context['TPortal']['editing_article'])) {
-                        // show checkboxes since we have these features aren't available until the article is saved.
-                        echo '
-                            <img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
-                            <img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
-                            <img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />';
-                    }
-                    else {
+						// show checkboxes since we have these features aren't available until the article is saved.
+						echo '
+							<img style="cursor: pointer;" class="toggleFront" id="artFront' .$mg['id']. '" title="'.$txt['tp-setfrontpage'].'" src="' .$settings['tp_images_url']. '/TPfront' , $mg['frontpage']=='1' ? '' : '2' , '.png" alt="'.$txt['tp-setfrontpage'].'"  />
+							<img style="cursor: pointer;" class="toggleSticky" id="artSticky' .$mg['id']. '" title="'.$txt['tp-setsticky'].'" src="' .$settings['tp_images_url']. '/TPsticky' , $mg['sticky']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setsticky'].'"  />
+							<img style="cursor: pointer;" class="toggleLock" id="artLock' .$mg['id']. '" title="'.$txt['tp-setlock'].'" src="' .$settings['tp_images_url']. '/TPlock' , $mg['locked']=='1' ? '1' : '2' , '.png" alt="'.$txt['tp-setlock'].'"  />';
+					}
+					else {
                         // Must be a new article, so lets show the check boxes instead.
-                        echo '
+						echo '
                             <input type="checkbox" id="artFront'. $mg['id']. '" name="tp_article_frontpage" value="1" /><label for="artFront'. $mg['id']. '">'. $txt['tp-setfrontpage']. '</label><br>
                             <input type="checkbox" id="artSticky'. $mg['id']. '" name="tp_article_sticky" value="1" /><label for="artSticky'. $mg['id']. '">'. $txt['tp-setsticky']. '</label><br>
                             <input type="checkbox" id="artLock'. $mg['id']. '" name="tp_article_locked" value="1" /><label for="artLock'. $mg['id']. '">'. $txt['tp-setlock']. '</label>';
                     }
-                }
+					echo '
+						<br><br>
+					</dd>';
+				}
                 echo '<input name="tp_article_timestamp" type="hidden" value="'.$mg['date'].'">';
 			    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-                    echo '<br><br>';
-
                     echo '
-					</dd>
 					<dt>
 						<label for="tp_article_approved">', $txt['tp-approved'], '</label>
 					</dt>
 					<dd>
-							
-							<input name="tp_article_approved" id="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
-							<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'<br><br>
+						<input name="tp_article_approved" id="tp_article_approved" type="radio" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
+						<input name="tp_article_approved" type="radio" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'<br><br>
 					</dd>
 					<dt>
 						<label for="tp_article_authorid">', $txt['tp-author'], '</label>
 					</dt>
 					<dd>
-							<b><a href="' . $scripturl . '?action=profile;u='.$mg['author_id'].'" target="_blank">'.$mg['real_name'].'</a></b>
-							&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" id="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
+						<b><a href="' . $scripturl . '?action=profile;u='.$mg['author_id'].'" target="_blank">'.$mg['real_name'].'</a></b>
+						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" id="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
 					</dd>
 					<dt>
 						', $txt['tp-created'], '
@@ -305,8 +330,6 @@ function template_submitarticle()
 							</select>
 							</div>
 					</dd>';
-                }
-
 
                 if(!empty($context['TPortal']['allcats'])) {
                     echo '
@@ -328,38 +351,11 @@ function template_submitarticle()
                     }
                     echo '
                             </div><br>
-                        </dd>';
+                        </dd>
+					</dl>';
                 }
+			}
 
-                echo '
-					<dt>
-						<label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
-					</dt>
-					<dd>
-							<input name="tp_article_useintro" type="radio" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
-							<input name="tp_article_useintro" type="radio" value="0" ', !$mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br>
-					</dd>
-				</dl>
-					';
-				if($article_type == 'php' || $article_type == 'html')	{
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
-					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
-						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
-                    }
-					else {
-						echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
-                    }
-					echo '</div>';
-				}
-				elseif($article_type == 'bbc' || $article_type == 'import') {
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
-                    '<div class="font-strong">'.$txt['tp-introtext'].'</div>
-					<div>
-						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
-					</div>
-                    </div>';
-				}
-                
                 if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '<hr>
 				<dl class="tptitle settings">
@@ -627,7 +623,8 @@ function template_submitarticle()
 										<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
 								</div>
 						</div>
-				</div>';
+				</div><br>
+				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>';
                 }
                 else {
                     echo '<input name="tp_article_type" type="hidden" value="'.$article_type.'">';
@@ -644,7 +641,6 @@ function template_submitarticle()
 				}
 
                 echo'
-					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 				</div>
 			</div>
 		</div>
