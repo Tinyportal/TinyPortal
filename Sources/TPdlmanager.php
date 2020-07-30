@@ -216,7 +216,7 @@ function TPortalDLManager()
 			{
 				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
 				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'].'uid');
-				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+				tp_createthumb( $context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'].'thumbs/thumb_'. $name);
 				redirectexit('action=tportal;sa=download;dl='. $item_id);
 			}
 			// check that nothing happended
@@ -317,7 +317,7 @@ function TPortalDLManager()
 				$uid = $context['user']['id'].'uid';
 				$dim = '1800';
 				$suf = 'jpg,gif,png';
-				$dest = 'tp-images/dlmanager';
+				$dest = $context['TPortal']['image_upload_path'].'dlmanager';
 				$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 				$screenshot = $sname;
 				tp_createthumb($dest.'/'.$sname ,$context['TPortal']['dl_screenshotsize'][0],$context['TPortal']['dl_screenshotsize'][1], $dest.'/thumb/'.$sname);
@@ -899,7 +899,7 @@ function TPortalDLManager()
 
 					   $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 						// does it exist?
-						if(file_exists($boarddir . '/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
+						if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
 							$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
 
 						if($context['user']['is_logged'])
@@ -1489,9 +1489,9 @@ function TPortalDLManager()
 
 				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 				// does it exist?
-				if(file_exists($boarddir . '/tp-images/dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
+				if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
 					$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
-				if(file_exists($boarddir . '/tp-images/dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
+				if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
 					$bigshot = $boardurl. '/tp-images/dlmanager/' . $row['screenshot'];
 
 				if($context['user']['is_logged'])
@@ -2440,12 +2440,12 @@ function TPortalDLAdmin()
 		if(!empty($_FILES['qup_dladmin_text']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name'])))
 		{
 			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'].'uid');
-			tp_createthumb('tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name);
+			tp_createthumb($context['TPortal']['image_upload_path'].$name, 50, 50, $context['TPortal']['image_upload_path'].'thumbs/thumb_'.$name);
 		}
 		if(!empty($_FILES['qup_blockbody']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name'])))
 		{
 			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'].'uid');
-			tp_createthumb('tp-images/'.$name, 50, 50, 'tp-images/thumbs/thumb_'.$name);
+			tp_createthumb($context['TPortal']['image_upload_path'].$name, 50, 50, $context['TPortal']['image_upload_path'].'thumbs/thumb_'.$name);
 		}
 
 		// a screenshot from edit item screen?
@@ -2461,7 +2461,7 @@ function TPortalDLAdmin()
 			$uid = $context['user']['id'].'uid';
 			$dim = '1800';
 			$suf = 'jpg,gif,png';
-			$dest = 'tp-images/dlmanager';
+			$dest = $context['TPortal']['image_upload_path'].'dlmanager';
 			$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
 			$screenshot = $sname;
 
