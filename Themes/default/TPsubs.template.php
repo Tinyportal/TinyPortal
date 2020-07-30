@@ -475,8 +475,12 @@ function TPortal_userbox()
 				<option value="-1" selected="selected">', $txt['forever'], '</option>
 			</select>
 			<input type="submit" class="button_submit" value="', $txt['login'], '" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
-		</form>
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
+		if(strstr($forum_version, '2.1')) {
+			echo '
+			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
+		}
+		echo '
 		<div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
 	}
 	echo '
