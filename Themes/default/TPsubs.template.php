@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.7
+ * @version 1.6.8
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -481,6 +481,7 @@ function TPortal_userbox()
 			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
 		}
 		echo '
+		</form>
 		<div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
 	}
 	echo '
