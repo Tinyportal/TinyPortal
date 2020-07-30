@@ -93,17 +93,17 @@ function TPListImages($user_id)
  	if(loadLanguage('TPListImages') == false) {
 		loadLanguage('TPListImages', 'english');
     }
-	
+
     $html = '';
     // fetch all images you have uploaded
     $imgfiles = array();
-    if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs'))
+    if ($handle = opendir($context['TPortal']['image_upload_path'].'thumbs/'))
     {
         while (false !== ($file = readdir($handle)))
         {
             if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_id) + 9) == 'thumb_'.$user_id.'uid')
             {
-                $imgfiles[filectime($boarddir.'/tp-files/tp-images/thumbs/'.$file)] = $file;
+                $imgfiles[filectime($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
             }
         }
         closedir($handle);
@@ -115,10 +115,10 @@ function TPListImages($user_id)
             <div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
     if(!empty($imgs)) {
         foreach($imgs as $im) {
-            if(!is_file($boarddir.'/tp-files/tp-images/'.substr($im, 6))) {
-                if(is_file($boarddir.'/tp-files/tp-images/thumbs/'.$im)) {
+            if(!is_file($context['TPortal']['image_upload_path'].''.substr($im, 6))) {
+                if(is_file($context['TPortal']['image_upload_path'].'thumbs/'.$im)) {
                     $image      = substr($im, 6);
-                    $imageUrl   = $boardurl.'/tp-files/tp-images/thumbs/'.$im;
+                    $imageUrl   = $boardurl.'/tp-images/thumbs/'.$im;
                 }
                 else {
                     continue;
@@ -126,7 +126,7 @@ function TPListImages($user_id)
             }
             else {
                 $image          = substr($im, 6);
-                $imageUrl       = $boardurl.'/tp-files/tp-images/'.substr($im, 6);
+                $imageUrl       = $boardurl.'/tp-images/'.substr($im, 6);
             }
             
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=remove"  method="post" style="margin: 0px;">
@@ -151,10 +151,10 @@ function TPListImages($user_id)
 
 function TPRemoveImage( $image )
 {
-    global $boarddir;
+    global $boarddir, $context;
 
-    $fileNameThumb  = $boarddir.'/tp-files/tp-images/thumbs/thumb_'.$image;
-    $fileName       = $boarddir.'/tp-files/tp-images/'.$image;
+    $fileNameThumb  = $context['TPortal']['image_upload_path'].'thumbs/thumb_'.$image;
+    $fileName       = $context['TPortal']['image_upload_path'].''.$image;
     if(file_exists($fileNameThumb)) {
         unlink($fileNameThumb);
     }
@@ -166,10 +166,10 @@ function TPRemoveImage( $image )
 
 function TPMembers()
 {
-	global $smcFunc, $boarddir, $txt;
+	global $smcFunc, $context, $boarddir, $txt;
 
 	$users	= array();
-    if ($handle = opendir($boarddir.'/tp-files/tp-images/thumbs')) {
+    if ($handle = opendir($context['TPortal']['image_upload_path'].'thumbs')) {
         while (false !== ($file = readdir($handle))) {
             if($file != '.' && $file !='..' && $file !='.htaccess') {
                 if(preg_match('/thumb_(.*?)uid/', $file, $matches)) {

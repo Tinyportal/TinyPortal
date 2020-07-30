@@ -624,8 +624,8 @@ $settings_array = array(
 	'use_groupcolor' => '0',
 	'disable_template_eval' => '1',
     'allow_links_article_comments' => '1',
-    'image_upload_path'     => $boarddir.'/tp-files/tp-images/',
-    'download_upload_path'  => $boarddir.'/tp-files/tp-downloads/',
+    'image_upload_path'     => $boarddir.'/tp-images/',
+    'download_upload_path'  => $boarddir.'/tp-downloads/',
     'blockcode_upload_path' => $boarddir.'/tp-files/tp-blockcodes/',
 );
 $updates = 0;
@@ -1013,7 +1013,7 @@ function addDefaults()
 		$smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_dlmanager',
 			array('name' => 'string', 'icon' => 'string', 'access' => 'string', 'type' => 'string'),
-			array('General', ''.$boardurl.'/tp-files/tp-downloads/icons/folder.png' ,'-1,0,1', 'dlcat'),
+			array('General', ''.$boardurl.'/tp-downloads/icons/folder.png' ,'-1,0,1', 'dlcat'),
 			array('id')
 		);
     }

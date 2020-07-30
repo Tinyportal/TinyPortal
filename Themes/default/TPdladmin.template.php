@@ -581,7 +581,7 @@ $clickme.click( function(e) {
 					<script type="text/javascript">
 					function dlcheck(icon)
 						{
-							document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
+							document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 						}
 					</script><br>
 					</dd>
@@ -858,7 +858,7 @@ $clickme.click( function(e) {
 					<script type="text/javascript">
 						function dlcheck(icon)
 						{
-							document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
+							document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 						}
 					</script>
 					<br><br>
@@ -967,11 +967,11 @@ $clickme.click( function(e) {
 
 		echo '
 					</select>
-					<br><br><img name="dlicon" src="'.$boardurl.'/tp-files/tp-downloads/icons/blank.gif" alt="" />
+					<br><br><img name="dlicon" src="'.$boardurl.'/tp-downloads/icons/blank.gif" alt="" />
 				<script type="text/javascript">
 					function dlcheck(icon)
 					{
-						document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
+						document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 					}
 				</script>
 				</div>

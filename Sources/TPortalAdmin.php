@@ -2628,7 +2628,7 @@ function do_postchecks()
 				);
 			}
 
-			// check if uploadad picture
+			// check if uploaded picture
 			if(isset($_FILES['qup_blockbody']) && file_exists($_FILES['qup_blockbody']['tmp_name']))
 			{
                 $name = TPuploadpicture( 'qup_blockbody', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
