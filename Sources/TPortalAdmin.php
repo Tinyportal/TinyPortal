@@ -2632,7 +2632,7 @@ function do_postchecks()
 			if(isset($_FILES['qup_blockbody']) && file_exists($_FILES['qup_blockbody']['tmp_name']))
 			{
                 $name = TPuploadpicture( 'qup_blockbody', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
-				tp_createthumb('tp-images/'. $name, 50, 50, 'tp-images/thumbs/thumb_'. $name);
+				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_'. $name);
 			}
 			updateTPSettings($updateArray);
 
