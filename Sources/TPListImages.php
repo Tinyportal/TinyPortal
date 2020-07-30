@@ -103,16 +103,16 @@ function TPListImages($user_id)
         {
             if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_id) + 9) == 'thumb_'.$user_id.'uid')
             {
-                $imgfiles[filectime($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
+                $imgfiles[($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
             }
         }
         closedir($handle);
         ksort($imgfiles);
-        $imgs = array_reverse($imgfiles);
+        $imgs = $imgfiles;
     }
     $html .='
         <div class="roundframe tp_pad" style="max-height: 800px; overflow: auto;">
-            <div class="tpthumb" style="padding: 4px; margin-top: 4px; overflow: auto;">';
+            <div class="tpthumb" style="overflow: auto;">';
     if(!empty($imgs)) {
         foreach($imgs as $im) {
             if(!is_file($context['TPortal']['image_upload_path'].''.substr($im, 6))) {
@@ -130,13 +130,15 @@ function TPListImages($user_id)
             }
             
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=remove"  method="post" style="margin: 0px;">
-                <div style="float:left; padding:1%;">
+                <div class="windowbg" style="float:left;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />
                     <input type="hidden" name="image" value="'.$image.'" />
-                    <div style="width: 160px; height: 180px;"><img src="'.$imageUrl.'"  alt="" /><br>
-                    <input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"><br ></div>
-                </div>
+                    <div style="width: 250px; height: 220px;text-align:center;"><img src="'.$imageUrl.'" alt="'.$image.'" title="'.$image.'" /><br>
+					'.$image.'
+					</div>
+                    <div style="text-align:center;"><input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"></div>
+				</div>
             </form>';
         }
 

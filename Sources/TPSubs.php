@@ -895,12 +895,12 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 			{
 				if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_'.$user_info['id'].'uid')
 				{
-					$imgfiles[filectime($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
+					$imgfiles[($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
 				}
 			}
 			closedir($handle);
 			ksort($imgfiles);
-			$imgs = array_reverse($imgfiles);
+			$imgs = $imgfiles;
 		}
 		echo '
 		<br><div class="title_bar"><h3 class="titlebg">' , $txt['tp-quicklist'] , '</h3></div>
@@ -910,7 +910,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		if(isset($imgs))
 		{
 			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  alt="" />';
+				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  alt="'.substr($im,6).'" title="'.substr($im,6).'" />';
 		}
 		echo '
 		</div>
