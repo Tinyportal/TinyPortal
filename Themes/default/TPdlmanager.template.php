@@ -694,7 +694,7 @@ function template_main()
 	<script type="text/javascript">
 		function dlcheck(icon)
 		{
-			document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
+			document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 		 }
 	</script>';
 	}
@@ -937,7 +937,7 @@ function template_main()
 						<script type="text/javascript">
 						function dlcheck(icon)
 							{
-								document.dlicon.src= "'.$boardurl.'/tp-files/tp-downloads/icons/" + icon
+								document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
 							}
 						</script><br><br>
 					</dd>

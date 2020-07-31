@@ -10,8 +10,10 @@
 		<redirect url="">Installed!</redirect>
 		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
-		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="TinyPortal" destination="$boarddir" />
+		<require-dir name="tp-files" destination="$boarddir" />
+		<require-dir name="tp-downloads" destination="$boarddir" />
+		<require-dir name="tp-images" destination="$boarddir" />
 		<readme parsebbc="true">readme_install20.txt</readme>
 		<modification>install.xml</modification>
 		<database>install.php</database>
@@ -68,8 +70,10 @@
 		<redirect url="">Installed!</redirect>
 		<require-dir name="Themes" destination="$boarddir" />
 		<require-dir name="Sources" destination="$boarddir" />
-		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="TinyPortal" destination="$boarddir" />
+		<require-dir name="tp-files" destination="$boarddir" />
+		<require-dir name="tp-downloads" destination="$boarddir" />
+		<require-dir name="tp-images" destination="$boarddir" />
 		<readme parsebbc="true">readme_install21.txt</readme>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
