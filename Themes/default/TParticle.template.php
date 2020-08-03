@@ -418,8 +418,7 @@ function template_submitarticle()
 					</dd>
 				</dl>
 					';
-				// set default options for an article. Full options: are ('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','nofrontsetting')
-				$opts = array('','date','title','author','linktree','top','','','','','','','category','catlist','','','','views','','','','avatar','inherit','social','');
+				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','nofrontsetting');
 				$tmp = explode(',',$mg['options']);
 				$options=array();
 				foreach($tmp as $tp => $val){
