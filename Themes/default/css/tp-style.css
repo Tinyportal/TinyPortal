@@ -728,12 +728,12 @@ h4.dl_perm {
 	overflow: hidden;
 	width: 50%;
 }
-a.avatar {
+a.tp_avatar_author {
 	display: block;
 	float: left;
 	margin: 0;
 }
-a.avatar img {
+a.tp_avatar_author img {
 	border-radius: 2px;
 	margin-right: 0.7em;
 	padding: 1px;
