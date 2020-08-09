@@ -1885,7 +1885,7 @@ function article_moreauthor($render = true)
 			$data .= '
                 <div class="article_authorinfo tp_pad">
                     <h2 class="author_h2">'.$txt['tp-authorinfo'].'</h2>
-                    ' . ( !empty($context['TPortal']['article']['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a>' : '') . '
+                    ' . ( !empty($context['TPortal']['article']['avatar']) ? '<a class="tp_avatar_author" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a>' : '') . '
                     <div class="authortext">
                         <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '">' . $context['TPortal']['article']['real_name'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['article']['date_registered']) . $txt['tp-poster3'] .
                         $context['TPortal']['article']['posts'] . $txt['tp-poster4'] . timeformat($context['TPortal']['article']['last_login']) . '.
@@ -2305,7 +2305,7 @@ function blockarticle_moreauthor($render = true)
 			echo '
 		<div class="article_authorinfo">
 			<h3>'.$txt['tp-authorinfo'].'</h3>
-			' . ( !empty($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar']) ? '<a class="avatar" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['author_id'] . '" title="' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar'] . '</a>' : '') . '
+			' . ( !empty($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar']) ? '<a class="tp_avatar_author" href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['author_id'] . '" title="' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['avatar'] . '</a>' : '') . '
 			<div class="authortext">
 				<a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['author_id'] . '">' . $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['real_name'] . '</a>' . $txt['tp-poster1'] . $context['forum_name'] . $txt['tp-poster2'] . timeformat($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['date_registered']) . $txt['tp-poster3'] .
 				$context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['posts'] . $txt['tp-poster4'] . timeformat($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['last_login']) . '.
