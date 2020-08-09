@@ -888,13 +888,13 @@ h4.dl_perm
 	width: 50%;
 	overflow: hidden;
 }
-a.avatar
+a.tp_avatar_author
 {
 	display: block;
 	margin: 0;
 	float: left;
 }
-a.avatar img
+a.tp_avatar_author img
 {
 	border-radius: 2px;
 	padding: 1px;
