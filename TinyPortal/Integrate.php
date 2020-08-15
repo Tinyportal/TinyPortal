@@ -272,7 +272,7 @@ class Integrate
         } elseif (isset($_GET['cat'])) {
             $bclass =  "cat" . $_GET['cat'];
         } else {
-            $bclass =  "tpcontnainer";
+            $bclass =  "tpcontainer";
         }
 
 
