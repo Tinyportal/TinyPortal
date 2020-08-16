@@ -2889,7 +2889,7 @@ function TPortalDLAdmin()
 					// If we came from WYSIWYG then turn it back into BBC regardless.
 					if (!empty($_REQUEST['tp_dl_introtext']) && isset($_REQUEST['tp_dl_introtext'])) {
 						require_once($sourcedir . '/Subs-Editor.php');
-						if($context['Tportal']['dl_wysiwyg'] == 'html') {
+						if($context['TPortal']['dl_wysiwyg'] == 'html') {
                             $_REQUEST['tp_dl_introtext'] = html_to_bbc($_REQUEST['tp_dl_introtext']);
                         }
 						// We need to unhtml it now as it gets done shortly.
