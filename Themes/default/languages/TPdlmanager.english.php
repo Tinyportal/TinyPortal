@@ -46,6 +46,7 @@ $txt['tp-approveno'] = 'No, but permission to upload will still be needed';
 
 $txt['tp-dlcreatetopicboards'] = 'Boards to use for support topics';
 $txt['tp-dlwysiwyg'] = 'Show text-editor';
+$txt['tp-dlwysiwygdesc'] = 'Changing this setting will change the editor used in the downloads. Please note that when changing the editor the existing introduction text and download descriptions that have been written using a different editor, may need to be updated in future. Change this setting only when you are sure.';
 $txt['tp-dlintrotext'] = 'Text for introduction';
 $txt['tp-dlusefeatured'] = 'Show featured file on frontpage of Download manager';
 $txt['tp-dlfeatured'] = 'Featured Download';
