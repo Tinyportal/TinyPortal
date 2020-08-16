@@ -211,7 +211,7 @@ $clickme.click( function(e) {
 						</div><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlwysiwyg'].'
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-dlwysiwygdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-dlwysiwyg'].'
 					</dt>
 					<dd>
 						<input name="tp_dl_wysiwyg" id="tp_dl_wysiwyg1" type="radio" value="" ', $context['TPortal']['dl_wysiwyg']=='' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg1"> '.$txt['tp-no'].'</label><br>
