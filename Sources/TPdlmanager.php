@@ -2837,16 +2837,19 @@ function TPortalDLAdmin()
 			{
 				// which one
 				$who = substr($what, 20);
-				$result = $smcFunc['db_query']('', '
-					SELECT value FROM {db_prefix}tp_settings
-					WHERE name = {string:name} LIMIT 1',
-					array('name' => 'dl_screenshotsizes')
-				);
-				$row = $smcFunc['db_fetch_assoc']($result);
-				$smcFunc['db_free_result']($result);
-				$all = explode(',', $row['value']);
+                // do we already have the results?
+                static $all = null;
+                if($all == null) {
+                    $result = $smcFunc['db_query']('', '
+                        SELECT value FROM {db_prefix}tp_settings
+                        WHERE name = {string:name} LIMIT 1',
+                        array('name' => 'dl_screenshotsizes')
+                    );
+                    $row = $smcFunc['db_fetch_assoc']($result);
+                    $smcFunc['db_free_result']($result);
+                    $all = explode(',', $row['value']);
+                }
 				$all[$who] = $value;
-
 				$changeArray['dl_screenshotsizes'] = implode(',', $all);
 				$go = 1;
 			}
