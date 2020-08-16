@@ -2885,13 +2885,13 @@ function TPortalDLAdmin()
 			}
 			elseif($what == 'tp_dl_introtext')
 			{
-				if($context['TPortal']['dl_wysiwyg'] == 'bbc')
-				{
+				if(in_array($context['TPortal']['dl_wysiwyg'], array('bbc', 'html'))) {
 					// If we came from WYSIWYG then turn it back into BBC regardless.
-					if (!empty($_REQUEST['tp_dl_introtext']) && isset($_REQUEST['tp_dl_introtext']))
-					{
+					if (!empty($_REQUEST['tp_dl_introtext']) && isset($_REQUEST['tp_dl_introtext'])) {
 						require_once($sourcedir . '/Subs-Editor.php');
-						$_REQUEST['tp_dl_introtext'] = html_to_bbc($_REQUEST['tp_dl_introtext']);
+						if($context['Tportal']['dl_wysiwyg'] == 'html') {
+                            $_REQUEST['tp_dl_introtext'] = html_to_bbc($_REQUEST['tp_dl_introtext']);
+                        }
 						// We need to unhtml it now as it gets done shortly.
 						$_REQUEST['tp_dl_introtext'] = un_htmlspecialchars($_REQUEST['tp_dl_introtext']);
 						// We need this for everything else.
@@ -2901,7 +2901,6 @@ function TPortalDLAdmin()
 				$changeArray['dl_introtext'] = trim($value);
 				$go = 1;
 			}
-
 			elseif($what == 'tp_dluploadsize')
 			{
 				$changeArray['dl_max_upload_size'] = $value;
