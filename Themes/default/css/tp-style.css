@@ -1370,9 +1370,15 @@ span.article_shortdate {
 	height: 28px;
 	width: 10px;
 }
-h4.h4dl {
+h3.h3dl {
 	font-size: 1.8em;
 	font-weight: normal;
+	margin: 0;
+	padding: 0 0 0.5em 0;
+}
+h4.h4dl {
+	font-size: 1.1em; 
+	font-weight: bold;
 	margin: 0;
 	padding: 0 0 0.5em 0;
 }
@@ -1385,11 +1391,6 @@ ul.uldl li {
 	margin: 0;
 	padding: 0;
 }
-h3.h3dl {
-	font-size: 1.2em;
-	margin: 0;
-	padding: 0 0 0.5em 0;
-}
 .recentdl {
 	display: inline-block;
 	min-width: 300px;
@@ -1400,6 +1401,11 @@ h3.h3dl {
 }
 .dlpost {
 	padding: 0 0 .5em 0;
+}
+.dlsummary {
+	line-height: 1.4em;
+	max-height: 15em;
+	overflow: hidden;
 }
 .dlcatpost {
 	margin: 0.5em 0 0 0;
@@ -1459,6 +1465,7 @@ div.useravatar img {
 .dl_container {
 	clear: both;
 	width: 100%;
+	word-break: break-word;
 }
 /************* TP STYLES ********************/
 .clearthefloat {
