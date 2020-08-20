@@ -1125,7 +1125,7 @@ function TPortalDLManager()
 			$rows2 = $row[0];
 
 			$request = $smcFunc['db_query']('', '
-				SELECT dl.id, LEFT(dl.description, 400) as ingress,dl.name, dl.category, dl.file,
+				SELECT dl.id, dl.description, dl.name, dl.category, dl.file,
 					dl.downloads, dl.views, dl.link, dl.created, dl.last_access,
 					dl.author_id as author_id, dl.icon, dl.screenshot, dl.filesize, mem.real_name as real_name
 				FROM {db_prefix}tp_dlmanager as dl
@@ -1187,7 +1187,7 @@ function TPortalDLManager()
 						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'description' => '',
+						'description' => $row['description'],
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
@@ -1202,7 +1202,6 @@ function TPortalDLManager()
 						'icon' => $ico,
 						'date' => $row['created'],
 						'filesize' => $fs,
-						'ingress' => $context['TPortal']['dl_wysiwyg']=='bbc' ? parse_bbc(trim(strip_tags($row['ingress']))) : $row['ingress'],
 					);
 				}
 				$smcFunc['db_free_result']($request);

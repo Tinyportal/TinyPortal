@@ -67,7 +67,7 @@ function template_main()
 			<div class="windowbg noup tp_pad">';
 
 			echo '
-				<h4 class="h4dl"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
+				<h3 class="h3dl"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
 				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['author_id'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
 				<hr>';
 
@@ -320,10 +320,18 @@ function template_main()
 				foreach($context['TPortal']['dlitem'] as $dlitem)
 				{
 				echo '
-					<div class="dlitemgrid">';
+					<div class="dlitemgrid">
+						<div>';
 				echo '
 					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
-				echo '<h4 class="h4dl" style="font-size: 1.1em; font-weight: bold;"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>';
+				echo '
+					<h4 class="h4dl"><a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h4>
+					</div>
+						<p class="clearthefloat"></p>';
+
+					if(isset($dlitem['description']))
+						echo '
+						<div class="dlpost dlsummary">' . $dlitem['description'] . '</div>';
 
 					unset($details);
 					$details=array();
@@ -334,13 +342,6 @@ function template_main()
 						$details[] = '<a href="' . $scripturl . '?action=tportal;sa=download;dl=adminitem' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
 					elseif($dlitem['author_id']==$context['user']['id'])
 						$details[] ='<a href="' . $scripturl . '?action=tportal;sa=download;dl=useredit' . $dlitem['id'] . '">' . $txt['tp-edit'] . '</a>';
-
-					if(isset($dlitem['ingress']))
-						echo '
-						<div class="dlpost">' . $dlitem['ingress'] . '</div>';
-
-					echo '
-						<p class="clearthefloat"></p>';
 
 					if(isset($dlitem['filesize']))
 						$details[] = $dlitem['filesize'];
@@ -386,7 +387,7 @@ function template_main()
 			echo '
 				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
 			echo '
-				<h4 class="h4dl">
+				<h3 class="h3dl">
 				<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
 
 			// edit the file?
