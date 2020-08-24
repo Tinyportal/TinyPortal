@@ -25,6 +25,7 @@ function TPDownloadActions(&$subActions) {{{
    $subActions = array_merge(
         array (
             'download'      => array('TPdlmanager.php', 'TPdlmanager',   array()),
+			'rate_dlitem'   => array('TPdlmanager.php', 'TPdlmanager',   array()),
         ),
         $subActions
     );

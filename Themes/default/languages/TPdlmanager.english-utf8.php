@@ -193,7 +193,9 @@ $txt['tp-notallowed'] = 'You are not allowed to access this section.';
 $txt['tp-confirm'] = 'Are you sure?';
 $txt['tp-dosubmit'] = 'Save';
 $txt['tp-download'] = 'Download';
+$txt['tp-nodownload'] = 'No Download';
 $txt['tp-downloads'] = 'Downloads';
 $txt['tp-downloadss2'] = 'Click here to download the file';
+$txt['tp-downloadss3'] = 'This is an empty item';
 
 ?>
