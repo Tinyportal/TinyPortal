@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0 RC1
+ * @version 2.0.0 RC2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -388,7 +388,7 @@ function template_main()
 				' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
 			echo '
 				<h3 class="h3dl">
-				<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
+				',$dlitem['file'] == '- empty item -' ? ''. $dlitem['name'] .'' : '<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>';
 
 			// edit the file?
 			if(allowedTo('tp_dlmanager'))
@@ -400,7 +400,7 @@ function template_main()
 				</h4>
 				<p class="clearthefloat"></p>
 				<hr>
-					<p style="float:right;"><a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a></p>
+					<p style="float:right;">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>
 					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
 						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
 						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>

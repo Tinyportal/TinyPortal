@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0 RC1
+ * @version 2.0.0 RC2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -25,6 +25,7 @@ function TPDownloadActions(&$subActions) {{{
    $subActions = array_merge(
         array (
             'download'      => array('TPdlmanager.php', 'TPdlmanager',   array()),
+			'rate_dlitem'   => array('TPdlmanager.php', 'TPdlmanager',   array()),
         ),
         $subActions
     );
