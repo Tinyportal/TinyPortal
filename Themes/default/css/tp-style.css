@@ -32,23 +32,7 @@
 .rightcol {
 	padding-left: 3px;
 }
-.clearfix:after {
-	clear: both;
-	content: '.';
-	display: block;
-	height: 0;
-	visibility: hidden;
-}
-.clearfix {
-	display: inline-block;
-}
 
-* html .clearfix {
-	height: 1%;
-}
-.clearfix {
-	display: block;
-}
 /* a general padding class */
 .pad {
 	padding: 8px;
@@ -86,19 +70,19 @@ h2.author_h2 {
 }
 .article_inner ul, ul.disc {
 	list-style-type: disc;
-    margin-block-start: 1em;
     margin-block-end: 1em;
-    margin-inline-start: 0;
+    margin-block-start: 1em;
     margin-inline-end: 0;
+    margin-inline-start: 0;
     padding: 0 0 0 40px;
     padding-inline-start: 40px;
 }
 .article_inner ol, ol.decimal {
     list-style-type: decimal;
-    margin-block-start: 1em;
     margin-block-end: 1em;
-    margin-inline-start: 0;
+    margin-block-start: 1em;
     margin-inline-end: 0;
+    margin-inline-start: 0;
     padding: 0 0 0 40px;
     padding-inline-start: 40px;
 }
@@ -112,17 +96,9 @@ h2.author_h2 {
 .article_info a, .article_info a:visited {
 	color: #888;
 }
-/*.article_text {
-	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
-}*/
 .article_extra {
 	border-top: 1px solid rgba(221, 221, 221, 0.5);
 	padding: 0 1em;
-}
-ul.gtags li {
-	list-style: none;
-	margin-left: 0;
-	padding-left: 0;
 }
 .article_others li.selected {
 	font-weight: bold;
@@ -420,84 +396,6 @@ img.catlayout {
 	margin: 6px 2px 4px 16px;
 	padding: 0;
 }
-/* for the tab category layout option */
-#tp_tabarticle_frame {
-	margin-left: 220px;
-	padding: 10px 10px 10px 30px;
-}
-#tp_tableft {
-	float: left;
-	margin-top: 5px;
-	padding: 0 0 5px 0;
-	width: 204px;
-}
-ul#tp_tabmenu {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-ul#tp_tabmenu li {
-	margin: 0;
-	padding: 0;
-	width: 230px;
-}
-ul#tp_tabmenu li a {
-	color: black;
-	display: block;
-	height: 27px;
-	line-height: 26px;
-	outline: none;
-	padding: 0 15px 0 15px;
-	text-decoration: none;
-	width: 230px;
-}
-ul#tp_tabmenu li a:hover {
-	color: #669;
-}
-.tabimage {
-	background: url(../images/tinyportal/TPtabindicator.png) no-repeat;
-	font-weight: bold;
-}
-.notab {
-	background-image: none;
-	font-weight: normal;
-}
-#tp_tabs_frame h4 {
-	font-size: 1.2em;
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
-}
-#tp_tabs_frame h4.forumpost {
-	background: url(../images/tinyportal/normal_post.png) 0 50% no-repeat;
-	padding-left: 24px;
-}
-#tp_tabs_frame h3 {
-	border-bottom: dotted 1px #888;
-	color: #543;
-	font-size: 1.5em;
-	margin: 0 0 5px 0;
-	padding: 5px 5px 5px 8px;
-}
-p.tp_tabarticle_opt {
-	border-bottom: dotted 1px #888;
-	font-size: 0.85em;
-	margin-bottom: 5px;
-	padding: 0 0 5px 0;
-}
-.tp_tabarticle_body {
-	line-height: 1.5em;
-}
-ul#tp_child_articles {
-	list-style: none;
-	margin: 1em;
-	padding: 0;
-}
-ul#tp_child_articles li {
-	background: url(../images/tinyportal/TPboard.png) no-repeat 0 50%;
-	margin-left: 0;
-	padding: 5px 0 5px 20px;
-}
 #articlejump {
 	padding: 1em;
 }
@@ -576,8 +474,8 @@ ul.dl_recentitems	 {
 }
 /* for the menu block */
 ul.tp_catmenu, ul.tp_catmenu li {
-	list-style: none;
 	line-height: 1.3em;
+	list-style: none;
 	margin: 0;
 	padding-left: 1em;
 	text-indent: -2em;
@@ -587,8 +485,8 @@ ul.tp_catmenu li.tp_catmenu_header {
 }
 /* for tp admin */
 .tp_largelist {
-	-webkit-box-sizing:border-box;
 	border: 1px solid rgba(204, 204, 204, 0.5);
+	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
 	margin-bottom: 4px;
 	max-height: 10em;
@@ -596,8 +494,8 @@ ul.tp_catmenu li.tp_catmenu_header {
 	padding: 4px;
 }
 .tp_largelist2 {
-	-webkit-box-sizing:border-box;
 	border: 1px solid rgba(204, 204, 204, 0.5);
+	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
 	margin-bottom: 4px;
 	max-height: 20em;
@@ -605,8 +503,8 @@ ul.tp_catmenu li.tp_catmenu_header {
 	padding: 4px;
 }
 #articlecomments {
-	-webkit-box-sizing:border-box;
 	border: 1px solid rgba(204, 204, 204, 0.5);
+	-webkit-box-sizing:border-box;
 	box-sizing: border-box;
 	margin: 1em 0 0 1em;
 	max-height: 30em;
@@ -664,8 +562,8 @@ h3.tp-dlmanager small {
 }
 ul.tp-subcategories,ul.tp-subcategories ul {
 	margin: 0;
-	padding: 0;
 	overflow: hidden;
+	padding: 0;
 }
 ul.tp-subcategories li {
 	float: left;
@@ -723,8 +621,8 @@ h4.dl_perm {
 .authorinfo {
 	float: left;
 	min-width: 300px;
-	padding: 8px 1em 8px 8px;
 	overflow: hidden;
+	padding: 8px 1em 8px 8px;
 	width: 50%;
 }
 a.tp_avatar_author {
@@ -752,22 +650,13 @@ a.tp_avatar_author img {
 	margin: 0 10px 10px 5px;
 	padding: 0;
 }
-.extrasblock .digg {
+.digg {
 	padding: 20px 20px 10px 20px;
 }
-.extrasblock .editlink {
+.editlink {
 	font-size: 0.8em;
 	padding: 8px 0 0 20px;
 	text-transform: uppercase;
-}
-.globaltags ul {
-	margin: 0;
-	padding: 0;
-}
-.globaltags li {
-	list-style: none;
-	margin: 0 0 4px 0;
-	padding: 0;
 }
 .authortext {
 	font-size: 0.85em;
@@ -982,23 +871,6 @@ div.dl_screenshot {
 	overflow: visible;
 	padding: 1%;
 }
-.forumgtags {
-	overflow: hidden;
-}
-.forumgtags a {
-	display: block;
-	float: left;
-	overflow: hidden;
-	padding: 3px 0 2px 0;
-	width: 20em;
-}
-.forumgtags a.selected {
-	font-weight: bold;
-}
-.gtagwindow {
-	margin: 0;
-	padding: 4px;
-}
 .rate_frame .rate_outer {
 	background: #eee;
 	border: solid 1px #777;
@@ -1006,22 +878,6 @@ div.dl_screenshot {
 	padding: 1px;
 	text-align: left;
 	width: 157px;
-}
-.rate_frame .rate_outer .inner {
-	height: 12px;
-	margin: 0;
-}
-div.slider {
-	background: #e0e0e0;
-	height: 18px;
-	width: 162px;
-}
-div.slider div.knob {
-	background: blue;
-	border: solid 1px white;
-	cursor: pointer;
-	height: 18px;
-	width: 30px;
 }
 div.tpleft {
 	text-align: left;
@@ -1140,18 +996,9 @@ table.multiplerow td {
 .admintable th {
 	font-weight: normal;
 }
-.formtable .checkboxmulti {
-	float: left;
-	padding: 2px;
-	width: 49%;
-}
-.formtable .checkboxmulti input, .formtable input.checkbox {
+.formtable input.checkbox {
 	margin: 0;
 	width: 2em;
-}
-.checkboxmulti_container {
-	overflow: auto;
-	max-height: 16em;
 }
 #tpadmin .oldsidebar {
 	line-height: 1em;
@@ -1239,8 +1086,8 @@ h2.catbg img.icon {
 	padding: 0;
 }
 #tp_overview ul li {
-	font-size: 90%;
 	float: left;
+	font-size: 90%;
 	height: 120px;
 	list-style: none;
 	margin: 0;
@@ -1294,12 +1141,12 @@ ul.recent_topics li {
 	padding: 4px;
 }
 .blockbody {
-	-ms-word-break: break-word;
 	line-height: 1.3em;
 	min-height: 0;
 	overflow-wrap: break-word;
 	padding: 4px;
-	word-break: break-word;
+	-epub-word-wrap: break-word;
+	-ms-word-wrap: break-word;
 	word-wrap: break-word;
 }
 .tp_halfgrid, .tp_halfgrid span.firsthalf, .tp_halfgrid span.lasthalf {
@@ -1412,8 +1259,8 @@ ul.uldl li {
 }
 .dlitemgrid {
 	display: inline-block;
-	padding: 1em 1% 1em 0;
 	overflow: hidden;
+	padding: 1em 1% 1em 0;
 	vertical-align: top;
 	width: 48%;
 }
@@ -1436,15 +1283,15 @@ div.useravatar img {
 	overflow: hidden;
 }
 .textcomment .body {
-	-webkit-border-radius: 10px;
 	background: rgba(255, 255, 255, 0.2);
 	border: 1px solid rgba(153, 153, 153, 0.3);
+	-webkit-border-radius: 10px;
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
 	margin: 14px 10px 10px 0;
+	overflow-wrap: break-word;
 	padding: 1.5em 1em;
 	position: relative;
-	word-break: break-word;
 	word-wrap: break-word;
 }
 .othercomment .textcomment .body {
@@ -1464,7 +1311,7 @@ div.useravatar img {
 .dl_container {
 	clear: both;
 	width: 100%;
-	word-break: break-word;
+	overflow-wrap: break-word;
 }
 /************* TP STYLES ********************/
 .clearthefloat {
@@ -1516,9 +1363,9 @@ input,select {
 	padding: 5px;
 }
 .tpthumb div {
-	padding: 4px;
 	margin-top: 4px;
 	overflow: auto;
+	padding: 4px;
 }
 .tpquicklist div {
 	margin-top: 4px;
@@ -1563,15 +1410,13 @@ input,select {
 	height: 140px;
 	width: 98%; 
 }
-dl.tptitle dt
-{
-	width: 40%;
+dl.tptitle dt {
 	float: left;
+	width: 40%;
 }
-dl.tptitle dd
-{
-	width: 60%;
+dl.tptitle dd {
 	float: right;
+	width: 60%;
 }
 #tp_customlayout {
 	height: 200px;
@@ -1583,9 +1428,6 @@ dl.tptitle dd
 	border-radius: 0 0 0 0;
 	margin: 0;
 }
-/*#tpadmin_content {
-	min-width:700px;
-}*/
 .padding-div {
 	padding:1%;
 }
@@ -1706,23 +1548,25 @@ div.tp_half21 {
 	padding: 4px 8px 8px 8px; 
 }
 .inner a, .article_inner a {
-	hyphens: auto;
+	-epub-hyphens: auto;
 	-ms-hyphens: auto;
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
-	word-break: break-word;
-	-ms-word-break: break-word;
-	word-wrap: break-word;
+	hyphens: auto;
 	overflow-wrap: break-word;
+	-epub-word-wrap: break-word;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 }
 code.bbc_code {
-	hyphens: none;
+	-epub-hyphens: auto;
 	-ms-hyphens: none;
 	-moz-hyphens: none;
 	-webkit-hyphens: none;
-	white-space: normal !important;
-	word-break: break-word;
-	-ms-word-break: break-word;
-	word-wrap: break-word;
+	hyphens: none;
 	overflow-wrap: break-word;
+	white-space: normal !important;
+	-epub-word-wrap: break-word;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 }

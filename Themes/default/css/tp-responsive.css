@@ -41,13 +41,13 @@
 	}
 	dl.tptitle dt
 	{
-		width: 100%;
 		float: none;
+		width: 100%;
 	}
 	dl.tptitle dd
 	{
-		width: 100%;
 		float: none;
+		width: 100%;
 	}
 }
 /** screen bigger then 900px **/
@@ -140,7 +140,7 @@
 		width:100%!important;	}
 	.tp_responsive #any-subcats #size-on-respnsive-layout .float-items,
 	.tp_responsive #up-file #size-on-respnsive-layout .float-items {
-		padding:0px 1%;
+		padding:0 1%;
 		text-align:left;
 	}
 	.tp_responsive #any-subcats #size-on-respnsive-layout,
@@ -240,7 +240,7 @@
 	.tp_responsive .panelsColumns,
 	.tp_responsive .gridColumns,
 	.tp_responsive .gridC {
-		padding-right:0px!important;
+		padding-right:0!important;
 		width:100%!important;
 		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
 	}
@@ -348,7 +348,7 @@
 	}
 	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
 	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader {
-		padding: 0;
 		margin: 0;
-}
+		padding: 0;
+	}
 }
