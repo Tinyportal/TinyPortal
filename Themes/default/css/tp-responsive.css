@@ -167,7 +167,7 @@
 		display: table;
 	}
 	.tp_responsive #tpadmin_content {
-		margin: 2px 0 0 0px!important;
+		margin: 2px 0 0 0!important;
 	}
 	.tp_responsive .article_iconcolumn {
 		float:none!important;
@@ -184,10 +184,10 @@
 		background-position: center;
 	}
 	.tp_responsive .render2 {
-		margin: 4px 0 0 0px!important;
+		margin: 4px 0 0 0!important;
 	}
 	.tp_responsive .render4 {
-		margin: 4px 0 0 0px!important;
+		margin: 4px 0 0 0!important;
 	}
 	.dlitemgrid {
 		width: 98%;
@@ -213,7 +213,7 @@
 		display: table;
 	}
 	.tp_responsive #tpadmin_content {
-		margin: 2px 0 0 0px!important;
+		margin: 2px 0 0 0!important;
 	}
 	.tp_responsive #tp_overview ul li {
 		width: 50%!important;
@@ -223,7 +223,7 @@
 	}
 }
 /** screen smaller then 400px **/
-@media all and (min-width: 0px) and (max-width: 400px) {
+@media all and (min-width: 0) and (max-width: 400px) {
 	.tp_responsive .panels-options {
 		width: 95%!important; /* Panel Settings */
 	}
@@ -236,7 +236,7 @@
 	}
 }
 /** screen smaller then 500px **/
-@media all and (min-width: 0px) and (max-width: 500px) {
+@media all and (min-width: 0) and (max-width: 500px) {
 	.tp_responsive .panelsColumns,
 	.tp_responsive .gridColumns,
 	.tp_responsive .gridC {
@@ -256,7 +256,7 @@
 	}
 }
 /** screen smaller then 400px **/
-@media all and (min-width: 0px) and (max-width: 400px) {
+@media all and (min-width: 0) and (max-width: 400px) {
 	.tp_responsive .panelsColumns,
 	.tp_responsive .panelsColumnsHorizontally {
 		width:100%!important;
@@ -273,7 +273,7 @@
 	overflow:hidden; /* do not delete */
 }
 /** screen smaller then 500px **/
-@media all and (min-width: 0px) and (max-width: 500px) {
+@media all and (min-width: 0) and (max-width: 500px) {
 	.lrON.tp_responsive #tpleftbarContainer {
 		display: table-row-group;
 	}
@@ -287,8 +287,8 @@
 	}
 	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
 	.tp_responsive #tprightbarContainer #tprightbarHeader {
-		margin: 0px;
-		padding: 0px;
+		margin: 0;
+		padding: 0;
 	}
 }
 /** screen from 500px to 900px **/
@@ -310,7 +310,7 @@
 	}
 }
 /** screen smaller then 900px **/
-@media all and (min-width: 0px) and (max-width: 900px) {
+@media all and (min-width: 0) and (max-width: 900px) {
 	.tp_responsive #centerContainer {
 		max-width:100%;
 		overflow:hidden!important;
@@ -348,7 +348,7 @@
 	}
 	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
 	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader {
-		padding: 0px;
-		margin: 0px;
+		padding: 0;
+		margin: 0;
 }
 }
