@@ -395,35 +395,35 @@ function template_frontpage()
 
 							if(empty($context['TPortal']['frontpage_template']))
 								$context['TPortal']['frontpage_template'] = '
-					<span class="upperframe"><span></span></span>
-					<div class="roundframe">
-						<div class="title_bar">
-							<h3 class="titlebg"><span class="left"></span>{article_shortdate} {article_title} </h3>
-						</div>
-						<div style="padding: 0; overflow: hidden;">
-							{article_avatar}
-							<div class="article_info">
-								{article_category}
-								{article_author}
-								{article_date}
-								{article_views}
-								{article_comments_total}
-								{article_rating}
-								{article_options}
-							</div>
-							<div class="article_padding">{article_text}</div>
-							{article_bookmark}
-							{article_boardnews}
-							{article_moreauthor}
-							{article_morelinks}
-						</div>
-					</div>
-					<span class="lowerframe" style="margin-bottom: 5px;"></span>';
+<span class="upperframe"><span></span></span>
+<div class="roundframe">
+	<div class="title_bar">
+		<h3 class="titlebg"><span class="left"></span>{article_shortdate} {article_title} </h3>
+	</div>
+	<div style="padding: 0; overflow: hidden;">
+		{article_avatar}
+		<div class="article_info">
+			{article_category}
+			{article_author}
+			{article_date}
+			{article_views}
+			{article_comments_total}
+			{article_rating}
+			{article_options}
+		</div>
+		<div class="article_padding">{article_text}</div>
+		{article_bookmark}
+		{article_boardnews}
+		{article_moreauthor}
+		{article_morelinks}
+	</div>
+</div>
+<span class="lowerframe" style="margin-bottom: 5px;"></span>';
 							echo '<br style="clear: both;" />
 				</div>
 				<div>
 					<h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
-					<textarea id="tp_customlayout" name="tp_frontpage_template">' . $context['TPortal']['frontpage_template'] . '</textarea><br><br>
+					<textarea class="tp_customlayout" name="tp_frontpage_template">' . $context['TPortal']['frontpage_template'] . '</textarea><br><br>
 				</div>
 				<hr>
 					<dl class="settings">
@@ -684,35 +684,35 @@ function template_editcategory()
 							</div>';
 				if(empty($mg['value9']))
 					$mg['value9'] = '
-							<div class="tparticle">
-								<div class="cat_bar">
-									<h3 class="catbg"><span class="left"></span>{article_shortdate} {article_title} {article_category}</h3>
-								</div>
-								<div class="windowbg2">
-									<span class="topslice"><span></span></span>
-									<div class="content">
-										{article_avatar}
-										<div class="article_info">
-											{article_author}
-											{article_date}
-											{article_views}
-											{article_comments_total}
-											{article_rating}
-											{article_options}
-										</div>
-										<div class="article_padding">{article_text}</div>
-										<div class="article_padding">{article_moreauthor}</div>
-										<div class="article_padding">{article_bookmark}</div>
-										<div class="article_padding">{article_morelinks}</div>
-										<div class="article_padding">{article_comments}</div>
-									</div>
-									<span class="botslice"><span></span></span>
-								</div>
-							</div>';
+<div class="tparticle">
+	<div class="cat_bar">
+		<h3 class="catbg"><span class="left"></span>{article_shortdate} {article_title} {article_category}</h3>
+	</div>
+	<div class="windowbg2">
+		<span class="topslice"><span></span></span>
+		<div class="content">
+			{article_avatar}
+			<div class="article_info">
+				{article_author}
+				{article_date}
+				{article_views}
+				{article_comments_total}
+				{article_rating}
+				{article_options}
+			</div>
+			<div class="article_padding">{article_text}</div>
+			<div class="article_padding">{article_moreauthor}</div>
+			<div class="article_padding">{article_bookmark}</div>
+			<div class="article_padding">{article_morelinks}</div>
+			<div class="article_padding">{article_comments}</div>
+		</div>
+		<span class="botslice"><span></span></span>
+	</div>
+</div>';
 				echo '	</div>
 						<br style="clear: both;" />
 						<h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
-						<textarea id="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
+						<textarea class="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
 					</div>
 					<hr>
 					<dl class="tptitle settings">
