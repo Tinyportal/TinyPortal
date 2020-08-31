@@ -713,7 +713,7 @@ function template_showcomments()
 			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
 					<tr class="title_bar titlebg2">
-					<th scope="col" class="comments">
+					<th scope="col" class="tp_comments">
 					<div style="word-break:break-all;">
 						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
 						<div class="float-items tpleft" style="width:15%;">' . $txt['tp-author'] . '</div>
@@ -730,7 +730,7 @@ function template_showcomments()
 				foreach($context['TPortal']['artcomments']['new'] as $mes) {
 					echo '
                         <tr class="windowbg">
-                            <td class="comments">
+                            <td class="tp_comments">
                             <div>
                                 <div class="float-items" style="width:30%;">
                                     <a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . ' ' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '</a>
@@ -767,7 +767,7 @@ function template_showcomments()
 			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
 					<tr class="title_bar titlebg2">
-					<th scope="col" class="comments">
+					<th scope="col" class="tp_comments">
 			<div>
 				<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
 				<div class="float-items tpleft" style="width:15%;">' . $txt['tp-author'] . '</div>
@@ -784,7 +784,7 @@ function template_showcomments()
 				foreach($context['TPortal']['artcomments']['new'] as $mes) {
 					echo '
 			<tr class="windowbg">
-			<td class="comments">
+			<td class="tp_comments">
 			<div>
 				<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
 				' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
@@ -802,7 +802,7 @@ function template_showcomments()
 			else {
 				echo '
 			<tr class="windowbg">
-			<td class="comments">
+			<td class="tp_comments">
 				<div class="padding-div">' . $txt['tp-nocomments2'] . '</div>
 			</td>
 			</tr>';
