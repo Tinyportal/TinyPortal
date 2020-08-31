@@ -2270,7 +2270,7 @@ function TPortal_panel($side) {{{
 
 						document.getElementById( blockimage ).src = "'.$settings['tp_images_url'].'" + (state ? "/TPcollapse.png" : "/TPexpand.png");
 						var tempImage = new Image();
-						tempImage.src = "'.$scripturl.'?action=tportal;upshrink=" + targetId + ";state=" + state + ";" + (new Date().getTime());
+						tempImage.src = "'.$scripturl.'?action=tportal;sa=upshrink;id=" + targetId + ";state=" + state + ";" + (new Date().getTime());
 
 					}
 				}

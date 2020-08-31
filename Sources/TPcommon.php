@@ -20,6 +20,17 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
+function TPCommonActions(&$subActions) {{{
+
+    $subActions = array_merge(
+        array (
+            'upshrink'      => array('TPcommon.php', 'upshrink', array()),
+        ),
+        $subActions
+    );
+
+}}}
+
 function tp_createthumb($picture, $width, $height, $thumb)
 {
 
@@ -190,12 +201,12 @@ function tp_groups()
 	return $grp;
 }
 
-function TPUpshrink() {{{
+function upshrink() {{{
 
     global $settings;
 
-    if(isset($_GET['upshrink']) && isset($_GET['state'])) {
-        $blockid    = TPUtil::filter('upshrink', 'get', 'string');
+    if(isset($_GET['id']) && isset($_GET['state'])) {
+        $blockid    = TPUtil::filter('id', 'get', 'string');
         $state      = TPUtil::filter('state', 'get', 'string');
         if(isset($_COOKIE['tp-upshrinks'])) {
             $shrinks = explode(',', $_COOKIE['tp-upshrinks']);
@@ -218,12 +229,12 @@ function TPUpshrink() {{{
         }
         // Don't output anything...
         $tid = time();
-		if (TP_SMF21) {
-			redirectexit($settings['images_url'] . '/blank.png?ti='.$tid);
-			}
-		else {
-			redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
-			}
+        if (TP_SMF21) {
+            redirectexit($settings['images_url'] . '/blank.png?ti='.$tid);
+        }
+        else {
+            redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
+        }
     }
 
 }}}
