@@ -69,9 +69,9 @@ class Integrate
                 '$sourcedir/TPSearch.php|TPSearchActions',
                 '$sourcedir/TPBlock.php|TPBlockActions',
                 '$sourcedir/TPdlmanager.php|TPDownloadActions',
+                '$sourcedir/TPcommon.php|TPCommonActions',
             ),
-            'tp_post_subactions'                 => array ( 
-                '$sourcedir/TPcommon.php|TPUpshrink',
+            'tp_post_subactions'                => array ( 
             ),           
             'tp_post_init'                      => array (
                 '$sourcedir/TPShout.php|TPShoutLoad',
