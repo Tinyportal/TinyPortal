@@ -88,19 +88,19 @@ $clickme.click( function(e) {
 					<a href="" class="clickme">'.$txt['tp-more'].'</a>
 					<div class="box" style="width:60%;float:left;">
 						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div id="show-on-respnsive-layout"><strong>'.$txt['tp-dlicon'].'</strong></div>
+							<div class="show-on-responsive"><strong>'.$txt['tp-dlicon'].'</strong></div>
 							', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 						</div>
 						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div id="show-on-respnsive-layout"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
+							<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
 							'.$cat['items'].'
 						</div>
 						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div id="show-on-respnsive-layout"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
+							<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
 							'.$cat['submitted'].'
 						</div>
 						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div id="show-on-respnsive-layout" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
+							<div class="show-on-responsive" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
 							<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
 							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
@@ -354,11 +354,11 @@ $clickme.click( function(e) {
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			<div class="box" style="width:70%;float:left;">				
 			    <div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
-					<div id="show-on-respnsive-layout">'.$txt['tp-dlicon'].'</div>
+					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 					', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 			    </div>
 			    <div style="width:29%;" class="fullwidth-on-res-layout float-items">
-					<div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
+					<div class="show-on-responsive" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
 					<div id="size-on-respnsive-layout">
 						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['items'].'
@@ -370,7 +370,7 @@ $clickme.click( function(e) {
 				</div>
 			</div>
 			<div style="width:56.5%;" class="fullwidth-on-res-layout float-items">
-				<div id="show-on-respnsive-layout" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
+				<div class="show-on-responsive" style="margin-left:1%;">'.$txt['tp-dlfile'].'</div>
 				<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
 				<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 				<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
@@ -396,11 +396,11 @@ $clickme.click( function(e) {
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
 			<div class="box" style="width:70%;float:left;">				
 				<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
-					<div id="show-on-respnsive-layout">'.$txt['tp-dlicon'].'</div>
+					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 				   ', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 				</div>
 			    <div class="fullwidth-on-res-layout float-items" style="width:29%;">
-					<div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
+					<div class="show-on-responsive" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
 					<div id="size-on-respnsive-layout">
 						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['views'].'
@@ -412,7 +412,7 @@ $clickme.click( function(e) {
 					</div>
 				</div>
 				<div class="fullwidth-on-res-layout float-items" style="width:42%;">
-					<div id="show-on-respnsive-layout">'.$txt['tp-dlfile'].'</div>
+					<div class="show-on-responsive">'.$txt['tp-dlfile'].'</div>
 					<div id="size-on-respnsive-layout"><div style="width:48%;word-break:break-all;" class="float-items">
 				   '. (($cat['file']=='- empty item -' || $cat['file']=='') ? $txt['tp-noneicon'] : $cat['file']) .'
 					</div>
@@ -423,7 +423,7 @@ $clickme.click( function(e) {
 				</div>
 			</div>
 			<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
-				<div id="show-on-respnsive-layout">'.$txt['tp-dlfilesize'].'</div>
+				<div class="show-on-responsive">'.$txt['tp-dlfilesize'].'</div>
 				'. $cat['filesize'].''.$txt['tp-kb'].'
 			</div>
 			<p class="clearthefloat"></p>
@@ -704,19 +704,19 @@ $clickme.click( function(e) {
 					<div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:30%;"><a href="'.$cat['href'].'">'.$cat['name'].'</a></div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
-							<div id="show-on-respnsive-layout">'.$txt['tp-dlfilename'].'</div>
+							<div class="show-on-responsive">'.$txt['tp-dlfilename'].'</div>
 							<div id="size-on-respnsive-layout" style="word-break:break-all;">'.$cat['file'].'</div>
 						</div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
-							<div id="show-on-respnsive-layout">'.$txt['tp-created'].'</div>
+							<div class="show-on-responsive">'.$txt['tp-created'].'</div>
 							<div id="size-on-respnsive-layout">'.$cat['date'].'</div>
 						</div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
-							<div id="show-on-respnsive-layout">'.$txt['tp-uploadedby'].'</div>
+							<div class="show-on-responsive">'.$txt['tp-uploadedby'].'</div>
 							'.$cat['author'].'
 						</div>
 						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:10%;">
-							<div id="show-on-respnsive-layout">'.$txt['tp-dlfilesize'].'</div>
+							<div class="show-on-responsive">'.$txt['tp-dlfilesize'].'</div>
 							'. $cat['filesize'].''.$txt['tp-kb'].'
 						</div>
 						<p class="clearthefloat"></p>

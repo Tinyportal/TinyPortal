@@ -1462,8 +1462,8 @@ function article_renders($type = 1, $single = false, $first = false)
 <div class="tborder" style="margin-bottom: 5px;">
 	<div class="article' . (isset($context['TPortal']['article']['boardnews']) ? ' windowbg' : ' windowbg') . '" style="margin: 0;">
 	<span class="topslice"><span></span></span>
-		<div class="article_picturecolumn smallpad">{article_picturecolumn}</div>
-		<div class="render4 smallpad">
+		<div class="article_picturecolumn tp_pad">{article_picturecolumn}</div>
+		<div class="render4 tp_pad">
 			<h2 class="article_title" style="padding-left: 0;">{article_title} </h2>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
@@ -1986,7 +1986,7 @@ function article_comments($render = true)
 
 	if(in_array('comments', $context['TPortal']['article']['visual_options']) && !$context['TPortal']['article_comments_count'] == 0) {
 		$data .= '	
-	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
+	<div class="tp_commentsbox"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
 
 		$counter = 1;
 		if(isset($context['TPortal']['article']['comment_posts'])) {
@@ -2372,7 +2372,7 @@ function template_tpadm_above()
 	global $context, $txt;
 
 	echo '
-	<div  id="tpadmin_menu">
+	<div  class="tpadmin_menu">
 		<div class="cat_bar">
 			<h3 class="catbg">' . $txt['tp-adminmenu'] .'</h3>
 		</div>
@@ -2410,7 +2410,7 @@ function template_tpadm_above()
 		</div>
 		<span class="lowerframe"><span></span></span>
 	</div>
-	<div id="tpadmin_content" style="margin-top: 0;">';
+	<div class="tpadmin_content" style="margin-top: 0;">';
 }
 
 function template_tpadm_below()

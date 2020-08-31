@@ -73,7 +73,7 @@ function template_main()
 
 			if(!empty($context['TPortal']['featured']['sshot']))
 				 echo '
-				<div class="screenshot floatright tp_pad" style="width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$context['TPortal']['featured']['sshot'].') no-repeat;"></div>';
+				<div class="dl_featureshot floatright tp_pad" style="width: '.$context['TPortal']['dl_screenshotsize'][2].'px; height: '.$context['TPortal']['dl_screenshotsize'][3].'px;background: url('.$context['TPortal']['featured']['sshot'].') no-repeat;"></div>';
 			echo '
 				<p>' . $context['TPortal']['featured']['description'] , '</p>
 				<p class="clearthefloat"></p>
@@ -278,7 +278,7 @@ function template_main()
 							<div class="dlcatpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 					if(!empty($content))
 						echo '
-					<div class="dlcategory tp-subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
+					<div class="dlcategory dlsubcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
 						echo '
 						<p class="clearthefloat"></p>
 						</div>
@@ -401,7 +401,7 @@ function template_main()
 				<p class="clearthefloat"></p>
 				<hr>
 					<p style="float:right;">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>
-					<ul class="tp_details" style="line-height: 1.4em; font-size: 0.95em;">
+					<ul class="dldetails" style="line-height: 1.4em; font-size: 0.95em;">
 						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
 						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>
 						<li>'.$txt['tp-downloads'].': '.$dlitem['downloads'].'</li>

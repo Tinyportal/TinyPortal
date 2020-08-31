@@ -2308,7 +2308,7 @@ function TPortalDLAdmin()
 				$itemid = $value;
 				// insert new one
 				$href = '?action=tportal;sa=download;dl=item'.$itemid;
-				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="taglink">' . $title[0] . '</span>';
+				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="dltag">' . $title[0] . '</span>';
 				if(!empty($tag))
 				{
 					$smcFunc['db_query']('INSERT',
