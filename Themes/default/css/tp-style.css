@@ -19,25 +19,25 @@
 	overflow: hidden;
 	width: 100%;
 }
-.tp_col8 {
+.tp_onecolumn {
 	float: left;
 	width: 50%;
 }
-.tp_col16 {
+.tp_twocolumn {
 	float: left;
 	width: 100%;
 }
-.leftcol {
+.tp_leftcol {
 	padding-right: 3px;
 }
-.rightcol {
+.tp_rightcol {
 	padding-left: 3px;
 }
-.tptabs {
+.tp_tabs {
 	margin: 0;
 	padding: 1em;
 }
-.tptabs a.tpactive {
+.tp_tabs a.tp_active {
 	font-weight: bold;
 }
 #tpleftbarContainer {
@@ -127,9 +127,6 @@ h2.author_h2 {
 	border-top: 1px solid rgba(221, 221, 221, 0.5);
 	padding: 0 1em;
 }
-.article {
-	overflow: auto;
-}
 .tparticle {
 	border-radius: 0 0 6px 6px;
 	overflow: auto;
@@ -198,11 +195,18 @@ a.tp_avatar_author img {
 	padding: 1px;
 	width: 35px;
 }
-.avatar_single img {
+.tp_avatar_single img {
 	border-radius: 2px;
 	float: left;
 	height: 30px;
 	margin: .4em .5em .5em 0;
+	padding: 1px;
+}
+.tp_avatar_single2 img {
+	border-radius: 2px;
+	float: left;
+	height: 30px;
+	margin: 4px 4px 4px 0;
 	padding: 1px;
 }
 .tp_avatar, .tp_avatar_category {
@@ -217,13 +221,6 @@ a.tp_avatar_author img {
 	padding: 3px;
 	right: 0;
 	top: 0;
-}
-.avatar_single2 img {
-	border-radius: 2px;
-	float: left;
-	height: 30px;
-	margin: 4px 4px 4px 0;
-	padding: 1px;
 }
 /* social */
 .article_socialbookmark {
@@ -273,20 +270,20 @@ img.tp_social {
 	max-height: 30em;
 	overflow: auto;
 }
-.article_comment {
+.tp_article_comment {
 	padding: 1em 1em 0.3em 1em;
 }
-.comment_author {
+.tp_comment_author {
 	display: block;
 	float: left;
 	margin: 0;
 }
-.comment_author img {
+.tp_comment_author img {
 	border-radius: 2px;
 	margin: 0 8px 0 0;
 	width: 34px;
 }
-.comments span.counter {
+.tp_comments span.counter {
 	color: #bbb;
 	font-size: 1.6em;
 	font-style: italic;
@@ -294,21 +291,21 @@ img.tp_social {
 	margin-left: -0.5em;
 	position: absolute;
 }
-.comments span.author {
+.tp_comments span.author {
 	display: block;
 	font-size: 0.8em;
 	font-weight: normal;
 	padding-left: 20px;
 }
-.comments strong.subject {
+.tp_comments strong.subject {
 	padding-left: 20px;
 }
-.comments div.text {
+.tp_comments div.text {
 	line-height: 1.4em;
 	margin: 0.5em 0.5em 0.5em 20px;
 	padding: 0.5em 0.5em 0.5em 0;
 }
-.comments a.delete {
+.tp_comments a.delete {
 	font-size: 0.8em;
 	font-weight: bold;
 	padding: 0 10px;
@@ -1097,16 +1094,12 @@ code.bbc_code {
 	width: 100%;
 }
 .dl_details {
-	margin-top: 5px;
-	padding: 0;
-}
-.dldetails {
-	font-size: 0.8em;
-	line-height: 1.3em;
+	font-size: 0.95em;
+	line-height: 1.4em;
 	margin: 0 0 5px 0;
 	padding: 2px 0 5px 0;
 }
-ul.dldetails li {
+ul.dl_details li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -1115,6 +1108,9 @@ ul.dldetails li {
 	border: #CCCCCC;
 	border: 1px solid rgba(204, 204, 204, 0.5);
 	overflow: hidden;
+}
+.dl_cats {
+	padding-bottom: 1em;
 }
 .dl_cats h4 {
 	margin: 0;
@@ -1130,57 +1126,39 @@ img.dl_caticon {
 	margin: 0.7em 1em .5em 0;
 	max-width: 50px;
 }
-.dl_cats {
-	padding-bottom: 1em;
-}
-.dltag {
+.dl_tag {
 	display: block;
 	margin: 0;
 	padding: 0 0 0 24px;
 }
-.dlcategory {
+.dl_category {
 	margin-bottom: 0.5em;
 	overflow: visible;
 	padding: 4px 10px;
 }
-.dlcategory h4 {
+.dl_category h4 {
 	font-size: 1.1em;
 	line-height: 1.5em;
 	margin: 0.5em 0 0 0;
 	padding: 0 0 0 60px;
 }
-.dlcategory .details {
+.dl_category .details {
 	float: right;
 }
-.dlcategory .itemdetails {
+.dl_category .itemdetails {
 	padding: 10px 0 4px 0;
 }
-.dlsubcats {
+.dl_subcats {
 	padding-left: 60px;
 }
-.dlitems {
-	margin-top: 0;
-}
-.dlitems h4.titlebg {
-	padding: 5px 10px;
-}
-.dlitems h5 {
-	font-size: 1em;
-	line-height: 1.5em;
-	margin: 0;
-	padding: 4px 10px;
-}
-.dlitems h5.titlebg2 a {
-	text-decoration: none;
-}
-.dlitemgrid {
+.dl_itemgrid {
 	display: inline-block;
 	overflow: hidden;
 	padding: 1em 1% 1em 0;
 	vertical-align: top;
 	width: 48%;
 }
-.dlitemgrid .itemdetails {
+.dl_itemgrid .itemdetails {
 	padding: 10px 0 4px 0;
 }
 select[name="tp_dlitem_rating"] {
@@ -1194,13 +1172,13 @@ div.dl_screenshot {
 	float: left;
 	margin-right: 15px;
 }
-.ratingoption {
+.dl_ratingoption {
 	padding: 0 5px;
 }
-.morefiles {
+.dl_morefiles {
 	padding: 10px 0 0 0;
 }
-.morefiles li {
+.dl_morefiles li {
 	background: url(../images/tinyportal/glyph_download.png) no-repeat;
 	list-style: none;
 	margin: 0;
@@ -1222,16 +1200,7 @@ h4.h4dl {
 	margin: 0;
 	padding: 0 0 0.5em 0;
 }
-ul.uldl {
-	margin: 0;
-	padding: 0;
-}
-ul.uldl li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-.recentdl {
+.dl_recentdl {
 	display: inline-block;
 	min-width: 300px;
 	overflow: hidden;
@@ -1239,15 +1208,15 @@ ul.uldl li {
 	vertical-align: top;
 	width: 47%;
 }
-.dlpost {
+.dl_post {
 	padding: 0 0 .5em 0;
 }
-.dlsummary {
+.dl_catpost {
+	margin: 0.5em 0 0 0;
+	padding: 0 0 .5em 60px;
+}
+.dl_summary {
 	line-height: 1.4em;
 	max-height: 15em;
 	overflow: hidden;
-}
-.dlcatpost {
-	margin: 0.5em 0 0 0;
-	padding: 0 0 .5em 60px;
 }

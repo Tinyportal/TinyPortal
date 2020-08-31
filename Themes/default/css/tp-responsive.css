@@ -189,7 +189,7 @@
 	.tp_responsive .render4 {
 		margin: 4px 0 0 0!important;
 	}
-	.dlitemgrid {
+	.dl_itemgrid {
 		width: 98%;
 		word-wrap: break-word;
 	}
@@ -244,7 +244,7 @@
 		width:100%!important;
 		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
 	}
-	.tp_col8 {
+	.tp_onecolumn {
 		width: 100%;
 	}
 }

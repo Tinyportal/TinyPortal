@@ -2172,7 +2172,7 @@ function template_blockoverview()
 				foreach($context['TPortal']['blockoverview'] as $block)
 				{
 					echo '
-				<div class="tp_col8">
+				<div class="tp_onecolumn">
 					<p><a href="' . $scripturl . '?action=tpadmin&sa=editblock&id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
 					<hr>
 					<div id="tp'.$block['id'].'" style="overflow: hidden;">

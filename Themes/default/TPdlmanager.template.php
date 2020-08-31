@@ -117,7 +117,7 @@ function template_main()
 				foreach($context['TPortal']['dl_last_added'] as $last)
 				{
 					echo '
-					<div class="recentdl">';
+					<div class="dl_recentdl">';
 
 					if(!empty($last['screenshot']))
 						echo '<div style="background: url('.$last['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
@@ -152,7 +152,7 @@ function template_main()
 				foreach($context['TPortal']['dl_week_downloaded'] as $wost)
 				{
 					echo '
-					<div class="recentdl">';
+					<div class="dl_recentdl">';
 					
 					if(!empty($wost['screenshot']))
 						echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
@@ -184,7 +184,7 @@ function template_main()
 				foreach($context['TPortal']['dl_most_downloaded'] as $wost)
 				{
 					echo '
-					<div class="recentdl">';
+					<div class="dl_recentdl">';
 					
 					if(!empty($wost['screenshot']))
 						echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
@@ -269,16 +269,16 @@ function template_main()
 					}
 
 					echo '
-					<div class="dlcategory"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
+					<div class="dl_category"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
 						<div>
 						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" /></div>
 							<div style="overflow: visible;">
 							<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ' '.$txt['tp-dlfiles'],': '.$dlcat['files'].'</div>
 							<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
-							<div class="dlcatpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
+							<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 					if(!empty($content))
 						echo '
-					<div class="dlcategory dlsubcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
+					<div class="dl_category dl_subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
 						echo '
 						<p class="clearthefloat"></p>
 						</div>
@@ -320,7 +320,7 @@ function template_main()
 				foreach($context['TPortal']['dlitem'] as $dlitem)
 				{
 				echo '
-					<div class="dlitemgrid">
+					<div class="dl_itemgrid">
 						<div>';
 				echo '
 					' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img class="dl_icon" src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	';
@@ -331,7 +331,7 @@ function template_main()
 
 					if(isset($dlitem['description']))
 						echo '
-						<div class="dlpost dlsummary">' . $dlitem['description'] . '</div>';
+						<div class="dl_post dl_summary">' . $dlitem['description'] . '</div>';
 
 					unset($details);
 					$details=array();
@@ -401,7 +401,7 @@ function template_main()
 				<p class="clearthefloat"></p>
 				<hr>
 					<p style="float:right;">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>
-					<ul class="dldetails" style="line-height: 1.4em; font-size: 0.95em;">
+					<ul class="dl_details">
 						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
 						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>
 						<li>'.$txt['tp-downloads'].': '.$dlitem['downloads'].'</li>
@@ -434,19 +434,19 @@ function template_main()
 			{
 			if (!$context['user']['is_guest'])
 				echo '
-					<div class="ratingoption"><em class="smalltext">'.$txt['tp-dlhaverated'].'</em></div>';
+					<div class="dl_ratingoption"><em class="smalltext">'.$txt['tp-dlhaverated'].'</em></div>';
 			}
 			echo '
 					<hr />
-					<div class="dlpost">'.$dlitem['description'].'</div>';
+					<div class="dl_post">'.$dlitem['description'].'</div>';
 
 			// any extra files attached?
 			if(isset($dlitem['subitem']) && is_array($dlitem['subitem']))
 			{
 				echo '
-					<div class="morefiles">
+					<div class="dl_morefiles">
 						<h4>'.$txt['tp-dlmorefiles'].'</h4>
-						<div class="dlpost">
+						<div class="dl_post">
 							<ul>';
 				foreach($dlitem['subitem'] as $sub)
 				{
