@@ -175,7 +175,7 @@ class Util
             if(preg_match('/.*\[([^]]+)\]/', $tmpString, $matches) > 0 ) {
                 // Get the bbcode tag
                 $search     = '/'.substr($matches[1], 0, strpos($matches[1], ' ')).']';
-                if(strstr($matches[0], $search) === false) {
+                if(strstr($matches[0], $matches[1]) === false) {
                     $strEnd     = strpos($string, $search, strlen($tmpString));
                     if($strEnd != 0) {
                         $tmpString  = self::substr($string, 0, $strEnd + strlen($search));
