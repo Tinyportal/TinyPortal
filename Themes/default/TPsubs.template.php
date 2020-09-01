@@ -980,7 +980,7 @@ function tpo_whos($buddy_only = false)
 		$avy = progetAvatars($ids);
 		foreach($avy as $a => $av)
 			echo '
-		<a class="avatar_single2" title="'.$names[$a].'" href="' . $scripturl . '?action=profile;u='.$a.'">' . $av . '</a>';
+		<a class="tp_avatar_single2" title="'.$names[$a].'" href="' . $scripturl . '?action=profile;u='.$a.'">' . $av . '</a>';
 	}
 }
 
@@ -1157,9 +1157,9 @@ function template_tptabs_above()
 	{
 		$buts = array();
 		echo '
-	<div class="tptabs">';
+	<div class="tp_tabs">';
 		foreach($context['TPortal']['tptabs'] as $tab)
-			$buts[] = '<a' . ($tab['is_selected'] ? ' class="tpactive"' : '') . ' href="' . $tab['href'] . '">' . $tab['title'] . '</a>';
+			$buts[] = '<a' . ($tab['is_selected'] ? ' class="tp_active"' : '') . ' href="' . $tab['href'] . '">' . $tab['title'] . '</a>';
 
 		echo implode(' | ', $buts) , '
 	</div>';
@@ -1275,10 +1275,10 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>
 			' . ($single ? '
 			<div class="tp_container">
-				<div class="tp_col8">
+				<div class="tp_twocolumn">
 					{article_bookmark}
 				</div>
-				<div class="tp_col8">
+				<div class="tp_twocolumn">
 					{article_moreauthor}
 				</div>
 			</div>
@@ -1440,10 +1440,10 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 				<div class="article_text" style="border-bottom:none">{article_text}</div>
 				<div class="tp_container">
-					<div class="tp_col8 tp_pad">
+					<div class="tp_twocolumn tp_pad">
 						{article_bookmark}
 					</div>
-					<div class="tp_col8">
+					<div class="tp_twocolumn">
 						{article_moreauthor}
 					</div>
 				</div>
@@ -1460,10 +1460,10 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		$code = '
 <div class="tborder" style="margin-bottom: 5px;">
-	<div class="article' . (isset($context['TPortal']['article']['boardnews']) ? ' windowbg' : ' windowbg') . '" style="margin: 0;">
+	<div class="tparticle' . (isset($context['TPortal']['article']['boardnews']) ? ' windowbg' : ' windowbg') . '" style="margin: 0;">
 	<span class="topslice"><span></span></span>
-		<div class="article_picturecolumn smallpad">{article_picturecolumn}</div>
-		<div class="render4 smallpad">
+		<div class="article_picturecolumn tp_pad">{article_picturecolumn}</div>
+		<div class="render4 tp_pad">
 			<h2 class="article_title" style="padding-left: 0;">{article_title} </h2>
 			<div class="article_info">
 		' . (!$single ? '{article_avatar}' : '') .  '
@@ -1919,7 +1919,7 @@ function article_avatar($render = true)
     $data = '';
 
 	if(in_array('avatar', $context['TPortal']['article']['visual_options'])) {
-		$data = (!empty($context['TPortal']['article']['avatar']) ? '<div class="avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
+		$data = (!empty($context['TPortal']['article']['avatar']) ? '<div class="tp_avatar_single" ><a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['article']['author_id'] . '" title="' . $context['TPortal']['article']['real_name'] . '">' . $context['TPortal']['article']['avatar'] . '</a></div>' : '');
     }
 
     if($render) {
@@ -1986,13 +1986,13 @@ function article_comments($render = true)
 
 	if(in_array('comments', $context['TPortal']['article']['visual_options']) && !$context['TPortal']['article_comments_count'] == 0) {
 		$data .= '	
-	<div id="articlecomments"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
+	<div class="tp_commentsbox"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
 
 		$counter = 1;
 		if(isset($context['TPortal']['article']['comment_posts'])) {
 			foreach($context['TPortal']['article']['comment_posts'] as $comment) {
 				$data .= '
-					<div class="article_comment ' . ($context['TPortal']['article']['author_id']!=$comment['poster_id'] ? 'mycomment' : 'othercomment') . '">
+					<div class="tp_article_comment ' . ($context['TPortal']['article']['author_id']!=$comment['poster_id'] ? 'mycomment' : 'othercomment') . '">
 					<a id="comment'.$comment['id'].'"></a>';
 				// can we edit the comment or are the owner of it?
 				if(allowedTo('tp_articles') || $comment['poster_id'] == $context['user']['id'] && !$context['user']['is_guest']) {
@@ -2001,7 +2001,7 @@ function article_comments($render = true)
 				// not a guest
 				if ($comment['poster_id'] > 0) {
 					$data .= '	
-					<span class="comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>';
+					<span class="tp_comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>';
                 }
 				$data .= '
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
@@ -2157,10 +2157,10 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_col16">{featured}</div>
+				<div class="tp_onecolumn">{featured}</div>
 			</div>
 			<div class="tp_container">
-				<div class="tp_col16">{col1}{col2}</div>
+				<div class="tp_onecolumn">{col1}{col2}</div>
 			</div>'
 		),
 		// featured 1 col, 2 cols
@@ -2168,11 +2168,11 @@ function tp_grids()
 				'cols' => 2,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_col16">{featured}</div>
+				<div class="tp_onecolumn">{featured}</div>
 			</div>
 			<div class="tp_container">
-				<div class="tp_col8"><div class="leftcol">{col1}</div></div>
-				<div class="tp_col8"><div class="rightcol">{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{col1}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col2}</div></div>
 			</div>'
 		),
 		// featured left col, rest right col
@@ -2180,8 +2180,8 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_col8" ><div class="leftcol">{featured}</div></div>
-				<div class="tp_col8"><div class="rightcol">{col1}{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{featured}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col1}{col2}</div></div>
 			</div>'
 		),
 		// 2 cols
@@ -2189,8 +2189,8 @@ function tp_grids()
 				'cols' => 2,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_col8"><div class="leftcol">{featured}{col1}</div></div>
-				<div class="tp_col8"><div class="rightcol">{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{featured}{col1}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col2}</div></div>
 			</div>'
 		),
 		// 2 cols, then featured at bottom
@@ -2198,10 +2198,10 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_col16">{col1}{col2}</div>
+				<div class="tp_onecolumn">{col1}{col2}</div>
 			</div>
 			<div class="tp_container">
-				<div class="tp_col16">{featured}</div>
+				<div class="tp_onecolumn">{featured}</div>
 			</div>'
 		),
 		// rest left col, featured right col
@@ -2209,8 +2209,8 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_col8"><div class="rightcol">{col1}{col2}</div></div>
-				<div class="tp_col8" ><div class="leftcol">{featured}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col1}{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{featured}</div></div>
 			</div>'
 		),
 	);
@@ -2372,7 +2372,7 @@ function template_tpadm_above()
 	global $context, $txt;
 
 	echo '
-	<div  id="tpadmin_menu">
+	<div  class="tpadmin_menu">
 		<div class="cat_bar">
 			<h3 class="catbg">' . $txt['tp-adminmenu'] .'</h3>
 		</div>
@@ -2410,7 +2410,7 @@ function template_tpadm_above()
 		</div>
 		<span class="lowerframe"><span></span></span>
 	</div>
-	<div id="tpadmin_content" style="margin-top: 0;">';
+	<div class="tpadmin_content" style="margin-top: 0;">';
 }
 
 function template_tpadm_below()

@@ -106,23 +106,23 @@ function template_tp_articles()
 				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 				<div class="box" style="width:75%;float:left;">
 					<div class="smalltext float-items fullwidth-on-res-layout" style="width:32%;">
-						<div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
+						<div class="show-on-responsive">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 						<div id="size-on-respnsive-layout">',$art['date'],'</div>
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:13.5%;text-align:center;">
-						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
+						<div class="show-on-responsive">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
 						',$art['views'],'
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:20%;">
-						<div id="show-on-respnsive-layout">'.$txt['tp-ratings'].'</div>
+						<div class="show-on-responsive">'.$txt['tp-ratings'].'</div>
 						' . ($art['rating_votes'] >0 ?  $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) : '') . ' ' . $txt['tp-ratingvotes'] . ' ' . $art['rating_votes'] . '
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:13.5%;text-align:center;">
-						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>
+						<div class="show-on-responsive">', $context['TPortal']['tpsort']=='comments' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=comments">'.$txt['tp-comments'].'</a></div>
 						',$art['comments'],'
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:21%;">
-						<div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
+						<div class="show-on-responsive">', $context['TPortal']['tpsort']=='category' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=category">'.$txt['tp-category'].'</a></div>
 						',$art['category'],'
 					</div>
 			</td>
@@ -242,19 +242,19 @@ function template_tp_download()
                     <a href="" class="clickme">'.$txt['tp-more'].'</a>
                     <div class="box" style="width:70%;float:left;">
                       <div style="width:33.5%;" class="fullwidth-on-res-layout smalltext float-items">
-                        <div id="show-on-respnsive-layout">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
+                        <div class="show-on-responsive">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
                         <div id="size-on-respnsive-layout">',$art['created'],'</div>
                       </div>
                       <div style="width:16.5%;" class="fullwidth-on-res-layout float-items tpcenter">
-                        <div id="show-on-respnsive-layout">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
+                        <div class="show-on-responsive">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
                         ',$art['views'],'
                       </div>
                       <div style="width:28%;" class="fullwidth-on-res-layout float-items">
-                        <div id="show-on-respnsive-layout" style="word-break:break-all;">'.$txt['tp-ratings'].'</div>
+                        <div class="show-on-responsive" style="word-break:break-all;">'.$txt['tp-ratings'].'</div>
                         ' . $txt['tp-ratingaverage'] . ' ' . ($context['TPortal']['showstars'] ? (str_repeat('<img src="' .$settings['tp_images_url']. '/TPblue.png" style="width: .7em; height: .7em; margin-right: 2px;" alt="" />', $art['rating_average'])) : $art['rating_average']) . ' (' . $txt['tp-ratingvotes'] . ' ' . $art['rating_votes'] . ')
                       </div>
                       <div style="width:16%;" class="fullwidth-on-res-layout float-items tpcenter">
-                        <div id="show-on-respnsive-layout" style="word-break:break-all;">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
+                        <div class="show-on-responsive" style="word-break:break-all;">', $context['TPortal']['tpsort']=='downloads' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=downloads">'.$txt['tp-downloads'].'</a></div>
                         ',$art['downloads'],'
                        </div>
                        <p class="clearthefloat"></p>

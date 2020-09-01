@@ -41,13 +41,13 @@
 	}
 	dl.tptitle dt
 	{
-		width: 100%;
 		float: none;
+		width: 100%;
 	}
 	dl.tptitle dd
 	{
-		width: 100%;
 		float: none;
+		width: 100%;
 	}
 }
 /** screen bigger then 900px **/
@@ -96,7 +96,7 @@
 		content: "";
 		display:block; /* after for older browsers*/
 	}
-	.tp_responsive #show-on-respnsive-layout {
+	.tp_responsive .show-on-responsive {
 		display:block;
 		float: left;
 		max-width: 150px;
@@ -127,20 +127,20 @@
 		padding:1%!important;
 		width:80%!important;
 	}	
-	.tp_responsive .bigger-width #show-on-respnsive-layout {
+	.tp_responsive .bigger-width .show-on-responsive {
 		padding:0 3% 0 2%!important;
 		width: 30%!important;
 	}
 	.tp_responsive .bigger-width  #size-on-respnsive-layout {
 		width: 65%;
 	}
-	.tp_responsive #new-item #show-on-respnsive-layout {
+	.tp_responsive #new-item .show-on-responsive {
 		float:none;
 		padding: 0 0 1% 0!important;
 		width:100%!important;	}
 	.tp_responsive #any-subcats #size-on-respnsive-layout .float-items,
 	.tp_responsive #up-file #size-on-respnsive-layout .float-items {
-		padding:0px 1%;
+		padding:0 1%;
 		text-align:left;
 	}
 	.tp_responsive #any-subcats #size-on-respnsive-layout,
@@ -167,7 +167,7 @@
 		display: table;
 	}
 	.tp_responsive #tpadmin_content {
-		margin: 2px 0 0 0px!important;
+		margin: 2px 0 0 0!important;
 	}
 	.tp_responsive .article_iconcolumn {
 		float:none!important;
@@ -184,12 +184,12 @@
 		background-position: center;
 	}
 	.tp_responsive .render2 {
-		margin: 4px 0 0 0px!important;
+		margin: 4px 0 0 0!important;
 	}
 	.tp_responsive .render4 {
-		margin: 4px 0 0 0px!important;
+		margin: 4px 0 0 0!important;
 	}
-	.dlitemgrid {
+	.dl_itemgrid {
 		width: 98%;
 		word-wrap: break-word;
 	}
@@ -213,9 +213,9 @@
 		display: table;
 	}
 	.tp_responsive #tpadmin_content {
-		margin: 2px 0 0 0px!important;
+		margin: 2px 0 0 0!important;
 	}
-	.tp_responsive #tp_overview ul li {
+	.tp_responsive .tp_overview ul li {
 		width: 50%!important;
 	}
 	ul.tp-subcategories li {
@@ -223,7 +223,7 @@
 	}
 }
 /** screen smaller then 400px **/
-@media all and (min-width: 0px) and (max-width: 400px) {
+@media all and (min-width: 0) and (max-width: 400px) {
 	.tp_responsive .panels-options {
 		width: 95%!important; /* Panel Settings */
 	}
@@ -236,15 +236,15 @@
 	}
 }
 /** screen smaller then 500px **/
-@media all and (min-width: 0px) and (max-width: 500px) {
+@media all and (min-width: 0) and (max-width: 500px) {
 	.tp_responsive .panelsColumns,
 	.tp_responsive .gridColumns,
 	.tp_responsive .gridC {
-		padding-right:0px!important;
+		padding-right:0!important;
 		width:100%!important;
 		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
 	}
-	.tp_col8 {
+	.tp_twocolumn {
 		width: 100%;
 	}
 }
@@ -256,7 +256,7 @@
 	}
 }
 /** screen smaller then 400px **/
-@media all and (min-width: 0px) and (max-width: 400px) {
+@media all and (min-width: 0) and (max-width: 400px) {
 	.tp_responsive .panelsColumns,
 	.tp_responsive .panelsColumnsHorizontally {
 		width:100%!important;
@@ -273,7 +273,7 @@
 	overflow:hidden; /* do not delete */
 }
 /** screen smaller then 500px **/
-@media all and (min-width: 0px) and (max-width: 500px) {
+@media all and (min-width: 0) and (max-width: 500px) {
 	.lrON.tp_responsive #tpleftbarContainer {
 		display: table-row-group;
 	}
@@ -287,8 +287,8 @@
 	}
 	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
 	.tp_responsive #tprightbarContainer #tprightbarHeader {
-		margin: 0px;
-		padding: 0px;
+		margin: 0;
+		padding: 0;
 	}
 }
 /** screen from 500px to 900px **/
@@ -310,7 +310,7 @@
 	}
 }
 /** screen smaller then 900px **/
-@media all and (min-width: 0px) and (max-width: 900px) {
+@media all and (min-width: 0) and (max-width: 900px) {
 	.tp_responsive #centerContainer {
 		max-width:100%;
 		overflow:hidden!important;
@@ -348,7 +348,7 @@
 	}
 	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
 	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader {
-		padding: 0px;
-		margin: 0px;
-}
+		margin: 0;
+		padding: 0;
+	}
 }
