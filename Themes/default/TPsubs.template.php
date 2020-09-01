@@ -1275,10 +1275,10 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>
 			' . ($single ? '
 			<div class="tp_container">
-				<div class="tp_onecolumn">
+				<div class="tp_twocolumn">
 					{article_bookmark}
 				</div>
-				<div class="tp_onecolumn">
+				<div class="tp_twocolumn">
 					{article_moreauthor}
 				</div>
 			</div>
@@ -1440,10 +1440,10 @@ function article_renders($type = 1, $single = false, $first = false)
 				</div>
 				<div class="article_text" style="border-bottom:none">{article_text}</div>
 				<div class="tp_container">
-					<div class="tp_onecolumn tp_pad">
+					<div class="tp_twocolumn tp_pad">
 						{article_bookmark}
 					</div>
-					<div class="tp_onecolumn">
+					<div class="tp_twocolumn">
 						{article_moreauthor}
 					</div>
 				</div>
@@ -2157,10 +2157,10 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_twocolumn">{featured}</div>
+				<div class="tp_onecolumn">{featured}</div>
 			</div>
 			<div class="tp_container">
-				<div class="tp_twocolumn">{col1}{col2}</div>
+				<div class="tp_onecolumn">{col1}{col2}</div>
 			</div>'
 		),
 		// featured 1 col, 2 cols
@@ -2168,11 +2168,11 @@ function tp_grids()
 				'cols' => 2,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_twocolumn">{featured}</div>
+				<div class="tp_onecolumn">{featured}</div>
 			</div>
 			<div class="tp_container">
-				<div class="tp_onecolumn"><div class="tp_leftcol">{col1}</div></div>
-				<div class="tp_onecolumn"><div class="tp_rightcol">{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{col1}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col2}</div></div>
 			</div>'
 		),
 		// featured left col, rest right col
@@ -2180,8 +2180,8 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_onecolumn"><div class="tp_leftcol">{featured}</div></div>
-				<div class="tp_onecolumn"><div class="tp_rightcol">{col1}{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{featured}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col1}{col2}</div></div>
 			</div>'
 		),
 		// 2 cols
@@ -2189,8 +2189,8 @@ function tp_grids()
 				'cols' => 2,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_onecolumn"><div class="tp_leftcol">{featured}{col1}</div></div>
-				<div class="tp_onecolumn"><div class="tp_rightcol">{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{featured}{col1}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col2}</div></div>
 			</div>'
 		),
 		// 2 cols, then featured at bottom
@@ -2198,10 +2198,10 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_twocolumn">{col1}{col2}</div>
+				<div class="tp_onecolumn">{col1}{col2}</div>
 			</div>
 			<div class="tp_container">
-				<div class="tp_twocolumn">{featured}</div>
+				<div class="tp_onecolumn">{featured}</div>
 			</div>'
 		),
 		// rest left col, featured right col
@@ -2209,8 +2209,8 @@ function tp_grids()
 				'cols' => 1,
 				'code' => '
 			<div class="tp_container">
-				<div class="tp_onecolumn"><div class="tp_rightcol">{col1}{col2}</div></div>
-				<div class="tp_onecolumn"><div class="tp_leftcol">{featured}</div></div>
+				<div class="tp_twocolumn"><div class="tp_rightcol">{col1}{col2}</div></div>
+				<div class="tp_twocolumn"><div class="tp_leftcol">{featured}</div></div>
 			</div>'
 		),
 	);
