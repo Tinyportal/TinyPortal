@@ -244,7 +244,7 @@
 		width:100%!important;
 		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
 	}
-	.tp_onecolumn {
+	.tp_twocolumn {
 		width: 100%;
 	}
 }

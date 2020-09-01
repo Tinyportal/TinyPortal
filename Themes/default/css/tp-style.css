@@ -19,11 +19,11 @@
 	overflow: hidden;
 	width: 100%;
 }
-.tp_onecolumn {
+.tp_twocolumn {
 	float: left;
 	width: 50%;
 }
-.tp_twocolumn {
+.tp_onecolumn {
 	float: left;
 	width: 100%;
 }
@@ -88,6 +88,7 @@ h2.author_h2 {
 	padding: 0.7em 0;
 }
 .article_bodytext {
+	overflow-wrap: anywhere;
 	padding: 0 ;
 }
 .article_inner {
@@ -253,7 +254,7 @@ img.tp_social {
 	border-radius: 10px;
 	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
 	margin: 14px 10px 10px 0;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	padding: 1.5em 1em;
 	position: relative;
 	word-wrap: break-word;
@@ -416,7 +417,7 @@ ul.category_children li {
 .blockbody {
 	line-height: 1.3em;
 	min-height: 0;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	padding: 4px;
 	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
@@ -1016,7 +1017,7 @@ div.tp_half21 {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
 	hyphens: auto;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
@@ -1027,7 +1028,7 @@ code.bbc_code {
 	-moz-hyphens: none;
 	-webkit-hyphens: none;
 	hyphens: none;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	white-space: normal !important;
 	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
@@ -1090,7 +1091,7 @@ code.bbc_code {
 /* DL manager styles */
 .dl_container {
 	clear: both;
-	overflow-wrap: break-word;
+	overflow-wrap: anywhere;
 	width: 100%;
 }
 .dl_details {
