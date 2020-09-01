@@ -1332,6 +1332,9 @@ function doTPfrontpage() {{{
 		// make the pageindex!
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
 
+        // Needed for html_to_bbc
+        require_once(SOURCEDIR . '/Subs-Editor.php');
+
 		if($smcFunc['db_num_rows']($request) > 0) {
 			$total = $smcFunc['db_num_rows']($request);
 			$col1 = ceil($total / 2);
@@ -1370,6 +1373,9 @@ function doTPfrontpage() {{{
 
 					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
 				}
+
+                // Turn the body back to bbc so the parse_bbc called later doesn't break....
+                $row['body']            = html_to_bbc($row['body']);
 
 				// some needed addons
 				$row['rendertype'] = 'bbc';
