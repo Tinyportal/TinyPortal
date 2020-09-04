@@ -36,7 +36,7 @@
 		height:100%;
 		width:100%;
 	}
-	.tp_responsive #tpadmin_content {
+	.tp_responsive .tpadmin_content {
 		min-width:200px;
 	}
 	dl.tptitle dt
@@ -102,7 +102,7 @@
 		max-width: 150px;
 		width: 35%!important;
 	}
-	.tp_responsive #size-on-respnsive-layout {
+	.tp_responsive .size-on-responsive {
 		float: left;
 		width: 65%;
 	}	
@@ -131,42 +131,42 @@
 		padding:0 3% 0 2%!important;
 		width: 30%!important;
 	}
-	.tp_responsive .bigger-width  #size-on-respnsive-layout {
+	.tp_responsive .bigger-width  .size-on-responsive {
 		width: 65%;
 	}
 	.tp_responsive #new-item .show-on-responsive {
 		float:none;
 		padding: 0 0 1% 0!important;
 		width:100%!important;	}
-	.tp_responsive #any-subcats #size-on-respnsive-layout .float-items,
-	.tp_responsive #up-file #size-on-respnsive-layout .float-items {
+	.tp_responsive #any-subcats .size-on-responsive .float-items,
+	.tp_responsive #up-file .size-on-responsive .float-items {
 		padding:0 1%;
 		text-align:left;
 	}
-	.tp_responsive #any-subcats #size-on-respnsive-layout,
-	.tp_responsive #up-file #size-on-respnsive-layout {
+	.tp_responsive #any-subcats .size-on-responsive,
+	.tp_responsive #up-file .size-on-responsive {
 		text-align:left;
 	}
 	.tp_responsive #new-item  .float-items {
 		float: none;
 		width: 98%!important;
 	}
-	.tp_responsive #tpadmin_menu {
+	.tp_responsive .tpadmin_menu {
 		float: none!important;
 		width: 100%!important;
 	}
-	.tp_responsive #tpadmin_menu ul li {
+	.tp_responsive .tpadmin_menu ul li {
 		display: inline-block;
 		padding-left: 1%!important;
 		vertical-align: top;
 		width: 31%!important;
 	}
-	.tp_responsive #tpadmin_menu .roundframe::after {
+	.tp_responsive .tpadmin_menu .roundframe::after {
 		clear: both;
 		content: "";
 		display: table;
 	}
-	.tp_responsive #tpadmin_content {
+	.tp_responsive .tpadmin_content {
 		margin: 2px 0 0 0!important;
 	}
 	.tp_responsive .article_iconcolumn {
@@ -199,20 +199,20 @@
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
-	.tp_responsive #tpadmin_menu{
+	.tp_responsive .tpadmin_menu{
 		float: none!important;
 		width: 100%!important;
 	}
-	.tp_responsive #tpadmin_menu ul li {
+	.tp_responsive .tpadmin_menu ul li {
 		padding-left: 3%!important;
 		width: 45%!important;
 	}
-	.tp_responsive #tpadmin_menu .roundframe::after {
+	.tp_responsive .tpadmin_menu .roundframe::after {
 		clear: both;
 		content: "";
 		display: table;
 	}
-	.tp_responsive #tpadmin_content {
+	.tp_responsive .tpadmin_content {
 		margin: 2px 0 0 0!important;
 	}
 	.tp_responsive .tp_overview ul li {
@@ -230,7 +230,7 @@
 }
 /** screen smaller then 300px **/
 @media all and (max-width: 300px) {
-	.tp_responsive #tpadmin_content {
+	.tp_responsive .tpadmin_content {
 		font-size:11px;
 		word-break: break-all;
 	}

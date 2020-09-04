@@ -107,7 +107,7 @@ function template_tp_articles()
 				<div class="box" style="width:75%;float:left;">
 					<div class="smalltext float-items fullwidth-on-res-layout" style="width:32%;">
 						<div class="show-on-responsive">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
-						<div id="size-on-respnsive-layout">',$art['date'],'</div>
+						<div class="size-on-responsive">',$art['date'],'</div>
 					</div>
 					<div class="fullwidth-on-res-layout float-items" style="width:13.5%;text-align:center;">
 						<div class="show-on-responsive">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=views">'.$txt['views'].'</a></div>
@@ -243,7 +243,7 @@ function template_tp_download()
                     <div class="box" style="width:70%;float:left;">
                       <div style="width:33.5%;" class="fullwidth-on-res-layout smalltext float-items">
                         <div class="show-on-responsive">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
-                        <div id="size-on-respnsive-layout">',$art['created'],'</div>
+                        <div class="size-on-responsive">',$art['created'],'</div>
                       </div>
                       <div style="width:16.5%;" class="fullwidth-on-res-layout float-items tpcenter">
                         <div class="show-on-responsive">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=views">'.$txt['views'].'</a></div>
