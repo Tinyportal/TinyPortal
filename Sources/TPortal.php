@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0 RC2
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1361,18 +1361,9 @@ function doTPfrontpage() {{{
                     $topic_ids[] = $row['id'];
                 }
 
-				$length = $context['TPortal']['frontpage_limit_len'];
-				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length) {
-					$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
-
-					// The first space or line break. (<br />, etc.)
-					$cutoff = max(strrpos($row['body'], ' '), strrpos($row['body'], '>'));
-
-					if ($cutoff !== false)
-						$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
-
+                if(TPUtil::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
 					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
-				}
+                }
 
                 // Turn the body back to bbc so the parse_bbc called later doesn't break....
                 $row['body']            = html_to_bbc($row['body']);

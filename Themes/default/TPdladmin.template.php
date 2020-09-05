@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0 RC2
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -359,7 +359,7 @@ $clickme.click( function(e) {
 			    </div>
 			    <div style="width:29%;" class="fullwidth-on-res-layout float-items">
 					<div class="show-on-responsive" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
-					<div id="size-on-respnsive-layout">
+					<div class="size-on-responsive">
 						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['items'].'
 					</div>
@@ -401,7 +401,7 @@ $clickme.click( function(e) {
 				</div>
 			    <div class="fullwidth-on-res-layout float-items" style="width:29%;">
 					<div class="show-on-responsive" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
-					<div id="size-on-respnsive-layout">
+					<div class="size-on-responsive">
 						<div style="width:48%;" class="float-items tpcenter">
 						'.$cat['views'].'
 						</div>
@@ -413,7 +413,7 @@ $clickme.click( function(e) {
 				</div>
 				<div class="fullwidth-on-res-layout float-items" style="width:42%;">
 					<div class="show-on-responsive">'.$txt['tp-dlfile'].'</div>
-					<div id="size-on-respnsive-layout"><div style="width:48%;word-break:break-all;" class="float-items">
+					<div class="size-on-responsive"><div style="width:48%;word-break:break-all;" class="float-items">
 				   '. (($cat['file']=='- empty item -' || $cat['file']=='') ? $txt['tp-noneicon'] : $cat['file']) .'
 					</div>
 					<div style="width:48%;" class="float-items">
@@ -705,11 +705,11 @@ $clickme.click( function(e) {
 						<div class="fullwidth-on-res-layout  float-items" style="width:30%;"><a href="'.$cat['href'].'">'.$cat['name'].'</a></div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
 							<div class="show-on-responsive">'.$txt['tp-dlfilename'].'</div>
-							<div id="size-on-respnsive-layout" style="word-break:break-all;">'.$cat['file'].'</div>
+							<div class="size-on-responsive" style="word-break:break-all;">'.$cat['file'].'</div>
 						</div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
 							<div class="show-on-responsive">'.$txt['tp-created'].'</div>
-							<div id="size-on-respnsive-layout">'.$cat['date'].'</div>
+							<div class="size-on-responsive">'.$cat['date'].'</div>
 						</div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
 							<div class="show-on-responsive">'.$txt['tp-uploadedby'].'</div>
