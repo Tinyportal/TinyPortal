@@ -371,8 +371,12 @@ img.tp_social {
 }
 .article_picturecolumn {
 	float: left;
+	overflow: hidden;
 	text-align: center;
 	width: 130px;
+}
+.article_picturecolumn img {
+	width: 100%;
 }
 .article_picture {
 	background-position: top right;

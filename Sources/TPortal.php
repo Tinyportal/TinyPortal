@@ -1310,13 +1310,12 @@ function doTPfrontpage() {{{
 				COALESCE(mem.real_name, m.poster_name) AS real_name, m.poster_time AS date, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
 				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type, t.id_board AS category, b.name AS category_name,
 				t.num_replies AS numreplies, t.id_topic AS id, m.id_member AS author_id, t.num_views AS views, t.num_replies AS replies, t.locked,
-				COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename, mem.email_address AS email_address
+				mem.email_address AS email_address
 			FROM {db_prefix}topics AS t
             INNER JOIN {db_prefix}messages AS m
 			    ON m.id_msg = t.id_first_msg
 			LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = m.id_member)
 			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type !=3)
-			LEFT JOIN {db_prefix}attachments AS thumb ON (t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3)
 			LEFT JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board)
 			WHERE t.id_first_msg IN ({array_int:posts})
 			ORDER BY m.{raw:catsort} DESC
@@ -1353,13 +1352,7 @@ function doTPfrontpage() {{{
 
             $topic_ids = array();
 			while($row = $smcFunc['db_fetch_assoc']($request)) {
-                // FIX for duplicate attachments
-                if(in_array($row['id'], $topic_ids)) {
-                    continue;
-                }
-                else {
-                    $topic_ids[] = $row['id'];
-                }
+                $topic_ids[] = $row['id'];
 
                 if(TPUtil::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
 					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
@@ -1368,6 +1361,23 @@ function doTPfrontpage() {{{
                 // Turn the body back to bbc so the parse_bbc called later doesn't break....
                 $row['body']            = html_to_bbc($row['body']);
 
+				// get the thumb data
+				$request2 =  $smcFunc['db_query']('', '
+		        	SELECT t.num_views AS views, t.num_replies AS replies, t.locked, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
+                    FROM {db_prefix}topics AS t
+			        LEFT JOIN {db_prefix}attachments AS thumb 
+                        ON ( t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 )
+			        WHERE t.id_topic = ({int:id})',
+			        array(
+				        'id' => $row['id'],
+			        )
+		        );
+
+				$data					= $smcFunc['db_fetch_assoc']($request2);
+				$row['thumb_id']		= isset($data['thumb_id']) ? $data['thumb_id'] : 0;
+				$row['thumb_filename']	= isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
+				$smcFunc['db_free_result']($request2);
+				
 				// some needed addons
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
