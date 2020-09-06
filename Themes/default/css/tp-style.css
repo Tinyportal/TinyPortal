@@ -164,6 +164,9 @@ h3.article_info {
 .article_info span:last-of-type {
 	border-right: none;
 }
+.article_author span:last-of-type {
+	border-right: none;
+}
 .article_authorinfo {
 	overflow: hidden;
 }
@@ -357,28 +360,55 @@ img.tp_social {
 .article_icon {
 	border: 1px solid #CCCCCC;
 	border: 1px solid rgba(204, 204, 204, 0.5);
-	height: 128px;
+	max-height: 98px;
 	overflow: hidden;
-	width: 128px;
+	width: 98px;
+}
+.admin-area .article_icon img {
+	max-width: 100%;
+	width: 100%;
 }
 /* render 4 */
 .render4 {
-	margin: 0 0 0 135px;
+	margin: 0 0 0 0;
 }
 .render4 h2 {
+	font-size: 1.2em;
 	font-weight: bold;
 	overflow: hidden;
 }
+.render4 .windowbg {
+	margin-top: 0 !important;
+}
+.article_header {
+	line-height: 1.6em;
+	overflow: hidden;
+	padding: 1em 1em 0 1em;
+}
 .article_picturecolumn {
 	float: left;
+	margin: 0 1em 0 0;
+	overflow: hidden;
 	text-align: center;
-	width: 130px;
+	width: 100px;
+}
+.article_picturecolumn img {
+	width: 100%;
 }
 .article_picture {
 	background-position: top right;
 	background-repeat: no-repeat;
-	height: 128px;
-	width: 128px;
+	height: auto;
+	max-height: 98px;
+	width: 98px;
+}
+.render4 .article_info {
+	border-bottom: none;
+}
+.tp_underline {
+	border-bottom: #DDDDDD;
+	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+	margin: 0 1em 0 1em;
 }
 .article_boardnews {
 	font-size: 0.8em;
@@ -937,6 +967,9 @@ img.theme_icon {
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
+.tparticle .windowbg {
+	padding: 0;
+}
 .admintable > .windowbg {
 	border: none;
 	border-radius: 0;
