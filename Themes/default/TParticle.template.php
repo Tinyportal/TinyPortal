@@ -395,7 +395,7 @@ function template_submitarticle()
 						', $txt['tp-illustration'], '
 					</dt>
 					<dd>
-						<div class="article_icon" style="background: top right url(' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , ')no-repeat;"></div><br>
+						<div class="article_icon"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
 					</dd>
 					<dt>
 						<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label>

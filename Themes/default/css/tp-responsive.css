@@ -175,7 +175,7 @@
 		width:100%!important;
 	/* Avatar + Article ON for articles*/
 	}
-	.tp_responsive .article_picturecolumn {
+/*	.tp_responsive .article_picturecolumn {
 		float:none!important;
 		width:100%!important;
 	/* Picture + Article ON for articles*/
@@ -184,9 +184,6 @@
 		background-position: center;
 	}
 	.tp_responsive .render2 {
-		margin: 4px 0 0 0!important;
-	}
-	.tp_responsive .render4 {
 		margin: 4px 0 0 0!important;
 	}
 	.dl_itemgrid {

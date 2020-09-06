@@ -1446,8 +1446,12 @@ function template_articons()
 			{
 				echo '
 					<div class="smalltext padding-div" style="float:left;">
-						<div class="article_icon" style="background: top right url(' . $icon['background'] . ') no-repeat;"></div>
-						<input type="checkbox" name="artillustration'.$icon['id'].'" id="artillustration'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  /> <label style="vertical-align: top;"  for="artiillustration'.$icon['id'].'">'.$txt['tp-remove'].'</label>
+						<div style="width: 110px; height: 110px;text-align:center;">
+							<div class="article_icon"><img src="' . $icon['background'] . '"></div>
+						</div>
+						<div>
+							<input type="checkbox" name="artillustration'.$icon['id'].'" id="artillustration'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  /> <label style="vertical-align: top;"  for="artiillustration'.$icon['id'].'">'.$txt['tp-remove'].'</label>
+						</div>
 					</div>
 							';
 				$alt = !$alt;
