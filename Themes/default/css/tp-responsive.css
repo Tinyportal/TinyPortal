@@ -169,22 +169,8 @@
 	.tp_responsive .tpadmin_content {
 		margin: 2px 0 0 0!important;
 	}
-	.tp_responsive .article_iconcolumn {
-		float:none!important;
-		text-align: left;
-		width:100%!important;
-	/* Avatar + Article ON for articles*/
-	}
-/*	.tp_responsive .article_picturecolumn {
-		float:none!important;
-		width:100%!important;
-	/* Picture + Article ON for articles*/
-	}
 	.article_picture {
 		background-position: center;
-	}
-	.tp_responsive .render2 {
-		margin: 4px 0 0 0!important;
 	}
 	.dl_itemgrid {
 		width: 98%;
