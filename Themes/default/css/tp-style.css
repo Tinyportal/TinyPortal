@@ -113,8 +113,6 @@ h2.author_h2 {
     padding-inline-start: 40px;
 }
 .article_info {
-	border-bottom: #DDDDDD;
-	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
 	color: #888;
 	line-height: 1.6em;
 	overflow: hidden;
@@ -202,8 +200,8 @@ a.tp_avatar_author img {
 .tp_avatar_single img {
 	border-radius: 2px;
 	float: left;
-	height: 30px;
-	margin: .4em .5em .5em 0;
+	height: 50px;
+	margin: .2em 1em .5em 0;
 	padding: 1px;
 }
 .tp_avatar_single2 img {
@@ -339,19 +337,42 @@ img.tp_social {
 .youtubecontainer iframe {
 	border-style: none;
 }
-/* render 2 */
-.render2 {
-	margin: 0 0 0 65px;
+/* render5 */
+.catlayout5_title {
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 50%;
 }
-.render2 h2 {
+.catlayout5_title .inner {
+	border: solid 1px #898;
+	margin: 2px 1px 2px 1px;
+}
+.catlayout5_title a {
+	display: block;
+	padding: 8px 12px;
+}
+.catlayout5_title a:hover {
+	background: #f80;
+}
+.catlayout5_text {
+	margin: 0;
+}
+/* renderX */
+.render2, .render3, .render4, .render6, .render8 {
+	margin: 0 0 0 0;
+}
+.render2 h2, .render4 h2, .render6 h2, .render8 h2 {
+	font-size: 1.2em;
 	font-weight: bold;
-	margin-bottom: 0;
-	padding-bottom: 0;
+	overflow: hidden;
 }
+/* render2 */
 .article_iconcolumn {
 	float: left;
+	margin: 0 1em 0.5em 0;
 	text-align: center;
-	width: 60px;
+	width: 100px;
 }
 .article_iconcolumn img {
 	height: auto;
@@ -368,17 +389,12 @@ img.tp_social {
 	max-width: 100%;
 	width: 100%;
 }
-/* render 4 */
-.render4 {
-	margin: 0 0 0 0;
-}
-.render4 h2 {
-	font-size: 1.2em;
-	font-weight: bold;
-	overflow: hidden;
-}
+/* render4 */
 .render4 .windowbg {
-	margin-top: 0 !important;
+	margin-top: 0px !important;
+}
+.render6 .windowbg, .render8 .windowbg {
+	margin-top: 2px !important;
 }
 .article_header {
 	line-height: 1.6em;
@@ -402,9 +418,11 @@ img.tp_social {
 	max-height: 98px;
 	width: 98px;
 }
-.render4 .article_info {
-	border-bottom: none;
+/* render9 */
+.render9 .windowbg {
+	    margin: 6px 0 0 0; !important;
 }
+
 .tp_underline {
 	border-bottom: #DDDDDD;
 	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
@@ -731,32 +749,7 @@ img.catlayout {
 	margin: 6px 2px 4px 16px;
 	padding: 0;
 }
-.catlayout5_title {
-	float: left;
-	margin: 0;
-	padding: 0;
-	width: 50%;
-}
-.catlayout5_title .inner {
-	border: solid 1px #898;
-	margin: 2px 1px 2px 1px;
-}
-.catlayout5_title a {
-	display: block;
-	padding: 8px 12px;
-}
-.catlayout5_title a:hover {
-	background: #f80;
-}
-.catlayout5_text {
-	margin: 0;
-}
-.catlayout6_text {
-	font-size: 0.9em;
-	margin: 4px 0 10px 0;
-	overflow: hidden;
-	padding: 0 5px 0 0;
-}
+
 fieldset#blockopts {
 	margin-top: 1em;
 	padding: 1em;
