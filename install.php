@@ -627,6 +627,9 @@ $settings_array = array(
     'image_upload_path'     => $boarddir.'/tp-images/',
     'download_upload_path'  => $boarddir.'/tp-downloads/',
     'blockcode_upload_path' => $boarddir.'/tp-files/tp-blockcodes/',
+	'icon_max_size' => '500',
+    'icon_width' => '100',
+    'icon_height' => '100',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');

@@ -154,7 +154,7 @@ $clickme.click( function(e) {
 						<label for="tp_dluploadsize">'.$txt['tp-dlallowedsize'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadsize" id="tp_dluploadsize" type="text" value="'.$context['TPortal']['dl_max_upload_size'].'"> '.$txt['tp-kb'].'<br><br>
+						<input name="tp_dluploadsize" id="tp_dluploadsize" type="text" pattern="[0-9]+" value="'.$context['TPortal']['dl_max_upload_size'].'"> '.$txt['tp-kb'].'<br><br>
 					</dd>
 					<dt>
 						<label for="tp_dl_fileprefix">'.$txt['tp-dluseformat'].'</label>
@@ -175,13 +175,13 @@ $clickme.click( function(e) {
 						'.$txt['tp-dlscreenshotsize1'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_screenshotsize0" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br><br>
+						<input name="tp_dl_screenshotsize0" type="text" pattern="[0-9]+" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][0].'"> x <input name="tp_dl_screenshotsize1" type="text" pattern="[0-9]+" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][1].'"> px<br><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dlscreenshotsize2'].'
 					</dt>
 					<dd>
-						<input name="tp_dl_screenshotsize2" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br><br>
+						<input name="tp_dl_screenshotsize2" type="text" pattern="[0-9]+" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][2].'"> x <input name="tp_dl_screenshotsize3" type="text"  pattern="[0-9]+" size="3" maxlength="3" value="'.$context['TPortal']['dl_screenshotsize'][3].'"> px<br><br>
 					</dd>
 					<dt>
 						'.$txt['tp-dlmustapprove'].'

@@ -1619,15 +1619,15 @@ function article_picturecolumn($render = true)
 
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews'])) {
 		$data = '
-	<div class="article_picture" ><img src="' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . '"></div>';
+	<div class="article_picture" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . '"></div>';
     }
 	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1)) {
 		$data = '
-	    <div class="article_picture"><img src="' . $context['TPortal']['article']['illustration'] . '"></div>';
+	    <div class="article_picture" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' . $context['TPortal']['article']['illustration'] . '"></div>';
 	}
     else {
 		$data = '
-	<div class="article_picture"><img src="' . $settings['tp_images_url'] . '/TPno_illustration.png"></div>';
+	<div class="article_picture" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' . $settings['tp_images_url'] . '/TPno_illustration.png"></div>';
     }
 
     if($render) {

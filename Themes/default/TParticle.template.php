@@ -151,7 +151,7 @@ function template_submitarticle()
 					</dt>
 					<dd>
 						<b><a href="' . $scripturl . '?action=profile;u='.$mg['author_id'].'" target="_blank">'.$mg['real_name'].'</a></b>
-						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" name="tp_article_authorid" id="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
+						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input size="8" maxlength="12" pattern="[0-9]" name="tp_article_authorid" id="tp_article_authorid" value="' . $mg['author_id'] . '" /><br><br>
 					</dd>
 					<dt>
 						', $txt['tp-created'], '
@@ -395,7 +395,7 @@ function template_submitarticle()
 						', $txt['tp-illustration'], '
 					</dt>
 					<dd>
-						<div class="article_icon"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
+						<div class="article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
 					</dd>
 					<dt>
 						<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label>
@@ -408,7 +408,7 @@ function template_submitarticle()
             }
 			echo '
 							</select><br>
-						<img id="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
+						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
 					</dd>
 					<dt>
 						' . $txt['tp-uploadicon'] . '
@@ -417,6 +417,7 @@ function template_submitarticle()
 						<input type="file" name="tp_article_illupload">
 					</dd>
 				</dl>
+				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="'.$txt['tp-send'].'"></div>
 					';
 				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','nofrontsetting');
 				$tmp = explode(',',$mg['options']);

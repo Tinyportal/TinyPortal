@@ -683,8 +683,9 @@ function template_main()
 			}
 		}
 		echo '
-				<div class="padding-div">
-					<input type="submit" class="button button_submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
+					<div class="padding-div">
+						<input type="submit" class="button button_submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
+					</div>
 				</div>
 			</div>
 		</form>
