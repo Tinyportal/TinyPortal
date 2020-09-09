@@ -326,7 +326,7 @@ function TPortal_userbox()
 		}
     echo '
         <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-            <input type="text" name="user" size="10" class="input_text" style="max-width: 45%!important;"/> <input type="password" name="passwrd" size="10" class="input_password" style="max-width: 45%!important;"/><br>
+            <input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
             <select name="cookielength" style="max-width: 45%!important;">
                 <option value="60">', $txt['one_hour'], '</option>
                 <option value="1440">', $txt['one_day'], '</option>
@@ -420,7 +420,7 @@ function TPortal_searchbox()
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" action="', $scripturl, '?action=search2" method="post" style="padding: 0; text-align: center; margin: 0; ">
-		<input type="text" name="search" value="" class="block_search" />
+		<input type="text" class="block_search" name="search" value="" />
 		<input type="submit" name="submit" value="', $txt['search'], '" class="block_search_submit button_submit" /><br>
 		<br><span class="smalltext"><a href="', $scripturl, '?action=search;advanced">', $txt['search_advanced'], '</a></span>
 		<input type="hidden" name="advanced" value="0" />
@@ -482,7 +482,7 @@ function TPortal_themebox()
 		 echo '
 			</select><br>' , $context['user']['is_logged'] ?
 			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
-			<input class="button_submit" type="button" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
+			<input type="button" class="button_submit" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
 			<div style="text-align: center; width: 95%; overflow: hidden;">';
 			
@@ -1619,15 +1619,15 @@ function article_picturecolumn($render = true)
 
 	if(!empty($context['TPortal']['article']['illustration']) && !isset($context['TPortal']['article']['boardnews'])) {
 		$data = '
-	<div class="article_picture" ><img src="' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . '"></div>';
+	<div class="article_picture" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' . $boardurl . '/tp-files/tp-articles/illustrations/' . $context['TPortal']['article']['illustration'] . '"></div>';
     }
 	elseif(!empty($context['TPortal']['article']['illustration']) && isset($context['TPortal']['article']['boardnews']) && ($context['TPortal']['use_attachment']==1)) {
 		$data = '
-	    <div class="article_picture"><img src="' . $context['TPortal']['article']['illustration'] . '"></div>';
+	    <div class="article_picture" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' . $context['TPortal']['article']['illustration'] . '"></div>';
 	}
     else {
 		$data = '
-	<div class="article_picture"><img src="' . $settings['tp_images_url'] . '/TPno_illustration.png"></div>';
+	<div class="article_picture" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' . $settings['tp_images_url'] . '/TPno_illustration.png"></div>';
     }
 
     if($render) {
@@ -2060,7 +2060,7 @@ function article_comments($render = true)
 		$data .= '
 			<div class="tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tportal;sa=comment" method="post" style="margin: 0; padding: 0;">
-						<input name="tp_article_comment_title" type="text" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
+						<input type="text" name="tp_article_comment_title" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea><br>'; 
 	
 	if (!empty($context['TPortal']['allow_links_article_comments'])==0) {
@@ -2068,9 +2068,9 @@ function article_comments($render = true)
 		}
 	
 		$data .= '
-						<div class="tp_pad"><input id="tp_article_comment_submit" type="submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
-						<input name="tp_article_type" type="hidden" value="article_comment">
-						<input name="tp_article_id" type="hidden" value="' . $context['TPortal']['article']['id'] . '">
+						<div class="tp_pad"><input type="submit" id="tp_article_comment_submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
+						<input type="hidden" name="tp_article_type" value="article_comment">
+						<input type="hidden" name="tp_article_id" value="' . $context['TPortal']['article']['id'] . '">
 						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
 				</form>
 			</div>';
@@ -2158,8 +2158,8 @@ function render_rating($total, $votes, $id, $can_rate = false, $render = true)
 				$data .= '
 				</select>
 				<input type="submit" name="tp_article_rating_submit" value="' . $txt['tp_rate'] . '">
-				<input name="tp_article_type" type="hidden" value="article_rating">
-				<input name="tp_article_id" type="hidden" value="' . $id . '">
+				<input type="hidden" name="tp_article_type" value="article_rating">
+				<input type="hidden" name="tp_article_id" value="' . $id . '">
 				<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
 			</form>';
 		}

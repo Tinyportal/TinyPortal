@@ -314,7 +314,7 @@ img.tp_social {
 	text-transform: uppercase;
 }
 /*images in articles content*/
-.article_inner img, .bbc_img {
+.article_inner img, .tparticle img, .bbc_img {
 	height: auto;
 	max-width: 100%;
 } 
@@ -406,7 +406,6 @@ img.tp_social {
 	margin: 0 1em 0 0;
 	overflow: hidden;
 	text-align: center;
-	width: 100px;
 }
 .article_picturecolumn img {
 	width: 100%;
@@ -955,8 +954,12 @@ dl.tptitle dd {
 	width: 160px;
 }
 img.theme_icon {
-   height: 35px;
-   width: 35px;
+	height: 35px;
+	width: 35px;
+}
+img.tp-illu {
+	max-width: 300px;
+	max-height: 300 px;
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
