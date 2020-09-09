@@ -144,7 +144,7 @@ $txt['tp-hidearticle-link'] = 'Hide the edit article link under articles';
 $txt['tp-printarticles'] = 'Display print link in articles?';
 $txt['tp-allow-links-article-comments'] = 'Allow article comments to contain links';
 $txt['tp-iconmaxsize'] = 'Max image upload size';
-$txt['tp-iconsize'] = 'Resize image for icon (width x height)';
+$txt['tp-iconsize'] = 'Image size for article icons (width x height)';
 $txt['tp-hidearticle-facebook'] = 'Hide Facebook button';
 $txt['tp-hidearticle-twitter'] = 'Hide Twitter button';
 $txt['tp-hidearticle-reddit'] = 'Hide Reddit button';
@@ -250,7 +250,7 @@ $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval
 
 // Icons
 $txt['tp-adminicons7'] = 'Article icons to be used in category layouts.';
-$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: 500KB. Images will be resized so the shortest side is 128 px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
+$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: 500KB. Images will be resized so the shortest side is ' .$context['TPortal']['icon_width']. ' px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category

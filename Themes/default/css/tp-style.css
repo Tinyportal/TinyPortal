@@ -314,7 +314,7 @@ img.tp_social {
 	text-transform: uppercase;
 }
 /*images in articles content*/
-.article_inner img, .bbc_img {
+.article_inner img, .tparticle img, .bbc_img {
 	height: auto;
 	max-width: 100%;
 } 

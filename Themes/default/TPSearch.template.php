@@ -35,7 +35,7 @@ function template_article_search_form()
                 <div class="tp_pad">'.$txt['tp-searcharticleshelp'].'</div>
                 <div class="tp_pad">
                     <b>'.$txt['tp-search'].':</b><br>
-                    <input id="searchbox" type="text" name="tpsearch_what" required/><br>
+                    <input type="text" id="searchbox" name="tpsearch_what" required/><br>
                     <input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br>
                     <input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
                     <input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
@@ -73,7 +73,7 @@ function template_article_search_results()
                 <form accept-charset="', $context['character_set'], '"  name="TPsearcharticle" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
                 <div class="tp_pad">
                     <b>'.$txt['tp-search'].':</b><br>
-                    <input id="searchbox" type="text" value="'.$context['TPortal']['searchterm'].'" name="tpsearch_what" required/><br>
+                    <input type="text" id="searchbox" name="tpsearch_what" value="'.$context['TPortal']['searchterm'].'" required/><br>
                     <input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br>
                     <input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
                     <input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>

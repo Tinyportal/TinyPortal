@@ -424,8 +424,8 @@ function template_main()
 				echo '
 						</select>
 						<input type="submit" name="tp_dlitem_rating_submit" value="',$txt['tp_rate'],'" />
-						<input name="tp_dlitem_type" type="hidden" value="dlitem_rating" />
-						<input name="tp_dlitem_id" type="hidden" value="'.$dlitem['id'].'" />
+						<input type="hidden" name="tp_dlitem_type" value="dlitem_rating" />
+						<input type="hidden" name="tp_dlitem_id" value="'.$dlitem['id'].'" />
 						<input type="hidden" name="sc" value="', $context['session_id'], '" />
 					</form>
 				';
@@ -502,13 +502,13 @@ function template_main()
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input style="width: 92%;" name="tp-dluploadtitle" required id="tp-dluploadtitle" type="text" value="">
+								<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="" style="width: 92%;" required>
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
 							</dt>
 							<dd>
-								<select name="tp-dluploadcat"  id="tp-dluploadcat">';
+								<select id="tp-dluploadcat" name="tp-dluploadcat">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats)
 		{
@@ -538,14 +538,14 @@ function template_main()
 					</dt>
 					<dd>';
 		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager')) {
-			echo '<input name="tp-dluploadfile" id="tp-dluploadfile" type="file">
+			echo '<input type="file" id="tp-dluploadfile" name="tp-dluploadfile">
 					</dd>';
 
             echo '<dt>
 						<label for="tp-dlexternalfile">'.$txt['tp-dlexternalfile'].'</label>
 					</dt>
 					<dd>
-                        <input name="tp-dlexternalfile" id="tp-dlexternalfile" type="text" size"40">
+                        <input type="text" id="tp-dlexternalfile" name="tp-dlexternalfile" style="width: 92%;">
 					</dd>';
         }
 		// file already uploaded?
@@ -555,7 +555,7 @@ function template_main()
 						<label for="tp-dluploadnot">'. $txt['tp-dlnoupload'].'</label>
 					</dt>
 					<dd>
-						<input name="tp-dluploadnot" id="tp-dluploadnot" type="checkbox" value="ON"><br>
+						<input type="checkbox" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><br>
 					</dd>';
 		}
 		elseif(allowedTo('tp_dlmanager') && isset($_GET['ftp'])){
@@ -565,7 +565,7 @@ function template_main()
 						<label for="tp-dluploadnot"><b>'.$txt['tp-dlmakeitem2'].':</b></label><br>'.$context['TPortal']['tp-downloads'][$_GET['ftp']]['file'].';
 					</dt>
 					<dd>
-						<input name="tp-dluploadnot" id="tp-dluploadnot" type="hidden" value="ON"><input name="tp-dlupload_ftpstray" type="hidden" value="'.$_GET['ftp'].'">
+						<input type="hidden" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><input type="hidden" name="tp-dlupload_ftpstray" value="'.$_GET['ftp'].'">
 					</dd>';
 		}
 		echo '</dl>';
@@ -591,9 +591,9 @@ function template_main()
 						<label for="tp_dluploadpic">'.$txt['tp-dluploadpic'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadpic" id="tp_dluploadpic" type="file" size="60">
-						<input name="tp-uploadcat" type="hidden" value="'.$context['TPortal']['dlitem'].'">
-						<input name="tp-uploaduser" type="hidden" value="'.$context['user']['id'].'">
+						<input type="file" id="tp_dluploadpic" name="tp_dluploadpic" size="60">
+						<input type="hidden" name="tp-uploadcat" value="'.$context['TPortal']['dlitem'].'">
+						<input type="hidden" name="tp-uploaduser" value="'.$context['user']['id'].'">
 					</dd>
 				</dl>';
 		// can you attach it?
@@ -644,7 +644,7 @@ function template_main()
 						<label for="create_topic">'.$txt['tp-dlcreatetopic'].'</label>
 					</dt>
 					<dd>
-						<input type="checkbox" name="create_topic" id="create_topic" />
+						<input type="checkbox" id="create_topic" name="create_topic" />
 					<dd>';
 
 			if(allowedTo('make_sticky') && !empty($modSettings['enableStickyTopics']))
@@ -653,7 +653,7 @@ function template_main()
 						<label for="create_topic_sticky">'.$txt['tp-dlcreatetopic_sticky'].'</label>
 					</dt>
 					<dd>
-						<input type="checkbox" name="create_topic_sticky" id="create_topic_sticky" /><br>
+						<input type="checkbox" id="create_topic_sticky" name="create_topic_sticky" /><br>
 					</dd>';
 			if(allowedTo('announce_topic'))
 				echo '
@@ -661,7 +661,7 @@ function template_main()
 						<label for="create_topic_announce">'.$txt['tp-dlcreatetopic_announce'].'</label>
 					</dt>
 					<dd>
-						<input type="checkbox" name="create_topic_announce" id="create_topic_announce" /><br>
+						<input type="checkbox" id="create_topic_announce" name="create_topic_announce" /><br>
 					</dd>';
 
 			echo '
@@ -684,7 +684,7 @@ function template_main()
 		}
 		echo '
 					<div class="padding-div">
-						<input type="submit" class="button button_submit" name="tp-uploadsubmit" id="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
+						<input type="submit" id="tp-uploadsubmit" class="button button_submit" name="tp-uploadsubmit" value="'.$txt['tp-dosubmit'].'">
 					</div>
 				</div>
 			</div>
@@ -855,7 +855,7 @@ function template_main()
 							<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 						</dt>
 						<dd>
-							<input style="width: 97%;" name="dladmin_name'.$cat['id'].'" id="dladmin_name'.$cat['id'].'" type="text" value="'.$cat['name'].'">
+							<input type="text" id="dladmin_name'.$cat['id'].'" name="dladmin_name'.$cat['id'].'" value="'.$cat['name'].'" style="width: 97%;">
 						</dd>
 						<dt>
 							<label for="dladmin_category'.$cat['id'].'"><b>'.$txt['tp-dluploadcategory'].'</b></label>
@@ -914,8 +914,8 @@ function template_main()
 					<dt>
 						'.$txt['tp-uploadnewfileexisting'].':</dt>
 					<dd>
-						<input name="tp_dluploadfile_edit" style="width: 90%;" type="file" value="">
-						<input name="tp_dluploadfile_editID" type="hidden" value="'.$cat['id'].'">
+						<input type="file" name="tp_dluploadfile_edit" value="" style="width: 90%;">
+						<input type="hidden" name="tp_dluploadfile_editID" value="'.$cat['id'].'">
 					</dd>
 				</dl>
 				<hr>
@@ -947,15 +947,15 @@ function template_main()
 						<label for="tp_dluploadpic_link">'.$txt['tp-uploadnewpicexisting'].'</label>
 					</dt>
 					<dd>
-						<input name="tp_dluploadpic_link" id="tp_dluploadpic_link" type="text" size="60"  value="'.$cat['sshot'].'"><br>
+						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="'.$cat['sshot'].'" size="60"><br>
 						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
 				   	</dd>
 					<dt>
 						'.$txt['tp-uploadnewpic'].'
 					</dt>
 					<dd>
-						<input name="tp_dluploadpic_edit" style="width: 90%;" type="file" value="">
-						<input name="tp_dluploadpic_editID" type="hidden" value="'.$cat['id'].'">
+						<input type="file" name="tp_dluploadpic_edit" value="" style="width: 90%;">
+						<input type="hidden" name="tp_dluploadpic_editID" value="'.$cat['id'].'">
 					</dd>
 				</dl>
 				' , $cat['approved']=='0' ? '
@@ -981,8 +981,8 @@ function template_main()
 			foreach($cat['subitem'] as $sub)
 			{
 				echo '<div><b><a href="' , $sub['href'], '">' , $sub['name'] , '</a></b><br>(',$sub['file'],')
-							', $sub['filesize'] ,' &nbsp;&nbsp;<br><input name="dladmin_delete'.$sub['id'].'" type="checkbox" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
-							&nbsp;&nbsp;<input name="dladmin_subitem'.$sub['id'].'" type="checkbox" value="0"> '.$txt['tp-dlattachloose'].'
+							', $sub['filesize'] ,' &nbsp;&nbsp;<br><input type="checkbox" name="dladmin_delete'.$sub['id'].'" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> '.$txt['tp-dldelete'].'
+							&nbsp;&nbsp;<input type="checkbox" name="dladmin_subitem'.$sub['id'].'" value="0"> '.$txt['tp-dlattachloose'].'
 							<br></div>';
 			}
 			echo '</dd>
@@ -1011,9 +1011,9 @@ function template_main()
 		}
 
 		echo '
-				<div class="padding-div"><input name="dlsend" type="submit"  class="button button_submit" value="'.$txt['tp-submit'].'">
-				<input name="sc" type="hidden" value="'.$context['session_id'].'">
-				<input name="dl_useredit" type="hidden" value="'.$cat['id'].'">
+				<div class="padding-div"><input type="submit" class="button button_submit" name="dlsend" value="'.$txt['tp-submit'].'">
+				<input type="hidden" name="sc" value="'.$context['session_id'].'">
+				<input type="hidden" name="dl_useredit" value="'.$cat['id'].'">
 				</div>
 			</div>
 		</div>
@@ -1034,8 +1034,8 @@ function template_main()
 				<div class="roundframe noup">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input id="searchbox" type="text" name="dl_search" required/><br>
-						<input type="checkbox" id="tp-searcharea-name" checked="checked"/> <label for="tp-searcharea-name">'.$txt['tp-searcharea-name'].'</label><br>
+						<input type="text" id="searchbox" name="dl_search" required/><br>
+						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name">'.$txt['tp-searcharea-name'].'</label><br>
 						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> '.$txt['tp-searcharea-descr'].'</label><br>
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
@@ -1061,7 +1061,7 @@ function template_main()
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tportal;sa=download;dl=results" method="post">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input id="searchbox" type="text" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
+						<input type="text" id="searchbox" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
 						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '<br>
 						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
