@@ -169,15 +169,12 @@ class Util
         if (!empty($length) && self::strlen($string) > $length) {
             $cutOffPos  = max(strpos($string, ' ', $length), strpos($string, '>', $length));
             $tmpString  = self::substr($string, 0, $cutOffPos);
-            //$tmpString  = preg_replace("~^(.{1,$cutOffPos})(\s.*|$)~s", '\\1...', $string);
 
             // check we haven't cut any bbcode off
             if(preg_match_all('/.*\[([^]]+)\]/', $tmpString, $matches, PREG_SET_ORDER) > 0 ) {
-                // Get the last bbcode tag
                 if(isset(end($matches)[1])) {
-                    $search     = end($matches)[1];
-                    // Check for the full tag
-                    if( (strstr($matches[0], $search) === false) ) {
+                    $search     = "[".end($matches)[1]."]";
+                    if( (strstr($tmpString, $search) === false) ) {
                         $strEnd     = strpos($string, $search, strlen($tmpString));
                         if($strEnd != 0) {
                             $tmpString  = self::substr($string, 0, $strEnd + strlen($search));
