@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0 RC2
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2085,8 +2085,8 @@ function do_postchecks()
 
 			if(file_exists($_FILES['tp_article_newillustration']['tmp_name']))
 			{
-				$name = TPuploadpicture('tp_article_newillustration', '', '500', 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
-				tp_createthumb('tp-files/tp-articles/illustrations/'. $name, 128, 128, 'tp-files/tp-articles/illustrations/s_'. $name);
+				$name = TPuploadpicture('tp_article_newillustration', '', $context['TPortal']['icon_max_size'], 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
+				tp_createthumb('tp-files/tp-articles/illustrations/'. $name, $context['TPortal']['icon_width'], $context['TPortal']['icon_height'], 'tp-files/tp-articles/illustrations/s_'. $name);
 				unlink('tp-files/tp-articles/illustrations/'. $name);
 			}
 			// how about deleted?

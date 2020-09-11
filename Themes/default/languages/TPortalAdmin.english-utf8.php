@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0 RC2
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -143,6 +143,8 @@ $txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor';
 $txt['tp-hidearticle-link'] = 'Hide the edit article link under articles';
 $txt['tp-printarticles'] = 'Display print link in articles?';
 $txt['tp-allow-links-article-comments'] = 'Allow article comments to contain links';
+$txt['tp-iconmaxsize'] = 'Max image upload size';
+$txt['tp-iconsize'] = 'Image size for article icons (width x height)';
 $txt['tp-hidearticle-facebook'] = 'Hide Facebook button';
 $txt['tp-hidearticle-twitter'] = 'Hide Twitter button';
 $txt['tp-hidearticle-reddit'] = 'Hide Reddit button';
@@ -198,7 +200,7 @@ $txt['tp-gobbc'] = 'BBC article';
 $txt['tp-goimport'] = 'External article';
 $txt['tp-articleoff'] = 'Article is NOT active';
 $txt['tp-articleon'] = 'Article is active';
-$txt['tp-illustration'] = 'Article icon <span class="smalltext">(128x128 px)</span>';
+$txt['tp-illustration'] = 'Article icon <span class="smalltext">(Preview)</span>';
 $txt['tp-illustration2'] = 'Choose another image';
 $txt['tp-uploadicon'] = 'Upload a new icon ';
 $txt['tp-articleoptions'] = 'Viewing options';
@@ -248,7 +250,7 @@ $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval
 
 // Icons
 $txt['tp-adminicons7'] = 'Article icons to be used in category layouts.';
-$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: 500KB. Images will be resized so the shortest side is 128 px, while retaining aspect ratio. Note that the top right area of the image will be used as article icon.';
+$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: ' .$context['TPortal']['icon_max_size']. ' KB. Images will be resized so the shortest side is ' .$context['TPortal']['icon_width']. ' px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category
@@ -306,7 +308,7 @@ $txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
 $txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
 $txt['tp-grid'] = 'Display the blocks according to a grid';
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
-$txt['tp-blockheight'] = '<b>Force</b> this height on each block(use 00px or 00%)';
+$txt['tp-blockheight'] = '<b>Force</b> this height on each block (use 00px or 00%)';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';
 $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
@@ -565,7 +567,7 @@ $txt['tp-module5'] = 'Downloads: most downloaded file';
 $txt['tp-module6'] = 'Downloads: most viewed file';
 $txt['tp-mod-dladmin'] = 'Downloads Admin';
 $txt['tp-mod-dlmanager'] = 'Downloads Manager';
-$txt['tp-dlmaxerror'] = 'The maximum size for a uploaded file is currently';
+$txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is currently ';
 $txt['tp-childcategories'] = 'Child categories';
 $txt['tp-icon'] = 'Icon';
 
