@@ -486,13 +486,13 @@ function template_frontpage()
 						  <input type="number" id="tp_frontpage_limit_len" name="tp_frontpage_limit_len"value="' ,$context['TPortal']['frontpage_limit_len'], '" style="width: 6em" maxlength="5" ><br><br>
 						</dd>
 						<dt>
-							<label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-forumposts_avatardesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
 						</dt>
 						<dd>	
 							<input type="checkbox" id="tp_forumposts_avatar" name="tp_forumposts_avatar" value="1" ' , $context['TPortal']['forumposts_avatar']=='1' ? 'checked' : '' , '>
 						</dd>
 						<dt>
-							<label for="tp_use_attachment">', $txt['tp-useattachment'], '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-useattachmentdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_attachment">', $txt['tp-useattachment'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_use_attachment" name="tp_use_attachment" value="1" ' , $context['TPortal']['use_attachment']=='1' ? 'checked' : '' , '>

@@ -116,7 +116,7 @@ h2.author_h2 {
 	color: #888;
 	line-height: 1.4em;
 	overflow: hidden;
-	padding: .7em 1em 0.7em 1em;
+	padding: .7em 1em 0.5em 1em;
 }
 .article_info a, .article_info a:visited {
 	color: #888;
@@ -159,7 +159,7 @@ h3.article_info {
 .article_authorinfo {
 	overflow: hidden;
 }
-/* render 1 */
+/* horizontal render layout */
 .article_info div {
 	border-right: solid 1px #888;
 	display: inline-block;
@@ -169,15 +169,17 @@ h3.article_info {
 .article_info div:last-of-type {
 	border-right: none;
 }
-
-/* render 4 */
-.render3 .article_info div, .render4 .article_info div, .render2 .article_info, .render8 .article_info div {
+.article_info div.tp_avatar_single {
+	border: none;
+	float: left;
+	max-width: 80px;
+}
+/* vertical layout */
+.render3 .article_info div, .render4 .article_info div, .render2 .article_info div, .render8 .article_info div {
 	display: block;
 	border: none;
 	padding: 0;
 }
-
-
 .authortext {
 	font-size: 0.85em;
 	line-height: 1.4em;
@@ -205,14 +207,11 @@ a.tp_avatar_author img {
 	border-radius: 2px;
 	margin-right: 0.7em;
 	padding: 1px;
-	width: 35px;
+	width: 80px;
 }
 .tp_avatar_single img {
 	border-radius: 2px;
 	float: left;
-	height: 50px;
-	margin: .2em 1em .5em 0;
-	padding: 1px;
 }
 .tp_avatar_single2 img {
 	border-radius: 2px;
@@ -412,7 +411,7 @@ img.tp_social {
 }
 .article_picturecolumn {
 	float: left;
-	margin: 0 1em 0 0;
+	margin: 0 1em .5em 0;
 	overflow: hidden;
 	text-align: center;
 }

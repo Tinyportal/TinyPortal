@@ -1192,23 +1192,24 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
 			' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}&nbsp;</h3>' :  '<h3 class="article_title">{article_title} </h3>') . '
+			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}</h3>' :  '<h3 class="article_title">{article_title}</h3>') . '
 		</div>
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info' . ($useframestyle ? '' : '') . '">
+				' . (!$single ? '{article_avatar}' : '') . '
+				{article_options}
 				{article_category}
 				{article_date}
 				{article_author}
 				{article_views}
 				{article_rating}
-				{article_options}
 			' . ($single ? '{article_print}' : '') . '
 			</div>
 			<div class="tp_underline"></div>
 			<div class="article_padding" style="clear: both;">
-			<div class="floatleft">{article_avatar}</div>
 			<div style="clear: right;"></div>
 			{article_text}
+			<p class="clearthefloat"></p>
 			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 			' . (!$single ? '{article_comments_total}' : '') . '
 			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
@@ -1230,30 +1231,31 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		if($first)
 			$code = '
-	<div class="tparticle render2">
+	<div class="tparticle render1">
 		<div></div>
-		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-		' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}&nbsp;</h3>' :  '<h3 class="article_title">{article_title} </h3>') . '
+			' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
+			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}</h3>' :  '<h3 class="article_title">{article_title}</h3>') . '
 		</div>
-			<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
+		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
-			    {article_avatar}
-				{article_author}
+				' . (!$single ? '{article_avatar}' : '') . '
+			    {article_options}
 				{article_category}
 				{article_date}
+				{article_author}
 				{article_views}
 				{article_rating}
-				{article_options}
 			' . ($single ? '{article_print}' : '') . '
 			</div>
 			<div class="tp_underline"></div>
 			<div class="article_padding">
 				{article_text}
+				<p class="clearthefloat"></p>
 				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 				' . (!$single ? '{article_comments_total}' : '') . '
 				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-			</div>
-			' . (!$single ? '<span class="botslice"><span></span></span>' : '') . '
+				' . (!$single ? '	<span class="botslice"><span></span></span>' : '') . '
+		</div>
 			' . ($single ? '
 			{article_bookmark}
 			{article_moreauthor}
@@ -1270,22 +1272,23 @@ function article_renders($type = 1, $single = false, $first = false)
 			<span class="topslice"><span></span></span>
 			<div class="article_header">
 				<div class="article_iconcolumn">{article_iconcolumn}</div>
-				<h2 class="article_title" style="padding-left: 0;">' . ($showtitle ? '{article_title}' : '') . '</h2>				
+				<h2 class="article_title" style="padding-left: 0;">' . ($showtitle ? '{article_title}' : '') . '{article_options}</h2>
 			<div class="article_info" style="padding-left: 0;">
 				{article_author}
 				{article_category}
 				{article_date}
 				{article_views}
 				{article_rating}
-				{article_options}
 			' . ($single ? '{article_print}' : '') . '
 			</div>
 			</div>
 			<div class="tp_underline"></div>
-			<div class="article_padding">{article_text}
-			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-			' . (!$single ? '{article_comments_total}' : '') . '
-			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
+				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+				' . (!$single ? '{article_comments_total}' : '') . '
+				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 			</div>
 			' . ($single ? '
 			<div class="tp_container">
@@ -1313,23 +1316,25 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render3">
 		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-		' . ($showtitle ? '<h3' . ($usetitlestyle ? ' class="' . $headerstyle . '"' : '') . '>{article_title} </h3>': '') . '
+		' . ($showtitle ? '<h3' . ($usetitlestyle ? ' class="' . $headerstyle . '"' : '') . '>{article_title}</h3>': '') . '
 		</div>
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_header">
 				<div class="article_iconcolumn">{article_iconcolumn}</div>
 				<div class="article_info" style="padding-left: 0;padding-top: 0;">
+					{article_options}
 					{article_author}
 					{article_category}
 					{article_date}
 					{article_views}
 					{article_rating}
-					{article_options}
 				' . ($single ? '{article_print}' : '') . '
 				</div>
 			</div>
 			<div class="tp_underline"></div>
-			<div class="article_padding">{article_text}
+			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
 				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 				' . (!$single ? '{article_comments_total}' : '') . '
 				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
@@ -1357,19 +1362,19 @@ function article_renders($type = 1, $single = false, $first = false)
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info">
 				<div class="article_picturecolumn">{article_picturecolumn}</div>
+				{article_options}
 				{article_category}
 				{article_date}
 				{article_author}
 				{article_views}
 				{article_rating}
-				{article_options}
 				' . ($single ? '{article_print}' : '') . '
 			</div>
 			<p class="clearthefloat"></p>
 			<div class="tp_underline"></div>
 			<div class="article_padding">
-				<div class="floatleft">{article_avatar}</div>
 				{article_text}
+				<p class="clearthefloat"></p>
 				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 				' . (!$single ? '{article_comments_total}' : '') . '
 				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
@@ -1397,26 +1402,27 @@ function article_renders($type = 1, $single = false, $first = false)
 	</div>': '') . '';
 		else
 			$code = '
-	<div class="tparticle render5">
+	<div class="tparticle render5" style="overflow: hidden;">
 		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-		' . ($showtitle ? '<h3' . ($usetitlestyle ? ' class="' . $headerstyle . '"' : '') . '>{article_shortdate} <strong>{article_title}</strong> </h3>': '') . '
+		' . ($showtitle ? '<h3' . ($usetitlestyle ? ' class="' . $headerstyle . '"' : '') . '>{article_title}</h3>': '') . '
 		</div>
 		<div class="' . ($useframestyle ? '' .$divbody. '' : '') . '">
 		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
 			<div class="article_info">
+			' . (!$single ? '{article_avatar}' : '') . '
+				{article_options}
 				{article_category}
 				{article_date}
 				{article_author}
 				{article_views}
 				{article_rating}
-				{article_options}
 			' . ($single ? '{article_print}' : '') . '
 			</div>
 			<div class="tp_underline"></div>
 			<div class="article_padding" style="clear: both;">
-				<div class="floatleft">{article_avatar}</div>
 				{article_text}
+				<p class="clearthefloat"></p>
 				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
 				' . (!$single ? '{article_comments_total}' : '') . '
 				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
@@ -1440,10 +1446,11 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render6">
 		<div class="' . ($useframestyle ? 'windowbg' : '') .'">
 		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
-			<div class="article_header" style="padding-bottom: 0.5em;"><h2 class="article_title">{article_title}</h2></div>
+			<div class="article_header" style="padding-bottom: 0.5em;"><h2 class="article_title">{article_title}{article_options}</h2></div>
 			<div class="tp_underline"></div>
 			<div class="article_padding">
 				{article_text}
+				<p class="clearthefloat"></p>
 				{article_comments_total}
 			</div>
 		' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
@@ -1454,23 +1461,21 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render6">
 		<div class="' . ($useframestyle ? 'windowbg' : '') . '">
 		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
-			<div class="article_header" style="padding-bottom: 0.5em;"><h2 class="article_title">{article_title}</h2></div>
+			<div class="article_header" style="padding-bottom: 0.5em;"><h2 class="article_title">{article_title}{article_options}</h2></div>
 			<div class="article_info">
 				{article_date}
 				{article_author}
 				{article_views}
 				{article_rating}
-				{article_options}
 				{article_print}
 			</div>
 			<div class="tp_underline"></div>
 			<div class="article_padding">
-				<div class="floatleft">{article_avatar}</div>
-				{article_text}</div>
-			{article_bookmark}
-			' . (!$single ? '{article_comments_total}' : '') . '
-			{article_moreauthor}
-			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
+				{article_bookmark}
+				' . (!$single ? '{article_comments_total}' : '') . '
+				{article_moreauthor}
 				{article_comments}
 			</div>
 			{article_morelinks}
@@ -1488,28 +1493,27 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		$code = '
 	<div class="tparticle render8">
-		<div class="' . (isset($context['TPortal']['article']['boardnews']) ? ' windowbg' : ' windowbg') . '" style="margin: 0;">
+		<div class="windowbg" style="margin: 0;">
 		<span class="topslice"><span></span></span>
 				<div class="article_header">
 					<div class="article_picturecolumn">{article_picturecolumn}</div>
-					<h2 class="article_title" style="padding-left: 0;">{article_title}</h2>
-				</div>
-				<div class="article_info">
+					<h2 class="article_title" style="padding-left: 0;">{article_title}{article_options}</h2>
+				<div class="article_info" style="padding-left: 0;">
 					{article_category}
 					{article_date}
 					{article_author}
 					{article_views}
 					{article_rating}
-					{article_options}
 				' . ($single ? '{article_print}' : '') . '
+				</div>
 				</div>
 				<div class="tp_underline"></div>
 				<div class="article_padding">
-				' . (!$single ? '<div class="floatleft">{article_avatar}</div>' : '') .  '
-				{article_text}
-				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-				' . (!$single ? '{article_comments_total}' : '') . '
-				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+					{article_text}
+					<p class="clearthefloat"></p>
+					' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+					' . (!$single ? '{article_comments_total}' : '') . '
+					' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 				</div>
 		' . ($single ? '
 				{article_bookmark}
@@ -1535,21 +1539,23 @@ function article_renders($type = 1, $single = false, $first = false)
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			<div class="article_info' . ($useframestyle ? '' : '') . '">
 			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
+				{article_options}
 				{article_author}
 				{article_category}
 				{article_date}
 				{article_views}
 				{article_rating}
-				{article_options}
 				{article_print}
 			' . (!$single ? '</div>' : '') .  '
 			</div>
 			<div class="tp_underline"></div>
-			<div class="article_padding" style="clear: both;">{article_text}
-			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-			' . (!$single ? '</div><span class="botslice"><span></span></span>' : '') . '
-		</div>
+			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
+				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+				' . (!$single ? '</div><span class="botslice"><span></span></span>' : '') . '
+			</div>
 			' . ($single ? '
 			{article_bookmark}
 			{article_moreauthor}
@@ -1831,7 +1837,7 @@ function article_lead($render = true)
 
 function article_options($render = true)
 {
-	global $scripturl, $txt, $context;
+	global $scripturl, $txt, $context, $settings;
 
     $data = '';
 
@@ -1839,12 +1845,12 @@ function article_options($render = true)
 		// give 'em a edit link? :)
 		if(allowedTo('tp_articles') && ($context['TPortal']['hide_editarticle_link']!=1)) {
 			$data .= '
-					<div class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></div>';
+					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
         }
 		// their own article?
 		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && $context['TPortal']['hide_editarticle_link']!=1 && $context['TPortal']['article']['locked']!=1) {
 			$data .= '
-					<div class="article_rating"><a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '">' . $txt['tp-edit'] . '</a></div>';
+					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
         }
 	}
 
