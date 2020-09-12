@@ -118,7 +118,9 @@ $txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum-topics on th
 $txt['tp-showforumposts'] = 'Display forum-topics on frontpage from';
 $txt['tp-lengthofposts'] = 'Number of characters to display per forum-topic';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics';
+$txt['tp-forumposts_avatardesc'] = 'This setting will make the member avatars show in forum topics on the Frontpage of your forum. This will only have an effect if you are using one of the following layouts for your Frontpage: normal articles, 1st normal \+ avatars or normal \+ links.';
 $txt['tp-useattachment'] = 'Use first post attachment preview as icon';
+$txt['tp-useattachmentdesc'] = 'This setting will make the an image of the first attachment of the forum topic be used as the icon for the post on the frontpage of your forum. This will only have an effect if you are using one of the following layouts for your Frontpage: articles \+ icons or articles \+ icons2.';
 
 // Navigation links
 $txt['tp-tabs5'] = 'Categories';

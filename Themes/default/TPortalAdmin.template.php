@@ -229,7 +229,7 @@ function template_settings()
 						<label for="tp_maxstars">', $txt['tp-maxrating'], '</label>
 					</dt>
 					<dd>
-						<input type="number" id="tp_maxstars" name="tp_maxstars" value="'.$context['TPortal']['maxstars'].'" size="6" min="1" max="10" step="1">
+						<input type="number" id="tp_maxstars" name="tp_maxstars" value="'.$context['TPortal']['maxstars'].'" style="width: 6em" min="1" max="10" step="1">
 					</dd>
 					<dt>
 						<label for="tp_showstars">', $txt['tp-stars'], '</label>
@@ -431,7 +431,7 @@ function template_frontpage()
 							<label for="tp_frontpage_limit">', $txt['tp-numberofposts'], '</label>
 						</dt>
 						<dd>
-						  <input type="number" id="tp_frontpage_limit" name="tp_frontpage_limit" value="' ,$context['TPortal']['frontpage_limit'], '" size="6" maxlength="5"><br><br>
+						  <input type="number" id="tp_frontpage_limit" name="tp_frontpage_limit" value="' ,$context['TPortal']['frontpage_limit'], '" style="width: 6em" maxlength="5"><br><br>
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-sortingoptionsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_frontpage_usorting">',$txt['tp-sortingoptions'],'</label>
@@ -483,16 +483,16 @@ function template_frontpage()
 							<label for="tp_frontpage_limit_len">', $txt['tp-lengthofposts'], '</label>
 						</dt>
 						<dd>
-						  <input type="number" id="tp_frontpage_limit_len" name="tp_frontpage_limit_len"value="' ,$context['TPortal']['frontpage_limit_len'], '" size="6" maxlength="5" ><br><br>
+						  <input type="number" id="tp_frontpage_limit_len" name="tp_frontpage_limit_len"value="' ,$context['TPortal']['frontpage_limit_len'], '" style="width: 6em" maxlength="5" ><br><br>
 						</dd>
 						<dt>
-							<label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-forumposts_avatardesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
 						</dt>
 						<dd>	
 							<input type="checkbox" id="tp_forumposts_avatar" name="tp_forumposts_avatar" value="1" ' , $context['TPortal']['forumposts_avatar']=='1' ? 'checked' : '' , '>
 						</dd>
 						<dt>
-							<label for="tp_use_attachment">', $txt['tp-useattachment'], '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-useattachmentdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_attachment">', $txt['tp-useattachment'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_use_attachment" name="tp_use_attachment" value="1" ' , $context['TPortal']['use_attachment']=='1' ? 'checked' : '' , '>
@@ -635,7 +635,7 @@ function template_editcategory()
 							<label for="tp_category_articlecount">', $txt['tp-articlecount'], '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_category_articlecount" name="tp_category_articlecount" value="' , empty($mg['articlecount']) ? $context['TPortal']['frontpage_limit'] : $mg['articlecount']  , '" size="6">
+							<input type="number" id="tp_category_articlecount" name="tp_category_articlecount" value="' , empty($mg['articlecount']) ? $context['TPortal']['frontpage_limit'] : $mg['articlecount']  , '" style="width: 6em">
 						<dd>
 					</dl>
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>
@@ -976,7 +976,7 @@ function template_articles()
 			<td class="articles">
 				<div>
 					<div style="width:7%;" class="adm-pos float-items">
-						<a name="article'.$alink['id'].'"></a><input type="number" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" size="5" />
+						<a name="article'.$alink['id'].'"></a><input type="number" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" style="width: 5em" />
 					</div>
 					<div style="width:25%;" class="adm-name float-items">
 						' , $alink['locked']==0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . $alink['subject'].'</a>' : '<img title="'.$txt['tp-islocked'].'" src="' .$settings['tp_images_url']. '/TPlock1.png" alt="'.$txt['tp-islocked'].'"  />&nbsp;' . $alink['subject'] , '
@@ -1337,7 +1337,7 @@ function template_artsettings()
 							<label for="tp_editorheight">', $txt['tp-editorheight'], '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_editorheight" name="tp_editorheight" value="' , $context['TPortal']['editorheight'] , '" size="6" />
+							<input type="number" id="tp_editorheight" name="tp_editorheight" value="' , $context['TPortal']['editorheight'] , '" style="width: 6em" />
 						</dd>
 						<dt>
 							<label for="tp_use_dragdrop">', $txt['tp-usedragdrop'], '</label>
@@ -1412,13 +1412,13 @@ function template_artsettings()
 							'.$txt['tp-iconsize'].'
 						</dt>
 						<dd>
-							<input type="number" name="tp_icon_width" value="'.$context['TPortal']['icon_width'].'" size="6" maxlength="3"> x <input type="number" name="tp_icon_height"value="'.$context['TPortal']['icon_height'].'" size="6" maxlength="3" > px
+							<input type="number" name="tp_icon_width" value="'.$context['TPortal']['icon_width'].'" style="width: 6em" maxlength="3"> x <input type="number" name="tp_icon_height"value="'.$context['TPortal']['icon_height'].'" style="width: 6em" maxlength="3" > px
 						</dd>
 						<dt>
 							<label for="tp_iconmaxsize">'.$txt['tp-iconmaxsize'].'</label>
 						</dt>
 						<dd>
-							<input type="number" name="tp_icon_max_size" id="tp_iconmaxsize" value="'.$context['TPortal']['icon_max_size'].'" size="6" maxlength="4"> '.$txt['tp-kb'].'
+							<input type="number" name="tp_icon_max_size" id="tp_iconmaxsize" value="'.$context['TPortal']['icon_max_size'].'" style="width: 6em" maxlength="4"> '.$txt['tp-kb'].'
 						</dd>
 					</dl>
 				</div>
@@ -1553,7 +1553,7 @@ function template_panels()
 							<label for="tp_padding">'.$txt['tp-padding_between'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_padding" name="tp_padding" value="' ,$context['TPortal']['padding'], '" size="6" maxlength="5">
+							<input type="number" id="tp_padding" name="tp_padding" value="' ,$context['TPortal']['padding'], '" style="width: 6em" maxlength="5">
 							<span class="smalltext">'.$txt['tp-inpixels'].'</span>
 						</dd>
 					</dl>
@@ -1786,7 +1786,7 @@ function template_blocks()
 						<td class="blocks">
 						<div id="blocksDiv">
 							<div style="width:10%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
-								<input type="number" name="pos' .$lblock['id']. '" value="' .$lblock['pos']. '" size="4" maxlength="3">
+								<input type="number" name="pos' .$lblock['id']. '" value="' .$lblock['pos']. '" style="width: 4em" maxlength="3">
 								<a name="block' .$lblock['id']. '"></a>';
 					echo '
 								<a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.png" value="' .(($n*10)+11). '" /></a>';
@@ -2262,7 +2262,7 @@ function template_menubox()
 					<td class="blocks">
 						<div>
 							<div style="width:7%;" class="adm-pos float-items">
-								<input type="number" name="menu_pos' .$lbox['id']. '" value="' . (empty($lbox['subtype']) ? '0' :  $lbox['subtype']) . '" size="5">
+								<input type="number" name="menu_pos' .$lbox['id']. '" value="' . (empty($lbox['subtype']) ? '0' :  $lbox['subtype']) . '" style="width: 5em">
 							</div>
 							<div style="width:15%;" class="adm-name float-items">
 								<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">' .$lbox['name']. '</a>
