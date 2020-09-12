@@ -25,6 +25,9 @@
 	}
 }
 @media all and (max-width: 768px) {
+	.padding-div {
+		padding: calc(1% + 10px);
+	}
 	.youtubecontainer {
 		display: inline-block;
 		height: calc(80vw/1.77);

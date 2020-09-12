@@ -114,9 +114,9 @@ h2.author_h2 {
 }
 .article_info {
 	color: #888;
-	line-height: 1.6em;
+	line-height: 1.4em;
 	overflow: hidden;
-	padding: 1em 1em 0.75em 1em;
+	padding: .7em 1em 0.7em 1em;
 }
 .article_info a, .article_info a:visited {
 	color: #888;
@@ -153,21 +153,31 @@ h3.article_info {
 .article_category a {
 	font-weight: bold;
 }
-.article_info span {
-	border-right: solid 1px #888;
-	margin-right: 5px;
-	padding: 0;
-	padding-right: 10px;
-}
-.article_info span:last-of-type {
-	border-right: none;
-}
 .article_author span:last-of-type {
 	border-right: none;
 }
 .article_authorinfo {
 	overflow: hidden;
 }
+/* render 1 */
+.article_info div {
+	border-right: solid 1px #888;
+	display: inline-block;
+	font-size: 0.9em;
+	padding: 0 10px 0 5px;
+}
+.article_info div:last-of-type {
+	border-right: none;
+}
+
+/* render 4 */
+.render3 .article_info div, .render4 .article_info div, .render2 .article_info, .render8 .article_info div {
+	display: block;
+	border: none;
+	padding: 0;
+}
+
+
 .authortext {
 	font-size: 0.85em;
 	line-height: 1.4em;
@@ -233,8 +243,7 @@ a.tp_avatar_author img {
 	padding-left: 5px;
 }
 img.tp_social {
-	height: 24px;
-	width:auto;
+	width: 24px;
 }
 /* rating */
 .tp_article_rate {
@@ -428,7 +437,7 @@ img.tp_social {
 	margin: 0 1em 0 1em;
 }
 .article_boardnews {
-	font-size: 0.8em;
+	font-size: 0.9em;
 	padding-top: 1em;
 }
 ul.category_children {
