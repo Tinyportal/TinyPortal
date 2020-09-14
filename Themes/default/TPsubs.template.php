@@ -1182,7 +1182,7 @@ function article_renders($type = 1, $single = false, $first = false)
     $useframestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'frame'));
 	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg';
 	$divheader = isset($context['TPortal']['article']['boardnews']) ? 'cat_bar' : 'title_bar';
-	$divbody = isset($context['TPortal']['article']['boardnews']) ? 'windowbg noup' : 'windowbg';
+	$divbody = isset($context['TPortal']['article']['boardnews']) ? 'windowbg noup' : ($usetitlestyle ?'windowbg noup' : 'windowbg');
 	$showtitle = in_array('title', $context['TPortal']['article']['visual_options']);
 
 	if($type == 1)
@@ -1191,11 +1191,12 @@ function article_renders($type = 1, $single = false, $first = false)
 		$code = '
 	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
-			' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}</h3>' :  '<h3 class="article_title">{article_title}</h3>') . '
+		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
+			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
 		</div>
-		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
-			<div class="article_info' . ($useframestyle ? '' : '') . '">
+		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
+			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
+			<div class="article_info">
 				' . (!$single ? '{article_avatar}' : '') . '
 				{article_options}
 				{article_category}
@@ -1206,40 +1207,39 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . ($single ? '{article_print}' : '') . '
 			</div>
 			<div class="tp_underline"></div>
-			<div class="article_padding" style="clear: both;">
-			<div style="clear: right;"></div>
-			{article_text}
-			<p class="clearthefloat"></p>
-			' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-			' . (!$single ? '{article_comments_total}' : '') . '
-			' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-			' . (!$single ? '</div><span class="botslice"><span></span></span>' : '') . '
-		</div>
-			' . ($single ? '
-			{article_bookmark}
-			{article_moreauthor}
 			<div class="article_padding">
-				{article_comments}
+				<div style="clear: both;"></div>
+				{article_text}
+				<p class="clearthefloat"></p>
+				' . (!isset($context['TPortal']['article']['boardnews']) ? '{article_bookmark}' : '') . '
+				' . (!$single ? '{article_comments_total}' : '') . '
+				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+				' . ($single ? '
+					{article_moreauthor}
+					<div class="article_padding">
+						{article_comments}
+					</div>
+					{article_morelinks}' : '') . '
 			</div>
-			{article_morelinks}
-		</div>' : '') . '
-	</div>
-		';
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
+	</div>';
 	}
 	elseif($type == 2)
 	// Layout type: 1st normal + avatars
 	{
 		if($first)
-			$code = '
-	<div class="tparticle render1">
+		$code = '
+	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
-			' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}</h3>' :  '<h3 class="article_title">{article_title}</h3>') . '
+		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
+			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
 		</div>
-		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
+		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
+			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
 				' . (!$single ? '{article_avatar}' : '') . '
-			    {article_options}
+				{article_options}
 				{article_category}
 				{article_date}
 				{article_author}
@@ -1249,30 +1249,31 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>
 			<div class="tp_underline"></div>
 			<div class="article_padding">
+				<div style="clear: both;"></div>
 				{article_text}
 				<p class="clearthefloat"></p>
-				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+				' . (!isset($context['TPortal']['article']['boardnews']) ? '{article_bookmark}' : '') . '
 				' . (!$single ? '{article_comments_total}' : '') . '
 				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-				' . (!$single ? '	<span class="botslice"><span></span></span>' : '') . '
-		</div>
-			' . ($single ? '
-			{article_bookmark}
-			{article_moreauthor}
-			<div class="article_padding">
-				{article_comments}
+				' . ($single ? '
+					{article_moreauthor}
+					<div class="article_padding">
+						{article_comments}
+					</div>
+					{article_morelinks}' : '') . '
 			</div>
-			{article_morelinks}' : '') . '
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
 	</div>';
 		else
 			$code = '
 	<div class="tparticle render2">
-		<div class="windowbg noup">
+		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			<span class="topslice"><span></span></span>
 			<div class="article_header">
 				<div class="article_iconcolumn">{article_iconcolumn}</div>
-				<h2 class="article_title" style="padding-left: 0;">' . ($showtitle ? '{article_title}' : '') . '{article_options}</h2>
+				{article_options}
+				' . ($showtitle ? '<h2 class="article_title" style="padding-left: 0;">{article_title}</h2>' : '') . '
 			<div class="article_info" style="padding-left: 0;">
 				{article_author}
 				{article_category}
@@ -1299,26 +1300,205 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_moreauthor}
 				</div>
 			</div>
-			<div class="article_padding ' . ($useframestyle ? ' windowbg2' : '') . '">{article_comments}</div>
-			<div class="article_padding ' . ($useframestyle ? ' windowbg2' : '') . '">{article_morelinks}</div>' : '') . '
-			<span class="botslice"><span></span></span>
+			<div class="article_padding>
+				{article_comments}
+				</div>
+			{article_morelinks}' : '') . '
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
 	</div>';
+	}
+	elseif($type == 4)
+	// Layout type: articles + icons
+	{
+		$code = '
+	<div class="tparticle render4">
+		<div></div>
+		' . ($usetitlestyle ? '<div class="' .$divheader.'">' : '<div style="padding: 0 1em;">') . '
+			<h3 class="' .($usetitlestyle ? $headerstyle : ''). '">{article_title}&nbsp;</h3>
+		</div>
+		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
+			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
+			<div class="article_info">
+				<div class="article_picturecolumn">{article_picturecolumn}</div>
+				{article_options}
+				{article_category}
+				{article_date}
+				{article_author}
+				{article_views}
+				{article_rating}
+				' . ($single ? '{article_print}' : '') . '
+			</div>
+			<p class="clearthefloat"></p>
+			<div class="tp_underline"></div>
+			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
+				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+				' . (!$single ? '{article_comments_total}' : '') . '
+				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+			</div>
+		' . ($single ? '
+			<div class="tp_container">
+				{article_bookmark}
+				{article_moreauthor}
+			</div>
+			<div class="article_padding">
+				{article_comments}
+			</div>
+			{article_morelinks}' : '') . '
+			' . (($useframestyle) ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
+	</div>';
+	}
+	elseif($type == 8)
+	// Layout type: articles + icons2
+	{
+		$code = '
+	<div class="tparticle render8">
+		<div ' . ($useframestyle ? 'class="' .$divbody. '"' : '') . ' style="margin: 0;">
+		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
+				<div class="article_header">
+					<div class="article_picturecolumn">{article_picturecolumn}</div>
+					{article_options}
+					' .($showtitle ? '<h2 class="article_title" style="padding-left: 0;">{article_title}</h2>' : ''). '
+				<div class="article_info" style="padding-left: 0;">
+					{article_category}
+					{article_date}
+					{article_author}
+					{article_views}
+					{article_rating}
+				' . ($single ? '{article_print}' : '') . '
+				</div>
+				</div>
+				<div class="tp_underline"></div>
+				<div class="article_padding">
+					{article_text}
+					<p class="clearthefloat"></p>
+					' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+					' . (!$single ? '{article_comments_total}' : '') . '
+					' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+				</div>
+		' . ($single ? '
+				{article_bookmark}
+				{article_moreauthor}
+				<div class="article_padding">
+					{article_comments}
+				</div>
+				{article_morelinks}' : '') . '
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
+	</div>';
+	}
+	elseif($type == 6)
+	// Layout type: simple articles
+	{
+		if($single)
+			$code = '
+	<div class="tparticle render6">
+		<div class="' . ($useframestyle ? 'windowbg' : '') . '">
+		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
+			<div class="article_header" style="padding-bottom: 0.5em;">
+				{article_options}
+				<h2 class="article_title">{article_title}</h2>
+			</div>
+			<div class="article_info">
+				{article_date}
+				{article_author}
+				{article_views}
+				{article_rating}
+				{article_print}
+			</div>
+			<div class="tp_underline"></div>
+			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
+				{article_bookmark}
+				' . (!$single ? '{article_comments_total}' : '') . '
+				{article_moreauthor}
+				{article_comments}
+			</div>
+			{article_morelinks}
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
+	</div>';
+		else
+			$code = '
+	<div class="tparticle render6">
+		<div class="' . ($useframestyle ? 'windowbg' : '') .'">
+		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
+			<div class="article_header" style="padding-bottom: 0.5em;">
+				{article_options}
+				<h2 class="article_title">{article_title}</h2>
+			</div>
+			<div class="tp_underline"></div>
+			<div class="article_padding">
+				{article_text}
+				<p class="clearthefloat"></p>
+				{article_comments_total}
+			</div>
+		' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
+	</div>';
+	}
+	elseif($type == 5)
+	// Layout type: normal + links
+	{
+		if($first)
+		$code = '
+	<div class="tparticle render1" style="overflow: hidden;">
+		<div></div>
+		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
+			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
+		</div>
+		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
+			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
+			<div class="article_info">
+				' . (!$single ? '{article_avatar}' : '') . '
+				{article_options}
+				{article_category}
+				{article_date}
+				{article_author}
+				{article_views}
+				{article_rating}
+			' . ($single ? '{article_print}' : '') . '
+			</div>
+			<div class="tp_underline"></div>
+			<div class="article_padding">
+				<div style="clear: both;"></div>
+				{article_text}
+				<p class="clearthefloat"></p>
+				' . (!isset($context['TPortal']['article']['boardnews']) ? '{article_bookmark}' : '') . '
+				' . (!$single ? '{article_comments_total}' : '') . '
+				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
+				' . ($single ? '
+					{article_moreauthor}
+					<div class="article_padding">
+						{article_comments}
+					</div>
+					{article_morelinks}' : '') . '
+			</div>
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
+	</div>';
+		else
+			$code = '
+	' . ($showtitle ? '<div class="' . $divheader . '">
+		<h3 class="' . $headerstyle . '" style="font-weight: normal;">{article_title}</h3>
+	</div>': '') . '';
 	}
 	elseif($type == 3)
 	// Layout type: 1st avatar + links
 	{
-		if(!$first)
-			$code = '
-	' . ($showtitle ? '<div style="padding: 2px 1em;"><div class="align_right"><strong>{article_title}</strong></div>{article_date}<hr /></div>': '') . '';
-		elseif($single || $first)
+		if($first)
 			$code = '
 	<div class="tparticle render3">
 		<div></div>
-		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-		' . ($showtitle ? '<h3' . ($usetitlestyle ? ' class="' . $headerstyle . '"' : '') . '>{article_title}</h3>': '') . '
+		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
+		' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
+			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_header">
 				<div class="article_iconcolumn">{article_iconcolumn}</div>
 				<div class="article_info" style="padding-left: 0;padding-top: 0;">
@@ -1345,72 +1525,38 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_bookmark}
 					{article_moreauthor}
 				</div>
-				<div class="article_padding ' . ($useframestyle ? ' windowbg2' : '') . '">{article_comments}</div>
-				<div class="' . ($useframestyle ? ' windowbg2' : '') . '">{article_morelinks}</div>
+				<div class="article_padding">
+					{article_comments}
+				</div>
+				{article_morelinks}
 			</div>' : '') . '
-			' . (($useframestyle && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
+			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
 	</div>';
-	}
-	elseif($type == 4)
-	// Layout type: articles + icons
-	{
-		$code = '
-	<div class="tparticle render4">
-		<div></div>
-		' . ($showtitle ? '<div class="cat_bar"><h3 class="catbg">{article_title} </h3></div>': '<div></div>') . '
-		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
-			<div class="article_info">
-				<div class="article_picturecolumn">{article_picturecolumn}</div>
-				{article_options}
-				{article_category}
-				{article_date}
-				{article_author}
-				{article_views}
-				{article_rating}
-				' . ($single ? '{article_print}' : '') . '
-			</div>
-			<p class="clearthefloat"></p>
-			<div class="tp_underline"></div>
-			<div class="article_padding">
-				{article_text}
-				<p class="clearthefloat"></p>
-				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-				' . (!$single ? '{article_comments_total}' : '') . '
-				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-			</div>
-			' . (($useframestyle && !$single) ? '<span class="botslice"><span></span></span>' : '') . '
-		' . ($single ? '
-			<div class="tp_container">
-				{article_bookmark}
-				{article_moreauthor}
-			</div>
-			<div class="article_padding">
-				{article_comments}
-			</div>
-			{article_morelinks}' : '') . '
-		</div>
-	</div>';
-	}
-	elseif($type == 5)
-	// Layout type: normal + links
-	{
-		if(!$first)
-			$code = '
-	' . ($showtitle ? '<div class="' . $divheader . '">
-		<h3 class="' . $headerstyle . '" style="font-weight: normal;">{article_title}</h3>
-	</div>': '') . '';
 		else
 			$code = '
-	<div class="tparticle render5" style="overflow: hidden;">
-		<div></div>
-		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-		' . ($showtitle ? '<h3' . ($usetitlestyle ? ' class="' . $headerstyle . '"' : '') . '>{article_title}</h3>': '') . '
+	' . ($showtitle ? '<div style="padding: 2px 1em;">
+		<div class="align_right">
+			<strong>{article_title}</strong>
 		</div>
-		<div class="' . ($useframestyle ? '' .$divbody. '' : '') . '">
-		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
+		{article_date}
+		<hr />
+	</div>': '') . '';
+	}
+	elseif($type == 9)
+	// Layout type: just links
+	{
+		if($single)
+		$code = '
+	<div class="tparticle render1" style="overflow: hidden;">
+		<div></div>
+		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
+			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
+		</div>
+		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
+			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
-			' . (!$single ? '{article_avatar}' : '') . '
+				' . (!$single ? '{article_avatar}' : '') . '
 				{article_options}
 				{article_category}
 				{article_date}
@@ -1420,66 +1566,33 @@ function article_renders($type = 1, $single = false, $first = false)
 			' . ($single ? '{article_print}' : '') . '
 			</div>
 			<div class="tp_underline"></div>
-			<div class="article_padding" style="clear: both;">
+			<div class="article_padding">
+				<div style="clear: both;"></div>
 				{article_text}
 				<p class="clearthefloat"></p>
-				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
+				' . (!isset($context['TPortal']['article']['boardnews']) ? '{article_bookmark}' : '') . '
 				' . (!$single ? '{article_comments_total}' : '') . '
 				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 				' . ($single ? '
-				{article_bookmark}
-				{article_moreauthor}
-				<div class="article_padding">
-					{article_comments}
-				</div>
-				{article_morelinks}' : '') . '
+					{article_moreauthor}
+					<div class="article_padding">
+						{article_comments}
+					</div>
+					{article_morelinks}' : '') . '
 			</div>
 			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
-		</div>
-	</div>';
-	}
-	elseif($type == 6)
-	// Layout type: simple articles
-	{
-		if(!$single)
-			$code = '
-	<div class="tparticle render6">
-		<div class="' . ($useframestyle ? 'windowbg' : '') .'">
-		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
-			<div class="article_header" style="padding-bottom: 0.5em;"><h2 class="article_title">{article_title}{article_options}</h2></div>
-			<div class="tp_underline"></div>
-			<div class="article_padding">
-				{article_text}
-				<p class="clearthefloat"></p>
-				{article_comments_total}
-			</div>
-		' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
 	</div>';
 		else
 			$code = '
-	<div class="tparticle render6">
-		<div class="' . ($useframestyle ? 'windowbg' : '') . '">
-		' . ($useframestyle ? '<span class="topslice"><span></span></span>' : '') . '
-			<div class="article_header" style="padding-bottom: 0.5em;"><h2 class="article_title">{article_title}{article_options}</h2></div>
-			<div class="article_info">
+	<div class="render9">	
+		<div class="windowbg" style="padding: 0;">
+			<span class="topslice"><span></span></span>
+			<div class="article_padding align_right">
+				<strong>{article_title}</strong>
 				{article_date}
-				{article_author}
-				{article_views}
-				{article_rating}
-				{article_print}
 			</div>
-			<div class="tp_underline"></div>
-			<div class="article_padding">
-				{article_text}
-				<p class="clearthefloat"></p>
-				{article_bookmark}
-				' . (!$single ? '{article_comments_total}' : '') . '
-				{article_moreauthor}
-				{article_comments}
-			</div>
-			{article_morelinks}
-			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+			<span class="botslice"><span></span></span>
 		</div>
 	</div>';
 	}
@@ -1487,93 +1600,6 @@ function article_renders($type = 1, $single = false, $first = false)
 	// Layout type: use custom template
 	{
 		$code = $context['TPortal']['frontpage_template'];
-	}
-	elseif($type == 8)
-	// Layout type: articles + icons2
-	{
-		$code = '
-	<div class="tparticle render8">
-		<div class="windowbg" style="margin: 0;">
-		<span class="topslice"><span></span></span>
-				<div class="article_header">
-					<div class="article_picturecolumn">{article_picturecolumn}</div>
-					<h2 class="article_title" style="padding-left: 0;">{article_title}{article_options}</h2>
-				<div class="article_info" style="padding-left: 0;">
-					{article_category}
-					{article_date}
-					{article_author}
-					{article_views}
-					{article_rating}
-				' . ($single ? '{article_print}' : '') . '
-				</div>
-				</div>
-				<div class="tp_underline"></div>
-				<div class="article_padding">
-					{article_text}
-					<p class="clearthefloat"></p>
-					' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-					' . (!$single ? '{article_comments_total}' : '') . '
-					' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-				</div>
-		' . ($single ? '
-				{article_bookmark}
-				{article_moreauthor}
-				<div class="article_padding">
-					{article_comments}
-				</div>
-				{article_morelinks}' : '') . '
-			<span class="botslice"><span></span></span>
-		</div>
-	</div>';
-	}
-	elseif($type == 9)
-	// Layout type: just links
-	{
-		if($single)
-		$code = '
-	<div class="tparticle render9">
-		<div></div>
-		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div>') . '
-		' . ($usetitlestyle ? '<h3 class="' . $headerstyle . ' article_title">{article_title}&nbsp;</h3>' :  '<h3 class="article_title">{article_title} </h3>') . '
-		</div>
-		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
-			<div class="article_info' . ($useframestyle ? '' : '') . '">
-			' . (!$single ? '<div class="floatleft">{article_avatar}</div><div style="clear: right;">' : '') .  '
-				{article_options}
-				{article_author}
-				{article_category}
-				{article_date}
-				{article_views}
-				{article_rating}
-				{article_print}
-			' . (!$single ? '</div>' : '') .  '
-			</div>
-			<div class="tp_underline"></div>
-			<div class="article_padding">
-				{article_text}
-				<p class="clearthefloat"></p>
-				' . (!isset($context['TPortal']['article']['boardnews']) && !$single ? '{article_bookmark}' : '') . '
-				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
-				' . (!$single ? '</div><span class="botslice"><span></span></span>' : '') . '
-			</div>
-			' . ($single ? '
-			{article_bookmark}
-			{article_moreauthor}
-			<div class="article_padding">
-				{article_comments}
-			</div>
-			{article_morelinks}</div>' : '') . '
-	</div>';
-		else
-			$code = '
-	<div class="render9">	
-		<div class="windowbg tp_pad">
-			<div class="align_right">
-				<strong>{article_title}</strong>
-			</div>
-			{article_date}
-		</div>
-	</div>';
 	}
 	return $code;
 }
@@ -2167,7 +2193,7 @@ function render_rating($total, $votes, $id, $can_rate = false, $render = true)
 		if($context['user']['is_logged'] && $can_rate) {
 				$data .= '
 			<form action="' . $scripturl . '?action=tportal;sa=rate_article" style="margin: 0; padding: 0; display: inline;" method="post">
-				<select size="1" name="tp_article_rating">';
+				<select name="tp_article_rating" size="1" style="width: 4em;">';
 
 				for($u=$context['TPortal']['maxstars'] ; $u>0 ; $u--) {
 					$data .= '
