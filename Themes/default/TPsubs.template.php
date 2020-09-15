@@ -273,10 +273,10 @@ function TPortal_userbox()
 		// can we submit an article?
        	if(allowedTo('tp_submithtml'))
 			echo '
-		<li><a href="', $scripturl, '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_html">' . $bullet3.$txt['tp-submitarticle']. '</a></li>';
+		<li><a href="', $scripturl, '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_html">' . $bullet3.$txt['tp-submitarticle']. '</a></li>';
        	if(allowedTo('tp_submitbbc'))
 					echo '
-		<li><a href="', $scripturl, '?action=tp' . (allowedTo('tp_articles') ? 'admin' : 'mod') . ';sa=addarticle_bbc">' . $bullet3.$txt['tp-submitarticlebbc']. '</a></li>';
+		<li><a href="', $scripturl, '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_bbc">' . $bullet3.$txt['tp-submitarticlebbc']. '</a></li>';
 
 		if(allowedTo('tp_editownarticle'))
 					echo '
