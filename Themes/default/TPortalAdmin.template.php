@@ -519,9 +519,12 @@ function template_frontpage()
 						<dd>
 						  <select id="tp_boardnews_headerstyle" name="tp_boardnews_headerstyle" value="' ,$context['TPortal']['boardnews_headerstyle'], '">
 								<option value="titlebg"' , $context['TPortal']['boardnews_headerstyle']=='titlebg' ? ' selected="selected"' : '' , '>titlebg</option>
-								<option value="catbg"' , $context['TPortal']['boardnews_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>
+								<option value="catbg"' , $context['TPortal']['boardnews_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>';
+		if (!TP_SMF21) 
+			echo '
 								<option value="titlebg2"' , $context['TPortal']['boardnews_headerstyle']=='titlebg2' ? ' selected="selected"' : '' , '>titlebg2</option>
-								<option value="catbg2"' , $context['TPortal']['boardnews_headerstyle']=='catbg2' ? ' selected="selected"' : '' , '>catbg2</option>
+								<option value="catbg2"' , $context['TPortal']['boardnews_headerstyle']=='catbg2' ? ' selected="selected"' : '' , '>catbg2</option>';
+			echo '
 							</select>
 						</dd>
 						<dt>

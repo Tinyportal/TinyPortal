@@ -78,7 +78,8 @@
 	padding: 0;
 }
 .tp_readmore {
-	padding-top: 1em;
+	margin: 0;
+	padding: 2em 0 0 0;
 }
 h2.author_h2 {
 	border-top: 1px solid #CCCCCC;
@@ -398,10 +399,10 @@ img.tp_social {
 	width: 100%;
 }
 /* render4 */
-.render4 .windowbg {
+.render4 .windowbg, .render4 .windowbg2, .render4 .roundframe {
 	margin-top: 0px !important;
 }
-.render6 .windowbg, .render8 .windowbg {
+.render6 .windowbg, .render6 .windowbg2, .render6 .roundframe, .render8 .windowbg, .render8 .windowbg2, .render8 .roundframe {
 	margin-top: 2px !important;
 }
 .article_header {
@@ -437,7 +438,7 @@ img.tp_social {
 }
 .article_boardnews {
 	font-size: 0.9em;
-	padding-top: 1em;
+	padding-top: 2em;
 }
 ul.category_children {
 	margin: 0;
@@ -839,6 +840,41 @@ h2.catbg img.icon {
 	margin: 0.25em 0 1em 0;
 	max-width: 100%;
 }
+/* Style for article titles */
+.tparticle .cat_bar {
+	border-radius: 6px 6px 0 0;
+}
+.tparticle .title_bar h3.titlebg2 {
+	background: none;
+    padding: 8px 0px 6px 0px;
+}
+.tparticle .title_bar h3.catbg {
+	background: none;
+	padding: 6px 12px 5px 12px;
+}
+.tparticle .title_bar h3.catbg2 {
+	background: none;
+}
+.tparticle .cat_bar h3.titlebg {
+	background: none;
+}
+.tparticle .cat_bar h3.titlebg2 {
+	background: none;
+    padding: 8px 0px 6px 0px;
+}
+.tparticle .tp_half h3.titlebg {
+    padding-left: 12px;
+}
+.tparticle .tp_half h3.catbg, .tparticle .tp_half h3.catbg2 {
+    border-radius: 6px;
+	height: auto;
+    padding: 0 0 0 12px;
+}
+.tparticle .tp_half h3.titlebg2 {
+	border-radius: 6px 6px 0 0;
+    padding: 10px 12px 5px 12px;
+}
+
 /************* TP STYLES ********************/
 .clearthefloat {
    clear:both;
@@ -971,7 +1007,7 @@ img.tp-illu {
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.tparticle .windowbg {
+.tparticle .windowbg, .tparticle .windowbg2, .tparticle .roundframe {
 	padding: 0;
 }
 .admintable > .windowbg {
@@ -992,7 +1028,7 @@ img.tp-illu {
 	box-shadow: none;
 	margin: 0 0 0 0 !important;
 }
-#centerContainer .windowbg, #centerContainer .windowbg2, #centerContainer .windowbg3, .dl_container .windowbg {
+.tparticle .windowbg, .tparticle .windowbg2, .tparticle .windowbg3, .tparticle .roundframe, .dl_container .windowbg {
 	margin-bottom: 6px !important;
 }
 #tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {
