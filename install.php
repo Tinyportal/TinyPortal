@@ -630,6 +630,10 @@ $settings_array = array(
 	'icon_max_size' => '500',
     'icon_width' => '100',
     'icon_height' => '100',
+	'boardnews_divheader' => 'cat_bar',
+	'boardnews_headerstyle' => 'catbg',
+	'boardnews_divbody' => 'windowbg noup',
+	
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
