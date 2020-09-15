@@ -992,7 +992,7 @@ img.tp-illu {
 	box-shadow: none;
 	margin: 0 0 0 0 !important;
 }
-#centerContainer .windowbg, .dl_container .windowbg {
+#centerContainer .windowbg, #centerContainer .windowbg2, #centerContainer .windowbg3, .dl_container .windowbg {
 	margin-bottom: 6px !important;
 }
 #tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {
@@ -1258,3 +1258,4 @@ h4.h4dl {
 	max-height: 15em;
 	overflow: hidden;
 }
+

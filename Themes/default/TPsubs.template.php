@@ -1180,9 +1180,9 @@ function article_renders($type = 1, $single = false, $first = false)
 	// decide the header style, different for forumposts
     $usetitlestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
     $useframestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'frame'));
-	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? 'catbg' : 'titlebg';
-	$divheader = isset($context['TPortal']['article']['boardnews']) ? 'cat_bar' : 'title_bar';
-	$divbody = isset($context['TPortal']['article']['boardnews']) ? 'windowbg noup' : ($usetitlestyle ?'windowbg noup' : 'windowbg');
+	$divheader = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divheader'] : 'title_bar';
+	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_headerstyle'] : 'titlebg';
+	$divbody = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divbody'] : ($usetitlestyle ? 'windowbg noup' : 'windowbg');
 	$showtitle = in_array('title', $context['TPortal']['article']['visual_options']);
 
 	if($type == 1)
@@ -1192,7 +1192,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
-			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
+			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
@@ -1202,7 +1202,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_author}
-				{article_views}
+				{article_views}	
 				{article_rating}
 			' . ($single ? '{article_print}' : '') . '
 			</div>
@@ -1233,7 +1233,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
-			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
+			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
@@ -1449,7 +1449,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
-			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
+			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
@@ -1551,7 +1551,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	<div class="tparticle render1" style="overflow: hidden;">
 		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
-			<h3 ' .($usetitlestyle ? 'class="' . $headerstyle . '"' : '') . ' >{article_title}' . ($showtitle ? '' : '&nbsp;') . '</h3>
+			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '

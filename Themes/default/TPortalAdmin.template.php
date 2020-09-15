@@ -495,7 +495,51 @@ function template_frontpage()
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-useattachmentdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_attachment">', $txt['tp-useattachment'], '</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_use_attachment" name="tp_use_attachment" value="1" ' , $context['TPortal']['use_attachment']=='1' ? 'checked' : '' , '>
+							<input type="checkbox" id="tp_use_attachment" name="tp_use_attachment" value="1" ' , $context['TPortal']['use_attachment']=='1' ? 'checked' : '' , '><br><br>
+						</dd>
+						<dt>
+							<label for="tp_boardnews_divheader">'.$txt['tp-boardnews_divheader'].'</label>
+						</dt>
+						<dd>
+						  <select id="tp_boardnews_divheader" name="tp_boardnews_divheader" value="' ,$context['TPortal']['boardnews_divheader'], '" >
+								<option value="title_bar"' , $context['TPortal']['boardnews_divheader']=='title_bar' ? ' selected="selected"' : '' , '>title_bar</option>
+								<option value="cat_bar"' , $context['TPortal']['boardnews_divheader']=='cat_bar' ? ' selected="selected"' : '' , '>cat_bar</option>';
+		if (!TP_SMF21) 
+			echo '
+								<option value="tp_half"' , $context['TPortal']['boardnews_divheader']=='tp_half' ? ' selected="selected"' : '' , '>tp_half</option>';
+		else
+			echo '
+								<option value="tp_half21"' , $context['TPortal']['boardnews_divheader']=='tp_half21' ? ' selected="selected"' : '' , '>tp_half21</option>';
+			echo '
+							</select>
+						</dd>
+						<dt>
+							<label for="tp_boardnews_headerstyle">'.$txt['tp-boardnews_headerstyle'].'</label>
+						</dt>
+						<dd>
+						  <select id="tp_boardnews_headerstyle" name="tp_boardnews_headerstyle" value="' ,$context['TPortal']['boardnews_headerstyle'], '">
+								<option value="titlebg"' , $context['TPortal']['boardnews_headerstyle']=='titlebg' ? ' selected="selected"' : '' , '>titlebg</option>
+								<option value="catbg"' , $context['TPortal']['boardnews_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>
+								<option value="titlebg2"' , $context['TPortal']['boardnews_headerstyle']=='titlebg2' ? ' selected="selected"' : '' , '>titlebg2</option>
+								<option value="catbg2"' , $context['TPortal']['boardnews_headerstyle']=='catbg2' ? ' selected="selected"' : '' , '>catbg2</option>
+							</select>
+						</dd>
+						<dt>
+							<label for="tp_boardnews_divbody">'.$txt['tp-boardnews_divbody'].'</label>
+						</dt>
+						<dd>
+						  <select id="tp_boardnews_divbody" name="tp_boardnews_divbody" value="' ,$context['TPortal']['boardnews_divbody'], '">
+								<option value="windowbg"' , $context['TPortal']['boardnews_divbody']=='windowbg' ? ' selected="selected"' : '' , '>windowbg</option>';
+		if (!TP_SMF21) 
+			echo '
+								<option value="windowbg2"' , $context['TPortal']['boardnews_divbody']=='windowbg2' ? ' selected="selected"' : '' , '>windowbg2</option>
+								<option value="windowbg3"' , $context['TPortal']['boardnews_divbody']=='windowbg3' ? ' selected="selected"' : '' , '>windowbg3</option>';
+		else
+			echo '
+								<option value="windowbg noup"' , $context['TPortal']['boardnews_divbody']=='windowbg noup' ? ' selected="selected"' : '' , '>windowbg+noup</option>
+								<option value="roundframe"' , $context['TPortal']['boardnews_divbody']=='roundframe' ? ' selected="selected"' : '' , '>roundframe</option>';
+			echo '
+						</select>
 						</dd>
 					</dl>
 				</div>
