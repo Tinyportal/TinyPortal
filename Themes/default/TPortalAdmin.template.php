@@ -1832,8 +1832,8 @@ function template_blocks()
 						<tr class="',$class,'">
 						<td class="blocks">
 						<div id="blocksDiv">
-							<div style="width:10%;" class="adm-pos float-items">', ($lblock['editgroups']!='' && $lblock['editgroups']!='-2') ? '#' : '' ,'
-								<input type="number" name="pos' .$lblock['id']. '" value="' .$lblock['pos']. '" style="width: 4em" maxlength="3">
+							<div style="width:10%;" class="adm-pos float-items">
+								<input type="number" name="pos' .$lblock['id']. '" value="' .$lblock['pos']. '" style="width: 3em" maxlength="3">
 								<a name="block' .$lblock['id']. '"></a>';
 					echo '
 								<a class="tpbut" title="'.$txt['tp-sortdown'].'" href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';addpos=' .$lblock['id']. '"><img src="' .$settings['tp_images_url']. '/TPsort_down.png" value="' .(($n*10)+11). '" /></a>';
