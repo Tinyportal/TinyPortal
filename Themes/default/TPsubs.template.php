@@ -2056,12 +2056,12 @@ function article_comments($render = true)
 		$data .= '
 	<a name="tp-comment">
 	<div></div>
-	<h2 class="titlebg article_extra">' .	$txt['tp-comments'] . ':  ' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . ' ' . $context['TPortal']['article_comments_count'] . '</h2>';
+	<h2 class="titlebg article_extra">' . $txt['tp-comments'] . ': ' . $context['TPortal']['article_comments_count'] . '' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2> ';
 	}
 
 	if(in_array('comments', $context['TPortal']['article']['visual_options']) && !$context['TPortal']['article_comments_count'] == 0) {
 		$data .= '	
-	<div class="tp_commentsbox"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
+	<div id="articlecomments" class="tp_commentsbox"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
 
 		$counter = 1;
 		if(isset($context['TPortal']['article']['comment_posts'])) {
