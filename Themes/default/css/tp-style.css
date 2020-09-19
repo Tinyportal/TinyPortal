@@ -780,11 +780,17 @@ h2.catbg img.icon {
 	float: left;
 	margin: 5px 8px 0 0;
 }
+div.tp_half
+{
+	height: 31px;
+	margin-bottom: 1px;
+	overflow: hidden;
+}
 .tp_half h3.titlebg {
 	background: url(../images/theme/main_block.png) no-repeat -10px -200px;
 	border-radius: 6px 6px 0 0;
 	font-weight: bold;
-	height: 28px;
+	height: 31px;
 	margin: 0;
 	padding-right: 0;
 }
@@ -792,35 +798,35 @@ h2.catbg img.icon {
 	background: url(../images/theme/main_block.png) no-repeat 0 -200px;
 	display: block;
 	float: left;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tp_half h3.titlebg span.r {
 	background: url(../images/theme/main_block.png) no-repeat 100% -200px;
 	display: block;
 	float: right;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tp_half h3.catbg {
 	background: url(../images/theme/main_block.png) no-repeat -10px -160px;
 	border-radius: 6px 6px 0 0;
 	font-weight: bold;
-	height: 28px;
-	padding-right: 0;
+	height: 31px;
+	padding-right: 0px;
 }
 .tp_half h3.catbg span.l {
 	background: url(../images/theme/main_block.png) no-repeat 0 -160px;
 	display: block;
 	float: left;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tp_half h3.catbg span.r {
 	background: url(../images/theme/main_block.png) no-repeat 100% -160px;
 	display: block;
 	float: right;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tpadmin_content .tpbut {
@@ -854,25 +860,36 @@ h2.catbg img.icon {
 }
 .tparticle .title_bar h3.catbg2 {
 	background: none;
+	border-radius: 6px 6px 0 0;
+	font-weight: bold;
+	height: 31px;
+	padding-right: 1em;
 }
 .tparticle .cat_bar h3.titlebg {
 	background: none;
 }
 .tparticle .cat_bar h3.titlebg2 {
 	background: none;
-    padding: 8px 0px 6px 0px;
+    padding: 8px 0 6px 0;
 }
 .tparticle .tp_half h3.titlebg {
-    padding-left: 12px;
+    height: 31px;
+	line-height: 31px;
+    padding-left: 1em;
+	padding-right: 1em;
 }
 .tparticle .tp_half h3.catbg, .tparticle .tp_half h3.catbg2 {
     border-radius: 6px;
-	height: auto;
-    padding: 0 0 0 12px;
+    height: 31px;
+    line-height: 31px;
+	padding: 0 1em 0 1em;
 }
 .tparticle .tp_half h3.titlebg2 {
 	border-radius: 6px 6px 0 0;
-    padding: 10px 12px 5px 12px;
+	font-weight: bold;
+    height: 31px;
+	line-height: 31px;
+	padding: 0 1em 0 1em;
 }
 
 /************* TP STYLES ********************/
