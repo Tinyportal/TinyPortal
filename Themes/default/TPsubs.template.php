@@ -1436,6 +1436,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_text}
 				<p class="clearthefloat"></p>
 				{article_comments_total}
+				' . (isset($context['TPortal']['article']['boardnews']) ? '{article_boardnews}' : '') . '
 			</div>
 		' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
