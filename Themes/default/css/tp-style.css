@@ -402,9 +402,9 @@ img.tp_social {
 .render4 .windowbg, .render4 .windowbg2, .render4 .roundframe {
 	margin-top: 0px !important;
 }
-.render6 .windowbg, .render6 .windowbg2, .render6 .roundframe, .render8 .windowbg, .render8 .windowbg2, .render8 .roundframe {
+/*.render6 .windowbg, .render6 .windowbg2, .render6 .roundframe, .render8 .windowbg, .render8 .windowbg2, .render8 .roundframe {
 	margin-top: 2px !important;
-}
+}*/
 .article_header {
 	line-height: 1.6em;
 	overflow: hidden;
