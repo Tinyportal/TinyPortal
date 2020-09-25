@@ -118,7 +118,12 @@ $txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum-topics on th
 $txt['tp-showforumposts'] = 'Display forum-topics on frontpage from';
 $txt['tp-lengthofposts'] = 'Number of characters to display per forum-topic';
 $txt['tp-forumposts_avatar'] = 'Show avatars in forum-topics';
+$txt['tp-forumposts_avatardesc'] = 'This setting will make the member avatars show in forum topics on the Frontpage of your forum. This will only have an effect if you are using one of the following layouts for your Frontpage: normal articles, 1st normal-avatars or normal-links.';
 $txt['tp-useattachment'] = 'Use first post attachment preview as icon';
+$txt['tp-useattachmentdesc'] = 'This setting will make the an image of the first attachment of the forum topic be used as the icon for the post on the frontpage of your forum. This will only have an effect if you are using one of the following layouts for your Frontpage: articles-icons or articles-icons2.';
+$txt['tp-boardnews_divheader'] = 'Header style for frontpage topics';
+$txt['tp-boardnews_headerstyle'] = 'Title style for frontpage topics';
+$txt['tp-boardnews_divbody'] = 'Frame style for frontpage topics';
 
 // Navigation links
 $txt['tp-tabs5'] = 'Categories';
@@ -250,7 +255,7 @@ $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval
 
 // Icons
 $txt['tp-adminicons7'] = 'Article icons to be used in category layouts.';
-$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: 500KB. Images will be resized so the shortest side is ' .$context['TPortal']['icon_width']. ' px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
+$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: ' .$context['TPortal']['icon_max_size']. ' KB. Images will be resized so the shortest side is ' .$context['TPortal']['icon_width']. ' px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category

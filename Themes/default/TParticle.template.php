@@ -524,14 +524,14 @@ function template_submitarticle()
 								</dt>
 								<dd>
 									<input type="checkbox" id="tp_article_options_'.$opts[14].'" name="tp_article_options_'.$opts[14].'" value="'.$mg['id'].'" ' , isset($options[$opts[14]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
+								</dd>';
+								/*<dt>
 									<label for="tp_article_options_'.$opts[16].'">', $txt['tp-articleoptions16'], '</label><br>
 								</dt>
 								<dd>
 									<input type="checkbox" id="tp_article_options_'.$opts[16].'" name="tp_article_options_'.$opts[16].'" value="'.$mg['id'].'" ' , isset($options[$opts[16]]) ? 'checked' : '' , '>
-								</dd>';							
-								/*<dt>
+								</dd>							
+								<dt>
 									<label for="tp_article_options_'.$opts[5].'">', $txt['tp-articleoptions5'], '</label><br>
 								</dt>
 								<dd>

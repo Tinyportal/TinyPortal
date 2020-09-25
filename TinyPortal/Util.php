@@ -182,7 +182,6 @@ class Util
                     }
                 }
             }
-
             // check that no html has been cut off
             if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
                 if(strpos($matches[1], 'br') === false) {

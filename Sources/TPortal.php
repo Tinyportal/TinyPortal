@@ -1113,6 +1113,7 @@ function doTPfrontpage() {{{
 
 	// fetch the articles, sorted
 	switch($context['TPortal']['front_type']) {
+		// Only articles
         case 'articles_only': 
 		// first, get all available
         $artgroups = '';
@@ -1244,7 +1245,9 @@ function doTPfrontpage() {{{
 			$smcFunc['db_free_result']($request);
 		}
         break;
+	// Only forum-topics 
 	case 'forum_only':
+	// Promoted topics only
     case 'forum_selected':
 		$totalmax = 200;
 
@@ -1416,7 +1419,9 @@ function doTPfrontpage() {{{
 			$smcFunc['db_free_result']($request);
 		}
         break;
+	// Forum-topics and articles - sorted on date
     case 'forum_articles':
+	// Promoted topics + articles - sorted on date
     case 'forum_selected_articles':
 		// first, get all available
 		$artgroups = '';
@@ -1433,7 +1438,7 @@ function doTPfrontpage() {{{
 		'SELECT art.id, art.date, art.sticky, art.featured
 			FROM {db_prefix}tp_articles AS art
 			INNER JOIN {db_prefix}tp_variables AS var
-            ON var.id = art.category
+				ON var.id = art.category
 			WHERE art.off = 0
 			' . $artgroups . '
 			AND ((art.pub_start = 0 AND art.pub_end = 0)
@@ -1466,14 +1471,16 @@ function doTPfrontpage() {{{
 				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
 				FROM {db_prefix}topics AS t
                 INNER JOIN {db_prefix}boards AS b
-                ON t.id_board = b.id_board
+					ON t.id_board = b.id_board
                 INNER JOIN {db_prefix}messages AS m
-				ON t.id_first_msg = m.id_msg
+					ON t.id_first_msg = m.id_msg
 				WHERE t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC
 				LIMIT {int:max}',
-				array('board' => $context['TPortal']['SSI_board'], 'max' => $totalmax)
+				array(
+					'board' => $context['TPortal']['SSI_board'],
+					'max' => $totalmax)
 			);
         }
 		else {
@@ -1481,9 +1488,9 @@ function doTPfrontpage() {{{
 				SELECT t.id_first_msg AS id_first_msg , m.poster_time AS date
 				FROM {db_prefix}topics AS t
                 INNER JOIN {db_prefix}boards AS b
-				ON t.id_board = b.id_board
+					ON t.id_board = b.id_board
                 INNER JOIN {db_prefix}messages AS m
-				ON t.id_first_msg = m.id_msg
+					ON t.id_first_msg = m.id_msg
 				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC'
@@ -1557,7 +1564,7 @@ function doTPfrontpage() {{{
 		$forumPosts = $posts = array();
         // ok we got the post ids now, fetch each one, forum first
 		if(count($mposts) > 0) {
-            $forumPosts = ssi_fetchPosts($mposts, false, 'array');
+            $forumPosts = ssi_fetchPosts($mposts, true, 'array');
         }
 
         global $memberContext;
@@ -1599,7 +1606,7 @@ function doTPfrontpage() {{{
 
 
                 // Turn the body back to bbc so the parse_bbc called later doesn't break....
-                $row['body']            = html_to_bbc($row['body']);
+                //$row['body']            = html_to_bbc($row['body']);
 
                 // Load their context data.
                 loadMemberData($row['author_id']);

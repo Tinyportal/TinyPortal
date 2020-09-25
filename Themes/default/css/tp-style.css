@@ -78,7 +78,8 @@
 	padding: 0;
 }
 .tp_readmore {
-	padding-top: 1em;
+	margin: 0;
+	padding: 2em 0 0 0;
 }
 h2.author_h2 {
 	border-top: 1px solid #CCCCCC;
@@ -114,9 +115,9 @@ h2.author_h2 {
 }
 .article_info {
 	color: #888;
-	line-height: 1.6em;
+	line-height: 1.4em;
 	overflow: hidden;
-	padding: 1em 1em 0.75em 1em;
+	padding: .7em 1em 0.5em 1em;
 }
 .article_info a, .article_info a:visited {
 	color: #888;
@@ -153,20 +154,32 @@ h3.article_info {
 .article_category a {
 	font-weight: bold;
 }
-.article_info span {
-	border-right: solid 1px #888;
-	margin-right: 5px;
-	padding: 0;
-	padding-right: 10px;
-}
-.article_info span:last-of-type {
-	border-right: none;
-}
 .article_author span:last-of-type {
 	border-right: none;
 }
 .article_authorinfo {
 	overflow: hidden;
+}
+/* horizontal render layout */
+.article_info div {
+	border-right: solid 1px #888;
+	display: inline-block;
+	font-size: 0.9em;
+	padding: 0 10px 0 5px;
+}
+.article_info div:last-of-type {
+	border-right: none;
+}
+.article_info div.tp_avatar_single {
+	border: none;
+	float: left;
+	max-width: 80px;
+}
+/* vertical layout */
+.render3 .article_info div, .render4 .article_info div, .render2 .article_info div, .render8 .article_info div {
+	display: block;
+	border: none;
+	padding: 0;
 }
 .authortext {
 	font-size: 0.85em;
@@ -195,14 +208,11 @@ a.tp_avatar_author img {
 	border-radius: 2px;
 	margin-right: 0.7em;
 	padding: 1px;
-	width: 35px;
+	width: 80px;
 }
 .tp_avatar_single img {
 	border-radius: 2px;
 	float: left;
-	height: 50px;
-	margin: .2em 1em .5em 0;
-	padding: 1px;
 }
 .tp_avatar_single2 img {
 	border-radius: 2px;
@@ -233,8 +243,7 @@ a.tp_avatar_author img {
 	padding-left: 5px;
 }
 img.tp_social {
-	height: 24px;
-	width:auto;
+	width: 24px;
 }
 /* rating */
 .tp_article_rate {
@@ -390,12 +399,12 @@ img.tp_social {
 	width: 100%;
 }
 /* render4 */
-.render4 .windowbg {
+.render4 .windowbg, .render4 .windowbg2, .render4 .roundframe {
 	margin-top: 0px !important;
 }
-.render6 .windowbg, .render8 .windowbg {
+/*.render6 .windowbg, .render6 .windowbg2, .render6 .roundframe, .render8 .windowbg, .render8 .windowbg2, .render8 .roundframe {
 	margin-top: 2px !important;
-}
+}*/
 .article_header {
 	line-height: 1.6em;
 	overflow: hidden;
@@ -403,7 +412,7 @@ img.tp_social {
 }
 .article_picturecolumn {
 	float: left;
-	margin: 0 1em 0 0;
+	margin: 0 1em .5em 0;
 	overflow: hidden;
 	text-align: center;
 }
@@ -428,8 +437,8 @@ img.tp_social {
 	margin: 0 1em 0 1em;
 }
 .article_boardnews {
-	font-size: 0.8em;
-	padding-top: 1em;
+	font-size: 0.9em;
+	padding-top: 2em;
 }
 ul.category_children {
 	margin: 0;
@@ -771,11 +780,17 @@ h2.catbg img.icon {
 	float: left;
 	margin: 5px 8px 0 0;
 }
+div.tp_half
+{
+	height: 31px;
+	margin-bottom: 1px;
+	overflow: hidden;
+}
 .tp_half h3.titlebg {
 	background: url(../images/theme/main_block.png) no-repeat -10px -200px;
 	border-radius: 6px 6px 0 0;
 	font-weight: bold;
-	height: 28px;
+	height: 31px;
 	margin: 0;
 	padding-right: 0;
 }
@@ -783,35 +798,35 @@ h2.catbg img.icon {
 	background: url(../images/theme/main_block.png) no-repeat 0 -200px;
 	display: block;
 	float: left;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tp_half h3.titlebg span.r {
 	background: url(../images/theme/main_block.png) no-repeat 100% -200px;
 	display: block;
 	float: right;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tp_half h3.catbg {
 	background: url(../images/theme/main_block.png) no-repeat -10px -160px;
 	border-radius: 6px 6px 0 0;
 	font-weight: bold;
-	height: 28px;
-	padding-right: 0;
+	height: 31px;
+	padding-right: 0px;
 }
 .tp_half h3.catbg span.l {
 	background: url(../images/theme/main_block.png) no-repeat 0 -160px;
 	display: block;
 	float: left;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tp_half h3.catbg span.r {
 	background: url(../images/theme/main_block.png) no-repeat 100% -160px;
 	display: block;
 	float: right;
-	height: 28px;
+	height: 31px;
 	width: 10px;
 }
 .tpadmin_content .tpbut {
@@ -831,6 +846,52 @@ h2.catbg img.icon {
 	margin: 0.25em 0 1em 0;
 	max-width: 100%;
 }
+/* Style for article titles */
+.tparticle .cat_bar {
+	border-radius: 6px 6px 0 0;
+}
+.tparticle .title_bar h3.titlebg2 {
+	background: none;
+    padding: 8px 0px 6px 0px;
+}
+.tparticle .title_bar h3.catbg {
+	background: none;
+	padding: 6px 12px 5px 12px;
+}
+.tparticle .title_bar h3.catbg2 {
+	background: none;
+	border-radius: 6px 6px 0 0;
+	font-weight: bold;
+	height: 31px;
+	padding-right: 1em;
+}
+.tparticle .cat_bar h3.titlebg {
+	background: none;
+}
+.tparticle .cat_bar h3.titlebg2 {
+	background: none;
+    padding: 8px 0 6px 0;
+}
+.tparticle .tp_half h3.titlebg {
+    height: 31px;
+	line-height: 31px;
+    padding-left: 1em;
+	padding-right: 1em;
+}
+.tparticle .tp_half h3.catbg, .tparticle .tp_half h3.catbg2 {
+    border-radius: 6px;
+    height: 31px;
+    line-height: 31px;
+	padding: 0 1em 0 1em;
+}
+.tparticle .tp_half h3.titlebg2 {
+	border-radius: 6px 6px 0 0;
+	font-weight: bold;
+    height: 31px;
+	line-height: 31px;
+	padding: 0 1em 0 1em;
+}
+
 /************* TP STYLES ********************/
 .clearthefloat {
    clear:both;
@@ -963,7 +1024,7 @@ img.tp-illu {
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.tparticle .windowbg {
+.tparticle .windowbg, .tparticle .windowbg2, .tparticle .roundframe {
 	padding: 0;
 }
 .admintable > .windowbg {
@@ -984,7 +1045,7 @@ img.tp-illu {
 	box-shadow: none;
 	margin: 0 0 0 0 !important;
 }
-#centerContainer .windowbg, .dl_container .windowbg {
+.tparticle .windowbg, .tparticle .windowbg2, .tparticle .windowbg3, .tparticle .roundframe, .dl_container .windowbg {
 	margin-bottom: 6px !important;
 }
 #tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {
@@ -1250,3 +1311,4 @@ h4.h4dl {
 	max-height: 15em;
 	overflow: hidden;
 }
+
