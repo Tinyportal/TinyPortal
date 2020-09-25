@@ -170,18 +170,18 @@ class Util
             $cutOffPos  = max(strpos($string, ' ', $length), strpos($string, '>', $length));
             $tmpString  = self::substr($string, 0, $cutOffPos);
 
-            // check we haven't cut any bbcode off
-            if(preg_match_all('/.*\[([^]]+)\]/', $tmpString, $matches, PREG_SET_ORDER) > 0 ) {
-                if(isset(end($matches)[1])) {
-                    $search     = "[".end($matches)[1]."]";
-                    if( (strstr($tmpString, $search) === false) ) {
-                        $strEnd     = strpos($string, $search, strlen($tmpString));
-                        if($strEnd != 0) {
-                            $tmpString  = self::substr($string, 0, $strEnd + strlen($search));
-                        }
+            if(preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0 ) {
+                foreach($matches[1] as $key) { 
+                    // check we haven't cut any bbcode off
+                    if(preg_match_all('/\[(['.$key.']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0 ) {
+                        $cutOffPos  = strpos($string, '[/'.$key.']');
+                        $tmpString  = self::substr($string, 0, $cutOffPos);
                     }
                 }
             }
+
+
+
             // check that no html has been cut off
             if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
                 if(strpos($matches[1], 'br') === false) {
@@ -203,6 +203,17 @@ class Util
         return false;
 
     }}}
+
+    public static function parseBBC($string) {{{
+
+        if(preg_match_all('/\[([a-zA-Z=0-9_\-]+?)\](.+?)\[\/\1\]/', $string, $matches) > 0 ) {
+            return $matches;
+        }
+
+        return false;
+
+    }}} 
+
 
     public static function isHTML( $string ) {{{
         return preg_match("~\/[a-z]*>~i", $string ) != 0;
@@ -312,7 +323,6 @@ class Util
         }
         return $filter;
     }}}
-
 
 }
 
