@@ -267,7 +267,6 @@ img.tp_social {
 	overflow-wrap: anywhere;
 	padding: 1.5em 1em;
 	position: relative;
-	word-wrap: break-word;
 }
 .othercomment .textcomment .body {
 	color: #008;
@@ -475,9 +474,6 @@ ul.category_children li {
 	min-height: 0;
 	overflow-wrap: anywhere;
 	padding: 4px;
-	-epub-word-wrap: break-word;
-	-ms-word-wrap: break-word;
-	word-wrap: break-word;
 }
 /* blocktype 1: User */
 .tp_userblock h4 {
@@ -1108,9 +1104,6 @@ div.tp_half21 {
 	-webkit-hyphens: auto;
 	hyphens: auto;
 	overflow-wrap: anywhere;
-	-epub-word-wrap: break-word;
-	-ms-word-wrap: break-word;
-	word-wrap: break-word;
 }
 code.bbc_code {
 	-epub-hyphens: auto;
@@ -1120,9 +1113,6 @@ code.bbc_code {
 	hyphens: none;
 	overflow-wrap: anywhere;
 	white-space: normal !important;
-	-epub-word-wrap: break-word;
-	-ms-word-wrap: break-word;
-	word-wrap: break-word;
 }
 /* TP rss feed styles */
 .rss_title {
