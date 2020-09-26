@@ -134,7 +134,7 @@ function TPListImages($user_id)
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />
                     <input type="hidden" name="image" value="'.$image.'" />
-                    <div style="width: 250px; height: 220px;text-align:center;"><img src="'.$imageUrl.'" alt="'.$image.'" title="'.$image.'" /><br>
+                    <div class="tp_listimage"><img src="'.$imageUrl.'" alt="'.$image.'" title="'.$image.'" /><br>
 					'.$image.'
 					</div>
                     <div style="text-align:center;"><input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"></div>

@@ -1513,7 +1513,7 @@ function do_postchecks()
                     }
                     break;
 				case 'frontpage':
-                    $checkboxes = array('forumposts_avatar', 'use_attachment');
+                    $checkboxes = array('allow_guestnews', 'forumposts_avatar', 'use_attachment');
                     foreach($checkboxes as $v) {
                         if(TPUtil::checkboxChecked('tp_'.$v)) {
                             $updateArray[$v] = "1";

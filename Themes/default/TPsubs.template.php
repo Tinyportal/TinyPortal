@@ -1870,12 +1870,12 @@ function article_options($render = true)
 
 	if(!isset($context['TPortal']['article']['boardnews'])) {
 		// give 'em a edit link? :)
-		if(allowedTo('tp_articles') && ($context['TPortal']['hide_editarticle_link']!=1)) {
+		if(allowedTo('tp_articles') && ($context['TPortal']['hide_editarticle_link']==1)) {
 			$data .= '
 					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
         }
 		// their own article?
-		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && $context['TPortal']['hide_editarticle_link']!=1 && $context['TPortal']['article']['locked']!=1) {
+		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && $context['TPortal']['hide_editarticle_link']==1 && $context['TPortal']['article']['locked']!=1) {
 			$data .= '
 					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
         }

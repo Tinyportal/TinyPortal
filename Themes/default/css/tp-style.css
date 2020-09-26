@@ -267,7 +267,6 @@ img.tp_social {
 	overflow-wrap: anywhere;
 	padding: 1.5em 1em;
 	position: relative;
-	word-wrap: break-word;
 }
 .othercomment .textcomment .body {
 	color: #008;
@@ -334,7 +333,7 @@ img.tp_social {
 }
 .tpthumb div {
 	margin-top: 4px;
-	overflow: auto;
+	overflow: hidden;
 	padding: 4px;
 }
 .tpquicklist div {
@@ -428,7 +427,7 @@ img.tp_social {
 }
 /* render9 */
 .render9 .windowbg {
-	    margin: 6px 0 0 0; !important;
+	margin: 6px 0 0 0; !important;
 }
 
 .tp_underline {
@@ -475,9 +474,6 @@ ul.category_children li {
 	min-height: 0;
 	overflow-wrap: anywhere;
 	padding: 4px;
-	-epub-word-wrap: break-word;
-	-ms-word-wrap: break-word;
-	word-wrap: break-word;
 }
 /* blocktype 1: User */
 .tp_userblock h4 {
@@ -684,6 +680,12 @@ h4.tpresults {
 	font-size: 1.3em;
 	font-weight: normal;
 	padding-bottom: 0;
+}
+.tp_listimage {
+	font-size: 0.7em;
+	height: 220px;
+	text-align: center;
+	width: 200px;
 }
 /* SMF2 styles */
 .tpadmin_menu {
@@ -1107,10 +1109,11 @@ div.tp_half21 {
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
 	hyphens: auto;
-	overflow-wrap: anywhere;
+	word-break: break-word;
 	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
+	overflow-wrap: anywhere;
 }
 code.bbc_code {
 	-epub-hyphens: auto;
@@ -1118,11 +1121,11 @@ code.bbc_code {
 	-moz-hyphens: none;
 	-webkit-hyphens: none;
 	hyphens: none;
-	overflow-wrap: anywhere;
-	white-space: normal !important;
 	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
+	overflow-wrap: anywhere;
+	white-space: normal !important;
 }
 /* TP rss feed styles */
 .rss_title {
@@ -1181,8 +1184,11 @@ code.bbc_code {
 /* DL manager styles */
 .dl_container {
 	clear: both;
-	overflow-wrap: anywhere;
 	width: 100%;
+	-epub-word-wrap: break-word;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+	overflow-wrap: anywhere;
 }
 .dl_details {
 	font-size: 0.95em;

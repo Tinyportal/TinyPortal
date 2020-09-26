@@ -145,8 +145,8 @@ $txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor';
 $txt['tp-editorheight'] = 'Height of WYSIWYG editor';
 $txt['tp-usedragdrop'] = 'Enable the DragDrop feature in the WYSIWYG Editor';
-$txt['tp-hidearticle-link'] = 'Hide the edit article link under articles';
-$txt['tp-printarticles'] = 'Display print link in articles?';
+$txt['tp-hidearticle-link'] = 'Display edit link in articles';
+$txt['tp-printarticles'] = 'Display print link in articles';
 $txt['tp-allow-links-article-comments'] = 'Allow article comments to contain links';
 $txt['tp-iconmaxsize'] = 'Max image upload size';
 $txt['tp-iconsize'] = 'Image size for article icons (width x height)';
@@ -254,7 +254,7 @@ $txt['tp-helpsubmissions'] = 'Articles that have been submitted or updated by me
 $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
 
 // Icons
-$txt['tp-adminicons7'] = 'Article icons to be used in category layouts.';
+$txt['tp-adminicons7'] = 'Article icons';
 $txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, Max-size: ' .$context['TPortal']['icon_max_size']. ' KB. Images will be resized so the shortest side is ' .$context['TPortal']['icon_width']. ' px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
