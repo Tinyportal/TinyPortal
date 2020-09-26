@@ -1306,7 +1306,7 @@ function doTPfrontpage() {{{
 		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $start + count($posts), $max);
 
 		if(count($posts) > 0) {
-			$total      = count($posts);
+			$total      = min(count($posts), $max);
 			$col1       = ceil($total / 2);
 			$col2       = $total - $col1;
 			$counter    = 0;

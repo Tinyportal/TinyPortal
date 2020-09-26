@@ -166,49 +166,51 @@ class Util
 
     public static function shortenString(&$string, $length) {{{
 
-        if (!empty($length) && self::strlen($string) > $length) {
+        if(!empty($length)) { 
             // Remove all the entities and change them to a space..
             $string     = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
             // Change all the new lines to \r\n
             $string     = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), "\r\n", $string);
             
-            // Now we can find the closest space character
-            $cutOffPos  = max(mb_strpos($string, ' ', $length), mb_strpos($string, '>', $length));
-            if($cutOffPos !== false) {
-                $tmpString  = self::substr($string, 0, $cutOffPos);
+            if( self::strlen($string) > $length ) {
+                // Now we can find the closest space character
+                $cutOffPos  = max(mb_strpos($string, ' ', $length), mb_strpos($string, '>', $length));
+                if($cutOffPos !== false) {
+                    $tmpString  = self::substr($string, 0, $cutOffPos);
 
-                // Find all the bbc tags then loop through finding the closing one
-                if(preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0 ) {
-                    foreach($matches[1] as $key) { 
-                        // check we haven't cut any bbcode off
-                        if(preg_match_all('/\[(['.$key.']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0 ) {
-                            // Search from the old cut off position to the next similar tag
-                            $cutOffPos  = mb_strpos($string, '[/'.$key.']', $cutOffPos);
-                            if($cutOffPos !== false) {
-                                $tmpString  = self::substr($string, 0, $cutOffPos);
+                    // Find all the bbc tags then loop through finding the closing one
+                    if(preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0 ) {
+                        foreach($matches[1] as $key) { 
+                            // check we haven't cut any bbcode off
+                            if(preg_match_all('/\[(['.$key.']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0 ) {
+                                // Search from the old cut off position to the next similar tag
+                                $cutOffPos  = mb_strpos($string, '[/'.$key.']', $cutOffPos);
+                                if($cutOffPos !== false) {
+                                    $tmpString  = self::substr($string, 0, $cutOffPos);
+                                }
                             }
                         }
                     }
-                }
 
-                // check that no html has been cut off
-                if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
-                    if(strpos($matches[1], 'br') === false) {
-                        // Get the html tag
-                        $search     = '/'.mb_substr($matches[1], 0, mb_strpos($matches[1], ' ')).'>';
-                        if(strstr($matches[0], $search) === false) {
-                            $strEnd     = mb_strpos($string, $search, mb_strlen($tmpString));
-                            if($strEnd != 0) {
-                                $tmpString  = self::substr($string, 0, $strEnd + mb_strlen($search));
+                    // check that no html has been cut off
+                    if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
+                    //if(preg_match_all('/<([a-z]*)\b[^>]*>(.*?)<\/\1>/', $tmpString, $matches) > 0 ) {
+                        if(strpos($matches[1], 'br') === false) {
+                            // Get the html tag
+                            $search     = '/'.mb_substr($matches[1], 0, mb_strpos($matches[1], ' ')).'>';
+                            if(strstr($matches[0], $search) === false) {
+                                $strEnd     = mb_strpos($string, $search, mb_strlen($tmpString));
+                                if($strEnd != 0) {
+                                    $tmpString  = self::substr($string, 0, $strEnd + mb_strlen($search));
+                                }
                             }
-                        }
-                    } 
+                        } 
+                    }
+
+                    // Assign it back to the string
+                    $string = $tmpString;
                 }
-
-                // Assign it back to the string
-                $string = $tmpString;
             }
-
             // Change the newlines back to <br>
             $string = str_ireplace("\r\n", '<br>', $string);
 
