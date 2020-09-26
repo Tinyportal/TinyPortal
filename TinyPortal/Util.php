@@ -167,20 +167,26 @@ class Util
     public static function shortenString(&$string, $length) {{{
 
         if (!empty($length) && self::strlen($string) > $length) {
+            // Remove all the entities and change them to a space..
+            $string     = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
+            // Change all the new lines to \r\n
+            $string     = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), "\r\n", $string);
+
+            // Now we can find the closest space character
             $cutOffPos  = max(strpos($string, ' ', $length), strpos($string, '>', $length));
             $tmpString  = self::substr($string, 0, $cutOffPos);
 
+            // Find all the bbc tags then loop through finding the closing one
             if(preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0 ) {
                 foreach($matches[1] as $key) { 
                     // check we haven't cut any bbcode off
                     if(preg_match_all('/\[(['.$key.']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0 ) {
-                        $cutOffPos  = strpos($string, '[/'.$key.']');
+                        // Search from the old cut off position to the next similar tag
+                        $cutOffPos  = strpos($string, '[/'.$key.']', $cutOffPos);
                         $tmpString  = self::substr($string, 0, $cutOffPos);
                     }
                 }
             }
-
-
 
             // check that no html has been cut off
             if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
@@ -196,7 +202,8 @@ class Util
                 } 
             }
 
-            $string = $tmpString;
+            // Change the newlines back to <br>
+            $string = str_ireplace("\r\n", '<br>', $tmpString);
             return true;
         }
 
@@ -213,7 +220,6 @@ class Util
         return false;
 
     }}} 
-
 
     public static function isHTML( $string ) {{{
         return preg_match("~\/[a-z]*>~i", $string ) != 0;
