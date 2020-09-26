@@ -203,9 +203,12 @@ class Util
                     } 
                 }
 
-                // Change the newlines back to <br>
-                $string = str_ireplace("\r\n", '<br>', $tmpString);
+                // Assign it back to the string
+                $string = $tmpString;
             }
+
+            // Change the newlines back to <br>
+            $string = str_ireplace("\r\n", '<br>', $string);
 
             return true;
         }
