@@ -519,8 +519,7 @@ class Article extends Base
 				$row['thumb_filename']  = isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
 				$smcFunc['db_free_result']($request);
 
-				// Turn the body back to bbc so the parse_bbc called later doesn't break....
-				$row['body']            = html_to_bbc($row['body']);
+                $row['parsed_bbc']      = true;
 
 				// Load their context data.
 				loadMemberData($row['author_id']);
