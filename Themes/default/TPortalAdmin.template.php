@@ -28,7 +28,7 @@
 // Uncategorized articles Page
 // Article Submissions Page
 // Article Settings Page
-// Illustrative article icons to be used in category layouts Page
+// Article icons Page
 // Panel Settings Page
 // Block Settings Page
 // Add Block Page
@@ -398,24 +398,25 @@ function template_frontpage()
 <span class="upperframe"><span></span></span>
 <div class="roundframe">
 	<div class="title_bar">
-		<h3 class="titlebg"><span class="left"></span>{article_shortdate} {article_title} </h3>
+		<h3 class="titlebg"><span class="left"></span>{article_title} </h3>
 	</div>
 	<div style="padding: 0; overflow: hidden;">
-		{article_avatar}
 		<div class="article_info">
-			{article_category}
-			{article_author}
-			{article_date}
-			{article_views}
-			{article_comments_total}
-			{article_rating}
 			{article_options}
+			{article_category}
+			{article_date}
+			{article_author}
+			{article_views}
+			{article_rating}
 		</div>
-		<div class="article_padding">{article_text}</div>
-		{article_bookmark}
-		{article_boardnews}
-		{article_moreauthor}
-		{article_morelinks}
+		<div class="tp_underline"></div>
+		<div class="article_padding">
+			{article_text}
+			{article_bookmark}
+			{article_boardnews}
+			{article_moreauthor}
+			{article_morelinks}
+		</div>
 	</div>
 </div>
 <span class="lowerframe" style="margin-bottom: 5px;"></span>';
@@ -452,11 +453,10 @@ function template_frontpage()
 					<hr>
 					<dl class="settings">
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-allowguestsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['tp-allowguests'], '
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-allowguestsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_allow_guestnews">', $txt['tp-allowguests'], '
 						</dt>
 						<dd>
-							  <input type="radio" name="tp_allow_guestnews" value="1" ' , $context['TPortal']['allow_guestnews']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
-							  <input type="radio" name="tp_allow_guestnews" value="0" ' , $context['TPortal']['allow_guestnews']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
+							<input type="checkbox" id="tp_allow_guestnews" name="tp_allow_guestnews" value="1" ' , $context['TPortal']['allow_guestnews']=='1' ? 'checked' : '' , '>
 						</dd>
 						<dt>
 							<label for="field_name">', $txt['tp-showforumposts'], '</label>
@@ -733,26 +733,24 @@ function template_editcategory()
 					$mg['value9'] = '
 <div class="tparticle">
 	<div class="cat_bar">
-		<h3 class="catbg"><span class="left"></span>{article_shortdate} {article_title} {article_category}</h3>
+		<h3 class="catbg"><span class="left"></span>{article_title}</h3>
 	</div>
 	<div class="windowbg2">
 		<span class="topslice"><span></span></span>
-		<div class="content">
+		<div class="article_info">
 			{article_avatar}
-			<div class="article_info">
-				{article_author}
-				{article_date}
-				{article_views}
-				{article_comments_total}
-				{article_rating}
-				{article_options}
-			</div>
-			<div class="article_padding">{article_text}</div>
-			<div class="article_padding">{article_moreauthor}</div>
-			<div class="article_padding">{article_bookmark}</div>
-			<div class="article_padding">{article_morelinks}</div>
-			<div class="article_padding">{article_comments}</div>
+			{article_options}
+			{article_category}
+			{article_date}
+			{article_author}
+			{article_views}
+			{article_rating}
 		</div>
+		<div class="tp_underline"></div>
+		<div class="article_padding">{article_text}</div>
+		<div class="article_padding">{article_moreauthor}</div>
+		<div class="article_padding">{article_morelinks}</div>
+		<div class="article_padding">{article_comments}</div>
 		<span class="botslice"><span></span></span>
 	</div>
 </div>';
@@ -1396,7 +1394,7 @@ function template_artsettings()
 					<hr>
 					<dl class="settings">
 						<dt>
-							<label for="tp_hide_editarticle_link">', $txt['tp-hidearticle-link'], '</label>
+							<label for="tp_hide_editarticle_link">', $txt['tp-hidearticle-link'], '&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPedit2.png" alt="" /></label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_hide_editarticle_link" name="tp_hide_editarticle_link" value="1" ' , $context['TPortal']['hide_editarticle_link']=='1' ? 'checked' : '' , '>
@@ -1475,7 +1473,7 @@ function template_artsettings()
 	</form>';
 }
 
-// Illustrative article icons to be used in category layouts Page
+// Article icons Page
 function template_articons()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
@@ -1510,7 +1508,7 @@ function template_articons()
 				echo '
 					<div class="smalltext padding-div" style="float:left;">
 						<div style="width: 110px; height: 110px;text-align:center;">
-							<div class="article_icon"><img src="' . $icon['background'] . '"></div>
+							<div class="article_icon"><img src="' . $icon['background'] . '" alt="'.$icon['file'].'" title="'.$icon['file'].'"></div>
 						</div>
 						<div>
 							<input type="checkbox" id="artillustration'.$icon['id'].'" name="artillustration'.$icon['id'].'" style="vertical-align: top;" value="'.$icon['file'].'"  /> <label style="vertical-align: top;"  for="artiillustration'.$icon['id'].'">'.$txt['tp-remove'].'</label>

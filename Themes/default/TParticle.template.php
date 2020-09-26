@@ -411,7 +411,7 @@ function template_submitarticle()
 						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
 					</dd>
 					<dt>
-						' . $txt['tp-uploadicon'] . '
+					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-adminiconsinfo'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-uploadicon'] . '
 					</dt>
 					<dd>
 						<input type="file" name="tp_article_illupload">
