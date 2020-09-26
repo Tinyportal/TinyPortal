@@ -1108,92 +1108,92 @@ function doTPfrontpage() {{{
 		$catsort = 'date';
     }
 
-	$max = $context['TPortal']['frontpage_limit'];
-	$start = $context['TPortal']['mystart'];
+	$max    = $context['TPortal']['frontpage_limit'];
+	$start  = $context['TPortal']['mystart'];
 
 	// fetch the articles, sorted
 	switch($context['TPortal']['front_type']) {
 		// Only articles
         case 'articles_only': 
-		// first, get all available
-        $artgroups = '';
-		if(!$context['user']['is_admin']) {
-            $artgroups = TPUtil::find_in_set($user_info['groups'], 'var.value3', 'AND');
-        }
+            // first, get all available
+            $artgroups = '';
+            if(!$context['user']['is_admin']) {
+                $artgroups = TPUtil::find_in_set($user_info['groups'], 'var.value3', 'AND');
+            }
 
 
-        $tpArticle          = TPArticle::getInstance();
-        $articles_total     = $tpArticle->getTotalArticles($artgroups);
-		// make the pageindex!
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total, $max);
+            $tpArticle          = TPArticle::getInstance();
+            $articles_total     = $tpArticle->getTotalArticles($artgroups);
+            // make the pageindex!
+            $context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $articles_total, $max);
 
-		$request =  $smcFunc['db_query']('', '
-			SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body,
-				art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
-				art.frame, art.comments, art.options, art.intro, art.useintro,
-				art.comments_var, art.views, art.rating, art.voters, art.shortname,
-				art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
-				COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
-				COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type, mem.email_address AS email_address
-			FROM {db_prefix}tp_articles AS art
-			LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
-			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
-			LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
-			WHERE art.off = 0
-			' . $artgroups . '
-			AND ((art.pub_start = 0 AND art.pub_end = 0)
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art.category > 0
-			AND art.approved = 1
-			AND (art.frontpage = 1 OR art.featured = 1)
-			ORDER BY art.featured DESC, art.sticky DESC, art.'.$catsort.' '. $catsort_order .'
-			LIMIT {int:start}, {int:max}',
-			array('start' => $start, 'max' => $max)
-		);
-		if($smcFunc['db_num_rows']($request) > 0) {
-			$total = $smcFunc['db_num_rows']($request);
-			$col1 = ceil($total / 2);
-			$col2 = $total - $col1;
-			$counter = 0;
+            $request =  $smcFunc['db_query']('', '
+                SELECT art.id, ( CASE WHEN art.useintro = 1 THEN art.intro ELSE  art.body END ) AS body,
+                    art.date, art.category, art.subject, art.author_id as author_id, var.value1 as category_name, var.value8 as category_shortname,
+                    art.frame, art.comments, art.options, art.intro, art.useintro,
+                    art.comments_var, art.views, art.rating, art.voters, art.shortname,
+                    art.fileimport, art.topic, art.locked, art.illustration,art.type as rendertype ,
+                    COALESCE(mem.real_name, art.author) as real_name, mem.avatar, mem.posts, mem.date_registered as date_registered,mem.last_login as last_login,
+                    COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type as attachment_type, mem.email_address AS email_address
+                FROM {db_prefix}tp_articles AS art
+                LEFT JOIN {db_prefix}tp_variables AS var ON(var.id = art.category)
+                LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
+                LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type!=3)
+                WHERE art.off = 0
+                ' . $artgroups . '
+                AND ((art.pub_start = 0 AND art.pub_end = 0)
+                OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+                OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
+                OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
+                AND art.category > 0
+                AND art.approved = 1
+                AND (art.frontpage = 1 OR art.featured = 1)
+                ORDER BY art.featured DESC, art.sticky DESC, art.'.$catsort.' '. $catsort_order .'
+                LIMIT {int:start}, {int:max}',
+                array('start' => $start, 'max' => $max)
+            );
+            if($smcFunc['db_num_rows']($request) > 0) {
+                $total = $smcFunc['db_num_rows']($request);
+                $col1 = ceil($total / 2);
+                $col2 = $total - $col1;
+                $counter = 0;
 
-			$context['TPortal']['category'] = array(
-				'articles' => array(),
-				'col1' => array(),
-				'col2' => array(),
-				'options' => array(
-					'catlayout' => $context['TPortal']['frontpage_catlayout'],
-				    'layout' => $context['TPortal']['frontpage_layout'],
-				)
-			);
+                $context['TPortal']['category'] = array(
+                    'articles' => array(),
+                    'col1' => array(),
+                    'col2' => array(),
+                    'options' => array(
+                        'catlayout' => $context['TPortal']['frontpage_catlayout'],
+                        'layout' => $context['TPortal']['frontpage_layout'],
+                    )
+                );
 
-			while($row = $smcFunc['db_fetch_assoc']($request)) {
-				// expand the vislaoptions
-				$row['visual_options'] = explode(',', $row['options']);
+                while($row = $smcFunc['db_fetch_assoc']($request)) {
+                    // expand the vislaoptions
+                    $row['visual_options'] = explode(',', $row['options']);
 
-                $row['avatar'] = set_avatar_data( array(      
-                            'avatar' => $row['avatar'],
-                            'email' => $row['email_address'],
-                            'filename' => !empty($row['filename']) ? $row['filename'] : '',
-                            'id_attach' => $row['id_attach'],
-                            'attachment_type' => $row['attachment_type'],
-                        )
-                )['image'];
+                    $row['avatar'] = set_avatar_data( array(      
+                                'avatar' => $row['avatar'],
+                                'email' => $row['email_address'],
+                                'filename' => !empty($row['filename']) ? $row['filename'] : '',
+                                'id_attach' => $row['id_attach'],
+                                'attachment_type' => $row['attachment_type'],
+                            )
+                    )['image'];
 
-            	if($counter == 0) {
-					$context['TPortal']['category']['featured'] = $row;
+                    if($counter == 0) {
+                        $context['TPortal']['category']['featured'] = $row;
+                    }
+                    elseif($counter < $col1 ) {
+                        $context['TPortal']['category']['col1'][] = $row;
+                    }
+                    elseif($counter > $col1 || $counter == $col1) {
+                        $context['TPortal']['category']['col2'][] = $row;
+                    }
+                    $counter++;
                 }
-				elseif($counter < $col1 ) {
-					$context['TPortal']['category']['col1'][] = $row;
-                }
-				elseif($counter > $col1 || $counter == $col1) {
-					$context['TPortal']['category']['col2'][] = $row;
-                }
-				$counter++;
-			}
-			$smcFunc['db_free_result']($request);
-		}
+                $smcFunc['db_free_result']($request);
+            }
         break;
     case 'single_page':
 		$request =  $smcFunc['db_query']('', '
@@ -1263,11 +1263,13 @@ function doTPfrontpage() {{{
 				WHERE t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
-				LIMIT {int:max}',
-				array(
+			    LIMIT {int:max} OFFSET {int:start}',
+			    array(
 					'board' => $context['TPortal']['SSI_board'],
-					'max' => $totalmax)
-			);
+				    'start' => $start,
+				    'max' => $max,
+			    )
+            );				
         }
 		else {
 			$request =  $smcFunc['db_query']('', '
@@ -1277,9 +1279,12 @@ function doTPfrontpage() {{{
                     ON t.id_board = b.id_board
 				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? 0 : '{raw:topics}') .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
-				ORDER BY t.id_first_msg DESC',
-				array(
-					'topics' => $context['TPortal']['frontpage_topics']
+				ORDER BY t.id_first_msg DESC
+			    LIMIT {int:max} OFFSET {int:start}',
+			    array(
+					'topics' => $context['TPortal']['frontpage_topics'],
+				    'start' => $start,
+				    'max' => $max,
 				)
 			);
         }
