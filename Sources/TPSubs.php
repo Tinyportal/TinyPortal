@@ -1414,7 +1414,7 @@ function tp_renderarticle($intro = '')
             } 
             else {
                 $data .= parse_bbc($context['TPortal']['article']['intro']);
-            }			
+            }
 		}
 		else {
 			$data .= $context['TPortal']['article']['intro'];
