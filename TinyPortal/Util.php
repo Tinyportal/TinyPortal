@@ -184,7 +184,9 @@ class Util
                         if(preg_match_all('/\[(['.$key.']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0 ) {
                             // Search from the old cut off position to the next similar tag
                             $cutOffPos  = mb_strpos($string, '[/'.$key.']', $cutOffPos);
-                            $tmpString  = self::substr($string, 0, $cutOffPos);
+                            if($cutOffPos !== false) {
+                                $tmpString  = self::substr($string, 0, $cutOffPos);
+                            }
                         }
                     }
                 }
