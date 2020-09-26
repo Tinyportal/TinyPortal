@@ -1263,11 +1263,11 @@ function doTPfrontpage() {{{
 				WHERE t.id_board IN({raw:board})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
-			    LIMIT {int:max} OFFSET {int:start}',
+			    LIMIT {int:max} OFFSET {int:offset}',
 			    array(
-					'board' => $context['TPortal']['SSI_board'],
-				    'start' => $start,
-				    'max' => $max,
+					'board'     => $context['TPortal']['SSI_board'],
+				    'max'       => $totalmax,
+                    'offset'    => $start,
 			    )
             );				
         }
@@ -1280,11 +1280,11 @@ function doTPfrontpage() {{{
 				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? 0 : '{raw:topics}') .')
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
-			    LIMIT {int:max} OFFSET {int:start}',
+			    LIMIT {int:max} OFFSET {int:offset}',
 			    array(
-					'topics' => $context['TPortal']['frontpage_topics'],
-				    'start' => $start,
-				    'max' => $max,
+					'topics'    => $context['TPortal']['frontpage_topics'],
+				    'max'       => $totalmax,
+                    'offset'    => $start,
 				)
 			);
         }
@@ -1303,7 +1303,7 @@ function doTPfrontpage() {{{
         $posts      = $tpArticle->getForumPosts($posts);
 
 		// make the pageindex!
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, count($posts), $max);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl .'?frontpage', $start, $start + count($posts), $max);
 
 		if(count($posts) > 0) {
 			$total      = count($posts);
@@ -1322,18 +1322,20 @@ function doTPfrontpage() {{{
 			);
 
             foreach($posts as $row) {
-				if($counter == 0) {
-					$context['TPortal']['category']['featured'] = $row;
+                if($counter >= $max) {
+                    break;
                 }
-				elseif($counter < $col1 && $counter > 0) {
-					$context['TPortal']['category']['col1'][] = $row;
+                if($counter == 0) {
+                    $context['TPortal']['category']['featured'] = $row;
                 }
-				elseif($counter > $col1 || $counter == $col1) {
-					$context['TPortal']['category']['col2'][] = $row;
+                elseif($counter < $col1 && $counter > 0) {
+                    $context['TPortal']['category']['col1'][] = $row;
                 }
-
-				$counter++;
-			}
+                elseif($counter > $col1 || $counter == $col1) {
+                    $context['TPortal']['category']['col2'][] = $row;
+                }
+                $counter++;
+            }
 		}
         break;
 	// Forum-topics and articles - sorted on date
