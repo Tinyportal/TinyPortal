@@ -535,6 +535,21 @@ function doTPpage() {{{
 					$article['type'] = $article['rendertype'] = 'html';
 				}
 
+                // Get the category name
+                $request = $smcFunc['db_query']('', '
+                    SELECT value1 AS category_name
+                    FROM {db_prefix}tp_variables
+                    WHERE id = {int:cat}',
+                    array (
+                        'cat' => $article['category'] 
+                    )
+                );
+                if($smcFunc['db_num_rows']($request) > 0) {
+                    $row = $smcFunc['db_fetch_assoc']($request);
+                    $article['category_name'] = $row['category_name'];
+                    $smcFunc['db_free_result']($request);
+                }
+
 				// shortname title
 				$article['shortname'] = un_htmlspecialchars($article['shortname']);
 				// Add ratings together
