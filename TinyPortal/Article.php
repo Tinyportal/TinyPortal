@@ -475,6 +475,93 @@ class Article extends Base
 
     }}}
 
+	public function getForumPosts( $post_ids ) {{{
+		global $context, $smcFunc, $memberContext, $txt, $scripturl;
+
+		$forumPosts = $posts = array();
+		// ok we got the post ids now, fetch each one, forum first
+		if(count($post_ids) > 0) {
+			$forumPosts = ssi_fetchPosts($post_ids, true, 'array');
+		}
+
+		// insert the forumposts into $posts
+		if(is_array($forumPosts) && count($forumPosts) > 0) {
+			// Needed for html_to_bbc
+			require_once(SOURCEDIR . '/Subs-Editor.php');
+
+			$length = $context['TPortal']['frontpage_limit_len'];
+			foreach($forumPosts as $k => $row) {
+				$row['date']            = $row['timestamp'];
+				$row['real_name']       = $row['poster']['name'];
+				$row['author_id']       = $row['poster']['id'];
+				$row['category']        = $row['board']['name'];
+				$row['date_registered'] = 0;
+				$row['id']              = $row['topic'];
+				$row['category_name']   = $row['board']['name'];
+				$row['category']        = $row['board']['id'];
+
+				$request =  $smcFunc['db_query']('', '
+						SELECT t.num_views AS views, t.num_replies AS replies, t.locked, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
+						FROM {db_prefix}topics AS t
+						LEFT JOIN {db_prefix}attachments AS thumb 
+						ON ( t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 )
+						WHERE t.id_topic = ({int:id})',
+						array(
+							'id' => $row['id'],
+							)
+						);
+
+				$data                   = $smcFunc['db_fetch_assoc']($request);
+				$row['views']           = isset($data['views']) ? $data['views'] : 0;
+				$row['replies']         = isset($data['replies']) ? $data['replies'] : 0;
+				$row['locked']          = isset($data['locked']) ? $data['locked'] : 0;
+				$row['thumb_id']        = isset($data['thumb_id']) ? $data['thumb_id'] : 0;
+				$row['thumb_filename']  = isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
+				$smcFunc['db_free_result']($request);
+
+                $row['parsed_bbc']      = true;
+
+				// Load their context data.
+				loadMemberData($row['author_id']);
+				loadMemberContext($row['author_id']);
+
+				// Store this member's information.
+				if(!is_null($memberContext) && array_key_exists($row['author_id'], $memberContext)) {
+					$avatar         = $memberContext[$row['author_id']];
+					$row['avatar']  = $avatar['avatar']['image'];
+				}
+				else {
+					$row['avatar']  = '';
+				}
+
+				if(Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
+					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+				}
+
+				// some needed addons
+				$row['rendertype'] = 'bbc';
+				$row['frame'] = 'theme';
+				$row['boardnews'] = 1;
+
+				if(!isset($context['TPortal']['frontpage_visopts'])) {
+					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
+				}
+
+				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
+				$row['useintro'] = '0';
+
+				if(!empty($row['thumb_id'])) {
+					$row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
+				}
+
+				$posts[$row['timestamp'].'0' . sprintf("%06s", $row['id'])] = $row;
+			}
+		}
+
+		return $posts;
+
+	}}}
+
 }
 
 ?>

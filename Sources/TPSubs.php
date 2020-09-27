@@ -1409,12 +1409,12 @@ function tp_renderarticle($intro = '')
             $data .= ob_get_clean();
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
-            if(TPUtil::isHTML($context['TPortal']['article']['intro'])) {
+            if(TPUtil::isHTML($context['TPortal']['article']['intro']) || isset($context['TPortal']['article']['parsed_bbc'])) {
 			    $data .= $context['TPortal']['article']['intro'];
             } 
             else {
                 $data .= parse_bbc($context['TPortal']['article']['intro']);
-            }			
+            }
 		}
 		else {
 			$data .= $context['TPortal']['article']['intro'];
@@ -1428,7 +1428,7 @@ function tp_renderarticle($intro = '')
             $data .= ob_get_clean();
 		}
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc') {
-            if(TPUtil::isHTML($context['TPortal']['article']['body'])) {
+            if(TPUtil::isHTML($context['TPortal']['article']['body']) || isset($context['TPortal']['article']['parsed_bbc'])) {
 			    $data .= $context['TPortal']['article']['body'];
             } 
             else {
