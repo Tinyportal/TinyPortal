@@ -107,24 +107,26 @@ function template_article($article, $single = false)
 // Article categories template
 function template_category()
 {
-	global $context, $scripturl;
+	global $txt, $context, $scripturl;
 
-	if(!empty($context['TPortal']['clist']))
-	{
+	if(!empty($context['TPortal']['clist'])) {
 		$buts = array();
-		foreach($context['TPortal']['clist'] as $cats)
-		{
+		foreach($context['TPortal']['clist'] as $cats) {
 			$buts[$cats['id']] = array(
 				'text' => 'catlist'. $cats['id'],
 				'lang' => false,
 				'url' => $scripturl . '?cat=' . $cats['id'],
 				'active' => false,
 			);
-			if($cats['selected'])
+			if($cats['selected']) {
 				$buts[$cats['id']]['active'] = true;
+            }
 		}
 		echo '<div style="overflow: hidden;">' , tp_template_button_strip($buts, 'top'), '</div>';
 	}
+    elseif(isset($context['TPortal']['category']['no_articles']) && $context['TPortal']['category']['no_articles'] == true) {
+		fatal_error($txt['tp-categorynoarticles'], false);
+    }
 
 	$category = $context['TPortal']['category'];
 

@@ -107,6 +107,7 @@ $txt['tp-articlessubmitted'] = 'New article(s): ';
 $txt['tp-cannotcomment'] = 'You don\'t have permission to comment, or comments have been turned off for this article.';
 $txt['tp-nolinkcomments'] = '(It is not allowed to post links in comments)';
 $txt['tp-categorynotexist'] = 'The category doesn\'t exist.';
+$txt['tp-categorynoarticles'] = 'This Category doesn\'t have any Articles assigned to it.';
 $txt['tp-comments'] = 'Comments';
 $txt['tp-comment'] = 'Comment';
 $txt['tp-writecomment'] = 'Write Comment';
