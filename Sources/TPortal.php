@@ -1505,7 +1505,7 @@ function doTPfrontpage() {{{
                     $sortdate = $row['date'] + $year;
                 }
                 if($row['featured'] == 1) {
-                    $sortdate = $row['date'] + $year + $year;
+                    $sortdate = $row['date'] + $year2;
                 }
                 $posts[$sortdate.'0' . sprintf("%06s", $row['id'])] = $row;
 			}
