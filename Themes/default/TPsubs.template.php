@@ -1831,8 +1831,10 @@ function article_category($render = true)
 		<div class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?board=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></div>';
         }
 		else {
-			$data = '
-		<div class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?cat=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></div>';
+			if(in_array('catlist', $context['TPortal']['article']['visual_options'])) {
+				$data = '
+			<div class="article_category">' . $txt['tp-fromcategory'] . '<a href="' . $scripturl . '?cat=' . $catNameOrId . '">' . $context['TPortal']['article']['category_name'] . '</a></div>';
+			}
         }
 	}
 
