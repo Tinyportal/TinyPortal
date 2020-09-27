@@ -460,6 +460,12 @@ function template_submitarticle()
 									<input type="checkbox" id="tp_article_options_'.$opts[2].'" name="tp_article_options_'.$opts[2].'" value="'.$mg['id'].'" ' , isset($options[$opts[2]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
+									<label for="tp_article_options_'.$opts[13].'">', $txt['tp-articleoptions13'], '</label><br>
+								</dt>
+								<dd>
+									<input type="checkbox" id="tp_article_options_'.$opts[13].'" name="tp_article_options_'.$opts[13].'" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
+								</dd>
+								<dt>
 									<label for="tp_article_options_'.$opts[3].'">', $txt['tp-articleoptions3'], '</label><br>
 								</dt>
 								<dd>
@@ -506,12 +512,6 @@ function template_submitarticle()
 								</dt>
 								<dd>
 									<input type="checkbox" id="tp_article_options_'.$opts[12].'" name="tp_article_options_'.$opts[12].'" value="'.$mg['id'].'" ' , isset($options[$opts[12]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[13].'">', $txt['tp-articleoptions13'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[13].'" name="tp_article_options_'.$opts[13].'" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
 									<label for="tp_article_options_'.$opts[15].'">', $txt['tp-articleoptions15'], '</label><br>
