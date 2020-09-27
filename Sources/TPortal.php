@@ -967,6 +967,8 @@ function doTPcat() {{{
 					$smcFunc['db_free_result']($request);
 				}
 
+                $context['TPortal']['category']['no_articles'] = false;
+
 				// get how many articles in all
 				$request =  $smcFunc['db_query']('', '
 					SELECT COUNT(*) FROM {db_prefix}tp_articles as art
@@ -983,8 +985,13 @@ function doTPcat() {{{
 					$all_articles = $row[0];
 				}
 				else {
-					$all_articles = 0;
+					$all_articles                                   = 0;
                 }
+            
+                if($all_articles == 0) {
+                    $context['TPortal']['category']['no_articles']  = true;
+                }
+
 				// make the pageindex!
 				$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?cat=' . $cat, $start, $all_articles, $max);
 
