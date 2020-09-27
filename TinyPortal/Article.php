@@ -96,8 +96,8 @@ class Article extends Base
 
         $request    = $this->dB->db_query('', '
             SELECT 
-                art.*, art.author_id AS author_id, art.id_theme AS id_theme, var.value1, var.value2,
-                var.value3, var.value4, var.value5, var.value7, var.value8, art.type AS rendertype, mem.email_address AS email_address,
+                art.*, art.author_id AS author_id, art.id_theme AS id_theme, var.value1 as category_name, var.value2,
+                var.value3, var.value4, var.value5, var.value7, var.value8 as category_shortname, art.type AS rendertype, mem.email_address AS email_address,
                 COALESCE(mem.real_name,art.author) AS real_name, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
                 COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type, var.value9, mem.email_address AS email_address
             FROM {db_prefix}tp_articles AS art
