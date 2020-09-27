@@ -241,7 +241,7 @@ function template_wap2_tp_page()
 	// additonal links etc.
 	echo '
 		<p class="titlebg">', $txt['wireless_navigation'], '</p>
-		<p class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></p>
+		<p class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['category_name'], '</a></p>
 		<p class="windowbg">[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></p>';
 }
 function template_imode_tp_page()
@@ -260,7 +260,7 @@ function template_imode_tp_page()
 	// additonal links etc.
 	echo '
 		<div class="titlebg">', $txt['wireless_navigation'], '</div>
-		<div class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></div>
+		<div class="windowbg">[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['category_name'], '</a></div>
 		<div class="windowbg">[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></div>
 	</div>';
 }
@@ -280,7 +280,7 @@ function template_wap_tp_page()
 	// additonal links etc.
 	echo '
 		<p>', $txt['wireless_navigation'], '</p>
-		<p>[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['value1'], '</a></p>
+		<p>[0] <a href="', $scripturl . '?cat=' , $context['TPortal']['article']['category'] , ';wap2" accesskey="0">' , $context['TPortal']['article']['category_name'], '</a></p>
 		<p>[#] <a href="', $scripturl . '?action=forum;wap2" accesskey="#">' . $txt['tp-forum'], '</a></p>
 	</card>';
 }
