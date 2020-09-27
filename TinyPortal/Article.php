@@ -476,7 +476,7 @@ class Article extends Base
     }}}
 
 	public function getForumPosts( $post_ids ) {{{
-		global $context, $smcFunc, $memberContext, $txt, $scripturl;
+		global $context, $memberContext, $txt, $scripturl;
 
 		$forumPosts = $posts = array();
 		// ok we got the post ids now, fetch each one, forum first
@@ -500,24 +500,24 @@ class Article extends Base
 				$row['category_name']   = $row['board']['name'];
 				$row['category']        = $row['board']['id'];
 
-				$request =  $smcFunc['db_query']('', '
-						SELECT t.num_views AS views, t.num_replies AS replies, t.locked, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
-						FROM {db_prefix}topics AS t
-						LEFT JOIN {db_prefix}attachments AS thumb 
-						ON ( t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 )
-						WHERE t.id_topic = ({int:id})',
-						array(
-							'id' => $row['id'],
-							)
-						);
+				$request =  $this->dB->db_query('', '
+                    SELECT t.num_views AS views, t.num_replies AS replies, t.locked, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
+                    FROM {db_prefix}topics AS t
+                    LEFT JOIN {db_prefix}attachments AS thumb 
+                    ON ( t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 )
+                    WHERE t.id_topic = ({int:id})',
+                    array(
+                        'id' => $row['id'],
+                    )
+                );
 
-				$data                   = $smcFunc['db_fetch_assoc']($request);
+				$data                   = $this->dB->db_fetch_assoc($request);
 				$row['views']           = isset($data['views']) ? $data['views'] : 0;
 				$row['replies']         = isset($data['replies']) ? $data['replies'] : 0;
 				$row['locked']          = isset($data['locked']) ? $data['locked'] : 0;
 				$row['thumb_id']        = isset($data['thumb_id']) ? $data['thumb_id'] : 0;
 				$row['thumb_filename']  = isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
-				$smcFunc['db_free_result']($request);
+				$this->dB->db_free_result($request);
 
                 $row['parsed_bbc']      = true;
 
