@@ -135,7 +135,7 @@ function articleShowComments() {{{
 
     $request = $smcFunc['db_query']('', '
         SELECT COUNT(var.value1)
-        FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
+        FROM ({db_prefix}tp_variables AS var, {db_prefix}tp_articles AS art)
         WHERE var.type = {string:type}
         ' . ((!$showall || $mylast == 0) ? 'AND var.value4 > '.$mylast : '') .'
         AND art.id = var.value5',
@@ -145,13 +145,13 @@ function articleShowComments() {{{
     $smcFunc['db_free_result']($request);
 
     $request = $smcFunc['db_query']('', '
-        SELECT art.subject, memb.real_name as author, art.author_id as authorID, var.value1, var.value2, var.value3,
-        var.value5, var.value4, mem.real_name as realName,
+        SELECT art.subject, memb.real_name AS author, art.author_id AS authorID, var.value1, var.value2, var.value3,
+        var.value5, var.value4, mem.real_name AS realName,
         ' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.value4)') . ' AS isRead
-        FROM ({db_prefix}tp_variables as var, {db_prefix}tp_articles as art)
-        LEFT JOIN {db_prefix}members as memb ON (art.author_id = memb.id_member)
-        LEFT JOIN {db_prefix}members as mem ON (var.value3 = mem.id_member)
-        LEFT JOIN {db_prefix}tp_data as log ON (log.value = art.id AND log.type = 1 AND log.id_member = '.$context['user']['id'].')
+        FROM ({db_prefix}tp_variables AS var, {db_prefix}tp_articles AS art)
+        LEFT JOIN {db_prefix}members AS memb ON (art.author_id = memb.id_member)
+        LEFT JOIN {db_prefix}members AS mem ON (var.value3 = mem.id_member)
+        LEFT JOIN {db_prefix}tp_data AS log ON (log.value = art.id AND log.type = 1 AND log.id_member = '.$context['user']['id'].')
         WHERE var.type = {string:type}
         AND art.id = var.value5
         ' . ((!$showall || $mylast == 0 ) ? 'AND var.value4 > {int:last}' : '') .'
