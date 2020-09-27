@@ -36,6 +36,7 @@ if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSI
 	die('<strong>Install Error:</strong> - please install a version of php greater than '.TP_MINIMUM_PHP_VERSION);
 }
 
+
 // Make sure we have all the $smcFunc stuff
 if (!array_key_exists('db_create_table', $smcFunc))
     db_extend('packages');
@@ -58,6 +59,18 @@ else {
     $forumVersion = 'SMF 2.1.x';
 }
 
+if(is_array($existing_tables) && count($existing_tables)) {
+    $request = $smcFunc['db_query']('', '
+        SELECT * FROM {db_prefix}tp_settings
+        WHERE name = {string:name} LIMIT 1',
+        array('name' => 'version')
+    );
+
+    $row = $smcFunc['db_fetch_assoc']($request);
+    if(version_compare($row['value'], '2.0.0', '>=')) {
+        die('<strong>Install Error:</strong> - please install a version of TinyPortal greater than or equal to 2.0.0');
+    }
+}
 
 if ($manual) {
 	$render .= '
