@@ -193,24 +193,35 @@ class Util
                     }
 
                     // check that no html has been cut off
-                    if(preg_match('/.*\<([^]]+)\>/', $tmpString, $matches) > 0 ) {
-                    //if(preg_match_all('/<([a-z]*)\b[^>]*>(.*?)<\/\1>/', $tmpString, $matches) > 0 ) {
-                        if(strpos($matches[1], 'br') === false) {
-                            // Get the html tag
-                            $search     = '/'.mb_substr($matches[1], 0, mb_strpos($matches[1], ' ')).'>';
-                            if(strstr($matches[0], $search) === false) {
-                                $strEnd     = mb_strpos($string, $search, mb_strlen($tmpString));
-                                if($strEnd != 0) {
-                                    $tmpString  = self::substr($string, 0, $strEnd + mb_strlen($search));
-                                }
-                            }
-                        } 
-                    }
+                    if(self::isHTML($string)) {
+                        $reachedLimit   = false;
+                        $totalLen       = 0;
+                        $toRemove       = array();
 
+                        $dom = new \DomDocument();
+
+						// set error level
+						$internalErrors = libxml_use_internal_errors(true);
+
+                        $dom->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
+
+						// Restore error level
+						libxml_use_internal_errors($internalErrors);
+
+                        self::walkHTML($dom, $length, $reachedLimit, $totalLen, $toRemove);
+
+                        foreach ($toRemove as $child) {
+                            $child->parentNode->removeChild($child);
+                        }
+
+                        $tmpString = $dom->saveHTML();
+                    }
+                    
                     // Assign it back to the string
                     $string = $tmpString;
                 }
             }
+
             // Change the newlines back to <br>
             $string = str_ireplace("\r\n", '<br>', $string);
 
@@ -219,6 +230,33 @@ class Util
 
         return false;
 
+    }}}
+
+    public static function walkHTML(\DomNode $node, $length, &$reachedLimit, &$totalLen, &$toRemove) {{{
+
+        if($reachedLimit == true) {
+            $toRemove[] = $node;
+        } 
+        else {
+            if($node instanceof \DomText) {
+                $nodeLen    = mb_strlen($node->nodeValue);
+                $totalLen   += $nodeLen;
+
+
+                if($totalLen > $length) {
+                    $node->nodeValue    = mb_substr($node->nodeValue, 0, $nodeLen - ($totalLen - $length));
+                    $reachedLimit       = true;
+                }
+            }
+
+            if(isset($node->childNodes)) {
+                foreach ($node->childNodes as $child) {
+                    self::walkHTML($child, $length, $reachedLimit, $totalLen, $toRemove);
+                }
+            }
+        }
+
+        return;
     }}}
 
     public static function parseBBC($string) {{{
