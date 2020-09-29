@@ -200,7 +200,13 @@ class Util
 
                         $dom = new \DomDocument();
 
-                        $dom->loadHTML($string);
+						// set error level
+						$internalErrors = libxml_use_internal_errors(true);
+
+                        $dom->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
+
+						// Restore error level
+						libxml_use_internal_errors($internalErrors);
 
                         self::walkHTML($dom, $length, $reachedLimit, $totalLen, $toRemove);
 
