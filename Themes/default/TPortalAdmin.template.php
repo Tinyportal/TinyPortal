@@ -1867,7 +1867,7 @@ function template_blocks()
 								<option value="3"' ,$lblock['type']=='statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$lblock['type']=='themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="20"' ,$lblock['type']=='tpmodulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
+								<option value="20"' ,$lblock['type']=='modulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
 			// theme hooks
 			if(function_exists('ctheme_tp_blocks'))
 			{

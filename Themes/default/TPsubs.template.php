@@ -59,7 +59,7 @@ function TPblock($block, $theme, $side, $double=false)
 		} else {
 			echo '<div class="block_' . $side . 'container" id="module_dlstats">';
 		}
-	} elseif ($block['type']=='tpmodulebox') {
+	} elseif ($block['type']=='modulebox') {
         //debug_print_backtrace();
 	} elseif ($block['type']=='html') {
 		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
@@ -933,7 +933,7 @@ function TPortal_categorybox()
  }
 
 // blocktype 20: TP module
-function TPortal_tpmodulebox($blockid)
+function TPortal_modulebox($blockid)
 {
 	global $context;
 

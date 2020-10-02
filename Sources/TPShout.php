@@ -21,15 +21,13 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-function TPShoutLoad()
-{
+function TPShoutLoad() {{{
 
     global $context, $settings, $options, $modSettings;
 
     if(loadLanguage('TPortal') == false) {
         loadLanguage('TPortal', 'english');
     }
-
 
     if(TP_SMF21) {
         loadCSSFile('jquery.sceditor.css');
@@ -150,10 +148,9 @@ function TPShoutLoad()
             // ]]></script>';
     }
 
-}
+}}}
 
-function TPShout()
-{
+function TPShout() {{{
     
     global $context, $settings, $options, $modSettings;
 
@@ -191,11 +188,10 @@ function TPShout()
 
     return true;
     
-}
+}}}
 
 // Post the shout via ajax
-function postShout()
-{
+function postShout() {{{
 	global $context, $smcFunc, $user_info, $scripturl, $sourcedir, $modSettings;
 
 	isAllowedTo('tp_can_shout');
@@ -275,11 +271,11 @@ function postShout()
             $tpMention->addMention($mention_data); 
         }
     }
-}
+
+}}}
 
 // This is to delete a shout via ajax
-function deleteShout()
-{
+function deleteShout() {{{
 	global $smcFunc;
 
 	// A couple of security checks
@@ -293,10 +289,9 @@ function deleteShout()
 		);
 	}
 
-}
+}}}
 
-function tpshout_admin()
-{
+function tpshout_admin() {{{
 	global $context, $scripturl, $txt, $smcFunc, $sourcedir;
 
 	// check permissions
@@ -639,10 +634,9 @@ function tpshout_admin()
 	$context['page_title'] = 'Shoutbox admin';
 
 /*	tp_hidebars();*/
-}
+}}}
 
-function tpshout_bigscreen($state = false, $number = 10)
-{
+function tpshout_bigscreen($state = false, $number = 10) {{{
     global $context;
 
     loadTemplate('TPShout');
@@ -657,11 +651,10 @@ function tpshout_bigscreen($state = false, $number = 10)
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
-}
+}}}
 
 // fetch all the shouts for output
-function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
-{
+function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false) {{{
 	global $context, $scripturl, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
@@ -769,10 +762,9 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	else {
 		return $nshouts;
     }
-}
+}}}
 
-function shout_bcc_code($collapse = true)
-{
+function shout_bcc_code($collapse = true) {{{
 	global $context, $txt, $settings, $option;
 
 	loadLanguage('Post');
@@ -967,10 +959,9 @@ function shout_bcc_code($collapse = true)
 	echo '</div>
 	</div>';
 
-}
+}}}
 
-function shout_smiley_code()
-{
+function shout_smiley_code() {{{
     global $context, $settings, $user_info, $txt, $modSettings, $smcFunc;
 
     // Initialize smiley array...
@@ -1073,10 +1064,9 @@ function shout_smiley_code()
 	}
 
 	$settings['smileys_url'] = $modSettings['smileys_url'] . '/' . $user_info['smiley_set'];
-}
+}}}
 
-function print_shout_smileys($collapse = true)
-{
+function print_shout_smileys($collapse = true) {{{
 	global $context, $txt, $settings, $options;
 
 	loadLanguage('Post');
@@ -1113,17 +1103,15 @@ function print_shout_smileys($collapse = true)
 	echo '
 		</div>
 	</div>';
-}
+}}}
 
 // show a dedicated frontpage
-function tpshout_frontpage()
-{
+function tpshout_frontpage() {{{
 	loadtemplate('TPShout');
     tpshout_bigscreen(true);
-}
+}}}
 
-function shoutHasLinks()
-{
+function shoutHasLinks() {{{
 	global $context;
 	$shout = !empty($_POST['tp_shout']) ? $_POST['tp_shout'] : '';
     if(TPUtil::hasLinks($shout)) {
@@ -1135,19 +1123,17 @@ function shoutHasLinks()
 		return true;
 	}
 	return false;
-}
+}}}
 
-function tp_shoutb($memID)
-{
+function tp_shoutb($memID) {{{
     global $txt, $context;
     loadtemplate('TPprofile');
     $context['page_title'] = $txt['shoutboxprofile'];
     tpshout_profile($memID);
-}
+}}}
 
 // fetch all the shouts for output
-function tpshout_profile($memID)
-{
+function tpshout_profile($memID) {{{
     global $context, $scripturl, $txt, $smcFunc;
     $context['page_title'] = $txt['shoutboxprofile'] ;
     if(isset($context['TPortal']['mystart'])) {
@@ -1201,7 +1187,7 @@ function tpshout_profile($memID)
         loadLanguage('TPortal', 'english');
     }
     $context['sub_template'] = 'tpshout_profile';
-}
+}}}
 
 function TPShoutAdminAreas() {{{
 
@@ -1226,7 +1212,6 @@ function TPShoutBlock($row) {{{
         loadLanguage('TPortal', 'english');
     }
 
-
     $set = json_decode($row['settings'], TRUE);
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
@@ -1234,6 +1219,7 @@ function TPShoutBlock($row) {{{
         'name' => $txt['tp-shoutbox'],
         'function' => 'tpshout_fetch',
         'sourcefile' => $sourcedir .'/TPShout.php',
+        'shoutbox_id' => $row['id'],
     );
     
     //$tpm = $row['id'];

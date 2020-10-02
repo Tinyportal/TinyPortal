@@ -70,7 +70,7 @@ class Block extends Base {
             5   => 'html',
             6   => 'onlinebox',
             7   => 'themebox',
-            8   => 'oldshoutbox',
+            8   => 'shoutbox',
             9   => 'catmenu',
             10  => 'phpbox',
             11  => 'scriptbox',
@@ -82,7 +82,7 @@ class Block extends Base {
             17  => 'admin',
             18  => 'articlebox',
             19  => 'categorybox',
-            20  => 'tpmodulebox',
+            20  => 'modulebox',
         );
 
         $this->blockPanel = array(
@@ -104,6 +104,13 @@ class Block extends Base {
             6 => 'top',
             7 => 'lower',
         );
+
+        foreach($this->blockType as $k => $v) {
+            $name = 'TP_BLOCK_'.strtoupper($v);
+            if(!defined($name)) {
+               define($name, $k);
+            }
+        }
 
 
     }}}

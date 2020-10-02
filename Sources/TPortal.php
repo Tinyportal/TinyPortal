@@ -2024,7 +2024,7 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['blocklisting_height'] = $block['var1'];
 				$context['TPortal']['blocklisting_author'] = $block['var2'];
 				break;
-			case 'tpmodulebox':
+			case 'modulebox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleid'] = $block['var1'];
 				$context['TPortal']['modulevar2'] = $block['var2'];
