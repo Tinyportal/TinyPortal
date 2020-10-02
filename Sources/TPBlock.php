@@ -172,6 +172,10 @@ function getBlocks() {{{
             elseif($row['type'] == TP_BLOCK_MODULEBOX) {
                 call_integration_hook('integrate_tp_blocks', array(&$row));
             }
+            elseif($row['type'] == TP_BLOCK_SHOUTBOX) {
+                call_integration_hook('integrate_tp_shoutbox', array(&$row));
+            }
+
 			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage) {
@@ -586,6 +590,9 @@ function editBlock( $block_id = 0 ) {{{
 			$context['TPortal']['editor_id'] = 'tp_block_body';
 			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
 		}
+        elseif($row['type'] == 8) {
+            call_integration_hook('integrate_tp_shoutbox', array(&$row));
+        }        
         elseif($row['type'] == 20) {
             call_integration_hook('integrate_tp_blocks', array(&$row));
         }

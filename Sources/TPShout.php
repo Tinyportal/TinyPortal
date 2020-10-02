@@ -171,7 +171,7 @@ function TPShout() {{{
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
         }
         elseif($shoutAction == 'refresh') {
-            var_dump(tpshout_fetch(false, $context['TPortal']['shoutbox_limit'], true));
+            var_dump(tpshout_fetch(null, false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
         elseif($shoutAction == 'fetch') {
@@ -644,17 +644,17 @@ function tpshout_bigscreen($state = false, $number = 10) {{{
     if ($state == false) {
         $context['template_layers']         = array();
         $context['sub_template']            = 'tpshout_ajax';
-        $context['TPortal']['rendershouts'] = tpshout_fetch($state, $number, true);
+        $context['TPortal']['rendershouts'] = tpshout_fetch(null, $state, $number, true);
     }
     else {
-        $context['TPortal']['rendershouts'] = tpshout_fetch(false, $number, false);
+        $context['TPortal']['rendershouts'] = tpshout_fetch(null, false, $number, false);
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
 }}}
 
 // fetch all the shouts for output
-function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false) {{{
+function tpshout_fetch($block_id = null, $render = true, $limit = 1, $ajaxRequest = false) {{{
 	global $context, $scripturl, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
@@ -688,13 +688,24 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false) {{{
 
 	loadTemplate('TPShout');
 
+
+    $block_shout = '';
+    if(!is_null($block_id)) {
+        $block_shout = ' AND s.shoutbox_id = {int:shoutbox_id} ';
+    }
+
 	$members = array();
 	$request =  $smcFunc['db_query']('', '
 		SELECT s.*
-			FROM {db_prefix}tp_shoutbox as s
+			FROM {db_prefix}tp_shoutbox AS s
 		WHERE s.sticky = {int:val7}
+        '.$block_shout.'
 		ORDER BY s.time DESC LIMIT {int:limit}',
-		array('val7' => 0, 'limit' => $limit)
+		array(
+            'val7' => 0, 
+            'limit' => $limit,
+            'shoutbox_id' => $block_id,
+        )
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0 ) {
@@ -762,6 +773,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false) {{{
 	else {
 		return $nshouts;
     }
+
 }}}
 
 function shout_bcc_code($collapse = true) {{{
@@ -1221,9 +1233,6 @@ function TPShoutBlock($row) {{{
         'sourcefile' => $sourcedir .'/TPShout.php',
         'shoutbox_id' => $row['id'],
     );
-    
-    //$tpm = $row['id'];
-    //$context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
 
 }}}
 

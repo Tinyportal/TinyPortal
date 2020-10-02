@@ -378,6 +378,7 @@ $txt['tp-blocktype11'] = 'Code: HTML/Javascript';
 $txt['tp-blocktype10'] = 'Code: PHP';
 $txt['tp-blocktype9'] = 'Menu';
 $txt['tp-blocktype2'] = 'News';
+$txt['tp-blocktype8'] = 'Shoutbox';
 $txt['tp-blocktype6'] = 'Online';
 $txt['tp-blocktype12'] = 'Recent topics';
 $txt['tp-blocktype15'] = 'RSS';

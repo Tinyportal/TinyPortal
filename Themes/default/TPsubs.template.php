@@ -59,6 +59,8 @@ function TPblock($block, $theme, $side, $double=false)
 		} else {
 			echo '<div class="block_' . $side . 'container" id="module_dlstats">';
 		}
+	} elseif ($block['type']=='shoutbox') {
+        //debug_print_backtrace();
 	} elseif ($block['type']=='modulebox') {
         //debug_print_backtrace();
 	} elseif ($block['type']=='html') {
@@ -530,6 +532,21 @@ function TPortal_themebox()
 	}
 	else
 		echo $txt['tp-nothemeschosen'];
+}
+
+// blocktype 8: TP Shoutbox
+function TPortal_shoutbox($blockid)
+{
+	global $context;
+
+	// fetch the correct block
+	if(!empty($context['TPortal']['moduleid'])) {
+		$tpm = $context['TPortal']['moduleid'];
+        var_dump($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']);
+		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
+			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $blockid);
+        }
+	}
 }
 
 // blocktype 9: Menu

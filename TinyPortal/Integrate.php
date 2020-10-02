@@ -81,8 +81,10 @@ class Integrate
                 '$sourcedir/TPShout.php|TPShoutAdminAreas',
                 '$sourcedir/TPListImages.php|TPListImageAdminAreas',
             ),
-            'tp_blocks'                         => array (
+            'tp_shoutbox'                       => array (
                 '$sourcedir/TPShout.php|TPShoutBlock',
+            ),
+            'tp_block'                          => array (
             ),
             'tp_pre_admin_subactions'           => array ( 
                 '$sourcedir/TPBlock.php|TPBlockAdminActions',
