@@ -15,6 +15,7 @@
  *
  */
 use \TinyPortal\Mentions as TPMentions;
+use \TinyPortal\Shout as TPShout;
 use \TinyPortal\Util as TPUtil;
 
 if (!defined('SMF')) {
@@ -160,7 +161,7 @@ function TPShout() {{{
             tpshout_admin();
         }
         elseif($shoutAction == 'del') {
-            deleteShout();
+            deleteShout( $_POST['s'] );
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
         }
         elseif($shoutAction == 'save') {
@@ -234,30 +235,18 @@ function postShout() {{{
 		$shout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
         if($shout != '') {
-            $smcFunc['db_insert']('INSERT',
-                    '{db_prefix}tp_shoutbox',
-                array (
-                    'content'       => 'string',
-                    'time'          => 'string',
-                    'member_link'   => 'string',
-                    'type'          => 'string',
-                    'member_ip'     => 'string',
-                    'member_id'     => 'int',
-                    'edit'          => 'int',
-                ),
-                array (
-                    $shout,
-                    $shout_time,
-                    $shout_name,
-                    'shoutbox',
-                    $ip,
-                    $memID,
-                    0,
-                ),
-                array('id')
+            $tpShout = TPShout::getInstance();
+            $shout_id = $tpShout->insertShout(
+                array(
+                    'content'       => $shout,
+                    'time'          => $shout_time,
+                    'member_link'   => $shout_name,
+                    'type'          => 'shoutbox',
+                    'member_ip'     => $ip,
+                    'member_id'     => $memID,
+                    'edit'          => 0
+                )
             );
-            $shout_id = $smcFunc['db_insert_id']('{db_prefix}tp_shoutbox');
-       
             $mention_data['id']             = $shout_id;
             $mention_data['content']        = $shout;
             $mention_data['type']           = 'shout';
@@ -275,18 +264,14 @@ function postShout() {{{
 }}}
 
 // This is to delete a shout via ajax
-function deleteShout() {{{
-	global $smcFunc;
+function deleteShout( $shout_id = null ) {{{
+    $tpShout = TPShout::getInstance();
 
 	// A couple of security checks
 	checkSession('post');
 	isAllowedTo('tp_can_admin_shout');
-	if(!empty($_POST['s'])) {
-		$smcFunc['db_query']('', '
-			DELETE FROM {db_prefix}tp_shoutbox
-			WHERE id = {int:id}',
-			array('id' => (int) $_POST['s'])
-		);
+	if(!empty($shout_id)) {
+        $tpShout->deleteShout($shout_id);
 	}
 
 }}}
@@ -330,11 +315,7 @@ function tpshout_admin() {{{
 		foreach ($_POST as $what => $value) {
 			if(substr($what, 0, 18) == 'tp_shoutbox_remove') {
 				$val = substr($what, 18);
-				$smcFunc['db_query']('', '
-					DELETE FROM {db_prefix}tp_shoutbox
-					WHERE id = {int:shout}',
-					array('shout' => $val)
-				);
+                deleteShout((int)$val);
 				$go = 2;
 			}
 			elseif(substr($what, 0, 18) == 'tp_shoutbox_hidden') {
@@ -355,7 +336,7 @@ function tpshout_admin() {{{
 
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_shoutbox
-					SET sticky_layout = "' . $svalue . '"
+					SET sticky_layout = \'' . $svalue . '\'
 					WHERE id = {int:shout}',
 					array('shout' => $val)
 				);

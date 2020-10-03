@@ -47,8 +47,9 @@ class Shout extends Base {
             'content'       => 'text', 
             'time'          => 'text',
             'member_link'   => 'text',
-            'type'          => 'text',  // tinytext
+            'member_ip'     => 'text',
             'member_id'     => 'int',
+            'type'          => 'text',  // tinytext
             'sticky'        => 'int',   // smallint
             'sticky_layout' => 'text',
             'edit'          => 'text',
@@ -56,14 +57,23 @@ class Shout extends Base {
 
     }}}
 
-    public function getShouts( ) {{{
+    public function getShouts( $shoutbox_id = null ) {{{
 
         $shout = array();
 
+        if(!is_null($shoutbox_id)) {
+            $where          = '{int:shoutbox_id}';
+            $where_array    = array( 'shoutbox_id' => $shoutbox_id );
+        }
+        else {
+            $where          = '1=1';
+            $where_array    = array( );
+        }
+
         $request =  $this->dB->db_query('', '
-            SELECT * FROM {db_prefix}tp_shout
-            WHERE 1=1',
-            array()
+            SELECT * FROM {db_prefix}tp_shoutbox
+            WHERE '.$where,
+            $where_array
         );
 
         if($this->dB->db_num_rows($request) > 0) {
@@ -87,7 +97,7 @@ class Shout extends Base {
         $shout = array();
 
         $request =  $this->dB->db_query('', '
-            SELECT * FROM {db_prefix}tp_shout
+            SELECT * FROM {db_prefix}tp_shoutbox
             WHERE id = {int:shoutid} LIMIT 1',
             array (
                 'shoutid' => $shout_id
@@ -144,7 +154,7 @@ class Shout extends Base {
 
         $request =  $this->dB->db_query('', '
             SELECT {raw:columns}
-            FROM {db_prefix}tp_shout
+            FROM {db_prefix}tp_shoutbox
             WHERE {raw:where}',
             array (
                 'columns'       => $columns,
@@ -169,13 +179,13 @@ class Shout extends Base {
         }
 
         $this->dB->db_insert('INSERT',
-            '{db_prefix}tp_shout',
+            '{db_prefix}tp_shoutbox',
             $insert_data,
             array_values($shout_data),
             array ('id')
         );
 			
-        return $this->dB->db_insert_id('{db_prefix}tp_shout', 'id');
+        return $this->dB->db_insert_id('{db_prefix}tp_shoutbox', 'id');
 
     }}}
 
@@ -190,7 +200,7 @@ class Shout extends Base {
 
         $shout_data['shout_id'] = (int)$shout_id;
         $this->dB->db_query('', '
-            UPDATE {db_prefix}tp_shout
+            UPDATE {db_prefix}tp_shoutbox
             SET '.$update_query.'
             WHERE id = {int:shout_id}',
             $shout_data
@@ -201,7 +211,7 @@ class Shout extends Base {
     public function deleteShout( $shout_id ) {{{
 
         $this->dB->db_query('', '
-            DELETE FROM {db_prefix}tp_shout
+            DELETE FROM {db_prefix}tp_shoutbox
             WHERE id = {int:shout_id}',
             array (
                 'shout_id' => $shout_id
