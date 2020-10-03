@@ -542,7 +542,6 @@ function TPortal_shoutbox($blockid)
 	// fetch the correct block
 	if(!empty($context['TPortal']['moduleid'])) {
 		$tpm = $context['TPortal']['moduleid'];
-        var_dump($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']);
 		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
 			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $blockid);
         }
