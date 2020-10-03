@@ -1227,11 +1227,10 @@ function TPShoutBlock($row) {{{
     $set = json_decode($row['settings'], TRUE);
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
-        'id' => $row['id'],
-        'name' => $txt['tp-shoutbox'],
-        'function' => 'tpshout_fetch',
-        'sourcefile' => $sourcedir .'/TPShout.php',
-        'shoutbox_id' => $row['id'],
+        'id'            => $row['id'],
+        'name'          => $txt['tp-shoutbox'],
+        'function'      => 'tpshout_fetch',
+        'sourcefile'    => $sourcedir .'/TPShout.php',
     );
 
 }}}

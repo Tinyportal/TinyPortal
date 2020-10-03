@@ -242,6 +242,7 @@ $tables = array(
 	'tp_shoutbox' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
+            array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => -2),
             array('name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'time', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -886,10 +887,10 @@ function updateShoutbox()
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value3', array( 'name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value4', array( 'name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value5', array( 'name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => '-2' ));
-    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value7', array( 'name' => 'sitcky', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
-    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value8', array( 'name' => 'sitcky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value7', array( 'name' => 'sticky', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
+    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value8', array( 'name' => 'sticky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
-
+    $smcFunc['db_add_column']('{db_prefix}tp_shoutbox', array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null ));
 	$render .= '<li>Updated old columns in shoutbox table</li>';
 }
 
