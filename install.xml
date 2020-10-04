@@ -26,9 +26,18 @@
 			require_once($sourcedir . '/BoardIndex.php');
 			return 'BoardIndex';
 		}]]></search>
-			<add><![CDATA[		$tpAction = TPortalHookDefaultAction();
-		if (!empty($tpAction))
-			return $tpAction;
+			<add><![CDATA[		if(function_exists('TPortalHookDefaultAction')) {
+        $tpAction = TPortalHookDefaultAction();
+		    if (!empty($tpAction)) {
+			    return $tpAction;
+            }
+        }
+        // Action and board are both empty... BoardIndex!
+        elseif (empty($board) && empty($topic))
+		{
+			require_once($sourcedir . '/BoardIndex.php');
+			return 'BoardIndex';
+		}
 			]]></add>
 		</operation>
 	</file>
@@ -61,7 +70,9 @@
 		$id_theme = $modSettings['theme_guests'];]]></search>
 			<add><![CDATA[
 	// TinyPortal
-	TPortalHookLoadTheme($id_theme);
+    if(function_exists('TPortalHookLoadTheme')) {
+	    TPortalHookLoadTheme($id_theme);
+    }
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>
