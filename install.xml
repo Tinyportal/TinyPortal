@@ -15,7 +15,9 @@
 		<operation>
 			<search position="after"><![CDATA[	// Is the forum in maintenance mode? (doesn't apply to administrators.)]]></search>
 			<add><![CDATA[	// TinyPortal
-	TPortalInit();
+    if(function_exists('TPortalInit')) {
+	    TPortalInit();
+    }
 
 ]]></add>
 		</operation>
@@ -27,7 +29,7 @@
 			return 'BoardIndex';
 		}]]></search>
 			<add><![CDATA[		if(function_exists('TPortalHookDefaultAction')) {
-        $tpAction = TPortalHookDefaultAction();
+            $tpAction = TPortalHookDefaultAction();
 		    if (!empty($tpAction)) {
 			    return $tpAction;
             }
