@@ -31,15 +31,16 @@ function TPupdateShouts(action, shoutId)
 	var name;
 	var shout;
 	if (action === "save") {
-		name = $("#tp-shout-name").val();
-		shout = $("#tp_shout").val();
-		params = "&tp-shout-name=" + name + "&tp_shout=" + shout;
+		name    = $("#tp-shout-name").val();
+		shout   = $("#tp_shout_" + shoutId).val();
+        alert(shout);
+		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;
 	}
 
 	if (shoutId) {
-		params = "&s=" + shoutId;
+		params = params.concat("&s=" + shoutId);
 	}
-	
+
 	$.ajax({
 		type : "POST",
 		dataType: "html",

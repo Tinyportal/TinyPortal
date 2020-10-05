@@ -284,7 +284,7 @@ function template_tpshout_admin_settings()
 }
 
 // Shoutbox Block template
-function template_tpshout_shoutblock()
+function template_tpshout_shoutblock( $block_id = 0 )
 {
 	global $context, $scripturl, $txt, $settings, $modSettings, $user_info;
 
@@ -292,8 +292,8 @@ function template_tpshout_shoutblock()
 		$context['TPortal']['shoutbox'] = '';
     }
 
-	$context['tp_shoutbox_form'] = 'tp_shoutbox';
-	$context['tp_shout_post_box_name'] = 'tp_shout';
+	$context['tp_shoutbox_form']        = 'tp_shoutbox';
+	$context['tp_shout_post_box_name']  = 'tp_shout_'.$block_id;
 
 	if(!empty($context['TPortal']['shoutbox_stitle'])) {
 		echo '
@@ -317,12 +317,12 @@ function template_tpshout_shoutblock()
 	if(!$context['user']['is_guest'] && allowedTo('tp_can_shout')) {
 	    if ( in_array($context['TPortal']['shoutbox_layout'], array('2','3'), true ) ) {
             echo '
-                <form  accept-charset="'. $context['character_set']. '" class="smalltext" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpshout;shout=save" method="post" ><hr>
+                <form  accept-charset="'. $context['character_set']. '" class="smalltext" name="'. $context['tp_shoutbox_form']. '"  id="'. $context['tp_shoutbox_form']. '" action="'.$scripturl.'?action=tpshout;shout=save;block='.$block_id.'" method="post" ><hr>
                 <div style="margin-bottom: 5px;">
                     <input type="text" id="'. $context['tp_shout_post_box_name']. '" class="shoutbox_input'. $context['TPortal']['shoutbox_layout']. '" name="'. $context['tp_shout_post_box_name']. '" maxlength="' .$context['TPortal']['shoutbox_maxlength']. '"  onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '"></input>
-                    <input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
+                    <input onclick="TPupdateShouts(\'save\', '.$block_id.' ); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
                     <a href="' , $scripturl , '?action=tpshout;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
-                    <a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpshout;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+                    <a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\', '.$block_id.' ); return false;" href="' , $scripturl , '?action=tpshout;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
                     <p class="clearthefloat"></p>
                 </div>';
 
@@ -367,8 +367,8 @@ function template_tpshout_shoutblock()
                 <hr>
                 <div style="overflow: hidden;">
                     <a href="' , $scripturl , '?action=tpshout;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
-                    <input onclick="TPupdateShouts(\'save\'); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
-                    <a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\'); return false;" href="' , $scripturl , '?action=tpshout;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
+                    <input onclick="TPupdateShouts(\'save\', '.$block_id.' ); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
+                    <a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\', '.$block_id.' ); return false;" href="' , $scripturl , '?action=tpshout;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
                 </div>
                 <input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
                 <input type="hidden" name="sc" value="', $context['session_id'], '" />
