@@ -33,28 +33,28 @@ function TPShout() {{{
         }
         elseif($shoutAction == 'del') {
             TPShoutDelete( $_POST['s'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
         }
         elseif($shoutAction == 'save') {
             if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
                     return;
             }
-            TPShoutPost( $_POST['s'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['s']);
+            TPShoutPost( $_POST['b'] );
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
         }
         elseif($shoutAction == 'refresh') {
-            var_dump(TPShoutFetch( $_POST['s'] , false, $context['TPortal']['shoutbox_limit'], true));
+            var_dump(TPShoutFetch( $_POST['b'] , false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
         elseif($shoutAction == 'fetch') {
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['s']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
         }
         else {
             $number = substr($shoutAction, 4);
             if(!is_numeric($number)) {
                 $number = 10;
             }
-            tpshout_bigscreen(true, $number, $_POST['s']);
+            tpshout_bigscreen(true, $number, $_POST['b']);
         }
     }
 
@@ -234,7 +234,7 @@ function TPShoutPost( $block_id ) {{{
 
 		$shout      = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
-        $block_id   = TPUtil::filter('s', 'post', 'int');
+        $block_id   = TPUtil::filter('b', 'post', 'int');
         if(empty($block_id)) {
             $block_id = 0;
         }
@@ -276,8 +276,9 @@ function TPShoutDelete( $shout_id = null ) {{{
 	// A couple of security checks
 	checkSession('post');
 	isAllowedTo('tp_can_admin_shout');
+
 	if(!empty($shout_id)) {
-        $tpShout->TPShoutDelete($shout_id);
+        $tpShout->deleteShout($shout_id);
 	}
 
 }}}
@@ -385,7 +386,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : (!empty($memberdata[$row['member_id']]['pg_online_color']) ? $memberdata[$row['member_id']]['pg_online_color'] : '');
-			$ns[] = template_singleshout($row);
+			$ns[] = template_singleshout($row, $block_id);
 		}
 		$nshouts .= implode('', $ns);
 
