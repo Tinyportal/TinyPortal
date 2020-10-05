@@ -17,7 +17,7 @@
  *
  */
 
-define('TP_MINIMUM_PHP_VERSION', '5.6.0');
+define('TP_MINIMUM_PHP_VERSION', '7.2.0');
 
 global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir;
 $manual = false;

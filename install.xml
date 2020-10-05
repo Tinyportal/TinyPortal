@@ -22,25 +22,15 @@
 ]]></add>
 		</operation>
 		<operation>
-			<search position="replace"><![CDATA[		// Action and board are both empty... BoardIndex!
-		if (empty($board) && empty($topic))
-		{
-			require_once($sourcedir . '/BoardIndex.php');
-			return 'BoardIndex';
-		}]]></search>
-			<add><![CDATA[		if(function_exists('TPortalHookDefaultAction')) {
+			<search position="after"><![CDATA[		// Action and board are both empty... BoardIndex!]]></search>
+			<add><![CDATA[
+        if(function_exists('TPortalHookDefaultAction')) {
             $tpAction = TPortalHookDefaultAction();
 		    if (!empty($tpAction)) {
 			    return $tpAction;
             }
         }
-        // Action and board are both empty... BoardIndex!
-        elseif (empty($board) && empty($topic))
-		{
-			require_once($sourcedir . '/BoardIndex.php');
-			return 'BoardIndex';
-		}
-			]]></add>
+]]></add>
 		</operation>
 	</file>
 	<file name="$sourcedir/Load.php">
