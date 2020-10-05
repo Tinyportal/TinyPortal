@@ -40,21 +40,21 @@ function TPShout() {{{
                     return;
             }
             TPShoutPost( $_POST['s'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['s']);
         }
         elseif($shoutAction == 'refresh') {
             var_dump(TPShoutFetch( $_POST['s'] , false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
         elseif($shoutAction == 'fetch') {
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['s']);
         }
         else {
             $number = substr($shoutAction, 4);
             if(!is_numeric($number)) {
                 $number = 10;
             }
-            tpshout_bigscreen(true, $number);
+            tpshout_bigscreen(true, $number, $_POST['s']);
         }
     }
 
@@ -402,7 +402,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 
 }}}
 
-function tpshout_bigscreen($state = false, $number = 10) {{{
+function tpshout_bigscreen($state = false, $number = 10, $block_id = 0 ) {{{
     global $context;
 
     loadTemplate('TPShout');
@@ -410,10 +410,10 @@ function tpshout_bigscreen($state = false, $number = 10) {{{
     if ($state == false) {
         $context['template_layers']         = array();
         $context['sub_template']            = 'tpshout_ajax';
-        $context['TPortal']['rendershouts'] = TPShoutFetch(null, $state, $number, true);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($block_id, $state, $number, true);
     }
     else {
-        $context['TPortal']['rendershouts'] = TPShoutFetch(null, false, $number, false);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($block_id, false, $number, false);
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }

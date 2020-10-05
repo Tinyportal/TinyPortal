@@ -33,7 +33,6 @@ function TPupdateShouts(action, shoutId)
 	if (action === "save") {
 		name    = $("#tp-shout-name").val();
 		shout   = $("#tp_shout_" + shoutId).val();
-        alert(shout);
 		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;
 	}
 
@@ -60,12 +59,12 @@ function TPupdateShouts(action, shoutId)
 			// If there's an error let's display it
 			if (error.length > 0) {
 				$("#shout_errors").html(error).show();
-				$(".tp_shoutframe").fadeIn();
+				$(".tp_shoutframe_" + shoutId).fadeIn();
 				$("#tp_shout").val(shout);
 			} else {
 				$("#shout_errors").hide();
-				$(".tp_shoutframe").html(data).fadeIn();
-				$(".tp_shoutframe").parent().scrollTop(0);
+				$(".tp_shoutframe_" + shoutId).html(data).fadeIn();
+				$(".tp_shoutframe_" + shoutId).parent().scrollTop(0);
 				if (action === "save") {
 					$("#tp_shout").val("");
 				}

@@ -303,14 +303,14 @@ function template_tpshout_shoutblock( $block_id = 0 )
 	if($context['TPortal']['shoutbox_usescroll'] > '0') {
 		echo '
 		<marquee id="tp_marquee" behavior="scroll" direction="down" scrollamount="'. $context['TPortal']['shoutbox_scrollduration'] . '" height="'. $context['TPortal']['shoutbox_height'] . '">
-			<div class="tp_shoutframe">'.$context['TPortal']['shoutbox'].'</div>
+			<div class="tp_shoutframe_'.$block_id.'">'.$context['TPortal']['shoutbox'].'</div>
 		</marquee>';
     }
 	else {
 		echo '
 			<div id="shoutboxContainer">
 				<div class="middletext" style="width: 100%; height: '.$context['TPortal']['shoutbox_height'].'px; overflow: auto;">
-					<div class="tp_shoutframe">'. $context['TPortal']['shoutbox']. '</div>
+					<div class="tp_shoutframe_'.$block_id.'">'. $context['TPortal']['shoutbox']. '</div>
 				</div>
 			<!--shoutboxContainer-->';
     }
