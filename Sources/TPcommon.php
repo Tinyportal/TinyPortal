@@ -236,6 +236,9 @@ function upshrink() {{{
             redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
         }
     }
+    else {
+        redirectexit();
+    }
 
 }}}
 
