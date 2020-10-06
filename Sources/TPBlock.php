@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -59,12 +59,11 @@ function getBlocks() {{{
 
 	global $context, $scripturl, $user_info, $smcFunc, $modSettings;
 
+    $tpBlock    = TPBlock::getInstance();
+
 	$now = time();
 	// setup the containers
-	$blocks = array('left' => array(), 'right' => array(), 'center' => array(), 'front' => array(), 'bottom' => array(), 'top' => array() , 'lower' => array());
-	$blocktype = array('no', 'userbox', 'newsbox', 'statsbox', 'searchbox', 'html',
-		'onlinebox', 'themebox', 'oldshoutbox', 'catmenu', 'phpbox', 'scriptbox', 'recentbox',
-		'ssi', 'module', 'rss', 'sitemap', 'oldadmin', 'articlebox', 'categorybox', 'tpmodulebox');
+	$blocks = $tpBlock->getBlockType(); 
 
 	// construct the spot we are in
 	$sqlarray = array();
@@ -109,7 +108,6 @@ function getBlocks() {{{
         $sqlarray[] = 'tpmod=shout';
     }
 
-
     $access = TPUtil::find_in_set($user_info['groups'], 'access');
 
 	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
@@ -139,38 +137,45 @@ function getBlocks() {{{
 	);
 	$context['TPortal']['hide_frontbar_forum'] = 0;
 
-	$count = array('left' => 0, 'right' => 0, 'center' => 0, 'front' => 0, 'bottom' => 0, 'top' => 0, 'lower' => 0);
-
 	$fetch_articles = array();
 	$fetch_article_titles = array();
 
-	$panels = array(1 => 'left', 2 => 'right', 3 => 'center', 4 => 'front', 5 => 'bottom', 6 => 'top', 7 => 'lower');
+    $count  = array_flip($tpBlock->getBlockPanel());
+    foreach($count as $k => $v) {
+        $count[$k] = 0;
+    }
+
+	$panels = $tpBlock->getBlockBar(); 
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
             // decode the block settings
             $set = json_decode($row['settings'], true);
 			// some tests to minimize sql calls
-			if($row['type'] == 7) {
+			if($row['type'] == TP_BLOCK_THEMEBOX) {
 				$test_themebox = true;
             }
-			elseif($row['type'] == 18) {
+			elseif($row['type'] == TP_BLOCK_ARTICLEBOX) {
 				$test_articlebox = true;
 				if(is_numeric($row['body'])) {
 					$fetch_articles[] = $row['body'];
                 }
 			}
-			elseif($row['type'] == 9 || $row['type'] == 16  ) {
+			elseif($row['type'] == TP_BLOCK_CATMENU || $row['type'] == TP_BLOCK_SITEMAP  ) {
 				$test_menubox = true;
 			}
-            elseif($row['type'] == 19) {
+            elseif($row['type'] == TP_BLOCK_CATEGORYBOX) {
 				$test_catbox = true;
 				if(is_numeric($row['body'])) {
 					$fetch_article_titles[] = $row['body'];
                 }
 			}
-            elseif($row['type'] == 20) {
+            elseif($row['type'] == TP_BLOCK_MODULEBOX) {
                 call_integration_hook('integrate_tp_blocks', array(&$row));
             }
+            elseif($row['type'] == TP_BLOCK_SHOUTBOX) {
+                call_integration_hook('integrate_tp_shoutbox', array(&$row));
+            }
+
 			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage) {
@@ -179,7 +184,7 @@ function getBlocks() {{{
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
 				'title' => strip_tags($row['title'], '<center>'),
-				'type' => isset($blocktype[$row['type']]) ? $blocktype[$row['type']] : $row['type'],
+                'type' => $tpBlock->getBlockType($row['type']),
 				'body' => $row['body'],
 				'visible' => $row['visible'],
 				'var1' => $set['var1'],
@@ -585,6 +590,9 @@ function editBlock( $block_id = 0 ) {{{
 			$context['TPortal']['editor_id'] = 'tp_block_body';
 			TP_prebbcbox($context['TPortal']['editor_id'], strip_tags($context['TPortal']['blockedit']['body']));
 		}
+        elseif($row['type'] == 8) {
+            call_integration_hook('integrate_tp_shoutbox', array(&$row));
+        }        
         elseif($row['type'] == 20) {
             call_integration_hook('integrate_tp_blocks', array(&$row));
         }

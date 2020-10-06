@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -378,6 +378,7 @@ $txt['tp-blocktype11'] = 'Code: HTML/Javascript';
 $txt['tp-blocktype10'] = 'Code: PHP';
 $txt['tp-blocktype9'] = 'Menu';
 $txt['tp-blocktype2'] = 'News';
+$txt['tp-blocktype8'] = 'Shoutbox';
 $txt['tp-blocktype6'] = 'Online';
 $txt['tp-blocktype12'] = 'Recent topics';
 $txt['tp-blocktype15'] = 'RSS';

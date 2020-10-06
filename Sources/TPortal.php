@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2024,7 +2024,8 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['blocklisting_height'] = $block['var1'];
 				$context['TPortal']['blocklisting_author'] = $block['var2'];
 				break;
-			case 'tpmodulebox':
+			case 'shoutbox':
+            case 'modulebox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleid'] = $block['var1'];
 				$context['TPortal']['modulevar2'] = $block['var2'];

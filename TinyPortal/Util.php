@@ -270,7 +270,7 @@ class Util
     }}} 
 
     public static function isHTML( $string ) {{{
-
+       
         // Remove any HTML which might be in bbc html tags for this check, this means bbc with html will break the shortenString function
         $string = preg_replace('/\[([html]+?)\](.+?)\[\/\1\]/', '', $string);
 

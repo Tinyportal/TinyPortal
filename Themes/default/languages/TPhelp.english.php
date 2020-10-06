@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -21,7 +21,7 @@ $txt['tp-credit1'] = '
 Bjorn "Bloc" Kristiansen
 <br><br>
 <h4>Developers and Contributors</h4>
-Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, emanuele, @rjen.
+Brad "IchBin" Grow, Bloc, Illori, Arantor, tino, lurkalot, emanuele, @rjen.
 <br><br>
 <h4>TP Team</h4>
 Agridoc, Crip, Freddy, Ken, Lesmond, Renegd98, WillyP, wildenborch and ZarPrime.

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -81,8 +81,10 @@ class Integrate
                 '$sourcedir/TPShout.php|TPShoutAdminAreas',
                 '$sourcedir/TPListImages.php|TPListImageAdminAreas',
             ),
-            'tp_blocks'                         => array (
+            'tp_shoutbox'                       => array (
                 '$sourcedir/TPShout.php|TPShoutBlock',
+            ),
+            'tp_block'                          => array (
             ),
             'tp_pre_admin_subactions'           => array ( 
                 '$sourcedir/TPBlock.php|TPBlockAdminActions',
@@ -167,7 +169,7 @@ class Integrate
         define('BOARDDIR', $boarddir);
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
-        define('TPVERSION', 'v200');
+        define('TPVERSION', 'v210');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);
         }
@@ -276,7 +278,7 @@ class Integrate
         }
 
 
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.0.0</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.1.0</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;

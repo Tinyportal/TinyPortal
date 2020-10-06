@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -17,7 +17,7 @@
  *
  */
 
-define('TP_MINIMUM_PHP_VERSION', '5.6.0');
+define('TP_MINIMUM_PHP_VERSION', '7.2.0');
 
 global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir;
 $manual = false;
@@ -64,7 +64,7 @@ if ($manual) {
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v2.0.0 for '.$forumVersion.'</title>
+		<title>TinyPortal - v2.1.0 for '.$forumVersion.'</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 }
@@ -78,7 +78,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.0.0 for '.$forumVersion.'<h3/></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.1.0 for '.$forumVersion.'<h3/></div>
 	<div class="windowbg middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -242,6 +242,7 @@ $tables = array(
 	'tp_shoutbox' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
+            array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => -2),
             array('name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'time', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -441,7 +442,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '2.0.0',
+    'version' => '2.1.0',
     'padding' => '4',
     'margins' => '2',
     'leftbar_width' => '200',
@@ -884,6 +885,7 @@ function updateShoutbox()
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value3', array( 'name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value4', array( 'name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value5', array( 'name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => '-2' ));
+    $smcFunc['db_add_column']('{db_prefix}tp_shoutbox', array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null ));
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value7');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value8');

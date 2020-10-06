@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -188,6 +188,7 @@ function template_editblock()
 						<dd>
 							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type">
 								<option value="0"' ,$context['TPortal']['blockedit']['type']=='0' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
+								<option value="8"' ,$context['TPortal']['blockedit']['type']=='8' ? ' selected' : '' , '>', $txt['tp-blocktype8'] , '</option>
 								<option value="18"' ,$context['TPortal']['blockedit']['type']=='18' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$context['TPortal']['blockedit']['type']=='19' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
 								<option value="14"' ,$context['TPortal']['blockedit']['type']=='14' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
@@ -331,6 +332,25 @@ function template_editblock()
 							<input type="radio" id="tp_block_body5" name="tp_block_body" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '><label for="tp_block_body5"> '.$txt['tp-ssi-calendar']. '</label><br>
 						</dd>
 					</dl>';
+			}
+// Block type: TP shoutbox
+			elseif($context['TPortal']['blockedit']['type']=='8'){
+                if(isset($context['TPortal']['tpblocks']['blockrender'])) {
+					echo '
+						</div><div>
+						<hr><dl class="tptitle settings">
+						<dt>'.$txt['tp-showmodulebox'].'</dt>
+						<dd>';
+
+				    foreach($context['TPortal']['tpblocks']['blockrender'] as $tpm) {
+					    echo '
+						    <input type="radio" name="tp_block_var1" value="' . $tpm['id'] . '" ' , $context['TPortal']['blockedit']['var1']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'].'<br>';
+					}
+
+					echo '
+						</dd>
+					</dl>'; 
+                }
 			}
 // Block type: TP module
 			elseif($context['TPortal']['blockedit']['type']=='20'){

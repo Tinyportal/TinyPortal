@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -135,7 +135,7 @@ function template_settings()
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input type="hidden" "name="tpadmin_form" value="settings">
+		<input type="hidden" name="tpadmin_form" value="settings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpsettings'] , '</div><div></div>
@@ -1850,6 +1850,7 @@ function template_blocks()
 							</div>
 							<select size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
+								<option value="8"' ,$lblock['type']=='shoutbox' ? ' selected' : '' , '>', $txt['tp-blocktype8'] , '</option>
 								<option value="18"' ,$lblock['type']=='articlebox' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$lblock['type']=='categorybox' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
 								<option value="14"' ,$lblock['type']=='module' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
@@ -1867,7 +1868,7 @@ function template_blocks()
 								<option value="3"' ,$lblock['type']=='statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$lblock['type']=='themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="20"' ,$lblock['type']=='tpmodulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
+								<option value="20"' ,$lblock['type']=='modulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
 			// theme hooks
 			if(function_exists('ctheme_tp_blocks'))
 			{
@@ -2148,6 +2149,7 @@ function template_addblock()
 						<dt><h3>' , $txt['tp-chooseblock'] , '</h3></dt>
 						<dd>
 							<div class="tp_largelist2">
+								<input type="radio" id="tp_addblock8" name="tp_addblock" value="18" checked /><label for="tp_addblock8">' . $txt['tp-blocktype8'] . '</label><br>
 								<input type="radio" id="tp_addblock18" name="tp_addblock" value="18" checked /><label for="tp_addblock18">' . $txt['tp-blocktype18'] . '</label><br>
 								<input type="radio" id="tp_addblock19" name="tp_addblock" value="19" /><label for="tp_addblock19">' . $txt['tp-blocktype19'] . '</label><br>
 								<input type="radio" id="tp_addblock14" name="tp_addblock" value="14" /><label for="tp_addblock14">' . $txt['tp-blocktype14'] . '</label><br>

@@ -24,22 +24,26 @@ function expandHeaderBBC(mode, is_guest, sessionId)
 	current_header_bbc = mode;
 }
 
-function TPupdateShouts(action, shoutId)
+function TPupdateShouts(action, blockId , shoutId)
 {
 
 	var params = "";
 	var name;
 	var shout;
 	if (action === "save") {
-		name = $("#tp-shout-name").val();
-		shout = $("#tp_shout").val();
-		params = "&tp-shout-name=" + name + "&tp_shout=" + shout;
+		name    = $("#tp-shout-name").val();
+		shout   = $("#tp_shout_" + blockId).val();
+		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;
+	}
+
+	if (blockId) {
+		params = params.concat("&b=" + blockId);
 	}
 
 	if (shoutId) {
-		params = "&s=" + shoutId;
+		params = params.concat("&s=" + shoutId);
 	}
-	
+
 	$.ajax({
 		type : "POST",
 		dataType: "html",
@@ -59,12 +63,12 @@ function TPupdateShouts(action, shoutId)
 			// If there's an error let's display it
 			if (error.length > 0) {
 				$("#shout_errors").html(error).show();
-				$(".tp_shoutframe").fadeIn();
+				$(".tp_shoutframe_" + blockId).fadeIn();
 				$("#tp_shout").val(shout);
 			} else {
 				$("#shout_errors").hide();
-				$(".tp_shoutframe").html(data).fadeIn();
-				$(".tp_shoutframe").parent().scrollTop(0);
+				$(".tp_shoutframe_" + blockId).html(data).fadeIn();
+				$(".tp_shoutframe_" + blockId).parent().scrollTop(0);
 				if (action === "save") {
 					$("#tp_shout").val("");
 				}

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -235,6 +235,9 @@ function upshrink() {{{
         else {
             redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
         }
+    }
+    else {
+        redirectexit();
     }
 
 }}}
