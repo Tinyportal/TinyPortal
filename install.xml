@@ -15,21 +15,22 @@
 		<operation>
 			<search position="after"><![CDATA[	// Is the forum in maintenance mode? (doesn't apply to administrators.)]]></search>
 			<add><![CDATA[	// TinyPortal
-	TPortalInit();
+    if(function_exists('TPortalInit')) {
+	    TPortalInit();
+    }
 
 ]]></add>
 		</operation>
 		<operation>
-			<search position="replace"><![CDATA[		// Action and board are both empty... BoardIndex!
-		if (empty($board) && empty($topic))
-		{
-			require_once($sourcedir . '/BoardIndex.php');
-			return 'BoardIndex';
-		}]]></search>
-			<add><![CDATA[		$tpAction = TPortalHookDefaultAction();
-		if (!empty($tpAction))
-			return $tpAction;
-			]]></add>
+			<search position="after"><![CDATA[		// Action and board are both empty... BoardIndex!]]></search>
+			<add><![CDATA[
+        if(function_exists('TPortalHookDefaultAction')) {
+            $tpAction = TPortalHookDefaultAction();
+		    if (!empty($tpAction)) {
+			    return $tpAction;
+            }
+        }
+]]></add>
 		</operation>
 	</file>
 	<file name="$sourcedir/Load.php">
@@ -61,7 +62,9 @@
 		$id_theme = $modSettings['theme_guests'];]]></search>
 			<add><![CDATA[
 	// TinyPortal
-	TPortalHookLoadTheme($id_theme);
+    if(function_exists('TPortalHookLoadTheme')) {
+	    TPortalHookLoadTheme($id_theme);
+    }
 	// end TinyPortal]]></add>
 		</operation>				
 	</file>
