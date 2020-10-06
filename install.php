@@ -248,8 +248,6 @@ $tables = array(
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'sticky', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
-            array('name' => 'sticky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'edit', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(

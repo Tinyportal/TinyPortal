@@ -88,14 +88,14 @@ function template_tpshout_admin()
 	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts) {
 				echo '
 					<div style="border-bottom:1px solid #ccc;">
-						<div class="fullwidth-on-res-layout float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '" style="width:30%;">
+						<div class="fullwidth-on-res-layout float-items" style="width:30%;">
 							'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
 							'. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
 						</div>
-						<div class="float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '">
+						<div class="float-items">
 							<textarea style="vertical-align: middle; width: 99%;" rows="5" cols="40" wrap="auto" name="tp_shoutbox_item'.$admin_shouts['id'].'">' .html_entity_decode($admin_shouts['body']).'</textarea>
 						</div>
-						<div class="float-items ' ,  !empty($admin_shouts['sticky']) ? 'windowbg2' : '' , '">
+						<div class="float-items">
 							<input type="hidden" name="tp_shoutbox_hidden'.$admin_shouts['id'].'" value="1">
 							<div style="text-align: right;"><strong><input type="checkbox" name="tp_shoutbox_remove'.$admin_shouts['id'].'" value="ON" style="vertical-align: middle;"> '.$txt['tp-remove'].'</strong></div>
 					   </div>

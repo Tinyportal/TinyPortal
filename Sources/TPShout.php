@@ -342,43 +342,12 @@ function tpshout_admin()
 				);
 				$go = 2;
 			}
-			elseif(substr($what, 0, 18) == 'tp_shoutbox_hidden') {
-				$val = substr($what, 18);
-				if(!empty($_POST['tp_shoutbox_sticky'.$val])) {
-					$value = '1';
-                }
-				else {
-					$value = '';
-                }
-
-				if(!empty($_POST['tp_shoutbox_sticky_layout'.$val]) && is_numeric($_POST['tp_shoutbox_sticky_layout'.$val])) {
-					$svalue = $_POST['tp_shoutbox_sticky_layout'.$val];
-                }
-				else {
-					$svalue = '0';
-                }
-
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_shoutbox
-					SET sticky_layout = "' . $svalue . '"
-					WHERE id = {int:shout}',
-					array('shout' => $val)
-				);
-				$go = 2;
-			}
 			elseif($what == 'tp_shoutsdelall' && $value == 'ON') {
 				$smcFunc['db_query']('', '
 					DELETE FROM {db_prefix}tp_shoutbox
 					WHERE type = {string:type}',
 					array('type' => 'shoutbox')
 				);
-				$go = 2;
-			}
-			elseif($what == 'tp_shoutsunstickall' && $value == 'ON') {
-				$smcFunc['db_query']('', '
-					UPDATE {db_prefix}tp_shoutbox
-					SET sticky_layout = "0"
-					WHERE 1');
 				$go = 2;
 			}
 			elseif(substr($what, 0, 16) == 'tp_shoutbox_item') {
@@ -517,9 +486,8 @@ function tpshout_admin()
 		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND member_id = {int:val5}
-			AND sticky = {int:val7}',
-			array('type' => 'shoutbox', 'val5' => $memID, 'val7' => 0)
+			AND member_id = {int:val5}',
+			array('type' => 'shoutbox', 'val5' => $memID)
 		);
 		$weh = $smcFunc['db_fetch_row']($shouts);
 		$smcFunc['db_free_result']($shouts);
@@ -530,18 +498,16 @@ function tpshout_admin()
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
 			AND member_id = {int:val5}
-			AND sticky = {int:val7}
 			ORDER BY time DESC LIMIT {int:start},10',
-			array('type' => 'shoutbox', 'val5'=> $memID, 'val7' => 0, 'start' => $tpstart)
+			array('type' => 'shoutbox', 'val5'=> $memID, 'start' => $tpstart)
 		);
 	}
 	elseif(isset($ip)) {
 		$shouts =  $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND member_ip = {string:val4}
-			AND sticky = {int:val7}',
-			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0)
+			AND member_ip = {string:val4}',
+			array('type' => 'shoutbox', 'val4' => $ip)
 		);
 		$weh = $smcFunc['db_fetch_row']($shouts);
 		$smcFunc['db_free_result']($shouts);
@@ -552,9 +518,8 @@ function tpshout_admin()
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
 			AND member_ip = {string:val4}
-			AND sticky = {int:val7}
 			ORDER BY time DESC LIMIT {int:start}, 10',
-			array('type' => 'shoutbox', 'val4' => $ip, 'val7' => 0, 'start' => $tpstart)
+			array('type' => 'shoutbox', 'val4' => $ip, 'start' => $tpstart)
 		);
 	}
 	elseif(isset($single)) {
@@ -564,17 +529,15 @@ function tpshout_admin()
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND sticky = {int:val7}
 			AND id = {int:shout}',
-			array('type' => 'shoutbox', 'val7' => 0, 'shout' => $single)
+			array('type' => 'shoutbox', 'shout' => $single)
 		);
 	}
 	else {
 		$shouts = $smcFunc['db_query']('', '
 			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
-			WHERE type = {string:type}
-			AND sticky = {int:val7}',
-			array('type' => 'shoutbox', 'val7' => 0)
+			WHERE type = {string:type}',
+			array('type' => 'shoutbox')
 		);
 		$weh = $smcFunc['db_fetch_row']($shouts);
 		$smcFunc['db_free_result']($shouts);
@@ -584,9 +547,8 @@ function tpshout_admin()
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			AND sticky = {int:val7}
 			ORDER BY time DESC LIMIT 10 OFFSET {int:start}',
-			array('type' => 'shoutbox', 'val7' => 0, 'start' => $tpstart)
+			array('type' => 'shoutbox', 'start' => $tpstart)
 		);
 	}
 
@@ -601,8 +563,6 @@ function tpshout_admin()
 				'ip' => $row['member_ip'],
 				'ID_MEMBER' => $row['member_id'],
 				'sort_member' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
-				'sticky' => $row['sticky'],
-				'sticky_layout' => $row['sticky_layout'],
 				'sort_ip' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
 				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpshout;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
 			);
@@ -699,9 +659,8 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	$request =  $smcFunc['db_query']('', '
 		SELECT s.*
 			FROM {db_prefix}tp_shoutbox as s
-		WHERE s.sticky = {int:val7}
 		ORDER BY s.time DESC LIMIT {int:limit}',
-		array('val7' => 0, 'limit' => $limit)
+		array('limit' => $limit)
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0 ) {
