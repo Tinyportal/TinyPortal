@@ -79,50 +79,21 @@ class Admin extends Base {
 
     }}}
 
-   public function insertSetting($setting_data) {{{
-        $insert_data = array();
-        foreach(array_keys($setting_data) as $key) {
-            $insert_data[$key] = $this->dBStructure[$key];
-        }
+   public function insertSetting($settings_data) {{{
 
-        $this->dB->db_insert('INSERT',
-            '{db_prefix}tp_settings',
-            $insert_data,
-            array_values($settings_data),
-            array ('id')
-        );
-			
-        return $this->dB->db_insert_id('{db_prefix}tp_settings', 'id');
+        return self::insertSQL($settings_data, $this->dBStructure, 'tp_settings');
 
     }}}
 
-     public function updateSetting($setting_id, $setting_data) {{{
+     public function updateSetting($settings_id, $settings_data) {{{
 
-        $update_data = $setting_data;
-        array_walk($update_data, function(&$update_data, $key) {
-                $update_data = $key.' = {'.$this->dBStructure[$key].':'.$key.'}';
-            }
-        );
-        $update_query = implode(', ', array_values($update_data));
-        $block_data['id'] = (int)$setting_id;
-        $this->dB->db_query('', '
-            UPDATE {db_prefix}tp_settings
-            SET '.$update_query.'
-            WHERE id = {int:setting_id}',
-            $setting_data
-        );
+        return self::updateSQL($settings_id, $settings_data, $this->dBStructure, 'tp_settings');
 
     }}}
 
-    public function deleteSetting( $setting_id ) {{{
+    public function deleteSetting( $settings_id ) {{{
 
-        $this->dB->db_query('', '
-            DELETE FROM {db_prefix}tp_settings
-            WHERE id = {int:setting_id}',
-            array (
-                'setting_id' => $setting_id
-            )
-        );
+        return self::deleteSQL($settings_id, 'tp_settings');
 
     }}}
 

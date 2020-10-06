@@ -163,109 +163,25 @@ class Block extends Base {
 
     public function getBlockData( $columns, $where ) {{{
 
-        $values = null;
-
-        if(empty($columns)) {
-            return $values;
-        }
-        elseif(is_array($columns)) {
-            foreach($columns as $column) {
-                if(!array_key_exists($column, $this->dBStructure)) {
-                    return $values;
-                }
-            }
-            $columns = implode(',', $columns);
-        }
-        else {
-            if(!array_key_exists($columns, $this->dBStructure)) {
-                return $values;
-            }
-        }
-
-        if(empty($where)) {
-            $where      = '1=1';
-        }
-        elseif(is_array($where)) {
-            $where_data = array();
-            foreach($where as $key => $value) {
-                if(array_key_exists($key, $this->dBStructure)) {
-                    $where_data[] = $key.' = '.$value;
-                }
-                elseif(strpos($key, '!') === 0) {
-                    $where_data[] = substr($key, strpos($key, '!') + 1).' != '.$value; 
-                }
-            }
-            $where = implode(' AND ', array_values($where_data));
-        }
-        else {
-            return $values;
-        }
-
-        $request =  $this->dB->db_query('', '
-            SELECT {raw:columns}
-            FROM {db_prefix}tp_blocks
-            WHERE {raw:where}',
-            array (
-                'columns'       => $columns,
-                'where'         => $where,
-            )
-        );
-
-        if($this->dB->db_num_rows($request) > 0) {
-            while ( $value = $this->dB->db_fetch_assoc($request) ) {
-                $values[] = $value;
-            }
-        }
-
-        return $values;
+        return self::getSQLData($columns, $where, $this->dBStructure, 'tp_blocks');
 
     }}}
 
    public function insertBlock($block_data) {{{
-        $insert_data = array();
-        foreach(array_keys($block_data) as $key) {
-            $insert_data[$key] = $this->dBStructure[$key];
-        }
 
-        $this->dB->db_insert('INSERT',
-            '{db_prefix}tp_blocks',
-            $insert_data,
-            array_values($block_data),
-            array ('id')
-        );
-			
-        return $this->dB->db_insert_id('{db_prefix}tp_blocks', 'id');
+        return self::insertSQL($block_data, $this->dBStructure, 'tp_blocks');
 
     }}}
 
      public function updateBlock($block_id, $block_data) {{{
 
-        $update_data = $block_data;
-        array_walk($update_data, function(&$update_data, $key) {
-                $update_data = $key.' = {'.$this->dBStructure[$key].':'.$key.'}';
-            }
-        );
-        $update_query = implode(', ', array_values($update_data));
-
-        $block_data['block_id'] = (int)$block_id;
-        $this->dB->db_query('', '
-            UPDATE {db_prefix}tp_blocks
-            SET '.$update_query.'
-            WHERE id = {int:block_id}',
-            $block_data
-        );
+        return self::updateSQL($block_id, $block_data, $this->dBStructure, 'tp_blocks');
 
     }}}
 
     public function deleteBlock( $block_id ) {{{
 
-        $this->dB->db_query('', '
-            DELETE FROM {db_prefix}tp_blocks
-            WHERE id = {int:block_id}',
-            array (
-                'block_id' => $block_id
-            )
-        );
+        return self::deleteSQL($block_id, 'tp_blocks');
 
     }}}
 

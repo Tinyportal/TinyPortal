@@ -114,109 +114,25 @@ class Shout extends Base {
 
     public function getShoutData( $columns, $where ) {{{
 
-        $values = null;
-
-        if(empty($columns)) {
-            return $values;
-        }
-        elseif(is_array($columns)) {
-            foreach($columns as $column) {
-                if(!array_key_exists($column, $this->dBStructure)) {
-                    return $values;
-                }
-            }
-            $columns = implode(',', $columns);
-        }
-        else {
-            if(!array_key_exists($columns, $this->dBStructure)) {
-                return $values;
-            }
-        }
-
-        if(empty($where)) {
-            $where      = '1=1';
-        }
-        elseif(is_array($where)) {
-            $where_data = array();
-            foreach($where as $key => $value) {
-                if(array_key_exists($key, $this->dBStructure)) {
-                    $where_data[] = $key.' = '.$value;
-                }
-                elseif(strpos($key, '!') === 0) {
-                    $where_data[] = substr($key, strpos($key, '!') + 1).' != '.$value; 
-                }
-            }
-            $where = implode(' AND ', array_values($where_data));
-        }
-        else {
-            return $values;
-        }
-
-        $request =  $this->dB->db_query('', '
-            SELECT {raw:columns}
-            FROM {db_prefix}tp_shoutbox
-            WHERE {raw:where}',
-            array (
-                'columns'       => $columns,
-                'where'         => $where,
-            )
-        );
-
-        if($this->dB->db_num_rows($request) > 0) {
-            while ( $value = $this->dB->db_fetch_assoc($request) ) {
-                $values[] = $value;
-            }
-        }
-
-        return $values;
+        return self::getSQLData($columns, $where, $this->dBStructure, 'tp_shoutbox');
 
     }}}
 
    public function insertShout($shout_data) {{{
-        $insert_data = array();
-        foreach(array_keys($shout_data) as $key) {
-            $insert_data[$key] = $this->dBStructure[$key];
-        }
 
-        $this->dB->db_insert('INSERT',
-            '{db_prefix}tp_shoutbox',
-            $insert_data,
-            array_values($shout_data),
-            array ('id')
-        );
-			
-        return $this->dB->db_insert_id('{db_prefix}tp_shoutbox', 'id');
+        return self::insertSQL($shout_data, $this->dBStructure, 'tp_shoutbox');
 
     }}}
 
      public function updateShout($shout_id, $shout_data) {{{
 
-        $update_data = $shout_data;
-        array_walk($update_data, function(&$update_data, $key) {
-                $update_data = $key.' = {'.$this->dBStructure[$key].':'.$key.'}';
-            }
-        );
-        $update_query = implode(', ', array_values($update_data));
-
-        $shout_data['shout_id'] = (int)$shout_id;
-        $this->dB->db_query('', '
-            UPDATE {db_prefix}tp_shoutbox
-            SET '.$update_query.'
-            WHERE id = {int:shout_id}',
-            $shout_data
-        );
+        return self::updateSQL($shout_id, $shout_data, $this->dBStructure, 'tp_shoutbox');
 
     }}}
 
     public function deleteShout( $shout_id ) {{{
 
-        $this->dB->db_query('', '
-            DELETE FROM {db_prefix}tp_shoutbox
-            WHERE id = {int:shout_id}',
-            array (
-                'shout_id' => $shout_id
-            )
-        );
+        return self::deleteSQL($shout_id, 'tp_shoutbox');
 
     }}}
 
