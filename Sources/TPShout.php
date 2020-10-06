@@ -1158,10 +1158,10 @@ function TPShoutAdmin() {{{
 
 	// on settings screen?
 	if(isset($_GET['settings'])) {
-		$context['sub_template'] = 'TPShoutAdmin_settings';
+		$context['sub_template'] = 'tpshout_admin_settings';
     }
 	else {
-		$context['sub_template'] = 'TPShoutAdmin';
+		$context['sub_template'] = 'tpshout_admin';
     }
 
 	$context['page_title'] = 'Shoutbox admin';
