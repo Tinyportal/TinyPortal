@@ -249,8 +249,6 @@ $tables = array(
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'sticky', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
-            array('name' => 'sticky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'edit', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(
@@ -887,10 +885,13 @@ function updateShoutbox()
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value3', array( 'name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value4', array( 'name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value5', array( 'name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => '-2' ));
-    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value7', array( 'name' => 'sticky', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
-    $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value8', array( 'name' => 'sticky_layout', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
-    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
     $smcFunc['db_add_column']('{db_prefix}tp_shoutbox', array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null ));
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value7');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value8');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sticky');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sticky_layout');
+
 	$render .= '<li>Updated old columns in shoutbox table</li>';
 }
 
