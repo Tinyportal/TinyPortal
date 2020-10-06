@@ -291,49 +291,22 @@ class Article extends Base
 
     }}}
 
-    public function updateArticle($article_id, $article_data) {{{
+   public function insertArticle($article_data) {{{
 
-        $update_data = $article_data;
-        array_walk($update_data, function(&$update_data, $key) {
-                $update_data = $key.' = {'.$this->dBStructure[$key].':'.$key.'}';
-            }
-        );
-        $update_query = implode(', ', array_values($update_data));
-        $article_data['article_id'] = (int)$article_id;
-        $this->dB->db_query('', '
-            UPDATE {db_prefix}tp_articles
-            SET '.$update_query.'
-            WHERE id = {int:article_id}',
-            $article_data
-        );
+        return self::insertSQL($article_data, $this->dBStructure, 'tp_articles');
 
     }}}
 
-    public function insertArticle($article_data) {{{
-        $insert_data = array();
-        foreach(array_keys($article_data) as $key) {
-            $insert_data[$key] = $this->dBStructure[$key];
-        }
+     public function updateArticle($article_id, $article_data) {{{
 
-        $this->dB->db_insert('INSERT',
-            '{db_prefix}tp_articles',
-            $insert_data,
-            array_values($article_data),
-            array ('id')
-        );
-			
-        return $this->dB->db_insert_id('{db_prefix}tp_articles', 'id');
+        return self::updateSQL($article_id, $article_data, $this->dBStructure, 'tp_articles');
 
     }}}
 
-    public function deleteArticle($article_id) {{{
-			$this->dB->db_query('', '
-				DELETE FROM {db_prefix}tp_articles
-				WHERE id = {int:article_id}',
-				array (
-                    'article_id' => $article_id
-                )
-			);
+    public function deleteArticle( $article_id ) {{{
+
+        return self::deleteSQL($article_id, 'tp_articles');
+
     }}}
 
     public function toggleColumnArticle($article_id, $column) {{{
