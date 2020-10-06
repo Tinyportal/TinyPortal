@@ -135,7 +135,7 @@ function template_settings()
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
-		<input type="hidden" "name="tpadmin_form" value="settings">
+		<input type="hidden" name="tpadmin_form" value="settings">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpsettings'] , '</div><div></div>
