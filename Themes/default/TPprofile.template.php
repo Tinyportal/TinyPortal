@@ -29,7 +29,7 @@ function template_tp_summary()
 	echo '
 	<div></div>
 	<div class="cat_bar"><h3 class="catbg">'.$txt['tpsummary'].'</h3></div>
-	<div id="tp_summary" class="windowbg padding-div">
+	<div id="tp_summary" class="'. (!TP_SMF21 ? 'windowbg padding-div' : 'roundframe') . '">
 		<div>
 			<div class="float-items" style="width:38%;">'.$txt['tp-prof_allarticles'].'</div>
 			<div class="float-items" style="width:58%;font-weight: bold;">'.$context['TPortal']['tpsummary']['articles'].'</div>
@@ -53,7 +53,7 @@ function template_tp_articles()
 		echo '
 	<div>
 		<div></div>
-		<div id="tp_profile_articles" class="windowbg padding-div" >
+		<div id="tp_profile_articles" class="'. (!TP_SMF21 ? 'windowbg padding-div' : 'roundframe') . '" >
 			<div class="windowbg addborder tp_pad">';
 
 		echo $txt['tp-prof_allarticles']. ' <b>'.$context['TPortal']['all_articles'].'</b><br>';
@@ -165,28 +165,29 @@ $clickme.click( function(e) {
 // Articles Settings Page
 	elseif($context['TPortal']['profile_action'] == 'settings') {
 		echo '
-	<div id="tp_profile_articles_settings" class="bordercolor windowbg padding-div">
-		<div class="font-strong padding-div">
-			'.$txt['tp-dlsettings'].'
-		</div>
-			<div class="padding-div">
-				<form name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=savesettings" method="post">
-					<input type="hidden" name="sc" value="', $context['session_id'], '" />
-					<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
-					<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />
-                ';
+	<div id="tp_profile_articles_settings" class="bordercolor '. (!TP_SMF21 ? 'windowbg padding-div' : 'roundframe') . '">
+		<div class="padding-div">
+			<form name="TPadmin3" action="' . $scripturl . '?action=tportal;sa=savesettings" method="post">
+				<input type="hidden" name="sc" value="', $context['session_id'], '" />
+				<input type="hidden" name="memberid" value="', $context['TPortal']['selected_member'], '" />
+				<input type="hidden" name="item" value="', $context['TPortal']['selected_member_choice_id'], '" />';
 
-		    if(!empty($context['TPortal']['allow_wysiwyg']) && ($user_info['id'] == $context['TPortal']['selected_member'])) {
+		    if((!empty($context['TPortal']['allow_wysiwyg']) && ($user_info['id'] == $context['TPortal']['selected_member'])) || allowedTo('profile_view_any')) {
 			    echo '<div>
 					<dl class="settings">
-						<dt>'.$txt['tp-wysiwygchoice'].':
+						<dt><strong>'.$txt['tp-wysiwygchoice'].':</strong>
 						</dt>
-						<dd>
+						<dd><fieldset>
 							<input type="radio" name="tpwysiwyg" value="2" ' , $context['TPortal']['selected_member_choice'] =='2' ? 'checked' : '' , '> '.$txt['tp-yes'].'<br>
 							<input type="radio" name="tpwysiwyg" value="0" ' , ($context['TPortal']['selected_member_choice'] =='0' || $context['TPortal']['selected_member_choice'] == '1') ? 'checked' : '' , '> '.$txt['tp-no'].'<br>
-							</dd>
-					</dl>
-						<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>
+							</fieldset>
+						</dd>
+					</dl>';
+			if(($user_info['id'] == $context['TPortal']['selected_member']) || allowedTo('admin_forum')) {
+				echo '
+						<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-send'].'" name="send"></div>';
+			}
+			echo '
 				</div>';
             }
 			echo '
@@ -206,7 +207,7 @@ function template_tp_download()
 		<div></div>
 		<div class="cat_bar"><h3 class="catbg">'.$txt['downloadsprofile'].'</h3></div>
 		<p class="information">'.$txt['downloadsprofile2'].'</p>
-		<div id="tp_profile_uploaded" class="windowbg padding-div">
+		<div id="tp_profile_uploaded" class="'. (!TP_SMF21 ? 'windowbg padding-div' : 'roundframe') . '">
 			<div class="windowbg addborder tp_pad">';
 
 	echo $txt['tp-prof_alldownloads'].' <b>'.$context['TPortal']['all_downloads'].'</b><br>';
