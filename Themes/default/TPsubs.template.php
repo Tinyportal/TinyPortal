@@ -535,7 +535,7 @@ function TPortal_themebox()
 }
 
 // blocktype 8: TP Shoutbox
-function TPortal_shoutbox($block['var2'])
+function TPortal_shoutbox($blockid)
 {
 	global $context;
 
@@ -543,7 +543,7 @@ function TPortal_shoutbox($block['var2'])
 	if(!empty($context['TPortal']['moduleid'])) {
 		$tpm = $context['TPortal']['moduleid'];
 		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
-			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $block['var2']);
+			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $blockid);
         }
 	}
 }
