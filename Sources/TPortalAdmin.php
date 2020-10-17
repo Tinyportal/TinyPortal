@@ -2350,6 +2350,11 @@ function do_postchecks()
 				$body = tp_convertphp($od['code']);
 				$type = 10;
 			}
+			$defblocks = array("18", "19");
+			if(in_array($type , $defblocks))
+			{
+				$body = '0';
+			}
 			else
 				$body = '';
 
