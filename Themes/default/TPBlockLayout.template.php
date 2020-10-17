@@ -346,6 +346,12 @@ function template_editblock()
 							<input type="number" id="tp_block_var2" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" style="width: 6em" min="0" max="9" step="1">
 						</dd>
 						<dt>
+							<label for="tp_block_var4">'.$txt['tp-shoutboxheight'].'</label>
+						</dt>
+						<dd>
+							<input type="number" id="tp_block_var4" name="tp_block_var4" value="' ,$context['TPortal']['blockedit']['var4'], '" size="6" /><br>
+						</dd>
+						<dt>
 							'.$txt['shoutbox_layout'].'<br>
 						</dt>
 						<dd>
@@ -355,12 +361,6 @@ function template_editblock()
 							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></label></div></div>
 							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4" /></label></div></div>
 							<p class="clearthefloat"></p>
-						</dd>
-						<dt>
-							<label for="tp_block_var4">'.$txt['tp-shoutboxheight'].'</label>
-						</dt>
-						<dd>
-							<input type="number" id="tp_block_var4" name="tp_block_var4" value="' ,$context['TPortal']['blockedit']['var4'], '" size="6" /><br>
 						</dd>
 					</dl>'; 
                 }
@@ -498,7 +498,8 @@ function template_editblock()
 					<hr><dl class="tptitle settings">
 						<dt>',$txt['tp-showarticle'],'</dt>
 						<dd>
-							<select name="tp_block_body">';
+							<select name="tp_block_body">
+							<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['edit_articles'] as $art => $article ){
 					echo '<option value="'.$article['id'].'" ' , $context['TPortal']['blockedit']['body']==$article['id'] ? ' selected="selected"' : '' ,' >'.html_entity_decode($article['subject']).'</option>';
 				}
@@ -554,7 +555,8 @@ function template_editblock()
 					<hr><dl class="tptitle settings">
 						<dt><label for="tp_block_body">'.$txt['tp-showcategory'].'</label></dt>
 						<dd>
-							<select name="tp_block_body" id="tp_block_body">';
+							<select name="tp_block_body" id="tp_block_body">
+							<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['catnames'] as $cat => $catname){
 					echo '
 								<option value="'.$cat.'" ' , $context['TPortal']['blockedit']['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($catname).'</option>';

@@ -2057,7 +2057,8 @@ function template_blocks()
 					<td class="blocks">
 						<div>
 							<div class="padding-div tpcenter">
-								<select name="blockbody' .$lblock['id']. '">';
+								<select name="blockbody' .$lblock['id']. '">
+								<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['edit_articles'] as $article){
 					echo '
 									<option value="'.$article['id'].'" ' ,$lblock['body']==$article['id'] ? ' selected' : '' ,' >'. html_entity_decode($article['subject'],ENT_QUOTES).'</option>';
@@ -2079,7 +2080,8 @@ function template_blocks()
 					<td class="blocks">
 						<div>
 							<div class="padding-div tpcenter">
-								<select name="blockbody' .$lblock['id']. '">';
+								<select name="blockbody' .$lblock['id']. '">
+								<option value="0">'.$txt['tp-none2'].'</option>';
 					if(isset($context['TPortal']['catnames']) && count($context['TPortal']['catnames'])>0)
 					{
 						foreach($context['TPortal']['catnames'] as $cat => $val)
