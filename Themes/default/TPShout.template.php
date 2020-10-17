@@ -90,10 +90,10 @@ function template_tpshout_admin()
 					<div style="border-bottom:1px solid #ccc;">
 						<div class="fullwidth-on-res-layout float-items" style="width:30%;">
 							'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
-							'. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
+							'.$admin_shouts['sort_shoutbox_id'].'&nbsp;('.$admin_shouts['shoutbox_id'].') <br> '. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
 						</div>
 						<div class="float-items">
-							<textarea style="vertical-align: middle; width: 99%;" rows="5" cols="40" wrap="auto" name="tp_shoutbox_item'.$admin_shouts['id'].'">' .html_entity_decode($admin_shouts['body']).'</textarea>
+							<textarea name="tp_shoutbox_item'.$admin_shouts['id'].'" style="vertical-align: middle; width: 99%;" rows="5" cols="40" wrap="auto">' .html_entity_decode($admin_shouts['body']).'</textarea>
 						</div>
 						<div class="float-items">
 							<input type="hidden" name="tp_shoutbox_hidden'.$admin_shouts['id'].'" value="1">
@@ -188,7 +188,8 @@ function template_tpshout_admin_settings()
 						</dd>
 					</dl>
 					<hr>
-					<dl class="settings">
+					<dl class="settings">';
+/*
 						<dt>
 						'.$txt['shoutbox_layout'].'<br>
 						</dt>
@@ -208,7 +209,8 @@ function template_tpshout_admin_settings()
 						</dt>
 						<dd>
 							<input type="number" id="tp_shoutbox_height" name="tp_shoutbox_height" value="' ,$context['TPortal']['shoutbox_height'], '" size="6" /><br>
-						</dd>
+						</dd>*/
+					echo '
 						<dt>
 							<label for="tp_shoutbox_limit">'.$txt['tp-shoutboxlimit'].'</label>
 						</dt>

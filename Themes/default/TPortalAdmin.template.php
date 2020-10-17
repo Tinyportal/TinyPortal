@@ -2109,7 +2109,7 @@ function template_blocks()
 	</form>';
 }
 
-// Add block Page
+// Add Block Page
 function template_addblock()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
@@ -2149,7 +2149,6 @@ function template_addblock()
 						<dt><h3>' , $txt['tp-chooseblock'] , '</h3></dt>
 						<dd>
 							<div class="tp_largelist2">
-								<input type="radio" id="tp_addblock8" name="tp_addblock" value="18" checked /><label for="tp_addblock8">' . $txt['tp-blocktype8'] . '</label><br>
 								<input type="radio" id="tp_addblock18" name="tp_addblock" value="18" checked /><label for="tp_addblock18">' . $txt['tp-blocktype18'] . '</label><br>
 								<input type="radio" id="tp_addblock19" name="tp_addblock" value="19" /><label for="tp_addblock19">' . $txt['tp-blocktype19'] . '</label><br>
 								<input type="radio" id="tp_addblock14" name="tp_addblock" value="14" /><label for="tp_addblock14">' . $txt['tp-blocktype14'] . '</label><br>
@@ -2162,6 +2161,7 @@ function template_addblock()
 								<input type="radio" id="tp_addblock12" name="tp_addblock" value="12" /><label for="tp_addblock12">' . $txt['tp-blocktype12'] . '</label><br>
 								<input type="radio" id="tp_addblock15" name="tp_addblock" value="15" /><label for="tp_addblock15">' . $txt['tp-blocktype15'] . '</label><br>
 								<input type="radio" id="tp_addblock4" name="tp_addblock" value="4" /><label for="tp_addblock4">' . $txt['tp-blocktype4'] . '</label><br>
+								<input type="radio" id="tp_addblock8" name="tp_addblock" value="8" /><label for="tp_addblock8">' . $txt['tp-blocktype8'] . '</label><br>
 								<input type="radio" id="tp_addblock16" name="tp_addblock" value="16" /><label for="tp_addblock16">' . $txt['tp-blocktype16'] . '</label><br>
 								<input type="radio" id="tp_addblock13" name="tp_addblock" value="13" /><label for="tp_addblock13">' . $txt['tp-blocktype13'] . '</label><br>
 								<input type="radio" id="tp_addblock3" name="tp_addblock" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>

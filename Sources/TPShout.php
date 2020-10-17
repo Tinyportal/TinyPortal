@@ -1044,6 +1044,11 @@ function TPShoutAdmin() {{{
 		$ip = $_GET['ip'];
     }
 
+	// check that a Shoutbox ID has been filtered
+	if(isset($_GET['shoutbox_id'])) {
+		$shoutbox_id = $_GET['shoutbox_id'];
+    }
+
 	if(isset($_GET['s'])) {
 		$single = $_GET['s'];
     }
@@ -1061,7 +1066,7 @@ function TPShoutAdmin() {{{
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$member_id.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;u='.$member_id, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$member_id.' ' .$txt['tp-filtered'] . ' (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;u='.$member_id, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -1088,6 +1093,26 @@ function TPShoutAdmin() {{{
 			AND member_ip = {string:val4}
 			ORDER BY time DESC LIMIT {int:start}, 10',
 			array('type' => 'shoutbox', 'val4' => $ip, 'start' => $tpstart)
+		);
+	}
+	elseif(isset($shoutbox_id)) {
+		$shouts =  $smcFunc['db_query']('', '
+			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
+			WHERE type = {string:type}
+			AND shoutbox_id = {string:val4}',
+			array('type' => 'shoutbox', 'val4' => $shoutbox_id)
+		);
+		$weh = $smcFunc['db_fetch_row']($shouts);
+		$smcFunc['db_free_result']($shouts);
+		$allshouts = $weh[0];
+		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
+		$context['TPortal']['shoutbox_pageindex'] = 'Shoutbox_ID '.$shoutbox_id.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;shoutbox_id='.urlencode($shoutbox_id) , $tpstart, $allshouts, 10,true);
+		$request =  $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_shoutbox
+			WHERE type = {string:type}
+			AND shoutbox_id = {string:val4}
+			ORDER BY time DESC LIMIT {int:start}, 10',
+			array('type' => 'shoutbox', 'val4' => $shoutbox_id, 'start' => $tpstart)
 		);
 	}
 	elseif(isset($single)) {
@@ -1132,7 +1157,9 @@ function TPShoutAdmin() {{{
 				'id_member' => $row['member_id'],
 				'sort_member' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
 				'sort_ip' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
+				'sort_shoutbox_id' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;shoutbox_id='.$row['shoutbox_id'].'">'.$txt['tp-allshoutsbyid'].'</a>',
 				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpshout;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
+				'shoutbox_id' => $row['shoutbox_id'],
 			);
 		}
 		$smcFunc['db_free_result']($request);
