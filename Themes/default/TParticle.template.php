@@ -446,98 +446,18 @@ function template_submitarticle()
 								</dd>
 							</dl>
 							<div class="font-strong">' . $txt['tp-details'] . '</div>
-							<dl class="tptitle settings">
-								<dt>
-									<label for="tp_article_options_'.$opts[4].'">', $txt['tp-articleoptions4'], '</label><br>
+							<dl class="tptitle settings">';
+                                $articleOption = array ( 4, 2, 13, 3, 1, 17, 19, 18, 21, 23, 12, 15, 14);
+                                foreach($articleOption as $k) {
+                                	echo '
+                                <dt>
+									<label for="tp_article_options_'.$opts[$k].'">', $txt['tp-articleoptions'.$k], '</label><br>
 								</dt>
 								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[4].'" name="tp_article_options_'.$opts[4].'" value="'.$mg['id'].'" ' , isset($options[$opts[4]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[2].'">', $txt['tp-articleoptions2'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[2].'" name="tp_article_options_'.$opts[2].'" value="'.$mg['id'].'" ' , isset($options[$opts[2]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[13].'">', $txt['tp-articleoptions13'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[13].'" name="tp_article_options_'.$opts[13].'" value="'.$mg['id'].'" ' , isset($options[$opts[13]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[3].'">', $txt['tp-articleoptions3'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[3].'" name="tp_article_options_'.$opts[3].'" value="'.$mg['id'].'" ' , isset($options[$opts[3]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[1].'">', $txt['tp-articleoptions1'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[1].'" name="tp_article_options_'.$opts[1].'" value="'.$mg['id'].'" ' , isset($options[$opts[1]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[17].'">', $txt['tp-articleoptions17'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[17].'" name="tp_article_options_'.$opts[17].'" value="'.$mg['id'].'" ' , isset($options[$opts[17]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[19].'">', $txt['tp-articleoptions19'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[19].'" name="tp_article_options_'.$opts[19].'" value="'.$mg['id'].'" ' , isset($options[$opts[19]]) ? 'checked' : '' , '><br>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[18].'">', $txt['tp-articleoptions18'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[18].'" name="tp_article_options_'.$opts[18].'" value="'.$mg['id'].'" ' , isset($options[$opts[18]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[21].'">', $txt['tp-articleoptions21'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[21].'" name="tp_article_options_'.$opts[21].'" value="'.$mg['id'].'" ' , isset($options[$opts[21]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[23].'">', $txt['tp-showsociallinks'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[23].'" name="tp_article_options_'.$opts[23].'" value="'.$mg['id'].'" ' , isset($options[$opts[23]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[12].'">', $txt['tp-articleoptions12'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[12].'" name="tp_article_options_'.$opts[12].'" value="'.$mg['id'].'" ' , isset($options[$opts[12]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[15].'">', $txt['tp-articleoptions15'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[15].'" name="tp_article_options_'.$opts[15].'" value="'.$mg['id'].'" ' , isset($options[$opts[15]]) ? 'checked' : '' , '>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[14].'">', $txt['tp-articleoptions14'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[14].'" name="tp_article_options_'.$opts[14].'" value="'.$mg['id'].'" ' , isset($options[$opts[14]]) ? 'checked' : '' , '>
+									<input type="checkbox" id="tp_article_options_'.$opts[$k].'" name="tp_article_options_'.$opts[$k].'" value="'.$mg['id'].'" ' , isset($options[$opts[$k]]) ? 'checked' : '' , '>
 								</dd>';
-								/*<dt>
-									<label for="tp_article_options_'.$opts[16].'">', $txt['tp-articleoptions16'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[16].'" name="tp_article_options_'.$opts[16].'" value="'.$mg['id'].'" ' , isset($options[$opts[16]]) ? 'checked' : '' , '>
-								</dd>							
-								<dt>
-									<label for="tp_article_options_'.$opts[5].'">', $txt['tp-articleoptions5'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[5].'" name="tp_article_options_'.$opts[5].'" value="'.$mg['id'].'" ' , isset($options[$opts[5]]) ? 'checked' : '' , '>
-								</dd>*/
-					echo '	</dl>
+                                }
+                           	echo '	</dl>
 								<div class="font-strong">' . $txt['tp-panels'] . '</div>
 							<dl class="tptitle settings">
 								<dt>

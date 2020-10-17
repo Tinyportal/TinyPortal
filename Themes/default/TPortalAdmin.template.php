@@ -1607,34 +1607,34 @@ function template_panels()
 	$allpanels = array('left','right','top','center','front','lower','bottom');
 	$alternate = true;
 
-	if(function_exists('ctheme_tp_getblockstyles'))
-		$types = ctheme_tp_getblockstyles();
-	if(TP_SMF21)
+	if(TP_SMF21) {
 		$types = tp_getblockstyles21();
-	else
+    }
+	else {
 		$types = tp_getblockstyles();
+    }
 
-	foreach($allpanels as $pa => $panl)
-	{
+	foreach($allpanels as $pa => $panl) {
 		echo '
 				<div id="panels-options" class="padding-div">
 				<hr>
 				<dl class="settings">
 				<dt>
 					<div class="font-strong">';
-		if($panl!='front')
+		if( $panl != 'front' ) {
 			echo $txt['tp-'.$panl.'panel'].'</div></dt>
 				<dd>
 					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" /></dd>';
-		else
+        }
+		else {
 			echo $txt['tp-'.$panl.'panel'].'</div></dt>
 					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" /></dd>';
+        }
 		echo '
 					<br>
 				</dl>
 				<dl class="settings">';
-		if($panl!='front')
-		{
+		if( $panl != 'front' ) {
 			if(in_array($panl, array("left","right")))
 				echo '
 					<dt>
@@ -1869,11 +1869,6 @@ function template_blocks()
 								<option value="7"' ,$lblock['type']=='themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
 								<option value="20"' ,$lblock['type']=='modulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
-			// theme hooks
-			if(function_exists('ctheme_tp_blocks'))
-			{
-				ctheme_tp_blocks('listblocktypes2', $lblock['type']);
-			}
 				echo '	</select>
 						</div>
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
@@ -2057,7 +2052,8 @@ function template_blocks()
 					<td class="blocks">
 						<div>
 							<div class="padding-div tpcenter">
-								<select name="blockbody' .$lblock['id']. '">';
+								<select name="blockbody' .$lblock['id']. '">
+								<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['edit_articles'] as $article){
 					echo '
 									<option value="'.$article['id'].'" ' ,$lblock['body']==$article['id'] ? ' selected' : '' ,' >'. html_entity_decode($article['subject'],ENT_QUOTES).'</option>';
@@ -2079,7 +2075,8 @@ function template_blocks()
 					<td class="blocks">
 						<div>
 							<div class="padding-div tpcenter">
-								<select name="blockbody' .$lblock['id']. '">';
+								<select name="blockbody' .$lblock['id']. '">
+								<option value="0">'.$txt['tp-none2'].'</option>';
 					if(isset($context['TPortal']['catnames']) && count($context['TPortal']['catnames'])>0)
 					{
 						foreach($context['TPortal']['catnames'] as $cat => $val)
@@ -2170,13 +2167,7 @@ function template_addblock()
 								<input type="radio" id="tp_addblock20" name="tp_addblock" value="20" /><label for="tp_addblock20">' . $txt['tp-blocktype20'] . '</label><br>
 							</div>
 						</dd>
-					</dl>';
-			// theme hooks
-			if(function_exists('ctheme_tp_blocks'))
-			{
-				ctheme_tp_blocks('listaddblocktypes');
-			}
-					echo '
+					</dl>
 					<dl class="tptitle settings">
 						<dt><h3>' , $txt['tp-chooseblocktype'] , '</h3></dt>
 						<dd>
