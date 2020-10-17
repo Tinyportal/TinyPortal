@@ -855,7 +855,7 @@ function TPShoutBlock($row) {{{
     $set = json_decode($row['settings'], TRUE);
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
-        'id'            => $set['id'],
+        'id'            => $row['id'],
         'shoutbox_id'   => $set['var2'],
         'name'          => $txt['tp-shoutbox'],
         'function'      => 'TPShoutFetch',
