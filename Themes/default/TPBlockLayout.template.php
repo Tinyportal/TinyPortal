@@ -465,7 +465,8 @@ function template_editblock()
 					<hr><dl class="tptitle settings">
 						<dt>',$txt['tp-showarticle'],'</dt>
 						<dd>
-							<select name="tp_block_body">';
+							<select name="tp_block_body">
+							<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['edit_articles'] as $art => $article ){
 					echo '<option value="'.$article['id'].'" ' , $context['TPortal']['blockedit']['body']==$article['id'] ? ' selected="selected"' : '' ,' >'.html_entity_decode($article['subject']).'</option>';
 				}
@@ -521,7 +522,8 @@ function template_editblock()
 					<hr><dl class="tptitle settings">
 						<dt><label for="tp_block_body">'.$txt['tp-showcategory'].'</label></dt>
 						<dd>
-							<select name="tp_block_body" id="tp_block_body">';
+							<select name="tp_block_body" id="tp_block_body">
+							<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['catnames'] as $cat => $catname){
 					echo '
 								<option value="'.$cat.'" ' , $context['TPortal']['blockedit']['body']==$cat ? ' selected' : '' ,' >'.html_entity_decode($catname).'</option>';
