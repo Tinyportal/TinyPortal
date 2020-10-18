@@ -340,16 +340,22 @@ function template_editblock()
 						</div><div>
 						<hr><dl class="tptitle settings">
 						<dt>
-							<label for="tp_block_var2">' .$txt['tp-shoutbox_id']. '</label>
+							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_block_var2" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" style="width: 6em" min="0" max="9" step="1">
+							<textarea style="width: 90%; height: 50px;" id="tp_shoutbox_stitle" name="tp_block_body">' , !empty($context['TPortal']['blockedit']['body']) ? $context['TPortal']['blockedit']['body'] : '', '</textarea><br>
 						</dd>
 						<dt>
-							<label for="tp_block_var4">'.$txt['tp-shoutboxheight'].'</label>
+							<label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_block_var4" name="tp_block_var4" value="' ,$context['TPortal']['blockedit']['var4'], '" size="6" /><br>
+							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" style="width: 6em" min="0" max="9" step="1">
+						</dd>
+						<dt>
+							<label for="tp-shoutboxheight">'.$txt['tp-shoutboxheight'].'</label>
+						</dt>
+						<dd>
+							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,$context['TPortal']['blockedit']['var4'], '" size="6" /><br>
 						</dd>
 						<dt>
 							'.$txt['shoutbox_layout'].'<br>

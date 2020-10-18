@@ -134,12 +134,6 @@ function template_tpshout_admin_settings()
 					<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>
-						</dt>
-						<dd>
-							<textarea style="width: 90%; height: 50px;" name="tp_shoutbox_stitle" id="tp_shoutbox_stitle">' , !empty($context['TPortal']['shoutbox_stitle']) ? $context['TPortal']['shoutbox_stitle'] : '', '</textarea><br>
-						</dd>
-						<dt>
 							'.$txt['tp-shoutbox_showsmile'].'
 						</dt>
 						<dd>
@@ -189,27 +183,6 @@ function template_tpshout_admin_settings()
 					</dl>
 					<hr>
 					<dl class="settings">';
-/*
-						<dt>
-						'.$txt['shoutbox_layout'].'<br>
-						</dt>
-						<dd>
-						<div class="float-items"><div><input type="radio" name="tp_shoutbox_layout" id="shout_layout1" value="0" ' , $context['TPortal']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"/></label></div></div>
-						<div class="float-items"><div><input type="radio" name="tp_shoutbox_layout" id="shout_layout2" value="1" ' , $context['TPortal']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></label></div></div>
-						<p class="clearthefloat"></p>
-						<div class="float-items"><div><input type="radio" name="tp_shoutbox_layout" id="shout_layout3" value="2" ' , $context['TPortal']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></label></div></div>
-						<div class="float-items"><div><input type="radio" name="tp_shoutbox_layout" id="shout_layout4" value="3" ' , $context['TPortal']['shoutbox_layout'] == '3' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4" /></label></div></div>
-						<p class="clearthefloat"></p>
-						</dd>
-					</dl>
-					<hr>
-					<dl class="settings">
-						<dt>
-							<label for="tp_shoutbox_height">'.$txt['tp-shoutboxheight'].'</label>
-						</dt>
-						<dd>
-							<input type="number" id="tp_shoutbox_height" name="tp_shoutbox_height" value="' ,$context['TPortal']['shoutbox_height'], '" size="6" /><br>
-						</dd>*/
 					echo '
 						<dt>
 							<label for="tp_shoutbox_limit">'.$txt['tp-shoutboxlimit'].'</label>
