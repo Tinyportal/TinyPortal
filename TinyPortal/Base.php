@@ -254,8 +254,7 @@ class Base
         return $values;
     }}}
 
-
-   protected function insertSQL($data, $dBStructure, $table) {{{
+   protected function insertSQL(array $data, array $dBStructure, string $table) {{{
         $insert_data = array();
         
         foreach(array_keys($data) as $key) {
@@ -273,7 +272,7 @@ class Base
 
     }}}
 
-     protected function updateSQL($id, $data, $dBStructure, $table) {{{
+     protected function updateSQL(int $id, array $data, array $dBStructure, string $table) {{{
 
         $update_data = $data;
         array_walk($update_data, function(&$update_data, $key) use ( $dBStructure ) {
@@ -292,7 +291,7 @@ class Base
 
     }}}
 
-    protected function deleteSQL( $delete_id, $table ) {{{
+    protected function deleteSQL( int $delete_id, array $table ) {{{
 
         return $this->dB->db_query('', '
             DELETE FROM {db_prefix}'.$table.'
