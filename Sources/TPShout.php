@@ -856,6 +856,7 @@ function TPShoutBlock($row) {{{
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
         'id'            => $row['id'],
+        'shoutbox_id'   => $set['var2'],
         'name'          => $txt['tp-shoutbox'],
         'function'      => 'TPShoutFetch',
         'sourcefile'    => $sourcedir .'/TPShout.php',
