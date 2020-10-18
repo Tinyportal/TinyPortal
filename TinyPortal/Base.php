@@ -291,7 +291,7 @@ class Base
 
     }}}
 
-    protected function deleteSQL( int $delete_id, array $table ) {{{
+    protected function deleteSQL( int $delete_id, string $table ) {{{
 
         return $this->dB->db_query('', '
             DELETE FROM {db_prefix}'.$table.'
