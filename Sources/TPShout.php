@@ -110,83 +110,13 @@ function TPShoutLoad() {{{
 
     $context['html_headers'] .= '
         // ]]></script>
-
         <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
-
-    if(!empty($context['TPortal']['shoutbox_refresh'])) {
-        $context['html_headers'] .= '
-        <script type="text/javascript"><!-- // --><![CDATA[
-            window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
-        // ]]></script>';
-    }
 
     if(file_exists($settings['theme_dir'].'/css/tp-shout.css')) {
         $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/tp-shout.css?'.TPVERSION.'" />';
     }
     else {
         $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/tp-shout.css?'.TPVERSION.'" />';
-    }
-
-    if($context['TPortal']['shoutbox_usescroll'] > 0) {
-        $context['html_headers'] .= '
-        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
-        <script type="text/javascript">
-            $j(document).ready(function(){
-                $j("marquee").marquee("tp_marquee").mouseover(function () {
-                        $j(this).trigger("stop");
-                    }).mouseout(function () {
-                        $j(this).trigger("start");
-                    });
-                });
-        </script>';
-    }
-
-    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
-        if($context['TPortal']['shout_submit_returnkey'] == 1) {
-            $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-                $(document).ready(function() {
-                    $("#tp_shout").keypress(function(event) {
-                        if(event.which == 13 && !event.shiftKey) {
-                            tp_shout_key_press = true;
-                            // set a 100 millisecond timeout for the next key press
-                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                            TPupdateShouts(\'save\');
-                        }
-                    });
-                });
-            // ]]></script>';
-        } 
-        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
-            $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-            $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
-                        tp_shout_key_press = true;
-                        // set a 100 millisecond timeout for the next key press
-                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                        TPupdateShouts(\'save\');
-                    }
-                    else if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
-            });
-            // ]]></script>';
-        }
-    }
-    else {
-        $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-            $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
-            });
-            // ]]></script>';
     }
 
 }}}
@@ -863,6 +793,78 @@ function TPShoutBlock($row) {{{
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
     );
+
+
+    if(!empty($context['TPortal']['shoutbox_refresh'])) {
+        $context['html_headers'] .= '
+        <script type="text/javascript"><!-- // --><![CDATA[
+            window.setInterval("TPupdateShouts(\'fetch\', '.$set['var2'].' , null , '.$set['var3'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
+        // ]]></script>';
+    }
+
+
+    if($context['TPortal']['shoutbox_usescroll'] > 0) {
+        $context['html_headers'] .= '
+        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+        <script type="text/javascript">
+            $j(document).ready(function(){
+                $j("marquee").marquee("tp_marquee").mouseover(function () {
+                        $j(this).trigger("stop");
+                    }).mouseout(function () {
+                        $j(this).trigger("start");
+                    });
+                });
+        </script>';
+    }
+
+    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
+        if($context['TPortal']['shout_submit_returnkey'] == 1) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+                $(document).ready(function() {
+                    $("#tp_shout_'.$set['var2'].'").keypress(function(event) {
+                        if(event.which == 13 && !event.shiftKey) {
+                            tp_shout_key_press = true;
+                            // set a 100 millisecond timeout for the next key press
+                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                            TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                        }
+                    });
+                });
+            // ]]></script>';
+        } 
+        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+                        tp_shout_key_press = true;
+                        // set a 100 millisecond timeout for the next key press
+                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                        TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                    }
+                    else if (event.keyCode == 13) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            // ]]></script>';
+        }
+    }
+    else {
+        $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            // ]]></script>';
+    }
+
 
 }}}
 
