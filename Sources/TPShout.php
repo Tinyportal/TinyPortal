@@ -111,7 +111,7 @@ function TPShoutLoad() {{{
     $context['html_headers'] .= '
         // ]]></script>
 
-        <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'1"></script>';
+        <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
 
     if(!empty($context['TPortal']['shoutbox_refresh'])) {
         $context['html_headers'] .= '
