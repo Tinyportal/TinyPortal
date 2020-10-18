@@ -541,13 +541,18 @@ function TPortal_shoutbox($blockid)
 
 	// fetch the correct block
 	if(!empty($context['TPortal']['moduleid'])) {
-		$tpm            = $context['TPortal']['moduleid'];
-        $shoutbox_id    = 0;
+		$tpm                = $context['TPortal']['moduleid'];
+        $shoutbox_id        = 0;
+        $shoutbox_layout    = null;
 		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
             if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'])) {
                 $shoutbox_id = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'];
             }
-			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id);
+            if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'])) {
+                $shoutbox_layout = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'];
+            }
+
+			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout);
         }
 	}
 }
