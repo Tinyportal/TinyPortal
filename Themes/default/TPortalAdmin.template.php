@@ -432,7 +432,7 @@ function template_frontpage()
 							<label for="tp_frontpage_limit">', $txt['tp-numberofposts'], '</label>
 						</dt>
 						<dd>
-						  <input type="number" id="tp_frontpage_limit" name="tp_frontpage_limit" value="' ,$context['TPortal']['frontpage_limit'], '" style="width: 6em" maxlength="5"><br><br>
+						  <input type="number" id="tp_frontpage_limit" name="tp_frontpage_limit" value="' ,$context['TPortal']['frontpage_limit'], '" style="width: 6em" min="1" maxlength="5"><br><br>
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-sortingoptionsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_frontpage_usorting">',$txt['tp-sortingoptions'],'</label>
@@ -464,7 +464,7 @@ function template_frontpage()
 						<dd>';
 		echo '
 							<select name="tp_ssiboard" size="5" multiple="multiple" required>
-							<option value="0">'.$txt['tp-none2'].'</option>';
+							<option value="0" ' , is_array($context['TPortal']['SSI_boards']) && in_array(0 , $context['TPortal']['SSI_boards']) ? ' selected="selected"' : '' , '>'.$txt['tp-none2'].'</option>';
             if(is_countable($context['TPortal']['boards'])) {
                 $tn = count($context['TPortal']['boards']);
             }
@@ -1382,7 +1382,7 @@ function template_artsettings()
 							<label for="tp_editorheight">', $txt['tp-editorheight'], '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_editorheight" name="tp_editorheight" value="' , $context['TPortal']['editorheight'] , '" style="width: 6em" />
+							<input type="number" id="tp_editorheight" name="tp_editorheight" value="' , $context['TPortal']['editorheight'] , '" style="width: 6em" min="200" />
 						</dd>
 						<dt>
 							<label for="tp_use_dragdrop">', $txt['tp-usedragdrop'], '</label>
