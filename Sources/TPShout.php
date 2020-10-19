@@ -33,28 +33,28 @@ function TPShout() {{{
         }
         elseif($shoutAction == 'del') {
             TPShoutDelete( $_POST['s'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'] , $_POST['l']);
         }
         elseif($shoutAction == 'save') {
             if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
                     return;
             }
-            TPShoutPost( $_POST['b'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
+            TPShoutPost();
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
         }
         elseif($shoutAction == 'refresh') {
-            var_dump(TPShoutFetch( $_POST['b'] , null, false, $context['TPortal']['shoutbox_limit'], true));
+            var_dump(TPShoutFetch( $_POST['b'] , $_POST['l'], false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
         elseif($shoutAction == 'fetch') {
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
         }
         else {
             $number = substr($shoutAction, 4);
             if(!is_numeric($number)) {
                 $number = 10;
             }
-            tpshout_bigscreen(true, $number, $_POST['b']);
+            tpshout_bigscreen(true, $number, $_POST['b'], $_POST['l']);
         }
     }
 
@@ -110,15 +110,7 @@ function TPShoutLoad() {{{
 
     $context['html_headers'] .= '
         // ]]></script>
-
         <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
-
-    if(!empty($context['TPortal']['shoutbox_refresh'])) {
-        $context['html_headers'] .= '
-        <script type="text/javascript"><!-- // --><![CDATA[
-            window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
-        // ]]></script>';
-    }
 
     if(file_exists($settings['theme_dir'].'/css/tp-shout.css')) {
         $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/tp-shout.css?'.TPVERSION.'" />';
@@ -127,72 +119,10 @@ function TPShoutLoad() {{{
         $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/tp-shout.css?'.TPVERSION.'" />';
     }
 
-    if($context['TPortal']['shoutbox_usescroll'] > 0) {
-        $context['html_headers'] .= '
-        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
-        <script type="text/javascript">
-            $j(document).ready(function(){
-                $j("marquee").marquee("tp_marquee").mouseover(function () {
-                        $j(this).trigger("stop");
-                    }).mouseout(function () {
-                        $j(this).trigger("start");
-                    });
-                });
-        </script>';
-    }
-
-    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
-        if($context['TPortal']['shout_submit_returnkey'] == 1) {
-            $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-                $(document).ready(function() {
-                    $("#tp_shout").keypress(function(event) {
-                        if(event.which == 13 && !event.shiftKey) {
-                            tp_shout_key_press = true;
-                            // set a 100 millisecond timeout for the next key press
-                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                            TPupdateShouts(\'save\');
-                        }
-                    });
-                });
-            // ]]></script>';
-        } 
-        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
-            $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-            $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
-                        tp_shout_key_press = true;
-                        // set a 100 millisecond timeout for the next key press
-                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                        TPupdateShouts(\'save\');
-                    }
-                    else if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
-            });
-            // ]]></script>';
-        }
-    }
-    else {
-        $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-            $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
-            });
-            // ]]></script>';
-    }
-
 }}}
 
 // Post the shout via ajax
-function TPShoutPost( $shoutbox_id ) {{{
+function TPShoutPost( ) {{{
 	global $context, $smcFunc, $user_info, $scripturl, $sourcedir, $modSettings;
 
 	isAllowedTo('tp_can_shout');
@@ -394,7 +324,7 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 
 	// its from a block, render it
 	if($render && !$ajaxRequest) {
-		template_tpshout_shoutblock( $shoutbox_id );
+		template_tpshout_shoutblock( $shoutbox_id , $shoutbox_layout);
     }
 	else {
 		return $nshouts;
@@ -402,7 +332,7 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 
 }}}
 
-function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0 ) {{{
+function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shoutbox_layout = null ) {{{
     global $context;
 
     loadTemplate('TPShout');
@@ -410,10 +340,10 @@ function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0 ) {{{
     if ($state == false) {
         $context['template_layers']         = array();
         $context['sub_template']            = 'tpshout_ajax';
-        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, null, $state, $number, true);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, $state, $number, true);
     }
     else {
-        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, null, false, $number, false);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, false, $number, false);
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
@@ -863,6 +793,78 @@ function TPShoutBlock($row) {{{
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
     );
+
+
+    if(!empty($context['TPortal']['shoutbox_refresh'])) {
+        $context['html_headers'] .= '
+        <script type="text/javascript"><!-- // --><![CDATA[
+            window.setInterval("TPupdateShouts(\'fetch\', '.$set['var2'].' , null , '.$set['var3'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
+        // ]]></script>';
+    }
+
+
+    if($context['TPortal']['shoutbox_usescroll'] > 0) {
+        $context['html_headers'] .= '
+        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+        <script type="text/javascript">
+            $j(document).ready(function(){
+                $j("marquee").marquee("tp_marquee").mouseover(function () {
+                        $j(this).trigger("stop");
+                    }).mouseout(function () {
+                        $j(this).trigger("start");
+                    });
+                });
+        </script>';
+    }
+
+    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
+        if($context['TPortal']['shout_submit_returnkey'] == 1) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+                $(document).ready(function() {
+                    $("#tp_shout_'.$set['var2'].'").keypress(function(event) {
+                        if(event.which == 13 && !event.shiftKey) {
+                            tp_shout_key_press = true;
+                            // set a 100 millisecond timeout for the next key press
+                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                            TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                        }
+                    });
+                });
+            // ]]></script>';
+        } 
+        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+                        tp_shout_key_press = true;
+                        // set a 100 millisecond timeout for the next key press
+                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                        TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                    }
+                    else if (event.keyCode == 13) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            // ]]></script>';
+        }
+    }
+    else {
+        $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            // ]]></script>';
+    }
+
 
 }}}
 
