@@ -463,7 +463,8 @@ function template_frontpage()
 						</dt>
 						<dd>';
 		echo '
-							<select name="tp_ssiboard" size="5" multiple="multiple">';
+							<select name="tp_ssiboard" size="5" multiple="multiple" required>
+							<option value="0">'.$txt['tp-none2'].'</option>';
             if(is_countable($context['TPortal']['boards'])) {
                 $tn = count($context['TPortal']['boards']);
             }
