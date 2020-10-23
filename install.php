@@ -580,8 +580,6 @@ $settings_array = array(
     'use_attachment' => '0',
     'frontpage_template' => '',
     // shoutbox settings
-    'shoutbox_height' => '250',
-    'shoutbox_layout' => '0',
 	'shout_submit_returnkey' => '0',
     'shoutbox_limit' => '5',
     'guest_shout' => '0',
