@@ -33,28 +33,28 @@ function TPShout() {{{
         }
         elseif($shoutAction == 'del') {
             TPShoutDelete( $_POST['s'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'] , $_POST['l']);
         }
         elseif($shoutAction == 'save') {
             if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
                     return;
             }
-            TPShoutPost( $_POST['b'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
+            TPShoutPost();
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
         }
         elseif($shoutAction == 'refresh') {
-            var_dump(TPShoutFetch( $_POST['b'] , false, $context['TPortal']['shoutbox_limit'], true));
+            var_dump(TPShoutFetch( $_POST['b'] , $_POST['l'], false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
         elseif($shoutAction == 'fetch') {
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
         }
         else {
             $number = substr($shoutAction, 4);
             if(!is_numeric($number)) {
                 $number = 10;
             }
-            tpshout_bigscreen(true, $number, $_POST['b']);
+            tpshout_bigscreen(true, $number, $_POST['b'], $_POST['l']);
         }
     }
 
@@ -110,15 +110,7 @@ function TPShoutLoad() {{{
 
     $context['html_headers'] .= '
         // ]]></script>
-
         <script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/tinyportal/TPShout.js?'.TPVERSION.'"></script>';
-
-    if(!empty($context['TPortal']['shoutbox_refresh'])) {
-        $context['html_headers'] .= '
-        <script type="text/javascript"><!-- // --><![CDATA[
-            window.setInterval("TPupdateShouts(\'fetch\')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
-        // ]]></script>';
-    }
 
     if(file_exists($settings['theme_dir'].'/css/tp-shout.css')) {
         $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/css/tp-shout.css?'.TPVERSION.'" />';
@@ -127,72 +119,10 @@ function TPShoutLoad() {{{
         $context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/css/tp-shout.css?'.TPVERSION.'" />';
     }
 
-    if($context['TPortal']['shoutbox_usescroll'] > 0) {
-        $context['html_headers'] .= '
-        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
-        <script type="text/javascript">
-            $j(document).ready(function(){
-                $j("marquee").marquee("tp_marquee").mouseover(function () {
-                        $j(this).trigger("stop");
-                    }).mouseout(function () {
-                        $j(this).trigger("start");
-                    });
-                });
-        </script>';
-    }
-
-    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
-        if($context['TPortal']['shout_submit_returnkey'] == 1) {
-            $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-                $(document).ready(function() {
-                    $("#tp_shout").keypress(function(event) {
-                        if(event.which == 13 && !event.shiftKey) {
-                            tp_shout_key_press = true;
-                            // set a 100 millisecond timeout for the next key press
-                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                            TPupdateShouts(\'save\');
-                        }
-                    });
-                });
-            // ]]></script>';
-        } 
-        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
-            $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-            $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
-                        tp_shout_key_press = true;
-                        // set a 100 millisecond timeout for the next key press
-                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                        TPupdateShouts(\'save\');
-                    }
-                    else if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
-            });
-            // ]]></script>';
-        }
-    }
-    else {
-        $context['html_headers'] .= '
-            <script type="text/javascript"><!-- // --><![CDATA[
-            $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
-            });
-            // ]]></script>';
-    }
-
 }}}
 
 // Post the shout via ajax
-function TPShoutPost( $block_id ) {{{
+function TPShoutPost( ) {{{
 	global $context, $smcFunc, $user_info, $scripturl, $sourcedir, $modSettings;
 
 	isAllowedTo('tp_can_shout');
@@ -234,9 +164,9 @@ function TPShoutPost( $block_id ) {{{
 
 		$shout      = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
-        $block_id   = TPUtil::filter('b', 'post', 'int');
-        if(empty($block_id)) {
-            $block_id = 0;
+        $shoutbox_id   = TPUtil::filter('b', 'post', 'int');
+        if(empty($shoutbox_id)) {
+            $shoutbox_id = 0;
         }
 
         if($shout != '') {
@@ -250,7 +180,7 @@ function TPShoutPost( $block_id ) {{{
                     'member_ip'     => $ip,
                     'member_id'     => $member_id,
                     'edit'          => 0,
-                    'shoutbox_id'   => $block_id
+                    'shoutbox_id'   => $shoutbox_id
                 )
             );
             $mention_data['id']             = $shout_id;
@@ -284,7 +214,7 @@ function TPShoutDelete( $shout_id = null ) {{{
 }}}
 
 // fetch all the shouts for output
-function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest = false) {{{
+function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = true, $limit = 1, $ajaxRequest = false) {{{
 	global $context, $scripturl, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
@@ -320,7 +250,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 
 
     $block_shout = ' 1 = 1';
-    if(!is_null($block_id)) {
+    if(!is_null($shoutbox_id)) {
         $block_shout = ' s.shoutbox_id = {int:shoutbox_id} ';
     }
 
@@ -333,7 +263,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 		ORDER BY s.time DESC LIMIT {int:limit}',
 		array(
             'limit' => $limit,
-            'shoutbox_id' => $block_id,
+            'shoutbox_id' => $shoutbox_id,
         )
 	);
 
@@ -385,7 +315,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : (!empty($memberdata[$row['member_id']]['pg_online_color']) ? $memberdata[$row['member_id']]['pg_online_color'] : '');
-			$ns[] = template_singleshout($row, $block_id);
+			$ns[] = template_singleshout($row, $shoutbox_id, $shoutbox_layout);
 		}
 		$nshouts .= implode('', $ns);
 
@@ -394,7 +324,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 
 	// its from a block, render it
 	if($render && !$ajaxRequest) {
-		template_tpshout_shoutblock( $block_id );
+		template_tpshout_shoutblock( $shoutbox_id , $shoutbox_layout);
     }
 	else {
 		return $nshouts;
@@ -402,7 +332,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 
 }}}
 
-function tpshout_bigscreen($state = false, $number = 10, $block_id = 0 ) {{{
+function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shoutbox_layout = null ) {{{
     global $context;
 
     loadTemplate('TPShout');
@@ -410,10 +340,10 @@ function tpshout_bigscreen($state = false, $number = 10, $block_id = 0 ) {{{
     if ($state == false) {
         $context['template_layers']         = array();
         $context['sub_template']            = 'tpshout_ajax';
-        $context['TPortal']['rendershouts'] = TPShoutFetch($block_id, $state, $number, true);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, $state, $number, true);
     }
     else {
-        $context['TPortal']['rendershouts'] = TPShoutFetch($block_id, false, $number, false);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, false, $number, false);
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
@@ -855,11 +785,86 @@ function TPShoutBlock($row) {{{
     $set = json_decode($row['settings'], TRUE);
 
     $context['TPortal']['tpblocks']['blockrender'][$set['var1']] = array(
-        'id'            => $row['id'],
-        'name'          => $txt['tp-shoutbox'],
-        'function'      => 'TPShoutFetch',
-        'sourcefile'    => $sourcedir .'/TPShout.php',
+        'id'                => $row['id'],
+        'shoutbox_id'       => $set['var2'],
+        'shoutbox_layout'   => $set['var3'],
+        'shoutbox_height'   => $set['var4'],
+        'name'              => $txt['tp-shoutbox'],
+        'function'          => 'TPShoutFetch',
+        'sourcefile'        => $sourcedir .'/TPShout.php',
     );
+
+
+    if(!empty($context['TPortal']['shoutbox_refresh'])) {
+        $context['html_headers'] .= '
+        <script type="text/javascript"><!-- // --><![CDATA[
+            window.setInterval("TPupdateShouts(\'fetch\', '.$set['var2'].' , null , '.$set['var3'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
+        // ]]></script>';
+    }
+
+
+    if($context['TPortal']['shoutbox_usescroll'] > 0) {
+        $context['html_headers'] .= '
+        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+        <script type="text/javascript">
+            $j(document).ready(function(){
+                $j("marquee").marquee("tp_marquee").mouseover(function () {
+                        $j(this).trigger("stop");
+                    }).mouseout(function () {
+                        $j(this).trigger("start");
+                    });
+                });
+        </script>';
+    }
+
+    if(!empty($context['TPortal']['shout_submit_returnkey'])) {
+        if($context['TPortal']['shout_submit_returnkey'] == 1) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+                $(document).ready(function() {
+                    $("#tp_shout_'.$set['var2'].'").keypress(function(event) {
+                        if(event.which == 13 && !event.shiftKey) {
+                            tp_shout_key_press = true;
+                            // set a 100 millisecond timeout for the next key press
+                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                            TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                        }
+                    });
+                });
+            // ]]></script>';
+        } 
+        else if($context['TPortal']['shout_submit_returnkey'] == 2) {
+            $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+                        tp_shout_key_press = true;
+                        // set a 100 millisecond timeout for the next key press
+                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                        TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                    }
+                    else if (event.keyCode == 13) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            // ]]></script>';
+        }
+    }
+    else {
+        $context['html_headers'] .= '
+            <script type="text/javascript"><!-- // --><![CDATA[
+            $(document).ready(function() {
+                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                    }
+                });
+            });
+            // ]]></script>';
+    }
+
 
 }}}
 
@@ -1044,6 +1049,11 @@ function TPShoutAdmin() {{{
 		$ip = $_GET['ip'];
     }
 
+	// check that a Shoutbox ID has been filtered
+	if(isset($_GET['shoutbox_id'])) {
+		$shoutbox_id = $_GET['shoutbox_id'];
+    }
+
 	if(isset($_GET['s'])) {
 		$single = $_GET['s'];
     }
@@ -1061,7 +1071,7 @@ function TPShoutAdmin() {{{
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$member_id.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;u='.$member_id, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = 'Member '.$member_id.' ' .$txt['tp-filtered'] . ' (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;u='.$member_id, $tpstart, $allshouts, 10, true);
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
@@ -1088,6 +1098,26 @@ function TPShoutAdmin() {{{
 			AND member_ip = {string:val4}
 			ORDER BY time DESC LIMIT {int:start}, 10',
 			array('type' => 'shoutbox', 'val4' => $ip, 'start' => $tpstart)
+		);
+	}
+	elseif(isset($shoutbox_id)) {
+		$shouts =  $smcFunc['db_query']('', '
+			SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
+			WHERE type = {string:type}
+			AND shoutbox_id = {string:val4}',
+			array('type' => 'shoutbox', 'val4' => $shoutbox_id)
+		);
+		$weh = $smcFunc['db_fetch_row']($shouts);
+		$smcFunc['db_free_result']($shouts);
+		$allshouts = $weh[0];
+		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
+		$context['TPortal']['shoutbox_pageindex'] = 'Shoutbox_ID '.$shoutbox_id.' filtered (<a href="'.$scripturl.'?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />'.TPageIndex($scripturl.'?action=tpshout;shout=admin;shoutbox_id='.urlencode($shoutbox_id) , $tpstart, $allshouts, 10,true);
+		$request =  $smcFunc['db_query']('', '
+			SELECT * FROM {db_prefix}tp_shoutbox
+			WHERE type = {string:type}
+			AND shoutbox_id = {string:val4}
+			ORDER BY time DESC LIMIT {int:start}, 10',
+			array('type' => 'shoutbox', 'val4' => $shoutbox_id, 'start' => $tpstart)
 		);
 	}
 	elseif(isset($single)) {
@@ -1132,7 +1162,9 @@ function TPShoutAdmin() {{{
 				'id_member' => $row['member_id'],
 				'sort_member' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;u='.$row['member_id'].'">'.$txt['tp-allshoutsbymember'].'</a>',
 				'sort_ip' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;ip='.$row['member_ip'].'">'.$txt['tp-allshoutsbyip'].'</a>',
+				'sort_shoutbox_id' => '<a href="'.$scripturl.'?action=tpshout;shout=admin;shoutbox_id='.$row['shoutbox_id'].'">'.$txt['tp-allshoutsbyid'].'</a>',
 				'single' => isset($single) ? '<hr><a href="'.$scripturl.'?action=tpshout;shout=admin"><b>'.$txt['tp-allshouts'].'</b></a>' : '',
+				'shoutbox_id' => $row['shoutbox_id'],
 			);
 		}
 		$smcFunc['db_free_result']($request);

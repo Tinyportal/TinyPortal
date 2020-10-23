@@ -2025,6 +2025,11 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['blocklisting_author'] = $block['var2'];
 				break;
 			case 'shoutbox':
+            	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
+				$context['TPortal']['shoutbox_stitle'] = $block['body'];
+				$context['TPortal']['shoutbox_id'] = $block['var2'];
+				$context['TPortal']['shoutbox_layout'] = $block['var3'];
+				$context['TPortal']['shoutbox_height'] = $block['var4'];
             case 'modulebox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleid'] = $block['var1'];
