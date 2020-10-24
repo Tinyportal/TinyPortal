@@ -1075,7 +1075,7 @@ function addDefaults()
                 'lang' => '',
                 'access2' => 'actio=allpages',
                 'editgroups' => '',
-                'settings' => json_encode( array ('var1' => 1, 'var2' => '1', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
+                'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
             ), 
             'recent' =>array(
                 'type' => 12,
