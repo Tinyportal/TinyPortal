@@ -170,7 +170,7 @@ function template_tpshout_admin_settings()
 							<label for="tp_shoutbox_refresh">'.$txt['tp-shout-autorefresh'].'</label>
 						</dt>
 						<dd>
-							<input type="number" name="tp_shoutbox_refresh" id="tp_shoutbox_refresh" value="' ,$context['TPortal']['shoutbox_refresh'], '" style="width: 6em" min="1" max="60" step="1" /><br>
+							<input type="number" name="tp_shoutbox_refresh" id="tp_shoutbox_refresh" value="' ,$context['TPortal']['shoutbox_refresh'], '" style="width: 6em" min="0" max="60" step="1" /><br>
 						</dd>
 						<dt>
 							'.$txt['shout_submit_returnkey'].'
