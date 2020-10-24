@@ -339,6 +339,7 @@ function template_editblock()
 					echo '
 						</div><div>
 						<hr><dl class="tptitle settings">
+						<input type="hidden" name="tp_block_var1" value="1">
 						<dt>
 							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>
 						</dt>
@@ -349,13 +350,13 @@ function template_editblock()
 							<label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" style="width: 6em" min="0" max="9" step="1">
+							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , (empty($context['TPortal']['blockedit']['var2']) ? '0': $context['TPortal']['blockedit']['var2']) ,'" style="width: 6em" min="0" max="9" step="1">
 						</dd>
 						<dt>
 							<label for="tp-shoutboxheight">'.$txt['tp-shoutboxheight'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,$context['TPortal']['blockedit']['var4'], '" size="6" /><br>
+							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '250' : $context['TPortal']['blockedit']['var4']), '" size="6" /><br>
 						</dd>
 						<dt>
 							'.$txt['shoutbox_layout'].'<br>

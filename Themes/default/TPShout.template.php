@@ -164,13 +164,13 @@ function template_tpshout_admin_settings()
 							<label for="tp_shoutbox_scrollduration">'.$txt['tp-shoutboxduration'].'</label>
 						</dt>
 						<dd>
-							<input type="number" name="tp_shoutbox_scrollduration" id="tp_shoutbox_scrollduration" value="'.$context['TPortal']['shoutbox_scrollduration'].'" size="6" min="1" max="5" step="1" /><br>
+							<input type="number" name="tp_shoutbox_scrollduration" id="tp_shoutbox_scrollduration" value="'.$context['TPortal']['shoutbox_scrollduration'].'" style="width: 6em" min="1" max="5" step="1" /><br>
 						</dd>
 						<dt>
 							<label for="tp_shoutbox_refresh">'.$txt['tp-shout-autorefresh'].'</label>
 						</dt>
 						<dd>
-							<input type="number" name="tp_shoutbox_refresh" id="tp_shoutbox_refresh" value="' ,$context['TPortal']['shoutbox_refresh'], '" size="6" min="1" max="60" step="1" /><br>
+							<input type="number" name="tp_shoutbox_refresh" id="tp_shoutbox_refresh" value="' ,$context['TPortal']['shoutbox_refresh'], '" style="width: 6em" min="1" max="60" step="1" /><br>
 						</dd>
 						<dt>
 							'.$txt['shout_submit_returnkey'].'
@@ -188,19 +188,19 @@ function template_tpshout_admin_settings()
 							<label for="tp_shoutbox_limit">'.$txt['tp-shoutboxlimit'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_shoutbox_limit" name="tp_shoutbox_limit" value="' ,$context['TPortal']['shoutbox_limit'], '" size="6" /><br>
+							<input type="number" id="tp_shoutbox_limit" name="tp_shoutbox_limit" value="' ,$context['TPortal']['shoutbox_limit'], '" style="width: 6em" /><br>
 						</dd>
 						<dt>
 							<label for="tp_shoutbox_maxlength">'.$txt['tp-shoutboxmaxlength'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp_shoutbox_maxlength" name="tp_shoutbox_maxlength" value="' ,$context['TPortal']['shoutbox_maxlength'], '" size="6" /><br>
+							<input type="number" id="tp_shoutbox_maxlength" name="tp_shoutbox_maxlength" value="' ,$context['TPortal']['shoutbox_maxlength'], '" style="width: 6em" /><br>
 						</dd>
 						<dt>
 							<label for="tp_shoutbox_timeformat">'.$txt['tp-shoutboxtimeformat'].'</label>
 						</dt>
 						<dd>
-							<input type="text" id="tp_shoutbox_timeformat" name="tp_shoutbox_timeformat" value="' ,$context['TPortal']['shoutbox_timeformat'], '" size="15" /><br>
+							<input type="text" id="tp_shoutbox_timeformat" name="tp_shoutbox_timeformat" value="' ,$context['TPortal']['shoutbox_timeformat'], '" style="width: 10em" /><br>
 						</dd>
 					</dl>
 					<hr>
