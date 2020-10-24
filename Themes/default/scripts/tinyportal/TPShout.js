@@ -36,7 +36,7 @@ function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout)
 		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;
 	}
 
-	if (shoutboxId) {
+	if (shoutboxId || !(0 === shoutboxId.length)) {
 		params = params.concat("&b=" + shoutboxId);
 	}
 
