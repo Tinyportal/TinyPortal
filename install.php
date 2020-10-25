@@ -255,31 +255,6 @@ $tables = array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
-	'tp_rates' => array(
-        'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0),
-            array('name' => 'timestamp', 'type' => 'int', 'size' => 11, 'default' => 0),
-            array('name' => 'rate', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-            array('name' => 'rate_type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'rate_id', 'type' => 'int', 'size' => 11, 'default' => 0),
-        ),
-        'indexes' => array(
-            array('type' => 'primary', 'columns' => array('id')),
-        ),
-    ),
-    'tp_ratestats' => array(
-        'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'average', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-            array('name' => 'rate_type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'rate_id', 'type' => 'int', 'size' => 11, 'default' => 0),
-            array('name' => 'rates', 'type' => 'int', 'size' => 11, 'default' => 0),
-        ),
-        'indexes' => array(
-            array('type' => 'primary', 'columns' => array('id')),
-        ),
-    ),
     'tp_events' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
@@ -291,20 +266,6 @@ $tables = array(
             array('name' => 'allowed', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'eventid', 'type' => 'int', 'size' => 11, 'default' => 0),
             array('name' => 'on', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-        ),
-        'indexes' => array(
-            array('type' => 'primary', 'columns' => array('id')),
-        ),
-    ),
-    'tp_menu' => array(
-        'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'name', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'link', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'parent', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'permissions', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'enabled', 'type' => 'smallint', 'size' => 4, 'default' => 0),
         ),
         'indexes' => array(
             array('type' => 'primary', 'columns' => array('id')),
@@ -421,8 +382,11 @@ foreach ($tables as $table => $col) {
     checkTextColumnNull($table);
 }
 
-// Remove the tp_modules database table
+// Remove the unused database tables
 $smcFunc['db_drop_table']('{db_prefix}tp_modules');
+$smcFunc['db_drop_table']('{db_prefix}tp_rates');
+$smcFunc['db_drop_table']('{db_prefix}tp_ratestats');
+$smcFunc['db_drop_table']('{db_prefix}tp_menu');
 
 $request = $smcFunc['db_query']('', '
     SELECT * FROM {db_prefix}tp_settings
@@ -940,6 +904,8 @@ function updateShoutbox()
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value8');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sticky');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sticky_layout');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sitcky');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sitcky_layout');
 
 	$render .= '<li>Updated old columns in shoutbox table</li>';
 }
