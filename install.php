@@ -836,9 +836,8 @@ else
 function updateBlocks()
 {
 	global $smcFunc, $render;
-	// Update old column names
 
-    // fetch any comments
+    // update block order
     $request =  $smcFunc['db_query']('', '
         SELECT id, pos, bar 
         FROM {db_prefix}tp_blocks
@@ -882,6 +881,27 @@ function updateBlocks()
 	$smcFunc['db_free_result']($request);
 
 	$render .= '<li>Updated block order in blocks table</li>';
+	
+	// update Shoutbox blocks
+	   
+	// get the actual settings
+//	$request = $smcFunc['db_query']('', '
+//		SELECT value FROM {db_prefix}tp_settings
+//		WHERE name = shoutbox_height',
+//	);
+//	$request = $smcFunc['db_query']('', '
+//		SELECT value FROM {db_prefix}tp_settings
+//		WHERE name = shoutbox_layout',
+//	);
+
+	$smcFunc['db_query']('', '
+		UPDATE {db_prefix}tp_blocks
+		SET type = {string:type}, body = {int:body}, settings = {string:settings}
+		WHERE type = 20',
+		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"0","var3":"0","var4":"250","var5":"99"}')
+	);
+
+	$render .= '<li>Updated shoutbox blocks</li>';
 }
 
 function updateDownLoads()
