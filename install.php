@@ -271,6 +271,20 @@ $tables = array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
+    'tp_menu' => array(
+        'columns' => array(
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
+            array('name' => 'name', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'link', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'parent', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'permissions', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
+            array('name' => 'enabled', 'type' => 'smallint', 'size' => 4, 'default' => 0),
+        ),
+        'indexes' => array(
+            array('type' => 'primary', 'columns' => array('id')),
+        ),
+    ),
 );
             
 foreach ($tables as $table => $col) {
@@ -382,11 +396,10 @@ foreach ($tables as $table => $col) {
     checkTextColumnNull($table);
 }
 
-// Remove the unused database tables
+// Remove unused database tables
 $smcFunc['db_drop_table']('{db_prefix}tp_modules');
 $smcFunc['db_drop_table']('{db_prefix}tp_rates');
 $smcFunc['db_drop_table']('{db_prefix}tp_ratestats');
-$smcFunc['db_drop_table']('{db_prefix}tp_menu');
 
 $request = $smcFunc['db_query']('', '
     SELECT * FROM {db_prefix}tp_settings
