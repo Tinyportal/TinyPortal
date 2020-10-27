@@ -255,31 +255,6 @@ $tables = array(
             array('type' => 'primary', 'columns' => array('id')),
         ),
     ),
-	'tp_rates' => array(
-        'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => 0),
-            array('name' => 'timestamp', 'type' => 'int', 'size' => 11, 'default' => 0),
-            array('name' => 'rate', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-            array('name' => 'rate_type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'rate_id', 'type' => 'int', 'size' => 11, 'default' => 0),
-        ),
-        'indexes' => array(
-            array('type' => 'primary', 'columns' => array('id')),
-        ),
-    ),
-    'tp_ratestats' => array(
-        'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'average', 'type' => 'smallint', 'size' => 4, 'default' => 0),
-            array('name' => 'rate_type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
-            array('name' => 'rate_id', 'type' => 'int', 'size' => 11, 'default' => 0),
-            array('name' => 'rates', 'type' => 'int', 'size' => 11, 'default' => 0),
-        ),
-        'indexes' => array(
-            array('type' => 'primary', 'columns' => array('id')),
-        ),
-    ),
     'tp_events' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
@@ -421,8 +396,10 @@ foreach ($tables as $table => $col) {
     checkTextColumnNull($table);
 }
 
-// Remove the tp_modules database table
+// Remove unused database tables
 $smcFunc['db_drop_table']('{db_prefix}tp_modules');
+$smcFunc['db_drop_table']('{db_prefix}tp_rates');
+$smcFunc['db_drop_table']('{db_prefix}tp_ratestats');
 
 $request = $smcFunc['db_query']('', '
     SELECT * FROM {db_prefix}tp_settings
@@ -443,191 +420,174 @@ $smcFunc['db_free_result']($request);
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
     'version' => '2.1.0',
-    'padding' => '4',
-    'margins' => '2',
-    'leftbar_width' => '200',
-    'rightbar_width' => '230',
-    'use_SSI' => '1',
-    'frontpage_limit' => '5',
-    'SSI_board' => '1',
-    'temapaths' => '',
-    'showtop' => '1',
-    'frontpage_limit_len' => '300',
-    'featured_article' => '0',
-    'front_type' => 'forum_articles',
+    'frontpage_title' => '',
     'showforumfirst' => '0',
-    'allow_guestnews' => '1',
-    'use_wysiwyg' => '2',
-    'use_dragdrop' => '0',
-    'imageproxycheck' => '1',
-    'allowed_membergroups' => '',
-    'approved_membergroups' => '',
-    'userbox_options' => 'avatar,logged,time,unread,stats,online,stats_all',
-    'hide_leftbar_forum' => '0',
-    'hide_rightbar_forum' => '0',
-    'hide_centerbar_forum' => '0',
-    'show_download' => '1',
-    'dl_total_items' => '0',
-    'dl_maxfiles' => '10',
-    'dl_allowed_types' => 'zip,rar,doc,docx,pdf,jpg,gif,png',
-    'dl_max_upload_size' => '2000',
-    'dl_totalcats' => '0',
-    'dl_totalfiles' => '0',
-    'dl_allow_upload' => '1',
-    'dl_upload_max' => '2',
-    'dl_approve' => '1',
-    'dl_approve_groups' => '',
-    'hidebars_admin_only' => '1',
-    'dl_uploadpath' => 'tp-downloads',
-    'dl_showlatest' => '1',
-    'frontpage_layout' => '1',
-    'opt_wysiwyg' => '1',
-    'sitemap_items' => '3',
-    'cat_list' => '1,2',
-    'dl_visual_options' => 'left,right,center,top',
-    'dl_fileprefix' => 'K',
-    'showstars' => '1',
+    'hideadminmenu' => '0',
+    'useroundframepanels' => '0',
+    'showcollapse' => '1',
+    'blocks_edithide' => '0',
+    'uselangoption' => '0',
+    'use_groupcolor' => '0',
     'maxstars' => '5',
+    'showstars' => '1',
+    'oldsidebar' => '1',
+    'admin_showblocks' => '1',
+    'imageproxycheck' => '1',
+    'fulltextsearch' => '0',
+    'disable_template_eval' => '1',
+    'copyrightremoval' => '',
+    'image_upload_path'     => $boarddir.'/tp-images/',
+    'download_upload_path'  => $boarddir.'/tp-downloads/',
+    'blockcode_upload_path' => $boarddir.'/tp-files/tp-blockcodes/',
+    // frontpage
+    'front_type' => 'forum_articles',
+    'frontblock_type' => 'first',
+    'frontpage_visual' => 'left,right,center,top,bottom,lower,header',
+    'frontpage_layout' => '1',
+    'frontpage_catlayout' => '1',
+    'frontpage_template' => '',	
+    'allow_guestnews' => '1',
+    'SSI_board' => '1',
+    'frontpage_limit' => '5',
+    'frontpage_limit_len' => '300',
+    'frontpage_topics' => '',
+    'forumposts_avatar' => '1',
+    'use_attachment' => '0',
+    'boardnews_divheader' => 'cat_bar',
+    'boardnews_headerstyle' => 'catbg',
+    'boardnews_divbody' => 'windowbg noup',
+    // article settings
+    'use_wysiwyg' => '2',
+    'editorheight' => '400',
+    'use_dragdrop' => '0',
+    'hide_editarticle_link' => '1',
+    'print_articles' => '1',
+    'allow_links_article_comments' => '1',
+    'hide_article_facebook' => '0',
+    'hide_article_twitter' => '0',
+    'hide_article_reddit' => '0',
+    'hide_article_digg' => '0',
+    'hide_article_delicious' => '0',
+    'hide_article_stumbleupon' => '0',
+    'icon_width' => '100',
+    'icon_height' => '100',
+    'icon_max_size' => '500',
+    'art_imagesizes' => '80,40,400,200',
+    // Panels
+    'hidebars_admin_only' => '1',
     'hidebars_profile' => '1',
     'hidebars_pm' => '1',
     'hidebars_memberlist' => '1',
-    'dlmanager_theme' => '0',
-    'teampage_theme' => '0',
-    'linkmanager_theme' => '0',
-    'blocks_edithide' => '0',
-    'profile_shouts_hide' => '0',
-    'frontblock_type' => 'first',
-    'rss_notitles' => '0',
-    'hide_editarticle_link' => '1',
-	'hide_article_facebook' => '0',
-	'hide_article_twitter' => '0',
-	'hide_article_google' => '0',
-	'hide_article_reddit' => '0',
-	'hide_article_digg' => '0',
-	'hide_article_delicious' => '0',
-	'hide_article_stumbleupon' => '0',
-    'hide_bottombar_forum' => '0',
-    'hide_topbar_forum' => '0',
-    'bottombar' => '1',
-    'blockwidth_left' => '200',
-    'blockwidth_right' => '150',
-    'blockwidth_center' => '150',
-    'blockwidth_front' => '150',
-    'blockwidth_bottom' => '150',
-    'blockwidth_top' => '150',
-    'blockwidth_lower' => '150',
-    'blockgrid_left' => '',
-    'blockgrid_right' => '',
-    'blockgrid_center' => '',
-    'blockgrid_front' => '',
-    'blockgrid_bottom' => '',
-    'blockgrid_top' => '',
-    'blockgrid_lower' => '',
-    'block_layout_left' => 'vert',
-    'block_layout_right' => 'vert',
-    'block_layout_center' => 'vert',
-    'block_layout_front' => 'vert',
-    'block_layout_bottom' => 'vert',
-    'block_layout_top' => 'vert',
-    'block_layout_lower' => 'vert',
-    'frontpage_visual' => 'left,right,center,top,bottom,lower,header',
-    'hidebars_calendar' => '1',
     'hidebars_search' => '1',
+    'hidebars_calendar' => '1',
     'hidebars_custom' => '',
-    'toppanel' => '1',
+    'padding' => '4',
+    'leftbar_width' => '200',
+    'rightbar_width' => '230',
+    'showtop' => '1',
     'leftpanel' => '1',
     'rightpanel' => '1',
+    'toppanel' => '1',
     'centerpanel' => '1',
-    'bottompanel' => '1',
     'frontpanel' => '1',
     'lowerpanel' => '1',
+    'bottompanel' => '1',
+    'hide_leftbar_forum' => '0',
+    'hide_rightbar_forum' => '0',
+    'hide_topbar_forum' => '0',
+    'hide_centerbar_forum' => '0',
     'hide_lowerbar_forum' => '0',
-    'print_articles' => '1',
-    'article_layout' => '1',
-    'article_layout_width' => '100%',
-    'article_layout_cols' => '1',
-    'frontpage_catlayout' => '1',
-    'showcollapse' => '1',
-    'fulltextsearch' => '0',
-    'front_module' => '',
-    'forumposts_avatar' => '1',
-    'dl_usescreenshot' => '1',
-    'dl_screenshotsizes' => '80,80,200,200',
-    'editorheight' => '400',
+    'hide_bottombar_forum' => '0',
+    'block_layout_left' => 'vert',
+    'block_layout_right' => 'vert',
+    'block_layout_top' => 'vert',
+    'block_layout_center' => 'vert',
+    'block_layout_front' => 'vert',
+    'block_layout_lower' => 'vert',
+    'block_layout_bottom' => 'vert',
+    'blockgrid_left' => '',
+    'blockgrid_right' => '',
+    'blockgrid_top' => '',
+    'blockgrid_center' => '',
+    'blockgrid_front' => '',
+    'blockgrid_lower' => '',
+    'blockgrid_bottom' => '',
+    'blockwidth_left' => '200',
+    'blockwidth_right' => '150',
+    'blockwidth_top' => '150',
+    'blockwidth_center' => '150',
+    'blockwidth_front' => '150',
+    'blockwidth_lower' => '150',
+    'blockwidth_bottom' => '150',
     'blockheight_left' => '',
     'blockheight_right' => '',
+    'blockheight_top' => '',
     'blockheight_center' => '',
     'blockheight_front' => '',
-    'blockheight_bottom' => '',
-    'blockheight_top' => '',
     'blockheight_lower' => '',
+    'blockheight_bottom' => '',
+    'panelstyle_left' => '0',
+    'panelstyle_right' => '0',
+    'panelstyle_top' => '0',
+    'panelstyle_upper' => '0',
+    'panelstyle_center' => '0',
+    'panelstyle_front' => '0',
+    'panelstyle_lower' => '0',
+    'panelstyle_bottom' => '0',
+    // Shoutbox
+    'show_shoutbox_smile' => '1',
+    'show_shoutbox_icons' => '1',
+    'shout_allow_links' => '0',
+    'shoutbox_usescroll' => '0',
+    'shoutbox_scrollduration' => '5',
+    'shoutbox_refresh' => '0',
+    'shout_submit_returnkey' => '0',
+    'shoutbox_limit' => '5',
+    'shoutbox_maxlength' => '256',
+    'shoutbox_timeformat' => 'Y M d H:i:s',
+    'shoutbox_use_groupcolor' => '1',
+    'shoutbox_textcolor' => '#000',
+    'shoutbox_timecolor' => '#787878',
+    'shoutbox_linecolor1' => '#f0f4f7',
+    'shoutbox_linecolor2' => '#fdfdfd',
+    'profile_shouts_hide' => '0',
+    // Other	
+    'bottombar' => '1',
+    'cat_list' => '1,2',
+    'featured_article' => '0',
+    'redirectforum' => '1',
+    'resp' => '0',
+    'rss_notitles' => '0',
+    'sitemap_items' => '3',
+    'temapaths' => '',
+    'userbox_options' => 'avatar,logged,time,unread,stats,online,stats_all',
+    // Downloads
+    'show_download' => '1',
+    'dl_allowed_types' => 'zip,rar,doc,docx,pdf,jpg,gif,png',
+    'dl_max_upload_size' => '2000',
+    'dl_fileprefix' => 'K',
+    'dl_usescreenshot' => '1',
+    'dl_screenshotsizes' => '80,80,200,200',
+    'dl_approve' => '1',
     'dl_createtopic' => 1,
     'dl_createtopic_boards' => '',
-    'art_imagesizes' => '80,40,400,200',
-    'dl_showstats' => '1',
-    'dl_showfeatured' => '1',
+    'dl_wysiwyg' => 'html',
     'dl_introtext' => '<p><strong>Welcome to the TinyPortal download manager!</strong></p>
 <p><br></p>
 <p>TPdownloads is a built-in function for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict membergroups access level for each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;Tinyportal &gt; Manage TPdownloads&quot; and select the [Settings] button.<br></p>
 <p>If you do not wish to use TPdownloads you can deactivate the function completely by setting the option "TPdownloads is NOT active" in the settings. The TPdownloads menu option will no longer be displayed in the menu when TPdownloads is deactivated.</p>
 <p><br></p>
 <p>We hope you enjoy using TinyPortal.&nbsp; If you have any problems, please feel free to <a href="https://www.tinyportal.net/index.php">ask us for assistance</a>.<br></p>
-<p><br>Thanks!<br>The TinyPortal team</p>',
+<p><br>Thanks!<br>The TinyPortal team</p>',	
+    'dl_showfeatured' => '1',
+    'dl_featured' => '',	
+    'dl_showlatest' => '1',
+    'dl_showstats' => '1',
     'dl_showcategorytext' => '1',
-    'dl_featured' => '',
-    'dl_wysiwyg' => 'html',
-    'oldsidebar' => '1',
-    'use_attachment' => '0',
-    'frontpage_template' => '',
-    // shoutbox settings
-	'shout_submit_returnkey' => '0',
-    'shoutbox_limit' => '5',
-    'guest_shout' => '0',
-    'shoutbox_usescroll' => '0',
-    'shoutbox_scrollduration' => '5',
-	'shoutbox_refresh' => '0',
-    'show_shoutbox_archive' => '50',
-    'show_shoutbox_smile' => '1',
-    'show_shoutbox_icons' => '1',
-    'profile_shouts_hide' => '0',
-    'shout_allow_links' => '0',
-	'shoutbox_timecolor' => '#787878',
-	'shoutbox_timeformat' => 'Y M d H:i:s',
-	'shoutbox_use_groupcolor' => '1',
-	'shoutbox_linecolor1' => '#f0f4f7',
-	'shoutbox_linecolor2' => '#fdfdfd',
-	'shoutbox_textcolor' => '#000',
-	'shoutbox_maxlength' => '256',
-    'frontpage_topics' => '',
-    'frontpage_title' => '',
-    'redirectforum' => '1',
-    'hideadminmenu' => '0',
-    'useroundframepanels' => '0',
-    'panelstyle_left' => '0',
-    'panelstyle_right' => '0',
-    'panelstyle_center' => '0',
-    'panelstyle_top' => '0',
-    'panelstyle_bottom' => '0',
-    'panelstyle_lower' => '0',
-    'panelstyle_upper' => '0',
-    'panelstyle_front' => '0',
-    'admin_showblocks' => '1',
-    'uselangoption' => '0',
-    'resp' => '0',
-    'copyrightremoval' => '',
-	'use_groupcolor' => '0',
-	'disable_template_eval' => '1',
-    'allow_links_article_comments' => '1',
-    'image_upload_path'     => $boarddir.'/tp-images/',
-    'download_upload_path'  => $boarddir.'/tp-downloads/',
-    'blockcode_upload_path' => $boarddir.'/tp-files/tp-blockcodes/',
-	'icon_max_size' => '500',
-    'icon_width' => '100',
-    'icon_height' => '100',
-	'boardnews_divheader' => 'cat_bar',
-	'boardnews_headerstyle' => 'catbg',
-	'boardnews_divbody' => 'windowbg noup',
-	
+    'dl_visual_options' => 'left,right,center,top',	
+    'dlmanager_theme' => '0',
+    'dl_allow_upload' => '1',
+    'dl_approve_groups' => '',
 );
 $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
@@ -691,7 +651,6 @@ if($updates > 0)
 	$render .= '
     <li>Settings table updated</li>
 	<li>Added '.$updates.' new setting(s)</li>';
-
 
 // convert empty blocks
 if($convertblocks)
@@ -781,6 +740,78 @@ if(isset($convertaccess))
 	$smcFunc['db_free_result']($request);
 }
 
+// Remove old settings from settings table
+$delete_settings_array = array(
+    'allowed_membergroups',
+    'approved_membergroups',
+    'article_layout',
+    'article_layout_width',
+    'article_layout_cols',
+    'articles_comment_captcha',
+    'dl_maxfiles',
+    'dl_total_items',
+    'dl_totalcats',
+    'dl_totalfiles',
+    'dl_upload_max',
+    'dl_uploadpath',
+    'fixed_width',
+    'front_module',
+    'guest_shout',
+    'hide_article_google',
+    'linkmanager_theme',
+    'margins',
+    'opt_wysiwyg',
+    'shoutbox_height',
+    'shoutbox_layout',
+    'shoutbox_scrolldelay',
+    'shoutbox_scrolldirection',
+    'shoutbox_scrolleasing',
+    'shoutbox_stitle',
+    'shoutbox_version',
+    'shoutbox_whisper',
+    'show_arcade',
+    'show_gallery',
+    'show_linkmanager',
+    'show_shoutbox_archive',
+    'show_teampage',
+    'tagboards',
+    'tagtopics',
+    'teampage_theme',
+    'temaer',
+    'temanames',
+    'topbar_align',
+    'tpgallery_theme',
+    'use_SSI',
+    'use_tpads',
+    'use_tpblog',
+    'use_tpfrontpage',
+    'use_tpgallery',
+    'use_tpmainmenu',
+);
+$deletes = 0;
+
+foreach($delete_settings_array as $what)
+{
+	$request = $smcFunc['db_query']('', '
+        SELECT * FROM {db_prefix}tp_settings
+        WHERE name = {string:name}',
+        array('name' => $what)
+    );
+	if($smcFunc['db_num_rows']($request) > 0) {
+		$smcFunc['db_query']('', '
+        DELETE FROM {db_prefix}tp_settings
+        WHERE name = {string:name}',
+        array('name' => $what)
+    );
+		$deletes++;
+	}
+	else
+		$smcFunc['db_free_result']($request);
+}
+if($deletes > 0)
+	$render .= '
+    <li>Settings table updated</li>
+	<li>Removed '.$deletes.' old setting(s)</li>';
 
 $render .= '</ul>
 		<hr><p>TinyPortal\'s table structure is now installed/updated. </p>
@@ -805,9 +836,8 @@ else
 function updateBlocks()
 {
 	global $smcFunc, $render;
-	// Update old column names
 
-    // fetch any comments
+    // update block order
     $request =  $smcFunc['db_query']('', '
         SELECT id, pos, bar 
         FROM {db_prefix}tp_blocks
@@ -851,6 +881,38 @@ function updateBlocks()
 	$smcFunc['db_free_result']($request);
 
 	$render .= '<li>Updated block order in blocks table</li>';
+	
+	// update Shoutbox blocks
+	   
+	// get the actual settings
+	$request = $smcFunc['db_query']('', '
+		SELECT value FROM {db_prefix}tp_settings
+		WHERE name = {string:value} LIMIT 1',
+		array('value' => 'shoutbox_height' )
+	);
+	if($smcFunc['db_num_rows']($request) > 0) {
+		$row = $smcFunc['db_fetch_assoc']($request);
+		$shoutbox_height = $row['value'];
+	}
+	
+	$request = $smcFunc['db_query']('', '
+		SELECT value FROM {db_prefix}tp_settings
+		WHERE name = {string:value} LIMIT 1',
+		array('value' => 'shoutbox_layout' )
+	);
+	if($smcFunc['db_num_rows']($request) > 0) {
+		$row = $smcFunc['db_fetch_assoc']($request);
+		$shoutbox_layout = $row['value'];
+	}
+	
+	$smcFunc['db_query']('', '
+		UPDATE {db_prefix}tp_blocks
+		SET type = {string:type}, body = {int:body}, settings = {string:settings}
+		WHERE type = 20',
+		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"0","var3":"' .(!empty($shoutbox_layout) ? $shoutbox_layout : '0'). '","var4":"' .(!empty($shoutbox_height) ? $shoutbox_height : '250'). '","var5":"99"}')
+	);
+
+	$render .= '<li>Updated shoutbox blocks</li>';
 }
 
 function updateDownLoads()
@@ -886,6 +948,8 @@ function updateShoutbox()
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value8');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sticky');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sticky_layout');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sitcky');
+    $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sitcky_layout');
 
 	$render .= '<li>Updated old columns in shoutbox table</li>';
 }
