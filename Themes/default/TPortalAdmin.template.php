@@ -2164,7 +2164,6 @@ function template_addblock()
 								<input type="radio" id="tp_addblock3" name="tp_addblock" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>
 								<input type="radio" id="tp_addblock7" name="tp_addblock" value="7" /><label for="tp_addblock7">' . $txt['tp-blocktype7'] . '</label><br>
 								<input type="radio" id="tp_addblock1" name="tp_addblock" value="1" /><label for="tp_addblock1">' . $txt['tp-blocktype1'] . '</label><br>
-								<input type="radio" id="tp_addblock20" name="tp_addblock" value="20" /><label for="tp_addblock20">' . $txt['tp-blocktype20'] . '</label><br>
 							</div>
 						</dd>
 					</dl>

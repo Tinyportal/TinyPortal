@@ -61,8 +61,6 @@ function TPblock($block, $theme, $side, $double=false)
 		}
 	} elseif ($block['type']=='shoutbox') {
         //debug_print_backtrace();
-	} elseif ($block['type']=='modulebox') {
-        //debug_print_backtrace();
 	} elseif ($block['type']=='html') {
 		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='phpbox') {
@@ -956,20 +954,6 @@ function TPortal_categorybox()
 		echo '</div>';
 	}
  }
-
-// blocktype 20: TP module
-function TPortal_modulebox($blockid)
-{
-	global $context;
-
-	// fetch the correct block
-	if(!empty($context['TPortal']['moduleid'])) {
-		$tpm = $context['TPortal']['moduleid'];
-		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
-			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']);
-        }
-	}
-}
 
 // dummy for old templates
 function TPortal_sidebar()

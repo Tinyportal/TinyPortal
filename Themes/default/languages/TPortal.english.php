@@ -262,7 +262,6 @@ $txt['tp-generalsettings'] = 'General settings';
 $txt['tp-haverated'] = 'You have rated.';
 $txt['tp-hide'] = 'Hide';
 $txt['tp-miscblocks'] = 'Menus';
-$txt['tp-modules'] = 'Modules';
 $txt['tp-morecategories'] = 'More';
 $txt['tp-myarticles'] = 'My articles';
 $txt['tp-newcomment'] = 'New comment';

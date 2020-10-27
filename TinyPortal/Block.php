@@ -82,7 +82,6 @@ class Block extends Base {
             17  => 'admin',
             18  => 'articlebox',
             19  => 'categorybox',
-            20  => 'modulebox',
         );
 
         $this->blockPanel = array(

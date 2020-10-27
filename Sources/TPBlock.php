@@ -169,9 +169,6 @@ function getBlocks() {{{
 					$fetch_article_titles[] = $row['body'];
                 }
 			}
-            elseif($row['type'] == TP_BLOCK_MODULEBOX) {
-                call_integration_hook('integrate_tp_blocks', array(&$row));
-            }
             elseif($row['type'] == TP_BLOCK_SHOUTBOX) {
                 call_integration_hook('integrate_tp_shoutbox', array(&$row));
             }
