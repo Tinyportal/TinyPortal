@@ -885,20 +885,31 @@ function updateBlocks()
 	// update Shoutbox blocks
 	   
 	// get the actual settings
-//	$request = $smcFunc['db_query']('', '
-//		SELECT value FROM {db_prefix}tp_settings
-//		WHERE name = shoutbox_height',
-//	);
-//	$request = $smcFunc['db_query']('', '
-//		SELECT value FROM {db_prefix}tp_settings
-//		WHERE name = shoutbox_layout',
-//	);
-
+	$request = $smcFunc['db_query']('', '
+		SELECT value FROM {db_prefix}tp_settings
+		WHERE name = {string:value} LIMIT 1',
+		array('value' => 'shoutbox_height' )
+	);
+	if($smcFunc['db_num_rows']($request) > 0) {
+		$row = $smcFunc['db_fetch_assoc']($request);
+		$shoutbox_height = $row['value'];
+	}
+	
+	$request = $smcFunc['db_query']('', '
+		SELECT value FROM {db_prefix}tp_settings
+		WHERE name = {string:value} LIMIT 1',
+		array('value' => 'shoutbox_layout' )
+	);
+	if($smcFunc['db_num_rows']($request) > 0) {
+		$row = $smcFunc['db_fetch_assoc']($request);
+		$shoutbox_layout = $row['value'];
+	}
+	
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_blocks
 		SET type = {string:type}, body = {int:body}, settings = {string:settings}
 		WHERE type = 20',
-		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"0","var3":"0","var4":"250","var5":"99"}')
+		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"0","var3":"' .(!empty($shoutbox_layout) ? $shoutbox_layout : '0'). '","var4":"' .(!empty($shoutbox_height) ? $shoutbox_height : '250'). '","var5":"99"}')
 	);
 
 	$render .= '<li>Updated shoutbox blocks</li>';
