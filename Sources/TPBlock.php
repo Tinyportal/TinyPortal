@@ -65,76 +65,7 @@ function getBlocks() {{{
 	// setup the containers
 	$blocks = $tpBlock->getBlockType(); 
 
-	// construct the spot we are in
-	$sqlarray = array();
-	// any action?
-	if(!empty($_GET['action'])) {
-		$sqlarray[] = 'actio=' . preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
-		if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2'))) {
-			$sqlarray[] = 'actio=forumall';
-        }
-	}
 
-	if(!empty($_GET['board'])) {
-		if(!isset($_GET['action'])) {
-			$sqlarray[] = 'board=-1';
-        }
-		$sqlarray[] = 'board=' . $_GET['board'];
-		$sqlarray[] = 'actio=forumall';
-	}
-
-	if(!empty($_GET['topic'])) {
-		if(!isset($_GET['action'])) {
-			$sqlarray[] = 'board=-1';
-        }
-		$sqlarray[] = 'topic=' . $_GET['topic'];
-		$sqlarray[] = 'actio=forumall';
-	}
-
-	if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
-        $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
-	}
-    
-	// frontpage
-	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
-	    $sqlarray[] = 'actio=frontpage';
-    }
-
-	$sqlarray[] = 'actio=allpages';
-	$sqlarray[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
-    $sqlarray[] = !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '';
-    
-    if(!empty($_GET['shout'])) {
-        $sqlarray[] = 'tpmod=shout';
-    }
-
-    $access = TPUtil::find_in_set($user_info['groups'], 'access');
-
-	if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
-		$access = '1=1';
-    }
-
-    $access2 = TPUtil::find_in_set($sqlarray, 'access2');
-    $access3 = '';
-    if(!empty($context['TPortal']['uselangoption'])) {
-        $access3 = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'access2');
-        if(isset($access3)) {
-            $access3 = ' AND '. $access3;
-        }
-    }
-
-	// get the blocks
-	$request = $smcFunc['db_query']('', '
-		SELECT * FROM {db_prefix}tp_blocks
-		WHERE off = 0
-		AND bar != {int:bar}
-		AND (' . $access2 . ')
-		AND ' . $access . ' ' . $access3 . '
-		ORDER BY bar, pos, id ASC',
-		array(
-			'bar' => 4,
-		)
-	);
 	$context['TPortal']['hide_frontbar_forum'] = 0;
 
 	$fetch_articles = array();
@@ -145,9 +76,10 @@ function getBlocks() {{{
         $count[$k] = 0;
     }
 
-	$panels = $tpBlock->getBlockBar(); 
-	if ($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
+	$panels             = $tpBlock->getBlockBar(); 
+    $availableBlocks    = $tpBlock->getBlockPermissions();
+	if (is_array($availableBlocks) & count($availableBlocks)) {
+        foreach($availableBlocks as $row) { 
             // decode the block settings
             $set = json_decode($row['settings'], true);
 			// some tests to minimize sql calls
@@ -179,25 +111,25 @@ function getBlocks() {{{
 				$can_edit = false;
             }
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
-				'frame' => $row['frame'],
-				'title' => strip_tags($row['title'], '<center>'),
-                'type' => $tpBlock->getBlockType($row['type']),
-				'body' => $row['body'],
-				'visible' => $row['visible'],
-				'var1' => $set['var1'],
-				'var2' => $set['var2'],
-				'var3' => $set['var3'],
-				'var4' => $set['var4'],
-				'var5' => $set['var5'],
-				'id' => $row['id'],
-				'lang' => $row['lang'],
-				'access2' => $row['access2'],
-				'can_edit' => $can_edit,
+				'frame'     => $row['frame'],
+				'title'     => strip_tags($row['title'], '<center>'),
+                'type'      => $tpBlock->getBlockType($row['type']),
+				'body'      => $row['body'],
+				'visible'   => $row['visible'],
+                'settings'  => $row['settings'],
+				'var1'      => $set['var1'],
+				'var2'      => $set['var2'],
+				'var3'      => $set['var3'],
+				'var4'      => $set['var4'],
+				'var5'      => $set['var5'],
+				'id'        => $row['id'],
+				'lang'      => $row['lang'],
+				'access2'   => $row['access2'],
+				'can_edit'  => $can_edit,
 				'can_manage' => $can_manage,
 			);
 			$count[$panels[$row['bar']]]++;
 		}
-		$smcFunc['db_free_result']($request);
 	}
 
     // if a block displays an article
@@ -281,7 +213,7 @@ function getBlocks() {{{
 	    $in_admin = true;
     }
 
-	if($context['TPortal']['action'] == 'tpmod' && isset($_GET['dl']) && substr($_GET['dl'], 0, 5) == 'admin') {
+	if($context['TPortal']['action'] == 'tportal' && isset($_GET['dl']) && substr($_GET['dl'], 0, 5) == 'admin') {
 		$in_admin = true;
 		$context['current_action'] = 'admin';
 	}
