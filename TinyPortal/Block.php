@@ -52,7 +52,7 @@ class Block extends Base {
             'body'          => 'text',
             'access'        => 'text',
             'bar'           => 'int',   // smallint
-            'pos'           => 'int',   
+            'pos'           => 'int',
             'off'           => 'int',   // smallint
             'visible'       => 'text',
             'lang'          => 'text',
@@ -61,9 +61,9 @@ class Block extends Base {
             'settings'      => 'text',
         );
 
-        $this->blockType = array( 
+        $this->blockType = array(
             0   => 'no',
-            1   => 'userbox', 
+            1   => 'userbox',
             2   => 'newsbox',
             3   => 'statsbox',
             4   => 'searchbox',
@@ -93,7 +93,7 @@ class Block extends Base {
             'lower',
             'front',
         );
-        
+
         $this->blockBar = array(
             1 => 'left',
             2 => 'right',
@@ -131,18 +131,18 @@ class Block extends Base {
         if(!empty($_GET['board'])) {
             if(!isset($_GET['action'])) {
                 $sqlarray[] = 'board=-1';
-            }   
-            $sqlarray[] = 'board=' . $_GET['board']; 
+            }
+            $sqlarray[] = 'board=' . $_GET['board'];
             $sqlarray[] = 'actio=forumall';
-        }       
+        }
 
         if(!empty($_GET['topic'])) {
             if(!isset($_GET['action'])) {
                 $sqlarray[] = 'board=-1';
-            }       
+            }
             $sqlarray[] = 'topic=' . $_GET['topic'];
             $sqlarray[] = 'actio=forumall';
-        }       
+        }
 
         if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
             $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
@@ -151,7 +151,7 @@ class Block extends Base {
         // frontpage
         if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
             $sqlarray[] = 'actio=frontpage';
-        }       
+        }
 
         $sqlarray[] = 'actio=allpages';
         $sqlarray[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
@@ -159,13 +159,13 @@ class Block extends Base {
 
         if(!empty($_GET['shout'])) {
             $sqlarray[] = 'tpmod=shout';
-        }           
+        }
 
         $access = Util::find_in_set($user_info['groups'], 'access');
 
         if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
             $access = '1=1';
-        }           
+        }
 
         $access2 = Util::find_in_set($sqlarray, 'access2');
         $access3 = '';
@@ -173,8 +173,8 @@ class Block extends Base {
             $access3 = Util::find_in_set(array('tlang='.$user_info['language']), 'access2');
             if(isset($access3)) {
                 $access3 = ' AND '. $access3;
-            }       
-        }           
+            }
+        }
 
         // get the blocks
         $request = $this->dB->db_query('', '
