@@ -205,13 +205,7 @@ function template_editblock()
 								<option value="13"' ,$context['TPortal']['blockedit']['type']=='13' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
 								<option value="3"' ,$context['TPortal']['blockedit']['type']=='3' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$context['TPortal']['blockedit']['type']=='7' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
-								<option value="1"' ,$context['TPortal']['blockedit']['type']=='1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>';
-		// theme hooks
-		if(function_exists('ctheme_tp_blocks'))
-		{
-			ctheme_tp_blocks('listblocktypes');
-		}
-		echo '
+								<option value="1"' ,$context['TPortal']['blockedit']['type']=='1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
 							</select>
 						</dd>
 						<dt>
@@ -591,14 +585,11 @@ function template_editblock()
 						</dd>
 					</dl>';
 			}
-			// theme hooks
-			elseif($context['TPortal']['blockedit']['type']>'50' && function_exists('ctheme_tp_blocks'))
-			{
-				ctheme_tp_blocks('blockoptions');
-			}
-			else
+			else {
 				echo '
 			</div><div>';
+            }
+
 			echo '
 					</div>
 				</div>
@@ -608,13 +599,14 @@ function template_editblock()
 					<br><input type="radio" id="tp_block_var5" name="tp_block_var5" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
 				<div class="panels-optionsbg">';
-			if(function_exists('ctheme_tp_getblockstyles'))
-				$types = ctheme_tp_getblockstyles();
-			if(TP_SMF21)
+			if(TP_SMF21) {
 				$types = tp_getblockstyles21();
-			else
+            }
+			else {
 				$types = tp_getblockstyles();
-			foreach($types as $blo => $bl)
+            }
+
+			foreach($types as $blo => $bl) {
 				echo '
 					<div class="panels-options">
 						<div>
@@ -623,6 +615,8 @@ function template_editblock()
 						' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
 						' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
 					</div>';
+            }
+
 			echo '
 						</div>
 					</div>
@@ -652,14 +646,13 @@ function template_editblock()
 							  <div class="tp_largelist">';
 			// loop through and set membergroups
 			$tg=explode(',',$context['TPortal']['blockedit']['access']);
-			if( !empty($context['TPmembergroups']))
-			{
-				foreach($context['TPmembergroups'] as $mg)
-				{
+			if( !empty($context['TPmembergroups'])) {
+				foreach($context['TPmembergroups'] as $mg) {
 					if($mg['posts']=='-1' && $mg['id']!='1'){
 						echo '<input type="checkbox" id="tp_group'.$mg['id'].'" name="tp_group'.$mg['id'].'" value="'.$context['TPortal']['blockedit']['id'].'"';
-						if(in_array($mg['id'],$tg))
+						if(in_array($mg['id'],$tg)) {
 							echo ' checked';
+                        }
 						echo '><label for="tp_group'.$mg['id'].'"> '.$mg['name'].'</label><br>';
 					}
 				}
@@ -705,8 +698,7 @@ function template_editblock()
 						<br></dd>
 						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . '';
 				// alert if the settings is off, supply link if allowed
-				if(empty($context['TPortal']['uselangoption']))
-				{
+				if(empty($context['TPortal']['uselangoption'])) {
 					echo '
 					<br><span class="error">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=settings#uselangoption">&nbsp;['. $txt['tp-settings'] .']&nbsp;</a>' : '' , '</span>';
 				}						
@@ -714,8 +706,7 @@ function template_editblock()
 					</dt>
 					<dd>';
 				$a=1;
-				foreach($context['TPortal']['langfiles'] as $bb => $lang)
-				{
+				foreach($context['TPortal']['langfiles'] as $bb => $lang) {
 					echo '
 							<input type="checkbox" id="langtype' . $a . '" name="langtype' . $a . '" value="'.$lang.'" ' , in_array($lang, $context['TPortal']['blockedit']['display']['lang']) ? 'checked="checked"' : '' , '><label for="langtype' . $a . '"> '.$lang.'</label><br>';
 					$a++;
@@ -723,8 +714,7 @@ function template_editblock()
 				echo ' </dd>
 					</dl>
 				</div>';
-		if($context['TPortal']['blockedit']['bar']!=4)
-		{
+		if($context['TPortal']['blockedit']['bar']!=4) {
 			// extended visible options
 				echo '
 					<div class="admintable">
