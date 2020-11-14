@@ -52,18 +52,18 @@ class Block extends Base {
             'body'          => 'text',
             'access'        => 'text',
             'bar'           => 'int',   // smallint
-            'pos'           => 'int',   
+            'pos'           => 'int',
             'off'           => 'int',   // smallint
             'visible'       => 'text',
             'lang'          => 'text',
-            'access2'       => 'text',
+            'display'       => 'text',
             'editgroups'    => 'text',
             'settings'      => 'text',
         );
 
-        $this->blockType = array( 
+        $this->blockType = array(
             0   => 'no',
-            1   => 'userbox', 
+            1   => 'userbox',
             2   => 'newsbox',
             3   => 'statsbox',
             4   => 'searchbox',
@@ -93,7 +93,7 @@ class Block extends Base {
             'lower',
             'front',
         );
-        
+
         $this->blockBar = array(
             1 => 'left',
             2 => 'right',
@@ -111,6 +111,95 @@ class Block extends Base {
             }
         }
 
+
+    }}}
+
+
+    public function getBlockPermissions( ) {{{
+        global $context, $user_info;
+
+        // construct the spot we are in
+        $sqlarray = array();
+        // any action?
+        if(!empty($_GET['action'])) {
+            $sqlarray[] = '' . preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
+            if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2'))) {
+                $sqlarray[] = 'forumall';
+            }
+        }
+
+        if(!empty($_GET['board'])) {
+            if(!isset($_GET['action'])) {
+                $sqlarray[] = 'board=-1';
+            }
+            $sqlarray[] = 'board=' . $_GET['board'];
+            $sqlarray[] = 'forumall';
+        }
+
+        if(!empty($_GET['topic'])) {
+            if(!isset($_GET['action'])) {
+                $sqlarray[] = 'board=-1';
+            }
+            $sqlarray[] = 'topic=' . $_GET['topic'];
+            $sqlarray[] = 'forumall';
+        }
+
+        if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
+            $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
+        }
+
+        // frontpage
+        if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
+            $sqlarray[] = 'frontpage';
+        }
+
+        $sqlarray[] = 'allpages';
+        $sqlarray[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
+        $sqlarray[] = !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '';
+
+        if(!empty($_GET['shout'])) {
+            $sqlarray[] = 'tpmod=shout';
+        }
+
+        $access = Util::find_in_set($user_info['groups'], 'access');
+
+        if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
+            $access = '1=1';
+        }
+
+        $display = Util::find_in_set($sqlarray, 'display');
+        $access3 = '';
+        if(!empty($context['TPortal']['uselangoption'])) {
+            $access3 = Util::find_in_set(array('tlang='.$user_info['language']), 'display');
+            if(isset($access3)) {
+                $access3 = ' AND '. $access3;
+            }
+        }
+
+        // get the blocks
+        $request = $this->dB->db_query('', '
+            SELECT * FROM {db_prefix}tp_blocks
+            WHERE off = 0
+            AND bar != {int:bar}
+            AND (' . $display . ')
+            AND ' . $access . ' ' . $access3 . '
+            ORDER BY bar, pos, id ASC',
+            array(
+                'bar' => 4,
+            )
+        );
+
+        $block = array();
+
+        if ($this->dB->db_num_rows($request) > 0) {
+		    while($row = $this->dB->db_fetch_assoc($request)) {
+                $blocks[] = $row;
+            }
+        }
+
+		$this->dB->db_free_result($request);
+
+        return $blocks;
 
     }}}
 

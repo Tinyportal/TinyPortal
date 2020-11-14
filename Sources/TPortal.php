@@ -1552,11 +1552,11 @@ function doTPfrontpage() {{{
 		$access = '1=1';
     }
 
-    $access2 = '';
+    $display = '';
     if(!empty($context['TPortal']['uselangoption'])) { 
-        $access2 = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'access2');
-        if(isset($access2)) {
-            $access2 = ' AND '. $access2;
+        $display = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'display');
+        if(isset($display)) {
+            $display = ' AND '. $display;
         }
     }
 
@@ -1566,7 +1566,7 @@ function doTPfrontpage() {{{
 		WHERE off = 0
 		AND bar = 4
 		AND '. $access .'
-		'.$access2. '
+		'.$display. '
 		ORDER BY pos,id ASC'
 	);
 
@@ -1624,7 +1624,7 @@ function doTPfrontpage() {{{
 				'var5' => $set['var5'],
 				'id' => $row['id'],
 				'lang' => $row['lang'],
-				'access2' => $row['access2'],
+				'display' => $row['display'],
 				'can_edit' => $can_edit,
 				'can_manage' => $can_manage,
 			);
