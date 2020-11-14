@@ -1807,11 +1807,6 @@ function doTPfrontpage() {{{
 function TPortal_panel($side) {{{
 	global $context, $scripturl, $settings;
 
-	if(function_exists('ctheme_tportal_panel')) {
-		ctheme_tportal_panel($side);
-		return;
-	}
-
 	// decide for $flow
 	$flow = $context['TPortal']['block_layout_' . $side];
 
