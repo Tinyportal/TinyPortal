@@ -114,7 +114,6 @@ class Block extends Base {
 
     }}}
 
-
     public function getBlockPermissions( ) {{{
         global $context, $user_info;
 
@@ -122,7 +121,7 @@ class Block extends Base {
         $sqlarray = array();
         // any action?
         if(!empty($_GET['action'])) {
-            $sqlarray[] = '' . preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
+            $sqlarray[] = preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
             if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2'))) {
                 $sqlarray[] = 'forumall';
             }
@@ -189,7 +188,7 @@ class Block extends Base {
             )
         );
 
-        $block = array();
+        $blocks = array();
 
         if ($this->dB->db_num_rows($request) > 0) {
 		    while($row = $this->dB->db_fetch_assoc($request)) {

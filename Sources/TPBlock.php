@@ -78,7 +78,7 @@ function getBlocks() {{{
 
 	$panels             = $tpBlock->getBlockBar(); 
     $availableBlocks    = $tpBlock->getBlockPermissions();
-	if (is_array($availableBlocks) & count($availableBlocks)) {
+	if (is_array($availableBlocks) && count($availableBlocks)) {
         foreach($availableBlocks as $row) { 
             // decode the block settings
             $set = json_decode($row['settings'], true);
@@ -233,6 +233,7 @@ function getBlocks() {{{
 			tp_hidebars($panel);
         }
 	}
+
 	$context['TPortal']['blocks'] = $blocks;
 
 }}}
