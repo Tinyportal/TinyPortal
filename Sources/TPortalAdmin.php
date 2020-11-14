@@ -2389,7 +2389,7 @@ function do_postchecks()
 						'off' => 'int',
 						'visible' => 'string',
 						'lang' => 'string',
-						'access2' => 'string',
+						'display' => 'string',
 						'editgroups' => 'string',
                         'settings' => 'string',
 					),
@@ -2404,7 +2404,7 @@ function do_postchecks()
 						1,
 						1,
 						$cp['lang'],
-						$cp['access2'],
+						$cp['display'],
 						$cp['editgroups'],
                         json_encode(array(
                             'var1' => json_decode($cp['settings'], true)['var1'],
@@ -2431,12 +2431,12 @@ function do_postchecks()
 						'off' => 'int',
 						'visible' => 'string',
 						'lang' => 'string',
-						'access2' => 'string',
+						'display' => 'string',
 						'editgroups' => 'string',
                         'settings' => 'string',
 					),
 					array(
-                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'actio=allpages', '', 
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages', '', 
                         json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')
@@ -2548,7 +2548,7 @@ function do_postchecks()
 				elseif(substr($what, 0, 12) == 'tp_editgroup')
 					$editgroups[] = substr($what, 12);
 				elseif(substr($what, 0, 10) == 'actiontype')
-					$access[] = 'actio=' . $value;
+					$access[] = '' . $value;
 				elseif(substr($what, 0, 9) == 'boardtype')
 					$access[] = 'board=' . $value;
 				elseif(substr($what, 0, 11) == 'articletype')
@@ -2565,7 +2565,7 @@ function do_postchecks()
 				{
 					$items = explode(',', $value);
 					foreach($items as $iti => $it)
-						$access[] = 'actio=' . $it;
+						$access[] = '' . $it;
 				}
 				elseif(substr($what, 0, 8) == 'tp_lang_')
 				{
@@ -2595,7 +2595,7 @@ function do_postchecks()
 			// construct the access++
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_blocks
-				SET	access2 = {string:acc2},
+				SET	display = {string:acc2},
 					access = {string:acc},
 					lang = {string:lang},
 					editgroups = {string:editgrp}

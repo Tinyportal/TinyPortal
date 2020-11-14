@@ -112,13 +112,13 @@ $tables = array(
 			array('name' => 'frame', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'title', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'body', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-			array('name' => 'access', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'bar', 'type' => 'smallint', 'size' => 4, 'default' => 0 ),
 			array('name' => 'pos', 'type' => 'int', 'size' => 11, 'default' => 0 ),
             array('name' => 'off', 'type' => 'smallint', 'size' => 1, 'default' => 0 ),
 			array('name' => 'visible', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'lang', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-			array('name' => 'access2', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+			array('name' => 'access', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
+			array('name' => 'display', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'editgroups', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'settings', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
         ),
@@ -652,27 +652,6 @@ if($updates > 0)
     <li>Settings table updated</li>
 	<li>Added '.$updates.' new setting(s)</li>';
 
-// convert empty blocks
-if($convertblocks)
-{
-	$smcFunc['db_query']('', '
-		UPDATE {db_prefix}tp_blocks
-		SET access2 = {string:access2}
-		WHERE access2 = \'\'',
-		array('access2' => 'actio=allpages')
-	);
-	$render .= '<li>Updated old blocks</li>';
-}
-
-// make sure access2 is comma separated
-$smcFunc['db_query']('', '
-	UPDATE {db_prefix}tp_blocks
-	SET access2 = REPLACE(access2, \'|\', \',\')
-	WHERE 1=1'
-);
-$render .= '<li>Updated access field of blocks</li>';
-
-
 if($convertblocks) {
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_variables
@@ -692,11 +671,11 @@ if($db_type == 'mysql') {
     articleUpdates();
 }
 
-// check if blocks access2 needs converting
+// check if blocks display needs converting
 if(isset($convertaccess))
 {
 	$request = $smcFunc['db_query']('', '
-		SELECT id ,access2 FROM {db_prefix}tp_blocks WHERE 1=1'
+		SELECT id ,display FROM {db_prefix}tp_blocks WHERE 1=1'
 	);
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
@@ -705,7 +684,7 @@ if(isset($convertaccess))
 		{
 			unset($new);
 			$new = array();
-			$a = explode('|', $row['access2']);
+			$a = explode('|', $row['display']);
 			if(count($a) > 1)
 			{
 				foreach($a as $b => $what)
@@ -724,15 +703,15 @@ if(isset($convertaccess))
 				}
 			}
 			else
-				$new[] = $row['access2'];
+				$new[] = $row['display'];
 
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_blocks
-				SET access2 = {string:access2}
+				SET display = {string:display}
 				WHERE id = {int:blockid}',
 				array(
 					'blockid' => $row['id'],
-					'access2' => count($new) > 1 ? implode(',', $new) : $new[0],
+					'display' => count($new) > 1 ? implode(',', $new) : $new[0],
 				)
 			);
 		}
@@ -835,7 +814,33 @@ else
 
 function updateBlocks()
 {
-	global $smcFunc, $render;
+	global $smcFunc, $render, $db_type;
+
+    $smcFunc['db_change_column']('{db_prefix}tp_blocks', 'access2', array( 'name' => 'display', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')));
+
+	$smcFunc['db_query']('', '
+		UPDATE {db_prefix}tp_blocks
+		SET display = {string:display}
+		WHERE display = \'\'',
+		array( 'display' => 'allpages')
+	);
+	$render .= '<li>Updated old blocks</li>';
+
+    // make sure display is comma separated
+    $smcFunc['db_query']('', '
+        UPDATE {db_prefix}tp_blocks
+        SET display = REPLACE(display, \'|\', \',\')
+        WHERE 1=1'
+    );
+    $render .= '<li>Changed | to , in display field of blocks</li>';
+
+    // make sure display is comma separated
+    $smcFunc['db_query']('', '
+        UPDATE {db_prefix}tp_blocks
+        SET display = REPLACE(display, \'actio=\', \'\')
+        WHERE 1=1'
+    );
+    $render .= '<li>Removed action= from display field of blocks</li>';
 
     // update block order
     $request =  $smcFunc['db_query']('', '
@@ -1098,13 +1103,13 @@ function addDefaults()
                 'frame' => 'theme',
                 'title' => 'Search',
                 'body' => '',
-                'access' => '-1,0,1,2,3',
                 'bar' => 1,
                 'pos' => 0,
                 'off' => 0,
                 'visible' => '',
                 'lang' => '',
-                'access2' => 'actio=allpages',
+                'access' => '-1,0,1,2,3',
+                'display' => 'allpages',
                 'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
@@ -1113,13 +1118,13 @@ function addDefaults()
                 'frame' => 'theme',
                 'title' => 'User',
                 'body' => '',
-                'access' => '-1,0,1,2,3',
                 'bar' => 1,
                 'pos' => 1,
                 'off' => 0,
                 'visible' => '',
                 'lang' => '',
-                'access2' => 'actio=allpages',
+                'access' => '-1,0,1,2,3',
+                'display' => 'allpages',
                 'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
@@ -1128,13 +1133,13 @@ function addDefaults()
                 'frame' => 'theme',
                 'title' => 'Shoutbox',
                 'body' => '',
-                'access' => '-1,0,1,2,3',
                 'bar' => 1,
                 'pos' => 2,
                 'off' => 0,
                 'visible' => '',
                 'lang' => '',
-                'access2' => 'actio=allpages',
+                'access' => '-1,0,1,2,3',
+                'display' => 'allpages',
                 'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
             ), 
@@ -1143,13 +1148,13 @@ function addDefaults()
                 'frame' => 'theme',
                 'title' => 'Recent',
                 'body' => '10',
-                'access' => '-1,0,1,2,3',
                 'bar' => 2,
                 'pos' => 0,
                 'off' => 0,
                 'visible' => '',
                 'lang' => '',
-                'access2' => 'actio=allpages',
+                'access' => '-1,0,1,2,3',
+                'display' => 'allpages',
                 'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
@@ -1158,13 +1163,13 @@ function addDefaults()
                 'frame' => 'theme',
                 'title' => 'Stats',
                 'body' => '10',
-                'access' => '-1,0,1,2,3',
                 'bar' => 2,
                 'pos' => 1,
                 'off' => 0,
                 'visible' => '',
                 'lang' => '',
-                'access2' => 'actio=allpages',
+                'access' => '-1,0,1,2,3',
+                'display' => 'allpages',
                 'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
@@ -1173,13 +1178,13 @@ function addDefaults()
                 'frame' => 'theme',
                 'title' => 'Online',
                 'body' => '',
-                'access' => '-1,0,1,2,3',
                 'bar' => 3,
                 'pos' => 0,
                 'off' => 0,
                 'visible' => '0',
                 'lang' => '',
-                'access2' => 'actio=allpages',
+                'access' => '-1,0,1,2,3',
+                'display' => 'allpages',
                 'editgroups' => '-2',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
@@ -1192,13 +1197,13 @@ function addDefaults()
                 'frame' => 'string',
                 'title' => 'string',
                 'body' => 'string',
-                'access' => 'string',
                 'bar' => 'int',
                 'pos' => 'int',
                 'off' => 'int',
                 'visible' => 'string',
                 'lang' => 'string',
-                'access2' => 'string',
+                'access' => 'string',
+                'display' => 'string',
                 'editgroups' => 'string',
                 'settings' => 'string',
             ),

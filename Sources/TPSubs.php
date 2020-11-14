@@ -1596,7 +1596,7 @@ function get_blockaccess($what, $front = false, $whichbar)
     foreach($levels as $level => $code){
 		$precode = substr($code,0, 6);
 		$body = explode(",", substr($code, 6));
-		if($precode == 'actio=')
+		if($precode == '')
 		{
 			// special case for frontpage
 			if(in_array('frontpage', $body) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))

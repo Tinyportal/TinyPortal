@@ -124,7 +124,7 @@ function getBlocks() {{{
 				'var5'      => $set['var5'],
 				'id'        => $row['id'],
 				'lang'      => $row['lang'],
-				'access2'   => $row['access2'],
+				'display'   => $row['display'],
 				'can_edit'  => $can_edit,
 				'can_manage' => $can_manage,
 			);
@@ -389,8 +389,8 @@ function adminBlocks() {{{
                         'var1' => $set['var1'],
                         'var2' => $set['var2'],
                         'lang' => $row['lang'],
-                        'access2' => $row['access2'],
-                        'loose' => $row['access2'] != '' ? true : false,
+                        'display' => $row['display'],
+                        'loose' => $row['display'] != '' ? true : false,
                         'editgroups' => $row['editgroups']
                     );
                 }
@@ -474,17 +474,17 @@ function editBlock( $block_id = 0 ) {{{
 
     $row = $tpBlock->getBlock($block_id);
     if(is_array($row)) {
-		$acc2 = explode(',', $row['access2']);
+		$acc2 = explode(',', $row['display']);
 		$context['TPortal']['blockedit'] = $row;
 		$context['TPortal']['blockedit']['var1']    = json_decode($row['settings'],true)['var1'];
 		$context['TPortal']['blockedit']['var2']    = json_decode($row['settings'],true)['var2'];
 		$context['TPortal']['blockedit']['var3']    = json_decode($row['settings'],true)['var3'];
 		$context['TPortal']['blockedit']['var4']    = json_decode($row['settings'],true)['var4'];
 		$context['TPortal']['blockedit']['var5']    = json_decode($row['settings'],true)['var5'];
-		$context['TPortal']['blockedit']['access22'] = $context['TPortal']['blockedit']['access2'];
+		$context['TPortal']['blockedit']['display2'] = $context['TPortal']['blockedit']['display'];
 		$context['TPortal']['blockedit']['body'] = $row['body'];
-		unset($context['TPortal']['blockedit']['access2']);
-		$context['TPortal']['blockedit']['access2'] = array(
+		unset($context['TPortal']['blockedit']['display']);
+		$context['TPortal']['blockedit']['display'] = array(
 			'action' => array(),
 			'board' => array(),
 			'page' => array(),
@@ -496,22 +496,22 @@ function editBlock( $block_id = 0 ) {{{
 		);
 
 		foreach($acc2 as $ss => $svalue) {
-			if(substr($svalue, 0, 6)== 'actio=')
-				$context['TPortal']['blockedit']['access2']['action'][]=substr($svalue,6);
-			elseif(substr($svalue, 0,6) == 'board=')
-				$context['TPortal']['blockedit']['access2']['board'][] = substr($svalue,6);
+			if(substr($svalue, 0,6) == 'board=')
+				$context['TPortal']['blockedit']['display']['board'][]  = substr($svalue,6);
 			elseif(substr($svalue, 0, 6) == 'tpage=')
-				$context['TPortal']['blockedit']['access2']['page'][]  = substr($svalue,6);
+				$context['TPortal']['blockedit']['display']['page'][]   = substr($svalue,6);
 			elseif(substr($svalue, 0, 6) == 'tpcat=')
-				$context['TPortal']['blockedit']['access2']['cat'][] = substr($svalue,6);
+				$context['TPortal']['blockedit']['display']['cat'][]    = substr($svalue,6);
 			elseif(substr($svalue, 0, 6) == 'tpmod=')
-				$context['TPortal']['blockedit']['access2']['tpmod'][] = substr($svalue,6);
+				$context['TPortal']['blockedit']['display']['tpmod'][]  = substr($svalue,6);
 			elseif(substr($svalue, 0, 6) == 'tlang=')
-				$context['TPortal']['blockedit']['access2']['lang'][] = substr($svalue,6);
+				$context['TPortal']['blockedit']['display']['lang'][]   = substr($svalue,6);
 			elseif(substr($svalue, 0, 6) == 'dlcat=')
-				$context['TPortal']['blockedit']['access2']['dlcat'][] = substr($svalue,6);
+				$context['TPortal']['blockedit']['display']['dlcat'][]  = substr($svalue,6);
 			elseif(substr($svalue, 0, 6) == 'custo=')
-				$context['TPortal']['blockedit']['access2']['custo'] = substr($svalue,6);
+				$context['TPortal']['blockedit']['display']['custo']    = substr($svalue,6);
+            else
+				$context['TPortal']['blockedit']['display']['action'][] = $svalue;
 		}
 
 		// Add in BBC editor before we call in template so the headers are there
