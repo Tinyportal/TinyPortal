@@ -116,87 +116,116 @@ class Block extends Base {
 
     public function getBlockPermissions( ) {{{
         global $context, $user_info;
+        
+        $blocks = array();
 
-        // construct the spot we are in
-        $sqlarray = array();
-        // any action?
+        $activeBlocks = $this->getActiveBlocks();
+        foreach($activeBlocks as $block) {
+            // Check group access      
+            if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
+                
+            } 
+            else if(in_array($user_info['groups'], explode(',', $block['access']))) {
+                continue;
+            }
+
+            // check page settings
+            $display = explode(',', $block['display']);
+            if( $this->checkDisplayBlock( $display ) !== TRUE ) {
+                continue;
+            }
+
+            $blocks[] = $block;
+        }
+
+        return $blocks;
+
+    }}}
+
+    public function checkDisplayBlock( $display ) {{{
+        global $context, $user_info;
+
+        $permissions    = array();
+        $permissions[]  = 'allpages';
+
         if(!empty($_GET['action'])) {
-            $sqlarray[] = preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
+            $permissions[] = preg_replace('/[^A-Za-z0-9]/', '', $_GET['action']);
             if(in_array($_GET['action'], array('forum', 'collapse', 'post', 'calendar', 'search', 'login', 'logout', 'register', 'unread', 'unreadreplies', 'recent', 'stats', 'pm', 'profile', 'post2', 'search2', 'login2'))) {
-                $sqlarray[] = 'forumall';
+                $permissions[] = 'forumall';
             }
         }
 
         if(!empty($_GET['board'])) {
             if(!isset($_GET['action'])) {
-                $sqlarray[] = 'board=-1';
+                $permissions[] = 'board=-1';
             }
-            $sqlarray[] = 'board=' . $_GET['board'];
-            $sqlarray[] = 'forumall';
+            $permissions[] = 'board=' . $_GET['board'];
+            $permissions[] = 'forumall';
         }
 
         if(!empty($_GET['topic'])) {
             if(!isset($_GET['action'])) {
-                $sqlarray[] = 'board=-1';
+                $permissions[] = 'board=-1';
             }
-            $sqlarray[] = 'topic=' . $_GET['topic'];
-            $sqlarray[] = 'forumall';
+            $permissions[] = 'topic=' . $_GET['topic'];
+            $permissions[] = 'forumall';
         }
 
         if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
-            $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
+            $permissions[] = 'dlcat=' . substr($_GET['dl'], 3);
         }
 
         // frontpage
         if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
-            $sqlarray[] = 'frontpage';
+            $permissions[] = 'frontpage';
         }
 
-        $sqlarray[] = 'allpages';
-        $sqlarray[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
-        $sqlarray[] = !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '';
+        $permissions[] = 'allpages';
+        $permissions[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
+        $permissions[] = !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '';
 
         if(!empty($_GET['shout'])) {
-            $sqlarray[] = 'tpmod=shout';
+            $permissions[] = 'tpmod=shout';
         }
 
-        $access = Util::find_in_set($user_info['groups'], 'access');
+        $check = FALSE;
 
-        if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
-            $access = '1=1';
-        }
-
-        $display = Util::find_in_set($sqlarray, 'display');
-        $access3 = '';
-        if(!empty($context['TPortal']['uselangoption'])) {
-            $access3 = Util::find_in_set(array('tlang='.$user_info['language']), 'display');
-            if(isset($access3)) {
-                $access3 = ' AND '. $access3;
+        foreach($permissions as $permission) {
+            if(in_array($permission, $display)) {
+                // Is the language option enabled also?
+                if(!empty($context['TPortal']['uselangoption'])) {
+                    if(in_array('tlang='.$user_info['language'], $display)) {
+                        $check = TRUE;
+                    }
+                }
+                else {
+                    $check = TRUE;
+                }
             }
         }
 
-        // get the blocks
-        $request = $this->dB->db_query('', '
-            SELECT * FROM {db_prefix}tp_blocks
-            WHERE off = 0
-            AND bar != {int:bar}
-            AND (' . $display . ')
-            AND ' . $access . ' ' . $access3 . '
-            ORDER BY bar, pos, id ASC',
-            array(
-                'bar' => 4,
-            )
-        );
+        return $check;
+
+    }}}
+
+    public function getActiveBlocks( ) {{{
 
         $blocks = array();
 
-        if ($this->dB->db_num_rows($request) > 0) {
-		    while($row = $this->dB->db_fetch_assoc($request)) {
-                $blocks[] = $row;
+        $request =  $this->dB->db_query('', '
+            SELECT * FROM {db_prefix}tp_blocks
+            WHERE off = {int:off}
+            ORDER BY bar, pos, id ASC',
+            array( 'off' => 0 )
+        );
+
+        if($this->dB->db_num_rows($request) > 0) {
+            while ( $block = $this->dB->db_fetch_assoc($request) ) {
+                $blocks[] = $block;
             }
         }
 
-		$this->dB->db_free_result($request);
+        $this->dB->db_free_result($request);
 
         return $blocks;
 
