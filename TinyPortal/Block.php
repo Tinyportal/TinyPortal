@@ -192,13 +192,15 @@ class Block extends Base {
 
         foreach($permissions as $permission) {
             if(in_array($permission, $display)) {
-                $check = TRUE;
-            }
-        }
-
-        if(!empty($context['TPortal']['uselangoption'])) {
-            if(in_array('tlang='.$user_info['language'], $display)) {
-                $check = TRUE;
+                // Is the language option enabled also?
+                if(!empty($context['TPortal']['uselangoption'])) {
+                    if(in_array('tlang='.$user_info['language'], $display)) {
+                        $check = TRUE;
+                    }
+                }
+                else {
+                    $check = TRUE;
+                }
             }
         }
 
