@@ -143,8 +143,49 @@ class Block extends Base {
     }}}
 
     public function checkDisplayBlock( $display ) {{{
-        global $context, $user_info;
+        global $context, $user_info, $maintenance;
 
+        // if we are in maintance mode, just hide panels
+        if (!empty($maintenance) && !allowedTo('admin_forum')) {
+            return FALSE;
+        }
+
+        // for some very large forum sections, give the option to hide bars
+        if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile') {
+            return FALSE;
+        }
+        else if($context['TPortal']['hidebars_pm'] == '1' && $context['TPortal']['action'] == 'pm') {
+            return FALSE;
+        }
+        else if($context['TPortal']['hidebars_calendar'] == '1' && $context['TPortal']['action'] == 'calendar') {
+            return FALSE;
+        }
+        else if($context['TPortal']['hidebars_search'] == '1' && in_array($context['TPortal']['action'], array('search', 'search2'))) {
+            return FALSE;
+        }
+        else if($context['TPortal']['hidebars_memberlist'] == '1' && $context['TPortal']['action'] == 'mlist') {
+            return FALSE;
+        }
+
+        // if custom actions is specified, hide panels there as well
+        if(!empty($context['TPortal']['hidebars_custom'])) {
+            $cactions = explode(',', $context['TPortal']['hidebars_custom']);
+            if(in_array($context['TPortal']['action'], $cactions)) {
+                return FALSE;
+            }
+        }
+
+        // finally..wap modes should not display the bars
+        if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode'])) {
+            return FALSE;
+        }
+
+        // maybe we are at the password pages?
+        if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2'))) {
+            return FALSE;
+        }
+
+        // Now we can actually check the block permissions
         $permissions    = array();
         $permissions[]  = 'allpages';
 
