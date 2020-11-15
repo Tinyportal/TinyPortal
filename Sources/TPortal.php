@@ -154,8 +154,6 @@ function TPortal_init() {{{
     require_once(SOURCEDIR.'/TPBlock.php');
 	getBlocks();
 
-	// determine which sidebars to hide
-	tpWhichHideBars();
 	// Load the stylesheet stuff
 	tpLoadCSS();
 
@@ -180,51 +178,6 @@ function TPortal_init() {{{
     }
 
     call_integration_hook('integrate_tp_post_init');
-
-}}}
-
-function tpWhichHideBars() {{{
-	global $maintenance, $context;
-
-	// if we are in maintance mode, just hide panels
-	if (!empty($maintenance) && !allowedTo('admin_forum')) {
-		tp_hidebars('all');
-    }
-		
-	// for some very large forum sections, give the option to hide bars
-	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile') {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_pm'] == '1' && $context['TPortal']['action'] == 'pm') {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_calendar'] == '1' && $context['TPortal']['action'] == 'calendar') {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_search'] == '1' && in_array($context['TPortal']['action'], array('search', 'search2'))) {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_memberlist'] == '1' && $context['TPortal']['action'] == 'mlist') {
-		tp_hidebars('all');
-    }
-
-	// if custom actions is specified, hide panels there as well
-	if(!empty($context['TPortal']['hidebars_custom'])) {
-		$cactions = explode(',', $context['TPortal']['hidebars_custom']);
-		if(in_array($context['TPortal']['action'], $cactions)) {
-			tp_hidebars('all');
-        }
-	}
-
-	// finally..wap modes should not display the bars
-	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode'])) {
-		tp_hidebars('all');
-    }
-
-	// maybe we are at the password pages?
-	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2'))) {
-		tp_hidebars('all');
-    }
 
 }}}
 
