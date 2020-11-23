@@ -4,7 +4,7 @@
 	<name>TinyPortal</name>
 	<id>bloc:tinyportal</id>
 	<type>modification</type>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 
 	<install for="2.0 - 2.0.99">
 		<redirect url="">Installed!</redirect>
