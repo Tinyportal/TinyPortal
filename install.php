@@ -433,9 +433,10 @@ $request = $smcFunc['db_query']('', '
 
 $row = $smcFunc['db_fetch_assoc']($request);
 if(isset($row['value'])) {
-    if($row['value'] < 104)
+	$version = preg_replace("/[^0-9]/", "", $row['value'] );
+    if($version < 104)
         $convertblocks = true;
-    if($row['value'] < 1090)
+    if($version < 1090)
         $convertaccess = true;
 }
 
