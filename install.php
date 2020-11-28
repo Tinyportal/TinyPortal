@@ -593,6 +593,8 @@ $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
 $barskey = array_keys($bars);
 
+$updateSettings = array( 'userbox_options', 'image_upload_path', 'download_upload_path', 'blockcode_upload_path' );
+
 foreach($settings_array as $what => $val)
 {
 	$request = $smcFunc['db_query']('', '
@@ -619,7 +621,7 @@ foreach($settings_array as $what => $val)
 		$render .= '<li>Updated internal version number to '.$val.'</li>';
 		$smcFunc['db_free_result']($request);
 	}
-	elseif($smcFunc['db_num_rows']($request) > 0 && $what == 'userbox_options'){
+	elseif($smcFunc['db_num_rows']($request) > 0 && in_array($what, $updateSettings)){
 		$smcFunc['db_query']('', '
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
@@ -644,8 +646,9 @@ foreach($settings_array as $what => $val)
             array('val' => '0', 'name' => $bars[$what])
         );
     }
-	else
+	else {
 		$smcFunc['db_free_result']($request);
+    }
 }
 if($updates > 0)
 	$render .= '
