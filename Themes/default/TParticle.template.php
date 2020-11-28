@@ -29,7 +29,8 @@ function template_submitarticle()
 	    $mg = $context['TPortal']['editarticle'];
     }
     else {
-        $mg = false;
+        // Set some defaults
+        $mg = array( 'off' => 1, 'id' => '', 'body' => '', 'subject' => '', 'shortname' => '', 'useintro' => 0, 'date' => time(), 'intro' => '');
     }
 
 	if(!isset($context['TPortal']['category_name'])) {
