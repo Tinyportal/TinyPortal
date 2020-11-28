@@ -34,16 +34,18 @@ class Integrate
 			'~^action=tpmod;dl=get([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=get%2$s',
 		);
 
-		foreach ($paths as $route => $destination) {
-			if (preg_match($route, $_SERVER['QUERY_STRING'], $matches)) {
-				if (count($matches) > 1) {
-                    $matches[0] = $boardurl;
-					$newUrl     = vsprintf($destination, $matches);
-                    header("Location: $newUrl", true, 301);
-                    exit;
-				}
-			}
-		}
+        if(is_array($_SERVER) && isset($_SERVER['QUERY_STRING'])) {
+            foreach ($paths as $route => $destination) {
+                if (preg_match($route, $_SERVER['QUERY_STRING'], $matches)) {
+                    if (count($matches) > 1) {
+                        $matches[0] = $boardurl;
+                        $newUrl     = vsprintf($destination, $matches);
+                        header("Location: $newUrl", true, 301);
+                        exit;
+                    }
+                }
+            }
+        }
 
 
         // We need to load our autoloader outside of the main function    
