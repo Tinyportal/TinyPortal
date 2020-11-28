@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -275,7 +275,7 @@ function template_settings()
 					<dd>
                         <input type="checkbox" id="tp_disable_template_eval" name="tp_disable_template_eval" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
 					</dd>';
-/* Disabled for 2.0.0 to be completed later
+/* Disabled for 2.0.1 to be completed later
                     <dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-imageuploadpathdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
 					</dt>
