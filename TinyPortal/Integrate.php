@@ -278,11 +278,7 @@ class Integrate
         }
 
 
-<<<<<<< HEAD
         $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.1.0</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
-=======
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.0.1</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
->>>>>>> master/master
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;

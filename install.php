@@ -427,24 +427,8 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-<<<<<<< HEAD
     'version' => '2.1.0',
     'frontpage_title' => '',
-=======
-    'version' => '2.0.1',
-    'padding' => '4',
-    'margins' => '2',
-    'leftbar_width' => '200',
-    'rightbar_width' => '230',
-    'use_SSI' => '1',
-    'frontpage_limit' => '5',
-    'SSI_board' => '1',
-    'temapaths' => '',
-    'showtop' => '1',
-    'frontpage_limit_len' => '300',
-    'featured_article' => '0',
-    'front_type' => 'forum_articles',
->>>>>>> master/master
     'showforumfirst' => '0',
     'hideadminmenu' => '0',
     'useroundframepanels' => '0',
