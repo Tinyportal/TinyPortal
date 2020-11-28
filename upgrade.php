@@ -4,7 +4,7 @@
  *
  * @package TinyPortal
  * @version 2.1.0
- * @author tino - http://www.tinyportal.net
+ * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
  *
