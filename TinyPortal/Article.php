@@ -476,7 +476,7 @@ class Article extends Base
     }}}
 
 	public function getForumPosts( $post_ids ) {{{
-		global $context, $memberContext, $txt, $scripturl, $smcFunc;
+		global $context, $memberContext, $txt, $scripturl;
 
 		$forumPosts = $posts = array();
 		// ok we got the post ids now, fetch each one, forum first
@@ -535,7 +535,7 @@ class Article extends Base
 				}
 
 				$length = $context['TPortal']['frontpage_limit_len'];
-				if (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
+				if (!empty($length) && strlen($row['body']) > $length)
 				{
 					if(Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
 						$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
