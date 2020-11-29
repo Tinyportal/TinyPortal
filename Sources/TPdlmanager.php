@@ -1188,7 +1188,7 @@ function TPortalDLManager()
 						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'description' => $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
