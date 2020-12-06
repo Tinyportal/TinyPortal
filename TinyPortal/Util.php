@@ -197,11 +197,14 @@ class Util
 
                     // check that no html has been cut off
                     if(self::isHTML($string)) {
+                        // Change the newlines back to <br>
+                        $string = str_ireplace("\r\n", '<br>', $string);
+
                         $reachedLimit   = false;
                         $totalLen       = 0;
                         $toRemove       = array();
 
-                        $dom = new \DomDocument();
+                        $dom = new \DomDocument('1.0', 'UTF-8');
 
 						// set error level
 						$internalErrors = libxml_use_internal_errors(true);
@@ -222,6 +225,7 @@ class Util
                         if(($pos = strpos($tmpString, '<html><body>')) !== FALSE) {
                             $tmpString = substr($tmpString, $pos + 12);
                         }
+
                     }
                     
                     // Assign it back to the string
