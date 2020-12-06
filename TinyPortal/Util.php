@@ -166,14 +166,16 @@ class Util
 
     public static function shortenString(&$string, $length) {{{
 
-        if(!empty($length)) { 
+        $shorten = FALSE;
 
+        if(!empty($length)) {
             // Remove all the entities and change them to a space..
             $string     = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
             // Change all the new lines to \r\n
             $string     = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), "\r\n", $string);
             
             if( self::strlen($string) > $length ) {
+                $shorten    = TRUE;
                 // Now we can find the closest space character
                 $cutOffPos  = max(mb_strpos($string, ' ', $length), mb_strpos($string, '>', $length));
                 if($cutOffPos !== false) {
@@ -229,11 +231,9 @@ class Util
 
             // Change the newlines back to <br>
             $string = str_ireplace("\r\n", '<br>', $string);
-
-            return true;
         }
 
-        return false;
+        return $shorten;
 
     }}}
 
@@ -275,7 +275,7 @@ class Util
     }}} 
 
     public static function isHTML( $string ) {{{
-
+        
         // Remove any HTML which might be in bbc html tags for this check, this means bbc with html will break the shortenString function
         $string = preg_replace('/\[([html]+?)\](.+?)\[\/\1\]/', '', $string);
 
