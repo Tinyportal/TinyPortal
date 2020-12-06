@@ -167,6 +167,7 @@ class Util
     public static function shortenString(&$string, $length) {{{
 
         if(!empty($length)) { 
+
             // Remove all the entities and change them to a space..
             $string     = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
             // Change all the new lines to \r\n
@@ -215,6 +216,10 @@ class Util
                         }
 
                         $tmpString = $dom->saveHTML();
+                        // Strip out the doctype and html body
+                        if(($pos = strpos($tmpString, '<html><body>')) !== FALSE) {
+                            $tmpString = substr($tmpString, $pos + 12);
+                        }
                     }
                     
                     // Assign it back to the string
