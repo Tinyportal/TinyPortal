@@ -1121,6 +1121,7 @@ code.bbc_code {
 	-moz-hyphens: none;
 	-webkit-hyphens: none;
 	hyphens: none;
+	word-break: break-word;
 	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
