@@ -1,17 +1,19 @@
 <?php
 /**
+ * @package TinyPortal
+ * @version 2.0.1
+ * @author tino - https://www.tinyportal.net
+ * @founder Bloc
+ * @license MPL 2.0
+ *
  * Handles all TinyPortal Util operations
  *
- * @name      	TinyPortal
- * @package 	TPBase
- * @copyright 	TinyPortal
- * @license   	MPL 1.1
+ * The contents of this file are subject to the Mozilla Public License Version 2.0
+ * (the "License"); you may not use this package except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
  *
- * This file contains code covered by:
- * author: tinoest - https://tinoest.co.uk
- * license: BSD-3-Clause 
- *
- * @version 1.0.0
+ * Copyright (C) 2020 - The TinyPortal Team
  *
  */
 namespace TinyPortal;

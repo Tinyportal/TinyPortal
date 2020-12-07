@@ -1,5 +1,5 @@
 <info>
-TinyPortal BlockCode file for 2.0.1
+TinyPortal BlockCode file for 2.0.0
 format: Boardmod
 </info>
 
@@ -84,5 +84,5 @@ function asingleshout($row)
 
 <description>
 Show a single latest shout or x latest shouts.
-TinyPortal 2.0.1 version 
+TinyPortal 2.0.0 version 
 </description>
