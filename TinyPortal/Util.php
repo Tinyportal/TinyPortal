@@ -1,17 +1,18 @@
 <?php
 /**
- * Handles all TinyPortal Util operations
+ * @package TinyPortal
+ * @version 2.0.1
+ * @author tino - https://www.tinyportal.net
+ * @founder Bloc
+ * @license MPL 2.0
  *
- * @name      	TinyPortal
- * @package 	TPBase
- * @copyright 	TinyPortal
- * @license   	MPL 1.1
+ * Handles all TinyPortal Util operations
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause 
  *
- * @version 1.0.0
+ * Copyright (C) 2020 - The TinyPortal Team
  *
  */
 namespace TinyPortal;
