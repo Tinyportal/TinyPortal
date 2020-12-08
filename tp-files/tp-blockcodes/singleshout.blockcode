@@ -83,11 +83,6 @@ function asingleshout($row)
 </code>
 
 <description>
-<<<<<<< HEAD
 Show a single latest shout or n latest shouts.
 TinyPortal 2.1.0 version 
-=======
-Show a single latest shout or x latest shouts.
-TinyPortal 2.0.0 version 
->>>>>>> master/master
 </description>
