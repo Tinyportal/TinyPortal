@@ -1,8 +1,8 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
- * @author tino - http://www.tinyportal.net
+ * @version 2.0.1
+ * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
  *
@@ -209,8 +209,8 @@ function TPSearchArticle()
 				$row['body'] = strip_tags($row['body']);
 			}
 
-			$row['subject'] = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
-			$row['body']    = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+			$row['subject'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
+			$row['body']    = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 			$context['TPortal']['searchresults'][]=array(
 				'id' 		=> $row['id'],
 				'date' 		=> $row['date'],

@@ -2,7 +2,7 @@
 /**
  * @package TinyPortal
  * @version 2.0.1
- * @author tino - http://www.tinyportal.net
+ * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
  *
