@@ -3,11 +3,7 @@
  * install.php
  *
  * @package TinyPortal
-<<<<<<< HEAD
- * @version 2.1.0
-=======
  * @version 2.0.1
->>>>>>> master/master
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
