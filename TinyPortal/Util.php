@@ -1,17 +1,23 @@
 <?php
 /**
+ * @package TinyPortal
+ * @version 2.1.0
+ * @author tinoest - https://www.tinyportal.net
+ * @founder Bloc
+ * @license MPL 2.0
+ *
  * Handles all TinyPortal Util operations
  *
- * @name      	TinyPortal
- * @package 	TPBase
- * @copyright 	TinyPortal
- * @license   	MPL 1.1
+ * The contents of this file are subject to the Mozilla Public License Version 2.0
+ * (the "License"); you may not use this package except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Copyright (C) 2020 - The TinyPortal Team
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause 
- *
- * @version 1.0.0
  *
  */
 namespace TinyPortal;
@@ -166,13 +172,16 @@ class Util
 
     public static function shortenString(&$string, $length) {{{
 
-        if(!empty($length)) { 
+        $shorten = FALSE;
+
+        if(!empty($length)) {
             // Remove all the entities and change them to a space..
             $string     = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
             // Change all the new lines to \r\n
             $string     = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), "\r\n", $string);
             
             if( self::strlen($string) > $length ) {
+                $shorten    = TRUE;
                 // Now we can find the closest space character
                 $cutOffPos  = max(mb_strpos($string, ' ', $length), mb_strpos($string, '>', $length));
                 if($cutOffPos !== false) {
@@ -194,11 +203,14 @@ class Util
 
                     // check that no html has been cut off
                     if(self::isHTML($string)) {
+                        // Change the newlines back to <br>
+                        $string = str_ireplace("\r\n", '<br>', $string);
+
                         $reachedLimit   = false;
                         $totalLen       = 0;
                         $toRemove       = array();
 
-                        $dom = new \DomDocument();
+                        $dom = new \DomDocument('1.0', 'UTF-8');
 
 						// set error level
 						$internalErrors = libxml_use_internal_errors(true);
@@ -215,6 +227,11 @@ class Util
                         }
 
                         $tmpString = $dom->saveHTML();
+                        // Strip out the doctype and html body
+                        if(($pos = strpos($tmpString, '<html><body>')) !== FALSE) {
+                            $tmpString = substr($tmpString, $pos + 12);
+                        }
+
                     }
                     
                     // Assign it back to the string
@@ -224,11 +241,9 @@ class Util
 
             // Change the newlines back to <br>
             $string = str_ireplace("\r\n", '<br>', $string);
-
-            return true;
         }
 
-        return false;
+        return $shorten;
 
     }}}
 
@@ -270,7 +285,7 @@ class Util
     }}} 
 
     public static function isHTML( $string ) {{{
-       
+
         // Remove any HTML which might be in bbc html tags for this check, this means bbc with html will break the shortenString function
         $string = preg_replace('/\[([html]+?)\](.+?)\[\/\1\]/', '', $string);
 
