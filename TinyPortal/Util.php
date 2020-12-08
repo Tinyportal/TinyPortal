@@ -2,7 +2,7 @@
 /**
  * @package TinyPortal
  * @version 2.0.1
- * @author tino - https://www.tinyportal.net
+ * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
  *
@@ -14,6 +14,10 @@
  * http://www.mozilla.org/MPL/
  *
  * Copyright (C) 2020 - The TinyPortal Team
+ *
+ * This file contains code covered by:
+ * author: tinoest - https://tinoest.co.uk
+ * license: BSD-3-Clause 
  *
  */
 namespace TinyPortal;
