@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.0.1
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -181,12 +181,12 @@ function articleShowComments() {{{
     }
 
     // construct the pages
-    $context['TPortal']['pageindex'] = TPageIndex($scripturl.'?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
-    $context['TPortal']['unreadcomments'] = true;
-    $context['TPortal']['showall'] = $showall;
-    $context['TPortal']['sub_template'] = 'showcomments';
+    $context['TPortal']['pageindex']        = TPageIndex($scripturl.'?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
+    $context['TPortal']['unreadcomments']   = true;
+    $context['TPortal']['showall']          = $showall;
     TPadd_linktree($scripturl.'?action=tportal;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
     loadTemplate('TParticle');
+    $context['sub_template'] = 'showcomments';
     if(loadLanguage('TParticle') == false) {
         loadLanguage('TParticle', 'english');
     };
@@ -242,7 +242,7 @@ function articleEditComment() {{{
                     'title' => $row['value1'],
                     'body' => $row['value2'],
                 );
-                $context['TPortal']['sub_template'] = 'editcomment';
+                $context['sub_template'] = 'editcomment';
                 loadTemplate('TParticle');
                 if(loadLanguage('TParticle') == false) {
                     loadLanguage('TParticle', 'english');
