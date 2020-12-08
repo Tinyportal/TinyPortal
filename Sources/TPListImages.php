@@ -1,11 +1,17 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.0.0
- * @author tinoest
- * @license BSD 3
+ * @version 2.0.0
+ * @author tino - https://www.tinyportal.net
+ * @founder Bloc
+ * @license MPL 2.0
  *
- * Copyright (C) 2019 - tinoest
+ * The contents of this file are subject to the Mozilla Public License Version 2.0
+ * (the "License"); you may not use this package except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Copyright (C) 2020 - The TinyPortal Team
  *
  */
 
