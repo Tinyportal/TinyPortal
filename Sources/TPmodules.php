@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.8
+ * @version 1.6.9
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -594,8 +594,8 @@ function TPmodules()
 				else
 					$row['body'] = strip_tags($row['body']);
 
-				$row['subject'] = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
-				$row['body']    = preg_replace('/'.preg_quote($what).'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+				$row['subject'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
+				$row['body']    = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 				$context['TPortal']['searchresults'][]=array(
 					'id' => $row['id'],
 					'date' => $row['date'],
