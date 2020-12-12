@@ -106,8 +106,12 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 
 	loadLanguage('TPdlmanager');
 
+    $upload = TPUpload::getInstance();
+
 	// add prefix
-	$sname = $prefix.$name;
+    $name   = $_FILES[$widthhat]['name'];
+    $name   = $upload->check_filename($name);
+	$sname  = $prefix.$name;
 
     if(is_dir($destdir)) {
         $dstPath = $destdir . '/' . $sname;
@@ -123,16 +127,18 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
         $exts = explode(',', $exts);
     }
 
-    $upload = TPUpload::getInstance();
     $upload->set_mime_types($exts);
+    if($upload->check_file_exists($dstPath)) {
+        $dstPath = dirname($dstPath) . '/' . $prefix . $upload->generate_filename(dirname($dstPath)) . $sname;
+    }
+
     if($upload->upload_file($_FILES[$widthhat]['tmp_name'], $dstPath) === FALSE) {
 		unlink($_FILES[$widthhat]['tmp_name']);
         $error_string = sprintf($txt['tp-dlnotuploaded'], $upload->get_error(TRUE));
 		fatal_error($error_string, false);
     }
 
-	return $sname;
-
+	return basename($dstPath);
 }
 
 function tp_groups()

@@ -180,6 +180,44 @@ class Upload
 
     }}}
 
+    public function check_directory_exists( string $directory ) {{{
+
+        if(!is_dir($directory)) {
+            return FALSE;
+        }
+
+        return TRUE;
+    }}}
+
+    public function check_file_exists( string $filename ) {{{
+
+        if(!file_exists($filename)) {
+            return FALSE;
+        }
+
+        return TRUE;
+
+    }}}
+
+    public function generate_filename( string $directory ) {{{
+    
+        $conflict = TRUE;
+
+        if(!self::check_directory_exists($directory)) {
+            self::set_error(201);
+            return FALSE;
+        }
+
+        $generated_filename = sha1(mt_rand(1, 9999) . uniqid()) . time();
+        if(self::check_file_exists($directory . '/' . $generated_filename) === TRUE) {
+            self::set_error(202);
+            return FALSE;
+        }
+
+        return $generated_filename;
+
+    }}}
+
     public function upload_file( string $source, string $destination ) {{{
 
         // Check File Exists
@@ -221,8 +259,23 @@ class Upload
             return FALSE;
         }
 
-        return move_uploaded_file($source, $destination);
+        $handle     = fopen($source, 'r+b');
+        $resource   = fopen($destination, 'w+b');
+        if(stream_copy_to_stream($handle, $resource) === FALSE) {
+            fclose($resource);
+            fclose($handle);
+            // Let's try move instead
+            if(move_uploaded_file($source, $destination) != TRUE) {
+                self::set_error(107);
+                return FALSE;
+            }
+        }
+        else {
+            fclose($handle);
+            fclose($resource);
+        }
 
+        return TRUE;
     }}}
 
     public function move_file( string $source, string $destination ) {{{
@@ -248,6 +301,7 @@ class Upload
         }
 
         return TRUE;
+
     }}}
 
 }
