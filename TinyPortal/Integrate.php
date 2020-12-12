@@ -171,6 +171,7 @@ class Integrate
         define('BOARDDIR', $boarddir);
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
+        define('LANGUAGEDIR', $boarddir . '/Themes/default/languages'); 
         define('TPVERSION', 'v210');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);
