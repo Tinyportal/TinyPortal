@@ -232,7 +232,22 @@ class Upload
 
     public function remove_file( string $filename ) {{{
 
+        if(!file_exists($filename)) {
+            self::set_error(801);
+            return FALSE;
+        }
 
+        if(!is_writable($filename)) {
+            self::set_error(802);
+            return FALSe;
+        }
+
+        if(unlink($filename) == FALSE) {
+            self::set_error(803);
+            return FALSE;
+        }
+
+        return TRUE;
     }}}
 
 }
