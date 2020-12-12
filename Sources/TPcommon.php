@@ -15,6 +15,7 @@
  *
  */
 use \TinyPortal\Util as TPUtil;
+use \TinyPortal\Upload as TPUpload;
 
 if (!defined('SMF')) {
 	die('Hacking attempt...');
@@ -105,51 +106,6 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 
 	loadLanguage('TPdlmanager');
 
-	// check that nothing happended
-	if(!file_exists($_FILES[$widthhat]['tmp_name']) || !is_uploaded_file($_FILES[$widthhat]['tmp_name'])) {
-		fatal_error($txt['tp-dlnotuploaded'], false);
-    }
-
-    if(is_null($maxsize)) {
-        $maxsize = 1800;
-    }
-    
-    if(is_null($exts)) {
-        $exts = 'jpg,gif,png';
-    }
-
-	// process the file
-	$filename=$_FILES[$widthhat]['name'];
-	$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-	$name = strtr($name, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
-	$name = preg_replace(array('/\s/', '/[^\w_\.\-]/'), array('_', ''), $name);
-
-	$filesize = filesize($_FILES[$widthhat]['tmp_name']);
-	if($filesize > (1024 * $maxsize)) {
-		unlink($_FILES[$widthhat]['tmp_name']);
-		fatal_error($txt['tp-dlmaxerror'] . $maxsize. $txt['tp-kb'], false);
-	}
-
-	// check the extension
-	$allowed = explode(',', $exts);
-	$match = false;
-	foreach($allowed as $extension => $value) {
-		$ext = '.'.$value;
-		$extlen = strlen($ext);
-		if(strtolower(substr($name, strlen($name)-$extlen, $extlen)) == strtolower($ext))
-			$match = true;
-	}
-
-	if(!$match) {
-		unlink($_FILES[$widthhat]['tmp_name']);
-		fatal_error($txt['tp-dlallowedtypes'] . ': ' . $exts, false);
-	}
-
-	// check that no other file exists with same name
-	if(file_exists($boarddir.'/'.$destdir.'/'.$name)) {
-		$name = time().$name;
-    }
-
 	// add prefix
 	$sname = $prefix.$name;
 
@@ -160,12 +116,22 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
         $dstPath = $boarddir . '/'. $destdir .'/' . $sname;
     }
 
-	if(move_uploaded_file($_FILES[$widthhat]['tmp_name'], $dstPath  )) {
-		return $sname;
+    if(is_null($exts)) {
+        $exts = array('jpg', 'gif', 'png');
     }
-	else {
-		return;
+    elseif(is_string($exts)) {
+        $exts = explode(',', $exts);
     }
+
+    $upload = TPUpload::getInstance();
+    $upload->set_mime_types($exts);
+    if($upload->upload_file($_FILES[$widthhat]['tmp_name'], $dstPath) === FALSE) {
+		unlink($_FILES[$widthhat]['tmp_name']);
+        $error_string = sprintf($txt['tp-dlnotuploaded'], $upload->get_error(TRUE));
+		fatal_error($error_string, false);
+    }
+
+	return $sname;
 
 }
 

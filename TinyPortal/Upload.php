@@ -27,6 +27,60 @@ class Upload
     private $errors             = array();
     private $max_file_size      = 1024;
     private $allowed_chars      = "a-z0-9_.-";
+    private $mime_types         = array(
+        'txt' => 'text/plain',
+        'htm' => 'text/html',
+        'html' => 'text/html',
+        'php' => 'text/html',
+        'css' => 'text/css',
+        'js' => 'application/javascript',
+        'json' => 'application/json',
+        'xml' => 'application/xml',
+        'swf' => 'application/x-shockwave-flash',
+        'flv' => 'video/x-flv',
+
+        // images
+        'png' => 'image/png',
+        'jpe' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'jpg' => 'image/jpeg',
+        'gif' => 'image/gif',
+        'bmp' => 'image/bmp',
+        'ico' => 'image/vnd.microsoft.icon',
+        'tiff' => 'image/tiff',
+        'tif' => 'image/tiff',
+        'svg' => 'image/svg+xml',
+        'svgz' => 'image/svg+xml',
+
+        // archives
+        'zip' => 'application/zip',
+        'rar' => 'application/x-rar-compressed',
+        'exe' => 'application/x-msdownload',
+        'msi' => 'application/x-msdownload',
+        'cab' => 'application/vnd.ms-cab-compressed',
+
+        // audio/video
+        'mp3' => 'audio/mpeg',
+        'qt' => 'video/quicktime',
+        'mov' => 'video/quicktime',
+
+        // adobe
+        'pdf' => 'application/pdf',
+        'psd' => 'image/vnd.adobe.photoshop',
+        'ai' => 'application/postscript',
+        'eps' => 'application/postscript',
+        'ps' => 'application/postscript',
+
+        // ms office
+        'doc' => 'application/msword',
+        'rtf' => 'application/rtf',
+        'xls' => 'application/vnd.ms-excel',
+        'ppt' => 'application/vnd.ms-powerpoint',
+
+        // open office
+        'odt' => 'application/vnd.oasis.opendocument.text',
+        'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+    );
 
     public static function getInstance() {{{
 	
@@ -43,42 +97,50 @@ class Upload
 
     private function set_error( int $err_num ) {{{
 
-        $errors[] = $err_num;
+        $this->errors[] = $err_num;
 
     }}}
 
-    public function get_error( void ) {{{
+    public function get_error( bool $last = FALSE ) {{{
 
-        return $errros;
+        if($last === TRUE) {
+            return end($this->errors);
+        }
+        else {
+            return $this->errors;
+        }
 
     }}}
 
-    public function clear_error( void ) {{{
+    public function clear_error( ) {{{
 
-        $errors = array();
+        $this->errors = array();
 
     }}}
 
     public function set_mime_types( array $mime_types, bool $reset = FALSE ) {{{
 
-        if($reset === FALSE) {
-            $allowed_mime_types = array_merge($allowed_mime_types, $mime_types);
+        if($reset === TRUE) {
+            $this->allowed_mime_types = array();
         }
-        else {
-            $allowed_mime_types = $mime_types;
+
+        foreach($mime_types as $type) {
+            if(array_key_exists($type, $this->mime_types)) {
+                $this->allowed_mime_types[] = $this->mime_types[$type];
+            }
         }
 
     }}}
 
     public function set_max_file_size( int $file_size ) {{{
     
-        $max_file_size = $file_size;
+        $this->max_file_size = $file_size;
 
     }}}
 
     public function set_allowed_chars( string $chars ) {{{
 
-        $allowed_chars = $chars;
+        $this->allowed_chars = $chars;
 
     }}}
 
@@ -94,8 +156,12 @@ class Upload
         elseif(function_exists('mime_content_type')) {
             $mime_type = mime_content_type($filename);
         }
-        
-        if(in_array($mime_type, $allowed_mime_types) {
+
+        if(!empty($mime_type) && strpos($mime_type, ';')) {
+            list($mime_type, ) = explode(';', $mime_type);
+        }
+
+        if(in_array($mime_type, $this->allowed_mime_types)) {
             return TRUE;
         }
 
@@ -110,7 +176,7 @@ class Upload
 
     public function check_filename( string $filename ) {{{
 
-        return preg_replace('/[^'.self::allowed_chars.']/i', "_", $filename)
+        return preg_replace('/[^'.$this->allowed_chars.']/i', "_", $filename);
 
     }}}
 
@@ -140,13 +206,18 @@ class Upload
         }
 
         // Check destination exists
-        if(!is_dir($destination)) {
+        if(!is_dir(dirname($destination))) {
             self::set_error(104);
             return FALSE;
         }
 
-        if(!is_writeable($destination)) {
+        if(!is_writeable(dirname($destination))) {
             self::set_error(105);
+            return FALSE;
+        }
+
+        if(is_file($destination)) {
+            self::set_error(106);
             return FALSE;
         }
 
