@@ -98,7 +98,17 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
 	loadLanguage('TPdlmanager');
 
     $upload = TPUpload::getInstance();
-    $upload->set_max_file_size($maxsize);
+
+    if(!is_null($maxsize)) {
+        $upload->set_max_file_size($maxsize);
+    }
+
+    if(is_null($exts)) {
+        $exts = array('jpg', 'gif', 'png');
+    }
+    elseif(is_string($exts)) {
+        $exts = explode(',', $exts);
+    }
     $upload->set_mime_types($exts);
 
 	// add prefix
@@ -111,13 +121,6 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
     }
     else { 
         $dstPath = $boarddir . '/'. $destdir .'/' . $sname;
-    }
-
-    if(is_null($exts)) {
-        $exts = array('jpg', 'gif', 'png');
-    }
-    elseif(is_string($exts)) {
-        $exts = explode(',', $exts);
     }
 
     if($upload->check_file_exists($dstPath)) {

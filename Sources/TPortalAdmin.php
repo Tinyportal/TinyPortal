@@ -1622,6 +1622,15 @@ function do_postchecks()
 						}
 					}
 					// END  non responsive themes form
+                    if($what == 'tp_image_upload_path') {
+                        if(strcmp($context['TPortal']['image_upload_path'],$value) != 0) {
+                            if(tp_create_dir($value)) {
+                                tp_recursive_copy($context['TPortal']['image_upload_path'],$value);
+                                tp_delete_dir($context['TPortal']['image_upload_path']);
+                                $updateArray['image_upload_path'] = $value;
+                            }
+                        }
+                    }
 				}
 			}
 
@@ -2749,7 +2758,7 @@ function get_catnames()
 	}
 }
 
-function tp_create_dir( $path ) {{{
+function tp_create_dir($path) {{{
     global $sourcedir;
 
     require_once($sourcedir . '/Subs-Package.php');
@@ -2758,11 +2767,42 @@ function tp_create_dir( $path ) {{{
     create_chmod_control();
 
     if (!mktree($path, 0755)) {
-        deltree($path, false);
+        deltree($path, true);
         fatal_error($txt['tp-failedcreatedir'], false);
     }
 
-    return;
+    return TRUE;
+}}}
+
+function tp_delete_dir($path) {{{
+    global $sourcedir;
+
+    require_once($sourcedir . '/Subs-Package.php');
+
+    // Load up the package FTP information?
+    create_chmod_control();
+
+    deltree($path, true);
+
+    return TRUE;
+}}}
+
+function tp_recursive_copy($src, $dst) {{{
+
+    $dir = opendir($src);
+    tp_create_dir($dst);
+    while(false !== ($file = readdir($dir)) ) {
+        if(($file != '.') && ($file != '..')) {
+            if(is_dir($src . '/' . $file)) {
+                tp_recursive_copy($src . '/' . $file,$dst . '/' . $file);
+            }
+            else {
+                copy($src . '/' . $file,$dst . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
+
 }}}
 
 ?>

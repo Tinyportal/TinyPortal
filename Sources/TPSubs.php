@@ -885,16 +885,12 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 
 
 	// only if you can edit your own articles
-	if($upload && allowedTo('tp_editownarticle'))
-	{
+	if($upload && allowedTo('tp_editownarticle')) {
 		// fetch all images you have uploaded
 		$imgfiles = array();
-		if ($handle = opendir($context['TPortal']['image_upload_path'].'thumbs'))
-		{
-			while (false !== ($file = readdir($handle)))
-			{
-				if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_'.$user_info['id'].'uid')
-				{
+		if ($handle = opendir($context['TPortal']['image_upload_path'].'thumbs')) {
+			while (false !== ($file = readdir($handle))) {
+				if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_'.$user_info['id'].'uid') {
 					$imgfiles[($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
 				}
 			}
@@ -907,11 +903,12 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $sho
 		<div class="windowbg2 smalltext tp_pad">' , $txt['tp-quicklist2'] , '</div>
 		<div class="windowbg tpquicklist">
 		<div class="tpthumb">';
-		if(isset($imgs))
-		{
-			foreach($imgs as $im)
-				echo '<img src="'.$boardurl.'/tp-images/', substr($im,6) , '"  alt="'.substr($im,6).'" title="'.substr($im,6).'" />';
+		if(isset($imgs)) {
+			foreach($imgs as $im) {
+				echo '<img src="', str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']), substr($im,6) , '"  alt="'.substr($im,6).'" title="'.substr($im,6).'" />';
+            }
 		}
+
 		echo '
 		</div>
 		</div>
