@@ -199,7 +199,8 @@ function TPSearchArticle()
 	);
 	if($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			if($row['type'] == 'bbc') {
+			TPUtil::shortenString($row['body'], 300);
+            if($row['type'] == 'bbc') {
 				$row['body'] = parse_bbc($row['body']);
 			}
 			elseif($row['type'] == 'php') {
@@ -216,7 +217,7 @@ function TPSearchArticle()
 				'date' 		=> $row['date'],
 				'views' 	=> $row['views'],
 				'subject' 	=> $row['subject'],
-				'body' 		=> TPUtil::shortenString($row['body'], 300),
+				'body' 		=> $row['body'],
 				'author' 	=> '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 			);
 		}
