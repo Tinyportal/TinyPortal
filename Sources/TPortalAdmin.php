@@ -1623,11 +1623,18 @@ function do_postchecks()
 					}
 					// END  non responsive themes form
                     if($what == 'tp_image_upload_path') {
+                        unset($updateArray['image_upload_path']);
                         if(strcmp($context['TPortal']['image_upload_path'],$value) != 0) {
-                            if(tp_create_dir($value)) {
-                                tp_recursive_copy($context['TPortal']['image_upload_path'],$value);
-                                tp_delete_dir($context['TPortal']['image_upload_path']);
-                                $updateArray['image_upload_path'] = $value;
+                            // Only allow if part of the boarddir
+                            if(strncmp($value, $boarddir, strlen($boarddir)) == 0) {
+                                // It cann't be part of the existing path
+                                if(strncmp($value, $context['TPortal']['image_upload_path'], strlen($context['TPortal']['image_upload_path'])) != 0) {
+                                    if(tp_create_dir($value)) {
+                                        tp_recursive_copy($context['TPortal']['image_upload_path'], $value);
+                                        tp_delete_dir($context['TPortal']['image_upload_path']);
+                                        $updateArray['image_upload_path'] = $value;
+                                    }
+                                }
                             }
                         }
                     }
