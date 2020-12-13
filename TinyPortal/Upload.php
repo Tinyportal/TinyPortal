@@ -170,8 +170,11 @@ class Upload
 
     public function check_file_size( string $filename ) {{{
 
-        
+        if(filesize($filename) > ( 1024 * $this->max_file_size)) {
+            return FALSE;
+        }
 
+        return TRUE;
     }}}
 
     public function check_filename( string $filename ) {{{
@@ -238,15 +241,21 @@ class Upload
         }
 
         // Check mime type is allowed
+        if(!self::check_file_size($source)) {
+            self::set_error(104);
+            return FALSE;
+        }
+
+        // Check mime type is allowed
         if(!self::check_mime_type($source)) {
-            self::set_error(103);
+            self::set_error(104);
             return FALSE;
         }
 
         if(!self::move_file($source, $destination)) {
             // Let's try move instead
             if(move_uploaded_file($source, $destination) != TRUE) {
-                self::set_error(107);
+                self::set_error(105);
                 return FALSE;
             }
         }
