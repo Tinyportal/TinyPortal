@@ -3,7 +3,7 @@
  * Handles all TinyPortal Database operations
  *
  * @name      	TinyPortal
- * @package 	TPBase
+ * @package 	Database
  * @copyright 	TinyPortal
  * @license   	MPL 1.1
  *
@@ -11,7 +11,7 @@
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause 
  *
- * @version 1.0.0
+ * @version 2.1.0
  *
  */
 namespace TinyPortal;
@@ -65,6 +65,7 @@ class Database
 		return false;
 
 	}}}
+
 }
 
 ?>
