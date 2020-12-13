@@ -594,7 +594,7 @@ $updates = 0;
 $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' => 'topbar', 'centerpanel' => 'centerbar', 'bottompanel' => 'bottombar', 'lowerpanel' => 'lowerbar');
 $barskey = array_keys($bars);
 
-$updateSettings = array( 'userbox_options', 'image_upload_path', 'download_upload_path', 'blockcode_upload_path' );
+$updateSettings = array( 'userbox_options', 'download_upload_path', 'blockcode_upload_path' );
 
 foreach($settings_array as $what => $val)
 {
