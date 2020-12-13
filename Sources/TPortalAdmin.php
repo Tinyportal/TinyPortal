@@ -2748,4 +2748,23 @@ function get_catnames()
 		$smcFunc['db_free_result']($request);
 	}
 }
+
+function tp_create_dir( $path ) {{{
+    global $sourcedir;
+    
+    require_once($sourcedir . '/Subs-Package.php');
+
+    // Load up the package FTP information?
+    create_chmod_control();
+
+    if (!mktree($path, 0755)) {
+        deltree($path, false);
+        fatal_error($txt['tp-failedcreatedir'], false);
+    }
+
+    die;
+
+    return;
+}}}
+
 ?>
