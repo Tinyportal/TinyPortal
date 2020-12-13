@@ -178,7 +178,7 @@ function TPSearchArticle()
 	$context['TPortal']['searchpage']       = $start;
 	$now        = forum_time();
 	$request    = $smcFunc['db_query']('', '
-        SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
+        SELECT a.id, a.date, a.views, a.subject, a.body AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
         FROM {db_prefix}tp_articles AS a
         LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
         WHERE {raw:query}
@@ -216,7 +216,7 @@ function TPSearchArticle()
 				'date' 		=> $row['date'],
 				'views' 	=> $row['views'],
 				'subject' 	=> $row['subject'],
-				'body' 		=> $row['body'],
+				'body' 		=> TPUtil::shortenString($row['body'], 300),
 				'author' 	=> '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 			);
 		}
