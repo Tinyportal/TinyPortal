@@ -32,21 +32,18 @@ function TPCommonActions(&$subActions) {{{
 
 }}}
 
-function tp_createthumb($picture, $width, $height, $thumb)
-{
+function tp_createthumb($picture, $width, $height, $thumb) {{{
 
 	//code modified from http://www.akemapa.com/2008/07/10/php-gd-resize-transparent-image-png-gif/
 	//Check if GD extension is loaded
-	if (!extension_loaded('gd') && !extension_loaded('gd2'))
-	{
+	if (!extension_loaded('gd') && !extension_loaded('gd2')) {
 		trigger_error("GD is not loaded", E_USER_WARNING);
 		return false;
 	}
 
 	//Get Image size info
 	$pictureInfo = getimagesize($picture);
-	switch ($pictureInfo[2])
-	{
+	switch ($pictureInfo[2]) {
 		case 1: $im = imagecreatefromgif($picture); break;
 		case 2: $im = imagecreatefromjpeg($picture);  break;
 		case 3: $im = imagecreatefrompng($picture); break;
@@ -54,33 +51,29 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	}
 
 	//If image dimension is smaller, do not resize
-	if ($pictureInfo[0] <= $width && $pictureInfo[1] <= $height)
-	{
+	if ($pictureInfo[0] <= $width && $pictureInfo[1] <= $height) {
 		$nHeight = $pictureInfo[1];
 		$nWidth = $pictureInfo[0];
 	}
-	else
-	{
+	else {
 		//yeah, resize it, but keep it proportional
 		if ($width/$pictureInfo[0] > $height/$pictureInfo[1]) {
 			$nWidth = $width;
 			$nHeight = $pictureInfo[1]*($width/$pictureInfo[0]);
 		}
-		else
-		{
+		else {
 			$nWidth = $pictureInfo[0]*($height/$pictureInfo[1]);
 			$nHeight = $height;
 		}
 	}
 
-	$nWidth = round($nWidth);
-	$nHeight = round($nHeight);
+	$nWidth     = round($nWidth);
+	$nHeight    = round($nHeight);
 
 	$newpicture = imagecreatetruecolor($nWidth, $nHeight);
 
 	/* Check if this image is PNG or GIF, then set if Transparent*/
-	if(($pictureInfo[2] == 1) OR ($pictureInfo[2]==3))
-	{
+	if(($pictureInfo[2] == 1) OR ($pictureInfo[2]==3)) {
 		imagealphablending($newpicture, false);
 		imagesavealpha($newpicture,true);
 		$transparent = imagecolorallocatealpha($newpicture, 255, 255, 255, 127);
@@ -89,8 +82,7 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	imagecopyresampled($newpicture, $im, 0, 0, 0, 0, $nWidth, $nHeight, $pictureInfo[0], $pictureInfo[1]);
 
 	//Generate the file, and rename it to $thumb
-	switch ($pictureInfo[2])
-	{
+	switch ($pictureInfo[2]) {
 		case 1: imagegif($newpicture,$thumb); break;
 		case 2: imagejpeg($newpicture,$thumb);  break;
 		case 3: imagepng($newpicture,$thumb); break;
@@ -98,15 +90,16 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	}
 
 	return $thumb;
-}
+}}}
 
-function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images')
-{
+function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png', $destdir = 'tp-images') {{{
 	global $boarddir, $txt;
 
 	loadLanguage('TPdlmanager');
 
     $upload = TPUpload::getInstance();
+    $upload->set_max_file_size($maxsize);
+    $upload->set_mime_types($exts);
 
 	// add prefix
     $name   = $_FILES[$widthhat]['name'];
@@ -127,7 +120,6 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
         $exts = explode(',', $exts);
     }
 
-    $upload->set_mime_types($exts);
     if($upload->check_file_exists($dstPath)) {
         $dstPath = dirname($dstPath) . '/' . $prefix . $upload->generate_filename(dirname($dstPath)) . $sname;
     }
@@ -139,20 +131,19 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
     }
 
 	return basename($dstPath);
-}
+}}}
 
-function tp_groups()
-{
+function tp_groups() {{{
 	global $txt, $smcFunc;
 
 	// get all membergroups for permissions
-	$grp = array();
-	$grp[] = array(
+	$grp    = array();
+	$grp[]  = array(
 		'id' => '-1',
 		'name' => $txt['tp-guests'],
 		'posts' => '-1'
 	);
-	$grp[] = array(
+	$grp[]  = array(
 		'id' => '0',
 		'name' => $txt['tp-ungroupedmembers'],
 		'posts' => '-1'
@@ -162,8 +153,7 @@ function tp_groups()
 		SELECT * FROM {db_prefix}membergroups
 		WHERE 1=1 ORDER BY id_group'
 	);
-	while ($row = $smcFunc['db_fetch_assoc']($request))
-	{
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
 		$grp[] = array(
 			'id' => $row['id_group'],
 			'name' => $row['group_name'],
@@ -171,7 +161,7 @@ function tp_groups()
 		);
 	}
 	return $grp;
-}
+}}}
 
 function upshrink() {{{
 

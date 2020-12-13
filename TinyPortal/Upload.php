@@ -243,42 +243,54 @@ class Upload
             return FALSE;
         }
 
-        // Check destination exists
-        if(!is_dir(dirname($destination))) {
-            self::set_error(104);
-            return FALSE;
-        }
-
-        if(!is_writeable(dirname($destination))) {
-            self::set_error(105);
-            return FALSE;
-        }
-
-        if(is_file($destination)) {
-            self::set_error(106);
-            return FALSE;
-        }
-
-        $handle     = fopen($source, 'r+b');
-        $resource   = fopen($destination, 'w+b');
-        if(stream_copy_to_stream($handle, $resource) === FALSE) {
-            fclose($resource);
-            fclose($handle);
+        if(!self::move_file($source, $destination)) {
             // Let's try move instead
             if(move_uploaded_file($source, $destination) != TRUE) {
                 self::set_error(107);
                 return FALSE;
             }
         }
-        else {
-            fclose($handle);
-            fclose($resource);
-        }
 
         return TRUE;
     }}}
 
     public function move_file( string $source, string $destination ) {{{
+
+        // Check File Exists
+        if(!file_exists($source)) {
+            self::set_error(300);
+            return FALSE;
+        }
+
+        // Check destination exists
+        if(!is_dir(dirname($destination))) {
+            self::set_error(301);
+            return FALSE;
+        }
+
+        // Check the destination is writable
+        if(!is_writable(dirname($destination))) {
+            self::set_error(302);
+            return FALSE;
+        }
+
+        // Make sure a file doesn't already exist
+        if(is_file($destination)) {
+            self::set_error(303);
+            return FALSE;
+        }
+
+
+        $handle     = fopen($source, 'r+b');
+        $resource   = fopen($destination, 'w+b');
+        if(stream_copy_to_stream($handle, $resource) === FALSE) {
+            self::set_error(304);
+            return FALSE;
+        }
+        fclose($resource);
+        fclose($handle);
+
+        return TRUE;
 
 
     }}}
