@@ -2751,7 +2751,7 @@ function get_catnames()
 
 function tp_create_dir( $path ) {{{
     global $sourcedir;
-    
+
     require_once($sourcedir . '/Subs-Package.php');
 
     // Load up the package FTP information?
@@ -2761,8 +2761,6 @@ function tp_create_dir( $path ) {{{
         deltree($path, false);
         fatal_error($txt['tp-failedcreatedir'], false);
     }
-
-    die;
 
     return;
 }}}
