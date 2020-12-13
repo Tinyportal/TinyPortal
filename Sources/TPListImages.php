@@ -124,7 +124,7 @@ function TPListImages($user_id)
             if(!is_file($context['TPortal']['image_upload_path'].''.substr($im, 6))) {
                 if(is_file($context['TPortal']['image_upload_path'].'thumbs/'.$im)) {
                     $image      = substr($im, 6);
-                    $imageUrl   = $boardurl.'/tp-images/thumbs/'.$im;
+                    $imageUrl   = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']).'/thumbs/'.$im;
                 }
                 else {
                     continue;
@@ -132,9 +132,9 @@ function TPListImages($user_id)
             }
             else {
                 $image          = substr($im, 6);
-                $imageUrl       = $boardurl.'/tp-images/'.substr($im, 6);
+                $imageUrl       = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']).''.$image;
             }
-            
+
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=remove"  method="post" style="margin: 0px;">
                 <div class="windowbg" style="float:left;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
