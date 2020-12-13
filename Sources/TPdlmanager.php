@@ -648,7 +648,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = '';
 					}
@@ -706,7 +706,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = '';
 					}
@@ -764,7 +764,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = '';
 					}
@@ -987,7 +987,7 @@ function TPortalDLManager()
 				if($context['TPortal']['dl_usescreenshot'] == 1)
 				{
 					if(!empty($row['screenshot']))
-						$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+						$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']).'dlmanager/thumb/'.$row['screenshot'];
 					else
 						$ico = '';
 				}
@@ -1162,9 +1162,9 @@ function TPortalDLManager()
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
 					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
-							$decideshot = $boardurl. '/' . $row['screenshot'];
+							$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
 					else
-						$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot'];
+						$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/' . $row['screenshot'];
 
 					if($context['TPortal']['dl_fileprefix'] == 'K')
 						$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
@@ -1176,7 +1176,7 @@ function TPortalDLManager()
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
-							$ico = $boardurl.'/tp-images/dlmanager/thumb/'.$row['screenshot'];
+							$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/'.$row['screenshot'];
 						else
 							$ico = $row['icon'];
 					}
@@ -1291,9 +1291,9 @@ function TPortalDLManager()
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
 			if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
-					$decideshot = $boardurl. '/' . $row['screenshot'];
+					$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
 			else
-				$decideshot = $boardurl. '/tp-images/dlmanager/thumb/' . $row['screenshot'];
+				$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/' . $row['screenshot'];
 
 			// set up the sorting links
 			$context['TPortal']['sortlinks'] = '';
@@ -3439,9 +3439,9 @@ function TPortalDLAdmin()
 			if (!empty($row['screenshot']))
 			{
 				if(substr($row['screenshot'], 0, 10) == 'tp-images/')
-					$sshot = $boardurl.'/'.$row['screenshot'];
+					$sshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
 				else
-				    $sshot = $boardurl.'/tp-images/dlmanager/listing/'.$row['screenshot'];
+				    $sshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/listing/'.$row['screenshot'];
 			}
 
             if (TPUtil::hasLinks($row['file'])) {
