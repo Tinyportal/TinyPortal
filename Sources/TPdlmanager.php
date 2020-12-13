@@ -901,7 +901,7 @@ function TPortalDLManager()
 					   $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 						// does it exist?
 						if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
-							$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
+							$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']). 'dlmanager/listing/' . $row['screenshot'];
 
 						if($context['user']['is_logged'])
 							$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
@@ -1490,9 +1490,9 @@ function TPortalDLManager()
 				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 				// does it exist?
 				if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
-					$decideshot = $boardurl. '/tp-images/dlmanager/listing/' . $row['screenshot'];
+					$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']). 'dlmanager/listing/' . $row['screenshot'];
 				if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
-					$bigshot = $boardurl. '/tp-images/dlmanager/' . $row['screenshot'];
+					$bigshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']). 'dlmanager/' . $row['screenshot'];
 
 				if($context['user']['is_logged'])
 					$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
