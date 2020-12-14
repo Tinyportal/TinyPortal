@@ -869,11 +869,26 @@ function TPShoutBlock($row) {{{
 }}}
 
 // Admin Area
+function TPShoutAdminActions(&$subActions) {{{
+
+   $subActions = array_merge(
+        array (
+            'shout'      => array('TPShout.php', 'TPShoutAdmin',   array()),
+        ),
+        $subActions
+    );
+
+}}}
+
 function TPShoutAdmin() {{{
 	global $context, $scripturl, $txt, $smcFunc, $sourcedir;
 
 	// check permissions
 	isAllowedTo('tp_can_admin_shout');
+
+    if(!(isset($_GET['shout']) && $_GET['shout'] == 'admin')) {
+        return;
+    }
 
 	if(!isset($context['tp_panels'])) {
 		$context['tp_panels'] = array();

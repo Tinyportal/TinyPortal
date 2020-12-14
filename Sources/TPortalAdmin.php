@@ -163,10 +163,6 @@ function TPortalAdmin()
             fatal_error($txt['tp-noadmin'], false);
         }
 	}
-    elseif(array_key_exists('shout', $_GET) && $_GET['shout'] == 'admin') {
-        require_once(SOURCEDIR . '/TPShout.php');
-        return;
-    }
     else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';
 		do_admin($tpsub);

@@ -90,6 +90,7 @@ class Integrate
             ),
             'tp_pre_admin_subactions'           => array ( 
                 '$sourcedir/TPBlock.php|TPBlockAdminActions',
+                '$sourcedir/TPShout.php|TPShoutAdminActions',
                 '$sourcedir/TPListImages.php|TPListImageAdminActions',
             ),
 
