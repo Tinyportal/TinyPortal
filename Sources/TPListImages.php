@@ -15,33 +15,11 @@
  *
  */
 
-if (!defined('SMF'))
+if (!defined('SMF')) {
 	die('Hacking attempt...');
-
-
-function template_list_images()
-{
-    global $context;
-
-    if(isset($_GET['listimage'])) {
-
-        if(!isset($context['tp_panels']))
-            $context['tp_panels'] = array();
-
-        $context['template_layers'][]   = 'tpadm';
-        $context['template_layers'][]   = 'subtab';
-        TPadminIndex();
-        $context['current_action']      = 'admin';
-        $context['sub_template']        = 'tpListImages_admin';
-
-        if($context['TPortal']['hidebars_admin_only'] == '1') {
-            tp_hidebars();
-        }
-    }
 }
 
-function template_tpListImages_admin()
-{
+function template_tp_list_images_admin() {
 
 	global $txt, $context, $boarddir, $scripturl;
 
@@ -51,23 +29,33 @@ function template_tpListImages_admin()
 
 	isAllowedTo('tp_can_list_images');
 
-    $ret = '';
-    if(array_key_exists('listimage', $_GET)) {
-	    switch($_GET['listimage']) {
-		    case 'remove':
-			    TPRemoveImage($_POST['image']);
-			    break;
-	    }
+    if(!isset($context['tp_panels']))
+        $context['tp_panels'] = array();
+
+    $context['template_layers'][]   = 'tpadm';
+    $context['template_layers'][]   = 'subtab';
+    TPadminIndex();
+    $context['current_action']      = 'admin';
+    $context['sub_template']        = 'tp_list_images_admin';
+
+    if($context['TPortal']['hidebars_admin_only'] == '1') {
+        tp_hidebars();
     }
 
+    if(array_key_exists('remove', $_GET)) {
+	    TPRemoveImage($_POST['image']);
+    }
+    
+    $ret = '';
+
     if(array_key_exists('id_member', $_POST)) {
-		$ret = TPListImages($_POST['id_member']);
+		$ret = TPListImageAdmin($_POST['id_member']);
     }
 
     $users = TPMembers();
 
     echo '
-		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=list"  method="post" style="margin: 0px;">
+		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;list"  method="post" style="margin: 0px;">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-listimage-settings'].'</h3></div>
 		<div id="tplistimages" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-listimage-intro'] , '</div><div></div>
@@ -90,25 +78,28 @@ function template_tpListImages_admin()
     
     echo $ret;
 
+    die;
+
 }
 
-function TPListImages($user_id)
-{
+function TPListImageAdmin($user_id = 0) {{{
     global $txt, $boarddir, $boardurl, $context, $scripturl;
 
  	if(loadLanguage('TPListImages') == false) {
 		loadLanguage('TPListImages', 'english');
     }
 
+    if($user_id == 0) {
+        $context['sub_template'] = 'tp_list_images_admin';
+        return;
+    }
+
     $html = '';
     // fetch all images you have uploaded
     $imgfiles = array();
-    if ($handle = opendir($context['TPortal']['image_upload_path'].'thumbs/'))
-    {
-        while (false !== ($file = readdir($handle)))
-        {
-            if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_id) + 9) == 'thumb_'.$user_id.'uid')
-            {
+    if ($handle = opendir($context['TPortal']['image_upload_path'].'thumbs/')) {
+        while (false !== ($file = readdir($handle))) {
+            if($file != '.' && $file !='..' && $file !='.htaccess' && substr($file, 0, strlen($user_id) + 9) == 'thumb_'.$user_id.'uid') {
                 $imgfiles[($context['TPortal']['image_upload_path'].'thumbs/'.$file)] = $file;
             }
         }
@@ -116,9 +107,11 @@ function TPListImages($user_id)
         ksort($imgfiles);
         $imgs = $imgfiles;
     }
+
     $html .='
         <div class="roundframe tp_pad" style="max-height: 800px; overflow: auto;">
             <div class="tpthumb" style="overflow: auto;">';
+
     if(!empty($imgs)) {
         foreach($imgs as $im) {
             if(!is_file($context['TPortal']['image_upload_path'].''.substr($im, 6))) {
@@ -135,7 +128,7 @@ function TPListImages($user_id)
                 $imageUrl       = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']).''.$image;
             }
 
-            $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;listimage=remove"  method="post" style="margin: 0px;">
+            $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post" style="margin: 0px;">
                 <div class="windowbg" style="float:left;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />
@@ -149,16 +142,16 @@ function TPListImages($user_id)
         }
 
     }
+
     $html .= '  
 			</div>
 		<div class="padding-div"></div>
 	</div>';
 
     return $html;
-}
+}}}
 
-function TPRemoveImage( $image )
-{
+function TPRemoveImage( $image ) {{{
     global $boarddir, $context;
 
     $fileNameThumb  = $context['TPortal']['image_upload_path'].'thumbs/thumb_'.$image;
@@ -170,10 +163,9 @@ function TPRemoveImage( $image )
     if(file_exists($fileName)) {
         unlink($fileName);
     }
-}
+}}}
 
-function TPMembers()
-{
+function TPMembers() {{{
 	global $smcFunc, $context, $boarddir, $txt;
 
 	$users	= array();
@@ -206,8 +198,8 @@ function TPMembers()
 		$smcFunc['db_free_result']($data);
 	}
 
-	return $users;
-}
+	return $users;     
+}}}
 
 function TPListImageAdminAreas() {{{
 
@@ -217,11 +209,22 @@ function TPListImageAdminAreas() {{{
 		$context['admin_tabs']['custom_modules']['tplistimage'] = array(
 			'title' => 'TPListImage',
 			'description' => '',
-			'href' => $scripturl . '?action=tpadmin;listimage=list',
+			'href' => $scripturl . '?action=tpadmin;sa=listimage;list',
 			'is_selected' => isset($_GET['listimage']),
 		);
 		$admin_set = true;
 	}
+
+}}}
+
+function TPListImageAdminActions(&$subActions) {{{
+
+   $subActions = array_merge(
+        array (
+            'listimage'      => array('TPListImages.php', 'TPListImageAdmin',   array()),
+        ),
+        $subActions
+    );
 
 }}}
 ?>
