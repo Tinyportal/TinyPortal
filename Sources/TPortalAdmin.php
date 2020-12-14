@@ -167,11 +167,6 @@ function TPortalAdmin()
         require_once(SOURCEDIR . '/TPShout.php');
         return;
     }
-	elseif(array_key_exists('listimage', $_GET) && in_array($_GET['listimage'], array( 'admin', 'list', 'remove'))) {
-        require_once(SOURCEDIR . '/TPListImages.php');
-        template_list_images();
-        return;
-    }
     else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';
 		do_admin($tpsub);
