@@ -78,8 +78,6 @@ function template_tp_list_images_admin() {
     
     echo $ret;
 
-    die;
-
 }
 
 function TPListImageAdmin($user_id = 0) {{{
