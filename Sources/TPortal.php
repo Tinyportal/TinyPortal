@@ -150,10 +150,6 @@ function TPortal_init() {{{
 		doTPfrontpage();
 	}
 
-	// determine the blocks
-    require_once(SOURCEDIR.'/TPBlock.php');
-	getBlocks();
-
 	// Load the stylesheet stuff
 	tpLoadCSS();
 

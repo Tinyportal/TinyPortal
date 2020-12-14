@@ -76,6 +76,7 @@ class Integrate
             'tp_post_subactions'                => array ( 
             ),           
             'tp_post_init'                      => array (
+                '$sourcedir/TPBlock.php|getBlocks',
                 '$sourcedir/TPShout.php|TPShoutLoad',
             ),
             'tp_admin_areas'                    => array (
