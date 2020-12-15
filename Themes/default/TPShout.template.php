@@ -296,7 +296,7 @@ function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null 
                 <div style="margin-bottom: 5px;">
                     <input type="text" id="'. $context['tp_shout_post_box_name']. '" class="shoutbox_input'. $context['TPortal']['shoutbox_layout']. '" name="'. $context['tp_shout_post_box_name']. '" maxlength="' .$context['TPortal']['shoutbox_maxlength']. '"  onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onchange="storeCaret(this);" tabindex="', $context['tabindex']++, '"></input>
                     <input onclick="TPupdateShouts(\'save\', '.$shoutbox_id.' , null , '.$shoutbox_layout.' ); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
-                    <a href="' , $scripturl , '?action=tpshout;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
+                    <a href="' , $scripturl , '?action=tpshout;shout=show50;b='.$shoutbox_id.';l='.$shoutbox_layout.'" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
                     <a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\', '.$shoutbox_id.' , null , '.$shoutbox_layout.' ); return false;" href="' , $scripturl , '?action=tpshout;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
                     <p class="clearthefloat"></p>
                 </div>';
@@ -341,7 +341,7 @@ function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null 
                 <p class="clearthefloat"></p>
                 <hr>
                 <div style="overflow: hidden;">
-                    <a href="' , $scripturl , '?action=tpshout;shout=show50" title="'. $txt['tp-shout-history'] . '"><img class="floatleft" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
+                    <a href="' , $scripturl , '?action=tpshout;shout=show50;b='.$shoutbox_id.';l='.$shoutbox_layout.'" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
                     <input onclick="TPupdateShouts(\'save\', '.$shoutbox_id.' , null , '.$shoutbox_layout.' ); return false;" type="submit" name="shout_send" value="&nbsp;'.$txt['shout!'].'&nbsp;" tabindex="', $context['tabindex']++, '" class="button_submit" />
                     <a id="tp_shout_refresh" onclick="TPupdateShouts(\'fetch\', '.$shoutbox_id.' , null , '.$shoutbox_layout.' ); return false;" href="' , $scripturl , '?action=tpshout;shout=refresh" title="'. $txt['tp-shout-refresh'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPrefresh.png" alt="" /></a>
                 </div>
