@@ -80,8 +80,6 @@ function getBlocks() {{{
     $availableBlocks    = $tpBlock->getBlockPermissions();
 	if (is_array($availableBlocks) && count($availableBlocks)) {
         foreach($availableBlocks as $row) { 
-            // decode the block settings
-            $set = json_decode($row['settings'], true);
 			// some tests to minimize sql calls
 			if($row['type'] == TP_BLOCK_THEMEBOX) {
 				$test_themebox = true;
@@ -105,7 +103,9 @@ function getBlocks() {{{
                 call_integration_hook('integrate_tp_shoutbox', array(&$row));
             }
 
-			$can_edit = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
+            // decode the block settings
+            $set        = json_decode($row['settings'], true);
+			$can_edit   = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
 			if($can_manage) {
 				$can_edit = false;
@@ -701,24 +701,6 @@ function saveBlock( $block_id = 0 ) {{{
                         SET visible = {string:vis}
                         WHERE id = {int:blockid}',
                         array('vis' => $value, 'blockid' => $val)
-                        );
-            }
-            elseif(substr($what, 0, 9) == 'blockvar1') {
-                $val=substr($what, 9);
-                $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_blocks
-                        SET var1 = {string:var1}
-                        WHERE id = {int:blockid}',
-                        array('var1' => $value, 'blockid' => $val)
-                        );
-            }
-            elseif(substr($what, 0, 9) == 'blockvar2') {
-                $val = substr($what, 9);
-                $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_blocks
-                        SET var2 = {string:var2}
-                        WHERE id = {int:blockid}',
-                        array('var2' => $value, 'blockid' => $val)
                         );
             }
         }

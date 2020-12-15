@@ -775,7 +775,7 @@ function tpshout_profile($member_id) {{{
 }}}
 
 // Block Callback
-function TPShoutBlock($row) {{{
+function TPShoutBlock(&$row) {{{
     global $context, $txt, $sourcedir;
 
     static $id = 1;
