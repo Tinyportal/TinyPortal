@@ -54,7 +54,7 @@ function TPShout() {{{
             if(!is_numeric($number)) {
                 $number = 10;
             }
-            tpshout_bigscreen(true, $number, $_POST['b'], $_POST['l']);
+            tpshout_bigscreen(true, $number, $_REQUEST['b'], $_REQUEST['l']);
         }
     }
 
