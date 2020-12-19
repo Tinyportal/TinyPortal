@@ -118,7 +118,7 @@ class Block extends Base {
         global $context, $user_info;
         
         $blocks = array();
-        $user   = array_shift($user_info['groups']);
+        $user   = reset($user_info['groups']);
 
         $activeBlocks = $this->getActiveBlocks();
         foreach($activeBlocks as $block) {
@@ -138,9 +138,6 @@ class Block extends Base {
 
             $blocks[] = $block;
         }
-
-        // put the user group back on the array
-        array_unshift($user_info['groups'], $user);
 
         return $blocks;
 
