@@ -139,6 +139,9 @@ class Block extends Base {
             $blocks[] = $block;
         }
 
+        // put the user group back on the array
+        array_unshift($user_info['groups'], $user);
+
         return $blocks;
 
     }}}
