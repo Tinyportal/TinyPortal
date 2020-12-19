@@ -118,6 +118,7 @@ class Block extends Base {
         global $context, $user_info;
         
         $blocks = array();
+        $user   = array_shift($user_info['groups']);
 
         $activeBlocks = $this->getActiveBlocks();
         foreach($activeBlocks as $block) {
@@ -125,7 +126,7 @@ class Block extends Base {
             if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
                 
             } 
-            else if(in_array($user_info['groups'], explode(',', $block['access']))) {
+            else if(in_array($user, explode(',', $block['access'])) == false) {
                 continue;
             }
 
