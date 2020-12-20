@@ -126,6 +126,9 @@ class Block extends Base {
             if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
                 
             } 
+            else if(empty($block['access'])) {
+                continue;
+            }
             else if(in_array($user, explode(',', $block['access'])) == false) {
                 continue;
             }
