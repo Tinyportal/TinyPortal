@@ -136,13 +136,13 @@ $clickme.click( function(e) {
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsettings'].'</h3></div>
 		<div id="dlsettings" class="admintable admin-area">
 			<div class="windowbg noup padding-div">
-					<dl class="settings">
+					<dl class="tptitle settings">
 					<dt>
 						',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  />
 					</dt>
 					<dd>
-						<input type="radio" id="tp_show_download_on" name="tp_show_download" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'><label for="tp_show_download_on"> '.$txt['tp-dlmanon'].'</label><br>
-						<input type="radio" id="tp_show_download_off" name="tp_show_download" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'><label for="tp_show_download_off"> '.$txt['tp-dlmanoff'].'</label><br><br>
+						<input type="radio" id="tp_show_download_on" name="tp_show_download" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'><label for="tp_show_download_on"> '.$txt['tp-on'].'</label>
+						<input type="radio" id="tp_show_download_off" name="tp_show_download" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'><label for="tp_show_download_off"> '.$txt['tp-off'].'</label><br><br>
 					</dd>
 					<dt>
 						<label for="tp_dl_allowed_types">'.$txt['tp-dlallowedtypes'].'</label>
@@ -156,6 +156,36 @@ $clickme.click( function(e) {
 					<dd>
 						<input type="number" id="tp_dluploadsize" name="tp_dluploadsize" value="'.$context['TPortal']['dl_max_upload_size'].'" size="10"> '.$txt['tp-kb'].'<br><br>
 					</dd>
+					<dt>
+						'.$txt['tp-dlmustapprove'].'
+					</dt>
+					<dd>
+						<input type="radio" id="tp-approveyes" name="tp_dl_approveonly" value="1" ', $context['TPortal']['dl_approve']=='1' ? 'checked' : '' ,'><label for="tp-approveyes"> '.$txt['tp-approveyes'].'<br>
+						<input type="radio" id="tp-approveno" name="tp_dl_approveonly" value="0" ', $context['TPortal']['dl_approve']=='0' ? 'checked' : '' ,'><label for="tp-approveno"> '.$txt['tp-approveno'].'<br><br>
+					</dd>
+					<dt>
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-dlwysiwygdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-dlwysiwyg'].'
+					</dt>
+					<dd>
+						<input type="radio" id="tp_dl_wysiwyg1" name="tp_dl_wysiwyg" value="" ', $context['TPortal']['dl_wysiwyg']=='' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg1"> '.$txt['tp-no'].'</label><br>
+						<input type="radio" id="tp_dl_wysiwyg2" name="tp_dl_wysiwyg" value="html" ', $context['TPortal']['dl_wysiwyg']=='html' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg2"> '.$txt['tp-yes'].', HTML</label><br>
+						<input type="radio" id="tp_dl_wysiwyg3" name="tp_dl_wysiwyg" value="bbc" ', $context['TPortal']['dl_wysiwyg']=='bbc' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg3"> '.$txt['tp-yes'].', BBC</label>
+					</dd>
+				</dl>
+			<hr>
+				<div>
+					<div><b>'.$txt['tp-dlintrotext'].'</b>
+					</div>';
+					if($context['TPortal']['dl_wysiwyg'] == 'html')
+						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+					elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
+						TP_bbcbox($context['TPortal']['editor_id']);
+					else
+						echo '<textarea id="tp_article_body" name="tp_dl_introtext" >'.$context['TPortal']['dl_introtext'].'</textarea>';
+					echo '
+				</div>
+			<hr>
+				<dl class="settings">
 					<dt>
 						<label for="tp_dl_fileprefix">'.$txt['tp-dluseformat'].'</label>
 					</dt>
@@ -184,13 +214,6 @@ $clickme.click( function(e) {
 						<input type="number" name="tp_dl_screenshotsize2" value="'.$context['TPortal']['dl_screenshotsize'][2].'" size="6" maxlength="3"> x <input type="number" name="tp_dl_screenshotsize3" value="'.$context['TPortal']['dl_screenshotsize'][3].'" size="6" maxlength="3"> px<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlmustapprove'].'
-					</dt>
-					<dd>
-						<input type="radio" id="tp-approveyes" name="tp_dl_approveonly" value="1" ', $context['TPortal']['dl_approve']=='1' ? 'checked' : '' ,'><label for="tp-approveyes"> '.$txt['tp-approveyes'].'<br>
-						<input type="radio" id="tp-approveno" name="tp_dl_approveonly" value="0" ', $context['TPortal']['dl_approve']=='0' ? 'checked' : '' ,'><label for="tp-approveno"> '.$txt['tp-approveno'].'<br><br>
-					</dd>
-					<dt>
 						'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>
@@ -210,27 +233,7 @@ $clickme.click( function(e) {
 					echo '<br style="clear: both;" />
 						</div><br>
 					</dd>
-					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-dlwysiwygdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-dlwysiwyg'].'
-					</dt>
-					<dd>
-						<input type="radio" id="tp_dl_wysiwyg1" name="tp_dl_wysiwyg" value="" ', $context['TPortal']['dl_wysiwyg']=='' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg1"> '.$txt['tp-no'].'</label><br>
-						<input type="radio" id="tp_dl_wysiwyg2" name="tp_dl_wysiwyg" value="html" ', $context['TPortal']['dl_wysiwyg']=='html' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg2"> '.$txt['tp-yes'].', HTML</label><br>
-						<input type="radio" id="tp_dl_wysiwyg3" name="tp_dl_wysiwyg" value="bbc" ', $context['TPortal']['dl_wysiwyg']=='bbc' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg3"> '.$txt['tp-yes'].', BBC</label><br><br>
-					</dd>
 				</dl>
-			<hr>
-				<div>
-					<div><b>'.$txt['tp-dlintrotext'].'</b>
-					</div>';
-					if($context['TPortal']['dl_wysiwyg'] == 'html')
-						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
-					elseif($context['TPortal']['dl_wysiwyg'] == 'bbc')
-						TP_bbcbox($context['TPortal']['editor_id']);
-					else
-						echo '<textarea id="tp_article_body" name="tp_dl_introtext" >'.$context['TPortal']['dl_introtext'].'</textarea>';
-					echo '
-				</div>
 			<hr>
 				<dl class="settings">
 					<dt>

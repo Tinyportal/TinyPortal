@@ -131,7 +131,6 @@ function TPdlmanager()
 
 }
 
-
 function TPdlmanager_init()
 {
 	global $context, $settings, $sourcedir;
@@ -1161,6 +1160,7 @@ function TPortalDLManager()
 
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
+					TPUtil::shortenString($row['description'], 400);
 					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
 							$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
 					else
@@ -1188,7 +1188,7 @@ function TPortalDLManager()
 						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
@@ -1676,7 +1676,7 @@ function TPdlresults()
 	$total = $tt[0];
 
 	$request = $smcFunc['db_query']('substring', '
-		SELECT d.id, d.created, d.type, d.downloads, d.name, LEFT(d.description, 300) as body, d.author_id as author_id, m.real_name as real_name
+		SELECT d.id, d.created, d.type, d.downloads, d.name, d.description as body, d.author_id as author_id, m.real_name as real_name
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		WHERE '. $query .'
@@ -1691,9 +1691,11 @@ function TPdlresults()
 	{
 		while($row=$smcFunc['db_fetch_assoc']($request))
 		{
-			$row['name'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['name']);
-			$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+			TPUtil::shortenString($row['body'], 400);
+	
 			$row['body'] = strip_tags($row['body']);
+			$row['name'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['name']);
+			$row['body'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 
 			$context['TPortal']['dlsearchresults'][] = array(
 				'id' => $row['id'],

@@ -1315,7 +1315,6 @@ h4.h4dl {
 }
 .dl_summary {
 	line-height: 1.4em;
-	max-height: 15em;
 	overflow: hidden;
 }
 
