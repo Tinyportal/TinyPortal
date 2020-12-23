@@ -242,7 +242,7 @@ $tables = array(
 	'tp_shoutbox' => array(
         'columns' => array(
             array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
-            array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null),
+            array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 3, 'default' => 1),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => -2),
             array('name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'time', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -918,7 +918,7 @@ function updateBlocks()
 		UPDATE {db_prefix}tp_blocks
 		SET type = {string:type}, body = {int:body}, settings = {string:settings}
 		WHERE type = 20',
-		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"0","var3":"' .(!empty($shoutbox_layout) ? $shoutbox_layout : '0'). '","var4":"' .(!empty($shoutbox_height) ? $shoutbox_height : '250'). '","var5":"99"}')
+		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"1","var3":"' .(!empty($shoutbox_layout) ? $shoutbox_layout : '0'). '","var4":"' .(!empty($shoutbox_height) ? $shoutbox_height : '250'). '","var5":"99"}')
 	);
 
 	$render .= '<li>Updated shoutbox blocks</li>';
@@ -951,7 +951,7 @@ function updateShoutbox()
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value3', array( 'name' => 'member_link', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value4', array( 'name' => 'member_ip', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '' )));
     $smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value5', array( 'name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => '-2' ));
-    $smcFunc['db_add_column']('{db_prefix}tp_shoutbox', array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 11, 'default' => null ));
+    $smcFunc['db_add_column']('{db_prefix}tp_shoutbox', array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 3, 'default' => '1' ));
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value6');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value7');
     $smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'value8');
