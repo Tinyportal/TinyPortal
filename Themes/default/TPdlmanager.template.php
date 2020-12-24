@@ -331,7 +331,7 @@ function template_main()
 
 					if(isset($dlitem['description']))
 						echo '
-						<div class="dl_post dl_summary">' . $dlitem['description'] . '</div>';
+						<div class="dl_post dl_summary">' . $dlitem['description'] . '' . $dlitem['readmore'] . '</div>';
 
 					unset($details);
 					$details=array();

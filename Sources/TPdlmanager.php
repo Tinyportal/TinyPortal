@@ -131,7 +131,6 @@ function TPdlmanager()
 
 }
 
-
 function TPdlmanager_init()
 {
 	global $context, $settings, $sourcedir;
@@ -152,7 +151,7 @@ function TPdlmanager_init()
 		$context['html_headers'] .= '
 			<script type="text/javascript" src="'. $settings['default_theme_url']. '/scripts/editor.js?rc1"></script>';
 
-		// see if its admin section
+		// see if admin section
 		if(substr($context['TPortal']['dlsub'], 0, 5) == 'admin' || $context['TPortal']['dlsub']=='submission')
 			TPortalDLAdmin();
 		elseif(substr($context['TPortal']['dlsub'], 0, 8) == 'useredit')
@@ -170,7 +169,7 @@ function TPortalDLManager()
 	// assume its the frontpage initially
 	$context['TPortal']['dlaction'] = 'main';;
 
-	// is even the manager active?
+	// is the DLmanager even active?
 	if(!$context['TPortal']['show_download'])
 		fatal_error($txt['tp-dlmanageroff'], false);
 
@@ -209,7 +208,7 @@ function TPortalDLManager()
 	$context['TPortal']['uploads'] = array();
 	if(isset($_FILES['tp-dluploadfile']['tmp_name']) || isset($_POST['tp-dluploadnot']) || isset($_POST['tp-dlexternalfile']))
 	{
-		// skip the uplaod checks etc . if just an empty item
+		// skip the upload checks etc. if just an empty item
 		if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile']))
 		{
 			// check if uploaded quick-list picture
@@ -452,7 +451,7 @@ function TPortalDLManager()
 						$row = $smcFunc['db_fetch_assoc']($request);
 						$context['TPortal']['dlcat'] = $row['category'];
 						$smcFunc['db_free_result']($request);
-						// check that it is indeed a main item, if not : redirect to the main one.
+						// check that it is indeed a main item, if not: redirect to the main one.
 						if($row['subitem'] > 0)
 							redirectexit('action=tportal;sa=download;dl=item'.$row['subitem']);
 					}
@@ -599,7 +598,7 @@ function TPortalDLManager()
 	$context['page_title'] = $txt['tp-downloads'];
 	$context['TPortal']['dl_title'] = $txt['tp-mainpage'];
 
-	// load the dlmanager frontpage
+	// DLmanager frontpage
 	if($context['TPortal']['dlaction'] == '')
 	{
 		$context['TPortal']['dlcats'] = array();
@@ -660,7 +659,7 @@ function TPortalDLManager()
 						'name' => $row['name'],
 						'icon' => $row['icon'],
 						'category' => $row['category'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
@@ -826,7 +825,7 @@ function TPortalDLManager()
 						'id' => $row['id'],
 						'name' => $row['name'],
 						'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'access' => $row['access'],
 						'icon' => $row['icon'],
 						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;sa=download;dl='.$row['shortname'] : $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
@@ -911,7 +910,7 @@ function TPortalDLManager()
 						$context['TPortal']['featured'] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
@@ -937,7 +936,7 @@ function TPortalDLManager()
 		}
 		$context['TPortal']['dlheader'] = $txt['tp-downloads'];
 	}
-	// load a category
+	// DLmanager category page
 	elseif($context['TPortal']['dlaction'] == 'cat')
 	{
 		// check if sorting is specified
@@ -1054,7 +1053,7 @@ function TPortalDLManager()
 			}
 	        $smcFunc['db_free_result']($request);
 	    }
-	    // nothing there, le them know
+	    // nothing there, let them know
 	    else
 			redirectexit('action=tportal;sa=download;dl');
 
@@ -1082,7 +1081,7 @@ function TPortalDLManager()
 						'id' => $row['id'],
 						'name' => $row['name'],
 						'parent' => $row['parent'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'access' => $row['access'],
 						'icon' => $row['icon'],
 						'href' => !empty($row['shortname']) ? $scripturl.'?action=tportal;sa=download;dl='.$row['shortname'] : $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
@@ -1161,6 +1160,9 @@ function TPortalDLManager()
 
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
+					if(TPUtil::shortenString($row['description'], 300)) {
+						$row['readmore'] = '...';
+					}
 					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
 							$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
 					else
@@ -1188,7 +1190,8 @@ function TPortalDLManager()
 						'name' => $row['name'],
 						'category' => $row['category'],
 						'file' => $row['file'],
-						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
+						'readmore' => $row['readmore'],
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
@@ -1254,87 +1257,7 @@ function TPortalDLManager()
 		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=cat'.$currentcat, $currentname);
 		$context['TPortal']['dlheader'] = $currentname;
 	}
-	// tptags
-	elseif($context['TPortal']['dlaction'] == 'tptag')
-	{
-		$context['TPortal']['dlsort'] = $dlsort = 'id';
-		$context['TPortal']['dlsort_way'] = $dlsort_way = 'desc';
-
-		// get any items in the category
-		$context['TPortal']['dlitem'] = array();
-		$start = 0;
-		if(isset($_GET['p']) && !is_numeric($_GET['p']))
-			fatal_error($txt['tp-dlnonint']);
-		elseif(isset($_GET['p']) && is_numeric($_GET['p']))
-			$start = $_GET['p'];
-
-		// get total count
-		$request = $smcFunc['db_query']('', '
-			SELECT COUNT(*) FROM {db_prefix}tp_dlmanager
-			WHERE type = {string:type}
-			AND subitem = {int:sub}',
-			array('type' => 'dlitem', 'sub' => 0)
-		);
-		$row = $smcFunc['db_fetch_row']($request);
-		$rows2 = $row[0];
-
-		$request = $smcFunc['db_query']('', '
-			SELECT id, name, category, file, downloads, views, link, created,
-				last_access, author_id as author_id, icon, screenshot, filesize,
-				global_tag
-			FROM {db_prefix}tp_dlmanager
-			WHERE type = {string:type}
-			AND subitem = {int:sub} LIMIT {int:start}, 10',
-			array('type' => 'dlitem', 'sub' => 0, 'start' => $start)
-		);
-
-		if($smcFunc['db_num_rows']($request) > 0)
-		{
-			if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
-					$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
-			else
-				$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/' . $row['screenshot'];
-
-			// set up the sorting links
-			$context['TPortal']['sortlinks'] = '';
-
-			while ($row = $smcFunc['db_fetch_assoc']($request))
-			{
-				if($context['TPortal']['dl_fileprefix'] == 'K')
-					$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
-				elseif($context['TPortal']['dl_fileprefix']=='M')
-					$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
-				elseif($context['TPortal']['dl_fileprefix']=='G')
-					$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
-				$context['TPortal']['dlitem'][] = array(
-					'id' => $row['id'],
-					'name' => $row['name'],
-					'category' => $row['category'],
-					'file' => $row['file'],
-					'description' => '',
-					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
-					'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
-					'downloads' => $row['downloads'],
-					'views' => $row['views'],
-					'link' => $row['link'],
-					'created' => $row['created'],
-					'date_last' => $row['last_access'],
-					'author' => '',
-					'author_id' => $row['author_id'],
-					'screenshot' => $row['screenshot'],
-					'sshot' => $decideshot,
-					'icon' => $row['icon'],
-					'date' => $row['created'],
-					'filesize' => $fs,
-				);
-			}
-			$smcFunc['db_free_result']($request);
-		}
-		if(isset($context['TPortal']['mystart']))
-			$mystart = $context['TPortal']['mystart'];
-
-		$context['TPortal']['dlheader'] = '';
-	}
+	// DLmanager item page
 	elseif($context['TPortal']['dlaction'] == 'item')
 	{
 		//fetch the category
@@ -1502,7 +1425,7 @@ function TPortalDLManager()
 					$context['TPortal']['dlitem'][] = array(
 					'id' => $row['id'],
 					'name' => $row['name'],
-					'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc(trim(strip_tags($row['description']))) : $row['description'],
+					'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'href' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
@@ -1644,7 +1567,7 @@ function TPdlresults()
 
 	$dlquery = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
 
-	// find out which categoies you ahve access to:
+	// find out which categories you have access to
 	$request=$smcFunc['db_query']('', '
 		SELECT id FROM {db_prefix}tp_dlmanager
 		WHERE type = {string:type}
@@ -1676,7 +1599,7 @@ function TPdlresults()
 	$total = $tt[0];
 
 	$request = $smcFunc['db_query']('substring', '
-		SELECT d.id, d.created, d.type, d.downloads, d.name, LEFT(d.description, 300) as body, d.author_id as author_id, m.real_name as real_name
+		SELECT d.id, d.created, d.type, d.downloads, d.name, d.description as body, d.author_id as author_id, m.real_name as real_name
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		WHERE '. $query .'
@@ -1685,15 +1608,15 @@ function TPdlresults()
 		array('type' => 'dlitem', 'what' => $what2, 'start' => $start)
 	);
 	// create pagelinks
-
-
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while($row=$smcFunc['db_fetch_assoc']($request))
 		{
-			$row['name'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['name']);
-			$row['body'] = preg_replace('/'.$what.'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+			TPUtil::shortenString($row['body'], 400);
+	
 			$row['body'] = strip_tags($row['body']);
+			$row['name'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['name']);
+			$row['body'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
 
 			$context['TPortal']['dlsearchresults'][] = array(
 				'id' => $row['id'],
@@ -1746,7 +1669,7 @@ function TPdlstats()
 		$smcFunc['db_free_result']($request);
 	}
 
-	//first : fetch all allowed categories
+	// first: fetch all allowed categories
 	$context['TPortal']['uploadcats'] = array();
 	$request = $smcFunc['db_query']('', '
 		SELECT id, parent, name, access
@@ -1768,7 +1691,7 @@ function TPdlstats()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	//no categories to select...
+	// no categories to select...
 	else
 		return;
 
@@ -1825,7 +1748,7 @@ function TPdlstats()
 				);
 		}
 		$smcFunc['db_free_result']($request);
-		// sort it by filesize,views and downloads
+		// sort it by filesize, views and downloads
 		$context['TPortal']['topsize'] = array();
 		$context['TPortal']['topviews']=array();
 		$context['TPortal']['topsize']=$context['TPortal']['topitems'];
@@ -2046,7 +1969,7 @@ function TPdownloadme()
     }
 }
 
-// TinyPortal DLmanager admin
+// DLmanager admin page
 function TPortalDLAdmin()
 {
 	global $txt, $scripturl, $boarddir, $boardurl, $smcFunc, $context, $settings, $sourcedir;
@@ -2056,7 +1979,7 @@ function TPortalDLAdmin()
 		checkSession('post');
 	else
 		isAllowedTo('tp_dlmanager');
-	// Set the linktree
+	// set the linktree
 	TPadd_linktree($scripturl.'?action=tpadmin', $txt['tp-admin']);
 	TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admin', 'TPdownloads');
 
@@ -2113,7 +2036,7 @@ function TPortalDLAdmin()
 		$smcFunc['db_free_result']($request);
 	}
 
-	// Add in BBC editor before we call in template so the headers are there
+	// add in BBC editor before we call in template so the headers are there
 	if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 	{
 		if ($context['TPortal']['dlsub'] == 'adminaddcat')
@@ -2387,7 +2310,7 @@ function TPortalDLAdmin()
 		$dlupload_grp = array();
 		$dlcreatetopic_grp = array();
 
-		// Our settings array to send to updateTPSettings();
+		// our settings array to send to updateTPSettings();
 		$changeArray = array();
 
 		foreach ($_POST as $what => $value)
@@ -2593,14 +2516,14 @@ function TPortalDLAdmin()
 				$id = substr($what, 12);
 				if(is_numeric($id))
 				{
-					// If we came from WYSIWYG then turn it back into BBC regardless.
+					// if we came from WYSIWYG then turn it back into BBC regardless.
 					if (!empty($_REQUEST[$what.'_mode']) && isset($_REQUEST[$what]))
 					{
 						require_once($sourcedir . '/Subs-Editor.php');
 						$_REQUEST[$what] = html_to_bbc($_REQUEST[$what]);
-						// We need to unhtml it now as it gets done shortly.
+						// we need to unhtml it now as it gets done shortly.
 						$_REQUEST[$what] = un_htmlspecialchars($_REQUEST[$what]);
-						// We need this for everything else.
+						// we need this for everything else.
 						$value = $_POST[$what] = $_REQUEST[$what];
 
 					}
@@ -2886,12 +2809,12 @@ function TPortalDLAdmin()
 			elseif($what == 'tp_dl_introtext')
 			{
 				if(in_array($context['TPortal']['dl_wysiwyg'], array('bbc', 'html'))) {
-					// If we came from WYSIWYG then turn it back into BBC regardless.
+					// if we came from WYSIWYG then turn it back into BBC regardless.
 					if (!empty($_REQUEST['tp_dl_introtext']) && isset($_REQUEST['tp_dl_introtext'])) {
 						require_once($sourcedir . '/Subs-Editor.php');
-						// We need to unhtml it now as it gets done shortly.
+						// we need to unhtml it now as it gets done shortly.
 						$_REQUEST['tp_dl_introtext'] = un_htmlspecialchars($_REQUEST['tp_dl_introtext']);
-						// We need this for everything else.
+						// we need this for everything else.
 						$value = $_POST['tp_dl_introtext'] = $_REQUEST['tp_dl_introtext'];
 					}
 				}
@@ -2930,7 +2853,7 @@ function TPortalDLAdmin()
             }
 		}
 
-		// Update all the changes settings finally
+		// update all the changes settings finally
 		updateTPSettings($changeArray);
 
 		// if we came from useredit screen..
@@ -2997,7 +2920,7 @@ function TPortalDLAdmin()
    // get all membergroups for permissions
 	$context['TPortal']['dlgroups'] = get_grps(true,true);
 
-	//fetch all categories
+	// fetch all categories
 	$sorted = array();
 	$context['TPortal']['linkcats'] = array();
 	$srequest = $smcFunc['db_query']('', '
@@ -3371,7 +3294,7 @@ function TPortalDLAdmin()
 			if($row['subitem']>0)
 				redirectexit('action=tportal;sa=download;dl=adminitem'.$row['subitem']);
 
-			// Add in BBC editor before we call in template so the headers are there
+			// add in BBC editor before we call in template so the headers are there
 			if($context['TPortal']['dl_wysiwyg'] == 'bbc')
 			{
 				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
@@ -3402,7 +3325,7 @@ function TPortalDLAdmin()
 				}
 			}
 
-			// Any additional files then..?
+			// any additional files then..?
 			$subitem = $row['id'];
 			$fdata = array();
 			$fetch = $smcFunc['db_query']('', '
@@ -3629,7 +3552,7 @@ function TPortalDLUser($item)
 			}
 		}
 
-		// Any additional files then..?
+		// any additional files then..?
 		$subitem = $row['id'];
 		$fdata = array();
 		$fetch = $smcFunc['db_query']('', '
@@ -3781,7 +3704,7 @@ function TP_dluploadcats()
 {
 	global $scripturl, $context, $smcFunc;
 
-	//first : fetch all allowed categories
+	// first: fetch all allowed categories
 	$sorted = array();
 	$request = $smcFunc['db_query']('', '
 		SELECT id, parent, name, access
@@ -3884,6 +3807,5 @@ function TPDownloadAdminAreas() {{{
 	}
 
 }}}
-
 
 ?>

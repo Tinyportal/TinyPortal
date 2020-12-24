@@ -199,7 +199,7 @@ function TPSearchArticle()
 	);
 	if($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			TPUtil::shortenString($row['body'], 300);
+			TPUtil::shortenString($row['body'], 400);
             if($row['type'] == 'bbc') {
 				$row['body'] = parse_bbc($row['body']);
 			}
