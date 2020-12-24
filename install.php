@@ -119,7 +119,6 @@ $tables = array(
 			array('name' => 'lang', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'access', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'display', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
-			array('name' => 'editgroups', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'settings', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
         ),
         'indexes' => array(
@@ -887,9 +886,9 @@ function updateBlocks()
             ); 
         }
     }
-
 	$smcFunc['db_free_result']($request);
-
+    $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'editgroups');
+	
 	$render .= '<li>Updated block order in blocks table</li>';
 	
 	// update Shoutbox blocks
@@ -1115,7 +1114,6 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
             'user' =>array(
@@ -1130,7 +1128,6 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
             'shout' => array(
@@ -1145,7 +1142,6 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
             ), 
             'recent' =>array(
@@ -1160,7 +1156,6 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
             'stats' =>array(
@@ -1175,7 +1170,6 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'editgroups' => '',
                 'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
             'online' =>array(
@@ -1190,7 +1184,6 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'editgroups' => '-2',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
         );
@@ -1209,7 +1202,6 @@ function addDefaults()
                 'lang' => 'string',
                 'access' => 'string',
                 'display' => 'string',
-                'editgroups' => 'string',
                 'settings' => 'string',
             ),
             $blocks,

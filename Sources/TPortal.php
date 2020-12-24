@@ -1554,11 +1554,7 @@ function doTPfrontpage() {{{
             elseif($row['type'] == 20) {
                 call_integration_hook('integrate_tp_blocks', array(&$row));
             }
-			$can_edit = get_perm($row['editgroups'], '');
 			$can_manage = allowedTo('tp_blocks');
-			if($can_manage) {
-				$can_edit = false;
-            }
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],

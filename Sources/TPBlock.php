@@ -105,11 +105,7 @@ function getBlocks() {{{
 
             // decode the block settings
             $set        = json_decode($row['settings'], true);
-			$can_edit   = !empty($row['editgroups']) ? get_perm($row['editgroups'],'') : false;
 			$can_manage = allowedTo('tp_blocks');
-			if($can_manage) {
-				$can_edit = false;
-            }
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame'     => $row['frame'],
 				'title'     => strip_tags($row['title'], '<center>'),
@@ -125,7 +121,6 @@ function getBlocks() {{{
 				'id'        => $row['id'],
 				'lang'      => $row['lang'],
 				'display'   => $row['display'],
-				'can_edit'  => $can_edit,
 				'can_manage' => $can_manage,
 			);
 			$count[$panels[$row['bar']]]++;
@@ -391,8 +386,7 @@ function adminBlocks() {{{
                         'var2' => $set['var2'],
                         'lang' => $row['lang'],
                         'display' => $row['display'],
-                        'loose' => $row['display'] != '' ? true : false,
-                        'editgroups' => $row['editgroups']
+                        'loose' => $row['display'] != '' ? true : false
                     );
                 }
             }
@@ -634,16 +628,11 @@ function saveBlock( $block_id = 0 ) {{{
     if(!is_numeric($block_id)) {
         fatal_error($txt['tp-notablock'], false);
     }
-    $request =  $smcFunc['db_query']('', '
-        SELECT editgroups FROM {db_prefix}tp_blocks
-        WHERE id = {int:blockid} LIMIT 1',
-        array('blockid' => $block_id)
-    );
 
     if($smcFunc['db_num_rows']($request) > 0) {
         $row = $smcFunc['db_fetch_assoc']($request);
         // check permission
-        if(allowedTo('tp_blocks') || get_perm($row['editgroups'])) {
+        if(allowedTo('tp_blocks')) {
             $ok = true;
         }
         else {

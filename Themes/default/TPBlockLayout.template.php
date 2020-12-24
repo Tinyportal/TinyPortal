@@ -663,28 +663,6 @@ function template_editblock()
 								<input type="checkbox" id="checkallmg" onclick="invertAll(this, this.form, \'tp_group\');" /><label for="checkallmg">'.$txt['tp-checkall'].'</label><br>
 							</div>
 						</dd>
-					</dl>';
-			//edit membergroups
-			echo '
-					<dl class="settings">
-						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-editgrouphelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-editgrouphelp'].'</dt>
-						<dd>
-							<div>
-								<div class="tp_largelist">';
-			$tg=explode(',',$context['TPortal']['blockedit']['editgroups']);
-			foreach($context['TPmembergroups'] as $mg){
-				if($mg['posts']=='-1' && $mg['id']!='1' && $mg['id']!='-1' && $mg['id']!='0'){
-					echo '<input type="checkbox" id="tp_editgroup'.$mg['id'].'" name="tp_editgroup'.$mg['id'].'" value="'.$context['TPortal']['blockedit']['id'].'"';
-					if(in_array($mg['id'],$tg))
-						echo ' checked';
-					echo '><label for="tp_editgroup'.$mg['id'].'"> '.$mg['name'].'</label><br>';
-				}
-			}
-			// if none is chosen, have a control value
-			echo '				</div><input type="checkbox" id="checkalleditmg" onclick="invertAll(this, this.form, \'tp_editgroup\');" /><label for="checkalleditmg">'.$txt['tp-checkall'];
-			echo '				</label><br>
-							</div>
-						</dd>
 					</dl>
 					<dl class="settings">
 						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langhelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">'.$txt['tp-langhelp'].'</label></dt>

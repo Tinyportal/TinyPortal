@@ -2397,7 +2397,6 @@ function do_postchecks()
 						'visible' => 'string',
 						'lang' => 'string',
 						'display' => 'string',
-						'editgroups' => 'string',
                         'settings' => 'string',
 					),
 					array(
@@ -2412,7 +2411,6 @@ function do_postchecks()
 						1,
 						$cp['lang'],
 						$cp['display'],
-						$cp['editgroups'],
                         json_encode(array(
                             'var1' => json_decode($cp['settings'], true)['var1'],
                             'var2' => json_decode($cp['settings'], true)['var2'],
@@ -2439,11 +2437,10 @@ function do_postchecks()
 						'visible' => 'string',
 						'lang' => 'string',
 						'display' => 'string',
-						'editgroups' => 'string',
                         'settings' => 'string',
 					),
 					array(
-                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages', '', 
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages', 
                         json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')
@@ -2462,7 +2459,6 @@ function do_postchecks()
 
 			$where = is_numeric($_POST['tpadmin_form_id']) ? $_POST['tpadmin_form_id'] : 0;
 			$tpgroups = array();
-			$editgroups = array();
 			$access = array();
 			$lang = array();
 			foreach($_POST as $what => $value)
@@ -2552,8 +2548,6 @@ function do_postchecks()
 				}
 				elseif(substr($what, 0, 8) == 'tp_group')
 					$tpgroups[] = substr($what, 8);
-				elseif(substr($what, 0, 12) == 'tp_editgroup')
-					$editgroups[] = substr($what, 12);
 				elseif(substr($what, 0, 10) == 'actiontype')
 					$access[] = '' . $value;
 				elseif(substr($what, 0, 9) == 'boardtype')
@@ -2604,14 +2598,12 @@ function do_postchecks()
 				UPDATE {db_prefix}tp_blocks
 				SET	display = {string:acc2},
 					access = {string:acc},
-					lang = {string:lang},
-					editgroups = {string:editgrp}
+					lang = {string:lang}
 				WHERE id = {int:blockid}',
 				array(
 					'acc2' => implode(',', $access),
 					'acc' => implode(',', $tpgroups),
 					'lang' => implode('|', $lang),
-					'editgrp' => implode(',', $editgroups),
 					'blockid' => $where,
 				)
 			);
