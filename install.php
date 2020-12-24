@@ -585,6 +585,7 @@ $settings_array = array(
     'dl_showlatest' => '1',
     'dl_showstats' => '1',
     'dl_showcategorytext' => '1',
+	'dl_limit_lenght' => '300',
     'dl_visual_options' => 'left,right,center,top',	
     'dlmanager_theme' => '0',
     'dl_allow_upload' => '1',

@@ -279,6 +279,12 @@ $clickme.click( function(e) {
 						<input type="radio" name="tp_dl_showcategorytext" value="0" ', $context['TPortal']['dl_showcategorytext']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
+						<label for="tp_dl_limit_length">', $txt['tp-dllimitlength'], '</label>
+						</dt>
+						<dd>
+						  <input type="number" id="tp_dl_limit_length" name="tp_dl_limit_length"value="' ,$context['TPortal']['dl_limit_length'], '" style="width: 6em" maxlength="5" min="100"><br><br>
+						</dd>
+					<dt>
 						'.$txt['tp-dlvisualoptions'].'
 					</dt>
 					<dd>

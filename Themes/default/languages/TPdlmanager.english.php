@@ -39,6 +39,7 @@ $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dluselatest'] = 'Show recent files';
 $txt['tp-dlusestats'] = 'Show most downloaded/weekly';
 $txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories';
+$txt['tp-dllimitlength'] = 'Characters to display per download on category page';
 $txt['tp-dlvisualoptions'] = 'Visual options';
 $txt['tp-leftbar'] = 'Show left panel';
 $txt['tp-rightbar'] = 'Show right panel';
