@@ -57,7 +57,6 @@ class Block extends Base {
             'visible'       => 'text',
             'lang'          => 'text',
             'display'       => 'text',
-            'editgroups'    => 'text',
             'settings'      => 'text',
         );
 
