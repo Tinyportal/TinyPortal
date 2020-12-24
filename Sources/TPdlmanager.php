@@ -1160,7 +1160,7 @@ function TPortalDLManager()
 
 				while ($row = $smcFunc['db_fetch_assoc']($request))
 				{
-					if(TPUtil::shortenString($row['description'], 300)) {
+					if(TPUtil::shortenString($row['description'], $context['TPortal']['dl_limit_length'])) {
 						$row['readmore'] = '...';
 					}
 					if(substr($row['screenshot'], 0, 16) == 'tp-images/Image/')
@@ -2799,6 +2799,11 @@ function TPortalDLAdmin()
 			elseif($what == 'tp_dl_showcategorytext')
 			{
 				$changeArray['dl_showcategorytext'] = $value;
+				$go = 1;
+			}
+			elseif($what == 'tp_dl_limit_length')
+			{
+				$changeArray['dl_limit_length'] = $value;
 				$go = 1;
 			}
 			elseif($what == 'tp_dl_featured')
