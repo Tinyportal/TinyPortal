@@ -218,6 +218,9 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 	global $context, $scripturl, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
+    // Force this to reset each time
+    $context['TPortal']['shoutbox'] = null; 
+
 	// get x number of shouts
 	$context['TPortal']['profile_shouts_hide'] = empty($context['TPortal']['profile_shouts_hide']) ? '0' : '1';
 	$context['TPortal']['usercolor'] = '';
@@ -795,7 +798,7 @@ function TPShoutBlock(&$row) {{{
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
     );
-
+    
     // Force var1 to change...
     $set['var1']        = $id++;
     $row['settings']    = json_encode($set, TRUE);
