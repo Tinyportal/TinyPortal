@@ -161,9 +161,6 @@ function TPortal_init() {{{
 	// Show search/frontpage topic layers?
 	TPIntegrate::hookSearchLayers();
 
-	// set cookie change for selected upshrinks
-	tpSetupUpshrinks();
-
 	// finally..any errors finding an article or category?
 	if(!empty($context['art_error'])) {
 		fatal_error($txt['tp-articlenotexist'], false);
@@ -175,6 +172,8 @@ function TPortal_init() {{{
 
     call_integration_hook('integrate_tp_post_init');
 
+	// set cookie change for selected upshrinks
+	tpSetupUpshrinks();
 }}}
 
 function tpLoadCSS() {{{
