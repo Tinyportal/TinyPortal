@@ -94,7 +94,7 @@ h2.author_h2 {
 }
 .article_inner {
 	line-height: 1.4em;
-	word-wrap: break-word;
+	word-break: break-word;
 	overflow-wrap: anywhere;
 }
 .inner a, .article_inner a {
