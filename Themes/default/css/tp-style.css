@@ -97,7 +97,7 @@ h2.author_h2 {
 	word-break: break-word;
 	overflow-wrap: anywhere;
 }
-.article_inner a, .inner a {
+.inner a, .article_inner a {
 	-epub-hyphens: auto;
 	-ms-hyphens: auto;
 	-moz-hyphens: auto;
