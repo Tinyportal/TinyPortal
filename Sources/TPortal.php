@@ -131,8 +131,8 @@ function TPortal_init() {{{
 		$context['template_layers'][] = $context['TPortal']['hooks']['tp_layer'];
     }
 
-	loadtemplate('TPsubs');
-	loadtemplate('TPBlockLayout');
+	loadTemplate('TPsubs');
+	loadTemplate('TPBlockLayout');
 
 	// is the permanent theme option set?
 	if(isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged']) {
@@ -163,10 +163,12 @@ function TPortal_init() {{{
 
 	// finally..any errors finding an article or category?
 	if(!empty($context['art_error'])) {
+        tp_hidebars('all');
 		fatal_error($txt['tp-articlenotexist'], false);
     }
 
 	if(!empty($context['cat_error'])) {
+        tp_hidebars('all');
 		fatal_error($txt['tp-categorynotexist'], false);
     }
 
