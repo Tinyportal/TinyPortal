@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 1.6.8
+ * @version 1.6.9
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -448,7 +448,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '1.6.8',
+    'version' => '1.6.9',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
