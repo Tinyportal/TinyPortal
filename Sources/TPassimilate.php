@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 1.6.8
+ * @version 1.6.9
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -115,7 +115,7 @@ function tpAddCopy($buffer)
 	}
 
 
-	$string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 1.6.8</a> &copy; <a href="' . $scripturl . '?action=tpmod;sa=credits" title="Credits">2005-2020</a>';
+	$string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 1.6.9</a> &copy; <a href="' . $scripturl . '?action=tpmod;sa=credits" title="Credits">2005-2020</a>';
 
 	if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
 		return $buffer;
