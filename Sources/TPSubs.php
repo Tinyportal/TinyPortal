@@ -806,8 +806,24 @@ function TPwysiwyg_setup()
 			if (version === false) {
 				// Do nothing
 			} else {
-				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js"><\/script>\');
-				document.write(\'<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"><\/script>\');
+				function cloudflareLibsTP() {
+					var bluebirdCloud = document.createElement("SCRIPT");
+					var fetchCloud = document.createElement("SCRIPT");
+					bluebirdCloud.type = "text/javascript";
+					fetchCloud.type = "text/javascript";
+					bluebirdCloud.src = "https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.5/bluebird.min.js";
+					fetchCloud.src = "https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js";
+					document.getElementsByTagName("HEAD")[0].insertBefore(bluebirdCloud, document.getElementsByTagName("HEAD")[0].firstChild);
+					document.getElementsByTagName("HEAD")[0].insertBefore(fetchCloud, document.getElementsByTagName("HEAD")[0].firstChild);
+				}
+				if (window.addEventListener) {
+					window.addEventListener("load", cloudflareLibsTP, false);
+				}
+				else if (window.attachEvent) {
+					window.attachEvent("onload", cloudflareLibsTP);
+				}
+				else
+					window.onload = cloudflareLibsTP();
 			}
 			// ]]></script>';
 	}
