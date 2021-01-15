@@ -47,22 +47,22 @@ function TPsetupAdminAreas() {{{
 function TP_addPerms() {{{
 
 	$admperms = array(
-        'admin_forum', 
-        'manage_permissions', 
-        'moderate_forum', 
+        'admin_forum',
+        'manage_permissions',
+        'moderate_forum',
         'manage_membergroups',
-        'manage_bans', 
-        'send_mail', 
-        'edit_news', 
-        'manage_boards', 
+        'manage_bans',
+        'send_mail',
+        'edit_news',
+        'manage_boards',
         'manage_smileys',
-        'manage_attachments', 
-        'tp_articles', 
-        'tp_blocks', 
-        'tp_dlmanager', 
+        'manage_attachments',
+        'tp_articles',
+        'tp_blocks',
+        'tp_dlmanager',
         'tp_settings'
     );
-    
+
     call_integration_hook('integrate_tp_admin_permissions', array(&$admperms));
 
 	return $admperms;
@@ -822,8 +822,9 @@ function TPwysiwyg_setup()
 				else if (window.attachEvent) {
 					window.attachEvent("onload", cloudflareLibsTP);
 				}
-				else
+				else {
 					window.onload = cloudflareLibsTP();
+				}
 			}
 			// ]]></script>';
 	}
@@ -1232,7 +1233,7 @@ function TP_fetchprofile_areas() {{{
 	);
 
     call_integration_hook('integrate_tp_profile_areas', array(&$areas));
-    
+
 	return $areas;
 }}}
 
@@ -1252,7 +1253,7 @@ function TP_fetchprofile_areas2($member_id) {{{
 		if(($context['user']['is_owner'] || allowedTo('tp_dlmanager')) && $context['TPortal']['show_download']) {
 			$context['profile_areas']['tinyportal']['areas']['tp_download'] = '<a href="' . $scripturl . '?action=profile;u=' . $member_id . ';sa=tp_download">' . $txt['downloadsprofile'] . '</a>';
         }
-    
+
         call_integration_hook('integrate_tp_profile', array(&$member_id));
 	}
 
@@ -1427,7 +1428,7 @@ function tp_renderarticle($intro = '')
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc' || $context['TPortal']['article']['rendertype'] == 'import') {
             if(TPUtil::isHTML($context['TPortal']['article']['intro']) || isset($context['TPortal']['article']['parsed_bbc'])) {
 			    $data .= $context['TPortal']['article']['intro'];
-            } 
+            }
             else {
                 $data .= parse_bbc($context['TPortal']['article']['intro']);
             }
@@ -1446,7 +1447,7 @@ function tp_renderarticle($intro = '')
 		elseif($context['TPortal']['article']['rendertype'] == 'bbc') {
             if(TPUtil::isHTML($context['TPortal']['article']['body']) || isset($context['TPortal']['article']['parsed_bbc'])) {
 			    $data .= $context['TPortal']['article']['body'];
-            } 
+            }
             else {
 			    $data .= parse_bbc($context['TPortal']['article']['body']);
             }
@@ -1522,7 +1523,7 @@ function render_template($code, $render = true)
 {
     global $context;
 
-    if(!empty($context['TPortal']['disable_template_eval']) && $render == true) { 
+    if(!empty($context['TPortal']['disable_template_eval']) && $render == true) {
         if(preg_match_all('~(?<={)([A-Za-z_]+)(?=})~', $code, $match) !== false) {
             foreach($match[0] as $func) {
                 if(function_exists($func)) {
@@ -1532,7 +1533,7 @@ function render_template($code, $render = true)
             }
             echo $code;
         }
-    } 
+    }
     else {
 	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', ","(), '"),$code).'\';';
 	    if($render) {
@@ -1548,7 +1549,7 @@ function render_template_layout($code, $prefix = '')
 {
     global $context;
 
-    if(!empty($context['TPortal']['disable_template_eval'])) { 
+    if(!empty($context['TPortal']['disable_template_eval'])) {
         if(preg_match_all('~(?<={)([A-Za-z0-9]+)(?=})~', $code, $match) !== false) {
             foreach($match[0] as $suffix) {
                 $func = (string)"$prefix$suffix";
@@ -1561,7 +1562,7 @@ function render_template_layout($code, $prefix = '')
             }
             echo $code;
         }
-    } 
+    }
     else {
 	    $ncode = 'echo \'' . str_replace(array('{','}'),array("', " . $prefix , "(), '"),$code).'\';';
 	    eval($ncode);
@@ -1780,7 +1781,7 @@ function TPparseRSS($override = '', $encoding = 0)
   		curl_close($curl);
 		$xml = simplexml_load_string($ret);
 	}
-	
+
 	if($xml !== false) {
 		switch (strtolower($xml->getName())) {
 			case 'rss':
@@ -1857,7 +1858,7 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 			),
 		);
 	}
-	
+
 	if (allowedTo('tp_articles')) {
 		$context['admin_tabs']['tp_articles'] = array(
 			'articles' => array(
@@ -2344,7 +2345,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 				FROM {db_prefix}tp_dlmanager AS dlm
                 LEFT JOIN {db_prefix}members AS mem
 				    ON dlm.author_id = mem.id_member
-				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat 
+				LEFT JOIN {db_prefix}tp_dlmanager AS dlcat
                     ON dlcat.id = dlm.category
 				WHERE dlm.type = {string:type}
 				AND dlm.category IN ({array_int:cat})
@@ -2851,18 +2852,18 @@ function tp_profile_articles($member_id) {{{
     $tpArticle  = TPArticle::getInstance();
 	$start      = 0;
 	$sorting    = 'date';
-	
+
     if(isset($context['TPortal']['mystart'])) {
 		$start = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
     }
-	
+
     if($context['TPortal']['tpsort'] != '') {
         $sorting = $context['TPortal']['tpsort'];
         if(!in_array($sorting, array('date', 'subject', 'views', 'category', 'comments'))) {
             $sorting = 'date';
         }
     }
-	
+
 	// get all articles written by member
     $max        = $tpArticle->getTotalAuthorArticles($member_id, false, true);
 
@@ -2882,8 +2883,8 @@ function tp_profile_articles($member_id) {{{
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
 		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 15 OFFSET {int:start}',
-		array('auth' => $member_id, 
-		'sort' => $sorting, 
+		array('auth' => $member_id,
+		'sort' => $sorting,
 		'sorter' => in_array($sorting, array('date', 'views', 'comments')) ? 'DESC' : 'ASC',
 		'start' => $start
 		)
@@ -2936,7 +2937,7 @@ function tp_profile_articles($member_id) {{{
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	
+
     // construct pageindexes
 	$context['TPortal']['pageindex'] = '';
 	if($max > 0) {
@@ -2948,7 +2949,7 @@ function tp_profile_articles($member_id) {{{
 	if(isset($_GET['sa']) && $_GET['sa'] == 'settings') {
 		$context['TPortal']['profile_action'] = 'settings';
     }
-	
+
 	// Create the tabs for the template.
 	$context[$context['profile_menu_name']]['tab_data'] = array(
 		'title' => $txt['articlesprofile'],
@@ -2976,7 +2977,7 @@ function tp_profile_articles($member_id) {{{
 		$context['TPortal']['selected_member_choice'] = 0;
 		$context['TPortal']['selected_member_choice_id'] = 0;
 	}
-	
+
     $context['TPortal']['selected_member'] = $member_id;
 	if(loadLanguage('TPortalAdmin') == false) {
 		loadLanguage('TPortalAdmin', 'english');
@@ -3032,8 +3033,8 @@ function tp_profile_download($memID)
 		WHERE author_id = {int:auth}
 		AND type = {string:type}
 		ORDER BY {raw:sort} {raw:sorter} LIMIT 15 OFFSET {int:start}',
-		array('auth' => $memID, 
-		'type' => 'dlitem', 
+		array('auth' => $memID,
+		'type' => 'dlitem',
 		'sort' => $sorting,
 		'sorter' => in_array($sorting, array('created', 'views', 'downloads')) ? 'DESC' : 'ASC',
 		'start' => $start)
