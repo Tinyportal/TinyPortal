@@ -117,7 +117,7 @@ function TPShoutLoad()
                     });
                 });
             // ]]></script>';
-        } 
+        }
         else if($context['TPortal']['shout_submit_returnkey'] == 2) {
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
@@ -154,7 +154,7 @@ function TPShoutLoad()
 
 function TPShout()
 {
-    
+
     global $context, $settings, $options, $modSettings;
 
     if(isset($_REQUEST['shout'])) {
@@ -190,7 +190,7 @@ function TPShout()
     }
 
     return true;
-    
+
 }
 
 // Post the shout via ajax
@@ -261,7 +261,7 @@ function postShout()
                 array('id')
             );
             $shout_id = $smcFunc['db_insert_id']('{db_prefix}tp_shoutbox');
-       
+
             $mention_data['id']             = $shout_id;
             $mention_data['content']        = $shout;
             $mention_data['type']           = 'shout';
@@ -272,7 +272,7 @@ function postShout()
             $mention_data['text']           = 'Shout';
 
             $tpMention = TPMentions::getInstance();
-            $tpMention->addMention($mention_data); 
+            $tpMention->addMention($mention_data);
         }
     }
 }
@@ -325,7 +325,7 @@ function tpshout_admin()
 
     // clear the linktree first
     TPstrip_linktree();
-	
+
 	// Set the linktree
 	TPadd_linktree($scripturl.'?action=tpshout', 'TPshout');
 
@@ -399,11 +399,11 @@ function tpshout_admin()
 				if($what == 'shoutbox_smile') {
 					$changeArray['show_shoutbox_smile'] = $value;
                 }
-				
+
                 if($what == 'shoutbox_icons') {
 					$changeArray['show_shoutbox_icons'] = $value;
                 }
-				
+
                 if($what == 'shoutbox_height') {
 					$changeArray['shoutbox_height'] = $value;
                 }
@@ -671,7 +671,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	// collect the color for shoutbox
 	$request = $smcFunc['db_query']('', '
 		SELECT grp.online_color AS onlineColor
-		FROM {db_prefix}members AS m 
+		FROM {db_prefix}members AS m
         INNER JOIN {db_prefix}membergroups AS grp
 		ON m.id_group = grp.id_group
 		WHERE id_member = {int:user} LIMIT 1',
@@ -716,16 +716,16 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 
 	if(count($members) > 0 ) {
 		$request2 =  $smcFunc['db_query']('', '
-		    SELECT mem.id_member, mem.real_name AS real_name, mem.email_address AS email_address, 
+		    SELECT mem.id_member, mem.real_name AS real_name, mem.email_address AS email_address,
 			    mem.avatar, COALESCE(a.id_attach,0) AS id_attach, a.filename, COALESCE(a.attachment_type,0) AS attachment_type, mgrp.online_color AS mg_online_color, pgrp.online_color AS pg_online_color
 		    FROM {db_prefix}members AS mem
 			LEFT JOIN {db_prefix}membergroups AS mgrp ON
 				(mgrp.id_group = mem.id_group)
 			LEFT JOIN {db_prefix}membergroups AS pgrp ON
 				(pgrp.id_group = mem.id_post_group)
-			LEFT JOIN {db_prefix}attachments AS a ON 
+			LEFT JOIN {db_prefix}attachments AS a ON
                 (a.id_member = mem.id_member and a.attachment_type!=3)
-		    WHERE mem.id_member IN(' . implode(",",$members) . ')' 
+		    WHERE mem.id_member IN(' . implode(",",$members) . ')'
 	    );
     }
 
@@ -734,7 +734,7 @@ function tpshout_fetch($render = true, $limit = 1, $ajaxRequest = false)
 	{
 		while($row = $smcFunc['db_fetch_assoc']($request2))
 		{
-            $row['avatar'] = set_avatar_data( array(      
+            $row['avatar'] = set_avatar_data( array(
                     'avatar' => $row['avatar'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -784,7 +784,7 @@ function shout_bcc_code($collapse = true)
 			something.style.backgroundImage = "url(" + smf_images_url + (mode ? "/bbc/bbc_hoverbg.gif)" : "/bbc/bbc_bg.gif)");
 		}
 	// ]]></script>';
-    
+
     // The below array makes it dead easy to add images to this page. Add it to the array and everything else is done for you!
     $context['tp_bbc_tags'] = array();
     $context['tp_bbc_tags2'] = array();
@@ -1016,13 +1016,13 @@ function shout_smiley_code()
                     'val1' => 0,
 				    'val2' => 2
                 )
-			);			
+			);
 		}
 		else {
 			$request = $smcFunc['db_query']('', '
 			    SELECT smiley.code, files.filename, smiley.description, smiley.smiley_row, smiley.hidden
 				FROM {db_prefix}smileys AS smiley
-				LEFT JOIN {db_prefix}smiley_files AS files ON				
+				LEFT JOIN {db_prefix}smiley_files AS files ON
 				(smiley.id_smiley = files.id_smiley)
 				WHERE hidden IN ({int:val1}, {int:val2}) and files.smiley_set = {string:smiley_set}
 				ORDER BY smiley_row, smiley_order',
@@ -1033,7 +1033,7 @@ function shout_smiley_code()
 				)
 			);
 		}
-			
+
 		    while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$row['code'] = htmlspecialchars($row['code']);
@@ -1235,7 +1235,7 @@ function TPShoutBlock($row) {{{
         'function' => 'tpshout_fetch',
         'sourcefile' => $sourcedir .'/TPShout.php',
     );
-    
+
     //$tpm = $row['id'];
     //$context['TPortal']['tpblocks']['blockrender'][$tpm]['function'] = 'tpshout_fetch';
 
