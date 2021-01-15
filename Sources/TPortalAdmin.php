@@ -1200,7 +1200,7 @@ function do_articles()
 
 		$(document).ready(function() {
 			startToggle();
-		}
+		});
 
 		function startToggle()
 		{

@@ -479,7 +479,7 @@ function adminBlocks() {{{
 		}
 		$(document).ready(function() {
 			startToggle();
-		}
+		});
 		function startToggle()
 		{
 			var img = document.getElementsByTagName("img");
