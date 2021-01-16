@@ -845,17 +845,19 @@ function TPShoutBlock(&$row) {{{
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
             $(document).ready(function() {
-                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
-                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
-                        tp_shout_key_press = true;
-                        // set a 100 millisecond timeout for the next key press
-                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                        TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
-                    }
-                    else if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
+                if ($("#tp_shout_'.$set['var2'].'")) {
+                    $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                        if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+                            tp_shout_key_press = true;
+                            // set a 100 millisecond timeout for the next key press
+                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                            TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                        }
+                        else if (event.keyCode == 13) {
+                            event.preventDefault();
+                        }
+                    });
+                }
             });
             // ]]></script>';
         }
@@ -864,11 +866,13 @@ function TPShoutBlock(&$row) {{{
         $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
             $(document).ready(function() {
-                $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
+                if ($("#tp_shout_'.$set['var2'].'")) {
+                    $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                        if (event.keyCode == 13) {
+                            event.preventDefault();
+                        }
+                    });
+                }
             });
             // ]]></script>';
     }
