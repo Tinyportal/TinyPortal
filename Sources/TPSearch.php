@@ -33,7 +33,7 @@ function TPSearch()
         TPadd_linktree($scripturl.'?action=tportal;sa=searcharticle' , $txt['tp-searcharticles2']);
         loadtemplate('TPSearch');
         $context['sub_template'] = 'article_search_results';
-    } 
+    }
     else {
 	    TPadd_linktree($scripturl.'?action=tportal;sa=searcharticle' , $txt['tp-searcharticles2']);
 	    loadtemplate('TPSearch');
@@ -70,7 +70,7 @@ function TPSearchArticle()
     else {
         $start = TPUtil::filter('start', 'request', 'int');
     }
-    
+
     if(!empty($_REQUEST['params'])) {
         $params = TPUtil::filter('params', 'request', 'string');
         if(!empty($params)) {
@@ -122,7 +122,7 @@ function TPSearchArticle()
 			foreach($splitWords as $word) {
 				$word       = trim($word);
 				$operator   = substr($word, 0, 1);
-				// First Character 
+				// First Character
 				switch($operator) {
 					// Allowed operators
 					case '-':
@@ -134,7 +134,7 @@ function TPSearchArticle()
 						break;
 					default:
 						// Last Character of a word
-						$operator   = substr($word, -1); 
+						$operator   = substr($word, -1);
 						switch($operator) {
 							// Allowed operators
 							case '-':
@@ -162,7 +162,7 @@ function TPSearchArticle()
 			$select     = ', MATCH (body) AGAINST (\''.$what.'\') AS score';
 			$query      = 'MATCH (body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
 		}
-		elseif($usetitle && $usebody) { 
+		elseif($usetitle && $usebody) {
 			$select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
 			$query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
 		}
@@ -244,7 +244,7 @@ function TPSearchArticle()
 	$smcFunc['db_free_result']($request);
 
     $params = base64_encode(json_encode(array( 'search' => $what, 'title' => $usetitle, 'body' => $usebody)));
-    
+
     // Now that we know how many results to expect we can start calculating the page numbers.
     $context['page_index']  = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
 

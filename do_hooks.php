@@ -68,7 +68,7 @@ function install_mod ()
 function setup_hooks ()
 {
 	global $context, $hooks, $forum_version;
-    
+
     $smf21 = true;
     if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
         $smf21 = false;

@@ -63,8 +63,8 @@ function getBlocks() {{{
 
 	$now = time();
 	// setup the containers
-	$blocks = $tpBlock->getBlockType(); 
-	
+	$blocks = $tpBlock->getBlockType();
+
 	$context['TPortal']['hide_frontbar_forum'] = 0;
 
 	$fetch_articles = array();
@@ -75,10 +75,10 @@ function getBlocks() {{{
         $count[$k] = 0;
     }
 
-	$panels             = $tpBlock->getBlockBar(); 
+	$panels             = $tpBlock->getBlockBar();
     $availableBlocks    = $tpBlock->getBlockPermissions();
 	if (is_array($availableBlocks) && count($availableBlocks)) {
-        foreach($availableBlocks as $row) { 
+        foreach($availableBlocks as $row) {
 			// some tests to minimize sql calls
 			if($row['type'] == TP_BLOCK_THEMEBOX) {
 				$test_themebox = true;
@@ -517,7 +517,7 @@ function editBlock( $block_id = 0 ) {{{
 		}
         elseif($row['type'] == 8) {
             call_integration_hook('integrate_tp_shoutbox', array(&$row));
-        }        
+        }
         elseif($row['type'] == 20) {
             call_integration_hook('integrate_tp_blocks', array(&$row));
         }

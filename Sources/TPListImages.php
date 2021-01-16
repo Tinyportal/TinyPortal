@@ -45,7 +45,7 @@ function template_tp_list_images_admin() {
     if(array_key_exists('remove', $_GET)) {
 	    TPRemoveImage($_POST['image']);
     }
-    
+
     $ret = '';
 
     if(array_key_exists('id_member', $_POST)) {
@@ -75,7 +75,7 @@ function template_tp_list_images_admin() {
 		</div>
 		</form>
 		';
-    
+
     echo $ret;
 
 }
@@ -141,7 +141,7 @@ function TPListImageAdmin($user_id = 0) {{{
 
     }
 
-    $html .= '  
+    $html .= '
 			</div>
 		<div class="padding-div"></div>
 	</div>';
@@ -196,7 +196,7 @@ function TPMembers() {{{
 		$smcFunc['db_free_result']($data);
 	}
 
-	return $users;     
+	return $users;
 }}}
 
 function TPListImageAdminAreas() {{{

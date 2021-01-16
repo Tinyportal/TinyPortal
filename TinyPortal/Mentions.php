@@ -25,13 +25,13 @@ class Mentions extends Base {
     private static $_instance   = null;
 
     public static function getInstance() {{{
-	
+
     	if(self::$_instance == null) {
 			self::$_instance = new self();
 		}
-	
+
     	return self::$_instance;
-	
+
     }}}
 
     // Empty Clone method
@@ -83,8 +83,8 @@ class Mentions extends Base {
 
                     $this->dB->db_insert('insert',
                         '{db_prefix}user_alerts',
-                        array(  
-                            'alert_time'        => 'int', 
+                        array(
+                            'alert_time'        => 'int',
                             'id_member'         => 'int',
                             'id_member_started' => 'int',
                             'member_name'       => 'string',

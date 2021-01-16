@@ -119,7 +119,7 @@ function TPuploadpicture($widthhat, $prefix, $maxsize='1800', $exts='jpg,gif,png
     if(is_dir($destdir)) {
         $dstPath = $destdir . '/' . $sname;
     }
-    else { 
+    else {
         $dstPath = $boarddir . '/'. $destdir .'/' . $sname;
     }
 

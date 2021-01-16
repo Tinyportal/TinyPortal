@@ -21,7 +21,7 @@
 // Shoutbox Block template
 // Shoutbox single shout template
 // View shouts Profile page
- 
+
 function template_tpshout_above()
 {
 	return;
@@ -348,7 +348,7 @@ function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null 
                 <input type="hidden" id="tp-shout-name" name="tp-shout-name" value="'.$context['user']['name'].'" />
                 <input type="hidden" name="sc" value="', $context['session_id'], '" />
             </form>';
-		}	
+		}
 	}
 }
 
@@ -391,13 +391,13 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 			<div class="shoutbody_layout1" '. (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . '' . $row['content'] .'</div>
 		</div>
 	</div>',
-	'2' => '	
+	'2' => '
 		<div class="shoutbody_layout2" style="background:' . (($row['id'] % 2) ? ($context['TPortal']['shoutbox_linecolor2']) : ($context['TPortal']['shoutbox_linecolor1'])) . ';">
 			<div class="showhover">
-                <div class="shoutbox_time">	
+                <div class="shoutbox_time">
 				    <span class="smalltext" style="color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], $row['time'] ).'</span>
                 </div>
-				<div class="shoutbox_edit">	
+				<div class="shoutbox_edit">
 					' . (allowedTo( 'tp_can_admin_shout' ) ? '
 					<a href="'.$scripturl.'?action=tpshout;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPmodify_shout.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '.$shoutbox_id.', '.$row['id'].', '.$shoutbox_layout.' ); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpshout;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPdelete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
@@ -407,10 +407,10 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 				<p class="clearthefloat"></p>
 			</div>
 		</div>',
-	'3' => '	
+	'3' => '
 		<div class="shoutbody_layout3" style="background:' . (($row['id'] % 2) ? ($context['TPortal']['shoutbox_linecolor2']) : ($context['TPortal']['shoutbox_linecolor1'])) . ';">
 			<div class="showhover">
-				<div class="shoutbox_edit">	
+				<div class="shoutbox_edit">
 					' . (allowedTo( 'tp_can_admin_shout' ) ? '
 					<a href="'.$scripturl.'?action=tpshout;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPmodify_shout.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '.$shoutbox_id.', '.$row['id'].', '.$shoutbox_layout.'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpshout;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPdelete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
@@ -473,7 +473,7 @@ function template_tpshout_profile()
 			echo '
 					<tr class="windowbg">
 					<td class="tpshout_date" colspan="3">
-						<div class="smalltext">',$txt['tpsummary_noshout'],'</div>	
+						<div class="smalltext">',$txt['tpsummary_noshout'],'</div>
 					</td>
 					</tr>';
 

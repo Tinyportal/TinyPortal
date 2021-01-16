@@ -2442,7 +2442,7 @@ function do_postchecks()
                         'settings' => 'string',
 					),
 					array(
-                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages', 
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages',
                         json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')

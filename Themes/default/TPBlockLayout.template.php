@@ -45,16 +45,16 @@ function template_tp_above()
     $sideclass = '';
 	if (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $context['TPortal']['rightpanel']==1)) {
 		$sideclass =  "lrs rightpanelOn";
-	} 
+	}
 	elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==1 && $context['TPortal']['rightpanel']==0)) {
 		$sideclass =  "lrs leftpanelOn";
-	} 
+	}
 	elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==1 && $context['TPortal']['rightpanel']==1)) {
 		$sideclass =  "lrs lrON";
-	} 
+	}
 	elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $context['TPortal']['rightpanel']==0)) {
 		$sideclass =  "nosides";
-	} 
+	}
 	else {
 		$bclass =  "nosides";
 	}
@@ -362,7 +362,7 @@ function template_editblock()
 							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4" /></label></div></div>
 							<p class="clearthefloat"></p>
 						</dd>
-					</dl>'; 
+					</dl>';
                 }
 			}
 // Block type: Article / Download functions
@@ -595,7 +595,7 @@ function template_editblock()
 				</div>
 				<div><hr>
 					<div><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-blockstylehelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
-					</div>				
+					</div>
 					<br><input type="radio" id="tp_block_var5" name="tp_block_var5" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
 				<div class="panels-optionsbg">';
@@ -679,7 +679,7 @@ function template_editblock()
 				if(empty($context['TPortal']['uselangoption'])) {
 					echo '
 					<br><span class="error">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=settings#uselangoption">&nbsp;['. $txt['tp-settings'] .']&nbsp;</a>' : '' , '</span>';
-				}						
+				}
 				echo '
 					</dt>
 					<dd>';

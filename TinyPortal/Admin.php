@@ -33,7 +33,7 @@ class Admin extends Base {
             'name'      => 'text',
             'value'     => 'text',
         );
-        
+
         $this->tpSettings = $this->getSetting();
 
     }}}
@@ -48,7 +48,7 @@ class Admin extends Base {
 
         if(empty($setting_name)) {
             $request =  $this->dB->db_query('', '
-                SELECT name, value 
+                SELECT name, value
                 FROM {db_prefix}tp_settings
                 WHERE 1=1'
             );

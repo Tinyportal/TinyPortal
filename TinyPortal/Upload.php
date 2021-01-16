@@ -9,7 +9,7 @@
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
- * license: BSD-3-Clause 
+ * license: BSD-3-Clause
  *
  * @version 2.1.0
  *
@@ -83,13 +83,13 @@ class Upload
     );
 
     public static function getInstance() {{{
-	
+
     	if(self::$_instance == null) {
 			self::$_instance = new self();
 		}
-	
+
     	return self::$_instance;
-	
+
     }}}
 
     // Empty Clone method
@@ -133,7 +133,7 @@ class Upload
     }}}
 
     public function set_max_file_size( int $file_size ) {{{
-    
+
         $this->max_file_size = $file_size;
 
     }}}
@@ -152,7 +152,7 @@ class Upload
             $finfo      = finfo_open(FILEINFO_MIME);
             $mime_type  = finfo_file($finfo, $filename);
             finfo_close($finfo);
-        } 
+        }
         elseif(function_exists('mime_content_type')) {
             $mime_type = mime_content_type($filename);
         }
@@ -203,7 +203,7 @@ class Upload
     }}}
 
     public function generate_filename( string $directory ) {{{
-    
+
         $conflict = TRUE;
 
         if(!self::check_directory_exists($directory)) {
@@ -229,7 +229,7 @@ class Upload
             return FALSE;
         }
 
-        // Check File was uploaded 
+        // Check File was uploaded
         if(!is_uploaded_file($source)) {
             self::set_error(101);
             return FALSE;

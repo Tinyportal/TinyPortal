@@ -20,20 +20,20 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class Article extends Base 
+class Article extends Base
 {
 
     private static $_instance   = null;
     private $dBStructure        = array();
 
     public static function getInstance() {{{
-	
+
     	if(self::$_instance == null) {
 			self::$_instance = new self();
 		}
-	
+
     	return self::$_instance;
-	
+
     }}}
 
     // Empty Clone method
@@ -42,7 +42,7 @@ class Article extends Base
     public function __construct() {{{
         parent::__construct();
 
-        $this->dBStructure = array ( 
+        $this->dBStructure = array (
             'id'            => 'int',
             'date'          => 'int',
             'body'          => 'string',
@@ -95,7 +95,7 @@ class Article extends Base
         }
 
         $request    = $this->dB->db_query('', '
-            SELECT 
+            SELECT
                 art.*, art.author_id AS author_id, art.id_theme AS id_theme, var.value1 AS category_name, var.value2,
                 var.value3, var.value4, var.value5, var.value7, var.value8 AS category_shortname, art.type AS rendertype, mem.email_address AS email_address,
                 COALESCE(mem.real_name,art.author) AS real_name, mem.avatar, mem.posts, mem.date_registered AS date_registered, mem.last_login AS last_login,
@@ -104,16 +104,16 @@ class Article extends Base
             LEFT JOIN {db_prefix}members AS mem ON (mem.id_member = art.author_id)
             LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = art.author_id AND a.attachment_type != 3)
             LEFT JOIN {db_prefix}tp_variables AS var ON (var.id= art.category)
-            WHERE '. $where . 
+            WHERE '. $where .
             (
                 !allowedTo( 'tp_articles' ) ? '
                     AND ((art.pub_start = 0 AND art.pub_end = 0)
                     OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
                     OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
-                    OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.')) ' 
-                : ' ' 
+                    OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.')) '
+                : ' '
             ),
-            array ( 
+            array (
                 'page' => $article
             )
         );
@@ -162,7 +162,7 @@ class Article extends Base
                     $where_data[] = $key.' = '.$value;
                 }
                 elseif(strpos($key, '!') === 0) {
-                    $where_data[] = substr($key, strpos($key, '!') + 1).' != '.$value; 
+                    $where_data[] = substr($key, strpos($key, '!') + 1).' != '.$value;
                 }
             }
             $where = implode(' AND ', array_values($where_data));
@@ -201,7 +201,7 @@ class Article extends Base
 
     public function insertArticleComment($user_id, $item_id, $comment, $title) {{{
 
-        $comment_id = 0;        
+        $comment_id = 0;
 
 		// check if the article indeed exists
 		$request =  $this->dB->db_query('', '
@@ -311,7 +311,7 @@ class Article extends Base
 
     public function toggleColumnArticle($article_id, $column) {{{
 
-        // We can only toggle certain fields so check that the column is in the list 
+        // We can only toggle certain fields so check that the column is in the list
         if(in_array($column, array('off', 'locked', 'sticky', 'frontpage', 'featured'))) {
 			if(TP_SMF21 == FALSE) {
 				global $modSettings;
@@ -320,19 +320,19 @@ class Article extends Base
 			if($article_id > 0) {
 				$this->dB->db_query('', '
 						UPDATE {db_prefix}tp_articles
-						SET {raw:column} = 
+						SET {raw:column} =
 						(
 						 	SELECT CASE WHEN tpa.{raw:column} = 1 THEN 0 ELSE 1 END
 						 	FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-							WHERE tpa.id = {int:id} 
+							WHERE tpa.id = {int:id}
 						 	LIMIT 1
-						)				
+						)
 						WHERE id = {int:id}',
 					array (
 						'id' 		=> $article_id,
 						'column' 	=> $column
 					)
-						
+
 				);
 			}
 			if(TP_SMF21 == FALSE) {
@@ -396,7 +396,7 @@ class Article extends Base
             $num_articles = $this->dB->db_fetch_assoc($request)['num_articles'];
             $this->dB->db_free_result($request);
         }
-       
+
         return $num_articles;
     }}}
 
@@ -444,7 +444,7 @@ class Article extends Base
         }
         $this->dB->db_free_result($request);
 
-        return $articles; 
+        return $articles;
 
     }}}
 
@@ -476,7 +476,7 @@ class Article extends Base
 				$request =  $this->dB->db_query('', '
                     SELECT t.num_views AS views, t.num_replies AS replies, t.locked, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
                     FROM {db_prefix}topics AS t
-                    LEFT JOIN {db_prefix}attachments AS thumb 
+                    LEFT JOIN {db_prefix}attachments AS thumb
                     ON ( t.id_first_msg = thumb.id_msg AND thumb.attachment_type = 3 )
                     WHERE t.id_topic = ({int:id})',
                     array(

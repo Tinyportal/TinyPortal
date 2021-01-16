@@ -20,7 +20,7 @@
 // My Articles
 
 // Submit Article
-function template_submitarticle() 
+function template_submitarticle()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
@@ -142,7 +142,7 @@ function template_submitarticle()
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
 
                 echo '<input type="hidden" name="tp_article_timestamp" value="'.$mg['date'].'">';
- 
+
 			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 					echo '
 				<hr>
@@ -158,7 +158,7 @@ function template_submitarticle()
 						', $txt['tp-created'], '
 					</dt>
 					<dd>';
-				
+
                 // day
 				$day = date("j",$mg['date']);
 				$month = date("n",$mg['date']);
@@ -733,7 +733,7 @@ function template_showcomments()
 		</table>
 		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
 		</div>';
-            }	
+            }
 		}
 }
 
@@ -782,8 +782,8 @@ function template_showarticle()
 					if((allowedTo('tp_editownarticle') || allowedTo('tp_articles')) && $art['locked']==0) {
 						echo '
 						<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article='.$art['id'].'" title="'. $txt['tp-editarticle'] .'"><img src="' . $settings['tp_images_url'] . '/TPmodify.png" alt="*" /></a>&nbsp; ';
-					} 
-					if($art['off']==0) { 
+					}
+					if($art['off']==0) {
 							echo '<img src="' . $settings['tp_images_url'] . '/TPactive2.png" title="" alt="*" />&nbsp; ';
 					}
 					else {
@@ -791,15 +791,15 @@ function template_showarticle()
 					}
                     echo '
                         </div>';
-					
-					if($art['locked']==1) { 
+
+					if($art['locked']==1) {
 						echo '
 						<img title="'.$txt['tp-islocked'].'" src="' .$settings['tp_images_url']. '/TPlock1.png" alt="'.$txt['tp-islocked'].'"  />&nbsp';
 					}
-				
+
                     if($art['off'] == 0 && $art['approved'] == 1) {
                         echo '
-                        <a href="' . $scripturl . '?page='.$art['id'].'" title="'. $txt['tp-viewarticle'] .'">' . html_entity_decode($art['subject']) . '</a>'; 
+                        <a href="' . $scripturl . '?page='.$art['id'].'" title="'. $txt['tp-viewarticle'] .'">' . html_entity_decode($art['subject']) . '</a>';
                     }
                     else {
                         echo '
@@ -814,7 +814,7 @@ function template_showarticle()
 			else {
 				echo '
 					<tr class="windowbg">
-					<td class="articles"> 
+					<td class="articles">
 					'. $txt['tp-noarticlesfound'] .'
 					</td>
 					</tr>';

@@ -285,7 +285,7 @@ $tables = array(
         ),
     ),
 );
-            
+
 foreach ($tables as $table => $col) {
     if (in_array($db_prefix . $table, $existing_tables)) {
         $render .= '
@@ -445,7 +445,7 @@ $settings_array = array(
     'frontpage_visual' => 'left,right,center,top,bottom,lower,header',
     'frontpage_layout' => '1',
     'frontpage_catlayout' => '1',
-    'frontpage_template' => '',	
+    'frontpage_template' => '',
     'allow_guestnews' => '1',
     'SSI_board' => '1',
     'frontpage_limit' => '5',
@@ -551,7 +551,7 @@ $settings_array = array(
     'shoutbox_linecolor1' => '#f0f4f7',
     'shoutbox_linecolor2' => '#fdfdfd',
     'profile_shouts_hide' => '0',
-    // Other	
+    // Other
     'bottombar' => '1',
     'cat_list' => '1,2',
     'featured_article' => '0',
@@ -578,14 +578,14 @@ $settings_array = array(
 <p>If you do not wish to use TPdownloads you can deactivate the function completely by setting the option "TPdownloads is NOT active" in the settings. The TPdownloads menu option will no longer be displayed in the menu when TPdownloads is deactivated.</p>
 <p><br></p>
 <p>We hope you enjoy using TinyPortal.&nbsp; If you have any problems, please feel free to <a href="https://www.tinyportal.net/index.php">ask us for assistance</a>.<br></p>
-<p><br>Thanks!<br>The TinyPortal team</p>',	
+<p><br>Thanks!<br>The TinyPortal team</p>',
     'dl_showfeatured' => '1',
-    'dl_featured' => '',	
+    'dl_featured' => '',
     'dl_showlatest' => '1',
     'dl_showstats' => '1',
     'dl_showcategorytext' => '1',
 	'dl_limit_length' => '300',
-    'dl_visual_options' => 'left,right,center,top',	
+    'dl_visual_options' => 'left,right,center,top',
     'dlmanager_theme' => '0',
     'dl_allow_upload' => '1',
     'dl_approve_groups' => '',
@@ -660,7 +660,7 @@ if($convertblocks) {
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_variables
 		SET value3 = {string:val3}
-		WHERE value3 =\'\' 
+		WHERE value3 =\'\'
 		AND type = {string:cat}',
 		array('val3' => '-1,0', 'cat' => 'category')
 	);
@@ -848,7 +848,7 @@ function updateBlocks()
 
     // update block order
     $request =  $smcFunc['db_query']('', '
-        SELECT id, pos, bar 
+        SELECT id, pos, bar
         FROM {db_prefix}tp_blocks
         WHERE 1=1',
         array (
@@ -883,16 +883,16 @@ function updateBlocks()
                     'id'    => $row['id'],
                     'pos'   => $newPos++,
                 )
-            ); 
+            );
         }
     }
 	$smcFunc['db_free_result']($request);
     $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'editgroups');
-	
+
 	$render .= '<li>Updated block order in blocks table</li>';
-	
+
 	// update Shoutbox blocks
-	   
+
 	// get the actual settings
 	$request = $smcFunc['db_query']('', '
 		SELECT value FROM {db_prefix}tp_settings
@@ -903,7 +903,7 @@ function updateBlocks()
 		$row = $smcFunc['db_fetch_assoc']($request);
 		$shoutbox_height = $row['value'];
 	}
-	
+
 	$request = $smcFunc['db_query']('', '
 		SELECT value FROM {db_prefix}tp_settings
 		WHERE name = {string:value} LIMIT 1',
@@ -913,7 +913,7 @@ function updateBlocks()
 		$row = $smcFunc['db_fetch_assoc']($request);
 		$shoutbox_layout = $row['value'];
 	}
-	
+
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}tp_blocks
 		SET type = {string:type}, body = {int:body}, settings = {string:settings}
@@ -969,7 +969,7 @@ function updateComments()
 
     // fetch any comments
     $request =  $smcFunc['db_query']('', '
-        SELECT var.* 
+        SELECT var.*
         FROM {db_prefix}tp_variables AS var
         WHERE var.type = {string:type}',
         array (
@@ -989,7 +989,7 @@ function updateComments()
                     'comment'   => 'string',
                     'member_id' => 'int'
                 ),
-                array ( 
+                array (
                     $row['value5'],
                     'article_comment',
                     $row['value1'],
@@ -1143,7 +1143,7 @@ function addDefaults()
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
-            ), 
+            ),
             'recent' =>array(
                 'type' => 12,
                 'frame' => 'theme',
@@ -1187,7 +1187,7 @@ function addDefaults()
                 'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
             ),
         );
-        
+
         $smcFunc['db_insert']('ignore',
             '{db_prefix}tp_blocks',
             array(
@@ -1221,8 +1221,8 @@ function addDefaults()
             while($row = $smcFunc['db_fetch_assoc']($request)) {
                 $id     = array_shift($row);
                 $data   = json_encode($row);
-                $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks 
-                        SET settings = {string:data} 
+                $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks
+                        SET settings = {string:data}
                         WHERE id = {int:id}',
                         array( 'data' => $data, 'id' => $id )
                         );

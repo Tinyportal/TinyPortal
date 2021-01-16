@@ -9,7 +9,7 @@
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
- * license: BSD-3-Clause 
+ * license: BSD-3-Clause
  *
  * @version 2.1.0
  *
@@ -25,13 +25,13 @@ class Database
     private static $_instance   = null;
 
     public static function getInstance() {{{
-	
+
     	if(self::$_instance == null) {
 			self::$_instance = new self();
 		}
-	
+
     	return self::$_instance;
-	
+
     }}}
 
     // Empty Clone method
