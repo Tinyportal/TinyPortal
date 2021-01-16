@@ -96,16 +96,16 @@ function TPortalAdmin()
 
 	// check POST values
 	$return = do_postchecks();
- 
+
 	if(!empty($return)) {
 		redirectexit('action=tpadmin;sa=' . $return);
     }
-	
+
     $tpsub = '';
 
 	$subAction  = TPUtil::filter('sa', 'get', 'string');
     $subActions = array();
-   
+
     call_integration_hook('integrate_tp_pre_admin_subactions', array(&$subActions));
 
     $context['TPortal']['subaction'] = $subAction;
@@ -137,7 +137,7 @@ function TPortalAdmin()
 		do_subaction($tpsub);
 	}
 	elseif(isset($_GET['blktype']) || isset($_GET['addblock']) || isset($_GET['blockon']) || isset($_GET['blockoff']) || isset($_GET['blockleft']) || isset($_GET['blockright']) || isset($_GET['blockcenter']) || isset($_GET['blocktop']) || isset($_GET['blockbottom']) || isset($_GET['blockfront']) || isset($_GET['blocklower']) || isset($_GET['blockdelete']) || isset($_GET['addpos']) || isset($_GET['subpos'])) {
-        if(allowedTo('tp_blocks')) {		
+        if(allowedTo('tp_blocks')) {
             $context['TPortal']['subaction'] = $tpsub = 'blocks';
 		    do_blocks($tpsub);
         }
@@ -152,13 +152,13 @@ function TPortalAdmin()
         }
         else {
             fatal_error($txt['tp-noadmin'], false);
-        }		
+        }
 	}
 	elseif(isset($_GET['catdelete']) || isset($_GET['artfeat']) || isset($_GET['artfront']) || isset($_GET['artdelete']) || isset($_GET['arton']) || isset($_GET['artoff']) || isset($_GET['artsticky']) || isset($_GET['artlock']) || isset($_GET['catcollapse'])) {
         if(allowedTo('tp_articles')) {
 		    $context['TPortal']['subaction'] = $tpsub = 'articles';
 		    do_articles($tpsub);
-        }    
+        }
         else {
             fatal_error($txt['tp-noadmin'], false);
         }
@@ -331,7 +331,7 @@ function do_menus()
 {
 	global $txt, $context, $scripturl, $smcFunc;
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=menubox', $txt['tp-menumanager']);
-		
+
 	$mid = isset($_GET['mid']) && is_numeric($_GET['mid']) ? $_GET['mid'] : 0;
 	// first check any link stuff
 	if(isset($_GET['linkon']))
@@ -419,7 +419,7 @@ function do_menus()
 				$newlink = '0';
 			else
 				$newlink = $row['value2'];
-			
+
 			if($mtype == 'head')
 			{
 				$mtype = 'head';
@@ -544,12 +544,12 @@ function do_articles()
 		        SELECT id FROM {db_prefix}tp_articles
 		        WHERE id = {int:article_id}
                 AND author_id = {int:member_id}',
-		        array(  
+		        array(
                     'article_id'    => $article,
                     'member_id'     => $context['user']['id']
                 )
 	        );
-	        if($smcFunc['db_num_rows']($request) == 0) {           
+	        if($smcFunc['db_num_rows']($request) == 0) {
                 fatal_error($txt['tp-noadmin'], false);
             }
             $smcFunc['db_free_result']($request);
@@ -904,7 +904,7 @@ function do_articles()
 		$request = $smcFunc['db_query']('', '
 			SELECT DISTINCT var.id AS id, var.value1 AS name, var.value2 AS parent
 			FROM {db_prefix}tp_variables AS var
-			WHERE var.type = {string:type} 
+			WHERE var.type = {string:type}
 			' . (isset($where) ? 'AND var.value2'.((TP_PGSQL == true) ? '::Integer' : ' ' ).' = {int:whereval}' : '') . '
 			ORDER BY parent, id DESC',
 			array('type' => 'category', 'whereval' => isset($where) ? $where : 0)
@@ -1189,7 +1189,9 @@ function do_articles()
 				alert("Sorry, but your browser does not support Ajax");
 		}
 
-		window.onload = startToggle;
+		$(document).ready(function() {
+			startToggle();
+		});
 
 		function startToggle()
 		{
@@ -1577,7 +1579,7 @@ function do_postchecks()
                             $output = TPUtil::http_parse_query($data)['tp_ssiboard'];
                             if(is_string($output)) {
                                 $ssi[] = $output;
-                            } 
+                            }
                             else if(is_array($output)) {
                                 $ssi = $output;
                             }
@@ -2440,7 +2442,7 @@ function do_postchecks()
                         'settings' => 'string',
 					),
 					array(
-                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages', 
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages',
                         json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')
@@ -2522,7 +2524,7 @@ function do_postchecks()
                             WHERE id = {int:varid} LIMIT 1',
                             array('varid' => $where)
                         );
-                            
+
                         $data = array();
                         if($smcFunc['db_num_rows']($request) > 0) {
                             $row    = $smcFunc['db_fetch_assoc']($request);
@@ -2531,7 +2533,7 @@ function do_postchecks()
                         }
                         $data[$setting] = $value;
 						$smcFunc['db_query']('', '
-                            UPDATE {db_prefix}tp_blocks 
+                            UPDATE {db_prefix}tp_blocks
                             SET settings = {string:data}
                             WHERE id = {int:blockid}',
                             array('data' => json_encode($data), 'blockid' => $where)

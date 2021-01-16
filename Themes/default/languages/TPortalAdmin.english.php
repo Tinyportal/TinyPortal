@@ -12,7 +12,7 @@ $txt['tp-menumanager'] = 'Menu manager';
 $txt['tp-addmenu'] = 'Add menu';
 $txt['custom_modules'] = 'TP Modules';
 $txt['tp-dlmanager'] = 'TPDownloads';
- 
+
 // Settings page
 $txt['tp-generalsettings'] = 'General settings';
 $txt['tp-helpsettings'] = 'Here you can tweak various general settings for the portal.';

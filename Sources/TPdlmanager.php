@@ -711,7 +711,7 @@ function TPortalDLManager()
 					}
 					else
 						$ico = '';
-						
+
 					$context['TPortal']['dl_most_downloaded'][] = array(
 						'id' => $row['id'],
 						'name' => $row['name'],
@@ -805,7 +805,7 @@ function TPortalDLManager()
 				a.name AS name, a.id AS id, a.parent AS parent, a.downloads AS downloads,
 	  			( CASE WHEN a.id = b.category THEN COUNT(a.id) ELSE 0 END ) AS files, b.category AS subchild
 			FROM {db_prefix}tp_dlmanager AS a
-			LEFT JOIN {db_prefix}tp_dlmanager AS b 
+			LEFT JOIN {db_prefix}tp_dlmanager AS b
                 ON a.id = b.category
 			WHERE a.type = {string:type}
 		  	GROUP BY a.id, a.access, a.icon, a.link, a.description, a.name, a.parent, a.downloads, b.category
@@ -992,7 +992,7 @@ function TPortalDLManager()
 				}
 				else
 					$ico = '';
-				
+
 				$fs = '';
 				if($context['TPortal']['dl_fileprefix'] == 'K')
 					$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
@@ -1335,7 +1335,7 @@ function TPortalDLManager()
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.*, dl.author_id as author_id, m.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dl
-			LEFT JOIN {db_prefix}members AS m 
+			LEFT JOIN {db_prefix}members AS m
             ON m.id_member = dl.author_id
 			WHERE dl.type = {string:type}
 			AND dl.id = {int:item}
@@ -1613,7 +1613,7 @@ function TPdlresults()
 		while($row=$smcFunc['db_fetch_assoc']($request))
 		{
 			TPUtil::shortenString($row['body'], 400);
-	
+
 			$row['body'] = strip_tags($row['body']);
 			$row['name'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['name']);
 			$row['body'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
@@ -1816,7 +1816,7 @@ function TPdownloadme()
 
         $external = false;
         if(TPUtil::hasLinks($real_filename)) {
-            $filename = $real_filename; 
+            $filename = $real_filename;
             $external = true;
         }
         else {

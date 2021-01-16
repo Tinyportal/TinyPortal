@@ -26,13 +26,13 @@ class Shout extends Base {
     private static $_instance   = null;
 
     public static function getInstance() {{{
-	
+
     	if(self::$_instance == null) {
 			self::$_instance = new self();
 		}
-	
+
     	return self::$_instance;
-	
+
     }}}
 
     // Empty Clone method
@@ -44,7 +44,7 @@ class Shout extends Base {
         $this->dBStructure = array (
             'id'            => 'int',
             'shoutbox_id'   => 'int',
-            'content'       => 'text', 
+            'content'       => 'text',
             'time'          => 'text',
             'member_link'   => 'text',
             'member_ip'     => 'text',

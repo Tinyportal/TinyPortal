@@ -28,17 +28,21 @@ function template_main()
 
 	echo '
 <div>
-<script>
-$(document).ready( function() {
-var $clickme = $(".clickme"),
-    $box = $(".box");
-$box.hide();
-$clickme.click( function(e) {
-    $(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
-    e.preventDefault();
-});
-});
-</script>
+	<script>
+		$(document).ready( function() {
+			var $clickme = $(".clickme"),
+				$box = $(".box");
+			if ($box) {
+				$box.hide();
+			}
+			if ($clickme) {
+				$clickme.click( function(e) {
+					$(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
+					e.preventDefault();
+				});
+			}
+		});
+	</script>
 </div>';
 	// setup the screen
 	echo '
@@ -361,7 +365,7 @@ $clickme.click( function(e) {
 					<p class="clearthefloat"></p>
 			    </div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			<div class="box" style="width:70%;float:left;">				
+			<div class="box" style="width:70%;float:left;">
 			    <div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 					', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
@@ -403,7 +407,7 @@ $clickme.click( function(e) {
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 				</div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			<div class="box" style="width:70%;float:left;">				
+			<div class="box" style="width:70%;float:left;">
 				<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 				   ', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
@@ -500,9 +504,9 @@ $clickme.click( function(e) {
 					</dt>
 					<dd>
 						 '.$cat['views'].' / '.$cat['downloads'].'<br>
-					</dd>					
+					</dd>
 				</dl>
-				<hr>			
+				<hr>
 				<div>
 					<div><b>'.$txt['tp-dluploadtext'].'</b></div>';
 
