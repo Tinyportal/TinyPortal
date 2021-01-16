@@ -86,19 +86,21 @@ function template_main()
 
 	echo '
 		<p class="clearthefloat"></p>
-<script>
-$(document).ready( function() {
-var $clickme = $(".clickme"),
-    $box = $(".box");
-
-$box.hide();
-
-$clickme.click( function(e) {
-    $(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
-    e.preventDefault();
-});
-});
-</script>
+		<script>
+			$(document).ready( function() {
+				var $clickme = $(".clickme"),
+					$box = $(".box");
+				if ($box) {
+					$box.hide();
+				}
+				if ($clickme) {
+					$clickme.click( function(e) {
+						$(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
+						e.preventDefault();
+					});
+				}
+			});
+		</script>
 	</div>';
 }
 
@@ -476,7 +478,7 @@ function template_frontpage()
                 echo '
 								<option value="'.$context['TPortal']['boards'][$n]['id'].'"' , is_array($context['TPortal']['SSI_boards']) && in_array($context['TPortal']['boards'][$n]['id'] , $context['TPortal']['SSI_boards']) ? ' selected="selected"' : '' , '>'.$context['TPortal']['boards'][$n]['name'].'</option>';
             }
-		
+
 		echo '
 							</select><br><br>
 						</dd>
@@ -489,7 +491,7 @@ function template_frontpage()
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-forumposts_avatardesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
 						</dt>
-						<dd>	
+						<dd>
 							<input type="checkbox" id="tp_forumposts_avatar" name="tp_forumposts_avatar" value="1" ' , $context['TPortal']['forumposts_avatar']=='1' ? 'checked' : '' , '>
 						</dd>
 						<dt>
@@ -505,7 +507,7 @@ function template_frontpage()
 						  <select id="tp_boardnews_divheader" name="tp_boardnews_divheader" value="' ,$context['TPortal']['boardnews_divheader'], '" >
 								<option value="title_bar"' , $context['TPortal']['boardnews_divheader']=='title_bar' ? ' selected="selected"' : '' , '>title_bar</option>
 								<option value="cat_bar"' , $context['TPortal']['boardnews_divheader']=='cat_bar' ? ' selected="selected"' : '' , '>cat_bar</option>';
-		if (!TP_SMF21) 
+		if (!TP_SMF21)
 			echo '
 								<option value="tp_half"' , $context['TPortal']['boardnews_divheader']=='tp_half' ? ' selected="selected"' : '' , '>tp_half</option>';
 		else
@@ -521,7 +523,7 @@ function template_frontpage()
 						  <select id="tp_boardnews_headerstyle" name="tp_boardnews_headerstyle" value="' ,$context['TPortal']['boardnews_headerstyle'], '">
 								<option value="titlebg"' , $context['TPortal']['boardnews_headerstyle']=='titlebg' ? ' selected="selected"' : '' , '>titlebg</option>
 								<option value="catbg"' , $context['TPortal']['boardnews_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>';
-		if (!TP_SMF21) 
+		if (!TP_SMF21)
 			echo '
 								<option value="titlebg2"' , $context['TPortal']['boardnews_headerstyle']=='titlebg2' ? ' selected="selected"' : '' , '>titlebg2</option>
 								<option value="catbg2"' , $context['TPortal']['boardnews_headerstyle']=='catbg2' ? ' selected="selected"' : '' , '>catbg2</option>';
@@ -534,7 +536,7 @@ function template_frontpage()
 						<dd>
 						  <select id="tp_boardnews_divbody" name="tp_boardnews_divbody" value="' ,$context['TPortal']['boardnews_divbody'], '">
 								<option value="windowbg"' , $context['TPortal']['boardnews_divbody']=='windowbg' ? ' selected="selected"' : '' , '>windowbg</option>';
-		if (!TP_SMF21) 
+		if (!TP_SMF21)
 			echo '
 								<option value="windowbg2"' , $context['TPortal']['boardnews_divbody']=='windowbg2' ? ' selected="selected"' : '' , '>windowbg2</option>
 								<option value="windowbg3"' , $context['TPortal']['boardnews_divbody']=='windowbg3' ? ' selected="selected"' : '' , '>windowbg3</option>';
@@ -1320,7 +1322,7 @@ function template_submission()
 			echo '
 					</tbody>
 				</table>';
-			
+
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
 				<div class="middletext padding-div">
@@ -1329,7 +1331,7 @@ function template_submission()
 
 		if(isset($context['TPortal']['allcats']))
 		{
-			echo '	
+			echo '
 				<br><div class="padding-div">
 					<select name="tp_article_cat">
 						<option value="0">' . $txt['tp-createnew2'] . '</option>';
@@ -1499,7 +1501,7 @@ function template_articons()
 					</dl>
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
 					<hr><br>';
-					
+
 				$alt=true;
 		if(count($context['TPortal']['articons']['illustrations'])>0)
 		{
@@ -2285,7 +2287,7 @@ function template_menubox()
 			<table class="table_grid tp_grid" style="width:100%">
 				<thead>
 					<tr class="title_bar titlebg">
-					<th scope="col" class="menuitems">			
+					<th scope="col" class="menuitems">
 							<div style="width:7%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
 							<div style="width:15%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
 							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-type'].'</strong></div>
@@ -2377,7 +2379,7 @@ function template_menubox()
 					echo '
 									</div>
 								</div>
-									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">';			      
+									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">';
 					if($lbox['type']!=='menu'){
 						echo '
 										<div class="show-on-responsive"><strong>'.$txt['tp-sub_item'].'</strong></div>
@@ -2391,7 +2393,7 @@ function template_menubox()
 										<div class="show-on-responsive">'.$txt['tp-sub_item'].'</div>
 										'.$txt['tp-none-'].'';
 					}
-						echo '			
+						echo '
 									</div>
 									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">
 										<div class="show-on-responsive"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
@@ -2419,7 +2421,7 @@ function template_menubox()
 					<div>' .$txt['tp-nomenuitem']. '</div>
 					</td>
 				</tr>';
-			}			
+			}
 		echo '
 				</tbody>
 			</table>';
@@ -2550,7 +2552,7 @@ function template_linkmanager()
 {
     global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
-		echo '    
+		echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadminmenu" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
@@ -2575,7 +2577,7 @@ function template_menucore()
 				<dd>
 					<input type="text" id="tp_menu_name" name="tp_menu_name" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'" required size="50"  style="max-width:97%;">
 				</dd>
-			</dl>	
+			</dl>
 			<dl class="settings tptitle">
 				<dt>
 					<label for="tp_menu_type"><b>'.$txt['tp-type'].'</b></label>
@@ -2605,7 +2607,7 @@ function template_menucore()
 					echo '
 					</select>
 				</dd>
-			</dl>					
+			</dl>
 			<hr>
 			<dl class="settings tptitle">
 				<dt>
@@ -2627,7 +2629,7 @@ function template_menucore()
  						<option value=""></option>';
 
 		//  (article)
-				echo '  
+				echo '
 					</select>
 					<select size="1" id="tp_menu_article" name="tp_menu_article" >';
 
@@ -2677,8 +2679,8 @@ function template_menucore()
 					echo '
 					</select>
 				</dd>';
-		if(TP_SMF21) { 
-			echo '	
+		if(TP_SMF21) {
+			echo '
 				<dt>
 					<label for="tp_menu_icon"><b>'.$txt['tp-menu-icon'].'</b><br>
 						'.$txt['tp-menu-icon2'].'</label>
@@ -2686,8 +2688,8 @@ function template_menucore()
 				<dd>
 					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40">
 				</dd>';
-		} 
-			echo '	
+		}
+			echo '
 			</dl>
 			<div>
 				</div>

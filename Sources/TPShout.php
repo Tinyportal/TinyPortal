@@ -93,12 +93,14 @@ function TPShoutLoad()
         <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
         <script type="text/javascript">
             $j(document).ready(function(){
-                $j("marquee").marquee("tp_marquee").mouseover(function () {
-                        $j(this).trigger("stop");
-                    }).mouseout(function () {
-                        $j(this).trigger("start");
-                    });
-                });
+				if ($j("marquee")) {
+					$j("marquee").marquee("tp_marquee").mouseover(function () {
+							$j(this).trigger("stop");
+						}).mouseout(function () {
+							$j(this).trigger("start");
+						});
+					});
+				}
         </script>';
     }
 
@@ -107,14 +109,16 @@ function TPShoutLoad()
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
                 $(document).ready(function() {
-                    $("#tp_shout").keypress(function(event) {
-                        if(event.which == 13 && !event.shiftKey) {
-                            tp_shout_key_press = true;
-                            // set a 100 millisecond timeout for the next key press
-                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                            TPupdateShouts(\'save\');
-                        }
-                    });
+					if ($("#tp_shout")) {
+						$("#tp_shout").keypress(function(event) {
+							if(event.which == 13 && !event.shiftKey) {
+								tp_shout_key_press = true;
+								// set a 100 millisecond timeout for the next key press
+								window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+								TPupdateShouts(\'save\');
+							}
+						});
+					}
                 });
             // ]]></script>';
         }
@@ -122,17 +126,19 @@ function TPShoutLoad()
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
             $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
-                        tp_shout_key_press = true;
-                        // set a 100 millisecond timeout for the next key press
-                        window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                        TPupdateShouts(\'save\');
-                    }
-                    else if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
+				if ($("#tp_shout")) {
+					$("#tp_shout").keydown(function (event) {
+						if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
+							tp_shout_key_press = true;
+							// set a 100 millisecond timeout for the next key press
+							window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+							TPupdateShouts(\'save\');
+						}
+						else if (event.keyCode == 13) {
+							event.preventDefault();
+						}
+					});
+				}
             });
             // ]]></script>';
         }
@@ -141,11 +147,13 @@ function TPShoutLoad()
         $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
             $(document).ready(function() {
-                $("#tp_shout").keydown(function (event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                    }
-                });
+				if ($("#tp_shout")) {
+					$("#tp_shout").keydown(function (event) {
+						if (event.keyCode == 13) {
+							event.preventDefault();
+						}
+					});
+				}
             });
             // ]]></script>';
     }
