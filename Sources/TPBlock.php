@@ -95,7 +95,7 @@ function getBlocks() {{{
 	if(!empty($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat') {
         $sqlarray[] = 'dlcat=' . substr($_GET['dl'], 3);
 	}
-    
+
 	// frontpage
 	if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
 	    $sqlarray[] = 'actio=frontpage';
@@ -104,7 +104,7 @@ function getBlocks() {{{
 	$sqlarray[] = 'actio=allpages';
 	$sqlarray[] = !empty($_GET['page']) ? !empty($context['shortID']) ? 'tpage=' . $context['shortID'] : 'tpage=' . $_GET['page'] : '';
     $sqlarray[] = !empty($_GET['cat']) ? !empty($context['catshortID']) ? 'tpcat=' . $context['catshortID'] : 'tpcat=' . $_GET['cat'] : '';
-    
+
     if(!empty($_GET['shout'])) {
         $sqlarray[] = 'tpmod=shout';
     }
@@ -216,7 +216,7 @@ function getBlocks() {{{
 					$avatar_width = '';
 					$avatar_height = '';
 				}
-                $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(      
+                $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(
                             'avatar' => $article['avatar'],
                             'email' => $article['email_address'],
                             'filename' => !empty($article['filename']) ? $article['filename'] : '',
@@ -322,13 +322,13 @@ function adminBlocks() {{{
 	global $context, $smcFunc, $txt, $settings, $scripturl;
 
 	isAllowedTo('tp_blocks');
-    
+
     $tpBlock    = TPBlock::getInstance();
 
 	if(($context['TPortal']['subaction']=='blocks') && !isset($_GET['overview'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
 	}
-	
+
 	if(isset($_GET['addblock'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=addblock', $txt['tp-addblock']);
 		// collect all available PHP block snippets
@@ -347,7 +347,7 @@ function adminBlocks() {{{
             if(is_array($existing)) {
                 $tpBlock->updateBlock($existing[0]['id'], array( 'pos' => $current[0]['pos']));
             }
-        } 
+        }
         else {
 		    $id         = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;
             $current    = $tpBlock->getBlockData(array( 'pos', 'bar'), array( 'id' => $id) );
@@ -384,7 +384,7 @@ function adminBlocks() {{{
         $tpBlock->deleteBlock($id);
 		redirectexit('action=tpadmin;sa=blocks');
 	}
-   
+
     foreach( array ( 'blockright', 'blockleft', 'blockcenter', 'blockfront', 'blockbottom', 'blocktop', 'blocklower') as $block_location ) {
         if(array_key_exists($block_location, $_GET)) {
             checksession('get');
@@ -398,7 +398,7 @@ function adminBlocks() {{{
 	// are we on overview screen?
 	if(isset($_GET['overview'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks;overview', $txt['tp-blockoverview']);
-		
+
 		// fetch all blocks member group permissions
         $data   = $tpBlock->getBlockData(array('id', 'title', 'bar', 'access', 'type'), array( 'off' => 0 ) );
 		if(is_array($data)) {
@@ -426,7 +426,7 @@ function adminBlocks() {{{
 	if($context['TPortal']['subaction']=='panels') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=panels', $txt['tp-panels']);
     }
-	
+
 	else {
 		foreach($tpBlock->getBlockPanel() as $p => $pan) {
 			if(isset($_GET[$pan])) {
@@ -477,7 +477,9 @@ function adminBlocks() {{{
 			else
 				alert("Sorry, but your browser does not support Ajax");
 		}
-		window.onload = startToggle;
+		$(document).ready(function() {
+			startToggle();
+		});
 		function startToggle()
 		{
 			var img = document.getElementsByTagName("img");
