@@ -51,6 +51,19 @@ $utf8 = (bool)( $db_type == 'mysql' && !empty($modSettings['global_character_set
 // Why $db_prefix has the database name prepended in it I don't know. Stripping off the stuff we don't need.
 $smf_prefix = trim(strstr($db_prefix, '.'), '.');
 
+if(is_array($existing_tables) && count($existing_tables)) {
+    $request = $smcFunc['db_query']('', '
+        SELECT * FROM {db_prefix}tp_settings
+        WHERE name = {string:name} LIMIT 1',
+        array('name' => 'version')
+    );
+
+    $row = $smcFunc['db_fetch_assoc']($request);
+    if(version_compare($row['value'], '1.6.0', '<')) {
+        die('<strong>Install Error:</strong> - please install a version of TinyPortal greater than or equal to 1.5.0 before installing 2.0.x');
+    }
+}
+
 global $forum_version;
 if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
     $forumVersion = 'SMF 2.0.x';
