@@ -59,7 +59,7 @@ if(is_array($existing_tables) && count($existing_tables)) {
     );
 
     $row = $smcFunc['db_fetch_assoc']($request);
-    if(version_compare($row['value'], '1.6.0', '<')) {
+    if(version_compare($row['value'], '1.5.0', '<')) {
         die('<strong>Install Error:</strong> - please install a version of TinyPortal greater than or equal to 1.5.0 before installing 2.0.x');
     }
 }
