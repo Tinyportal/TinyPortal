@@ -1152,30 +1152,50 @@ function addDefaults()
 		$render .= '<li>Added some sample values for some default blocks</li>';
 	}
 
-    $columns = $smcFunc['db_list_columns']('{db_prefix}tp_blocks');
-    if(in_array('var1', $columns)) {
+    $changes    = array();
+    $columns    = $smcFunc['db_list_columns']('{db_prefix}tp_blocks');
+    foreach($columns as $id => $name) {
+        switch($name) {
+            case 'var1':
+            case 'var2':
+            case 'var3':
+            case 'var4':
+            case 'var5':
+                $changes[] = $name;
+                break;
+            default:
+                break;
+        }
+    }
+
+    if(is_array($changes) && (count($changes) > 0)) {
+        $str = implode(', ', $changes);
         // Check for blocks in table, if none insert default blocks.
         $request = $smcFunc['db_query']('', '
-            SELECT id, var1, var2, var3, var4, var5 FROM {db_prefix}tp_blocks WHERE 1=1'
+            SELECT id, '.$str.' FROM {db_prefix}tp_blocks WHERE 1=1'
         );
         if($smcFunc['db_num_rows']($request) != 0) {
             while($row = $smcFunc['db_fetch_assoc']($request)) {
                 $id     = array_shift($row);
+                foreach(array('var1', 'var2', 'var3', 'var4', 'var5') as $key) {
+                    if(!array_key_exists($key, $row)) {
+                        $row[$key] = "0";
+                    }
+                }
                 $data   = json_encode($row);
-                $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks 
-                        SET settings = {string:data} 
-                        WHERE id = {int:id}',
-                        array( 'data' => $data, 'id' => $id )
-                        );
+                $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks
+                    SET settings = {string:data}
+                    WHERE id = {int:id}',
+                    array( 'data' => $data, 'id' => $id )
+                );
             }
             $render .= '<li>Updated tp_blocks settings</li>';
             $smcFunc['db_free_result']($request);
         }
-        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var1');
-        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var2');
-        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var3');
-        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var4');
-        $smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'var5');
+
+        foreach($changes as $column) {
+            $smcFunc['db_remove_column']('{db_prefix}tp_blocks', $column);
+        }
     }
 
 	// Check for date in variables table, if none insert default values.
