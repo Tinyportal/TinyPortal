@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -14,7 +14,7 @@
  * Copyright (C) 2020 - The TinyPortal Team
  *
  */
- 
+
 // ** Sections **
 // Portal Summary Page
 // Articles Page
@@ -59,7 +59,7 @@ function template_tp_articles()
 		echo $txt['tp-prof_allarticles']. ' <b>'.$context['TPortal']['all_articles'].'</b><br>';
 
 		if($context['TPortal']['all_articles']>0) {
-			if($context['TPortal']['approved_articles']>0) 
+			if($context['TPortal']['approved_articles']>0)
 				echo $txt['tp-prof_waitapproval1'].' <b>'.$context['TPortal']['approved_articles'].'</b> '.$txt['tp-prof_waitapproval2'].'<br>';
 
 			if($context['TPortal']['off_articles']==0)
@@ -70,7 +70,7 @@ function template_tp_articles()
 
 		echo '
 				</div><br>
-				
+
 	<table class="table_grid tp_grid" style="width:100%">
 		<thead>
 			<tr class="title_bar titlebg2">
@@ -94,14 +94,14 @@ function template_tp_articles()
 			<tr class="windowbg">
 			<td class="articles">
 				<div class="float-items fullwidth-on-res-layout" style="width:25%;">', $art['off']==1 ? '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="'. $txt['tp-noton'] .'" alt="*" />&nbsp; ' : '' , '', $art['approved']==0 ? '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt['tp-notapproved'] .'" alt="*" />&nbsp; ' : '' , '';
-		if(($art['approved']==0) || ($art['off']==1)) { 
+		if(($art['approved']==0) || ($art['off']==1)) {
 				echo '
 					' ,$art['subject'], '</div>';
 		}
 		else {
 				echo '
 					<a href="'.$art['href'].'" target="_blank">' ,$art['subject'], '</a></div>';
-		} 
+		}
 			echo '
 				<a href="" class="clickme">'.$txt['tp-more'].'</a>
 				<div class="box" style="width:75%;float:left;">
@@ -133,13 +133,13 @@ function template_tp_articles()
 			echo '
 					<tr class="windowbg">
 					<td class="tpshout_date" colspan="6">
-						<div class="smalltext">',$txt['tp-noarticlesfound'],'</div>	
+						<div class="smalltext">',$txt['tp-noarticlesfound'],'</div>
 					</td>
 					</tr>';
 	echo '
 		</tbody>
 	</table>';
-			
+
 		if(!empty($context['TPortal']['pageindex']))
 			echo '
 			<div class="padding-div">
@@ -147,19 +147,21 @@ function template_tp_articles()
 			</div>';
 		echo '
 		</div>
-<script>
-$(document).ready( function() {
-var $clickme = $(".clickme"),
-    $box = $(".box");
-
-$box.hide();
-
-$clickme.click( function(e) {
-    $(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
-    e.preventDefault();
-});
-});
-</script>
+		<script>
+			$(document).ready( function() {
+				var $clickme = $(".clickme"),
+					$box = $(".box");
+				if ($box) {
+					$box.hide();
+				}
+				if ($clickme) {
+					$clickme.click( function(e) {
+						$(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
+						e.preventDefault();
+					});
+				}
+			});
+		</script>
 	</div>';
 	}
 // Articles Settings Page
@@ -268,20 +270,21 @@ function template_tp_download()
 			</tbody>
 		</table>
 				<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
-
-<script>
-$(document).ready( function() {
-var $clickme = $(".clickme"),
-    $box = $(".box");
-
-$box.hide();
-
-$clickme.click( function(e) {
-    $(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
-    e.preventDefault();
-});
-});
-</script>
+				<script>
+					$(document).ready( function() {
+						var $clickme = $(".clickme"),
+							$box = $(".box");
+						if ($box) {
+							$box.hide();
+						}
+						if ($clickme) {
+							$clickme.click( function(e) {
+								$(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
+								e.preventDefault();
+							});
+						}
+					});
+				</script>
 	</div>';
 }
 
