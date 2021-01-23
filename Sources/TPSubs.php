@@ -761,69 +761,70 @@ function TPwysiwyg_setup()
 		$context['html_headers'] .= '
 			<script src="' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js"></script>
 			<script type="text/javascript">
-			function detectIE() {
-				var ua = window.navigator.userAgent;
+				function detectIE() {
+					var ua = window.navigator.userAgent;
 
-				// Test values; Uncomment to check result
+					// Test values; Uncomment to check result
 
-				// IE 10
-				// ua = \'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)\';
+					// IE 10
+					// ua = \'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)\';
 
-				// IE 11
-				// ua = \'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko\';
+					// IE 11
+					// ua = \'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko\';
 
-				// Edge 12 (Spartan)
-				// ua = \'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0\';
+					// Edge 12 (Spartan)
+					// ua = \'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0\';
 
-				// Edge 13
-				// ua = \'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586\';
+					// Edge 13
+					// ua = \'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586\';
 
-				var msie = ua.indexOf("MSIE ");
-				if (msie > 0) {
-					// IE 10 or older => return version number
-					return parseInt(ua.substring(msie + 5, ua.indexOf(\'.\', msie)), 10);
+					var msie = ua.indexOf("MSIE ");
+					if (msie > 0) {
+						// IE 10 or older => return version number
+						return parseInt(ua.substring(msie + 5, ua.indexOf(\'.\', msie)), 10);
+					}
+
+					var trident = ua.indexOf("Trident/");
+					if (trident > 0) {
+						// IE 11 => return version number
+						var rv = ua.indexOf("rv:");
+						return parseInt(ua.substring(rv + 3, ua.indexOf(".", rv)), 10);
+					}
+
+					var edge = ua.indexOf("Edge/");
+					if (edge > 0) {
+						// Edge (IE 12+) => return version number
+						return parseInt(ua.substring(edge + 5, ua.indexOf(".", edge)), 10);
+					}
+
+					// other browser
+					return false;
 				}
+				// Get IE or Edge browser version
+				var version = detectIE();
 
-				var trident = ua.indexOf("Trident/");
-				if (trident > 0) {
-					// IE 11 => return version number
-					var rv = ua.indexOf("rv:");
-					return parseInt(ua.substring(rv + 3, ua.indexOf(".", rv)), 10);
-				}
-
-				var edge = ua.indexOf("Edge/");
-				if (edge > 0) {
-					// Edge (IE 12+) => return version number
-					return parseInt(ua.substring(edge + 5, ua.indexOf(".", edge)), 10);
-				}
-
-				// other browser
-				return false;
-			}
-			// Get IE or Edge browser version
-			var version = detectIE();
-
-			if (version === false) {
-				function cloudflareLibsTP() {
-					var dragDrop = document.createElement("SCRIPT");
-					dragDrop.type = "text/javascript";
-					dragDrop.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js";
-					document.getElementsByTagName("HEAD")[0].appendChild(dragDrop);
-				}
-			} else {
-				function cloudflareLibsTP() {
-					var fetchPolyfill = document.createElement("SCRIPT");
-					var fetchCloud = document.createElement("SCRIPT");
-					fetchPolyfill.type = "text/javascript";
-					fetchCloud.type = "text/javascript";
-					fetchPolyfill.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/tp.polyfill.js";
-					fetchCloud.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/tp.fetch.umd.js";
-					document.getElementsByTagName("HEAD")[0].insertBefore(fetchPolyfill, document.getElementsByTagName("HEAD")[0].firstElementChild.nextSibling);
-					document.getElementsByTagName("HEAD")[0].appendChild(fetchCloud);
-					var dragDrop = document.createElement("SCRIPT");
-					dragDrop.type = "text/javascript";
-					dragDrop.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js";
-					document.getElementsByTagName("HEAD")[0].appendChild(dragDrop);
+				if (version === false) {
+					function cloudflareLibsTP() {
+						var dragDrop = document.createElement("SCRIPT");
+						dragDrop.type = "text/javascript";
+						dragDrop.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js";
+						document.getElementsByTagName("HEAD")[0].appendChild(dragDrop);
+					}
+				} else {
+					function cloudflareLibsTP() {
+						var fetchPolyfill = document.createElement("SCRIPT");
+						var fetchCloud = document.createElement("SCRIPT");
+						fetchPolyfill.type = "text/javascript";
+						fetchCloud.type = "text/javascript";
+						fetchPolyfill.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/tp.polyfill.js";
+						fetchCloud.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/tp.fetch.umd.js";
+						document.getElementsByTagName("HEAD")[0].insertBefore(fetchPolyfill, document.getElementsByTagName("HEAD")[0].firstElementChild.nextSibling);
+						document.getElementsByTagName("HEAD")[0].appendChild(fetchCloud);
+						var dragDrop = document.createElement("SCRIPT");
+						dragDrop.type = "text/javascript";
+						dragDrop.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js";
+						document.getElementsByTagName("HEAD")[0].appendChild(dragDrop);
+					}
 				}
 				if (window.addEventListener) {
 					window.addEventListener("load", cloudflareLibsTP, false);
@@ -834,7 +835,6 @@ function TPwysiwyg_setup()
 				else {
 					window.onload = cloudflareLibsTP();
 				}
-			}
 			</script>
 			<script type="text/javascript">
 				setTimeout(function() {if (typeof fetch === "function"){console.log("fetch polyfill loaded");}}, 300);
