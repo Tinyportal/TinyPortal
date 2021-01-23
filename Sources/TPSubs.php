@@ -804,14 +804,14 @@ function TPwysiwyg_setup()
 				var version = detectIE();
 
 				if (version === false) {
-					function cloudflareLibsTP() {
+					function dragDropLibsTP() {
 						var dragDrop = document.createElement("SCRIPT");
 						dragDrop.type = "text/javascript";
 						dragDrop.src = "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/plugins/dragdrop.js";
 						document.getElementsByTagName("HEAD")[0].appendChild(dragDrop);
 					}
 				} else {
-					function cloudflareLibsTP() {
+					function dragDropLibsTP() {
 						var fetchPolyfill = document.createElement("SCRIPT");
 						var fetchCloud = document.createElement("SCRIPT");
 						fetchPolyfill.type = "text/javascript";
@@ -827,13 +827,13 @@ function TPwysiwyg_setup()
 					}
 				}
 				if (window.addEventListener) {
-					window.addEventListener("load", cloudflareLibsTP, false);
+					window.addEventListener("load", dragDropLibsTP, false);
 				}
 				else if (window.attachEvent) {
-					window.attachEvent("onload", cloudflareLibsTP);
+					window.attachEvent("onload", dragDropLibsTP);
 				}
 				else {
-					window.onload = cloudflareLibsTP();
+					window.onload = dragDropLibsTP();
 				}
 			</script>
 			<script type="text/javascript">
