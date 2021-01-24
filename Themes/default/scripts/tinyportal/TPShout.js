@@ -75,8 +75,62 @@ function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout)
 				$(".tp_shoutframe_" + shoutboxId).parent().scrollTop(0);
 				if (action === "save") {
 					$("#tp_shout_" + shoutboxId).val("");
+					document.getElementById("tp_shout_" + shoutboxId).focus();
+					$("#tp_shout_" + shoutboxId).setCursorPosition(0,0);
 				}
 			}
 		}
 	});
 }
+
+function replaceShoutText(shout_text, shout_handle) {
+	var cursorPosition = $("#" + shout_handle).prop("selectionStart");
+	var shoutTextArea = document.getElementById(shout_handle).value;
+	var whiteSpace = cursorPosition != 0 && shoutTextArea.charAt(cursorPosition-1) == " " ? " " : "";
+	var newShoutTextArea = shoutTextArea.substr(0,cursorPosition) + shout_text + whiteSpace + shoutTextArea.substr(cursorPosition, (shoutTextArea.length-1));
+	document.getElementById(shout_handle).style.outline = "0.2em";
+	setTimeout(function(){
+		document.getElementById(shout_handle).style.outline = "0.2em";
+		document.getElementById(shout_handle).value = newShoutTextArea;
+	}, 100);
+	document.getElementById(shout_handle).focus();
+	$("#" + shout_handle).setCursorPosition(cursorPosition+shout_text.length);
+	return false;
+};
+
+function surroundShoutText(bbcBefore, bbcAfter, shout_handle) {
+	var cursorPosition = $("#" + shout_handle).prop("selectionStart");
+	var shoutTextArea = document.getElementById(shout_handle).value;
+	var whiteSpace = cursorPosition != 0 && shoutTextArea.charAt(cursorPosition-1) == " " ? " " : "";
+	var newShoutTextArea = shoutTextArea.substr(0,cursorPosition) + bbcBefore + bbcAfter + whiteSpace + shoutTextArea.substr(cursorPosition, (shoutTextArea.length-1));
+	document.getElementById(shout_handle).style.outline = "0.2em";
+	setTimeout(function(){
+		document.getElementById(shout_handle).style.outline = "0.2em";
+		document.getElementById(shout_handle).value = newShoutTextArea;
+		$("#" + shout_handle).setCursorPosition((cursorPosition+bbcBefore.length));
+	}, 100);
+	document.getElementById(shout_handle).focus();
+	return false;
+};
+
+function tpShoutFocusTextArea(shoutboxTextArea) {
+	if (document.getElementById(shoutboxTextArea)) {
+		document.getElementById(shoutboxTextArea).focus();
+	}
+	return false;
+}
+
+$.fn.setCursorPosition = function(pos) {
+  this.each(function(index, elem) {
+    if (elem.setSelectionRange) {
+      elem.setSelectionRange(pos, pos);
+    } else if (elem.createTextRange) {
+      var range = elem.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  });
+  return this;
+};
