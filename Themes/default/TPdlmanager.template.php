@@ -153,7 +153,7 @@ function template_main()
 				{
 					echo '
 					<div class="dl_recentdl">';
-					
+
 					if(!empty($wost['screenshot']))
 						echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
@@ -172,7 +172,7 @@ function template_main()
 			}
 			echo '
 			</div>
-			
+
 			<div id="dlpop" style="display: none;">
 				<div class="title_bar">
 					<h3 class="titlebg">' , $txt['tp-mostpop'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</h3>
@@ -185,7 +185,7 @@ function template_main()
 				{
 					echo '
 					<div class="dl_recentdl">';
-					
+
 					if(!empty($wost['screenshot']))
 						echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
 					elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
@@ -286,7 +286,7 @@ function template_main()
 
 				}
 		echo '
-			</div>'; 	
+			</div>';
 		}
 
 		// output the files in the category
@@ -314,7 +314,7 @@ function template_main()
 					<div style="padding-bottom: 0.3em;">' . $context['TPortal']['pageindex'] . '</div>';
 				echo '
 				</div>
-				
+
 				<div class="tp_pad" style="overflow: hidden;">';
 
 				foreach($context['TPortal']['dlitem'] as $dlitem)
@@ -331,7 +331,7 @@ function template_main()
 
 					if(isset($dlitem['description']))
 						echo '
-						<div class="dl_post dl_summary">' . $dlitem['description'] . '</div>';
+						<div class="dl_post dl_summary">' . $dlitem['description'] . '' . $dlitem['readmore'] . '</div>';
 
 					unset($details);
 					$details=array();
@@ -356,7 +356,7 @@ function template_main()
 				}
 				echo '
 				</div>
-			
+
 				<p class="clearthefloat"></p>
 				<div class="padding-div">';
 					if($context['TPortal']['dlaction']!='item' && !empty($context['TPortal']['pageindex']))
@@ -368,7 +368,7 @@ function template_main()
 			else
 			{
 				echo '
-			<div class="padding-div">'.$txt['tp-nofiles'].'</div>'; 
+			<div class="padding-div">'.$txt['tp-nofiles'].'</div>';
 			}
 		}
 	}
@@ -870,7 +870,7 @@ function template_main()
 			}
 			echo '
 							</select>
-						</dd>	
+						</dd>
 						<dt>
 							'.$txt['tp-uploadedby'].':
 						</dt>
@@ -880,7 +880,7 @@ function template_main()
 						<dt>'.$txt['tp-dlviews'].':</dt>
 						<dd>
 							'.$cat['views'].' / '.$cat['downloads'].'
-						</dd>						
+						</dd>
 					</dl>
 				<hr>
 				<div>

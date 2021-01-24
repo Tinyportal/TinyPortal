@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.1.0
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -17,7 +17,7 @@
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
- * license: BSD-3-Clause 
+ * license: BSD-3-Clause
  *
  */
 namespace TinyPortal;
@@ -76,7 +76,7 @@ class Util
         if(TP_PGSQL == false) {
             if($arg == 'OR') {
                 $str = '(FIND_IN_SET(' . implode(', '.$field.') '.$arg.' FIND_IN_SET(', $data) . ', '.$field.'))';
-            } 
+            }
             else {
                 $str = 'AND (FIND_IN_SET(' . implode(', '.$field.') OR FIND_IN_SET(', $data) . ', '.$field.'))';
             }
@@ -134,17 +134,17 @@ class Util
                         if (is_array($target)) {
                             $intKeys    = array_filter(array_keys($target), 'is_int');
                             $index      = count($intKeys) ? max($intKeys)+1 : 0;
-                        } 
+                        }
                         else {
                             $target     = array($target);
                             $index      = 1;
                         }
-                    } 
+                    }
                     else {
                         $target         = array();
                         $index          = 0;
                     }
-                } 
+                }
                 elseif (isset($target[$index]) && !is_array($target[$index])) {
                     $target[$index] = array($target[$index]);
                 }
@@ -170,16 +170,14 @@ class Util
 
     }}}
 
-    public static function shortenString(&$string, $length) {{{
+	public static function shortenString(&$string, $length) {{{
 
         $shorten = FALSE;
 
         if(!empty($length)) {
             // Remove all the entities and change them to a space..
             $string     = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
-            // Change all the new lines to \r\n
-            $string     = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), "\r\n", $string);
-            
+
             if( self::strlen($string) > $length ) {
                 $shorten    = TRUE;
                 // Now we can find the closest space character
@@ -189,7 +187,7 @@ class Util
 
                     // Find all the bbc tags then loop through finding the closing one
                     if(preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0 ) {
-                        foreach($matches[1] as $key) { 
+                        foreach($matches[1] as $key) {
                             // check we haven't cut any bbcode off
                             if(preg_match_all('/\[(['.$key.']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0 ) {
                                 // Search from the old cut off position to the next similar tag
@@ -203,8 +201,10 @@ class Util
 
                     // check that no html has been cut off
                     if(self::isHTML($string)) {
-                        // Change the newlines back to <br>
-                        $string = str_ireplace("\r\n", '<br>', $string);
+                        // Change all the new lines to <br>
+                        $string         = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
+                        $string         = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), '<br>', $string);
+                        $string         = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
 
                         $reachedLimit   = false;
                         $totalLen       = 0;
@@ -215,7 +215,7 @@ class Util
 						// set error level
 						$internalErrors = libxml_use_internal_errors(true);
 
-                        $dom->loadHTML(mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8'));
+                        $dom->loadHTML($string);
 
 						// Restore error level
 						libxml_use_internal_errors($internalErrors);
@@ -227,20 +227,22 @@ class Util
                         }
 
                         $tmpString = $dom->saveHTML();
+
                         // Strip out the doctype and html body
-                        if(($pos = strpos($tmpString, '<html><body>')) !== FALSE) {
-                            $tmpString = substr($tmpString, $pos + 12);
+                        if(($pos = mb_strpos($tmpString, '<html><body>')) !== FALSE) {
+                            $tmpString = mb_substr($tmpString, $pos + 12);
                         }
 
+                        // Remove the html body from the end
+                        if(($pos = mb_strpos($tmpString, '</body></html>')) != FALSE) {
+                            $tmpString = mb_substr($tmpString, 0, $pos);
+                        }
                     }
-                    
+
                     // Assign it back to the string
                     $string = $tmpString;
                 }
             }
-
-            // Change the newlines back to <br>
-            $string = str_ireplace("\r\n", '<br>', $string);
         }
 
         return $shorten;
@@ -251,15 +253,14 @@ class Util
 
         if($reachedLimit == true) {
             $toRemove[] = $node;
-        } 
+        }
         else {
             if($node instanceof \DomText) {
                 $nodeLen    = mb_strlen($node->nodeValue);
                 $totalLen   += $nodeLen;
 
-
                 if($totalLen > $length) {
-                    $node->nodeValue    = mb_substr($node->nodeValue, 0, $nodeLen - ($totalLen - $length));
+                    $node->nodeValue    = mb_substr($node->nodeValue, 0, mb_strpos($node->nodeValue, ' ', ($nodeLen - ($totalLen - $length))));
                     $reachedLimit       = true;
                 }
             }
@@ -273,7 +274,6 @@ class Util
 
         return;
     }}}
-
     public static function parseBBC($string) {{{
 
         if(preg_match_all('/\[([a-zA-Z=0-9_\-]+?)\](.+?)\[\/\1\]/', $string, $matches) > 0 ) {
@@ -282,10 +282,10 @@ class Util
 
         return false;
 
-    }}} 
+    }}}
 
     public static function isHTML( $string ) {{{
-        
+
         // Remove any HTML which might be in bbc html tags for this check, this means bbc with html will break the shortenString function
         $string = preg_replace('/\[([html]+?)\](.+?)\[\/\1\]/', '', $string);
 
@@ -348,7 +348,7 @@ class Util
     }}}
 
     public static function filter($key, $type, $filterType = 'string', $options = array()) {{{
-        
+
         switch($type) {
             case 'get':
                 $data = $_GET;

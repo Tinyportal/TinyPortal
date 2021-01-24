@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.0; TPortalAdmin
+// Version: 2.1.0; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & Frontpage';
@@ -12,7 +12,7 @@ $txt['tp-menumanager'] = 'Menu manager';
 $txt['tp-addmenu'] = 'Add menu';
 $txt['custom_modules'] = 'TP Modules';
 $txt['tp-dlmanager'] = 'TPDownloads';
- 
+
 // Settings page
 $txt['tp-generalsettings'] = 'General settings';
 $txt['tp-helpsettings'] = 'Here you can tweak various general settings for the portal.';
@@ -64,7 +64,6 @@ $txt['tp-onlyarticles'] = 'Only articles';
 $txt['tp-singlepage'] = 'Featured article with frontpanel';
 $txt['tp-frontblocks'] = 'Frontpanel only';
 $txt['tp-boardindex'] = 'Go directly to forum index';
-$txt['tp-frontmodule'] = 'TP module';
 $txt['tp-frontblockoption'] = 'How frontpanel will be shown with content';
 $txt['tp-frontblocksingle'] = 'Hide frontpanel, unless otherwise selected.';
 $txt['tp-frontblockfirst'] = 'Frontpanel will be added before content';
@@ -305,7 +304,6 @@ $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used 
 
 // Navigation links called from source files
 $txt['tp-admin'] = 'TP Admin';
-$txt['tp-modules'] = 'Modules';
 $txt['tp-left'] = 'Left';
 $txt['tp-right'] = 'Right';
 $txt['tp-top'] = 'Top';
@@ -364,6 +362,7 @@ $txt['tp-blocktype11'] = 'Code: HTML/Javascript';
 $txt['tp-blocktype10'] = 'Code: PHP';
 $txt['tp-blocktype9'] = 'Menu';
 $txt['tp-blocktype2'] = 'News';
+$txt['tp-blocktype8'] = 'Shoutbox';
 $txt['tp-blocktype6'] = 'Online';
 $txt['tp-blocktype12'] = 'Recent topics';
 $txt['tp-blocktype15'] = 'RSS';
@@ -373,7 +372,6 @@ $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype3'] = 'Stats';
 $txt['tp-blocktype7'] = 'Theme selector';
 $txt['tp-blocktype1'] = 'User';
-$txt['tp-blocktype20'] = 'TP module';
 $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
 
@@ -392,13 +390,11 @@ $txt['tp-notallowupshrink'] = 'Do not allow block to collapse';
 $txt['tp-membergrouphelp'] = 'Choose the membergroups that will able to see this block.';
 $txt['tp-membergrouphelpdesc'] = 'Choose your membergroups that will able to see this block. Note that if none are chosen it will only display it to admin.';
 $txt['tp-membergrouptext'] = 'Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
-$txt['tp-editgrouphelp'] = 'Choose the membergroups that can edit this block.';
-$txt['tp-editgrouphelpdesc'] = 'Choose your extra membergroups that can edit this block only. Note that \'manage_blocks\' and \'admin\' permission will always give this right regardless.';
 $txt['tp-langhelp'] = 'Block title per language. ';
 $txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language - except for default. ';
 $txt['tp-lang'] = 'Block visible for these languages';
 $txt['tp-langdesc'] = 'Upon installation of Tinyportal the Language visibility option will be switched OFF by default. When you access the block settings for a block you will see the language visibility option with a warning message, pointing out that the  language visibility setting is off. As long as the setting is off the blocks will show regardless of the user language. Language visibility is an additional setting for controlling when blocks are visible in the panels: the settings that choose where the block should appear will always be respected. If the settings do not allow the block to show, setting language visibility will also not make it show.';
-$txt['tp-access2help'] = 'Choose where the block should appear.';
+$txt['tp-displayhelp'] = 'Choose where the block should appear.';
 $txt['tp-actions'] = 'Actions';
 $txt['tp-allpages'] = 'Display on all pages and sections';
 $txt['tp-forumall'] = 'All Forum related sections';
@@ -470,7 +466,6 @@ $txt['tp-rssblock-maxwidth'] = 'Max width of rss feed';
 $txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 sets max to 20 )';
 $txt['tp-showstatsbox'] = 'Display these stats in the article/downloads box';
 $txt['tp-showssibox'] = 'Display this SSI function in the box';
-$txt['tp-showmodulebox'] = 'Select the TinyPortal module to show in the box';
 $txt['tp-showuserbox'] = 'Display these items in the statbox';
 $txt['tp-showuserbox2'] = 'Display these items in the userbox';
 $txt['tp-themesavail'] = 'Themes available in the themebox';
@@ -482,7 +477,6 @@ $txt['tp-recentboards'] = 'Board Id\'s (comma separated, blank will include all)
 $txt['tp-recentincexc'] = 'Include or exclude boards';
 $txt['tp-recentinboard'] = 'Include boards';
 $txt['tp-recentexboard'] = 'Exclude boards';
-$txt['tp-nofrontmodule'] =  'No modules available.';
 $txt['tp-catboxauthor'] = 'Show author?';
 $txt['tp-catboxheight'] = 'Height of the article box before scrollbar';
 $txt['tp-insert'] = 'Insert code';
@@ -526,6 +520,7 @@ $txt['shout_submit_returnkey'] = 'Choose how to submit Shout';
 $txt['tp-yes-enter'] = 'with Enter';
 $txt['tp-yes-ctrl'] = 'with Ctrl/Cmd+Enter';
 $txt['tp-yes-shout'] = 'with Shout button only';
+$txt['tp-shoutbox_id'] = 'Choose the Shoutbox ID for this block';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
 $txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
 $txt['tp-shoutboxlimit'] = 'Limit posts in shoutbox to ';
@@ -542,7 +537,9 @@ $txt['tp-shoutboxlinecolor2'] = 'Layouts 3 and 4: background color even lines';
 $txt['tp-show_profile_shouts'] = 'Hide shouts in the profile';
 $txt['tp-shoutboxadmin'] = 'Shoutbox administration';
 $txt['tp-shoutboxitems'] = 'Edit/Remove last shouts';
+$txt['tp-filtered'] = 'Filtered';
 $txt['tp-deleteallshouts'] = 'Delete all shouts?';
+$txt['tp-allshoutsbyid'] = 'All shouts in this shoutbox';
 $txt['tp-allshoutsbymember'] = 'All shouts by this member';
 $txt['tp-allshoutsbyip'] = 'All shouts by this IP';
 $txt['tp-allshouts'] = 'Show all shouts';

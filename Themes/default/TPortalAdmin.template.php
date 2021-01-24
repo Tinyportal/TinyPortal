@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -276,14 +276,14 @@ function template_settings()
 					</dt>
 					<dd>
                         <input type="checkbox" id="tp_disable_template_eval" name="tp_disable_template_eval" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
-					</dd>';
-/* Disabled for 2.0.0 to be completed later
+					</dd>
                     <dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-imageuploadpathdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_image_upload_path" name="tp_image_upload_path" value="' , !empty($context['TPortal']['image_upload_path']) ? $context['TPortal']['image_upload_path'] : '' , '" size="50">
-					</dd>
+					</dd>';
+/*
                     <dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-downloaduploadpathdesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_download_upload_path">', $txt['tp-downloaduploadpath'], '</label>
 					</dt>
@@ -297,8 +297,7 @@ function template_settings()
 						<input type="text" id="tp_blockcode_upload_path" name="tp_blockcode_upload_path" value="' , !empty($context['TPortal']['blockcode_upload_path']) ? $context['TPortal']['blockcode_upload_path'] : '' , '" size="50" >
 					</dd>
 */
-			echo '
-                    <dt>
+                    echo '<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=', $txt['tp-copyrightremovaldesc'], '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label>
 					</dt>
 					<dd>
@@ -1610,34 +1609,34 @@ function template_panels()
 	$allpanels = array('left','right','top','center','front','lower','bottom');
 	$alternate = true;
 
-	if(function_exists('ctheme_tp_getblockstyles'))
-		$types = ctheme_tp_getblockstyles();
-	if(TP_SMF21)
+	if(TP_SMF21) {
 		$types = tp_getblockstyles21();
-	else
+    }
+	else {
 		$types = tp_getblockstyles();
+    }
 
-	foreach($allpanels as $pa => $panl)
-	{
+	foreach($allpanels as $pa => $panl) {
 		echo '
 				<div id="panels-options" class="padding-div">
 				<hr>
 				<dl class="settings">
 				<dt>
 					<div class="font-strong">';
-		if($panl!='front')
+		if( $panl != 'front' ) {
 			echo $txt['tp-'.$panl.'panel'].'</div></dt>
 				<dd>
 					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" /></dd>';
-		else
+        }
+		else {
 			echo $txt['tp-'.$panl.'panel'].'</div></dt>
 					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" /></dd>';
+        }
 		echo '
 					<br>
 				</dl>
 				<dl class="settings">';
-		if($panl!='front')
-		{
+		if( $panl != 'front' ) {
 			if(in_array($panl, array("left","right")))
 				echo '
 					<dt>
@@ -1853,6 +1852,7 @@ function template_blocks()
 							</div>
 							<select size="1" name="type' .$lblock['id']. '">
 								<option value="0"' ,$lblock['type']=='no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
+								<option value="8"' ,$lblock['type']=='shoutbox' ? ' selected' : '' , '>', $txt['tp-blocktype8'] , '</option>
 								<option value="18"' ,$lblock['type']=='articlebox' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$lblock['type']=='categorybox' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
 								<option value="14"' ,$lblock['type']=='module' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
@@ -1869,13 +1869,7 @@ function template_blocks()
 								<option value="13"' ,$lblock['type']=='ssi' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
 								<option value="3"' ,$lblock['type']=='statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$lblock['type']=='themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
-								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="20"' ,$lblock['type']=='tpmodulebox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
-			// theme hooks
-			if(function_exists('ctheme_tp_blocks'))
-			{
-				ctheme_tp_blocks('listblocktypes2', $lblock['type']);
-			}
+								<option value="1"' ,$lblock['type']=='userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>';
 				echo '	</select>
 						</div>
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
@@ -2113,7 +2107,7 @@ function template_blocks()
 	</form>';
 }
 
-// Add block Page
+// Add Block Page
 function template_addblock()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
@@ -2165,21 +2159,15 @@ function template_addblock()
 								<input type="radio" id="tp_addblock12" name="tp_addblock" value="12" /><label for="tp_addblock12">' . $txt['tp-blocktype12'] . '</label><br>
 								<input type="radio" id="tp_addblock15" name="tp_addblock" value="15" /><label for="tp_addblock15">' . $txt['tp-blocktype15'] . '</label><br>
 								<input type="radio" id="tp_addblock4" name="tp_addblock" value="4" /><label for="tp_addblock4">' . $txt['tp-blocktype4'] . '</label><br>
+								<input type="radio" id="tp_addblock8" name="tp_addblock" value="8" /><label for="tp_addblock8">' . $txt['tp-blocktype8'] . '</label><br>
 								<input type="radio" id="tp_addblock16" name="tp_addblock" value="16" /><label for="tp_addblock16">' . $txt['tp-blocktype16'] . '</label><br>
 								<input type="radio" id="tp_addblock13" name="tp_addblock" value="13" /><label for="tp_addblock13">' . $txt['tp-blocktype13'] . '</label><br>
 								<input type="radio" id="tp_addblock3" name="tp_addblock" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>
 								<input type="radio" id="tp_addblock7" name="tp_addblock" value="7" /><label for="tp_addblock7">' . $txt['tp-blocktype7'] . '</label><br>
 								<input type="radio" id="tp_addblock1" name="tp_addblock" value="1" /><label for="tp_addblock1">' . $txt['tp-blocktype1'] . '</label><br>
-								<input type="radio" id="tp_addblock20" name="tp_addblock" value="20" /><label for="tp_addblock20">' . $txt['tp-blocktype20'] . '</label><br>
 							</div>
 						</dd>
-					</dl>';
-			// theme hooks
-			if(function_exists('ctheme_tp_blocks'))
-			{
-				ctheme_tp_blocks('listaddblocktypes');
-			}
-					echo '
+					</dl>
 					<dl class="tptitle settings">
 						<dt><h3>' , $txt['tp-chooseblocktype'] , '</h3></dt>
 						<dd>

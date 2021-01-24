@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -42,7 +42,7 @@ function TPortal() {{{
         'updatelog'         => array('TPSubs.php', 'TPUpdateLog'    , array()),
         'savesettings'      => array('TPSubs.php', 'TPSaveSettings' , array()),
     );
-  
+
     call_integration_hook('integrate_tp_pre_subactions', array(&$subActions));
 
     if(!array_key_exists($subAction, $subActions)) {
@@ -107,10 +107,10 @@ function TPortal_init() {{{
 	setupTPsettings();
     // Setup querystring
 	$context['TPortal']['querystring'] = $_SERVER['QUERY_STRING'];
-    
+
 	// Include a ton of functions.
 	require_once(SOURCEDIR.'/TPSubs.php');
-	
+
 	// go back on showing attachments..
 	if(isset($_GET['action']) && $_GET['action'] == 'dlattach') {
 		return;
@@ -131,8 +131,8 @@ function TPortal_init() {{{
 		$context['template_layers'][] = $context['TPortal']['hooks']['tp_layer'];
     }
 
-	loadtemplate('TPsubs');
-	loadtemplate('TPBlockLayout');
+	loadTemplate('TPsubs');
+	loadTemplate('TPBlockLayout');
 
 	// is the permanent theme option set?
 	if(isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged']) {
@@ -150,12 +150,6 @@ function TPortal_init() {{{
 		doTPfrontpage();
 	}
 
-	// determine the blocks
-    require_once(SOURCEDIR.'/TPBlock.php');
-	getBlocks();
-
-	// determine which sidebars to hide
-	tpWhichHideBars();
 	// Load the stylesheet stuff
 	tpLoadCSS();
 
@@ -167,72 +161,28 @@ function TPortal_init() {{{
 	// Show search/frontpage topic layers?
 	TPIntegrate::hookSearchLayers();
 
-	// set cookie change for selected upshrinks
-	tpSetupUpshrinks();
-
 	// finally..any errors finding an article or category?
 	if(!empty($context['art_error'])) {
+        tp_hidebars('all');
 		fatal_error($txt['tp-articlenotexist'], false);
     }
 
 	if(!empty($context['cat_error'])) {
+        tp_hidebars('all');
 		fatal_error($txt['tp-categorynotexist'], false);
     }
 
     call_integration_hook('integrate_tp_post_init');
 
-}}}
-
-function tpWhichHideBars() {{{
-	global $maintenance, $context;
-
-	// if we are in maintance mode, just hide panels
-	if (!empty($maintenance) && !allowedTo('admin_forum')) {
-		tp_hidebars('all');
-    }
-		
-	// for some very large forum sections, give the option to hide bars
-	if($context['TPortal']['hidebars_profile'] == '1' && $context['TPortal']['action'] == 'profile') {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_pm'] == '1' && $context['TPortal']['action'] == 'pm') {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_calendar'] == '1' && $context['TPortal']['action'] == 'calendar') {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_search'] == '1' && in_array($context['TPortal']['action'], array('search', 'search2'))) {
-		tp_hidebars('all');
-    }
-	else if($context['TPortal']['hidebars_memberlist'] == '1' && $context['TPortal']['action'] == 'mlist') {
-		tp_hidebars('all');
-    }
-
-	// if custom actions is specified, hide panels there as well
-	if(!empty($context['TPortal']['hidebars_custom'])) {
-		$cactions = explode(',', $context['TPortal']['hidebars_custom']);
-		if(in_array($context['TPortal']['action'], $cactions)) {
-			tp_hidebars('all');
-        }
-	}
-
-	// finally..wap modes should not display the bars
-	if(isset($_GET['wap']) || isset($_GET['wap2']) || isset($_GET['imode'])) {
-		tp_hidebars('all');
-    }
-
-	// maybe we are at the password pages?
-	if(isset($_REQUEST['action']) && in_array($_REQUEST['action'], array('login2', 'profile2'))) {
-		tp_hidebars('all');
-    }
-
+	// set cookie change for selected upshrinks
+	tpSetupUpshrinks();
 }}}
 
 function tpLoadCSS() {{{
 	global $context, $settings;
 
 	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
-	
+
     // load both stylesheets to be sure all is in, but not if things aren't setup!
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-style.css')) {
 		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-style.css?'.TPVERSION.'" />';
@@ -254,7 +204,7 @@ function tpLoadCSS() {{{
 	else {
 		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-custom.css?'.TPVERSION.'" />';
     }
-	
+
 	if(!empty($context['TPortal']['padding'])) {
 		$context['html_headers'] .= '
             <style type="text/css">
@@ -518,12 +468,12 @@ function doTPpage() {{{
 				TP_error($txt['tp-nocategory']);
 				$shown = true;
             }
-	
+
 			// likewise for off.
 			if($article['off'] == 1 && $shown == false) {
 				TP_error($txt['tp-noton']);
 				$shown = true;
-            }	
+            }
 
         	if($shown == true && !allowedTo('tp_articles')) {
 				$valid = false;
@@ -542,7 +492,7 @@ function doTPpage() {{{
 				// allowed and all is well, go on with it.
 				$context['TPortal']['article'] = $article;
 
-                $context['TPortal']['article']['avatar'] = set_avatar_data( array(      
+                $context['TPortal']['article']['avatar'] = set_avatar_data( array(
                         'avatar' => $article['avatar'],
                         'email' => $article['email_address'],
                         'filename' => !empty($article['filename']) ? $article['filename'] : '',
@@ -573,10 +523,10 @@ function doTPpage() {{{
                     unset($comments['last']);
                     unset($comments['new_count']);
                     unset($comments['comment_count']);
-					
+
                     foreach($comments as $row) {
 
-                        $avatar = set_avatar_data( array(      
+                        $avatar = set_avatar_data( array(
                                     'avatar'            => $row['avatar'],
                                     'email'             => $row['email_address'],
                                     'filename'          => !empty($row['filename']) ? $row['filename'] : '',
@@ -923,7 +873,7 @@ function doTPcat() {{{
 						// expand the vislaoptions
 						$row['visual_options'] = explode(',', $row['options']);
 
-                        $row['avatar'] = set_avatar_data( array(      
+                        $row['avatar'] = set_avatar_data( array(
                                     'avatar' => $row['avatar'],
                                     'email' => $row['email_address'],
                                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -987,7 +937,7 @@ function doTPcat() {{{
 				else {
 					$all_articles                                   = 0;
                 }
-            
+
                 if($all_articles == 0) {
                     $context['TPortal']['category']['no_articles']  = true;
                 }
@@ -1121,7 +1071,7 @@ function doTPfrontpage() {{{
 	// fetch the articles, sorted
 	switch($context['TPortal']['front_type']) {
 		// Only articles
-        case 'articles_only': 
+        case 'articles_only':
             // first, get all available
             $artgroups = '';
             if(!$context['user']['is_admin']) {
@@ -1179,7 +1129,7 @@ function doTPfrontpage() {{{
                     // expand the vislaoptions
                     $row['visual_options'] = explode(',', $row['options']);
 
-                    $row['avatar'] = set_avatar_data( array(      
+                    $row['avatar'] = set_avatar_data( array(
                                 'avatar' => $row['avatar'],
                                 'email' => $row['email_address'],
                                 'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -1238,8 +1188,8 @@ function doTPfrontpage() {{{
 			$row = $smcFunc['db_fetch_assoc']($request);
 			// expand the vislaoptions
 			$row['visual_options'] = explode(',', $row['options']);
-            
-            $row['avatar'] = set_avatar_data( array(      
+
+            $row['avatar'] = set_avatar_data( array(
                         'avatar' => $row['avatar'],
                         'email' => $row['email_address'],
                         'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -1252,7 +1202,7 @@ function doTPfrontpage() {{{
 			$smcFunc['db_free_result']($request);
 		}
         break;
-	// Only forum-topics 
+	// Only forum-topics
 	case 'forum_only':
 	// Promoted topics only
     case 'forum_selected':
@@ -1276,7 +1226,7 @@ function doTPfrontpage() {{{
 				    'max'       => $totalmax,
                     'offset'    => $start,
 			    )
-            );				
+            );
         }
 		else {
 			$request =  $smcFunc['db_query']('', '
@@ -1498,7 +1448,7 @@ function doTPfrontpage() {{{
                 $row['visual_options'] = explode(',', $row['options']);
                 $row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
                 $row['rating'] = array_sum(explode(',', $row['rating']));
-                $row['avatar'] = set_avatar_data( array(      
+                $row['avatar'] = set_avatar_data( array(
                             'avatar' => $row['avatar'],
                             'email' => $row['email_address'],
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -1552,11 +1502,11 @@ function doTPfrontpage() {{{
 		$access = '1=1';
     }
 
-    $access2 = '';
-    if(!empty($context['TPortal']['uselangoption'])) { 
-        $access2 = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'access2');
-        if(isset($access2)) {
-            $access2 = ' AND '. $access2;
+    $display = '';
+    if(!empty($context['TPortal']['uselangoption'])) {
+        $display = TPUtil::find_in_set(array('tlang='.$user_info['language']), 'display');
+        if(isset($display)) {
+            $display = ' AND '. $display;
         }
     }
 
@@ -1566,7 +1516,7 @@ function doTPfrontpage() {{{
 		WHERE off = 0
 		AND bar = 4
 		AND '. $access .'
-		'.$access2. '
+		'.$display. '
 		ORDER BY pos,id ASC'
 	);
 
@@ -1605,11 +1555,7 @@ function doTPfrontpage() {{{
             elseif($row['type'] == 20) {
                 call_integration_hook('integrate_tp_blocks', array(&$row));
             }
-			$can_edit = get_perm($row['editgroups'], '');
 			$can_manage = allowedTo('tp_blocks');
-			if($can_manage) {
-				$can_edit = false;
-            }
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
@@ -1624,7 +1570,7 @@ function doTPfrontpage() {{{
 				'var5' => $set['var5'],
 				'id' => $row['id'],
 				'lang' => $row['lang'],
-				'access2' => $row['access2'],
+				'display' => $row['display'],
 				'can_edit' => $can_edit,
 				'can_manage' => $can_manage,
 			);
@@ -1673,7 +1619,7 @@ function doTPfrontpage() {{{
 			while($article = $smcFunc['db_fetch_assoc']($request)) {
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
-                $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(      
+                $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(
                             'avatar' => isset($row['avatar']) ? $row['avatar'] : '',
                             'email' => isset($row['email_address']) ? $row['email_address'] : '',
                             'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -1731,9 +1677,9 @@ function doTPfrontpage() {{{
 		$request =  $smcFunc['db_query']('', '
 			SELECT var.*, art.shortname, cat.value8 as catshort
 			FROM {db_prefix}tp_variables as var
-			LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id 
+			LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id
 			LEFT JOIN {db_prefix}tp_variables AS cat ON substring(var.value3,5) = cat.id
-			WHERE var.type = {string:type} 
+			WHERE var.type = {string:type}
 			ORDER BY value5 ASC',
 			array('type' => 'menubox')
 		);
@@ -1752,7 +1698,7 @@ function doTPfrontpage() {{{
 						$idtype = $row['shortname'];
 					}
 					if($mtype == 'cats' && !empty($row['catshort'])) {
-						$idtype = $row['catshort'];					
+						$idtype = $row['catshort'];
 					}
 					if($mtype == 'cats' && isset($context['TPortal']['article_categories']['icon'][$idtype])) {
 						$icon=$context['TPortal']['article_categories']['icon'][$idtype];
@@ -1806,11 +1752,6 @@ function doTPfrontpage() {{{
 // TPortal side bar, left or right.
 function TPortal_panel($side) {{{
 	global $context, $scripturl, $settings;
-
-	if(function_exists('ctheme_tportal_panel')) {
-		ctheme_tportal_panel($side);
-		return;
-	}
 
 	// decide for $flow
 	$flow = $context['TPortal']['block_layout_' . $side];
@@ -2024,7 +1965,13 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['blocklisting_height'] = $block['var1'];
 				$context['TPortal']['blocklisting_author'] = $block['var2'];
 				break;
-			case 'tpmodulebox':
+			case 'shoutbox':
+            	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
+				$context['TPortal']['shoutbox_stitle'] = $block['body'];
+				$context['TPortal']['shoutbox_id'] = $block['var2'];
+				$context['TPortal']['shoutbox_layout'] = $block['var3'];
+				$context['TPortal']['shoutbox_height'] = $block['var4'];
+            case 'modulebox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleid'] = $block['var1'];
 				$context['TPortal']['modulevar2'] = $block['var2'];
@@ -2342,7 +2289,7 @@ function TPortal_menubox() {{{
     $request =  $smcFunc['db_query']('', '
         SELECT var.*, art.shortname, cat.value8 as catshort
         FROM {db_prefix}tp_variables as var
-		LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id 
+		LEFT JOIN {db_prefix}tp_articles AS art ON substring(var.value3,5) = art.id
 		LEFT JOIN {db_prefix}tp_variables AS cat ON substring(var.value3,5) = cat.id
         WHERE var.type = {string:type}
         ORDER BY var.subtype + 0 ASC',
@@ -2365,7 +2312,7 @@ function TPortal_menubox() {{{
 					$idtype = $row['shortname'];
 				}
 				if($mtype == 'cats' && !empty($row['catshort'])) {
-					$idtype = $row['catshort'];					
+					$idtype = $row['catshort'];
 				}
                 if($mtype == 'cats' && isset($context['TPortal']['article_categories']['icon'][$idtype])) {
                     $icon = $context['TPortal']['article_categories']['icon'][$idtype];

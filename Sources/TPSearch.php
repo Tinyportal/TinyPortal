@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.1.0
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -33,7 +33,7 @@ function TPSearch()
         TPadd_linktree($scripturl.'?action=tportal;sa=searcharticle' , $txt['tp-searcharticles2']);
         loadtemplate('TPSearch');
         $context['sub_template'] = 'article_search_results';
-    } 
+    }
     else {
 	    TPadd_linktree($scripturl.'?action=tportal;sa=searcharticle' , $txt['tp-searcharticles2']);
 	    loadtemplate('TPSearch');
@@ -70,7 +70,7 @@ function TPSearchArticle()
     else {
         $start = TPUtil::filter('start', 'request', 'int');
     }
-    
+
     if(!empty($_REQUEST['params'])) {
         $params = TPUtil::filter('params', 'request', 'string');
         if(!empty($params)) {
@@ -122,7 +122,7 @@ function TPSearchArticle()
 			foreach($splitWords as $word) {
 				$word       = trim($word);
 				$operator   = substr($word, 0, 1);
-				// First Character 
+				// First Character
 				switch($operator) {
 					// Allowed operators
 					case '-':
@@ -134,7 +134,7 @@ function TPSearchArticle()
 						break;
 					default:
 						// Last Character of a word
-						$operator   = substr($word, -1); 
+						$operator   = substr($word, -1);
 						switch($operator) {
 							// Allowed operators
 							case '-':
@@ -162,7 +162,7 @@ function TPSearchArticle()
 			$select     = ', MATCH (body) AGAINST (\''.$what.'\') AS score';
 			$query      = 'MATCH (body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
 		}
-		elseif($usetitle && $usebody) { 
+		elseif($usetitle && $usebody) {
 			$select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
 			$query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
 		}
@@ -178,7 +178,7 @@ function TPSearchArticle()
 	$context['TPortal']['searchpage']       = $start;
 	$now        = forum_time();
 	$request    = $smcFunc['db_query']('', '
-        SELECT a.id, a.date, a.views, a.subject, LEFT(a.body, 300) AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
+        SELECT a.id, a.date, a.views, a.subject, a.body AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
         FROM {db_prefix}tp_articles AS a
         LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
         WHERE {raw:query}
@@ -199,7 +199,8 @@ function TPSearchArticle()
 	);
 	if($smcFunc['db_num_rows']($request) > 0) {
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
-			if($row['type'] == 'bbc') {
+			TPUtil::shortenString($row['body'], 400);
+            if($row['type'] == 'bbc') {
 				$row['body'] = parse_bbc($row['body']);
 			}
 			elseif($row['type'] == 'php') {
@@ -243,7 +244,7 @@ function TPSearchArticle()
 	$smcFunc['db_free_result']($request);
 
     $params = base64_encode(json_encode(array( 'search' => $what, 'title' => $usetitle, 'body' => $usebody)));
-    
+
     // Now that we know how many results to expect we can start calculating the page numbers.
     $context['page_index']  = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
 

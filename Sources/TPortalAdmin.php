@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -163,15 +163,6 @@ function TPortalAdmin()
             fatal_error($txt['tp-noadmin'], false);
         }
 	}
-    elseif(array_key_exists('shout', $_GET) && $_GET['shout'] == 'admin') {
-        require_once(SOURCEDIR . '/TPShout.php');
-        return;
-    }
-	elseif(array_key_exists('listimage', $_GET) && in_array($_GET['listimage'], array( 'admin', 'list', 'remove'))) {
-        require_once(SOURCEDIR . '/TPListImages.php');
-        template_list_images();
-        return;
-    }
     else {
 		$context['TPortal']['subaction'] = $tpsub = 'overview';
 		do_admin($tpsub);
@@ -1624,6 +1615,22 @@ function do_postchecks()
 						}
 					}
 					// END  non responsive themes form
+                    if($what == 'tp_image_upload_path') {
+                        unset($updateArray['image_upload_path']);
+                        if(strcmp($context['TPortal']['image_upload_path'],$value) != 0) {
+                            // Only allow if part of the boarddir
+                            if(strncmp($value, $boarddir, strlen($boarddir)) == 0) {
+                                // It cann't be part of the existing path
+                                if(strncmp($value, $context['TPortal']['image_upload_path'], strlen($context['TPortal']['image_upload_path'])) != 0) {
+                                    if(tp_create_dir($value)) {
+                                        tp_recursive_copy($context['TPortal']['image_upload_path'], $value);
+                                        tp_delete_dir($context['TPortal']['image_upload_path']);
+                                        $updateArray['image_upload_path'] = $value;
+                                    }
+                                }
+                            }
+                        }
+                    }
 				}
 			}
 
@@ -2391,8 +2398,7 @@ function do_postchecks()
 						'off' => 'int',
 						'visible' => 'string',
 						'lang' => 'string',
-						'access2' => 'string',
-						'editgroups' => 'string',
+						'display' => 'string',
                         'settings' => 'string',
 					),
 					array(
@@ -2406,8 +2412,7 @@ function do_postchecks()
 						1,
 						1,
 						$cp['lang'],
-						$cp['access2'],
-						$cp['editgroups'],
+						$cp['display'],
                         json_encode(array(
                             'var1' => json_decode($cp['settings'], true)['var1'],
                             'var2' => json_decode($cp['settings'], true)['var2'],
@@ -2433,12 +2438,11 @@ function do_postchecks()
 						'off' => 'int',
 						'visible' => 'string',
 						'lang' => 'string',
-						'access2' => 'string',
-						'editgroups' => 'string',
+						'display' => 'string',
                         'settings' => 'string',
 					),
 					array(
-                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'actio=allpages', '',
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages',
                         json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
 					),
 					array('id')
@@ -2457,7 +2461,6 @@ function do_postchecks()
 
 			$where = is_numeric($_POST['tpadmin_form_id']) ? $_POST['tpadmin_form_id'] : 0;
 			$tpgroups = array();
-			$editgroups = array();
 			$access = array();
 			$lang = array();
 			foreach($_POST as $what => $value)
@@ -2547,10 +2550,8 @@ function do_postchecks()
 				}
 				elseif(substr($what, 0, 8) == 'tp_group')
 					$tpgroups[] = substr($what, 8);
-				elseif(substr($what, 0, 12) == 'tp_editgroup')
-					$editgroups[] = substr($what, 12);
 				elseif(substr($what, 0, 10) == 'actiontype')
-					$access[] = 'actio=' . $value;
+					$access[] = '' . $value;
 				elseif(substr($what, 0, 9) == 'boardtype')
 					$access[] = 'board=' . $value;
 				elseif(substr($what, 0, 11) == 'articletype')
@@ -2567,7 +2568,7 @@ function do_postchecks()
 				{
 					$items = explode(',', $value);
 					foreach($items as $iti => $it)
-						$access[] = 'actio=' . $it;
+						$access[] = '' . $it;
 				}
 				elseif(substr($what, 0, 8) == 'tp_lang_')
 				{
@@ -2597,16 +2598,14 @@ function do_postchecks()
 			// construct the access++
 			$smcFunc['db_query']('', '
 				UPDATE {db_prefix}tp_blocks
-				SET	access2 = {string:acc2},
+				SET	display = {string:acc2},
 					access = {string:acc},
-					lang = {string:lang},
-					editgroups = {string:editgrp}
+					lang = {string:lang}
 				WHERE id = {int:blockid}',
 				array(
 					'acc2' => implode(',', $access),
 					'acc' => implode(',', $tpgroups),
 					'lang' => implode('|', $lang),
-					'editgrp' => implode(',', $editgroups),
 					'blockid' => $where,
 				)
 			);
@@ -2750,4 +2749,52 @@ function get_catnames()
 		$smcFunc['db_free_result']($request);
 	}
 }
+
+function tp_create_dir($path) {{{
+    global $sourcedir;
+
+    require_once($sourcedir . '/Subs-Package.php');
+
+    // Load up the package FTP information?
+    create_chmod_control();
+
+    if (!mktree($path, 0755)) {
+        deltree($path, true);
+        fatal_error($txt['tp-failedcreatedir'], false);
+    }
+
+    return TRUE;
+}}}
+
+function tp_delete_dir($path) {{{
+    global $sourcedir;
+
+    require_once($sourcedir . '/Subs-Package.php');
+
+    // Load up the package FTP information?
+    create_chmod_control();
+
+    deltree($path, true);
+
+    return TRUE;
+}}}
+
+function tp_recursive_copy($src, $dst) {{{
+
+    $dir = opendir($src);
+    tp_create_dir($dst);
+    while(false !== ($file = readdir($dir)) ) {
+        if(($file != '.') && ($file != '..')) {
+            if(is_dir($src . '/' . $file)) {
+                tp_recursive_copy($src . '/' . $file,$dst . '/' . $file);
+            }
+            else {
+                copy($src . '/' . $file,$dst . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
+
+}}}
+
 ?>
