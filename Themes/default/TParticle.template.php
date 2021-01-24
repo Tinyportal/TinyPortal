@@ -120,7 +120,7 @@ function template_submitarticle()
 				</dl>
 					';
 				if($article_type == 'php' || $article_type == 'html')	{
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
 					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
                     }
@@ -130,7 +130,7 @@ function template_submitarticle()
 					echo '</div>';
 				}
 				elseif($article_type == 'bbc' || $article_type == 'import') {
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' ,
                     '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
