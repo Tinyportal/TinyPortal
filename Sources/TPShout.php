@@ -400,10 +400,10 @@ function shout_bcc_code($collapse = true) {{{
     }
 
 	if($collapse) {
-		echo '  <a href="#" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
-	            </a>
-                <div id="shoutbox_bbc" style="text-align:left;">';
+		echo '  <div style="display: inline;padding-top: 0.2em;" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
+		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left;padding-top: 0.5em;" />
+	            </div>
+                <div id="shoutbox_bbc" style="text-align:left;padding-top: 0.2em;">';
     }
 	else {
 		echo '  <div>';
@@ -424,13 +424,13 @@ function shout_bcc_code($collapse = true) {{{
 
                     // If there's no after, we're just replacing the entire selection in the post box.
                     if (!isset($tag['after']))
-                        echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                        echo '<div style="display: inline;" onclick="replaceShoutText(\'', $tag['before'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
                     // On the other hand, if there is one we are surrounding the selection ;).
                     else
-                        echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                        echo '<div style="display: inline;" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
 
                     // Okay... we have the link. Now for the image and the closing </a>!
-                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></a>';
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></div>';
                 }
                 // I guess it's a divider...
                 elseif ($found_button) {
@@ -439,7 +439,7 @@ function shout_bcc_code($collapse = true) {{{
                 }
             }
             else {
-				echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;" style="padding:0px;"><div unselectable="on">'.$tag['description'].'</div></a>';
+				echo '<div class="sceditor-button sceditor-button-'.$image.'" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;" style="display: inline;padding:0px;"><div unselectable="on">'.$tag['description'].'</div></div>';
             }
 		}
 	}
@@ -469,13 +469,13 @@ function shout_bcc_code($collapse = true) {{{
 
                     // If there's no after, we're just replacing the entire selection in the post box.
                     if (!isset($tag['after']))
-                        echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                        echo '<div style="display: inline;" onclick="replaceShoutText(\'', $tag['before'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
                     // On the other hand, if there is one we are surrounding the selection ;).
                     else
-                        echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+                        echo '<div style="display: inline;" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
 
                     // Okay... we have the link. Now for the image and the closing </a>!
-                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></a>';
+                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></div>';
                 }
                 // I guess it's a divider...
                 elseif ($found_button1)
@@ -485,7 +485,7 @@ function shout_bcc_code($collapse = true) {{{
                 }
             }
             else {
-                echo '<a class="sceditor-button sceditor-button-'.$image.'" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;" style="padding:0px;"><div unselectable="on">'.$tag['description'].'</div></a>';
+                echo '<div class="sceditor-button sceditor-button-'.$image.'" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;" style="display: inline;padding:0px;"><div unselectable="on">'.$tag['description'].'</div></div>';
             }
 		}
 	}
@@ -493,7 +493,7 @@ function shout_bcc_code($collapse = true) {{{
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
 		echo ' <p class="clearthefloat"></p>
-				<select onchange="surroundText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
+				<select onchange="surroundShoutText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', \'', $context['tp_shout_post_box_name'], '\'); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
 						<option value="" selected="selected">'. $txt['change_color']. '</option>
 						<option value="Black">Black</option>
 						<option value="Red">Red</option>
@@ -528,13 +528,13 @@ function shout_bcc_code($collapse = true) {{{
 
 				// If there's no after, we're just replacing the entire selection in the post box.
 				if (!isset($tag['after']))
-					echo '<a href="javascript:void(0);" onclick="replaceText(\'', $tag['before'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;">';
+					echo '<div style="display: inline;" onclick="replaceShoutText(\'', $tag['before'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
 				// On the other hand, if there is one we are surrounding the selection ;).
 				else
-					echo '<a href="javascript:void(0);" onclick="surroundText(\'', $tag['before'], '\', \'', $tag['after'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['shout_post_box_name'], '); return false;">';
+					echo '<div style="display: inline;" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['shout_post_box_name'], '\'); return false;">';
 
 				// Okay... we have the link. Now for the image and the closing </a>!
-				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></a>';
+				echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></div>';
 			}
 			// I guess it's a divider...
 			elseif ($found_button2)
@@ -661,10 +661,10 @@ function print_shout_smileys($collapse = true) {{{
 
 	if($collapse) {
 		echo '
-	<a href="#" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
+	<div style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
 		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
-	</a>
-	<div id="shoutbox_smiley" style="text-align:left;">
+	</div>
+	<div id="shoutbox_smiley" style="text-align:left;padding-top: 0.2em;">
 		';
     }
 	else {
@@ -679,10 +679,10 @@ function print_shout_smileys($collapse = true) {{{
 		foreach ($context['tp_smileys']['postform'] as $smiley_row) {
 			foreach ($smiley_row['smileys'] as $smiley) {
 				if($sm_counter == 5 && $collapse) {
-					echo '<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
+					echo '<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;padding-top: 0.2em;"' , '>';
                 }
 
-				echo '<a href="javascript:void(0);" onclick="replaceText(\' ', $smiley['code'], '\', document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></a>';
+				echo '<div style="display: inline;" onclick="replaceShoutText(\' ', $smiley['code'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></div>';
 				$sm_counter++;
 			}
 		}
@@ -834,8 +834,9 @@ function TPShoutBlock(&$row) {{{
                         if(event.which == 13 && !event.shiftKey) {
                             tp_shout_key_press = true;
                             // set a 100 millisecond timeout for the next key press
-                            window.setTimeout(function() { tp_shout_key_press = false; }, 100);
+                            window.setTimeout(function() { tp_shout_key_press = false; $("#tp_shout_' . $set['var2'] . '").setCursorPosition(0,0);}, 100);
                             TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+							console.log("'.$set['var2'].'");
                         }
                     });
                 });
@@ -854,6 +855,7 @@ function TPShoutBlock(&$row) {{{
                             TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
                         }
                         else if (event.keyCode == 13) {
+							$("#tp_shout_' . $set['var2'] . '").setCursorPosition(0,0);
                             event.preventDefault();
                         }
                     });
