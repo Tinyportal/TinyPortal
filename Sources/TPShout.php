@@ -339,8 +339,9 @@ function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shou
     global $context;
 
     loadTemplate('TPShout');
+	$context['TPortalShoutboxId'] = $shoutbox_id;
 
-    if ($state == false) {
+	if ($state == false) {
         $context['template_layers']         = array();
         $context['sub_template']            = 'tpshout_ajax';
         $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, $state, $number, true);
@@ -352,7 +353,7 @@ function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shou
     }
 }}}
 
-function shout_bcc_code($collapse = true) {{{
+function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 	global $context, $txt, $settings, $option;
 
 	loadLanguage('Post');
@@ -400,10 +401,10 @@ function shout_bcc_code($collapse = true) {{{
     }
 
 	if($collapse) {
-		echo '  <div style="display: inline;padding-top: 0.2em;" onclick="expandHeaderBBC(!current_header_bbc, ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		            <img id="expand_bbc" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left;padding-top: 0.5em;" />
+		echo '  <div class="expand_bbc_parent" id="expand_bbc_parent_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderBBC(!current_header_bbc, \'' . $shoutbox_id . '\', ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
+		            <img class="expand_shout_bbc" id="expand_bbc_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left;padding-top: 0.5em;" />
 	            </div>
-                <div id="shoutbox_bbc" style="text-align:left;padding-top: 0.2em;">';
+                <div id="shoutbox_bbc_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">';
     }
 	else {
 		echo '  <div>';
@@ -445,7 +446,7 @@ function shout_bcc_code($collapse = true) {{{
 	}
 
 	if($collapse) {
-		echo '<div id="expandHeaderBBC"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
+		echo '<div id="expandHeaderBBC_' . $shoutbox_id . '"', empty($options['expand_header_bbc']) ? ' style="display: none;"' : 'style="display: inline;"' , '>';
     }
 	else {
 		echo '<div style="display: inline;">';
@@ -549,7 +550,7 @@ function shout_bcc_code($collapse = true) {{{
 
 }}}
 
-function shout_smiley_code() {{{
+function shout_smiley_code($shoutbox_id) {{{
     global $context, $settings, $user_info, $txt, $modSettings, $smcFunc;
 
     // Initialize smiley array...
@@ -654,17 +655,17 @@ function shout_smiley_code() {{{
 	$settings['smileys_url'] = $modSettings['smileys_url'] . '/' . $user_info['smiley_set'];
 }}}
 
-function print_shout_smileys($collapse = true) {{{
+function print_shout_smileys($shoutbox_id, $collapse = true) {{{
 	global $context, $txt, $settings, $options;
 
 	loadLanguage('Post');
 
 	if($collapse) {
 		echo '
-	<div style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-		<img id="expand_smiley" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
+	<div class="expand_parent_smiley" id="expand_parent_sniley_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
+		<img class="expand_smiley" id="expand_smiley_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
 	</div>
-	<div id="shoutbox_smiley" style="text-align:left;padding-top: 0.2em;">
+	<div id="shoutbox_smiley_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">
 		';
     }
 	else {
@@ -679,7 +680,7 @@ function print_shout_smileys($collapse = true) {{{
 		foreach ($context['tp_smileys']['postform'] as $smiley_row) {
 			foreach ($smiley_row['smileys'] as $smiley) {
 				if($sm_counter == 5 && $collapse) {
-					echo '<div id="expandHeaderSmiley"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;padding-top: 0.2em;"' , '>';
+					echo '<div id="expandHeaderSmiley_' . $shoutbox_id . '"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;padding-top: 0.2em;"' , '>';
                 }
 
 				echo '<div style="display: inline;" onclick="replaceShoutText(\' ', $smiley['code'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></div>';
@@ -695,6 +696,7 @@ function print_shout_smileys($collapse = true) {{{
 
 // show a dedicated frontpage
 function tpshout_frontpage() {{{
+	global $context;
 	loadtemplate('TPShout');
     tpshout_bigscreen(true);
 }}}

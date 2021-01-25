@@ -1,39 +1,39 @@
-function expandHeaderSmiley(mode, is_guest, sessionId)
+function expandHeaderSmiley(mode, shoutbox_id, is_guest, sessionId)
 {
 	// Guests don't have theme options!!
 	if (is_guest)
-		document.cookie = "expandsmiley=" + (mode ? 1 : 0);
+		document.cookie = "expandsmiley" + shoutbox_id + "=" + (mode ? 1 : 0);
 	else
-		smf_setThemeOption("expand_header_smiley", mode ? 1 : 0, null, sessionId);
+		smf_setThemeOption("expand_header_smiley_" + shoutbox_id, mode ? 1 : 0, null, sessionId);
 
-	document.getElementById("expand_smiley").src = mode ? tp_images_url + "/TPcollapse.png" : tp_images_url + "/TPexpand.png";
-	document.getElementById("expandHeaderSmiley").style.display = mode ? "" : "none";
+	document.getElementById("expand_smiley_" + shoutbox_id).src = mode ? tp_images_url + "/TPcollapse.png" : tp_images_url + "/TPexpand.png";
+	document.getElementById("expandHeaderSmiley_" + shoutbox_id).style.display = mode ? "" : "none";
 	current_header_smiley = mode;
 }
 
 
-function expandHeaderBBC(mode, is_guest, sessionId)
+function expandHeaderBBC(mode, shoutbox_id, is_guest, sessionId)
 {
 	if (is_guest)
-		document.cookie = "expandbbc=" + (mode ? 1 : 0);
+		document.cookie = "expandbbc_" + shoutbox_id + "=" + (mode ? 1 : 0);
 	else
-		smf_setThemeOption("expand_header_bbc", mode ? 1 : 0, null, sessionId);
+		smf_setThemeOption("expand_header_bbc_" + shoutbox_id, mode ? 1 : 0, null, sessionId);
 
-	document.getElementById("expand_bbc").src = mode ? tp_images_url + "/TPcollapse.png" : tp_images_url + "/TPexpand.png";
-	document.getElementById("expandHeaderBBC").style.display = mode ? "" : "none";
+	document.getElementById("expand_bbc_" + shoutbox_id).src = mode ? tp_images_url + "/TPcollapse.png" : tp_images_url + "/TPexpand.png";
+	document.getElementById("expandHeaderBBC_" + shoutbox_id).style.display = mode ? "" : "none";
 	current_header_bbc = mode;
 }
 
 function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout)
 {
-
 	var params = "";
 	var name;
 	var shout;
+	
 	if (action === "save") {
-		name    = $("#tp-shout-name").val();
+		name    = $("#tp-shout-name_" + shoutboxId).val();
 		shout   = $("#tp_shout_" + shoutboxId).val();
-		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;
+		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;		
 	}
 
 	if (shoutboxId || !(0 === shoutboxId.length)) {
@@ -63,16 +63,16 @@ function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout)
 		complete: function(){
 		},
 		success: function(data) {
-			var error = $($.parseHTML(data)).filter("#shoutError");
+			var error = $($.parseHTML(data)).filter("#shoutError_" + shoutboxId);
 			// If there's an error let's display it
 			if (error.length > 0) {
-				$("#shout_errors").html(error).show();
-				$(".tp_shoutframe_" + shoutboxId).fadeIn();
+				$("#shout_errors_" + shoutboxId).html(error).show();
+				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).fadeIn();
 				$("#tp_shout_" + shoutboxId).val(shout);
 			} else {
-				$("#shout_errors").hide();
-				$(".tp_shoutframe_" + shoutboxId).html(data).fadeIn();
-				$(".tp_shoutframe_" + shoutboxId).parent().scrollTop(0);
+				$("#shout_errors_" + shoutboxId).hide();
+				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).html(data).fadeIn();
+				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).parent().scrollTop(0);
 				if (action === "save") {
 					$("#tp_shout_" + shoutboxId).val("");
 					document.getElementById("tp_shout_" + shoutboxId).focus();
