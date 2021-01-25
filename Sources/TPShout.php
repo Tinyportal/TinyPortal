@@ -662,7 +662,7 @@ function print_shout_smileys($shoutbox_id, $collapse = true) {{{
 
 	if($collapse) {
 		echo '
-	<div class="expand_parent_smiley" id="expand_parent_sniley_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
+	<div class="expand_parent_smiley" id="expand_parent_smiley_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
 		<img class="expand_smiley" id="expand_smiley_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
 	</div>
 	<div id="shoutbox_smiley_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">
