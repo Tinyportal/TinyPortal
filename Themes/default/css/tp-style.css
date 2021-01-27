@@ -40,6 +40,21 @@
 .tp_tabs a.tp_active {
 	font-weight: bold;
 }
+.tp_menu_horizontal {
+	display: block;
+	width: 92%;
+	min-width: 92%;
+	line-height: 0.1em;
+	max-height: 0.1em;
+	border-top: 0.01em solid;
+	overflow: hidden;
+	padding: 0em;
+	margin: 0em auto;
+	cursor: default;
+	position: relative;
+	top: 0.85em;
+	opacity: 0.3;
+}
 #tpleftbarContainer {
 	float: left;
 }
@@ -339,7 +354,7 @@ img.tp_social {
 .article_inner img, .tparticle img, .bbc_img {
 	height: auto;
 	max-width: 100%;
-} 
+}
 .tpthumb img {
 	max-height: 150px;
 	max-width: 150px;
@@ -958,11 +973,11 @@ input,select {
 .addborderleft div {
 	border-left: 1px solid #CCCCCC;
 	border-left: 1px solid rgba(204, 204, 204, 0.5);
-} 
+}
 .tpartlayoutfp {
     float: left;
 	margin: 4px;
-} 
+}
 .tpartlayouttype {
 	float: left;
 	height: 100px;
@@ -971,11 +986,11 @@ input,select {
 }
 #tp_article_body {
 	height: 300px;
-	width: 98%; 
+	width: 98%;
 }
 #tp_article_intro {
 	height: 140px;
-	width: 98%; 
+	width: 98%;
 }
 dl.tptitle dt {
 	float: left;
@@ -1115,7 +1130,7 @@ div.tp_half21 {
 .tp_block21 {
 	margin-bottom: 0 !important;
 	margin-top: 6px;
-	padding: 4px 8px 8px 8px; 
+	padding: 4px 8px 8px 8px;
 }
 code.bbc_code {
 	-epub-hyphens: auto;
@@ -1265,7 +1280,7 @@ select[name="tp_dlitem_rating"] {
 	width: initial;
 }
 div.dl_featureshot {
-	float: right;	
+	float: right;
 	margin: 4px 4px 4px 1em;
 }
 div.dl_screenshot {
@@ -1295,7 +1310,7 @@ h3.h3dl {
 	padding: 0 0 0.5em 0;
 }
 h4.h4dl {
-	font-size: 1.1em; 
+	font-size: 1.1em;
 	font-weight: bold;
 	margin: 0;
 	padding: 0 0 0.5em 0;
