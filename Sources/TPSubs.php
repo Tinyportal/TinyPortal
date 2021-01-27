@@ -170,8 +170,8 @@ function tp_getbuttons() {{{
 	// the admin functions - divider
 	if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox'))
 		$buts['divde1'] = array(
-			'title' => '<hr />',
-			'href' => '#',
+			'title' => '<span class="tp_menu_horizontal">&nbsp;</span>',
+			'href' => '#button_tpadmin',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
