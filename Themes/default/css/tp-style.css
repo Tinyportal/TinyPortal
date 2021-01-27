@@ -42,17 +42,14 @@
 }
 .tp_menu_horizontal {
 	display: block;
-	width: 92%;
-	min-width: 92%;
-	line-height: 0.1em;
-	max-height: 0.1em;
+	line-height: 0.5em;
 	border-top: 0.01em solid;
 	overflow: hidden;
 	padding: 0em;
 	margin: 0em auto;
 	cursor: default;
 	position: relative;
-	top: 0.85em;
+	top: 0.25em;
 	opacity: 0.3;
 }
 #tpleftbarContainer {
