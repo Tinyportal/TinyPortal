@@ -72,13 +72,13 @@ function template_submitarticle()
 			<div class="formtable padding-div">
 			<dl class="settings tptitle">
 				<dt>
-					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></div>
+					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_subject" name="tp_article_subject" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'" style="width: 92%;" required>
 				</dd>
 				<dt>
-					<div class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></div>
+					<span class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></span></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="'.$mg['shortname'].'" size=20 >
@@ -120,7 +120,7 @@ function template_submitarticle()
 				</dl>
 					';
 				if($article_type == 'php' || $article_type == 'html')	{
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<span class="font-strong">'.$txt['tp-introtext'].'</span>';
 					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
                     }
@@ -131,7 +131,7 @@ function template_submitarticle()
 				}
 				elseif($article_type == 'bbc' || $article_type == 'import') {
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' ,
-                    '<div class="font-strong">'.$txt['tp-introtext'].'</div>
+                    '<span class="font-strong">'.$txt['tp-introtext'].'</span>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
 					</div>
@@ -434,7 +434,7 @@ function template_submitarticle()
 				echo '
 					<hr>
 					<div>
-						<div class="font-strong">'.$txt['tp-articleoptions'].'</div>
+						<span class="font-strong">'.$txt['tp-articleoptions'].'</span>
 						<div class="article-details">';
 				// article details options
 				echo '
@@ -446,7 +446,7 @@ function template_submitarticle()
 									<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
 								</dd>
 							</dl>
-							<div class="font-strong">' . $txt['tp-details'] . '</div>
+							<span class="font-strong">' . $txt['tp-details'] . '</span>
 							<dl class="tptitle settings">';
                                 $articleOption = array ( 4, 2, 13, 3, 1, 17, 19, 18, 21, 23, 12, 15, 14);
                                 foreach($articleOption as $k) {
@@ -459,7 +459,7 @@ function template_submitarticle()
 								</dd>';
                                 }
                            	echo '	</dl>
-								<div class="font-strong">' . $txt['tp-panels'] . '</div>
+								<span class="font-strong">' . $txt['tp-panels'] . '</span>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
@@ -519,7 +519,7 @@ function template_submitarticle()
 									<input type="checkbox" id="tp_article_options_'.$opts[22].'" name="tp_article_options_'.$opts[22].'" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
-							<div class="font-strong">' . $txt['tp-others'] . '</div>
+							<span class="font-strong">' . $txt['tp-others'] . '</span>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
