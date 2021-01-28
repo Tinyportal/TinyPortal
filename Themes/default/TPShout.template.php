@@ -205,11 +205,12 @@ function template_tpshout_admin_settings()
 					</dl>
 					<hr>
 					<dl class="settings">
-						<dt><h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shoutboxcolorsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-shoutboxcolors'].'</h4>
+						<dt><span class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shoutboxcolorsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-shoutboxcolors'].'</span>
 						</dt>
+						<dd></dd>
 						<dt>
-							'.$txt['tp-shoutbox_use_groupcolor'].'
-							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<div class="smalltext" style="color:red;">'.$txt['tp-shoutbox_use_groupcolordesc'].'</div>' : '' , '
+							'.$txt['tp-shoutbox_use_groupcolor'].'<br>
+							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<span class="smalltext" style="color:red;">'.$txt['tp-shoutbox_use_groupcolordesc'].'</span>' : '' , '
 						</dt>
 						<dd>
 							<input type="radio" name="tp_shoutbox_use_groupcolor" value="1" ' , $context['TPortal']['shoutbox_use_groupcolor']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'

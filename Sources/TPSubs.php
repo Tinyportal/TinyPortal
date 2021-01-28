@@ -170,7 +170,7 @@ function tp_getbuttons() {{{
 	// the admin functions - divider
 	if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox'))
 		$buts['divde1'] = array(
-			'title' => '<span class="tp_menu_horizontal">&nbsp;</span>',
+			'title' => (TP_SMF21 ? '<span class="tp_menu_horizontal21">&nbsp;</span>' : '<span class="tp_menu_horizontal20">&nbsp;</span>'),
 			'href' => '#button_tpadmin',
 			'show' => true,
 			'active_button' => false,

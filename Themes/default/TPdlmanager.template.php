@@ -67,7 +67,7 @@ function template_main()
 			<div class="windowbg noup tp_pad">';
 
 			echo '
-				<h3 class="h3dl"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
+				<h3 class="h3dl"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h3>
 				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['author_id'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
 				<hr>';
 
@@ -397,7 +397,7 @@ function template_main()
 				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tportal;sa=download;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 
 			echo '
-				</h4>
+				</h3>
 				<p class="clearthefloat"></p>
 				<hr>
 					<p style="float:right;">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>

@@ -200,7 +200,7 @@ function TPortal_userbox()
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
 	$bullet3 = '<img src="'.$settings['tp_images_url'].'/TPdivider3.png" alt="" style="margin:0 4px 0 0;" />';
 	$bullet4 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt="" style="margin:0 4px 0 0;" />';
-	$bullet5 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt=""  style="margin:0 4px 0 0;" />';
+	$bullet5 = '<img src="'.$settings['tp_images_url'].'/TPmodule2.png" alt="" style="margin:0 4px 0 0;" />';
 
 	echo'
 	<div class="tp_userblocknew">';
@@ -362,7 +362,7 @@ function TPortal_statsbox()
 {
 	global $context, $settings, $scripturl, $txt, $modSettings;
 
-	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt=""  style="margin:0 4px 0 0;" />';
+	$bullet = '<img src="'.$settings['tp_images_url'].'/TPdivider.png" alt="" style="margin:0 4px 0 0;" />';
 	$bullet2 = '<img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" style="margin:0 4px 0 0;" />';
 
 	echo'
@@ -2066,7 +2066,7 @@ function article_comments($render = true)
 
 	if((in_array('comments', $context['TPortal']['article']['visual_options'])) || (in_array('commentallow', $context['TPortal']['article']['visual_options']))) {
 		$data .= '
-	<a name="tp-comment">
+	<a name="tp-comment"></a>
 	<div></div>
 	<h2 class="titlebg article_extra">' . $txt['tp-comments'] . ': ' . $context['TPortal']['article_comments_count'] . '' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2> ';
 	}
