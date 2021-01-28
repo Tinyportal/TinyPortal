@@ -758,7 +758,7 @@ function template_main()
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
 							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></div>
-							<div class="float-items" style="width="15%";">'.$cats['views'].'</div>
+							<div class="float-items" style="width:15%;">'.$cats['views'].'</div>
 					        <p class="clearthefloat"></p>';
 					$counter++;
 				}
@@ -1034,7 +1034,7 @@ function template_main()
 				<div class="roundframe noup">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input type="text" id="searchbox" name="dl_search" required/><br>
+						<input type="text" id="searchbox" name="dl_search" value="" required><br>
 						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name">'.$txt['tp-searcharea-name'].'</label><br>
 						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> '.$txt['tp-searcharea-descr'].'</label><br>
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>

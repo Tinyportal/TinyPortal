@@ -1953,7 +1953,7 @@ function template_blocks()
 						</div>
 						<div  style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive"><strong>'.$txt['tp-editsave'].'</strong></div>
-							<a href="' . $scripturl . '?action=tpadmin&amp;=editblock&amp;=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
+							<a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 							<input type="image" class="tpbut" style="height:16px; vertical-align:top;" src="' .$settings['tp_images_url']. '/TPsave.png" title="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">
 						</div>
 	                    <div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
@@ -2230,7 +2230,7 @@ function template_blockoverview()
 				{
 					echo '
 				<div class="tp_twocolumn">
-					<p><a href="' . $scripturl . '?action=tpadmin&amp;=editblock&amp;='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
+					<p><a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
 					<hr>
 					<div id="tp'.$block['id'].'" style="overflow: hidden;">
 						<input type="hidden" name="' . rand(10000,19999) .'tpblock'.$block['id'].'" value="control" />';

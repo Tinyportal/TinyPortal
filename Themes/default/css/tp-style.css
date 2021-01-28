@@ -40,16 +40,15 @@
 .tp_tabs a.tp_active {
 	font-weight: bold;
 }
-.tp_menu_horizontal {
+.dropmenu .tp_menu_horizontal {
 	display: block;
-	line-height: 0.5em;
-	border-top: 0.01em solid;
+	border-top: 1px solid;
 	overflow: hidden;
 	padding: 0em;
 	margin: 0em auto;
 	cursor: default;
 	position: relative;
-	top: 0.25em;
+	top: 50%;
 	opacity: 0.3;
 }
 #tpleftbarContainer {
