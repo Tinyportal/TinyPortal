@@ -507,10 +507,13 @@ class Article extends Base
 					$row['avatar']  = '';
 				}
 
-				if(Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
-					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+				$length = $context['TPortal']['frontpage_limit_len'];
+				if (!empty($length) && strlen($row['body']) > $length)
+				{
+					if(Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
+						$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+					}
 				}
-
 				// some needed addons
 				$row['rendertype'] = 'bbc';
 				$row['frame'] = 'theme';
