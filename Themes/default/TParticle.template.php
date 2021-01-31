@@ -155,7 +155,7 @@ function template_submitarticle()
 						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" /><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-created'], '
+						<label for="field_name">', $txt['tp-created'], '</label>
 					</dt>
 					<dd>';
 
@@ -210,7 +210,7 @@ function template_submitarticle()
 				<hr>
 				<dl class="tptitle settings">
 					<dt>
-						', $txt['tp-switchmode'], '
+						<label for="field_name">', $txt['tp-switchmode'], '</label>
 					</dt>
 					<dd>
 						<input type="radio" id="gohtml" name="tp_article_type" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
@@ -219,7 +219,7 @@ function template_submitarticle()
 						<input type="radio" id="goimport" name="tp_article_type" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />
+						<label for="tp_article_on">', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  /></label>
 					</dt>
 					<dd>
 						<input type="radio" id="tp_article_on" name="tp_article_off" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br>
@@ -384,7 +384,7 @@ function template_submitarticle()
 				echo '
 				<dl class="tptitle settings">
 					<dt>
-						', $txt['tp-display'], '
+						<label for="field_name">', $txt['tp-display'], '</label>
 					</dt>
 					<dd>
 							<input type="radio" id="usetheme" name="tp_article_frame" value="theme" ' , $mg['frame']=='theme' ? 'checked' : '' , '><label for="usetheme"> '.$txt['tp-useframe'].'</label><br>
@@ -393,7 +393,7 @@ function template_submitarticle()
 							<input type="radio" id="noframe" name="tp_article_frame" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-illustration'], '
+						<label for="field_name">', $txt['tp-illustration'], '</label>
 					</dt>
 					<dd>
 						<div class="article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
@@ -412,7 +412,7 @@ function template_submitarticle()
 						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
 					</dd>
 					<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-adminiconsinfo'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-uploadicon'] . '
+					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-adminiconsinfo'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
 					</dt>
 					<dd>
 						<input type="file" name="tp_article_illupload">
