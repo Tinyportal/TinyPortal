@@ -72,13 +72,13 @@ function template_submitarticle()
 			<div class="formtable padding-div">
 			<dl class="settings tptitle">
 				<dt>
-					<div class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></div>
+					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_subject" name="tp_article_subject" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'" style="width: 92%;" required>
 				</dd>
 				<dt>
-					<div class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></div>
+					<span class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></span></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="'.$mg['shortname'].'" size=20 >
@@ -120,7 +120,7 @@ function template_submitarticle()
 				</dl>
 					';
 				if($article_type == 'php' || $article_type == 'html')	{
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<span class="font-strong">'.$txt['tp-introtext'].'</span>';
 					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
                     }
@@ -131,7 +131,7 @@ function template_submitarticle()
 				}
 				elseif($article_type == 'bbc' || $article_type == 'import') {
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' ,
-                    '<div class="font-strong">'.$txt['tp-introtext'].'</div>
+                    '<span class="font-strong">'.$txt['tp-introtext'].'</span>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
 					</div>
@@ -155,7 +155,7 @@ function template_submitarticle()
 						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" /><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-created'], '
+						<label for="field_name">', $txt['tp-created'], '</label>
 					</dt>
 					<dd>';
 
@@ -210,7 +210,7 @@ function template_submitarticle()
 				<hr>
 				<dl class="tptitle settings">
 					<dt>
-						', $txt['tp-switchmode'], '
+						<label for="field_name">', $txt['tp-switchmode'], '</label>
 					</dt>
 					<dd>
 						<input type="radio" id="gohtml" name="tp_article_type" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
@@ -219,7 +219,7 @@ function template_submitarticle()
 						<input type="radio" id="goimport" name="tp_article_type" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />
+						<label for="tp_article_on">', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  /></label>
 					</dt>
 					<dd>
 						<input type="radio" id="tp_article_on" name="tp_article_off" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br>
@@ -384,7 +384,7 @@ function template_submitarticle()
 				echo '
 				<dl class="tptitle settings">
 					<dt>
-						', $txt['tp-display'], '
+						<label for="field_name">', $txt['tp-display'], '</label>
 					</dt>
 					<dd>
 							<input type="radio" id="usetheme" name="tp_article_frame" value="theme" ' , $mg['frame']=='theme' ? 'checked' : '' , '><label for="usetheme"> '.$txt['tp-useframe'].'</label><br>
@@ -393,7 +393,7 @@ function template_submitarticle()
 							<input type="radio" id="noframe" name="tp_article_frame" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-illustration'], '
+						<label for="field_name">', $txt['tp-illustration'], '</label>
 					</dt>
 					<dd>
 						<div class="article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
@@ -412,7 +412,7 @@ function template_submitarticle()
 						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
 					</dd>
 					<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-adminiconsinfo'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-uploadicon'] . '
+					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-adminiconsinfo'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
 					</dt>
 					<dd>
 						<input type="file" name="tp_article_illupload">
@@ -434,7 +434,7 @@ function template_submitarticle()
 				echo '
 					<hr>
 					<div>
-						<div class="font-strong">'.$txt['tp-articleoptions'].'</div>
+						<span class="font-strong">'.$txt['tp-articleoptions'].'</span>
 						<div class="article-details">';
 				// article details options
 				echo '
@@ -446,7 +446,7 @@ function template_submitarticle()
 									<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
 								</dd>
 							</dl>
-							<div class="font-strong">' . $txt['tp-details'] . '</div>
+							<span class="font-strong">' . $txt['tp-details'] . '</span>
 							<dl class="tptitle settings">';
                                 $articleOption = array ( 4, 2, 13, 3, 1, 17, 19, 18, 21, 23, 12, 15, 14);
                                 foreach($articleOption as $k) {
@@ -459,7 +459,7 @@ function template_submitarticle()
 								</dd>';
                                 }
                            	echo '	</dl>
-								<div class="font-strong">' . $txt['tp-panels'] . '</div>
+								<span class="font-strong">' . $txt['tp-panels'] . '</span>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
@@ -519,7 +519,7 @@ function template_submitarticle()
 									<input type="checkbox" id="tp_article_options_'.$opts[22].'" name="tp_article_options_'.$opts[22].'" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
 								</dd>
 							</dl>
-							<div class="font-strong">' . $txt['tp-others'] . '</div>
+							<span class="font-strong">' . $txt['tp-others'] . '</span>
 							<dl class="tptitle settings">
 								<dt>
 									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
