@@ -651,6 +651,8 @@ function shout_smiley_code($shoutbox_id) {{{
 		if (!empty($context['tp_smileys'][$location]))
 			$context['tp_smileys'][$location][count($context['tp_smileys'][$location]) - 1]['last'] = true;
 	}
+	echo '</div>
+	</div>';
 
 	$settings['smileys_url'] = $modSettings['smileys_url'] . '/' . $user_info['smiley_set'];
 }}}
