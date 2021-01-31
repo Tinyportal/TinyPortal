@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.0; TPdlmanager
+// Version: 2.1.0; TPdlmanager
 
 global $scripturl;
 
@@ -39,6 +39,7 @@ $txt['tp-dlfeatured'] = 'Featured Download';
 $txt['tp-dluselatest'] = 'Show recent files';
 $txt['tp-dlusestats'] = 'Show most downloaded/weekly';
 $txt['tp-dlusecategorytext'] = 'Show category descriptions for child categories';
+$txt['tp-dllimitlength'] = 'Characters to display per download on category page';
 $txt['tp-dlvisualoptions'] = 'Visual options';
 $txt['tp-leftbar'] = 'Show left panel';
 $txt['tp-rightbar'] = 'Show right panel';
@@ -83,7 +84,7 @@ $txt['tp-dlchooseboard'] = 'Choose board to post topic in';
 $txt['tp-adminonly'] = 'You are not allowed in this section.';
 
 $txt['tp-dluploadnotallowed'] = 'Sorry, uploading files is currently not allowed.';
-$txt['tp-dlnotuploaded'] = 'File was not uploaded.';
+$txt['tp-dlnotuploaded'] = 'File was not uploaded. Error %s';
 $txt['tp-dluploadfailure']='The upload was not able to complete. This might happen because it took too long to upload or the file is bigger than the server will allow.<br><br>Please consult your server administrator for more information. ';
 $txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is currently ';
 $txt['tp-dlmaxerror2'] = 'Your file was';

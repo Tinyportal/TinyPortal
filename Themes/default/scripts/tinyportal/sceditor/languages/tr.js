@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @author Mahmut Yaman - iletisim@/m-yaman.com
  * @license [MIT](http://www.opensource.org/licenses/mit-license.php)
  */

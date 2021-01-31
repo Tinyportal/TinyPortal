@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.0; TPortal
+// Version: 2.1.0; TPortal
 
 global $txt, $context, $scripturl;
 
@@ -248,7 +248,6 @@ $txt['tp-generalsettings'] = 'General settings';
 $txt['tp-haverated'] = 'You have rated.';
 $txt['tp-hide'] = 'Hide';
 $txt['tp-miscblocks'] = 'Menus';
-$txt['tp-modules'] = 'Modules';
 $txt['tp-morecategories'] = 'More';
 $txt['tp-myarticles'] = 'My articles';
 $txt['tp-newcomment'] = 'New comment';

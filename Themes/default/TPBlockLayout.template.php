@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -45,16 +45,16 @@ function template_tp_above()
     $sideclass = '';
 	if (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $context['TPortal']['rightpanel']==1)) {
 		$sideclass =  "lrs rightpanelOn";
-	} 
+	}
 	elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==1 && $context['TPortal']['rightpanel']==0)) {
 		$sideclass =  "lrs leftpanelOn";
-	} 
+	}
 	elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==1 && $context['TPortal']['rightpanel']==1)) {
 		$sideclass =  "lrs lrON";
-	} 
+	}
 	elseif (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $context['TPortal']['rightpanel']==0)) {
 		$sideclass =  "nosides";
-	} 
+	}
 	else {
 		$bclass =  "nosides";
 	}
@@ -200,18 +200,12 @@ function template_editblock()
 								<option value="12"' ,$context['TPortal']['blockedit']['type']=='12' ? ' selected' : '' , '>', $txt['tp-blocktype12'] , '</option>
 								<option value="15"' ,$context['TPortal']['blockedit']['type']=='15' ? ' selected' : '' , '>', $txt['tp-blocktype15'] , '</option>
 								<option value="4"' ,$context['TPortal']['blockedit']['type']=='4' ? ' selected' : '' , '>', $txt['tp-blocktype4'] , '</option>
+								<option value="8"' ,$context['TPortal']['blockedit']['type']=='8' ? ' selected' : '' , '>', $txt['tp-blocktype8'] , '</option>
 								<option value="16"' ,$context['TPortal']['blockedit']['type']=='16' ? ' selected' : '' , '>', $txt['tp-blocktype16'] , '</option>
 								<option value="13"' ,$context['TPortal']['blockedit']['type']=='13' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
 								<option value="3"' ,$context['TPortal']['blockedit']['type']=='3' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$context['TPortal']['blockedit']['type']=='7' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$context['TPortal']['blockedit']['type']=='1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="20"' ,$context['TPortal']['blockedit']['type']=='20' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
-		// theme hooks
-		if(function_exists('ctheme_tp_blocks'))
-		{
-			ctheme_tp_blocks('listblocktypes');
-		}
-		echo '
 							</select>
 						</dd>
 						<dt>
@@ -294,7 +288,7 @@ function template_editblock()
 					<dl class="tptitle settings">
 						<dt><label for="tp_block_body">'.$txt['tp-numberofrecenttopics'].'</label></dt>
 						<dd>
-							<input id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 50px;">
+							<input type="number" id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 6em" min="1">
 						</dd>
 						<dt><label for="tp_block_var2">'.$txt['tp-recentboards'].'</label></dt>
 						<dd>
@@ -332,23 +326,43 @@ function template_editblock()
 						</dd>
 					</dl>';
 			}
-// Block type: TP module
-			elseif($context['TPortal']['blockedit']['type']=='20'){
+// Block type: TP shoutbox
+			elseif($context['TPortal']['blockedit']['type']=='8'){
                 if(isset($context['TPortal']['tpblocks']['blockrender'])) {
 					echo '
 						</div><div>
 						<hr><dl class="tptitle settings">
-						<dt>'.$txt['tp-showmodulebox'].'</dt>
-						<dd>';
-
-				    foreach($context['TPortal']['tpblocks']['blockrender'] as $tpm) {
-					    echo '
-						    <input type="radio" name="tp_block_var1" value="' . $tpm['id'] . '" ' , $context['TPortal']['blockedit']['var1']==$tpm['id'] ? 'checked' : '' , '>'.$tpm['name'].'<br>';
-					}
-
-					echo '
+						<input type="hidden" name="tp_block_var1" value="1">
+						<dt>
+							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>
+						</dt>
+						<dd>
+							<textarea style="width: 90%; height: 50px;" id="tp_shoutbox_stitle" name="tp_block_body">' , !empty($context['TPortal']['blockedit']['body']) ? $context['TPortal']['blockedit']['body'] : '', '</textarea><br>
 						</dd>
-					</dl>'; 
+						<dt>
+							<label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
+						</dt>
+						<dd>
+							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , (empty($context['TPortal']['blockedit']['var2']) ? '1': $context['TPortal']['blockedit']['var2']) ,'" style="width: 6em" min="1" max="9" step="1">
+						</dd>
+						<dt>
+							<label for="tp-shoutboxheight">'.$txt['tp-shoutboxheight'].'</label>
+						</dt>
+						<dd>
+							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '250' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" /><br>
+						</dd>
+						<dt>
+							'.$txt['shoutbox_layout'].'<br>
+						</dt>
+						<dd>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['var3'] == '0' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"/></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['var3'] == '1' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></label></div></div>
+							<p class="clearthefloat"></p>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4" /></label></div></div>
+							<p class="clearthefloat"></p>
+						</dd>
+					</dl>';
                 }
 			}
 // Block type: Article / Download functions
@@ -359,7 +373,7 @@ function template_editblock()
 						<hr><dl class="tptitle settings">
 						<dt>'.$txt['tp-showstatsbox'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_body0 name="tp_block_body"" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="dl-stats" ' , $context['TPortal']['blockedit']['body']=='dl-stats' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-module1'].'</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="dl-stats2" ' , $context['TPortal']['blockedit']['body']=='dl-stats2' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-module2'].'</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="dl-stats3" ' , $context['TPortal']['blockedit']['body']=='dl-stats3' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-module3'].'</label><br>
@@ -433,11 +447,11 @@ function template_editblock()
 						</dd>
 						<dt>' . $txt['tp-rssblock-maxwidth'].'</dt>
 						<dd>
-							<input type="text" name="tp_block_var3" value="' , $context['TPortal']['blockedit']['var3'],'">
+							<input type="number" name="tp_block_var3" value="' , $context['TPortal']['blockedit']['var3'],'" style="width: 6em">
 						</dd>
 						<dt>' . $txt['tp-rssblock-maxshown'].'</dt>
 						<dd>
-							<input type="text" name="tp_block_var4" value="' , $context['TPortal']['blockedit']['var4'],'">
+							<input type="number" name="tp_block_var4" value="' , $context['TPortal']['blockedit']['var4'],'" style="width: 6em">
 						</dd>
 					</dl>
 				</div>';
@@ -445,14 +459,13 @@ function template_editblock()
 // Block type: Sitemap
 			elseif($context['TPortal']['blockedit']['type']=='16'){
 				echo '
-					</div><div>
-					<hr><dl class="tptitle settings">
-						<dt>'.$txt['tp-sitemapmodules'].'<ul class="disc"></dt>
-						<dd>';
+					</div><div>';
 				if($context['TPortal']['show_download']=='1')
-					echo '<li>&nbsp;'.$txt['tp-dldownloads'].'</li>';
-				echo '</ul>
-						</dd>
+					echo '
+					<hr>
+					<dl class="tptitle settings">
+						<dt>'.$txt['tp-sitemapmodules'].'<ul class="disc"></dt>
+						<dd><li>&nbsp;'.$txt['tp-dldownloads'].'</ul></li></dd>
 					</dl>';
 			}
 // Block type: Single Article
@@ -514,10 +527,6 @@ function template_editblock()
 			elseif($context['TPortal']['blockedit']['type']=='19') {
 				if(!is_numeric($context['TPortal']['blockedit']['body']))
 					$lblock['body']='';
-				if(!is_numeric($context['TPortal']['blockedit']['var1']))
-					$lblock['var1']='15';
-				if($context['TPortal']['blockedit']['var1']=='0')
-					$lblock['var1']='15';
 				echo '
 					<hr><dl class="tptitle settings">
 						<dt><label for="tp_block_body">'.$txt['tp-showcategory'].'</label></dt>
@@ -533,7 +542,7 @@ function template_editblock()
 						</dd>
 						<dt><label for="tp_block_var1">'.$txt['tp-catboxheight'].'</label></dt>
 						<dd>
-							<input type="text" id="tp_block_var1" name="tp_block_var1" value="' , $context['TPortal']['blockedit']['var1'] ,'" size="4"> em
+							<input type="number" id="tp_block_var1" name="tp_block_var1" value="' , ((!is_numeric($context['TPortal']['blockedit']['var1'])) || (($context['TPortal']['blockedit']['var1']) == 0) ? '15' : $context['TPortal']['blockedit']['var1']) ,'" style="width: 6em" min="1" required> em
 						</dd>
 						<dt>'.$txt['tp-catboxauthor'].'</dt>
 						<dd>
@@ -576,30 +585,28 @@ function template_editblock()
 						</dd>
 					</dl>';
 			}
-			// theme hooks
-			elseif($context['TPortal']['blockedit']['type']>'50' && function_exists('ctheme_tp_blocks'))
-			{
-				ctheme_tp_blocks('blockoptions');
-			}
-			else
+			else {
 				echo '
 			</div><div>';
+            }
+
 			echo '
 					</div>
 				</div>
 				<div><hr>
 					<div><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-blockstylehelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
-					</div>				
+					</div>
 					<br><input type="radio" id="tp_block_var5" name="tp_block_var5" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
 				<div class="panels-optionsbg">';
-			if(function_exists('ctheme_tp_getblockstyles'))
-				$types = ctheme_tp_getblockstyles();
-			if(TP_SMF21)
+			if(TP_SMF21) {
 				$types = tp_getblockstyles21();
-			else
+            }
+			else {
 				$types = tp_getblockstyles();
-			foreach($types as $blo => $bl)
+            }
+
+			foreach($types as $blo => $bl) {
 				echo '
 					<div class="panels-options">
 						<div>
@@ -608,6 +615,8 @@ function template_editblock()
 						' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
 						' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
 					</div>';
+            }
+
 			echo '
 						</div>
 					</div>
@@ -637,14 +646,13 @@ function template_editblock()
 							  <div class="tp_largelist">';
 			// loop through and set membergroups
 			$tg=explode(',',$context['TPortal']['blockedit']['access']);
-			if( !empty($context['TPmembergroups']))
-			{
-				foreach($context['TPmembergroups'] as $mg)
-				{
+			if( !empty($context['TPmembergroups'])) {
+				foreach($context['TPmembergroups'] as $mg) {
 					if($mg['posts']=='-1' && $mg['id']!='1'){
 						echo '<input type="checkbox" id="tp_group'.$mg['id'].'" name="tp_group'.$mg['id'].'" value="'.$context['TPortal']['blockedit']['id'].'"';
-						if(in_array($mg['id'],$tg))
+						if(in_array($mg['id'],$tg)) {
 							echo ' checked';
+                        }
 						echo '><label for="tp_group'.$mg['id'].'"> '.$mg['name'].'</label><br>';
 					}
 				}
@@ -653,28 +661,6 @@ function template_editblock()
 			echo '
 							</div>
 								<input type="checkbox" id="checkallmg" onclick="invertAll(this, this.form, \'tp_group\');" /><label for="checkallmg">'.$txt['tp-checkall'].'</label><br>
-							</div>
-						</dd>
-					</dl>';
-			//edit membergroups
-			echo '
-					<dl class="settings">
-						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-editgrouphelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-editgrouphelp'].'</dt>
-						<dd>
-							<div>
-								<div class="tp_largelist">';
-			$tg=explode(',',$context['TPortal']['blockedit']['editgroups']);
-			foreach($context['TPmembergroups'] as $mg){
-				if($mg['posts']=='-1' && $mg['id']!='1' && $mg['id']!='-1' && $mg['id']!='0'){
-					echo '<input type="checkbox" id="tp_editgroup'.$mg['id'].'" name="tp_editgroup'.$mg['id'].'" value="'.$context['TPortal']['blockedit']['id'].'"';
-					if(in_array($mg['id'],$tg))
-						echo ' checked';
-					echo '><label for="tp_editgroup'.$mg['id'].'"> '.$mg['name'].'</label><br>';
-				}
-			}
-			// if none is chosen, have a control value
-			echo '				</div><input type="checkbox" id="checkalleditmg" onclick="invertAll(this, this.form, \'tp_editgroup\');" /><label for="checkalleditmg">'.$txt['tp-checkall'];
-			echo '				</label><br>
 							</div>
 						</dd>
 					</dl>
@@ -690,33 +676,30 @@ function template_editblock()
 						<br></dd>
 						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . '';
 				// alert if the settings is off, supply link if allowed
-				if(empty($context['TPortal']['uselangoption']))
-				{
+				if(empty($context['TPortal']['uselangoption'])) {
 					echo '
 					<br><span class="error">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=settings#uselangoption">&nbsp;['. $txt['tp-settings'] .']&nbsp;</a>' : '' , '</span>';
-				}						
+				}
 				echo '
 					</dt>
 					<dd>';
 				$a=1;
-				foreach($context['TPortal']['langfiles'] as $bb => $lang)
-				{
+				foreach($context['TPortal']['langfiles'] as $bb => $lang) {
 					echo '
-							<input type="checkbox" id="langtype' . $a . '" name="langtype' . $a . '" value="'.$lang.'" ' , in_array($lang, $context['TPortal']['blockedit']['access2']['lang']) ? 'checked="checked"' : '' , '><label for="langtype' . $a . '"> '.$lang.'</label><br>';
+							<input type="checkbox" id="langtype' . $a . '" name="langtype' . $a . '" value="'.$lang.'" ' , in_array($lang, $context['TPortal']['blockedit']['display']['lang']) ? 'checked="checked"' : '' , '><label for="langtype' . $a . '"> '.$lang.'</label><br>';
 					$a++;
 				}
 				echo ' </dd>
 					</dl>
 				</div>';
-		if($context['TPortal']['blockedit']['bar']!=4)
-		{
+		if($context['TPortal']['blockedit']['bar']!=4) {
 			// extended visible options
 				echo '
 					<div class="admintable">
-						<div>'.$txt['tp-access2help'].'</div>
+						<div>'.$txt['tp-displayhelp'].'</div>
 						<div id="collapse-options">
 						', tp_hidepanel('blockopts', true) , '
-				' , empty($context['TPortal']['blockedit']['access22']) ? '<div class="tborder error" style="margin: 1em 0; padding: 4px 4px 4px 20px;">' . $txt['tp-noaccess'] . '</div>' : '' , '
+				' , empty($context['TPortal']['blockedit']['display2']) ? '<div class="tborder error" style="margin: 1em 0; padding: 4px 4px 4px 20px;">' . $txt['tp-noaccess'] . '</div>' : '' , '
 						<fieldset class="tborder" id="blockopts" ' , in_array('blockopts',$context['tp_panels']) ? ' style="display: none;"' : '' , '>
 						<input type="hidden" name="TPadmin_blocks_vo" value="'.$mg['id'].'" />';
 				if(!empty($context['TPortal']['return_url']))
@@ -727,27 +710,27 @@ function template_editblock()
 						<dt><b>' . $txt['tp-actions'] . '</b></dt>
 						<dd>
 							<div>
-								<input name="actiontype1" id="actiontype1" type="checkbox" value="allpages" ' ,in_array('allpages',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype1"> '.$txt['tp-allpages'].'</label><br><br>
-								<input name="actiontype2" id="actiontype2" type="checkbox" value="frontpage" ' ,in_array('frontpage',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype2"> '.$txt['tp-frontpage'].'</label><br>
-								<input name="actiontype3" id="actiontype3" type="checkbox" value="forumall" ' ,in_array('forumall',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype3"> '.$txt['tp-forumall'].'</label><br>
-								<input name="actiontype4" id="actiontype4" type="checkbox" value="forum" ' ,in_array('forum',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype4"> '.$txt['tp-forumfront'].'</label><br>
-								<input name="actiontype5" id="actiontype5" type="checkbox" value="recent" ' ,in_array('recent',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype5"> '.$txt['tp-recent'].'</label><br>
-								<input name="actiontype6" id="actiontype6" type="checkbox" value="unread" ' ,in_array('unread',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype6"> '.$txt['tp-unread'].'</label><br>
-								<input name="actiontype7" id="actiontype7" type="checkbox" value="unreadreplies" ' ,in_array('unreadreplies',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype7"> '.$txt['tp-unreadreplies'].'</label><br>
-								<input name="actiontype8" id="actiontype8" type="checkbox" value="profile" ' ,in_array('profile',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype8"> '.$txt['profile'].'</label><br>
-								<input name="actiontype9" id="actiontype9" type="checkbox" value="pm" ' ,in_array('pm',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype9"> '.$txt['pm_short'].'</label><br>
-								<input name="actiontype10" id="actiontype10" type="checkbox" value="calendar" ' ,in_array('calendar',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype10"> '.$txt['calendar'].'</label><br>
-								<input name="actiontype11" id="actiontype11" type="checkbox" value="admin" ' ,in_array('admin',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype11"> '.$txt['admin'].'</label><br>
-								<input name="actiontype12" id="actiontype12" type="checkbox" value="login" ' ,in_array('login',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype12"> '.$txt['login'].'</label><br>
-								<input name="actiontype13" id="actiontype13" type="checkbox" value="logout" ' ,in_array('logout',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype13"> '.$txt['logout'].'</label><br>
-								<input name="actiontype14" id="actiontype14" type="checkbox" value="register" ' ,in_array('register',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype14"> '.$txt['register'].'</label><br>
-								<input name="actiontype15" id="actiontype15" type="checkbox" value="post" ' ,in_array('post',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype15"> '.$txt['post'].'</label><br>
-								<input name="actiontype16" id="actiontype16" type="checkbox" value="stats" ' ,in_array('stats',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype16"> '.$txt['tp-stats'].'</label><br>
-								<input name="actiontype17" id="actiontype17" type="checkbox" value="search" ' ,in_array('search',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype17"> '.$txt['search'].'</label><br>
-								<input name="actiontype18" id="actiontype18" type="checkbox" value="mlist" ' ,in_array('mlist',$context['TPortal']['blockedit']['access2']['action']) ? 'checked="checked"' : '' , '><label for="actiontype18"> '.$txt['tp-memberlist'].'</label><br><br>';
+								<input name="actiontype1" id="actiontype1" type="checkbox" value="allpages" ' ,in_array('allpages',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype1"> '.$txt['tp-allpages'].'</label><br><br>
+								<input name="actiontype2" id="actiontype2" type="checkbox" value="frontpage" ' ,in_array('frontpage',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype2"> '.$txt['tp-frontpage'].'</label><br>
+								<input name="actiontype3" id="actiontype3" type="checkbox" value="forumall" ' ,in_array('forumall',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype3"> '.$txt['tp-forumall'].'</label><br>
+								<input name="actiontype4" id="actiontype4" type="checkbox" value="forum" ' ,in_array('forum',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype4"> '.$txt['tp-forumfront'].'</label><br>
+								<input name="actiontype5" id="actiontype5" type="checkbox" value="recent" ' ,in_array('recent',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype5"> '.$txt['tp-recent'].'</label><br>
+								<input name="actiontype6" id="actiontype6" type="checkbox" value="unread" ' ,in_array('unread',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype6"> '.$txt['tp-unread'].'</label><br>
+								<input name="actiontype7" id="actiontype7" type="checkbox" value="unreadreplies" ' ,in_array('unreadreplies',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype7"> '.$txt['tp-unreadreplies'].'</label><br>
+								<input name="actiontype8" id="actiontype8" type="checkbox" value="profile" ' ,in_array('profile',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype8"> '.$txt['profile'].'</label><br>
+								<input name="actiontype9" id="actiontype9" type="checkbox" value="pm" ' ,in_array('pm',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype9"> '.$txt['pm_short'].'</label><br>
+								<input name="actiontype10" id="actiontype10" type="checkbox" value="calendar" ' ,in_array('calendar',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype10"> '.$txt['calendar'].'</label><br>
+								<input name="actiontype11" id="actiontype11" type="checkbox" value="admin" ' ,in_array('admin',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype11"> '.$txt['admin'].'</label><br>
+								<input name="actiontype12" id="actiontype12" type="checkbox" value="login" ' ,in_array('login',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype12"> '.$txt['login'].'</label><br>
+								<input name="actiontype13" id="actiontype13" type="checkbox" value="logout" ' ,in_array('logout',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype13"> '.$txt['logout'].'</label><br>
+								<input name="actiontype14" id="actiontype14" type="checkbox" value="register" ' ,in_array('register',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype14"> '.$txt['register'].'</label><br>
+								<input name="actiontype15" id="actiontype15" type="checkbox" value="post" ' ,in_array('post',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype15"> '.$txt['post'].'</label><br>
+								<input name="actiontype16" id="actiontype16" type="checkbox" value="stats" ' ,in_array('stats',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype16"> '.$txt['tp-stats'].'</label><br>
+								<input name="actiontype17" id="actiontype17" type="checkbox" value="search" ' ,in_array('search',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype17"> '.$txt['search'].'</label><br>
+								<input name="actiontype18" id="actiontype18" type="checkbox" value="mlist" ' ,in_array('mlist',$context['TPortal']['blockedit']['display']['action']) ? 'checked="checked"' : '' , '><label for="actiontype18"> '.$txt['tp-memberlist'].'</label><br><br>';
 					// add the custom ones you added
 					$count=19;
-					foreach($context['TPortal']['blockedit']['access2']['action'] as $po => $p) {
+					foreach($context['TPortal']['blockedit']['display']['action'] as $po => $p) {
 						if(!in_array($p, array('allpages','frontpage','forumall','forum','recent','unread','unreadreplies','profile','pm','calendar','admin','login','logout','register','post','stats','search','mlist')))
 						{
 							echo '<input type="checkbox" id="actiontype'.$count.'" name="actiontype'.$count.'" value="'.$p.'" checked="checked"><label for="name="actiontype'.$count.'">'.$p.'</label><br>';
@@ -767,12 +750,12 @@ function template_editblock()
 				$a=1;
 				if(!empty($context['TPortal']['boards']))
 				{
-					echo '<input type="checkbox" name="boardtype' , $a, '" value="-1" id="allboards" ' , in_array('-1', $context['TPortal']['blockedit']['access2']['board']) ? 'checked="checked"' : '' , '><label for="allboards"> '.$txt['tp-allboards'].'</label><br><br>';
+					echo '<input type="checkbox" name="boardtype' , $a, '" value="-1" id="allboards" ' , in_array('-1', $context['TPortal']['blockedit']['display']['board']) ? 'checked="checked"' : '' , '><label for="allboards"> '.$txt['tp-allboards'].'</label><br><br>';
 					$a++;
 					foreach($context['TPortal']['boards'] as $bb)
 					{
 						echo '
-								<input type="checkbox" name="boardtype' , $a, '" id="boardtype' , $a, '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['access2']['board']) ? 'checked="checked"' : '' , '><label for="boardtype' , $a, '"> '.$bb['name'].'</label><br>';
+								<input type="checkbox" name="boardtype' , $a, '" id="boardtype' , $a, '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['display']['board']) ? 'checked="checked"' : '' , '><label for="boardtype' , $a, '"> '.$bb['name'].'</label><br>';
 						$a++;
 					}
 				}
@@ -788,7 +771,7 @@ function template_editblock()
 				foreach($context['TPortal']['edit_articles'] as $bb)
 				{
 					echo '
-								<input type="checkbox" id="articletype' , $a , '" name="articletype' , $a , '" value="'.$bb['id'].'" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['access2']['page']) ? 'checked="checked"' : '' , '><label for="articletype' , $a , '"> '.html_entity_decode($bb['subject'],ENT_QUOTES).'</label><br>';
+								<input type="checkbox" id="articletype' , $a , '" name="articletype' , $a , '" value="'.$bb['id'].'" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['display']['page']) ? 'checked="checked"' : '' , '><label for="articletype' , $a , '"> '.html_entity_decode($bb['subject'],ENT_QUOTES).'</label><br>';
 					$a++;
 				}
 				// if none is chosen, have a control value
@@ -806,7 +789,7 @@ function template_editblock()
 					foreach($context['TPortal']['article_categories'] as $bb)
 					{
 						echo '
-								<input type="checkbox" id="categorytype' . $a . '" name="categorytype' . $a . '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['access2']['cat']) ? 'checked="checked"' : '' , '><label for="categorytype' . $a . '"> '.$bb['name'].'</label><br>';
+								<input type="checkbox" id="categorytype' . $a . '" name="categorytype' . $a . '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['display']['cat']) ? 'checked="checked"' : '' , '><label for="categorytype' . $a . '"> '.$bb['name'].'</label><br>';
 						$a++;
 					}
 				}
@@ -826,7 +809,7 @@ function template_editblock()
 					foreach($context['TPortal']['dlcats'] as $bb)
 					{
 						echo '
-								<input type="checkbox" id="dlcattype' , $a, '" name="dlcattype' , $a, '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['access2']['dlcat']) ? 'checked="checked"' : '' , '><label for="dlcattype' , $a, '"> '.$bb['name'].'</label><br>';
+								<input type="checkbox" id="dlcattype' , $a, '" name="dlcattype' , $a, '" value="'.$bb['id'].'" ' , in_array($bb['id'], $context['TPortal']['blockedit']['display']['dlcat']) ? 'checked="checked"' : '' , '><label for="dlcattype' , $a, '"> '.$bb['name'].'</label><br>';
 						$a++;
 					}
 				}

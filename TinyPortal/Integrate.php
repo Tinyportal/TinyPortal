@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -20,7 +20,7 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-class Integrate 
+class Integrate
 {
 
     public static function hookPreLoad()
@@ -48,7 +48,7 @@ class Integrate
         }
 
 
-        // We need to load our autoloader outside of the main function    
+        // We need to load our autoloader outside of the main function
         if(!defined('SMF_BACKWARDS_COMPAT')) {
             define('SMF_BACKWARDS_COMPAT', true);
             self::setup_smf_backwards_compat();
@@ -66,16 +66,17 @@ class Integrate
             'profile_areas'                     => 'TinyPortal\Integrate::hookProfileArea',
             'whos_online'                       => 'TinyPortal\Integrate::hookWhosOnline',
             'pre_log_stats'                     => 'TinyPortal\Integrate::hookPreLogStats',
-            'tp_pre_subactions'                 => array ( 
+            'tp_pre_subactions'                 => array (
                 '$sourcedir/TPArticle.php|TPArticleActions',
                 '$sourcedir/TPSearch.php|TPSearchActions',
                 '$sourcedir/TPBlock.php|TPBlockActions',
                 '$sourcedir/TPdlmanager.php|TPDownloadActions',
                 '$sourcedir/TPcommon.php|TPCommonActions',
             ),
-            'tp_post_subactions'                => array ( 
-            ),           
+            'tp_post_subactions'                => array (
+            ),
             'tp_post_init'                      => array (
+                '$sourcedir/TPBlock.php|getBlocks',
                 '$sourcedir/TPShout.php|TPShoutLoad',
             ),
             'tp_admin_areas'                    => array (
@@ -83,11 +84,15 @@ class Integrate
                 '$sourcedir/TPShout.php|TPShoutAdminAreas',
                 '$sourcedir/TPListImages.php|TPListImageAdminAreas',
             ),
-            'tp_blocks'                         => array (
+            'tp_shoutbox'                       => array (
                 '$sourcedir/TPShout.php|TPShoutBlock',
             ),
-            'tp_pre_admin_subactions'           => array ( 
+            'tp_block'                          => array (
+            ),
+            'tp_pre_admin_subactions'           => array (
                 '$sourcedir/TPBlock.php|TPBlockAdminActions',
+                '$sourcedir/TPShout.php|TPShoutAdminActions',
+                '$sourcedir/TPListImages.php|TPListImageAdminActions',
             ),
 
         );
@@ -111,13 +116,13 @@ class Integrate
 			    self::TPAddIntegrationFunction('integrate_' . $hook, $callable, false);
             }
 		}
-        
+
     }
 
     public static function TPAddIntegrationFunction($hook, $call, $perm)
     {
 
-        // SMF 2.0.x doesn't support the seperate file call so lets include it manually here. 
+        // SMF 2.0.x doesn't support the seperate file call so lets include it manually here.
         if(TP_SMF21 == false && (strpos($call, '|') !== false) ) {
             $tmp = explode('|', $call);
             if( is_array($tmp) && isset($tmp[0]) && isset($tmp[1]) ) {
@@ -158,7 +163,7 @@ class Integrate
         global $boarddir, $cachedir, $sourcedir, $db_type;
 
         if(defined('SMF_FULL_VERSION')) {
-            // SMF 2.1 
+            // SMF 2.1
             define('TP_SMF21', true);
         }
         else {
@@ -169,7 +174,8 @@ class Integrate
         define('BOARDDIR', $boarddir);
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
-        define('TPVERSION', 'v200');
+        define('LANGUAGEDIR', $boarddir . '/Themes/default/languages');
+        define('TPVERSION', 'v210');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);
         }
@@ -179,9 +185,9 @@ class Integrate
 
     }
 
-    public static function hookPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions) 
+    public static function hookPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
 	{
-    
+
         $permissionList['membergroup'] = array_merge(
             array(
                 'tp_settings' => array(false, 'tp', 'tp'),
@@ -221,7 +227,7 @@ class Integrate
         if( TP_SMF21 && array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
             $buffer = preg_replace('~<div class="navigate_section">\s*<ul>~', '<div class="navigate_section"><ul><li class="tp_upshrink21">'.$context['TPortal']['upshrinkpanel'].'</li>', $buffer, 1);
         }
-        
+
         // apply user membergroup colors ony when set in TP settings.
         if(!empty($context['TPortal']['use_groupcolor'])) {
             $user_match     = '~href="' . preg_quote($scripturl) . '\?action=profile;u=(\d+)"~';
@@ -236,7 +242,7 @@ class Integrate
                 }
             }
         }
-        
+
         // Dynamic body ID
         if (isset($context['TPortal']) && $context['TPortal']['action'] == 'profile') {
             $bodyid = "profilepage";
@@ -278,7 +284,7 @@ class Integrate
         }
 
 
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.0.1</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.1.0</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;
@@ -325,7 +331,7 @@ class Integrate
                     $buffer);
             }
         }
- 
+
         $tmpurl = parse_url($boardurl, PHP_URL_HOST);
         if(!empty($context['TPortal']['copyrightremoval']) && (sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval'])) {
             return $buffer;
@@ -334,7 +340,7 @@ class Integrate
             if( TP_SMF21 ) {
                 $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
                 $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
-            } 
+            }
             else {
                 $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
                 $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
@@ -509,7 +515,7 @@ class Integrate
     public static function hookProfileArea(&$profile_areas)
     {
         global $txt, $context;
-        
+
         $profile_areas['tp'] = array(
             'title' => 'Tinyportal',
             'areas' => array(),
@@ -583,7 +589,7 @@ class Integrate
             }
         }
         else {
-            // Profile area for 2.0 - no icons 
+            // Profile area for 2.0 - no icons
             $profile_areas['tp']['areas']['tpsummary'] = array(
                 'label' => $txt['tpsummary'],
                 'file' => 'TPSubs.php',
@@ -779,7 +785,7 @@ class Integrate
                 return $txt['tp-who-categories'];
             }
         }
-        
+
         if(isset($actions['action']) && $actions['action'] == 'tportal' && isset($actions['dl'])) {
             return $txt['tp-who-downloads'];
         }
@@ -891,7 +897,7 @@ class Integrate
                     $request = $dB->db_query('', '
                         SELECT art.id_theme
                         FROM {db_prefix}tp_articles AS art
-                        WHERE featured = 1' 
+                        WHERE featured = 1'
                     );
                     if($dB->db_num_rows($request) > 0) {
                         $theme = $dB->db_fetch_row($request)[0];

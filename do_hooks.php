@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -68,7 +68,7 @@ function install_mod ()
 function setup_hooks ()
 {
 	global $context, $hooks, $forum_version;
-    
+
     $smf21 = true;
     if(isset($forum_version) && strpos($forum_version, '2.0') !== false) {
         $smf21 = false;

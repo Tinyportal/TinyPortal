@@ -3,15 +3,15 @@
  * Handles all TinyPortal Database operations
  *
  * @name      	TinyPortal
- * @package 	TPBase
+ * @package 	Database
  * @copyright 	TinyPortal
  * @license   	MPL 1.1
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
- * license: BSD-3-Clause 
+ * license: BSD-3-Clause
  *
- * @version 1.0.0
+ * @version 2.1.0
  *
  */
 namespace TinyPortal;
@@ -25,13 +25,13 @@ class Database
     private static $_instance   = null;
 
     public static function getInstance() {{{
-	
+
     	if(self::$_instance == null) {
 			self::$_instance = new self();
 		}
-	
+
     	return self::$_instance;
-	
+
     }}}
 
     // Empty Clone method
@@ -65,6 +65,7 @@ class Database
 		return false;
 
 	}}}
+
 }
 
 ?>
