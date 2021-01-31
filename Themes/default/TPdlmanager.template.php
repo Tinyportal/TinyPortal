@@ -67,7 +67,7 @@ function template_main()
 			<div class="windowbg noup tp_pad">';
 
 			echo '
-				<h3 class="h3dl"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h4>
+				<h3 class="h3dl"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item'.$context['TPortal']['featured']['id'].'">' . $context['TPortal']['featured']['name'] . '</a></h3>
 				<span class="middletext">'. $txt['tp-uploadedby'] . ' <a href="' . $scripturl . '?action=profile;u=' . $context['TPortal']['featured']['author_id'].'">' . $context['TPortal']['featured']['author'] . '</a></span>
 				<hr>';
 
@@ -397,7 +397,7 @@ function template_main()
 				echo '&nbsp;&nbsp;<small>[<a href="' , $scripturl , '?action=tportal;sa=download;dl=useredit' , $dlitem['id'] , '">' , $txt['tp-edit'] , '</a>]</small>';
 
 			echo '
-				</h4>
+				</h3>
 				<p class="clearthefloat"></p>
 				<hr>
 					<p style="float:right;">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>
@@ -627,7 +627,7 @@ function template_main()
 			<hr>
 				<dl class="settings">
 					<dt>
-						'.$txt['tp-dlcreatetopic'].'
+						<label for="field_name">'.$txt['tp-dlcreatetopic'].'</filed>
 					</dt>
 					<dd>
 						'.$txt['tp-dlmissingboards'].'
@@ -758,7 +758,7 @@ function template_main()
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
 							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , $cats['views']>0 ? ceil(100*($cats['views']/$maxval)) : '1' , '%" /></div>
-							<div class="float-items" style="width="15%";">'.$cats['views'].'</div>
+							<div class="float-items" style="width:15%;">'.$cats['views'].'</div>
 					        <p class="clearthefloat"></p>';
 					$counter++;
 				}
@@ -1034,7 +1034,7 @@ function template_main()
 				<div class="roundframe noup">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input type="text" id="searchbox" name="dl_search" required/><br>
+						<input type="text" id="searchbox" name="dl_search" value="" required><br>
 						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name">'.$txt['tp-searcharea-name'].'</label><br>
 						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> '.$txt['tp-searcharea-descr'].'</label><br>
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>

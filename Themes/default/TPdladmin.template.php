@@ -142,7 +142,7 @@ function template_main()
 			<div class="windowbg noup padding-div">
 					<dl class="tptitle settings">
 					<dt>
-						',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  />
+						<label for="tp_show_download_on">',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  /></label>
 					</dt>
 					<dd>
 						<input type="radio" id="tp_show_download_on" name="tp_show_download" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'><label for="tp_show_download_on"> '.$txt['tp-on'].'</label>
@@ -161,14 +161,14 @@ function template_main()
 						<input type="number" id="tp_dluploadsize" name="tp_dluploadsize" value="'.$context['TPortal']['dl_max_upload_size'].'" size="10"> '.$txt['tp-kb'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlmustapprove'].'
+						<label for="fieldname">'.$txt['tp-dlmustapprove'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" id="tp-approveyes" name="tp_dl_approveonly" value="1" ', $context['TPortal']['dl_approve']=='1' ? 'checked' : '' ,'><label for="tp-approveyes"> '.$txt['tp-approveyes'].'<br>
 						<input type="radio" id="tp-approveno" name="tp_dl_approveonly" value="0" ', $context['TPortal']['dl_approve']=='0' ? 'checked' : '' ,'><label for="tp-approveno"> '.$txt['tp-approveno'].'<br><br>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-dlwysiwygdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-dlwysiwyg'].'
+						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-dlwysiwygdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">'.$txt['tp-dlwysiwyg'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" id="tp_dl_wysiwyg1" name="tp_dl_wysiwyg" value="" ', $context['TPortal']['dl_wysiwyg']=='' ? 'checked' : '' ,'><label for="tp_dl_wysiwyg1"> '.$txt['tp-no'].'</label><br>
@@ -199,33 +199,33 @@ function template_main()
 						<input type="radio" id="tp_dl_fileprefix3" name="tp_dl_fileprefix" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix3">'.$txt['tp-gb'].'</label><br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlusescreenshot'].'
+						<label for="fieldname">'.$txt['tp-dlusescreenshot'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" name="tp_dl_usescreenshot" value="1" ', $context['TPortal']['dl_usescreenshot']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input type="radio" name="tp_dl_usescreenshot" value="0" ', $context['TPortal']['dl_usescreenshot']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlscreenshotsize1'].'
+						<label for="fieldname">'.$txt['tp-dlscreenshotsize1'].'</label>
 					</dt>
 					<dd>
 						<input type="number" name="tp_dl_screenshotsize0" value="'.$context['TPortal']['dl_screenshotsize'][0].'" size="6" maxlength="3"> x <input type="number" name="tp_dl_screenshotsize1"value="'.$context['TPortal']['dl_screenshotsize'][1].'" size="6" maxlength="3" > px<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlscreenshotsize2'].'
+						<label for="fieldname">'.$txt['tp-dlscreenshotsize2'].'</label>
 					</dt>
 					<dd>
 						<input type="number" name="tp_dl_screenshotsize2" value="'.$context['TPortal']['dl_screenshotsize'][2].'" size="6" maxlength="3"> x <input type="number" name="tp_dl_screenshotsize3" value="'.$context['TPortal']['dl_screenshotsize'][3].'" size="6" maxlength="3"> px<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlcreatetopic'].'
+						<label for="fieldname">'.$txt['tp-dlcreatetopic'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" name="tp_dl_createtopic" value="1" ', $context['TPortal']['dl_createtopic']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input type="radio" name="tp_dl_createtopic" value="0" ', $context['TPortal']['dl_createtopic']=='0' ? 'checked' : '' ,'> '.$txt['tp-no'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlcreatetopicboards'].'
+						<label for="fieldname">'.$txt['tp-dlcreatetopicboards'].'</label>
 					</dt>
 					<dd>
 						<div class="dl_perm tp_largelist" id="dl_createboard" ' , in_array('dl_createboard',$context['tp_panels']) ? ' style="display: none;"' : '' , '>
@@ -241,7 +241,7 @@ function template_main()
 			<hr>
 				<dl class="settings">
 					<dt>
-						'.$txt['tp-dlusefeatured'].'
+						<label for="fieldname">'.$txt['tp-dlusefeatured'].'
 					</dt>
 					<dd>
 						<input type="radio" name="tp_dl_showfeatured" value="1" ', $context['TPortal']['dl_showfeatured']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
@@ -262,21 +262,21 @@ function template_main()
 					</select><br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dluselatest'].'
+						<label for="fieldname">'.$txt['tp-dluselatest'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" name="tp_dl_showrecent" value="1" ', $context['TPortal']['dl_showlatest']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input type="radio" name="tp_dl_showrecent" value="0" ', $context['TPortal']['dl_showlatest']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlusestats'].'
+						<label for="fieldname">'.$txt['tp-dlusestats'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" name="tp_dl_showstats" value="1" ', $context['TPortal']['dl_showstats']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
 						<input type="radio" name="tp_dl_showstats" value="0" ', $context['TPortal']['dl_showstats']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
 					</dd>
 					<dt>
-						'.$txt['tp-dlusecategorytext'].'
+						<label for="fieldname">'.$txt['tp-dlusecategorytext'].'</label>
 					</dt>
 					<dd>
 						<input type="radio" name="tp_dl_showcategorytext" value="1" ', $context['TPortal']['dl_showcategorytext']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
@@ -289,7 +289,7 @@ function template_main()
 						  <input type="number" id="tp_dl_limit_length" name="tp_dl_limit_length"value="' ,$context['TPortal']['dl_limit_length'], '" style="width: 6em" maxlength="5" min="100"><br><br>
 						</dd>
 					<dt>
-						'.$txt['tp-dlvisualoptions'].'
+						<label for="fieldname">'.$txt['tp-dlvisualoptions'].'</label>
 					</dt>
 					<dd>
 						<input type="checkbox" id="tp_dl_visual_options1" name="tp_dl_visual_options1" value="left" ', isset($context['TPortal']['dl_left']) ? 'checked' : '' ,'><label for="tp_dl_visual_options1"> '.$txt['tp-leftbar'].'</label><br>

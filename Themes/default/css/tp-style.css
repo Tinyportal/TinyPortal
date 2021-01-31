@@ -40,6 +40,28 @@
 .tp_tabs a.tp_active {
 	font-weight: bold;
 }
+.dropmenu .tp_menu_horizontal20 {
+	display: block;
+	border-top: 1px solid;
+	overflow: hidden;
+	padding: 0em;
+	margin: 0em auto;
+	cursor: default;
+	position: relative;
+	top: .7em;
+	opacity: 0.3;
+}
+.dropmenu .tp_menu_horizontal21 {
+	display: block;
+	border-top: 1px solid;
+	overflow: hidden;
+	padding: 0em;
+	margin: 0em auto;
+	cursor: default;
+	position: relative;
+	top: 1em;
+	opacity: 0.3;
+}
 #tpleftbarContainer {
 	float: left;
 }
@@ -339,7 +361,7 @@ img.tp_social {
 .article_inner img, .tparticle img, .bbc_img {
 	height: auto;
 	max-width: 100%;
-} 
+}
 .tpthumb img {
 	max-height: 150px;
 	max-width: 150px;
@@ -958,11 +980,11 @@ input,select {
 .addborderleft div {
 	border-left: 1px solid #CCCCCC;
 	border-left: 1px solid rgba(204, 204, 204, 0.5);
-} 
+}
 .tpartlayoutfp {
     float: left;
 	margin: 4px;
-} 
+}
 .tpartlayouttype {
 	float: left;
 	height: 100px;
@@ -971,15 +993,15 @@ input,select {
 }
 #tp_article_body {
 	height: 300px;
-	width: 98%; 
+	width: 98%;
 }
 #tp_article_intro {
 	height: 140px;
-	width: 98%; 
+	width: 98%;
 }
 dl.tptitle dt {
 	float: left;
-	width: 40%;
+	width: 39%;
 }
 dl.tptitle dd {
 	float: right;
@@ -1115,7 +1137,7 @@ div.tp_half21 {
 .tp_block21 {
 	margin-bottom: 0 !important;
 	margin-top: 6px;
-	padding: 4px 8px 8px 8px; 
+	padding: 4px 8px 8px 8px;
 }
 code.bbc_code {
 	-epub-hyphens: auto;
@@ -1265,7 +1287,7 @@ select[name="tp_dlitem_rating"] {
 	width: initial;
 }
 div.dl_featureshot {
-	float: right;	
+	float: right;
 	margin: 4px 4px 4px 1em;
 }
 div.dl_screenshot {
@@ -1295,7 +1317,7 @@ h3.h3dl {
 	padding: 0 0 0.5em 0;
 }
 h4.h4dl {
-	font-size: 1.1em; 
+	font-size: 1.1em;
 	font-weight: bold;
 	margin: 0;
 	padding: 0 0 0.5em 0;

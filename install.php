@@ -1243,10 +1243,10 @@ function addDefaults()
                 }
                 $data   = json_encode($row);
                 $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks
-                    SET settings = {string:data}
-                    WHERE id = {int:id}',
-                    array( 'data' => $data, 'id' => $id )
-                );
+                        SET settings = {string:data}
+                        WHERE id = {int:id}',
+                        array( 'data' => $data, 'id' => $id )
+                        );
             }
             $render .= '<li>Updated tp_blocks settings</li>';
             $smcFunc['db_free_result']($request);

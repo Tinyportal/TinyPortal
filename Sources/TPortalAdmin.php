@@ -2450,7 +2450,7 @@ function do_postchecks()
 
 			$where = $smcFunc['db_insert_id']('{db_prefix}tp_blocks', 'id');
 			if(!empty($where))
-				redirectexit('action=tpadmin&sa=editblock&id='.$where.';sesc='. $context['session_id']);
+				redirectexit('action=tpadmin&amp;sa=editblock&amp;id='.$where.';sesc='. $context['session_id']);
 			else
 				redirectexit('action=tpadmin;sa=blocks');
 		}
@@ -2642,7 +2642,7 @@ function do_postchecks()
 			}
 			updateTPSettings($updateArray);
 
-			redirectexit('action=tpadmin&sa=editblock&id='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
+			redirectexit('action=tpadmin&amp;sa=editblock&amp;id='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
 		}
 		// Editing an article?
 		elseif(substr($from, 0, 11) == 'editarticle') {
