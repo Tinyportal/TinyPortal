@@ -134,27 +134,28 @@ function template_tpshout_admin_settings()
 					<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							'.$txt['tp-shoutbox_showsmile'].'
+							<label for="field_name">'.$txt['tp-shoutbox_showsmile'].'</label>
 						</dt>
 						<dd>
 							<input type="radio" name="tp_shoutbox_smile" value="1" ' , $context['TPortal']['show_shoutbox_smile']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
 							<input type="radio" name="tp_shoutbox_smile" value="0" ' , $context['TPortal']['show_shoutbox_smile']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br>
 						</dd>
-						<dt>'.$txt['tp-shoutbox_showicons'].'
+						<dt>
+							<label for="field_name">'.$txt['tp-shoutbox_showicons'].'</label>
 						</dt>
 						<dd>
 							<input type="radio" name="tp_shoutbox_icons" value="1" ' , $context['TPortal']['show_shoutbox_icons']=='1' ? 'checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
 							<input type="radio" name="tp_shoutbox_icons" value="0" ' , $context['TPortal']['show_shoutbox_icons']=='0' ? 'checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br>
 						</dd>
 						<dt>
-							'.$txt['tp-shout-allow-links'].'
+							<label for="field_name">'.$txt['tp-shout-allow-links'].'</label?
 						</dt>
 						<dd>
 							<input type="radio" name="tp_shout_allow_links" value="1" ' , $context['TPortal']['shout_allow_links'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
 							<input type="radio" name="tp_shout_allow_links" value="0" ' , $context['TPortal']['shout_allow_links'] == '0' ? ' checked="checked"' : '' , ' /> '.$txt['tp-no'].'<br>
 						</dd>
 						<dt>
-							'.$txt['tp-shoutboxusescroll'].'
+							<label for="field_name">'.$txt['tp-shoutboxusescroll'].'</label>
 						</dt>
 						<dd>
 							<input type="radio" name="tp_shoutbox_usescroll" value="1" ' , $context['TPortal']['shoutbox_usescroll'] > 0 ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'
@@ -173,7 +174,7 @@ function template_tpshout_admin_settings()
 							<input type="number" name="tp_shoutbox_refresh" id="tp_shoutbox_refresh" value="' ,$context['TPortal']['shoutbox_refresh'], '" style="width: 6em" min="0" max="60" step="1" /><br>
 						</dd>
 						<dt>
-							'.$txt['shout_submit_returnkey'].'
+							<label for="field_name">'.$txt['shout_submit_returnkey'].'</label>
 						</dt>
 						<dd>
 							<input type="radio" name="tp_shout_submit_returnkey" id="tp_shout_submit_returnkey1" value="1" ' , $context['TPortal']['shout_submit_returnkey'] == '1' ? ' checked="checked"' : '' , ' /> <label for="tp_shout_submit_returnkey1">'.$txt['tp-yes-enter'].'</label><br>
@@ -209,7 +210,7 @@ function template_tpshout_admin_settings()
 						</dt>
 						<dd></dd>
 						<dt>
-							'.$txt['tp-shoutbox_use_groupcolor'].'<br>
+							<label for="field_name">'.$txt['tp-shoutbox_use_groupcolor'].'</label><br>
 							' , (!empty($context['TPortal']['use_groupcolor'])) ? '<span class="smalltext" style="color:red;">'.$txt['tp-shoutbox_use_groupcolordesc'].'</span>' : '' , '
 						</dt>
 						<dd>
@@ -244,7 +245,7 @@ function template_tpshout_admin_settings()
 					<hr>
 					<dl class="settings">
 						<dt>
-							'.$txt['tp-show_profile_shouts'].'
+							<label for="field_name">'.$txt['tp-show_profile_shouts'].'</label>
 						</dt>
 						<dd>
 							<input type="radio" name="tp_show_profile_shouts" value="1" ' , $context['TPortal']['profile_shouts_hide'] == '1' ? ' checked="checked"' : '' , ' /> '.$txt['tp-yes'].'

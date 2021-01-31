@@ -627,7 +627,7 @@ function template_main()
 			<hr>
 				<dl class="settings">
 					<dt>
-						'.$txt['tp-dlcreatetopic'].'
+						<label for="field_name">'.$txt['tp-dlcreatetopic'].'</filed>
 					</dt>
 					<dd>
 						'.$txt['tp-dlmissingboards'].'
