@@ -59,7 +59,7 @@ function TPblock($block, $theme, $side, $double=false)
 		} else {
 			echo '<div class="block_' . $side . 'container" id="module_dlstats">';
 		}
-	} elseif ($block['type']=='tpmodulebox') {
+	} elseif ($block['type']=='shoutbox') {
         //debug_print_backtrace();
 	} elseif ($block['type']=='html') {
 		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
@@ -340,7 +340,7 @@ function TPortal_userbox()
 			echo '
 			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
 		}
-		echo '			
+		echo '
         </form>
         <div style="line-height: 1.4em;" class="middletext">', $txt['quick_login_dec'], '</div>';
 	}
@@ -485,12 +485,12 @@ function TPortal_themebox()
 			<input type="button" class="button_submit" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
 			<div style="text-align: center; width: 95%; overflow: hidden;">';
-			
+
 		if (!TP_SMF21)
 			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
 		else
 			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
-			
+
 		echo '
 			</div>
 		</form>
@@ -530,6 +530,29 @@ function TPortal_themebox()
 	}
 	else
 		echo $txt['tp-nothemeschosen'];
+}
+
+// blocktype 8: TP Shoutbox
+function TPortal_shoutbox($blockid)
+{
+	global $context;
+
+	// fetch the correct block
+	if(!empty($context['TPortal']['moduleid'])) {
+		$tpm                = $context['TPortal']['moduleid'];
+        $shoutbox_id        = 0;
+        $shoutbox_layout    = null;
+		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
+            if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'])) {
+                $shoutbox_id = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'];
+            }
+            if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'])) {
+                $shoutbox_layout = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'];
+            }
+
+			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout);
+        }
+	}
 }
 
 // blocktype 9: Menu
@@ -637,7 +660,7 @@ function TPortal_recentbox()
 		$bb = array($modSettings['recycle_board']);
 		$exclude_boards = $bb;
 	}
-	
+
 	// include boards
 	if (isset($context['TPortal']['recentboards']) && !$context['TPortal']['boardmode'] == 0)
 		$include_boards = $context['TPortal']['recentboards'];
@@ -656,7 +679,7 @@ function TPortal_recentbox()
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 			if ((TP_SMF21) && ($w['is_new']))
-				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> '; 
+				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
 			echo '
 				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
@@ -691,7 +714,7 @@ function TPortal_recentbox()
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 			if ((TP_SMF21) && ($w['is_new']))
-				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> '; 
+				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
 			echo '
 					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
@@ -908,7 +931,7 @@ function TPortal_sitemap()
 	</div>';
 }
 
-// blocktype 18: Single Article 
+// blocktype 18: Single Article
 function TPortal_articlebox()
 {
 	global $context;
@@ -931,20 +954,6 @@ function TPortal_categorybox()
 		echo '</div>';
 	}
  }
-
-// blocktype 20: TP module
-function TPortal_tpmodulebox($blockid)
-{
-	global $context;
-
-	// fetch the correct block
-	if(!empty($context['TPortal']['moduleid'])) {
-		$tpm = $context['TPortal']['moduleid'];
-		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
-			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']);
-        }
-	}
-}
 
 // dummy for old templates
 function TPortal_sidebar()
@@ -1016,7 +1025,7 @@ function progetAvatars($ids)
 	if($smcFunc['db_num_rows']($request) > 0)
 	{
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-            $avy[$row['id_member']] = set_avatar_data( array(      
+            $avy[$row['id_member']] = set_avatar_data( array(
                     'avatar' => $row['avatar'],
                     'email' => $row['email_address'],
                     'filename' => !empty($row['filename']) ? $row['filename'] : '',
@@ -1202,7 +1211,7 @@ function article_renders($type = 1, $single = false, $first = false)
 				{article_category}
 				{article_date}
 				{article_author}
-				{article_views}	
+				{article_views}
 				{article_rating}
 			' . ($single ? '{article_print}' : '') . '
 			</div>
@@ -1586,7 +1595,7 @@ function article_renders($type = 1, $single = false, $first = false)
 	</div>';
 		else
 			$code = '
-	<div class="render9">	
+	<div class="render9">
 		<div class="windowbg" style="padding: 0;">
 			<span class="topslice"><span></span></span>
 			<div class="article_padding align_right">
@@ -1774,12 +1783,12 @@ function article_comments_total($render = true)
 		$data = '
 		<div class="article_boardnews">
 		<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '#tp-comment">' .$context['TPortal']['article']['comments']. ' ' . ($context['TPortal']['article']['comments'] == 1 ? $txt['tp-comment'] : $txt['tp-comments']) . '</a>';
-	
+
 	if(in_array('commentallow', $context['TPortal']['article']['visual_options']) && isset($context['TPortal']['can_artcomment']) == 1) {
 		$data .= '
 			&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '#tp-comment">' . $txt['tp-writecomment']. '</a>';
 	}
-	
+
 		$data .= '
 			</div>';
 	}
@@ -2063,7 +2072,7 @@ function article_comments($render = true)
 	}
 
 	if(in_array('comments', $context['TPortal']['article']['visual_options']) && !$context['TPortal']['article_comments_count'] == 0) {
-		$data .= '	
+		$data .= '
 	<div id="articlecomments" class="tp_commentsbox"' . (in_array('articlecomments',$context['tp_panels']) ? ' style="display: none;"' : '') . '>';
 
 		$counter = 1;
@@ -2078,7 +2087,7 @@ function article_comments($render = true)
                 }
 				// not a guest
 				if ($comment['poster_id'] > 0) {
-					$data .= '	
+					$data .= '
 					<span class="tp_comment_author">' . (!empty($comment['avatar']['image']) ? $comment['avatar']['image'] : '') . '</span>';
                 }
 				$data .= '
@@ -2086,14 +2095,14 @@ function article_comments($render = true)
 					' . (($comment['is_new'] && $context['user']['is_logged'] && !TP_SMF21) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
 					' . (($comment['is_new'] && $context['user']['is_logged'] && TP_SMF21) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
 				if ($comment['poster_id'] > 0) {
-					$data .= '					
+					$data .= '
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-bycom'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
 				}
                 else {
 					$data .= '
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-bycom'].' '.$txt['guest_title'].'&nbsp;'. $txt['on'] . ' ' . $comment['date'] . '</div>';
                 }
-				$data .= '	
+				$data .= '
 					<p class="clearthefloat"></p>
 					<div class="textcomment"><div class="body">' . $comment['text'] . '</div></div>';
 				$data .= '
@@ -2109,12 +2118,12 @@ function article_comments($render = true)
 			<div class="tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tportal;sa=comment" method="post" style="margin: 0; padding: 0;">
 						<input type="text" name="tp_article_comment_title" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
-						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea><br>'; 
-	
+						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea><br>';
+
 	if (!empty($context['TPortal']['allow_links_article_comments'])==0) {
 		$data .= '<em>'. $txt['tp-nolinkcomments'] . '<em>';
 		}
-	
+
 		$data .= '
 						<div class="tp_pad"><input type="submit" id="tp_article_comment_submit" class="button button_submit" value="' . $txt['tp-submit'] . '"></div>
 						<input type="hidden" name="tp_article_type" value="article_comment">

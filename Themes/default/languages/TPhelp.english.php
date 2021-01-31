@@ -1,5 +1,5 @@
 <?php
-// Version: 2.0.0; TPhelp
+// Version: 2.1.0; TPhelp
 
 // Credits
 $txt['tp-credit1'] = '
@@ -7,7 +7,7 @@ $txt['tp-credit1'] = '
 Bjorn "Bloc" Kristiansen
 <br><br>
 <h4>Developers and Contributors</h4>
-Brad "IchBin" Grow, Bloc, Illori, Arantor, tinoest, lurkalot, emanuele, @rjen.
+Brad "IchBin" Grow, Bloc, Illori, Arantor, tino, lurkalot, emanuele, @rjen.
 <br><br>
 <h4>TP Team</h4>
 Agridoc, Crip, Freddy, Ken, Lesmond, Renegd98, WillyP, wildenborch and ZarPrime.
