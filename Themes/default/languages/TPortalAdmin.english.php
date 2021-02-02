@@ -509,6 +509,7 @@ $txt['tp-menu-icon2'] = '<small>Note: the path for menu icons is relative to fol
 // Shoutbox settings
 $txt['tp_shout'] = 'Shoutbox';
 $txt['tp-shoutboxsettings'] = 'Shoutbox settings';
+$txt['tp-shoutboxsettingsinfo'] = 'The settings on this page apply to all shoutboxes in your forum. If you have multiple shoutbox blocks, these settings apply to all.';
 $txt['tp-shoutboxtitle'] = 'Place a fixed message or announcement at the top of the shoutbox (BBC allowed)';
 $txt['tp-shoutbox_showsmile'] = 'Display smilies buttons';
 $txt['tp-shoutbox_showicons'] = 'Display BBC buttons';
@@ -521,6 +522,7 @@ $txt['tp-yes-enter'] = 'with Enter';
 $txt['tp-yes-ctrl'] = 'with Ctrl/Cmd+Enter';
 $txt['tp-yes-shout'] = 'with Shout button only';
 $txt['tp-shoutbox_id'] = 'Choose the Shoutbox ID for this block';
+$txt['tp-shoutbox_iddesc'] = 'You can choose different shoutbox id\'s to be used in different shoutbox blocks. Note that if more shoutbox blocks use the same ID, these blocks will display the same shoutbox content.';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
 $txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
 $txt['tp-shoutboxlimit'] = 'Limit posts in shoutbox to ';
@@ -535,15 +537,20 @@ $txt['tp-shoutboxtimecolor'] = 'Time text color';
 $txt['tp-shoutboxlinecolor1'] = 'Layouts 3 and 4: background color odd lines';
 $txt['tp-shoutboxlinecolor2'] = 'Layouts 3 and 4: background color even lines';
 $txt['tp-show_profile_shouts'] = 'Hide shouts in the profile';
+
+// Shoutbox admin
 $txt['tp-shoutboxadmin'] = 'Shoutbox administration';
+$txt['tp-shoutboxadmininfo'] = 'This screen allows you to manage the shouts in all shoutboxes. Note that by default ALL shoutboxes are included in the display. If you want to manage a specific shoutbox you can select the option "All shouts in this shoutbox" showing next to the shouts. This will filter the list of shouts by Shoutbox ID';
 $txt['tp-shoutboxitems'] = 'Edit/Remove last shouts';
+$txt['tp-member'] = 'Member';
+$txt['tp-IP'] = 'IP address';
+$txt['tp-shoutbox_id'] = 'Shoutbox ID';
 $txt['tp-filtered'] = 'Filtered';
 $txt['tp-deleteallshouts'] = 'Delete all shouts?';
 $txt['tp-allshoutsbyid'] = 'All shouts in this shoutbox';
 $txt['tp-allshoutsbymember'] = 'All shouts by this member';
 $txt['tp-allshoutsbyip'] = 'All shouts by this IP';
 $txt['tp-allshouts'] = 'Show all shouts';
-$txt['tp-allowguestshout'] = 'Allow guest shouts';
 
 // Downloads Manager
 $txt['tp-dldownloads'] = 'Downloads';
