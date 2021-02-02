@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2021 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 
@@ -77,6 +77,7 @@ function template_tpshout_admin()
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxadmin'].'</h3></div>
 			<div id="tpshout_admin" class="admintable admin-area">
+				<div class="information smalltext">' , $txt['tp-shoutboxadmininfo'] , '</div><div></div>
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
 						<div class="addborder">
@@ -130,6 +131,7 @@ function template_tpshout_admin_settings()
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxsettings'].'</h3></div>
 			<div id="tpshout_admin_settings" class="admintable admin-area">
+				<div class="information smalltext">' , $txt['tp-shoutboxsettingsinfo'] , '</div><div></div>
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
 					<dl class="settings">

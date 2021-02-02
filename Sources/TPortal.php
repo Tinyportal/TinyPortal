@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2021 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 use \TinyPortal\Article as TPArticle;
@@ -978,7 +978,7 @@ function doTPcat() {{{
 					TPadd_linktree($scripturl.'?cat='. $parent['shortname'] , $parent['name']);
                 }
 
-				if(!empty($context['TPortal']['category']['shortname'])) {
+				if(!empty($context['TPortal']['category']['value8'])) {
 					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['value8'], $context['TPortal']['category']['value1']);
                 }
 				else {
