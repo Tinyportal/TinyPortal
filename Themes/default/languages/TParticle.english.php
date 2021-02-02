@@ -1,5 +1,5 @@
 <?php
-// Version: 2.1.0; TParticle
+// Version: 2.0.0; TParticle
 
 global $scripturl;
 
