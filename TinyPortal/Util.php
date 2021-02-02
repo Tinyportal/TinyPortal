@@ -13,7 +13,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) 2021 - The TinyPortal Team
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
