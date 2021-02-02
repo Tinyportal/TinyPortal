@@ -978,7 +978,7 @@ function doTPcat() {{{
 					TPadd_linktree($scripturl.'?cat='. $parent['shortname'] , $parent['name']);
                 }
 
-				if(!empty($context['TPortal']['category']['shortname'])) {
+				if(!empty($context['TPortal']['category']['value8'])) {
 					TPadd_linktree($scripturl.'?cat='. $context['TPortal']['category']['value8'], $context['TPortal']['category']['value1']);
                 }
 				else {
