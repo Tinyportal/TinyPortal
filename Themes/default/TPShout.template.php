@@ -377,7 +377,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 					<a onclick="TPupdateShouts(\'del\', '.$shoutbox_id.', '.$row['id'].' , '.$shoutbox_layout.' ); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpshout;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="height:14px;" src="' . $settings['tp_images_url'] . '/TPdelete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
 				</div>' : '') . '
 				<h4><a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . ' href="' . $scripturl . '?action=profile;u=' . $row['member_id'] . '">' . $row['real_name'] . '</a></h4>
-				<span class="smalltext clear" style="padding-top: .5em;color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], $row['time']).'</span>
+				<span class="smalltext clear" style="padding-top: .5em;color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], forum_time(true, $row['time'])).'</span>
 			</div>
 			<div class="bubble speech" ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . '' .$row['content']. '</div>
 		</div>
@@ -391,7 +391,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 				<a href="' . $scripturl. '?action=tpshout;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="height:14px;" src="' . $settings['tp_images_url'] . '/TPmodify_shout.png" alt="'.$txt['tp-edit'].'" /></a>
 				<a onclick="TPupdateShouts(\'del\', '.$shoutbox_id.', '.$row['id'].' , '.$shoutbox_layout.' ); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="' . $scripturl. '?action=tpshout;shout=del;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="height:14px;" src="' . $settings['tp_images_url'] . '/TPdelete_shout.png" alt="'.$txt['tp-delete'].'" /></a>
 			</div>' : ''). '
-			<div class="smalltext shout_date" style="padding-top: .5em;color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], $row['time']).'</div>
+			<div class="smalltext shout_date" style="padding-top: .5em;color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], forum_time(true, $row['time'])).'</div>
 			<div class="shoutbody_layout1" '. (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . '' . $row['content'] .'</div>
 		</div>
 	</div>',
@@ -399,7 +399,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 		<div class="shoutbody_layout2" style="background:' . (($row['id'] % 2) ? ($context['TPortal']['shoutbox_linecolor2']) : ($context['TPortal']['shoutbox_linecolor1'])) . ';">
 			<div class="showhover">
                 <div class="shoutbox_time">
-				    <span class="smalltext" style="color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], $row['time'] ).'</span>
+				    <span class="smalltext" style="color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], forum_time(true, $row['time'])).'</span>
                 </div>
 				<div class="shoutbox_edit">
 					' . (allowedTo( 'tp_can_admin_shout' ) ? '
@@ -421,7 +421,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 				</div>
 				<a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . '
 				href="' . $scripturl . '?action=profile;u=' . $row['member_id'] . '">' . $row['real_name'] . '</a>: <span ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . ''.$row['content'].'</span>
-				<span class="smalltext" style="color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], $row['time'] ).'</span>
+				<span class="smalltext" style="color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. date($context['TPortal']['shoutbox_timeformat'], forum_time(true, $row['time'])).'</span>
 				<p class="clearthefloat"></p>
 			</div>
 		</div>',
