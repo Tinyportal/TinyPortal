@@ -619,12 +619,7 @@ function template_categories()
 		}
 				echo '
 				</tbody>
-				</table>';
-		echo '
-				<br>
-				<div class="padding-div;">
-					<input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
-				</div>
+				</table>
 			</div>
 		</div>
 	</form>';
@@ -927,7 +922,7 @@ function template_clist()
 		}
 		echo '
 					<br><input type="checkbox" onclick="invertAll(this, this.form, \'tp_clist\');" />  '.$txt['tp-checkall'].'
-				</div><br>
+				</div>
 				<div class="padding-div"><input type="submit" class="button button_submit" name="send" value="'.$txt['tp-send'].'"></div>
 			</div>
 		</div>
@@ -1079,24 +1074,22 @@ function template_articles()
 			</td>
 			</tr>';
 			}
-	echo '
+			echo '
 		</tbody>
 	</table>';
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
-								<div class="middletext padding-div">
-									'.$context['TPortal']['pageindex'].'
-								</div>';
+					<div class="middletext padding-div">
+						'.$context['TPortal']['pageindex'].'
+					</div>';
 			echo '
-							<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
-						<input type="hidden" name="tpadmin_form_category" value="' . $catty . '"></div>';
+					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
+						<input type="hidden" name="tpadmin_form_category" value="' . $catty . '">
+					</div>';
 	}
-	else
-		echo '
-				<div class="padding-div"></div>';
-
-		echo '
-		</div></div>
+			echo '
+			</div>
+		</div>
 	</form>';
 }
 
@@ -1210,7 +1203,7 @@ function template_strays()
 
 		if(isset($context['TPortal']['allcats'])) {
 			echo '
-				<br><div class="padding-div">
+				<div class="padding-div">
 				<select name="tp_article_cat">
 					<option value="0">' . $txt['tp-createnew'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg) {
@@ -1220,7 +1213,7 @@ function template_strays()
 			echo '
 				</select>
 				<input name="tp_article_new" value="" size="40" />
-				</div><br>';
+				</div>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -1338,7 +1331,7 @@ function template_submission()
 		if(isset($context['TPortal']['allcats']))
 		{
 			echo '
-				<br><div class="padding-div">
+				<div class="padding-div">
 					<select name="tp_article_cat">
 						<option value="0">' . $txt['tp-createnew2'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg)
@@ -1347,7 +1340,7 @@ function template_submission()
 			echo '
 					</select>
 					<input name="tp_article_new" value="" size="40" /> &nbsp;
-				</div><br>';
+				</div>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -2107,7 +2100,7 @@ function template_blocks()
 				}
 			echo '
 					</tbody>
-				</table><br>';
+				</table>';
 			}
 		}
 		echo '
@@ -2484,7 +2477,7 @@ function template_menubox()
 				</table>';
 		}
 		echo '
-				<div><br>
+				<div>
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
 				</div>
 			</div>
