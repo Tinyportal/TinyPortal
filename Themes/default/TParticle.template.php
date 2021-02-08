@@ -468,7 +468,7 @@ function template_submitarticle()
 									<input type="checkbox" id="tp_article_options_'.$opts[8].'" name="tp_article_options_'.$opts[8].'" value="'.$mg['id'].'" ' , isset($options[$opts[8]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
-									<label for="tp_article_options_lblockwidth">', $txt['tp-articleoptions23'], '</label><br>
+									<label for="tp_article_options_lblockwidth">', $txt['tp-articleoptions_lblockwidth'], '</label><br>
 								</dt>
 								<dd>
 									<input type="text" id="tp_article_options_lblockwidth" name="tp_article_options_lblockwidth" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
@@ -480,7 +480,7 @@ function template_submitarticle()
 									<input type="checkbox" id="tp_article_options_'.$opts[7].'" name="tp_article_options_'.$opts[7].'" value="'.$mg['id'].'" ' , isset($options[$opts[7]]) ? 'checked' : '' , '>
 								</dd>
 								<dt>
-									<label for="tp_article_options_rblockwidth">', $txt['tp-articleoptions22'], '</label><br>
+									<label for="tp_article_options_rblockwidth">', $txt['tp-articleoptions_rblockwidth'], '</label><br>
 								</dt>
 								<dd>
 									<input type="text" id="tp_article_options_rblockwidth" name="tp_article_options_rblockwidth" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>

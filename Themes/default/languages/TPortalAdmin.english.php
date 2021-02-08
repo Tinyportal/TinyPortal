@@ -195,33 +195,33 @@ $txt['tp-illustration2'] = 'Choose another image';
 $txt['tp-uploadicon'] = 'Upload a new icon ';
 $txt['tp-articleoptions'] = 'Viewing options';
 $txt['tp-details'] = 'Details';
+$txt['tp-articleoptions4'] = 'Display breadcrumb navigation';
 $txt['tp-articleoptions2'] = 'Display title';
 $txt['tp-articleoptions13'] = 'Display posted in category';
 $txt['tp-articleoptions3'] = 'Display author';
 $txt['tp-articleoptions1'] = 'Display date';
-$txt['tp-articleoptions12'] = 'Display all articles in category';
-$txt['tp-articleoptions4'] = 'Display breadcrumb navigation';
-$txt['tp-articleoptions14'] = 'Display comments underneath article';
-$txt['tp-articleoptions15'] = 'Allow to comment';
-$txt['tp-articleoptions5'] = 'Display top';
-$txt['tp-articleoptions16'] = 'Do not collapse comments initially';
 $txt['tp-articleoptions17'] = 'Display number of views';
-$txt['tp-articleoptions18'] = 'Display ratings';
 $txt['tp-articleoptions19'] = 'Allow to rate';
-$txt['tp-articleoptions24'] = 'Use settings from category instead!';
+$txt['tp-articleoptions18'] = 'Display ratings';
+$txt['tp-articleoptions21'] = 'Display author avatar/info';
+$txt['tp-articleoptions23'] = 'Show Social Bookmarks buttons';
+$txt['tp-articleoptions12'] = 'Display all articles in category';
+$txt['tp-articleoptions15'] = 'Allow to comment';
+$txt['tp-articleoptions14'] = 'Display comments underneath article';
+
 $txt['tp-articleoptions8'] = 'Display left panel';
-$txt['tp-articleoptions23'] = 'Width left panel (leave empty for default)';
+$txt['tp-articleoptions_lblockwidth'] = 'Width left panel (leave empty for default)';
 $txt['tp-articleoptions7'] = 'Display right panel';
-$txt['tp-articleoptions22'] = 'Width right panel (leave empty for default)';
+$txt['tp-articleoptions_rblockwidth'] = 'Width right panel (leave empty for default)';
 $txt['tp-articleoptions10'] = 'Display top panel';
 $txt['tp-articleoptions6'] = 'Display upper panel';
 $txt['tp-articleoptions11'] = 'Display lower panel';
 $txt['tp-articleoptions9'] = 'Display bottom panel';
+$txt['tp-articleoptions24'] = 'Use settings from category instead!';
+
 $txt['tp-others'] = 'Others';
-$txt['tp-articleoptions20'] = 'Do not use SMF templates';
-$txt['tp-articleoptions21'] = 'Display author avatar/info';
-$txt['tp-showsociallinks'] = 'Show Social Bookmarks buttons';
 $txt['tp-chosentheme'] = 'Use only this theme ';
+$txt['tp-articleoptions20'] = 'Do not use SMF templates';
 $txt['tp-articleheaders'] = 'Header code to be used in articles without any template/theme code';
 
 // Uncategorized articles
