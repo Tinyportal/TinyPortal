@@ -131,7 +131,7 @@ function TPShoutPost( ) {{{
 		// Check the session id.
 		checkSession('post');
 		require_once($sourcedir . '/Subs-Post.php');
-		$shout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, 300));
+		$shout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, $context['TPortal']['shoutbox_maxlength']));
 		preparsecode($shout);
 
 		// collect the color for shoutbox
@@ -955,7 +955,7 @@ function TPShoutAdmin() {{{
 			}
 			elseif(substr($what, 0, 16) == 'tp_shoutbox_item') {
 				$val = substr($what, 16);
-				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, 300));
+				$bshout = $smcFunc['htmlspecialchars'](substr($value, 0, $context['TPortal']['shoutbox_maxlength']));
 				preparsecode($bshout);
 				$bshout = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $bshout);
 				$smcFunc['db_query']('', '
