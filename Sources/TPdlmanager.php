@@ -491,6 +491,7 @@ function TPortalDLManager()
 		}
 		elseif(substr($context['TPortal']['dlsub'], 0, 6) == 'upload')
 		{
+            TP_hidebars('all');
 			$context['TPortal']['dlitem'] = substr($context['TPortal']['dlsub'], 6);
 			$context['TPortal']['dlaction'] = 'upload';
 
