@@ -134,28 +134,28 @@ function articleShowComments() {{{
     }
 
     $request = $smcFunc['db_query']('', '
-        SELECT COUNT(var.value1)
-        FROM ({db_prefix}tp_variables AS var, {db_prefix}tp_articles AS art)
-        WHERE var.type = {string:type}
-        ' . ((!$showall || $mylast == 0) ? 'AND var.value4 > '.$mylast : '') .'
-        AND art.id = var.value5',
+        SELECT COUNT(var.subject)
+        FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
+        WHERE var.item_type = {string:type}
+        ' . ((!$showall || $mylast == 0) ? 'AND var.datetime > '.$mylast : '') .'
+        AND art.id = var.item_id',
         array('type' => 'article_comment')
     );
     $check = $smcFunc['db_fetch_row']($request);
     $smcFunc['db_free_result']($request);
 
     $request = $smcFunc['db_query']('', '
-        SELECT art.subject, memb.real_name AS author, art.author_id AS authorID, var.value1, var.value2, var.value3,
-        var.value5, var.value4, mem.real_name AS realName,
-        ' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.value4)') . ' AS isRead
-        FROM ({db_prefix}tp_variables AS var, {db_prefix}tp_articles AS art)
+        SELECT art.subject, memb.real_name AS author, art.author_id AS author_id, var.subject, var.comment, var.member_id,
+        var.item_id, var.datetime, mem.real_name AS real_name,
+        ' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.datetime)') . ' AS isRead
+        FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
         LEFT JOIN {db_prefix}members AS memb ON (art.author_id = memb.id_member)
-        LEFT JOIN {db_prefix}members AS mem ON (var.value3 = mem.id_member)
+        LEFT JOIN {db_prefix}members AS mem ON (var.member_id = mem.id_member)
         LEFT JOIN {db_prefix}tp_data AS log ON (log.value = art.id AND log.type = 1 AND log.id_member = '.$context['user']['id'].')
-        WHERE var.type = {string:type}
-        AND art.id = var.value5
-        ' . ((!$showall || $mylast == 0 ) ? 'AND var.value4 > {int:last}' : '') .'
-        ORDER BY var.value4 DESC LIMIT {int:start}, 15',
+        WHERE var.item_type = {string:type}
+        AND art.id = var.item_id
+        ' . ((!$showall || $mylast == 0 ) ? 'AND var.datetime > {int:last}' : '') .'
+        ORDER BY var.datetime DESC LIMIT {int:start}, 15',
         array('type' => 'article_comment', 'last' => $mylast, 'start' => $tpstart)
     );
 
@@ -164,15 +164,15 @@ function articleShowComments() {{{
     if($smcFunc['db_num_rows']($request) > 0) {
         while($row=$smcFunc['db_fetch_assoc']($request)) {
             $context['TPortal']['artcomments']['new'][] = array(
-                'page' => $row['value5'],
+                'page' => $row['item_id'],
                 'subject' => $row['subject'],
-                'title' => $row['value1'],
-                'comment' => $row['value2'],
-                'membername' => $row['realName'],
-                'time' => timeformat($row['value4']),
+                'title' => $row['subject'],
+                'comment' => $row['comment'],
+                'membername' => $row['real_name'],
+                'time' => timeformat($row['datetime']),
                 'author' => $row['author'],
-                'authorID' => $row['authorID'],
-                'member_id' => $row['value3'],
+                'author_id' => $row['authorID'],
+                'member_id' => $row['member_id'],
                 'is_read' => $row['isRead'],
                 'replies' => $check[0],
             );
@@ -192,6 +192,7 @@ function articleShowComments() {{{
     };
 
 }}}
+
 
 function articleDeleteComment() {{{
 
