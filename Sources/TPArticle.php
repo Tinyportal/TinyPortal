@@ -171,7 +171,7 @@ function articleShowComments() {{{
                 'membername' => $row['real_name'],
                 'time' => timeformat($row['datetime']),
                 'author' => $row['author'],
-                'author_id' => $row['authorID'],
+                'author_id' => $row['author_id'],
                 'member_id' => $row['member_id'],
                 'is_read' => $row['isRead'],
                 'replies' => $check[0],
@@ -192,7 +192,6 @@ function articleShowComments() {{{
     };
 
 }}}
-
 
 function articleDeleteComment() {{{
 

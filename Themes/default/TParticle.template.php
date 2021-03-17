@@ -120,7 +120,7 @@ function template_submitarticle()
 				</dl>
 					';
 				if($article_type == 'php' || $article_type == 'html')	{
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' , '<div class="font-strong">'.$txt['tp-introtext'].'</div>';
 					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
                     }
@@ -130,7 +130,7 @@ function template_submitarticle()
 					echo '</div>';
 				}
 				elseif($article_type == 'bbc' || $article_type == 'import') {
-					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' ,
+					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? 'style="display:none;">' : '>' ,
                     '<div class="font-strong">'.$txt['tp-introtext'].'</div>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
@@ -657,7 +657,7 @@ function template_showcomments()
                                 <div class="float-items" style="width:30%;">
                                     <a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . ' ' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '</a>
                                 </div>
-                                <div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+                                <div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['author_id'].'">' . $mes['author'] . '</a></div>
                                 <div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'],0,150) , '...</div></div>
                                 <div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
                             </div>
