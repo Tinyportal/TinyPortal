@@ -639,7 +639,7 @@ function template_showcomments()
 					<div style="word-break:break-all;">
 						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
 						<div class="float-items tpleft" style="width:15%;">' . $txt['tp-author'] . '</div>
-						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-comments'] . '</div>
+						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-comment'] . '</div>
 						<div class="float-items tpleft" style="width:25%;">' . $txt['by'] . '</div>
 						<p class="clearthefloat"></p>
 					</div>
@@ -693,7 +693,7 @@ function template_showcomments()
 			<div>
 				<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
 				<div class="float-items tpleft" style="width:15%;">' . $txt['tp-author'] . '</div>
-				<div class="float-items tpleft" style="width:30%;">' . $txt['tp-comments'] . '</div>
+				<div class="float-items tpleft" style="width:30%;">' . $txt['tp-comment'] . '</div>
 				<div class="float-items tpleft" style="width:25%;">' . $txt['by'] . '</div>
 				<p class="clearthefloat"></p>
 			</div>
@@ -728,12 +728,17 @@ function template_showcomments()
 				<div class="padding-div">' . $txt['tp-nocomments2'] . '</div>
 			</td>
 			</tr>';
+			}
 			echo '
+			<tr class="windowbg">
+			    <td class="shouts">
+				    <div class="padding-div tpright"><a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showall'] . '</a></div>
+			    </td>
+			</tr>
 			</tbody>
 		</table>
 		<div class="tp_pad">'.$context['TPortal']['pageindex'].'</div>
 		</div>';
-            }
 		}
 }
 
