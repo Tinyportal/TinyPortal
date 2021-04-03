@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 use \TinyPortal\Article as TPArticle;
@@ -466,7 +466,7 @@ function editBlock( $block_id = 0 ) {{{
     require_once(SOURCEDIR.'/TPortalAdmin.php');
 
 	TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);
-	TPadd_linktree($scripturl.'?action=tpadmin&sa=editblock&id='.$block_id . ';'.$context['session_var'].'='.$context['session_id'], $txt['tp-editblock']);
+	TPadd_linktree($scripturl.'?action=tpadmin&amp;sa=editblock&amp;id='.$block_id . ';'.$context['session_var'].'='.$context['session_id'], $txt['tp-editblock']);
 
     $row = $tpBlock->getBlock($block_id);
     if(is_array($row)) {

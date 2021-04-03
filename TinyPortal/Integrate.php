@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 namespace TinyPortal;
@@ -29,9 +29,9 @@ class Integrate
 
         $paths = array (
             // Downloads
-			'~^action=tpmod;dl=item([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=item%2$s',
-			'~^action=tpmod;dl=cat([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=cat%2$s',
-			'~^action=tpmod;dl=get([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&sa=download;dl=get%2$s',
+			'~^action=tpmod;dl=item([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&amp;sa=download;dl=item%2$s',
+			'~^action=tpmod;dl=cat([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&amp;sa=download;dl=cat%2$s',
+			'~^action=tpmod;dl=get([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&amp;sa=download;dl=get%2$s',
 		);
 
         if(is_array($_SERVER) && isset($_SERVER['QUERY_STRING'])) {
@@ -284,7 +284,7 @@ class Integrate
         }
 
 
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.1.0</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2020</a>';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.1.0</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2021</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;

@@ -11,7 +11,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 
@@ -143,11 +143,13 @@ function template_settings()
 			<div class="information smalltext">' , $txt['tp-helpsettings'] , '</div><div></div>
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
-						<!-- START non responsive themes form -->
-							<div>
-						       <div class="font-strong">'.$txt['tp-formres'].'</div>';
+					<!-- START non responsive themes form -->
+					<dl class="settings">
+						<dt>
+					       <label for="tp_resp">'.$txt['tp-formres'].'</label>
+						</dt>
+						<dd>';
 						       $tm=explode(",",$context['TPortal']['resp']);
-						   echo '<input type="checkbox" name="tp_resp" id="tp_resp" value="0"><label for="tp_resp">'.$txt['tp-deselectthemes'].'</label><br><br> ';
 							foreach($context['TPallthem'] as $them) {
 					              if(TP_SMF21) {
 									echo '
@@ -164,10 +166,13 @@ function template_settings()
 					              }
 					              echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
 						       }
-						       echo'<br><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
-					        </div>
-						<!-- END non responsive themes form -->
-							<br><hr>
+						   echo '
+							<br><input type="checkbox" name="tp_resp" id="tp_resp" value="0"><label for="tp_resp">'.$txt['tp-deselectthemes'].'</label>
+						</dd>
+					</dl>
+					<br><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
+					<!-- END non responsive themes form -->
+					<br><hr>
 
 				<dl class="settings">
 					<dt>
@@ -177,7 +182,7 @@ function template_settings()
 						<input type="text" name="tp_frontpage_title" id="tp_frontpage_title" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '" size="50">
 					</dd>
 					<dt>
-						', $txt['tp-redirectforum'], '
+						<label for="tp-redirectforum">', $txt['tp-redirectforum'], '</label>
 					</dt>
 					<dd>
 						<input type="radio" name="tp_redirectforum" id="tp_redirectforum1" value="1" ' , $context['TPortal']['redirectforum']=='1' ? 'checked' : '' , '><label for="tp_redirectforum1"> '.$txt['tp-redirectforum1'].'</label>
@@ -327,7 +332,7 @@ function template_frontpage()
 				<div class="formtable padding-div">
 					<dl class="settings">
 						<dt>
-							', $txt['tp-whattoshow'], '
+							<label for="tp_front_type">', $txt['tp-whattoshow'], '</label>
 						</dt>
 						<dd>
 							<input type="radio" id="tp_front_type1" name="tp_front_type" value="forum_selected" ' , $context['TPortal']['front_type']=='forum_selected' ? 'checked' : '' , '><label for="tp_front_type1"> '.$txt['tp-selectedforum'].'</label><br>
@@ -340,7 +345,7 @@ function template_frontpage()
 							<input type="radio" id="tp_front_type8" name="tp_front_type" value="boardindex"  ' , $context['TPortal']['front_type']=='boardindex' ? 'checked' : '' , '><label for="tp_front_type8"> '.$txt['tp-boardindex'].'</label><br><br>
 						</dd>
 						<dt>
-							', $txt['tp-frontblockoption'], '
+							<label for="tp_frontblock">', $txt['tp-frontblockoption'], '</label>
 						</dt>
 						<dd>
 							<input type="radio" id="tp_frontblock_type1" name="tp_frontblock_type" value="single"  ' , $context['TPortal']['frontblock_type']=='single' ? 'checked' : '' , '><label for="tp_frontblock_type1"> '.$txt['tp-frontblocksingle'].'</label><br>
@@ -387,15 +392,16 @@ function template_frontpage()
 					<div>
 						<strong>', $txt['tp-articlelayouts'], '</strong>
 					</div>
-					<div>';	foreach($context['TPortal']['admin_layoutboxes'] as $box)
-								echo '
-									<div class="tpartlayouttype">
-										<input type="radio" id="tp_frontpage_catlayout'.$box['value'].'" name="tp_frontpage_catlayout" value="'.$box['value'].'"' , $context['TPortal']['frontpage_catlayout']==$box['value'] ? ' checked="checked"' : '' , '><label for="tp_frontpage_catlayout'.$box['value'].'">
-										'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" /></label>
-									</div>';
+					<div>';
+			foreach($context['TPortal']['admin_layoutboxes'] as $box)
+				echo '
+					<div class="tpartlayouttype">
+						<input type="radio" id="tp_frontpage_catlayout'.$box['value'].'" name="tp_frontpage_catlayout" value="'.$box['value'].'"' , $context['TPortal']['frontpage_catlayout']==$box['value'] ? ' checked="checked"' : '' , '><label for="tp_frontpage_catlayout'.$box['value'].'">
+						'.$box['label'].'<br><img style="margin: 4px 4px 4px 10px;" src="' , $settings['tp_images_url'] , '/TPcatlayout'.$box['value'].'.png" alt="tplayout'.$box['value'].'" /></label>
+					</div>';
 
-							if(empty($context['TPortal']['frontpage_template']))
-								$context['TPortal']['frontpage_template'] = '
+			if(empty($context['TPortal']['frontpage_template']))
+				$context['TPortal']['frontpage_template'] = '
 <span class="upperframe"><span></span></span>
 <div class="roundframe">
 	<div class="title_bar">
@@ -421,7 +427,7 @@ function template_frontpage()
 	</div>
 </div>
 <span class="lowerframe" style="margin-bottom: 5px;"></span>';
-							echo '<br style="clear: both;" />
+			echo '<br style="clear: both;" />
 				</div>
 				<div>
 					<h4><a href="', $scripturl, '?action=helpadmin;help=',$txt['reset_custom_template_layoutdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
@@ -454,7 +460,8 @@ function template_frontpage()
 					<hr>
 					<dl class="settings">
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-allowguestsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_allow_guestnews">', $txt['tp-allowguests'], '
+							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-allowguestsdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>
+							<label for="tp_allow_guestnews">', $txt['tp-allowguests'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_allow_guestnews" name="tp_allow_guestnews" value="1" ' , $context['TPortal']['allow_guestnews']=='1' ? 'checked' : '' , '>
@@ -612,12 +619,7 @@ function template_categories()
 		}
 				echo '
 				</tbody>
-				</table>';
-		echo '
-				<br>
-				<div class="padding-div;">
-					<input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
-				</div>
+				</table>
 			</div>
 		</div>
 	</form>';
@@ -644,7 +646,7 @@ function template_editcategory()
 						</dt>
 						<dd>
 							<input type="text" id="tp_category_value1" style="max-width:97%;" name="tp_category_value1" value="' ,html_entity_decode($mg['value1']), '" size="50" required>
-						<dd>
+						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortnamedesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8"><b>', $txt['tp-shortname'], '</b></label>
 						</dt>
@@ -664,7 +666,7 @@ function template_editcategory()
 				}
 					echo '
 							</select>
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_sort">', $txt['tp-sorting'], '</label>
 						</dt>
@@ -679,13 +681,13 @@ function template_editcategory()
 								<option value="desc"' , isset($mg['sortorder']) && $mg['sortorder']=='desc' ? ' selected="selected"' : '' , '>' , $txt['tp-sortdirection1'] , '</option>
 								<option value="asc"' , isset($mg['sortorder']) && $mg['sortorder']=='asc' ? ' selected="selected"' : '' , '>' , $txt['tp-sortdirection2'] , '</option>
 							</select>
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_articlecount">', $txt['tp-articlecount'], '</label>
 						</dt>
 						<dd>
 							<input type="number" id="tp_category_articlecount" name="tp_category_articlecount" value="' , empty($mg['articlecount']) ? $context['TPortal']['frontpage_limit'] : $mg['articlecount']  , '" style="width: 6em">
-						<dd>
+						</dd>
 					</dl>
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>
 					<hr>
@@ -764,12 +766,12 @@ function template_editcategory()
 					<hr>
 					<dl class="tptitle settings">
 						<dt>
-							', $txt['tp-showchilds'], '
+							<label for="tp_category_showchild1">', $txt['tp-showchilds'], '</label>
 						</dt>
 						<dd>
-							<input type="radio" name="tp_category_showchild" value="1"' , (isset($mg['showchild']) && $mg['showchild']==1) ? ' checked="checked"' : '' , '> ' , $txt['tp-yes'] , '
-							<input type="radio" name="tp_category_showchild" value="0"' , ((isset($mg['showchild']) && $mg['showchild']==0) || !isset($mg['showchild'])) ? ' checked="checked"' : '' , '> ' , $txt['tp-no'] , '<br><br>
-						<dd>
+							<input type="radio" name="tp_category_showchild" id="tp_category_showchild1" value="1"' , (isset($mg['showchild']) && $mg['showchild']==1) ? ' checked="checked"' : '' , '>' , $txt['tp-yes'] , '
+							<input type="radio" name="tp_category_showchild" id="tp_category_showchild0" value="0"' , ((isset($mg['showchild']) && $mg['showchild']==0) || !isset($mg['showchild'])) ? ' checked="checked"' : '' , '>' , $txt['tp-no'] , '<br><br>
+						</dd>
 						<dt>
 							<strong>', $txt['tp-allpanels'], '</strong>
 						</dt>
@@ -778,37 +780,37 @@ function template_editcategory()
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_category_leftpanel" name="tp_category_leftpanel" value="1"' , !empty($mg['leftpanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_rightpanel">', $txt['tp-displayrightpanel'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_category_rightpanel" name="tp_category_rightpanel" value="1"' , !empty($mg['rightpanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_toppanel">', $txt['tp-displaytoppanel'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_category_toppanel" name="tp_category_toppanel" value="1"' , !empty($mg['toppanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_centerpanel">', $txt['tp-displaycenterpanel'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_category_centerpanel" name="tp_category_centerpanel" value="1"' , !empty($mg['centerpanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_lowerpanel">', $txt['tp-displaylowerpanel'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_category_lowerpanel" name="tp_category_lowerpanel" value="1"' , !empty($mg['lowerpanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
+						</dd>
 						<dt>
 							<label for="tp_category_bottompanel">', $txt['tp-displaybottompanel'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_category_bottompanel" name="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
-						<dd>
+						</dd>
 					</dl>
 					<dl class="tptitle settings">
 						<dt>
@@ -884,7 +886,7 @@ function template_addcategory()
 			}
 			echo '
 							</select><input type="hidden" name="newcategory" value="1">
-						<dd>
+						</dd>
 					</dl>
 				</div>
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -920,7 +922,7 @@ function template_clist()
 		}
 		echo '
 					<br><input type="checkbox" onclick="invertAll(this, this.form, \'tp_clist\');" />  '.$txt['tp-checkall'].'
-				</div><br>
+				</div>
 				<div class="padding-div"><input type="submit" class="button button_submit" name="send" value="'.$txt['tp-send'].'"></div>
 			</div>
 		</div>
@@ -1072,24 +1074,22 @@ function template_articles()
 			</td>
 			</tr>';
 			}
-	echo '
+			echo '
 		</tbody>
 	</table>';
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
-								<div class="middletext padding-div">
-									'.$context['TPortal']['pageindex'].'
-								</div>';
+					<div class="middletext padding-div">
+						'.$context['TPortal']['pageindex'].'
+					</div>';
 			echo '
-							<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
-						<input type="hidden" name="tpadmin_form_category" value="' . $catty . '"></div>';
+					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
+						<input type="hidden" name="tpadmin_form_category" value="' . $catty . '">
+					</div>';
 	}
-	else
-		echo '
-				<div class="padding-div"></div>';
-
-		echo '
-		</div></div>
+			echo '
+			</div>
+		</div>
 	</form>';
 }
 
@@ -1203,7 +1203,7 @@ function template_strays()
 
 		if(isset($context['TPortal']['allcats'])) {
 			echo '
-				<br><div class="padding-div">
+				<div class="padding-div">
 				<select name="tp_article_cat">
 					<option value="0">' . $txt['tp-createnew'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg) {
@@ -1213,7 +1213,7 @@ function template_strays()
 			echo '
 				</select>
 				<input name="tp_article_new" value="" size="40" />
-				</div><br>';
+				</div>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -1331,7 +1331,7 @@ function template_submission()
 		if(isset($context['TPortal']['allcats']))
 		{
 			echo '
-				<br><div class="padding-div">
+				<div class="padding-div">
 					<select name="tp_article_cat">
 						<option value="0">' . $txt['tp-createnew2'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg)
@@ -1340,7 +1340,7 @@ function template_submission()
 			echo '
 					</select>
 					<input name="tp_article_new" value="" size="40" /> &nbsp;
-				</div><br>';
+				</div>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -1455,10 +1455,10 @@ function template_artsettings()
 					<hr>
 					<dl class="settings">
 						<dt>
-							'.$txt['tp-iconsize'].'
+							<label for="tp_icon_width">'.$txt['tp-iconsize'].'</label>
 						</dt>
 						<dd>
-							<input type="number" name="tp_icon_width" value="'.$context['TPortal']['icon_width'].'" style="width: 6em" maxlength="3"> x <input type="number" name="tp_icon_height"value="'.$context['TPortal']['icon_height'].'" style="width: 6em" maxlength="3" > px
+							<input type="number" name="tp_icon_width" id="tp_icon_width" value="'.$context['TPortal']['icon_width'].'" style="width: 6em" maxlength="3"> x <input type="number" name="tp_icon_height"value="'.$context['TPortal']['icon_height'].'" style="width: 6em" maxlength="3" > px
 						</dd>
 						<dt>
 							<label for="tp_iconmaxsize">'.$txt['tp-iconmaxsize'].'</label>
@@ -1492,7 +1492,7 @@ function template_articons()
 				<div class="formtable"><br>
 					<dl class="tptitle settings">
 						<dt>
-							', $txt['tp-adminicons6'], '<br>
+							<label for="field_name">', $txt['tp-adminicons6'], '</label>
 						</dt>
 						<dd>
 							<input type="file" name="tp_article_newillustration" />
@@ -1618,22 +1618,25 @@ function template_panels()
 
 	foreach($allpanels as $pa => $panl) {
 		echo '
-				<div id="panels-options" class="padding-div">
+				<div class="padding-div">
 				<hr>
 				<dl class="settings">
-				<dt>
-					<div class="font-strong">';
+					<dt>
+						<span class="font-strong">
+						'. $txt['tp-'.$panl.'panel'] .'</span>
+					</dt>
+					<dd>
+					';
 		if( $panl != 'front' ) {
-			echo $txt['tp-'.$panl.'panel'].'</div></dt>
-				<dd>
-					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" /></dd>';
+			echo '
+				<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'' , $context['TPortal']['admin'.$panl.'panel'] ? '' : '_off' , '.png" alt="" />';
         }
 		else {
-			echo $txt['tp-'.$panl.'panel'].'</div></dt>
-					<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" /></dd>';
+			echo '
+				<a name="'.$panl.'"></a><img src="' .$settings['tp_images_url']. '/TPpanel_'.$panl.'.png" alt="" />';
         }
 		echo '
-					<br>
+					</dd>
 				</dl>
 				<dl class="settings">';
 		if( $panl != 'front' ) {
@@ -1951,9 +1954,9 @@ function template_blocks()
 					}
 					echo '
 						</div>
-						<div  style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
+						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive"><strong>'.$txt['tp-editsave'].'</strong></div>
-							<a href="' . $scripturl . '?action=tpadmin&sa=editblock&id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
+							<a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
 							<input type="image" class="tpbut" style="height:16px; vertical-align:top;" src="' .$settings['tp_images_url']. '/TPsave.png" title="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">
 						</div>
 	                    <div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
@@ -2097,7 +2100,7 @@ function template_blocks()
 				}
 			echo '
 					</tbody>
-				</table><br>';
+				</table>';
 			}
 		}
 		echo '
@@ -2230,7 +2233,7 @@ function template_blockoverview()
 				{
 					echo '
 				<div class="tp_twocolumn">
-					<p><a href="' . $scripturl . '?action=tpadmin&sa=editblock&id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
+					<p><a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
 					<hr>
 					<div id="tp'.$block['id'].'" style="overflow: hidden;">
 						<input type="hidden" name="' . rand(10000,19999) .'tpblock'.$block['id'].'" value="control" />';
@@ -2259,8 +2262,7 @@ function template_menubox()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 		// is it a single menu?
-		if(isset($_GET['mid']))
-		{
+		if(isset($_GET['mid'])) {
 			$mid=is_numeric($_GET['mid']) ? $_GET['mid'] : 0;
 			echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -2462,19 +2464,20 @@ function template_menubox()
 							<input type="text" name="tp_menu_name' .$mbox['id']. '" value="' .$mbox['name']. '" size="40" required><br>
 						</div>
 						<div style="width:15%;" class="menu-actions float-items tpcenter">
-							<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=' .$mbox['id']. '"><img height="16px" title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'" /></a>
+							<a href="' . $scripturl . '?action=tpadmin;sa=menubox;mid=' .$mbox['id']. '"><img height="16" title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'" /></a>
 						</div>
 						<div style="width:15%;" class="menu-actions float-items tpcenter">
-							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete='. $mbox['id']. ';fullmenu" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img height="16px" title="'.$txt['tp-delete'].'" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'" /></a><br>
+							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete='. $mbox['id']. ';fullmenu" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img height="16" title="'.$txt['tp-delete'].'" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'" /></a><br>
 						</div>
 					</td>
 					</tr>';
 			}
+			echo '
+				</tbody>
+				</table>';
 		}
 		echo '
-				</tbody>
-				</table>
-				<div><br>
+				<div>
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
 				</div>
 			</div>
@@ -2523,9 +2526,11 @@ function template_addmenu()
 		<div id="add-menu" class="admintable admin-area">
 			<div class="windowbg noup padding-div"><br>
 				<dl class="settings tptitle">
-					<dt><label for="tp_menu_title"><h4>'.$txt['tp-title'].'</h4><label>
+					<dt>
+						<span class="font-strong"><label for="tp_menu_title">'.$txt['tp-title'].'</label></span>
 					</dt>
-					<dd><input type="text" id="tp_menu_title" name="tp_menu_title" value="" size="40" required><br>
+					<dd>
+						<input type="text" id="tp_menu_title" name="tp_menu_title" value="" size="40" required><br>
 					</dd>
 				</dl>
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -2560,15 +2565,15 @@ function template_menucore()
 		<div class="windowbg noup padding-div"><br>
 			<dl class="settings tptitle">
 				<dt>
-					<label for="tp_menu_name"><b>'.$txt['tp-title'].'</b></label>
+					<label for="tp_menu_name">'.$txt['tp-title'].'</label>
 				</dt>
 				<dd>
-					<input type="text" id="tp_menu_name" name="tp_menu_name" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'" required size="50"  style="max-width:97%;">
+					<input type="text" id="tp_menu_name" name="tp_menu_name" value="', isset($context['TPortal']['editmenuitem']['name']) ? $context['TPortal']['editmenuitem']['name'] : ''  ,'" required size="50" style="max-width:97%;">
 				</dd>
 			</dl>
 			<dl class="settings tptitle">
 				<dt>
-					<label for="tp_menu_type"><b>'.$txt['tp-type'].'</b></label>
+					<label for="tp_menu_type">'.$txt['tp-type'].'</label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_type" id="tp_menu_type">
@@ -2599,7 +2604,7 @@ function template_menucore()
 			<hr>
 			<dl class="settings tptitle">
 				<dt>
-					<label for="tp_item"><b>'.$txt['tp-item'].'</b></label>
+					<label for="tp_item">'.$txt['tp-item'].'</label>
 				</dt>
 				<dd>';
 		// (category)
@@ -2636,7 +2641,7 @@ function template_menucore()
                     <input type="text" id="tp_menu_link" name="tp_menu_link" size="40" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 				</dd>
 				<dt>
-					<label for="tp_menu_newlink"><b>'.$txt['tp-windowopen'].'</b></label>
+					<label for="tp_menu_newlink">'.$txt['tp-windowopen'].'</label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
@@ -2645,7 +2650,7 @@ function template_menucore()
 					</select>
 				</dd>
 				<dt>
-					<label for="tp_menu_sub"><b>'.$txt['tp-sub_item'].'</b></label>
+					<label for="tp_menu_sub">'.$txt['tp-sub_item'].'</label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_sub" id="tp_menu_sub">
@@ -2656,7 +2661,7 @@ function template_menucore()
 					</select>
 				</dd>
 				<dt>
-					<label for="tp_menu_position"><b>'.$txt['tp-menu-after'].'</b></label>
+					<label for="tp_menu_position">'.$txt['tp-menu-after'].'</label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_menu_position" id="tp_menu_position">';
@@ -2670,7 +2675,7 @@ function template_menucore()
 		if(TP_SMF21) {
 			echo '
 				<dt>
-					<label for="tp_menu_icon"><b>'.$txt['tp-menu-icon'].'</b><br>
+					<label for="tp_menu_icon">'.$txt['tp-menu-icon'].'<br>
 						'.$txt['tp-menu-icon2'].'</label>
 				</dt>
 				<dd>

@@ -13,7 +13,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 
@@ -1243,10 +1243,10 @@ function addDefaults()
                 }
                 $data   = json_encode($row);
                 $smcFunc['db_query']('', 'UPDATE {db_prefix}tp_blocks
-                    SET settings = {string:data}
-                    WHERE id = {int:id}',
-                    array( 'data' => $data, 'id' => $id )
-                );
+                        SET settings = {string:data}
+                        WHERE id = {int:id}',
+                        array( 'data' => $data, 'id' => $id )
+                        );
             }
             $render .= '<li>Updated tp_blocks settings</li>';
             $smcFunc['db_free_result']($request);

@@ -10,7 +10,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 
@@ -44,17 +44,17 @@
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
 }
-#shoutError {
+.shoutError {
 	background-color: #FF9999;
 	border: 1px solid #CC0000;
 	margin-top: 5px;
 	padding: 3px;
 }
-#bigshout {
+.bigshout {
 	height: 100%;
 	width: 99%;
 }
-#shout_errors {
+.shout_errors {
 	display: none;
 }
 /* for layout option 0 */

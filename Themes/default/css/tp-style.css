@@ -10,7 +10,7 @@
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
- * Copyright (C) 2020 - The TinyPortal Team
+ * Copyright (C) - The TinyPortal Team
  *
  */
 
@@ -40,6 +40,28 @@
 .tp_tabs a.tp_active {
 	font-weight: bold;
 }
+.dropmenu .tp_menu_horizontal20 {
+	display: block;
+	border-top: 1px solid;
+	overflow: hidden;
+	padding: 0em;
+	margin: 0em auto;
+	cursor: default;
+	position: relative;
+	top: .7em;
+	opacity: 0.3;
+}
+.dropmenu .tp_menu_horizontal21 {
+	display: block;
+	border-top: 1px solid;
+	overflow: hidden;
+	padding: 0em;
+	margin: 0em auto;
+	cursor: default;
+	position: relative;
+	top: 1em;
+	opacity: 0.3;
+}
 #tpleftbarContainer {
 	float: left;
 }
@@ -61,6 +83,52 @@
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box;
 }
+/* Panel Grid options using CSS grid */
+.GridWrap {
+    display: grid;
+    column-gap: 4px;
+    grid-template-columns: [col1-start] 33.1% [col2-start] 33.1%  [col3-start] 33.1% [col3-end];
+    grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
+  }
+/* Panel grid1 */
+.grid1box1 {
+    grid-column: col1-start / col3-end;
+    grid-row: row1-start;
+  }
+.grid1box2 {
+    grid-column: col1-start;
+    grid-row: row2-start ;
+	}
+.grid1box3 {
+    grid-column: col2-start ;
+    grid-row: row2-start ;
+	}
+.grid1box4 {
+    grid-column: col3-start;
+    grid-row: row2-start ;
+	}
+/* Panel grid2 */
+.grid2box1 {
+    grid-column: col1-start ;
+    grid-row: row1-start / row2-end;
+  }
+.grid2box2 {
+    grid-column: col2-start;
+    grid-row: row1-start ;
+	}
+.grid2box3 {
+    grid-column: col3-start ;
+    grid-row: row1-start ;
+	}
+.grid2box4 {
+    grid-column: col2-start;
+    grid-row: row2-start ;
+	}
+.grid2box5 {
+    grid-column: col3-start ;
+    grid-row: row2-start ;
+	}	
+
 /* articles */
 .article h2 {
 	margin: 0;
@@ -339,7 +407,7 @@ img.tp_social {
 .article_inner img, .tparticle img, .bbc_img {
 	height: auto;
 	max-width: 100%;
-} 
+}
 .tpthumb img {
 	max-height: 150px;
 	max-width: 150px;
@@ -958,11 +1026,11 @@ input,select {
 .addborderleft div {
 	border-left: 1px solid #CCCCCC;
 	border-left: 1px solid rgba(204, 204, 204, 0.5);
-} 
+}
 .tpartlayoutfp {
     float: left;
 	margin: 4px;
-} 
+}
 .tpartlayouttype {
 	float: left;
 	height: 100px;
@@ -971,15 +1039,15 @@ input,select {
 }
 #tp_article_body {
 	height: 300px;
-	width: 98%; 
+	width: 98%;
 }
 #tp_article_intro {
 	height: 140px;
-	width: 98%; 
+	width: 98%;
 }
 dl.tptitle dt {
 	float: left;
-	width: 40%;
+	width: 39%;
 }
 dl.tptitle dd {
 	float: right;
@@ -1115,7 +1183,7 @@ div.tp_half21 {
 .tp_block21 {
 	margin-bottom: 0 !important;
 	margin-top: 6px;
-	padding: 4px 8px 8px 8px; 
+	padding: 4px 8px 8px 8px;
 }
 code.bbc_code {
 	-epub-hyphens: auto;
@@ -1265,7 +1333,7 @@ select[name="tp_dlitem_rating"] {
 	width: initial;
 }
 div.dl_featureshot {
-	float: right;	
+	float: right;
 	margin: 4px 4px 4px 1em;
 }
 div.dl_screenshot {
@@ -1295,7 +1363,7 @@ h3.h3dl {
 	padding: 0 0 0.5em 0;
 }
 h4.h4dl {
-	font-size: 1.1em; 
+	font-size: 1.1em;
 	font-weight: bold;
 	margin: 0;
 	padding: 0 0 0.5em 0;
