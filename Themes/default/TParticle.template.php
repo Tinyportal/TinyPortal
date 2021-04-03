@@ -657,7 +657,7 @@ function template_showcomments()
                                 <div class="float-items" style="width:30%;">
                                     <a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . ' ' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '</a>
                                 </div>
-                                <div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
+                                <div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['author_id'].'">' . $mes['author'] . '</a></div>
                                 <div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'],0,150) , '...</div></div>
                                 <div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
                             </div>
