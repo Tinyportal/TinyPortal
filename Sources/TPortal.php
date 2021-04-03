@@ -2224,27 +2224,20 @@ function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $no
 
 	// first, set the table, equal in all grids
 	if($pos == 0) {
-		echo '<div style="width:100%;">';
-    }
-
-	if(isset($context['TPortal']['grid'][$gridtype][$pos]['doubleheight'])) {
-		$dh = true;
-    }
-	else {
-		$dh = false;
+		echo '<div class="GridWrap">';
     }
 
 	// render if its not empty
 	if($none == false) {
-		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] , call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side, $dh) , $context['TPortal']['grid'][$gridtype][$pos]['after'];
+		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] , call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side) , $context['TPortal']['grid'][$gridtype][$pos]['after'];
     }
 	else {
-		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] . '&nbsp;' . $context['TPortal']['grid'][$gridtype][$pos]['after'];
+		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] . '' . $context['TPortal']['grid'][$gridtype][$pos]['after'];
     }
 
 	// last..if its the last block,close the table
 	if($last) {
-		echo '<p class="clearthefloat"></p></div>';
+		echo '</div>';
     }
 
 }}}
@@ -2253,16 +2246,16 @@ function TP_blockgrids() {{{
 	global $context;
 
 	$context['TPortal']['grid'] = array();
-	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="gridColumns">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div><div class="gridColumns" style="width:32.3%;padding-right:0.7%;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="gridColumns" style="width:32.3%;padding-right:0.7%;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="gridColumns" style="width:34%;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
+	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="grid1box1">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div class="grid1box2">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="grid1box3">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="grid1box4">', 'after' => '</div>');
 
-	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="gridC" style="width:32.3%;padding-right: 0.7%;float:left;">', 'after' => '</div>', 'doubleheight' => true);
-	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="gridC" style="width:67%;float:left;"><div class="gridColumns" style="width:49%;padding-right: 1%;padding-bottom: 5px;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="gridColumns" style="width:50%;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="gridColumns" style="width:49%;padding-right: 1%;float:left;">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="gridColumns" style="width:50%;float:left;">', 'after' => '</div><p class="clearthefloat"></p></div>');
+	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="grid2box1">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="grid2box2">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="grid2box3">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="grid2box4">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="grid2box5">', 'after' => '</div>');
 
 }}}
 

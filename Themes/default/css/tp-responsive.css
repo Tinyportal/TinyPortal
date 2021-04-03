@@ -1,6 +1,6 @@
-/**
+	/**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.1.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -223,15 +223,17 @@
 }
 /** screen smaller then 500px **/
 @media all and (min-width: 0) and (max-width: 500px) {
-	.tp_responsive .panelsColumns,
-	.tp_responsive .gridColumns,
-	.tp_responsive .gridC {
+	.tp_responsive .panelsColumns {
 		padding-right:0!important;
 		width:100%!important;
 		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
 	}
 	.tp_twocolumn {
 		width: 100%;
+	}
+	.GridWrap {
+		display: flex;
+		flex-direction: column;
 	}
 }
 /** screen from 400px to 600px **/
