@@ -612,7 +612,7 @@ function doTPpage() {{{
 				if(in_array('inherit', $context['TPortal']['article']['visual_options'])) {
 					$all = array('leftpanel', 'rightpanel', 'toppanel', 'centerpanel', 'lowerpanel', 'bottompanel');
 					for($p = 0; $p < 6; $p++) {
-						if($context['TPortal'][$all[$p]] !== '0') {
+						if(isset($cat_opts[$all[$p]]) && ($context['TPortal'][$all[$p]] !== '0')) {
 							$context['TPortal'][$all[$p]] = $cat_opts[$all[$p]];
                         }
 					}
