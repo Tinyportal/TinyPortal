@@ -145,7 +145,7 @@ function articleShowComments() {{{
     $smcFunc['db_free_result']($request);
 
     $request = $smcFunc['db_query']('', '
-        SELECT art.subject, memb.real_name AS author, art.author_id AS author_id, var.subject, var.comment, var.member_id,
+        SELECT art.subject AS pagename, memb.real_name AS author, art.author_id AS author_id, var.subject, var.comment, var.member_id,
         var.item_id, var.datetime, mem.real_name AS real_name,
         ' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.datetime)') . ' AS isRead
         FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
@@ -165,6 +165,7 @@ function articleShowComments() {{{
         while($row=$smcFunc['db_fetch_assoc']($request)) {
             $context['TPortal']['artcomments']['new'][] = array(
                 'page' => $row['item_id'],
+                'pagename' => $row['pagename'],
                 'subject' => $row['subject'],
                 'title' => $row['subject'],
                 'comment' => $row['comment'],
@@ -184,7 +185,9 @@ function articleShowComments() {{{
     $context['TPortal']['pageindex']        = TPageIndex($scripturl.'?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
     $context['TPortal']['unreadcomments']   = true;
     $context['TPortal']['showall']          = $showall;
-    TPadd_linktree($scripturl.'?action=tportal;sa=showcomments' . ($showall ? ';showall' : '')  , $txt['tp-showcomments']);
+    TPadd_linktree($scripturl.'?action=tportal;sa=showcomments', $txt['tp-showcomments']);
+    ($showall ? (TPadd_linktree($scripturl.'?action=tportal;sa=showcomments;showall', $txt['tp-showall'])) : '');
+    ($showall ? ($context['TPortal']['pageindex']        = TPageIndex($scripturl.'?action=tportal;sa=showcomments;showall', $tpstart, $check[0], 15)) : '');
     loadTemplate('TParticle');
     $context['sub_template'] = 'showcomments';
     if(loadLanguage('TParticle') == false) {

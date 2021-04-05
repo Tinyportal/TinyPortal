@@ -574,7 +574,7 @@ function doTPpage() {{{
 					// add the headers!
 					$context['tp_html_headers'] .= $article['headers'];
 				}
-				// set bars on/off according to options, setting override
+				// set bars on/off according to article options
 				$all = array('showtop', 'centerpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
 				$all2=array('top', 'cblock', 'lblock', 'rblock', 'tblock', 'bblock', 'lbblock', 'comments', 'views', 'rating', 'date', 'title',
 				'commentallow', 'commentupshrink', 'ratingallow', 'nolayer', 'avatar');
@@ -608,12 +608,11 @@ function doTPpage() {{{
 
 				$context['TPortal']['article']['category_opts'] = $cat_opts;
 
-				// the article should follow panel settngs from category?
+				// the article should follow panel settings from category?
 				if(in_array('inherit', $context['TPortal']['article']['visual_options'])) {
-					// set bars on/off according to options, setting override
-					$all = array('upperpanel', 'leftpanel', 'rightpanel', 'toppanel', 'bottompanel', 'lowerpanel');
+					$all = array('leftpanel', 'rightpanel', 'toppanel', 'centerpanel', 'lowerpanel', 'bottompanel');
 					for($p = 0; $p < 6; $p++) {
-						if(isset($cat_opts[$all[$p]])) {
+						if($context['TPortal'][$all[$p]] !== '0') {
 							$context['TPortal'][$all[$p]] = $cat_opts[$all[$p]];
                         }
 					}

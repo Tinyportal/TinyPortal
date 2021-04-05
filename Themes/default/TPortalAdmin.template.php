@@ -776,40 +776,40 @@ function template_editcategory()
 							<strong>', $txt['tp-allpanels'], '</strong>
 						</dt>
 						<dt>
-							<label for="tp_category_leftpanel">', $txt['tp-displayleftpanel'], '</label>
+							<label for="tp_category_leftpanel">', $txt['tp-displayleftpanel'], '</label> 
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_category_leftpanel" name="tp_category_leftpanel" value="1"' , !empty($mg['leftpanel']) ? ' checked="checked"' : '' ,' />
+							'. (($context['TPortal']['adminleftpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_category_leftpanel" name="tp_category_leftpanel" value="1"'. (!empty($mg['leftpanel']) ? ' checked="checked"' : '' ) .' />' ) .'
 						</dd>
 						<dt>
 							<label for="tp_category_rightpanel">', $txt['tp-displayrightpanel'], '</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_category_rightpanel" name="tp_category_rightpanel" value="1"' , !empty($mg['rightpanel']) ? ' checked="checked"' : '' ,' />
+							'. (($context['TPortal']['adminrightpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_category_rightpanel" name="tp_category_rightpanel" value="1"'. (!empty($mg['rightpanel']) ? ' checked="checked"' : '') .' />' ) .'
 						</dd>
 						<dt>
 							<label for="tp_category_toppanel">', $txt['tp-displaytoppanel'], '</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_category_toppanel" name="tp_category_toppanel" value="1"' , !empty($mg['toppanel']) ? ' checked="checked"' : '' ,' />
+							'. (($context['TPortal']['admintoppanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_category_toppanel" name="tp_category_toppanel" value="1"'. (!empty($mg['toppanel']) ? ' checked="checked"' : '') .' />' ) .'
 						</dd>
 						<dt>
 							<label for="tp_category_centerpanel">', $txt['tp-displaycenterpanel'], '</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_category_centerpanel" name="tp_category_centerpanel" value="1"' , !empty($mg['centerpanel']) ? ' checked="checked"' : '' ,' />
+							'. (($context['TPortal']['admincenterpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_category_centerpanel" name="tp_category_centerpanel" value="1"'. (!empty($mg['centerpanel']) ? ' checked="checked"' : '') .' />' ) .'
 						</dd>
 						<dt>
 							<label for="tp_category_lowerpanel">', $txt['tp-displaylowerpanel'], '</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_category_lowerpanel" name="tp_category_lowerpanel" value="1"' , !empty($mg['lowerpanel']) ? ' checked="checked"' : '' ,' />
+							'. (($context['TPortal']['adminlowerpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_category_lowerpanel" name="tp_category_lowerpanel" value="1"'. (!empty($mg['lowerpanel']) ? ' checked="checked"' : '') .' />' ) .'
 						</dd>
 						<dt>
 							<label for="tp_category_bottompanel">', $txt['tp-displaybottompanel'], '</label>
 						</dt>
 						<dd>
-							<input type="checkbox" id="tp_category_bottompanel" name="tp_category_bottompanel" value="1"' , !empty($mg['bottompanel']) ? ' checked="checked"' : '' ,' />
+							'. (($context['TPortal']['adminbottompanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_category_bottompanel" name="tp_category_bottompanel" value="1"'. (!empty($mg['bottompanel']) ? ' checked="checked"' : '') .' />' ) .'
 						</dd>
 					</dl>
 					<dl class="tptitle settings">
@@ -1650,18 +1650,18 @@ function template_panels()
 					</dd>';
 				echo '
 					<dt>
-						<label for="tp_'.$panl.'panel">'.$txt['tp-use'.$panl.'panel'].'</label>
+						'.$txt['tp-use'.$panl.'panel'].'
 					</dt>
 					<dd>
-						<input type="radio" id="tp_'.$panl.'panel" name="tp_'.$panl.'panel" value="1" ' , $context['TPortal']['admin'.$panl.'panel']==1 ? 'checked' : '' , '> '.$txt['tp-on'].'
-						<input type="radio" name="tp_'.$panl.'panel" value="0" ' , $context['TPortal']['admin'.$panl.'panel']==0 ? 'checked' : '' , '> '.$txt['tp-off'].'<br>
+						<input type="radio" id="tp_'.$panl.'panelon" name="tp_'.$panl.'panel" value="1" ' , $context['TPortal']['admin'.$panl.'panel']==1 ? 'checked' : '' , '><label for="tp_'.$panl.'panelon"> '.$txt['tp-on'].'</label>
+						<input type="radio" id="tp_'.$panl.'paneloff" name="tp_'.$panl.'panel" value="0" ' , $context['TPortal']['admin'.$panl.'panel']==0 ? 'checked' : '' , '><label for="tp_'.$panl.'paneloff"> '.$txt['tp-off'].'</label>
 					</dd>
 					<dt>
-						<label for="tp_hide_'.$panl.'bar_forum">'.$txt['tp-hide_'.$panl.'bar_forum'].'</label>
+						'.$txt['tp-hide_'.$panl.'bar_forum'].'
 					</dt>
 					<dd>
-						<input type="radio" id="tp_hide_'.$panl.'bar_forum" name="tp_hide_'.$panl.'bar_forum" value="1" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==1 ? 'checked' : '' , '> '.$txt['tp-yes'].'
-						<input type="radio" name="tp_hide_'.$panl.'bar_forum" value="0" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==0 ? 'checked' : '' , '> '.$txt['tp-no'].'
+						<input type="radio" id="tp_hide_'.$panl.'bar_forumon" name="tp_hide_'.$panl.'bar_forum" value="1" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==1 ? 'checked' : '' , '><label for="tp_hide_'.$panl.'bar_forumon"> '.$txt['tp-yes'].'</label>
+						<input type="radio" id="tp_hide_'.$panl.'bar_forumoff" name="tp_hide_'.$panl.'bar_forum" value="0" ' , $context['TPortal']['hide_'.$panl.'bar_forum']==0 ? 'checked' : '' , '><label for="tp_hide_'.$panl.'bar_forumoff"> '.$txt['tp-no'].'</label>
 						<br><br>
 					</dd>';
 		}
@@ -1738,12 +1738,12 @@ function template_panels()
 					</div>';
 			echo '
 				</div>
+				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
 		</div>';
 		$alternate = !$alternate;
 	}
 
 		echo '
-				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
 			</div>
 		</div>
 	</form>';

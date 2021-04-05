@@ -209,6 +209,7 @@ $txt['tp-articleoptions12'] = 'Display all articles in category';
 $txt['tp-articleoptions15'] = 'Allow to comment';
 $txt['tp-articleoptions14'] = 'Display comments underneath article';
 
+$txt['tp-paneloff'] = '<i>The panel is switched off</i>';
 $txt['tp-articleoptions8'] = 'Display left panel';
 $txt['tp-articleoptions_lblockwidth'] = 'Width left panel (leave empty for default)';
 $txt['tp-articleoptions7'] = 'Display right panel';
