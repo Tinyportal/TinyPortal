@@ -143,6 +143,7 @@ $txt['tp-submitarticle'] = 'Write HTML article';
 $txt['tp-total'] = 'Total';
 $txt['tp-unread'] = 'Show unread';
 $txt['tp-users'] = 'Users';
+$txt['tp-quick_login_dec'] = 'Login with username, password and session length';
 
 // Search
 $txt['tp-nosearchentered'] = 'Nothing to search for!';
