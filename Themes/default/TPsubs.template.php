@@ -319,7 +319,7 @@ function TPortal_userbox()
 	// Otherwise they're a guest - so politely ask them to register or login.
 	else  {
 		if(TP_SMF21) {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'welcome_guest_register' : 'welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
+			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
 		}
 		else {
 			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
