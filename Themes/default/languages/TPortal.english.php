@@ -144,6 +144,10 @@ $txt['tp-total'] = 'Total';
 $txt['tp-unread'] = 'Show unread';
 $txt['tp-users'] = 'Users';
 $txt['tp-quick_login_dec'] = 'Login with username, password and session length';
+// argument(s): forum name, login URL, login JavaScript snippet
+$txt['tp-welcome_guest'] = 'Welcome to <strong>%1$s</strong>. Please <a href="%2$s" onclick="%3$s">login</a>.';
+// argument(s): forum name, login URL, login JavaScript snippet, signup URL
+$txt['tp-welcome_guest_register'] = 'Welcome to <strong>%1$s</strong>. Please <a href="%2$s" onclick="%3$s">login</a> or <a href="%4$s">sign up</a>.';
 
 // Search
 $txt['tp-nosearchentered'] = 'Nothing to search for!';
