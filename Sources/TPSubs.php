@@ -1786,7 +1786,7 @@ function TPparseRSS($override = '', $encoding = 0)
 
 	$allow_url = ini_get('allow_url_fopen');
 	if ($allow_url){
-  		$xml = simplexml_load_file($backend);
+  		$xml = simplexml_load_string(file_get_contents($backend));
 	} else {
   		$curl = curl_init();
   		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

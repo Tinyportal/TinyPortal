@@ -469,7 +469,8 @@ $txt['tp-showstatsbox'] = 'Display these stats in the article/downloads box';
 $txt['tp-showssibox'] = 'Display this SSI function in the box';
 $txt['tp-showuserbox'] = 'Display these items in the statbox';
 $txt['tp-showuserbox2'] = 'Display these items in the userbox';
-$txt['tp-themesavail'] = 'Themes available in the themebox';
+$txt['tp-themesavail'] = 'Themes available in the theme selector';
+$txt['tp-sitemapdesc'] = 'In the sitemap block a list of menu items marked as relevant for the Sitemap is displayed.';
 $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-showarticle'] = 'Display article';
 $txt['tp-showcategory'] = 'Display article listing from category';
@@ -482,6 +483,7 @@ $txt['tp-catboxauthor'] = 'Show author?';
 $txt['tp-catboxheight'] = 'Height of the article box before scrollbar';
 $txt['tp-insert'] = 'Insert code';
 $txt['tp-unreadreplies'] = 'Unread replies';
+$txt['tp-noblocktype'] = 'You have not specified a block type';
 
 // Menu manager
 $txt['tp-helpmenus'] = 'The built in menu manager allows you to create multiple menu\'s. These menu\'s are typically displayed in a block. You get all the features of blocks to display these menu\'s in different places along with choosing who gets to see the blocks based on permissions. Here you can edit the Internal menu of create and manage new menu\'s';
