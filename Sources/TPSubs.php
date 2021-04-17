@@ -1775,7 +1775,7 @@ function category_col2($render = true)
 
 function TPparseRSS($override = '', $encoding = 0)
 {
-	global $context, $smcFunc;
+	global $context, $smcFunc, $sourcedir;
 
 	// Initialise the number of RSS Feeds to show
 	$numShown = 0;
@@ -1784,17 +1784,9 @@ function TPparseRSS($override = '', $encoding = 0)
 	if($override != '')
 		$backend = $override;
 
-	$allow_url = ini_get('allow_url_fopen');
-	if ($allow_url){
-  		$xml = simplexml_load_string(file_get_contents($backend));
-	} else {
-  		$curl = curl_init();
-  		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-  		curl_setopt($curl, CURLOPT_URL, $backend);
-  		$ret = curl_exec($curl);
-  		curl_close($curl);
-		$xml = simplexml_load_string($ret);
-	}
+        require_once($sourcedir . '/Subs-Package.php');
+        $data   = fetch_web_data($backend);
+        $xml    = simplexml_load_string($data);
 
 	if($xml !== false) {
 		switch (strtolower($xml->getName())) {
