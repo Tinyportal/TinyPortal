@@ -1912,6 +1912,7 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['recentboxnum'] = $block['body'];
 				$context['TPortal']['useavatar'] = $block['var1'];
 				$context['TPortal']['boardmode'] = $block['var3'];
+				$context['TPortal']['recentlength'] = $block['var4'];
 				if($block['var1'] == '') {
 					$context['TPortal']['useavatar'] = 1;
                 }

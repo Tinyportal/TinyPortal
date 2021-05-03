@@ -14,6 +14,7 @@
  * Copyright (C) - The TinyPortal Team
  *
  */
+use \TinyPortal\Util as TPUtil;
 
 // Block template
 function TPblock($block, $theme, $side, $double=false)
@@ -477,7 +478,7 @@ function TPortal_themebox()
          for($a=0 ; $a<(count($temaid)); $a++)
 		 {
                 echo '
-				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,20).'</option>';
+				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,25).'</option>';
          }
 		 echo '
 			</select><br>' , $context['user']['is_logged'] ?
@@ -648,9 +649,10 @@ function TPortal_recentbox()
 	global $scripturl, $context, $settings, $txt, $modSettings;
 
 	// is it a number?
-	if(!is_numeric($context['TPortal']['recentboxnum']))
-		$context['TPortal']['recentboxnum']='10';
-
+	if(is_numeric($context['TPortal']['recentlength']))
+		$recentlength = $context['TPortal']['recentlength'];
+	else 
+		$recentlength = '25';
 	// exclude boards
 	if (isset($context['TPortal']['recentboards']) && $context['TPortal']['boardmode'] == 0)
 		$exclude_boards = $context['TPortal']['recentboards'];
@@ -680,8 +682,9 @@ function TPortal_recentbox()
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 			if ((TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
+			TPUtil::shortenString($w['subject'], $recentlength);
 			echo '
-				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['short_subject'] . '</a>
+				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['subject'] . '</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if (!(TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>';
@@ -709,14 +712,16 @@ function TPortal_recentbox()
 		$coun = 1;
 		echo '
 		<ul class="recent_topics" style="' , isset($context['TPortal']['recentboxscroll']) && $context['TPortal']['recentboxscroll']==1 ? 'overflow: auto; height: 20ex;' : '' , 'margin: 0; padding: 0;">';
+
 		foreach($what as $wi => $w)
 		{
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 			if ((TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
+			TPUtil::shortenString($w['subject'], $recentlength);
 			echo '
-					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['short_subject'].'</a>
+					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['subject'] .'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if (!(TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>';

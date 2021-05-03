@@ -288,15 +288,20 @@ function template_editblock()
 						<dd>
 							<input type="number" id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 6em" min="1">
 						</dd>
-						<dt><label for="tp_block_var2">'.$txt['tp-recentboards'].'</label></dt>
+						<dt>
+							<label for="tp-recentlength">'.$txt['tp-lengthofrecenttopics'].'</label>
+						</dt>
 						<dd>
-							<input type="text" id="tp_block_var2" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" size="20" pattern="[0-9,]+">
-						</dd>';
-				echo '
+							<input type="number" id="tp-recentlength" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '30' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" min="1" max="200"><br>
+						</dd>
 						<dt>'.$txt['tp-recentincexc'].'</dt>
 						<dd>
 							<input type="radio" id="tp_block_var3in" name="tp_block_var3" value="1" ' , ($context['TPortal']['blockedit']['var3']=='1' || $context['TPortal']['blockedit']['var3']=='') ? ' checked' : '' ,'> <label for="tp_block_var3in">'.$txt['tp-recentinboard'].'</label><br>
 							<input type="radio" id="tp_block_var3ex" name="tp_block_var3" value="0" ' , $context['TPortal']['blockedit']['var3']=='0' ? 'checked' : '' ,'> <label for="tp_block_var3ex">'.$txt['tp-recentexboard'].'</label>
+						</dd>
+						<dt><label for="tp_block_var2">'.$txt['tp-recentboards'].'</label></dt>
+						<dd>
+							<input type="text" id="tp_block_var2" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" size="20" pattern="[0-9,]+">
 						</dd>
 						<dt>' . $txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
