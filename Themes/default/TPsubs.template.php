@@ -678,13 +678,16 @@ function TPortal_recentbox()
 		$coun = 1;
 		foreach($what as $wi => $w)
 		{
+			$tpshortsubject = $w['subject'];
+			if(TPUtil::shortenString($tpshortsubject, $recentlength)) {
+				$w['readmore'] = '...';
+			}
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 			if ((TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
-			TPUtil::shortenString($w['subject'], $recentlength);
 			echo '
-				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">' . $w['subject'] . '</a>
+				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">'. $tpshortsubject .''. $w['readmore'] .'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if (!(TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>';
@@ -715,13 +718,16 @@ function TPortal_recentbox()
 
 		foreach($what as $wi => $w)
 		{
+			$tpshortsubject = $w['subject'];
+			if(TPUtil::shortenString($tpshortsubject, $recentlength)) {
+				$w['readmore'] = '...';
+			}
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 			if ((TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
-			TPUtil::shortenString($w['subject'], $recentlength);
 			echo '
-					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">' . $w['subject'] .'</a>
+					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'">'. $tpshortsubject .''. $w['readmore'] .'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
 			if (!(TP_SMF21) && ($w['is_new']))
 				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>';

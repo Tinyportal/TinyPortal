@@ -1646,7 +1646,8 @@ function template_panels()
 						<label for="tp_'.$panl.'bar_width">'.$txt['tp-panelwidth'].'</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp_'.$panl.'bar_width" name="tp_'.$panl.'bar_width" value="' , $context['TPortal'][$panl. 'bar_width'] , '" size="5" maxlength="5"><br>
+						<input type="number" id="tp_'.$panl.'bar_width" name="tp_'.$panl.'bar_width" value="' , $context['TPortal'][$panl. 'bar_width'] , '" min="1" style="width: 6em" maxlength="5">
+						<span class="smalltext">'.$txt['tp-inpixels'].'</span>
 					</dd>';
 				echo '
 					<dt>

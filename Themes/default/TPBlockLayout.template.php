@@ -292,7 +292,7 @@ function template_editblock()
 							<label for="tp-recentlength">'.$txt['tp-lengthofrecenttopics'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-recentlength" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '30' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" min="1" max="200"><br>
+							<input type="number" id="tp-recentlength" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '25' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" min="1" max="255"><br>
 						</dd>
 						<dt>'.$txt['tp-recentincexc'].'</dt>
 						<dd>
