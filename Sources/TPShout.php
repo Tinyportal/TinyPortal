@@ -312,12 +312,14 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 	}
 
 	if(!empty($fetched) && count($fetched)>0) {
+		$counter = 1;
 		$ns = array();
 		foreach($fetched as $b => $row) {
 			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
 			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : (!empty($memberdata[$row['member_id']]['pg_online_color']) ? $memberdata[$row['member_id']]['pg_online_color'] : '');
+			$row['counter'] = ++$counter;
 			$ns[] = template_singleshout($row, $shoutbox_id, $shoutbox_layout);
 		}
 		$nshouts .= implode('', $ns);

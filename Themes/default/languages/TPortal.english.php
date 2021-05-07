@@ -38,7 +38,7 @@ $txt['cannot_tp_alwaysapproved'] = 'Article submission or update needs to be app
 $txt['permissionname_tp_artcomment'] = $txt['group_perms_name_tp_artcomment'] = 'Can comment on articles';
 $txt['permissionhelp_tp_artcomment'] = 'Allows users to add comments to articles.';
 
-$txt['permissionname_tp_can_admin_shout'] = $txt['group_perms_name_can_admin_shout'] = 'Manage TPshout';
+$txt['permissionname_tp_can_admin_shout'] = $txt['group_perms_name_tp_can_admin_shout'] = 'Manage TPshout';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
 $txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage the Shoutbox.';
 
