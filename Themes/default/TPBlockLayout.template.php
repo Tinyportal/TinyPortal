@@ -286,17 +286,17 @@ function template_editblock()
 					<dl class="tptitle settings">
 						<dt><label for="tp_block_body">'.$txt['tp-numberofrecenttopics'].'</label></dt>
 						<dd>
-							<input type="number" id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 6em" min="1">
+							<input type="number" id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 6em" min="1" required>
 						</dd>
 						<dt>
 							<label for="tp-recentlength">'.$txt['tp-lengthofrecenttopics'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-recentlength" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '25' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" min="1" max="255"><br>
+							<input type="number" id="tp-recentlength" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '25' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" min="1" max="255" required><br>
 						</dd>
 						<dt>'.$txt['tp-recentincexc'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var3in" name="tp_block_var3" value="1" ' , ($context['TPortal']['blockedit']['var3']=='1' || $context['TPortal']['blockedit']['var3']=='') ? ' checked' : '' ,'> <label for="tp_block_var3in">'.$txt['tp-recentinboard'].'</label><br>
+							<input type="radio" id="tp_block_var3in" name="tp_block_var3" value="1" ' , !$context['TPortal']['blockedit']['var3']=='0' ? ' checked' : '' ,' required> <label for="tp_block_var3in">'.$txt['tp-recentinboard'].'</label><br>
 							<input type="radio" id="tp_block_var3ex" name="tp_block_var3" value="0" ' , $context['TPortal']['blockedit']['var3']=='0' ? 'checked' : '' ,'> <label for="tp_block_var3ex">'.$txt['tp-recentexboard'].'</label>
 						</dd>
 						<dt><label for="tp_block_var2">'.$txt['tp-recentboards'].'</label></dt>
@@ -305,7 +305,7 @@ function template_editblock()
 						</dd>
 						<dt>' . $txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var1yes" name="tp_block_var1" value="1" ' , ($context['TPortal']['blockedit']['var1']=='1' || $context['TPortal']['blockedit']['var1']=='') ? ' checked' : '' ,'><label for="tp_block_var1yes">'.$txt['tp-yes'].'</label>
+							<input type="radio" id="tp_block_var1yes" name="tp_block_var1" value="1" ' , !$context['TPortal']['blockedit']['var1']=='0' ? ' checked' : '' ,' required><label for="tp_block_var1yes">'.$txt['tp-yes'].'</label>
 							<input type="radio" id="tp_block_var1no" name="tp_block_var1" value="0" ' , $context['TPortal']['blockedit']['var1']=='0' ? ' checked' : '' ,'><label for="tp_block_var1no">'.$txt['tp-no'].'</label>
 						</dd>
 					</dl>';
@@ -318,7 +318,7 @@ function template_editblock()
 						<dl class="tptitle settings">
 						<dt>'.$txt['tp-showssibox'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-ssi-topboards']. '</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-ssi-topposters']. '</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-ssi-topreplies']. '</label><br>
@@ -344,23 +344,23 @@ function template_editblock()
 							<label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , (empty($context['TPortal']['blockedit']['var2']) ? '1': $context['TPortal']['blockedit']['var2']) ,'" style="width: 6em" min="1" max="9" step="1">
+							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , (empty($context['TPortal']['blockedit']['var2']) ? '1': $context['TPortal']['blockedit']['var2']) ,'" style="width: 6em" min="1" max="9" step="1" required>
 						</dd>
 						<dt>
 							<label for="tp-shoutboxheight">'.$txt['tp-shoutboxheight'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '250' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" /><br>
+							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '250' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" required><br>
 						</dd>
 						<dt>
 							<label for="fieldname">'.$txt['shoutbox_layout'].'</label>
 						</dt>
 						<dd>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['var3'] == '0' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"/></label></div></div>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['var3'] == '1' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2" /></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['var3'] == '0' ? ' checked="checked"' : '' , ' required></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['var3'] == '1' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2"></label></div></div>
 							<p class="clearthefloat"></p>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3" /></label></div></div>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , ' /></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4" /></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4"></label></div></div>
 							<p class="clearthefloat"></p>
 						</dd>
 					</dl>';
@@ -373,7 +373,7 @@ function template_editblock()
 						<dl class="tptitle settings">
 						<dt><label for="fieldname">'.$txt['tp-showstatsbox'].'</label></dt>
 						<dd>
-							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , '><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="dl-stats" ' , $context['TPortal']['blockedit']['body']=='dl-stats' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-module1'].'</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="dl-stats2" ' , $context['TPortal']['blockedit']['body']=='dl-stats2' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-module2'].'</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="dl-stats3" ' , $context['TPortal']['blockedit']['body']=='dl-stats3' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-module3'].'</label><br>
@@ -431,16 +431,16 @@ function template_editblock()
 					<dl class="tptitle settings">
 						<dt><label for="tp_block_body">' .	$txt['tp-rssblock'] . '</label></dt>
 						<dd>
-							<input name="tp_block_body" id="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 95%">
+							<input name="tp_block_body" id="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 95%" required>
 						</dd>
 						<dt>'.$txt['tp-rssblock-useutf8'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var1utf" name="tp_block_var1" value="1" ' , $context['TPortal']['blockedit']['var1']=='1' ? ' checked' : '' ,'><label for="tp_block_var1utf">'.$txt['tp-utf8'].'</label><br>
+							<input type="radio" id="tp_block_var1utf" name="tp_block_var1" value="1" ' , $context['TPortal']['blockedit']['var1']=='1' ? ' checked' : '' ,' required><label for="tp_block_var1utf">'.$txt['tp-utf8'].'</label><br>
 							<input type="radio" id="tp_block_var1iso" name="tp_block_var1" value="0" ' , ($context['TPortal']['blockedit']['var1']=='0' || $context['TPortal']['blockedit']['var1']=='') ? ' checked' : '' ,'><label for="tp_block_var1iso">'.$txt['tp-iso'].'</label>
 						</dd>
 						<dt>'.$txt['tp-rssblock-showonlytitle'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var2yes" name="tp_block_var2" value="1" ' , $context['TPortal']['blockedit']['var2']=='1' ? ' checked' : '' ,'><label for="tp_block_var2yes">'.$txt['tp-yes'].'</label>
+							<input type="radio" id="tp_block_var2yes" name="tp_block_var2" value="1" ' , $context['TPortal']['blockedit']['var2']=='1' ? ' checked' : '' ,' required><label for="tp_block_var2yes">'.$txt['tp-yes'].'</label>
 							<input type="radio" id="tp_block_var2no" name="tp_block_var2" value="0" ' , ($context['TPortal']['blockedit']['var2']=='0' || $context['TPortal']['blockedit']['var2']=='') ? ' checked' : '' ,'><label for="tp_block_var2no">'.$txt['tp-no'], '</label>
 						</dd>
 						<dt><label for="tp_block_var3">' . $txt['tp-rssblock-maxwidth'].'</label></dt>
@@ -455,13 +455,16 @@ function template_editblock()
 			}
 // Block type: Sitemap
 			elseif($context['TPortal']['blockedit']['type']=='16'){
-				if($context['TPortal']['show_download']=='1')
-					echo '
+				echo '
 					<dl class="tptitle settings">
-						<dt>'.$txt['tp-sitemapdesc'].'</dt>
-						<dd></dd>
-						<dt>'.$txt['tp-sitemapmodules'].'<ul class="disc"></dt>
-						<dd><li>&nbsp;'.$txt['tp-dldownloads'].'</li></ul></dd>
+						<dt>' . $txt['tp-sitemapdesc'] . '</dt>
+						<dd></dd>'; 
+				if($context['TPortal']['show_download']=='1') {
+					echo '
+						<dt>' . $txt['tp-sitemapmodules'] . '<ul class="disc"></dt>
+						<dd><li>' . $txt['tp-dldownloads'] . '</li></ul></dd>';
+					}
+					echo '
 					</dl>';
 			}
 // Block type: Single Article
@@ -532,7 +535,7 @@ function template_editblock()
 					<dl class="tptitle settings">
 						<dt><label for="tp_block_body">'.$txt['tp-showcategory'].'</label></dt>
 						<dd>
-							<select name="tp_block_body" id="tp_block_body">
+							<select name="tp_block_body" id="tp_block_body" required>
 							<option value="0">'.$txt['tp-none2'].'</option>';
 				foreach($context['TPortal']['catnames'] as $cat => $catname){
 					echo '
@@ -543,11 +546,11 @@ function template_editblock()
 						</dd>
 						<dt><label for="tp_block_var1">'.$txt['tp-catboxheight'].'</label></dt>
 						<dd>
-							<input type="number" id="tp_block_var1" name="tp_block_var1" value="' , ((!is_numeric($context['TPortal']['blockedit']['var1'])) || (($context['TPortal']['blockedit']['var1']) == 0) ? '15' : $context['TPortal']['blockedit']['var1']) ,'" style="width: 6em" min="1" required> em
+							<input type="number" id="tp_block_var1" name="tp_block_var1" value="' , ((!is_numeric($context['TPortal']['blockedit']['var1'])) || (($context['TPortal']['blockedit']['var1']) == 0) ? '15' : $context['TPortal']['blockedit']['var1']) ,'" style="width: 6em" min="2" required> em
 						</dd>
 						<dt>'.$txt['tp-catboxauthor'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var2yes" name="tp_block_var2" value="1" ' , $context['TPortal']['blockedit']['var2']=='1' ? 'checked' : '' ,'><label for="tp_block_var2yes"> ', $txt['tp-yes'], '</label><br>
+							<input type="radio" id="tp_block_var2yes" name="tp_block_var2" value="1" ' , $context['TPortal']['blockedit']['var2']=='1' ? 'checked' : '' ,' required><label for="tp_block_var2yes"> ', $txt['tp-yes'], '</label><br>
 							<input type="radio" id="tp_block_var2no" name="tp_block_var2" value="0" ' , $context['TPortal']['blockedit']['var2']=='0' ? 'checked' : '' ,'><label for="tp_block_var2no"> ', $txt['tp-no'], '</label>
 						</dd>
 					</dl>';
@@ -570,7 +573,7 @@ function template_editblock()
 						</dd>
 						<dt><label for="fieldname">',$txt['tp-showmenustyle'],'</label></dt>
 						<dd>
-							<input type="radio" name="tp_block_var1" value="0" ' , ($context['TPortal']['blockedit']['var1']=='' || $context['TPortal']['blockedit']['var1']=='0') ? ' checked' : '' ,' > <img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" /><br>
+							<input type="radio" name="tp_block_var1" value="0" ' , ($context['TPortal']['blockedit']['var1']=='' || $context['TPortal']['blockedit']['var1']=='0') ? ' checked' : '' ,' required> <img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" /><br>
 							<input type="radio" name="tp_block_var1" value="1" ' , ($context['TPortal']['blockedit']['var1']=='1') ? ' checked' : '' ,' > <img src="'.$settings['tp_images_url'].'/bullet3.png" alt="" /><br>
 							<input type="radio" name="tp_block_var1" value="2" ' , ($context['TPortal']['blockedit']['var1']=='2') ? ' checked' : '' ,' > '.$txt['tp-none-'].'
 						</dd>
@@ -582,9 +585,14 @@ function template_editblock()
 					<dl class="tptitle settings">
 						<dt>'.$txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var1yes" name="tp_block_var1" value="1" ' , ($context['TPortal']['blockedit']['var1']=='1' || $context['TPortal']['blockedit']['var1']=='') ? ' checked' : '' ,'><label for="tp_block_var1yes">'.$txt['tp-yes'].'</label> <input type="radio" id="tp_block_var1no" name="tp_block_var1" value="0" ' , $context['TPortal']['blockedit']['var1']=='0' ? ' checked' : '' ,'><label for="tp_block_var1no">'.$txt['tp-no'].'</label>
+							<input type="radio" id="tp_block_var1yes" name="tp_block_var1" value="1" ' , !$context['TPortal']['blockedit']['var1']=='0' ? ' checked' : '' ,' required><label for="tp_block_var1yes">'.$txt['tp-yes'].'</label> <input type="radio" id="tp_block_var1no" name="tp_block_var1" value="0" ' , $context['TPortal']['blockedit']['var1']=='0' ? ' checked' : '' ,'><label for="tp_block_var1no">'.$txt['tp-no'].'</label>
 						</dd>
 					</dl>';
+			}
+// Block type: News
+			elseif($context['TPortal']['blockedit']['type']=='2'){
+				echo '
+					<div>' . $txt['tp-newsdesc'] . '</div>';
 			}
 			else {
 				echo '

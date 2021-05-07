@@ -471,6 +471,7 @@ $txt['tp-showuserbox'] = 'Display these items in the statbox';
 $txt['tp-showuserbox2'] = 'Display these items in the userbox';
 $txt['tp-themesavail'] = 'Themes available in the theme selector';
 $txt['tp-sitemapdesc'] = 'In the sitemap block a list of menu items marked as relevant for the Sitemap is displayed.';
+$txt['tp-newsdesc'] = 'The news block presents a random news item from the forum news.';
 $txt['tp-sitemapmodules'] = 'Active Modules';
 $txt['tp-showarticle'] = 'Display article';
 $txt['tp-showcategory'] = 'Display article listing from category';
