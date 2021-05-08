@@ -119,7 +119,7 @@ class Util
 
 
             if (preg_match_all('/\[([^\]]*)\]/m', $paramName, $matches)) {
-                $paramName      = substr($paramName, 0, strpos($paramName, '['));
+                $paramName      = self::substr($paramName, 0, strpos($paramName, '['));
                 $keys           = array_merge(array($paramName), $matches[1]);
             }
             else {
@@ -230,12 +230,12 @@ class Util
 
                         // Strip out the doctype and html body
                         if(($pos = mb_strpos($tmpString, '<html><body>')) !== FALSE) {
-                            $tmpString = mb_substr($tmpString, $pos + 12);
+                            $tmpString = self::substr($tmpString, $pos + 12);
                         }
 
                         // Remove the html body from the end
                         if(($pos = mb_strpos($tmpString, '</body></html>')) != FALSE) {
-                            $tmpString = mb_substr($tmpString, 0, $pos);
+                            $tmpString = self::substr($tmpString, 0, $pos);
                         }
                     }
 
@@ -260,7 +260,7 @@ class Util
                 $totalLen   += $nodeLen;
 
                 if($totalLen > $length) {
-                    $node->nodeValue    = mb_substr($node->nodeValue, 0, mb_strpos($node->nodeValue, ' ', ($nodeLen - ($totalLen - $length))));
+                    $node->nodeValue    = self::substr($node->nodeValue, 0, mb_strpos($node->nodeValue, ' ', ($nodeLen - ($totalLen - $length))));
                     $reachedLimit       = true;
                 }
             }
@@ -274,6 +274,7 @@ class Util
 
         return;
     }}}
+
     public static function parseBBC($string) {{{
 
         if(preg_match_all('/\[([a-zA-Z=0-9_\-]+?)\](.+?)\[\/\1\]/', $string, $matches) > 0 ) {
@@ -397,6 +398,14 @@ class Util
         return $filter;
     }}}
 
+	public static function substr($string, $start, $len) {{{
+
+		if(function_exists('mb_substr')) {
+			return mb_substr($string, $start, $len);
+		}
+
+		return substr($string, $start, $len);
+	}}}
 }
 
 ?>
