@@ -161,7 +161,7 @@ function getBlocks() {{{
 	}
 
     // any cat listings from blocks?
-    if(isset($test_catbox)) {
+    if(isset($test_catbox) && !empty($fetch_article_titles)) {
         $tpArticle  = new TPArticle();
         $categories = $tpArticle->getArticlesInCategory($fetch_article_titles, false, true);
         if (!isset($context['TPortal']['blockarticle_titles'])) {

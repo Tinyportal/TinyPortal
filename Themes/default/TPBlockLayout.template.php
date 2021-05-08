@@ -436,16 +436,16 @@ function template_editblock()
 						<dt>'.$txt['tp-rssblock-useutf8'].'</dt>
 						<dd>
 							<input type="radio" id="tp_block_var1utf" name="tp_block_var1" value="1" ' , $context['TPortal']['blockedit']['var1']=='1' ? ' checked' : '' ,' required><label for="tp_block_var1utf">'.$txt['tp-utf8'].'</label><br>
-							<input type="radio" id="tp_block_var1iso" name="tp_block_var1" value="0" ' , ($context['TPortal']['blockedit']['var1']=='0' || $context['TPortal']['blockedit']['var1']=='') ? ' checked' : '' ,'><label for="tp_block_var1iso">'.$txt['tp-iso'].'</label>
+							<input type="radio" id="tp_block_var1iso" name="tp_block_var1" value="0" ' , $context['TPortal']['blockedit']['var1']<>'1' ? ' checked' : '' ,'><label for="tp_block_var1iso">'.$txt['tp-iso'].'</label>
 						</dd>
 						<dt>'.$txt['tp-rssblock-showonlytitle'].'</dt>
 						<dd>
 							<input type="radio" id="tp_block_var2yes" name="tp_block_var2" value="1" ' , $context['TPortal']['blockedit']['var2']=='1' ? ' checked' : '' ,' required><label for="tp_block_var2yes">'.$txt['tp-yes'].'</label>
-							<input type="radio" id="tp_block_var2no" name="tp_block_var2" value="0" ' , ($context['TPortal']['blockedit']['var2']=='0' || $context['TPortal']['blockedit']['var2']=='') ? ' checked' : '' ,'><label for="tp_block_var2no">'.$txt['tp-no'], '</label>
+							<input type="radio" id="tp_block_var2no" name="tp_block_var2" value="0" ' , $context['TPortal']['blockedit']['var2']<>'1' ? ' checked' : '' ,'><label for="tp_block_var2no">'.$txt['tp-no'], '</label>
 						</dd>
 						<dt><label for="tp_block_var3">' . $txt['tp-rssblock-maxwidth'].'</label></dt>
 						<dd>
-							<input type="number" id="tp_block_var3" name="tp_block_var3" value="' , $context['TPortal']['blockedit']['var3'],'" style="width: 6em">
+							<input id="tp_block_var3" name="tp_block_var3" value="' , $context['TPortal']['blockedit']['var3'],'" style="width: 6em">
 						</dd>
 						<dt><label for="tp_block_var4">' . $txt['tp-rssblock-maxshown'].'</label></dt>
 						<dd>
@@ -546,7 +546,7 @@ function template_editblock()
 						</dd>
 						<dt><label for="tp_block_var1">'.$txt['tp-catboxheight'].'</label></dt>
 						<dd>
-							<input type="number" id="tp_block_var1" name="tp_block_var1" value="' , ((!is_numeric($context['TPortal']['blockedit']['var1'])) || (($context['TPortal']['blockedit']['var1']) == 0) ? '15' : $context['TPortal']['blockedit']['var1']) ,'" style="width: 6em" min="2" required> em
+							<input type="number" id="tp_block_var1" name="tp_block_var1" value="' , ((!is_numeric($context['TPortal']['blockedit']['var1'])) || (($context['TPortal']['blockedit']['var1']) == 0) ? '15' : $context['TPortal']['blockedit']['var1']) ,'" style="width: 6em" min="1" required> em
 						</dd>
 						<dt>'.$txt['tp-catboxauthor'].'</dt>
 						<dd>
@@ -593,6 +593,11 @@ function template_editblock()
 			elseif($context['TPortal']['blockedit']['type']=='2'){
 				echo '
 					<div>' . $txt['tp-newsdesc'] . '</div>';
+			}
+// Block type: Search
+			elseif($context['TPortal']['blockedit']['type']=='4'){
+				echo '
+					<div>' . $txt['tp-searchdesc'] . '</div>';
 			}
 			else {
 				echo '

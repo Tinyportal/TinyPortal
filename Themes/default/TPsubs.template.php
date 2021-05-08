@@ -950,7 +950,7 @@ function TPortal_articlebox()
 	global $context;
 
 	if(isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]))
-		echo '<div class="block_article">', 	template_blockarticle() , '</div>';
+		echo '<div class="block_article">', template_blockarticle() ,'</div>';
 }
 
 // blocktype 19: Articles in a Category
