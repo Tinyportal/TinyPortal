@@ -1235,7 +1235,7 @@ code.bbc_code {
 	margin: 8px 0;
 	padding: 4px;
 	vertical-align: middle;
-	width: 100%;
+	max-width: 100%;
 }
 .rss_body h1, .rss_body h2, .rss_body h3, .rss_body h4, .rss_body h5, .rss_body h6 {
 	font-size: 1em;

@@ -460,11 +460,11 @@ $txt['tp-ssi-topviews'] = 'Top Views';
 $txt['tp-rssblock'] = 'RSS feed ';
 $txt['tp-rssblock-showonlytitle'] = 'Display only titles?';
 $txt['tp-rssblock-useutf8'] = 'What encoding to use in this feed ';
-$txt['tp-utf8'] = 'UTF-8';
-$txt['tp-iso'] = 'ISO-8859-1 (default)';
+$txt['tp-utf8'] = 'UTF-8 <span class="smalltext">(default)</span>';
+$txt['tp-iso'] = 'ISO-8859-1';
 $txt['tp-rssblock-showavatar'] = 'Show avatars';
-$txt['tp-rssblock-maxwidth'] = 'Max width of rss feed';
-$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed ( 0 sets max to 20 )';
+$txt['tp-rssblock-maxwidth'] = 'Max width of rss feed<br><span class="smalltext">(include unit, such as px, % or em)</span>';
+$txt['tp-rssblock-maxshown'] = 'Maximum number of items shown in rss feed<br><span class="smalltext">(leave empty for default: 20)</span>';
 $txt['tp-showstatsbox'] = 'Display these stats in the article/downloads box';
 $txt['tp-showssibox'] = 'Display this SSI function in the box';
 $txt['tp-showuserbox'] = 'Display these items in the statbox';
@@ -485,7 +485,8 @@ $txt['tp-catboxauthor'] = 'Show author?';
 $txt['tp-catboxheight'] = 'Height of the article box before scrollbar';
 $txt['tp-insert'] = 'Insert code';
 $txt['tp-unreadreplies'] = 'Unread replies';
-$txt['tp-noblocktype'] = 'You have not specified a block type';
+$txt['tp-searchdesc'] = 'The search block presents the standard SMF search function in a block.';
+$txt['tp-noblocktype'] = 'You have not specified a block type or the block type has no settings.';
 
 // Menu manager
 $txt['tp-helpmenus'] = 'The built in menu manager allows you to create multiple menu\'s. These menu\'s are typically displayed in a block. You get all the features of blocks to display these menu\'s in different places along with choosing who gets to see the blocks based on permissions. Here you can edit the Internal menu of create and manage new menu\'s';
