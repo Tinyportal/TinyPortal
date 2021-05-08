@@ -398,13 +398,13 @@ class Util
         return $filter;
     }}}
 
-	public static function substr($string, $start, $len) {{{
+	public static function substr($string, $offset, $length = null) {{{
 
 		if(function_exists('mb_substr')) {
-			return mb_substr($string, $start, $len);
+			return mb_substr($string, $offset, $length);
 		}
 
-		return substr($string, $start, $len);
+		return substr($string, $offset, $length);
 	}}}
 }
 
