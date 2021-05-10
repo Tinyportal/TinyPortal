@@ -1570,7 +1570,6 @@ function doTPfrontpage() {{{
 				'id' => $row['id'],
 				'lang' => $row['lang'],
 				'display' => $row['display'],
-				'can_edit' => $can_edit,
 				'can_manage' => $can_manage,
 			);
 
