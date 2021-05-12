@@ -31,22 +31,22 @@ function TPShout() {{{
         if($shoutAction == 'admin') {
             TPShoutAdmin();
         }
-        elseif($shoutAction == 'del') {
+        elseif($shoutAction == 'del' && !empty($_POST)) {
             TPShoutDelete( $_POST['s'] );
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'] , $_POST['l']);
         }
-        elseif($shoutAction == 'save') {
+        elseif($shoutAction == 'save' && !empty($_POST)) {
             if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
                     return;
             }
             TPShoutPost();
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
         }
-        elseif($shoutAction == 'refresh') {
+        elseif($shoutAction == 'refresh' && !empty($_POST)) {
             var_dump(TPShoutFetch( $_POST['b'] , $_POST['l'], false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
-        elseif($shoutAction == 'fetch') {
+        elseif($shoutAction == 'fetch' && !empty($_POST)) {
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
         }
         else {
@@ -54,7 +54,9 @@ function TPShout() {{{
             if(!is_numeric($number)) {
                 $number = 10;
             }
-            tpshout_bigscreen(true, $number, $_REQUEST['b'], $_REQUEST['l']);
+			$shoutbox_id = (isset($_REQUEST['b']) ? $_REQUEST['b'] : '1');
+			$shoutbox_limit = (isset($_REQUEST['l']) ? $_REQUEST['l'] : 10);
+            tpshout_bigscreen(true, $number, $shoutbox_id, $shoutbox_limit);
         }
     }
 
