@@ -1191,7 +1191,7 @@ function TPortalDLManager()
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
-						'readmore' => $row['readmore'],
+						'readmore' => isset($row['readmore']) ? $row['readmore'] : '',
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'dlhref' => $scripturl.'?action=tportal;sa=download;dl=get'.$row['id'],
 						'downloads' => $row['downloads'],
