@@ -361,7 +361,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 {
 	global $scripturl, $context, $settings, $txt;
 
-    if(is_null($shoutbox_layout)) {
+    if(is_null($shoutbox_layout) && isset($context['TPortal']['shoutbox_layout'])) {
         $shoutbox_layout = $context['TPortal']['shoutbox_layout'];
     }
 
@@ -426,8 +426,9 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 			</div>
 		</div>',
 	);
-
-	return $layoutOptions[$shoutbox_layout];
+	if(!empty($layoutOptions[$shoutbox_layout])) { 
+		return $layoutOptions[$shoutbox_layout];
+	}
 }
 
 function template_tpshout_ajax($shoutbox_id = 0)
