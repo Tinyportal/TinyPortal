@@ -154,7 +154,7 @@ function template_tp_below()
 // Edit Block Page (including settings per block type)
 function template_editblock()
 {
-	global $context, $settings, $txt, $scripturl, $boardurl;
+	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings;
 
 	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
 	if(empty($newtitle)) {
@@ -309,6 +309,10 @@ function template_editblock()
 							<input type="radio" id="tp_block_var1no" name="tp_block_var1" value="0" ' , $context['TPortal']['blockedit']['var1']=='0' ? ' checked' : '' ,'><label for="tp_block_var1no">'.$txt['tp-no'].'</label>
 						</dd>
 					</dl>';
+	if($modSettings['allow_guestAccess'] == '0') {
+		echo '<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-noguest_accessdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>
+		<span style="color: red;">' .$txt['tp-noguest_access'] .'</span>';
+	}
 			}
 // Block type: SSI functions
 			elseif($context['TPortal']['blockedit']['type']=='13'){

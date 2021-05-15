@@ -481,6 +481,8 @@ $txt['tp-recentboards'] = 'Board Id\'s <span class="smalltext">(comma separated,
 $txt['tp-recentincexc'] = 'Include or exclude boards';
 $txt['tp-recentinboard'] = 'Include boards';
 $txt['tp-recentexboard'] = 'Exclude boards';
+$txt['tp-noguest_access'] = 'Guests are not allowed to browse the forum.';
+$txt['tp-noguest_accessdesc'] = 'Note that currently the forum settings are that Guests are not allowed to browse the forum. This means that -if the recent topics block is visible to guests- these visitors will not be seeing any recent topics in the block. Instead, the warning \'Guests are not allowed to browse the forum.\' will be shown to guests in the block.';
 $txt['tp-catboxauthor'] = 'Show author?';
 $txt['tp-catboxheight'] = 'Height of the article box before scrollbar';
 $txt['tp-insert'] = 'Insert code';

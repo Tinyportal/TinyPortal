@@ -646,8 +646,13 @@ function TPortal_scriptbox()
 // blocktype 12: Recent Topics
 function TPortal_recentbox()
 {
-	global $scripturl, $context, $settings, $txt, $modSettings;
+	global $scripturl, $context, $settings, $txt, $modSettings, $user_info;
 
+	// if no guest access to forum, then no recent topics
+	if($modSettings['allow_guestAccess'] == '0' && $user_info['is_guest']) {
+		echo '' .$txt['tp-noguest_access'] .'';
+	}
+	else {
 	// is it a number?
 	if(is_numeric($context['TPortal']['recentlength']))
 		$recentlength = $context['TPortal']['recentlength'];
@@ -739,6 +744,7 @@ function TPortal_recentbox()
 		}
 		echo '
 		</ul>';
+		}
 	}
 }
 // blocktype 13: SSI functions
