@@ -26,36 +26,38 @@ function TPShout() {{{
 
     global $context, $settings, $options, $modSettings;
 
+	$shoutbox_id = (isset($_POST['b']) ? $_POST['b'] : NULL);
+	$shoutbox_limit = (isset($_POST['l']) ? $_POST['l'] : NULL);
+	$shoutbox_del = (isset($_POST['s']) ? $_POST['s'] : NULL);
+
     if(isset($_REQUEST['shout'])) {
         $shoutAction = TPUtil::filter('shout', 'request', 'string');
         if($shoutAction == 'admin') {
             TPShoutAdmin();
         }
-        elseif($shoutAction == 'del' && !empty($_POST)) {
-            TPShoutDelete( $_POST['s'] );
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'] , $_POST['l']);
+        elseif($shoutAction == 'del') {
+            TPShoutDelete( $shoutbox_del );
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $shoutbox_id, $shoutbox_limit);
         }
-        elseif($shoutAction == 'save' && !empty($_POST)) {
+        elseif($shoutAction == 'save') {
             if (empty($context['TPortal']['shout_allow_links']) && shoutHasLinks() == true) {
                     return;
             }
             TPShoutPost();
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $shoutbox_id, $shoutbox_limit);
         }
-        elseif($shoutAction == 'refresh' && !empty($_POST)) {
-            var_dump(TPShoutFetch( $_POST['b'] , $_POST['l'], false, $context['TPortal']['shoutbox_limit'], true));
+        elseif($shoutAction == 'refresh') {
+            var_dump(TPShoutFetch( $shoutbox_id, $shoutbox_limit, false, $context['TPortal']['shoutbox_limit'], true));
             die;
         }
-        elseif($shoutAction == 'fetch' && !empty($_POST)) {
-            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $_POST['b'], $_POST['l']);
+        elseif($shoutAction == 'fetch') {
+            tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $shoutbox_id, $shoutbox_limit);
         }
         else {
             $number = substr($shoutAction, 4);
             if(!is_numeric($number)) {
                 $number = 10;
             }
-			$shoutbox_id = (isset($_REQUEST['b']) ? $_REQUEST['b'] : '1');
-			$shoutbox_limit = (isset($_REQUEST['l']) ? $_REQUEST['l'] : 10);
             tpshout_bigscreen(true, $number, $shoutbox_id, $shoutbox_limit);
         }
     }
