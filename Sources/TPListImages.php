@@ -186,8 +186,8 @@ function TPMembers() {{{
 				'member_id' => $user_id
 			)
 		);
-		$member	= $smcFunc['db_fetch_assoc']($data)['member_name'];
-		if(!is_null($member)) {
+		if ($smcFunc['db_affected_rows']() != 0) {
+			$member	= $smcFunc['db_fetch_assoc']($data)['member_name'];
 			$users[$user_id] = $member;
 		}
         else {
