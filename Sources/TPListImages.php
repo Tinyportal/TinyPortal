@@ -72,9 +72,7 @@ function template_tp_list_images_admin() {
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
 				</div>
 			</div>
-		</div>
-		</form>
-		';
+		</form>';
 
     echo $ret;
 
