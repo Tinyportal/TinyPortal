@@ -72,9 +72,7 @@ function template_tp_list_images_admin() {
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
 				</div>
 			</div>
-		</div>
-		</form>
-		';
+		</form>';
 
     echo $ret;
 
@@ -186,8 +184,8 @@ function TPMembers() {{{
 				'member_id' => $user_id
 			)
 		);
-		$member	= $smcFunc['db_fetch_assoc']($data)['member_name'];
-		if(!is_null($member)) {
+		if ($smcFunc['db_affected_rows']() != 0) {
+			$member	= $smcFunc['db_fetch_assoc']($data)['member_name'];
 			$users[$user_id] = $member;
 		}
         else {
