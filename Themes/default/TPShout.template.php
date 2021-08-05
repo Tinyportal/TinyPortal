@@ -281,7 +281,7 @@ function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null 
 
 	if($context['TPortal']['shoutbox_usescroll'] > '0') {
 		echo '
-		<marquee id="tp_marquee_' . $shoutbox_id . '" behavior="scroll" direction="down" scrollamount="'. $context['TPortal']['shoutbox_scrollduration'] . '" height="'. $context['TPortal']['shoutbox_height'] . '">
+		<marquee id="tp_marquee_' . $shoutbox_id . '" behavior="scroll" direction="down" scrollamount="'. ($context['TPortal']['shoutbox_scrollduration'] / 2) . '" height="'. $context['TPortal']['shoutbox_height'] . '">
 			<div class="tp_shoutframe tp_shoutframe_'.$shoutbox_id.'">'.$context['TPortal']['shoutbox'].'</div>
 		</marquee>';
     }
