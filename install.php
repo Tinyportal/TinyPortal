@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 1.6.9
+ * @version 1.6.10
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -29,11 +29,11 @@ if(!defined('SMF') && file_exists('SSI.php'))
 	$manual = true;
 }
 elseif(!defined('SMF'))
-	die('<strong>Install Error:</strong> - please verify you put this file the same directory as SMF\'s index.php.');
+	die('<strong>Install Error:</strong> Please verify you put this file in the same directory as SMF\'s index.php.');
 
 
 if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>='))) {
-	die('<strong>Install Error:</strong> - please install a version of php greater than '.TP_MINIMUM_PHP_VERSION);
+	die('<strong>Install Error:</strong> Your server does not meet the minimum PHP requirement. Please install a version of PHP greater than '.TP_MINIMUM_PHP_VERSION);
 }
 
 
@@ -67,8 +67,9 @@ if(is_array($existing_tables) && count($existing_tables)) {
     );
 
     $row = $smcFunc['db_fetch_assoc']($request);
-    if(version_compare($row['value'], '2.0.0', '>=')) {
-        die('<strong>Install Error:</strong> - please install a version of TinyPortal greater than or equal to 2.0.0');
+//    if(version_compare($row['value'], '2.0.0', '>=')) {
+    if(substr($row['value'], 0, 1) > 1) {
+        die('<strong>Install Error:</strong> You are upgrading from a TinyPortal version that is not of the 1.x branche. Please install a version of TinyPortal greater than or equal to 2.0.0');
     }
 }
 
@@ -448,7 +449,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '1.6.9',
+    'version' => '1.6.10',
     'padding' => '4',
     'margins' => '2',
     'topbar_align' => 'center',
