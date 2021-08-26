@@ -329,7 +329,7 @@ function adminBlocks() {{{
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks;overview', $txt['tp-blockoverview']);
 
 		// fetch all blocks member group permissions
-        $data   = $tpBlock->getBlockData(array('id', 'title', 'bar', 'access', 'type'), array( 'off' => 0 ) );
+        $data   = $tpBlock->getActiveBlocks();
 		if(is_array($data)) {
 			$context['TPortal']['blockoverview'] = array();
             foreach($data as $row) {
