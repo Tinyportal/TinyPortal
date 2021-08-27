@@ -821,13 +821,13 @@ function TPShoutBlock(&$row) {{{
 
     if($context['TPortal']['shoutbox_usescroll'] > 0) {
         $context['html_headers'] .= '
-        <script type="text/javascript" src="tp-files/tp-plugins/javascript/jquery.marquee.js"></script>
+        <script type="text/javascript" src="Themes/default/scripts/tinyportal/jquery.marquee.js"></script>
         <script type="text/javascript">
-            $j(document).ready(function(){
-                $j("marquee").marquee("tp_marquee").mouseover(function () {
-                        $j(this).trigger("stop");
+            $(document).ready(function(){
+                $("marquee").marquee("tp_marquee").mouseover(function () {
+                        $(this).trigger("stop");
                     }).mouseout(function () {
-                        $j(this).trigger("start");
+                        $(this).trigger("start");
                     });
                 });
         </script>';

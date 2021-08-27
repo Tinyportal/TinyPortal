@@ -238,57 +238,59 @@ function template_main()
 		// ]]></script>';
 
 	// output the category block?
-		if(sizeof($context['TPortal']['dlcats'])>0)
-		{
 		echo '
 			<div class="cat_bar">
 				<h3 class="catbg">' , $context['TPortal']['dlaction']=='cat' ? $txt['tp-childcategories'] : $txt['tp-categories'] , '</h3>
 			</div>
 			<div class="windowbg noup padding-div">';
-				//show all categories
-				foreach($context['TPortal']['dlcats'] as $dlcat)
+		if(sizeof($context['TPortal']['dlcats'])>0) {
+		//show all categories
+			foreach($context['TPortal']['dlcats'] as $dlcat)
+			{
+				// any subcategories?
+				if(!empty($context['TPortal']['dlcats']) && sizeof($context['TPortal']['dlcatchilds'])>1)
 				{
-					// any subcategories?
-					if(!empty($context['TPortal']['dlcats']) && sizeof($context['TPortal']['dlcatchilds'])>1)
+					$content='';
+					foreach($context['TPortal']['dlcatchilds'] as $dlchild)
 					{
-						$content='';
-						foreach($context['TPortal']['dlcatchilds'] as $dlchild)
+						if($dlchild['parent']==$dlcat['id'])
 						{
-							if($dlchild['parent']==$dlcat['id'])
-							{
-								$content .= '
-							<li>
-								<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
-									<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
-								if($dlchild['files']>0)
-									$content .= ' (' . $dlchild['files'].')';
-								$content .= '
-							</li>';
-							}
+							$content .= '
+						<li>
+							<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
+								<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
+							if($dlchild['files']>0)
+								$content .= ' (' . $dlchild['files'].')';
+							$content .= '
+						</li>';
 						}
 					}
-
-					echo '
-					<div class="dl_category"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
-						<div>
-						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" /></div>
-							<div style="overflow: visible;">
-							<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ' '.$txt['tp-dlfiles'],': '.$dlcat['files'].'</div>
-							<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
-							<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
-					if(!empty($content))
-						echo '
-					<div class="dl_category dl_subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
-						echo '
-						<p class="clearthefloat"></p>
-						</div>
-					</div>';
-
 				}
+
+				echo '
+				<div class="dl_category"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
+					<div>
+					<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" /></div>
+						<div style="overflow: visible;">
+						<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ' '.$txt['tp-dlfiles'],': '.$dlcat['files'].'</div>
+						<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
+						<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
+				if(!empty($content))
+					echo '
+				<div class="dl_category dl_subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
+					echo '
+					<p class="clearthefloat"></p>
+					</div>
+				</div>';
+			}
+		}
+		else {
+			echo '
+			' , $txt['tp-nocats'] , '';
+			}
 		echo '
 			</div>';
-		}
-
+		
 		// output the files in the category
 		if($context['TPortal']['dlaction']=='cat')
 		{
@@ -820,7 +822,7 @@ function template_main()
 				if($counter<$maxcount){
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
-							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , ceil(100*($cats['size']/$maxval)) , '%" /></div>
+							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , (!$maxval == '0' ? ceil(100*($cats['size']/$maxval)) : '0') , '%" /></div>
 							<div class="float-items" style="width:15%;">'. floor($cats['size']/1000).''.$txt['tp-kb'].'</div>
 							<p class="clearthefloat"></p>';
 					$counter++;
@@ -1035,7 +1037,7 @@ function template_main()
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
 						<input type="text" id="searchbox" name="dl_search" value="" required><br>
-						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name">'.$txt['tp-searcharea-name'].'</label><br>
+						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name"> '.$txt['tp-searcharea-name'].'</label><br>
 						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> '.$txt['tp-searcharea-descr'].'</label><br>
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
 						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">

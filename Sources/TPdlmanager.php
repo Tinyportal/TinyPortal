@@ -3427,33 +3427,34 @@ function TPortalDLAdmin()
 			}
 			else
 				$context['TPortal']['admcurrent']['member'] = '-' . $txt['guest_title'] . '-';
-		}
-		// check to see if its child
-		$parents = array();
-		while($catparent > 0 )
-		{
-			$parents[$catparent] = array(
-				'id' => $catparent,
-				'name' => $context['TPortal']['linkcats'][$catparent]['name'],
-				'parent' => $context['TPortal']['linkcats'][$catparent]['parent']
-			);
-			$catparent = $context['TPortal']['linkcats'][$catparent]['parent'];
-		}
-
-		// make the linktree
-		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admin', $txt['tp-dldownloads']);
-
-		if(isset($parents))
-		{
-			$parts = array_reverse($parents, TRUE);
-			// add to the linktree
-			foreach($parts as $parent)
+			// check to see if its child
+			$parents = array();
+			while($catparent > 0 )
 			{
-				TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admincat'.$parent['id'] , $parent['name']);
+				$parents[$catparent] = array(
+					'id' => $catparent,
+					'name' => $context['TPortal']['linkcats'][$catparent]['name'],
+					'parent' => $context['TPortal']['linkcats'][$catparent]['parent']
+				);
+				$catparent = $context['TPortal']['linkcats'][$catparent]['parent'];
 			}
+			// make the linktree
+			TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admin', $txt['tp-dldownloads']);
+
+			if(isset($parents))
+			{
+				$parts = array_reverse($parents, TRUE);
+				// add to the linktree
+				foreach($parts as $parent)
+				{
+					TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=admincat'.$parent['id'] , $parent['name']);
+				}
+			}
+			// add to the linktree
+			TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=adminitem'.$item , $itemname);
 		}
-		// add to the linktree
-		TPadd_linktree($scripturl.'?action=tportal;sa=download;dl=adminitem'.$item , $itemname);
+		else
+			redirectexit('action=tportal;sa=download;dl=admin');
 	}
 
 	loadTemplate('TPdladmin');
