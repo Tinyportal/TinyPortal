@@ -48,10 +48,7 @@ function template_tp_summary()
 function template_tp_articles()
 {
 	global $settings, $txt, $context, $scripturl, $user_info;
-var_dump($context['TPortal']['catnames']);
-		echo '<br>';
-var_dump($context['TPortal']['categories_shortname']);
-echo '<br>';
+
 	if($context['TPortal']['profile_action'] == ''){
 		echo '
 	<div>
