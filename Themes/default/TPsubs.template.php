@@ -374,7 +374,7 @@ function TPortal_statsbox()
 		echo '
 		<h5 class="mlist"><a href="'.$scripturl.'?action=mlist">'.$txt['members'].'</a></h5>
 		<ul>
-			<li>' . $bullet. $txt['total_members'].': ' , isset($modSettings['memberCount']) ? $modSettings['memberCount'] : $modSettings['totalMembers'] , '</li>
+			<li>' . $bullet. $txt['total_members'].': ' , isset($modSettings['memberCount']) ? comma_format($modSettings['memberCount']) : comma_format($modSettings['totalMembers']) , '</li>
 			<li>' . $bullet. $txt['tp-latest']. ': <a href="', $scripturl, '?action=profile;u=', $modSettings['latestMember'], '"><strong>', $modSettings['latestRealName'], '</strong></a></li>
 		</ul>';
 	if(isset($context['TPortal']['userbox']['stats_all']))
@@ -382,10 +382,10 @@ function TPortal_statsbox()
 		echo '
 		<h5 class="stats"><a href="'.$scripturl.'?action=stats">'.$txt['tp-stats'].'</a></h5>
 		<ul>
-			<li>'.  $bullet. $txt['total_posts'].': '.$modSettings['totalMessages']. '</li>
-			<li>'.  $bullet. $txt['total_topics'].': '.$modSettings['totalTopics']. '</li>
-			<li>' . $bullet. $txt['tp-mostonline-today'].': '.$modSettings['mostOnlineToday'].'</li>
-			<li>' . $bullet. $txt['tp-mostonline'].': '.$modSettings['mostOnline'].'</li>
+			<li>'.  $bullet. $txt['total_posts'].': '.comma_format($modSettings['totalMessages']). '</li>
+			<li>'.  $bullet. $txt['total_topics'].': '.comma_format($modSettings['totalTopics']). '</li>
+			<li>' . $bullet. $txt['tp-mostonline-today'].': '.comma_format($modSettings['mostOnlineToday']).'</li>
+			<li>' . $bullet. $txt['tp-mostonline'].': '.comma_format($modSettings['mostOnline']).'</li>
 			<li>('.timeformat($modSettings['mostDate']).')</li>
 		</ul>';
 
