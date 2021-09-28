@@ -1162,6 +1162,13 @@ table.tp_grid tr.windowbg:nth-of-type(even) {
 .main_icons.menu_tpforum::before {
     background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
 }
+/* font awesome icons for FA themes*/
+.fa-forum:before {
+  content: "\f086"; }
+  
+.fa-tpadmin:before {
+  content: "\f1b3"; }
+  
 /* Additional style for blocks replacing tp_half */
 div.tp_half21 {
 	background: #B1BBC5;
