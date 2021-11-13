@@ -2223,7 +2223,7 @@ function template_blockoverview()
 		<div id="blocks-overview" class="admintable admin-area windowbg noup">
 			<div class="content">';
 
-		$side=array('','left','right','top','center','front','lower','bottom');
+		$side=array('','left','right','center','front','bottom','top','lower');
 
 		if(allowedTo('tp_blocks') && isset($context['TPortal']['blockoverview']))
 		{
@@ -2252,6 +2252,7 @@ function template_blockoverview()
 		}
 		echo '
 			</div>
+			<p class="clearthefloat"></p>
 			<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
 		</div>
 	</form>';

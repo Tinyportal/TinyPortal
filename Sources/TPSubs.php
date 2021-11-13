@@ -443,7 +443,7 @@ function TP_article_categories($use_sorted = false) {{{
 					),
 				);
 				$context['TPortal']['catnames'][$row['id']]=$row['value1'];
-				$context['TPortal']['categories_shortname'][$sorted[$row['id']]['shortname']]=$row['id'];
+				$context['TPortal']['categories_shortname'][$row['id']]=!empty($row['value8']) ? $row['value8'] : $row['id'];
 			}
 		}
 		$smcFunc['db_free_result']($request);
@@ -2936,7 +2936,7 @@ function tp_profile_articles($member_id) {{{
 					'off' => $row['off'],
 					'locked' => $row['locked'],
 					'catID' => $row['category'],
-					'category' => '<a href="'.$scripturl.'?mycat='.$row['category'].'">' . (isset($context['TPortal']['catnames'][$row['category']]) ? $context['TPortal']['catnames'][$row['category']] : '') .'</a>',
+					'category' => '<a href="'.$scripturl.'?cat='.(isset($context['TPortal']['categories_shortname'][$row['category']]) ? $context['TPortal']['categories_shortname'][$row['category']] : '').'">' . (isset($context['TPortal']['catnames'][$row['category']]) ? $context['TPortal']['catnames'][$row['category']] : '') .'</a>',
 					'editlink' => allowedTo('tp_articles') ? $scripturl.'?action=tpadmin;sa=editarticle'.$row['id'] : $scripturl.'?action=tportal;sa=editarticle'.$row['id'],
 				);
             }
