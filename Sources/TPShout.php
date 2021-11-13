@@ -26,9 +26,9 @@ function TPShout() {{{
 
     global $context, $settings, $options, $modSettings;
 
-	$shoutbox_id = (isset($_POST['b']) ? $_POST['b'] : NULL);
-	$shoutbox_limit = (isset($_POST['l']) ? $_POST['l'] : NULL);
-	$shoutbox_del = (isset($_POST['s']) ? $_POST['s'] : NULL);
+	$shoutbox_id	= TPUtil::filter('b', 'request', 'int');
+	$shoutbox_limit = TPUtil::filter('l', 'request', 'int');
+	$shoutbox_del	= TPUtil::filter('s', 'request', 'int');
 
     if(isset($_REQUEST['shout'])) {
         $shoutAction = TPUtil::filter('shout', 'request', 'string');
@@ -357,6 +357,7 @@ function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shou
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
+
 }}}
 
 function shout_bbc_code($shoutbox_id, $collapse = true) {{{
