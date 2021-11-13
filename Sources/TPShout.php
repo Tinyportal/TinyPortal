@@ -26,9 +26,9 @@ function TPShout() {{{
 
     global $context, $settings, $options, $modSettings;
 
-	$shoutbox_id	= TPUtil::filter('b', 'request', 'int');
-	$shoutbox_limit = TPUtil::filter('l', 'request', 'int');
-	$shoutbox_del	= TPUtil::filter('s', 'request', 'int');
+	$shoutbox_id	= TPUtil::filter('b', 'request', 'int') ?? null;
+	$shoutbox_limit = TPUtil::filter('l', 'request', 'int') ?? null;
+	$shoutbox_del	= TPUtil::filter('s', 'request', 'int') ?? null;
 
     if(isset($_REQUEST['shout'])) {
         $shoutAction = TPUtil::filter('shout', 'request', 'string');
