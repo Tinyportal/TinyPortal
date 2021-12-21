@@ -54,6 +54,7 @@ function TPShout() {{{
             tpshout_bigscreen(false, $context['TPortal']['shoutbox_limit'], $shoutbox_id, $shoutbox_limit);
         }
         else {
+			isAllowedTo('tp_can_shout');
             $number = substr($shoutAction, 4);
             if(!is_numeric($number)) {
                 $number = 10;
