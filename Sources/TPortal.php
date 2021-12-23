@@ -89,10 +89,6 @@ function TPortal_init() {{{
 		return;
     }
 
-	if($modSettings['allow_guestAccess'] == '0' && $user_info['is_guest']) {
-		return;
-	}
-
 	if(loadLanguage('TPortal') == false) {
 		loadLanguage('TPortal', 'english');
     }
