@@ -71,14 +71,10 @@
 	
 	<file name="$sourcedir/Subs.php">
 		<operation>
-			<search position="replace"><![CDATA[function redirectexit($setLocation = '', $refresh = false)]]></search>
-			<add><![CDATA[function redirectexit($setLocation = '', $refresh = false, $tp_not = false)]]></add>
-		</operation>
-		<operation>
 			<search position="after"><![CDATA[	// Put the session ID in.
 	if (defined('SID') && SID != '')]]></search>
 			<add><![CDATA[	// TinyPortal
-	if ($setLocation == $scripturl && !$tp_not && !empty($context['TPortal']['redirectforum']))
+	if ($setLocation == $scripturl && !empty($context['TPortal']['redirectforum']))
 		$setLocation .= '?action=forum';
 	// end
 	
@@ -90,23 +86,6 @@
 		<operation>
 			<search position="replace"><![CDATA[?:board|topic)=]]></search>
 			<add><![CDATA[?:board|topic|page|cat)=]]></add>
-		</operation>
-	</file>
-	
-	<file name="$sourcedir/Subs-Editor.php">
-		<operation>
-			<search position="replace"><![CDATA[function theme_postbox($msg)
-{
-	global $context;
-
-	return template_control_richedit($context['post_box_name']);
-}]]></search>
-			<add><![CDATA[function theme_postbox($msg, $from_tp = false)
-{
-	global $context;
-
-	return template_control_richedit($context['post_box_name'], $from_tp);
-}]]></add>
 		</operation>
 	</file>
 </modification>
