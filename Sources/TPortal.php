@@ -1446,7 +1446,7 @@ function doTPfrontpage() {{{
                 // expand the vislaoptions
                 $row['visual_options'] = explode(',', $row['options']);
                 $row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
-                $row['rating'] = array_sum(explode(',', $row['rating']));
+                $row['rating'] = is_null($row['rating']) ? 0 : array_sum(explode(',', $row['rating']));
                 $row['avatar'] = set_avatar_data( array(
                             'avatar' => $row['avatar'],
                             'email' => $row['email_address'],

@@ -495,8 +495,10 @@ class Article extends Base
                 $row['parsed_bbc']      = true;
 
 				// Load their context data.
-				loadMemberData($row['author_id']);
-				loadMemberContext($row['author_id']);
+				if(is_null($memberContext) || !array_key_exists($row['author_id'], $memberContext)) {
+					loadMemberData($row['author_id']);
+					loadMemberContext($row['author_id']);
+				}
 
 				// Store this member's information.
 				if(!is_null($memberContext) && array_key_exists($row['author_id'], $memberContext)) {

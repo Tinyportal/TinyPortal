@@ -19,7 +19,7 @@
 
 define('TP_MINIMUM_PHP_VERSION', '7.2.0');
 
-global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir;
+global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir, $render;
 $manual = false;
 $render = '';
 
@@ -1188,7 +1188,7 @@ function addDefaults()
             ),
         );
 
-        $smcFunc['db_insert']('ignore',
+        $smcFunc['db_insert']('INSERT',
             '{db_prefix}tp_blocks',
             array(
                 'type' => 'int',
@@ -1305,7 +1305,7 @@ function addDefaults()
 			),
 		);
 
-		$smcFunc['db_insert']('ignore',
+		$smcFunc['db_insert']('INSERT',
 			'{db_prefix}tp_variables',
 			array(
 				'value1' => 'string',
