@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 2.1.0
+ * @version 2.1.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -64,7 +64,7 @@ if ($manual) {
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v2.1.0 for '.$forumVersion.'</title>
+		<title>TinyPortal - v2.1.1 for '.$forumVersion.'</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 }
@@ -78,7 +78,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.1.0 for '.$forumVersion.'<h3/></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.1.1 for '.$forumVersion.'<h3/></div>
 	<div class="windowbg middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -419,7 +419,7 @@ $smcFunc['db_free_result']($request);
 
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '2.1.0',
+    'version' => '2.1.1',
     'frontpage_title' => '',
     'showforumfirst' => '0',
     'hideadminmenu' => '0',
@@ -575,7 +575,7 @@ $settings_array = array(
     'dl_introtext' => '<p><strong>Welcome to the TinyPortal download manager!</strong></p>
 <p><br></p>
 <p>TPdownloads is a built-in function for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict membergroups access level for each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;Tinyportal &gt; Manage TPdownloads&quot; and select the [Settings] button.<br></p>
-<p>If you do not wish to use TPdownloads you can deactivate the function completely by setting the option "TPdownloads is NOT active" in the settings. The TPdownloads menu option will no longer be displayed in the menu when TPdownloads is deactivated.</p>
+<p>If you do not wish to use TPdownloads you can deactivate the function completely by setting the option "Show Downloads" to OFF in the settings. The Downloads menu option will no longer be displayed to your users in the menu when TPdownloads is deactivated.</p>
 <p><br></p>
 <p>We hope you enjoy using TinyPortal.&nbsp; If you have any problems, please feel free to <a href="https://www.tinyportal.net/index.php">ask us for assistance</a>.<br></p>
 <p><br>Thanks!<br>The TinyPortal team</p>',
