@@ -316,18 +316,38 @@ function template_editblock()
 			}
 // Block type: SSI functions
 			elseif($context['TPortal']['blockedit']['type']=='13'){
-				if(!in_array($context['TPortal']['blockedit']['body'],array('recentpoll','toppoll','topposters','topboards','topreplies','topviews','calendar')))
+				if(!in_array($context['TPortal']['blockedit']['body'],array('recenttopics','recentposts','recentpoll','recentattachments','topboards','topreplies','topviews','toppoll','topposters','latestmember','randommember','online','welcome','calendar','birthday','holiday','event','recentevent','boardstats','news','boardnews','quicksearch')))
 					$context['TPortal']['blockedit']['body']='';
 						echo '
+						',$txt['tp-ssiblockdesc'],'<br><br>
 						<dl class="tptitle settings">
 						<dt>'.$txt['tp-showssibox'].'</dt>
 						<dd>
+						<div class="tp_largelist">
 							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
-							<input type="radio" id="tp_block_body1" name="tp_block_body" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-ssi-topboards']. '</label><br>
-							<input type="radio" id="tp_block_body2" name="tp_block_body" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-ssi-topposters']. '</label><br>
-							<input type="radio" id="tp_block_body3" name="tp_block_body" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-ssi-topreplies']. '</label><br>
-							<input type="radio" id="tp_block_body4" name="tp_block_body" value="topviews" ' , $context['TPortal']['blockedit']['body']=='topviews' ? 'checked' : '' , '><label for="tp_block_body4"> '.$txt['tp-ssi-topviews']. '</label><br>
-							<input type="radio" id="tp_block_body5" name="tp_block_body" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '><label for="tp_block_body5"> '.$txt['tp-ssi-calendar']. '</label><br>
+							<input type="radio" id="tp_block_body1" name="tp_block_body" value="recenttopics" ' , $context['TPortal']['blockedit']['body']=='recenttopics' ? 'checked' : '' , '><label for="tp_block_body1"> '.$txt['tp-ssi-recenttopics']. '</label><br>
+							<input type="radio" id="tp_block_body2" name="tp_block_body" value="recentposts" ' , $context['TPortal']['blockedit']['body']=='recentposts' ? 'checked' : '' , '><label for="tp_block_body2"> '.$txt['tp-ssi-recentposts']. '</label><br>
+							<input type="radio" id="tp_block_body3" name="tp_block_body" value="recentpoll" ' , $context['TPortal']['blockedit']['body']=='recentpoll' ? 'checked' : '' , '><label for="tp_block_body3"> '.$txt['tp-ssi-recentpoll']. '</label><br>
+							<input type="radio" id="tp_block_body4" name="tp_block_body" value="recentattachments" ' , $context['TPortal']['blockedit']['body']=='recentattachments' ? 'checked' : '' , '><label for="tp_block_body4"> '.$txt['tp-ssi-recentattachments']. '</label><br>
+							<input type="radio" id="tp_block_body5" name="tp_block_body" value="topboards" ' , $context['TPortal']['blockedit']['body']=='topboards' ? 'checked' : '' , '><label for="tp_block_body5"> '.$txt['tp-ssi-topboards']. '</label><br>
+							<input type="radio" id="tp_block_body6" name="tp_block_body" value="topreplies" ' , $context['TPortal']['blockedit']['body']=='topreplies' ? 'checked' : '' , '><label for="tp_block_body6"> '.$txt['tp-ssi-topreplies']. '</label><br>
+							<input type="radio" id="tp_block_body7" name="tp_block_body" value="topviews" ' , $context['TPortal']['blockedit']['body']=='topviews' ? 'checked' : '' , '><label for="tp_block_body7"> '.$txt['tp-ssi-topviews']. '</label><br>
+							<input type="radio" id="tp_block_body8" name="tp_block_body" value="toppoll" ' , $context['TPortal']['blockedit']['body']=='toppoll' ? 'checked' : '' , '><label for="tp_block_body8"> '.$txt['tp-ssi-toppoll']. '</label><br>
+							<input type="radio" id="tp_block_body9" name="tp_block_body" value="topposters" ' , $context['TPortal']['blockedit']['body']=='topposters' ? 'checked' : '' , '><label for="tp_block_body9"> '.$txt['tp-ssi-topposters']. '</label><br>
+							<input type="radio" id="tp_block_body10" name="tp_block_body" value="latestmember" ' , $context['TPortal']['blockedit']['body']=='latestmember' ? 'checked' : '' , '><label for="tp_block_body10"> '.$txt['tp-ssi-latestmember']. '</label><br>
+							<input type="radio" id="tp_block_body11" name="tp_block_body" value="randommember" ' , $context['TPortal']['blockedit']['body']=='randommember' ? 'checked' : '' , '><label for="tp_block_body11"> '.$txt['tp-ssi-randommember']. '</label><br>
+							<input type="radio" id="tp_block_body12" name="tp_block_body" value="online" ' , $context['TPortal']['blockedit']['body']=='online' ? 'checked' : '' , '><label for="tp_block_body12"> '.$txt['tp-ssi-online']. '</label><br>
+							<input type="radio" id="tp_block_body13" name="tp_block_body" value="welcome" ' , $context['TPortal']['blockedit']['body']=='welcome' ? 'checked' : '' , '><label for="tp_block_body13"> '.$txt['tp-ssi-welcome']. '</label><br>
+							<input type="radio" id="tp_block_body14" name="tp_block_body" value="calendar" ' , $context['TPortal']['blockedit']['body']=='calendar' ? 'checked' : '' , '><label for="tp_block_body14"> '.$txt['tp-ssi-calendar']. '</label><br>
+							<input type="radio" id="tp_block_body15" name="tp_block_body" value="birthday" ' , $context['TPortal']['blockedit']['body']=='birthday' ? 'checked' : '' , '><label for="tp_block_body15"> '.$txt['tp-ssi-birthday']. '</label><br>
+							<input type="radio" id="tp_block_body16" name="tp_block_body" value="holiday" ' , $context['TPortal']['blockedit']['body']=='holiday' ? 'checked' : '' , '><label for="tp_block_body16"> '.$txt['tp-ssi-holiday']. '</label><br>
+							<input type="radio" id="tp_block_body17" name="tp_block_body" value="event" ' , $context['TPortal']['blockedit']['body']=='event' ? 'checked' : '' , '><label for="tp_block_body17"> '.$txt['tp-ssi-event']. '</label><br>
+							<input type="radio" id="tp_block_body18" name="tp_block_body" value="recentevents" ' , $context['TPortal']['blockedit']['body']=='recentevents' ? 'checked' : '' , '><label for="tp_block_body18"> '.$txt['tp-ssi-recentevents']. '</label><br>
+							<input type="radio" id="tp_block_body19" name="tp_block_body" value="boardstats" ' , $context['TPortal']['blockedit']['body']=='boardstats' ? 'checked' : '' , '><label for="tp_block_body19"> '.$txt['tp-ssi-boardstats']. '</label><br>
+							<input type="radio" id="tp_block_body20" name="tp_block_body" value="news" ' , $context['TPortal']['blockedit']['body']=='news' ? 'checked' : '' , '><label for="tp_block_body20"> '.$txt['tp-ssi-news']. '</label><br>
+							<input type="radio" id="tp_block_body21" name="tp_block_body" value="boardnews" ' , $context['TPortal']['blockedit']['body']=='boardnews' ? 'checked' : '' , '><label for="tp_block_body21"> '.$txt['tp-ssi-boardnews']. '</label><br>
+							<input type="radio" id="tp_block_body22" name="tp_block_body" value="quicksearch" ' , $context['TPortal']['blockedit']['body']=='quicksearch' ? 'checked' : '' , '><label for="tp_block_body22"> '.$txt['tp-ssi-quicksearch']. '</label><br>
+						</div>
 						</dd>
 					</dl>';
 			}

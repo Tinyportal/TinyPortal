@@ -12,11 +12,11 @@ Bloc
 </author>
 
 <version>
-0.3
+0.4
 </version>
 
 <date>
-20.jan.2019
+22.jan.2022
 </date>
 
 <code>
@@ -31,30 +31,28 @@ $days = array($today => array(NULL, NULL, '<a class="smalltext" style="color: st
 $day_name_length = 2;
 $month_href = $scripturl . '?action=calendar';
 $first_day = 1;
-$pn = array();
 
 $first_of_month = gmmktime(0,0,0,$month,1,$year);
-//remember that mktime will automatically correct if invalid dates are entered
+// remember that mktime will automatically correct if invalid dates are entered
 // for instance, mktime(0,0,0,12,32,1997) will be the date for Jan 1, 1998
 // this provides a built in "rounding" feature to generate_calendar()
 
-$day_names = array(); //generate all the day names according to the current locale
-for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400) //January 4, 1970 was a Sunday
-	$day_names[$n] = ucfirst(gmstrftime('%A',$t)); //%A means full textual day name
+$day_names = array(); 
+//generate all the day names according to the current locale
+for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400) 
+//January 4, 1970 was a Sunday
+$day_names[$n] = ucfirst(gmstrftime('%A',$t));
+//%A means full textual day name
 
 list($month, $year, $month_name, $weekday) = explode(',', gmstrftime('%m,%Y,%B,%w', $first_of_month));
-$weekday = ($weekday + 7 - $first_day) % 7; //adjust for $first_day
-$title   = $smcFunc['htmlspecialchars'](ucfirst($month_name)).' '.$year;  //note that some locales don't capitalize month and day names
+$weekday = ($weekday + 7 - $first_day) % 7; 
+//adjust for $first_day
+$title   = $smcFunc['htmlspecialchars'](ucfirst($month_name)).' '.$year; 
+//note that some locales don't capitalize month and day names
 
-//Begin calendar. Uses a real <caption>. See http://diveintomark.org/archives/2002/07/03
-@list($p, $pl) = each($pn);
-@list($n, $nl) = each($pn); //previous and next links, if applicable
-if($p) 
-	$p = '<span class="smalltext">'.($pl ? '<a href="'.htmlspecialchars($pl).'">'.$p.'</a>' : $p).'</span> ';
-if($n) 
-	$n = ' <span class="smalltext">'.($nl ? '<a href="'.htmlspecialchars($nl).'">'.$n.'</a>' : $n).'</span>';
+//Begin calendar. Uses a real <caption>.
 $calendar = '<table>'."\n".
-'<caption >'.$p.($month_href ? '<a href="'.htmlspecialchars($month_href).'">'.$title.'</a>' : $title).$n."</caption>\n<tr>";
+'<caption ><a href="'.htmlspecialchars($month_href).'">'.$title.'</a>'.$n."</caption>\n<tr>";
 
 if($day_name_length){ #if the day names should be shown ($day_name_length > 0)
 	//if day_name_length is >3, the full name of the day will be printed
@@ -96,5 +94,7 @@ echo $calendar."</tr>\n</table>\n";
 
 <description>
 A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar , slightly modified. 
-It simply displays the date and the days in current month/year. Current day is highlighted. Version 0.3 is updated to be used in SMF 2.1 and fit in the side bars.
+It simply displays the date and the days in current month/year. Current day is highlighted. 
+Version 0.3 is updated to be used in SMF 2.1 and fit in the side bars.
+Version 0.4 is updated to work on PHP8.1.
 </description>

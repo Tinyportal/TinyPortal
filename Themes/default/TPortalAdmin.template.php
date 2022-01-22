@@ -1985,7 +1985,7 @@ function template_blocks()
 					}
 					elseif($lblock['type']=='ssi'){
 						// SSI block..which function?
-						if(!in_array($lblock['body'],array('recentpoll','toppoll','topposters','topboards','topreplies','topviews','calendar')))
+						if(!in_array($lblock['body'],array('recenttopics','recentposts','recentpoll','recentattachments','topboards','topreplies','topviews','toppoll','topposters','latestmember','randommember','online','welcome','calendar','birthday','holiday','event','recentevent','boardstats','news','boardnews','quicksearch')))
 							$lblock['body']='';
 						echo '
 					<tr class="windowbg">
@@ -1995,19 +1995,49 @@ function template_blocks()
 								<select name="blockbody' .$lblock['id']. '">
 									<option value="" ' , $lblock['body']=='' ? 'selected' : '' , '>' .$txt['tp-none-'].'</option>';
 						echo '
+									<option value="recenttopics" ' , $lblock['body']=='recenttopics' ? 'selected' : '' , '>'.$txt['tp-ssi-recenttopics'].'</option>';
+						echo '
+									<option value="recentposts" ' , $lblock['body']=='recentposts' ? 'selected' : '' , '>'.$txt['tp-ssi-recentposts'].'</option>';
+						echo '
 									<option value="recentpoll" ' , $lblock['body']=='recentpoll' ? 'selected' : '' , '>'.$txt['tp-ssi-recentpoll'].'</option>';
 						echo '
-									<option value="toppoll" ' , $lblock['body']=='toppoll' ? 'selected' : '' , '>'.$txt['tp-ssi-toppoll'].'</option>';
+									<option value="recentattachments" ' , $lblock['body']=='recentattachments' ? 'selected' : '' , '>'.$txt['tp-ssi-recentattachments'].'</option>';
 						echo '
 									<option value="topboards" ' , $lblock['body']=='topboards' ? 'selected' : '' , '>'.$txt['tp-ssi-topboards'].'</option>';
-						echo '
-									<option value="topposters" ' , $lblock['body']=='topposters' ? 'selected' : '' , '>'.$txt['tp-ssi-topposters'].'</option>';
 						echo '
 									<option value="topreplies" ' , $lblock['body']=='topreplies' ? 'selected' : '' , '>'.$txt['tp-ssi-topreplies'].'</option>';
 						echo '
 									<option value="topviews" ' , $lblock['body']=='topviews' ? 'selected' : '' , '>'.$txt['tp-ssi-topviews'].'</option>';
 						echo '
-									<option value="calendar" ' , $lblock['body']=='calendar' ? 'selected' : '' , '>'.$txt['tp-ssi-calendar'].'</option>
+									<option value="toppoll" ' , $lblock['body']=='toppoll' ? 'selected' : '' , '>'.$txt['tp-ssi-toppoll'].'</option>';
+						echo '
+									<option value="topposters" ' , $lblock['body']=='topposters' ? 'selected' : '' , '>'.$txt['tp-ssi-topposters'].'</option>';
+						echo '
+									<option value="latestmember" ' , $lblock['body']=='latestmember' ? 'selected' : '' , '>'.$txt['tp-ssi-latestmember'].'</option>';
+						echo '
+									<option value="randommember" ' , $lblock['body']=='randommember' ? 'selected' : '' , '>'.$txt['tp-ssi-randommember'].'</option>';
+						echo '
+									<option value="online" ' , $lblock['body']=='online' ? 'selected' : '' , '>'.$txt['tp-ssi-online'].'</option>';
+						echo '
+									<option value="welcome" ' , $lblock['body']=='welcome' ? 'selected' : '' , '>'.$txt['tp-ssi-welcome'].'</option>';
+						echo '
+									<option value="calendar" ' , $lblock['body']=='calendar' ? 'selected' : '' , '>'.$txt['tp-ssi-calendar'].'</option>';
+						echo '
+									<option value="birthday" ' , $lblock['body']=='birthday' ? 'selected' : '' , '>'.$txt['tp-ssi-birthday'].'</option>';
+						echo '
+									<option value="holiday" ' , $lblock['body']=='holiday' ? 'selected' : '' , '>'.$txt['tp-ssi-holiday'].'</option>';
+						echo '
+									<option value="event" ' , $lblock['body']=='event' ? 'selected' : '' , '>'.$txt['tp-ssi-event'].'</option>';
+						echo '
+									<option value="recentevents" ' , $lblock['body']=='recentevents' ? 'selected' : '' , '>'.$txt['tp-ssi-recentevents'].'</option>';
+						echo '
+									<option value="boardstats" ' , $lblock['body']=='boardstats' ? 'selected' : '' , '>'.$txt['tp-ssi-boardstats'].'</option>';
+						echo '
+									<option value="news" ' , $lblock['body']=='news' ? 'selected' : '' , '>'.$txt['tp-ssi-news'].'</option>';
+						echo '
+									<option value="boardnews" ' , $lblock['body']=='boardnews' ? 'selected' : '' , '>'.$txt['tp-ssi-boardnews'].'</option>';
+						echo '
+									<option value="quicksearch" ' , $lblock['body']=='quicksearch' ? 'selected' : '' , '>'.$txt['tp-ssi-quicksearch'].'</option>
 								</select>
 							</div>
 						</div>

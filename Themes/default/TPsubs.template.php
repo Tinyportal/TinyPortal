@@ -750,20 +750,54 @@ function TPortal_recentbox()
 // blocktype 13: SSI functions
 function TPortal_ssi()
 {
-	global $context;
+	global $context, $txt;
 	echo '<div style="padding: 5px;" class="smalltext">';
-	if($context['TPortal']['ssifunction'] == 'toptopics')
-		ssi_topTopics();
+	if($context['TPortal']['ssifunction'] == 'recenttopics')
+		ssi_recentTopics();
+	elseif($context['TPortal']['ssifunction'] == 'recentposts')
+		ssi_recentPosts();
+	elseif($context['TPortal']['ssifunction'] == 'recentpoll')
+		ssi_recentPoll();
+	elseif($context['TPortal']['ssifunction'] == 'recentattachments')
+		ssi_recentAttachments();
 	elseif($context['TPortal']['ssifunction'] == 'topboards')
 		ssi_topBoards();
-	elseif($context['TPortal']['ssifunction'] == 'topposters')
-		ssi_topPoster(5);
 	elseif($context['TPortal']['ssifunction'] == 'topreplies')
 		ssi_topTopicsReplies();
 	elseif($context['TPortal']['ssifunction'] == 'topviews')
 		ssi_topTopicsViews();
+	elseif($context['TPortal']['ssifunction'] == 'toppoll')
+		ssi_topPoll();
+	elseif($context['TPortal']['ssifunction'] == 'topposters')
+		ssi_topPoster(5);
+	elseif($context['TPortal']['ssifunction'] == 'latestmember')
+		ssi_latestMember();
+	elseif($context['TPortal']['ssifunction'] == 'randommember')
+		ssi_randomMember('day');
+	elseif($context['TPortal']['ssifunction'] == 'online')
+		ssi_whosOnline();
+	elseif($context['TPortal']['ssifunction'] == 'whosonline')
+		ssi_whosOnline();
+	elseif($context['TPortal']['ssifunction'] == 'welcome')
+		ssi_welcome();
 	elseif($context['TPortal']['ssifunction'] == 'calendar')
 		ssi_todaysCalendar();
+	elseif($context['TPortal']['ssifunction'] == 'birthday')
+		ssi_todaysBirthdays();
+	elseif($context['TPortal']['ssifunction'] == 'holiday')
+		ssi_todaysHolidays();
+	elseif($context['TPortal']['ssifunction'] == 'event')
+		ssi_todaysEvents();
+	elseif($context['TPortal']['ssifunction'] == 'recentevents')
+		ssi_recentEvents();
+	elseif($context['TPortal']['ssifunction'] == 'boardstats')
+		ssi_boardStats();
+	elseif($context['TPortal']['ssifunction'] == 'news')
+		ssi_news();
+	elseif($context['TPortal']['ssifunction'] == 'boardnews')
+		ssi_boardNews();
+	elseif($context['TPortal']['ssifunction'] == 'quicksearch')
+		ssi_quickSearch();
 
 	echo '</div>';
 }
