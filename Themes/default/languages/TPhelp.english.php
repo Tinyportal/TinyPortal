@@ -1,5 +1,5 @@
 <?php
-// Version: 2.1.0; TPhelp
+// Version: 2.1.1; TPhelp
 
 // Credits
 $txt['tp-credit1'] = '

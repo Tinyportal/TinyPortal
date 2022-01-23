@@ -1,5 +1,5 @@
 <?php
-// Version: 2.1.0; TPortalAdmin
+// Version: 2.1.1; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & Frontpage';
@@ -450,13 +450,29 @@ $txt['tp-userbox7'] = 'Forum Stats';
 $txt['tp-module7'] = 'Articles: newest additions';
 $txt['tp-module8'] = 'Articles: most viewed';
 $txt['tp-module9'] = 'Articles: most comments';
-$txt['tp-ssi-calendar'] = 'Todays calendar';
-$txt['tp-ssi-recentpoll'] = 'Most recent poll';
-$txt['tp-ssi-topboards'] = 'Top Boards';
-$txt['tp-ssi-toppoll'] = 'Top Poll';
-$txt['tp-ssi-topposters'] = 'Top Posters';
-$txt['tp-ssi-topreplies'] = 'Top Replies';
-$txt['tp-ssi-topviews'] = 'Top Views';
+$txt['tp-ssi-recenttopics'] = 'Recent Topics Function';
+$txt['tp-ssi-recentposts'] = 'Recent Posts Function';
+$txt['tp-ssi-recentpoll'] = 'Recent Poll Function';
+$txt['tp-ssi-recentattachments'] = 'Recent Attachments Function';
+$txt['tp-ssi-topboards'] = 'Top Boards Function';
+$txt['tp-ssi-topreplies'] = 'Top Topics - by replies';
+$txt['tp-ssi-topviews'] = 'Top Topics - by views';
+$txt['tp-ssi-toppoll'] = 'Top Poll Function';
+$txt['tp-ssi-topposters'] = 'Top Poster Function';
+$txt['tp-ssi-latestmember'] = 'Latest Member Function';
+$txt['tp-ssi-randommember'] = 'Member of the Day';
+$txt['tp-ssi-online'] = 'Who\'s Online Function';
+$txt['tp-ssi-welcome'] = 'Welcome Function';
+$txt['tp-ssi-calendar'] = 'Today\'s Calendar Function';
+$txt['tp-ssi-birthday'] = 'Today\'s Birthdays Function';
+$txt['tp-ssi-holiday'] = 'Today\'s Holidays Function';
+$txt['tp-ssi-event'] = 'Today\'s Events Function';
+$txt['tp-ssi-recentevents'] = 'Recent Calendar Events Function';
+$txt['tp-ssi-boardstats'] = 'Forum Stats';
+$txt['tp-ssi-news'] = 'News Function';
+$txt['tp-ssi-boardnews'] = 'Board News Function';
+$txt['tp-ssi-quicksearch'] = 'Quick Search Function';
+$txt['tp-ssi-none'] = 'No SSI function selected';
 $txt['tp-rssblock'] = 'RSS feed ';
 $txt['tp-rssblock-showonlytitle'] = 'Display only titles?';
 $txt['tp-rssblock-useutf8'] = 'What encoding to use in this feed ';
@@ -488,6 +504,7 @@ $txt['tp-catboxheight'] = 'Height of the article box before scrollbar';
 $txt['tp-insert'] = 'Insert code';
 $txt['tp-unreadreplies'] = 'Unread replies';
 $txt['tp-searchdesc'] = 'The search block presents the standard SMF search function in a block.';
+$txt['tp-ssiblockdesc'] = 'The SSI block offers you the option to use one of the many standard SMF SSI functions. Documentation of what these functions mean and can provide can be found here: <a href="'.$boardurl.'/ssi_examples.php" target="_blank">ssi_examples.php</a>.';
 $txt['tp-noblocktype'] = 'You have not specified a block type or the block type has no settings.';
 
 // Menu manager
