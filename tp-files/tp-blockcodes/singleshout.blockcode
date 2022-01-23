@@ -1,5 +1,5 @@
 <info>
-TinyPortal BlockCode file for 2.x.x
+TinyPortal BlockCode file for 2.1.x
 format: Boardmod
 </info>
 
@@ -12,20 +12,22 @@ Bloc
 </author>
 
 <version>
-0.2
+0.3
 </version>
 
 <date>
-10.july.2020
+23.January.2022
 </date>
 
 <code>
 global $settings, $db_prefix, $scripturl, $txt, $modSettings, $smcFunc;
 
-// set the limit
+// set the limit: the number of shouts included in the block
 $limit = 1;
+// set the shoutbox ID: what shoutbox is included in the block
+$shoutbox_id = 1;
 
-$request =  $smcFunc['db_query']('', 'SELECT s.* FROM {db_prefix}tp_shoutbox as s 	WHERE s.sticky = {int:val7}	ORDER BY s.time DESC LIMIT {int:limit}', array('val7' => 0, 'limit' => $limit));
+$request =  $smcFunc['db_query']('', 'SELECT s.* FROM {db_prefix}tp_shoutbox as s 	WHERE s.shoutbox_id = {int:shoutbox_id}	ORDER BY s.time DESC LIMIT {int:limit}', array('shoutbox_id' => $shoutbox_id, 'limit' => $limit));
 $fetched = array(); $members = array();
 if($smcFunc['db_num_rows']($request)>0)
 {
@@ -84,5 +86,5 @@ function asingleshout($row)
 
 <description>
 Show a single latest shout or n latest shouts.
-TinyPortal 2.x version 
+TinyPortal 2.1 version 
 </description>
