@@ -488,7 +488,9 @@ function doTPpage() {{{
 				// shortname title
 				$article['shortname'] = un_htmlspecialchars($article['shortname']);
 				// Add ratings together
-				$article['rating'] = array_sum(explode(',', $article['rating']));
+				$article['rating'] = !is_null($article['rating']) ? array_sum(explode(',', $article['rating'])) : 0;
+				// Make sure voters is set
+				$article['voters'] = !is_null($article['voters']) ? $article['voters'] : 0;
 				// allowed and all is well, go on with it.
 				$context['TPortal']['article'] = $article;
 
@@ -2218,7 +2220,7 @@ function tpSetupUpshrinks() {{{
 
 }}}
 
-function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $none = false) {{{
+function TP_blockgrid($block, $theme, $pos, $side, $last, $gridtype, $none = false) {{{
 	global $context;
 
 	// first, set the table, equal in all grids
