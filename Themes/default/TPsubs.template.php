@@ -2584,7 +2584,7 @@ function template_tp_fatal_error()
 }
 
 // Format a time to make it look purdy.
-function tptimeformat($log_time, $show_today = true, $format)
+function tptimeformat($log_time, $format, $show_today = true)
 {
 	global $context, $user_info, $txt, $modSettings, $smcFunc;
 

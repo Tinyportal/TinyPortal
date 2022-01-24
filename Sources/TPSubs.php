@@ -668,7 +668,7 @@ if(!function_exists('htmlspecialchars_decode'))
     }
 }
 
-function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
+function TP_createtopic($title, $text, $icon, $board, $submitter, $sticky = 0)
 {
 	global $user_info, $board_info, $sourcedir;
 
@@ -842,7 +842,7 @@ function TPwysiwyg_setup()
 	}
 }
 
-function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
+function TPwysiwyg($textarea, $body, $uploadname, $upload = true, $use = 1, $showchoice = true)
 {
 	global $user_info, $boardurl, $settings, $boarddir, $context, $txt, $scripturl;
 
@@ -1609,7 +1609,7 @@ function tp_hidebars($what = 'all' )
 		$context['TPortal']['lowerpanel'] = 0;
 }
 
-function get_blockaccess($what, $front = false, $whichbar)
+function get_blockaccess($what, $whichbar, $front = false)
 {
 	global $context, $user_info;
 
