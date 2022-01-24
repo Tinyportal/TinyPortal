@@ -2218,7 +2218,7 @@ function tpSetupUpshrinks() {{{
 
 }}}
 
-function TP_blockgrid($block, $theme, $pos, $side, $last = false, $gridtype, $none = false) {{{
+function TP_blockgrid($block, $theme, $pos, $side, $gridtype, $last = false, $none = false) {{{
 	global $context;
 
 	// first, set the table, equal in all grids
