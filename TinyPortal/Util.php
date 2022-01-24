@@ -375,12 +375,13 @@ class Util
     private static function filterType($type) {{{
         switch (strtolower($type)) {
             case 'string':
-                $filter = FILTER_SANITIZE_STRING;
+                $filter = FILTER_UNSAFE_RAW;
                 break;
             case 'int':
                 $filter = FILTER_SANITIZE_NUMBER_INT;
                 break;
-            case 'float' || 'decimal':
+            case 'float':
+			case 'decimal':
                 $filter = FILTER_SANITIZE_NUMBER_FLOAT;
                 break;
             case 'encoded':
@@ -393,7 +394,7 @@ class Util
                 $filter = FILTER_SANITIZE_EMAIL;
                 break;
             default:
-                $filter = FILTER_SANITIZE_STRING;
+                $filter = FILTER_UNSAFE_RAW;
         }
         return $filter;
     }}}
