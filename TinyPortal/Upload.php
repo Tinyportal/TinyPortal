@@ -11,7 +11,7 @@
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause
  *
- * @version 2.1.1
+ * @version 2.2.0
  *
  */
 namespace TinyPortal;

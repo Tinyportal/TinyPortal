@@ -1,5 +1,5 @@
 <?php
-// Version: 2.1.1; TPortal
+// Version: 2.2.0; TPortal
 
 global $txt, $context, $scripturl;
 
