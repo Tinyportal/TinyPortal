@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.1.1
+ * @version 2.2.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2584,7 +2584,7 @@ function template_tp_fatal_error()
 }
 
 // Format a time to make it look purdy.
-function tptimeformat($log_time, $show_today = true, $format)
+function tptimeformat($log_time, $show_today = true, $format = '%d %b %Y')
 {
 	global $context, $user_info, $txt, $modSettings, $smcFunc;
 

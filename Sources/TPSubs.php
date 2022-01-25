@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.1.1
+ * @version 2.2.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -668,7 +668,7 @@ if(!function_exists('htmlspecialchars_decode'))
     }
 }
 
-function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter)
+function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter = false)
 {
 	global $user_info, $board_info, $sourcedir;
 
@@ -842,7 +842,7 @@ function TPwysiwyg_setup()
 	}
 }
 
-function TPwysiwyg($textarea, $body, $upload = true, $uploadname, $use = 1, $showchoice = true)
+function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use = 1, $showchoice = true)
 {
 	global $user_info, $boardurl, $settings, $boarddir, $context, $txt, $scripturl;
 
@@ -1608,101 +1608,6 @@ function tp_hidebars($what = 'all' )
 	elseif($what=='lower')
 		$context['TPortal']['lowerpanel'] = 0;
 }
-
-function get_blockaccess($what, $front = false, $whichbar)
-{
-	global $context, $user_info;
-
-	$mylang = $user_info['language'];
-	$show = false;
-
-	// if empty return
-	if($what=='')
-	{
-		$show=false;
-		return $show;
-	}
-    // split up the access level
-    $levels = explode('|', $what);
-    foreach($levels as $level => $code){
-		$precode = substr($code,0, 6);
-		$body = explode(",", substr($code, 6));
-		if($precode == '')
-		{
-			// special case for frontpage
-			if(in_array('frontpage', $body) && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat']))
-				$show = true;
-			// normal
-			if(in_array($context['TPortal']['action'], $body) || (isset($_GET['action']) && in_array($_GET['action'], $body)))
-				$show = true;
-			// special for forum
-			if(in_array('forumall', $body) && $context['TPortal']['in_forum'])
-				$show = true;
-			// if we are on post screen
-			if(isset($_GET['action']) && $_GET['action'] == 'post2' && in_array('post', $body))
-				$show = true;
-
-			// special for allpages!
-			if(in_array('allpages', $body))
-				$show = true;
-		}
-		elseif($precode == 'board='){
-			if(isset($_GET['board']) && in_array($_GET['board'], $body))
-				$show = true;
-			// show on all boards
-			if(isset($_GET['board']) && in_array('-1', $body))
-				$show = true;
-		}
-		elseif($precode == 'dlcat='){
-			if(isset($_GET['dl']) && substr($_GET['dl'], 0, 3) == 'cat' && in_array(substr($_GET['dl'], 3), $body))
-				$show = true;
-		}
-		elseif($precode == 'tpmod='){
-			if($context['TPortal']['action'] == 'tpmod' && isset($_GET[$body]))
-				$show = true;
-		}
-		elseif($precode == 'custo='){
-			if(isset($_GET['action']) && in_array($_GET['action'], $body))
-				$show = true;
-		}
-		elseif($precode == 'tpage=')
-		{
-			if(isset($context['TPortal']['currentpage']))
-			{
-				if(in_array($context['TPortal']['currentpage'], $body))
-					$show = true;
-			}
-			if($front && in_array($context['TPortal']['featured_article'], $body))
-				$show = true;
-		}
-		elseif($precode == 'tpcat='){
-			if(isset($_GET['cat']) && !isset($_GET['action']) && in_array($_GET['cat'], $body))
-				$show = true;
-			// also on the actual category
-			if(!empty($context['TPortal']['parentcat']) && in_array($context['TPortal']['parentcat'], $body))
-				$show = true;
-		}
-		elseif($precode == 'tlang=')
-		{
-			// if a language IS selected, use ONLY that, otherwise it will abide to the others
-			if(in_array($mylang, $body))
-				$show_lang = true;
-			else
-				$show_lang = false;
-		}
-		// code for modules
-		elseif($precode == 'modul='){
-			if($context['TPortal']['action'] == 'tpmod' && isset($_GET['dl']))
-				$show = true;
-		}
-    }
-	// check for language option
-	if(isset($show_lang) && $show == true)
-	{
-		$show = $show_lang;
-	}
-	return $show;
- }
 
 function TPgetlangOption($langlist, $set)
 {
