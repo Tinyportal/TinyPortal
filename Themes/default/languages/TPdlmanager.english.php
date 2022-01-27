@@ -99,7 +99,7 @@ $txt['tp-onlyftpstrays'] = 'Only showing files that do not have an entry in the 
 $txt['tp-dlfilesize'] = 'Filesize';
 $txt['tp-uploadnewfileexisting'] = 'Upload a new file <br><span class="smalltext"> (the existing will be replaced!)</span>';
 $txt['tp-uploadnewpicexisting']='Existing screenshot/picture';
-$txt['tp-uploadnewpic'] = 'Upload a new picture<br><span class="smalltext">(the existing will be replaced)</span>';
+$txt['tp-uploadnewpic'] = 'Upload a new picture<br><span class="smalltext">(supported extensions: jpg, gif or png. The existing will be replaced)</span>';
 $txt['tp-dlmorefiles2'] = 'Attach to another item:';
 $txt['tp-sayno'] = 'No';
 $txt['tp-dlnotapprovedyet'] = 'The file is not approved yet.';
