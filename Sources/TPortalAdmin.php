@@ -1490,67 +1490,39 @@ function do_postchecks()
 			isAllowedTo('tp_settings');
 			$w = array();
 			$ssi = array();
+			$checkboxes = array();
 
             switch($from) {
                 case 'settings':
                     $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
-                    foreach($checkboxes as $v) {
-                        if(TPUtil::checkboxChecked('tp_'.$v)) {
-                            $updateArray[$v] = "1";
-                        }
-                        else {
-                            $updateArray[$v] = "";
-                        }
-                        // remove the variable so we don't process it twice before the old logic is removed
-                        unset($_POST['tp_'.$v]);
-                    }
                     break;
 				case 'frontpage':
                     $checkboxes = array('allow_guestnews', 'forumposts_avatar', 'use_attachment');
-                    foreach($checkboxes as $v) {
-                        if(TPUtil::checkboxChecked('tp_'.$v)) {
-                            $updateArray[$v] = "1";
-                        }
-                        else {
-                            $updateArray[$v] = "";
-                        }
-                        // remove the variable so we don't process it twice before the old logic is removed
-                        unset($_POST['tp_'.$v]);
-                    }
                     break;
 				case 'artsettings':
                     $checkboxes = array('use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon');
-                    foreach($checkboxes as $v) {
-                        if(TPUtil::checkboxChecked('tp_'.$v)) {
-                            $updateArray[$v] = "1";
-                        }
-                        else {
-                            $updateArray[$v] = "";
-                        }
-                        // remove the variable so we don't process it twice before the old logic is removed
-                        unset($_POST['tp_'.$v]);
-                    }
                     break;
 				case 'panels':
                     $checkboxes = array('hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar');
-                    foreach($checkboxes as $v) {
-                        if(TPUtil::checkboxChecked('tp_'.$v)) {
-                            $updateArray[$v] = "1";
-                        }
-                        else {
-                            $updateArray[$v] = "";
-                        }
-                        // remove the variable so we don't process it twice before the old logic is removed
-                        unset($_POST['tp_'.$v]);
-                    }
                     break;
-
                 default:
                     break;
-            }
+			}
 
-			foreach($_POST as $what => $value)
-			{
+			if(!empty($checkboxes)) {
+				foreach($checkboxes as $v) {
+					if(TPUtil::checkboxChecked('tp_'.$v)) {
+						$updateArray[$v] = 1;
+					}
+					else {
+						$updateArray[$v] = 0;
+					}
+					// remove the variable so we don't process it twice before the old logic is removed
+					unset($_POST['tp_'.$v]);
+				}
+			}
+
+			foreach($_POST as $what => $value) {
 				if(substr($what, 0, 3) == 'tp_')
 				{
 					$where = substr($what, 3);
