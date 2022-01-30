@@ -651,10 +651,44 @@ foreach($settings_array as $what => $val)
 		$smcFunc['db_free_result']($request);
     }
 }
-if($updates > 0)
+if($updates > 0) {
 	$render .= '
     <li>Settings table updated</li>
 	<li>Added '.$updates.' new setting(s)</li>';
+}
+
+$checkboxes	= array();
+$checkboxes = array_merge($checkboxes, array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars'));
+$checkboxes = array_merge($checkboxes, array('allow_guestnews', 'forumposts_avatar', 'use_attachment'));
+$checkboxes = array_merge($checkboxes, array('use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon'));
+$checkboxes = array_merge($checkboxes, array('hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar'));
+
+$updates	= 0;
+
+foreach($checkboxes as $check) {
+	$request = $smcFunc['db_query']('', '
+		SELECT * FROM {db_prefix}tp_settings
+		WHERE name = {string:name} LIMIT 1',
+		array('name' => $check)
+	);
+
+	$row = $smcFunc['db_fetch_assoc']($request);
+	if(isset($row['value']) && ($row['value'] == "")) {
+		$smcFunc['db_query']('', '
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
+            WHERE name = {string:name}',
+            array('val' => 0, 'name' => $check)
+        );
+	}
+	$smcFunc['db_free_result']($request);
+}
+
+if($updates > 0) {
+	$render .= '
+    <li>Settings table updated</li>
+	<li>Updated '.$updates.' setting(s)</li>';
+}
 
 if($convertblocks) {
 	$smcFunc['db_query']('', '
