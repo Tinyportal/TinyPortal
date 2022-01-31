@@ -674,6 +674,8 @@ foreach($checkboxes as $check) {
 
 	$row = $smcFunc['db_fetch_assoc']($request);
 	if(isset($row['value']) && ($row['value'] == "")) {
+		$updates++;
+		
 		$smcFunc['db_query']('', '
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
