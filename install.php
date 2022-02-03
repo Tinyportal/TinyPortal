@@ -857,7 +857,7 @@ function articleChanges()
     $smcFunc['db_change_column']('{db_prefix}tp_articles', 'ID_THEME', array( 'name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => '0'));
     $smcFunc['db_change_column']('{db_prefix}tp_articles', 'authorID', array( 'name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => '0'));
     $smcFunc['db_change_column']('{db_prefix}tp_articles', 'body', array( 'name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')));
-	$render .= '<p>Processed column definitions articles table</p>';
+	$render .= 'Processed column definitions articles table<br>';
 }
 
 function articleUpdates()
@@ -1003,7 +1003,7 @@ function updateBlocks()
 		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"1","var3":"' .(!empty($shoutbox_layout) ? $shoutbox_layout : '0'). '","var4":"' .(!empty($shoutbox_height) ? $shoutbox_height : '250'). '","var5":"99"}')
 	);
 
-	$render .= '<p>Processed existing blocks</p>';
+	$render .= 'Processed existing blocks<br>';
 }
 
 function updateComments()
@@ -1052,7 +1052,7 @@ function updateComments()
 				'type' => 'article_comment',
 			)
 		);
-	$render .= '<p>Processed comments table</p>';
+	$render .= 'Processed comments table<br>';
     }
 }
 
@@ -1061,7 +1061,7 @@ function dataTableChanges()
 	global $smcFunc, $render;
 	// update column names tp_data
     $smcFunc['db_change_column']('{db_prefix}tp_data', 'ID_MEMBER', array( 'name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => '0'));
-	$render .= '<p>Processed column names data table</p>';
+	$render .= 'Processed column names data table<br>';
 }
 
 function updateDownLoads()
