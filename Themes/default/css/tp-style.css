@@ -672,6 +672,9 @@ ul.tpsitemap li a.tpsitemapheader {
 	display: none;
 }
 /* TP admin styles */
+.tpadmin_content .button:not(:first-child) {
+	margin-left: 4px;
+}
 .tp_overview {
 	overflow: hidden;
 	padding: 2%;
