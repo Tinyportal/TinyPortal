@@ -257,11 +257,12 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 	loadTemplate('TPShout');
 
     $block_shout = ' 1 = 1';
-    if(($shoutbox_id) > 0) {
-        $block_shout = ' s.shoutbox_id = {int:shoutbox_id} ';
-    }
-	else
+	if(!empty($shoutbox_id)) {
+		$block_shout = ' s.shoutbox_id = {int:shoutbox_id} ';
+	}
+	else {
 		redirectexit();
+	}
 
 	$members = array();
 	$request =  $smcFunc['db_query']('', '
