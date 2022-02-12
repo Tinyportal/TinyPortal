@@ -31,7 +31,7 @@ elseif(!defined('SMF')) {
 	die('<strong>Install Error:</strong> - please verify you put this file the same directory as SMF\'s index.php.');
 }
 
-if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>='))) {
+if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>'))) {
 	die('<strong>Install Error:</strong> - please install a version of php greater than '.TP_MINIMUM_PHP_VERSION);
 }
 
