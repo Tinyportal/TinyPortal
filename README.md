@@ -23,50 +23,23 @@ TinyPortal comes with a number of standard block types, such as: Recent Posts, T
 
 - **ShoutBox:** An integrated message box in which you can leave messages for others to see and thus maintain a simple "chat" on the site. Combined with permissions you will have much freedom in who can participate as well.
 
+## Questions?
+For more detailed information about the features of TinyPortal and how to use them, check out the [TinyPortal documentation](https://www.tinyportal.net/docs). If you cannot find what you are looking for in the documentation, please feel free to ask on the [TinyPortal Support forum](https://www.tinyportal.net)
+
+## Changelog
+Please click on the appropriate release to see the [Changelog](https://github.com/Tinyportal/TinyPortal/tags)
+
 ## What you need to install TinyPortal
 1. In order to install TinyPortal, you need to have a working version of Simple Machines Forum. 
 SMF version must be SMF2.x.
 2. Zip files are provided for install both on the 
-[Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the 
-[TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61).
+[Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the [TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61) (the archive with old version packages is available in the download section).
 
-**Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.0.x or SMF2.1.x Make a backup of all your SMF and TP files before you uninstall.**
+Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.x. Make a backup of all your SMF and TP files before you uninstall.
+
+**NOTICE!: Because of the database changes in TinyPortal 2.x versions there's no going back to TinyPortal 1.x after installing a TinyPortal 2.x version. You can install previous versions, but by doing that you WILL lose TP data and you will need to manually fix or recreate your content!!! This will also result in issues upgrading to TinyPortal 2.x later on. For these reasons it is strongly advised to backup your database and files before proceeding.**
 
 ## License Information:
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License");
 you may not use this package except in compliance with the License. You may obtain a copy of the License at
 https://www.mozilla.org/en-US/MPL/2.0/
-
-## Questions?
-
-For more detailed information about the features of TinyPortal and how to use them, check out the [TinyPortal documentation](https://www.tinyportal.net/docs). If you cannot find what you are looking for in the documentation, please feel free to ask on the [TinyPortal Support forum](https://www.tinyportal.net)
-
-
-***
-## Version: TinyPortal 2.2.1, 13th February 2022
-This is the current version of TinyPortal and recommended for all forums on PHP versions from 7.0.0 and higher
-
-* This version can be used on SMF 2.0 and 2.1
-* Minimum required PHP version : 7.0.0
-* Highest supported PHP version (tested) 8.1.1
-
-### Changelog
-Please click on the appropriate release to see the [Changelog](https://github.com/Tinyportal/TinyPortal/tags)
-
-### NOTICE!
-Because of the database changes in TP 2.x.x versions there's no going back to TP 1.x.x after installing a TP 2.x version. You can install previous versions, but by doing that you WILL lose TP data and you will need to manually fix or recreate your content!!! This will also result in issues upgrading to TP2.x later on.
-For these reasons it's advised to backup your database and files before proceeding.
-
-
-***
-## Version: TinyPortal 1.6.9, 19th January 2021
-This is a bug fix only support for older php versions
-
-* This version can be used on SMF 2.0. and 2.1
-* Minimum required PHP version : 5.4.0
-
-### Changelog
-Please click on the appropriate release to see the [Changelog](https://github.com/Tinyportal/TinyPortal/tags)
-
-*** 
-**Note:** All versions of TinyPortal can be downloaded from the download section of [the official TinyPortal website](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61).
