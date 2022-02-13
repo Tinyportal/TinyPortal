@@ -46,9 +46,9 @@ For more detailed information about the features of TinyPortal and how to use th
 ## Version: TinyPortal 2.2.1, 13th February 2022
 This is the current version of TinyPortal and recommended for all forums on PHP versions from 7.0.0 and higher
 
-* TinyPortal 2.2.0 can be used on SMF 2.0 and 2.1 - 2.1.1
-* Minimum required PHP version : 7.2.0
-* Highest supported PHP version (tested) 8.0.0
+* This version can be used on SMF 2.0 and 2.1
+* Minimum required PHP version : 7.0.0
+* Highest supported PHP version (tested) 8.1.1
 
 ### Changelog
 Please click on the appropriate release to see the [Changelog](https://github.com/Tinyportal/TinyPortal/tags)
@@ -62,7 +62,7 @@ For these reasons it's advised to backup your database and files before proceedi
 ## Version: TinyPortal 1.6.9, 19th January 2021
 This is a bug fix only support for older php versions
 
-* TinyPortal 1.6.9 can be used on SMF 2.0. and 2.1
+* This version can be used on SMF 2.0. and 2.1
 * Minimum required PHP version : 5.4.0
 
 ### Changelog
