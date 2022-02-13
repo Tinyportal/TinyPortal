@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/github/downloads/TinyPortal/TinyPortal/total.svg)](https://github.com/TinyPortal/TinyPortal/releases)
 [![GitHub issues](https://img.shields.io/github/issues/TinyPortal/TinyPortal.svg)](https://github.com/TinyPortal/TinyPortal/issues)
 
-# What is TinyPortal?
+## What is TinyPortal?
 
 TinyPortal is a mod for SMF that adds a powerful and mature CMS to your SMF Forum in minutes, with native integration, without having to worry about bridging, database, and appearance. Your SMF and TP will be a homogenous ensemble from installation. It's up to you and your creativity to use TP's features to customize your site and organize its content.
 
@@ -23,100 +23,52 @@ TinyPortal comes with a number of standard block types, such as: Recent Posts, T
 
 - **ShoutBox:** An intergrated message box in which you can leave messages for others to see and thus maintain a simple "chat" on the site. Combined with permissions you will have much freedom in who can participate as well.
 
+For more detailed information about the features of TinyPortal and how to use them, check out the [TinyPortal support site](https://www.tinyportal.net/docs)
 
-For more detailed information about the features of TinyPortal and how to use them, check out the https://www.tinyportal.net/docs
+**Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.0.x or SMF2.1 - 2.1.1. Make a backup of all your SMF and TP files before you uninstall.**
 
-**Note:** You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.0.x or SMF2.1 - 2.1.1. Make a backup of all your SMF and TP files before you uninstall.[/color]
+## What you need to install TinyPortal
+1. In order to install TinyPortal, you need to have a working version of Simple Machines Forum. 
+SMF version must be SMF2.x.
+2. Zip files are provided for install both on the 
+[Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the 
+[TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61).
 
-***
-
-## Current Version: TinyPortal 2.2.0, 11th February 2022
-
-##### TinyPortal (TP)
-
-**The TinyPortal Team is pleased to announce the release of TinyPortal 2.2.0**
-
-TinyPortal 2.2.0 can be used on SMF 2.0 and 2.1 - 2.1.1
-
-Minimum required PHP version : 7.2.0
-
-Highest supported PHP version (tested) 8.0.0
-
-[b]Changelog: TinyPortal 2.2.0[/b]
-
-Relevant to SMF 2.0 and 2.1:
-
-**New functionality:**
-
-- added most standard SSI functions as options to SSI block
-- updated stats block to use thousand separators
-- added font-awesome icons for menu options in specials themes
-- updated installer to provide more consistent log information
-
-**Bugfixes:**
-
-- fixed block access page shows incorrect panels for blocks
-- fixed Save button on block access pages showing between blocks when uneven #items
-- fixed missing div on Downloads page when top downloads not activated
-- fixed broken category links in profile articles view and use short names when available
-- fixed link to article category from Profile
-- fixed mini calendar blockcode for PHP 8.1
-- fixed singleshout blockcode for 2.1.x
-- general code updates for PHP8 compatibility
-
-**Note:**
-
-when updating from TinyPortal versions older than 2.1.0, shoutbox blocks are enhanced with a new block setting: "Characters to display in titles".
-
-Due to this change any pre-existing shoutbox blocks 'may' have a changed title length after installing the new version of TP. Please check any shoutbox blocks and adjust the block setting "Characters to display in titles" to the desired length...
-
-***
-
-**Download:** https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=item172
-
-**NOTICE!** because of the database changes in TP 2.x.x versions there's no going back to TP 1.x.x after installing version 2.0.1 or 2.1.0. You can install previous versions, but by doing that you WILL lose TP data and you will need to manually fix or recreate your content!!! For these reasons it's advised to backup your database and files before proceeding.
-
-A huge thankyou to tino and @rjen, and all our beta testers for all their hard work, and making this release possible.
-
-***
-
-### Current Version: TinyPortal 1.6.9, 19th January 2021
-
-**TinyPortal (TP)**
-
-This is a bug fix only support for older php versions
-
-Minimum required PHP version : 5.4.0
-
-**Changelog TinyPortal 1.6.9**
-
-This release includes the following fixes:
-
-**Relevant to 2.0 and 2.1:**
-
-- Fix search string not being correctly escaped when printing to the screen
-
-***
-
-***Users running versions of TinyPortal prior to 1.6.6 should update immediately by downloading the latest version.***
-
-**Download:** https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61
-
-http://www.tinyportal.net/"Official_TinyPortal_Site
-
-**Note:** Older versions of TinyPortal can be found on the official TinyPortal website.
-
-License Information:
---------------------------------------
-
+## License Information:
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License");
 you may not use this package except in compliance with the License. You may obtain a copy of the License at
 https://www.mozilla.org/en-US/MPL/2.0/
 
-
-Questions?
-----------
-
-If you have any questions, please feel free to ask on the
+## Questions?
+For more detailed information about the features of TinyPortal and how to use them or if you have any questions, please feel free to ask on the
 [TinyPortal Support forum](https://www.tinyportal.net)
 
+
+***
+## Version: TinyPortal 2.2.1, 13th February 2022
+This is the current version of TinyPortal and recommended for all forums on PHP versions from 7.0.0 and higher
+
+* TinyPortal 2.2.0 can be used on SMF 2.0 and 2.1 - 2.1.1
+* Minimum required PHP version : 7.2.0
+* Highest supported PHP version (tested) 8.0.0
+
+### Changelog
+Please click on the appropriate release to see the [Changelog](https://github.com/Tinyportal/TinyPortal/tags)
+
+### NOTICE!
+Because of the database changes in TP 2.x.x versions there's no going back to TP 1.x.x after installing a TP 2.x version. You can install previous versions, but by doing that you WILL lose TP data and you will need to manually fix or recreate your content!!! This will also result in issues upgrading to TP2.x later on.
+For these reasons it's advised to backup your database and files before proceeding.
+
+
+***
+## Version: TinyPortal 1.6.9, 19th January 2021
+This is a bug fix only support for older php versions
+
+* TinyPortal 1.6.9 can be used on SMF 2.0. and 2.1
+* Minimum required PHP version : 5.4.0
+
+### Changelog
+Please click on the appropriate release to see the [Changelog](https://github.com/Tinyportal/TinyPortal/tags)
+
+*** 
+**Note:** All versions of TinyPortal can be downloaded from the download section of [the official TinyPortal website](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61).
