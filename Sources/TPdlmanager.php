@@ -384,7 +384,7 @@ function TPortalDLManager()
 
 				$body .= '[hr][b]'.$txt['tp-download'].':[/b][br]'.$scripturl.'?action=tportal;sa=download;dl=item'.$newitem;
 				// ok, create the topic then
-				$top = TP_createtopic($title, $body, $icon, $brd, $context['user']['id'], $sticky ? 1 : 0);
+				$top = TP_createtopic($title, $body, $icon, $brd, $sticky ? 1 : 0, $context['user']['id']);
 				// go to announce screen?
 				if($top > 0)
 				{
