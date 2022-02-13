@@ -21,7 +21,7 @@ TinyPortal comes with a number of standard block types, such as: Recent Posts, T
 
 - **Downloads Manager**: A built-in module for TP that lets you offer files for your members to browse and download. Its works by having the downloadable files placed in categories, letting you restrict member groups access level per each category.
 
-- **ShoutBox:** An intergrated message box in which you can leave messages for others to see and thus maintain a simple "chat" on the site. Combined with permissions you will have much freedom in who can participate as well.
+- **ShoutBox:** An integrated message box in which you can leave messages for others to see and thus maintain a simple "chat" on the site. Combined with permissions you will have much freedom in who can participate as well.
 
 ## What you need to install TinyPortal
 1. In order to install TinyPortal, you need to have a working version of Simple Machines Forum. 
