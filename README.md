@@ -30,7 +30,7 @@ SMF version must be SMF2.x.
 [Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the 
 [TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61).
 
-**Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.0.x or SMF2.1 - 2.1.1. Make a backup of all your SMF and TP files before you uninstall.**
+**Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.0.x or SMF2.1.x Make a backup of all your SMF and TP files before you uninstall.**
 
 ## License Information:
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License");
