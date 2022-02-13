@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -17,7 +17,7 @@
  *
  */
 
-define('TP_MINIMUM_PHP_VERSION', '7.2.0');
+define('TP_MINIMUM_PHP_VERSION', '6.9.9');
 
 global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir, $render;
 $manual = false;
@@ -31,7 +31,7 @@ elseif(!defined('SMF')) {
 	die('<strong>Install Error:</strong> - please verify you put this file the same directory as SMF\'s index.php.');
 }
 
-if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>='))) {
+if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSION, PHP_VERSION, '>'))) {
 	die('<strong>Install Error:</strong> - please install a version of php greater than '.TP_MINIMUM_PHP_VERSION);
 }
 
@@ -60,7 +60,7 @@ if ($manual) {
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v2.2.0 for '.$forumVersion.'</title>
+		<title>TinyPortal - v2.2.1 for '.$forumVersion.'</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 }
@@ -74,7 +74,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.2.0 for '.$forumVersion.'<h3/></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.2.1 for '.$forumVersion.'<h3/></div>
 	<div class="windowbg middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -480,7 +480,7 @@ if($convertaccess) {
 // now we process all settings
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '2.2.0',
+    'version' => '2.2.1',
     'frontpage_title' => '',
     'showforumfirst' => '0',
     'hideadminmenu' => '0',
@@ -1153,7 +1153,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
+                'settings' => json_encode( array ('var1' => 1, 'var2' => '1', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
             ),
             'recent' =>array(
                 'type' => 12,
