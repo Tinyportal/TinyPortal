@@ -22,8 +22,8 @@ What you need to install TinyPortal
 1. In order to install TinyPortal, you need to have a working version of Simple Machines Forum. 
 SMF version must be SMF2.x.
 2. Zip files are provided for install both on the 
-[Simple Machines Site](https://custom.simplemachines.org/mods/index.php?mod=97) and the 
-[TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;dl=cat61).
+[Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the 
+[TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61).
 
 
 License Information:
