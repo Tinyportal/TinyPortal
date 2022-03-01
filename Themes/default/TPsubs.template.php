@@ -1252,10 +1252,10 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		$code = '
 	<div class="tparticle render1" style="overflow: hidden;">
-		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
 			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
+		<div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
@@ -1284,6 +1284,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_morelinks}' : '') . '
 			</div>
 			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
 		</div>
 	</div>';
 	}
@@ -1293,10 +1294,10 @@ function article_renders($type = 1, $single = false, $first = false)
 		if($first)
 		$code = '
 	<div class="tparticle render1" style="overflow: hidden;">
-		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
 			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
+		<div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
@@ -1325,6 +1326,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_morelinks}' : '') . '
 			</div>
 			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
 		</div>
 	</div>';
 		else
@@ -1375,10 +1377,10 @@ function article_renders($type = 1, $single = false, $first = false)
 	{
 		$code = '
 	<div class="tparticle render4">
-		<div></div>
 		' . ($usetitlestyle ? '<div class="' .$divheader.'">' : '<div style="padding: 0 1em;">') . '
 			<h3 class="' .($usetitlestyle ? $headerstyle : ''). '">{article_title}&nbsp;</h3>
 		</div>
+		<div>
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
@@ -1410,6 +1412,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>
 			{article_morelinks}' : '') . '
 			' . (($useframestyle) ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
 		</div>
 	</div>';
 	}
@@ -1510,10 +1513,10 @@ function article_renders($type = 1, $single = false, $first = false)
 		if($first)
 		$code = '
 	<div class="tparticle render1" style="overflow: hidden;">
-		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
 			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
+		<div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
@@ -1543,6 +1546,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>
 			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
+		</div>
 	</div>';
 		else
 			$code = '
@@ -1556,10 +1560,10 @@ function article_renders($type = 1, $single = false, $first = false)
 		if($first)
 			$code = '
 	<div class="tparticle render3">
-		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
 		' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
+		<div>
 		<div' . ($useframestyle ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_header">
@@ -1595,6 +1599,7 @@ function article_renders($type = 1, $single = false, $first = false)
 			</div>' : '') . '
 			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
 		</div>
+		</div>
 	</div>';
 		else
 			$code = '
@@ -1612,10 +1617,10 @@ function article_renders($type = 1, $single = false, $first = false)
 		if($single)
 		$code = '
 	<div class="tparticle render1" style="overflow: hidden;">
-		<div></div>
 		' . ($usetitlestyle ? '<div class="'. $divheader .'">' : '<div style="padding: 0 1em;">') . '
 			' . ($usetitlestyle ? '<h3 class="' . $headerstyle . '">' .($showtitle ? '{article_title}' : '&nbsp;'). '</h3>' :  '<h3>' .($showtitle ? '{article_title}' : '' ). '</h3>') . '
 		</div>
+		<div>
 		<div' . (($useframestyle) ? ' class="' .$divbody. '" ' : '') . '>
 			' . ($usetitlestyle ? '' : ($useframestyle ? '<span class="topslice"><span></span></span>' : '')) . '
 			<div class="article_info">
@@ -1644,6 +1649,7 @@ function article_renders($type = 1, $single = false, $first = false)
 					{article_morelinks}' : '') . '
 			</div>
 			' . ($useframestyle ? '<span class="botslice"><span></span></span>' : '') . '
+		</div>
 		</div>
 	</div>';
 		else
@@ -2120,7 +2126,6 @@ function article_comments($render = true)
 	if((in_array('comments', $context['TPortal']['article']['visual_options'])) || (in_array('commentallow', $context['TPortal']['article']['visual_options']))) {
 		$data .= '
 	<a name="tp-comment"></a>
-	<div></div>
 	<h2 class="titlebg article_extra">' . $txt['tp-comments'] . ': ' . $context['TPortal']['article_comments_count'] . '' . (tp_hidepanel('articlecomments', false, true, '5px 5px 0 5px')) . '</h2> ';
 	}
 
