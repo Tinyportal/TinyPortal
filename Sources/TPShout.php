@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1247,7 +1247,7 @@ function TPShoutAdminAreas() {{{
 
 	if (allowedTo('tp_can_admin_shout')) {
 		$context['admin_tabs']['custom_modules']['tpshout'] = array(
-			'title' => 'TPShout',
+			'title' => 'TPshout',
 			'description' => '',
 			'href' => $scripturl . '?action=tpshout;shout=admin',
 			'is_selected' => isset($_GET['shout']),

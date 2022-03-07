@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1712,13 +1712,13 @@ function template_panels()
 				</dl>
 				<dl class="settings">
 					<dt>
-						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].':</label>
+						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].'</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5"><br>
 					</dd>
 					<dt>
-						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].':</label>
+						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].'</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_blockheight_'.$panl.'" name="tp_blockheight_'.$panl.'" value="' ,$context['TPortal']['blockheight_'.$panl], '" size="5" maxlength="5">

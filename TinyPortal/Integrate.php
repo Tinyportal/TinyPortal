@@ -517,7 +517,7 @@ class Integrate
         global $txt, $context;
 
         $profile_areas['tp'] = array(
-            'title' => 'Tinyportal',
+            'title' => 'TinyPortal',
             'areas' => array(),
         );
                // Profile area for 2.1

@@ -591,15 +591,16 @@ function template_submitarticle()
 
 function template_submitsuccess()
 {
-	global $txt;
+	global $txt, $scripturl;
 
 	echo '
 		<div class="tborder">
-                <div class="cat_bar">
-				    <h3 class="catbg">'.$txt['tp-submitsuccess2'].'</h3>
-                </div>
-					<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-submitsuccess'].'
-					<div class="padding-div">&nbsp;</div></div>
+			<div class="cat_bar">
+				<h3 class="catbg">'.$txt['tp-submitsuccess2'].'</h3>
+			</div>
+			<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-submitsuccess'].'<a href="' . $scripturl . '?action=tportal;sa=myarticles">' .$txt['tp-myarticles']. '</a>
+				<div class="padding-div">&nbsp;</div>
+			</div>
 		</div>';
 }
 

@@ -1,5 +1,5 @@
 <?php
-// Version: 2.2.0; TPortal
+// Version: 2.2.2; TPortal
 
 global $txt, $context, $scripturl;
 
@@ -8,7 +8,7 @@ $txt['permissiongroup_tp'] = 'TinyPortal';
 $txt['permissiongroup_simple_tp'] = 'Manage TinyPortal';
 
 $txt['permissionname_tp_settings'] = $txt['group_perms_name_tp_settings'] = 'Manage settings';
-$txt['permissionhelp_tp_settings'] = 'Allows users to manage settings for TP.';
+$txt['permissionhelp_tp_settings'] = 'Allows users to manage settings for TinyPortal.';
 $txt['cannot_tp_settings'] = 'Sorry, you aren\'t allowed to manage TinyPortal settings.';
 
 $txt['permissionname_tp_blocks'] = $txt['group_perms_name_tp_blocks'] = 'Manage blocks';
@@ -16,7 +16,7 @@ $txt['permissionhelp_tp_blocks'] = 'Allows users to manage blocks. Be careful wi
 $txt['cannot_tp_blocks'] = 'Sorry, you aren\'t allowed to manage blocks.';
 
 $txt['permissionname_tp_articles'] = $txt['group_perms_name_tp_articles'] = 'Manage articles';
-$txt['permissionhelp_tp_articles'] = 'Allows users to manage articles, categories for articles and the catlist.';
+$txt['permissionhelp_tp_articles'] = 'Allows users to manage articles, article categories and the catlist.';
 $txt['cannot_tp_articles'] = 'Sorry, you aren\'t allowed to manage articles.';
 
 $txt['permissionname_tp_submithtml'] = $txt['group_perms_name_tp_submithtml'] = 'Can submit HTML articles';
@@ -40,47 +40,47 @@ $txt['permissionhelp_tp_artcomment'] = 'Allows users to add comments to articles
 
 $txt['permissionname_tp_can_admin_shout'] = $txt['group_perms_name_tp_can_admin_shout'] = 'Manage TPshout';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
-$txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage the Shoutbox.';
+$txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage the shoutbox.';
 
-$txt['permissionname_tp_can_shout'] = $txt['group_perms_name_tp_can_shout'] = 'Can Post Shouts';
+$txt['permissionname_tp_can_shout'] = $txt['group_perms_name_tp_can_shout'] = 'Can post shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 
 $txt['permissionname_tp_dlmanager'] = $txt['group_perms_name_tp_dlmanager'] = 'Manage TPdownloads';
-$txt['permissionhelp_tp_dlmanager'] = 'Allows users to visit and operate any part of the File manager admin screens.';
-$txt['cannot_tp_dlmanager'] = 'Sorry, you aren\'t allowed to manage the File Manager module.';
+$txt['permissionhelp_tp_dlmanager'] = 'Allows users to visit and operate any part of the file manager admin screens.';
+$txt['cannot_tp_dlmanager'] = 'Sorry, you aren\'t allowed to manage the TPdownloads.';
 
 $txt['permissionname_tp_dlupload'] = $txt['group_perms_name_tp_dlupload'] = 'Upload file';
-$txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the File manager';
-$txt['cannot_tp_dlupload'] = 'Sorry, you aren\'t allowed to upload files to the File Manager.';
+$txt['permissionhelp_tp_dlupload'] = 'Allow you to upload files for the file manager';
+$txt['cannot_tp_dlupload'] = 'Sorry, you aren\'t allowed to upload files to the file manager.';
 
 $txt['permissionname_tp_dlcreatetopic'] = $txt['group_perms_name_tp_dlcreatetopic'] = 'Create Download topic';
 $txt['permissionhelp_tp_dlcreatetopic'] = 'Allows users to create a linked support topic, and also link the topic to the download. Uses pre-defined boards to choose from.';
 $txt['cannot_tp_dlcreatetopic'] = 'Sorry, you aren\'t allowed to create support topics.';
 
 $txt['permissionname_tp_can_list_images'] = $txt['group_perms_name_tp_can_list_images'] = 'Manage TPlistimages';
-$txt['permissionhelp_tp_can_list_images'] = 'Allows users to remove uploaded images from the Tiny Portal Image Directory.';
+$txt['permissionhelp_tp_can_list_images'] = 'Allows users to remove uploaded images from the TinyPortal image directory.';
 $txt['cannot_tp_can_list_images'] = 'Sorry, you aren\'t allowed to manage article images.';
 
 // Panels
-$txt['bottom-tp-upshrink_description'] = 'Bottom Panel';
-$txt['center-tp-upshrink_description'] = 'Upper Panel';
+$txt['bottom-tp-upshrink_description'] = 'Bottom panel';
+$txt['center-tp-upshrink_description'] = 'Upper panel';
 $txt['front-tp-upshrink_description'] = 'Frontpage';
-$txt['left-tp-upshrink_description'] = 'Left Panel';
-$txt['lower-tp-upshrink_description'] = 'Lower Panel';
-$txt['right-tp-upshrink_description'] = 'Right Panel';
-$txt['top-tp-upshrink_description'] = 'Top Panel';
+$txt['left-tp-upshrink_description'] = 'Left panel';
+$txt['lower-tp-upshrink_description'] = 'Lower panel';
+$txt['right-tp-upshrink_description'] = 'Right panel';
+$txt['top-tp-upshrink_description'] = 'Top panel';
 
 // Who
-$txt['tp-who-article'] = 'Viewing the Article &quot;<a href="%3$s?page=%2$s">%1$s</a>&quot;.';
-$txt['tp-who-articles'] = 'Viewing Articles';
-$txt['tp-who-article-search'] = 'Searching Articles.';
+$txt['tp-who-article'] = 'Viewing the article &quot;<a href="%3$s?page=%2$s">%1$s</a>&quot;.';
+$txt['tp-who-articles'] = 'Viewing articles';
+$txt['tp-who-article-search'] = 'Searching articles.';
 $txt['tp-who-categories'] = 'Viewing an article category page';
 $txt['tp-who-category'] = 'Viewing the category page &quot;<a href="%3$s?cat=%2$s">%1$s</a>&quot;.';
-$txt['tp-who-downloads'] = 'Viewing Downloads';
-$txt['tp-who-forum-index'] = 'Viewing the Forum Index';
-$txt['whoall_forum'] = 'Viewing the board index of <a href="' . $scripturl . '">' . (!empty($context['forum_name']) ? $context['forum_name'] : '*') . '</a>.';
-$txt['whoall_tpmod_dl'] = 'Viewing the File Manager.';
-$txt['whoall_tpmod_dlcat'] = 'Viewing a File category.';
+$txt['tp-who-downloads'] = 'Viewing downloads';
+$txt['tp-who-forum-index'] = 'Viewing the forum index';
+$txt['whoall_forum'] = 'Viewing the board index';
+$txt['whoall_tpmod_dl'] = 'Viewing the file manager.';
+$txt['whoall_tpmod_dlcat'] = 'Viewing a file category.';
 $txt['whoall_tpmod_dlitem'] = 'Viewing a files item.';
 
 // Articles
@@ -93,10 +93,10 @@ $txt['tp-articlessubmitted'] = 'New article(s): ';
 $txt['tp-cannotcomment'] = 'You don\'t have permission to comment, or comments have been turned off for this article.';
 $txt['tp-nolinkcomments'] = '(It is not allowed to post links in comments)';
 $txt['tp-categorynotexist'] = 'The category doesn\'t exist.';
-$txt['tp-categorynoarticles'] = 'This Category doesn\'t have any Articles assigned to it.';
+$txt['tp-categorynoarticles'] = 'This category doesn\'t have any articles assigned to it.';
 $txt['tp-comments'] = 'Comments';
 $txt['tp-comment'] = 'Comment';
-$txt['tp-writecomment'] = 'Write Comment';
+$txt['tp-writecomment'] = 'Write comment';
 $txt['tp-confirmcommentdelete'] = 'Are you sure you want to delete this comment?';
 $txt['tp-confirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-delete'] = 'Delete';
@@ -129,9 +129,9 @@ $txt['tp-guest'] = 'Guest';
 $txt['tp-guests'] = 'Guests';
 $txt['tp-itemviews'] = 'Views';
 $txt['tp-latest'] = 'Latest';
-$txt['tp-loggedintime'] = 'Total Logged In:';
-$txt['tp-mostonline'] = 'Online Ever';
-$txt['tp-mostonline-today'] = 'Online Today';
+$txt['tp-loggedintime'] = 'Total logged in:';
+$txt['tp-mostonline'] = 'Online ever';
+$txt['tp-mostonline-today'] = 'Online today';
 $txt['tp-nothemeschosen'] = 'No themes are chosen';
 $txt['tp-pm'] = 'PM: ';
 $txt['tp-pm2'] = 'New: ';
@@ -154,7 +154,7 @@ $txt['tp-noguest_access'] = 'Guests are not allowed to browse the forum.';
 $txt['tp-nosearchentered'] = 'Nothing to search for!';
 $txt['tp-search'] = 'Search';
 $txt['tp-searcharticles'] = 'Extended search';
-$txt['tp-searcharticles2'] = 'Search Articles';
+$txt['tp-searcharticles2'] = 'Search articles';
 $txt['tp-searcharticleshelp'] = 'Search through all allowed articles.';
 $txt['tp-searcharticleshelp2'] = '<span class="smalltext"><b>You can use the following operators:</b><br>
 <B>+</B>&nbsp;&nbsp;include, the word must be present.<br>
@@ -167,7 +167,7 @@ $txt['tp-searchintitle'] = 'Search in titles';
 
 // Profile
 $txt['articlesprofile'] = 'Articles';
-$txt['articlesprofile2'] = 'All the articles the member has written. Note that articles currently not active or not approved cannot be viewed from here. These can be accessed from the My Articles page in TinyPortal';
+$txt['articlesprofile2'] = 'All the articles the member has written. Note that articles currently not active or not approved cannot be viewed from here. These can be accessed from the My articles page in TinyPortal';
 $txt['downloadsprofile'] = 'Uploaded files';
 $txt['downloadsprofile2'] = 'All the files uploaded in File Manager. Files not yet approved are shown in italic style.';
 $txt['shoutboxprofile'] = 'View shouts';
@@ -175,7 +175,7 @@ $txt['shoutboxprofile2'] = 'All shouts made by the member.';
 $txt['tp-category'] = 'Category';
 $txt['tp-locked'] = 'Locked';
 $txt['tp-more'] = 'More ';
-$txt['tp-notlocked'] = 'Not Locked';
+$txt['tp-notlocked'] = 'Not locked';
 $txt['tp-prof_allarticles'] = 'Total number of articles written:';
 $txt['tp-prof_alldownloads'] = 'Total number of submitted files:';
 $txt['tp-prof_allshouts'] = 'Total number of shouts:';
@@ -184,7 +184,7 @@ $txt['tp-prof_offarticles'] = 'Articles not currently active:';
 $txt['tp-prof_offarticles2'] = 'All articles are marked as active.';
 $txt['tp-prof_waitapproval1'] = 'This member has ';
 $txt['tp-prof_waitapproval2'] = 'articles waiting approval.';
-$txt['tpsummary'] = 'Portal Summary';
+$txt['tpsummary'] = 'Portal summary';
 $txt['tp-wysiwygchoice'] = 'Use WYSIWYG editor';
 
 // File Manager
@@ -200,7 +200,7 @@ $txt['tp-uploadedby'] = 'Uploaded by ';
 $txt['shout!'] = 'Shout!';
 $txt['tp-shout'] = 'Shout';
 $txt['tp-shouts'] = 'Shouts:';
-$txt['tp-shoutbox'] = 'TinyPortal Shoutbox';
+$txt['tp-shoutbox'] = 'TinyPortal shoutbox';
 $txt['tp-shoutboxitems'] = 'Edit/Remove last shouts';
 $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
@@ -213,28 +213,28 @@ $txt['editor_tp_floatleft'] = 'Insert float left div';
 $txt['editor_tp_floatright'] = 'Insert float right div';
 
 // Menu texts
-$txt['tp-adminheader1'] = 'Settings & Frontpage';
-$txt['tp_menuarticles'] = 'Articles and Categories';
-$txt['tp-adminpanels'] = 'Panels and Blocks';
+$txt['tp-adminheader1'] = 'Settings & frontpage';
+$txt['tp_menuarticles'] = 'Articles & categories';
+$txt['tp-adminpanels'] = 'Panels & blocks';
 $txt['tp-menumanager'] = 'Menu manager';
-$txt['custom_modules'] = 'TP Modules';
+$txt['custom_modules'] = 'TP modules';
 
 // Various
 $txt['tp-forum'] = 'Forum';
 $txt['tp-tphelp'] = 'TinyPortal';
 $txt['tp-edit'] = 'Edit';
 $txt['tp-send'] = 'Save';
-$txt['tp-tpadmin'] = 'TP Admin';
+$txt['tp-tpadmin'] = 'TP admin';
 $txt['tp-profilesection'] = 'TinyPortal';
 $txt['tp-acronymdays'] = 'd ';
 $txt['tp-acronymhours'] = 'h ';
 $txt['tp-acronymminutes'] = 'm ';
 $txt['tp_unapproved_members'] = 'Unapproved: ';
-$txt['tp_maintenace'] = 'Maintenance Mode';
+$txt['tp_maintenace'] = 'Maintenance mode';
 $txt['tp_articles_help'] = '';
 $txt['tp_modreports'] = 'Modreports:';
 $txt['tp-addarticle'] = 'Add';
-$txt['tp-admin'] = 'TP Admin';
+$txt['tp-admin'] = 'TP admin';
 $txt['tp-article'] = 'Article';
 $txt['tp-articles'] = 'Articles';
 $txt['tp-articlesettings'] = 'Article settings';
@@ -276,7 +276,7 @@ $txt['tp-poster5'] = ' is no longer a member with this community.';
 $txt['tp-poster6'] = 'The member has written ';
 $txt['tp-poster7'] = ' articles.';
 $txt['tp-publish'] = 'Promote to frontpage';
-$txt['tp-quicklist'] = 'My Images Quicklist';
+$txt['tp-quicklist'] = 'My images quick-list';
 $txt['tp-quicklist2'] = 'The images below are small thumbnails of the original pictures. By dragging them into the editor the picture is inserted into the editor.';
 $txt['tp-rates'] = 'rates';
 $txt['tp-settings'] = 'Settings';

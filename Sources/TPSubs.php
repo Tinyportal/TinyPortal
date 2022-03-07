@@ -3006,7 +3006,7 @@ function tp_pro_shoutbox()
 	$context['page_title'] = $txt['tp-shouts'];
 }
 
-// Tinyportal
+// TinyPortal
 function tp_summary($memID)
 {
 	global $txt, $context;
