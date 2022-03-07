@@ -1,3 +1,3 @@
 files:
   - source: /Themes/default/languages
-    translation: /Themes/default/languages/%original_file_name%/%locale_with_underscore%
+    translation: '%file_name%_%language%'
