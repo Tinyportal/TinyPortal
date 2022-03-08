@@ -1785,7 +1785,7 @@ function TPadminIndex($tpsub = '', $module_admin = false) {{{
 				'is_selected' => in_array($tpsub, array('categories', 'addcategory','clist')) ,
 			),
 			'artsettings' => array(
-				'title' => $txt['tp-settings'],
+				'title' => $txt['tp-artsettings'],
 				'description' => $txt['tp-articledesc3'],
 				'href' => $scripturl . '?action=tpadmin;sa=artsettings',
 				'is_selected' => $tpsub == 'artsettings',

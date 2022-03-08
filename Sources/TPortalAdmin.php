@@ -1365,7 +1365,7 @@ function do_articles()
 	// ]]></script>';
 
 	if($context['TPortal']['subaction'] == 'artsettings') {
-		TPadd_linktree($scripturl.'?action=tpadmin;sa=artsettings', $txt['tp-settings']);
+		TPadd_linktree($scripturl.'?action=tpadmin;sa=artsettings', $txt['tp-artsettings']);
     }
 	elseif($context['TPortal']['subaction'] == 'articons') {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=articons', $txt['tp-adminicons']);

@@ -4,6 +4,7 @@
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
 $txt['tp-settings'] = 'Settings';
+$txt['tp-artsettings'] = 'Article settings';
 $txt['tp-frontpage'] = 'Frontpage';
 $txt['tp-articles'] = 'Articles';
 $txt['tp-tabs4'] = 'Submissions';
@@ -125,7 +126,6 @@ $txt['tp-artcat'] = 'Article categories';
 $txt['tp-helpcats'] = 'These are your article categories and sub-categories with the number of articles each category holds. Selecting a category will bring you the edit category page. The actions icons allow you to quickly access some category functions.';
 
 // Article settings
-$txt['tp-articlesettings'] = 'Article settings';
 $txt['tp-helpartsettings'] = 'These settings apply to ALL TinyPortal articles.';
 $txt['tp-usewysiwyg'] = 'Use the WYSIWYG editor';
 $txt['tp-editorheight'] = 'Height of WYSIWYG editor';

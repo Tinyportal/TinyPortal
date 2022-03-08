@@ -1367,7 +1367,7 @@ function template_artsettings()
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input  type="hidden"name="tpadmin_form" value="artsettings">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-articlesettings'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-artsettings'] . '</h3></div>
 		<div id="article-settings" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpartsettings'] , '</div><div></div>
 			<div class="windowbg noup">

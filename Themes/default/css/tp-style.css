@@ -925,7 +925,7 @@ div.tp_half
 .editor {
 	height: 100px;
 	margin: 0.25em 0 1em 0;
-	max-width: 95%;
+	max-width: 100%;
 	min-width: 90%;
 	width: 635px;
 }
@@ -992,7 +992,7 @@ input#searchbox {
 	width: 100%;
 }
 input,select {
-	max-width:97%!important;
+	max-width:100%!important;
 }
 .tp_upshrink20 {
 	float: right;

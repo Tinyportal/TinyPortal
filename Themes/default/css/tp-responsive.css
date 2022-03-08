@@ -207,6 +207,10 @@
 	ul.tp-subcategories li {
 		width: 98%;
 	}
+/** dirty fix for reason for edit in Curve2 */
+	input[name="modify_reason"] {
+	width:100%;
+}
 }
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
