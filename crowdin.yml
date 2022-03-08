@@ -1,0 +1,3 @@
+files:
+  - source: /Themes/default/languages
+    translation: '%file_name%_%language%'
