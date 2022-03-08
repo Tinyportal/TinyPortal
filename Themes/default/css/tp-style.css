@@ -509,7 +509,7 @@ img.tp_social {
 }
 /* render9 */
 .render9 .windowbg {
-	margin: 6px 0 0 0; !important;
+	margin: 6px 0 0 0 !important;
 }
 
 .tp_underline {
@@ -1107,7 +1107,7 @@ img.theme_icon {
 }
 img.tp-illu {
 	max-width: 300px;
-	max-height: 300 px;
+	max-height: 300px;
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
