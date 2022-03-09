@@ -488,9 +488,9 @@ function TPortal_themebox()
 			<div style="text-align: center; width: 95%; overflow: hidden;">';
 
 		if (!TP_SMF21)
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" style="max-width: 100%;" /> ';
 		else
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" style="max-width: 100%;" />';
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" style="max-width: 100%;" />';
 
 		echo '
 			</div>
