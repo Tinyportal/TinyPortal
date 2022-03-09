@@ -473,7 +473,7 @@ function TPortal_themebox()
 
 	 if(is_countable($temaid) && count($temaid) > 0){
         echo '
-		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="" style="padding: 0; margin: 0; text-align: center;">
+		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="#" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
          for($a=0 ; $a<(count($temaid)); $a++)
 		 {
@@ -1066,7 +1066,7 @@ function progetAvatars($ids)
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 	$request = $smcFunc['db_query']('', '
 		SELECT
-			mem.real_name, mem.member_name, mem.id_member, mem.show_online,mem.avatar, mem.email_address AS email_address,
+			mem.real_name, mem.member_name, mem.id_member, mem.show_online, mem.avatar, mem.email_address AS email_address,
 			COALESCE(a.id_attach, 0) AS id_attach, a.filename, a.attachment_type AS attachment_type
 		FROM {db_prefix}members AS mem
 		LEFT JOIN {db_prefix}attachments AS a ON (a.id_member = mem.id_member AND a.attachment_type != 3)
