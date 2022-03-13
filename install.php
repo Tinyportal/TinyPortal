@@ -635,7 +635,7 @@ $settings_array = array(
     'dl_wysiwyg' => 'html',
     'dl_introtext' => '<p><strong>Welcome to the TinyPortal download manager!</strong></p>
 <p><br></p>
-<p>TPdownloads is a built-in function for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict membergroups access level for each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;Tinyportal &gt; Manage TPdownloads&quot; and select the [Settings] button.<br></p>
+<p>TPdownloads is a built-in function for TinyPortal that lets you offer files for your members to browse and download. It works by having the downloadable files placed in categories. These categories have permissions on them, letting you restrict membergroups access level for each category. You may also allow members to upload files, control which membergroups are allowed and what types of files they may upload.<br><br>Admins can access the TPdownloads settings from the menu &quot;TinyPortal &gt; Manage TPdownloads&quot; and select the [Settings] button.<br></p>
 <p>If you do not wish to use TPdownloads you can deactivate the function completely by setting the option "Show Downloads" to OFF in the settings. The Downloads menu option will no longer be displayed to your users in the menu when TPdownloads is deactivated.</p>
 <p><br></p>
 <p>We hope you enjoy using TinyPortal.&nbsp; If you have any problems, please feel free to <a href="https://www.tinyportal.net/index.php">ask us for assistance</a>.<br></p>

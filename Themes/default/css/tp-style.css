@@ -44,8 +44,8 @@
 	display: block;
 	border-top: 1px solid;
 	overflow: hidden;
-	padding: 0em;
-	margin: 0em auto;
+	padding: 0;
+	margin: 0 auto;
 	cursor: default;
 	position: relative;
 	top: .7em;
@@ -55,8 +55,8 @@
 	display: block;
 	border-top: 1px solid;
 	overflow: hidden;
-	padding: 0em;
-	margin: 0em auto;
+	padding: 0;
+	margin: 0 auto;
 	cursor: default;
 	position: relative;
 	top: 1em;
@@ -162,19 +162,14 @@ h2.author_h2 {
 }
 .article_inner {
 	line-height: 1.4em;
-	word-break: break-word;
 	overflow-wrap: anywhere;
 }
 .inner a, .article_inner a {
-	-epub-hyphens: auto;
 	-ms-hyphens: auto;
 	-moz-hyphens: auto;
 	-webkit-hyphens: auto;
 	hyphens: auto;
-	word-break: break-word;
-	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
-	word-wrap: break-word;
 	overflow-wrap: anywhere;
 }
 .article_inner ul, ul.disc {
@@ -324,7 +319,7 @@ a.tp_avatar_author img {
 .article_socialbookmark a img {
 	padding-left: 5px;
 }
-img.tp_social {
+.tp_social {
 	width: 24px;
 }
 /* rating */
@@ -481,7 +476,7 @@ img.tp_social {
 }
 /* render4 */
 .render4 .windowbg, .render4 .windowbg2, .render4 .roundframe {
-	margin-top: 0px !important;
+	margin-top: 0 !important;
 }
 /*.render6 .windowbg, .render6 .windowbg2, .render6 .roundframe, .render8 .windowbg, .render8 .windowbg2, .render8 .roundframe {
 	margin-top: 2px !important;
@@ -509,7 +504,7 @@ img.tp_social {
 }
 /* render9 */
 .render9 .windowbg {
-	margin: 6px 0 0 0; !important;
+	margin: 6px 0 0 0 !important;
 }
 
 .tp_underline {
@@ -735,13 +730,13 @@ ul.tp-subcategories ul li {
 	padding: 0;
 	width: auto;
 }
-div.tpleft {
+.tpleft {
 	text-align: left;
 }
-div.tpcenter {
+.tpcenter {
 	text-align: center;
 }
-div.tpright {
+.tpright {
 	text-align: right;
 }
 .tptooltip::before {
@@ -787,13 +782,13 @@ h4.tpresults {
 	padding-left: 5px;
 	width: 180px;
 }
-.tpadmin_menu ul li div.largetext {
+.tpadmin_menu ul li .largetext {
 	font-size: 1.2em;
 	line-height: 1em;
 	padding-bottom: 5px;
 	padding-top: 5px;
 }
-.tpadmin_menu ul li div.normaltext, .tpadmin_menu ul li div.middletext {
+.tpadmin_menu ul li .normaltext, .tpadmin_menu ul li .middletext {
 	margin: 0;
 	padding: 2px 0 10px 0;
 }
@@ -900,7 +895,7 @@ div.tp_half
 	border-radius: 6px 6px 0 0;
 	font-weight: bold;
 	height: 31px;
-	padding-right: 0px;
+	padding-right: 0;
 }
 .tp_half h3.catbg span.l {
 	background: url(../images/theme/main_block.png) no-repeat 0 -160px;
@@ -925,7 +920,7 @@ div.tp_half
 .editor {
 	height: 100px;
 	margin: 0.25em 0 1em 0;
-	max-width: 95%;
+	max-width: 100%;
 	min-width: 90%;
 	width: 635px;
 }
@@ -939,7 +934,7 @@ div.tp_half
 }
 .tparticle .title_bar h3.titlebg2 {
 	background: none;
-    padding: 8px 0px 6px 0px;
+    padding: 8px 0 6px 0;
 }
 .tparticle .title_bar h3.catbg {
 	background: none;
@@ -992,7 +987,7 @@ input#searchbox {
 	width: 100%;
 }
 input,select {
-	max-width:97%!important;
+	max-width:100%!important;
 }
 .tp_upshrink20 {
 	float: right;
@@ -1101,13 +1096,13 @@ dl.tptitle dd {
 	margin: 5px;
 	width: 160px;
 }
-img.theme_icon {
+.theme_icon {
 	height: 35px;
 	width: 35px;
 }
-img.tp-illu {
+.tp-illu {
 	max-width: 300px;
-	max-height: 300 px;
+	max-height: 300px;
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
@@ -1196,13 +1191,10 @@ div.tp_half21 {
 	padding: 4px 8px 8px 8px;
 }
 code.bbc_code {
-	-epub-hyphens: auto;
 	-ms-hyphens: none;
 	-moz-hyphens: none;
 	-webkit-hyphens: none;
 	hyphens: none;
-	word-break: break-word;
-	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
 	overflow-wrap: anywhere;
@@ -1266,7 +1258,6 @@ code.bbc_code {
 .dl_container {
 	clear: both;
 	width: 100%;
-	-epub-word-wrap: break-word;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
 	overflow-wrap: anywhere;
@@ -1294,12 +1285,12 @@ ul.dl_details li {
 	margin: 0;
 	padding: 0;
 }
-img.dl_icon {
+.dl_icon {
 	float: left;
 	max-width: 100px;
 	padding: 0 1em .3em 0;
 }
-img.dl_caticon {
+.dl_caticon {
 	float: left;
 	margin: 0.7em 1em .5em 0;
 	max-width: 50px;
@@ -1346,7 +1337,7 @@ div.dl_featureshot {
 	float: right;
 	margin: 4px 4px 4px 1em;
 }
-div.dl_screenshot {
+.dl_screenshot {
 	float: left;
 	margin-right: 15px;
 }

@@ -77,7 +77,7 @@ function template_tpshout_admin()
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxadmin'].'</h3></div>
 			<div id="tpshout_admin" class="admintable admin-area">
-				<div class="information smalltext">' , $txt['tp-shoutboxadmininfo'] , '</div><div></div>
+				<div class="information smalltext">' , $txt['tp-shoutboxadmininfo'] , '</div>
 				<div class="windowbg noup">
 					<div class="formtable padding-div">
 						<div class="addborder">
@@ -89,7 +89,7 @@ function template_tpshout_admin()
 	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts) {
 				echo '
 					<div style="border-bottom:1px solid #ccc;">
-						<div class="fullwidth-on-res-layout float-items" style="width:30%;">
+						<div class="fullwidth-on-res-layout float-items" style="width:40%;">
 							'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
 							'.$admin_shouts['sort_shoutbox_id'].'&nbsp;('.$admin_shouts['shoutbox_id'].') <br> '. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
 						</div>

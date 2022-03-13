@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -319,7 +319,7 @@ function template_editblock()
 				if(!in_array($context['TPortal']['blockedit']['body'],array('recenttopics','recentposts','recentpoll','recentattachments','topboards','topreplies','topviews','toppoll','topposters','latestmember','randommember','online','welcome','calendar','birthday','holiday','event','recentevent','boardstats','news','boardnews','quicksearch')))
 					$context['TPortal']['blockedit']['body']='';
 						echo '
-						',$txt['tp-ssiblockdesc'],'<br><br>
+						',$txt['tp-ssiblockdesc'],'<a href="'.$boardurl.'/ssi_examples.php" target="_blank">ssi_examples.php</a><br><br>
 						<dl class="tptitle settings">
 						<dt>'.$txt['tp-showssibox'].'</dt>
 						<dd>

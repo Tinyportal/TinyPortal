@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1367,7 +1367,7 @@ function template_artsettings()
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input  type="hidden"name="tpadmin_form" value="artsettings">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-articlesettings'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-artsettings'] . '</h3></div>
 		<div id="article-settings" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpartsettings'] , '</div><div></div>
 			<div class="windowbg noup">
@@ -1712,13 +1712,13 @@ function template_panels()
 				</dl>
 				<dl class="settings">
 					<dt>
-						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].':</label>
+						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].'</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5"><br>
 					</dd>
 					<dt>
-						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].':</label>
+						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].'</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_blockheight_'.$panl.'" name="tp_blockheight_'.$panl.'" value="' ,$context['TPortal']['blockheight_'.$panl], '" size="5" maxlength="5">

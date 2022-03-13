@@ -601,7 +601,7 @@ function template_main() {
 						<label for="field_name">'.$txt['tp-dlcreatetopic'].'</filed>
 					</dt>
 					<dd>
-						'.$txt['tp-dlmissingboards'].'
+						'.$txt['tp-dlmissingboards'].' <a href="' . $scripturl . '?action=tportal;sa=download;dl=adminsettings">'.$txt['tp-dlmissingboards2'].'</a>
 					</dd>
 				</dl>';
 			}
