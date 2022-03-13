@@ -2459,6 +2459,9 @@ function do_postchecks()
 							$value = $_POST['tp_block_body'] = $_REQUEST['tp_block_body'];
 						}
 
+						if($_POST['tp_block_type'] == 5)
+							$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
+
 						// PHP block?
 						if($_POST['tp_block_type'] == 10)
 							$value = tp_convertphp($value);
