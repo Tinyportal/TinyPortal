@@ -104,7 +104,7 @@ function template_tp_articles()
 		}
 			echo '
 				<a href="" class="clickme">'.$txt['tp-more'].'</a>
-				<div class="box" style="width:75%;float:left;">
+				<div class="box tp_floatleft" style="width:75%;">
 					<div class="smalltext float-items fullwidth-on-res-layout" style="width:32%;">
 						<div class="show-on-responsive">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
 						<div class="size-on-responsive">',$art['date'],'</div>
@@ -243,7 +243,7 @@ function template_tp_download()
                       <a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['name'], $art['approved'] == 0 ? ')' : '' ,  '</a>
                     </div>
                     <a href="" class="clickme">'.$txt['tp-more'].'</a>
-                    <div class="box" style="width:70%;float:left;">
+                    <div class="box tp_floatleft" style="width:70%;">
                       <div style="width:33.5%;" class="fullwidth-on-res-layout smalltext float-items">
                         <div class="show-on-responsive">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';sa=tpdownloads;tpsort=created">'.$txt['date'].'</a></div>
                         <div class="size-on-responsive">',$art['created'],'</div>

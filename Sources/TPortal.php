@@ -1853,7 +1853,7 @@ function TPortal_panel($side) {{{
 			    $wh = 25;
                 break;
         }
-		echo '<div style="width:100%;"><div class="panelsColumns" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;float:left;">';
+		echo '<div style="width:100%;"><div class="panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;">';
 	}
 	$flowmain = 0;
 	$flowsub = 0;
@@ -1993,7 +1993,7 @@ function TPortal_panel($side) {{{
 			if($i == ($flowcount-1)) {
 				$pad=0;
             }
-			echo '<div class="panelsColumnsHorizontally" style="float: left; width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
+			echo '<div class="panelsColumnsHorizontally tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 			echo '</div></div>';
 		}
@@ -2023,7 +2023,7 @@ function TPortal_panel($side) {{{
                 elseif($flow == 'horiz4' && $flowmain == 3) {
                     $pad = 0;
                 }
-				echo '</div><div class="panelsColumns" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;float:left;">';
+				echo '</div><div class="panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;">';
 			}
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 		}
