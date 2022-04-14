@@ -288,7 +288,7 @@ function template_main() {
 
 				if(!empty($context['TPortal']['sortlinks']))
 					echo '
-					<div style="float: right;">' . $context['TPortal']['sortlinks'] . '</div>';
+					<div class="tp_floatright">' . $context['TPortal']['sortlinks'] . '</div>';
 				else
 					echo $txt['tp-dlfiles'];
 
@@ -380,7 +380,7 @@ function template_main() {
 				</h3>
 				<p class="clearthefloat"></p>
 				<hr>
-					<p style="float:right;">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>
+					<p class="tp_floatright">',$dlitem['file'] == '- empty item -' ? '<img title="'.$txt['tp-downloadss3'].'" src="' .$settings['tp_images_url']. '/TPnodownloadfile.png" alt="'.$txt['tp-nodownload'].'" />' : '<a href="'.$dlitem['href'].'"><img title="'.$txt['tp-downloadss2'].'" src="' .$settings['tp_images_url']. '/TPdownloadfile.png" alt="'.$txt['tp-download'].'" /></a>','</p>
 					<ul class="dl_details">
 						<li>'.$txt['tp-dlfilesize'].': ',isset($dlitem['filesize']) ? $dlitem['filesize']: '','</li>
 						<li>'.$txt['tp-views'].': '.$dlitem['views'].'</li>

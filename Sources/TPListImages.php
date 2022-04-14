@@ -125,7 +125,7 @@ function TPListImageAdmin($user_id = 0) {{{
             }
 
             $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post" style="margin: 0px;">
-                <div class="windowbg" style="float:left;">
+                <div class="windowbg tp_floatleft;">
                     <input type="hidden" name="sc" value="'.$context['session_id'].'" />
                     <input type="hidden" name="id_member" value="'.$user_id.'" />
                     <input type="hidden" name="image" value="'.$image.'" />

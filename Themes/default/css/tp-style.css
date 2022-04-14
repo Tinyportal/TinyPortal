@@ -975,6 +975,12 @@ div.tp_half
 }
 
 /************* TP STYLES ********************/
+.tp_floatleft {
+	float: left;
+}
+.tp_floatright {
+	float: right;
+}
 .clearthefloat {
    clear:both;
    margin: 0;

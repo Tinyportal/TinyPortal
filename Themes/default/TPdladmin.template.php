@@ -90,7 +90,7 @@ function template_main()
 					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" style="margin: 0;vertical-align:top" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<a href="" class="clickme">'.$txt['tp-more'].'</a>
-					<div class="box" style="width:60%;float:left;">
+					<div class="box tp_floatleft" style="width:60%;">
 						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
 							<div class="show-on-responsive"><strong>'.$txt['tp-dlicon'].'</strong></div>
 							', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
@@ -365,7 +365,7 @@ function template_main()
 					<p class="clearthefloat"></p>
 			    </div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			<div class="box" style="width:70%;float:left;">
+			<div class="box tp_floatleft" style="width:70%;">
 			    <div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 					', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
@@ -407,7 +407,7 @@ function template_main()
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 				</div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			<div class="box" style="width:70%;float:left;">
+			<div class="box tp_floatleft" style="width:70%;">
 				<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 				   ', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
