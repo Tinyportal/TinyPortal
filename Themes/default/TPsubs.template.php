@@ -61,7 +61,7 @@ function TPblock($block, $theme, $side, $double=false)
 			echo '<div class="block_' . $side . 'container" id="module_dlstats">';
 		}
 	} elseif ($block['type']=='shoutbox') {
-        //debug_print_backtrace();
+		echo '<div class="block_' . $side . 'container" id="shoutbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='html') {
 		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='phpbox') {
@@ -488,9 +488,9 @@ function TPortal_themebox()
 			<div style="text-align: center; width: 95%; overflow: hidden;">';
 
 		if (!TP_SMF21)
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" style="max-width: 100%;" /> ';
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
 		else
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" style="max-width: 100%;" />';
+			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" />';
 
 		echo '
 			</div>
