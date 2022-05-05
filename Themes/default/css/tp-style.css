@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -62,15 +62,33 @@
 	top: 1em;
 	opacity: 0.3;
 }
+/* The main grid for panels */
+/* Main parent div - does not need any CSS. */
+.tp_responsive {}
+/* Top panel - does not need any CSS. */
+#tptopbarHeader {}
+/* Main panel. */
+#mainContainer {
+	display: flex;
+}
+/* 1st-child. */
 #tpleftbarContainer {
-	float: left;
+	flex: 0 0 auto;
+	order: 1;
 }
+/* 2nd-child. */
 #tprightbarContainer {
-	float: right;
+	flex: 0 0 auto;
+	order: 3;
 }
+/* 3rd-child. */
 #centerContainer {
-	padding-bottom: 4px;
+	flex: 1 1 auto;
+	order: 2;
 }
+/* Bottom panel - does not need any CSS. */
+#tpbottombarHeader {}
+
 /*  This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
 	padding-bottom: 4px;
