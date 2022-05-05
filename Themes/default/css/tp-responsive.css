@@ -278,33 +278,37 @@
 	.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select {
 		width:70%;
 	}
-
 	/* Responsive behaviour for panels */
 	#mainContainer {
 		flex-wrap: wrap;
 	}
-	/* @900px this goes to the bottom - side by side. */
+	/* goes to the bottom - side by side. */
 	#tpleftbarContainer {
 		flex: 0 0 auto;
 		order: 2;
 		/* Needs important to override the inline width style. */
 		width: 50%!important;
 	}
-
-	/* @900px this goes to the bottom - side by side. */
+	/* goes to the bottom - side by side. */
 	#tprightbarContainer {
 		flex: 0 0 auto;
 		order: 3;
 		/* Needs important to override the inline width style. */
 		width: 50%!important;
 	}
-	/* @900px the sidebars must be pushed to 100% if only one is active */
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
+	/* the sidebars must be pushed to 100% if only one is active */
+	.tp_responsive.leftpanelOn #tpleftbarContainer,	
 	.tp_responsive.rightpanelOn #tprightbarContainer {
 		width: 100%!important;
 	}
-
-	/* @900px this goes to the top. */
+	/* override panel spacing from settings on single display */
+	.tp_responsive.leftpanelOn #tpleftbarHeader {
+		margin-right: 0!important;
+	}
+	.tp_responsive.rightpanelOn #tprightbarHeader {
+		margin-left: 0!important;
+	}
+	/* goes to the top. */
 	#centerContainer {
 		flex: 0 0 auto;
 		order: 1;
@@ -317,16 +321,21 @@
 	#mainContainer {
 		flex-direction: column;
 	}
-
 	/* @500px this goes to the bottom- stacked 1st. */
 	#tpleftbarContainer {
 		/* Needs important to override the inline width style. */
 		width: 100%!important;
 	}
-
 	/* @500px this goes to the bottom - stacked 2nd. */
 	#tprightbarContainer {
 		/* Needs important to override the inline width style. */
 		width: 100%!important;
+	}
+	/* override panel spacing from settings on single display */
+	#tpleftbarHeader {
+		margin-right: 0!important;
+	}
+	#tprightbarHeader {
+		margin-left: 0!important;
 	}
 }
