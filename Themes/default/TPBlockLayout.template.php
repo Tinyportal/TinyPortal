@@ -69,7 +69,6 @@ function template_tp_above()
 		echo '
 		<div id="tptopbarHeader" style="' , in_array('tptopbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , 'clear: both;">
 			'	, TPortal_panel('top') , '
-			<p class="clearthefloat"></p>
 		</div>';
 
 	echo '
@@ -87,7 +86,6 @@ function template_tp_above()
 					$context['TPortal']['useroundframepanels']==1 ?
 					'</div>
 					<span class="lowerframe"><span></span></span>' : '' , '
-					<p class="clearthefloat"></p>
 				</div>
 			</div>';
 	}
@@ -104,7 +102,6 @@ function template_tp_above()
 						$context['TPortal']['useroundframepanels']==1 ?
 					'</div>
 					<span class="lowerframe"><span></span></span>' : '' , '
-					<p class="clearthefloat"></p>
 				</div>
 			</div>';
 	}
@@ -116,7 +113,6 @@ function template_tp_above()
 		echo '
 					<div id="tpcenterbarHeader" ' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'style="display: none;"' : '' , '>
 						' , TPortal_panel('center') , '
-						<p class="clearthefloat"></p>
 					</div>';
     }
 	echo '
@@ -131,21 +127,18 @@ function template_tp_below()
 		echo '
 				<div id="tplowerbarHeader" ' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'style="display: none;"' : '' , '>
 					' , TPortal_panel('lower') , '
-					<p class="clearthefloat"></p>
 				</div>';
 // end centerContainer
 	echo '
 			</div>';
 // end mainContainer
 	echo '
-			<p class="clearthefloat" style="padding:0px;margin:0px;"></p>
 		</div>';
 
 	if($context['TPortal']['bottompanel']==1)
 		echo '
 		<div id="tpbottombarHeader" style="clear: both;' , in_array('tpbottombarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 			' , TPortal_panel('bottom') , '
-			<p class="clearthefloat"></p>
 		</div>';
 	echo '
 	</div>';

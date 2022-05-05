@@ -92,6 +92,7 @@
 /*  This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
 	padding-bottom: 4px;
+	margin-bottom: 4px;
 }
 .panelsColumnsHorizontally {
 	padding-right: 2px;
