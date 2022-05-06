@@ -260,9 +260,53 @@
 		/* width and float for left toggle menu from pages like profile page */
 	}
 } 
-
+/********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
+.lrs #centerContainer {
+	overflow:hidden; /* do not delete */
+}
+/** screen smaller then 500px **/
+@media all and (min-width: 0) and (max-width: 500px) {
+	.lrON.tp_responsive #tpleftbarContainer {
+		display: table-row-group;
+	}
+	.lrON.tp_responsive #tprightbarContainer {
+		display: table-footer-group;
+	}
+	.tp_responsive #tpleftbarContainer,
+	.tp_responsive #tprightbarContainer {
+		float:none!important;
+		width:100%!important;
+	}
+	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
+	.tp_responsive #tprightbarContainer #tprightbarHeader {
+		margin: 0;
+		padding: 0;
+	}
+}
+/** screen from 500px to 900px **/
+@media all and (min-width: 500px) and (max-width: 900px) {
+	.lrON.tp_responsive #tpleftbarContainer,
+	.lrON.tp_responsive #tprightbarContainer {
+		float:none!important;
+	}
+	.lrON.tp_responsive #tpleftbarContainer {
+		display: table-cell;
+	}
+	.lrON.tp_responsive #tprightbarContainer {
+		display: table-cell;
+	}
+	.tp_responsive #tpleftbarContainer,
+	.tp_responsive #tprightbarContainer {
+		padding:0.5%;
+		width:49%!important;
+	}
+}
 /** screen smaller then 900px **/
-@media (min-width: 0px) and (max-width: 900px) {
+@media all and (min-width: 0) and (max-width: 900px) {
+	.tp_responsive #centerContainer {
+		max-width:100%;
+		overflow:hidden!important;
+	}
 	/* very specific fixes dealing width responsive curve in 2.0 */
 	.lrON input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
 	.lrON #edit_poll fieldset input, 
@@ -278,64 +322,25 @@
 	.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select {
 		width:70%;
 	}
-	/* Responsive behaviour for panels */
-	#mainContainer {
-		flex-wrap: wrap;
+	.lrs.tp_responsive #mainContainer {
+		display: table;
+		width:100%; /* can be changed but not deleted it must have a width in px or % because of display table */
 	}
-	/* goes to the bottom - side by side. */
-	#tpleftbarContainer {
-		flex: 0 0 auto;
-		order: 2;
-		/* Needs important to override the inline width style. */
-		width: 50%!important;
+	.lrs.tp_responsive #centerContainer {
+		display: table-caption;
 	}
-	/* goes to the bottom - side by side. */
-	#tprightbarContainer {
-		flex: 0 0 auto;
-		order: 3;
-		/* Needs important to override the inline width style. */
-		width: 50%!important;
-	}
-	/* the sidebars must be pushed to 100% if only one is active */
-	.tp_responsive.leftpanelOn #tpleftbarContainer,	
+	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
 	.tp_responsive.rightpanelOn #tprightbarContainer {
+		display: table-footer-group;
+	}
+	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
+	.tp_responsive.rightpanelOn #tprightbarContainer {
+		float:none!important;
 		width: 100%!important;
 	}
-	/* override panel spacing from settings on single display */
-	.tp_responsive.leftpanelOn #tpleftbarHeader {
-		margin-right: 0!important;
-	}
-	.tp_responsive.rightpanelOn #tprightbarHeader {
-		margin-left: 0!important;
-	}
-	/* goes to the top. */
-	#centerContainer {
-		flex: 0 0 auto;
-		order: 1;
-		width: 100%;
-	}
-}
-
-/** screen smaller then 500px **/
-@media (min-width: 0px) and (max-width: 500px) {
-	#mainContainer {
-		flex-direction: column;
-	}
-	/* @500px this goes to the bottom- stacked 1st. */
-	#tpleftbarContainer {
-		/* Needs important to override the inline width style. */
-		width: 100%!important;
-	}
-	/* @500px this goes to the bottom - stacked 2nd. */
-	#tprightbarContainer {
-		/* Needs important to override the inline width style. */
-		width: 100%!important;
-	}
-	/* override panel spacing from settings on single display */
-	#tpleftbarHeader {
-		margin-right: 0!important;
-	}
-	#tprightbarHeader {
-		margin-left: 0!important;
+	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
+	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader {
+		margin: 0;
+		padding: 0;
 	}
 }
