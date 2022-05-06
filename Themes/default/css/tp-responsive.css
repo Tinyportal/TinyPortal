@@ -297,7 +297,7 @@
 	}
 	.tp_responsive #tpleftbarContainer,
 	.tp_responsive #tprightbarContainer {
-		padding:0.5%;
+/*		padding:0.5%;*/
 		width:49%!important;
 	}
 }
