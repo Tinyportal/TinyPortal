@@ -62,6 +62,12 @@
 	top: 1em;
 	opacity: 0.3;
 }
+#tptopbarHeader {
+	clear: both;
+}
+#mainContainer {
+	clear: both;
+}
 #tpleftbarContainer {
 	float: left;
 }
@@ -70,6 +76,9 @@
 }
 #centerContainer {
 	padding-bottom: 4px;
+}
+#tpbottombarHeader {
+	clear: both;
 }
 /*  This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
