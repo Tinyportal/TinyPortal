@@ -70,6 +70,7 @@
 /* Main panel. */
 #mainContainer {
 	display: flex;
+	clear: both;
 }
 /* 1st-child. */
 #tpleftbarContainer {
@@ -92,7 +93,6 @@
 /*  This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
 	padding-bottom: 4px;
-	margin-bottom: 4px;
 }
 .panelsColumnsHorizontally {
 	padding-right: 2px;
@@ -1017,12 +1017,11 @@ input,select {
 .tp_upshrink20 {
 	float: right;
 	margin-right: 0.5em;
-	margin-top: -1.5em;
+	margin-top: -2.1em;
 }
 .tp_upshrink21, .navigate_section .tp_upshrink21 {
 	float: right;
-	margin-top:6px;
-	padding-left:10px;
+	padding: 6px 3px 0 3px;
 }
 
 /* ** TP ADMIN STYLES ** */
