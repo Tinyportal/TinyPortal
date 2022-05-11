@@ -62,35 +62,21 @@
 	top: 1em;
 	opacity: 0.3;
 }
-/* The main grid for panels */
-/* Main parent div - does not need any CSS. */
-.tp_responsive {}
-/* Top panel - does not need any CSS. */
 #tptopbarHeader {
 	clear: both;
 }
-/* Main panel. */
 #mainContainer {
-	display: flex;
 	clear: both;
 }
-/* 1st-child. */
 #tpleftbarContainer {
-	flex: 0 0 auto;
-	order: 1;
+	float: left;
 }
-/* 2nd-child. */
 #tprightbarContainer {
-	flex: 0 0 auto;
-	order: 3;
+	float: right;
 }
-/* 3rd-child. */
 #centerContainer {
-	flex: 1 1 auto;
-	order: 2;
 	padding-bottom: 4px;
 }
-/* Bottom panel - does not need any CSS. */
 #tpbottombarHeader {
 	clear: both;
 }
