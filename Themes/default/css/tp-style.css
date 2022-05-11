@@ -1011,7 +1011,8 @@ input,select {
 }
 .tp_upshrink21, .navigate_section .tp_upshrink21 {
 	float: right;
-	padding: 6px 3px 0 3px;
+	padding: 0 0 1px 3px;
+	margin-top: 6px;
 }
 
 /* ** TP ADMIN STYLES ** */
