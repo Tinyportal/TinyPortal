@@ -2164,7 +2164,7 @@ function art_recentitems($max = 5, $type = 'date' ){
 
 	if($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			$rat = explode(',', $row['rating']);
+			$rat = explode(',', $row['rating'] ?? '');
             if(is_countable($rat)) {
 			    $rating_votes = count($rat);
             }
@@ -2805,7 +2805,7 @@ function tp_profile_articles($member_id) {{{
 		while($row = $smcFunc['db_fetch_assoc']($request)) {
 			$rat = array();
 			$rating_votes = 0;
-			$rat = explode(',', $row['rating']);
+			$rat = explode(',', $row['rating'] ?? '');
 			$rating_votes = count($rat);
 			if($row['rating'] == '') {
 				$rating_votes = 0;
@@ -2956,7 +2956,7 @@ function tp_profile_download($memID)
 		{
 			$rat = array();
 			$rating_votes = 0;
-			$rat = explode(',', $row['rating']);
+			$rat = explode(',', $row['rating'] ?? '');
 			$rating_votes = count($rat);
 			if($row['rating'] == '')
 				$rating_votes = 0;

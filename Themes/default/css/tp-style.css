@@ -138,6 +138,10 @@
     grid-row: row2-start ;
 	}	
 
+.tpbuttons > ul > .button {
+	margin: 0 3px 3px 0;
+}
+
 /* articles */
 .article h2 {
 	margin: 0;
