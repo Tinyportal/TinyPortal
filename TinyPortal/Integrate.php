@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.2
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -175,7 +175,7 @@ class Integrate
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
         define('LANGUAGEDIR', $boarddir . '/Themes/default/languages');
-        define('TPVERSION', 'v210');
+        define('TPVERSION', 'v223');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);
         }
@@ -284,7 +284,7 @@ class Integrate
         }
 
 
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.2.2</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2022</a>';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.2.3</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2022</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;
