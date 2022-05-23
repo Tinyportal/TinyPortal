@@ -12,11 +12,11 @@ Bloc
 </author>
 
 <version>
-0.4
+0.5
 </version>
 
 <date>
-22.jan.2022
+23.may.2022
 </date>
 
 <code>
@@ -93,8 +93,8 @@ echo $calendar."</tr>\n</table>\n";
 </code>
 
 <description>
-A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar , slightly modified. 
-It simply displays the date and the days in current month/year. Current day is highlighted. 
-Version 0.3 is updated to be used in SMF 2.1 and fit in the side bars.
-Version 0.4 is updated to work on PHP8.1.
+A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar, slightly modified. <br>
+It simply displays the date and the days in current month/year. Current day is highlighted. <br>
+<br>
+<strong>Do NOT use this blockcode with SMF2.1: for higher PHP versions an alternative code is available: Mini Calendar SMF2.1
 </description>

@@ -93,8 +93,9 @@ echo $calendar."</tr>\n</table>\n";
 </code>
 
 <description>
-A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar , slightly modified.<br>
+A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar, slightly modified.<br>
 It simply displays the date and the days in current month/year. Current day is highlighted. <br>
 <br>
 This is an updated version that can only be used in SMF2.1.x and is needed for PHP versions 8.1.1 and higher, it uses smf_gmstrftime function instead of removed gmstrftime.<br>
+<strong>Do NOT use this blockcode with SMF2.0: use the old blockcode: Mini Calendar2
 </description>
