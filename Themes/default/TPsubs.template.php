@@ -649,7 +649,7 @@ function TPortal_recentbox()
 	global $scripturl, $context, $settings, $txt, $modSettings, $user_info;
 
 	// if no guest access to forum, then no recent topics
-	if($modSettings['allow_guestAccess'] == '0' && $user_info['is_guest']) {
+	if(empty($modSettings['allow_guestAccess']) && $user_info['is_guest']) {
 		echo '' .$txt['tp-noguest_access'] .'';
 	}
 	else {
