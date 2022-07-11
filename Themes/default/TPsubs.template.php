@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -651,8 +651,14 @@ function TPortal_recentbox()
 	// if no guest access to forum, then no recent topics
 	if(empty($modSettings['allow_guestAccess']) && $user_info['is_guest']) {
 		echo '' .$txt['tp-noguest_access'] .'';
+		return;
 	}
 	else {
+	// set variable for SMF21
+	if(is_numeric($context['TPortal']['recentboxnum'] < 5))
+		$context['min_message_topics'] = 1000;
+	else 
+		$context['min_message_topics'] = 300;
 	// is it a number?
 	if(is_numeric($context['TPortal']['recentlength']))
 		$recentlength = $context['TPortal']['recentlength'];
