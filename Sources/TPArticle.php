@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.1
+ * @version 2.2.3
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -427,6 +427,10 @@ function articleEdit() {{{
 									array('id')
 								);
 							}
+						}
+						// BBC we need to encode quotes
+						if( ($_REQUEST['tp_article_type'] == 'bbc') && ($setting == 'body') ) {
+							$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
 						}
 						$article_data[$setting] = $value;
 						break;
