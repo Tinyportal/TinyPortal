@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -26,12 +26,12 @@ function template_main()
 // Credits Page
 function template_tpcredits()
 {
-	global $txt;
+	global $txt, $context;
 
 	echo '
 	<div class="tborder">
 		<div class="cat_bar">
-			<h3 class="catbg">' . $txt['tp-credits'] . '</h3>
+			<h3 class="catbg">' . $txt['tp-credits'] . ' (v' . $context['TPortal']['version'] . ')</h3>
 		</div><div></div>
 		<p class="information">' , $txt['tp-creditack2']  , '</p>
 		<div class="windowbg">
