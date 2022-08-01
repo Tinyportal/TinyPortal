@@ -661,13 +661,7 @@ class Integrate
 	{
 		global $context, $scripturl, $boardurl;
 
-        $tmpurl = parse_url($boardurl, PHP_URL_HOST);
-        if(!empty($context['TPortal']['copyrightremoval']) && (sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval'])) {
-			return;
-        }
-		else {
-			$context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2022</a>';
-		}
+		$context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2022</a>';
 	}
 
     public static function hookActions(&$actionArray)
