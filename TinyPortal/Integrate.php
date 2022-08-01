@@ -60,6 +60,7 @@ class Integrate
             'load_permissions'                  => 'TinyPortal\Integrate::hookPermissions',
             'load_illegal_guest_permissions'    => 'TinyPortal\Integrate::hookIllegalPermissions',
             'buffer'                            => 'TinyPortal\Integrate::hookBuffer',
+			'credits'                           => 'TinyPortal\Integrate::hookCredits',
             'menu_buttons'                      => 'TinyPortal\Integrate::hookMenuButtons',
             'display_buttons'                   => 'TinyPortal\Integrate::hookDisplayButton',
             'actions'                           => 'TinyPortal\Integrate::hookActions',
@@ -283,8 +284,8 @@ class Integrate
             $bclass =  "tpcontainer";
         }
 
-
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal 2.2.3</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2022</a>';
+		$tpversion = isset($context['TPortal']['version']) ? $context['TPortal']['version'] : ' ';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $tpversion . '</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2022</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;
@@ -305,12 +306,18 @@ class Integrate
 
         $buffer = str_replace($find, $replace, $buffer);
 
-        if( TP_SMF21 ) {
-            $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
-            $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
-            $replace= '<a href="https://www.tinyportal.net/docs/" target=_blank>'.$tmp.'</a>';
-            $buffer = str_replace($find, $replace.' | '.$find, $buffer);
+        $tmpurl = parse_url($boardurl, PHP_URL_HOST);
+        if(!empty($context['TPortal']['copyrightremoval']) && (sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval'])) {
+            return $buffer;
         }
+        else {
+			if( TP_SMF21 ) {
+				$tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
+				$find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
+				$replace= '<a href="https://www.tinyportal.net/docs/" target=_blank>'.$tmp.'</a>';
+				$buffer = str_replace($find, $replace.' | '.$find, $buffer);
+			}
+		}
 
         if ($image_proxy_enabled && ( array_key_exists('TPortal', $context) && $context['TPortal']['imageproxycheck'] > 0 ) ) {
             if (!empty($buffer) && stripos($buffer, 'http://') !== false) {
@@ -332,27 +339,22 @@ class Integrate
             }
         }
 
-        $tmpurl = parse_url($boardurl, PHP_URL_HOST);
         if(!empty($context['TPortal']['copyrightremoval']) && (sha1('TinyPortal'.$tmpurl) == $context['TPortal']['copyrightremoval'])) {
             return $buffer;
         }
         else {
-            if( TP_SMF21 ) {
-                $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>';
-                $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" rel="noopener">Simple Machines</a>, ' . $string;
-            }
-            else {
+            if( TP_SMF21 === false ) {
                 $find       = '//www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>';
                 $replace    = '//www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $string;
+
+				$buffer     = str_replace($find, $replace, $buffer);
+
+				if (strpos($buffer, $string) === false) {
+					$string = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $string . '</div></body></html>';
+					$buffer = preg_replace('~</body>\s*</html>~', $string, $buffer);
+				}
             }
-            $buffer     = str_replace($find, $replace, $buffer);
         }
-
-        if (strpos($buffer, $string) === false) {
-            $string = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $string . '</div></body></html>';
-            $buffer = preg_replace('~</body>\s*</html>~', $string, $buffer);
-        }
-
         return $buffer;
     }
 
@@ -654,6 +656,13 @@ class Integrate
         }
 
     }
+
+	public static function hookCredits()
+	{
+		global $context, $scripturl, $boardurl;
+
+		$context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2022</a>';
+	}
 
     public static function hookActions(&$actionArray)
     {
