@@ -1007,7 +1007,12 @@ function do_articles()
 		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
 			$context['TPortal']['editing_article'] = true;
-			if($context['TPortal']['editarticle']['type'] != 'bbc') {
+			if (TP_SMF21) {
+				if($context['TPortal']['editarticle']['type'] != 'bbc') {
+					$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
+				}
+			}
+			else {
 				$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
 			}
 			$smcFunc['db_free_result']($request);

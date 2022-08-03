@@ -429,8 +429,10 @@ function articleEdit() {{{
 							}
 						}
 						// BBC we need to encode quotes
-						if( ($_REQUEST['tp_article_type'] == 'bbc') && ($setting == 'body') ) {
-							$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
+						if (TP_SMF21) {
+							if( ($_REQUEST['tp_article_type'] == 'bbc') && ($setting == 'body') ) {
+								$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
+							}
 						}
 						$article_data[$setting] = $value;
 						break;
