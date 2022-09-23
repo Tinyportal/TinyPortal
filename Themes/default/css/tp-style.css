@@ -303,6 +303,7 @@ a.tp_avatar_author img {
 .tp_avatar_single img {
 	border-radius: 2px;
 	float: left;
+	width: 65px;
 }
 .tp_avatar_single2 img {
 	border-radius: 2px;
