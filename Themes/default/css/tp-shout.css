@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -44,28 +44,28 @@
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
 }
-.shoutError {
+.tp_shoutError {
 	background-color: #FF9999;
 	border: 1px solid #CC0000;
 	margin-top: 5px;
 	padding: 3px;
 }
-.bigshout {
+.tp_bigshout {
 	height: 100%;
 	width: 99%;
 }
-.shout_errors {
+.tp_shout_errors {
 	display: none;
 }
 /* for layout option 0 */
-.shoutbox_editor0 {
+.tp_shoutbox_editor0 {
 	height: 80px;
     margin: 0.25em 0 1em 0;
 	margin-top: 1em;
     max-width: 95%;
 	width: 100%;
 }
-.bubble {
+.tp_bubble {
 	background: #fff;
 	border: 1px solid #999;
 	-webkit-border-radius: 10px;
@@ -77,7 +77,7 @@
 	position: relative;
 	word-wrap: break-word;
 }
-.bubble:after {
+.tp_bubble:after {
 	border-color: #ffffff transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
@@ -89,7 +89,7 @@
 	width: 0;
 	z-index: 1;
 }
-.bubble:before {
+.tp_bubble:before {
 	border-color: #999 transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
@@ -104,10 +104,10 @@
 /* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
 
 /*
-.bubble {
+.tp_bubble {
 	background-color: #404040; 
 } 
-.bubble:after { 
+.tp_bubble:after { 
 	border-color: #404040 transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
@@ -121,11 +121,11 @@
 }
 */
 /* for layout option 2 */
-.shoutbody_layout1 {
+.tp_shoutbody_layout1 {
 	border-bottom: 1px dotted #000;
 	padding: 5px 0;
 }
-.shoutbox_editor1 {
+.tp_shoutbox_editor1 {
 	height: 80px;
     margin: 0.25em 0 1em 0;
 	margin-top: 1em;
@@ -133,29 +133,29 @@
 	width: 100%;
 }
 /* for layout option 3 and 4 */
-.shout_date {
+.tp_shout_date {
 	clear: both;
 }
-.shoutbox_time {
+.tp_shoutbox_time {
 	display: block;
 	float: right;
 	padding-left: 5px;
 }
-.showhover:hover .shoutbox_time {
+.tp_showhover:hover .tp_shoutbox_time {
 	display : none;
 }
-.shoutbox_edit {
+.tp_shoutbox_edit {
 	display: none;
 	float: right;
 	padding-left: 5px;
 }
-.showhover:hover .shoutbox_edit {
+.tp_showhover:hover .tp_shoutbox_edit {
 	display : block;
 }
-.shoutbody_layout2, .shoutbody_layout3 {
+.tp_shoutbody_layout2, .tp_shoutbody_layout3 {
 	line-height: 1.3em;
 	padding: 5px;
 }
-.shoutbox_input2, .shoutbox_input3 {
+.tp_shoutbox_input2, .tp_shoutbox_input3 {
 	width: 65%;
 }

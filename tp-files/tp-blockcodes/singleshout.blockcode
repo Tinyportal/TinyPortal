@@ -12,11 +12,11 @@ Bloc
 </author>
 
 <version>
-0.3
+0.4
 </version>
 
 <date>
-23.January.2022
+12.October.2022
 </date>
 
 <code>
@@ -77,7 +77,7 @@ function asingleshout($row)
 				<h4>' . $row['realName'] . '</h4>
 				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['time']).'</div>
 			</div>
-			<div class="bubble speech">' . $row['content'] . '</div>
+			<div class="tp_bubble speech">' . $row['content'] . '</div>
 		</div>
 	</div>';
      return $return;

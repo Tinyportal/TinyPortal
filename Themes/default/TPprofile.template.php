@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -132,7 +132,7 @@ function template_tp_articles()
 		else
 			echo '
 					<tr class="windowbg">
-					<td class="tpshout_date" colspan="6">
+					<td class="tp_shout_date" colspan="6">
 						<div class="smalltext">',$txt['tp-noarticlesfound'],'</div>
 					</td>
 					</tr>';
