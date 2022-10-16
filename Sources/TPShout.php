@@ -806,6 +806,7 @@ function TPShoutBlock(&$row) {{{
         'shoutbox_id'       => $set['var2'],
         'shoutbox_layout'   => $set['var3'],
         'shoutbox_height'   => $set['var4'],
+        'shoutbox_avatar'   => $set['var5'],
         'name'              => $txt['tp-shoutbox'],
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
@@ -990,6 +991,10 @@ function TPShoutAdmin() {{{
 					$changeArray['shoutbox_height'] = $value;
                 }
 
+                if($what == 'shoutbox_avatar') {
+					$changeArray['shoutbox_avatar'] = $value;
+                }
+				
 				if($what == 'shoutbox_usescroll') {
 					$changeArray['shoutbox_usescroll'] = $value;
                 }
