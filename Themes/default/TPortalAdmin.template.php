@@ -2313,11 +2313,16 @@ function template_menubox()
 							<div style="width:7%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
 							<div style="width:15%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
 							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-type'].'</strong></div>
-							<div style="width:12%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </strong></div>
 							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-item'].'</strong></div>
-							<div style="width:18%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>
-							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
-							<div style="width:7%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-delete'].' </strong></div>
+							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>';
+					if(TP_SMF21) {
+						echo '
+							<div style="width:6%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-menu-icon'].'</strong></div>';
+					}
+					echo '
+							<div style="width:11%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-windowopen'].'</strong></div>
+							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
+							<div style="width:15%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-edit'].' / '.$txt['tp-delete'].' </strong></div>
 							<p class="clearthefloat"></p>
 					</th>
 					</tr>
@@ -2357,13 +2362,6 @@ function template_menubox()
 
 				echo '
 								</div>
-								<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
-									<div class="show-on-responsive"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].'</strong></div>
-									<a href="' . $scripturl . '?action=tpadmin;linkon=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-activate'].'" src="' .$settings['tp_images_url']. '/TPgreen' , $lbox['off']!=0 ? '2' : '' , '.png" alt="'.$txt['tp-activate'].'"  /></a>
-									<a href="' . $scripturl . '?action=tpadmin;linkoff=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-deactivate'].'" src="' .$settings['tp_images_url']. '/TPred' , $lbox['off']==0 ? '2' : '' , '.png" alt="'.$txt['tp-deactivate'].'"  /></a>
-									<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">
-									<img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-								</div>
 								<div style="width:19.2%; overflow:hidden;" class="smalltext fullwidth-on-res-layout float-items">
 									<div class="show-on-responsive"><strong>'.$txt['tp-item'].'</strong></div>
 									<div class="size-on-responsive">';
@@ -2401,7 +2399,7 @@ function template_menubox()
 					echo '
 									</div>
 								</div>
-									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">';
+									<div style="width:13%;" class="smalltext fullwidth-on-res-layout float-items">';
 					if($lbox['type']!=='menu'){
 						echo '
 										<div class="show-on-responsive"><strong>'.$txt['tp-sub_item'].'</strong></div>
@@ -2412,18 +2410,46 @@ function template_menubox()
 					}
 					 else {
 						echo '
-										<div class="show-on-responsive">'.$txt['tp-sub_item'].'</div>
+										<div class="show-on-responsive"><strong>'.$txt['tp-sub_item'].'</strong></div>
 										'.$txt['tp-none-'].'';
 					}
 						echo '
+									</div>';
+					if(TP_SMF21) {
+						echo '
+									<div style="width:7%;" class="smalltext fullwidth-on-res-layout float-items">';
+						if($lbox['type']=='menu'){
+							echo '
+										<div class="show-on-responsive"><strong>'.$txt['tp-menu-icon'].'</strong></div>
+										<span title="'.$lbox['menuicon'].'"><img title="" src="'. $settings['default_images_url'] .'/' . $lbox['menuicon'] .'" alt="'.$lbox['menuicon'].'" /></span>';
+								}
+							echo '
+									</div>';
+					}
+					echo '
+									<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items">';
+					$openopts = array("menu", "cats", "arti", "link");
+					if(in_array($lbox['type'], $openopts)){
+						echo '
+										<div class="show-on-responsive"><strong>'.$txt['tp-windowopen'].'</strong></div>';
+										if($lbox['newlink']=='1')
+											echo $txt['tp-windowmenu'];
+										else
+											echo $txt['tp-nowindowmenu'];
+							}
+						echo '
 									</div>
-									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">
+									<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items">
 										<div class="show-on-responsive"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
 										<input type="radio" name="tp_menu_sitemap' .$lbox['id']. '" value="1" ' , in_array($lbox['id'],$context['TPortal']['sitemap']) ? 'checked' : '' ,'>' . $txt['tp-yes'] .'
 										<input type="radio" name="tp_menu_sitemap' .$lbox['id']. '" value="0" ' , !in_array($lbox['id'],$context['TPortal']['sitemap']) ? 'checked' : '' ,'> ' . $txt['tp-no'] . '
 									</div>
-									<div style="width:5%;" class="smalltext fullwidth-on-res-layout float-items">
-										<div class="show-on-responsive"><strong>'.$txt['tp-delete'].'</strong></div>
+									<div style="width:12%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
+										<div class="show-on-responsive"><strong>'.$txt['tp-edit'].' / '.$txt['tp-delete'].'</strong></div>
+										<a href="' . $scripturl . '?action=tpadmin;linkon=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-activate'].'" src="' .$settings['tp_images_url']. '/TPgreen' , $lbox['off']!=0 ? '2' : '' , '.png" alt="'.$txt['tp-activate'].'"  /></a>
+										<a href="' . $scripturl . '?action=tpadmin;linkoff=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-deactivate'].'" src="' .$settings['tp_images_url']. '/TPred' , $lbox['off']==0 ? '2' : '' , '.png" alt="'.$txt['tp-deactivate'].'"  /></a>
+										<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">
+										<img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
 										<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img title="'.$txt['tp-delete'].'" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /></a>
 									</div>
 									<p class="clearthefloat"></p>
