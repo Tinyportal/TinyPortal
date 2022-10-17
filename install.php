@@ -1165,7 +1165,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 1, 'var2' => '1', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
+                'settings' => json_encode( array ('var1' => 1, 'var2' => '1', 'var3' => 0, 'var4' => 250, 'var5' => 1) ),
             ),
             'recent' =>array(
                 'type' => 12,
