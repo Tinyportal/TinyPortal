@@ -517,7 +517,7 @@ $txt['tp-editmenu'] = 'Edit menu item';
 $txt['tp-windowopen'] = 'Open in';
 $txt['tp-suremenu'] = 'Are you sure you want to delete this item?';
 $txt['tp-nowindowmenu'] = 'Same window';
-$txt['tp-windowmenu'] = 'Open in a new window';
+$txt['tp-windowmenu'] = 'New window';
 $txt['tp-link'] = 'Link';
 $txt['tp-spacer'] = 'Spacer';
 $txt['tp-menu'] = 'Menu button';
@@ -529,7 +529,7 @@ $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
 $txt['tp-menu-after'] = 'Add button in menu after';
 $txt['tp-menu-icon'] = 'Menu icon';
-$txt['tp-menu-icon2'] = '<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling TinyPortal, so any file manually placed there will be lost upon uninstall!</small>';
+$txt['tp-menu-icon2'] = 'Standard icon value for new buttons is \'tinyportal/menu_tpmenu.png\'. The path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is REMOVED when uninstalling TinyPortal, so any file manually placed there will be lost upon uninstall!';
 
 // Shoutbox settings
 $txt['tp_shout'] = 'Shoutbox';
