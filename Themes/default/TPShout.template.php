@@ -263,7 +263,7 @@ function template_tpshout_admin_settings()
 }
 
 // Shoutbox Block template
-function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null )
+function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null, $shoutbox_avatar = null )
 {
 	global $context, $scripturl, $txt, $settings, $modSettings, $user_info;
 
@@ -367,7 +367,7 @@ function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null 
 }
 
 // Shoutbox single shout template
-function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
+function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null, $shoutbox_avatar = null)
 {
 	global $scripturl, $context, $settings, $txt;
 
@@ -430,6 +430,9 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 	);
 	if(!empty($layoutOptions[$shoutbox_layout])) { 
 		return $layoutOptions[$shoutbox_layout];
+	}
+	if(!empty($layoutOptions[$shoutbox_avatar])) { 
+		return $layoutOptions[$shoutbox_avatar];
 	}
 }
 

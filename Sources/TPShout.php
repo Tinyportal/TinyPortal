@@ -219,7 +219,7 @@ function TPShoutDelete( $shout_id = null ) {{{
 }}}
 
 // fetch all the shouts for output
-function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = true, $limit = 1, $ajaxRequest = false) {{{
+function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $shoutbox_avatar = null, $render = true, $limit = 1, $ajaxRequest = false) {{{
 	global $context, $scripturl, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
@@ -327,7 +327,7 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : (!empty($memberdata[$row['member_id']]['pg_online_color']) ? $memberdata[$row['member_id']]['pg_online_color'] : '');
 			$row['counter'] = ++$counter;
-			$ns[] = template_singleshout($row, $shoutbox_id, $shoutbox_layout);
+			$ns[] = template_singleshout($row, $shoutbox_id, $shoutbox_layout, $shoutbox_avatar);
 		}
 		$nshouts .= implode('', $ns);
 
@@ -336,7 +336,7 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 
 	// its from a block, render it
 	if($render && !$ajaxRequest) {
-		template_tpshout_shoutblock( $shoutbox_id , $shoutbox_layout);
+		template_tpshout_shoutblock( $shoutbox_id , $shoutbox_layout, $shoutbox_avatar);
     }
 	else {
 		return $nshouts;
@@ -344,7 +344,7 @@ function TPShoutFetch($shoutbox_id = null, $shoutbox_layout = null, $render = tr
 
 }}}
 
-function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shoutbox_layout = null ) {{{
+function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shoutbox_layout = null, $shoutbox_avatar = null ) {{{
     global $context;
 
     loadTemplate('TPShout');
@@ -353,10 +353,10 @@ function tpshout_bigscreen($state = false, $number = 10, $shoutbox_id = 0, $shou
 	if ($state == false) {
         $context['template_layers']         = array();
         $context['sub_template']            = 'tpshout_ajax';
-        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, $state, $number, true);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, $shoutbox_avatar, $state, $number, true);
     }
     else {
-        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, false, $number, false);
+        $context['TPortal']['rendershouts'] = TPShoutFetch($shoutbox_id, $shoutbox_layout, $shoutbox_avatar, false, $number, false);
         TP_setThemeLayer('tpshout', 'TPortal', 'tpshout_bigscreen');
         $context['page_title'] = 'Shoutbox';
     }
