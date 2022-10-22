@@ -380,7 +380,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer tp_showhover">
 			<div class="tp_shoutavatar">
-				' . (($context['TPortal']['shoutbox_avatar']=='1' || $context['TPortal']['shoutbox_avatar']=='99')  ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
+				' . (!empty($context['TPortal']['shoutbox_avatar']) ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
 				' . (allowedTo('tp_can_admin_shout') ? '
 				<div class="tp_shoutbox_edit">
 					<a href="' . $scripturl. '?action=tpshout;shout=admin;s=' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="height:14px;" src="' . $settings['tp_images_url'] . '/TPmodify_shout.png" alt="'.$txt['tp-edit'].'" /></a>
@@ -395,7 +395,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 	'1' => '
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer tp_showhover">
-			' . ($context['TPortal']['shoutbox_avatar']=='1' ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
+			' . (!empty($context['TPortal']['shoutbox_avatar']) ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
 			<a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. '"' : '"') .' href="' .$scripturl. '?action=profile;u=' . $row['member_id']. '">'. $row['real_name'] .'</a>:
 			' .(allowedTo('tp_can_admin_shout') ? '
 			<div class="tp_shoutbox_edit">
@@ -417,7 +417,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 					<a href="'.$scripturl.'?action=tpshout;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPmodify_shout.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '.$shoutbox_id.', '.$row['id'].', '.$shoutbox_layout.' ); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpshout;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPdelete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
 				</div>
-				' . ($context['TPortal']['shoutbox_avatar']=='1' ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
+				' . (!empty($context['TPortal']['shoutbox_avatar']) ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
 				<b><a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . '
 				href="' . $scripturl . '?action=profile;u=' . $row['member_id'] . '">' . $row['real_name'] . '</a></b>: <span ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . ''.$row['content'].'</span>
 				<p class="clearthefloat"></p>
@@ -431,7 +431,7 @@ function template_singleshout($row, $shoutbox_id, $shoutbox_layout = null)
 					<a href="'.$scripturl.'?action=tpshout;shout=admin;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPmodify_shout.png" alt="'.$txt['tp-edit'].'" /></a>
 					<a onclick="TPupdateShouts(\'del\', '.$shoutbox_id.', '.$row['id'].', '.$shoutbox_layout.'); return false;" class="shout_delete" title="'.$txt['tp-delete'].'" href="'.$scripturl.'?action=tpshout;shout=del;s='.$row['id'].';'.$context['session_var'].'='.$context['session_id'].'"><img style="height:14px;" src="'.$settings['tp_images_url'].'/TPdelete_shout.png" alt="'.$txt['tp-delete'].'" /></a>' : '').'
 				</div>
-				' . ($context['TPortal']['shoutbox_avatar']==1 ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
+				' . (!empty($context['TPortal']['shoutbox_avatar']) ? '<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>' : '') . '
 				<a ' .(!empty($context['TPortal']['shoutbox_use_groupcolor']) ? 'style="color:' .$row['online_color']. ';"' : '') . '
 				href="' . $scripturl . '?action=profile;u=' . $row['member_id'] . '">' . $row['real_name'] . '</a>: <span ' . (!empty($context['TPortal']['shoutbox_textcolor']) ? 'style="color:' .$context['TPortal']['shoutbox_textcolor']. '">' : '>') . ''.$row['content'].'</span>
 				<span class="smalltext" style="color:' .$context['TPortal']['shoutbox_timecolor']. ';">'. tptimeformat($row['time'], true, $context['TPortal']['shoutbox_timeformat2']).'</span>
