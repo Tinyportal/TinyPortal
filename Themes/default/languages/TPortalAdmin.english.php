@@ -550,7 +550,6 @@ $txt['tp-shoutbox_id'] = 'Choose the shoutbox id for this block';
 $txt['tp-shoutbox_iddesc'] = 'You can choose different shoutbox id\'s to be used in different shoutbox blocks. Note that if more shoutbox blocks use the same id, these blocks will display the same shoutbox content.';
 $txt['shoutbox_layout'] = 'Shoutbox layout';
 $txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
-$txt['tp-shoutboxavatar'] = 'Show avatars';
 $txt['tp-shoutboxlimit'] = 'Limit posts in shoutbox to ';
 $txt['tp-shoutboxmaxlength'] = 'Maximum shout length in characters';
 $txt['tp-shoutboxtimeformat'] = 'Time format';
