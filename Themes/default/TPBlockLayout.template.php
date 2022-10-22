@@ -376,11 +376,6 @@ function template_editblock()
 						<dd>
 							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '250' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" required><br>
 						</dd>
-						<dt>'.$txt['tp-shoutboxavatar'].'</dt>
-						<dd>
-							<input type="radio" id="tp_block_var5yes" name="tp_block_var5" value="1" ' , $context['TPortal']['blockedit']['var5']=='1' ? ' checked' : '' ,' required><label for="tp_block_var5yes">'.$txt['tp-yes'].'</label>
-							<input type="radio" id="tp_block_var5no" name="tp_block_var5" value="0" ' , $context['TPortal']['blockedit']['var5']<>'1' ? ' checked' : '' ,'><label for="tp_block_var5no">'.$txt['tp-no'].'</label>
-						</dd>
 						<dt>
 							<label for="fieldname">'.$txt['shoutbox_layout'].'</label>
 						</dt>
