@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -176,7 +176,7 @@ class Integrate
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
         define('LANGUAGEDIR', $boarddir . '/Themes/default/languages');
-        define('TPVERSION', 'v230');
+        define('TPVERSION', 'v223');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);
         }
