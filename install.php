@@ -605,7 +605,7 @@ $settings_array = array(
     'shout_submit_returnkey' => '0',
     'shoutbox_limit' => '5',
     'shoutbox_maxlength' => '256',
-    'shoutbox_timeformat2' => '%Y-%m-%d, %H:%M:%S',
+    'shoutbox_timeformat' => 'Y M d H:i:s',
     'shoutbox_use_groupcolor' => '1',
     'shoutbox_textcolor' => '#000',
     'shoutbox_timecolor' => '#787878',
@@ -809,7 +809,6 @@ $delete_settings_array = array(
     'use_tpfrontpage',
     'use_tpgallery',
     'use_tpmainmenu',
-	'shoutbox_timeformat',
 );
 $deletes = 0;
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.3
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1043,8 +1043,8 @@ function TPShoutAdmin() {{{
 					$changeArray['shoutbox_maxlength'] = $value;
                 }
 
-				if($what == 'shoutbox_timeformat2') {
-					$changeArray['shoutbox_timeformat2'] = $value;
+				if($what == 'shoutbox_timeformat') {
+					$changeArray['shoutbox_timeformat'] = $value;
                 }
 
 				if($what == 'shoutbox_use_groupcolor') {
