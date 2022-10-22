@@ -517,7 +517,7 @@ $txt['tp-editmenu'] = 'Edit menu item';
 $txt['tp-windowopen'] = 'Open in';
 $txt['tp-suremenu'] = 'Are you sure you want to delete this item?';
 $txt['tp-nowindowmenu'] = 'Same window';
-$txt['tp-windowmenu'] = 'Open in a new window';
+$txt['tp-windowmenu'] = 'New window';
 $txt['tp-link'] = 'Link';
 $txt['tp-spacer'] = 'Spacer';
 $txt['tp-menu'] = 'Menu button';
@@ -529,7 +529,7 @@ $txt['tp-showmenusvar1'] = 'Type of menu';
 $txt['tp-showmenusvar2'] = 'Menu type variable';
 $txt['tp-menu-after'] = 'Add button in menu after';
 $txt['tp-menu-icon'] = 'Menu icon';
-$txt['tp-menu-icon2'] = '<small>Note: the path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is <b>removed</b> when uninstalling TinyPortal, so any file manually placed there will be lost upon uninstall!</small>';
+$txt['tp-menu-icon2'] = 'Standard icon value for new buttons is \'tinyportal/menu_tpmenu.png\'. The path for menu icons is relative to folder /Themes/default/images. You can place your own icons in that folder using ftp and assign them here. Please note that folder /Themes/default/images/tinyportal is REMOVED when uninstalling TinyPortal, so any file manually placed there will be lost upon uninstall!';
 
 // Shoutbox settings
 $txt['tp_shout'] = 'Shoutbox';
@@ -553,6 +553,7 @@ $txt['tp-shoutboxheight'] = 'Height of shoutbox in pixels';
 $txt['tp-shoutboxlimit'] = 'Limit posts in shoutbox to ';
 $txt['tp-shoutboxmaxlength'] = 'Maximum shout length in characters';
 $txt['tp-shoutboxtimeformat'] = 'Time format';
+$txt['tp-shoutboxtimeformatdesc'] = 'Time Format: You have the ability to adjust how the time and date look for yourself. There are a lot of little letters, but it\'s quite simple. The conventions follow PHP\'s strftime function and are described at php.net: https://www.php.net/manual/en/function.strftime.php. The following characters are recognized in the format string: %a - abbreviated weekday name, %A - full weekday name, %b - abbreviated month name, %B - full month name, %d - day of the month (01 to 31), %D* - same as %m/%d/%y, %e* - day of the month (1 to 31), %H - hour using a 24-hour clock (range 00 to 23), %I - hour using a 12-hour clock (range 01 to 12), %m - month as a number (01 to 12), %M - minute as a number, %p - either &quot;am&quot; or &quot;pm&quot; according to the given time, %R* - time in 24 hour notation, %S - second as a decimal number, %T* - current time, equal to %H:%M:%S, %y - 2 digit year (00 to 99), %Y - 4 digit year, %% - a literal \'%\' character (* Does not work on Windows-based servers.)';
 $txt['tp-shoutboxcolors'] = 'Shoutbox color settings';
 $txt['tp-shoutboxcolorsdesc'] = 'Shoutbox color settings: Use hex color codes. An example of a hex color representation is \'hashtag\'123456. To use the default theme colors leave these fields blank.';
 $txt['tp-shoutbox_use_groupcolor'] = 'Use membergroup color for usernames';
