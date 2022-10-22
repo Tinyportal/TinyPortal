@@ -73,7 +73,7 @@ function asingleshout($row)
 	<div style="padding-bottom: 5px;">
 		<div class="tp_shoutcontainer">
 			<div class="tp_shoutavatar">
-				<div class="avy2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>
+				<div class="tp_shoutavatar2"><a href="' . $scripturl. '?action=profile;u=' . $row['member_id'] . '">' . $row['avatar'] . '</a></div>
 				<h4>' . $row['realName'] . '</h4>
 				<div class="smalltext clear" style="padding-top: .5em;">'. timeformat($row['time']).'</div>
 			</div>
