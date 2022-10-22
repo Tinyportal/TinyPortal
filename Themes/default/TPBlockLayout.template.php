@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.3
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -354,7 +354,6 @@ function template_editblock()
 // Block type: TP shoutbox
 			elseif($context['TPortal']['blockedit']['type']=='8'){
                 if(isset($context['TPortal']['tpblocks']['blockrender'])) {
-// var_dump($context['TPortal']['blockedit']['var5']);
 					echo '
 						<dl class="tptitle settings">
 						<input type="hidden" name="tp_block_var1" value="1">
@@ -379,18 +378,18 @@ function template_editblock()
 						</dd>
 						<dt>'.$txt['tp-shoutboxavatar'].'</dt>
 						<dd>
-							<input type="radio" name="tp_block_var5" id="avataryes" value="1" ',$context['TPortal']['blockedit']['var5']=="1" ? 'checked="checked"' : '' ,' required /><label for="avataryes">'.$txt['tp-yes'].'</label>
-							<input type="radio" name="tp_block_var5" id="avatarno" value="0" ',!$context['TPortal']['blockedit']['var5']=="1" ? 'checked="checked"' : '' ,' /><label for="avatarno">'.$txt['tp-no'].'</label>
+							<input type="radio" id="tp_block_var5yes" name="tp_block_var5" value="1" ' , $context['TPortal']['blockedit']['var5']=='1' ? ' checked' : '' ,' required><label for="tp_block_var5yes">'.$txt['tp-yes'].'</label>
+							<input type="radio" id="tp_block_var5no" name="tp_block_var5" value="0" ' , $context['TPortal']['blockedit']['var5']<>'1' ? ' checked' : '' ,'><label for="tp_block_var5no">'.$txt['tp-no'].'</label>
 						</dd>
 						<dt>
 							<label for="fieldname">'.$txt['shoutbox_layout'].'</label>
 						</dt>
 						<dd>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['var3'] == '0' ? 'checked="checked"' : '' , ' required></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"></label></div></div>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['var3'] == '1' ? 'checked="checked"' : '' , '></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['var3'] == '0' ? ' checked="checked"' : '' , ' required></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['var3'] == '1' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2"></label></div></div>
 							<p class="clearthefloat"></p>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? 'checked="checked"' : '' , '></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3"></label></div></div>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? 'checked="checked"' : '' , '></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4"></label></div></div>
 							<p class="clearthefloat"></p>
 						</dd>
 					</dl>';
