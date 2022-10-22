@@ -543,7 +543,6 @@ function TPortal_shoutbox($blockid)
 		$tpm                = $context['TPortal']['moduleid'];
         $shoutbox_id        = 0;
         $shoutbox_layout    = null;
-        $shoutbox_avatar    = null;
 		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
             if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'])) {
                 $shoutbox_id = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'];
@@ -551,11 +550,8 @@ function TPortal_shoutbox($blockid)
             if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'])) {
                 $shoutbox_layout = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'];
             }
-            if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_avatar'])) {
-                $shoutbox_avatar = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_avatar'];
-            }
 
-			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout, $shoutbox_avatar);
+			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout);
         }
 	}
 }
