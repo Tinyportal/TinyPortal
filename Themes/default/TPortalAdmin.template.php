@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.2
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2313,11 +2313,16 @@ function template_menubox()
 							<div style="width:7%;" class="smalltext pos float-items"><strong>'.$txt['tp-pos'].'</strong></div>
 							<div style="width:15%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
 							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-type'].'</strong></div>
-							<div style="width:12%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].' </strong></div>
 							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-item'].'</strong></div>
-							<div style="width:18%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>
-							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
-							<div style="width:7%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-delete'].' </strong></div>
+							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>';
+					if(TP_SMF21) {
+						echo '
+							<div style="width:6%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-menu-icon'].'</strong></div>';
+					}
+					echo '
+							<div style="width:11%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-windowopen'].'</strong></div>
+							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
+							<div style="width:15%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-edit'].' / '.$txt['tp-delete'].' </strong></div>
 							<p class="clearthefloat"></p>
 					</th>
 					</tr>
@@ -2357,13 +2362,6 @@ function template_menubox()
 
 				echo '
 								</div>
-								<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
-									<div class="show-on-responsive"><strong>'.$txt['tp-on'].' '.$txt['tp-off'].' '.$txt['tp-edit'].'</strong></div>
-									<a href="' . $scripturl . '?action=tpadmin;linkon=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-activate'].'" src="' .$settings['tp_images_url']. '/TPgreen' , $lbox['off']!=0 ? '2' : '' , '.png" alt="'.$txt['tp-activate'].'"  /></a>
-									<a href="' . $scripturl . '?action=tpadmin;linkoff=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-deactivate'].'" src="' .$settings['tp_images_url']. '/TPred' , $lbox['off']==0 ? '2' : '' , '.png" alt="'.$txt['tp-deactivate'].'"  /></a>
-									<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">
-									<img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
-								</div>
 								<div style="width:19.2%; overflow:hidden;" class="smalltext fullwidth-on-res-layout float-items">
 									<div class="show-on-responsive"><strong>'.$txt['tp-item'].'</strong></div>
 									<div class="size-on-responsive">';
@@ -2401,7 +2399,7 @@ function template_menubox()
 					echo '
 									</div>
 								</div>
-									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">';
+									<div style="width:13%;" class="smalltext fullwidth-on-res-layout float-items">';
 					if($lbox['type']!=='menu'){
 						echo '
 										<div class="show-on-responsive"><strong>'.$txt['tp-sub_item'].'</strong></div>
@@ -2412,18 +2410,46 @@ function template_menubox()
 					}
 					 else {
 						echo '
-										<div class="show-on-responsive">'.$txt['tp-sub_item'].'</div>
+										<div class="show-on-responsive"><strong>'.$txt['tp-sub_item'].'</strong></div>
 										'.$txt['tp-none-'].'';
 					}
 						echo '
+									</div>';
+					if(TP_SMF21) {
+						echo '
+									<div style="width:7%;" class="smalltext fullwidth-on-res-layout float-items">';
+						if($lbox['type']=='menu'){
+							echo '
+										<div class="show-on-responsive"><strong>'.$txt['tp-menu-icon'].'</strong></div>
+										<span title="'.$lbox['menuicon'].'"><img title="" src="'. $settings['default_images_url'] .'/' . $lbox['menuicon'] .'" alt="'.$lbox['menuicon'].'" /></span>';
+								}
+							echo '
+									</div>';
+					}
+					echo '
+									<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items">';
+					$openopts = array("menu", "cats", "arti", "link");
+					if(in_array($lbox['type'], $openopts)){
+						echo '
+										<div class="show-on-responsive"><strong>'.$txt['tp-windowopen'].'</strong></div>';
+										if($lbox['newlink']=='1')
+											echo $txt['tp-windowmenu'];
+										else
+											echo $txt['tp-nowindowmenu'];
+							}
+						echo '
 									</div>
-									<div style="width:23%;" class="smalltext fullwidth-on-res-layout float-items">
+									<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items">
 										<div class="show-on-responsive"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
 										<input type="radio" name="tp_menu_sitemap' .$lbox['id']. '" value="1" ' , in_array($lbox['id'],$context['TPortal']['sitemap']) ? 'checked' : '' ,'>' . $txt['tp-yes'] .'
 										<input type="radio" name="tp_menu_sitemap' .$lbox['id']. '" value="0" ' , !in_array($lbox['id'],$context['TPortal']['sitemap']) ? 'checked' : '' ,'> ' . $txt['tp-no'] . '
 									</div>
-									<div style="width:5%;" class="smalltext fullwidth-on-res-layout float-items">
-										<div class="show-on-responsive"><strong>'.$txt['tp-delete'].'</strong></div>
+									<div style="width:12%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
+										<div class="show-on-responsive"><strong>'.$txt['tp-edit'].' / '.$txt['tp-delete'].'</strong></div>
+										<a href="' . $scripturl . '?action=tpadmin;linkon=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-activate'].'" src="' .$settings['tp_images_url']. '/TPgreen' , $lbox['off']!=0 ? '2' : '' , '.png" alt="'.$txt['tp-activate'].'"  /></a>
+										<a href="' . $scripturl . '?action=tpadmin;linkoff=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-deactivate'].'" src="' .$settings['tp_images_url']. '/TPred' , $lbox['off']==0 ? '2' : '' , '.png" alt="'.$txt['tp-deactivate'].'"  /></a>
+										<a href="' . $scripturl . '?action=tpadmin;linkedit=' .$lbox['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'">
+										<img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>
 										<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';linkdelete=' .$lbox['id']. ';mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '" onclick="javascript:return confirm(\''.$txt['tp-suremenu'].'\')"><img title="'.$txt['tp-delete'].'" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-delete'].'"  /></a>
 									</div>
 									<p class="clearthefloat"></p>
@@ -2608,28 +2634,28 @@ function template_menucore()
 					<label for="tp_menu_type">'.$txt['tp-type'].'</label>
 				</dt>
 				<dd>
-					<select size="1" name="tp_menu_type" id="tp_menu_type">
-						<option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
-						<option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
-						<option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
-						<option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
-						<option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>';
+					<select size="1" name="tp_menu_type" id="tp_menu_type">';
 				// check for menu button in createmenuitem
 				if (isset($_GET['mid']))
 					{
 					if($_GET['mid']==0)
 						{
 						echo '
-                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
+							<option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
 						}
 					}
 				// check for menu button in editmenuitem
 				elseif ($context['TPortal']['editmenuitem']['menuID']==0)
 					{
 					echo '
-                            <option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
+						<option value="menu" ', $context['TPortal']['editmenuitem']['type']=='menu' ? 'selected' : '', '>'.$txt['tp-menu'].'</option>';
 					}
 					echo '
+						<option value="cats" ', $context['TPortal']['editmenuitem']['type']=='cats' ? 'selected' : '', '>'.$txt['tp-category'].'</option>
+						<option value="arti" ', $context['TPortal']['editmenuitem']['type']=='arti' ? 'selected' : '', '>'.$txt['tp-article'].'</option>
+						<option value="link" ', $context['TPortal']['editmenuitem']['type']=='link' ? 'selected' : '', '>'.$txt['tp-link'].'</option>
+						<option value="head" ', $context['TPortal']['editmenuitem']['type']=='head' ? 'selected' : '', '>'.$txt['tp-header'].'</option>
+						<option value="spac" ', $context['TPortal']['editmenuitem']['type']=='spac' ? 'selected' : '', '>'.$txt['tp-spacer'].'</option>
 					</select>
 				</dd>
 			</dl>
@@ -2673,15 +2699,6 @@ function template_menucore()
                     <input type="text" id="tp_menu_link" name="tp_menu_link" size="40" value="' , (in_array($context['TPortal']['editmenuitem']['type'], array ('link', 'menu' ))) ? $context['TPortal']['editmenuitem']['IDtype'] : ''  ,'" ' , !in_array($context['TPortal']['editmenuitem']['type'], array( 'link', 'menu' )) ? ' ' : '' ,'>
 				</dd>
 				<dt>
-					<label for="tp_menu_newlink">'.$txt['tp-windowopen'].'</label>
-				</dt>
-				<dd>
-					<select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
-						<option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
-						<option value="1" ', $context['TPortal']['editmenuitem']['newlink'] == '1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
-					</select>
-				</dd>
-				<dt>
 					<label for="tp_menu_sub">'.$txt['tp-sub_item'].'</label>
 				</dt>
 				<dd>
@@ -2707,14 +2724,22 @@ function template_menucore()
 		if(TP_SMF21) {
 			echo '
 				<dt>
-					<label for="tp_menu_icon">'.$txt['tp-menu-icon'].'<br>
-						'.$txt['tp-menu-icon2'].'</label>
+					<a href="', $scripturl, '?action=helpadmin;help='.$txt['tp-menu-icon2'].'" onclick="return reqOverlayDiv(this.href);"><span id="tp_menu_iconhlp" class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_menu_icon">'.$txt['tp-menu-icon'].'</label>
 				</dt>
 				<dd>
-					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40">
+					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40" placeholder="'. $txt['tp-none-'].'">
 				</dd>';
 		}
 			echo '
+				<dt>
+					<label for="tp_menu_newlink">'.$txt['tp-windowopen'].'</label>
+				</dt>
+				<dd>
+					<select size="1" name="tp_menu_newlink" id="tp_menu_newlink">
+						<option value="0" ', $context['TPortal']['editmenuitem']['newlink'] == '0' ? 'selected' : '', '>'.$txt['tp-nowindowmenu'].'</option>
+						<option value="1" ', $context['TPortal']['editmenuitem']['newlink'] == '1' ? 'selected' : '', '>'.$txt['tp-windowmenu'].'</option>
+					</select>
+				</dd>
 			</dl>
 			<div>
 				</div>
@@ -2735,6 +2760,7 @@ function template_menucore()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
 						$("#tp_menu_icon").hide()
+						$("#tp_menu_iconhlp").hide()
                         $(\'label[for="tp_menu_position"]\').hide();
 						$(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
@@ -2743,16 +2769,17 @@ function template_menucore()
                         break;
                     case "menu":
                         $("#tp_menu_link").show()
-                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_newlink").show()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").hide()
                         $("#tp_menu_sub").hide()
                         $("#tp_menu_position").show()
 						$("#tp_menu_icon").show()
+						$("#tp_menu_iconhlp").show()
 						$(\'label[for="tp_menu_icon"]\').show();
                         $(\'label[for="tp_menu_position"]\').show();
                         $(\'label[for="tp_menu_sub"]\').hide();
-                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
                         break;
                     case "spac":
@@ -2763,6 +2790,7 @@ function template_menucore()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
 						$("#tp_menu_icon").hide()
+						$("#tp_menu_iconhlp").hide()
 						$(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
@@ -2777,6 +2805,7 @@ function template_menucore()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
 						$("#tp_menu_icon").hide()
+						$("#tp_menu_iconhlp").hide()
 						$(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
@@ -2787,28 +2816,30 @@ function template_menucore()
                         $("#tp_menu_link").hide()
                         $("#tp_menu_category").show()
                         $("#tp_menu_article").hide()
-                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_newlink").show()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
 						$("#tp_menu_icon").hide()
+						$("#tp_menu_iconhlp").hide()
                         $(\'label[for="tp_menu_icon"]\').hide();
 						$(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
-                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
                         break;
                     case "arti":
                         $("#tp_menu_link").hide()
                         $("#tp_menu_category").hide()
                         $("#tp_menu_article").show()
-                        $("#tp_menu_newlink").hide()
+                        $("#tp_menu_newlink").show()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
 						$("#tp_menu_icon").hide()
+						$("#tp_menu_iconhlp").hide()
                         $(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();
-                        $(\'label[for="tp_menu_newlink"]\').hide();
+                        $(\'label[for="tp_menu_newlink"]\').show();
                         $(\'label[for="tp_item"]\').show();
                         break;
                     default:
@@ -2819,6 +2850,7 @@ function template_menucore()
                         $("#tp_menu_sub").show()
                         $("#tp_menu_position").hide()
 						$("#tp_menu_icon").hide()
+						$("#tp_menu_iconhlp").hide()
                         $(\'label[for="tp_menu_icon"]\').hide();
                         $(\'label[for="tp_menu_position"]\').hide();
                         $(\'label[for="tp_menu_sub"]\').show();

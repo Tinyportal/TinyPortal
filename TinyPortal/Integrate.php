@@ -481,7 +481,7 @@ class Integrate
         $dB = Database::getInstance();
 
         $request = $dB->db_query('', '
-            SELECT value1 AS name , value3 AS href , value7 AS position , value8 AS menuicon
+            SELECT value1 AS name , value2 AS newlink , value3 AS href , value7 AS position , value8 AS menuicon
             FROM {db_prefix}tp_variables
             WHERE type = {string:type}
             AND value3 LIKE {string:mainmenu}
@@ -503,6 +503,7 @@ class Integrate
                             'tpbutton'.$i => array (
                                 'icon' => $row['menuicon'],
                                 'title' => $row['name'],
+                                'target' => (($row['newlink'] == 1) ? ' target="_blank"' : ''),
                                 'href' => substr($row['href'], 4),
                                 'show' =>  true,
                             ),
