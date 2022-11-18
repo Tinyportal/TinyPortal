@@ -1968,7 +1968,6 @@ function TPortal_panel($side) {{{
 				break;
 			case 'shoutbox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['moduleid']			= $block['var1']; // Why is this needed??
 				$context['TPortal']['shoutbox_stitle']	= $block['body'];
 				$context['TPortal']['shoutbox_id']		= $block['shoutbox_id'];
 				$context['TPortal']['shoutbox_layout']	= $block['shoutbox_layout'];

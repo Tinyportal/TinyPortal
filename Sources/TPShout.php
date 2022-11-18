@@ -793,13 +793,13 @@ function tpshout_profile($member_id) {{{
 function TPShoutBlock(&$row) {{{
     global $context, $txt, $sourcedir;
 
-    static $id = 1;
-
     if(loadLanguage('TPortal') == false) {
         loadLanguage('TPortal', 'english');
     }
 
     $set = json_decode($row['settings'], TRUE);
+
+	$id	= $row['id'];
 
     $context['TPortal']['tpblocks']['blockrender'][$id] = array(
         'id'                => $row['id'],
@@ -811,8 +811,6 @@ function TPShoutBlock(&$row) {{{
         'sourcefile'        => $sourcedir .'/TPShout.php',
     );
 
-    // Force var1 to change...
-    $set['var1']        = $id++;
     $row['settings']    = json_encode($set, TRUE);
 
     if(!empty($context['TPortal']['shoutbox_refresh'])) {
