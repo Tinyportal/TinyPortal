@@ -81,7 +81,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
 $tables = array(
     'tp_articles' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'date', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'intro', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -120,7 +120,7 @@ $tables = array(
     ),
     'tp_blocks' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'type', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
 			array('name' => 'frame', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'title', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -140,7 +140,7 @@ $tables = array(
     ),
     'tp_comments' => array (
         'columns' => array (
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'item_type', 'type' => 'varchar', 'size' => 255, 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'item_id', 'type' => 'int', 'size' => 11, 'default' => 0,),
             array('name' => 'datetime', 'type' => 'int', 'size' => 11, 'default' => 0,),
@@ -154,7 +154,7 @@ $tables = array(
     ),
     'tp_data' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'type', 'type' => 'smallint', 'size' => 4, 'default' => 0,),
             array('name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => 0, 'old_name' => 'ID_MEMBER'),
             array('name' => 'value', 'type' => 'smallint', 'size' => 6, 'default' => 0,),
@@ -166,7 +166,7 @@ $tables = array(
     ),
     'tp_dldata' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'bigint', 'size' => 20, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'bigint', 'size' => 20, 'auto' => true,),
             array('name' => 'views', 'type' => 'bigint', 'size' => 20, 'default' => 0 ),
             array('name' => 'downloads', 'type' => 'bigint', 'size' => 20, 'default' => 0 ),
             array('name' => 'item', 'type' => 'int', 'size' => 11, 'default' => 0 ),
@@ -179,7 +179,7 @@ $tables = array(
     ),
     'tp_dlmanager' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'name', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'description', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'icon', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -207,7 +207,7 @@ $tables = array(
     ),
     'tp_events' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => 0),
 			array('name' => 'date', 'type' => 'int', 'size' => 11, 'default' => 0),
             array('name' => 'textvariable', 'type' => 'mediumtext', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -223,7 +223,7 @@ $tables = array(
     ),
     'tp_menu' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'name', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'type', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
             array('name' => 'link', 'type' => 'tinytext', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -237,7 +237,7 @@ $tables = array(
     ),
 	'tp_shoutbox' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'shoutbox_id', 'type' => 'int', 'size' => 3, 'default' => 1),
             array('name' => 'member_id', 'type' => 'int', 'size' => 11, 'default' => -2),
             array('name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -253,7 +253,7 @@ $tables = array(
     ),
     'tp_variables' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'int', 'size' => 11, 'auto' => true,),
             array('name' => 'value1', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'value2', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
 			array('name' => 'value3', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')),
@@ -272,7 +272,7 @@ $tables = array(
     ),
     'tp_settings' => array(
         'columns' => array(
-            array('name' => 'id', 'type' => 'mediumint', 'size' => 9, 'auto' => true, 'default' => 0),
+            array('name' => 'id', 'type' => 'mediumint', 'size' => 9, 'auto' => true,),
             array('name' => 'name', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '') ),
             array('name' => 'value', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '') ),
         ),
