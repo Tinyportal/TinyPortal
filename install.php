@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 2.2.2
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -60,7 +60,7 @@ if ($manual) {
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v2.2.2 for '.$forumVersion.'</title>
+		<title>TinyPortal - v2.2.3 for '.$forumVersion.'</title>
 		 <link rel="stylesheet" type="text/css" href="'. $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 }
@@ -74,7 +74,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.2.2 for '.$forumVersion.'<h3/></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v2.2.3 for '.$forumVersion.'<h3/></div>
 	<div class="windowbg middletext" style="padding: 2em; overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -480,7 +480,7 @@ if($convertaccess) {
 // now we process all settings
 $settings_array = array(
     // KEEP TRACK OF INTERNAL VERSION HERE
-    'version' => '2.2.2',
+    'version' => '2.2.3',
     'frontpage_title' => '',
     'showforumfirst' => '0',
     'hideadminmenu' => '0',
@@ -566,13 +566,13 @@ $settings_array = array(
     'block_layout_front' => 'vert',
     'block_layout_lower' => 'vert',
     'block_layout_bottom' => 'vert',
-    'blockgrid_left' => '',
-    'blockgrid_right' => '',
-    'blockgrid_top' => '',
-    'blockgrid_center' => '',
-    'blockgrid_front' => '',
-    'blockgrid_lower' => '',
-    'blockgrid_bottom' => '',
+    'blockgrid_left' => 'colspan3',
+    'blockgrid_right' => 'colspan3',
+    'blockgrid_top' => 'colspan3',
+    'blockgrid_center' => 'colspan3',
+    'blockgrid_front' => 'colspan3',
+    'blockgrid_lower' => 'colspan3',
+    'blockgrid_bottom' => 'colspan3',
     'blockwidth_left' => '200',
     'blockwidth_right' => '150',
     'blockwidth_top' => '150',
@@ -605,7 +605,7 @@ $settings_array = array(
     'shout_submit_returnkey' => '0',
     'shoutbox_limit' => '5',
     'shoutbox_maxlength' => '256',
-    'shoutbox_timeformat' => 'Y M d H:i:s',
+    'shoutbox_timeformat2' => '%Y-%m-%d, %H:%M:%S',
     'shoutbox_use_groupcolor' => '1',
     'shoutbox_textcolor' => '#000',
     'shoutbox_timecolor' => '#787878',
@@ -656,7 +656,8 @@ $bars = array('leftpanel' => 'leftbar', 'rightpanel' => 'rightbar', 'toppanel' =
 $barskey = array_keys($bars);
 
 $updateSettings = array( 'userbox_options', 'download_upload_path', 'blockcode_upload_path' );
-
+$updateBlockgrid = array( 'blockgrid_left', 'blockgrid_right', 'blockgrid_top', 'blockgrid_center', 'blockgrid_front', 'blockgrid_lower', 'blockgrid_bottom' );
+ 
 // check each setting if it exists, and if not add it
 foreach($settings_array as $what => $val)
 {
@@ -689,6 +690,16 @@ foreach($settings_array as $what => $val)
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
             WHERE name = {string:name}',
+            array('val' => $val, 'name' => $what)
+        );
+		$smcFunc['db_free_result']($request);
+	}
+	elseif($smcFunc['db_num_rows']($request) > 0 && in_array($what, $updateBlockgrid)){
+		$smcFunc['db_query']('', '
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
+            WHERE name = {string:name}
+			AND value = \'\'',
             array('val' => $val, 'name' => $what)
         );
 		$smcFunc['db_free_result']($request);
@@ -798,6 +809,7 @@ $delete_settings_array = array(
     'use_tpfrontpage',
     'use_tpgallery',
     'use_tpmainmenu',
+	'shoutbox_timeformat',
 );
 $deletes = 0;
 

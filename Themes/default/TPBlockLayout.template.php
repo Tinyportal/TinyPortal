@@ -67,19 +67,19 @@ function template_tp_above()
 
 	if($context['TPortal']['toppanel']==1)
 		echo '
-		<div id="tptopbarHeader" style="' , in_array('tptopbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , 'clear: both;">
+		<div id="tptopbarHeader"' , in_array('tptopbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
 			'	, TPortal_panel('top') , '
 			<p class="clearthefloat"></p>
 		</div>';
 
 	echo '
-		<div id="mainContainer" style="clear: both;">';
+		<div id="mainContainer">';
 
 	// TinyPortal integrated bars
 	if($context['TPortal']['leftpanel']==1) {
 		echo '
 			<div id="tpleftbarContainer" style="width:' , ($context['TPortal']['leftbar_width']) , 'px; ' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '" >
-				<div id="tpleftbarHeader" ' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'style="display: none;"' : '' , '>
+				<div id="tpleftbarHeader"' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
 					' , $context['TPortal']['useroundframepanels']==1 ?
 					'<span class="upperframe"><span></span></span>
 					<div class="roundframe" style="overflow: auto;">' : ''
@@ -96,7 +96,7 @@ function template_tp_above()
 	{
 		echo '
 			<div id="tprightbarContainer" style="width:' ,$context['TPortal']['rightbar_width'], 'px;' , in_array('tprightbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '" >
-				<div id="tprightbarHeader" ' , in_array('tprightbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'style="display: none;"' : '' , '>
+				<div id="tprightbarHeader"' , in_array('tprightbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
 					' , $context['TPortal']['useroundframepanels']==1 ?
 					'<span class="upperframe"><span></span></span>
 					<div class="roundframe">' : ''
@@ -114,7 +114,7 @@ function template_tp_above()
 
 	if($context['TPortal']['centerpanel']==1) {
 		echo '
-					<div id="tpcenterbarHeader" ' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'style="display: none;"' : '' , '>
+					<div id="tpcenterbarHeader"' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
 						' , TPortal_panel('center') , '
 						<p class="clearthefloat"></p>
 					</div>';
@@ -129,7 +129,7 @@ function template_tp_below()
 
 	if($context['TPortal']['lowerpanel']==1)
 		echo '
-				<div id="tplowerbarHeader" ' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'style="display: none;"' : '' , '>
+				<div id="tplowerbarHeader"' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
 					' , TPortal_panel('lower') , '
 					<p class="clearthefloat"></p>
 				</div>';
@@ -138,13 +138,13 @@ function template_tp_below()
 			</div>';
 // end mainContainer
 	echo '
-			<p class="clearthefloat" style="padding:0px;margin:0px;"></p>
+			<p class="clearthefloat"></p>				
 		</div>';
 
 	if($context['TPortal']['bottompanel']==1)
 		echo '
-		<div id="tpbottombarHeader" style="clear: both;' , in_array('tpbottombarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
-			' , TPortal_panel('bottom') , '
+		<div id="tpbottombarHeader"', in_array('tpbottombarHeader', $context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
+			', TPortal_panel('bottom') , '
 			<p class="clearthefloat"></p>
 		</div>';
 	echo '

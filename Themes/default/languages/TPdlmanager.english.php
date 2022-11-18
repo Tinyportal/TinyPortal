@@ -1,5 +1,5 @@
 <?php
-// Version: 2.2.2; TPdlmanager
+// Version: 2.2.3; TPdlmanager
 
 global $scripturl;
 
@@ -170,7 +170,7 @@ $txt['tp-dladmin'] = 'Administration';
 $txt['tp-dldownloads'] = 'Downloads';
 $txt['tp-dlheader1'] = 'Downloads';
 $txt['tp-mainpage'] = 'Main';
-$txt['tp-dlheader2'] = 'You can create categories here, edit each one with permissions, names and icons and upload files into them. There is also a ftp screen where you can assign pre-uploaded files to an item or caegory. Submitted files screen can also be found here, it allows you to either approve or reject(delete) them.';
+$txt['tp-dlheader2'] = 'You can create categories here, edit each one with permissions, names and icons and upload files into them. There is also a ftp screen where you can assign pre-uploaded files to a download item or category. Submitted files screen can also be found here, it allows you to either approve or reject(delete) them.';
 $txt['tp-dlheader3'] = 'Manage categories and items in TPdownloads';
 $txt['tp-dlssnotdel'] = 'Unable to delete the actual screenshot, but the item was deleted.';
 $txt['tp-dlnonint'] = 'Sorry, you attempted to specify a non-integer value!';

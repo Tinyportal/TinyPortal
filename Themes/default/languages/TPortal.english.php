@@ -202,6 +202,7 @@ $txt['tp-shout'] = 'Shout';
 $txt['tp-shouts'] = 'Shouts:';
 $txt['tp-shoutbox'] = 'TinyPortal shoutbox';
 $txt['tp-shoutboxitems'] = 'Edit/Remove last shouts';
+$txt['tp-shoutboxsettings'] = 'Shoutbox settings';
 $txt['tp-shout-history'] = 'History';
 $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tpsummary_noshout'] = 'No shout messages found';

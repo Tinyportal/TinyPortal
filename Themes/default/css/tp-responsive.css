@@ -1,6 +1,6 @@
 	/**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -207,9 +207,14 @@
 	ul.tp-subcategories li {
 		width: 98%;
 	}
-/** dirty fix for reason for edit in Curve2 */
+/** Quick fixes Curve2 **/
+/* reason for edit */
 	input[name="modify_reason"] {
 	width:100%;
+	}
+/* quickactions */
+	#quick_actions > select[name="qaction"] {
+    width: 80px;
 }
 }
 /** screen smaller then 400px **/
@@ -297,7 +302,7 @@
 	}
 	.tp_responsive #tpleftbarContainer,
 	.tp_responsive #tprightbarContainer {
-		padding:0.5%;
+/*		padding:0.5%;*/
 		width:49%!important;
 	}
 }

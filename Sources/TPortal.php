@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -870,7 +870,7 @@ function doTPcat() {{{
 					$context['TPortal']['category']['col1'] = array(); $context['TPortal']['category']['col2'] = array();
 					while($row = $smcFunc['db_fetch_assoc']($request)) {
 						// Add the rating together
-						$row['rating'] = array_sum(explode(',', $row['rating']));
+						$row['rating'] = array_sum(explode(',', $row['rating'] ?? ''));
 						// expand the vislaoptions
 						$row['visual_options'] = explode(',', $row['options']);
 

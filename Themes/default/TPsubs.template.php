@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -649,10 +649,16 @@ function TPortal_recentbox()
 	global $scripturl, $context, $settings, $txt, $modSettings, $user_info;
 
 	// if no guest access to forum, then no recent topics
-	if($modSettings['allow_guestAccess'] == '0' && $user_info['is_guest']) {
+	if(empty($modSettings['allow_guestAccess']) && $user_info['is_guest']) {
 		echo '' .$txt['tp-noguest_access'] .'';
+		return;
 	}
 	else {
+	// set variable for SMF21
+	if(is_numeric($context['TPortal']['recentboxnum'] < 5))
+		$context['min_message_topics'] = 1000;
+	else 
+		$context['min_message_topics'] = 300;
 	// is it a number?
 	if(is_numeric($context['TPortal']['recentlength']))
 		$recentlength = $context['TPortal']['recentlength'];
@@ -2683,7 +2689,7 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 	$buttons[count($buttons) - 1] = str_replace('<span>', '<span class="last">', $buttons[count($buttons) - 1]);
 
 	echo '
-		<div class="buttonlist', !empty($direction) ? ' align_' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>
+		<div class="tpbuttons buttonlist', !empty($direction) ? ' align_' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>
 			<ul style="margin:0px;padding:5px 0px;">',
 				implode('', $buttons), '
 			<p class="clearthefloat"></p></ul>

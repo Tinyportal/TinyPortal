@@ -4,7 +4,7 @@ format: Boardmod
 </info>
 
 <name>
-Mini calendar2
+Mini calendar SMF2.1
 </name>
 
 <author>
@@ -12,7 +12,7 @@ Bloc
 </author>
 
 <version>
-0.5
+1.0
 </version>
 
 <date>
@@ -41,10 +41,10 @@ $day_names = array();
 //generate all the day names according to the current locale
 for($n=0,$t=(3+$first_day)*86400; $n<7; $n++,$t+=86400) 
 //January 4, 1970 was a Sunday
-$day_names[$n] = ucfirst(gmstrftime('%A',$t));
+$day_names[$n] = ucfirst(smf_gmstrftime('%A',$t));
 //%A means full textual day name
 
-list($month, $year, $month_name, $weekday) = explode(',', gmstrftime('%m,%Y,%B,%w', $first_of_month));
+list($month, $year, $month_name, $weekday) = explode(',', smf_gmstrftime('%m,%Y,%B,%w', $first_of_month));
 $weekday = ($weekday + 7 - $first_day) % 7; 
 //adjust for $first_day
 $title   = $smcFunc['htmlspecialchars'](ucfirst($month_name)).' '.$year; 
@@ -92,8 +92,9 @@ echo $calendar."</tr>\n</table>\n";
 </code>
 
 <description>
-A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar, slightly modified. <br>
+A simple calendar to be used in a php-block, the code is from http://keithdevens.com/software/php_calendar, slightly modified.<br>
 It simply displays the date and the days in current month/year. Current day is highlighted. <br>
 <br>
-<strong>Do NOT use this blockcode with SMF2.1: for higher PHP versions an alternative code is available: Mini Calendar SMF2.1
+This is an updated version that can only be used in SMF2.1.x and is needed for PHP versions 8.1.1 and higher, it uses smf_gmstrftime function instead of removed gmstrftime.<br>
+<strong>Do NOT use this blockcode with SMF2.0: use the old blockcode: Mini Calendar2
 </description>
