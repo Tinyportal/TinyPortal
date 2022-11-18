@@ -2498,7 +2498,7 @@ function do_postchecks()
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
-                    elseif(in_array($setting, array( 'var1', 'var2', 'var3', 'var4', 'var5')) ) {
+                    elseif(in_array($setting, array('var1', 'var2', 'var3', 'var4', 'var5', 'shoutbox_id', 'shoutbox_height', 'shoutbox_layout')) ) {
                         // Check for blocks in table, if none insert default blocks.
 						$request = $smcFunc['db_query']('', '
                             SELECT settings FROM {db_prefix}tp_blocks

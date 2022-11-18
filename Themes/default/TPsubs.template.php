@@ -2599,7 +2599,7 @@ function tptimeformat($log_time, $show_today = true, $format = '%d %b %Y')
 {
 	global $context, $user_info, $txt, $modSettings, $smcFunc;
 
-	$time = $log_time + ($user_info['time_offset'] + $modSettings['time_offset']) * 3600;
+	$time = $log_time + ($user_info['time_offset'] + (isset($modSettings['time_offset']) ? $modSettings['time_offset'] : 0))   * 3600;
 
 	// We can't have a negative date (on Windows, at least.)
 	if ($log_time < 0)

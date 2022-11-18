@@ -368,23 +368,23 @@ function template_editblock()
 							<label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , (empty($context['TPortal']['blockedit']['var2']) ? '1': $context['TPortal']['blockedit']['var2']) ,'" style="width: 6em" min="1" max="9" step="1" required>
+							<input type="number" id="tp-shoutbox_id" name="tp_block_shoutbox_id" value="' , (empty($context['TPortal']['blockedit']['shoutbox_id']) ? '1': $context['TPortal']['blockedit']['shoutbox_id']) ,'" style="width: 6em" min="1" max="9" step="1" required>
 						</dd>
 						<dt>
 							<label for="tp-shoutboxheight">'.$txt['tp-shoutboxheight'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-shoutboxheight" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '250' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" required><br>
+							<input type="number" id="tp-shoutboxheight" name="tp_block_shoutbox_height" value="' ,(empty($context['TPortal']['blockedit']['shoutbox_height']) ? '250' : $context['TPortal']['blockedit']['shoutbox_height']), '" style="width: 6em" required><br>
 						</dd>
 						<dt>
 							<label for="fieldname">'.$txt['shoutbox_layout'].'</label>
 						</dt>
 						<dd>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['var3'] == '0' ? ' checked="checked"' : '' , ' required></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"></label></div></div>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['var3'] == '1' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_shoutbox_layout" id="shout_layout1" value="0" ' , $context['TPortal']['blockedit']['shoutbox_layout'] == '0' ? ' checked="checked"' : '' , ' required></div><div><label for="shout_layout1"><img src="' . $settings['tp_images_url'] . '/shout_layout1.png" alt="Layout 1" style="text-align: right"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_shoutbox_layout" id="shout_layout2" value="1" ' , $context['TPortal']['blockedit']['shoutbox_layout'] == '1' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout2"><img src="' . $settings['tp_images_url'] . '/shout_layout2.png" alt="Layout 2"></label></div></div>
 							<p class="clearthefloat"></p>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['var3'] == '2' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3"></label></div></div>
-							<div class="float-items"><div><input type="radio" name="tp_block_var3" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['var3'] == '3' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_shoutbox_layout" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3"></label></div></div>
+							<div class="float-items"><div><input type="radio" name="tp_block_shoutbox_layout" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['shoutbox_layout'] == '3' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4"></label></div></div>
 							<p class="clearthefloat"></p>
 						</dd>
 					</dl>';

@@ -105,23 +105,20 @@ function getBlocks() {{{
             // decode the block settings
             $set        = json_decode($row['settings'], true);
 			$can_manage = allowedTo('tp_blocks');
-			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
+
+			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = $set + array(
 				'frame'     => $row['frame'],
 				'title'     => strip_tags($row['title'], '<center>'),
                 'type'      => $tpBlock->getBlockType($row['type']),
 				'body'      => $row['body'],
 				'visible'   => $row['visible'],
                 'settings'  => $row['settings'],
-				'var1'      => $set['var1'],
-				'var2'      => $set['var2'],
-				'var3'      => $set['var3'],
-				'var4'      => $set['var4'],
-				'var5'      => $set['var5'],
 				'id'        => $row['id'],
 				'lang'      => $row['lang'],
 				'display'   => $row['display'],
 				'can_manage' => $can_manage,
 			);
+
 			$count[$panels[$row['bar']]]++;
 		}
 	}
@@ -371,7 +368,7 @@ function adminBlocks() {{{
                 foreach($blocks as $row) {
                     // decode the block settings
                     $set = json_decode($row['settings'], true);
-                    $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = array(
+                    $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = $set + array(
                         'frame' => $row['frame'],
                         'title' => $row['title'],
                         'type' => $tpBlock->getBlockType($row['type']),
@@ -381,8 +378,6 @@ function adminBlocks() {{{
                         'pos' => $row['pos'],
                         'off' => $row['off'],
                         'visible' => $row['visible'],
-                        'var1' => $set['var1'],
-                        'var2' => $set['var2'],
                         'lang' => $row['lang'],
                         'display' => $row['display'],
                         'loose' => $row['display'] != '' ? true : false
@@ -470,13 +465,9 @@ function editBlock( $block_id = 0 ) {{{
 
     $row = $tpBlock->getBlock($block_id);
     if(is_array($row)) {
-		$acc2 = explode(',', $row['display']);
-		$context['TPortal']['blockedit'] = $row;
-		$context['TPortal']['blockedit']['var1']    = json_decode($row['settings'],true)['var1'];
-		$context['TPortal']['blockedit']['var2']    = json_decode($row['settings'],true)['var2'];
-		$context['TPortal']['blockedit']['var3']    = json_decode($row['settings'],true)['var3'];
-		$context['TPortal']['blockedit']['var4']    = json_decode($row['settings'],true)['var4'];
-		$context['TPortal']['blockedit']['var5']    = json_decode($row['settings'],true)['var5'];
+		$acc2	= explode(',', $row['display']);
+		$set	= json_decode($row['settings'], true);
+		$context['TPortal']['blockedit'] = $row + $set;
 		$context['TPortal']['blockedit']['display2'] = $context['TPortal']['blockedit']['display'];
 		$context['TPortal']['blockedit']['body'] = $row['body'];
 		unset($context['TPortal']['blockedit']['display']);

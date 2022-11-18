@@ -1968,10 +1968,10 @@ function TPortal_panel($side) {{{
 				break;
 			case 'shoutbox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['shoutbox_stitle'] = $block['body'];
-				$context['TPortal']['shoutbox_id'] = $block['var2'];
-				$context['TPortal']['shoutbox_layout'] = $block['var3'];
-				$context['TPortal']['shoutbox_height'] = $block['var4'];
+				$context['TPortal']['shoutbox_stitle']	= $block['body'];
+				$context['TPortal']['shoutbox_id']		= $block['shoutbox_id'];
+				$context['TPortal']['shoutbox_layout']	= $block['shoutbox_layout'];
+				$context['TPortal']['shoutbox_height']	= $block['shoutbox_height'];
             case 'modulebox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleid'] = $block['var1'];

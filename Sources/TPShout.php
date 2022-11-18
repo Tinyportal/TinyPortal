@@ -803,9 +803,9 @@ function TPShoutBlock(&$row) {{{
 
     $context['TPortal']['tpblocks']['blockrender'][$id] = array(
         'id'                => $row['id'],
-        'shoutbox_id'       => $set['var2'],
-        'shoutbox_layout'   => $set['var3'],
-        'shoutbox_height'   => $set['var4'],
+        'shoutbox_id'       => $set['shoutbox_id'],
+        'shoutbox_layout'   => $set['shoutbox_layout'],
+        'shoutbox_height'   => $set['shoutbox_height'],
         'name'              => $txt['tp-shoutbox'],
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
@@ -818,7 +818,7 @@ function TPShoutBlock(&$row) {{{
     if(!empty($context['TPortal']['shoutbox_refresh'])) {
         $context['html_headers'] .= '
         <script type="text/javascript"><!-- // --><![CDATA[
-            window.setInterval("TPupdateShouts(\'fetch\', '.$set['var2'].' , null , '.$set['var3'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
+            window.setInterval("TPupdateShouts(\'fetch\', '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
         // ]]></script>';
     }
 
@@ -842,13 +842,13 @@ function TPShoutBlock(&$row) {{{
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
                 $(document).ready(function() {
-                    $("#tp_shout_'.$set['var2'].'").keypress(function(event) {
+                    $("#tp_shout_'.$set['shoutbox_id'].'").keypress(function(event) {
                         if(event.which == 13 && !event.shiftKey) {
                             tp_shout_key_press = true;
                             // set a 100 millisecond timeout for the next key press
-                            window.setTimeout(function() { tp_shout_key_press = false; $("#tp_shout_' . $set['var2'] . '").setCursorPosition(0,0);}, 100);
-                            TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
-							console.log("'.$set['var2'].'");
+                            window.setTimeout(function() { tp_shout_key_press = false; $("#tp_shout_' . $set['shoutbox_id'] . '").setCursorPosition(0,0);}, 100);
+                            TPupdateShouts(\'save\' , '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].');
+							console.log("'.$set['shoutbox_id'].'");
                         }
                     });
                 });
@@ -858,16 +858,16 @@ function TPShoutBlock(&$row) {{{
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
             $(document).ready(function() {
-                if ($("#tp_shout_'.$set['var2'].'")) {
-                    $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                if ($("#tp_shout_'.$set['shoutbox_id'].'")) {
+                    $("#tp_shout_'.$set['shoutbox_id'].'").keydown(function (event) {
                         if((event.metaKey || event.ctrlKey) && event.keyCode == 13) {
                             tp_shout_key_press = true;
                             // set a 100 millisecond timeout for the next key press
                             window.setTimeout(function() { tp_shout_key_press = false; }, 100);
-                            TPupdateShouts(\'save\' , '.$set['var2'].' , null , '.$set['var3'].');
+                            TPupdateShouts(\'save\' , '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].');
                         }
                         else if (event.keyCode == 13) {
-							$("#tp_shout_' . $set['var2'] . '").setCursorPosition(0,0);
+							$("#tp_shout_' . $set['shoutbox_id'] . '").setCursorPosition(0,0);
                             event.preventDefault();
                         }
                     });
@@ -880,8 +880,8 @@ function TPShoutBlock(&$row) {{{
         $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
             $(document).ready(function() {
-                if ($("#tp_shout_'.$set['var2'].'")) {
-                    $("#tp_shout_'.$set['var2'].'").keydown(function (event) {
+                if ($("#tp_shout_'.$set['shoutbox_id'].'")) {
+                    $("#tp_shout_'.$set['shoutbox_id'].'").keydown(function (event) {
                         if (event.keyCode == 13) {
                             event.preventDefault();
                         }
