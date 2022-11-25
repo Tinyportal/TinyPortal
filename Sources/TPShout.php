@@ -797,9 +797,8 @@ function TPShoutBlock(&$row) {{{
         loadLanguage('TPortal', 'english');
     }
 
-    $set = json_decode($row['settings'], TRUE);
-
-	$id	= $row['id'];
+    $set	= json_decode($row['settings'], TRUE);
+	$id		= $row['id'];
 
     $context['TPortal']['tpblocks']['blockrender'][$id] = array(
         'id'                => $row['id'],

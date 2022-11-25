@@ -583,16 +583,12 @@ function editBlock( $block_id = 0 ) {{{
 		$context['TPortal']['menus'][0] = array(
 			'id' => 0,
 			'name' => 'Internal',
-			'var1' => '',
-			'var2' => ''
 		);
 		if($smcFunc['db_num_rows']($request) > 0) {
 			while ($row = $smcFunc['db_fetch_assoc']($request)) {
 				$context['TPortal']['menus'][$row['id']] = array(
 					'id' => $row['id'],
 					'name' => $row['value1'],
-					'var1' => $row['value2'],
-					'var2' => $row['value3']
 				);
 			}
 		}
