@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -968,8 +968,6 @@ function TP_getallmenus()
 	$menus[0] = array(
 		'id' => 0,
 		'name' => 'Internal',
-		'var1' => '',
-		'var2' => ''
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0)
@@ -979,8 +977,6 @@ function TP_getallmenus()
 			$menus[$row['id']] = array(
 				'id' => $row['id'],
 				'name' => $row['value1'],
-				'var1' => $row['value2'],
-				'var2' => $row['value3']
 			);
 		}
 		$smcFunc['db_free_result']($request);
