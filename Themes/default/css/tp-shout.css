@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -32,13 +32,13 @@
 	float: left;
 	font-weight: bold;
 }
-.avy2 img {
-	border-radius: 2px;
+.tp_shoutavatar2 {
 	float: left;
 	margin: 0 6px 0 0;
-	max-height: 100%;
 	padding: 1px;
-	width: 34px;
+	width: 2.6em;
+	height: 2.6em;
+	overflow: hidden;
 }
 .tp_shoutavatar h4 {
 	font-size: 1.1em;

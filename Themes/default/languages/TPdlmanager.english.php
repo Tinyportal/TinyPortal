@@ -1,5 +1,5 @@
 <?php
-// Version: 2.3.0; TPdlmanager
+// Version: 2.2.3; TPdlmanager
 
 global $scripturl;
 
