@@ -1558,12 +1558,17 @@ function doTPfrontpage() {{{
             }
 			$can_manage = allowedTo('tp_blocks');
 
-			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = $set + array(
+			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = array(
 				'frame' => $row['frame'],
 				'title' => strip_tags($row['title'], '<center>'),
 				'type' => $tpBlock->getBlockType($row['type']),
 				'body' => $row['body'],
 				'visible' => $row['visible'],
+				'var1' => $set['var1'],
+				'var2' => $set['var2'],
+				'var3' => $set['var3'],
+				'var4' => $set['var4'],
+				'var5' => $set['var5'],
 				'id' => $row['id'],
 				'lang' => $row['lang'],
 				'display' => $row['display'],
@@ -1883,7 +1888,12 @@ function TPortal_panel($side) {{{
 			case 'onlinebox':
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=who">'.$block['title'].'</a>';
 				$block['title'] = $mp;
-				$context['TPortal']['useavataronline'] = $block['useravataronline'];
+				if($block['var1'] == 0) {
+					$context['TPortal']['useavataronline'] = 0;
+                }
+				else {
+					$context['TPortal']['useavataronline'] = 1;
+                }
 				break;
 			case 'userbox':
 				if($context['user']['is_logged']) {
@@ -1901,10 +1911,15 @@ function TPortal_panel($side) {{{
 			case 'recentbox':
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=recent">'.$block['title'].'</a>';
 				$context['TPortal']['recentboxnum'] = $block['body'];
-				$context['TPortal']['useavatar']	= $block['useavatar'];
-				$context['TPortal']['boardmode']	= $block['boardmode'];
-				$context['TPortal']['recentlength'] = $block['recentlength'];
-				$context['TPortal']['recentboards'] = explode(',', $block['recentboards']);
+				$context['TPortal']['useavatar'] = $block['var1'];
+				$context['TPortal']['boardmode'] = $block['var3'];
+				$context['TPortal']['recentlength'] = $block['var4'];
+				if($block['var1'] == '') {
+					$context['TPortal']['useavatar'] = 1;
+                }
+				if(!empty($block['var2'])) {
+					$context['TPortal']['recentboards'] = explode(',', $block['var2']);
+                }
 				break;
 			case 'scriptbox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -1920,8 +1935,8 @@ function TPortal_panel($side) {{{
 				break;
 			case 'module':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['moduleblock']	= $block['body'];
-				$context['TPortal']['modulevar2']	= $block['module'];
+				$context['TPortal']['moduleblock'] = $block['body'];
+				$context['TPortal']['modulevar2'] = $block['var2'];
 				break;
 			case 'themebox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -1940,16 +1955,16 @@ function TPortal_panel($side) {{{
 			case 'rss':
 				$block['title'] = '<span class="header rss">' . $block['title'] . '</span>';
 				$context['TPortal']['rss'] = $block['body'];
-				$context['TPortal']['rss_notitles'] = $block['rss_notitles'];
-				$context['TPortal']['rss_utf8'] = $block['rss_utf8'];
-				$context['TPortal']['rsswidth'] = isset($block['rsswidth']) ? $block['rsswidth'] : '';
-				$context['TPortal']['rssmaxshown'] = !empty($block['rssmaxshown']) ? $block['rssmaxshown'] : '20';
+				$context['TPortal']['rss_notitles'] = $block['var2'];
+				$context['TPortal']['rss_utf8'] = $block['var1'];
+				$context['TPortal']['rsswidth'] = isset($block['var3']) ? $block['var3'] : '';
+				$context['TPortal']['rssmaxshown'] = !empty($block['var4']) ? $block['var4'] : '20';
 				break;
 			case 'categorybox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['blocklisting'] = $block['body'];
-				$context['TPortal']['blocklisting_height'] = $block['block_height'];
-				$context['TPortal']['blocklisting_author'] = $block['block_author'];
+				$context['TPortal']['blocklisting_height'] = $block['var1'];
+				$context['TPortal']['blocklisting_author'] = $block['var2'];
 				break;
 			case 'shoutbox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -1960,16 +1975,16 @@ function TPortal_panel($side) {{{
 				break;
             case 'modulebox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['moduleid']		= $block['module_id'];
-				$context['TPortal']['modulevar2']	= $block['module'];
-				$context['TPortal']['modulebody']	= $block['body'];
+				$context['TPortal']['moduleid'] = $block['var1'];
+				$context['TPortal']['modulevar2'] = $block['var2'];
+				$context['TPortal']['modulebody'] = $block['body'];
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['menuid']	= is_numeric($block['body']) ? $block['body'] : 0;
-				$context['TPortal']['menuvar1'] = $block['menu'];
-				$context['TPortal']['menuvar2'] = $block['menu_list'];
-				$context['TPortal']['blockid']	= $block['id'];
+				$context['TPortal']['menuid'] = is_numeric($block['body']) ? $block['body'] : 0;
+				$context['TPortal']['menuvar1'] = $block['var1'];
+				$context['TPortal']['menuvar2'] = $block['var2'];
+				$context['TPortal']['blockid'] = $block['id'];
 				break;
 		}
 

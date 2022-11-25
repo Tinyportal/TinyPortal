@@ -473,6 +473,8 @@ function do_menus()
 	$context['TPortal']['menus'][0] = array(
 		'id' => 0,
 		'name' => 'Internal',
+		'var1' => '',
+		'var2' => ''
 	);
 
 	if($smcFunc['db_num_rows']($request) > 0)
@@ -482,6 +484,8 @@ function do_menus()
 			$context['TPortal']['menus'][$row['id']] = array(
 				'id' => $row['id'],
 				'name' => $row['value1'],
+				'var1' => $row['value2'],
+				'var2' => $row['value3']
 			);
 		}
 	}
@@ -2388,7 +2392,14 @@ function do_postchecks()
 						1,
 						$cp['lang'],
 						$cp['display'],
-						$cp['settings'],
+                        json_encode(array(
+                            'var1' => json_decode($cp['settings'], true)['var1'],
+                            'var2' => json_decode($cp['settings'], true)['var2'],
+                            'var3' => 0,
+                            'var4' => 0,
+                            'var5' => 0
+                            )
+                        ),
 					),
 					array('id')
 				);
@@ -2409,7 +2420,10 @@ function do_postchecks()
 						'display' => 'string',
                         'settings' => 'string',
 					),
-					array( $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages', ''),
+					array(
+                        $type, 'theme', $title, $body, '-1,0,1', $panel, $pos, 1, 1, '', 'allpages',
+                        json_encode(array('var1' => 0, 'var2' => 0, 'var3' => 0, 'var4' => 0, 'var5' => 0 )),
+					),
 					array('id')
 				);
 
@@ -2434,6 +2448,7 @@ function do_postchecks()
 //				if(empty($value) && $value == '') {
 //					continue;
 //				}
+
 				if(substr($what, 0, 9) == 'tp_block_')
 				{
 					$setting = substr($what, 9);
@@ -2483,10 +2498,7 @@ function do_postchecks()
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
-                    elseif(substr($setting, 0, 4) == 'set_' ) {
-						// Replace set_ as we don't want it anymore
-						$setting = str_replace('set_', '', $setting);
-
+                    elseif(in_array($setting, array('var1', 'var2', 'var3', 'var4', 'var5', 'shoutbox_id', 'shoutbox_height', 'shoutbox_layout')) ) {
                         // Check for blocks in table, if none insert default blocks.
 						$request = $smcFunc['db_query']('', '
                             SELECT settings FROM {db_prefix}tp_blocks
