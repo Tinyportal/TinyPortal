@@ -102,6 +102,7 @@ class Integrate
             $hooks['redirect']                = 'TinyPortal\Integrate::hookRedirect';
             $hooks['pre_profile_areas']       = 'TinyPortal\Integrate::hookProfileArea';
             $hooks['pre_load_theme']          = 'TinyPortal\Integrate::hookLoadTheme';
+            $hooks['helpadmin']               = 'TinyPortal\Integrate::hookHelpadmin';
             unset($hooks['profile_areas']);
             // We can use a hook of sorts for the default actions now
             updateSettings(array('integrate_default_action' => 'TinyPortal\Integrate::hookDefaultAction'));
@@ -944,6 +945,16 @@ class Integrate
 
         return $id_theme;
     }
+
+    public static function hookHelpadmin()
+    {
+        if (isset($_GET['help']))
+		{
+            loadLanguage('TPortal');
+            loadLanguage('TPortalAdmin');
+            loadLanguage('TPdlmanager');
+		}
+	}
 
 }
 

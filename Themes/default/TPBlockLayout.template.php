@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.2
+ * @version 2.2.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -310,8 +310,10 @@ function template_editblock()
 						</dd>
 					</dl>';
 	if($modSettings['allow_guestAccess'] == '0') {
-		echo '<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-noguest_accessdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>
-		<span style="color: red;">' .$txt['tp-noguest_access'] .'</span>';
+		echo '
+			<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-noguest_accessdesc'] : 'tp-noguest_accessdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+			<span class="tptooltip" title="', $txt['help'], '"></span></a>
+			<span style="color: red;">' .$txt['tp-noguest_access'] .'</span>';
 	}
 			}
 // Block type: SSI functions
@@ -364,8 +366,8 @@ function template_editblock()
 							<textarea style="width: 90%; height: 50px;" id="tp_shoutbox_stitle" name="tp_block_body">' , !empty($context['TPortal']['blockedit']['body']) ? $context['TPortal']['blockedit']['body'] : '', '</textarea><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shoutbox_iddesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>
-							<label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
+							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shoutbox_iddesc'] : 'tp-shoutbox_iddesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
 						</dt>
 						<dd>
 							<input type="number" id="tp-shoutbox_id" name="tp_block_var2" value="' , (empty($context['TPortal']['blockedit']['var2']) ? '1': $context['TPortal']['blockedit']['var2']) ,'" style="width: 6em" min="1" max="9" step="1" required>
@@ -631,7 +633,9 @@ function template_editblock()
 			echo '
 				</div>
 				<div><hr>
-					<div><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-blockstylehelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
+					<div>
+						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-blockstylehelpdesc'] : 'tp-blockstylehelpdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
 					</div>
 					<br><input type="radio" id="tp_block_var5" name="tp_block_var5" value="99" ' , $context['TPortal']['blockedit']['var5']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['var5']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
@@ -678,7 +682,9 @@ function template_editblock()
 					</dl>
 					<br>
 					<dl class="settings">
-						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-membergrouphelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">'.$txt['tp-membergrouphelp'].'</label></dt>
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-membergrouphelpdesc'] : 'tp-membergrouphelpdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">'.$txt['tp-membergrouphelp'].'</label></dt>
 						<dd><div>
 							  <div class="tp_largelist">';
 			// loop through and set membergroups
@@ -711,7 +717,9 @@ function template_editblock()
 			}
 			echo '			</div>
 						<br></dd>
-						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">' . $txt['tp-lang'] . '</label>';
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-langdesc'] : 'tp-langdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">' . $txt['tp-lang'] . '</label>';
 				// alert if the settings is off, supply link if allowed
 				if(empty($context['TPortal']['uselangoption'])) {
 					echo '
