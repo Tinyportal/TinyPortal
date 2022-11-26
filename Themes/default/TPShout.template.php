@@ -200,7 +200,7 @@ function template_tpshout_admin_settings()
 							<input type="number" id="tp_shoutbox_maxlength" name="tp_shoutbox_maxlength" value="' ,$context['TPortal']['shoutbox_maxlength'], '" style="width: 6em" /><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shoutboxtimeformatdesc'] : 'tp-shoutboxtimeformatdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shoutboxtimeformatdesc'] : 'time_format') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_shoutbox_timeformat2">'.$txt['tp-shoutboxtimeformat'].'</label>
 						</dt>
 						<dd>
