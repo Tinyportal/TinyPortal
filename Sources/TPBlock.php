@@ -103,7 +103,7 @@ function getBlocks() {{{
             }
 
             // decode the block settings
-            $set        = json_decode($row['settings'], true);
+            $set        = json_decode($row['settings'], true) ?? [];
 			$can_manage = allowedTo('tp_blocks');
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = $set + array(
@@ -466,7 +466,7 @@ function editBlock( $block_id = 0 ) {{{
     $row = $tpBlock->getBlock($block_id);
     if(is_array($row)) {
 		$acc2	= explode(',', $row['display']);
-		$set	= json_decode($row['settings'], true);
+		$set	= json_decode($row['settings'], true) ?? [];
 		$context['TPortal']['blockedit'] = $row + $set;
 		$context['TPortal']['blockedit']['display2'] = $context['TPortal']['blockedit']['display'];
 		$context['TPortal']['blockedit']['body'] = $row['body'];

@@ -292,16 +292,16 @@ function template_editblock()
 							<label for="tp-recentlength">'.$txt['tp-lengthofrecenttopics'].'</label>
 						</dt>
 						<dd>
-							<input type="number" id="tp-recentlength" name="tp_block_var4" value="' ,(empty($context['TPortal']['blockedit']['var4']) ? '25' : $context['TPortal']['blockedit']['var4']), '" style="width: 6em" min="1" max="255" required><br>
+							<input type="number" id="tp-recentlength" name="tp_block_set_length" value="' ,(empty($context['TPortal']['blockedit']['length']) ? '25' : $context['TPortal']['blockedit']['length']), '" style="width: 6em" min="1" max="255" required><br>
 						</dd>
 						<dt>'.$txt['tp-recentincexc'].'</dt>
 						<dd>
-							<input type="radio" id="tp_block_var3in" name="tp_block_var3" value="1" ' , !$context['TPortal']['blockedit']['var3']=='0' ? ' checked' : '' ,' required> <label for="tp_block_var3in">'.$txt['tp-recentinboard'].'</label><br>
-							<input type="radio" id="tp_block_var3ex" name="tp_block_var3" value="0" ' , $context['TPortal']['blockedit']['var3']=='0' ? 'checked' : '' ,'> <label for="tp_block_var3ex">'.$txt['tp-recentexboard'].'</label>
+							<input type="radio" id="tp_block_var3in" name="tp_block_set_include" value="1" ' , !$context['TPortal']['blockedit']['include']=='0' ? ' checked' : '' ,' required> <label for="tp_block_var3in">'.$txt['tp-recentinboard'].'</label><br>
+							<input type="radio" id="tp_block_var3ex" name="tp_block_set_include" value="0" ' , $context['TPortal']['blockedit']['include']=='0' ? 'checked' : '' ,'> <label for="tp_block_var3ex">'.$txt['tp-recentexboard'].'</label>
 						</dd>
 						<dt><label for="tp_block_var2">'.$txt['tp-recentboards'].'</label></dt>
 						<dd>
-							<input type="text" id="tp_block_var2" name="tp_block_var2" value="' , $context['TPortal']['blockedit']['var2'] ,'" size="20" pattern="[0-9,]+">
+							<input type="text" id="tp_block_var2" name="tp_block_set_boards" value="' , $context['TPortal']['blockedit']['boards'] ,'" size="20" pattern="[0-9,]+">
 						</dd>
 						<dt>' . $txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
@@ -597,9 +597,9 @@ function template_editblock()
 						</dd>
 						<dt><label for="fieldname">',$txt['tp-showmenustyle'],'</label></dt>
 						<dd>
-							<input type="radio" name="tp_block_var1" value="0" ' , ($context['TPortal']['blockedit']['var1']=='' || $context['TPortal']['blockedit']['var1']=='0') ? ' checked' : '' ,' required> <img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" /><br>
-							<input type="radio" name="tp_block_var1" value="1" ' , ($context['TPortal']['blockedit']['var1']=='1') ? ' checked' : '' ,' > <img src="'.$settings['tp_images_url'].'/bullet3.png" alt="" /><br>
-							<input type="radio" name="tp_block_var1" value="2" ' , ($context['TPortal']['blockedit']['var1']=='2') ? ' checked' : '' ,' > '.$txt['tp-none-'].'
+							<input type="radio" name="tp_block_set_style" value="0" ' , ($context['TPortal']['blockedit']['style']=='' || $context['TPortal']['blockedit']['style']=='0') ? ' checked' : '' ,' required> <img src="'.$settings['tp_images_url'].'/TPdivider2.png" alt="" /><br>
+							<input type="radio" name="tp_block_set_style" value="1" ' , ($context['TPortal']['blockedit']['style']=='1') ? ' checked' : '' ,' > <img src="'.$settings['tp_images_url'].'/bullet3.png" alt="" /><br>
+							<input type="radio" name="tp_block_set_style" value="2" ' , ($context['TPortal']['blockedit']['style']=='2') ? ' checked' : '' ,' > '.$txt['tp-none-'].'
 						</dd>
 					</dl>';
 			}

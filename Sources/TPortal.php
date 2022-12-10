@@ -1939,17 +1939,17 @@ function TPortal_panel($side) {{{
 				break;
 			case 'rss':
 				$block['title'] = '<span class="header rss">' . $block['title'] . '</span>';
-				$context['TPortal']['rss'] = $block['body'];
-				$context['TPortal']['rss_notitles'] = $block['rss_notitles'];
-				$context['TPortal']['rss_utf8'] = $block['rss_utf8'];
-				$context['TPortal']['rsswidth'] = isset($block['rsswidth']) ? $block['rsswidth'] : '';
-				$context['TPortal']['rssmaxshown'] = !empty($block['rssmaxshown']) ? $block['rssmaxshown'] : '20';
+				$context['TPortal']['rss']			= $block['body'];
+				$context['TPortal']['rss_notitles'] = $block['showtitle'];
+				$context['TPortal']['rss_utf8']		= $block['utf'];
+				$context['TPortal']['rsswidth']		= isset($block['maxwidth']) ? $block['maxwidth'] : '';
+				$context['TPortal']['rssmaxshown']	= !empty($block['maxshown']) ? $block['maxshown'] : '20';
 				break;
 			case 'categorybox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['blocklisting'] = $block['body'];
-				$context['TPortal']['blocklisting_height'] = $block['block_height'];
-				$context['TPortal']['blocklisting_author'] = $block['block_author'];
+				$context['TPortal']['blocklisting']			= $block['body'];
+				$context['TPortal']['blocklisting_height']	= $block['block_height'];
+				$context['TPortal']['blocklisting_author']	= $block['block_author'];
 				break;
 			case 'shoutbox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
