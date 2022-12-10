@@ -358,7 +358,7 @@ function template_editblock()
                 if(isset($context['TPortal']['tpblocks']['blockrender'])) {
 					echo '
 						<dl class="tptitle settings">
-						<input type="hidden" name="tp_block_set_body" value="1">
+						<input type="hidden" name="tp_block_body" value="1">
 						<dt>
 							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>
 						</dt>
