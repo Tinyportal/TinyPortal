@@ -1016,12 +1016,12 @@ function updateBlocks()
 	);
 
 	$settingUpdates = array (
-		'6'		=> array( 'var1' => 'useavatar' ),																// Online
-		'8'		=> array( 'var1' => 'body', 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout'),				// Shoutbox
-		'9'		=> array( 'var1' => 'style' ),																	// Menu
-		'12'	=> array( 'var1' => 'useravatar', 'var2' => 'boards', 'var3' => 'include', 'var4' => 'length'),	// Recent Topics
-		'15'	=> array( 'var1' => 'utf', 'var2' => 'showtitle', 'var3' => 'maxwidth', 'var4' => 'maxshown'),	// RSS
-		'19'	=> array( 'var1' => 'block_height', 'var2' => 'block_author' ),									// Categories
+		'6'		=> array( 'var1' => 'useavatar', 'var5' => 'panel' ),																// Online
+		'8'		=> array( 'var1' => 'body', 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var5' => 'panel' ),				// Shoutbox
+		'9'		=> array( 'var1' => 'style', 'var5' => 'panel' ),																	// Menu
+		'12'	=> array( 'var1' => 'useravatar', 'var2' => 'boards', 'var3' => 'include', 'var4' => 'length', 'var5' => 'panel' ),	// Recent Topics
+		'15'	=> array( 'var1' => 'utf', 'var2' => 'showtitle', 'var3' => 'maxwidth', 'var4' => 'maxshown', 'var5' => 'panel' ),	// RSS
+		'19'	=> array( 'var1' => 'block_height', 'var2' => 'block_author', 'var5' => 'panel' ),									// Categories
 	);
 
 	$request = $smcFunc['db_query']('', '
