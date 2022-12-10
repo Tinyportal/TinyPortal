@@ -367,7 +367,7 @@ function adminBlocks() {{{
             if(array_multisort($bar, SORT_ASC, $pos, SORT_ASC, $blocks)) {
                 foreach($blocks as $row) {
                     // decode the block settings
-                    $set = json_decode($row['settings'], true);
+                    $set = json_decode($row['settings'], true) ?? [];
                     $context['TPortal']['admin_'.$bars[$row['bar']].'block']['blocks'][] = $set + array(
                         'frame' => $row['frame'],
                         'title' => $row['title'],
