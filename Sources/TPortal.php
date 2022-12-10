@@ -1902,9 +1902,9 @@ function TPortal_panel($side) {{{
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=recent">'.$block['title'].'</a>';
 				$context['TPortal']['recentboxnum'] = $block['body'];
 				$context['TPortal']['useavatar']	= $block['useavatar'];
-				$context['TPortal']['boardmode']	= $block['boardmode'];
-				$context['TPortal']['recentlength'] = $block['recentlength'];
-				$context['TPortal']['recentboards'] = explode(',', $block['recentboards']);
+				$context['TPortal']['boardmode']	= $block['include'];
+				$context['TPortal']['recentlength'] = $block['length'];
+				$context['TPortal']['recentboards'] = !empty($block['boards']) ? explode(',', $block['boards']) : [];
 				break;
 			case 'scriptbox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -1967,8 +1967,8 @@ function TPortal_panel($side) {{{
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['menuid']	= is_numeric($block['body']) ? $block['body'] : 0;
-				$context['TPortal']['menuvar1'] = $block['menu'];
-				$context['TPortal']['menuvar2'] = $block['menu_list'];
+				$context['TPortal']['menuvar1'] = $block['style'];
+				$context['TPortal']['menuvar2'] = $block['style'];
 				$context['TPortal']['blockid']	= $block['id'];
 				break;
 		}
