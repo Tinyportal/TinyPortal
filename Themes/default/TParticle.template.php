@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 2.2.3
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -78,7 +78,9 @@ function template_submitarticle()
 					<input type="text" id="tp_article_subject" name="tp_article_subject" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'" style="width: 92%;" required>
 				</dd>
 				<dt>
-					<span class="font-strong"><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-shortname_articledesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></span></span>
+					<span class="font-strong">
+					<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shortname_articledesc'] : 'tp-shortname_articledesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></span></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="'.$mg['shortname'].'" size=20 >
@@ -111,7 +113,8 @@ function template_submitarticle()
 			</div><br>
 			<dl class="settings tptitle">
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-useintrodesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-useintrodesc'] : 'tp-useintrodesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
 					<dd>
 							<input type="radio" name="tp_article_useintro" value="1" ', $mg['useintro']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'
@@ -251,7 +254,8 @@ function template_submitarticle()
 						</div><br>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-statusdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-statusdesc'] : 'tp-statusdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
 					</dt>
 					<dd>';
 				if (!empty($context['TPortal']['editing_article'])) {
@@ -412,7 +416,8 @@ function template_submitarticle()
 						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
 					</dd>
 					<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-adminiconsinfo'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-adminiconsinfo'] : 'tp-adminiconsinfo') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
 					</dt>
 					<dd>
 						<input type="file" name="tp_article_illupload">

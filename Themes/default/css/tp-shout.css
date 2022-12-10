@@ -50,9 +50,11 @@
 	margin-top: 5px;
 	padding: 3px;
 }
+.tp_shoutframe {
+	width: 99%;
+}
 .tp_bigshout {
 	height: 100%;
-	width: 99%;
 }
 .tp_shout_errors {
 	display: none;
