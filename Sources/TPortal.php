@@ -1968,7 +1968,6 @@ function TPortal_panel($side) {{{
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['menuid']	= is_numeric($block['body']) ? $block['body'] : 0;
 				$context['TPortal']['menuvar1'] = $block['style'];
-				$context['TPortal']['menuvar2'] = $block['style'];
 				$context['TPortal']['blockid']	= $block['id'];
 				break;
 		}
