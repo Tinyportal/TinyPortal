@@ -1023,7 +1023,7 @@ function updateBlocks()
 		'5'		=> array( 'var5' => 'panel' ),																										// Html
 		'6'		=> array( 'var1' => 'useavatar', 'var5' => 'panel' ),																				// Online
 		'7'		=> array( 'var5' => 'panel' ),																										// Theme
-		'8'		=> array( 'var1' => 'body', 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var4' => 'shoutbox_height', 'var5' => 'panel' ),	// Shoutbox
+		'8'		=> array( 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var4' => 'shoutbox_height', 'var5' => 'panel' ),	// Shoutbox
 		'9'		=> array( 'var1' => 'style', 'var5' => 'panel' ),																					// Menu
 		'10'	=> array( 'var5' => 'panel' ),																										// Php
 		'11'	=> array( 'var5' => 'panel' ),																										// Script
@@ -1215,7 +1215,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('panel' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 1 ) ),
+                'settings' => json_encode( array ('panel' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 1, 'shoutbox_height' => 1 ) ),
             ),
             'recent' =>array(
                 'type' => 12,
