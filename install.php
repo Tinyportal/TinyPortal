@@ -1015,6 +1015,44 @@ function updateBlocks()
 		array('type' => '8', 'body' => 0, 'settings' => '{"var1":"1","var2":"1","var3":"' .(!empty($shoutbox_layout) ? $shoutbox_layout : '0'). '","var4":"' .(!empty($shoutbox_height) ? $shoutbox_height : '250'). '","var5":"99"}')
 	);
 
+	$settingUpdates = array (
+		'6'		=> array( 'var1' => 'useavatar', 'var5' => 'panel' ),																// Online
+		'8'		=> array( 'var1' => 'body', 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var5' => 'panel' ),				// Shoutbox
+		'9'		=> array( 'var1' => 'style', 'var5' => 'panel' ),																	// Menu
+		'12'	=> array( 'var1' => 'useravatar', 'var2' => 'boards', 'var3' => 'include', 'var4' => 'length', 'var5' => 'panel' ),	// Recent Topics
+		'15'	=> array( 'var1' => 'utf', 'var2' => 'showtitle', 'var3' => 'maxwidth', 'var4' => 'maxshown', 'var5' => 'panel' ),	// RSS
+		'19'	=> array( 'var1' => 'block_height', 'var2' => 'block_author', 'var5' => 'panel' ),									// Categories
+	);
+
+	$request = $smcFunc['db_query']('', '
+		SELECT id, type, settings FROM {db_prefix}tp_blocks
+		WHERE 1=1',
+	);
+
+	if($smcFunc['db_num_rows']($request) > 0) {
+		while($row = $smcFunc['db_fetch_assoc']($request)) {
+			if(array_key_exists($row['type'], $settingUpdates)) {
+				$type		= $row['type'];
+				$original	= json_decode($row['settings'], true);
+				$updated	= array();
+				foreach($original as $k => $v) {
+					if(array_key_exists($k, $settingUpdates[$type])) {
+						$key = $settingUpdates[$type][$k];
+						$updated[$key] = $v;
+					}
+				}
+				if(!empty($updated)) {
+					$smcFunc['db_query']('', '
+						UPDATE {db_prefix}tp_blocks
+						SET settings = {string:settings}
+						WHERE id = {int:id}',
+						array( 'id' => $row['id'], 'settings' => json_encode($updated) )
+					);
+				}
+			}
+		}
+	}
+
 	$render .= 'Processed existing blocks<br>';
 }
 

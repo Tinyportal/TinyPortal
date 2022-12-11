@@ -81,7 +81,7 @@ function TPblock($block, $theme, $side, $double=false)
 		$types = tp_getblockstyles();
 
 	// check
-	if ( ($block['var5'] == '') || ($block['var5'] == 99) )
+	if ( !isset($block['var5']) || ($block['var5'] == '') || ($block['var5'] == 99) )
 		$block['var5'] = $context['TPortal']['panelstyle_'.$side];
 
 	// its a normal block..
@@ -539,21 +539,20 @@ function TPortal_shoutbox($blockid)
 	global $context;
 
 	// fetch the correct block
-	if(!empty($context['TPortal']['moduleid'])) {
-		$tpm                = $context['TPortal']['moduleid'];
-        $shoutbox_id        = 0;
-        $shoutbox_layout    = null;
-		if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
-            if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'])) {
-                $shoutbox_id = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'];
-            }
-            if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'])) {
-                $shoutbox_layout = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'];
-            }
-
-			call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout);
+	$tpm                = $blockid;
+    $shoutbox_id        = 0;
+    $shoutbox_layout    = null;
+	if(!empty($context['TPortal']['tpblocks']['blockrender'][$tpm]['function']) && function_exists($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'])) {
+        if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'])) {
+            $shoutbox_id = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_id'];
         }
-	}
+        if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'])) {
+            $shoutbox_layout = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'];
+        }
+
+		call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout);
+    }
+
 }
 
 // blocktype 9: Menu
@@ -2599,7 +2598,7 @@ function tptimeformat($log_time, $show_today = true, $format = '%d %b %Y')
 {
 	global $context, $user_info, $txt, $modSettings, $smcFunc;
 
-	$time = $log_time + ($user_info['time_offset'] + $modSettings['time_offset']) * 3600;
+	$time = $log_time + ($user_info['time_offset'] + (isset($modSettings['time_offset']) ? $modSettings['time_offset'] : 0))   * 3600;
 
 	// We can't have a negative date (on Windows, at least.)
 	if ($log_time < 0)
