@@ -1883,7 +1883,7 @@ function TPortal_panel($side) {{{
 			case 'onlinebox':
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=who">'.$block['title'].'</a>';
 				$block['title'] = $mp;
-				$context['TPortal']['useavataronline'] = $block['useravataronline'];
+				$context['TPortal']['useavatar'] = $block['useavatar'];
 				break;
 			case 'userbox':
 				if($context['user']['is_logged']) {

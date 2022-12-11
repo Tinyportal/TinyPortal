@@ -2407,7 +2407,7 @@ function do_postchecks()
         			'9'     => array( 'style' => 0, 'panel' => 99),                                                         // Menu
         			'10'    => array( 'panel' => 99 ),																		// PHP
         			'11'    => array( 'panel' => 99 ),																		// Script
-        			'12'    => array( 'useravatar', 'boards' => '', 'include' => 0, 'length' => 100, 'panel' => 99 ),		// Recent Topics
+        			'12'    => array( 'useavatar', 'boards' => '', 'include' => 0, 'length' => 100, 'panel' => 99 ),		// Recent Topics
         			'13'    => array( 'panel' => 99 ),																		// SSI
         			'14'    => array( 'panel' => 99 ),																		// Module
         			'15'    => array( 'utf' => 0, 'showtitle' => 1, 'maxwidth' => 100, 'maxshown' => 100, 'panel' => 99 ),  // RSS

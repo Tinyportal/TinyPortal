@@ -433,7 +433,7 @@ function TPortal_onlinebox()
 {
 	global $context;
 
-	if($context['TPortal']['useavataronline'] == 1)
+	if($context['TPortal']['useavatar'] == 1)
 		tpo_whos();
 	else
 		echo '
