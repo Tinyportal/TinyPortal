@@ -1175,7 +1175,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
+                'settings' => json_encode( array ('panel' => 99 ) ),
             ),
             'user' =>array(
                 'type' => 1,
@@ -1189,7 +1189,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
+                'settings' => json_encode( array ('panel' => 99 ) ),
             ),
             'shout' => array(
                 'type' => 8,
@@ -1203,7 +1203,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 1, 'var2' => '1', 'var3' => 0, 'var4' => 250, 'var5' => 0) ),
+                'settings' => json_encode( array ('panel' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 1 ) ),
             ),
             'recent' =>array(
                 'type' => 12,
@@ -1217,7 +1217,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 25, 'var5' => 0) ),
+                'settings' => json_encode( array ('panel' => 99, 'useravatar' => 0, 'boards' => '', 'include' => 0, 'length' => 100  ) ),
             ),
             'stats' =>array(
                 'type' => 3,
@@ -1231,7 +1231,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 0, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
+                'settings' => json_encode( array ('panel' => 99 ) ),
             ),
             'online' =>array(
                 'type' => 6,
@@ -1245,7 +1245,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('var1' => 1, 'var2' => '0', 'var3' => 0, 'var4' => 0, 'var5' => 0) ),
+                'settings' => json_encode( array ('panel' => 99, 'useavatar' => 0 ) ),
             ),
         );
 
