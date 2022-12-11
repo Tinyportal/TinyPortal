@@ -1020,7 +1020,7 @@ function updateBlocks()
 		'2'		=> array( 'var5' => 'panelstyle' ),																										// News
 		'3'		=> array( 'var5' => 'panelstyle' ),																										// Stats
 		'4'		=> array( 'var5' => 'panelstyle' ),																										// Search
-		'5'		=> array( 'var5' => 'panelstyle' ),																										// Html
+		'5'		=> array( 'var5' => 'panelstyle' ),																										// BBC
 		'6'		=> array( 'var1' => 'useavatar', 'var5' => 'panelstyle' ),																				// Online
 		'7'		=> array( 'var5' => 'panelstyle' ),																										// Theme
 		'8'		=> array( 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var4' => 'shoutbox_height', 'var5' => 'panelstyle' ),	// Shoutbox
@@ -1215,7 +1215,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('panelstyle' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 1, 'shoutbox_height' => 1 ) ),
+                'settings' => json_encode( array ('panelstyle' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250 ) ),
             ),
             'recent' =>array(
                 'type' => 12,
@@ -1229,7 +1229,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('panelstyle' => 99, 'useavatar' => 0, 'boards' => '', 'include' => 0, 'length' => 100  ) ),
+                'settings' => json_encode( array ('panelstyle' => 99, 'useavatar' => 1, 'boards' => '', 'include' => 0, 'length' => 25  ) ),
             ),
             'stats' =>array(
                 'type' => 3,
