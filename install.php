@@ -1016,11 +1016,23 @@ function updateBlocks()
 	);
 
 	$settingUpdates = array (
+		'1'		=> array( 'var5' => 'panel' ),																										// User
+		'2'		=> array( 'var5' => 'panel' ),																										// News
+		'3'		=> array( 'var5' => 'panel' ),																										// Stats
+		'4'		=> array( 'var5' => 'panel' ),																										// Search
+		'5'		=> array( 'var5' => 'panel' ),																										// Html
 		'6'		=> array( 'var1' => 'useavatar', 'var5' => 'panel' ),																				// Online
+		'7'		=> array( 'var5' => 'panel' ),																										// Theme
 		'8'		=> array( 'var1' => 'body', 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var4' => 'shoutbox_height', 'var5' => 'panel' ),	// Shoutbox
 		'9'		=> array( 'var1' => 'style', 'var5' => 'panel' ),																					// Menu
+		'10'	=> array( 'var5' => 'panel' ),																										// Php
+		'11'	=> array( 'var5' => 'panel' ),																										// Script
 		'12'	=> array( 'var1' => 'useavatar', 'var2' => 'boards', 'var3' => 'include', 'var4' => 'length', 'var5' => 'panel' ),					// Recent Topics
+		'13'	=> array( 'var5' => 'panel' ),																										// SSI
+		'14'	=> array( 'var5' => 'panel' ),																										// Module
 		'15'	=> array( 'var1' => 'utf', 'var2' => 'showtitle', 'var3' => 'maxwidth', 'var4' => 'maxshown', 'var5' => 'panel' ),					// RSS
+		'16'	=> array( 'var5' => 'panel' ),																										// Sitemap
+		'18'	=> array( 'var5' => 'panel' ),																										// Article
 		'19'	=> array( 'var1' => 'block_height', 'var2' => 'block_author', 'var5' => 'panel' ),													// Categories
 	);
 
