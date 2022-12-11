@@ -2396,25 +2396,25 @@ function do_postchecks()
 			else {
 
     			$defaultBlock = array (
-        			'1'     => array( 'panel' => 99 ),                                                                              // User
-        			'2'     => array( 'panel' => 99 ),                                                                              // News
-        			'3'     => array( 'panel' => 99 ),                                                                              // Stats
-        			'4'     => array( 'panel' => 99 ),                                                                              // Search
-        			'5'     => array( 'panel' => 99 ),                                                                              // HTML
-        			'6'     => array( 'useavatar' => 0 , 'panel' => 99 ),                                                           // Online
-        			'7'     => array( 'panel' => 99 ),                                                                              // Theme
-        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 1, 'shoutbox_height' => 1, 'panel' => 99 ),  // Shoutbox
-        			'9'     => array( 'style' => 0, 'panel' => 99),                                                                 // Menu
-        			'10'    => array( 'panel' => 99 ),                                                                              // PHP
-        			'11'    => array( 'panel' => 99 ),                                                                              // Script
-        			'12'    => array( 'useavatar', 'boards' => '', 'include' => 0, 'length' => 100, 'panel' => 99 ),		        // Recent Topics
-        			'13'    => array( 'panel' => 99 ),                                                                              // SSI
-        			'14'    => array( 'panel' => 99 ),                                                                              // Module
-        			'15'    => array( 'utf' => 0, 'showtitle' => 1, 'maxwidth' => 100, 'maxshown' => 100, 'panel' => 99 ),          // RSS
-        			'16'    => array( 'panel' => 99 ),                                                                              // Site Map
-        			'17'    => array( 'panel' => 99 ),                                                                              // Admin
-        			'18'    => array( 'panel' => 99 ),                                                                              // Article
-        			'19'    => array( 'block_height' => 100, 'block_author' => 1, 'panel' => 99),                                   // Categories
+        			'1'     => array( 'panelstyle' => 99 ),                                                                              // User
+        			'2'     => array( 'panelstyle' => 99 ),                                                                              // News
+        			'3'     => array( 'panelstyle' => 99 ),                                                                              // Stats
+        			'4'     => array( 'panelstyle' => 99 ),                                                                              // Search
+        			'5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
+        			'6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
+        			'7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
+        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 1, 'shoutbox_height' => 1, 'panelstyle' => 99 ),          // Shoutbox
+        			'9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
+        			'10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
+        			'11'    => array( 'panelstyle' => 99 ),                                                                              // Script
+        			'12'    => array( 'useavatar', 'boards' => '', 'include' => 0, 'length' => 100, 'panelstyle' => 99 ),                // Recent Topics
+        			'13'    => array( 'panelstyle' => 99 ),                                                                              // SSI
+        			'14'    => array( 'panelstyle' => 99 ),                                                                              // Module
+        			'15'    => array( 'utf' => 0, 'showtitle' => 1, 'maxwidth' => 100, 'maxshown' => 100, 'panelstyle' => 99 ),          // RSS
+        			'16'    => array( 'panelstyle' => 99 ),                                                                              // Site Map
+        			'17'    => array( 'panelstyle' => 99 ),                                                                              // Admin
+        			'18'    => array( 'panelstyle' => 99 ),                                                                              // Article
+        			'19'    => array( 'block_height' => 100, 'block_author' => 1, 'panelstyle' => 99),                                   // Categories
     			);
 
 				$smcFunc['db_insert']('INSERT',

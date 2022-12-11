@@ -637,7 +637,7 @@ function template_editblock()
 						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-blockstylehelpdesc'] : 'tp-blockstylehelpdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
 						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
 					</div>
-					<br><input type="radio" id="tp_block_var5" name="tp_block_set_panel" value="99" ' , $context['TPortal']['blockedit']['panel']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panel']=='99' ? ' style="color: red;">' : '><label for="tp_block_var5">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
+					<br><input type="radio" id="tp_block_panelstyle" name="tp_block_set_panelstyle" value="99" ' , $context['TPortal']['blockedit']['panelstyle']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panelstyle']=='99' ? ' style="color: red;">' : '><label for="tp_block_panelstyle">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
 				<div class="panels-optionsbg">';
 			if(TP_SMF21) {
@@ -651,7 +651,7 @@ function template_editblock()
 				echo '
 					<div class="panels-options">
 						<div>
-							<input type="radio" id="tp_block_var5'.$blo.'" name="tp_block_set_panel" value="'.$blo.'" ' , $context['TPortal']['blockedit']['panel']==$blo ? 'checked' : '' , '><label for="tp_block_var5'.$blo.'"><span' , $context['TPortal']['blockedit']['panel']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
+							<input type="radio" id="tp_block_panelstyle'.$blo.'" name="tp_block_set_panelstyle" value="'.$blo.'" ' , $context['TPortal']['blockedit']['panelstyle']==$blo ? 'checked' : '' , '><label for="tp_block_panelstyle'.$blo.'"><span' , $context['TPortal']['blockedit']['panelstyle']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
 						</div>
 						' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'
 						' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
