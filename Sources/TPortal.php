@@ -1952,10 +1952,11 @@ function TPortal_panel($side) {{{
 				break;
 			case 'shoutbox':
             	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['shoutbox_stitle']	= $block['body'];
-				$context['TPortal']['shoutbox_id']		= $block['shoutbox_id'];
-				$context['TPortal']['shoutbox_layout']	= $block['shoutbox_layout'];
-				$context['TPortal']['shoutbox_height']	= $block['shoutbox_height'];
+				$context['TPortal']['shoutbox_stitle']  = $block['body'];
+				$context['TPortal']['shoutbox_id']      = $block['shoutbox_id'];
+				$context['TPortal']['shoutbox_layout']  = $block['shoutbox_layout'];
+				$context['TPortal']['shoutbox_height']  = $block['shoutbox_height'];
+				$context['TPortal']['useavatar']        = isset($block['useavatar']);
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
