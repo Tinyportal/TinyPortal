@@ -1883,7 +1883,7 @@ function TPortal_panel($side) {{{
 			case 'onlinebox':
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=who">'.$block['title'].'</a>';
 				$block['title'] = $mp;
-				$context['TPortal']['useavataronline'] = $block['useravataronline'];
+				$context['TPortal']['useavatar'] = $block['useavatar'];
 				break;
 			case 'userbox':
 				if($context['user']['is_logged']) {
@@ -1921,7 +1921,6 @@ function TPortal_panel($side) {{{
 			case 'module':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['moduleblock']	= $block['body'];
-				$context['TPortal']['modulevar2']	= $block['module'];
 				break;
 			case 'themebox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
@@ -1957,12 +1956,6 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['shoutbox_id']		= $block['shoutbox_id'];
 				$context['TPortal']['shoutbox_layout']	= $block['shoutbox_layout'];
 				$context['TPortal']['shoutbox_height']	= $block['shoutbox_height'];
-				break;
-            case 'modulebox':
-            	$block['title'] = '<span class="header">' . $block['title'] . '</span>';
-				$context['TPortal']['moduleid']		= $block['module_id'];
-				$context['TPortal']['modulevar2']	= $block['module'];
-				$context['TPortal']['modulebody']	= $block['body'];
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';

@@ -81,8 +81,8 @@ function TPblock($block, $theme, $side, $double=false)
 		$types = tp_getblockstyles();
 
 	// check
-	if ( !isset($block['var5']) || ($block['var5'] == '') || ($block['var5'] == 99) )
-		$block['var5'] = $context['TPortal']['panelstyle_'.$side];
+	if ( !isset($block['panelstyle']) || ($block['panelstyle'] == '') || ($block['panelstyle'] == 99) )
+		$block['panelstyle'] = $context['TPortal']['panelstyle_'.$side];
 
 	// its a normal block..
 	if(in_array($block['frame'],array('theme', 'frame', 'title', 'none'))) {
@@ -91,7 +91,7 @@ function TPblock($block, $theme, $side, $double=false)
 
 		// show the frame and title
 		if ($theme || $block['frame'] == 'title') {
-			echo $types[$block['var5']]['code_title_left'];
+			echo $types[$block['panelstyle']]['code_title_left'];
 
 	        if(TP_SMF21) {
                 if($block['visible'] == '' || $block['visible'] == '1') {
@@ -115,7 +115,7 @@ function TPblock($block, $theme, $side, $double=false)
 			}
 
 			echo $block['title'];
-			echo $types[$block['var5']]['code_title_right'];
+			echo $types[$block['panelstyle']]['code_title_right'];
 		}
 		else {
 			if(($block['visible'] == '' || $block['visible'] == '1') && $block['frame'] != 'frame') {
@@ -130,7 +130,7 @@ function TPblock($block, $theme, $side, $double=false)
 		echo '
 		<div class="', (($theme || $block['frame'] == 'frame') ? 'tp_'.$side.'block_body' : ''), '"', in_array($block['id'],$context['TPortal']['upshrinkblocks']) ? ' style="display: none;"' : ''  , ' id="block'.$block['id'].'">';
 		if($theme || $block['frame'] == 'frame')
-			echo $types[$block['var5']]['code_top'];
+			echo $types[$block['panelstyle']]['code_top'];
 
 		$func = 'TPortal_' . $block['type'];
 		if (function_exists($func))
@@ -152,7 +152,7 @@ function TPblock($block, $theme, $side, $double=false)
 			echo '<div class="blockbody" style="overflow: auto;' , !empty($context['TPortal']['blockheight_'.$side]) ? 'height: '.$context['TPortal']['blockheight_'.$side].';' : '' , '">' , parse_bbc($block['body']) , '</div>';
 
 		if($theme || $block['frame'] == 'frame')
-			echo $types[$block['var5']]['code_bottom'];
+			echo $types[$block['panelstyle']]['code_bottom'];
 		echo '
 		</div>
 	</div>';
@@ -433,7 +433,7 @@ function TPortal_onlinebox()
 {
 	global $context;
 
-	if($context['TPortal']['useavataronline'] == 1)
+	if($context['TPortal']['useavatar'] == 1)
 		tpo_whos();
 	else
 		echo '
