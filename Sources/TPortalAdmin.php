@@ -2403,18 +2403,18 @@ function do_postchecks()
         			'5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
         			'6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
         			'7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
-        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99 ),          // Shoutbox
+        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99 ),        // Shoutbox
         			'9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
         			'10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
         			'11'    => array( 'panelstyle' => 99 ),                                                                              // Script
-        			'12'    => array( 'useavatar', 'boards' => '', 'include' => 0, 'length' => 100, 'panelstyle' => 99 ),                // Recent Topics
+        			'12'    => array( 'useavatar' => 1, 'boards' => '', 'include' => 1, 'length' => 100, 'panelstyle' => 99 ),           // Recent Topics
         			'13'    => array( 'panelstyle' => 99 ),                                                                              // SSI
-        			'14'    => array( 'panelstyle' => 99 ),                                                                              // Module
-        			'15'    => array( 'utf' => 0, 'showtitle' => 1, 'maxwidth' => 100, 'maxshown' => 100, 'panelstyle' => 99 ),          // RSS
+        			'14'    => array( 'panelstyle' => 99 ),                                                                              // Module: Downloads/stats
+        			'15'    => array( 'utf' => 1, 'showtitle' => 1, 'maxwidth' => '100%', 'maxshown' => 20, 'panelstyle' => 99 ),        // RSS
         			'16'    => array( 'panelstyle' => 99 ),                                                                              // Site Map
         			'17'    => array( 'panelstyle' => 99 ),                                                                              // Admin
         			'18'    => array( 'panelstyle' => 99 ),                                                                              // Article
-        			'19'    => array( 'block_height' => 100, 'block_author' => 1, 'panelstyle' => 99),                                   // Categories
+        			'19'    => array( 'block_height' => 15, 'block_author' => 0, 'panelstyle' => 99),                                    // Categories
     			);
 
 				$smcFunc['db_insert']('INSERT',

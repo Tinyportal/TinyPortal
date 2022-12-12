@@ -1023,13 +1023,13 @@ function updateBlocks()
 		'5'		=> array( 'var5' => 'panelstyle' ),																										// BBC
 		'6'		=> array( 'var1' => 'useavatar', 'var5' => 'panelstyle' ),																				// Online
 		'7'		=> array( 'var5' => 'panelstyle' ),																										// Theme
-		'8'		=> array( 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var4' => 'shoutbox_height', 'var5' => 'panelstyle' ),	// Shoutbox
+		'8'		=> array( 'var2' => 'shoutbox_id', 'var3' => 'shoutbox_layout', 'var4' => 'shoutbox_height', 'var5' => 'panelstyle' ), 					// Shoutbox
 		'9'		=> array( 'var1' => 'style', 'var5' => 'panelstyle' ),																					// Menu
 		'10'	=> array( 'var5' => 'panelstyle' ),																										// Php
 		'11'	=> array( 'var5' => 'panelstyle' ),																										// Script
 		'12'	=> array( 'var1' => 'useavatar', 'var2' => 'boards', 'var3' => 'include', 'var4' => 'length', 'var5' => 'panelstyle' ),					// Recent Topics
 		'13'	=> array( 'var5' => 'panelstyle' ),																										// SSI
-		'14'	=> array( 'var5' => 'panelstyle' ),																										// Module
+		'14'	=> array( 'var5' => 'panelstyle' ),																										// Module: Downloads/stats
 		'15'	=> array( 'var1' => 'utf', 'var2' => 'showtitle', 'var3' => 'maxwidth', 'var4' => 'maxshown', 'var5' => 'panelstyle' ),					// RSS
 		'16'	=> array( 'var5' => 'panelstyle' ),																										// Sitemap
 		'18'	=> array( 'var5' => 'panelstyle' ),																										// Article
