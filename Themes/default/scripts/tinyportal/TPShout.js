@@ -24,7 +24,7 @@ function expandHeaderBBC(mode, shoutbox_id, is_guest, sessionId)
 	current_header_bbc = mode;
 }
 
-function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout)
+function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout, shoutAvatar)
 {
 	var params = "";
 	var name;
@@ -46,6 +46,9 @@ function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout)
 
     if(shoutLayout || !(0 === shoutLayout.length)) {
         params = params.concat("&l=" + shoutLayout);
+    }
+    if(shoutAvatar || !(0 === shoutAvatar.length)) {
+        params = params.concat("&a=" + shoutAvatar);
     }
 
 	$.ajax({
