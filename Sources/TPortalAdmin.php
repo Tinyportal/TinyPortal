@@ -2403,7 +2403,7 @@ function do_postchecks()
         			'5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
         			'6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
         			'7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
-        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99, 'useavatar' => 1 ), // Shoutbox
+        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99 ),        // Shoutbox
         			'9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
         			'10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
         			'11'    => array( 'panelstyle' => 99 ),                                                                              // Script
