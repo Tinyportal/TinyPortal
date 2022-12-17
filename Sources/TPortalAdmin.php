@@ -2260,16 +2260,26 @@ function do_postchecks()
 				}
 				elseif(substr($what, 0, 4) == 'type')
 				{
+					// Check to see if the type has changed.
 					$where = substr($what, 4);
-					$smcFunc['db_query']('', '
-						UPDATE {db_prefix}tp_blocks
-						SET type = {int:type}
-						WHERE id = {int:blockid}',
-						array(
-							'type' => $value,
-							'blockid' => $where,
-						)
-					);
+					$request = $smcFunc['db_query']('', '
+                        SELECT type FROM {db_prefix}tp_blocks
+                        WHERE id = {int:id} LIMIT 1',
+                        array('id' => $where)
+                    );
+					if($smcFunc['db_num_rows']($request) > 0) {
+                        $row    = $smcFunc['db_fetch_assoc']($request);
+                        $smcFunc['db_free_result']($request);
+                        if($row['type'] != $value) {
+							$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
+							$smcFunc['db_query']('', '
+								UPDATE {db_prefix}tp_blocks
+								SET settings = {string:data}, type = {int:blocktype}
+								WHERE id = {int:blockid}',
+								array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
+							);
+                        }
+                    }
 				}
 				elseif(substr($what, 0, 5) == 'title')
 				{
@@ -2394,28 +2404,7 @@ function do_postchecks()
 				);
 			}
 			else {
-
-    			$defaultBlock = array (
-        			'1'     => array( 'panelstyle' => 99 ),                                                                              // User
-        			'2'     => array( 'panelstyle' => 99 ),                                                                              // News
-        			'3'     => array( 'panelstyle' => 99 ),                                                                              // Stats
-        			'4'     => array( 'panelstyle' => 99 ),                                                                              // Search
-        			'5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
-        			'6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
-        			'7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
-        			'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99, 'useavatar' => 1 ), // Shoutbox
-        			'9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
-        			'10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
-        			'11'    => array( 'panelstyle' => 99 ),                                                                              // Script
-        			'12'    => array( 'useavatar' => 1, 'boards' => '', 'include' => 1, 'length' => 100, 'panelstyle' => 99 ),           // Recent Topics
-        			'13'    => array( 'panelstyle' => 99 ),                                                                              // SSI
-        			'14'    => array( 'panelstyle' => 99 ),                                                                              // Module: Downloads/stats
-        			'15'    => array( 'utf' => 1, 'showtitle' => 1, 'maxwidth' => '100%', 'maxshown' => 20, 'panelstyle' => 99 ),        // RSS
-        			'16'    => array( 'panelstyle' => 99 ),                                                                              // Site Map
-        			'17'    => array( 'panelstyle' => 99 ),                                                                              // Admin
-        			'18'    => array( 'panelstyle' => 99 ),                                                                              // Article
-        			'19'    => array( 'block_height' => 15, 'block_author' => 0, 'panelstyle' => 99),                                    // Categories
-    			);
+				$defaultBlock = TPBlock::getInstance()->getBlockDefault();
 
 				$smcFunc['db_insert']('INSERT',
 					'{db_prefix}tp_blocks',
@@ -2453,6 +2442,7 @@ function do_postchecks()
 			$tpgroups = array();
 			$access = array();
 			$lang = array();
+
 			foreach($_POST as $what => $value)
 			{
 				// We have a empty post value just skip it
@@ -2463,8 +2453,28 @@ function do_postchecks()
 				{
 					$setting = substr($what, 9);
 
-					if($setting == 'body')
-					{
+					if($setting == 'type') {
+                        // Check to see if the type has changed.
+						$request = $smcFunc['db_query']('', '
+                            SELECT type FROM {db_prefix}tp_blocks
+                            WHERE id = {int:id} LIMIT 1',
+                            array('id' => $where)
+                        );
+						if($smcFunc['db_num_rows']($request) > 0) {
+                            $row    = $smcFunc['db_fetch_assoc']($request);
+                            $smcFunc['db_free_result']($request);
+                        	if($row['type'] != $value) {
+								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
+								$smcFunc['db_query']('', '
+									UPDATE {db_prefix}tp_blocks
+									SET settings = {string:data}, type = {int:blocktype}
+									WHERE id = {int:blockid}',
+									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
+								);
+                        	}
+                        }
+					}
+					elseif($setting == 'body') {
 						// If we came from WYSIWYG then turn it back into BBC regardless.
 						if (!empty($_REQUEST['tp_block_body_mode']) && isset($_REQUEST['tp_block_body']))
 						{
