@@ -636,11 +636,11 @@ function saveBlock( $block_id = 0 ) {{{
                 $value = preg_replace('~&#\d+$~', '', $value);
                 $val = substr($what,10);
                 $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_blocks
-                        SET title = {string:title}
-                        WHERE id = {int:blockid}',
-                        array('title' => $value, 'blockid' => $val)
-                        );
+                    UPDATE {db_prefix}tp_blocks
+                    SET title = {string:title}
+                    WHERE id = {int:blockid}',
+                    array('title' => $value, 'blockid' => $val)
+                );
             }
             elseif(substr($what, 0, 9) == 'blockbody' && substr($what, -4) != 'mode') {
                 // If we came from WYSIWYG then turn it back into BBC regardless.
@@ -656,29 +656,29 @@ function saveBlock( $block_id = 0 ) {{{
                 $val = (int) substr($what, 9);
 
                 $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_blocks
-                        SET body = {string:body}
-                        WHERE id = {int:blockid}',
-                        array('body' => $value, 'blockid' => $val)
-                        );
+                    UPDATE {db_prefix}tp_blocks
+                    SET body = {string:body}
+                    WHERE id = {int:blockid}',
+                    array('body' => $value, 'blockid' => $val)
+                );
             }
             elseif(substr($what, 0, 10) == 'blockframe') {
                 $val = substr($what, 10);
                 $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_blocks
-                        SET frame = {string:frame}
-                        WHERE id = {int:blockid}',
-                        array('frame' => $value, 'blockid' => $val)
-                        );
+                    UPDATE {db_prefix}tp_blocks
+                    SET frame = {string:frame}
+                    WHERE id = {int:blockid}',
+                    array('frame' => $value, 'blockid' => $val)
+                );
             }
             elseif(substr($what, 0, 12) == 'blockvisible') {
                 $val = substr($what, 12);
                 $smcFunc['db_query']('', '
-                        UPDATE {db_prefix}tp_blocks
-                        SET visible = {string:vis}
-                        WHERE id = {int:blockid}',
-                        array('vis' => $value, 'blockid' => $val)
-                        );
+                    UPDATE {db_prefix}tp_blocks
+                    SET visible = {string:vis}
+                    WHERE id = {int:blockid}',
+                    array('vis' => $value, 'blockid' => $val)
+				);
             }
         }
         redirectexit('action=tportal;sa=editblock'.$whatID);

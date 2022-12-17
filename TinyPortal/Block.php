@@ -26,6 +26,7 @@ class Block extends Base {
     private $blockType          = array();
     private $blockBar           = array();
     private $blockPanel         = array();
+    private $blockDefault		= array();
     private static $_instance   = null;
 
     public static function getInstance() {{{
@@ -102,6 +103,28 @@ class Block extends Base {
             6 => 'top',
             7 => 'lower',
         );
+
+        $this->blockDefault = array(
+        	'1'     => array( 'panelstyle' => 99 ),                                                                              // User
+        	'2'     => array( 'panelstyle' => 99 ),                                                                              // News
+        	'3'     => array( 'panelstyle' => 99 ),                                                                              // Stats
+        	'4'     => array( 'panelstyle' => 99 ),                                                                              // Search
+        	'5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
+        	'6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
+        	'7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
+        	'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99, 'useavatar' => 1 ), // Shoutbox
+        	'9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
+        	'10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
+        	'11'    => array( 'panelstyle' => 99 ),                                                                              // Script
+        	'12'    => array( 'useavatar' => 1, 'boards' => '', 'include' => 1, 'length' => 100, 'panelstyle' => 99 ),           // Recent Topics
+        	'13'    => array( 'panelstyle' => 99 ),                                                                              // SSI
+        	'14'    => array( 'panelstyle' => 99 ),                                                                              // Module: Downloads/stats
+        	'15'    => array( 'utf' => 1, 'showtitle' => 1, 'maxwidth' => '100%', 'maxshown' => 20, 'panelstyle' => 99 ),        // RSS
+        	'16'    => array( 'panelstyle' => 99 ),                                                                              // Site Map
+        	'17'    => array( 'panelstyle' => 99 ),                                                                              // Admin
+        	'18'    => array( 'panelstyle' => 99 ),                                                                              // Article
+        	'19'    => array( 'block_height' => 15, 'block_author' => 0, 'panelstyle' => 99),                                    // Categories
+    	);
 
         foreach($this->blockType as $k => $v) {
             $name = 'TP_BLOCK_'.strtoupper($v);
@@ -384,7 +407,20 @@ class Block extends Base {
 
     }}}
 
-    public function getBlockBarId( $bar_location = null ) {{{
+    public function getBlockDefault( $bar_id = null ) {{{
+
+        if(!is_null($bar_id) && array_key_exists($bar_id, $this->blockDefault)) {
+            $bars = $this->blockDefault[$bar_id];
+        }
+        else {
+            $bars = $this->blockDefault;
+        }
+
+        return $bars;
+
+    }}}
+
+	public function getBlockBarId( $bar_location = null ) {{{
 
         if(!is_null($bar_location)) {
             $bars = array_search($bar_location, $this->blockBar);
