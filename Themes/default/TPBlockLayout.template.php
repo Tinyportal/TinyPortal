@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.3
+ * @version 2.3.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -379,11 +379,11 @@ function template_editblock()
 							<input type="number" id="tp-shoutboxheight" name="tp_block_set_shoutbox_height" value="' ,(empty($context['TPortal']['blockedit']['shoutbox_height']) ? '250' : $context['TPortal']['blockedit']['shoutbox_height']), '" style="width: 6em" required><br>
 						</dd>
 						<dt>
-							<label for="tp-shout_useavatar">'.$txt['tp-rssblock-showavatar'].'</label>
+							'.$txt['tp-rssblock-showavatar'].'
 						</dt>
 						<dd>
-							<input type="radio" id="tp_block_useavataryes" name="tp_block_set_useavatar" value="1" ' , !isset($context['TPortal']['blockedit']['useavatar'])=='0' ? ' checked' : '' ,' required><label for="tp_block_useavataryes">'.$txt['tp-yes'].'</label>
-							<input type="radio" id="tp_block_useavatarno" name="tp_block_set_useavatar" value="0" ' , isset($context['TPortal']['blockedit']['useavatar'])=='0' ? ' checked' : '' ,'><label for="tp_block_useavatarno">'.$txt['tp-no'].'</label>
+							<input type="radio" id="tp_block_shoutbox_avataryes" name="tp_block_set_shoutbox_avatar" value="1" ' , $context['TPortal']['blockedit']['shoutbox_avatar'] == '1' ? ' checked="checked"' : '' ,' required><label for="tp_block_shoutbox_avataryes">'.$txt['tp-yes'].'</label>
+							<input type="radio" id="tp_block_shoutbox_avatarno" name="tp_block_set_shoutbox_avatar" value="0" ' , $context['TPortal']['blockedit']['shoutbox_avatar'] == '0' ? ' checked="checked"' : '' ,'><label for="tp_block_shoutbox_avatarno">'.$txt['tp-no'].'</label>
 						</dd>
 						<dt>
 							<label for="fieldname">'.$txt['shoutbox_layout'].'</label>

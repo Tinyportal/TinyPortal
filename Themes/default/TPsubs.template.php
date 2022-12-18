@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.3
+ * @version 2.3.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -550,8 +550,8 @@ function TPortal_shoutbox($blockid)
         if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'])) {
             $shoutbox_layout = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_layout'];
         }
-		if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['useavatar'])) {
-            $shoutbox_avatar = $context['TPortal']['tpblocks']['blockrender'][$tpm]['useavatar'];
+		if(isset($context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_avatar'])) {
+            $shoutbox_avatar = $context['TPortal']['tpblocks']['blockrender'][$tpm]['shoutbox_avatar'];
         }
 
 		call_user_func($context['TPortal']['tpblocks']['blockrender'][$tpm]['function'], $shoutbox_id, $shoutbox_layout, $shoutbox_avatar);
