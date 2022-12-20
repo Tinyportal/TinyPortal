@@ -1,7 +1,7 @@
-<?php
+	<?php
 /**
  * @package TinyPortal
- * @version 2.2.3
+ * @version 2.3.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1956,7 +1956,7 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['shoutbox_id']      = $block['shoutbox_id'];
 				$context['TPortal']['shoutbox_layout']  = $block['shoutbox_layout'];
 				$context['TPortal']['shoutbox_height']  = $block['shoutbox_height'];
-				$context['TPortal']['useavatar']        = isset($block['useavatar']);
+				$context['TPortal']['shoutbox_avatar']  = isset($block['shoutbox_avatar']) ? $block['shoutbox_avatar'] : 0 ;
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';

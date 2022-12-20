@@ -1,4 +1,4 @@
-Upgrading TinyPortal v2.2.3 for SMF2.1
+Upgrading TinyPortal v2.3.0 for SMF2.1
 
 [size=14pt][color=red][b]Important:[/b][/color][/size]
 [list]
