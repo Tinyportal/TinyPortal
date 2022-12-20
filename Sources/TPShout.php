@@ -806,7 +806,7 @@ function TPShoutBlock(&$row) {{{
         'shoutbox_id'       => $set['shoutbox_id'],
         'shoutbox_layout'   => $set['shoutbox_layout'],
         'shoutbox_height'   => $set['shoutbox_height'],
-		'shoutbox_avatar'   => $set['shoutbox_avatar'],
+		'shoutbox_avatar'   => isset($set['shoutbox_avatar']) ? $set['shoutbox_avatar'] : 0 ,
         'name'              => $txt['tp-shoutbox'],
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
