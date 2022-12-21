@@ -806,7 +806,7 @@ function TPShoutBlock(&$row) {{{
         'shoutbox_id'       => $set['shoutbox_id'],
         'shoutbox_layout'   => $set['shoutbox_layout'],
         'shoutbox_height'   => $set['shoutbox_height'],
-		'shoutbox_avatar'   => isset($set['shoutbox_avatar']) ? $set['shoutbox_avatar'] : 0 ,
+		'shoutbox_avatar'   => $set['shoutbox_avatar'],
         'name'              => $txt['tp-shoutbox'],
         'function'          => 'TPShoutFetch',
         'sourcefile'        => $sourcedir .'/TPShout.php',
@@ -817,7 +817,7 @@ function TPShoutBlock(&$row) {{{
     if(!empty($context['TPortal']['shoutbox_refresh'])) {
         $context['html_headers'] .= '
         <script type="text/javascript"><!-- // --><![CDATA[
-            window.setInterval("TPupdateShouts(\'fetch\', '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].' , '.isset($set['shoutbox_avatar']).')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
+            window.setInterval("TPupdateShouts(\'fetch\', '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].' , '.$set['shoutbox_avatar'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
         // ]]></script>';
     }
 
@@ -845,7 +845,7 @@ function TPShoutBlock(&$row) {{{
                             tp_shout_key_press = true;
                             // set a 100 millisecond timeout for the next key press
                             window.setTimeout(function() { tp_shout_key_press = false; $("#tp_shout_' . $set['shoutbox_id'] . '").setCursorPosition(0,0);}, 100);
-                            TPupdateShouts(\'save\' , '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].' , '.isset($set['shoutbox_avatar']).');
+                            TPupdateShouts(\'save\' , '.$set['shoutbox_id'].' , null , '.$set['shoutbox_layout'].' , '.$set['shoutbox_avatar'].');
 							console.log("'.$set['shoutbox_id'].'");
                         }
                     });

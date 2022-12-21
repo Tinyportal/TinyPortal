@@ -1054,6 +1054,9 @@ function updateBlocks()
 					}
 				}
 				if(!empty($updated)) {
+					if($type == 8) {
+					$updated['shoutbox_avatar'] = 1;
+					}
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks
 						SET settings = {string:settings}
