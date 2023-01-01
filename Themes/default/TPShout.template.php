@@ -339,7 +339,7 @@ function template_tpshout_shoutblock( $shoutbox_id = 0, $shoutbox_layout = null,
 		}
 	    else {
             echo '
-                <form  accept-charset="'. $context['character_set']. '" class="smalltext" style="text-align: center; width: 99%;" name="' . $context['tp_shoutbox_form'] . '_' . $shoutbox_id . '"  id="' . $context['tp_shoutbox_form'] . '_' . $shoutbox_id . '" action="'.$scripturl.'?action=tpshout;shout=save" method="post" ><hr>
+                <form  accept-charset="'. $context['character_set']. '" class="smalltext" style="text-align: center; width: 99%;" name="' . $context['tp_shoutbox_form'] . '_' . $shoutbox_id . '"  id="' . $context['tp_shoutbox_form'] . '_' . $shoutbox_id . '" action="'.$scripturl.'?action=tpshout;shout=save" method="post" >
                 <textarea class="tp_shoutbox_editor'. $context['TPortal']['shoutbox_layout']. '" maxlength="' .$context['TPortal']['shoutbox_maxlength']. '" name="'. $context['tp_shout_post_box_name']. '" id="'. $context['tp_shout_post_box_name']. '" onselect="tpShoutFocusTextArea(\''. $context['tp_shout_post_box_name']. '\');" onclick="tpShoutFocusTextArea(\''. $context['tp_shout_post_box_name']. '\');" onkeyup="tpShoutFocusTextArea(\''. $context['tp_shout_post_box_name']. '\');" onchange="tpShoutFocusTextArea(\''. $context['tp_shout_post_box_name']. '\');" tabindex="', $context['tabindex']++, '"></textarea><br>';
 
                 if(!empty($context['TPortal']['show_shoutbox_smile']) && $user_info['smiley_set'] != 'none') {
