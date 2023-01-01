@@ -1056,6 +1056,8 @@ function updateBlocks()
 				if(!empty($updated)) {
 					if($type == 8) {
 					$updated['shoutbox_avatar'] = 1;
+					$updated['shoutbox_barposition'] = 1;
+					$updated['shoutbox_direction'] = 1;
 					}
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks

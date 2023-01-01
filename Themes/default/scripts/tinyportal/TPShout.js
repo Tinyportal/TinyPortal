@@ -76,6 +76,7 @@ function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout, shoutAvatar)
 				$("#shout_errors_" + shoutboxId).hide();
 				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).html(data).fadeIn();
 				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).parent().scrollTop(0);
+//				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).parent().scrollTop($(document).height());
 				if (action === "save") {
 					$("#tp_shout_" + shoutboxId).val("");
 					document.getElementById("tp_shout_" + shoutboxId).focus();
