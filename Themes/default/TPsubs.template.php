@@ -1130,6 +1130,11 @@ function template_TPsearch_above()
 {
 	global $context, $txt, $scripturl;
 
+	// do not show the article search in some cases
+	if($context['TPortal']['submitcheck']['articles']==0 && $context['TPortal']['show_download']==0) {
+    	return;
+    }
+
 	if($context['TPortal']['show_download']==0) {
 		echo '
 	<div style="padding: 0 5px;">
