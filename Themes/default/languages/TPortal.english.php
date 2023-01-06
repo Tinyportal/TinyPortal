@@ -45,6 +45,10 @@ $txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage the sh
 $txt['permissionname_tp_can_shout'] = $txt['group_perms_name_tp_can_shout'] = 'Can post shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 
+$txt['permissionname_tp_can_search'] = $txt['group_perms_name_tp_can_search'] = 'Can Search Articles and or Downloads.';
+$txt['permissionhelp_tp_can_search'] = 'Allows users to search for Articles and or Downloads.';
+
+
 $txt['permissionname_tp_dlmanager'] = $txt['group_perms_name_tp_dlmanager'] = 'Manage TPdownloads';
 $txt['permissionhelp_tp_dlmanager'] = 'Allows users to visit and operate any part of the file manager admin screens.';
 $txt['cannot_tp_dlmanager'] = 'Sorry, you aren\'t allowed to manage the TPdownloads.';
