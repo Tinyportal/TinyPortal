@@ -47,6 +47,7 @@ $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
 
 $txt['permissionname_tp_can_search'] = $txt['group_perms_name_tp_can_search'] = 'Can Search Articles and or Downloads.';
 $txt['permissionhelp_tp_can_search'] = 'Allows users to search for Articles and or Downloads.';
+$txt['cannot_tp_can_search'] = 'Sorry, you aren\'t allowed to search for Articles or Downloads.';
 
 
 $txt['permissionname_tp_dlmanager'] = $txt['group_perms_name_tp_dlmanager'] = 'Manage TPdownloads';
