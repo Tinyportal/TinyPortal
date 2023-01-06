@@ -44,9 +44,7 @@ function TPSearch()
 
 function TPSearchActions(&$subActions)
 {
-	if(!isAllowedTo('tp_can_search')) {
-		return;
-	}
+	isAllowedTo('tp_can_search');
 
    $subActions = array_merge(
         array (
