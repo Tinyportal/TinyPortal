@@ -206,6 +206,7 @@ class Integrate
                 'tp_dlupload' => array(false, 'tp', 'tp'),
                 'tp_dlcreatetopic' => array(false, 'tp', 'tp'),
                 'tp_can_list_images' => array(false, 'tp', 'tp'),
+                'tp_can_search' => array(false, 'tp', 'tp'),
             ),
             $permissionList['membergroup']
         );
@@ -381,6 +382,7 @@ class Integrate
             'tp_dlupload',
             'tp_dlcreatetopic',
             'tp_can_list_images',
+            'tp_can_search',
         );
         $context['non_guest_permissions'] = array_merge($context['non_guest_permissions'], $tp_illegal_perms);
     }
@@ -835,7 +837,7 @@ class Integrate
         global $context;
 
         // are we on search page? then add TP search options as well!
-        if($context['TPortal']['action'] == 'search') {
+        if($context['TPortal']['action'] == 'search' && allowedTo(array('tp_can_search'))) {
             $context['template_layers'][] = 'TPsearch';
         }
 
