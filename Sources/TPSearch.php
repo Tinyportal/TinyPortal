@@ -24,6 +24,8 @@ function TPSearch()
 {
     global $scripturl, $txt, $context;
 
+	isAllowedTo('tp_can_search');
+
     if(loadLanguage('TPmodules') == false) {
 		loadLanguage('TPmodules', 'english');
     }
@@ -44,7 +46,6 @@ function TPSearch()
 
 function TPSearchActions(&$subActions)
 {
-	isAllowedTo('tp_can_search');
 
    $subActions = array_merge(
         array (
@@ -59,6 +60,8 @@ function TPSearchActions(&$subActions)
 function TPSearchArticle()
 {
 	global $scripturl, $txt, $context, $smcFunc;
+
+	isAllowedTo('tp_can_search');
 
 	$start          = 0;
     $max_results    = 20;
