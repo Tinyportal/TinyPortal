@@ -359,22 +359,8 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 	else {
 		return $nshouts;
     }
-	if($shoutbox_direction == 1) { 
-		echo '
-       <script type="text/javascript"><!-- // --><![CDATA[
-        $( document ).ready(function() {
-            $(".tp_shoutframe.tp_shoutframe_' . $shoutbox_id . '").parent().scrollTop($(document).height() + $(window).height());
-        });
-        // ]]></script>';
-	}
-	else {
-		echo '
-		<script type="text/javascript"><!-- // --><![CDATA[
-        $( document ).ready(function() {
-            $(".tp_shoutframe.tp_shoutframe_' . $shoutbox_id . '").parent().scrollTop(0);
-        });
-        // ]]></script>';
-	}		
+
+
 }}}
 
 function tpshout_bigscreen($state = false, $number = 10, $block_id = 0) {{{
@@ -830,7 +816,10 @@ function TPShoutBlock(&$row) {{{
         loadLanguage('TPortal', 'english');
     }
 
-	$id		= $row['id'];
+	$id					= $row['id'];
+	$row				= TPBlock::getInstance()->getBlock($id);
+	$set				= json_decode($row['settings'], TRUE);
+	$shoutbox_direction	= $set['shoutbox_direction'];
 
     $context['TPortal']['tpblocks']['blockrender'][$id] = array(
         'id'                   => $row['id'],
@@ -912,6 +901,23 @@ function TPShoutBlock(&$row) {{{
             });
             // ]]></script>';
     }
+
+	if($shoutbox_direction == 1) { 
+		$context['html_headers'] .= '
+		<script type="text/javascript"><!-- // --><![CDATA[
+        $(document).ready(function() {
+            $(".tp_shoutframe.tp_shoutframe_' . $id . '").parent().scrollTop($(document).height() + $(window).height());
+        });
+        // ]]></script>';
+	}
+	else {
+        $context['html_headers'] .= '
+		<script type="text/javascript"><!-- // --><![CDATA[
+        $(document).ready(function() {
+            $(".tp_shoutframe.tp_shoutframe_' . $id . '").parent().scrollTop(0);
+        });
+        // ]]></script>';
+	}
 
 }}}
 
