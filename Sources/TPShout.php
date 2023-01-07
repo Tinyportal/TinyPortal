@@ -169,7 +169,11 @@ function TPShoutPost( ) {{{
 
 		$shout      = str_ireplace(array("<br />","<br>","<br/>"), "\r\n", $shout);
 
-        $shoutbox_id   = TPUtil::filter('b', 'post', 'int');
+        $block_id		= TPUtil::filter('b', 'post', 'int');
+		$row			= TPBlock::getInstance()->getBlock($block_id);
+		$set			= json_decode($row['settings'], TRUE);
+		$shoutbox_id	= $set['shoutbox_id'];
+
         if(empty($shoutbox_id)) {
             $shoutbox_id = 0;
         }
@@ -338,9 +342,11 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 			$row['counter'] = ++$counter;
 			$ns[] = template_singleshout($row, $block_id);
 		}
+
 		if($shoutbox_direction == 1) { 
 			$ns = array_reverse($ns);
 		}
+
 		$nshouts .= implode('', $ns);
 
 		$context['TPortal']['shoutbox'] = $nshouts;
@@ -374,12 +380,8 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 function tpshout_bigscreen($state = false, $number = 10, $block_id = 0) {{{
     global $context;
 
-    $row					= TPBlock::getInstance()->getBlock($block_id);
-    $set					= json_decode($row['settings'], TRUE);
-	$shoutbox_id			= $set['shoutbox_id'];
-
     loadTemplate('TPShout');
-	$context['TPortalShoutboxId'] = $shoutbox_id;
+	$context['TPortalShoutboxId'] = $block_id;
 
 	if ($state == false) {
         $context['template_layers']         = array();
@@ -840,7 +842,7 @@ function TPShoutBlock(&$row) {{{
     if(!empty($context['TPortal']['shoutbox_refresh'])) {
         $context['html_headers'] .= '
         <script type="text/javascript"><!-- // --><![CDATA[
-            window.setInterval("TPupdateShouts(\'fetch\', '.$row['id'].');
+            window.setInterval("TPupdateShouts(\'fetch\', '.$row['id'].')", '. $context['TPortal']['shoutbox_refresh'] * 1000 . ');
         // ]]></script>';
     }
 
@@ -863,7 +865,7 @@ function TPShoutBlock(&$row) {{{
             $context['html_headers'] .= '
             <script type="text/javascript"><!-- // --><![CDATA[
                 $(document).ready(function() {
-                    $("#tp_shout_'.$set['shoutbox_id'].'").keypress(function(event) {
+                    $("#tp_shout_'.$row['id'].'").keypress(function(event) {
                         if(event.which == 13 && !event.shiftKey) {
                             tp_shout_key_press = true;
                             // set a 100 millisecond timeout for the next key press

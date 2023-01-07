@@ -29,7 +29,7 @@ function TPupdateShouts(action, blockId, shoutId)
 	var params = "";
 	var name;
 	var shout;
-	
+
 	if (action === "save") {
 		name    = $("#tp-shout-name_" + blockId).val();
 		shout   = $("#tp_shout_" + blockId).val();
