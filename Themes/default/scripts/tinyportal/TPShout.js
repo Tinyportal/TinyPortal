@@ -29,6 +29,7 @@ function TPupdateShouts(action, blockId, shoutId)
 	var params = "";
 	var name;
 	var shout;
+	var direction;
 
 	if (action === "save") {
 		name    = $("#tp-shout-name_" + blockId).val();
@@ -43,6 +44,8 @@ function TPupdateShouts(action, blockId, shoutId)
 	if (shoutId) {
 		params = params.concat("&s=" + shoutId);
 	}
+	
+	direction = $("#tp_shout_direction_" + blockId).val();
 
 	$.ajax({
 		type : "POST",
@@ -68,8 +71,12 @@ function TPupdateShouts(action, blockId, shoutId)
 			} else {
 				$("#shout_errors_" + blockId).hide();
 				$(".tp_shoutframe.tp_shoutframe_" + blockId).html(data).fadeIn();
-				$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop(0);
-//				$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop($(document).height());
+				if(direction == "1") {
+					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop($(document).height());
+				}
+				else {
+					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop(0);
+				}
 				if (action === "save") {
 					$("#tp_shout_" + blockId).val("");
 					document.getElementById("tp_shout_" + blockId).focus();

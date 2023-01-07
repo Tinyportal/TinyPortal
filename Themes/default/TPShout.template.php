@@ -345,6 +345,7 @@ function template_tpshout_shoutblock( $block_id = 0 )
 			echo '
 			    <br>
 			    <input type="hidden" id="tp-shout-name_' . $block_id . '" name="tp-shout-name_' . $block_id . '" value="'.$context['user']['name'].'" />
+			    <input type="hidden" id="tp_shout_direction_' . $block_id . '" name="tp_shout_direction_' . $block_id . '" value="'.$shoutbox_direction.'" />
 			    <input type="hidden" name="sc" value="', $context['session_id'], '" />
 		    </form>';
 		}
@@ -376,6 +377,7 @@ function template_tpshout_shoutblock( $block_id = 0 )
                     <a href="' , $scripturl , '?action=tpshout;shout=show50;b='.$block_id.';l='.$shoutbox_layout.'" title="'. $txt['tp-shout-history'] . '"><img class="floatright" src="' . $settings['tp_images_url'] . '/TPhistory.png" alt="" /></a>
 				</div>
                 <input type="hidden" id="tp-shout-name_' . $block_id . '" name="tp-shout-name_' . $block_id . '" value="'.$context['user']['name'].'" />
+			    <input type="hidden" id="tp_shout_direction_' . $block_id . '" name="tp_shout_direction_' . $block_id . '" value="'.$shoutbox_direction.'" />
                 <input type="hidden" name="sc" value="', $context['session_id'], '" />
             </form>';
 		}
