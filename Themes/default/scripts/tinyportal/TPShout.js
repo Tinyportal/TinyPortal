@@ -72,7 +72,7 @@ function TPupdateShouts(action, blockId, shoutId)
 				$("#shout_errors_" + blockId).hide();
 				$(".tp_shoutframe.tp_shoutframe_" + blockId).html(data).fadeIn();
 				if(direction == "1") {
-					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop($(document).height());
+					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop($(document).height() + $(window).height());
 				}
 				else {
 					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop(0);

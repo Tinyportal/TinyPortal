@@ -363,7 +363,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 		echo '
        <script type="text/javascript"><!-- // --><![CDATA[
         $( document ).ready(function() {
-            $(".tp_shoutframe.tp_shoutframe_' . $shoutbox_id . '").parent().scrollTop($(document).height());
+            $(".tp_shoutframe.tp_shoutframe_' . $shoutbox_id . '").parent().scrollTop($(document).height() + $(window).height());
         });
         // ]]></script>';
 	}
