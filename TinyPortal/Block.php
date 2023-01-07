@@ -112,7 +112,7 @@ class Block extends Base {
         	'5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
         	'6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
         	'7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
-        	'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99, 'shoutbox_avatar' => 1 ), // Shoutbox
+        	'8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99, 'shoutbox_avatar' => 1, 'shoutbox_barposition' => 1, 'shoutbox_direction' => 0 ), // Shoutbox
         	'9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
         	'10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
         	'11'    => array( 'panelstyle' => 99 ),                                                                              // Script

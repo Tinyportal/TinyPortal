@@ -379,13 +379,6 @@ function template_editblock()
 							<input type="number" id="tp-shoutboxheight" name="tp_block_set_shoutbox_height" value="' ,(empty($context['TPortal']['blockedit']['shoutbox_height']) ? '250' : $context['TPortal']['blockedit']['shoutbox_height']), '" style="width: 6em" required><br>
 						</dd>
 						<dt>
-							'.$txt['tp-rssblock-showavatar'].'
-						</dt>
-						<dd>
-							<input type="radio" id="tp_block_shoutbox_avataryes" name="tp_block_set_shoutbox_avatar" value="1" ' , $context['TPortal']['blockedit']['shoutbox_avatar'] == '1' ? ' checked="checked"' : '' ,' required><label for="tp_block_shoutbox_avataryes">'.$txt['tp-yes'].'</label>
-							<input type="radio" id="tp_block_shoutbox_avatarno" name="tp_block_set_shoutbox_avatar" value="0" ' , $context['TPortal']['blockedit']['shoutbox_avatar'] == '0' ? ' checked="checked"' : '' ,'><label for="tp_block_shoutbox_avatarno">'.$txt['tp-no'].'</label>
-						</dd>
-						<dt>
 							<label for="fieldname">'.$txt['shoutbox_layout'].'</label>
 						</dt>
 						<dd>
@@ -395,6 +388,27 @@ function template_editblock()
 							<div class="float-items"><div><input type="radio" name="tp_block_set_shoutbox_layout" id="shout_layout3" value="2" ' , $context['TPortal']['blockedit']['shoutbox_layout'] == '2' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout3"><img src="' . $settings['tp_images_url'] . '/shout_layout3.png" alt="Layout 3"></label></div></div>
 							<div class="float-items"><div><input type="radio" name="tp_block_set_shoutbox_layout" id="shout_layout4" value="3" ' , $context['TPortal']['blockedit']['shoutbox_layout'] == '3' ? ' checked="checked"' : '' , '></div><div><label for="shout_layout4"><img src="' . $settings['tp_images_url'] . '/shout_layout4.png" alt="Layout 4"></label></div></div>
 							<p class="clearthefloat"></p>
+						</dd>
+						<dt>
+							'.$txt['tp-rssblock-showavatar'].'
+						</dt>
+						<dd>
+							<input type="radio" id="tp_block_shoutbox_avataryes" name="tp_block_set_shoutbox_avatar" value="1" ' , $context['TPortal']['blockedit']['shoutbox_avatar'] == '1' ? ' checked="checked"' : '' ,' required><label for="tp_block_shoutbox_avataryes">'.$txt['tp-yes'].'</label>
+							<input type="radio" id="tp_block_shoutbox_avatarno" name="tp_block_set_shoutbox_avatar" value="0" ' , $context['TPortal']['blockedit']['shoutbox_avatar'] == '0' ? ' checked="checked"' : '' ,'><label for="tp_block_shoutbox_avatarno">'.$txt['tp-no'].'</label>
+						</dd>
+						<dt>
+							'.$txt['tp-shoutbox_direction'].'
+						</dt>
+						<dd>
+							<input type="radio" id="tp_shoutbox_directiontop" name="tp_block_set_shoutbox_direction" value="0" ' , $context['TPortal']['blockedit']['shoutbox_direction'] == '0' ? ' checked="checked"' : '' ,'><label for="tp_shoutbox_directiontop">'.$txt['tp-shoutbox_directiontop'].'</label>
+							<input type="radio" id="tp_shoutbox_directionbottom" name="tp_block_set_shoutbox_direction" value="1" ' , $context['TPortal']['blockedit']['shoutbox_direction'] == '1' ? ' checked="checked"' : '' ,' required><label for="tp_shoutbox_directionbottom">'.$txt['tp-shoutbox_directionbottom'].'</label>
+						</dd>
+						<dt>
+							'.$txt['tp-shoutbox_barposition'].'
+						</dt>
+						<dd>
+							<input type="radio" id="tp_shoutbox_barpositiontop" name="tp_block_set_shoutbox_barposition" value="0" ' , $context['TPortal']['blockedit']['shoutbox_barposition'] == '0' ? ' checked="checked"' : '' ,'><label for="tp_shoutbox_barpositiontop">'.$txt['tp-shoutbox_barpositiontop'].'</label>
+							<input type="radio" id="tp_shoutbox_barpositionbottom" name="tp_block_set_shoutbox_barposition" value="1" ' , $context['TPortal']['blockedit']['shoutbox_barposition'] == '1' ? ' checked="checked"' : '' ,' required><label for="tp_shoutbox_barpositionbottom">'.$txt['tp-shoutbox_barpositionbottom'].'</label>
 						</dd>
 					</dl>';
                 }

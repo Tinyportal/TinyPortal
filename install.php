@@ -1056,6 +1056,8 @@ function updateBlocks()
 				if(!empty($updated)) {
 					if($type == 8) {
 					$updated['shoutbox_avatar'] = 1;
+					$updated['shoutbox_barposition'] = 1;
+					$updated['shoutbox_direction'] = 0;
 					}
 					$smcFunc['db_query']('', '
 						UPDATE {db_prefix}tp_blocks
@@ -1218,7 +1220,7 @@ function addDefaults()
                 'lang' => '',
                 'access' => '-1,0,1,2,3',
                 'display' => 'allpages',
-                'settings' => json_encode( array ('panelstyle' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'shoutbox_avatar' => 1 ) ),
+                'settings' => json_encode( array ('panelstyle' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'shoutbox_avatar' => 1, 'shoutbox_barposition' => 1,'shoutbox_direction' => 0 ) ),
             ),
             'recent' =>array(
                 'type' => 12,
