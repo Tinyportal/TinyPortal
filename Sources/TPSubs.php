@@ -232,7 +232,7 @@ function tp_getbuttons() {{{
 	{
 		$buts['tpshoutbox'] = array(
 			'title' => $txt['permissionname_tp_can_admin_shout'],
-			'href' => $scripturl . '?action=tpshout;shout=admin',
+			'href' => $scripturl . '?action=tpshout;shout=admin;settings',
 			'show' => true,
 			'active_button' => false,
 			'sub_buttons' => array(),
