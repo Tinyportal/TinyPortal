@@ -1277,7 +1277,7 @@ function TPShoutAdminAreas() {{{
 		$context['admin_tabs']['custom_modules']['tpshout'] = array(
 			'title' => 'TPshout',
 			'description' => '',
-			'href' => $scripturl . '?action=tpshout;shout=admin',
+			'href' => $scripturl . '?action=tpshout;shout=admin;settings',
 			'is_selected' => isset($_GET['shout']),
 		);
 		$admin_set = true;

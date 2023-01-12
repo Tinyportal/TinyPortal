@@ -285,7 +285,6 @@ span.article_shortdate {
 	padding: 3px 11px 0 0;
 }
 .tpavatar img {
-	border-radius: 2px;
 	height: auto;
 	width: 40px;
 }
@@ -295,18 +294,15 @@ a.tp_avatar_author {
 	margin: 0;
 }
 a.tp_avatar_author img {
-	border-radius: 2px;
 	margin-right: 0.7em;
 	padding: 1px;
 	width: 80px;
 }
 .tp_avatar_single img {
-	border-radius: 2px;
 	float: left;
 	width: 65px;
 }
 .tp_avatar_single2 img {
-	border-radius: 2px;
 	float: left;
 	height: 30px;
 	margin: 4px 4px 4px 0;
