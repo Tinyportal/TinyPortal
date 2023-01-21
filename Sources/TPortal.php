@@ -1,4 +1,4 @@
-	<?php
+<?php
 /**
  * @package TinyPortal
  * @version 2.3.0
