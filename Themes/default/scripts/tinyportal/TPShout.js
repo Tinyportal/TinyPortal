@@ -24,32 +24,28 @@ function expandHeaderBBC(mode, shoutbox_id, is_guest, sessionId)
 	current_header_bbc = mode;
 }
 
-function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout, shoutAvatar)
+function TPupdateShouts(action, blockId, shoutId)
 {
 	var params = "";
 	var name;
 	var shout;
-	
+	var direction;
+
 	if (action === "save") {
-		name    = $("#tp-shout-name_" + shoutboxId).val();
-		shout   = $("#tp_shout_" + shoutboxId).val();
+		name    = $("#tp-shout-name_" + blockId).val();
+		shout   = $("#tp_shout_" + blockId).val();
 		params  = "&tp-shout-name=" + name + "&tp_shout=" + shout;		
 	}
 
-	if (shoutboxId || !(0 === shoutboxId.length)) {
-		params = params.concat("&b=" + shoutboxId);
+	if (blockId || !(0 === blockId.length)) {
+		params = params.concat("&b=" + blockId);
 	}
 
 	if (shoutId) {
 		params = params.concat("&s=" + shoutId);
 	}
-
-    if(shoutLayout || !(0 === shoutLayout.length)) {
-        params = params.concat("&l=" + shoutLayout);
-    }
-    if(shoutAvatar || !(0 === shoutAvatar.length)) {
-        params = params.concat("&a=" + shoutAvatar);
-    }
+	
+	direction = $("#tp_shout_direction_" + blockId).val();
 
 	$.ajax({
 		type : "POST",
@@ -66,20 +62,25 @@ function TPupdateShouts(action, shoutboxId, shoutId, shoutLayout, shoutAvatar)
 		complete: function(){
 		},
 		success: function(data) {
-			var error = $($.parseHTML(data)).filter("#shoutError_" + shoutboxId);
+			var error = $($.parseHTML(data)).filter("#shoutError_" + blockId);
 			// If there's an error let's display it
 			if (error.length > 0) {
-				$("#shout_errors_" + shoutboxId).html(error).show();
-				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).fadeIn();
-				$("#tp_shout_" + shoutboxId).val(shout);
+				$("#shout_errors_" + blockId).html(error).show();
+				$(".tp_shoutframe.tp_shoutframe_" + blockId).fadeIn();
+				$("#tp_shout_" + blockId).val(shout);
 			} else {
-				$("#shout_errors_" + shoutboxId).hide();
-				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).html(data).fadeIn();
-				$(".tp_shoutframe.tp_shoutframe_" + shoutboxId).parent().scrollTop(0);
+				$("#shout_errors_" + blockId).hide();
+				$(".tp_shoutframe.tp_shoutframe_" + blockId).html(data).fadeIn();
+				if(direction == "1") {
+					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop($(document).height() + $(window).height());
+				}
+				else {
+					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop(0);
+				}
 				if (action === "save") {
-					$("#tp_shout_" + shoutboxId).val("");
-					document.getElementById("tp_shout_" + shoutboxId).focus();
-					$("#tp_shout_" + shoutboxId).setCursorPosition(0,0);
+					$("#tp_shout_" + blockId).val("");
+					document.getElementById("tp_shout_" + blockId).focus();
+					$("#tp_shout_" + blockId).setCursorPosition(0,0);
 				}
 			}
 		}

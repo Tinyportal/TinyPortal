@@ -1957,6 +1957,8 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['shoutbox_layout']  = $block['shoutbox_layout'];
 				$context['TPortal']['shoutbox_height']  = $block['shoutbox_height'];
 				$context['TPortal']['shoutbox_avatar']  = $block['shoutbox_avatar'];
+				$context['TPortal']['shoutbox_barposition']  = $block['shoutbox_barposition'];
+				$context['TPortal']['shoutbox_direction']  = $block['shoutbox_direction'];
 				break;
 			case 'catmenu':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
