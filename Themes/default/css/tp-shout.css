@@ -53,11 +53,27 @@
 .tp_shoutframe {
 	width: 99%;
 }
+.tp_shoutframe img.bbc_img {
+	width: 250px;
+	display: flex;
+}
 .tp_bigshout {
 	height: 100%;
 }
 .tp_shout_errors {
 	display: none;
+}
+.tp_shout_smileybox {
+	display: inline-block;
+	vertical-align: top;
+	min-width:150px;
+	max-height: 5.1em;
+	overflow: auto;
+}
+.tp_shout_bbcbox {
+	display: inline-block;
+	min-width:150px;
+	vertical-align: top;
 }
 /* for layout option 0 */
 .tp_shoutbody_layout0 {

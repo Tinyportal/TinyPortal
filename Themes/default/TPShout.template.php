@@ -328,7 +328,7 @@ function template_tpshout_shoutblock( $block_id = 0 )
 
 			if(!empty($context['TPortal']['show_shoutbox_smile']) && $user_info['smiley_set'] != 'none') {
 			    echo '
-			        <div style="display: inline-block;min-width:150px;vertical-align: top;">';
+			        <div class="tp_shout_smileybox">';
 				    shout_smiley_code($shoutbox_id);
 				    print_shout_smileys($shoutbox_id);
 			    echo '
@@ -337,7 +337,7 @@ function template_tpshout_shoutblock( $block_id = 0 )
 
 			if(!empty($context['TPortal']['show_shoutbox_icons'])) {
 			    echo '
-			        <div style="display: inline-block;min-width:150px;vertical-align: top;">';
+			        <div class="tp_shout_bbcbox">';
 				    shout_bbc_code($shoutbox_id);
 			    echo '
 			        </div>';
