@@ -620,7 +620,7 @@ function shout_smiley_code($shoutbox_id) {{{
 			    SELECT code, filename, description, smiley_row, hidden
 				FROM {db_prefix}smileys
 				WHERE hidden IN ({int:val1}, {int:val2})
-				ORDER BY smiley_row, smiley_order',
+				ORDER BY hidden, smiley_row, smiley_order ASC',
 				array(
                     'val1' => 0,
 				    'val2' => 2
@@ -634,7 +634,7 @@ function shout_smiley_code($shoutbox_id) {{{
 				LEFT JOIN {db_prefix}smiley_files AS files ON
 				(smiley.id_smiley = files.id_smiley)
 				WHERE hidden IN ({int:val1}, {int:val2}) and files.smiley_set = {string:smiley_set}
-				ORDER BY smiley_row, smiley_order',
+				ORDER BY hidden, smiley_row, smiley_order ASC',
 				array(
                     'val1' => 0,
 				    'val2' => 2,
@@ -649,7 +649,8 @@ function shout_smiley_code($shoutbox_id) {{{
 				$row['filename'] = htmlspecialchars($row['filename']);
 				$row['description'] = htmlspecialchars($row['description']);
 
-				$context['tp_smileys'][empty($row['hidden']) ? 'postform' : 'popup'][$row['smiley_row']]['smileys'][] = $row;
+//				$context['tp_smileys'][empty($row['hidden']) ? 'postform' : 'popup'][$row['smiley_row']]['smileys'][] = $row;
+				$context['tp_smileys']['postform'][$row['smiley_row']]['smileys'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 
@@ -691,11 +692,10 @@ function print_shout_smileys($shoutbox_id, $collapse = true) {{{
 
 	if($collapse) {
 		echo '
-	<div class="expand_parent_smiley" id="expand_parent_smiley_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-		<img class="expand_smiley" id="expand_smiley_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
-	</div>
-	<div id="shoutbox_smiley_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">
-		';
+		<div class="expand_parent_smiley" id="expand_parent_smiley_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
+			<img class="expand_smiley" id="expand_smiley_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
+		</div>
+		<div id="shoutbox_smiley_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">		';
     }
 	else {
 		echo '<div>';
@@ -709,11 +709,12 @@ function print_shout_smileys($shoutbox_id, $collapse = true) {{{
 		foreach ($context['tp_smileys']['postform'] as $smiley_row) {
 			foreach ($smiley_row['smileys'] as $smiley) {
 				if($sm_counter == 5 && $collapse) {
-					echo '<div id="expandHeaderSmiley_' . $shoutbox_id . '"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;padding-top: 0.2em;"' , '>';
-                }
-
-				echo '<div style="display: inline;" onclick="replaceShoutText(\' ', $smiley['code'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></div>';
-				$sm_counter++;
+					echo '
+						<div id="expandHeaderSmiley_' . $shoutbox_id . '"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;padding-top: 0.2em;"' , '>';
+				}
+					echo '
+						<div style="display: inline;" onclick="replaceShoutText(\' ', $smiley['code'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></div>';
+					$sm_counter++;
 			}
 		}
 	}
