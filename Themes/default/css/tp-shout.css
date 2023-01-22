@@ -53,6 +53,10 @@
 .tp_shoutframe {
 	width: 99%;
 }
+.tp_shoutframe img.bbc_img {
+	width: 250px;
+	display: flex;
+}
 .tp_bigshout {
 	height: 100%;
 }
