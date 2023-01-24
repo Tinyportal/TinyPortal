@@ -2274,10 +2274,11 @@ function do_postchecks()
 							$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
 							$smcFunc['db_query']('', '
 								UPDATE {db_prefix}tp_blocks
-								SET settings = {string:data}, type = {int:blocktype}
+								SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
 								WHERE id = {int:blockid}',
-								array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
+								array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
 							);
+						break;
                         }
                     }
 				}
@@ -2467,10 +2468,11 @@ function do_postchecks()
 								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_blocks
-									SET settings = {string:data}, type = {int:blocktype}
+									SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
 									WHERE id = {int:blockid}',
-									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
+									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
 								);
+							break;
                         	}
                         }
 					}
