@@ -2258,30 +2258,6 @@ function do_postchecks()
 							)
 						);
 				}
-				elseif(substr($what, 0, 4) == 'type')
-				{
-					// Check to see if the type has changed.
-					$where = substr($what, 4);
-					$request = $smcFunc['db_query']('', '
-                        SELECT type FROM {db_prefix}tp_blocks
-                        WHERE id = {int:id} LIMIT 1',
-                        array('id' => $where)
-                    );
-					if($smcFunc['db_num_rows']($request) > 0) {
-                        $row    = $smcFunc['db_fetch_assoc']($request);
-                        $smcFunc['db_free_result']($request);
-                        if($row['type'] != $value) {
-							$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
-							$smcFunc['db_query']('', '
-								UPDATE {db_prefix}tp_blocks
-								SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
-								WHERE id = {int:blockid}',
-								array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
-							);
-						break;
-                        }
-                    }
-				}
 				elseif(substr($what, 0, 5) == 'title')
 				{
 					$where = strip_tags(substr($what, 5));
@@ -2307,6 +2283,29 @@ function do_postchecks()
 							'blockid' => $where,
 						)
 					);
+				}
+				elseif(substr($what, 0, 4) == 'type')
+				{
+					// Check to see if the type has changed.
+					$where = substr($what, 4);
+					$request = $smcFunc['db_query']('', '
+                        SELECT type FROM {db_prefix}tp_blocks
+                        WHERE id = {int:id} LIMIT 1',
+                        array('id' => $where)
+                    );
+					if($smcFunc['db_num_rows']($request) > 0) {
+                        $row    = $smcFunc['db_fetch_assoc']($request);
+                        $smcFunc['db_free_result']($request);
+                        if($row['type'] != $value) {
+							$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
+							$smcFunc['db_query']('', '
+								UPDATE {db_prefix}tp_blocks
+								SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
+								WHERE id = {int:blockid}',
+								array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
+							);
+                        }
+                    }
 				}
 			}
 			redirectexit('action=tpadmin;sa=blocks');
@@ -2454,29 +2453,7 @@ function do_postchecks()
 				{
 					$setting = substr($what, 9);
 
-					if($setting == 'type') {
-                        // Check to see if the type has changed.
-						$request = $smcFunc['db_query']('', '
-                            SELECT type FROM {db_prefix}tp_blocks
-                            WHERE id = {int:id} LIMIT 1',
-                            array('id' => $where)
-                        );
-						if($smcFunc['db_num_rows']($request) > 0) {
-                            $row    = $smcFunc['db_fetch_assoc']($request);
-                            $smcFunc['db_free_result']($request);
-                        	if($row['type'] != $value) {
-								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_blocks
-									SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
-									WHERE id = {int:blockid}',
-									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
-								);
-							break;
-                        	}
-                        }
-					}
-					elseif($setting == 'body') {
+					if($setting == 'body') {
 						// If we came from WYSIWYG then turn it back into BBC regardless.
 						if (!empty($_REQUEST['tp_block_body_mode']) && isset($_REQUEST['tp_block_body']))
 						{
@@ -2545,6 +2522,27 @@ function do_postchecks()
                             array('data' => json_encode($data), 'blockid' => $where)
                         );
                     }
+					elseif($setting == 'type') {
+                        // Check to see if the type has changed.
+						$request = $smcFunc['db_query']('', '
+                            SELECT type FROM {db_prefix}tp_blocks
+                            WHERE id = {int:id} LIMIT 1',
+                            array('id' => $where)
+                        );
+						if($smcFunc['db_num_rows']($request) > 0) {
+                            $row    = $smcFunc['db_fetch_assoc']($request);
+                            $smcFunc['db_free_result']($request);
+                        	if($row['type'] != $value) {
+								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
+								$smcFunc['db_query']('', '
+									UPDATE {db_prefix}tp_blocks
+									SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
+									WHERE id = {int:blockid}',
+									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
+								);
+                        	}
+                        }
+					}
 					else {
 						$smcFunc['db_query']('', '
 							UPDATE {db_prefix}tp_blocks
