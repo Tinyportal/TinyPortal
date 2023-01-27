@@ -2442,7 +2442,7 @@ function do_postchecks()
 			$tpgroups = array();
 			$access = array();
 			$lang = array();
-			$typechange == FALSE;
+			$typechange = FALSE;
 
 			foreach($_POST as $what => $value)
 			{
