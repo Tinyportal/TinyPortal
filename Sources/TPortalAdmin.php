@@ -2442,6 +2442,7 @@ function do_postchecks()
 			$tpgroups = array();
 			$access = array();
 			$lang = array();
+			$typechange == FALSE;
 
 			foreach($_POST as $what => $value)
 			{
@@ -2533,12 +2534,13 @@ function do_postchecks()
                             $row    = $smcFunc['db_fetch_assoc']($request);
                             $smcFunc['db_free_result']($request);
                         	if($row['type'] != $value) {
+								$typechange = TRUE;
 								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
 								$smcFunc['db_query']('', '
 									UPDATE {db_prefix}tp_blocks
-									SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
+									SET settings = {string:data}, type = {int:blocktype}
 									WHERE id = {int:blockid}',
-									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '')
+									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
 								);
                         	}
                         }
@@ -2644,6 +2646,16 @@ function do_postchecks()
                 $name = TPuploadpicture( 'qup_blockbody', $context['user']['id'].'uid', null, null, $context['TPortal']['image_upload_path']);
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_'. $name);
 			}
+	
+			// if type changed, we wipe the body	
+			if($typechange == TRUE) {
+				$smcFunc['db_query']('', '
+					UPDATE {db_prefix}tp_blocks
+					SET body = {string:defaultbody}
+					WHERE id = {int:blockid}',
+					array('blockid' => $where, 'defaultbody' => '')
+				);
+			}			
 			updateTPSettings($updateArray);
 
 			redirectexit('action=tpadmin&amp;sa=editblock&amp;id='.$where.';' . $context['session_var'] . '=' . $context['session_id']);
