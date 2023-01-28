@@ -153,7 +153,7 @@ class Block extends Base {
 			else if(isset($block['access']) && (strpos($block['access'],',') === false) && (empty(array_intersect(array($block['access']), $user))) ) {
 				continue;
 			}
-			else if(array_intersect($user, explode(',', $block['access'])) == false) {
+			else if(empty(array_intersect($user, explode(',', $block['access'])))) {
 				continue;
 			}
 
