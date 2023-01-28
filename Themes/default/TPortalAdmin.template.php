@@ -257,7 +257,8 @@ function template_settings()
 						<input type="checkbox" id="tp_oldsidebar" name="tp_oldsidebar" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						<label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-admin_showblocksdesc'] : 'tp-admin_showblocksdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
 					</dt>
 					<dd>
 						<input type="checkbox" id="tp_admin_showblocks" name="tp_admin_showblocks" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '>
