@@ -140,20 +140,22 @@ class Block extends Base {
         global $context, $user_info;
 
         $blocks = array();
-        $user   = reset($user_info['groups']);
-
+        $user   = $user_info['groups'];
         $activeBlocks = $this->getActiveBlocks();
         foreach($activeBlocks as $block) {
             // Check group access
             if(allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 
             }
-            else if(empty($block['access'])) {
-                continue;
-            }
-            else if(in_array($user, explode(',', $block['access'])) == false) {
-                continue;
-            }
+            else if(!isset($block['access'])) {
+				continue;
+			}
+			else if(isset($block['access']) && (strpos($block['access'],',') === false) && (empty(array_intersect(array($block['access']), $user))) ) {
+				continue;
+			}
+			else if(empty(array_intersect($user, explode(',', $block['access'])))) {
+				continue;
+			}
 
             // check page settings
             $display = explode(',', $block['display']);
