@@ -37,6 +37,9 @@ $txt['tp-stars'] = 'Display stars instead of numbers';
 
 $txt['tp-useoldsidebar'] = 'Use old sidebar for admin';
 $txt['tp-admin_showblocks'] = 'Admin can see all blocks';
+$txt['tp-admin_showblocksdesc'] = 'If a user has the Administrator as primary membergroup, this user will by default see ALL active TinyPortal blocks. The setting \'Admin can see all blocks\' can be used disable this behaviour for Administrators. The behaviour is in standard TinyPortal:
+Admin can see all blocks (Set) - Admin will see All blocks that are active
+Admin can see all blocks (Not-Set) - Admin will see blocks if admin is part of another membergroup which can see the block (additional membergroups)';
 $txt['tp-uselangoption2'] = 'NB! The language visibility setting is turned off. Note that the language choices will not work unless its turned on.';
 $txt['tp-imageproxycheck'] = 'Perform the final image proxy check';
 $txt['tp-imageproxycheckdesc'] = 'This defaults to ON and is only effective when SMF Image Proxy is enabled. Deactivating this option may resolve conflicts with certain mods, but will deactivate the image proxy for http images in PHP articles and HTML blocks.';
