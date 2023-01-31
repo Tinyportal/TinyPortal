@@ -665,7 +665,7 @@ class Integrate
 	{
 		global $context, $scripturl, $boardurl;
 
-		$context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2022</a>';
+		$context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2023</a>';
 	}
 
     public static function hookActions(&$actionArray)
