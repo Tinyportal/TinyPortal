@@ -37,7 +37,8 @@ SMF version must be SMF2.x.
 
 Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.x. Make a backup of all your SMF and TP files before you uninstall.
 
-**NOTICE!: Due to a bug in SMF2.1.3 upgrading TinyPortal may result in this error message: "All parts of a PRIMARY KEY must be NOT NULL; if you need NULL in a key, use UNIQUE instead". In order to update TinyPortal while on SMF2.1.3 you may need to install the [correction MOD that can be downloaded from the TinyPortal.net support site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=item177). After applying this MOD yoy will be able to re-install TinyPortal on SMF2.1.3. Please note that the correction MOD should be uninstalled prior to patching SMF to version 2.1.4.**
+**NOTICE!: Due to a bug in SMF 2.1.3 upgrading TinyPortal may result in one of these error messages: "All parts of a PRIMARY KEY must be NOT NULL; if you need NULL in a key, use UNIQUE instead" or "Database error: Invalid default value for 'item_type'".** 
+**If you encounter these errors while on SMF 2.1.3 you will need to install the [correction MOD that can be downloaded from the TinyPortal.net support site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=item177). After applying this MOD you will be able to re-install TinyPortal on SMF 2.1.3. Please note that the correction MOD should be uninstalled prior to patching SMF to version 2.1.4.**
 
 ## License Information:
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License");
