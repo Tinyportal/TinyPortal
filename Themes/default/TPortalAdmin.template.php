@@ -2747,7 +2747,8 @@ function template_menucore()
 		if(TP_SMF21) {
 			echo '
 				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help='.$txt['tp-menu-icon2'].'" onclick="return reqOverlayDiv(this.href);"><span id="tp_menu_iconhlp" class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_menu_icon">'.$txt['tp-menu-icon'].'</label>
+					<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-menu-icon2'] : 'tp-menu-icon2') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+					<span id="tp_menu_iconhlp" class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_menu_icon">'.$txt['tp-menu-icon'].'</label>
 				</dt>
 				<dd>
 					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40" placeholder="'. $txt['tp-none-'].'">

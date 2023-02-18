@@ -40,6 +40,9 @@
 	height: 2.6em;
 	overflow: hidden;
 }
+.tp_shoutavatar2 img {
+    max-width: 100%;
+}
 .tp_shoutavatar h4 {
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
