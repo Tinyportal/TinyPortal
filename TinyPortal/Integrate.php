@@ -815,7 +815,7 @@ class Integrate
 
     public static function hookPreLogStats(&$no_stat_actions)
     {
-        $no_stat_actions = array_merge($no_stat_actions, array('shout'));
+        $no_stat_actions = array_merge($no_stat_actions, array('tpshout' => true));
 
         // We can also call init from here although it's not meant for this
         require_once(SOURCEDIR . '/TPortal.php');
