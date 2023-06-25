@@ -284,15 +284,20 @@ function template_editblock()
 					$context['TPortal']['blockedit']['body']=10;
 				echo '
 					<dl class="tptitle settings">
-						<dt><label for="tp_block_body">'.$txt['tp-numberofrecenttopics'].'</label></dt>
+						<dt>' . $txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
-							<input type="number" id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 6em" min="1" required>
+							<input type="radio" id="tp_block_useavataryes" name="tp_block_set_useavatar" value="1" ' , !$context['TPortal']['blockedit']['useavatar']== '0' ? ' checked' : '' ,' required><label for="tp_block_useavataryes">'.$txt['tp-yes'].'</label>
+							<input type="radio" id="tp_block_useavatarno" name="tp_block_set_useavatar" value="0" ' , $context['TPortal']['blockedit']['useavatar']== '0' ? ' checked' : '' ,'><label for="tp_block_useavatarno">'.$txt['tp-no'].'</label>
 						</dd>
 						<dt>
 							<label for="tp-recentlength">'.$txt['tp-lengthofrecenttopics'].'</label>
 						</dt>
 						<dd>
 							<input type="number" id="tp-recentlength" name="tp_block_set_length" value="' ,(empty($context['TPortal']['blockedit']['length']) ? '25' : $context['TPortal']['blockedit']['length']), '" style="width: 6em" min="1" max="255" required><br>
+						</dd>
+						<dt><label for="tp_block_body">'.$txt['tp-numberofrecenttopics'].'</label></dt>
+						<dd>
+							<input type="number" id="tp_block_body" name="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 6em" min="1" required>
 						</dd>
 						<dt>'.$txt['tp-recentincexc'].'</dt>
 						<dd>
@@ -303,10 +308,11 @@ function template_editblock()
 						<dd>
 							<input type="text" id="tp_block_boards" name="tp_block_set_boards" value="' , $context['TPortal']['blockedit']['boards'] ,'" size="20" pattern="[0-9,]+">
 						</dd>
-						<dt>' . $txt['tp-rssblock-showavatar'].'</dt>
+						<dt>
+							<label for="tp-minmessagetopics">'.$txt['tp-minmessagetopics'].'</label>
+						</dt>
 						<dd>
-							<input type="radio" id="tp_block_useavataryes" name="tp_block_set_useavatar" value="1" ' , !$context['TPortal']['blockedit']['useavatar']== '0' ? ' checked' : '' ,' required><label for="tp_block_useavataryes">'.$txt['tp-yes'].'</label>
-							<input type="radio" id="tp_block_useavatarno" name="tp_block_set_useavatar" value="0" ' , $context['TPortal']['blockedit']['useavatar']== '0' ? ' checked' : '' ,'><label for="tp_block_useavatarno">'.$txt['tp-no'].'</label>
+							<input type="number" id="tp-minmessagetopics" name="tp_block_set_minmessagetopics" value="' ,(empty($context['TPortal']['blockedit']['minmessagetopics']) ? '350' : $context['TPortal']['blockedit']['minmessagetopics']), '" style="width: 6em" min="1" max="1000000" required><br>
 						</dd>
 					</dl>';
 	if($modSettings['allow_guestAccess'] == '0') {

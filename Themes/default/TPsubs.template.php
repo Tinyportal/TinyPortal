@@ -645,10 +645,10 @@ function TPortal_recentbox()
 	}
 	else {
 	// set variable for SMF21
-	if(is_numeric($context['TPortal']['recentboxnum'] < 5))
-		$context['min_message_topics'] = 1000;
+	if(is_numeric($context['TPortal']['minmessagetopics']))
+		$context['min_message_topics'] = $context['TPortal']['minmessagetopics'];
 	else 
-		$context['min_message_topics'] = 300;
+		$context['min_message_topics'] = 350;
 	// is it a number?
 	if(is_numeric($context['TPortal']['recentlength']))
 		$recentlength = $context['TPortal']['recentlength'];
