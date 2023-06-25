@@ -1904,7 +1904,7 @@ function TPortal_panel($side) {{{
 				$context['TPortal']['useavatar']	= $block['useavatar'];
 				$context['TPortal']['boardmode']	= $block['include'];
 				$context['TPortal']['recentlength'] = $block['length'];
-				$context['TPortal']['minmessagetopics'] = $block['minmessagetopics'];
+				$context['TPortal']['minmessagetopics'] = isset($block['minmessagetopics']) ? $block['minmessagetopics'] : '';
 				$context['TPortal']['recentboards'] = !empty($block['boards']) ? explode(',', $block['boards']) : [];
 				break;
 			case 'scriptbox':
