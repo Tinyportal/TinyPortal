@@ -202,7 +202,7 @@ class Util
                     // check that no html has been cut off
                     if(self::isHTML($string)) {
                         // Change all the new lines to <br>
-                        $string         = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
+                        // $string         = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
                         $string         = str_ireplace(array("<br />","<br>","<br/>","<br />","&lt;br /&gt;","&lt;br/&gt;","&lt;br&gt;"), '<br>', $string);
                         $string         = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
 
