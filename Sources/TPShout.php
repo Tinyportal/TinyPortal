@@ -227,10 +227,17 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 	global $context, $scripturl, $modSettings, $smcFunc;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
-    // Force this to reset each time
+// Force this to reset each time
     $context['TPortal']['shoutbox'] = null;
 
+    if(is_null($block_id) || $block_id === false) {
+        redirectexit();
+    }
+
     $row					= TPBlock::getInstance()->getBlock($block_id);
+    if(!is_array($row) || (isset($row['type']) && ((int)$row['type'] != TP_BLOCK_SHOUTBOX))) {
+        redirectexit();
+    }
     $set					= json_decode($row['settings'], TRUE);
 	$shoutbox_id			= $set['shoutbox_id'];
     $shoutbox_layout		= $set['shoutbox_layout'];
