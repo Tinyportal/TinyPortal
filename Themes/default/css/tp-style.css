@@ -584,13 +584,58 @@ ul.category_children li {
 	margin: 0;
 	padding: 0;
 }
+.tp_user_pm::before {
+    content: url(../images/tinyportal/TPdivider.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_unread_pm::before {
+    content: url(../images/tinyportal/TPdivider.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_unapproved_members::before {
+    content: url(../images/tinyportal/TPmodule2.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_moderate::before {
+    content: url(../images/tinyportal/TPdivider.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_unread::before {
+    content: url(../images/tinyportal/TPdivider.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_maintenance::before {
+    content: url(../images/tinyportal/TPdivider2.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_loggedintime::before {
+    content: url(../images/tinyportal/TPdivider2.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_subart::before {
+    content: url(../images/tinyportal/TPdivider3.png);
+    left: -4px;
+    position: relative;
+}
+.tp_user_settings::before {
+    content: url(../images/tinyportal/TPmodule2.png);
+    left: -4px;
+    position: relative;
+}
 /* blocktype 3: Stats */
 .tp_statsblock h5 {
-	padding: 5px 0 5px 0;
+	padding: .3em 0 .3em 0;
 }
 .tp_statsblock h5.mlist, .tp_statsblock h5.stats, .tp_statsblock h5.online {
-	margin-bottom: 5px;
-	padding: 5px 0 5px 25px;
+	margin: .3em 0 .2em 0;
+    padding: .3em 0 .3em 1.5em;
 }
 .tp_statsblock h5.mlist {
 	background: url(../images/tinyportal/members.png) no-repeat 0 5px;
@@ -603,6 +648,32 @@ ul.category_children li {
 }
 .tp_statsblock ul, .tp_stats_users {
 	padding-left: 2em;
+}
+.tp_statsblock ul {
+    padding: 0 0 1em;
+}
+.tp_statsblock ul.tp_stats_users {
+    padding: 0 0 1em 2em;
+}
+.tp_stats_members::before {
+    content: url(../images/tinyportal/TPdivider.png);
+    left: -4px;
+    position: relative;
+}
+.tp_stats_forum::before {
+    content: url(../images/tinyportal/TPdivider.png);
+    left: -4px;
+    position: relative;
+}
+.tp_stats_online::before {
+    content: url(../images/tinyportal/TPmodule2.png);
+    left: -4px;
+    position: relative;
+}
+.tp_stats_online_users::before {
+    content: url(../images/tinyportal/TPdivider2.png);
+    left: -4px;
+    position: relative;
 }
 /* blocktype 4: search */
 .block_search {
@@ -623,6 +694,16 @@ ul.tp_catmenu, ul.tp_catmenu li {
 }
 ul.tp_catmenu li.tp_catmenu_header {
 	padding-top: 6px;
+}
+.tp_menu_0::before {
+    content: url(../images/tinyportal/TPdivider2.png);
+    left: -4px;
+    position: relative;
+}
+.tp_menu_1::before {
+    content: url(../images/tinyportal/bullet3.png);
+    left: -4px;
+    position: relative;
 }
 /* blocktype 12: Recent Topics */
 ul.tp_recentblock, .tp_statsblock ul {
