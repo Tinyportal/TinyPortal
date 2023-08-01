@@ -524,7 +524,7 @@ function shout_smiley_code($shoutbox_id) {{{
 		// Cache for longer when customized smiley codes aren't enabled
 		$cache_time = empty($modSettings['smiley_enable']) ? 7200 : 480;
 
-		if (($temp = cache_get_data('posting_smileys_' . $user_info['smiley_set'], $cache_time)) == null)
+		if (($temp = cache_get_data('tp_posting_smileys_' . $user_info['smiley_set'], $cache_time)) == null)
 		{
 			$request = $smcFunc['db_query']('', '
 				SELECT s.code, f.filename, s.description, s.smiley_row, s.hidden
@@ -557,7 +557,7 @@ function shout_smiley_code($shoutbox_id) {{{
 					$context['tp_smileys'][$section][count($smileyRows) - 1]['isLast'] = true;
 			}
 
-//			cache_put_data('posting_smileys_' . $user_info['smiley_set'], $context['tp_smileys'], $cache_time);
+			cache_put_data('tp_posting_smileys_' . $user_info['smiley_set'], $context['tp_smileys'], $cache_time);
 		}
 		else {
 			$context['tp_smileys'] = $temp;
