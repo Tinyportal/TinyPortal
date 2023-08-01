@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -201,7 +201,7 @@ function template_tpshout_admin_settings()
 							<input type="number" id="tp_shoutbox_maxlength" name="tp_shoutbox_maxlength" value="' ,$context['TPortal']['shoutbox_maxlength'], '" style="width: 6em" /><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shoutboxtimeformatdesc'] : 'time_format') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=time_format" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_shoutbox_timeformat2">'.$txt['tp-shoutboxtimeformat'].'</label>
 						</dt>
 						<dd>
@@ -212,7 +212,7 @@ function template_tpshout_admin_settings()
 					<dl class="settings">
 						<dt>
 							<span class="font-strong">
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shoutboxcolorsdesc'] : 'tp-shoutboxcolorsdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-shoutboxcolorsdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-shoutboxcolors'].'</span>
 						</dt>
 						<dd></dd>
@@ -500,7 +500,7 @@ function template_tpshout_profile()
 		<div class="cat_bar"><h3 class="catbg">'.$txt['shoutboxprofile'].'</h3></div>
 		<p class="information">'.$txt['shoutboxprofile2'].'</p>
 		<div></div>
-		<div id="tpshout_profile" class="'. (!TP_SMF21 ? 'windowbg padding-div' : 'roundframe') . '">
+		<div id="tpshout_profile" class="roundframe">
 			<div class="windowbg addborder tp_pad">';
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '

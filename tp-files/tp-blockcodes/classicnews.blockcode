@@ -41,9 +41,6 @@ foreach($what as $w)
 	<div class="smalltext">';
 	if(!$w['new'])
 	{
-	if (!TP_SMF21)
-		echo '<a href="'.$w['href'].'"><img src="'.$settings['images_url'].'/'.$context['user']['language'].'/new.gif" alt="new" /></a> ';
-	else
 		echo '<a href="'.$w['href'].'" id="newicon" class="new_posts" >' . $txt['new'] . '</a> ';
 	}
 	echo '['.$w['time'].']

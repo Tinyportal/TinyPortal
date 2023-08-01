@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -170,7 +170,7 @@ function tp_getbuttons() {{{
 	// the admin functions - divider
 	if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox'))
 		$buts['divde1'] = array(
-			'title' => (TP_SMF21 ? '<span class="tp_menu_horizontal21">&nbsp;</span>' : '<span class="tp_menu_horizontal20">&nbsp;</span>'),
+			'title' => '<span class="tp_menu_horizontal21">&nbsp;</span>',
 			'href' => '#button_tpadmin',
 			'show' => true,
 			'active_button' => false,
@@ -2380,81 +2380,6 @@ function TP_prebbcbox($id, $body = '')
 	);
 	create_control_richedit($editorOptions);
 }
-function tp_getblockstyles()
-{
-	return array(
-		'0' => array(
-			'class' => 'titlebg+windowbg',
-			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg"><span class="topslice"><span></span></span><div style="padding: 0 8px;">',
-			'code_bottom' => '</div><span class="botslice"><span></span></span></div>',
-		),
-		'1' => array(
-			'class' => 'catbg+windowbg',
-			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg"><span class="topslice"><span></span></span><div style="padding: 0 8px;">',
-			'code_bottom' => '</div><span class="botslice"><span></span></span></div>',
-		),
-		'2' => array(
-			'class' => 'titlebg+windowbg(old)',
-			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg"><div style="padding: 8px;">',
-			'code_bottom' => '</div></div>',
-		),
-		'3' => array(
-			'class' => 'catbg+windowbg(old)',
-			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg"><div style="padding: 8px;">',
-			'code_bottom' => '</div></div>',
-		),
-		'4' => array(
-			'class' => 'titlebg+windowbg',
-			'code_title_left' => '<div class="tp_half"><h3 class="titlebg"><span class="l"></span><span class="r"></span>',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg"><div style="padding: 8px 8px 0 8px;">',
-			'code_bottom' => '</div><span class="botslice"><span></span></span></div>',
-		),
-		'5' => array(
-			'class' => 'catbg+windowbg',
-			'code_title_left' => '<div class="tp_half"><h3 class="catbg"><span class="l"></span><span class="r"></span>',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg"><div style="padding: 8px 8px 0 8px;">',
-			'code_bottom' => '</div><span class="botslice"><span></span></span></div>',
-		),
-		'6' => array(
-			'class' => 'titlebg+windowbg2',
-			'code_title_left' => '<div class="tp_half"><h3 class="titlebg"><span class="l"></span><span class="r"></span>',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg2"><div style="padding: 8px 8px 0 8px;">',
-			'code_bottom' => '</div><span class="botslice"><span></span></span></div>',
-		),
-		'7' => array(
-			'class' => 'catbg+windowbg2',
-			'code_title_left' => '<div class="tp_half"><h3 class="catbg"><span class="l"></span><span class="r"></span>',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg2"><div style="padding: 8px 8px 0 8px;">',
-			'code_bottom' => '</div><span class="botslice"><span></span></span></div>',
-		),
-		'8' => array(
-			'class' => 'titlebg+roundframe',
-			'code_title_left' => '<div class="tp_half"><h3 class="titlebg"><span class="l"></span><span class="r"></span>',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="roundframe"><div style="padding: 8px 0 0 0px;">',
-			'code_bottom' => '</div></div><span class="lowerframe"><span></span></span>',
-		),
-		'9' => array(
-			'class' => 'catbg+roundframe',
-			'code_title_left' => '<div class="tp_half"><h3 class="catbg"><span class="l"></span><span class="r"></span>',
-			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="roundframe"><div style="padding: 8px 0px 0 0;">',
-			'code_bottom' => '</div></div><span class="lowerframe"><span></span></span>',
-		),
-	);
-}
 
 function tp_getblockstyles21()
 {
@@ -2677,7 +2602,7 @@ function TPGetMemberColour($member_ids)
     }
 
     // SMF2.1 and php < 7.0 need this
-    if (TP_SMF21 && empty($db_connection)) {
+    if (empty($db_connection)) {
         $db_options = array();
         // Add in the port if needed
         if (!empty($db_port)) {

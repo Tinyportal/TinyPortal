@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.1
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -151,20 +151,13 @@ function template_settings()
 						<dd>';
 						       $tm=explode(",",$context['TPortal']['resp']);
 							foreach($context['TPallthem'] as $them) {
-					              if(TP_SMF21) {
-									echo '
-										  <img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
-										  <input name="tp_resp'.$them['id'].'" id="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
-										}
-								  else {
-									echo '
-										  <img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.gif" />
-										  <input type="checkbox" name="tp_resp'.$them['id'].'" id="tp_resp'.$them['id'].'" value="'.$them['id'].'" ';
-										}
-					              if(in_array($them['id'],$tm)) {
+								echo '
+									<img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
+									<input name="tp_resp'.$them['id'].'" id="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
+								if(in_array($them['id'],$tm)) {
 					                echo ' checked="checked" ';
-					              }
-					              echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
+					            }
+					            echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
 						       }
 						   echo '
 							<br><input type="checkbox" name="tp_resp" id="tp_resp" value="0"><label for="tp_resp">'.$txt['tp-deselectthemes'].'</label>
@@ -176,7 +169,7 @@ function template_settings()
 
 				<dl class="settings">
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-frontpagetitle2'] : 'tp-frontpagetitle2') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-frontpagetitle2" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_frontpage_title">', $txt['tp-frontpagetitle'], '</label>
 					</dt>
 					<dd>
@@ -192,7 +185,7 @@ function template_settings()
 						<input type="radio" name="tp_redirectforum" id="tp_redirectforum2" value="0" ' , $context['TPortal']['redirectforum']=='0' ? 'checked' : '' , '><label for="tp_redirectforum2"> '.$txt['tp-redirectforum2'].'</label>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-hideadminmenudesc'] : 'tp-hideadminmenudesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-hideadminmenudesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hideadminmenu">', $txt['tp-hideadminmenu'], '</label>
 					</dt>
 					<dd>
@@ -226,7 +219,7 @@ function template_settings()
 						<input type="checkbox" id="tp_uselangoption" name="tp_uselangoption" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-use_groupcolordesc'] : 'tp-use_groupcolordesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-use_groupcolordesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label>
 					</dt>
 					<dd>
@@ -257,14 +250,14 @@ function template_settings()
 						<input type="checkbox" id="tp_oldsidebar" name="tp_oldsidebar" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-admin_showblocksdesc'] : 'tp-admin_showblocksdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-admin_showblocksdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
 					</dt>
 					<dd>
 						<input type="checkbox" id="tp_admin_showblocks" name="tp_admin_showblocks" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-imageproxycheckdesc'] : 'tp-imageproxycheckdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-imageproxycheckdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label>
 					</dt>
 					<dd>
@@ -274,7 +267,7 @@ function template_settings()
                     if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
                         echo '
                         <dt>
-                            <a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-fulltextsearchdesc'] : 'tp-fulltextsearchdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+                            <a href="', $scripturl, '?action=helpadmin;help=tp-fulltextsearchdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_fulltextsearch">', $txt['tp-fulltextsearch'], '</label>
                         </dt>
                         <dd>
@@ -283,14 +276,14 @@ function template_settings()
                     }
 					echo '
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-disabletemplateevaldesc'] : 'tp-disabletemplateevaldesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-disabletemplateevaldesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label>
 					</dt>
 					<dd>
                         <input type="checkbox" id="tp_disable_template_eval" name="tp_disable_template_eval" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
 					</dd>
                     <dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-imageuploadpathdesc'] : 'tp-imageuploadpathdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-imageuploadpathdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
 					</dt>
 					<dd>
@@ -298,14 +291,14 @@ function template_settings()
 					</dd>';
 /*
                     <dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-downloaduploadpathdesc'] : 'tp-downloaduploadpathdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-downloaduploadpathdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_download_upload_path">', $txt['tp-downloaduploadpath'], '</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_download_upload_path" name="tp_download_upload_path" value="' , !empty($context['TPortal']['download_upload_path']) ? $context['TPortal']['download_upload_path'] : '' , '" size="50">
 					</dd>
                     <dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-blockcodeuploadpathdesc'] : 'tp-blockcodeuploadpathdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-blockcodeuploadpathdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_blockcode_upload_path">', $txt['tp-blockcodeuploadpath'], '</label>
 					</dt>
 					<dd>
@@ -313,7 +306,7 @@ function template_settings()
 					</dd>
 */
                     echo '<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-copyrightremovaldesc'] : 'tp-copyrightremovaldesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-copyrightremovaldesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label>
 					</dt>
 					<dd>
@@ -364,7 +357,7 @@ function template_frontpage()
 							<input type="radio" id="tp_frontblock_type3" name="tp_frontblock_type" value="last"  ' , $context['TPortal']['frontblock_type']=='last' ? 'checked' : '' , '><label for="tp_frontblock_type3"> '.$txt['tp-frontblocklast'].'</label><br><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-frontpageoptionsdesc'] : 'tp-frontpageoptionsdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-frontpageoptionsdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp-frontpageoptions">',$txt['tp-frontpageoptions'],'</label>
 						</dt>
 						<dd>
@@ -443,7 +436,7 @@ function template_frontpage()
 				</div>
 				<div>
 					<h4>
-					<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['reset_custom_template_layoutdesc'] : 'reset_custom_template_layoutdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+					<a href="', $scripturl, '?action=helpadmin;help=reset_custom_template_layoutdesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
 					<textarea class="tp_customlayout" name="tp_frontpage_template">' . $context['TPortal']['frontpage_template'] . '</textarea><br><br>
 				</div>
@@ -456,7 +449,7 @@ function template_frontpage()
 						  <input type="number" id="tp_frontpage_limit" name="tp_frontpage_limit" value="' ,$context['TPortal']['frontpage_limit'], '" style="width: 6em" min="1" maxlength="5"><br><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-sortingoptionsdesc'] : 'tp-sortingoptionsdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-sortingoptionsdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_frontpage_usorting">',$txt['tp-sortingoptions'],'</label>
 						</dt>
 						<dd>
@@ -475,7 +468,7 @@ function template_frontpage()
 					<hr>
 					<dl class="settings">
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-allowguestsdesc'] : 'tp-allowguestsdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-allowguestsdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_allow_guestnews">', $txt['tp-allowguests'], '</label>
 						</dt>
 						<dd>
@@ -510,14 +503,14 @@ function template_frontpage()
 						  <input type="number" id="tp_frontpage_limit_len" name="tp_frontpage_limit_len"value="' ,$context['TPortal']['frontpage_limit_len'], '" style="width: 6em" maxlength="5" ><br><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-forumposts_avatardesc'] : 'tp-forumposts_avatardesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-forumposts_avatardesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
 						</dt>
 						<dd>
 							<input type="checkbox" id="tp_forumposts_avatar" name="tp_forumposts_avatar" value="1" ' , $context['TPortal']['forumposts_avatar']=='1' ? 'checked' : '' , '>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-useattachmentdesc'] : 'tp-useattachmentdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-useattachmentdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_attachment">', $txt['tp-useattachment'], '</label>
 						</dt>
 						<dd>
@@ -527,48 +520,30 @@ function template_frontpage()
 							<label for="tp_boardnews_divheader">'.$txt['tp-boardnews_divheader'].'</label>
 						</dt>
 						<dd>
-						  <select id="tp_boardnews_divheader" name="tp_boardnews_divheader" value="' ,$context['TPortal']['boardnews_divheader'], '" >
+							<select id="tp_boardnews_divheader" name="tp_boardnews_divheader" value="' ,$context['TPortal']['boardnews_divheader'], '" >
 								<option value="title_bar"' , $context['TPortal']['boardnews_divheader']=='title_bar' ? ' selected="selected"' : '' , '>title_bar</option>
-								<option value="cat_bar"' , $context['TPortal']['boardnews_divheader']=='cat_bar' ? ' selected="selected"' : '' , '>cat_bar</option>';
-		if (!TP_SMF21)
-			echo '
-								<option value="tp_half"' , $context['TPortal']['boardnews_divheader']=='tp_half' ? ' selected="selected"' : '' , '>tp_half</option>';
-		else
-			echo '
-								<option value="tp_half21"' , $context['TPortal']['boardnews_divheader']=='tp_half21' ? ' selected="selected"' : '' , '>tp_half21</option>';
-			echo '
+								<option value="cat_bar"' , $context['TPortal']['boardnews_divheader']=='cat_bar' ? ' selected="selected"' : '' , '>cat_bar</option>
+								<option value="tp_half21"' , $context['TPortal']['boardnews_divheader']=='tp_half21' ? ' selected="selected"' : '' , '>tp_half21</option>
 							</select>
 						</dd>
 						<dt>
 							<label for="tp_boardnews_headerstyle">'.$txt['tp-boardnews_headerstyle'].'</label>
 						</dt>
 						<dd>
-						  <select id="tp_boardnews_headerstyle" name="tp_boardnews_headerstyle" value="' ,$context['TPortal']['boardnews_headerstyle'], '">
+							<select id="tp_boardnews_headerstyle" name="tp_boardnews_headerstyle" value="' ,$context['TPortal']['boardnews_headerstyle'], '">
 								<option value="titlebg"' , $context['TPortal']['boardnews_headerstyle']=='titlebg' ? ' selected="selected"' : '' , '>titlebg</option>
-								<option value="catbg"' , $context['TPortal']['boardnews_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>';
-		if (!TP_SMF21)
-			echo '
-								<option value="titlebg2"' , $context['TPortal']['boardnews_headerstyle']=='titlebg2' ? ' selected="selected"' : '' , '>titlebg2</option>
-								<option value="catbg2"' , $context['TPortal']['boardnews_headerstyle']=='catbg2' ? ' selected="selected"' : '' , '>catbg2</option>';
-			echo '
+								<option value="catbg"' , $context['TPortal']['boardnews_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>
 							</select>
 						</dd>
 						<dt>
 							<label for="tp_boardnews_divbody">'.$txt['tp-boardnews_divbody'].'</label>
 						</dt>
 						<dd>
-						  <select id="tp_boardnews_divbody" name="tp_boardnews_divbody" value="' ,$context['TPortal']['boardnews_divbody'], '">
-								<option value="windowbg"' , $context['TPortal']['boardnews_divbody']=='windowbg' ? ' selected="selected"' : '' , '>windowbg</option>';
-		if (!TP_SMF21)
-			echo '
-								<option value="windowbg2"' , $context['TPortal']['boardnews_divbody']=='windowbg2' ? ' selected="selected"' : '' , '>windowbg2</option>
-								<option value="windowbg3"' , $context['TPortal']['boardnews_divbody']=='windowbg3' ? ' selected="selected"' : '' , '>windowbg3</option>';
-		else
-			echo '
+							<select id="tp_boardnews_divbody" name="tp_boardnews_divbody" value="' ,$context['TPortal']['boardnews_divbody'], '">
+								<option value="windowbg"' , $context['TPortal']['boardnews_divbody']=='windowbg' ? ' selected="selected"' : '' , '>windowbg</option>
 								<option value="windowbg noup"' , $context['TPortal']['boardnews_divbody']=='windowbg noup' ? ' selected="selected"' : '' , '>windowbg+noup</option>
-								<option value="roundframe"' , $context['TPortal']['boardnews_divbody']=='roundframe' ? ' selected="selected"' : '' , '>roundframe</option>';
-			echo '
-						</select>
+								<option value="roundframe"' , $context['TPortal']['boardnews_divbody']=='roundframe' ? ' selected="selected"' : '' , '>roundframe</option>
+							</select>
 						</dd>
 					</dl>
 				</div>
@@ -665,7 +640,7 @@ function template_editcategory()
 							<input type="text" id="tp_category_value1" style="max-width:97%;" name="tp_category_value1" value="' ,html_entity_decode($mg['value1']), '" size="50" required>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shortnamedesc'] : 'tp-shortnamedesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-shortnamedesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8"><b>', $txt['tp-shortname'], '</b></label>
 						</dt>
 						<dd>
@@ -779,7 +754,7 @@ function template_editcategory()
 				echo '	</div>
 						<br style="clear: both;" />
 						<h4>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['reset_custom_template_layoutdesc'] : 'reset_custom_template_layoutdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=reset_custom_template_layoutdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['reset_custom_template_layout'] ,'</h4>
 						<textarea class="tp_customlayout" name="tp_category_value9">' . $mg['value9'] . '</textarea><br><br>
 					</div>
@@ -887,7 +862,7 @@ function template_addcategory()
 							<input type="text" id="tp_cat_name" style="max-width:97%;" name="tp_cat_name" value="" size="50" required>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shortnamedesc'] : 'tp-shortnamedesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-shortnamedesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><b><label for="tp_cat_shortname">', $txt['tp-shortname'], '</label></b>
 						</dt>
 						<dd>
@@ -1609,7 +1584,7 @@ function template_panels()
 					</dl>
 					<dl class="settings">
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-hidebarscustomdesc'] : 'tp-hidebarscustomdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-hidebarscustomdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hidebars_custom">'.$txt['tp-hidebarscustom'].'</label>
 						</dt>
 						<dd>
@@ -1630,13 +1605,7 @@ function template_panels()
 
 	$allpanels = array('left','right','top','center','front','lower','bottom');
 	$alternate = true;
-
-	if(TP_SMF21) {
-		$types = tp_getblockstyles21();
-    }
-	else {
-		$types = tp_getblockstyles();
-    }
+	$types = tp_getblockstyles21();
 
 	foreach($allpanels as $pa => $panl) {
 		echo '
@@ -1746,7 +1715,7 @@ function template_panels()
 						<input type="text" id="tp_blockheight_'.$panl.'" name="tp_blockheight_'.$panl.'" value="' ,$context['TPortal']['blockheight_'.$panl], '" size="5" maxlength="5">
 					</dd>
 				</dl>
-				<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-panelstylehelpdesc'] : 'tp-panelstylehelpdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+				<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
 				<span class="tptooltip" title="', $txt['help'], '"></span></a><label>'.$txt['tp-panelstylehelp'].'</label>
 				<div class="panels-optionsbg">';
 
@@ -2337,12 +2306,8 @@ function template_menubox()
 							<div style="width:15%;" class="smalltext name float-items"><strong>'.$txt['tp-title'].'</strong></div>
 							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-type'].'</strong></div>
 							<div style="width:15%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-item'].'</strong></div>
-							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>';
-					if(TP_SMF21) {
-						echo '
-							<div style="width:6%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-menu-icon'].'</strong></div>';
-					}
-					echo '
+							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sub_item'].'</strong></div>
+							<div style="width:6%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-menu-icon'].'</strong></div>
 							<div style="width:11%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-windowopen'].'</strong></div>
 							<div style="width:10%;" class="smalltext title-admin-area float-items"><strong>'.$txt['tp-sitemap_on'].'</strong></div>
 							<div style="width:15%;" class="smalltext title-admin-area float-items tpcenter"><strong>'.$txt['tp-edit'].' / '.$txt['tp-delete'].' </strong></div>
@@ -2437,9 +2402,7 @@ function template_menubox()
 										'.$txt['tp-none-'].'';
 					}
 						echo '
-									</div>';
-					if(TP_SMF21) {
-						echo '
+									</div>
 									<div style="width:7%;" class="smalltext fullwidth-on-res-layout float-items">';
 						if($lbox['type']=='menu'){
 							echo '
@@ -2448,7 +2411,6 @@ function template_menubox()
 								}
 							echo '
 									</div>';
-					}
 					echo '
 									<div style="width:15%;" class="smalltext fullwidth-on-res-layout float-items">';
 					$openopts = array("menu", "cats", "arti", "link");
@@ -2743,18 +2705,14 @@ function template_menucore()
 					}
 					echo '
 					</select>
-				</dd>';
-		if(TP_SMF21) {
-			echo '
+				</dd>
 				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-menu-icon2'] : 'tp-menu-icon2') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-menu-icon2" onclick="return reqOverlayDiv(this.href);">
 					<span id="tp_menu_iconhlp" class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_menu_icon">'.$txt['tp-menu-icon'].'</label>
 				</dt>
 				<dd>
 					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40" placeholder="'. $txt['tp-none-'].'">
-				</dd>';
-		}
-			echo '
+				</dd>
 				<dt>
 					<label for="tp_menu_newlink">'.$txt['tp-windowopen'].'</label>
 				</dt>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.1
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -120,7 +120,7 @@ function TPortal_init() {{{
 	require_once($boarddir. '/SSI.php');
 
 	// Load JQuery if it's not set (anticipated for SMF2.1)
-    if(TP_SMF21 == false && !isset($modSettings['jquery_source'])) {
+    if(!isset($modSettings['jquery_source'])) {
 		loadJavaScriptFile('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array('external' => true), 'tp_jquery');
     }
 

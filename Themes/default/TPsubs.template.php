@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.1
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -72,13 +72,7 @@ function TPblock($block, $theme, $side, $double=false)
 		echo '<div class="block_' . $side . 'container" id="block_' . $block['type'] . '">';
 	}
 
-	if(function_exists('ctheme_tp_getblockstyles'))
-		$types = ctheme_tp_getblockstyles();
-
-	if(TP_SMF21)
-		$types = tp_getblockstyles21();
-	else
-		$types = tp_getblockstyles();
+	$types = tp_getblockstyles21();
 
 	// check
 	if ( !isset($block['panelstyle']) || ($block['panelstyle'] == '') || ($block['panelstyle'] == 99) )
@@ -93,27 +87,14 @@ function TPblock($block, $theme, $side, $double=false)
 		if ($theme || $block['frame'] == 'title') {
 			echo $types[$block['panelstyle']]['code_title_left'];
 
-	        if(TP_SMF21) {
-                if($block['visible'] == '' || $block['visible'] == '1') {
-                    echo '<a href="javascript:void(0);return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
-                }
-
-                // can you edit the block?
-                if($block['can_manage'] && !$context['TPortal']['blocks_edithide']) {
-                    echo '<a href="',$scripturl,'?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
-                }
-			}
-			else {
-                if($block['visible'] == '' || $block['visible'] == '1') {
-                    echo '<a href="javascript:void(0);return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 8px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
-                }
-
-                // can you edit the block?
-                if($block['can_manage'] && !$context['TPortal']['blocks_edithide']) {
-                    echo '<a href="',$scripturl,'?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 8px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
-                }
+			if($block['visible'] == '' || $block['visible'] == '1') {
+				echo '<a href="javascript:void(0);return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 			}
 
+			// can you edit the block?
+			if($block['can_manage'] && !$context['TPortal']['blocks_edithide']) {
+				echo '<a href="',$scripturl,'?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
+			}
 			echo $block['title'];
 			echo $types[$block['panelstyle']]['code_title_right'];
 		}
@@ -212,8 +193,7 @@ function TPortal_userbox()
 		<ul class="reset">';
 
 		// Only tell them about their messages if they can read their messages!
-		if ($context['allow_pm'])
-		{
+		if ($context['allow_pm']) {
 			echo '
 			<li class="tp_user_pm"><a href="', $scripturl, '?action=pm">' .$txt['tp-pm'].' ',  $context['user']['messages'], '</a></li>';
 			if($context['user']['unread_messages'] > 0)
@@ -221,20 +201,14 @@ function TPortal_userbox()
 			<li style="tp_user_unread_pm"><a href="', $scripturl, '?action=pm">' .$txt['tp-pm2'].' ',$context['user']['unread_messages'] , '</a></li>';
 		}
 		// Are there any members waiting for approval?
-		if (!empty($context['unapproved_members']))
+		if (!empty($context['unapproved_members'])) {
 			echo '
 				<li class="tp_user_unapproved_members"><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">' .$txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
-		// Are there any moderation reports?
-	if(!TP_SMF21)
-		{
-		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
-			echo '
-				<li class="tp_user_moderate"><a href="', $scripturl, '?action=moderate;area=reports">'.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
 		}
-	else {
-		if (!empty($user_info['mod_cache']) && $user_info['mod_cache']['bq'] != '0=1' && !empty($context['open_mod_reports']))
+		// Are there any moderation reports?
+		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
+		{
 			echo '
-				<hr>
 				<li class="tp_user_moderate"><a href="', $scripturl, '?action=moderate;area=reports">'.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
 		}
 		if(isset($context['TPortal']['userbox']['unread']))
@@ -317,31 +291,25 @@ function TPortal_userbox()
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
 	else  {
-		if(TP_SMF21) {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
-		}
-		else {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
-		}
-    echo '
-        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-            <input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
-            <select name="cookielength" style="max-width: 45%!important;">
-                <option value="-1" selected="selected">', $txt['forever'], '</option>
-                <option value="60">', $txt['one_hour'], '</option>
-                <option value="1440">', $txt['one_day'], '</option>
-                <option value="10080">', $txt['one_week'], '</option>
-                <option value="302400">', $txt['one_month'], '</option>
-            </select>
-            <input type="submit" class="button_submit" value="', $txt['login'], '" />
-            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
-		if (TP_SMF21) {
-			echo '
-			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
-		}
 		echo '
-        </form>
-        <div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
+			<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
+		echo '
+			<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+				<input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
+				<select name="cookielength" style="max-width: 45%!important;">
+					<option value="-1" selected="selected">', $txt['forever'], '</option>
+					<option value="60">', $txt['one_hour'], '</option>
+					<option value="1440">', $txt['one_day'], '</option>
+					<option value="10080">', $txt['one_week'], '</option>
+					<option value="302400">', $txt['one_month'], '</option>
+				</select>
+				<input type="submit" class="button_submit" value="', $txt['login'], '" />
+				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
+		echo '
+			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
+		echo '
+			</form>
+			<div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
 	}
 	echo '
 	</div>';
@@ -478,29 +446,18 @@ function TPortal_themebox()
 			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
 			<input type="button" class="button_submit" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
-			<div style="text-align: center; width: 95%; overflow: hidden;">';
-
-		if (!TP_SMF21)
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.gif" alt="" id="chosen" name="chosen" style="max-width: 100%;" /> ';
-		else
-			echo ' <img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" />';
-
-		echo '
+			<div style="text-align: center; width: 95%; overflow: hidden;">
+			<img src="'.$settings['images_url'].'/thumbnail.png" alt="" id="chosen" name="chosen" />
 			</div>
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
 			var extra = \'\';
 			var themepath = new Array();';
 		 for($a=0 ; $a<(count($temaid)); $a++){
-		    if (!TP_SMF21)
-				echo '
-					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.gif";
-					';
-			else
-				echo '
-					themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.png";
-					';
-			}
+			echo '
+				themepath['.$temaid[$a].'] = "'.$temapaths[$a].'/thumbnail.png";
+				';
+		}
 
 		echo '
 			function jumpit()
@@ -637,7 +594,7 @@ function TPortal_recentbox()
 		return;
 	}
 	else {
-	// set variable for SMF21
+	// set variable
 	if(is_numeric($context['TPortal']['minmessagetopics']))
 		$context['min_message_topics'] = $context['TPortal']['minmessagetopics'];
 	else 
@@ -679,15 +636,14 @@ function TPortal_recentbox()
 			}
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
-			if ((TP_SMF21) && ($w['is_new']))
-				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
+			if ($w['is_new'])
+				echo '
+					<a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
 			echo '
 				<a href="' . $w['href'] . '" title="' . $w['subject'] . '">'. $tpshortsubject .''. $w['readmore'] .'</a>
-				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
-			if (!(TP_SMF21) && ($w['is_new']))
-				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>';
-			echo '<br><span class="smalltext">['.$w['time'].']</span>
-			</li>';
+				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b>
+				 <br><span class="smalltext">['.$w['time'].']</span>
+				</li>';
 			$coun++;
 		}
 		echo '
@@ -720,15 +676,14 @@ function TPortal_recentbox()
 			}
 			echo '
 			<li' , $coun<count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
-			if ((TP_SMF21) && ($w['is_new']))
-				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
+			if ($w['is_new'])
+				echo ' 
+					<a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
 			echo '
-					<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'" title="' . $w['subject'] . '">'. $tpshortsubject .''. $w['readmore'] .'</a>
-				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b> ';
-			if (!(TP_SMF21) && ($w['is_new']))
-				echo ' <a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow"><img src="' . $settings['lang_images_url'] . '/new.gif" alt="' . $txt['new'] . '" /></a>';
-			echo '<br><span class="smalltext">['.$w['time'].']</span>
-			</li>';
+				<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'" title="' . $w['subject'] . '">'. $tpshortsubject .''. $w['readmore'] .'</a>
+				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b>
+				 <br><span class="smalltext">['.$w['time'].']</span>
+				</li>';
 			$coun++;
 		}
 		echo '
@@ -2139,8 +2094,7 @@ function article_comments($render = true)
                 }
 				$data .= '
 					<strong>' . $counter++ .') ' . $comment['subject'] . '</strong>
-					' . (($comment['is_new'] && $context['user']['is_logged'] && !TP_SMF21) ? '<img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '') . '
-					' . (($comment['is_new'] && $context['user']['is_logged'] && TP_SMF21) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
+					' . (($comment['is_new'] && $context['user']['is_logged']) ? '<a href="" id="newicon" class="new_posts" >' . $txt['new'] . '</a>' : '') . '';
 				if ($comment['poster_id'] > 0) {
 					$data .= '
 						<div class="middletext" style="padding-top: 0.5em;"> '.$txt['tp-bycom'].' <a href="'.$scripturl.'?action=profile;u='.$comment['poster_id'].'">'.$comment['poster'].'</a>&nbsp;' . $txt['on'] . ' ' . $comment['date'] . '</div>';
@@ -2655,12 +2609,7 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 	foreach ($button_strip as $key => $value)
 	{
 		if (!isset($value['test']) || !empty($context[$value['test']])) {
-			if(TP_SMF21) {
-				$buttons[] = '<a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a>';
-			}
-			else {
-				$buttons[] = '<li><a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a></li>';
-			}
+			$buttons[] = '<a' . (isset($value['id']) ? ' id="button_strip_' . $value['id'] . '"' : '') . ' class="button button_strip_' . $key . '' . ($value['active'] ? ' active' : '') . '" href="' . $value['url'] . '"' . (isset($value['custom']) ? ' ' . $value['custom'] : '') . '><span>' . $txt[$value['text']] . '</span></a>';
 		}
 	}
 

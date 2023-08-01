@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -79,7 +79,7 @@ function template_submitarticle()
 				</dd>
 				<dt>
 					<span class="font-strong">
-					<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shortname_articledesc'] : 'tp-shortname_articledesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-shortname_articledesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></span></span>
 				</dt>
 				<dd>
@@ -113,7 +113,7 @@ function template_submitarticle()
 			</div><br>
 			<dl class="settings tptitle">
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-useintrodesc'] : 'tp-useintrodesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-useintrodesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
 					</dt>
 					<dd>
@@ -254,7 +254,7 @@ function template_submitarticle()
 						</div><br>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-statusdesc'] : 'tp-statusdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-statusdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
 					</dt>
 					<dd>';
@@ -416,7 +416,7 @@ function template_submitarticle()
 						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
 					</dd>
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-adminiconsinfo'] : 'tp-adminiconsinfo') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-adminiconsinfo" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
 					</dt>
 					<dd>
@@ -663,9 +663,7 @@ function template_showcomments()
 					<tr class="windowbg">
 						<td class="tp_comments">
 						<div>
-							<div class="float-items" style="width:30%;">
-								<a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['pagename'] . ' ' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '</a>
-							</div>
+							<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['pagename'] . '</a></div>
 							<div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['author_id'].'">' . $mes['author'] . '</a></div>
 							<div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'],0,150) , '...</div></div>
 							<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
@@ -711,10 +709,7 @@ function template_showcomments()
 					<tr class="windowbg">
 					<td class="tp_comments">
 					<div>
-						<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '
-						' , ($mes['is_read']==0 && !TP_SMF21) ? ' <img src="' . $settings['images_url'] . '/' . $context['user']['language'] . '/new.gif" alt="" />' : '' , '
-						</a><div class="smalltext"> ' , $mes['title'] , '</div>
-						</div>
+						<div class="float-items" style="width:30%;"><a href="'.$scripturl.'?page='.$mes['page'].'#tp-comment">' . $mes['subject'] . '</a><div class="smalltext"> ' , $mes['title'] , '</div></div>
 						<div class="float-items" style="width:15%;"><a href="'.$scripturl.'?action=profile;u='.$mes['authorID'].'">' . $mes['author'] . '</a></div>
 						<div class="float-items" style="width:30%;">' , $mes['title'] , '<br> ' , $mes['comment'] , '</div>
 						<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="'.$scripturl.'?action=profile;u='.$mes['member_id'].'">' . $mes['membername'] . '</a> ' :  $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div></div>

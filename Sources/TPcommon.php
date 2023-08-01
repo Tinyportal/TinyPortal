@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -194,12 +194,7 @@ function upshrink() {{{
         }
         // Don't output anything...
         $tid = time();
-        if (TP_SMF21) {
-            redirectexit($settings['images_url'] . '/blank.png?ti='.$tid);
-        }
-        else {
-            redirectexit($settings['images_url'] . '/blank.gif?ti='.$tid);
-        }
+        redirectexit($settings['images_url'] . '/blank.png?ti='.$tid);
     }
     else {
         redirectexit();
