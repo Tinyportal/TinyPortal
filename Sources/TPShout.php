@@ -519,35 +519,45 @@ function shout_smiley_code($shoutbox_id) {{{
         'popup' => array(),
     );
 
-	if ($user_info['smiley_set'] != 'none') {
-		if (($temp = cache_get_data('posting_smileys', 480)) == null)
-		{
-		$request = $smcFunc['db_query']('', '
-			SELECT smiley.code, files.filename, smiley.description, smiley.smiley_row, smiley.hidden
-			FROM {db_prefix}smileys AS smiley
-			LEFT JOIN {db_prefix}smiley_files AS files ON
-			(smiley.id_smiley = files.id_smiley)
-			WHERE hidden IN ({int:val1}, {int:val2}) and files.smiley_set = {string:smiley_set}
-			ORDER BY hidden, smiley_row, smiley_order ASC',
-			array(
-				'val1' => 0,
-				'val2' => 2,
-				'smiley_set' => $user_info['smiley_set']
-			)
-		);
+	if ($user_info['smiley_set'] != 'none')
+	{
+		// Cache for longer when customized smiley codes aren't enabled
+		$cache_time = empty($modSettings['smiley_enable']) ? 7200 : 480;
 
-		    while ($row = $smcFunc['db_fetch_assoc']($request))
+		if (($temp = cache_get_data('posting_smileys_' . $user_info['smiley_set'], $cache_time)) == null)
+		{
+			$request = $smcFunc['db_query']('', '
+				SELECT s.code, f.filename, s.description, s.smiley_row, s.hidden
+				FROM {db_prefix}smileys AS s
+					JOIN {db_prefix}smiley_files AS f ON (s.id_smiley = f.id_smiley)
+				WHERE s.hidden IN (0, 2)
+					AND f.smiley_set = {string:smiley_set}' . (empty($modSettings['smiley_enable']) ? '
+					AND s.code IN ({array_string:default_codes})' : '') . '
+				ORDER BY s.hidden, s.smiley_row, s.smiley_order',
+				array(
+					'default_codes' => array('>:D', ':D', '::)', '>:(', ':))', ':)', ';)', ';D', ':(', ':o', '8)', ':P', '???', ':-[', ':-X', ':-*', ':\'(', ':-\\', '^-^', 'O0', 'C:-)', 'O:-)'),
+					'smiley_set' => $user_info['smiley_set'],
+				)
+			);
+			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['code'] = htmlspecialchars($row['code']);
-				$row['filename'] = htmlspecialchars($row['filename']);
-				$row['description'] = htmlspecialchars($row['description']);
+				$row['description'] = !empty($txt['icon_' . strtolower($row['description'])]) ? $smcFunc['htmlspecialchars']($txt['icon_' . strtolower($row['description'])]) : $smcFunc['htmlspecialchars']($row['description']);
 
 //				$context['tp_smileys'][empty($row['hidden']) ? 'postform' : 'popup'][$row['smiley_row']]['smileys'][] = $row;
 				$context['tp_smileys']['postform'][$row['smiley_row']]['smileys'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 
-			cache_put_data('posting_smileys', $context['tp_smileys'], 480);
+			foreach ($context['tp_smileys'] as $section => $smileyRows)
+			{
+				foreach ($smileyRows as $rowIndex => $smileys)
+					$context['tp_smileys'][$section][$rowIndex]['smileys'][count($smileys['smileys']) - 1]['isLast'] = true;
+
+				if (!empty($smileyRows))
+					$context['tp_smileys'][$section][count($smileyRows) - 1]['isLast'] = true;
+			}
+
+//			cache_put_data('posting_smileys_' . $user_info['smiley_set'], $context['tp_smileys'], $cache_time);
 		}
 		else {
 			$context['tp_smileys'] = $temp;
