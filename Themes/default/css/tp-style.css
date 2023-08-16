@@ -1207,6 +1207,10 @@ dl.tptitle dd {
 .tparticle .windowbg, .tparticle .windowbg2, .tparticle .roundframe {
 	padding: 0;
 }
+#tpleftbarHeader.roundframe, #tprightbarHeader.roundframe {
+	/* Reduced padding for sidebars? */
+	padding: 10px;
+}
 .admintable > .windowbg {
 	border: none;
 	border-radius: 0;

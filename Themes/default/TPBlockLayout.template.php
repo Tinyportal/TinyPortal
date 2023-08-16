@@ -75,38 +75,16 @@ function template_tp_above()
 	// Tiny Portal left side bar - floated left by default.
 	if($context['TPortal']['leftpanel']==1) {
 		echo '
-			<div id="tpleftbarHeader" style="width:', ($context['TPortal']['leftbar_width']), 'px;', in_array('tpleftbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse']==1) ? 'display:none' : '', '" >';
-
-		if($context['TPortal']['useroundframepanels']==1) {
-			echo '
-				<div class="roundframe">
-					', TPortal_panel('left'), '
-				</div>';
-		}
-		else {
-					TPortal_panel('left');
-		}
-
-	echo '
+			<div id="tpleftbarHeader"', ($context['TPortal']['useroundframepanels']==1) ? ' class="roundframe"' : '', ' style="width:', ($context['TPortal']['leftbar_width']), 'px;', in_array('tpleftbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse']==1) ? 'display:none' : '', '" >
+				', TPortal_panel('left'), '
 			</div><!-- #tpleftbarHeader -->';
 	}
 
 	// Tiny Portal right side bar - floated right by default.
 	if($context['TPortal']['rightpanel']==1) {
 		echo '
-			<div id="tprightbarHeader" style="width:', ($context['TPortal']['rightbar_width']), 'px;', in_array('tprightbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse']==1) ? 'display:none' : '', '" >';
-
-		if($context['TPortal']['useroundframepanels']==1) {
-			echo '
-				<div class="roundframe">
-					', TPortal_panel('right'), '
-				</div>';
-		}
-		else {
-					TPortal_panel('right');
-		}
-
-	echo '
+			<div id="tprightbarHeader"', ($context['TPortal']['useroundframepanels']==1) ? ' class="roundframe"' : '', ' style="width:', ($context['TPortal']['rightbar_width']), 'px;', in_array('tprightbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse']==1) ? 'display:none' : '', '" >
+				', TPortal_panel('right'), '
 			</div><!-- #tprightbarHeader -->';
 	}
 
