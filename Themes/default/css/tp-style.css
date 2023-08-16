@@ -671,13 +671,13 @@ ul.category_children li {
     top: -.125em;
 }
 .tp_stats_users li::before {
-    content: url('../images/tinyportal/TPmodule2.png');
+    content: url('../images/tinyportal/TPdivider2.png');
     left: -.25em;
     position: relative;
     top: -.125em;
 }
 li.tp_stats_online_users::before {
-    content: url('../images/tinyportal/TPdivider2.png');
+    content: url('../images/tinyportal/TPdivider3.png');
     left: -.25em;
     position: relative;
     top: -.125em;
