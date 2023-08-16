@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -75,9 +75,7 @@ function TPShoutLoad() {{{
         loadLanguage('TPortal', 'english');
     }
 
-    if(TP_SMF21) {
-        loadCSSFile('jquery.sceditor.css');
-    }
+    loadCSSFile('jquery.sceditor.css');
 
     // if in admin screen, turn off blocks
     if($context['TPortal']['action'] == 'tpshout' && isset($_GET['shout']) && substr($_GET['shout'], 0, 5) == 'admin') {
@@ -406,35 +404,17 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
     $context['tp_bbc_tags'] = array();
     $context['tp_bbc_tags2'] = array();
 
-    if(!TP_SMF21) {
-        $context['tp_bbc_tags'][] = array(
-            'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $txt['bold']),
-            'italicize' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $txt['italic']),
-            'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $txt[ 'underline']),
-            'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $txt['strike']),
-        );
-        $context['tp_bbc_tags2'][] = array(
-            'glow' => array('code' => 'glow', 'before' => '[glow=red,2,300]', 'after' => '[/glow]', 'description' => $txt[ 'glow']),
-            'shadow' => array('code' => 'shadow', 'before' => '[shadow=red,left]', 'after' => '[/shadow]', 'description' => $txt[ 'shadow']),
-            'move' => array('code' => 'move', 'before' => '[move]', 'after' => '[/move]', 'description' => $txt[ 'marquee']),
-			'img' => array('code' => 'img', 'before' => '[img]', 'after' => '[/img]', 'description' => $txt['image']),
-            'quote' => array('code' => 'quote', 'before' => '[quote]', 'after' => '[/quote]', 'description' => $txt['bbc_quote']),
-        );
+    global $editortxt;
+    loadLanguage('Editor');
 
-    }
-    else {
-        global $editortxt;
-        loadLanguage('Editor');
-
-        $context['tp_bbc_tags'][] = array(
-            'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $editortxt['bold']),
-            'italic' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $editortxt['italic']),
-            'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $editortxt['underline']),
-            'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $editortxt['strikethrough']),
-        );
-        $context['tp_bbc_tags2'][] = array(
-        );
-    }
+	$context['tp_bbc_tags'][] = array(
+		'bold' => array('code' => 'b', 'before' => '[b]', 'after' => '[/b]', 'description' => $editortxt['bold']),
+		'italic' => array('code' => 'i', 'before' => '[i]', 'after' => '[/i]', 'description' => $editortxt['italic']),
+		'underline' => array('code' => 'u', 'before' => '[u]', 'after' => '[/u]', 'description' => $editortxt['underline']),
+		'strike' => array('code' => 's', 'before' => '[s]', 'after' => '[/s]', 'description' => $editortxt['strikethrough']),
+	);
+	$context['tp_bbc_tags2'][] = array(
+	);
 
 	if($collapse) {
 		echo '  <div class="expand_bbc_parent" id="expand_bbc_parent_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderBBC(!current_header_bbc, \'' . $shoutbox_id . '\', ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
@@ -450,34 +430,7 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 	// Here loop through the array, printing the images/rows/separators!
 	if(isset($context['tp_bbc_tags'][0]) && count($context['tp_bbc_tags'][0]) > 0) {
 		foreach ($context['tp_bbc_tags'][0] as $image => $tag) {
-            if(!TP_SMF21) {
-                // Is there a "before" part for this bbc button? If not, it can't be a button!!
-                if (isset($tag['before'])) {
-                    // Is this tag disabled?
-                    if (!empty($context['disabled_tags'][$tag['code']]))
-                        continue;
-
-                    $found_button = true;
-
-                    // If there's no after, we're just replacing the entire selection in the post box.
-                    if (!isset($tag['after']))
-                        echo '<div style="display: inline;" onclick="replaceShoutText(\'', $tag['before'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
-                    // On the other hand, if there is one we are surrounding the selection ;).
-                    else
-                        echo '<div style="display: inline;" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
-
-                    // Okay... we have the link. Now for the image and the closing </a>!
-                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></div>';
-                }
-                // I guess it's a divider...
-                elseif ($found_button) {
-                    echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-                    $found_button = false;
-                }
-            }
-            else {
-				echo '<div class="sceditor-button sceditor-button-'.$image.'" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;" style="display: inline;padding:0px;"><div unselectable="on">'.$tag['description'].'</div></div>';
-            }
+			echo '<div class="sceditor-button sceditor-button-'.$image.'" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;" style="display: inline;padding:0px;"><div unselectable="on">'.$tag['description'].'</div></div>';
 		}
 	}
 
@@ -494,37 +447,8 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 	{
 		foreach ($context['tp_bbc_tags2'][0] as $image => $tag)
 		{
-            if(!TP_SMF21) {
-                // Is there a "before" part for this bbc button? If not, it can't be a button!!
-                if (isset($tag['before']))
-                {
-                    // Is this tag disabled?
-                    if (!empty($context['disabled_tags'][$tag['code']]))
-                        continue;
-
-                    $found_button1 = true;
-
-                    // If there's no after, we're just replacing the entire selection in the post box.
-                    if (!isset($tag['after']))
-                        echo '<div style="display: inline;" onclick="replaceShoutText(\'', $tag['before'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
-                    // On the other hand, if there is one we are surrounding the selection ;).
-                    else
-                        echo '<div style="display: inline;" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;">';
-
-                    // Okay... we have the link. Now for the image and the closing </a>!
-                    echo '<img onmouseover="tp_bbc_highlight(this, true);" onmouseout="if (window.tp_bbc_highlight) tp_bbc_highlight(this, false);" src="', $settings['images_url'], '/bbc/', $image, '.gif" width="23" height="22" alt="', $tag['description'], '" title="', $tag['description'], '" style="background-image: url(', $settings['images_url'], '/bbc/bbc_bg.gif); margin: 1px 2px 1px 1px;vertical-align:bottom" /></div>';
-                }
-                // I guess it's a divider...
-                elseif ($found_button1)
-                {
-                    echo '<img src="', $settings['images_url'], '/bbc/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />';
-                    $found_button1 = false;
-                }
-            }
-            else {
-                echo '<div class="sceditor-button sceditor-button-'.$image.'" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;" style="display: inline;padding:0px;"><div unselectable="on">'.$tag['description'].'</div></div>';
-            }
-		}
+			echo '<div class="sceditor-button sceditor-button-'.$image.'" onclick="surroundShoutText(\'', $tag['before'], '\', \'', $tag['after'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;" style="display: inline;padding:0px;"><div unselectable="on">'.$tag['description'].'</div></div>';
+ 		}
 	}
 
 	// Print a drop down list for all the colors we allow!
@@ -595,73 +519,45 @@ function shout_smiley_code($shoutbox_id) {{{
         'popup' => array(),
     );
 
-    // Load smileys - don't bother to run a query in 2.0 if we're not using the database's ones anyhow.
-    if (empty($modSettings['smiley_enable']) && $user_info['smiley_set'] != 'none' && !TP_SMF21) {
-            $context['tp_smileys']['postform'][] = array(
-                'smileys' => array(
-                    array('code' => ':)', 'filename' => 'smiley.gif', 'description' => $txt['icon_smiley']),
-                    array('code' => ';)', 'filename' => 'wink.gif', 'description' => $txt['icon_wink']),
-                    array('code' => ':D', 'filename' => 'cheesy.gif', 'description' => $txt['icon_cheesy']),
-                    array('code' => ';D', 'filename' => 'grin.gif', 'description' => $txt['icon_grin']),
-                    array('code' => '>:(', 'filename' => 'angry.gif', 'description' => $txt['icon_angry']),
-                    array('code' => ':(', 'filename' => 'sad.gif', 'description' => $txt[ 'icon_sad']),
-                    array('code' => ':o', 'filename' => 'shocked.gif', 'description' => $txt['icon_shocked']),
-                    array('code' => '8)', 'filename' => 'cool.gif', 'description' => $txt[ 'icon_cool']),
-                    array('code' => '???', 'filename' => 'huh.gif', 'description' => $txt['icon_huh']),
-                    array('code' => '::)', 'filename' => 'rolleyes.gif', 'description' => $txt[ 'icon_rolleyes']),
-                    array('code' => ':P', 'filename' => 'tongue.gif', 'description' => $txt['icon_tongue']),
-                    array('code' => ':-[', 'filename' => 'embarrassed.gif', 'description' => $txt['icon_embarrassed']),
-                    array('code' => ':-X', 'filename' => 'lipsrsealed.gif', 'description' => $txt['icon_lips']),
-                    array('code' => ':-\\', 'filename' => 'undecided.gif', 'description' => $txt[ 'icon_undecided']),
-                    array('code' => ':-*', 'filename' => 'kiss.gif', 'description' => $txt['icon_kiss']),
-                    array('code' => ':\'(', 'filename' => 'cry.gif', 'description' => $txt['icon_cry'])
-                ),
-                'last' => true,
-            );
-	}
-	elseif ($user_info['smiley_set'] != 'none') {
-		if (($temp = cache_get_data('posting_smileys', 480)) == null)
+	if ($user_info['smiley_set'] != 'none')
+	{
+		// Cache for longer when customized smiley codes aren't enabled
+		$cache_time = empty($modSettings['smiley_enable']) ? 7200 : 480;
+
+		if (($temp = cache_get_data('tp_posting_smileys_' . $user_info['smiley_set'], $cache_time)) == null)
 		{
-        if(!TP_SMF21) {
 			$request = $smcFunc['db_query']('', '
-			    SELECT code, filename, description, smiley_row, hidden
-				FROM {db_prefix}smileys
-				WHERE hidden IN ({int:val1}, {int:val2})
-				ORDER BY hidden, smiley_row, smiley_order ASC',
+				SELECT s.code, f.filename, s.description, s.smiley_row, s.hidden
+				FROM {db_prefix}smileys AS s
+					JOIN {db_prefix}smiley_files AS f ON (s.id_smiley = f.id_smiley)
+				WHERE s.hidden IN (0, 2)
+					AND f.smiley_set = {string:smiley_set}' . (empty($modSettings['smiley_enable']) ? '
+					AND s.code IN ({array_string:default_codes})' : '') . '
+				ORDER BY s.hidden, s.smiley_row, s.smiley_order',
 				array(
-                    'val1' => 0,
-				    'val2' => 2
-                )
-			);
-		}
-		else {
-			$request = $smcFunc['db_query']('', '
-			    SELECT smiley.code, files.filename, smiley.description, smiley.smiley_row, smiley.hidden
-				FROM {db_prefix}smileys AS smiley
-				LEFT JOIN {db_prefix}smiley_files AS files ON
-				(smiley.id_smiley = files.id_smiley)
-				WHERE hidden IN ({int:val1}, {int:val2}) and files.smiley_set = {string:smiley_set}
-				ORDER BY hidden, smiley_row, smiley_order ASC',
-				array(
-                    'val1' => 0,
-				    'val2' => 2,
-					'smiley_set' => $user_info['smiley_set']
+					'default_codes' => array('>:D', ':D', '::)', '>:(', ':))', ':)', ';)', ';D', ':(', ':o', '8)', ':P', '???', ':-[', ':-X', ':-*', ':\'(', ':-\\', '^-^', 'O0', 'C:-)', 'O:-)'),
+					'smiley_set' => $user_info['smiley_set'],
 				)
 			);
-		}
-
-		    while ($row = $smcFunc['db_fetch_assoc']($request))
+			while ($row = $smcFunc['db_fetch_assoc']($request))
 			{
-				$row['code'] = htmlspecialchars($row['code']);
-				$row['filename'] = htmlspecialchars($row['filename']);
-				$row['description'] = htmlspecialchars($row['description']);
+				$row['description'] = !empty($txt['icon_' . strtolower($row['description'])]) ? $smcFunc['htmlspecialchars']($txt['icon_' . strtolower($row['description'])]) : $smcFunc['htmlspecialchars']($row['description']);
 
 //				$context['tp_smileys'][empty($row['hidden']) ? 'postform' : 'popup'][$row['smiley_row']]['smileys'][] = $row;
 				$context['tp_smileys']['postform'][$row['smiley_row']]['smileys'][] = $row;
 			}
 			$smcFunc['db_free_result']($request);
 
-			cache_put_data('posting_smileys', $context['tp_smileys'], 480);
+			foreach ($context['tp_smileys'] as $section => $smileyRows)
+			{
+				foreach ($smileyRows as $rowIndex => $smileys)
+					$context['tp_smileys'][$section][$rowIndex]['smileys'][count($smileys['smileys']) - 1]['isLast'] = true;
+
+				if (!empty($smileyRows))
+					$context['tp_smileys'][$section][count($smileyRows) - 1]['isLast'] = true;
+			}
+
+			cache_put_data('tp_posting_smileys_' . $user_info['smiley_set'], $context['tp_smileys'], $cache_time);
 		}
 		else {
 			$context['tp_smileys'] = $temp;

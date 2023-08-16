@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.1
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -61,9 +61,6 @@ function template_tp_above()
 
 	echo '
 	<div class="'. $sideclass .' '. $respClass .'">';
-	if(!empty($context['TPortal']['upshrinkpanel']) && (!TP_SMF21))
-		echo '
-		<div class="tp_upshrink20">', $context['TPortal']['upshrinkpanel'] , '</div>';
 
 	if($context['TPortal']['toppanel']==1)
 		echo '
@@ -317,7 +314,7 @@ function template_editblock()
 					</dl>';
 	if($modSettings['allow_guestAccess'] == '0') {
 		echo '
-			<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-noguest_accessdesc'] : 'tp-noguest_accessdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+			<a href="', $scripturl, '?action=helpadmin;help=tp-noguest_accessdesc" onclick="return reqOverlayDiv(this.href);">
 			<span class="tptooltip" title="', $txt['help'], '"></span></a>
 			<span style="color: red;">' .$txt['tp-noguest_access'] .'</span>';
 	}
@@ -372,7 +369,7 @@ function template_editblock()
 							<textarea style="width: 90%; height: 50px;" id="tp_shoutbox_stitle" name="tp_block_body">' , !empty($context['TPortal']['blockedit']['body']) ? $context['TPortal']['blockedit']['body'] : '', '</textarea><br>
 						</dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-shoutbox_iddesc'] : 'tp-shoutbox_iddesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-shoutbox_iddesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp-shoutbox_id">' .$txt['tp-shoutbox_id']. '</label>
 						</dt>
 						<dd>
@@ -560,14 +557,8 @@ function template_editblock()
 							<input type="hidden" name="tp_tpath-1" value="1">';
 				foreach($context['TPthemes'] as $tema)
 				{
-					if(TP_SMF21) {
-						echo '
-							<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input type="checkbox" id="tp_theme'.$tema['id'].'" name="tp_theme'.$tema['id'].'" value="'.$tema['name'].'"';
-						}
-					else {
-						echo '
-							<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.gif" /> <input type="checkbox" id="tp_theme'.$tema['id'].'" name="tp_theme'.$tema['id'].'" value="'.$tema['name'].'"';
-						}
+					echo '
+						<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input type="checkbox" id="tp_theme'.$tema['id'].'" name="tp_theme'.$tema['id'].'" value="'.$tema['name'].'"';
 					if(in_array($tema['id'],$myt))
 						echo ' checked';
 					echo '><label for="tp_theme'.$tema['id'].'">'.$tema['name'].'</label><input type="hidden" value="'.$tema['path'].'" name="tp_path'.$tema['id'].'"><br>';
@@ -661,18 +652,13 @@ function template_editblock()
 				</div>
 				<div><hr>
 					<div>
-						<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-blockstylehelpdesc'] : 'tp-blockstylehelpdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-blockstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
 					</div>
 					<br><input type="radio" id="tp_block_panelstyle" name="tp_block_set_panelstyle" value="99" ' , $context['TPortal']['blockedit']['panelstyle']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panelstyle']=='99' ? ' style="color: red;">' : '><label for="tp_block_panelstyle">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
 				<div class="panels-optionsbg">';
-			if(TP_SMF21) {
-				$types = tp_getblockstyles21();
-            }
-			else {
-				$types = tp_getblockstyles();
-            }
+			$types = tp_getblockstyles21();
 
 			foreach($types as $blo => $bl) {
 				echo '
@@ -710,7 +696,7 @@ function template_editblock()
 					<br>
 					<dl class="settings">
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-membergrouphelpdesc'] : 'tp-membergrouphelpdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-membergrouphelpdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">'.$txt['tp-membergrouphelp'].'</label></dt>
 						<dd><div>
 							  <div class="tp_largelist">';
@@ -735,7 +721,7 @@ function template_editblock()
 						</dd>
 					</dl>
 					<dl class="settings">
-						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langhelpdesc'],'" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">'.$txt['tp-langhelp'].'</label></dt>
+						<dt><a href="', $scripturl, '?action=helpadmin;help=',$txt['tp-langhelpdesc'],'" onclick="return reqOverlayDiv(this.href);"><span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">'.$txt['tp-langhelp'].'</label></dt>
 						<dd>
 							<div>';
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang){
@@ -745,7 +731,7 @@ function template_editblock()
 			echo '			</div>
 						<br></dd>
 						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=' . ((!TP_SMF21) ? $txt['tp-langdesc'] : 'tp-langdesc') . '" onclick=' . ((!TP_SMF21) ? '"return reqWin(this.href);"' : '"return reqOverlayDiv(this.href);"') . '>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-langdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="fieldname">' . $txt['tp-lang'] . '</label>';
 				// alert if the settings is off, supply link if allowed
 				if(empty($context['TPortal']['uselangoption'])) {

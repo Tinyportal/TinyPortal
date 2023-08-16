@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1003,12 +1003,7 @@ function do_articles()
 		if($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
 			$context['TPortal']['editing_article'] = true;
-			if (TP_SMF21) {
-				if($context['TPortal']['editarticle']['type'] != 'bbc') {
-					$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
-				}
-			}
-			else {
+			if($context['TPortal']['editarticle']['type'] != 'bbc') {
 				$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
 			}
 			$smcFunc['db_free_result']($request);

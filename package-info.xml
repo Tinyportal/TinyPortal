@@ -4,63 +4,8 @@
 	<name>TinyPortal</name>
 	<id>bloc:tinyportal</id>
 	<type>modification</type>
-	<version>2.3.1</version>
+	<version>3.0.0</version>
 
-	<install for="2.0 - 2.0.99">
-		<redirect url="">Installed!</redirect>
-		<require-dir name="Themes" destination="$boarddir" />
-		<require-dir name="Sources" destination="$boarddir" />
-		<require-dir name="TinyPortal" destination="$boarddir" />
-		<require-dir name="tp-files" destination="$boarddir" />
-		<require-dir name="tp-downloads" destination="$boarddir" />
-		<require-dir name="tp-images" destination="$boarddir" />
-		<readme parsebbc="true">readme_install20.txt</readme>
-		<modification>install.xml</modification>
-		<database>install.php</database>
-		<code>do_hooks.php</code>
-	</install>
-	<uninstall for="2.0 - 2.0.99">
-		<readme parsebbc="true">readme_uninstall.txt</readme>
-		<modification reverse="true">install.xml</modification>
-		<remove-file name="$sourcedir/TPcommon.php" />
-		<remove-file name="$sourcedir/TPCompat.php" />
-		<remove-file name="$sourcedir/TPdlmanager.php" />
-		<remove-file name="$sourcedir/TPhelp.php" />
-		<remove-file name="$sourcedir/TPBlock.php" />
-		<remove-file name="$sourcedir/TPSearch.php" />
-		<remove-file name="$sourcedir/TPShout.php" />
-		<remove-file name="$sourcedir/TPortal.php" />
-		<remove-file name="$sourcedir/TPortalAdmin.php" />
-		<remove-file name="$sourcedir/TPArticle.php" />
-		<remove-file name="$sourcedir/TPSubs.php" />
-		<remove-file name="$sourcedir/TPSSI.php" />
-		<remove-file name="$themedir/TPBlockLayout.template.php" />
-		<remove-file name="$themedir/TParticle.template.php" />
-		<remove-file name="$themedir/TPdladmin.template.php" />
-		<remove-file name="$themedir/TPdlmanager.template.php" />
-		<remove-file name="$themedir/TPhelp.template.php" />
-		<remove-file name="$themedir/TPortal.template.php" />
-		<remove-file name="$themedir/TPortalAdmin.template.php" />
-		<remove-file name="$themedir/TPprint.template.php" />
-		<remove-file name="$themedir/TPprofile.template.php" />
-		<remove-file name="$themedir/TPSearch.template.php" />
-		<remove-file name="$themedir/TPShout.template.php" />
-		<remove-file name="$themedir/TPsubs.template.php" />
-		<remove-file name="$themedir/TPwireless.template.php" />
-		<remove-file name="$themedir/css/tp-shout.css" />
-		<remove-file name="$themedir/css/tp-style.css" />
-		<remove-file name="$themedir/css/tp-responsive.css" />
-		<remove-file name="$languagedir/TParticle.english.php" />
-		<remove-file name="$languagedir/TPdlmanager.english.php" />
-		<remove-file name="$languagedir/TPhelp.english.php" />
-		<remove-file name="$languagedir/TPListImages.english.php" />
-		<remove-file name="$languagedir/TPmodules.english.php" />
-		<remove-file name="$languagedir/TPortal.english.php" />
-		<remove-file name="$languagedir/TPortalAdmin.english.php" />
-		<remove-dir  name="$boarddir/TinyPortal" />
-		<remove-dir  name="$themedir/scripts/tinyportal" />
-		<code>do_hooks.php</code>
-	</uninstall>
 	<install for="2.1.* - 2.1.99">
 		<redirect url="">Installed!</redirect>
 		<require-dir name="Themes" destination="$boarddir" />
