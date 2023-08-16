@@ -178,7 +178,7 @@ function TPortal_userbox()
 {
 	global $context, $settings, $scripturl, $txt, $user_info;
 
-	echo'
+	echo '
 	<div class="tp_userblocknew">';
 
 	// If the user is logged in, display stuff like their name, new messages, etc.
@@ -187,103 +187,114 @@ function TPortal_userbox()
 
 		if (!empty($context['user']['avatar']) &&  isset($context['TPortal']['userbox']['avatar']))
 			echo '
-				<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
+		<span class="tpavatar">', $context['user']['avatar']['image'], '</span>';
 		echo '
 		<strong><a class="subject"  href="'.$scripturl.'?action=profile;u='.$context['user']['id'].'">', $context['user']['name'], '</a></strong>
-		<ul class="reset">';
+		<ul class="tp_user_pm">';
 
 		// Only tell them about their messages if they can read their messages!
-		if ($context['allow_pm']) {
-			echo '
-			<li class="tp_user_pm"><a href="', $scripturl, '?action=pm">' .$txt['tp-pm'].' ',  $context['user']['messages'], '</a></li>';
-			if($context['user']['unread_messages'] > 0)
-				echo '
-			<li style="tp_user_unread_pm"><a href="', $scripturl, '?action=pm">' .$txt['tp-pm2'].' ',$context['user']['unread_messages'] , '</a></li>';
-		}
-		// Are there any members waiting for approval?
-		if (!empty($context['unapproved_members'])) {
-			echo '
-				<li class="tp_user_unapproved_members"><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">' .$txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
-		}
-		// Are there any moderation reports?
-		if (!empty($context['open_mod_reports']) && $context['show_open_reports'])
+		if ($context['allow_pm'])
 		{
 			echo '
-				<li class="tp_user_moderate"><a href="', $scripturl, '?action=moderate;area=reports">'.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
+			<li><a href="', $scripturl, '?action=pm">' .$txt['tp-pm'].' ',  $context['user']['messages'], '</a></li>';
+			if($context['user']['unread_messages'] > 0)
+				echo '
+			<li><a href="', $scripturl, '?action=pm">' .$txt['tp-pm2'].' ',$context['user']['unread_messages'] , '</a></li>';
+		}
+		// Are there any members waiting for approval?
+		if (!empty($context['unapproved_members']))
+			echo '
+			<li><a href="', $scripturl, '?action=admin;area=viewmembers;sa=browse;type=approve;' . $context['session_var'] . '=' . $context['session_id'].'">' .$txt['tp_unapproved_members'].' '. $context['unapproved_members']  . '</a></li>';
+		// Are there any moderation reports?
+		if (!empty($user_info['mod_cache']) && $user_info['mod_cache']['bq'] != '0=1' && !empty($context['open_mod_reports'])) {
+			echo '
+		</ul>
+		<hr>
+		<ul class="tp_user_moderate">
+			<li><a href="', $scripturl, '?action=moderate;area=reports">'.$txt['tp_modreports'].' ' . $context['open_mod_reports']. '</a></li>';
 		}
 		if(isset($context['TPortal']['userbox']['unread']))
 			echo '
-			<hr>
-			<li class="tp_user_unread"><a href="', $scripturl, '?action=unread">' .$txt['tp-unread'].'</a></li>
-			<li class="tp_user_unread"><a href="', $scripturl, '?action=unreadreplies">'.$txt['tp-replies'].'</a></li>
-			<li class="tp_user_unread"><a href="', $scripturl, '?action=profile;u='.$context['user']['id'].';area=showposts">'.$txt['tp-showownposts'].'</a></li>
-			<li class="tp_user_unread"><a href="', $scripturl, '?action=tportal;sa=showcomments">'.$txt['tp-showcomments'].'</a></li>
+		</ul>
+		<hr>
+		<ul class="tp_user_unread">
+			<li><a href="', $scripturl, '?action=unread">' .$txt['tp-unread'].'</a></li>
+			<li><a href="', $scripturl, '?action=unreadreplies">'.$txt['tp-replies'].'</a></li>
+			<li><a href="', $scripturl, '?action=profile;u='.$context['user']['id'].';area=showposts">'.$txt['tp-showownposts'].'</a></li>
+			<li><a href="', $scripturl, '?action=tportal;sa=showcomments">'.$txt['tp-showcomments'].'</a></li>
 			';
-
 		// Is the forum in maintenance mode?
 		if ($context['in_maintenance'] && $context['user']['is_admin'])
 			echo '
-			<hr>
-			<li class="tp_user_maintenance">' .$txt['tp_maintenace']. '</li>';
+		</ul>
+		<hr>
+		<ul class="tp_user_maintenance">
+			<li>' .$txt['tp_maintenace']. '</li>';
 		// Show the total time logged in?
 		if (!empty($context['user']['total_time_logged_in']) && isset($context['TPortal']['userbox']['logged']))
 		{
 			echo '
-			<hr>
-			<li class="tp_user_loggedintime">' .$txt['tp-loggedintime'] . '</li>
-			<li class="tp_user_loggedintime">'.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
+		</ul>
+		<hr>
+		<ul class="tp_user_loggedintime">
+			<li>' .$txt['tp-loggedintime'] . '</li>
+			<li>'.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
 		}
 		if (isset($context['TPortal']['userbox']['time']))
-		echo '
-			<li class="tp_user_loggedintime">' .$context['current_time'].'</li>';
+			echo '
+			<li>' .$context['current_time'].'</li>';
 
 		// admin parts etc.
-         if(!isset($context['TPortal']['can_submit_article']))
+		if(!isset($context['TPortal']['can_submit_article']))
             $context['TPortal']['can_submit_article']=0;
 
 		// can we submit an article?
        	if(allowedTo('tp_submithtml'))
 			echo '
+		</ul>
 		<hr>
-		<li class="tp_user_subart"><a href="', $scripturl, '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_html">' .$txt['tp-submitarticle']. '</a></li>';
+		<ul class="tp_user_subart">
+			<li><a href="', $scripturl, '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_html">' .$txt['tp-submitarticle']. '</a></li>';
        	if(allowedTo('tp_submitbbc'))
-					echo '
-		<li class="tp_user_subart"><a href="', $scripturl, '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_bbc">' .$txt['tp-submitarticlebbc']. '</a></li>';
+			echo '
+			<li><a href="', $scripturl, '?action=' . (allowedTo('tp_articles') ? 'tpadmin' : 'tportal') . ';sa=addarticle_bbc">' .$txt['tp-submitarticlebbc']. '</a></li>';
 
 		if(allowedTo('tp_editownarticle'))
-					echo '
-		<li class="tp_user_subart"><a href="', $scripturl, '?action=tportal;sa=myarticles">' .$txt['tp-myarticles']. '</a></li>';
+			echo '
+			<li><a href="', $scripturl, '?action=tportal;sa=myarticles">' .$txt['tp-myarticles']. '</a></li>';
 
 		// upload a file?
         if(allowedTo('tp_dlupload') || allowedTo('tp_dlmanager'))
-             echo '
-			<li class="tp_user_subart"><a href="', $scripturl, '?action=tportal;sa=download;dl=upload">' .$txt['permissionname_tp_dlupload']. '</a></li>';
+			echo '
+			<li><a href="', $scripturl, '?action=tportal;sa=download;dl=upload">' .$txt['permissionname_tp_dlupload']. '</a></li>';
 
 		// tpadmin checks
 		if (allowedTo('tp_settings'))
 			echo '
-			<hr>
-			<li class="tp_user_settings"><a href="' . $scripturl . '?action=tpadmin;sa=settings">' .$txt['permissionname_tp_settings'] . '</a></li>';
+		</ul>
+		<hr>
+		<ul class="tp_user_settings">
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=settings">' .$txt['permissionname_tp_settings'] . '</a></li>';
 		if (allowedTo('tp_blocks'))
-					echo '
-			<li class="tp_user_settings"><a href="' . $scripturl . '?action=tpadmin;sa=blocks">' .$txt['permissionname_tp_blocks'] . '</a></li>';
+			echo '
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=blocks">' .$txt['permissionname_tp_blocks'] . '</a></li>';
 		if (allowedTo('tp_articles'))
 		{
+			echo '
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=articles">' .$txt['permissionname_tp_articles'] . '</a></li>';
+		// any submissions?
+				if($context['TPortal']['submitcheck']['articles']>0)
 					echo '
-			<li class="tp_user_settings"><a href="' . $scripturl . '?action=tpadmin;sa=articles">' .$txt['permissionname_tp_articles'] . '</a></li>';
-					// any submissions?
-					if($context['TPortal']['submitcheck']['articles']>0)
-						echo '
-			<li class="tp_user_settings"><a href="' . $scripturl . '?action=tpadmin;sa=submission"><b> ' .$txt['tp-articlessubmitted'] . ' ' .$context['TPortal']['submitcheck']['articles'] . '</b></a></li>';
+			<li><a href="' . $scripturl . '?action=tpadmin;sa=submission"><b> ' .$txt['tp-articlessubmitted'] . ' ' .$context['TPortal']['submitcheck']['articles'] . '</b></a></li>';
 		}
 		if (allowedTo('tp_dlmanager'))
 		{
+			echo '
+			<li><a href="' . $scripturl . '?action=tportal;sa=download;dl=admin">' .$txt['permissionname_tp_dlmanager'] . '</a></li>';
+		// any submissions?
+				if($context['TPortal']['submitcheck']['uploads']>0)
 					echo '
-			<li class="tp_user_settings"><a href="' . $scripturl . '?action=tportal;sa=download;dl=admin">' .$txt['permissionname_tp_dlmanager'] . '</a></li>';
-					// any submissions?
-					if($context['TPortal']['submitcheck']['uploads']>0)
-						echo '
-			<li class="tp_user_settings"><a href="' . $scripturl . '?action=tportal;sa=download;dl=adminsubmission"><b>' .$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
+			<li><a href="' . $scripturl . '?action=tportal;sa=download;dl=adminsubmission"><b>' .$context['TPortal']['submitcheck']['uploads'] . ' ' .$txt['tp-dluploaded'] . '</b></a></li>';
 		}
 
 		echo '
@@ -291,28 +302,34 @@ function TPortal_userbox()
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
 	else  {
-		echo '
-			<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
-		echo '
-			<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-				<input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
-				<select name="cookielength" style="max-width: 45%!important;">
-					<option value="-1" selected="selected">', $txt['forever'], '</option>
-					<option value="60">', $txt['one_hour'], '</option>
-					<option value="1440">', $txt['one_day'], '</option>
-					<option value="10080">', $txt['one_week'], '</option>
-					<option value="302400">', $txt['one_month'], '</option>
-				</select>
-				<input type="submit" class="button_submit" value="', $txt['login'], '" />
-				<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
-		echo '
+		if(TP_SMF21) {
+			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
+		}
+		else {
+			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
+		}
+    echo '
+        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+            <input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
+            <select name="cookielength" style="max-width: 45%!important;">
+                <option value="-1" selected="selected">', $txt['forever'], '</option>
+                <option value="60">', $txt['one_hour'], '</option>
+                <option value="1440">', $txt['one_day'], '</option>
+                <option value="10080">', $txt['one_week'], '</option>
+                <option value="302400">', $txt['one_month'], '</option>
+            </select>
+            <input type="submit" class="button_submit" value="', $txt['login'], '" />
+            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
+		if (TP_SMF21) {
+			echo '
 			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
+		}
 		echo '
-			</form>
-			<div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
+        </form>
+        <div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
 	}
 	echo '
-	</div>';
+        </div>';
 }
 
 // blocktype 2: News
@@ -329,26 +346,26 @@ function TPortal_statsbox()
 {
 	global $context, $settings, $scripturl, $txt, $modSettings;
 
-	echo'
+	echo '
 	<div class="tp_statsblock">';
 
 	if(isset($context['TPortal']['userbox']['stats']))
 		// members stats
 		echo '
 		<h5 class="mlist"><a href="'.$scripturl.'?action=mlist">'.$txt['members'].'</a></h5>
-		<ul>
-			<li class="tp_stats_members">' . $txt['total_members'].': ' , isset($modSettings['memberCount']) ? comma_format($modSettings['memberCount']) : comma_format($modSettings['totalMembers']) , '</li>
-			<li class="tp_stats_members">' . $txt['tp-latest']. ': <a href="', $scripturl, '?action=profile;u=', $modSettings['latestMember'], '"><strong>', $modSettings['latestRealName'], '</strong></a></li>
+		<ul class="tp_stats_members">
+			<li>' . $txt['total_members'].': ' , isset($modSettings['memberCount']) ? comma_format($modSettings['memberCount']) : comma_format($modSettings['totalMembers']) , '</li>
+			<li>' . $txt['tp-latest']. ': <a href="', $scripturl, '?action=profile;u=', $modSettings['latestMember'], '"><strong>', $modSettings['latestRealName'], '</strong></a></li>
 		</ul>';
 	if(isset($context['TPortal']['userbox']['stats_all']))
 		// more stats
 		echo '
 		<h5 class="stats"><a href="'.$scripturl.'?action=stats">'.$txt['tp-stats'].'</a></h5>
-		<ul>
-			<li class="tp_stats_forum">' . $txt['total_posts'].': '.comma_format($modSettings['totalMessages']). '</li>
-			<li class="tp_stats_forum">' . $txt['total_topics'].': '.comma_format($modSettings['totalTopics']). '</li>
-			<li class="tp_stats_forum">' . $txt['tp-mostonline-today'].': '.comma_format($modSettings['mostOnlineToday']).'</li>
-			<li class="tp_stats_forum">' . $txt['tp-mostonline'].': '.comma_format($modSettings['mostOnline']).'</li>
+		<ul class="tp_stats_forum">
+			<li>' . $txt['total_posts'].': '.comma_format($modSettings['totalMessages']). '</li>
+			<li>' . $txt['total_topics'].': '.comma_format($modSettings['totalTopics']). '</li>
+			<li>' . $txt['tp-mostonline-today'].': '.comma_format($modSettings['mostOnlineToday']).'</li>
+			<li>' . $txt['tp-mostonline'].': '.comma_format($modSettings['mostOnline']).'</li>
 			<li>('.timeformat($modSettings['mostDate']).')</li>
 		</ul>';
 
@@ -359,9 +376,9 @@ function TPortal_statsbox()
 		echo '
 		<h5 class="online"><a href="'.$scripturl.'?action=who">'.$txt['online_users'].'</a></h5>
 		<ul class="tp_stats_users">
-			<li class="tp_stats_online">' . $txt['tp-users'].': '.$online['num_users'].'</li>
-			<li class="tp_stats_online">' . $txt['tp-guests'].': '.$online['guests'].'</li>
-			<li class="tp_stats_online">' . $txt['tp-total'].': '.$online['total_users'].'</li>';
+			<li>' . $txt['tp-users'].': '.$online['num_users'].'</li>
+			<li>' . $txt['tp-guests'].': '.$online['guests'].'</li>
+			<li>' . $txt['tp-total'].': '.$online['total_users'].'</li>';
 
 		foreach($online['users'] as $user)
 		{

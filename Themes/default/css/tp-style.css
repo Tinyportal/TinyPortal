@@ -584,50 +584,53 @@ ul.category_children li {
 	margin: 0;
 	padding: 0;
 }
-.tp_user_pm::before {
-    content: url(../images/tinyportal/TPdivider.png);
-    left: -4px;
+.tp_user_pm li::before {
+    content: url('../images/tinyportal/TPdivider.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_unread_pm::before {
-    content: url(../images/tinyportal/TPdivider.png);
-    left: -4px;
+.tp_user_unapproved_members li::before {
+    content: url('../images/tinyportal/TPmodule2.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_unapproved_members::before {
-    content: url(../images/tinyportal/TPmodule2.png);
-    left: -4px;
+.tp_user_moderate li::before {
+    content: url('../images/tinyportal/TPdivider.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_moderate::before {
-    content: url(../images/tinyportal/TPdivider.png);
-    left: -4px;
+.tp_user_unread li::before {
+    content: url('../images/tinyportal/TPdivider.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_unread::before {
-    content: url(../images/tinyportal/TPdivider.png);
-    left: -4px;
+.tp_user_maintenance li::before {
+    content: url('../images/tinyportal/TPdivider2.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_maintenance::before {
-    content: url(../images/tinyportal/TPdivider2.png);
-    left: -4px;
+.tp_user_loggedintime li::before {
+    content: url('../images/tinyportal/TPdivider2.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_loggedintime::before {
-    content: url(../images/tinyportal/TPdivider2.png);
-    left: -4px;
+.tp_user_subart li::before {
+    content: url('../images/tinyportal/TPdivider3.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_user_subart::before {
-    content: url(../images/tinyportal/TPdivider3.png);
-    left: -4px;
+.tp_user_settings li::before {
+    content: url('../images/tinyportal/TPmodule2.png');
+    left: -.25em;
     position: relative;
-}
-.tp_user_settings::before {
-    content: url(../images/tinyportal/TPmodule2.png);
-    left: -4px;
-    position: relative;
+    top: -.125em;
 }
 /* blocktype 3: Stats */
 .tp_statsblock h5 {
@@ -655,25 +658,29 @@ ul.category_children li {
 .tp_statsblock ul.tp_stats_users {
     padding: 0 0 1em 2em;
 }
-.tp_stats_members::before {
-    content: url(../images/tinyportal/TPdivider.png);
-    left: -4px;
+.tp_stats_members li::before {
+    content: url('../images/tinyportal/TPdivider.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_stats_forum::before {
-    content: url(../images/tinyportal/TPdivider.png);
-    left: -4px;
+.tp_stats_forum li::before {
+    content: url('../images/tinyportal/TPdivider.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_stats_online::before {
-    content: url(../images/tinyportal/TPmodule2.png);
-    left: -4px;
+.tp_stats_users li::before {
+    content: url('../images/tinyportal/TPmodule2.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
-.tp_stats_online_users::before {
-    content: url(../images/tinyportal/TPdivider2.png);
-    left: -4px;
+li.tp_stats_online_users::before {
+    content: url('../images/tinyportal/TPdivider2.png');
+    left: -.25em;
     position: relative;
+    top: -.125em;
 }
 /* blocktype 4: search */
 .block_search {
