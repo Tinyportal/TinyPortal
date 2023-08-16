@@ -62,24 +62,23 @@
 	top: 1em;
 	opacity: 0.3;
 }
-#tptopbarHeader {
-	clear: both;
+/* This will take care of dropping the old	*/
+/* .clearthefloat <p> tags on main panels. */
+/* Can probably drop them everywhere later. */
+#tptopbarHeader, #tpbottombarHeader, #mainContainer, #mainContainer > div,
+#tpcenterbarHeader, #tplowerbarHeader {
+	overflow:hidden;
 }
-#mainContainer {
-	clear: both;
-}
-#tpleftbarContainer {
+#tpleftbarHeader {
 	float: left;
 }
-#tprightbarContainer {
+#tprightbarHeader {
 	float: right;
 }
 #centerContainer {
 	padding-bottom: 4px;
 }
-#tpbottombarHeader {
-	clear: both;
-}
+
 /*  This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
 	padding-bottom: 4px;
@@ -1092,11 +1091,6 @@ input#searchbox {
 }
 input,select {
 	max-width:100%!important;
-}
-.tp_upshrink20 {
-	float: right;
-	margin-right: 0.5em;
-	margin-top: -2.1em;
 }
 .tp_upshrink21, .navigate_section .tp_upshrink21 {
 	float: right;

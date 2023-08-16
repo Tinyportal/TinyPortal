@@ -1,6 +1,6 @@
 	/**
  * @package TinyPortal
- * @version 2.2.2
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -265,87 +265,43 @@
 		/* width and float for left toggle menu from pages like profile page */
 	}
 } 
-/********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
-.lrs #centerContainer {
-	overflow:hidden; /* do not delete */
-}
-/** screen smaller then 500px **/
-@media all and (min-width: 0) and (max-width: 500px) {
-	.lrON.tp_responsive #tpleftbarContainer {
-		display: table-row-group;
+/*	RESPONSIVE TP: Sidebar classes
+	------------------------------
+	ONLY right side bar is enabled:	.lrs.rightpanelOn
+	ONLY left side bar is enabled:	.lrs.leftpanelOn
+	BOTH side bars are enabled:		.lrs.lrON
+	NO side bars are enabled:		.nosides
+/*	------------------------------	*/
+@media (max-width: 900px) {
+	#mainContainer {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		max-width: 100%;
 	}
-	.lrON.tp_responsive #tprightbarContainer {
-		display: table-footer-group;
+	#tpleftbarHeader, #tprightbarHeader {
+		flex: 0 0 auto;
+		order: 2;
+		width: 50% !important;
+		margin: 0 !important;
 	}
-	.tp_responsive #tpleftbarContainer,
-	.tp_responsive #tprightbarContainer {
-		float:none!important;
-		width:100%!important;
+	#tprightbarHeader {
+		order: 3;
 	}
-	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
-	.tp_responsive #tprightbarContainer #tprightbarHeader {
-		margin: 0;
-		padding: 0;
+	.lrs.leftpanelOn #tpleftbarHeader, .lrs.rightpanelOn #tprightbarHeader {
+		width: 100% !important;
 	}
-}
-/** screen from 500px to 900px **/
-@media all and (min-width: 500px) and (max-width: 900px) {
-	.lrON.tp_responsive #tpleftbarContainer,
-	.lrON.tp_responsive #tprightbarContainer {
-		float:none!important;
-	}
-	.lrON.tp_responsive #tpleftbarContainer {
-		display: table-cell;
-	}
-	.lrON.tp_responsive #tprightbarContainer {
-		display: table-cell;
-	}
-	.tp_responsive #tpleftbarContainer,
-	.tp_responsive #tprightbarContainer {
-/*		padding:0.5%;*/
-		width:49%!important;
+	#centerContainer {
+		flex: 1 1 auto;
+		order: 1;
+		width: 100% !important;
 	}
 }
-/** screen smaller then 900px **/
-@media all and (min-width: 0) and (max-width: 900px) {
-	.tp_responsive #centerContainer {
-		max-width:100%;
-		overflow:hidden!important;
+@media (max-width: 500px) {
+	#mainContainer {
+		flex-direction: column;
 	}
-	/* very specific fixes dealing width responsive curve in 2.0 */
-	.lrON input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
-	.lrON #edit_poll fieldset input, 
-	.lrON select[name="targetboard"], 
-	.leftpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
-	.leftpanelOn #edit_poll fieldset input, 
-	.leftpanelOn select[name="targetboard"],
-	.rightpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
-	.rightpanelOn #edit_poll fieldset input, 
-	.rightpanelOn select[name="targetboard"] {
-		width:90%;
-	}
-	.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select {
-		width:70%;
-	}
-	.lrs.tp_responsive #mainContainer {
-		display: table;
-		width:100%; /* can be changed but not deleted it must have a width in px or % because of display table */
-	}
-	.lrs.tp_responsive #centerContainer {
-		display: table-caption;
-	}
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-	.tp_responsive.rightpanelOn #tprightbarContainer {
-		display: table-footer-group;
-	}
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-	.tp_responsive.rightpanelOn #tprightbarContainer {
-		float:none!important;
-		width: 100%!important;
-	}
-	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
-	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader {
-		margin: 0;
-		padding: 0;
+	#tpleftbarHeader, #tprightbarHeader {
+		width: 100% !important;
 	}
 }
