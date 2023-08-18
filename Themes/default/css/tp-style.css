@@ -14,7 +14,7 @@
  *
  */
 
-/* page layout */
+/* Page layout */
 .tp_container {
 	overflow: hidden;
 	width: 100%;
@@ -62,8 +62,8 @@
 	top: 1em;
 	opacity: 0.3;
 }
-/* This will take care of dropping the old	*/
-/* .clearthefloat <p> tags on main panels. */
+/* This will take care of dropping the old */
+/* clearthefloat <p> tags on main panels. */
 /* Can probably drop them everywhere later. */
 #tptopbarHeader, #tpbottombarHeader, #mainContainer, #mainContainer > div,
 #tpcenterbarHeader, #tplowerbarHeader {
@@ -78,70 +78,67 @@
 #centerContainer {
 	padding-bottom: 4px;
 }
-
-/*  This is where you set the distance between blocks, use padding and target each panel if you like */
+/* This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_centercontainer, .block_uppercontainer, .block_lowercontainer, .block_topcontainer, .block_bottomcontainer {
 	padding-bottom: 4px;
 }
 .panelsColumnsHorizontally {
 	padding-right: 2px;
 }
-/* blocks in panels set to display in columns (the default is vertically)*/
+/* Blocks in panels set to display in columns (the default is vertically)*/
 .panelsColumns {
 	-webkit-box-sizing:border-box;
 	box-sizing:border-box;
 }
 /* Panel Grid options using CSS grid */
 .GridWrap {
-    display: grid;
-    column-gap: 4px;
-    grid-template-columns: [col1-start] 33.1% [col2-start] 33.1%  [col3-start] 33.1% [col3-end];
-    grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
+	display: grid;
+	column-gap: 4px;
+	grid-template-columns: [col1-start] 33.1% [col2-start] 33.1% [col3-start] 33.1% [col3-end];
+	grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
 }
 /* Panel grid1 */
 .grid1box1 {
-    grid-column: col1-start / col3-end;
-    grid-row: row1-start;
+	grid-column: col1-start / col3-end;
+	grid-row: row1-start;
 }
 .grid1box2 {
-    grid-column: col1-start;
-    grid-row: row2-start ;
+	grid-column: col1-start;
+	grid-row: row2-start ;
 }
 .grid1box3 {
-    grid-column: col2-start ;
-    grid-row: row2-start ;
+	grid-column: col2-start ;
+	grid-row: row2-start ;
 }
 .grid1box4 {
-    grid-column: col3-start;
-    grid-row: row2-start ;
+	grid-column: col3-start;
+	grid-row: row2-start ;
 }
 /* Panel grid2 */
 .grid2box1 {
-    grid-column: col1-start ;
-    grid-row: row1-start / row2-end;
+	grid-column: col1-start ;
+	grid-row: row1-start / row2-end;
 }
 .grid2box2 {
-    grid-column: col2-start;
-    grid-row: row1-start ;
+	grid-column: col2-start;
+	grid-row: row1-start ;
 }
 .grid2box3 {
-    grid-column: col3-start ;
-    grid-row: row1-start ;
+	grid-column: col3-start ;
+	grid-row: row1-start ;
 }
 .grid2box4 {
-    grid-column: col2-start;
-    grid-row: row2-start ;
+	grid-column: col2-start;
+	grid-row: row2-start ;
 }
 .grid2box5 {
-    grid-column: col3-start ;
-    grid-row: row2-start ;
-	}	
-
+	grid-column: col3-start ;
+	grid-row: row2-start ;
+}
 .tpbuttons > ul > .button {
 	margin: 0 3px 3px 0;
 }
-
-/* articles */
+/* Articles */
 .article h2 {
 	margin: 0;
 	padding: 0;
@@ -186,21 +183,21 @@ h2.author_h2 {
 }
 .article_inner ul, ul.disc {
 	list-style-type: disc;
-    margin-block-end: 1em;
-    margin-block-start: 1em;
-    margin-inline-end: 0;
-    margin-inline-start: 0;
-    padding: 0 0 0 40px;
-    padding-inline-start: 40px;
+	margin-block-end: 1em;
+	margin-block-start: 1em;
+	margin-inline-end: 0;
+	margin-inline-start: 0;
+	padding: 0 0 0 40px;
+	padding-inline-start: 40px;
 }
 .article_inner ol, ol.decimal {
-    list-style-type: decimal;
-    margin-block-end: 1em;
-    margin-block-start: 1em;
-    margin-inline-end: 0;
-    margin-inline-start: 0;
-    padding: 0 0 0 40px;
-    padding-inline-start: 40px;
+	list-style-type: decimal;
+	margin-block-end: 1em;
+	margin-block-start: 1em;
+	margin-inline-end: 0;
+	margin-inline-start: 0;
+	padding: 0 0 0 40px;
+	padding-inline-start: 40px;
 }
 .article_info {
 	color: #888;
@@ -249,7 +246,7 @@ h3.article_info {
 .article_authorinfo {
 	overflow: hidden;
 }
-/* horizontal render layout */
+/* Horizontal render layout */
 .article_info div {
 	border-right: solid 1px #888;
 	display: inline-block;
@@ -264,7 +261,7 @@ h3.article_info {
 	float: left;
 	max-width: 80px;
 }
-/* vertical layout */
+/* Vertical layout */
 .render3 .article_info div, .render4 .article_info div, .render2 .article_info div, .render8 .article_info div {
 	display: block;
 	border: none;
@@ -278,7 +275,7 @@ h3.article_info {
 span.article_shortdate {
 	font-weight: normal;
 }
-/* avatar styles */
+/* Avatar styles */
 .tpavatar {
 	float: left;
 	padding: 3px 11px 0 0;
@@ -320,7 +317,7 @@ a.tp_avatar_author img {
 	right: 0;
 	top: 0;
 }
-/* social */
+/* Social */
 .article_socialbookmark {
 	padding: 1em;
 	text-align: center;
@@ -331,12 +328,12 @@ a.tp_avatar_author img {
 .tp_social {
 	width: 24px;
 }
-/* rating */
+/* Rating */
 .tp_article_rate {
 	margin: 0;
 	padding: 1em;
 }
-/* comments */
+/* Comments */
 .mycomment, .othercomment {
 	clear: both;
 	overflow: hidden;
@@ -407,7 +404,7 @@ a.tp_avatar_author img {
 	padding: 0 10px;
 	text-transform: uppercase;
 }
-/*images in articles content*/
+/* Images in articles content */
 .article_inner img, .tparticle img, .bbc_img {
 	height: auto;
 	max-width: 100%;
@@ -431,7 +428,7 @@ a.tp_avatar_author img {
 .youtubecontainer iframe {
 	border-style: none;
 }
-/* render5 */
+/* Render5 */
 .catlayout5_title {
 	float: left;
 	margin: 0;
@@ -452,7 +449,7 @@ a.tp_avatar_author img {
 .catlayout5_text {
 	margin: 0;
 }
-/* renderX */
+/* RenderX */
 .render2, .render3, .render4, .render6, .render8 {
 	margin: 0 0 0 0;
 }
@@ -461,7 +458,7 @@ a.tp_avatar_author img {
 	font-weight: bold;
 	overflow: hidden;
 }
-/* render2 */
+/* Render2 */
 .article_iconcolumn {
 	float: left;
 	margin: 0 1em 0.5em 0;
@@ -483,13 +480,10 @@ a.tp_avatar_author img {
 	max-width: 100%;
 	width: 100%;
 }
-/* render4 */
+/* Render4 */
 .render4 .windowbg, .render4 .windowbg2, .render4 .roundframe {
 	margin-top: 0 !important;
 }
-/*.render6 .windowbg, .render6 .windowbg2, .render6 .roundframe, .render8 .windowbg, .render8 .windowbg2, .render8 .roundframe {
-	margin-top: 2px !important;
-}*/
 .article_header {
 	line-height: 1.6em;
 	overflow: hidden;
@@ -511,11 +505,10 @@ a.tp_avatar_author img {
 	max-height: 98px;
 	width: 98px;
 }
-/* render9 */
+/* Render9 */
 .render9 .windowbg {
 	margin: 6px 0 0 0 !important;
 }
-
 .tp_underline {
 	border-bottom: #DDDDDD;
 	border-bottom: 1px solid rgba(221, 221, 221, 0.5);
@@ -554,14 +547,14 @@ ul.category_children li {
 #tprightbarHeader {
 	padding-left: 2px;
 }
-/* blocklayout */
+/* Blocklayout */
 .blockbody {
 	line-height: 1.3em;
 	min-height: 0;
 	overflow-wrap: anywhere;
 	padding: 4px;
 }
-/* blocktype 1: User */
+/* Blocktype 1: User */
 .tp_userblock h4 {
 	font-size: 1.1em;
 	margin: 0;
@@ -584,60 +577,60 @@ ul.category_children li {
 	padding: 0;
 }
 .tp_user_pm li::before {
-    content: url('../images/tinyportal/TPdivider.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_unapproved_members li::before {
-    content: url('../images/tinyportal/TPmodule2.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPmodule2.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_moderate li::before {
-    content: url('../images/tinyportal/TPdivider.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_unread li::before {
-    content: url('../images/tinyportal/TPdivider.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_maintenance li::before {
-    content: url('../images/tinyportal/TPdivider2.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider2.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_loggedintime li::before {
-    content: url('../images/tinyportal/TPdivider2.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider2.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_subart li::before {
-    content: url('../images/tinyportal/TPdivider3.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider3.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_user_settings li::before {
-    content: url('../images/tinyportal/TPmodule2.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPmodule2.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
-/* blocktype 3: Stats */
+/* Blocktype 3: Stats */
 .tp_statsblock h5 {
 	padding: .3em 0 .3em 0;
 }
 .tp_statsblock h5.mlist, .tp_statsblock h5.stats, .tp_statsblock h5.online {
 	margin: .3em 0 .2em 0;
-    padding: .3em 0 .3em 1.5em;
+	padding: .3em 0 .3em 1.5em;
 }
 .tp_statsblock h5.mlist {
 	background: url(../images/tinyportal/members.png) no-repeat 0 5px;
@@ -652,36 +645,36 @@ ul.category_children li {
 	padding-left: 2em;
 }
 .tp_statsblock ul {
-    padding: 0 0 1em;
+	padding: 0 0 1em;
 }
 .tp_statsblock ul.tp_stats_users {
-    padding: 0 0 1em 2em;
+	padding: 0 0 1em 2em;
 }
 .tp_stats_members li::before {
-    content: url('../images/tinyportal/TPdivider.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_stats_forum li::before {
-    content: url('../images/tinyportal/TPdivider.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 .tp_stats_users li::before {
-    content: url('../images/tinyportal/TPdivider2.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider2.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
 li.tp_stats_online_users::before {
-    content: url('../images/tinyportal/TPdivider3.png');
-    left: -.25em;
-    position: relative;
-    top: -.125em;
+	content: url('../images/tinyportal/TPdivider3.png');
+	left: -.25em;
+	position: relative;
+	top: -.125em;
 }
-/* blocktype 4: search */
+/* Blocktype 4: search */
 .block_search {
 	margin: 5px auto;
 	width: 85%;
@@ -690,7 +683,7 @@ li.tp_stats_online_users::before {
 	margin: 0 auto 5px auto;
 	width: 65%;
 }
-/* blocktype 9: Menu */
+/* Blocktype 9: Menu */
 ul.tp_catmenu, ul.tp_catmenu li {
 	line-height: 1.3em;
 	list-style: none;
@@ -702,16 +695,16 @@ ul.tp_catmenu li.tp_catmenu_header {
 	padding-top: 6px;
 }
 .tp_menu_0::before {
-    content: url(../images/tinyportal/TPdivider2.png);
-    left: -4px;
-    position: relative;
+	content: url(../images/tinyportal/TPdivider2.png);
+	left: -4px;
+	position: relative;
 }
 .tp_menu_1::before {
-    content: url(../images/tinyportal/bullet3.png);
-    left: -4px;
-    position: relative;
+	content: url(../images/tinyportal/bullet3.png);
+	left: -4px;
+	position: relative;
 }
-/* blocktype 12: Recent Topics */
+/* Blocktype 12: Recent Topics */
 ul.tp_recentblock, .tp_statsblock ul {
 	line-height: 1.3em;
 	list-style: none;
@@ -730,12 +723,12 @@ ul.recent_topics li {
 	overflow: hidden;
 	padding: 4px;
 }
-/* blocktype 14: Article / Download functions */
+/* Blocktype 14: Article / Download functions */
 ul.dl_recentitems {
 	margin: 0;
 	padding-inline-start: 20px;
 }
-/* blocktype 16: Sitemap */
+/* Blocktype 16: Sitemap */
 ul.tpsitemap {
 	margin: 0;
 	padding: 0;
@@ -759,7 +752,7 @@ ul.tpsitemap li a:hover {
 ul.tpsitemap li a.tpsitemapheader {
 	font-weight: bold;
 }
-/* blocktype 18: Single Article */
+/* Blocktype 18: Single Article */
 .block_article h2.article_title, .block_article .article_info {
 	display: none;
 }
@@ -947,7 +940,7 @@ fieldset#blockopts table {
 fieldset#blockopts td {
 	border: solid 1px #aaa;
 }
-/* rounded headers for TP */
+/* Rounded headers for TP */
 h2.catbg, h2.catbg2, h2.titlebg {
 	font-size: 1.2em;
 	font-weight: bold;
@@ -959,59 +952,33 @@ h2.catbg img.icon {
 	float: left;
 	margin: 5px 8px 0 0;
 }
-div.tp_half
-{
-	height: 31px;
-	margin-bottom: 1px;
+/* Additional style for blocks replacing tp_half */
+div.tp_half21 {
+	background: #B1BBC5;
+	border-radius: 6px 6px 0 0;
+	box-shadow: 0 16px 20px rgba(255,255,255,0.15) inset;
+	padding: 0;
+	text-shadow: -1px -1px 1px rgba(0,0,0,0.2);
+}
+.tp_half21 h3.titlebg {
+	font-size: 1.1em;
 	overflow: hidden;
+	padding: 8px 12px 6px 12px;
 }
-.tp_half h3.titlebg {
-	background: url(../images/theme/main_block.png) no-repeat -10px -200px;
-	border-radius: 6px 6px 0 0;
-	font-weight: bold;
-	height: 31px;
-	margin: 0;
-	padding-right: 0;
+.tp_half21 h3.catbg {
+	font-size: 1.1em;
+	overflow: hidden;
+	padding: 8px 12px 6px 12px;
 }
-.tp_half h3.titlebg span.l {
-	background: url(../images/theme/main_block.png) no-repeat 0 -200px;
-	display: block;
-	float: left;
-	height: 31px;
-	width: 10px;
-}
-.tp_half h3.titlebg span.r {
-	background: url(../images/theme/main_block.png) no-repeat 100% -200px;
-	display: block;
-	float: right;
-	height: 31px;
-	width: 10px;
-}
-.tp_half h3.catbg {
-	background: url(../images/theme/main_block.png) no-repeat -10px -160px;
-	border-radius: 6px 6px 0 0;
-	font-weight: bold;
-	height: 31px;
-	padding-right: 0;
-}
-.tp_half h3.catbg span.l {
-	background: url(../images/theme/main_block.png) no-repeat 0 -160px;
-	display: block;
-	float: left;
-	height: 31px;
-	width: 10px;
-}
-.tp_half h3.catbg span.r {
-	background: url(../images/theme/main_block.png) no-repeat 100% -160px;
-	display: block;
-	float: right;
-	height: 31px;
-	width: 10px;
+.tp_block21 {
+	margin-bottom: 0 !important;
+	margin-top: 6px;
+	padding: 4px 8px 8px 8px;
 }
 .tpadmin_content .tpbut {
 	background: none;
 	border: none;
-	margin:  0;
+	margin: 0;
 	padding: 0;
 }
 .editor {
@@ -1031,7 +998,7 @@ div.tp_half
 }
 .tparticle .title_bar h3.titlebg2 {
 	background: none;
-    padding: 8px 0 6px 0;
+	padding: 8px 0 6px 0;
 }
 .tparticle .title_bar h3.catbg {
 	background: none;
@@ -1049,29 +1016,28 @@ div.tp_half
 }
 .tparticle .cat_bar h3.titlebg2 {
 	background: none;
-    padding: 8px 0 6px 0;
+	padding: 8px 0 6px 0;
 }
 .tparticle .tp_half h3.titlebg {
-    height: 31px;
+	height: 31px;
 	line-height: 31px;
-    padding-left: 1em;
+	padding-left: 1em;
 	padding-right: 1em;
 }
 .tparticle .tp_half h3.catbg, .tparticle .tp_half h3.catbg2 {
-    border-radius: 6px;
-    height: 31px;
-    line-height: 31px;
+	border-radius: 6px;
+	height: 31px;
+	line-height: 31px;
 	padding: 0 1em 0 1em;
 }
 .tparticle .tp_half h3.titlebg2 {
 	border-radius: 6px 6px 0 0;
 	font-weight: bold;
-    height: 31px;
+	height: 31px;
 	line-height: 31px;
 	padding: 0 1em 0 1em;
 }
-
-/************* TP STYLES ********************/
+/* TP STYLES */
 .tp_floatleft {
 	float: left;
 }
@@ -1079,9 +1045,9 @@ div.tp_half
 	float: right;
 }
 .clearthefloat {
-   clear:both;
-   margin: 0;
-   padding: 0;
+	clear:both;
+	margin: 0;
+	padding: 0;
 }
 input#searchbox {
 	margin-bottom: 0.5em;
@@ -1097,8 +1063,7 @@ input,select {
 	padding: 0 0 1px 3px;
 	margin-top: 6px;
 }
-
-/* ** TP ADMIN STYLES ** */
+/* TP ADMIN STYLES */
 .tpadmin {
 	padding: 0 0 4px 0;
 }
@@ -1109,7 +1074,7 @@ input,select {
 	border: 1px solid #CCCCCC;
 	border: 1px solid rgba(204, 204, 204, 0.5);
 	box-sizing: border-box;
-    float: left;
+	float: left;
 	width: 100%;
 }
 .admin-area img {
@@ -1124,7 +1089,7 @@ input,select {
 	border-left: 1px solid rgba(204, 204, 204, 0.5);
 }
 .tpartlayoutfp {
-    float: left;
+	float: left;
 	margin: 4px;
 }
 .tpartlayouttype {
@@ -1168,7 +1133,7 @@ dl.tptitle dd {
 }
 .float-items {
 	box-sizing: border-box;
-   	float: left;
+	float: left;
 	padding: 1%;
 }
 .show-on-responsive {
@@ -1208,7 +1173,6 @@ dl.tptitle dd {
 	padding: 0;
 }
 #tpleftbarHeader.roundframe, #tprightbarHeader.roundframe {
-	/* Reduced padding for sidebars? */
 	padding: 10px;
 }
 .admintable > .windowbg {
@@ -1235,17 +1199,6 @@ dl.tptitle dd {
 #tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {
 	margin-bottom: 0 !important;
 }
-/* Added so that grid lists show acceptable in 2.0 > not needed in 2.1 */
-table.tp_grid td, table.tp_grid th {
-	border: #DDDDDD;
-	border: 1px solid rgba(221, 221, 221, 0.5);
-}
-table.tp_grid tr.windowbg:nth-of-type(odd) {
-    background: #fdfdfd;
-}
-table.tp_grid tr.windowbg:nth-of-type(even) {
-    background: #f0f4f7;
-}
 /* Main icons for SMF 2.1 */
 .main_icons.menu_tp::before {
 	background: url(../images/tinyportal/menu_tp.png) no-repeat;
@@ -1260,37 +1213,14 @@ table.tp_grid tr.windowbg:nth-of-type(even) {
 	background: url(../images/tinyportal/menu_tpshout.png) no-repeat;
 }
 .main_icons.menu_tpforum::before {
-    background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
+	background: url(../images/tinyportal/menu_tpforum.png) no-repeat;
 }
-/* font awesome icons for FA themes*/
+/* Font awesome icons for FA themes*/
 .fa-forum:before {
-  content: "\f086"; }
-  
+	content: "\f086";
+}
 .fa-tpadmin:before {
-  content: "\f1b3"; }
-  
-/* Additional style for blocks replacing tp_half */
-div.tp_half21 {
-	background: #B1BBC5;
-	border-radius: 6px 6px 0 0;
-	box-shadow: 0 16px 20px rgba(255,255,255,0.15) inset;
-	padding: 0;
-	text-shadow: -1px -1px 1px rgba(0,0,0,0.2);
-}
-.tp_half21 h3.titlebg {
-	font-size: 1.1em;
-	overflow: hidden;
-	padding: 8px 12px 6px 12px;
-}
-.tp_half21 h3.catbg {
-	font-size: 1.1em;
-	overflow: hidden;
-	padding: 8px 12px 6px 12px;
-}
-.tp_block21 {
-	margin-bottom: 0 !important;
-	margin-top: 6px;
-	padding: 4px 8px 8px 8px;
+	content: "\f1b3";
 }
 code.bbc_code {
 	-ms-hyphens: none;

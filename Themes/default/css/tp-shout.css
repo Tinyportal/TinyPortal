@@ -41,7 +41,7 @@
 	overflow: hidden;
 }
 .tp_shoutavatar2 img {
-    max-width: 100%;
+	max-width: 100%;
 }
 .tp_shoutavatar h4 {
 	font-size: 1.1em;
@@ -78,15 +78,15 @@
 	min-width:150px;
 	vertical-align: top;
 }
-/* for layout option 0 */
+/* Layout option 0 */
 .tp_shoutbody_layout0 {
 	padding-right: 5px;
 }
 .tp_shoutbox_editor0 {
 	height: 80px;
-    margin: 0.25em 0 1em 0;
+	margin: 0.25em 0 1em 0;
 	margin-top: 1em;
-    max-width: 95%;
+	max-width: 95%;
 	width: 100%;
 }
 .tp_bubble {
@@ -144,19 +144,19 @@
 	z-index: 1;
 }
 */
-/* for layout option 2 */
+/* Layout option 2 */
 .tp_shoutbody_layout1 {
 	border-bottom: 1px dotted #000;
 	padding: 5px 5px 5px 0;
 }
 .tp_shoutbox_editor1 {
 	height: 80px;
-    margin: 0.25em 0 1em 0;
+	margin: 0.25em 0 1em 0;
 	margin-top: 1em;
-    max-width: 95%;
+	max-width: 95%;
 	width: 100%;
 }
-/* for layout option 3 and 4 */
+/* Layout option 3 and 4 */
 .tp_shout_date {
 	clear: both;
 }
