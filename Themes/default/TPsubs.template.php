@@ -365,8 +365,7 @@ function TPortal_statsbox()
 			<li>' . $txt['total_posts'].': '.comma_format($modSettings['totalMessages']). '</li>
 			<li>' . $txt['total_topics'].': '.comma_format($modSettings['totalTopics']). '</li>
 			<li>' . $txt['tp-mostonline-today'].': '.comma_format($modSettings['mostOnlineToday']).'</li>
-			<li>' . $txt['tp-mostonline'].': '.comma_format($modSettings['mostOnline']).'</li>
-			<li>('.timeformat($modSettings['mostDate']).')</li>
+			<li>' . $txt['tp-mostonline'].': '.comma_format($modSettings['mostOnline']).'&nbsp;('.timeformat($modSettings['mostDate']).')</li>
 		</ul>';
 
 	if(isset($context['TPortal']['userbox']['online']))
