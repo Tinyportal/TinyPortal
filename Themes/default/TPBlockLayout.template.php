@@ -66,59 +66,54 @@ function template_tp_above()
 		echo '
 		<div id="tptopbarHeader"' , in_array('tptopbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
 			'	, TPortal_panel('top') , '
-			<p class="clearthefloat"></p>
 		</div>';
 
+	// Stick to old school floats here, until width gets down to 900px.
 	echo '
 		<div id="mainContainer">';
 
-	// TinyPortal integrated bars
+	// Tiny Portal left side bar - floated left by default.
 	if($context['TPortal']['leftpanel']==1) {
 		echo '
-			<div id="tpleftbarContainer" style="width:' , ($context['TPortal']['leftbar_width']) , 'px; ' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '" >
-				<div id="tpleftbarHeader"' , in_array('tpleftbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
-					' , $context['TPortal']['useroundframepanels']==1 ?
-					'<span class="upperframe"><span></span></span>
-					<div class="roundframe" style="overflow: auto;">' : ''
-					, TPortal_panel('left') ,
-					$context['TPortal']['useroundframepanels']==1 ?
-					'</div>
-					<span class="lowerframe"><span></span></span>' : '' , '
-					<p class="clearthefloat"></p>
-				</div>
-			</div>';
+			<div id="tpleftbarHeader"', ($context['TPortal']['useroundframepanels']==1) ? ' class="roundframe"' : '', ' style="width:', ($context['TPortal']['leftbar_width']), 'px;', in_array('tpleftbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse']==1) ? 'display:none' : '', '" >
+				', TPortal_panel('left'), '
+			</div><!-- #tpleftbarHeader -->';
 	}
-	// TinyPortal integrated bars
-	if($context['TPortal']['rightpanel']==1)
-	{
+
+	// Tiny Portal right side bar - floated right by default.
+	if($context['TPortal']['rightpanel']==1) {
 		echo '
-			<div id="tprightbarContainer" style="width:' ,$context['TPortal']['rightbar_width'], 'px;' , in_array('tprightbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '" >
-				<div id="tprightbarHeader"' , in_array('tprightbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
-					' , $context['TPortal']['useroundframepanels']==1 ?
-					'<span class="upperframe"><span></span></span>
-					<div class="roundframe">' : ''
-						, TPortal_panel('right') ,
-						$context['TPortal']['useroundframepanels']==1 ?
-					'</div>
-					<span class="lowerframe"><span></span></span>' : '' , '
-					<p class="clearthefloat"></p>
-				</div>
-			</div>';
+			<div id="tprightbarHeader"', ($context['TPortal']['useroundframepanels']==1) ? ' class="roundframe"' : '', ' style="width:', ($context['TPortal']['rightbar_width']), 'px;', in_array('tprightbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse']==1) ? 'display:none' : '', '" >
+				', TPortal_panel('right'), '
+			</div><!-- #tprightbarHeader -->';
 	}
+
+	//	Tiny Portal centre panel - not floated.
+	//	The important div for nailing width < 900px!
 	echo '
 			<div id="centerContainer">
 				<div id="tpcontentHeader">';
 
+	//	This is where the pesky "upper panel" lives.
+	//	Note: inconsistent naming is a minor faux pas.
+	//	Really it would make sense to rename things here,
+	//	to match the name as given in admin: upper panel.
+
 	if($context['TPortal']['centerpanel']==1) {
 		echo '
-					<div id="tpcenterbarHeader"' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
+					<div id="tpcenterbarHeader" style="' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 						' , TPortal_panel('center') , '
-						<p class="clearthefloat"></p>
 					</div>';
     }
 	echo '
-                </div><!--tpcontentHeader-->';
+                </div><!-- #tpcontentHeader -->';
 }
+
+// The board index goes here, naturally.
+//	<div id="boardindex_table" class="boardindex_table"></div>
+//	Then the info centre...
+//	<div id="info_center" class="roundframe"></div>
+//	Then wrap things up...
 
 function template_tp_below()
 {
@@ -126,23 +121,18 @@ function template_tp_below()
 
 	if($context['TPortal']['lowerpanel']==1)
 		echo '
-				<div id="tplowerbarHeader"' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
+				<div id="tplowerbarHeader" style="' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 					' , TPortal_panel('lower') , '
-					<p class="clearthefloat"></p>
 				</div>';
-// end centerContainer
 	echo '
-			</div>';
-// end mainContainer
-	echo '
-			<p class="clearthefloat"></p>				
-		</div>';
+			</div><!-- #centerContainer -->
+		</div><!-- #mainContainer -->';
+		// End #mainContainer
 
 	if($context['TPortal']['bottompanel']==1)
 		echo '
-		<div id="tpbottombarHeader"', in_array('tpbottombarHeader', $context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? ' style="display: none"' : '', '>
-			', TPortal_panel('bottom') , '
-			<p class="clearthefloat"></p>
+		<div id="tpbottombarHeader" style="' , in_array('tpbottombarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
+			' , TPortal_panel('bottom') , '
 		</div>';
 	echo '
 	</div>';

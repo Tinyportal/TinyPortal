@@ -1,6 +1,6 @@
-	/**
+/**
  * @package TinyPortal
- * @version 2.2.2
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -14,338 +14,281 @@
  *
  */
 
-/************* TP ADMIN RESPONSIVE ********************/
 /* Responsive Youtube embed */
 @media only screen and (min-width: 769px) {
-	.youtubecontainer {
-		display: inline-block;
-		height: calc(59vw/1.77);
-		margin: 0 auto;
-		width: 59vw;
-	}
+.youtubecontainer {
+	display: inline-block;
+	height: calc(59vw/1.77);
+	margin: 0 auto;
+	width: 59vw;
+}
 }
 @media all and (max-width: 768px) {
-	.padding-div {
-		padding: calc(1% + 10px);
-	}
-	.youtubecontainer {
-		display: inline-block;
-		height: calc(80vw/1.77);
-		margin: 0 auto;
-		width: 80vw;
-	}
-	.youtubecontainer iframe {
-		display:block;
-		height:100%;
-		width:100%;
-	}
-	.tp_responsive .tpadmin_content {
-		min-width:200px;
-	}
-	dl.tptitle dt
-	{
-		float: none;
-		width: 100%;
-	}
-	dl.tptitle dd
-	{
-		float: none;
-		width: 100%;
-	}
+.padding-div {
+	padding: calc(1% + 10px);
+}
+.youtubecontainer {
+	display: inline-block;
+	height: calc(80vw/1.77);
+	margin: 0 auto;
+	width: 80vw;
+}
+.youtubecontainer iframe {
+	display:block;
+	height:100%;
+	width:100%;
+}
+.tp_responsive .tpadmin_content {
+	min-width:200px;
+}
+dl.tptitle dt {
+	float: none;
+	width: 100%;
+}
+dl.tptitle dd {
+	float: none;
+	width: 100%;
+}
 }
 /** screen bigger then 900px **/
 @media all and (min-width: 900px) {
-	.clickme {
-		display:none!important;
-	}
-	.box {
-		display:block!important;
-	}
+.clickme {
+	display:none!important;
+}
+.box {
+	display:block!important;
+}
 }
 
 /** screen smaller then 900px **/
 @media all and (max-width: 900px) {
-	.tp_responsive .clickme {
-		background-image:url(../images/tinyportal/TPsort_down.png);
-		background-position:center right;
-		background-repeat:no-repeat;
-		clear:both;
-		cursor: pointer;
-		display:block;
-		font-size:12px;
-		font-weight:bold;
-		padding: 1%;
-		text-decoration:none;
-		width:55px;
-	}	
-	.tp_responsive .box {
-		float:none!important;
-		width:100%!important;
-	}
-	.tp_responsive .fullwidth-on-res-layout {
-		box-sizing: border-box;
-		clear:both!important;
-		float:none!important;
-		text-align: left!important;
-		width:98%!important;
-	}	
-	.tp_responsive .fullwidth-on-res-layout::after {
-		clear:both;
-		content: "";
-		display:block;
-	}
-	.tp_responsive .fullwidth-on-res-layout:after {
-		clear:both;
-		content: "";
-		display:block; /* after for older browsers*/
-	}
-	.tp_responsive .show-on-responsive {
-		display:block;
-		float: left;
-		max-width: 150px;
-		width: 35%!important;
-	}
-	.tp_responsive .size-on-responsive {
-		float: left;
-		width: 65%;
-	}	
-	.tp_responsive .title-admin-area {
-		display:none;
-	}
-	.tp_responsive .admin-area .pos,
-	.tp_responsive .admin-area .name {
-		box-sizing: border-box;
-		display:inline-block;
-	}
-	.tp_responsive .admin-area .name {
-		width:78%!important;
-	}
-	.tp_responsive .admin-area .pos,
-	.tp_responsive .admin-area .adm-pos {
-		box-sizing: border-box;
-		width:14%!important;
-	}	
-	.tp_responsive .admin-area .adm-name {
-		box-sizing: border-box;
-		padding:1%!important;
-		width:80%!important;
-	}	
-	.tp_responsive .bigger-width .show-on-responsive {
-		padding:0 3% 0 2%!important;
-		width: 30%!important;
-	}
-	.tp_responsive .bigger-width  .size-on-responsive {
-		width: 65%;
-	}
-	.tp_responsive #new-item .show-on-responsive {
-		float:none;
-		padding: 0 0 1% 0!important;
-		width:100%!important;	}
-	.tp_responsive #any-subcats .size-on-responsive .float-items,
-	.tp_responsive #up-file .size-on-responsive .float-items {
-		padding:0 1%;
-		text-align:left;
-	}
-	.tp_responsive #any-subcats .size-on-responsive,
-	.tp_responsive #up-file .size-on-responsive {
-		text-align:left;
-	}
-	.tp_responsive #new-item  .float-items {
-		float: none;
-		width: 98%!important;
-	}
-	.tp_responsive .tpadmin_menu {
-		float: none!important;
-		width: 100%!important;
-	}
-	.tp_responsive .tpadmin_menu ul li {
-		display: inline-block;
-		padding-left: 1%!important;
-		vertical-align: top;
-		width: 31%!important;
-	}
-	.tp_responsive .tpadmin_menu .roundframe::after {
-		clear: both;
-		content: "";
-		display: table;
-	}
-	.tp_responsive .tpadmin_content {
-		margin: 2px 0 0 0!important;
-	}
-	.article_picture {
-		background-position: center;
-	}
-	.dl_itemgrid {
-		width: 98%;
-		word-wrap: break-word;
-	}
-	ul.tp-subcategories li {
-		width: 48%;
-	}
+.tp_responsive .clickme {
+	background-image:url(../images/tinyportal/TPsort_down.png);
+	background-position:center right;
+	background-repeat:no-repeat;
+	clear:both;
+	cursor: pointer;
+	display:block;
+	font-size:12px;
+	font-weight:bold;
+	padding: 1%;
+	text-decoration:none;
+	width:55px;
+}	
+.tp_responsive .box {
+	float:none!important;
+	width:100%!important;
+}
+.tp_responsive .fullwidth-on-res-layout {
+	box-sizing: border-box;
+	clear:both!important;
+	float:none!important;
+	text-align: left!important;
+	width:98%!important;
+}	
+.tp_responsive .fullwidth-on-res-layout::after {
+	clear:both;
+	content: "";
+	display:block;
+}
+.tp_responsive .fullwidth-on-res-layout:after {
+	clear:both;
+	content: "";
+	display:block; /* after for older browsers*/
+}
+.tp_responsive .show-on-responsive {
+	display:block;
+	float: left;
+	max-width: 150px;
+	width: 35%!important;
+}
+.tp_responsive .size-on-responsive {
+	float: left;
+	width: 65%;
+}	
+.tp_responsive .title-admin-area {
+	display:none;
+}
+.tp_responsive .admin-area .pos, .tp_responsive .admin-area .name {
+	box-sizing: border-box;
+	display:inline-block;
+}
+.tp_responsive .admin-area .name {
+	width:78%!important;
+}
+.tp_responsive .admin-area .pos, .tp_responsive .admin-area .adm-pos {
+	box-sizing: border-box;
+	width:14%!important;
+}	
+.tp_responsive .admin-area .adm-name {
+	box-sizing: border-box;
+	padding:1%!important;
+	width:80%!important;
+}	
+.tp_responsive .bigger-width .show-on-responsive {
+	padding:0 3% 0 2%!important;
+	width: 30%!important;
+}
+.tp_responsive .bigger-width .size-on-responsive {
+	width: 65%;
+}
+.tp_responsive #new-item .show-on-responsive {
+	float:none;
+	padding: 0 0 1% 0!important;
+	width:100%!important;
+}
+.tp_responsive #any-subcats .size-on-responsive .float-items, .tp_responsive #up-file .size-on-responsive .float-items {
+	padding:0 1%;
+	text-align:left;
+}
+.tp_responsive #any-subcats .size-on-responsive, .tp_responsive #up-file .size-on-responsive {
+	text-align:left;
+}
+.tp_responsive #new-item .float-items {
+	float: none;
+	width: 98%!important;
+}
+.tp_responsive .tpadmin_menu {
+	float: none!important;
+	width: 100%!important;
+}
+.tp_responsive .tpadmin_menu ul li {
+	display: inline-block;
+	padding-left: 1%!important;
+	vertical-align: top;
+	width: 31%!important;
+}
+.tp_responsive .tpadmin_menu .roundframe::after {
+	clear: both;
+	content: "";
+	display: table;
+}
+.tp_responsive .tpadmin_content {
+	margin: 2px 0 0 0!important;
+}
+.article_picture {
+	background-position: center;
+}
+.dl_itemgrid {
+	width: 98%;
+	word-wrap: break-word;
+}
+ul.tp-subcategories li {
+	width: 48%;
+}
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
-	.tp_responsive .tpadmin_menu{
-		float: none!important;
-		width: 100%!important;
-	}
-	.tp_responsive .tpadmin_menu ul li {
-		padding-left: 3%!important;
-		width: 45%!important;
-	}
-	.tp_responsive .tpadmin_menu .roundframe::after {
-		clear: both;
-		content: "";
-		display: table;
-	}
-	.tp_responsive .tpadmin_content {
-		margin: 2px 0 0 0!important;
-	}
-	.tp_responsive .tp_overview ul li {
-		width: 50%!important;
-	}
-	ul.tp-subcategories li {
-		width: 98%;
-	}
+.tp_responsive .tpadmin_menu{
+	float: none!important;
+	width: 100%!important;
+}
+.tp_responsive .tpadmin_menu ul li {
+	padding-left: 3%!important;
+	width: 45%!important;
+}
+.tp_responsive .tpadmin_menu .roundframe::after {
+	clear: both;
+	content: "";
+	display: table;
+}
+.tp_responsive .tpadmin_content {
+	margin: 2px 0 0 0!important;
+}
+.tp_responsive .tp_overview ul li {
+	width: 50%!important;
+}
+ul.tp-subcategories li {
+	width: 98%;
+}
 /** Quick fixes Curve2 **/
-/* reason for edit */
-	input[name="modify_reason"] {
+input[name="modify_reason"] {
 	width:100%;
-	}
-/* quickactions */
-	#quick_actions > select[name="qaction"] {
-    width: 80px;
+}
+#quick_actions > select[name="qaction"] {
+	width: 80px;
 }
 }
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
-	.tp_responsive .panels-options {
-		width: 95%!important; /* Panel Settings */
-	}
+.tp_responsive .panels-options {
+	width: 95%!important; /* Panel Settings */
+}
 }
 /** screen smaller then 300px **/
 @media all and (max-width: 300px) {
-	.tp_responsive .tpadmin_content {
-		font-size:11px;
-		word-break: break-all;
-	}
+.tp_responsive .tpadmin_content {
+	font-size:11px;
+	word-break: break-all;
+}
 }
 /** screen smaller then 500px **/
 @media all and (min-width: 0) and (max-width: 500px) {
-	.tp_responsive .panelsColumns {
-		padding-right:0!important;
-		width:100%!important;
-		/* blocks in panels set to display horizontally,in columns or grid (the default is vertically)*/
-	}
-	.tp_twocolumn {
-		width: 100%;
-	}
-	.GridWrap {
-		display: flex;
-		flex-direction: column;
-	}
+.tp_responsive .panelsColumns {
+	padding-right:0!important;
+	width:100%!important;
+}
+.tp_twocolumn {
+	width: 100%;
+}
+.GridWrap {
+	display: flex;
+	flex-direction: column;
+}
 }
 /** screen from 400px to 600px **/
 @media all and (min-width: 400px) and (max-width: 600px) {
-	.tp_responsive .panelsColumns,
-	.tp_responsive .panelsColumnsHorizontally {
-		width:50%!important;
-	}
+.tp_responsive .panelsColumns, .tp_responsive .panelsColumnsHorizontally {
+	width:50%!important;
+}
 }
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
-	.tp_responsive .panelsColumns,
-	.tp_responsive .panelsColumnsHorizontally {
-		width:100%!important;
-		/* blocks in panels set to display horizontally or in columns (the default is vertically)*/	
-	}
-	.tp_responsive #left_admsection {
-		float: none;
-		width: 100%;
-		/* width and float for left toggle menu from pages like profile page */
-	}
+.tp_responsive .panelsColumns, .tp_responsive .panelsColumnsHorizontally {
+	width:100%!important;
+}
+.tp_responsive #left_admsection {
+	float: none;
+	width: 100%;
+	/* width and float for left toggle menu from pages like profile page */
+}
 } 
-/********** RESPONSIVE TP - only if one or both sidebars are ON on the page ***********/
-.lrs #centerContainer {
-	overflow:hidden; /* do not delete */
+/* RESPONSIVE TP: Sidebar classes
+ * ONLY right side bar is enabled:	.lrs.rightpanelOn
+ * ONLY left side bar is enabled:	.lrs.leftpanelOn
+ * BOTH side bars are enabled:		.lrs.lrON
+ * NO side bars are enabled:		.nosides
+ */
+@media (max-width: 900px) {
+#mainContainer {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	max-width: 100%;
 }
-/** screen smaller then 500px **/
-@media all and (min-width: 0) and (max-width: 500px) {
-	.lrON.tp_responsive #tpleftbarContainer {
-		display: table-row-group;
-	}
-	.lrON.tp_responsive #tprightbarContainer {
-		display: table-footer-group;
-	}
-	.tp_responsive #tpleftbarContainer,
-	.tp_responsive #tprightbarContainer {
-		float:none!important;
-		width:100%!important;
-	}
-	.tp_responsive #tpleftbarContainer #tpleftbarHeader,
-	.tp_responsive #tprightbarContainer #tprightbarHeader {
-		margin: 0;
-		padding: 0;
-	}
+#tpleftbarHeader, #tprightbarHeader {
+	flex: 0 0 auto;
+	order: 2;
+	width: 50% !important;
+	margin: 0 !important;
 }
-/** screen from 500px to 900px **/
-@media all and (min-width: 500px) and (max-width: 900px) {
-	.lrON.tp_responsive #tpleftbarContainer,
-	.lrON.tp_responsive #tprightbarContainer {
-		float:none!important;
-	}
-	.lrON.tp_responsive #tpleftbarContainer {
-		display: table-cell;
-	}
-	.lrON.tp_responsive #tprightbarContainer {
-		display: table-cell;
-	}
-	.tp_responsive #tpleftbarContainer,
-	.tp_responsive #tprightbarContainer {
-/*		padding:0.5%;*/
-		width:49%!important;
-	}
+#tprightbarHeader {
+	order: 3;
 }
-/** screen smaller then 900px **/
-@media all and (min-width: 0) and (max-width: 900px) {
-	.tp_responsive #centerContainer {
-		max-width:100%;
-		overflow:hidden!important;
-	}
-	/* very specific fixes dealing width responsive curve in 2.0 */
-	.lrON input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
-	.lrON #edit_poll fieldset input, 
-	.lrON select[name="targetboard"], 
-	.leftpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
-	.leftpanelOn #edit_poll fieldset input, 
-	.leftpanelOn select[name="targetboard"],
-	.rightpanelOn input[name="subject"], input[name="evtitle"], input[name="secret_question"], 
-	.rightpanelOn #edit_poll fieldset input, 
-	.rightpanelOn select[name="targetboard"] {
-		width:90%;
-	}
-	.lrON td.blocks select, .leftpanelOn td.blocks select, .rightpanelOn td.blocks select {
-		width:70%;
-	}
-	.lrs.tp_responsive #mainContainer {
-		display: table;
-		width:100%; /* can be changed but not deleted it must have a width in px or % because of display table */
-	}
-	.lrs.tp_responsive #centerContainer {
-		display: table-caption;
-	}
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-	.tp_responsive.rightpanelOn #tprightbarContainer {
-		display: table-footer-group;
-	}
-	.tp_responsive.leftpanelOn  #tpleftbarContainer,	
-	.tp_responsive.rightpanelOn #tprightbarContainer {
-		float:none!important;
-		width: 100%!important;
-	}
-	.tp_responsive.leftpanelOn #tpleftbarContainer #tpleftbarHeader,
-	.tp_responsive.rightpanelOn #tprightbarContainer #tprightbarHeader {
-		margin: 0;
-		padding: 0;
-	}
+.lrs.leftpanelOn #tpleftbarHeader, .lrs.rightpanelOn #tprightbarHeader {
+	width: 100% !important;
+}
+#centerContainer {
+	flex: 1 1 auto;
+	order: 1;
+	width: 100% !important;
+}
+}
+@media (max-width: 500px) {
+#mainContainer {
+	flex-direction: column;
+}
+#tpleftbarHeader, #tprightbarHeader {
+	width: 100% !important;
+}
 }
