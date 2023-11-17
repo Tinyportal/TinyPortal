@@ -147,7 +147,7 @@ function template_submitarticle()
                 echo '<input type="hidden" name="tp_article_timestamp" value="'.$mg['date'].'">';
 
 			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-					echo '
+				echo '
 				<hr>
 				<dl class="tptitle settings">
 					<dt>
@@ -226,8 +226,20 @@ function template_submitarticle()
 					</dt>
 					<dd>
 						<input type="radio" id="tp_article_on" name="tp_article_off" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br>
-						<input type="radio" id="tp_article_off" name="tp_article_off" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label>
-					</dd>
+						<input type="radio" id="tp_article_off" name="tp_article_off" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label><br><br>
+					</dd>';
+				if(!empty($mg['id'])) {
+					echo '
+					<dt>
+						<label>', $txt['tp-articledelete'], '</label><br>
+						<span class="smalltext">', $txt['tp-articledeletedesc'], '</span>
+					</dt>
+					<dd>
+						<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'].';artdelete=' .$mg['id'] , !empty($_GET['cu']) ? ';cu=' . $_GET['cu'] : '' , '" onclick="javascript:return confirm(\''.$txt['tp-articleconfirmdelete'].'\')">
+						<div class="padding-div"><input type="delete" class="button button_submit" name="'.$txt['tp-delete'].'" value="'.$txt['tp-delete'].'" ></div></a>
+					</dd>';
+				}
+			echo '
 				</dl>
 				<hr>
 				<dl class="tptitle settings">';
@@ -277,154 +289,154 @@ function template_submitarticle()
 					</dd>';
 				}
 			    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-                    echo '
+					echo '
 					<dt>
 						<label for="field_name">', $txt['tp-published'], '</label>
 					</dt>
 					<dd><div class="description" style="line-height: 1.6em;">
 							<b>',$txt['tp-pub_start'],': </b><br>';
 				// day
-				echo '
-							<input type="hidden" name="tp_article_pub_start" value="'.$mg['pub_start'].'">
-							<select size="1" name="tp_article_pubstartday">
-								<option value="0">' . $txt['tp-notset'] . '</option>';
-				$day    = !empty($mg['pub_start']) ? date("j",$mg['pub_start']) : 0;
-				$month  = !empty($mg['pub_start']) ? date("n",$mg['pub_start']) : 0;
-				$year   = !empty($mg['pub_start']) ? date("Y",$mg['pub_start']) : 0;
-				$hour   = !empty($mg['pub_start']) ? date("G",$mg['pub_start']) : 0;
-				$minute = !empty($mg['pub_start']) ? date("i",$mg['pub_start']) : 0;
-				for($a=1; $a<32;$a++)
 					echo '
-								<option value="'.$a.'" ' , $day==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+						<input type="hidden" name="tp_article_pub_start" value="'.$mg['pub_start'].'">
+						<select size="1" name="tp_article_pubstartday">
+							<option value="0">' . $txt['tp-notset'] . '</option>';
+						$day    = !empty($mg['pub_start']) ? date("j",$mg['pub_start']) : 0;
+						$month  = !empty($mg['pub_start']) ? date("n",$mg['pub_start']) : 0;
+						$year   = !empty($mg['pub_start']) ? date("Y",$mg['pub_start']) : 0;
+						$hour   = !empty($mg['pub_start']) ? date("G",$mg['pub_start']) : 0;
+						$minute = !empty($mg['pub_start']) ? date("i",$mg['pub_start']) : 0;
+					for($a=1; $a<32;$a++)
+						echo '
+							<option value="'.$a.'" ' , $day==$a ? ' selected' : '' , '>'.$a.'</option>  ';
+					echo '
+						</select>';
 				// month
-				echo '
-							<select size="1" name="tp_article_pubstartmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-				for($a=1; $a<13; $a++)
 					echo '
-								<option value="'.$a.'" ' , $month==$a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
-				echo '
-							</select>';
+						<select size="1" name="tp_article_pubstartmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
+					for($a=1; $a<13; $a++)
+						echo '
+							<option value="'.$a.'" ' , $month==$a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
+					echo '
+						</select>';
 				// year
-				echo '
-							<select size="1" name="tp_article_pubstartyear"><option value="0">' . $txt['tp-notset'] . '</option>';
-				$now = date("Y",time())+1;
-				for($a = 2004; $a < $now + 2; $a++)
 					echo '
-								<option value="'.$a.'" ' , $year == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+						<select size="1" name="tp_article_pubstartyear"><option value="0">' . $txt['tp-notset'] . '</option>';
+					$now = date("Y",time())+1;
+					for($a = 2004; $a < $now + 2; $a++)
+						echo '
+							<option value="'.$a.'" ' , $year == $a ? ' selected' : '' , '>'.$a.'</option>  ';
+					echo '
+						</select>';
 				// hours
-				echo ' -
-							<select size="1" name="tp_article_pubstarthour">';
-				for($a=0; $a<24;$a++)
+					echo ' -
+						<select size="1" name="tp_article_pubstarthour">';
+					for($a=0; $a<24;$a++)
+						echo '
+							<option value="'.$a.'" ' , $hour == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 					echo '
-								<option value="'.$a.'" ' , $hour == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+						</select>';
 				// minutes
-				echo ' <b>:</b>
-							<select size="1" name="tp_article_pubstartminute">';
-				for($a = 0; $a < 60; $a++)
+					echo ' <b>:</b>
+						<select size="1" name="tp_article_pubstartminute">';
+					for($a = 0; $a < 60; $a++)
+						echo '
+							<option value="'.$a.'" ' , $minute == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 					echo '
-								<option value="'.$a.'" ' , $minute == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select><br>';
+						</select><br>';
 				// day
-				echo '
-							<input type="hidden" name="tp_article_pub_end" value="'.$mg['pub_end'].'">
-							<b>',$txt['tp-pub_end'],':</b><br><select size="1" name="tp_article_pubendday"><option value="0">' . $txt['tp-notset'] . '</option>';
-				$day = !empty($mg['pub_end']) ? date("j",$mg['pub_end']) : 0;
-				$month = !empty($mg['pub_end']) ? date("n",$mg['pub_end']) : 0;
-				$year = !empty($mg['pub_end']) ? date("Y",$mg['pub_end']) : 0;
-				$hour = !empty($mg['pub_end']) ? date("G",$mg['pub_end']) : 0;
-				$minute = !empty($mg['pub_end']) ? date("i",$mg['pub_end']) : 0;
-				for($a=1; $a<32;$a++)
 					echo '
-								<option value="'.$a.'" ' , $day == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+						<input type="hidden" name="tp_article_pub_end" value="'.$mg['pub_end'].'">
+						<b>',$txt['tp-pub_end'],':</b><br><select size="1" name="tp_article_pubendday"><option value="0">' . $txt['tp-notset'] . '</option>';
+					$day = !empty($mg['pub_end']) ? date("j",$mg['pub_end']) : 0;
+					$month = !empty($mg['pub_end']) ? date("n",$mg['pub_end']) : 0;
+					$year = !empty($mg['pub_end']) ? date("Y",$mg['pub_end']) : 0;
+					$hour = !empty($mg['pub_end']) ? date("G",$mg['pub_end']) : 0;
+					$minute = !empty($mg['pub_end']) ? date("i",$mg['pub_end']) : 0;
+					for($a=1; $a<32;$a++)
+						echo '
+									<option value="'.$a.'" ' , $day == $a ? ' selected' : '' , '>'.$a.'</option>  ';
+					echo '
+						</select>';
 				// month
-				echo '
-							<select size="1" name="tp_article_pubendmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-				for($a = 1; $a < 13; $a++)
 					echo '
-								<option value="'.$a.'" ' , $month == $a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
-				echo '
-							</select>';
+						<select size="1" name="tp_article_pubendmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
+					for($a = 1; $a < 13; $a++)
+						echo '
+							<option value="'.$a.'" ' , $month == $a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
+					echo '
+						</select>';
 				// year
-				echo '
-							<select size="1" name="tp_article_pubendyear"><option value="0">' . $txt['tp-notset'] . '</option>';
-				$now = date("Y",time())+1;
-				for($a = 2004; $a < $now + 2; $a++)
 					echo '
-								<option value="'.$a.'" ' , $year == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
+						<select size="1" name="tp_article_pubendyear"><option value="0">' . $txt['tp-notset'] . '</option>';
+					$now = date("Y",time())+1;
+					for($a = 2004; $a < $now + 2; $a++)
+						echo '
+							<option value="'.$a.'" ' , $year == $a ? ' selected' : '' , '>'.$a.'</option>  ';
+					echo '
+						</select>';
 				// hours
-				echo ' -
-							<select size="1" name="tp_article_pubendhour">';
-				for($a = 0; $a < 24; $a++)
+					echo ' -
+						<select size="1" name="tp_article_pubendhour">';
+					for($a = 0; $a < 24; $a++)
+						echo '
+							<option value="'.$a.'" ' , $hour == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 					echo '
-								<option value="'.$a.'" ' , $hour == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>';
-				// minutes
-				echo ' <b>:</b>
-							<select size="1" name="tp_article_pubendminute">';
-				for($a = 0; $a < 60; $a++)
+						</select>';
+					// minutes
+					echo ' <b>:</b>
+						<select size="1" name="tp_article_pubendminute">';
+					for($a = 0; $a < 60; $a++)
+						echo '
+							<option value="'.$a.'" ' , $minute == $a ? ' selected' : '' , '>'.$a.'</option>  ';
 					echo '
-								<option value="'.$a.'" ' , $minute == $a ? ' selected' : '' , '>'.$a.'</option>  ';
-				echo '
-							</select>
-							</div>
-						</dd>
-					</dl>';
+						</select>
+					</div>
+					</dd>
+				</dl>';
                 }
 			}
 
-                if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
+			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '
-				<dl class="tptitle settings">
-					<dt>
-						<label for="field_name">', $txt['tp-display'], '</label>
-					</dt>
-					<dd>
+					<dl class="tptitle settings">
+						<dt>
+							<label for="field_name">', $txt['tp-display'], '</label>
+						</dt>
+						<dd>
 							<input type="radio" id="usetheme" name="tp_article_frame" value="theme" ' , $mg['frame']=='theme' ? 'checked' : '' , '><label for="usetheme"> '.$txt['tp-useframe'].'</label><br>
 							<input type="radio" id="useframe" name="tp_article_frame" value="frame" ' , $mg['frame']=='frame' ? 'checked' : '' , '><label for="useframe"> '.$txt['tp-useframe2'].'</label><br>
 							<input type="radio" id="usetitle" name="tp_article_frame" value="title" ' , $mg['frame']=='title' ? 'checked' : '' , '><label for="usetitle"> '.$txt['tp-usetitle'].' </label><br>
 							<input type="radio" id="noframe" name="tp_article_frame" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
-					</dd>
-					<dt>
-						<label for="field_name">', $txt['tp-illustration'], '</label>
-					</dt>
-					<dd>
-						<div class="article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
-					</dd>
-					<dt>
-						<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label>
-					</dt>
-					<dd>
-						<select size="1" name="tp_article_illustration" id="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
-								<option value=""' , $mg['illustration']=='' ? ' selected="selected"' : '' , '>' . $txt['tp-none2'] . '</option>';
-			foreach($context['TPortal']['articons']['illustrations'] as $ill) {
-				echo '<option value="'.$ill['file'].'"' , $ill['file']==$mg['illustration'] ? ' selected="selected"' : '' , '>'.$ill['file'].'</option>';
-            }
-			echo '
+						</dd>
+						<dt>
+							<label for="field_name">', $txt['tp-illustration'], '</label>
+						</dt>
+						<dd>
+							<div class="article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
+						</dd>
+						<dt>
+							<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label>
+						</dt>
+						<dd>
+							<select size="1" name="tp_article_illustration" id="tp_article_illustration" onchange="changeIllu(document.getElementById(\'tp-illu\'), this.value);">
+							<option value=""' , $mg['illustration']=='' ? ' selected="selected"' : '' , '>' . $txt['tp-none2'] . '</option>';
+							foreach($context['TPortal']['articons']['illustrations'] as $ill) {
+								echo '
+									<option value="'.$ill['file'].'"' , $ill['file']==$mg['illustration'] ? ' selected="selected"' : '' , '>'.$ill['file'].'</option>';
+							}
+						echo '
 							</select><br>
-						<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
-					</dd>
-					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=tp-adminiconsinfo" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
-					</dt>
-					<dd>
+							<img id="tp-illu" class="tp-illu" src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '" alt="" /><br><br>
+						</dd>
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-adminiconsinfo" onclick="return reqOverlayDiv(this.href);">
+							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
+						</dt>
+						<dd>
 						<input type="file" name="tp_article_illupload">
 					</dd>
 				</dl>
-				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>
-					';
+				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
 				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','nofrontsetting');
 				$tmp = explode(',',$mg['options']);
 				$options=array();
@@ -436,138 +448,139 @@ function template_submitarticle()
 					else
 						$options[$val]=1;
 				}
-				echo '
-					<hr>
-					<div>
-						<span class="font-strong">'.$txt['tp-articleoptions'].'</span>
-						<div class="article-details">';
+			echo '
+				<hr>
+				<div>
+					<span class="font-strong">'.$txt['tp-articleoptions'].'</span>
+					<div class="article-details">';
 				// article details options
 				echo '
-							<dl class="tptitle settings">
-								<dt>
-									<label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
-								</dd>
-							</dl>
-							<span class="font-strong">' . $txt['tp-details'] . '</span>
-							<dl class="tptitle settings">';
-                                $articleOption = array ( 4, 2, 13, 3, 1, 17, 19, 18, 21, 23, 12, 15, 14);
-                                foreach($articleOption as $k) {
-                                	echo '
-                                <dt>
-									<label for="tp_article_options_'.$opts[$k].'">', $txt['tp-articleoptions'.$k], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[$k].'" name="tp_article_options_'.$opts[$k].'" value="'.$mg['id'].'" ' , isset($options[$opts[$k]]) ? 'checked' : '' , '>
-								</dd>';
-                                }
-                           	echo '	</dl>
-								<span class="font-strong">' . $txt['tp-panels'] . '</span>
-							<dl class="tptitle settings">
-								<dt>
-									<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
-								</dt>
-								<dd>
-									'. (($context['TPortal']['adminleftpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[8].'" name="tp_article_options_'.$opts[8].'" value="'.$mg['id'].'" '. (isset($options[$opts[8]]) ? 'checked' : '') .'>' ) .'
-								</dd>
-								<dt>
-									<label for="tp_article_options_lblockwidth">', $txt['tp-articleoptions_lblockwidth'], '</label><br>
-								</dt>
-								<dd>
-									<input type="text" id="tp_article_options_lblockwidth" name="tp_article_options_lblockwidth" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[7].'">', $txt['tp-articleoptions7'], '</label><br>
-								</dt>
-								<dd>
-									'. (($context['TPortal']['adminrightpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[7].'" name="tp_article_options_'.$opts[7].'" value="'.$mg['id'].'" '. (isset($options[$opts[7]]) ? 'checked' : ''). '>' ) .'
-								</dd>
-								<dt>
-									<label for="tp_article_options_rblockwidth">', $txt['tp-articleoptions_rblockwidth'], '</label><br>
-								</dt>
-								<dd>
-									<input type="text" id="tp_article_options_rblockwidth" name="tp_article_options_rblockwidth" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[10].'">', $txt['tp-articleoptions10'], '</label><br>
-								</dt>
-								<dd>
-									'. (($context['TPortal']['admintoppanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[10].'" name="tp_article_options_'.$opts[10].'" value="'.$mg['id'].'" '. (isset($options[$opts[10]]) ? 'checked' : '') .'>' ) .'
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[6].'">', $txt['tp-articleoptions6'], '</label><br>
-								</dt>
-								<dd>
-									'. (($context['TPortal']['admincenterpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[6].'" name="tp_article_options_'.$opts[6].'" value="'.$mg['id'].'" '. (isset($options[$opts[6]]) ? 'checked' : ''). '>' ) .'
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[11].'">', $txt['tp-articleoptions11'], '</label><br>
-								</dt>
-								<dd>
-									'. (($context['TPortal']['adminlowerpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[11].'" name="tp_article_options_'.$opts[11].'" value="'.$mg['id'].'" '. (isset($options[$opts[11]]) ? 'checked' : ''). '>' ) .'
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[9].'">', $txt['tp-articleoptions9'], '</label><br>
-								</dt>
-								<dd>
-									'. (($context['TPortal']['adminbottompanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[9].'" name="tp_article_options_'.$opts[9].'" value="'.$mg['id'].'" '. (isset($options[$opts[9]]) ? 'checked' : ''). '>' ) .'
-								</dd>
-							</dl>
-						<br>
-							<dl class="tptitle settings">
-								<dt>
-									<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[22].'" name="tp_article_options_'.$opts[22].'" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
-								</dd>
-							</dl>
-							<span class="font-strong">' . $txt['tp-others'] . '</span>
-							<dl class="tptitle settings">
-								<dt>
-									<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
-								</dt>
-								<dd>
-									<select size="1" name="tp_article_idtheme" id="tp_article_idtheme">';
-									echo '			<option value="0" ', $mg['id_theme']==0 ? 'selected' : '' ,'>'.$txt['tp-none-'].'</option>';
-									foreach($context['TPthemes'] as $them)
-										echo '
-														<option value="'.$them['id'].'" ',$them['id']==$mg['id_theme'] ? 'selected' : '' ,'>'.$them['name'].'</option>';
-									echo '
-								</select>
-								</dd>
-								<dt>
-									<label for="tp_article_options_'.$opts[20].'">', $txt['tp-articleoptions20'], '</label><br>
-								</dt>
-								<dd>
-									<input type="checkbox" id="tp_article_options_'.$opts[20].'" name="tp_article_options_'.$opts[20].'" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>
-								</dd>
-							</dl>
-								<div>
-										' , $txt['tp-articleheaders'] , '<br>
-										<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
-								</div>
-						</div>
+					<dl class="tptitle settings">
+						<dt>
+							<label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
+						</dt>
+						<dd>
+							<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_options_\');" />
+						</dd>
+					</dl>
+					<span class="font-strong">' . $txt['tp-details'] . '</span>
+					<dl class="tptitle settings">';
+						$articleOption = array ( 4, 2, 13, 3, 1, 17, 19, 18, 21, 23, 12, 15, 14);
+						foreach($articleOption as $k) {
+							echo '
+						<dt>
+							<label for="tp_article_options_'.$opts[$k].'">', $txt['tp-articleoptions'.$k], '</label><br>
+						</dt>
+						<dd>
+							<input type="checkbox" id="tp_article_options_'.$opts[$k].'" name="tp_article_options_'.$opts[$k].'" value="'.$mg['id'].'" ' , isset($options[$opts[$k]]) ? 'checked' : '' , '>
+						</dd>';
+						}
+				echo '
+					</dl>
+					<span class="font-strong">' . $txt['tp-panels'] . '</span>
+					<dl class="tptitle settings">
+						<dt>
+							<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
+						</dt>
+							<dd>
+							'. (($context['TPortal']['adminleftpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[8].'" name="tp_article_options_'.$opts[8].'" value="'.$mg['id'].'" '. (isset($options[$opts[8]]) ? 'checked' : '') .'>' ) .'
+						</dd>
+						<dt>
+							<label for="tp_article_options_lblockwidth">', $txt['tp-articleoptions_lblockwidth'], '</label><br>
+						</dt>
+						<dd>
+							<input type="text" id="tp_article_options_lblockwidth" name="tp_article_options_lblockwidth" value="', !empty($options['lblockwidth']) ?  $options['lblockwidth'] : '' ,'"><br>
+						</dd>
+						<dt>
+							<label for="tp_article_options_'.$opts[7].'">', $txt['tp-articleoptions7'], '</label><br>
+						</dt>
+						<dd>
+							'. (($context['TPortal']['adminrightpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[7].'" name="tp_article_options_'.$opts[7].'" value="'.$mg['id'].'" '. (isset($options[$opts[7]]) ? 'checked' : ''). '>' ) .'
+						</dd>
+						<dt>
+							<label for="tp_article_options_rblockwidth">', $txt['tp-articleoptions_rblockwidth'], '</label><br>
+						</dt>
+						<dd>
+							<input type="text" id="tp_article_options_rblockwidth" name="tp_article_options_rblockwidth" value="', !empty($options['rblockwidth']) ?  $options['rblockwidth'] : '' ,'"><br>
+						</dd>
+						<dt>
+							<label for="tp_article_options_'.$opts[10].'">', $txt['tp-articleoptions10'], '</label><br>
+						</dt>
+						<dd>
+							'. (($context['TPortal']['admintoppanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[10].'" name="tp_article_options_'.$opts[10].'" value="'.$mg['id'].'" '. (isset($options[$opts[10]]) ? 'checked' : '') .'>' ) .'
+						</dd>
+						<dt>
+							<label for="tp_article_options_'.$opts[6].'">', $txt['tp-articleoptions6'], '</label><br>
+						</dt>
+						<dd>
+							'. (($context['TPortal']['admincenterpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[6].'" name="tp_article_options_'.$opts[6].'" value="'.$mg['id'].'" '. (isset($options[$opts[6]]) ? 'checked' : ''). '>' ) .'
+						</dd>
+						<dt>
+							<label for="tp_article_options_'.$opts[11].'">', $txt['tp-articleoptions11'], '</label><br>
+						</dt>
+						<dd>
+							'. (($context['TPortal']['adminlowerpanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[11].'" name="tp_article_options_'.$opts[11].'" value="'.$mg['id'].'" '. (isset($options[$opts[11]]) ? 'checked' : ''). '>' ) .'
+						</dd>
+						<dt>
+							<label for="tp_article_options_'.$opts[9].'">', $txt['tp-articleoptions9'], '</label><br>
+						</dt>
+						<dd>
+							'. (($context['TPortal']['adminbottompanel'] !== '1') ? ' '. $txt['tp-paneloff'] .'' : '<input type="checkbox" id="tp_article_options_'.$opts[9].'" name="tp_article_options_'.$opts[9].'" value="'.$mg['id'].'" '. (isset($options[$opts[9]]) ? 'checked' : ''). '>' ) .'
+						</dd>
+					</dl>
+					<br>
+					<dl class="tptitle settings">
+						<dt>
+							<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
+						</dt>
+						<dd>
+							<input type="checkbox" id="tp_article_options_'.$opts[22].'" name="tp_article_options_'.$opts[22].'" value="'.$mg['id'].'" ' , isset($options[$opts[22]]) ? 'checked' : '' , '>
+						</dd>
+					</dl>
+					<span class="font-strong">' . $txt['tp-others'] . '</span>
+					<dl class="tptitle settings">
+						<dt>
+							<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
+						</dt>
+						<dd>
+							<select size="1" name="tp_article_idtheme" id="tp_article_idtheme">';
+						echo '
+							<option value="0" ', $mg['id_theme']==0 ? 'selected' : '' ,'>'.$txt['tp-none-'].'</option>';
+							foreach($context['TPthemes'] as $them)
+								echo '
+									<option value="'.$them['id'].'" ',$them['id']==$mg['id_theme'] ? 'selected' : '' ,'>'.$them['name'].'</option>';
+						echo '
+							</select>
+						</dd>
+						<dt>
+							<label for="tp_article_options_'.$opts[20].'">', $txt['tp-articleoptions20'], '</label><br>
+						</dt>
+						<dd>
+							<input type="checkbox" id="tp_article_options_'.$opts[20].'" name="tp_article_options_'.$opts[20].'" value="'.$mg['id'].'" ' , isset($options[$opts[20]]) ? 'checked' : '' , '>
+						</dd>
+					</dl>
+					<div>
+						' , $txt['tp-articleheaders'] , '<br>
+						<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
+					</div>
 				</div><br>
-				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
-                }
-                else {
-                    echo '<input name="tp_article_type" type="hidden" value="'.$article_type.'">';
-				// set defaults for submissions?
-					echo '	<input type="hidden" name="tp_article_authorid" value="' . $context['user']['id'] . '">
-							<input type="hidden" name="tp_article_frame" value="theme">
-							<input type="hidden" name="tp_article_options_date" value="date">
-							<input type="hidden" name="tp_article_options_title" value="title">
-							<input type="hidden" name="tp_article_options_author" value="author">
-							<input type="hidden" name="tp_article_options_linktree" value="linktree">
-							<input type="hidden" name="tp_article_options_views" value="views">
-							<input type="hidden" name="tp_article_options_inherit" value="inherit">
-							<input type="hidden" name="tp_article_options_social" value="social">';
-				}
+			<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
+			}
+			else {
+				echo '<input name="tp_article_type" type="hidden" value="'.$article_type.'">';
+			// set defaults for submissions?
+				echo '	<input type="hidden" name="tp_article_authorid" value="' . $context['user']['id'] . '">
+						<input type="hidden" name="tp_article_frame" value="theme">
+						<input type="hidden" name="tp_article_options_date" value="date">
+						<input type="hidden" name="tp_article_options_title" value="title">
+						<input type="hidden" name="tp_article_options_author" value="author">
+						<input type="hidden" name="tp_article_options_linktree" value="linktree">
+						<input type="hidden" name="tp_article_options_views" value="views">
+						<input type="hidden" name="tp_article_options_inherit" value="inherit">
+						<input type="hidden" name="tp_article_options_social" value="social">';
+			}
 
-                echo'
+            echo'
 				</div>
 			</div>
 		</div>

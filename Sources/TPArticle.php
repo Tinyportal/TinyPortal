@@ -773,10 +773,12 @@ function articleAjax() {{{
 	elseif(isset($_GET['artdelete'])) {
 		checksession('get');
 		$what = is_numeric($_GET['artdelete']) ? $_GET['artdelete'] : '0';
-		$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
+		if(!empty($cu)) {
+			$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
 		if($cu == -1) {
 			$strays=true;
 			$cu = '';
+		}
 		}
 		if($what > 0) {
 			$smcFunc['db_query']('', '

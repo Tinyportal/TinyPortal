@@ -227,6 +227,8 @@ $txt['tp-others'] = 'Others';
 $txt['tp-chosentheme'] = 'Use only this theme ';
 $txt['tp-articleoptions20'] = 'Do not use SMF templates';
 $txt['tp-articleheaders'] = 'Header code to be used in articles without any template/theme code';
+$txt['tp-articledelete'] = 'Delete this article';
+$txt['tp-articledeletedesc'] = 'Once you delete an article, there is no going back. Please be certain.';
 
 // Uncategorized articles
 $txt['tp-uncategorised2'] = 'Uncategorized articles';
