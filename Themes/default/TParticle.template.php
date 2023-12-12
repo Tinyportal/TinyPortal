@@ -655,7 +655,7 @@ function template_showcomments()
 			<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
 			<div></div>
 			<div id="show-art-comm" class="windowbg padding-div">
-			<table class="table_grid tp_grid" style="width:100%">
+			<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="tp_comments">
@@ -702,7 +702,7 @@ function template_showcomments()
 				<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '. <a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showallcomments'] . '</a></h3></div>
 				<div></div>
 				<div id="latest-art-comm" class="windowbg padding-div">
-				<table class="table_grid tp_grid" style="width:100%">
+				<table class="table_grid tp_grid">
 					<thead>
 						<tr class="title_bar titlebg2">
 						<th scope="col" class="tp_comments">
@@ -761,7 +761,7 @@ function template_showarticle()
             <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
         </div>
 		<div class="windowbg padding-div">
-	<table class="table_grid tp_grid" style="width:100%";>
+	<table class="table_grid tp_grid";>
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="myarticles">

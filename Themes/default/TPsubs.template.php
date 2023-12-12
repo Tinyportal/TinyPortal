@@ -179,7 +179,7 @@ function TPortal_userbox()
 	global $context, $settings, $scripturl, $txt, $user_info;
 
 	echo '
-	<div class="tp_userblocknew">';
+	<div class="tp_userblock">';
 
 	// If the user is logged in, display stuff like their name, new messages, etc.
 	if ($context['user']['is_logged'])
@@ -696,7 +696,7 @@ function TPortal_recentbox()
 				echo ' 
 					<a href="' . $scripturl . '?topic=' . $w['topic'] . '.msg' . $w['new_from'] . ';topicseen#new" rel="nofollow" class="new_posts" style="margin:0px;">' . $txt['new'] . '</a> ';
 			echo '
-				<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'" title="' . $w['subject'] . '">'. $tpshortsubject .''. $w['readmore'] .'</a>
+				<span class="tpavatar"><a href="' . $scripturl. '?action=profile;u=' . $w['poster']['id'] . '">' , empty($avatars[$w['poster']['id']]) ? '<img class="avatar" src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['poster']['id']] , '</a></span><a href="'.$w['href'].'" title="' . $w['subject'] . '">'. $tpshortsubject .''. $w['readmore'] .'</a>
 				 ', $txt['by'], ' <b>', $w['poster']['link'],'</b>
 				 <br><span class="smalltext">['.$w['time'].']</span>
 				</li>';
@@ -2050,7 +2050,7 @@ function article_bookmark($render = true)
 		    $data .= '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_twitter']=='1') {
-			$data .= '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" title="Share on Twitter!" src="' . $settings['tp_images_url'] . '/social/twitter.png" alt="Share on Twitter!" /></a>';
+			$data .= '<a href="http://twitter.com/home/?status=' . $scripturl.'?page='. (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" title="Share on X!" src="' . $settings['tp_images_url'] . '/social/twitter-x.png" alt="Share on Twitter!" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_reddit']=='1') {
 			$data .= '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
@@ -2637,10 +2637,9 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 	$buttons[count($buttons) - 1] = str_replace('<span>', '<span class="last">', $buttons[count($buttons) - 1]);
 
 	echo '
-		<div class="tpbuttons buttonlist', !empty($direction) ? ' align_' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>
-			<ul style="margin:0px;padding:5px 0px;">',
+		<div class="tpbuttons buttonlist', !empty($direction) ? ' align_' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"': ''), '>',
 				implode('', $buttons), '
-			<p class="clearthefloat"></p></ul>
+			<p class="clearthefloat"></p>
 		</div>';
 }
 

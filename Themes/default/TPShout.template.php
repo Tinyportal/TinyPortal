@@ -505,7 +505,7 @@ function template_tpshout_profile()
 	echo $txt['tp-prof_allshouts'].' <b>', $context['TPortal']['all_shouts'] ,'</b><br>';
 	echo '
 			</div><br>
-			<table class="table_grid tp_grid" style="width:100%">
+			<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg2">
 					<th scope="col" class="shouts">
