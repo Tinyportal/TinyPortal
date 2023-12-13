@@ -1,5 +1,5 @@
 <?php
-// Version: 2.3.1; TPortalAdmin
+// Version: 3.0.0; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
@@ -139,7 +139,7 @@ $txt['tp-allow-links-article-comments'] = 'Allow article comments to contain lin
 $txt['tp-iconmaxsize'] = 'Max image upload size';
 $txt['tp-iconsize'] = 'Image size for article icons (width x height)';
 $txt['tp-hidearticle-facebook'] = 'Hide Facebook button';
-$txt['tp-hidearticle-twitter'] = 'Hide Twitter button';
+$txt['tp-hidearticle-twitter'] = 'Hide X button';
 $txt['tp-hidearticle-reddit'] = 'Hide Reddit button';
 $txt['tp-hidearticle-digg'] = 'Hide Digg button';
 $txt['tp-hidearticle-delicious'] = 'Hide Delicious button';
@@ -227,6 +227,8 @@ $txt['tp-others'] = 'Others';
 $txt['tp-chosentheme'] = 'Use only this theme ';
 $txt['tp-articleoptions20'] = 'Do not use SMF templates';
 $txt['tp-articleheaders'] = 'Header code to be used in articles without any template/theme code';
+$txt['tp-articledelete'] = 'Delete this article';
+$txt['tp-articledeletedesc'] = 'Once you delete an article, there is no going back. Please be certain.';
 
 // Uncategorized articles
 $txt['tp-uncategorised2'] = 'Uncategorized articles';

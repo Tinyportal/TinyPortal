@@ -565,7 +565,7 @@ function template_categories()
 		<div id="edit-category" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpcats'] , '</div><div></div>
 			<div class="windowbg noup padding-div">
-				<table class="table_grid tp_grid" style="width:100%">
+				<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg">
 					<th scope="col">
@@ -942,7 +942,7 @@ function template_articles()
 	if(isset($context['TPortal']['cats']) && count($context['TPortal']['cats'])>0)
 	{
 		echo '
-		<table class="table_grid tp_grid" style="width:100%">
+		<table class="table_grid tp_grid">
 		<thead>
 			<tr class="title_bar titlebg">
 			<th scope="col" class="articles">
@@ -988,7 +988,7 @@ function template_articles()
 	if(isset($context['TPortal']['arts']))
 	{
 		echo '
-	<table class="table_grid tp_grid" style="width:100%">
+	<table class="table_grid tp_grid">
 		<thead>
 			<tr class="title_bar titlebg">
 			<th scope="col" class="articles">
@@ -1105,7 +1105,7 @@ function template_strays()
 		echo '
 			<div class="windowbg noup padding-div">
 				<div>
-					<table class="table_grid tp_grid" style="width:100%">
+					<table class="table_grid tp_grid">
 					<thead>
 						<tr class="title_bar titlebg">
 						<th scope="col">
@@ -1242,7 +1242,7 @@ function template_submission()
 	if(isset($context['TPortal']['arts_submissions']))
 	{
 		echo '
-				<table class="table_grid tp_grid" style="width:100%">
+				<table class="table_grid tp_grid">
 					<thead>
 						<tr class="title_bar titlebg">
 						<th scope="col" class="articles">
@@ -1786,7 +1786,7 @@ function template_blocks()
 			if($tn>0)
 			{
 				echo '
-				<table class="table_grid tp_grid" style="width:100%">
+				<table class="table_grid tp_grid">
 					<thead>
 						<tr class="title_bar titlebg">
 						<th scope="col" class="blocks">
@@ -2298,7 +2298,7 @@ function template_menubox()
 		<div class="information smalltext">' , $txt['tp-helpmenuitems'] , '</div><div></div>
 			<div class="windowbg noup padding-div">
 			<span style="float: right;"><strong><a href="' . $scripturl . '?action=tpadmin;sa=addmenu;mid=' , (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $_GET['mid'] : 0 , '">['.$txt['tp-addmenuitem'].']</a></strong></span>
-			<table class="table_grid tp_grid" style="width:100%">
+			<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg">
 					<th scope="col" class="menuitems">
@@ -2475,7 +2475,7 @@ function template_menubox()
 			{
 			if($mbox['id']==0)
 				echo '
-				<table class="table_grid tp_grid" style="width:100%">
+				<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg">
 					<th scope="col" class="menus">

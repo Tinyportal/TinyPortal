@@ -1,0 +1,20 @@
+:root {
+	--tinyportal-border: rgba(204, 204, 204, 0.5);
+	--tinyportal-background: rgba(204, 204, 204, 0.5);
+	--article-border: var(--tinyportal-border);
+	--comment-background: var(--tinyportal-background);
+	--comment-border: var(--tinyportal-border);
+	--comment-boxshadow: rgba(0,0,0,0.1);
+	--catlayout-border: var(--tinyportal-border);
+	--article-icon-border: var(--tinyportal-border);
+	--recenttopics-border: var(--tinyportal-border);
+	--tpsitemap-background: rgba(85, 85, 85, 1);
+	--tpsitemap-color: var(--tinyportal-background);
+	--blockopts-border: var(--tinyportal-border);
+	--tp_half21-background: rgba(177, 187, 197, 1);
+	--tp_half21-box-shadow: rgba(255,255,255,0.15);
+	--tp_half21-text-shadow: rgba(0,0,0,0.2);
+	--panels-background: var(--tinyportal-background);
+	--rss_body-background: var(--tinyportal-background);
+	--rss_body-border: var(--tinyportal-border);
+}

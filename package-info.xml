@@ -61,7 +61,7 @@
 		<remove-file name="$themedir/TPwireless.template.php" />
 		<remove-file name="$themedir/css/tp-shout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
-		<remove-file name="$themedir/css/tp-responsive.css" />
+		<remove-file name="$themedir/css/tp-colors.css" />
 		<remove-file name="$languagedir/TParticle.english.php" />
 		<remove-file name="$languagedir/TPdlmanager.english.php" />
 		<remove-file name="$languagedir/TPhelp.english.php" />

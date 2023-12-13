@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -97,7 +97,7 @@ function template_article_search_results()
             <div class="windowbg padding-div" style="margin-bottom:3px;">
                 <h4 class="tpresults"><a href="' . $scripturl . '?page=' . $res['id'] . '">' . $res['subject'] . '</a></h4>
                 <hr>
-                <div class="tpresults" style="padding-top: 4px;">
+                <div class="tpresults">
                     <div class="middletext">' , $res['body'] . '</div>
                     <div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
                 </div>

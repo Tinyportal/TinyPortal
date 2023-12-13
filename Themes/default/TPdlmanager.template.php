@@ -260,7 +260,7 @@ function template_main() {
 						<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 				if(!empty($content))
 					echo '
-				<div class="dl_category dl_subcats"><ul class="tp-subcategories">'.$content.'</ul></div>';
+				<div class="dl_category dl_subcats"><ul class="dl_subcats">'.$content.'</ul></div>';
 					echo '
 					<p class="clearthefloat"></p>
 					</div>
@@ -1046,7 +1046,7 @@ function template_main() {
 				<div class="windowbg padding-div" style="margin-bottom:5px;">
 					<h4 class="tpresults"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
 					<hr>
-					<div class="tpresults" style="padding-top: 4px;">
+					<div class="tpresults">
 						<div>' , $res['body'] . '</div>
 						<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
 					</div>
