@@ -347,7 +347,6 @@ class Integrate
             'tp_dlupload',
             'tp_dlcreatetopic',
             'tp_can_list_images',
-            'tp_can_search',
         );
         $context['non_guest_permissions'] = array_merge($context['non_guest_permissions'], $tp_illegal_perms);
     }

@@ -15,6 +15,7 @@
  *
  */
 use \TinyPortal\Util as TPUtil;
+use \TinyPortal\Database as TPDatabase;
 
 if (!defined('SMF')) {
         die('Hacking attempt...');
@@ -59,7 +60,7 @@ function TPSearchActions(&$subActions)
 
 function TPSearchArticle()
 {
-	global $scripturl, $txt, $context, $smcFunc;
+	global $scripturl, $txt, $context;
 
 	isAllowedTo('tp_can_search');
 
@@ -102,21 +103,23 @@ function TPSearchArticle()
         }
     }
 
+
 	$select     = '';
 	$query      = '';
 	$order_by   = '';
 	if(TP_PGSQL || $context['TPortal']['fulltextsearch'] == 0) {
+		$search		= TPDatabase::getInstance()->db_quote( '{string:what}', ['what' => '%'.$what.'%']);
 		if($usetitle && !$usebody) {
-			$query = 'a.subject LIKE \'%' . $what . '%\'';
+			$query	= 'a.subject LIKE '.$search;
 		}
 		elseif(!$usetitle && $usebody) {
-			$query = 'a.body LIKE \'%' . $what . '%\'';
+			$query = 'a.body LIKE '.$search;
 		}
 		elseif($usetitle && $usebody) {
-			$query = 'a.subject LIKE \'%' . $what . '%\' OR a.body LIKE \'%' . $what . '%\'';
+			$query = 'a.subject LIKE '.$search.' OR a.body LIKE '.$search;
 		}
 		else {
-			$query = 'a.subject LIKE \'%' . $what . '%\'';
+			$query = 'a.subject LIKE '.$search;
 		}
 	}
 	else {
@@ -157,22 +160,23 @@ function TPSearchArticle()
 				$words[]    = $operator.$word;
 			}
 			$what = implode(' ',$words);
+			$search		= TPDatabase::getInstance()->db_quote( '{string:what}', ['what' => '%'.$what.'%']);
 		}
 		if($usetitle && !$usebody) {
-			$select     = ', MATCH (subject) AGAINST (\''.$what.'\') AS score';
-			$query      = 'MATCH (subject) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+			$select     = ', MATCH (subject) AGAINST ('.$search.') AS score';
+			$query      = 'MATCH (subject) AGAINST ('.$search.' IN BOOLEAN MODE) > 0';
 		}
 		elseif(!$usetitle && $usebody) {
-			$select     = ', MATCH (body) AGAINST (\''.$what.'\') AS score';
-			$query      = 'MATCH (body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+			$select     = ', MATCH (body) AGAINST ('.$search.') AS score';
+			$query      = 'MATCH (body) AGAINST ('.$search.' IN BOOLEAN MODE) > 0';
 		}
 		elseif($usetitle && $usebody) {
-			$select     = ', MATCH (subject, body) AGAINST (\''.$what.'\') AS score';
-			$query      = 'MATCH (subject, body) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+			$select     = ', MATCH (subject, body) AGAINST ('.$search.') AS score';
+			$query      = 'MATCH (subject, body) AGAINST ('.$search.' IN BOOLEAN MODE) > 0';
 		}
 		else {
-			$select     = ', MATCH (subject) AGAINST (\''.$what.'\') AS score';
-			$query      = 'MATCH (subject) AGAINST (\''.$what.'\' IN BOOLEAN MODE) > 0';
+			$select     = ', MATCH (subject) AGAINST ('.$search.') AS score';
+			$query      = 'MATCH (subject) AGAINST ('.$search.' IN BOOLEAN MODE) > 0';
 		}
 		$order_by   = 'score DESC, ';
 	}
@@ -181,7 +185,7 @@ function TPSearchArticle()
 	$context['TPortal']['searchterm']       = $what;
 	$context['TPortal']['searchpage']       = $start;
 	$now        = forum_time();
-	$request    = $smcFunc['db_query']('', '
+	$request    = TPDatabase::getInstance()->db_query('', '
         SELECT a.id, a.date, a.views, a.subject, a.body AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
         FROM {db_prefix}tp_articles AS a
         LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
@@ -201,8 +205,8 @@ function TPSearchArticle()
             'order_by'  => $order_by,
         )
 	);
-	if($smcFunc['db_num_rows']($request) > 0) {
-		while($row = $smcFunc['db_fetch_assoc']($request)) {
+	if(TPDatabase::getInstance()->db_num_rows($request) > 0) {
+		while($row = TPDatabase::getInstance()->db_fetch_assoc($request)) {
 			TPUtil::shortenString($row['body'], 400);
             if($row['type'] == 'bbc') {
 				$row['body'] = parse_bbc($row['body']);
@@ -225,10 +229,10 @@ function TPSearchArticle()
 				'author' 	=> '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
 			);
 		}
-		$smcFunc['db_free_result']($request);
+		TPDatabase::getInstance()->db_free_result($request);
 	}
 
-    $request    = $smcFunc['db_query']('', '
+    $request    = TPDatabase::getInstance()->db_query('', '
         SELECT COUNT(id) AS num_results
         FROM {db_prefix}tp_articles AS a
         LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
@@ -244,8 +248,8 @@ function TPSearchArticle()
         )
 	);
 
-    $num_results = $smcFunc['db_fetch_assoc']($request)['num_results'];
-	$smcFunc['db_free_result']($request);
+    $num_results = TPDatabase::getInstance()->db_fetch_assoc($request)['num_results'];
+	TPDatabase::getInstance()->db_free_result($request);
 
     $params = base64_encode(json_encode(array( 'search' => $what, 'title' => $usetitle, 'body' => $usebody)));
 
