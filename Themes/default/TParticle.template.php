@@ -75,7 +75,7 @@ function template_submitarticle()
 					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
 				</dt>
 				<dd>
-					<input type="text" id="tp_article_subject" name="tp_article_subject" value="'. html_entity_decode($mg['subject'], ENT_QUOTES, $context['character_set']) .'" style="width: 92%;" required>
+					<input type="text" id="tp_article_subject" name="tp_article_subject" value="'. htmlentities($mg['subject'], ENT_QUOTES, $context['character_set']) .'" style="width: 92%;" required>
 				</dd>
 				<dt>
 					<span class="font-strong">
