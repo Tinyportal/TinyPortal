@@ -637,14 +637,14 @@ function template_editcategory()
 							<b><label for="tp_category_value1">', $txt['tp-name'], '</label></b>
 						</dt>
 						<dd>
-							<input type="text" id="tp_category_value1" style="max-width:97%;" name="tp_category_value1" value="' ,html_entity_decode($mg['value1']), '" size="50" required>
+							<input type="text" id="tp_category_value1" style="max-width:97%;" name="tp_category_value1" value="' , htmlentities($mg['value1']), '" size="50" required>
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=tp-shortnamedesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8"><b>', $txt['tp-shortname'], '</b></label>
 						</dt>
 						<dd>
-							<input type="text" id="tp_category_value8" name="tp_category_value8" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '" size="20"><br><br>
+							<input type="text" id="tp_category_value8" name="tp_category_value8" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '" size="20" pattern="[A-Za-z0-9- ]" ><br><br>
 						</dd>
 						<dt>
 							<label for="tp_category_value2">', $txt['tp-parent'], '</label>
@@ -866,7 +866,7 @@ function template_addcategory()
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><b><label for="tp_cat_shortname">', $txt['tp-shortname'], '</label></b>
 						</dt>
 						<dd>
-							<input type="text" id="tp_cat_shortname" name="tp_cat_shortname" value="" size="20"><br><br>
+							<input type="text" id="tp_cat_shortname" name="tp_cat_shortname" value="" size="20" pattern="[A-Za-z0-9- ]" ><br><br>
 						</dd>
 						<dt>
 							<label for="tp_cat_parent">'.$txt['tp-parent'].'</label>
