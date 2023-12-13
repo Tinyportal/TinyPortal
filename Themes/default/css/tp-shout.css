@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 2.3.1
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -19,8 +19,8 @@
 	overflow: hidden;
 }
 .tp_shoutbody {
-	background: #fff;
-	border: solid 1px #888;
+	background: var(--tp_shoutbody-background);
+	border: solid 1px var(tp_shoutbody-border);
 	border-top: none;
 	font-size: 0.9em;
 	line-height: 1.3em;
@@ -48,8 +48,8 @@
 	margin: 5px 0 5px 0;
 }
 .tp_shoutError {
-	background-color: #FF9999;
-	border: 1px solid #CC0000;
+	background-color: var(--tp_shouterror-background);
+	border: 1px solid var(--tp_shouterror-border);
 	margin-top: 5px;
 	padding: 3px;
 }
@@ -78,6 +78,12 @@
 	min-width:150px;
 	vertical-align: top;
 }
+span.tp_shoutbox_text {
+	color: var(--tp_shout-textcolor);
+}
+span.tp_shoutbox_time {
+	color: var(--tp_shout-timecolor);
+}
 /* Layout option 0 */
 .tp_shoutbody_layout0 {
 	padding-right: 5px;
@@ -90,11 +96,11 @@
 	width: 100%;
 }
 .tp_bubble {
-	background: #fff;
-	border: 1px solid #999;
+	background: var(--tp_bubble-background);
+	border: 1px solid var(--tp_bubble-border);
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.1);
+	box-shadow: 2px 2px 4px 0 var(--tp_bubble-boxshadow);
 	margin: 14px 5px 10px 0;
 	overflow-wrap: anywhere;
 	padding: 1.5em 1em;
@@ -102,7 +108,7 @@
 	word-wrap: break-word;
 }
 .tp_bubble:after {
-	border-color: #ffffff transparent;
+	border-color: var(--tp_bubble-background) transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
 	content: '';
@@ -114,7 +120,7 @@
 	z-index: 1;
 }
 .tp_bubble:before {
-	border-color: #999 transparent;
+	border-color: var(--tp_bubble-border) transparent;
 	border-style: solid;
 	border-width: 0 10px 8px;
 	content: '';
@@ -125,28 +131,9 @@
 	width: 0;
 	z-index: 0;
 }
-/* This is a special dark version of the shoutbox bubble, activate by removing the / and * before and after. */
-
-/*
-.tp_bubble {
-	background-color: #404040; 
-} 
-.tp_bubble:after { 
-	border-color: #404040 transparent;
-	border-style: solid;
-	border-width: 0 10px 8px;
-	content: '';
-	display: block;
-	left: 16px;
-	position: absolute;
-	top: -8px;
-	width: 0;
-	z-index: 1;
-}
-*/
 /* Layout option 2 */
 .tp_shoutbody_layout1 {
-	border-bottom: 1px dotted #000;
+	border-bottom: 2px solid var(--tinyportal-border);
 	padding: 5px 5px 5px 0;
 }
 .tp_shoutbox_editor1 {
@@ -160,7 +147,7 @@
 .tp_shout_date {
 	clear: both;
 }
-.tp_shoutbox_time {
+div.tp_shoutbox_time {
 	display: block;
 	float: right;
 	padding-left: 5px;
@@ -181,3 +168,10 @@
 .tp_shoutbox_input2, .tp_shoutbox_input3 {
 	width: 65%;
 }
+.tp_shoutbody_layout2:nth-of-type(2n + 1), .tp_shoutbody_layout3:nth-of-type(2n + 1) {
+	background: var(--tp_shout-bgodd);
+}
+.tp_shoutbody_layout2:nth-of-type(2n), .tp_shoutbody_layout3:nth-of-type(2n) {
+	background: var(--tp_shout-bgeven);
+}
+
