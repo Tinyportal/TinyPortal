@@ -644,7 +644,7 @@ function template_editcategory()
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_category_value8"><b>', $txt['tp-shortname'], '</b></label>
 						</dt>
 						<dd>
-							<input type="text" id="tp_category_value8" name="tp_category_value8" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '" size="20" pattern="[A-Za-z0-9- ]" ><br><br>
+							<input type="text" id="tp_category_value8" name="tp_category_value8" value="' , isset($mg['value8']) ? $mg['value8'] : '' , '" size="20" pattern="[^\'\x22;:]+" ><br><br>
 						</dd>
 						<dt>
 							<label for="tp_category_value2">', $txt['tp-parent'], '</label>
