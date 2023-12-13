@@ -353,7 +353,7 @@ a.tp_avatar_author img {
 }
 .tp_comment_author img {
 	border-radius: 2px;
-	margin: 0 .8px 0 0;
+	margin: 0 .5em 0 0;
 	width: 34px;
 }
 .tp_comments span.counter {
@@ -1062,7 +1062,7 @@ dl.tptitle dd {
 	width: 100%;
 }
 .panels-optionsbg {
-	background-color: var(panels-background);
+	background-color: var(--panels-background);
 	overflow: hidden;
 	padding: .5em;
 }

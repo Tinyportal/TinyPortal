@@ -571,9 +571,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 	{
 		loadtemplate($template);
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?'.TPVERSION.'" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?'.TPVERSION.'" />';
 
 		if( loadLanguage('TPortalAdmin') == false)
 			loadlangauge('TPortalAdmin', 'english');
@@ -591,9 +591,9 @@ function TP_setThemeLayer($layer, $template, $subtemplate, $admin = false)
 			loadLanguage($template, 'english');
 
 		if(file_exists($settings['theme_dir']. '/'. $template. '.css'))
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['theme_url']. '/'. $template. '.css?'.TPVERSION.'" />';
 		else
-			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?fin160" />';
+			$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="'. $settings['default_theme_url']. '/'. $template. '.css?'.TPVERSION.'" />';
 
 		$context['template_layers'][] = $layer;
 		$context['sub_template'] = $subtemplate;

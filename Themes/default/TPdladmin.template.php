@@ -823,7 +823,7 @@ function template_main()
 						<label for="dladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
 					</dt>
 					<dd>
-						<input type="text" id="dladmin_link" name="dladmin_link'.$cat['id'].'" value="'.$cat['shortname'].'"><br><br>
+						<input type="text" id="dladmin_link" name="dladmin_link'.$cat['id'].'" value="'.$cat['shortname'].'" size="20" pattern="[^\'\x22;:]+"><br><br>
 					</dd>
 					<dt>
 						<label for="dladmin_parent">'.$txt['tp-dlparent'].'</label>
@@ -946,7 +946,7 @@ function template_main()
 						<label for="newdladmin_link"><b>'.$txt['tp-shortname'].'</b></label>
 					</dt>
 					<dd>
-						<input type="text" id="newdladmin_link" name="newdladmin_link" value=""><br><br>
+						<input type="text" id="newdladmin_link" name="newdladmin_link" value="" size="20" pattern="[^\'\x22;:]+"><br><br>
 					</dd>
 					<dt>
 						<label for="newdladmin_parent">'.$txt['tp-dlparent'].'</label>
