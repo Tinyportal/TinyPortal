@@ -83,7 +83,7 @@ function template_submitarticle()
 					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">'.$txt['tp-shortname_article'].'</label></span></span>
 				</dt>
 				<dd>
-					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="'.$mg['shortname'].'" size=20 >
+					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="'.$mg['shortname'].'" size=20 pattern="[A-Za-z0-9- ]" >
 				</dd>
 			</dl>
 			<div>';
