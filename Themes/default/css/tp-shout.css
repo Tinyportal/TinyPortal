@@ -20,7 +20,7 @@
 }
 .tp_shoutbody {
 	background: var(--tp_shoutbody-background);
-	border: solid 1px var(tp_shoutbody-border);
+	border: solid 1px var(--tp_shoutbody-border);
 	border-top: none;
 	font-size: 0.9em;
 	line-height: 1.3em;
