@@ -1,8 +1,9 @@
 :root {
 	--tinyportal-border: rgba(204, 204, 204, 0.5);
+	--tinyportal-divider: rgba(204, 204, 204, 1);
 	--tinyportal-background: rgba(255, 255, 255, 0.5);
 	--tinyportal-boxshadow: rgba(0,0,0,0.2);
-	--article-border: var(--tinyportal-border);
+	--article-border: var(--tinyportal-divider);
 	--comment-background: var(--tinyportal-background);
 	--comment-border: var(--tinyportal-border);
 	--comment-boxshadow: var(--tinyportal-boxshadow);

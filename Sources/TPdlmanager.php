@@ -2078,6 +2078,10 @@ function TPortalDLAdmin()
 			$newcatparent = 0;
 		}
 
+		//check if we have a category
+		if(($newcat==false) && ($newcatnow==0)) {
+			redirectexit('action=tportal;sa=download;dl=adminftp;ftpcat=nocat');
+		}
 		// if new category create it first.
 		if($newcat)
 		{
@@ -2144,7 +2148,7 @@ function TPortalDLAdmin()
 			}
 		}
 		// done, set a value to make member aware of assigned category
-  		redirectexit('action=tportal;sa=download;dl=adminftp;ftpcat='.$newcatnow);
+		redirectexit('action=tportal;sa=download;dl=adminftp;ftpcat='.$newcatnow);
 	}
 
 	// check for new category
