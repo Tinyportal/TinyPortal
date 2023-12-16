@@ -119,15 +119,16 @@ $txt['tp-dlapprove'] = 'Approval?';
 //FTP
 $txt['tp-dlftp'] = 'FTP';
 $txt['tp-ftpstrays'] = 'Assign new files in the tp_dlmanager table';
-$txt['tp-assignftp'] = 'Using an FTP client you can upload multiple files to the tp-downloads folder on your server. Here you can add these files to TPdownloads: by using the links behind each file, you can select individual files for direct processing. If you wish to process multiple files at once you can use the cechboxes. If you write something in the new-category-field, a new category will be created with that name. Otherwise the file(s) will be assigned to the category selected in the dropdown list. Note that this also acts as a parent category when using new-category option.';
+$txt['tp-assignftp'] = 'Using an FTP client you can upload multiple files to the tp-downloads folder on your server. Here you can add these files to TPdownloads: by using the links behind each file, you can select individual files for direct processing. If you wish to process multiple files at once you can use the ceckboxes. If you write something in the new-category-field, a new category will be created with that name. Otherwise the file(s) will be assigned to the category selected in the dropdown list. Note that this also acts as a parent category when using new-category option.';
 $txt['tp-noftpstrays'] = 'Currently there are no files that are not assigned in the tp_dlmanager table.';
 
 $txt['tp-dlmakeitem'] = 'Process';
 $txt['tp-dlmakeitem2'] = 'Assigning the file:';
 $txt['tp-newcatassign'] = 'New category';
-$txt['tp-assigncatparent'] = 'Parent category/main category:';
+$txt['tp-assigncatparent'] = 'Assign to / Parent category -> ';
 $txt['tp-adminftp_nonewfiles'] = 'No files were added: no category specified.';
-$txt['tp-adminftp_newfiles'] = 'Files were added successfully. Check out the category they were inserted into.';
+$txt['tp-adminftp_newfiles'] = 'Files were added successfully. ';
+$txt['tp-adminftp_newfilescat'] = 'Check out the category they were inserted into.';
 $txt['tp-submitftp'] = 'Process selected';
 
 //Main
