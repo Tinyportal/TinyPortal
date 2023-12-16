@@ -1208,7 +1208,7 @@ function template_strays()
             }
 			echo '
 				</select>
-				<input name="tp_article_new" value="" size="40" />
+				<input name="tp_article_new" size="40" placeholder= "'.$txt['tp-createnewcategory'].'" value="">
 				</div>';
 		}
 		echo '
@@ -1335,7 +1335,7 @@ function template_submission()
 						<option value="'.$submg['id'].'">'. $txt['tp-approveto'] . $submg['name'].'</option>';
 			echo '
 					</select>
-					<input name="tp_article_new" value="" size="40" /> &nbsp;
+					<input name="tp_article_new" value="" size="40" placeholder= "'.$txt['tp-createnewcategory'].'">
 				</div>';
 		}
 		echo '

@@ -761,16 +761,16 @@ function template_main()
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-ftpstrays'].'</h3></div>
 			<div id="ftp-files" class="admintable admin-area">
-				<div class="information smalltext">'.$txt['tp-assignftp'].'</div>
+				<div class="information smalltext">'.$txt['tp-assignftp'].'</div><div></div>
 				<div class="windowbg noup padding-div">';
 
 		if(!empty($_GET['ftpcat'])) {
 			// alert if no files were assigned
 			if($_GET['ftpcat'] ==='nocat')
-				echo '<div class="errorbox"><b>'.$txt['tp-adminftp_nonewfiles'].'</a></b></div>';
+				echo '<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
 			// alert if new files were added recently
 			else 
-				echo '<div class="infobox"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfiles'].'</a></b></div>';
+				echo '<div class="infobox">'.$txt['tp-adminftp_newfiles'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfilescat'].'</a></div>';
 		}
 		if(count($context['TPortal']['tp-downloads'])>(count($context['TPortal']['dl_allitems']))) {
 			$ccount=0;
@@ -784,34 +784,34 @@ function template_main()
 			echo '
 				</div>
 				<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
-				<hr>
-				<dl class="settings tptitle">
-					<dt>'.$txt['tp-newcatassign'].'</dt>
-					<dd><input type="text" name="assign-ftp-newcat" value=""><dd>
-					<dt>'.$txt['tp-assigncatparent'].'</dt>
-					<dd><select size="1" name="assign-ftp-cat" required>
-						<option value="0" selected>'.$txt['tp-dlnocategory'].'</option>';
+
+				<div class="padding-div">
+				<select name="assign-ftp-cat">
+					<option value="0">' . $txt['tp-createnew'] . '</option>';
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
 					foreach($context['TPortal']['admuploadcats'] as $ucats)
 					{
-							echo '
-						<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '.$ucats['name'].'</option>';
+						echo '
+						<option value="'.$ucats['indent'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
 					}
 				}
 				else
 					echo '
 						<option value="0">'.$txt['tp-none-'].'</option>';
 			echo '
-					</select></dd>
-				</dl>';
+					</select>
+					<input type="text" name="assign-ftp-newcat" placeholder= "'.$txt['tp-newcatassign'].'" value="" size="40">
+					</div>';
 
-			echo '<input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
-				  </div>';
+			echo '
+				<div class="padding-div"><input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'">
+				</div></div>';
 		}
 		else {
 			echo '
-				<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>';
+				<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>
+				<div class="padding-div">&nbsp;</div>';
 		}
 			echo '
 				</div>
