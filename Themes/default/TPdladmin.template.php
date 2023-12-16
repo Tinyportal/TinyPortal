@@ -764,23 +764,32 @@ function template_main()
 				<div class="information smalltext">'.$txt['tp-assignftp'].'</div>
 				<div class="windowbg noup padding-div">';
 
-		// alert if new files were added recently
-		if(!empty($_GET['ftpcat']))
-			echo '<div style="margin-bottom:1ex;text-align:center;border:dotted 2px red;padding:2ex;"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfiles'].'</a></b><br></div>';
-
-		if(count($context['TPortal']['tp-downloads'])>0){
+		if(!empty($_GET['ftpcat'])) {
+			// alert if no files were assigned
+			if($_GET['ftpcat'] ==='nocat')
+				echo '<div class="errorbox"><b>'.$txt['tp-adminftp_nonewfiles'].'</a></b></div>';
+			// alert if new files were added recently
+			else 
+				echo '<div class="infobox"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfiles'].'</a></b></div>';
+		}
+		if(count($context['TPortal']['tp-downloads'])>(count($context['TPortal']['dl_allitems']))) {
 			$ccount=0;
+			echo '
+				<div class="tp_largelist2">';
 			foreach($context['TPortal']['tp-downloads'] as $file){
 				if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
 					echo '<div><input type="checkbox" name="assign-ftp-checkbox'.$ccount.'" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;sa=download;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
 					$ccount++;
 			}
-			echo '<div style="padding: 5px;"><span class="smalltext">
-			 '.$txt['tp-newcatassign'].' <input type="text" name="assign-ftp-newcat" value=""> ';
-			// the parent category - or the one to use
-				// which parent category?
-				echo $txt['tp-assigncatparent'].'</span>
-					<select size="1" name="assign-ftp-cat" style="margin-top: 4px;">
+			echo '
+				</div>
+				<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
+				<hr>
+				<dl class="settings tptitle">
+					<dt>'.$txt['tp-newcatassign'].'</dt>
+					<dd><input type="text" name="assign-ftp-newcat" value=""><dd>
+					<dt>'.$txt['tp-assigncatparent'].'</dt>
+					<dd><select size="1" name="assign-ftp-cat" required>
 						<option value="0" selected>'.$txt['tp-dlnocategory'].'</option>';
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
@@ -794,12 +803,19 @@ function template_main()
 					echo '
 						<option value="0">'.$txt['tp-none-'].'</option>';
 			echo '
-					</select><p class="clearthefloat"></p><br><hr /><br>';
+					</select></dd>
+				</dl>';
 
-			echo '<input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submit'].'">
+			echo '<input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">
 				  </div>';
 		}
-		echo '</div></div>';
+		else {
+			echo '
+				<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>';
+		}
+			echo '
+				</div>
+			</div>';
 	}
 	elseif(substr($context['TPortal']['dlsub'],0,12)=='admineditcat')
 	{
