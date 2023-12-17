@@ -793,7 +793,7 @@ function template_main()
 					foreach($context['TPortal']['admuploadcats'] as $ucats)
 					{
 						echo '
-						<option value="'.$ucats['indent'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
+						<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
 					}
 				}
 				else
