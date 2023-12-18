@@ -122,7 +122,7 @@ function template_overview()
 			$tabs = array();
 			foreach($tab as $t => $tb) {
 				echo '<li><a href="' . $tb['href'] . '"><img style="margin-bottom: 8px;" src="' . $settings['tp_images_url'] . '/TPov_' . strtolower($t) . '.png" alt="TPov_' . strtolower($t) . '" /><br><b>'.$tb['title'].'</b></a></li>';
-            }
+			}
 		}
 		echo '</ul>';
 	}
@@ -155,11 +155,11 @@ function template_settings()
 									<img class="theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
 									<input name="tp_resp'.$them['id'].'" id="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
 								if(in_array($them['id'],$tm)) {
-					                echo ' checked="checked" ';
-					            }
-					            echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
-						       }
-						   echo '
+									echo ' checked="checked" ';
+								}
+								echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
+								}
+							echo '
 							<br><input type="checkbox" name="tp_resp" id="tp_resp" value="0"><label for="tp_resp">'.$txt['tp-deselectthemes'].'</label>
 						</dd>
 					</dl>
@@ -263,26 +263,26 @@ function template_settings()
 					<dd>
 						<input type="checkbox" id="tp_imageproxycheck" name="tp_imageproxycheck" value="1" ' , $context['TPortal']['imageproxycheck'] == '1' ? 'checked' : '' , '>
 					</dd>';
-                    db_extend('extra');
-                    if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
-                        echo '
-                        <dt>
-                            <a href="', $scripturl, '?action=helpadmin;help=tp-fulltextsearchdesc" onclick="return reqOverlayDiv(this.href);">
+					db_extend('extra');
+					if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
+						echo '
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-fulltextsearchdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_fulltextsearch">', $txt['tp-fulltextsearch'], '</label>
-                        </dt>
-                        <dd>
-                            <input type="checkbox" id="tp_fulltextsearch" name="tp_fulltextsearch" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '>
-                        </dd>';
-                    }
+						</dt>
+						<dd>
+							<input type="checkbox" id="tp_fulltextsearch" name="tp_fulltextsearch" value="1" ' , $context['TPortal']['fulltextsearch']=='1' ? 'checked' : '' , '>
+						</dd>';
+					}
 					echo '
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-disabletemplateevaldesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label>
 					</dt>
 					<dd>
-                        <input type="checkbox" id="tp_disable_template_eval" name="tp_disable_template_eval" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
+						<input type="checkbox" id="tp_disable_template_eval" name="tp_disable_template_eval" value="1" ' , $context['TPortal']['disable_template_eval']=='1' ? 'checked' : '' , '>
 					</dd>
-                    <dt>
+					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-imageuploadpathdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_image_upload_path">', $txt['tp-imageuploadpath'], '</label>
 					</dt>
@@ -290,14 +290,14 @@ function template_settings()
 						<input type="text" id="tp_image_upload_path" name="tp_image_upload_path" value="' , !empty($context['TPortal']['image_upload_path']) ? $context['TPortal']['image_upload_path'] : '' , '" size="50">
 					</dd>';
 /*
-                    <dt>
+					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-downloaduploadpathdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_download_upload_path">', $txt['tp-downloaduploadpath'], '</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_download_upload_path" name="tp_download_upload_path" value="' , !empty($context['TPortal']['download_upload_path']) ? $context['TPortal']['download_upload_path'] : '' , '" size="50">
 					</dd>
-                    <dt>
+					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-blockcodeuploadpathdesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_blockcode_upload_path">', $txt['tp-blockcodeuploadpath'], '</label>
 					</dt>
@@ -305,7 +305,7 @@ function template_settings()
 						<input type="text" id="tp_blockcode_upload_path" name="tp_blockcode_upload_path" value="' , !empty($context['TPortal']['blockcode_upload_path']) ? $context['TPortal']['blockcode_upload_path'] : '' , '" size="50" >
 					</dd>
 */
-                    echo '<dt>
+					echo '<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-copyrightremovaldesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label>
 					</dt>

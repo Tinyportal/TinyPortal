@@ -49,6 +49,10 @@ $txt['tp-lowerbar'] = 'Show lower panel';
 $txt['tp-bottombar'] = 'Show bottom panel';
 $txt['tp-noneicon'] = 'None';
 
+//Admnin
+$txt['tp-helpdownload1'] = 'These are your main download categories with the number of files each category holds. Selecting a category will bring you to the list of files for that category. The actions icons allow you to view the category page or directly edit the category settings.';
+$txt['tp-helpdownload2'] = 'This page shows all list of all files in the chosen category. Selecting a download will bring you the the edit file page. If a category holds any sub-categories these will be listed first.';
+
 //Add/Edit Categories
 $txt['tp-dltabs2'] = 'Add category';
 $txt['tp-dlcatadd'] = 'Add category';

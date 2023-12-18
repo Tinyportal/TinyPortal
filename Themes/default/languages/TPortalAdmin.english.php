@@ -146,7 +146,7 @@ $txt['tp-hidearticle-delicious'] = 'Hide Delicious button';
 $txt['tp-hidearticle-stumbleupon'] = 'Hide Stumbleupon button';
 
 // Articles overview
-$txt['tp-helparticles'] = 'These are your article categories and sub-categories with the number of articles each category holds. Selecting a category will bring you the the articles listing for that category. The actions icons allow you to view the category page or directly edit the category settings.';
+$txt['tp-helparticles'] = 'These are your article categories and sub-categories with the number of articles each category holds. Selecting a category will bring you to the articles listing for that category. The actions icons allow you to view the category page or directly edit the category settings.';
 $txt['tp-helparticles2'] = 'This page shows all list of all articles in the chosen category. Selecting an article will bring you the the edit article page. The actions icons allow you to quickly toggle some article settings. Note that if an article is locked the edit option is disabled until the lock is removed.';
 $txt['tp-setfrontpage'] = 'Toggle show on frontpage';
 $txt['tp-setsticky'] = 'Toggle sticky/non-sticky';
