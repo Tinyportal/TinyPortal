@@ -17,7 +17,7 @@
 
 // Settings page
 // Admin page
-// Admin page category
+// Files in category page
 // Submissions page
 // FTP page
 // Edit category page
@@ -243,7 +243,7 @@ function template_main()
 	elseif($context['TPortal']['dlsub']=='admin')
 	{
 		echo '
-		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
+		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].' - '.$txt['tp-categories'].'</h3></div>
 		<div id="user-download" class="admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpdownload1'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
@@ -266,9 +266,6 @@ function template_main()
 					</thead>
 					<tbody>';
 			// output all the categories, sort after childs
-
-
-
 		if(isset($context['TPortal']['admcats']) && $context['TPortal']['admcats'] >0)
 		{
 			foreach($context['TPortal']['admcats'] as $cat)
@@ -282,7 +279,7 @@ function template_main()
 								  <input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
 								</div>
 								<div class="adm-name float-items" style="width:30%;">
-								  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" style="margin: 0;vertical-align:top" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+									<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 								</div>
 								<a href="" class="clickme">'.$txt['tp-more'].'</a>
 								<div class="box tp_floatleft" style="width:60%;">
@@ -327,7 +324,7 @@ function template_main()
 			</div>
 		</div>';
 	}
-// Admin page category
+// Files in category page
 	elseif(substr($context['TPortal']['dlsub'],0,8)=='admincat')
 	{
 		$mycat=substr($context['TPortal']['dlsub'],8);
@@ -342,11 +339,12 @@ function template_main()
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
 		<div id="any-subcats" class="admintable admin-area">
-		<div class="information smalltext">' , $txt['tp-helpdownload2'] , '</div><div></div>
-		<div class="windowbg noup padding-div">';
+			<div class="information smalltext">' , $txt['tp-helpdownload2'] , '</div><div></div>
+			<div class="windowbg noup padding-div">';
 		if(isset($context['TPortal']['admcats']) && $ccount>0)
 		{
 		echo '
+			<b>'.$txt['tp-childcategories'].'</b>
 			<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg2">
@@ -373,7 +371,7 @@ function template_main()
 					  <input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
 					</div>
 					<div class="adm-name float-items" style="width:30%;">
-					  <img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" style="margin: 0;vertical-align:top" /> <a href="'.$cat['href'].'">'.$cat['name'].'</a>
+						<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 					</div>
 					<a href="" class="clickme">'.$txt['tp-more'].'</a>
 					<div class="box tp_floatleft" style="width:60%;">
@@ -415,16 +413,18 @@ function template_main()
 		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
 		{
 		echo '
+		<b>'.$txt['tp-dlfiles'].'</b>
 			<table class="table_grid tp_grid">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col" class="articles">
 			<div class="catbg3">
-				<div style="width:30%;" class="float-items pos"><strong>'.$txt['tp-dlname'].'</strong></div>
+				<div style="width:25%;" class="float-items pos"><strong>'.$txt['tp-dlname'].'</strong></div>
 				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlicon'].'</strong></div>
-				<div style="width:20%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlviews'].'</strong></div>
-				<div style="width:30%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfile'].'</strong></div>
+				<div style="width:21%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlviews'].'</strong></div>
+				<div style="width:26%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfile'].'</strong></div>
 				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
+				<div style="width:8%" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dledit'].'</strong></div>
 				<p class="clearthefloat"></p>
 			</div>
 			</th>
@@ -437,42 +437,45 @@ function template_main()
 		<tr class="windowbg">
 		<td class="articles">
 			<div id="up-file" class="bigger-width">
-				<div style="width:30%;" class="fullwidth-on-res-layout float-items">
-					<a href="',$scripturl, '?action=tportal;sa=download;dl=item',$cat['id'],'"><img title="'.$txt['tp-dlpreview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
+				<div style="width:25%;" class="fullwidth-on-res-layout float-items">
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
 				</div>
 			<a href="" class="clickme">'.$txt['tp-more'].'</a>
-			<div class="box tp_floatleft" style="width:70%;">
+			<div class="box tp_floatleft" style="width:75%;">
 				<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
 					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 				   ', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 				</div>
-			    <div class="fullwidth-on-res-layout float-items" style="width:29%;">
-					<div class="show-on-responsive" style="word-break:break-all;">'.$txt['tp-dlviews'].'</div>
+			    <div class="fullwidth-on-res-layout float-items" style="width:27%;">
+					<div class="show-on-responsive">'.$txt['tp-dlviews'].'</div>
 					<div class="size-on-responsive">
-						<div style="width:48%;" class="float-items tpcenter">
+						<div style="width:49%;" class="float-items tpcenter">
 						'.$cat['views'].'
 						</div>
-						<div style="width:48%;" class="float-items tpcenter">
+						<div style="width:49%;" class="float-items tpcenter">
 						'.$cat['downloads'].'
 						</div>
 						<p class="clearthefloat"></p>
 					</div>
 				</div>
-				<div class="fullwidth-on-res-layout float-items" style="width:42%;">
+				<div class="fullwidth-on-res-layout float-items" style="width:36%;">
 					<div class="show-on-responsive">'.$txt['tp-dlfile'].'</div>
-					<div class="size-on-responsive"><div style="width:48%;word-break:break-all;" class="float-items">
+					<div class="size-on-responsive"><div style="width:58%; word-break:break-all;"" class="float-items">
 				   '. (($cat['file']=='- empty item -' || $cat['file']=='') ? $txt['tp-noneicon'] : $cat['file']) .'
 					</div>
-					<div style="width:48%;" class="float-items">
+					<div style="width:40%;" class="float-items">
 					'.$txt['tp-authorby'].' '.$cat['author'].'
 					</div>
 					<p class="clearthefloat"></p>
 				</div>
 			</div>
-			<div style="width:14.5%;" class="fullwidth-on-res-layout float-items tpcenter">
+			<div style="width:14%;" class="fullwidth-on-res-layout float-items tpcenter">
 				<div class="show-on-responsive">'.$txt['tp-dlfilesize'].'</div>
 				'. $cat['filesize'].''.$txt['tp-kb'].'
+			</div>
+			<div style="width:8%;" class="fullwidth-on-res-layout float-items tpcenter">
+				<div class="show-on-responsive"><a href="',$scripturl, '?action=tportal;sa=download;dl=item',$cat['id'],'"><img title="'.$txt['tp-dlpreview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a></div>
+				<a href="',$scripturl, '?action=tportal;sa=download;dl=item',$cat['id'],'"><img title="'.$txt['tp-dlpreview'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>
 			</div>
 			<p class="clearthefloat"></p>
 		</div>

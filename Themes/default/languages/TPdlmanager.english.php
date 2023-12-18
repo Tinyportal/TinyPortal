@@ -1,5 +1,5 @@
 <?php
-// Version: 2.3.0; TPdlmanager
+// Version: 3.0.0; TPdlmanager
 
 global $scripturl;
 
@@ -8,7 +8,7 @@ $txt['tp-dltabs4'] = 'Admin';
 $txt['tp-dlsubmitted'] = 'Approval';
 $txt['tp-dledit'] = 'Actions';
 $txt['tp-dlfile'] = 'Filename / uploader';
-$txt['tp-dlviews'] = 'Views/downloads';
+$txt['tp-dlviews'] = 'Views / downloads';
 $txt['tp-dlicon'] = 'Icon';
 
 //Settings

@@ -3065,17 +3065,16 @@ function TPortalDLAdmin()
 			$catshortname = $row['link'];
 			$smcFunc['db_free_result']($request);
 		}
-
-		// fetch items within a category
+		// fetch items within a category, soerted by name
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.*, dl.author_id as author_id,m.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dl
-            INNER JOIN {db_prefix}members AS m
-            ON dl.author_id = m.id_member
+			INNER JOIN {db_prefix}members AS m
+			ON dl.author_id = m.id_member
 			WHERE abs(dl.category) = {int:cat}
 			AND dl.type = {string:type}
 			AND dl.subitem = {int:sub}
-			ORDER BY dl.id DESC',
+			ORDER BY dl.name ASC',
 			array('cat' => $cat, 'type' => 'dlitem', 'sub' => 0)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
@@ -3109,7 +3108,7 @@ function TPortalDLAdmin()
 		$request = $smcFunc['db_query']('', '
 			SELECT * FROM {db_prefix}tp_dlmanager
 			WHERE type = {string:type}
-			ORDER BY name ASC',
+			ORDER BY downloads ASC, name ASC',
 			array('type' => 'dlcat')
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
