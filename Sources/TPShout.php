@@ -133,7 +133,9 @@ function TPShoutPost( ) {{{
 	if(!empty($_POST['tp_shout']) && !empty($_POST['tp-shout-name'])) {
 		// Check the session id.
 		checkSession('post');
-		require_once($sourcedir . '/Subs-Post.php');
+		if(TP_SMF21) {
+			require_once($sourcedir . '/Subs-Post.php');
+		}
 		$shout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, $context['TPortal']['shoutbox_maxlength']));
 		preparsecode($shout);
 

@@ -35,7 +35,9 @@ function TPortalAdmin()
 		loadLanguage('TPortal', 'english');
 
 	require_once($sourcedir . '/TPcommon.php');
-	require_once($sourcedir . '/Subs-Post.php');
+	if(TP_SMF21) {
+		require_once($sourcedir . '/Subs-Post.php');
+	}
 
 	$context['TPortal']['frontpage_visualopts_admin'] = array(
 		'left' => 0,

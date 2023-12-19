@@ -149,8 +149,13 @@ class Integrate
         global $boarddir, $cachedir, $sourcedir, $db_type;
 
         if(defined('SMF_FULL_VERSION')) {
-            // SMF 2.1
-            define('TP_SMF21', true);
+            // SMF 2.1 or SMF 3.0
+			if(substr(SMF_FULL_VERSION, 0, 7) === 'SMF 3.0') {
+				define('TP_SMF21', false);
+            }
+            else {
+				define('TP_SMF21', true);
+            }
         }
         else {
             // We must be on SMF 2.0
@@ -582,6 +587,11 @@ class Integrate
     {
         global $topic, $board, $context;
 
+		if(!TP_SMF21) {
+        	require_once(SOURCEDIR . '/TPortal.php');
+        	\TPortal_init();
+        }
+        
         $theAction = false;
         // first..if the action is set, but empty, don't go any further
         if (isset($_REQUEST['action']) && $_REQUEST['action']=='') {
@@ -707,10 +717,10 @@ class Integrate
     public static function hookPreLogStats(&$no_stat_actions)
     {
         $no_stat_actions = array_merge($no_stat_actions, array('tpshout' => true));
-
-        // We can also call init from here although it's not meant for this
-        require_once(SOURCEDIR . '/TPortal.php');
-        \TPortal_init();
+		if(TP_SMF21) {
+        	require_once(SOURCEDIR . '/TPortal.php');
+        	\TPortal_init();
+        }
     }
 
     public static function hookRedirect(&$setLocation, &$refresh, &$permanent)

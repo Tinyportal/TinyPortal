@@ -181,6 +181,10 @@ function TPortal_init() {{{
 function tpLoadCSS() {{{
 	global $context, $settings;
 
+	if(!isset($context['html_headers'])) {
+		$context['html_headers'] = '';
+	}
+
 	$context['html_headers'] .=  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>";
 
     // load both stylesheets to be sure all is in, but not if things aren't setup!
@@ -326,6 +330,7 @@ function setupTPsettings() {{{
     $context['TPortal']['is_front'] = false;
     $context['TPortal']['is_frontpage'] = false;
     if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+		require_once(SOURCEDIR.'/TPSubs.php');
         TPstrip_linktree();
         // a switch to make it clear what is "forum" and not
         $context['TPortal']['not_forum'] = true;
