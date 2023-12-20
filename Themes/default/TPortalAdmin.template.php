@@ -1483,7 +1483,7 @@ function template_articons()
 		<input type="hidden" name="tpadmin_form" value="articons">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-adminicons7'] . '</h3></div>
 		<div id="article-icons-pictures" class="admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-adminiconsinfo'] , '</div><div></div>
+			<div class="information smalltext">' , sprintf($txt['tp-adminiconsinfo'], $context['TPortal']['icon_max_size'], $context['TPortal']['icon_width']) , '</div><div></div>
 				<div class="windowbg noup padding-div">
 				<div class="formtable"><br>
 					<dl class="tptitle settings">
