@@ -233,12 +233,22 @@ function TPortal_userbox()
 		// Show the total time logged in?
 		if (!empty($context['user']['total_time_logged_in']) && isset($context['TPortal']['userbox']['logged']))
 		{
+			if(!TP_SMF21) {
+				$days		= date('d', $context['user']['total_time_logged_in']);
+				$hours		= date('H', $context['user']['total_time_logged_in']);
+				$minutes	= date('i', $context['user']['total_time_logged_in']);
+			}
+			else {
+				$days		= $context['user']['total_time_logged_in']['days'];
+				$hours		= $context['user']['total_time_logged_in']['hours'];
+				$minutes	= $context['user']['total_time_logged_in']['minutes'];
+			}
 			echo '
 		</ul>
 		<hr>
 		<ul class="tp_user_loggedintime">
 			<li>' .$txt['tp-loggedintime'] . '</li>
-			<li>'.$context['user']['total_time_logged_in']['days'] . $txt['tp-acronymdays']. $context['user']['total_time_logged_in']['hours'] . $txt['tp-acronymhours']. $context['user']['total_time_logged_in']['minutes'] .$txt['tp-acronymminutes'].'</li>';
+			<li>'.$days . $txt['tp-acronymdays']. $hours . $txt['tp-acronymhours']. $minutes .$txt['tp-acronymminutes'].'</li>';
 		}
 		if (isset($context['TPortal']['userbox']['time']))
 			echo '
