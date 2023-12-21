@@ -726,7 +726,7 @@ function do_articles()
                         }
 					}
 					$smcFunc['db_free_result']($request);
-					$check = array('layout', 'catlayout', 'toppanel', 'bottompanel', 'leftpanel', 'rightpanel', 'upperpanel', 'lowerpanel', 'showchild');
+					$check = array('layout', 'catlayout', 'toppanel', 'bottompanel', 'leftpanel', 'rightpanel', 'centerpanel', 'lowerpanel', 'showchild');
 					foreach($check as $c => $ch) {
 						if(!isset($row[$ch])) {
 							$row[$ch] = 0;

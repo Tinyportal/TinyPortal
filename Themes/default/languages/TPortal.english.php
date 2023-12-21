@@ -67,7 +67,7 @@ $txt['cannot_tp_can_list_images'] = 'Sorry, you aren\'t allowed to manage articl
 
 // Panels
 $txt['bottom-tp-upshrink_description'] = 'Bottom panel';
-$txt['center-tp-upshrink_description'] = 'Upper panel';
+$txt['center-tp-upshrink_description'] = 'Center panel';
 $txt['front-tp-upshrink_description'] = 'Frontpage';
 $txt['left-tp-upshrink_description'] = 'Left panel';
 $txt['lower-tp-upshrink_description'] = 'Lower panel';

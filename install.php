@@ -582,7 +582,6 @@ $settings_array = array(
     'panelstyle_left' => '0',
     'panelstyle_right' => '0',
     'panelstyle_top' => '0',
-    'panelstyle_upper' => '0',
     'panelstyle_center' => '0',
     'panelstyle_front' => '0',
     'panelstyle_lower' => '0',
@@ -801,7 +800,8 @@ $delete_settings_array = array(
     'use_tpfrontpage',
     'use_tpgallery',
     'use_tpmainmenu',
-	'shoutbox_timeformat',
+	'shoutbox_timeformat'
+	'panelstyle_upper',
 );
 $deletes = 0;
 

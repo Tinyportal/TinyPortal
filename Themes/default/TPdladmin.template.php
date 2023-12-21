@@ -55,9 +55,9 @@ function template_main()
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsettings'].'</h3></div>
-		<div id="dlsettings" class="admintable admin-area">
+		<div id="dlsettings" class="tp_admintable admin-area">
 			<div class="windowbg noup padding-div">
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 					<dt>
 						<label for="tp_show_download_on">',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  /></label>
 					</dt>
@@ -244,7 +244,7 @@ function template_main()
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].' - '.$txt['tp-categories'].'</h3></div>
-		<div id="user-download" class="admintable admin-area">
+		<div id="user-download" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpdownload1'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
 		echo '
@@ -273,7 +273,7 @@ function template_main()
 				if($cat['parent']==0)
 					echo '
 						<tr class="windowbg">
-						<td class="articles">
+						<td>
 							<div>
 								<div class="adm-pos float-items" style="width:10%;">
 								  <input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
@@ -313,7 +313,7 @@ function template_main()
 		else
 			echo '
 						<tr class="windowbg">
-						<td class="articles">
+						<td>
 							<div class="padding-div">'.$txt['tp-nocats'].'</div>
 						</td>
 						</tr>';
@@ -338,7 +338,7 @@ function template_main()
 		// output any subcats
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].'</h3></div>
-		<div id="any-subcats" class="admintable admin-area">
+		<div id="any-subcats" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpdownload2'] , '</div><div></div>
 			<div class="windowbg noup padding-div">';
 		if(isset($context['TPortal']['admcats']) && $ccount>0)
@@ -365,7 +365,7 @@ function template_main()
 				if($cat['parent']==$mycat)
 					echo '
 			<tr class="windowbg">
-			<td class="articles">
+			<td>
 				<div>
 					<div class="adm-pos float-items" style="width:10%;">
 					  <input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
@@ -417,7 +417,7 @@ function template_main()
 			<table class="table_grid tp_grid">
 		<thead>
 			<tr class="title_bar titlebg2">
-			<th scope="col" class="articles">
+			<th scope="col">
 			<div class="catbg3">
 				<div style="width:25%;" class="float-items pos"><strong>'.$txt['tp-dlname'].'</strong></div>
 				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlicon'].'</strong></div>
@@ -435,7 +435,7 @@ function template_main()
 			{
 				echo '
 		<tr class="windowbg">
-		<td class="articles">
+		<td>
 			<div id="up-file" class="bigger-width">
 				<div style="width:25%;" class="fullwidth-on-res-layout float-items">
 					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
@@ -487,7 +487,7 @@ function template_main()
 		else
 			echo '
 		<tr class="windowbg">
-		<td class="articles">
+		<td>
 			<div class="padding-div">'.$txt['tp-nofiles'].'</div>
 		</td>
 		</tr>';
@@ -507,9 +507,9 @@ function template_main()
 			{
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;sa=download;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
-		<div id="edit-up-item" class="admintable admin-area">
+		<div id="edit-up-item" class="tp_admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<dl class="settings tptitle">
+				<dl class="tp_title settings">
 					<dt>
 						<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 					</dt>
@@ -725,7 +725,7 @@ function template_main()
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlsubmissions'].'</h3></div>
-		<div id="any-submitted" class="admintable admin-area">
+		<div id="any-submitted" class="tp_admintable admin-area">
 			<div class="windowbg noup padding-div">
 				<table class="table_grid tp_grid">
 				<thead>
@@ -749,7 +749,7 @@ function template_main()
 			{
 				echo '
 				<tr class="windowbg">
-				<td class="articles">
+				<td>
 					<div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:30%;"><a href="'.$cat['href'].'">'.$cat['name'].'</a></div>
 						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
@@ -778,7 +778,7 @@ function template_main()
 		{
 			echo '
 				<tr class="windowbg">
-				<td class="articles">
+				<td>
 					<div class="padding-div">'.$txt['tp-nosubmissions'].'</div>
 				</td>
 				</tr>';
@@ -795,7 +795,7 @@ function template_main()
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-ftpstrays'].'</h3></div>
-			<div id="ftp-files" class="admintable admin-area">
+			<div id="ftp-files" class="tp_admintable admin-area">
 				<div class="information smalltext">'.$txt['tp-assignftp'].'</div><div></div>
 				<div class="windowbg noup padding-div">';
 
@@ -861,9 +861,9 @@ function template_main()
 			{
 				echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatedit'].'</h3></div>
-		<div id="editupcat" class="admintable admin-area">
+		<div id="editupcat" class="tp_admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<dl class="settings tptitle">
+				<dl class="tp_title settings">
 					<dt>
 						<label for="dladmin_name"><b>'.$txt['tp-dlname'].'</b></label>
 					</dt>
@@ -984,9 +984,9 @@ function template_main()
 // Add category page
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlcatadd'].'</h3></div>
-		<div id="dl-addcat" class="admintable admin-area">
+		<div id="dl-addcat" class="tp_admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<dl class="settings tptitle">
+				<dl class="tp_title settings">
 					<dt>
 						<label for="newdladmin_name"><b>'.$txt['tp-name'].'</b></label>
 					</dt>

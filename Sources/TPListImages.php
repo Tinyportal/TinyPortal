@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 3.0.0
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -57,7 +57,7 @@ function template_tp_list_images_admin() {
     echo '
 		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;list"  method="post" style="margin: 0px;">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-listimage-settings'].'</h3></div>
-		<div id="tplistimages" class="admintable admin-area">
+		<div id="tplistimages" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-listimage-intro'] , '</div><div></div>
 			<div class="windowbg noup">
 				<div class="padding-div">
@@ -106,7 +106,7 @@ function TPListImageAdmin($user_id = 0) {{{
 
     $html .='
         <div class="roundframe tp_pad" style="max-height: 800px; overflow: auto;">
-            <div class="tpthumb" style="overflow: auto;">';
+            <div class="tp_thumb" style="overflow: auto;">';
 
     if(!empty($imgs)) {
         foreach($imgs as $im) {

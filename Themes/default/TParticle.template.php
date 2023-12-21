@@ -67,10 +67,10 @@ function template_submitarticle()
     echo'
 		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , '' , $mg['id']==0 ? '' : '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>';
 	echo '</h3></div>
-		<div id="edit-add-single-article" class="admintable admin-area">
+		<div id="edit-add-single-article" class="tp_admintable admin-area">
 		<div class="windowbg noup">
-			<div class="formtable padding-div">
-			<dl class="settings tptitle">
+			<div class="tp_formtable padding-div">
+			<dl class="tp_title settings">
 				<dt>
 					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
 				</dt>
@@ -102,7 +102,7 @@ function template_submitarticle()
                 }
 				else {
 					echo '
-					<dl class="settings tptitle">
+					<dl class="tp_title settings">
 						<dt>' , $txt['tp-importarticle'] , '</dt>
 						<dd>
 							<input type="text" name="tp_article_fileimport" value="' , $mg['fileimport'] , '" size="50" style="max-width:97%;" >
@@ -111,7 +111,7 @@ function template_submitarticle()
                 }
 				echo '
 			</div><br>
-			<dl class="settings tptitle">
+			<dl class="tp_title settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-useintrodesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
@@ -149,13 +149,13 @@ function template_submitarticle()
 			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '
 				<hr>
-				<dl class="tptitle settings">
+				<dl class="tp_title settings">
 					<dt>
 						<label for="tp_article_authorid">', $txt['tp-author'], '</label>
 					</dt>
 					<dd>
 						<b><a href="' . $scripturl . '?action=profile;u='.$mg['author_id'].'" target="_blank">'.$mg['real_name'].'</a></b>
-						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" /><br><br>
+						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" required><br><br>
 					</dd>
 					<dt>
 						<label for="field_name">', $txt['tp-created'], '</label>
@@ -211,7 +211,7 @@ function template_submitarticle()
 					</dd>
 				</dl>
 				<hr>
-				<dl class="tptitle settings">
+				<dl class="tp_title settings">
 					<dt>
 						<label for="field_name">', $txt['tp-switchmode'], '</label>
 					</dt>
@@ -242,7 +242,7 @@ function template_submitarticle()
 			echo '
 				</dl>
 				<hr>
-				<dl class="tptitle settings">';
+				<dl class="tp_title settings">';
 
 				if(!empty($context['TPortal']['allcats'])) {
 					echo '
@@ -398,7 +398,7 @@ function template_submitarticle()
 
 			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>
 							<label for="field_name">', $txt['tp-display'], '</label>
 						</dt>
@@ -412,7 +412,7 @@ function template_submitarticle()
 							<label for="field_name">', $txt['tp-illustration'], '</label>
 						</dt>
 						<dd>
-							<div class="article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
+							<div class="tp_article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
 						</dd>
 						<dt>
 							<label for="tp_article_illustration">', $txt['tp-illustration2'], '</label>
@@ -455,7 +455,7 @@ function template_submitarticle()
 					<div class="article-details">';
 				// article details options
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>
 							<label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
 						</dt>
@@ -464,7 +464,7 @@ function template_submitarticle()
 						</dd>
 					</dl>
 					<span class="font-strong">' . $txt['tp-details'] . '</span>
-					<dl class="tptitle settings">';
+					<dl class="tp_title settings">';
 						$articleOption = array ( 4, 2, 13, 3, 1, 17, 19, 18, 21, 23, 12, 15, 14);
 						foreach($articleOption as $k) {
 							echo '
@@ -478,7 +478,7 @@ function template_submitarticle()
 				echo '
 					</dl>
 					<span class="font-strong">' . $txt['tp-panels'] . '</span>
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>
 							<label for="tp_article_options_'.$opts[8].'">', $txt['tp-articleoptions8'], '</label><br>
 						</dt>
@@ -529,7 +529,7 @@ function template_submitarticle()
 						</dd>
 					</dl>
 					<br>
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>
 							<label for="tp_article_options_'.$opts[22].'">', $txt['tp-articleoptions24'], '</label><br>
 						</dt>
@@ -538,7 +538,7 @@ function template_submitarticle()
 						</dd>
 					</dl>
 					<span class="font-strong">' . $txt['tp-others'] . '</span>
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>
 							<label for="tp_article_idtheme">', $txt['tp-chosentheme'], '</label><br>
 						</dt>
@@ -776,7 +776,7 @@ function template_showarticle()
 				foreach($context['TPortal']['myarticles'] as $art) {
 					echo '
 					<tr class="windowbg">
-					<td class="articles">
+					<td>
 						<div style="overflow: hidden; padding: 3px;">
 							<div style="float: right;">';
 					if($art['approved'] == 0) {
@@ -817,7 +817,7 @@ function template_showarticle()
 			else {
 				echo '
 					<tr class="windowbg">
-					<td class="articles">
+					<td>
 					'. $txt['tp-noarticlesfound'] .'
 					</td>
 					</tr>';

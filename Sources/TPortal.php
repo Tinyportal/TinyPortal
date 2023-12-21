@@ -211,7 +211,6 @@ function tpLoadCSS() {{{
 				.block_leftcontainer,
 				.block_rightcontainer,
 				.block_topcontainer,
-				.block_uppercontainer,
 				.block_centercontainer,
 				.block_frontcontainer,
 				.block_lowercontainer,
@@ -1848,7 +1847,7 @@ function TPortal_panel($side) {{{
 			    $wh = 25;
                 break;
         }
-		echo '<div style="width:100%;"><div class="panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;">';
+		echo '<div style="width:100%;"><div class="tp_panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;">';
 	}
 	$flowmain = 0;
 	$flowsub = 0;
@@ -1975,7 +1974,7 @@ function TPortal_panel($side) {{{
 			if($i == ($flowcount-1)) {
 				$pad=0;
             }
-			echo '<div class="panelsColumnsHorizontally tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
+			echo '<div class="tp_panelsColHoriz tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 			echo '</div></div>';
 		}
@@ -2005,7 +2004,7 @@ function TPortal_panel($side) {{{
                 elseif($flow == 'horiz4' && $flowmain == 3) {
                     $pad = 0;
                 }
-				echo '</div><div class="panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;">';
+				echo '</div><div class="tp_panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;">';
 			}
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 		}
@@ -2199,7 +2198,7 @@ function TP_blockgrid($block, $theme, $pos, $side, $last, $gridtype, $none = fal
 
 	// first, set the table, equal in all grids
 	if($pos == 0) {
-		echo '<div class="GridWrap">';
+		echo '<div class="tp_gridwrap">';
     }
 
 	// render if its not empty
@@ -2221,16 +2220,16 @@ function TP_blockgrids() {{{
 	global $context;
 
 	$context['TPortal']['grid'] = array();
-	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="grid1box1">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div class="grid1box2">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="grid1box3">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="grid1box4">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="tp_grid1box1">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div class="tp_grid1box2">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="tp_grid1box3">', 'after' => '</div>');
+	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="tp_grid1box4">', 'after' => '</div>');
 
-	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="grid2box1">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="grid2box2">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="grid2box3">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="grid2box4">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="grid2box5">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="tp_grid2box1">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="tp_grid2box2">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="tp_grid2box3">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="tp_grid2box4">', 'after' => '</div>');
+	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="tp_grid2box5">', 'after' => '</div>');
 
 }}}
 
