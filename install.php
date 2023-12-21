@@ -800,7 +800,7 @@ $delete_settings_array = array(
     'use_tpfrontpage',
     'use_tpgallery',
     'use_tpmainmenu',
-	'shoutbox_timeformat'
+	'shoutbox_timeformat',
 	'panelstyle_upper',
 );
 $deletes = 0;
