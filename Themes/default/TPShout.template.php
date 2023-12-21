@@ -77,10 +77,10 @@ function template_tpshout_admin()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxadmin'].'</h3></div>
-			<div id="tpshout_admin" class="admintable admin-area">
+			<div id="tpshout_admin" class="tp_admintable admin-area">
 				<div class="information smalltext">' , $txt['tp-shoutboxadmininfo'] , '</div>
 				<div class="windowbg noup">
-					<div class="formtable padding-div">
+					<div class="tp_formtable padding-div">
 						<div class="addborder">
 							<div style="width:47%;" class="float-items"><strong>'.$txt['tp-shoutboxitems'].'</strong></div>
 							<div class="smalltext float-items" style="width:47%;text-align:right">'.$context['TPortal']['shoutbox_pageindex'].'</div>
@@ -131,10 +131,10 @@ function template_tpshout_admin_settings()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-shoutboxsettings'].'</h3></div>
-			<div id="tpshout_admin_settings" class="admintable admin-area">
+			<div id="tpshout_admin_settings" class="tp_admintable admin-area">
 				<div class="information smalltext">' , $txt['tp-shoutboxsettingsinfo'] , '</div><div></div>
 				<div class="windowbg noup">
-					<div class="formtable padding-div">
+					<div class="tp_formtable padding-div">
 					<dl class="settings">
 						<dt>
 							<label for="field_name">'.$txt['tp-shoutbox_showsmile'].'</label>

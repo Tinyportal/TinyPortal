@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -471,8 +471,8 @@ function template_main() {
 			echo '<div class="padding-div" style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
 		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
-					<div class="formtable padding-div">
-						<dl class="settings tptitle">
+					<div class="tp_formtable padding-div">
+						<dl class="tp_title settings">
 							<dt>
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
@@ -823,7 +823,7 @@ function template_main() {
 				<div></div>
 				<div class="cat_bar"><h3 class="catbg">'.$txt['tp-useredit'].' : '.$cat['name'].' - <a href="'.$scripturl.'?action=tportal;sa=download;dl=item'.$cat['id'].'">['.$txt['tp-dlpreview'].']</a></h3></div>
 				<div class="windowbg noup padding-div">
-					<dl class="settings tptitle">
+					<dl class="tp_title settings">
 						<dt>
 							<label for="dladmin_name'.$cat['id'].'"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 						</dt>

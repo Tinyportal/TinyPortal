@@ -62,14 +62,14 @@ $topPoster = 8;
 
 	// Output our array of users with avatar, posts, and name
 	echo '
-	<ul class="recent_topics" style="margin: 0; padding: 0;">';
+	<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
 
 	$coun = 1;
 	foreach ($users as $user)
 	{
 		echo '
 		<li' , $coun<$topPoster ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>
-			<span class="tpavatar">',empty($user['avatar']['image']) ? '<a href="'.$user['href'].'"><img style="border-radius: 100%;" class="avatar" src="'.$settings['tp_images_url'].'/TPguest.png" style="'.$style.'" alt="" title="'.$user['name'].'" /></a>' : '<a href="'.$user['href'].'"><img style="'.$style.'" class="avatar" '.$user['avatar']['image'].'</a>';
+			<span class="tp_avatar">',empty($user['avatar']['image']) ? '<a href="'.$user['href'].'"><img style="border-radius: 100%;" class="avatar" src="'.$settings['tp_images_url'].'/TPguest.png" style="'.$style.'" alt="" title="'.$user['name'].'" /></a>' : '<a href="'.$user['href'].'"><img style="'.$style.'" class="avatar" '.$user['avatar']['image'].'</a>';
 		echo '
 			</span>
 			<strong>'.$user['link'].'</strong><br>
