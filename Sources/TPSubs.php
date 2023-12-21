@@ -170,7 +170,7 @@ function tp_getbuttons() {{{
 	// the admin functions - divider
 	if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox'))
 		$buts['divde1'] = array(
-			'title' => '<span class="tp_menu_horizontal21">&nbsp;</span>',
+			'title' => '<span class="tp_menu_horizontal">&nbsp;</span>',
 			'href' => '#button_tpadmin',
 			'show' => true,
 			'active_button' => false,
@@ -373,9 +373,9 @@ function TP_article_categories($use_sorted = false) {{{
 				'leftpanel' => '0',
 				'rightpanel' => '0',
 				'toppanel' => '0' ,
-				'bottompanel' => '0' ,
-				'upperpanel' => '0' ,
+				'centerpanel' => '0' ,
 				'lowerpanel' => '0',
+				'bottompanel' => '0' ,
 			);
 			$opts = explode('|' , $row['value7']);
 			foreach($opts as $op => $val)
@@ -404,7 +404,7 @@ function TP_article_categories($use_sorted = false) {{{
 					$options['toppanel'] = substr($val,9);
 				elseif(substr($val,0,12) == 'bottompanel=')
 					$options['bottompanel'] = substr($val,12);
-				elseif(substr($val,0,11) == 'upperpanel=')
+				elseif(substr($val,0,11) == 'centerpanel=')
 					$options['centerpanel'] = substr($val,11);
 				elseif(substr($val,0,11) == 'lowerpanel=')
 					$options['lowerpanel'] = substr($val,11);
@@ -438,7 +438,7 @@ function TP_article_categories($use_sorted = false) {{{
 						'rightpanel' => $options['rightpanel'],
 						'toppanel' => $options['toppanel'],
 						'bottompanel' => $options['bottompanel'],
-						'upperpanel' => $options['upperpanel'],
+						'centerpanel' => $options['centerpanel'],
 						'lowerpanel' => $options['lowerpanel'],
 					),
 				);
@@ -932,8 +932,8 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use =
 			<h3 class="titlebg">', $txt['tp-quicklist'], '</h3>
 		</div>
 		<div class="windowbg2 smalltext tp_pad">', $txt['tp-quicklist2'], '</div>
-		<div class="windowbg tpquicklist">
-			<div class="tpthumb">';
+		<div class="windowbg tp_quicklist">
+			<div class="tp_thumb">';
 
 		if(isset($imgs)) {
 			foreach($imgs as $im) {
@@ -1427,7 +1427,7 @@ function tp_renderarticle($intro = '')
     }
 
 	$data .= '
-	<div class="article_inner">';
+	<div class="tp_article_inner">';
 	// use intro!
 	if(($context['TPortal']['article']['useintro'] == '1' && !$context['TPortal']['single_article']) || !empty($intro)) {
 		if($context['TPortal']['article']['rendertype'] == 'php') {
@@ -1496,7 +1496,7 @@ function tp_renderarticle($intro = '')
 			$data .= $post;
 		}
 	}
-	$data .= '</div> <!-- article_inner -->';
+	$data .= '</div> <!-- tp_article_inner -->';
 	return $data;
 }
 
@@ -1510,7 +1510,7 @@ function tp_renderblockarticle()
 		return;
 
 	echo '
-	<div class="article_inner">';
+	<div class="tp_article_inner">';
 	if($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'php')
 		eval($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['body']);
 	elseif($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'import')
@@ -1696,10 +1696,10 @@ function TPparseRSS($override = '', $encoding = 0)
 					if($numShown++ >= $context['TPortal']['rssmaxshown'])
 						break;
 
-					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
+					printf("<div class=\"tp_rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
 					if(!$context['TPortal']['rss_notitles'])
-						printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", $v->pubDate, $v->description);
+						printf("<div class=\"tp_rss_date\">%s</div><div class=\"tp_rss_body\">%s</div>", $v->pubDate, $v->description);
 				}
 				break;
 			case 'feed':
@@ -1707,10 +1707,10 @@ function TPparseRSS($override = '', $encoding = 0)
 					if($numShown++ >= $context['TPortal']['rssmaxshown'])
 						break;
 
-					printf("<div class=\"rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link['href']), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
+					printf("<div class=\"tp_rss_title%s\"><a target='_blank' href='%s'>%s</a></div>", $context['TPortal']['rss_notitles'] ? '_normal' : '', trim($v->link['href']), $smcFunc['htmlspecialchars'](trim($v->title), ENT_QUOTES));
 
 					if(!$context['TPortal']['rss_notitles'])
-						printf("<div class=\"rss_date\">%s</div><div class=\"rss_body\">%s</div>", isset($v->issued) ? $v->issued : $v->published, $v->summary);
+						printf("<div class=\"tp_rss_date\">%s</div><div class=\"tp_rss_body\">%s</div>", isset($v->issued) ? $v->issued : $v->published, $v->summary);
 				}
 				break;
 		}

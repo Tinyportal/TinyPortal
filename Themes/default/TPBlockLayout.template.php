@@ -91,13 +91,8 @@ function template_tp_above()
 	//	Tiny Portal centre panel - not floated.
 	//	The important div for nailing width < 900px!
 	echo '
-			<div id="centerContainer">
+			<div id="tpcenterContainer">
 				<div id="tpcontentHeader">';
-
-	//	This is where the pesky "upper panel" lives.
-	//	Note: inconsistent naming is a minor faux pas.
-	//	Really it would make sense to rename things here,
-	//	to match the name as given in admin: upper panel.
 
 	if($context['TPortal']['centerpanel']==1) {
 		echo '
@@ -154,10 +149,10 @@ function template_editblock()
 		<input type="hidden" name="tpadmin_form" value="blockedit">
 		<input type="hidden" name="tpadmin_form_id" value="' . $context['TPortal']['blockedit']['id'] . '">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-editblock'] . '</h3></div>
-		<div id="editblock" class="admintable admin-area">
+		<div id="editblock" class="tp_admintable admin-area">
 			<div class="windowbg noup padding-div">
-				<div class="formtable">
-					<dl class="tptitle settings">
+				<div class="tp_formtable">
+					<dl class="tp_title settings">
 						<dt>
 							<b><label for="tp_block_off">', $txt['tp-status'], '<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></label></b>
 						</dt>
@@ -166,7 +161,7 @@ function template_editblock()
 							<input type="radio" value="1" name="tp_block_off"',$context['TPortal']['blockedit']['off']==1 ? ' checked="checked"' : '' ,' />'.$txt['tp-off'].'
 						</dd>
 					</dl>
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="tp_block_title"><b>'.$txt['tp-title'].'</b></label></dt>
 						<dd>
 							<input type="text" id="tp_block_title" name="tp_block_title" value="' .$newtitle. '" size=60 required><br><br>
@@ -270,7 +265,7 @@ function template_editblock()
 				if(!is_numeric($context['TPortal']['blockedit']['body']))
 					$context['TPortal']['blockedit']['body']=10;
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>' . $txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
 							<input type="radio" id="tp_block_useavataryes" name="tp_block_set_useavatar" value="1" ' , !$context['TPortal']['blockedit']['useavatar']== '0' ? ' checked' : '' ,' required><label for="tp_block_useavataryes">'.$txt['tp-yes'].'</label>
@@ -315,7 +310,7 @@ function template_editblock()
 					$context['TPortal']['blockedit']['body']='';
 						echo '
 						',$txt['tp-ssiblockdesc'],'<a href="'.$boardurl.'/ssi_examples.php" target="_blank">ssi_examples.php</a><br><br>
-						<dl class="tptitle settings">
+						<dl class="tp_title settings">
 						<dt>'.$txt['tp-showssibox'].'</dt>
 						<dd>
 						<div class="tp_largelist">
@@ -350,7 +345,7 @@ function template_editblock()
 			elseif($context['TPortal']['blockedit']['type']=='8'){
                 if(isset($context['TPortal']['tpblocks']['blockrender'])) {
 					echo '
-						<dl class="tptitle settings">
+						<dl class="tp_title settings">
 						<input type="hidden" name="tp_block_body" value="1">
 						<dt>
 							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>
@@ -410,7 +405,7 @@ function template_editblock()
 			elseif($context['TPortal']['blockedit']['type']=='14'){
 				// Module block...choose module and module ID , check if module is active
 						echo '
-						<dl class="tptitle settings">
+						<dl class="tp_title settings">
 						<dt><label for="fieldname">'.$txt['tp-showstatsbox'].'</label></dt>
 						<dd>
 							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body']=='' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' .$txt['tp-none-']. '</label><br>
@@ -429,7 +424,7 @@ function template_editblock()
 // Block type: Stats
 			elseif($context['TPortal']['blockedit']['type']=='3'){
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="fieldname">'.$txt['tp-showuserbox'].'</label></dt>';
 				if(isset($context['TPortal']['userbox']['avatar']) && $context['TPortal']['userbox']['avatar'])
 					echo '<input type="hidden" name="tp_userbox_options0" value="avatar">';
@@ -449,7 +444,7 @@ function template_editblock()
 // Block type: User
 			elseif($context['TPortal']['blockedit']['type']=='1'){
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="fieldname">'. $txt['tp-showuserbox2'].'</label></dt>
 						<dd>
 							<input type="checkbox" id="tp_userbox_options0" name="tp_userbox_options0" value="avatar" ', (isset($context['TPortal']['userbox']['avatar']) && $context['TPortal']['userbox']['avatar']) ? 'checked' : '' , '><label for="tp_userbox_options0"> '.$txt['tp-userbox1'].'</label><br>
@@ -468,7 +463,7 @@ function template_editblock()
 // Block type: RSS
 			elseif($context['TPortal']['blockedit']['type']=='15'){
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="tp_block_body">' .	$txt['tp-rssblock'] . '</label></dt>
 						<dd>
 							<input name="tp_block_body" id="tp_block_body" value="' .$context['TPortal']['blockedit']['body']. '" style="width: 95%" required>
@@ -496,7 +491,7 @@ function template_editblock()
 // Block type: Sitemap
 			elseif($context['TPortal']['blockedit']['type']=='16'){
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>' . $txt['tp-sitemapdesc'] . '</dt>
 						<dd></dd>'; 
 				if($context['TPortal']['show_download']=='1') {
@@ -513,7 +508,7 @@ function template_editblock()
 				if(!is_numeric($context['TPortal']['blockedit']['body']))
 					$lblock['body']='';
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="fieldname">',$txt['tp-showarticle'],'</label></dt>
 						<dd>
 							<select name="tp_block_body">
@@ -528,7 +523,7 @@ function template_editblock()
 // Block type: Themes
 			elseif($context['TPortal']['blockedit']['type']=='7') {
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>'.$txt['tp-themesavail'].'</dt>
 						<dd>';
 				// get the ids
@@ -548,7 +543,7 @@ function template_editblock()
 				foreach($context['TPthemes'] as $tema)
 				{
 					echo '
-						<img class="theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input type="checkbox" id="tp_theme'.$tema['id'].'" name="tp_theme'.$tema['id'].'" value="'.$tema['name'].'"';
+						<img class="tp_theme_icon" alt="*" src="'.$tema['path'].'/thumbnail.png" /> <input type="checkbox" id="tp_theme'.$tema['id'].'" name="tp_theme'.$tema['id'].'" value="'.$tema['name'].'"';
 					if(in_array($tema['id'],$myt))
 						echo ' checked';
 					echo '><label for="tp_theme'.$tema['id'].'">'.$tema['name'].'</label><input type="hidden" value="'.$tema['path'].'" name="tp_path'.$tema['id'].'"><br>';
@@ -566,7 +561,7 @@ function template_editblock()
 				if(!is_numeric($context['TPortal']['blockedit']['body']))
 					$lblock['body']='';
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="tp_block_body">'.$txt['tp-showcategory'].'</label></dt>
 						<dd>
 							<select name="tp_block_body" id="tp_block_body" required>
@@ -594,7 +589,7 @@ function template_editblock()
 				if(!is_numeric($context['TPortal']['blockedit']['body']))
 					$lblock['body']='0';
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt><label for="fieldname">',$txt['tp-showmenus'],'</label></dt>
 						<dd>
 							<select name="tp_block_body">';
@@ -616,7 +611,7 @@ function template_editblock()
 // Block type: Online
 			elseif($context['TPortal']['blockedit']['type']=='6') {
 				echo '
-					<dl class="tptitle settings">
+					<dl class="tp_title settings">
 						<dt>'.$txt['tp-rssblock-showavatar'].'</dt>
 						<dd>
 							<input type="radio" id="tp_block_useavataryes" name="tp_block_set_useavatar" value="1" ' , !$context['TPortal']['blockedit']['useavatar']=='0' ? ' checked' : '' ,' required><label for="tp_block_useavataryes">'.$txt['tp-yes'].'</label> <input type="radio" id="tp_block_useavatarno" name="tp_block_set_useavatar" value="0" ' , $context['TPortal']['blockedit']['useavatar']=='0' ? ' checked' : '' ,'><label for="tp_block_useavatarno">'.$txt['tp-no'].'</label>
@@ -647,12 +642,12 @@ function template_editblock()
 					</div>
 					<br><input type="radio" id="tp_block_panelstyle" name="tp_block_set_panelstyle" value="99" ' , $context['TPortal']['blockedit']['panelstyle']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panelstyle']=='99' ? ' style="color: red;">' : '><label for="tp_block_panelstyle">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
-				<div class="panels-optionsbg">';
+				<div class="tp_panels-optionsbg">';
 			$types = tp_getblockstyles21();
 
 			foreach($types as $blo => $bl) {
 				echo '
-					<div class="panels-options">
+					<div class="tp_panels-options">
 						<div>
 							<input type="radio" id="tp_block_panelstyle'.$blo.'" name="tp_block_set_panelstyle" value="'.$blo.'" ' , $context['TPortal']['blockedit']['panelstyle']==$blo ? 'checked' : '' , '><label for="tp_block_panelstyle'.$blo.'"><span' , $context['TPortal']['blockedit']['panelstyle']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
 						</div>
@@ -743,7 +738,7 @@ function template_editblock()
 		if($context['TPortal']['blockedit']['bar']!=4) {
 			// extended visible options
 				echo '
-					<div class="admintable">
+					<div class="tp_admintable">
 						<div>'.$txt['tp-displayhelp'].'</div>
 						<div id="collapse-options">
 						', tp_hidepanel('blockopts', true) , '

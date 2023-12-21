@@ -74,7 +74,7 @@ function template_tp_articles()
 	<table class="table_grid tp_grid">
 		<thead>
 			<tr class="title_bar titlebg2">
-			<th scope="col" class="articles">
+			<th scope="col">
 			<div class="font-strong" style="padding:0px;">
 				<div class="float-items pos tpleft" style="width:25%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
 				<div class="float-items title-admin-area tpleft" style="width:24%;">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
@@ -92,7 +92,7 @@ function template_tp_articles()
 			foreach($context['TPortal']['profile_articles'] as $art){
 				echo '
 			<tr class="windowbg">
-			<td class="articles">
+			<td>
 				<div class="float-items fullwidth-on-res-layout" style="width:25%;">', $art['off']==1 ? '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="'. $txt['tp-noton'] .'" alt="*" />&nbsp; ' : '' , '', $art['approved']==0 ? '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt['tp-notapproved'] .'" alt="*" />&nbsp; ' : '' , '';
 		if(($art['approved']==0) || ($art['off']==1)) {
 				echo '
