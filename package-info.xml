@@ -71,4 +71,69 @@
 		<remove-file name="$languagedir/TPortalAdmin.english.php" />
 		<code>do_hooks.php</code>
 	</uninstall>
+	<install for="3.0.* - 3.0.99">
+		<redirect url="">Installed!</redirect>
+		<require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="TinyPortal" destination="$boarddir" />
+		<require-dir name="tp-files" destination="$boarddir" />
+		<require-dir name="tp-downloads" destination="$boarddir" />
+		<require-dir name="tp-images" destination="$boarddir" />
+		<readme parsebbc="true">readme_install3.txt</readme>
+		<database>install.php</database>
+		<code>do_hooks.php</code>
+	</install>
+	<upgrade from="all" for="3.0.* - 3.0.99">
+		<redirect url="">Upgraded!</redirect>
+		<require-dir name="Themes" destination="$boarddir" />
+		<require-dir name="Sources" destination="$boarddir" />
+		<require-dir name="TinyPortal" destination="$boarddir" />
+		<require-dir name="tp-files" destination="$boarddir" />
+		<require-dir name="tp-downloads" destination="$boarddir" />
+		<require-dir name="tp-images" destination="$boarddir" />
+		<readme parsebbc="true">readme_upgrade21.txt</readme>
+		<database>install.php</database>
+	</upgrade>
+	<uninstall for="3.0.* - 3.0.99">
+		<readme parsebbc="true">readme_uninstall.txt</readme>
+		<remove-dir name="$themedir/images/tinyportal" />
+		<remove-dir name="$boarddir/TinyPortal" />
+		<remove-dir name="$themedir/scripts/tinyportal" />
+		<remove-file name="$sourcedir/TPSSI.php" />
+		<remove-file name="$sourcedir/TPBlock.php" />
+		<remove-file name="$sourcedir/TPCompat.php" />
+		<remove-file name="$sourcedir/TPcommon.php" />
+		<remove-file name="$sourcedir/TPdlmanager.php" />
+		<remove-file name="$sourcedir/TPhelp.php" />
+		<remove-file name="$sourcedir/TPortal.php" />
+		<remove-file name="$sourcedir/TPortalAdmin.php" />
+		<remove-file name="$sourcedir/TPArticle.php" />
+		<remove-file name="$sourcedir/TPSearch.php" />
+		<remove-file name="$sourcedir/TPShout.php" />
+		<remove-file name="$sourcedir/TPSubs.php" />
+		<remove-file name="$themedir/TParticle.template.php" />
+		<remove-file name="$themedir/TPBlockLayout.template.php" />
+		<remove-file name="$themedir/TPdladmin.template.php" />
+		<remove-file name="$themedir/TPdlmanager.template.php" />
+		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPortal.template.php" />
+		<remove-file name="$themedir/TPortalAdmin.template.php" />
+		<remove-file name="$themedir/TPprint.template.php" />
+		<remove-file name="$themedir/TPprofile.template.php" />
+		<remove-file name="$themedir/TPSearch.template.php" />
+		<remove-file name="$themedir/TPShout.template.php" />
+		<remove-file name="$themedir/TPsubs.template.php" />
+		<remove-file name="$themedir/TPwireless.template.php" />
+		<remove-file name="$themedir/css/tp-shout.css" />
+		<remove-file name="$themedir/css/tp-style.css" />
+		<remove-file name="$themedir/css/tp-colors.css" />
+		<remove-file name="$languagedir/TParticle.english.php" />
+		<remove-file name="$languagedir/TPdlmanager.english.php" />
+		<remove-file name="$languagedir/TPhelp.english.php" />
+		<remove-file name="$languagedir/TPListImages.english.php" />
+		<remove-file name="$languagedir/TPmodules.english.php" />
+		<remove-file name="$languagedir/TPortal.english.php" />
+		<remove-file name="$languagedir/TPortalAdmin.english.php" />
+		<code>do_hooks.php</code>
+	</uninstall>
 </package-info>

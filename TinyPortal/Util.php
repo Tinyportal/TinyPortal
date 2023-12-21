@@ -67,6 +67,10 @@ class Util
             return;
         }
 
+        if(is_null($data)) {
+			return;
+        }
+
         array_walk($data, function (&$value, $key) use ($dB) {
                 $value = $dB->db_quote('{string:value}', array( 'value' => $value));
             }

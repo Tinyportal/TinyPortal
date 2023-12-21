@@ -133,7 +133,16 @@ function TPShoutPost( ) {{{
 	if(!empty($_POST['tp_shout']) && !empty($_POST['tp-shout-name'])) {
 		// Check the session id.
 		checkSession('post');
-		require_once($sourcedir . '/Subs-Post.php');
+		
+		if(TP_SMF21) {
+			require_once($sourcedir . '/Subs-Post.php');
+		}
+		else {
+			// We don't require it until we load now so need to load seperately...
+			require_once($sourcedir.'/TPortal.php');
+			TPortal_init();
+		}
+
 		$shout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, $context['TPortal']['shoutbox_maxlength']));
 		preparsecode($shout);
 
@@ -858,7 +867,14 @@ function TPShoutAdmin() {{{
 		$tpstart = 0;
     }
 
-	require_once($sourcedir . '/Subs-Post.php');
+	if(TP_SMF21) {
+		require_once($sourcedir . '/Subs-Post.php');
+	}
+	else {
+		// We don't require it until we load now so need to load seperately...
+		require_once($sourcedir.'/TPortal.php');
+		TPortal_init();
+	}
 	loadtemplate('TPShout');
 
 	$context['template_layers'][] = 'tpadm';

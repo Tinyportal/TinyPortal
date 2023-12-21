@@ -246,7 +246,7 @@ $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval
 
 // Icons
 $txt['tp-adminicons7'] = 'Article icons';
-$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, max-size: ' .$context['TPortal']['icon_max_size']. ' KB. Images will be resized so the shortest side is ' .$context['TPortal']['icon_width']. ' px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
+$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, max-size: %d KB. Images will be resized so the shortest side is %d px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category
