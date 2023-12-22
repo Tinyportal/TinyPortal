@@ -2145,8 +2145,11 @@ function tpSetupUpshrinks() {{{
 
 	if($context['TPortal']['showcollapse'] == 1) {
 		foreach($panels as $pa => $pan) {
-			// Add to the panel
-			$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', '', strtolower($pan).'-tp-upshrink_description');
+			$side = strtolower($pan);
+			if($context['TPortal'][$side.'panel'] == 1) {
+				// add to the upshrinkpanel
+				$context['TPortal']['upshrinkpanel'] .= tp_hidepanel2('tp' . strtolower($pan) . 'barHeader', '', strtolower($pan).'-tp-upshrink_description');
+			}
 		}
 	}
 
