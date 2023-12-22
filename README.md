@@ -1,6 +1,6 @@
 [TinyPortal](https://www.tinyportal.net/) - Portal Mod for SMF
 ==================================================
-![](https://www.tinyportal.net/Themes/alphacentauri203/images/theme/logo_light.png)
+![](https://www.tinyportal.net//Themes/tinyportal-theme/images/logo_light.png)
 
 [![Latest Version](https://img.shields.io/github/release/TinyPortal/TinyPortal.svg)](https://github.com/TinyPortal/TinyPortal/releases)
 [![Total Downloads](https://img.shields.io/github/downloads/TinyPortal/TinyPortal/total.svg)](https://github.com/TinyPortal/TinyPortal/releases)
@@ -31,14 +31,13 @@ Please click on the appropriate release to see the [Changelog](https://github.co
 
 ## What you need to install TinyPortal
 1. In order to install TinyPortal, you need to have a working version of Simple Machines Forum. 
-SMF version must be SMF2.x.
+SMF version must be SMF2.x. or SMF3.0. Note that SMF3.0 is under development, we cannot guarantee stable support for 3.0 untill a Final version is released.
 2. Zip files are provided for install both on the 
 [Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the [TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61) (the archive with old version packages is available in the download section).
 
-Note: You must uninstall any previous version of TinyPortal before you can install TinyPortal for SMF2.x. Make a backup of all your SMF and TP files before you uninstall.
+Note: It is recommended to uninstall any previous version of TinyPortal before you install TinyPortal. Make a backup of all your SMF and TinyPortal files before you uninstall.
 
-**NOTICE!: Due to a bug in SMF 2.1.3 upgrading TinyPortal may result in one of these error messages: "All parts of a PRIMARY KEY must be NOT NULL; if you need NULL in a key, use UNIQUE instead" or "Database error: Invalid default value for 'item_type'".** 
-**If you encounter these errors while on SMF 2.1.3 you will need to install the [correction MOD that can be downloaded from the TinyPortal.net support site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=item177). After applying this MOD you will be able to re-install TinyPortal on SMF 2.1.3. Please note that the correction MOD should be uninstalled prior to patching SMF to version 2.1.4.**
+SMF2.x is supported by TinyPortal only up to TinyPortal version 2.3.1. Support for SMF2.x has been dropped starting TinyPortal version 3.0.0.
 
 ## License Information:
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License");

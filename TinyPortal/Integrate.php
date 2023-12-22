@@ -213,7 +213,7 @@ class Integrate
 
         // add upshrink buttons
         if( array_key_exists('TPortal', $context) && !empty($context['TPortal']['upshrinkpanel']) ) {
-            $buffer = preg_replace('~<div class="navigate_section">\s*<ul>~', '<div class="navigate_section"><ul><li class="tp_upshrink21">'.$context['TPortal']['upshrinkpanel'].'</li>', $buffer, 1);
+            $buffer = preg_replace('~<div class="navigate_section">\s*<ul>~', '<div class="navigate_section"><ul><li class="tp_upshrink">'.$context['TPortal']['upshrinkpanel'].'</li>', $buffer, 1);
         }
 
         // apply user membergroup colors ony when set in TP settings.

@@ -895,7 +895,7 @@ input#searchbox {
 input,select {
 	max-width:100%!important;
 }
-.tp_upshrink21, .navigate_section .tp_upshrink21 {
+.tp_upshrink, .navigate_section .tp_upshrink {
 	float: right;
 	padding: 0 0 .1em .2em;
 	margin-top: .5em;
