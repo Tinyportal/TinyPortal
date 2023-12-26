@@ -2,10 +2,10 @@
 /**
  * Handles all TPBase operations
  *
- * @name      	TinyPortal
- * @package 	TPBase
- * @copyright 	TinyPortal
- * @license   	MPL 1.1
+ * @name        TinyPortal
+ * @package     TPBase
+ * @copyright   TinyPortal
+ * @license     MPL 1.1
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
@@ -17,26 +17,26 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 define('ARTICLE_COMMENT', 1);
 
 class Base
 {
-	protected $dB = null;
+    protected $dB = null;
     protected $modSettings = null;
 
-	function __construct() {{{
+    function __construct() {{{
         global $modSettings;
 
-		if(is_null($this->dB)) {
-			$this->dB = Database::getInstance();
-		}
+        if(is_null($this->dB)) {
+            $this->dB = Database::getInstance();
+        }
 
         $this->modSettings = $modSettings;
 
-	}}}
+    }}}
 
     protected function getComments($type, $user_id, $item_id) {{{
 
@@ -184,14 +184,14 @@ class Base
     protected function deleteComment($id, $type) {{{
 
         $this->dB->db_query('', '
-			DELETE FROM {db_prefix}tp_comments
-			WHERE id = {int:id}
+            DELETE FROM {db_prefix}tp_comments
+            WHERE id = {int:id}
             AND item_type = {string:type}',
-			array(
-				'id'    => $id,
+            array(
+                'id'    => $id,
                 'type'  => $type
-			)
-		);
+            )
+        );
 
     }}}
 

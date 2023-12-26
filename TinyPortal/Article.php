@@ -17,7 +17,7 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 class Article extends Base
@@ -28,11 +28,11 @@ class Article extends Base
 
     public static function getInstance() {{{
 
-    	if(self::$_instance == null) {
-			self::$_instance = new self();
-		}
+        if(self::$_instance == null) {
+            self::$_instance = new self();
+        }
 
-    	return self::$_instance;
+        return self::$_instance;
 
     }}}
 
@@ -203,8 +203,8 @@ class Article extends Base
 
         $comment_id = 0;
 
-		// check if the article indeed exists
-		$request =  $this->dB->db_query('', '
+        // check if the article indeed exists
+        $request =  $this->dB->db_query('', '
             SELECT comments FROM {db_prefix}tp_articles
             WHERE id = {int:artid}',
             array (
@@ -212,9 +212,9 @@ class Article extends Base
             )
         );
 
-		if($this->dB->db_num_rows($request) > 0) {
-			$num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
-			$this->dB->db_free_result($request);
+        if($this->dB->db_num_rows($request) > 0) {
+            $num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
+            $this->dB->db_free_result($request);
             $comment_id = parent::insertComment('1', $user_id, $item_id, $comment, $title);
 
             $num_comments++;
@@ -235,8 +235,8 @@ class Article extends Base
 
     public function deleteArticleComment($comment_id) {{{
 
-		// check if the article indeed exists
-		$request =  $this->dB->db_query('', '
+        // check if the article indeed exists
+        $request =  $this->dB->db_query('', '
             SELECT item_id FROM {db_prefix}tp_comments
             WHERE id = {int:artid}',
             array (
@@ -244,9 +244,9 @@ class Article extends Base
             )
         );
 
-		if($this->dB->db_num_rows($request) > 0) {
-			$article_id = $this->dB->db_fetch_assoc($request)['item_id'];
-			$this->dB->db_free_result($request);
+        if($this->dB->db_num_rows($request) > 0) {
+            $article_id = $this->dB->db_fetch_assoc($request)['item_id'];
+            $this->dB->db_free_result($request);
             // check if the article indeed exists
             $request =  $this->dB->db_query('', '
                 SELECT comments FROM {db_prefix}tp_articles
@@ -257,8 +257,8 @@ class Article extends Base
             );
 
             if($this->dB->db_num_rows($request) > 0) {
-			    $num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
-			    $this->dB->db_free_result($request);
+                $num_comments   = $this->dB->db_fetch_assoc($request)['comments'];
+                $this->dB->db_free_result($request);
 
                 $num_comments--;
                 // count and decrease the number of comments
@@ -313,23 +313,23 @@ class Article extends Base
 
         // We can only toggle certain fields so check that the column is in the list
         if(in_array($column, array('off', 'locked', 'sticky', 'frontpage', 'featured'))) {
-			if($article_id > 0) {
-				$this->dB->db_query('', '
-						UPDATE {db_prefix}tp_articles
-						SET {raw:column} =
-						(
-						 	SELECT CASE WHEN tpa.{raw:column} = 1 THEN 0 ELSE 1 END
-						 	FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
-							WHERE tpa.id = {int:id}
-						 	LIMIT 1
-						)
-						WHERE id = {int:id}',
-					array (
-						'id' 		=> $article_id,
-						'column' 	=> $column
-					)
-				);
-			}
+            if($article_id > 0) {
+                $this->dB->db_query('', '
+                        UPDATE {db_prefix}tp_articles
+                        SET {raw:column} =
+                        (
+                            SELECT CASE WHEN tpa.{raw:column} = 1 THEN 0 ELSE 1 END
+                            FROM ( SELECT * FROM {db_prefix}tp_articles ) AS tpa
+                            WHERE tpa.id = {int:id}
+                            LIMIT 1
+                        )
+                        WHERE id = {int:id}',
+                    array (
+                        'id'        => $article_id,
+                        'column'    => $column
+                    )
+                );
+            }
         }
 
 
@@ -368,21 +368,21 @@ class Article extends Base
         $num_articles   = 0;
         $now            = time();
 
-		$request =  $this->dB->db_query('', '
-			SELECT COUNT(art.id) AS num_articles
-			FROM {db_prefix}tp_articles AS art
+        $request =  $this->dB->db_query('', '
+            SELECT COUNT(art.id) AS num_articles
+            FROM {db_prefix}tp_articles AS art
             INNER JOIN  {db_prefix}tp_variables AS var
-			ON var.id = art.category
-			WHERE art.off = 0
-			' . $group . '
-			AND art.category > 0
-			AND ((art.pub_start = 0 AND art.pub_end = 0)
-			OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
-			OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
-			OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
-			AND art. approved = 1
-			AND art.frontpage = 1'
-		);
+            ON var.id = art.category
+            WHERE art.off = 0
+            ' . $group . '
+            AND art.category > 0
+            AND ((art.pub_start = 0 AND art.pub_end = 0)
+            OR (art.pub_start != 0 AND art.pub_start < '.$now.' AND art.pub_end = 0)
+            OR (art.pub_start = 0 AND art.pub_end != 0 AND art.pub_end > '.$now.')
+            OR (art.pub_start != 0 AND art.pub_end != 0 AND art.pub_end > '.$now.' AND art.pub_start < '.$now.'))
+            AND art. approved = 1
+            AND art.frontpage = 1'
+        );
 
         if($this->dB->db_num_rows($request) > 0) {
             $num_articles = $this->dB->db_fetch_assoc($request)['num_articles'];
@@ -440,32 +440,32 @@ class Article extends Base
 
     }}}
 
-	public function getForumPosts( $post_ids ) {{{
-		global $context, $memberContext, $txt, $scripturl;
+    public function getForumPosts( $post_ids ) {{{
+        global $context, $memberContext, $txt, $scripturl;
 
-		$forumPosts = $posts = array();
-		// ok we got the post ids now, fetch each one, forum first
-		if(count($post_ids) > 0) {
-			$forumPosts = ssi_fetchPosts($post_ids, true, 'array');
-		}
+        $forumPosts = $posts = array();
+        // ok we got the post ids now, fetch each one, forum first
+        if(count($post_ids) > 0) {
+            $forumPosts = ssi_fetchPosts($post_ids, true, 'array');
+        }
 
-		// insert the forumposts into $posts
-		if(is_array($forumPosts) && count($forumPosts) > 0) {
-			// Needed for html_to_bbc
-			require_once(SOURCEDIR . '/Subs-Editor.php');
+        // insert the forumposts into $posts
+        if(is_array($forumPosts) && count($forumPosts) > 0) {
+            // Needed for html_to_bbc
+            require_once(SOURCEDIR . '/Subs-Editor.php');
 
-			$length = $context['TPortal']['frontpage_limit_len'];
-			foreach($forumPosts as $k => $row) {
-				$row['date']            = $row['timestamp'];
-				$row['real_name']       = $row['poster']['name'];
-				$row['author_id']       = $row['poster']['id'];
-				$row['category']        = $row['board']['name'];
-				$row['date_registered'] = 0;
-				$row['id']              = $row['topic'];
-				$row['category_name']   = $row['board']['name'];
-				$row['category']        = $row['board']['id'];
+            $length = $context['TPortal']['frontpage_limit_len'];
+            foreach($forumPosts as $k => $row) {
+                $row['date']            = $row['timestamp'];
+                $row['real_name']       = $row['poster']['name'];
+                $row['author_id']       = $row['poster']['id'];
+                $row['category']        = $row['board']['name'];
+                $row['date_registered'] = 0;
+                $row['id']              = $row['topic'];
+                $row['category_name']   = $row['board']['name'];
+                $row['category']        = $row['board']['id'];
 
-				$request =  $this->dB->db_query('', '
+                $request =  $this->dB->db_query('', '
                     SELECT t.num_views AS views, t.num_replies AS replies, t.locked, COALESCE(thumb.id_attach, 0) AS thumb_id, thumb.filename AS thumb_filename
                     FROM {db_prefix}topics AS t
                     LEFT JOIN {db_prefix}attachments AS thumb
@@ -476,58 +476,58 @@ class Article extends Base
                     )
                 );
 
-				$data                   = $this->dB->db_fetch_assoc($request);
-				$row['views']           = isset($data['views']) ? $data['views'] : 0;
-				$row['replies']         = isset($data['replies']) ? $data['replies'] : 0;
-				$row['locked']          = isset($data['locked']) ? $data['locked'] : 0;
-				$row['thumb_id']        = isset($data['thumb_id']) ? $data['thumb_id'] : 0;
-				$row['thumb_filename']  = isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
-				$this->dB->db_free_result($request);
+                $data                   = $this->dB->db_fetch_assoc($request);
+                $row['views']           = isset($data['views']) ? $data['views'] : 0;
+                $row['replies']         = isset($data['replies']) ? $data['replies'] : 0;
+                $row['locked']          = isset($data['locked']) ? $data['locked'] : 0;
+                $row['thumb_id']        = isset($data['thumb_id']) ? $data['thumb_id'] : 0;
+                $row['thumb_filename']  = isset($data['thumb_filename']) ? $data['thumb_filename'] : 0;
+                $this->dB->db_free_result($request);
 
                 $row['parsed_bbc']      = true;
 
-				// Load their context data.
-				if(is_null($memberContext) || !array_key_exists($row['author_id'], $memberContext)) {
-					loadMemberData($row['author_id']);
-					loadMemberContext($row['author_id']);
-				}
+                // Load their context data.
+                if(is_null($memberContext) || !array_key_exists($row['author_id'], $memberContext)) {
+                    loadMemberData($row['author_id']);
+                    loadMemberContext($row['author_id']);
+                }
 
-				// Store this member's information.
-				if(!is_null($memberContext) && array_key_exists($row['author_id'], $memberContext)) {
-					$avatar         = $memberContext[$row['author_id']];
-					$row['avatar']  = $avatar['avatar']['image'];
-				}
-				else {
-					$row['avatar']  = '';
-				}
+                // Store this member's information.
+                if(!is_null($memberContext) && array_key_exists($row['author_id'], $memberContext)) {
+                    $avatar         = $memberContext[$row['author_id']];
+                    $row['avatar']  = $avatar['avatar']['image'];
+                }
+                else {
+                    $row['avatar']  = '';
+                }
 
-				if(Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
-					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
-				}
+                if(Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
+                    $row['readmore'] = '... <p class="tp_readmore"><strong><a href="'. $scripturl. '?topic='. $row['id']. '">'. $txt['tp-readmore']. '</a></strong></p>';
+                }
 
-				// some needed addons
-				$row['rendertype'] = 'bbc';
-				$row['frame'] = 'theme';
-				$row['boardnews'] = 1;
+                // some needed addons
+                $row['rendertype'] = 'bbc';
+                $row['frame'] = 'theme';
+                $row['boardnews'] = 1;
 
-				if(!isset($context['TPortal']['frontpage_visopts'])) {
-					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
-				}
+                if(!isset($context['TPortal']['frontpage_visopts'])) {
+                    $context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
+                }
 
-				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
-				$row['useintro'] = '0';
+                $row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
+                $row['useintro'] = '0';
 
-				if(!empty($row['thumb_id'])) {
-					$row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
-				}
+                if(!empty($row['thumb_id'])) {
+                    $row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
+                }
 
-				$posts[$row['timestamp'].'0' . sprintf("%06s", $row['id'])] = $row;
-			}
-		}
+                $posts[$row['timestamp'].'0' . sprintf("%06s", $row['id'])] = $row;
+            }
+        }
 
-		return $posts;
+        return $posts;
 
-	}}}
+    }}}
 
 }
 

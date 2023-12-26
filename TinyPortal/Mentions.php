@@ -17,7 +17,7 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 class Mentions extends Base {
@@ -26,11 +26,11 @@ class Mentions extends Base {
 
     public static function getInstance() {{{
 
-    	if(self::$_instance == null) {
-			self::$_instance = new self();
-		}
+        if(self::$_instance == null) {
+            self::$_instance = new self();
+        }
 
-    	return self::$_instance;
+        return self::$_instance;
 
     }}}
 

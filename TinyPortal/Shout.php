@@ -17,7 +17,7 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 class Shout extends Base {
@@ -27,11 +27,11 @@ class Shout extends Base {
 
     public static function getInstance() {{{
 
-    	if(self::$_instance == null) {
-			self::$_instance = new self();
-		}
+        if(self::$_instance == null) {
+            self::$_instance = new self();
+        }
 
-    	return self::$_instance;
+        return self::$_instance;
 
     }}}
 
