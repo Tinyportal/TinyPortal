@@ -2,10 +2,10 @@
 /**
  * Handles all TinyPortal Upload operations
  *
- * @name      	TinyPortal
- * @package 	Upload
- * @copyright 	TinyPortal
- * @license   	MPL 1.1
+ * @name        TinyPortal
+ * @package     Upload
+ * @copyright   TinyPortal
+ * @license     MPL 1.1
  *
  * This file contains code covered by:
  * author: tinoest - https://tinoest.co.uk
@@ -17,7 +17,7 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 class Upload
@@ -84,11 +84,11 @@ class Upload
 
     public static function getInstance() {{{
 
-    	if(self::$_instance == null) {
-			self::$_instance = new self();
-		}
+        if(self::$_instance == null) {
+            self::$_instance = new self();
+        }
 
-    	return self::$_instance;
+        return self::$_instance;
 
     }}}
 

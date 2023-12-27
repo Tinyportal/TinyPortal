@@ -23,41 +23,41 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 // Static method to call smcFunc calls which are not database related.
 class Util
 {
 
-	public static function __callStatic($call, $vars) {{{
-		global $smcFunc;
-		if(array_key_exists($call, $smcFunc)) {
-			// It's faster to call directly, failover to call_user_func_array
-			switch(count($vars)) {
-				case 1:
-					return $smcFunc[$call]($vars[0]);
-					break;
-				case 2:
-					return $smcFunc[$call]($vars[0], $vars[1]);
-					break;
-				case 3:
-					return $smcFunc[$call]($vars[0], $vars[1], $vars[2]);
-					break;
-				case 4:
-					return $smcFunc[$call]($vars[0], $vars[1], $vars[2], $vars[3]);
-					break;
-				case 5:
-					return $smcFunc[$call]($vars[0], $vars[1], $vars[2], $vars[3], $vars[4]);
-					break;
-				default:
-					return call_user_func_array($smcFunc[$call], $vars);
-					break;
-			}
-		}
-		return false;
+    public static function __callStatic($call, $vars) {{{
+        global $smcFunc;
+        if(array_key_exists($call, $smcFunc)) {
+            // It's faster to call directly, failover to call_user_func_array
+            switch(count($vars)) {
+                case 1:
+                    return $smcFunc[$call]($vars[0]);
+                    break;
+                case 2:
+                    return $smcFunc[$call]($vars[0], $vars[1]);
+                    break;
+                case 3:
+                    return $smcFunc[$call]($vars[0], $vars[1], $vars[2]);
+                    break;
+                case 4:
+                    return $smcFunc[$call]($vars[0], $vars[1], $vars[2], $vars[3]);
+                    break;
+                case 5:
+                    return $smcFunc[$call]($vars[0], $vars[1], $vars[2], $vars[3], $vars[4]);
+                    break;
+                default:
+                    return call_user_func_array($smcFunc[$call], $vars);
+                    break;
+            }
+        }
+        return false;
 
-	}}}
+    }}}
 
     public static function find_in_set($data, $field, $arg = 'OR') {{{
 
@@ -68,7 +68,7 @@ class Util
         }
 
         if(is_null($data)) {
-			return;
+            return;
         }
 
         array_walk($data, function (&$value, $key) use ($dB) {
@@ -174,7 +174,7 @@ class Util
 
     }}}
 
-	public static function shortenString(&$string, $length) {{{
+    public static function shortenString(&$string, $length) {{{
 
         $shorten = FALSE;
 
@@ -216,13 +216,13 @@ class Util
 
                         $dom = new \DomDocument('1.0', 'UTF-8');
 
-						// set error level
-						$internalErrors = libxml_use_internal_errors(true);
+                        // set error level
+                        $internalErrors = libxml_use_internal_errors(true);
 
                         $dom->loadHTML($string);
 
-						// Restore error level
-						libxml_use_internal_errors($internalErrors);
+                        // Restore error level
+                        libxml_use_internal_errors($internalErrors);
 
                         self::walkHTML($dom, $length, $reachedLimit, $totalLen, $toRemove);
 
@@ -385,7 +385,7 @@ class Util
                 $filter = FILTER_SANITIZE_NUMBER_INT;
                 break;
             case 'float':
-			case 'decimal':
+            case 'decimal':
                 $filter = FILTER_SANITIZE_NUMBER_FLOAT;
                 break;
             case 'encoded':
@@ -403,14 +403,14 @@ class Util
         return $filter;
     }}}
 
-	public static function substr($string, $offset, $length = null) {{{
+    public static function substr($string, $offset, $length = null) {{{
 
-		if(function_exists('mb_substr')) {
-			return mb_substr($string, $offset, $length);
-		}
+        if(function_exists('mb_substr')) {
+            return mb_substr($string, $offset, $length);
+        }
 
-		return substr($string, $offset, $length);
-	}}}
+        return substr($string, $offset, $length);
+    }}}
 }
 
 ?>
