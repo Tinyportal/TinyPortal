@@ -22,8 +22,6 @@
 /* Shoutbox */
 	--tp_shoutbody-background: var(--tp_background);
 	--tp_shoutbody-border: rgba(136, 136, 136, 1);
-	--tp_shouterror-background: rgba(255, 153, 153, 1);
-	--tp_shouterror-border: rgba(204, 0, 0, 1);
 	--tp_bubble-background: var(--tp_shout-bgeven);
 	--tp_bubble-border: rgba(153, 153, 153, 1);
 	--tp_bubble-boxshadow: var(--tp_boxshadow);
