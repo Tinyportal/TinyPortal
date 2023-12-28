@@ -9,6 +9,7 @@
 	--tp_comment-boxshadow: var(--tp_boxshadow);
 	--tp_article-icon-border: var(--tp_border);
 	--tp_blockopts-border: var(--tp_border);
+	--tp_panelstyles-background: var(--tp_background);
 	--tp_half21-background: rgba(177, 187, 197, 1);
 	--tp_half21-box-shadow: rgba(255,255,255,0.15);
 	--tp_half21-text-shadow: var(--tp_boxshadow);
@@ -16,7 +17,6 @@
 	--tp_recenttopics-border: var(--tp_border);
 	--tp_sitemap-background: rgba(85, 85, 85, 1);
 	--tp_sitemap-color: var(--tp_background);
-	--tp_panels-background: var(--tp_background);
 	--tp_rssbody-background: var(--tp_background);
 	--tp_rssbody-border: var(--tp_border);
 /* Shoutbox */

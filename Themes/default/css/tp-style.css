@@ -981,14 +981,14 @@ dl.tp_title dd {
 	height: 100%;
 	width: 100%;
 }
-.tp_panels-options {
+.tp_panelstyles {
 	float: left;
 	height: 120px;
 	width: 160px;
 	margin: .5em;
 }
-.tp_panels-optionsbg {
-	background-color: var(--tp_panels-background);
+.tp_panelstyles-bg {
+	background-color: var(--tp_panelstyles-background);
 	overflow: hidden;
 	padding: .5em;
 }
@@ -1461,7 +1461,7 @@ input[name="modify_reason"] {
 }
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
-.tp_responsive .tp_panels-options {
+.tp_responsive .tp_panelstyles {
 	width: 95%!important; /* Panel Settings */
 }
 }

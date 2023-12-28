@@ -642,12 +642,12 @@ function template_editblock()
 					</div>
 					<br><input type="radio" id="tp_block_panelstyle" name="tp_block_set_panelstyle" value="99" ' , $context['TPortal']['blockedit']['panelstyle']=='99' ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panelstyle']=='99' ? ' style="color: red;">' : '><label for="tp_block_panelstyle">' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 				<div>
-				<div class="tp_panels-optionsbg">';
+				<div class="tp_panelstyles-bg">';
 			$types = tp_getblockstyles21();
 
 			foreach($types as $blo => $bl) {
 				echo '
-					<div class="tp_panels-options">
+					<div class="tp_panelstyles">
 						<div>
 							<input type="radio" id="tp_block_panelstyle'.$blo.'" name="tp_block_set_panelstyle" value="'.$blo.'" ' , $context['TPortal']['blockedit']['panelstyle']==$blo ? 'checked' : '' , '><label for="tp_block_panelstyle'.$blo.'"><span' , $context['TPortal']['blockedit']['panelstyle']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
 						</div>
