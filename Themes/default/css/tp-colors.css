@@ -1,33 +1,32 @@
 :root {
-	--tinyportal-border: rgba(204, 204, 204, 0.5);
-	--tinyportal-divider: rgba(204, 204, 204, 1);
-	--tinyportal-background: rgba(255, 255, 255, 0.5);
-	--tinyportal-boxshadow: rgba(0,0,0,0.2);
-	--article-border: var(--tinyportal-divider);
-	--comment-background: var(--tinyportal-background);
-	--comment-border: var(--tinyportal-border);
-	--comment-boxshadow: var(--tinyportal-boxshadow);
-	--catlayout-border: var(--tinyportal-border);
-	--article-icon-border: var(--tinyportal-border);
-	--blockopts-border: var(--tinyportal-border);
+	--tp_border: rgba(204, 204, 204, 0.5);
+	--tp_divider: rgba(204, 204, 204, 1);
+	--tp_background: rgba(255, 255, 255, 0.5);
+	--tp_boxshadow: rgba(0,0,0,0.2);
+	--tp_article-border: var(--tp_divider);
+	--tp_comment-background: var(--tp_background);
+	--tp_comment-border: var(--tp_border);
+	--tp_comment-boxshadow: var(--tp_boxshadow);
+	--tp_article-icon-border: var(--tp_border);
+	--tp_blockopts-border: var(--tp_border);
 	--tp_half21-background: rgba(177, 187, 197, 1);
 	--tp_half21-box-shadow: rgba(255,255,255,0.15);
-	--tp_half21-text-shadow: var(--tinyportal-boxshadow);
+	--tp_half21-text-shadow: var(--tp_boxshadow);
 /* Blocks */
-	--recenttopics-border: var(--tinyportal-border);
-	--tpsitemap-background: rgba(85, 85, 85, 1);
-	--tpsitemap-color: var(--tinyportal-background);
-	--panels-background: var(--tinyportal-background);
-	--rss_body-background: var(--tinyportal-background);
-	--rss_body-border: var(--tinyportal-border);
+	--tp_recenttopics-border: var(--tp_border);
+	--tp_sitemap-background: rgba(85, 85, 85, 1);
+	--tp_sitemap-color: var(--tp_background);
+	--tp_panels-background: var(--tp_background);
+	--tp_rssbody-background: var(--tp_background);
+	--tp_rssbody-border: var(--tp_border);
 /* Shoutbox */
-	--tp_shoutbody-background: var(--tinyportal-background);
+	--tp_shoutbody-background: var(--tp_background);
 	--tp_shoutbody-border: rgba(136, 136, 136, 1);
 	--tp_shouterror-background: rgba(255, 153, 153, 1);
 	--tp_shouterror-border: rgba(204, 0, 0, 1);
 	--tp_bubble-background: var(--tp_shout-bgeven);
 	--tp_bubble-border: rgba(153, 153, 153, 1);
-	--tp_bubble-boxshadow: var(--tinyportal-boxshadow);
+	--tp_bubble-boxshadow: var(--tp_boxshadow);
 /*Shoutbox settings: add !important to overrule the setting value in a theme, example: 
 	--tp_shout-textcolor: #000 !important; */
 	--tp_shout-textcolor: #000;

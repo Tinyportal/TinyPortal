@@ -133,7 +133,7 @@ span.tp_shoutbox_time {
 }
 /* Layout option 2 */
 .tp_shoutbody_layout1 {
-	border-bottom: 2px solid var(--tinyportal-border);
+	border-bottom: 2px solid var(--tp_border);
 	padding: 5px 5px 5px 0;
 }
 .tp_shoutbox_editor1 {
