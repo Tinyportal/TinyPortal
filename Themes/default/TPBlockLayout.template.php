@@ -164,7 +164,7 @@ function template_editblock()
 					<dl class="tp_title settings">
 						<dt><label for="tp_block_title"><b>'.$txt['tp-title'].'</b></label></dt>
 						<dd>
-							<input type="text" id="tp_block_title" name="tp_block_title" value="' .$newtitle. '" size=60 required><br><br>
+							<input type="text" id="tp_block_title" name="tp_block_title" value="' .$newtitle. '" size="50" required><br><br>
 						</dd>
 						<dt><label for="tp_block_type"><b>',$txt['tp-type'].'</b></label></dt>
 						<dd>
