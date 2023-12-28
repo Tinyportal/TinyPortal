@@ -47,12 +47,6 @@
 	font-size: 1.1em;
 	margin: 5px 0 5px 0;
 }
-.tp_shoutError {
-	background-color: var(--tp_shouterror-background);
-	border: 1px solid var(--tp_shouterror-border);
-	margin-top: 5px;
-	padding: 3px;
-}
 .tp_shoutframe {
 	width: 99%;
 }

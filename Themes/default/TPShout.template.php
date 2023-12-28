@@ -490,7 +490,7 @@ function template_tpshout_ajax($block_id = 0)
 
 	$block_id = !empty($context['TPortalShoutboxId']) ? (int)$context['TPortalShoutboxId'] : $block_id;
 	echo '
-	<div class="'. (!empty($context['TPortal']['shoutError']) ? 'tp_shoutError' : 'tp_bigshout') . '" id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError_' . $block_id : 'bigshout_' . $block_id) . '">'. $context['TPortal']['rendershouts']. '</div>';
+	<div class="'. (!empty($context['TPortal']['shoutError']) ? 'errorbox' : 'tp_bigshout') . '" id="'. (!empty($context['TPortal']['shoutError']) ? 'shoutError_' . $block_id : 'bigshout_' . $block_id) . '">'. $context['TPortal']['rendershouts']. '</div>';
 }
 
 // View shouts Profile page
