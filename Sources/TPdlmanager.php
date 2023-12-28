@@ -43,12 +43,6 @@ function TPdlmanager()
 	if(loadLanguage('TPortalAdmin') == false)
         loadLanguage('TPortalAdmin', 'english');
 
-	if(!TP_SMF21) {
-		// We don't require it until we load now so need to load seperately...
-		require_once($sourcedir.'/TPortal.php');
-		TPortal_init();
-	}
-
 	// get subaction
 	$tpsub = '';
     if(isset($_GET['sub'])) {
