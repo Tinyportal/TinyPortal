@@ -99,7 +99,8 @@ class Integrate
 
         $hooks['redirect']              = 'TinyPortal\Integrate::hookRedirect';
         $hooks['pre_profile_areas']     = 'TinyPortal\Integrate::hookProfileArea';
-        $hooks['pre_load_theme']        = 'TinyPortal\Integrate::hookLoadTheme';
+        $hooks['pre_load_theme']        = 'TinyPortal\Integrate::hookPreLoadTheme';
+        $hooks['load_theme']            = 'TinyPortal\Integrate::hookLoadTheme';
         $hooks['helpadmin']             = 'TinyPortal\Integrate::hookHelpadmin';
         if(!TP_SMF21) {
             $hooks['admin_areas']       = 'TinyPortal\Integrate::hookAdminAreas';
@@ -178,11 +179,8 @@ class Integrate
 
     }
 
-    public static function hookAdminAreas(&$adminArea) {
-
-        // This would be better adding it as a drop down in the admin area, for now we maintain the old way..
-        require_once(SOURCEDIR . '/TPortal.php');
-        \TPortal_init();
+    public static function hookAdminAreas(&$adminArea) 
+    {
 
     }
 
@@ -596,11 +594,6 @@ class Integrate
     public static function hookDefaultAction()
     {
         global $topic, $board, $context;
-
-        if(!TP_SMF21) {
-            require_once(SOURCEDIR . '/TPortal.php');
-            \TPortal_init();
-        }
         
         $theAction = false;
         // first..if the action is set, but empty, don't go any further
@@ -768,7 +761,15 @@ class Integrate
         }
     }
 
-    public static function hookLoadTheme(&$id_theme)
+    public static function hookLoadTheme()
+    {
+        if(!TP_SMF21) {
+            require_once(SOURCEDIR . '/TPortal.php');
+            \TPortal_init();
+        }
+    }
+
+    public static function hookPreLoadTheme(&$id_theme)
     {
         global $modSettings;
 
