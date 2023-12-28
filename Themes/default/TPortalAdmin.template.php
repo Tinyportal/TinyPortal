@@ -1717,11 +1717,11 @@ function template_panels()
 				</dl>
 				<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
 				<span class="tptooltip" title="', $txt['help'], '"></span></a><label>'.$txt['tp-panelstylehelp'].'</label>
-				<div class="tp_panels-optionsbg">';
+				<div class="tp_panelstyles-bg">';
 
 			foreach($types as $blo => $bl)
 				echo '
-					<div class="tp_panels-options">
+					<div class="tp_panelstyles">
 						<div class="smalltext" style="padding: 4px 0;">
 							<input type="radio" id="tp_panelstyle_'.$panl.''.$blo.'" name="tp_panelstyle_'.$panl.'" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '><label for="tp_panelstyle_'.$panl.''.$blo.'">
 							<span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
