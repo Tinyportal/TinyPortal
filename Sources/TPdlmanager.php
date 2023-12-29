@@ -259,7 +259,7 @@ function TPortalDLManager()
         }
 
 	    if(isset($_POST['tp-dlupload_ftpstray']))
-    		$name = '- empty item - ftp';
+    		$name = $_POST['tp-dlupload_ftpstray'];
 
 		$status = 'normal';
 
@@ -267,16 +267,16 @@ function TPortalDLManager()
 		{
 			// check the size
 			$dlfilesize = filesize($_FILES['tp-dluploadfile']['tmp_name']);
-			if($dlfilesize > (1000 * $context['TPortal']['dl_max_upload_size']))
+			if($dlfilesize > (1024 * $context['TPortal']['dl_max_upload_size']))
 			{
 				$status = 'maxsize';
 				unlink($_FILES['tp-dluploadfile']['tmp_name']);
-				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1000) . $txt['tp-kb'];
+				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1024) . $txt['tp-kb'];
 				fatal_error($error, false);
 			}
 		}
 		else
-			$dlfilesize = 0;
+			$dlfilesize = filesize($context['TPortal']['download_upload_path'].$name);
 
 		if(!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile']))
 		{
@@ -409,6 +409,8 @@ function TPortalDLManager()
 			else{
 				if(!isset($_POST['tp-dluploadnot']))
 					redirectexit('action=tportal;sa=download;dl=item'.$newitem);
+				elseif(isset($_POST['tp-dlupload_ftpstray']))
+					redirectexit('action=tportal;sa=download;dl=adminftp;ftpitem='.$newitem);
 				else
 					redirectexit('action=tportal;sa=download;dl=adminitem'.$newitem);
 			}
@@ -638,11 +640,11 @@ function TPortalDLManager()
 				{
 					$fs = '';
 					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+						$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+						$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
-						$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+						$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
@@ -696,11 +698,11 @@ function TPortalDLManager()
 				{
 					$fs = '';
 					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+						$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+						$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
-						$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+						$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
@@ -772,11 +774,11 @@ function TPortalDLManager()
 
 					$fs = '';
 					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+						$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+						$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
-						$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+						$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 					$context['TPortal']['dl_week_downloaded'][] = array(
 						'id' => $row['id'],
@@ -872,11 +874,11 @@ function TPortalDLManager()
 				{
 					$row = $smcFunc['db_fetch_assoc']($request);
 					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+						$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+						$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
-						$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+						$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 					$rat = array();
 					$rating_votes = 0;
@@ -995,11 +997,11 @@ function TPortalDLManager()
 
 				$fs = '';
 				if($context['TPortal']['dl_fileprefix'] == 'K')
-					$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+					$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'M')
-					$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+					$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'G')
-					$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+					$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 				$context['TPortal']['dl_week_downloaded'][] = array(
 					'id' => $row['id'],
@@ -1169,11 +1171,11 @@ function TPortalDLManager()
 						$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/' . $row['screenshot'];
 
 					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+						$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+						$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 					elseif($context['TPortal']['dl_fileprefix']=='G')
-						$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+						$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
@@ -1363,11 +1365,11 @@ function TPortalDLManager()
 					while($frow = $smcFunc['db_fetch_assoc']($fetch))
 					{
 						if($context['TPortal']['dl_fileprefix'] == 'K')
-							$ffs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+							$ffs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 						elseif($context['TPortal']['dl_fileprefix'] == 'M')
-							$ffs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+							$ffs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 						elseif($context['TPortal']['dl_fileprefix'] == 'G')
-							$ffs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+							$ffs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 						$fdata[] = array(
 							'id' => $frow['id'],
@@ -1385,11 +1387,11 @@ function TPortalDLManager()
 				}
 
 				if($context['TPortal']['dl_fileprefix'] == 'K')
-					$fs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+					$fs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'M')
-					$fs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+					$fs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'G')
-					$fs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+					$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 				$rat = array();
 				$rating_votes = 0;
@@ -2439,10 +2441,10 @@ function TPortalDLAdmin()
 			$sname = time().$sname;
 			// check the size
 			$dlfilesize = filesize($_FILES['tp_dluploadfile_edit']['tmp_name']);
-			if($dlfilesize > (1000 * $context['TPortal']['dl_max_upload_size']))
+			if($dlfilesize > (1024 * $context['TPortal']['dl_max_upload_size']))
 			{
 				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
-				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1000) . $txt['tp-kb'];
+				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' '.$txt['tp-kb'].'<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1024) . $txt['tp-kb'];
 				fatal_error($error, false);
 			}
 
@@ -2909,7 +2911,7 @@ function TPortalDLAdmin()
 	// fetch all files from tp-downloads
 	$context['TPortal']['tp-downloads'] = array();
 	$count = 1;
-	if ($handle = opendir($boarddir.'/tp-downloads'))
+	if ($handle = opendir($context['TPortal']['download_upload_path']))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
@@ -3349,11 +3351,11 @@ function TPortalDLAdmin()
 				while($frow = $smcFunc['db_fetch_assoc']($fetch))
 				{
 					if($context['TPortal']['dl_fileprefix'] == 'K')
-						$ffs = ceil($row['filesize']/ 1000). $txt['tp-kb'];
+						$ffs = ceil($row['filesize']/ 1024). $txt['tp-kb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'M')
-						$ffs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+						$ffs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
-						$ffs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+						$ffs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 					$fdata[] = array(
 						'id' => $frow['id'],
@@ -3577,11 +3579,11 @@ function TPortalDLUser($item)
 			while($frow = $smcFunc['db_fetch_assoc']($fetch))
 			{
 				if($context['TPortal']['dl_fileprefix'] == 'K')
-					$ffs = ceil($row['filesize'] / 1000). $txt['tp-kb'];
+					$ffs = ceil($row['filesize'] / 1024). $txt['tp-kb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'M')
-					$ffs = (ceil($row['filesize'] / 1000) / 1000). $txt['tp-mb'];
+					$ffs = (ceil($row['filesize'] / 1000) / 1024). $txt['tp-mb'];
 				elseif($context['TPortal']['dl_fileprefix'] == 'G')
-					$ffs = (ceil($row['filesize'] / 1000000) / 1000). $txt['tp-gb'];
+					$ffs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
 				$fdata[] = array(
 					'id' => $frow['id'],
@@ -3776,13 +3778,13 @@ function TP_dlftpfiles()
 
 	$count = 1;
 	$sorted = array();
-	if ($handle = opendir($boarddir.'/tp-downloads'))
+	if ($handle = opendir($context['TPortal']['download_upload_path']))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
 			if($file != '.' && $file != '..' && $file != '.htaccess' && $file != 'icons')
 			{
-				$size = floor(filesize($context['TPortal']['download_upload_path'].$file) / 1024);
+				$size = (floor(filesize($context['TPortal']['download_upload_path'].$file) / 102.4) / 10);
 				$sorted[$count] = array(
 					'id' => $count,
 					'file' => $file,

@@ -563,42 +563,28 @@ function template_main()
 					<label for="dladmin_file">'.$txt['tp-dlfilename'].'</label>
 				</dt>
 				<dd>';
-		if($cat['file']=='- empty item -' || $cat['file']==''|| $cat['file']=='- empty item - ftp')
+		if($cat['file']=='- empty item -' || $cat['file']=='')
 		{
-			if($cat['file']=='- empty item - ftp')
-			{
-				echo '
-					<div style="padding: 5px 0 5px 0; font-weight: bold;">'.$txt['tp-onlyftpstrays'].'</div>';
-			}
 			echo '
 				<select size="1" name="dladmin_file'.$cat['id'].'" id="dladmin_file">
 					<option value="- empty item -">' . $txt['tp-noneicon'] . '</option>';
 
-			foreach($context['TPortal']['tp-downloads'] as $file)
-			{
-				if($cat['file']=='- empty item - ftp')
-				{
-					// check the file against
-					if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
-		  				echo '
-						<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].''.$txt['tp-kb'].'</option>';
-				}
-				else
-	  				echo '
-				  		<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].''.$txt['tp-kb'].'</option>';
+			foreach($context['TPortal']['tp-downloads'] as $file) {
+  				echo '
+			  		<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].''.$txt['tp-kb'].'</option>';
 			}
 			echo '
 					</select>';
 		}
 		else
-			echo '<input type="text" name="dladmin_file'.$cat['id'].'" id="dladmin_file" value="'.$cat['file'].'" size="50" style="margin-bottom: 0.5em">';
+			echo '<input type="text" name="dladmin_file'.$cat['id'].'" id="dladmin_file" value="'.$cat['file'].'" style="margin-bottom: 0.5em" readonly>';
 
 		echo '
 				</dd>
 				<dt>
 					'.$txt['tp-dlfilesize'].'</dt>
 				<dd>
-					'.($cat['filesize']*1024).' '.$txt['tp-bytes'].'<br>
+					'. $cat['filesize'].''.$txt['tp-kb'].'
 				</dd>
 				<dt>
 					<label for="tp_dluploadfile_edit">'.$txt['tp-uploadnewfileexisting'].'</label>
@@ -797,56 +783,75 @@ function template_main()
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-ftpstrays'].'</h3></div>
 			<div id="ftp-files" class="tp_admintable admin-area">
 				<div class="information smalltext">'.$txt['tp-assignftp'].'</div><div></div>
-				<div class="windowbg noup padding-div">';
+				<div class="windowbg noup padding-div">
+					<dl class="tp_title settings">
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-ftpfolderdesc" onclick="return reqOverlayDiv(this.href);">
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-ftpfolder'].'
+						</dt>
+						<dd>
+							'.$context['TPortal']['download_upload_path'].'
+						</dd>
+					</dl>';
 
 		if(!empty($_GET['ftpcat'])) {
-			// alert if no files were assigned
+			// alert or information processsing multiple files
 			if($_GET['ftpcat'] ==='nocat')
-				echo '<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
-			// alert if new files were added recently
+				echo '
+					<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
 			else 
-				echo '<div class="infobox">'.$txt['tp-adminftp_newfiles'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfilescat'].'</a></div>';
+				echo '
+					<div class="infobox">'.$txt['tp-adminftp_newfiles'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfilescat'].'</a></div>';
 		}
-		if(count($context['TPortal']['tp-downloads'])>(count($context['TPortal']['dl_allitems']))) {
+		if(!empty($_GET['ftpitem'])) {
+			// alert or information processing a single file
+			if($_GET['ftpitem'] ==='noitem')
+				echo '
+					<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
+			else 
+				echo '
+					<div class="infobox">'.$txt['tp-adminftp_newfile'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=adminitem'.$_GET['ftpitem'].'">'.$txt['tp-adminftp_newfileview'].'</a></div>';
+		}
 			$ccount=0;
 			echo '
-				<div class="tp_largelist2">';
+					<div class="tp_largelist2">';
 			foreach($context['TPortal']['tp-downloads'] as $file){
-				if(!in_array($file['file'], $context['TPortal']['dl_allitems']))
-					echo '<div><input type="checkbox" name="assign-ftp-checkbox'.$ccount.'" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;sa=download;dl=upload;ftp='.$file['id'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
+				if(!in_array($file['file'], $context['TPortal']['dl_allitems'])) {
+					echo '
+						<div><input type="checkbox" name="assign-ftp-checkbox'.$ccount.'" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;sa=download;dl=upload;ftp='.$file['file'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
 					$ccount++;
+				}
 			}
+		if($ccount==0) {
 			echo '
-				</div>
-				<input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label><br>
-
-				<div class="padding-div">
-				<select name="assign-ftp-cat">
-					<option value="0">' . $txt['tp-createnew'] . '</option>';
+						<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>';
+		}
+			echo '
+						</div>';
+		if($ccount>0) {
+			echo '
+						<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>
+						<div class="padding-div">
+							<select name="assign-ftp-cat">
+							<option value="0">' . $txt['tp-createnew'] . '</option>';
 				if(count($context['TPortal']['admuploadcats'])>0)
 				{
 					foreach($context['TPortal']['admuploadcats'] as $ucats)
 					{
 						echo '
-						<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
+							<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
 					}
 				}
 				else
 					echo '
-						<option value="0">'.$txt['tp-none-'].'</option>';
+							<option value="0">'.$txt['tp-none-'].'</option>';
 			echo '
-					</select>
-					<input type="text" name="assign-ftp-newcat" placeholder= "'.$txt['tp-newcatassign'].'" value="" size="40">
+							</select>
+							<input type="text" name="assign-ftp-newcat" placeholder= "'.$txt['tp-newcatassign'].'" value="" size="40">
+						</div>';
+			echo '
+						<div class="padding-div"><input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'"></div>
 					</div>';
-
-			echo '
-				<div class="padding-div"><input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'">
-				</div></div>';
-		}
-		else {
-			echo '
-				<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>
-				<div class="padding-div">&nbsp;</div>';
 		}
 			echo '
 				</div>

@@ -477,7 +477,7 @@ function template_main() {
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="" style="width: 92%;" required>
+								<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="'.(!empty($_GET['ftp']) ? $_GET['ftp'] : "").'" style="width: 92%;" required>
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
@@ -505,26 +505,23 @@ function template_main() {
 
 		echo '	</div>
 				<hr>
-				<dl class="settings">
+				<dl class="settings">';
+		if((allowedTo('tp_dlmanager') && empty($_GET['ftp'])) || !allowedTo('tp_dlmanager')) {
+		// file upload or external url
+			echo '
 					<dt>
 						<label for="tp-dluploadfile">'.$txt['tp-dluploadfile'].'</label><br>
 						 ('.$context['TPortal']['dl_allowed_types'].')
 					</dt>
-					<dd>';
-		if((allowedTo('tp_dlmanager') && !isset($_GET['ftp'])) || !allowedTo('tp_dlmanager')) {
-			echo '<input type="file" id="tp-dluploadfile" name="tp-dluploadfile">
-					</dd>';
-
-            echo '<dt>
+					<dd>
+						<input type="file" id="tp-dluploadfile" name="tp-dluploadfile">
+					</dd>
+					<dt>
 						<label for="tp-dlexternalfile">'.$txt['tp-dlexternalfile'].'</label>
 					</dt>
 					<dd>
-                        <input type="text" id="tp-dlexternalfile" name="tp-dlexternalfile" style="width: 92%;">
-					</dd>';
-        }
-		// file already uploaded?
-		if(allowedTo('tp_dlmanager') && !isset($_GET['ftp'])){
-			echo '
+						<input type="text" id="tp-dlexternalfile" name="tp-dlexternalfile" style="width: 92%;">
+					</dd>
 					<dt>
 						<label for="tp-dluploadnot">'. $txt['tp-dlnoupload'].'</label>
 					</dt>
@@ -532,14 +529,15 @@ function template_main() {
 						<input type="checkbox" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><br>
 					</dd>';
 		}
-		elseif(allowedTo('tp_dlmanager') && isset($_GET['ftp'])){
-			if(isset($_GET['ftp']))
+		elseif(allowedTo('tp_dlmanager') && !empty($_GET['ftp'])) {
+		// link to ftp file
 				echo '
 					<dt>
-						<label for="tp-dluploadnot"><b>'.$txt['tp-dlmakeitem2'].':</b></label><br>'.$context['TPortal']['tp-downloads'][$_GET['ftp']]['file'].';
+						'.$txt['tp-dlmakeitem2'].'
 					</dt>
 					<dd>
 						<input type="hidden" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><input type="hidden" name="tp-dlupload_ftpstray" value="'.$_GET['ftp'].'">
+						<input type="text" id="tp-dluploadfile" name="tp-dluploadfile" value="'.$_GET['ftp'].'" readonly>
 					</dd>';
 		}
 		echo '</dl>';
@@ -571,7 +569,7 @@ function template_main() {
 					</dd>
 				</dl>';
 		// can you attach it?
-		if(!empty($context['TPortal']['attachitems'])) {
+		if(!empty($context['TPortal']['attachitems']) && empty($_GET['ftp'])) {
 			echo '
 				<hr>
 				<dl class="settings">
@@ -795,7 +793,7 @@ function template_main() {
 					echo '
 							<div class="float-items" style="width:60%;">'.$cats['link'].'</div>
 							<div class="float-items" style="width:19%;height:13px;margin-bottom:2px;overflow:hidden;"><img src="' .$settings['tp_images_url']. '/TPbar.png" height="15" alt="" width="' , (!$maxval == '0' ? ceil(100*($cats['size']/$maxval)) : '0') , '%" /></div>
-							<div class="float-items" style="width:15%;">'. floor($cats['size']/1000).''.$txt['tp-kb'].'</div>
+							<div class="float-items" style="width:15%;">'. floor($cats['size']/1024).''.$txt['tp-kb'].'</div>
 							<p class="clearthefloat"></p>';
 						$counter++;
 				}
