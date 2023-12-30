@@ -269,7 +269,7 @@ function TPortalDLManager()
 			if($dlfilesize > (1024 * $context['TPortal']['dl_max_upload_size'])) {
 				$status = 'maxsize';
 				unlink($_FILES['tp-dluploadfile']['tmp_name']);
-				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1024) . $txt['tp-kb'];
+				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' Kb<br /><br />'.$txt['tp-dlerrorfile'].': '. ceil($dlfilesize/1024) . $txt['tp-kb'];
 				fatal_error($error, false);
 			}
 		}
@@ -294,7 +294,7 @@ function TPortalDLManager()
 			{
 				$status = 'wrongtype';
 				unlink($_FILES['tp-dluploadfile']['tmp_name']);
-				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlexterror2'].': <b>'.$name.'</b>';
+				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlerrorfile'].': <b>'.$name.'</b>';
 				fatal_error($error, false);
 			}
 		}
@@ -1968,7 +1968,7 @@ function TPdownloadme()
 			}
 		}
 		else {
-			$error = $txt['tp-dlfilemissing'].'.<br>'.$txt['tp-dlexterror2'].': <b>'.$real_filename.'</b>';
+			$error = $txt['tp-dlfileerror'].'.<br>'.$txt['tp-dlerrorfile'].': <b>'.$real_filename.'</b>';
 			fatal_error($error, false);
 		}
 	}
@@ -2454,7 +2454,7 @@ function TPortalDLAdmin()
 			if($dlfilesize > (1024 * $context['TPortal']['dl_max_upload_size']))
 			{
 				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
-				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' '.$txt['tp-kb'].'<br /><br />'.$txt['tp-dlmaxerror2'].': '. ceil($dlfilesize/1024) . $txt['tp-kb'];
+				$error = $txt['tp-dlmaxerror'].' '.($context['TPortal']['dl_max_upload_size']).' '.$txt['tp-kb'].'<br /><br />'.$txt['tp-dlerrorfile'].': '. ceil($dlfilesize/1024) . $txt['tp-kb'];
 				fatal_error($error, false);
 			}
 
@@ -2471,7 +2471,7 @@ function TPortalDLAdmin()
 			if(!$match)
 			{
 				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
-				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlexterror2'].': <b>'.$sname.'</b>';
+				$error = $txt['tp-dlexterror'].':<b> <br />'.$context['TPortal']['dl_allowed_types'].'</b><br /><br />'.$txt['tp-dlerrorfile'].': <b>'.$sname.'</b>';
 				fatal_error($error, false);
 			}
 			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'],$context['TPortal']['download_upload_path'].$sname);

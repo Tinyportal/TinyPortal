@@ -92,10 +92,9 @@ $txt['tp-dluploadnotallowed'] = 'Sorry, uploading files is currently not allowed
 $txt['tp-dlnotuploaded'] = 'File was not uploaded. Error %s';
 $txt['tp-dluploadfailure'] = 'The upload was not able to complete: you may have forgotten to specify a file for the upload. It might also happen because the file you specified took too long to upload or is bigger than the server will allow.';
 $txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is ';
-$txt['tp-dlmaxerror2'] = 'Your file was';
 $txt['tp-dlexterror'] = 'You can only upload one of the following file formats';
-$txt['tp-dlexterror2'] = 'Your file was';
-$txt['tp-dlfilemissing'] = 'The file you tried to download no longer exists on the server';
+$txt['tp-dlfileerror'] = 'The file you tried to download no longer exists on the server';
+$txt['tp-dlerrorfile'] = 'Your file was';
 
 //Edit file
 $txt['tp-useredit'] = 'Edit file';
