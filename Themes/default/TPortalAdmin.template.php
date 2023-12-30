@@ -1199,17 +1199,22 @@ function template_strays()
 
 		if(isset($context['TPortal']['allcats'])) {
 			echo '
-				<div class="padding-div">
-				<select name="tp_article_cat">
-					<option value="0">' . $txt['tp-createnew'] . '</option>';
-			foreach($context['TPortal']['allcats'] as $submg) {
-  					echo '
-						<option value="'.$submg['id'].'">',  ( isset($submg['indent']) && $submg['indent'] > 1 ) ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
-            }
-			echo '
-				</select>
-				<input name="tp_article_new" size="40" placeholder= "'.$txt['tp-createnewcategory'].'" value="">
-				</div>';
+				<hr>
+				<dl class="tp_title settings">
+					<dt>
+						<select name="tp_article_cat">
+							<option value="0">' . $txt['tp-createnew'] . '</option>';
+					foreach($context['TPortal']['allcats'] as $submg) {
+							echo '
+								<option value="'.$submg['id'].'">',  ( isset($submg['indent']) && $submg['indent'] > 1 ) ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
+					}
+					echo '
+						</select>
+					</dt>
+					<dd>
+						<input name="tp_article_new" size="40" placeholder= "'.$txt['tp-createnewcategory'].'" value="">
+					</dd>
+				</dl>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -1327,7 +1332,9 @@ function template_submission()
 		if(isset($context['TPortal']['allcats']))
 		{
 			echo '
-				<div class="padding-div">
+				<hr>
+				<dl class="tp_title settings">
+					<dt>
 					<select name="tp_article_cat">
 						<option value="0">' . $txt['tp-createnew2'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg)
@@ -1335,8 +1342,11 @@ function template_submission()
 						<option value="'.$submg['id'].'">'. $txt['tp-approveto'] . $submg['name'].'</option>';
 			echo '
 					</select>
+					</dt>
+					<dd>
 					<input name="tp_article_new" value="" size="40" placeholder= "'.$txt['tp-createnewcategory'].'">
-				</div>';
+					</dd>
+				</dl>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>

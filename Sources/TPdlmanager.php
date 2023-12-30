@@ -842,6 +842,7 @@ function TPortalDLManager()
 							'id' => $row['id'],
 							'name' => $row['name'],
 							'parent' => $row['parent'],
+							'icon' => $row['icon'],
 							'href' => $scripturl.'?action=tportal;sa=download;dl=cat'.$row['id'],
 							'files' => $row['files'],
 						);
@@ -2071,6 +2072,7 @@ function TPortalDLAdmin()
 				$newcatparent = 0;
 			if($newcatname == '')
 				$newcatname = '-no name-';
+			$icon = $boardurl.'/tp-downloads/icons/'.$_POST['tp_newdladmin_icon'];
 		}
 		else
 		{
@@ -2109,7 +2111,7 @@ function TPortalDLAdmin()
 					'rating' => 'string',
 					'voters' => 'string',
 					'subitem' => 'int'),
-				array($newcatname, '', '', 0, 'dlcat', 0, 0, '', 0, 0, 0, $newcatparent, '', '', $context['user']['id'], '', '', '', 0),
+				array($newcatname, '', $icon, 0, 'dlcat', 0, 0, '', 0, 0, 0, $newcatparent, '', '', $context['user']['id'], '', '', '', 0),
 				array('id')
 			);
 			$newcatnow = $smcFunc['db_insert_id']($request);
@@ -2120,6 +2122,7 @@ function TPortalDLAdmin()
 			if(substr($what, 0, 19) == 'assign-ftp-checkbox')
 			{
 				$name = $value;
+				$icon = $boardurl.'/tp-downloads/icons/'.$_POST['tp_newdladmin_icon'];
 				$now = time();
 				$fsize = filesize($context['TPortal']['download_upload_path'].$value);
 				$smcFunc['db_insert']('INSERT',
@@ -2144,7 +2147,7 @@ function TPortalDLAdmin()
 					'rating' => 'string',
 					'voters' => 'string',
 					'subitem' => 'int'),
-					array($name, '', '', $newcatnow, 'dlitem', 1, 1, $value, $now, $now, $fsize, 0, '', '', $context['user']['id'], '', '', '', 0),
+					array($name, '', $icon, $newcatnow, 'dlitem', 1, 1, $value, $now, $now, $fsize, 0, '', '', $context['user']['id'], '', '', '', 0),
 					array('id')
 				);
 			}

@@ -41,7 +41,7 @@
 	overflow: hidden;
 }
 .tp_shoutavatar2 img {
-	max-width: 100%;
+	max-width: 100% !important;
 }
 .tp_shoutavatar h4 {
 	font-size: 1.1em;

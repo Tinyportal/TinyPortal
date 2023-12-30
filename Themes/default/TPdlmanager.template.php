@@ -242,25 +242,26 @@ function template_main() {
 						<li>
 							<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
 								<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
-							if($dlchild['files']>0)
-								$content .= ' (' . $dlchild['files'].')';
+
+								$content .= ' ( ' . $dlchild['files']==1 ? '<span class="smalltext"><i> ('.$dlchild['files'].'&nbsp;'.$txt['tp-dl1file'].')</i></span>' : '<span class="smalltext"><i> ('.$dlchild['files'].' '.$txt['tp-dlfiles'].')</i></span>' .'';
 							$content .= '
 						</li>';
 						}
 					}
 				}
-
 				echo '
 				<div class="dl_category"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
 					<div>
-					<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" /></div>
-						<div style="overflow: visible;">
-						<div class="details">',$dlcat['files']==1 ? $dlcat['files'].' '.$txt['tp-dl1file'] : ' '.$txt['tp-dlfiles'],': '.$dlcat['files'].'</div>
+						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
+					</div>
+					<div style="overflow: visible">
+						<div class="details">', $dlcat['files']==1 ? ''.$dlcat['files'].'&nbsp;'.$txt['tp-dl1file'].'' : ''.$dlcat['files'].' '.$txt['tp-dlfiles'].'' ,'</div>
 						<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
 						<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
-				if(!empty($content))
-					echo '
-				<div class="dl_category dl_subcats"><ul class="dl_subcats">'.$content.'</ul></div>';
+				if(!empty($content)) {
+					echo ' 
+						<div class="dl_subcats"><ul class="dl_subcats">'.$content.'</div></ul>';
+					}
 					echo '
 					<p class="clearthefloat"></p>
 					</div>
@@ -548,8 +549,15 @@ function template_main() {
 						<label for="tp_dluploadicon">'.$txt['tp-dluploadicon'].'</label>
 					</dt>
 					<dd>
-						<select size="1" name="tp_dluploadicon" id="tp_dluploadicon" onchange="dlcheck(this.value)">
+						<select size="1" name="tp_dluploadicon" id="tp_dluploadicon" onchange="dlcheck(this.value)">';
+	if(!empty($_GET['ftp'])) {
+				echo '
+						<option value="ftp.png" selected>ftp.png</option>';
+	}
+		else {
+				echo '
 						<option value="blank.gif" selected>'.$txt['tp-noneicon'].'</option>';
+		}
 		// output the icons
 		foreach($context['TPortal']['dlicons'] as $dlicon => $value)
 			echo '

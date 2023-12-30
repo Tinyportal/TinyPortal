@@ -696,12 +696,14 @@ function template_main()
 				<hr>
 				<dl class="settings">
 					<dt>
-						<b>'.$txt['tp-dldelete'].'</b>
+						<label><b>'.$txt['tp-dldelete'].'</b></label><br>
+						<span class="smalltext">', $txt['tp-articledeletedesc'], '</span>
 					</dt>
 					<dd>
-						<input type="checkbox" name="dladmin_delete'.$cat['id'].'" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">&nbsp;&nbsp;<img title="'.$txt['tp-dldelete'].'" border="0" src="' .$settings['tp_images_url']. '/TPthumbdown.png" alt="'.$txt['tp-dldelete'].'"  />
+						<input type="checkbox" name="dladmin_delete'.$cat['id'].'" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')">&nbsp;&nbsp;<img title="'.$txt['tp-dldelete'].'" border="0" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt="'.$txt['tp-dldelete'].'"  />
 					</dd>
 				</dl>
+
 			<div class="padding-div"><input type="submit" class="button button_submit" name="dlsend" value="'.$txt['tp-submit'].'"></div>
 			</div>
 		</div>';
@@ -830,32 +832,56 @@ function template_main()
 						</div>';
 		if($ccount>0) {
 			echo '
-						<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>
-						<div class="padding-div">
-							<select name="assign-ftp-cat">
-							<option value="0">' . $txt['tp-createnew'] . '</option>';
-				if(count($context['TPortal']['admuploadcats'])>0)
-				{
-					foreach($context['TPortal']['admuploadcats'] as $ucats)
-					{
-						echo '
-							<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
-					}
+					<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>
+				<hr>
+				<dl class="tp_title settings">
+					<dt>
+						<select name="assign-ftp-cat">
+						<option value="0">' . $txt['tp-createnew'] . '</option>';
+			if(count($context['TPortal']['admuploadcats'])>0) {
+				foreach($context['TPortal']['admuploadcats'] as $ucats) {
+					echo '
+						<option value="'.$ucats['id'].'">', (!empty($ucats['indent']) ? str_repeat("-", $ucats['indent']) : '') ,' '. $txt['tp-assigncatparent'] .$ucats['name'].'</option>';
 				}
+			}
 				else
 					echo '
-							<option value="0">'.$txt['tp-none-'].'</option>';
+						<option value="0">'.$txt['tp-none-'].'</option>';
 			echo '
-							</select>
-							<input type="text" name="assign-ftp-newcat" placeholder= "'.$txt['tp-newcatassign'].'" value="" size="40">
-						</div>';
+						</select>
+					</dt>
+					<dd>
+						<input type="text" name="assign-ftp-newcat" placeholder= "'.$txt['tp-newcatassign'].'" value="" size="40">
+					</dd>
+					<dt>
+						<label for="dladmin_icon">'.$txt['tp-dluploadicon'].'</label>
+					</dt>
+					<dd>
+						<select size="1" name="tp_newdladmin_icon" id="tp_newdladmin_icon" onchange="dlcheck(this.value)">
+						<option value="ftp.png">ftp.png</option>';
+
+				// output the icons
+				$selicon = 'ftp.png';
+				foreach($context['TPortal']['dlicons'] as $dlicon => $value)
+					echo '
+						<option ' , ($selicon == $value) ? 'selected="selected" ' : '', 'value="'.$value.'">'. $value.'</option>';
+				echo '
+						</select>
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/'. $selicon.'" alt="" />
+					<script type="text/javascript">
+					function dlcheck(icon) {
+							document.dlicon.src= "'.$boardurl.'/tp-downloads/icons/" + icon
+					}
+					</script><br>
+					</dd>
+				</dl>';
 			echo '
-						<div class="padding-div"><input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'"></div>
-					</div>';
+				<div class="padding-div"><input type="submit" class="button button_submit" name="ftpdlsend" value="'.$txt['tp-submitftp'].'"></div>
+			</div>';
 		}
 			echo '
-				</div>
-			</div>';
+		</div>
+	</div>';
 	}
 // Edit category page
 	elseif(substr($context['TPortal']['dlsub'],0,12)=='admineditcat')

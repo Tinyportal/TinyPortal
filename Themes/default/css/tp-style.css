@@ -1426,6 +1426,9 @@ dl.tp_title dd {
 	width: 98%;
 	word-wrap: break-word;
 }
+ul.dl_subcats li {
+	width: 49%;
+}
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
@@ -1450,6 +1453,10 @@ dl.tp_title dd {
 }
 ul.tp-subcategories li {
 	width: 98%;
+}
+ul.dl_subcats li {
+	float: none;
+	width: 100%;
 }
 /** Quick fixes Curve2 **/
 input[name="modify_reason"] {
