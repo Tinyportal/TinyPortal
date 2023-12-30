@@ -224,13 +224,13 @@ function template_main() {
 			}
 		// ]]></script>';
 
-	// output the category block?
+		if(sizeof($context['TPortal']['dlcats'])>0) {
+		// output the category block?
 		echo '
 			<div class="cat_bar">
 				<h3 class="catbg">' , $context['TPortal']['dlaction']=='cat' ? $txt['tp-childcategories'] : $txt['tp-categories'] , '</h3>
 			</div>
 			<div class="windowbg noup padding-div">';
-		if(sizeof($context['TPortal']['dlcats'])>0) {
 		//show all categories
 			foreach($context['TPortal']['dlcats'] as $dlcat) {
 				// any subcategories?
@@ -267,13 +267,9 @@ function template_main() {
 					</div>
 				</div>';
 			}
-		}
-		else {
-			echo '
-			' , $txt['tp-nocats'] , '';
-			}
 		echo '
 			</div>';
+		}
 		
 		// output the files in the category
 		if($context['TPortal']['dlaction']=='cat') {
