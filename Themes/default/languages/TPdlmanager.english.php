@@ -95,7 +95,7 @@ $txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is ';
 $txt['tp-dlmaxerror2'] = 'Your file was';
 $txt['tp-dlexterror'] = 'You can only upload one of the following file formats';
 $txt['tp-dlexterror2'] = 'Your file was';
-$txt['tp-dlfilemissing'] = 'The file your are trying to download does no longer exist on the server';
+$txt['tp-dlfilemissing'] = 'The file you tried to download no longer exists on the server';
 
 //Edit file
 $txt['tp-useredit'] = 'Edit file';
