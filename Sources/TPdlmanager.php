@@ -3395,7 +3395,7 @@ function TPortalDLAdmin()
 					$file_size = floor((int)$headers['content-length'][1] / 1024);
 				}
 			}
-			else if(substr($row['file'],0,14)!='- empty item -') {
+			else if((substr($row['file'],0,14)!='- empty item -') && (file_exists($context['TPortal']['download_upload_path'].$row['file']))) {
 				$file_size  = floor(filesize($context['TPortal']['download_upload_path'].$row['file']) / 1024);
 			}
 			else {
