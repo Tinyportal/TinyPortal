@@ -516,7 +516,7 @@ function template_main() {
 						<label for="tp-dlexternalfile">'.$txt['tp-dlexternalfile'].'</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp-dlexternalfile" name="tp-dlexternalfile" style="width: 92%;">
+						<input type="text" id="tp-dlexternalfile" name="tp-dlexternalfile" size="50">
 					</dd>
 					<dt>
 						<label for="tp-dluploadnot">'. $txt['tp-dlnoupload'].'</label>

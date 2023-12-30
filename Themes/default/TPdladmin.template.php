@@ -574,10 +574,11 @@ function template_main()
 			  		<option value="'.$file['file'].'">'.$file['file'].' - '.$file['size'].''.$txt['tp-kb'].'</option>';
 			}
 			echo '
-					</select>';
+				</select>';
 		}
 		else
-			echo '<input type="text" name="dladmin_file'.$cat['id'].'" id="dladmin_file" value="'.$cat['file'].'" style="margin-bottom: 0.5em" readonly>';
+			echo '
+				<input type="text" name="dladmin_file'.$cat['id'].'" id="dladmin_file" value="'.$cat['file'].'" style="margin-bottom: 0.5em" size="50">';
 
 		echo '
 				</dd>
@@ -652,8 +653,7 @@ function template_main()
 					</dd>
 				</dl>' : '' , '
 				<hr>
-			<dl class="settings">
-';
+			<dl class="settings">';
 			}
 		}
 		// any extra files?
@@ -974,8 +974,7 @@ function template_main()
 
 				echo '
 				</div>
-
-		<hr>
+			<hr>
 			<dl class="settings">
 				<dt>
 					<span class="font-strong">'.$txt['tp-dlaccess'].'</span>
