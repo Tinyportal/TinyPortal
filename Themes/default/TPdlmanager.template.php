@@ -242,8 +242,7 @@ function template_main() {
 						<li>
 							<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
 								<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
-
-								$content .= ' ( ' . $dlchild['files']==1 ? '<span class="smalltext"><i> ('.$dlchild['files'].'&nbsp;'.$txt['tp-dl1file'].')</i></span>' : '<span class="smalltext"><i> ('.$dlchild['files'].' '.$txt['tp-dlfiles'].')</i></span>' .'';
+								$content .= '' . ($dlchild['files']==1 ? '<span class="smalltext"><i> ('.$dlchild['files'].'&nbsp;'.$txt['tp-dl1file'].')</i></span>' : '<span class="smalltext"><i> ('.$dlchild['files'].' '.$txt['tp-dlfiles'].')</i></span>') .'';
 							$content .= '
 						</li>';
 						}
@@ -255,7 +254,7 @@ function template_main() {
 						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
 					</div>
 					<div style="overflow: visible">
-						<div class="details">', $dlcat['files']==1 ? ''.$dlcat['files'].'&nbsp;'.$txt['tp-dl1file'].'' : ''.$dlcat['files'].' '.$txt['tp-dlfiles'].'' ,'</div>
+						<div class="details">', ($dlcat['files']==1 ? ''.$dlcat['files'].'&nbsp;'.$txt['tp-dl1file'].'' : ''.$dlcat['files'].' '.$txt['tp-dlfiles'].'') ,'</div>
 						<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
 						<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 				if(!empty($content)) {
