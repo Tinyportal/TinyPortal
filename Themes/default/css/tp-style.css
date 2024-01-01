@@ -1136,7 +1136,7 @@ ul.dl_details li {
 	border: 1px solid var(--tp_border);
 	overflow: hidden;
 }
-.dl_pageindex img {
+.dl_pageindex img, .title-admin-area img, #blocksDiv img, .box img, .float-items img {
 	display: inline-block;
 	vertical-align: middle;
 }

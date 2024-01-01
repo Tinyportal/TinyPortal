@@ -570,7 +570,7 @@ function template_categories()
 					<tr class="title_bar titlebg">
 					<th scope="col">
 						<div>
-							<div class="float-items" style="width:72%;"><strong>' , $txt['tp-artcat'] , '</strong></div>
+							<div class="float-items"><strong>' , $txt['tp-artcat'] , '</strong></div>
 							<div class="title-admin-area float-items tpcenter" style="width:150px;float:right;"><strong>' , $txt['tp-actions'] , '</strong></div>
 							<p class="clearthefloat"></p>
 						</div>
@@ -590,7 +590,7 @@ function template_categories()
 						<div>';
 
 				echo '
-							<div class="float-items' , '" style="width:72%;">
+							<div class="float-items' , '">
 								' , str_repeat("- ",$cat['indent']) , '
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '">' , $cat['name'] , '</a>
 								' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '(' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . ': '.$context['TPortal']['cats_count'][$cat['id']].')' : '' , '
@@ -1960,7 +1960,7 @@ function template_blocks()
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive"><strong>'.$txt['tp-editsave'].'</strong></div>
 							<a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
-							<input type="image" class="tpbut" style="height:16px; vertical-align:top;" src="' .$settings['tp_images_url']. '/TPsave.png" title="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">
+							<input type="image" class="tpbut" style="height:18px;" src="' .$settings['tp_images_url']. '/TPsave.png" title="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">
 						</div>
 	                    <div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive"><strong>'.$txt['tp-delete'].'</strong></div>
