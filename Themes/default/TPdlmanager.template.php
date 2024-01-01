@@ -103,22 +103,20 @@ function template_main() {
 				<div class="title_bar">
 				<h3 class="titlebg">' , $txt['tp-recentuploads'] , $context['TPortal']['dlaction']=='cat' ? ' '.$txt['tp-incategory']. '&quot;' . $context['TPortal']['dlheader'].'&quot;' : '' , '</h3>
 				</div>';
-
+				
 				$count=1;
 				if(!empty($context['TPortal']['dl_last_added'])) {
 					foreach($context['TPortal']['dl_last_added'] as $last) {
 						echo '
 						<div class="dl_recentdl">';
-
 						if(!empty($last['screenshot']))
-							echo '<div style="background: url('.$last['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$last['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						elseif(!empty($last['icon']) && strpos($last['icon'], 'blank.gif') == false)
-							echo '<div style="background: url('.$last['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$last['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						else
-							echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
-
+							echo '<div class="dl_screenshot" style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						echo '
-							<div class="dl_most_downloaded">
+							<div class="dl_screenshot">
 								<a href="'.$last['href'].'"><b>'.$last['name'].'</b></a>
 								<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $last['author'].'<br>'.$last['date'].'</div>
 								<div class="smalltext"> '.strtolower($txt['tp-downloads']).': '.$last['downloads'].'</div>
@@ -141,15 +139,14 @@ function template_main() {
 					foreach($context['TPortal']['dl_week_downloaded'] as $wost) {
 						echo '
 						<div class="dl_recentdl">';
-
 						if(!empty($wost['screenshot']))
-							echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
-							echo '<div style="background: url('.$wost['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$wost['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						else
-							echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						echo '
-							<div class="dl_most_downloaded">
+							<div class="dl_screenshot">
 								<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 								<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
 								<div class="smalltext">'.strtolower($txt['tp-downloads']).': '.$wost['downloads'].'</div>
@@ -171,15 +168,14 @@ function template_main() {
 					foreach($context['TPortal']['dl_most_downloaded'] as $wost) {
 						echo '
 						<div class="dl_recentdl">';
-
 						if(!empty($wost['screenshot']))
-							echo '<div style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$wost['screenshot'].') no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
-							echo '<div style="background: url('.$wost['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$wost['icon'].') 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						else
-							echo '<div style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;" class="dl_screenshot"></div>';
+							echo '<div class="dl_screenshot" style="background: url('.$settings['tp_images_url'].'/TPnodl.png) 50% 50% no-repeat; width: '.$context['TPortal']['dl_screenshotsize'][0].'px; height: '.$context['TPortal']['dl_screenshotsize'][1].'px;"></div>';
 						echo '
-							<div class="dl_most_downloaded">
+							<div class="dl_screenshot">
 								<a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 								<div class="smalltext"> '.$txt['tp-uploadedby'] .' ' . $wost['author'].'<br>'.$wost['date'].'</div>
 								<div class="smalltext">'.strtolower($txt['tp-downloads']).': '.$wost['downloads'].' </div>
@@ -250,12 +246,13 @@ function template_main() {
 				}
 				echo '
 				<div class="dl_category"' , !empty($content) ? ' style="margin-bottom: 0;"' : '' ,'>
+					<div style="overflow: visible">
 					<div>
 						<img class="dl_caticon" src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
 					</div>
-					<div style="overflow: visible">
+
 						<div class="details">', ($dlcat['files']==1 ? ''.$dlcat['files'].'&nbsp;'.$txt['tp-dl1file'].'' : ''.$dlcat['files'].' '.$txt['tp-dlfiles'].'') ,'</div>
-						<h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4>
+						<div><h4><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></h4></div>
 						<div class="dl_catpost">', (($context['TPortal']['dl_showcategorytext']==0) && ($context['TPortal']['dlaction']=='cat')) ? '' : $dlcat['description'] , '</div>';
 				if(!empty($content)) {
 					echo ' 

@@ -1136,6 +1136,10 @@ ul.dl_details li {
 	border: 1px solid var(--tp_border);
 	overflow: hidden;
 }
+.dl_pageindex img {
+	display: inline-block;
+	vertical-align: middle;
+}
 .dl_cats {
 	padding-bottom: 1em;
 }
@@ -1150,7 +1154,7 @@ ul.dl_details li {
 }
 .dl_caticon {
 	float: left;
-	margin: .7em 1em .5em 0;
+	margin: .5em 1em .5em 0;
 	max-width: 50px;
 }
 .dl_tag {
@@ -1214,8 +1218,10 @@ div.dl_featureshot {
 	margin: .3em .3em .3em 1em;
 }
 .dl_screenshot {
-	float: left;
-	margin-right: 15px;
+	margin: 5px 10px 0 0 ;
+	display: inline-block;
+	vertical-align: top;
+	max-width: 75%;
 }
 .dl_ratingoption {
 	padding: 0 .5em;
@@ -1229,12 +1235,8 @@ div.dl_featureshot {
 	margin: 0;
 	padding: .15em 0 .5em 20px;
 }
-.dl_most_downloaded {
-	overflow: visible;
-	padding: 1%;
-}
 h3.h3dl {
-	font-size: 1.8em;
+	font-size: 1.4em;
 	font-weight: normal;
 	line-height: 1.2em;
 	margin: 0;
@@ -1252,7 +1254,7 @@ h4.h4dl {
 	overflow: hidden;
 	padding: .5em .5em 0 .5em;
 	vertical-align: top;
-	width: 47%;
+	width: 49%;
 }
 .dl_post {
 	padding: 0 0 .5em 0;
@@ -1300,6 +1302,9 @@ dl.tp_title dt {
 }
 dl.tp_title dd {
 	float: none;
+	width: 100%;
+}
+.dl_recentdl {
 	width: 100%;
 }
 }
