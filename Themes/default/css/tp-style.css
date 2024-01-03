@@ -178,7 +178,7 @@ h2.tp_author {
 .tp_article_inner ol, ol.decimal {
 	list-style-type: decimal;
 	}
-.tp_article_info {
+.tp_article_info, .tp_dl_info {
 	opacity: .8;
 	line-height: 1.4em;
 	overflow: hidden;
@@ -207,16 +207,17 @@ h3.tp_article_info {
 	overflow: hidden;
 }
 /* Horizontal render layout */
-.tp_article_info div {
+.tp_article_info div, .tp_dl_info div {
 	border-right: 1px solid var(--tp_article-border);
 	display: inline-block;
 	font-size: .9em;
-	padding: 0 .5em;
+	padding-right: .5em;
+	margin-right: .5em;
 }
-.tp_article_info div:first-of-type {
+.tp_article_info div:first-of-type, .tp_dl_info div:first-of-type {
 	padding-left: 0;
 }
-.tp_article_info div:last-of-type {
+.tp_article_info div:last-of-type, .tp_dl_info div:last-of-type {
 	border-right: none;
 }
 .tp_article_info div.tp_avatar_single {
@@ -1002,7 +1003,7 @@ dl.tp_title dd {
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.tp_article .windowbg, .tp_article .windowbg2, .tp_article .roundframe {
+.tp_article .windowbg, .tp_article .windowbg2, .tp_article .roundframe, .dl_container .windowbg, .dl_container .windowbg2, .dl_container .roundframe {
 	padding: 0;
 }
 #tpleftbarHeader.roundframe, #tprightbarHeader.roundframe {
@@ -1026,7 +1027,7 @@ dl.tp_title dd {
 	box-shadow: none;
 	margin: 0 0 0 0 !important;
 }
-.tp_article .windowbg, .tp_article .windowbg2, .tp_article .windowbg3, .tp_article .roundframe, .dl_container .windowbg {
+.tp_article .windowbg, .tp_article .windowbg2, .tp_article .windowbg3, .tp_article .roundframe {
 	margin-bottom: .5em !important;
 }
 #tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {
@@ -1133,7 +1134,7 @@ ul.dl_details li {
 	padding: 0;
 }
 .dl_pageindex {
-	border: 1px solid var(--tp_border);
+	border-bottom: 1px solid var(--tp_border);
 	overflow: hidden;
 }
 .dl_pageindex img, .title-admin-area img, #blocksDiv img, .box img, .float-items img {
@@ -1178,7 +1179,7 @@ ul.dl_details li {
 .dl_category .itemdetails {
 	padding: 1em 0 .4em 0;
 }
-.dl_category h4, .dl_catpost, .dl_subcats {
+.dl_category h4, .tp_dl_catpost, .dl_subcats {
 	padding-left: 60px;
 }
 ul.dl_subcats, ul.dl_subcats ul {
@@ -1200,14 +1201,24 @@ ul.dl_subcats ul li {
 	padding: 0;
 	width: auto;
 }
-.dl_itemgrid {
-	display: inline-block;
-	overflow: hidden;
-	padding: 1em 1% 1em 0;
-	vertical-align: top;
-	width: 48%;
+.tp_dl_flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: normal;
+  align-items: stretch;
+  align-content: stretch;
 }
-.dl_itemgrid .itemdetails {
+.tp_dl_itemgrid {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+  width: 50%;
+}
+.tp_dl_itemgrid .itemdetails {
 	padding: 1em 0 .4em 0;
 }
 select[name="tp_dlitem_rating"] {
@@ -1226,10 +1237,10 @@ div.dl_featureshot {
 .dl_ratingoption {
 	padding: 0 .5em;
 }
-.dl_morefiles {
+.tp_dl_morefiles {
 	padding: 10px 0 0 0;
 }
-.dl_morefiles li {
+.tp_dl_morefiles li {
 	background: url(../images/tinyportal/glyph_download.png) no-repeat;
 	list-style: none;
 	margin: 0;
@@ -1248,24 +1259,66 @@ h4.h4dl {
 	margin: 0;
 	padding: 0 0 0.5em 0;
 }
-.dl_recentdl {
-	display: inline-block;
-	min-width: 300px;
-	overflow: hidden;
-	padding: .5em .5em 0 .5em;
-	vertical-align: top;
-	width: 49%;
-}
-.dl_post {
+.tp_dl_post {
 	padding: 0 0 .5em 0;
 }
-.dl_catpost {
+.tp_dl_catpost {
 	margin: 0.5em 0 0 0;
 	padding-bottom: .5em;
 }
-.dl_summary {
+.tp_dl_title {
+	padding: 1em;
+}
+.tp_dl_summary {
 	line-height: 1.4em;
 	overflow: hidden;
+	padding: 1em;
+}
+.tp_dl_tablelist .windowbg, .tp_dl_tablelist .windowbg2 {
+	border-top: none;
+	display: flex;
+	box-shadow: none;
+	border-radius: 0;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	justify-content: normal;
+	align-items: center;
+}
+.tp_dl_tablelist, .tpbottom {
+	margin-bottom: .5em;
+}
+.tp_dl_recentthumb {
+	height: 50px;
+	width: 50px;
+	min-width: 50px;
+	margin: .8em;
+	position: relative;
+}
+.tp_dl_recentthumb img {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+.tp_dl_recentdetails {
+	flex-grow: 1;
+}
+.tp_dl_recenttitle {
+	font-size: 14px;
+}
+.tp_dl_recentdetails .tp_dl_info {
+	padding: 0;
+}
+.tp_dl_recentstats {
+	background: var(--tp_background);
+	border: 1px solid var(--tp_article-border);
+	margin: .8em;
+	padding: 6px 10px;
+	text-align: center;
+	border-radius: 6px;
 }
 
 /* Responsive CSS */
@@ -1427,10 +1480,6 @@ dl.tp_title dd {
 .tp_article_picture {
 	background-position: center;
 }
-.dl_itemgrid {
-	width: 98%;
-	word-wrap: break-word;
-}
 ul.dl_subcats li {
 	width: 49%;
 }
@@ -1462,6 +1511,12 @@ ul.tp-subcategories li {
 ul.dl_subcats li {
 	float: none;
 	width: 100%;
+}
+.tp_dl_itemgrid {
+	width: 100%;
+}
+.tp_dl_recentstats {
+	display: none;
 }
 /** Quick fixes Curve2 **/
 input[name="modify_reason"] {
