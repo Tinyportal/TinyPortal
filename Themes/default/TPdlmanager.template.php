@@ -485,22 +485,22 @@ function template_main() {
         <div class="cat_bar">
             <h3 class="catbg">'.$txt['tp-dlupload'].'</h3>
         </div>
-		<div class="windowbg noup" style="padding:0px">
+		<div class="windowbg noup">
 			  <div>
 				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tportal;sa=download;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
 				';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
-			echo '<div class="padding-div" style="text-align:center;"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
+			echo '<div class="padding-div tpcenter"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div style="text-align:center;" class="smalltext padding-div"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
+		echo '<div class="smalltext padding-div tpcenter"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
 					<div class="tp_formtable padding-div">
 						<dl class="tp_title settings">
 							<dt>
 								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
 							</dt>
 							<dd>
-								<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="'.(!empty($_GET['ftp']) ? $_GET['ftp'] : "").'" style="width: 92%;" required>
+								<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="'.(!empty($_GET['ftp']) ? $_GET['ftp'] : "").'" required>
 							</dd>
 							<dt>
 								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
@@ -895,7 +895,7 @@ function template_main() {
 			echo '
 				</div>
 			<hr>
-				<div class="padding-div" style="text-align:center;"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
+				<div class="padding-div tpcenter"><b><a href="'.$scripturl.'?action=tportal;sa=download;dl=get'.$cat['id'].'">['.$txt['tp-download'].']</a></b>
 				</div><br>
 				<dl class="settings">
 					<dt>
@@ -1066,12 +1066,14 @@ function template_main() {
 		$bb=1;
 		foreach($context['TPortal']['dlsearchresults'] as $res) {
 			echo '
-				<div class="windowbg padding-div" style="margin-bottom:5px;">
-					<h4 class="tpresults"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
-					<hr>
-					<div class="tpresults">
-						<div>' , $res['body'] . '</div>
-						<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
+				<div class="windowbg tpbottom">
+					<div class="padding-div">
+						<h4 class="tpresults"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
+						<hr>
+						<div class="tpresults">
+							<div>' , $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($res['body']) : $res['body'] , '</div>
+							<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
+						</div>
 					</div>
 				</div>';
 			$bb++;
@@ -1091,7 +1093,7 @@ function template_dlsubmitsuccess() {
             <div class="cat_bar">
 				<h3 class="catbg">'.$txt['tp-dlsubmitsuccess2'].'</h3>
             </div>
-            <div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-dlsubmitsuccess'].'
+            <div class="windowbg padding-div tpcenter">'.$txt['tp-dlsubmitsuccess'].'
                 <div class="padding-div">&nbsp;</div>
 			</div>
         </div>';

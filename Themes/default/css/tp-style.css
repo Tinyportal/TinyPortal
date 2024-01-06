@@ -941,14 +941,6 @@ input,select {
 	height: 140px;
 	width: 98%;
 }
-dl.tp_title dt {
-	float: left;
-	width: 39%;
-}
-dl.tp_title dd {
-	float: right;
-	width: 60%;
-}
 .tp_customlayout {
 	height: 200px;
 	max-width: 900px;
@@ -1255,6 +1247,17 @@ h4.h4dl {
 }
 .tp_dldetails .tp_dlinfo {
 	padding: 0;
+}
+dl.tp_title dt {
+	float: left;
+	width: 39%;
+}
+dl.tp_title dd {
+	float: right;
+	width: 60%;
+}
+#tp-dluploadtitle {
+	width: 92%;
 }
 .tp_dlstatblock {
 	display: flex;
