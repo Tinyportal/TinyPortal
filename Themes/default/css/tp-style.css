@@ -1003,7 +1003,7 @@ dl.tp_title dd {
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.tp_article .windowbg, .tp_article .windowbg2, .tp_article .roundframe, .dl_container .windowbg, .dl_container .windowbg2, .dl_container .roundframe {
+.tp_article .windowbg, .tp_article .windowbg2, .tp_article .roundframe, .tp_dl_container .windowbg, .tp_dl_container .windowbg2, .tp_dl_container .roundframe {
 	padding: 0;
 }
 #tpleftbarHeader.roundframe, #tprightbarHeader.roundframe {
@@ -1115,130 +1115,76 @@ code.bbc_code {
 	font-style: italic;
 }
 /* DL manager styles */
-.dl_container {
+.tp_wrapanywhere {
+	overflow-wrap: anywhere !important;
+}
+.tp_dl_container {
 	clear: both;
 	width: 100%;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
 	overflow-wrap: anywhere;
 }
-.dl_details {
+.tp_dl_postdetails {
 	font-size: 0.95em;
 	line-height: 1.4em;
 	margin: 0 0 .5em 0;
 	padding: .2em 0 .5em 0;
 }
-ul.dl_details li {
+ul.tp_dl_postdetails li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-.dl_pageindex {
-	border-bottom: 1px solid var(--tp_border);
-	overflow: hidden;
-}
-.dl_pageindex img, .title-admin-area img, #blocksDiv img, .box img, .float-items img {
+.title-admin-area img, #blocksDiv img, .box img, .float-items img {
 	display: inline-block;
 	vertical-align: middle;
 }
-.dl_cats {
-	padding-bottom: 1em;
-}
-.dl_cats h4 {
-	margin: 0;
-	padding: 0;
-}
-.dl_icon {
-	float: left;
-	max-width: 100px;
-	padding: 0 1em .3em 0;
-}
-.dl_caticon {
-	float: left;
-	margin: .5em 1em .5em 0;
-	max-width: 50px;
-}
-.dl_tag {
+.tp_dl_tag {
 	display: block;
 	margin: 0;
 	padding: 0 0 0 24px;
 }
-.dl_category {
-	margin-bottom: .5em;
-	overflow: visible;
-	padding: .4em 1em;
-}
-.dl_category h4 {
-	font-size: 1.1em;
-	line-height: 1.5em;
-	margin: .5em 0 0 0;
-}
-.dl_category .details {
-	float: right;
-}
-.dl_category .itemdetails {
-	padding: 1em 0 .4em 0;
-}
-.dl_category h4, .tp_dl_catpost, .dl_subcats {
-	padding-left: 60px;
-}
-ul.dl_subcats, ul.dl_subcats ul {
+ul.tp_dl_subcats, ul.tp_dl_subcats ul {
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
 }
-ul.dl_subcats li {
+ul.tp_dl_subcats li {
 	float: left;
 	list-style: none;
 	margin: .2em .2em .2em 0;
 	padding: 0;
-	width: 32%;
+	width: 33%;
 }
-ul.dl_subcats ul li {
+ul.tp_dl_subcats ul li {
 	float: left;
 	list-style: none;
 	margin: .1em .2em;
 	padding: 0;
 	width: auto;
 }
-.tp_dl_flex-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: normal;
-  align-items: stretch;
-  align-content: stretch;
-}
-.tp_dl_itemgrid {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 1;
-  flex-basis: auto;
-  align-self: auto;
-  order: 0;
-  width: 50%;
-}
-.tp_dl_itemgrid .itemdetails {
-	padding: 1em 0 .4em 0;
-}
 select[name="tp_dlitem_rating"] {
 	width: initial;
 }
-div.dl_featureshot {
+div.tp_dl_featureshot {
 	float: right;
-	margin: .3em .3em .3em 1em;
+	margin: 0 0 1em 1em;
 }
-.dl_screenshot {
+/*.dl_screenshot {
 	margin: 5px 10px 0 0 ;
 	display: inline-block;
 	vertical-align: top;
 	max-width: 75%;
-}
-.dl_ratingoption {
+}*/
+.tp_dl_ratingoption {
 	padding: 0 .5em;
 }
 .tp_dl_morefiles {
-	padding: 10px 0 0 0;
+	padding: 1em;
+}
+.tp_dl_morefiles ul {
+	padding: .5em 1em;
 }
 .tp_dl_morefiles li {
 	background: url(../images/tinyportal/glyph_download.png) no-repeat;
@@ -1260,14 +1206,10 @@ h4.h4dl {
 	padding: 0 0 0.5em 0;
 }
 .tp_dl_post {
-	padding: 0 0 .5em 0;
+	padding: .5em 1em 1em 1em;
 }
-.tp_dl_catpost {
-	margin: 0.5em 0 0 0;
-	padding-bottom: .5em;
-}
-.tp_dl_title {
-	padding: 1em;
+.tp_dl_catpost, .tp_dl_subcats {
+	margin: 1em;
 }
 .tp_dl_summary {
 	line-height: 1.4em;
@@ -1276,26 +1218,28 @@ h4.h4dl {
 }
 .tp_dl_tablelist .windowbg, .tp_dl_tablelist .windowbg2 {
 	border-top: none;
-	display: flex;
 	box-shadow: none;
 	border-radius: 0;
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+}
+.tp_flexbox {
+	display: flex;
 	justify-content: normal;
 	align-items: center;
 }
 .tp_dl_tablelist, .tpbottom {
 	margin-bottom: .5em;
 }
-.tp_dl_recentthumb {
+.tp_dl_thumb {
 	height: 50px;
 	width: 50px;
 	min-width: 50px;
 	margin: .8em;
 	position: relative;
 }
-.tp_dl_recentthumb img {
+.tp_dl_thumb img {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -1303,24 +1247,54 @@ h4.h4dl {
 	right: 0;
 	margin: auto;
 }
-.tp_dl_recentdetails {
+.tp_dl_icon {
+	max-width: 100px;
+	margin: .8em;
+	position: relative;
+}
+.tp_dl_icon img {
+	float: left;
+	max-width: 100px;
+	padding: 0 1em .3em 0;
+}
+.tp_dl_details {
 	flex-grow: 1;
+	margin: .3em 0;
 }
-.tp_dl_recenttitle {
+.tp_dl_title {
 	font-size: 14px;
+	font-weight: bold;
 }
-.tp_dl_recentdetails .tp_dl_info {
+.tp_dl_details .tp_dl_info {
 	padding: 0;
 }
-.tp_dl_recentstats {
+.tp_dl_statblock {
+	display: flex;
+	font-size: .8em;
+}
+.tp_dl_statblock_a{
 	background: var(--tp_background);
 	border: 1px solid var(--tp_article-border);
-	margin: .8em;
+	margin: 0 3px;
 	padding: 6px 10px;
 	text-align: center;
 	border-radius: 6px;
+	min-width: max-content;
 }
-
+.tp_dl_statblock_b {
+	background: var(--tp_background);
+	border: 1px solid var(--tp_article-border);
+	margin: 0 3px;
+	padding: 6px 8px;
+	text-align: center;
+	border-radius: 6px;
+	min-width: max-content;
+}
+.tp_dl_statnr {
+	font-size: 14px;
+	font-weight: bold;
+}
+}
 /* Responsive CSS */
 /* Youtube embed */
 @media only screen and (min-width: 769px) {
@@ -1355,9 +1329,6 @@ dl.tp_title dt {
 }
 dl.tp_title dd {
 	float: none;
-	width: 100%;
-}
-.dl_recentdl {
 	width: 100%;
 }
 }
@@ -1480,7 +1451,7 @@ dl.tp_title dd {
 .tp_article_picture {
 	background-position: center;
 }
-ul.dl_subcats li {
+ul.tp_dl_subcats li {
 	width: 49%;
 }
 }
@@ -1508,14 +1479,11 @@ ul.dl_subcats li {
 ul.tp-subcategories li {
 	width: 98%;
 }
-ul.dl_subcats li {
+ul.tp_dl_subcats li {
 	float: none;
 	width: 100%;
 }
-.tp_dl_itemgrid {
-	width: 100%;
-}
-.tp_dl_recentstats {
+.tp_dl_statblock {
 	display: none;
 }
 /** Quick fixes Curve2 **/

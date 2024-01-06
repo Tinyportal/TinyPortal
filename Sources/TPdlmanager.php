@@ -666,7 +666,7 @@ function TPortalDLManager()
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
@@ -723,7 +723,7 @@ function TPortalDLManager()
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
@@ -789,7 +789,7 @@ function TPortalDLManager()
 						'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 						'downloads' => $row['downloads'],
 						'views' => $row['views'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 						'author_id' => $row['author_id'],
 						'date' => timeformat($row['created']),
 						'screenshot' => $ico,
@@ -921,7 +921,7 @@ function TPortalDLManager()
 						'views' => $row['views'],
 						'link' => $row['link'],
 						'date_last' => $row['last_access'],
-						'author' => $row['real_name'],
+						'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 						'author_id' => $row['author_id'],
 						'screenshot' => $row['screenshot'],
 						'sshot' => $decideshot,
@@ -1013,7 +1013,7 @@ function TPortalDLManager()
 					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+					'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 					'author_id' => $row['author_id'],
 					'date' => timeformat($row['created']),
 					'screenshot' => $ico,
@@ -1202,7 +1202,7 @@ function TPortalDLManager()
 						'link' => $row['link'],
 						'created' => $row['created'],
 						'date_last' => $row['last_access'],
-						'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+						'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 						'author_id' => $row['author_id'],
 						'screenshot' => $row['screenshot'],
 						'sshot' => $decideshot,
@@ -1436,7 +1436,7 @@ function TPortalDLManager()
 					'views' => $row['views'],
 					'link' => $row['link'],
 					'date_last' => $row['last_access'],
-					'author' => $row['real_name'],
+					'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 					'author_id' => $row['author_id'],
 					'screenshot' => $row['screenshot'],
 					'sshot' => $decideshot,
@@ -1628,7 +1628,7 @@ function TPdlresults()
 				'downloads' => $row['downloads'],
 				'name' => $row['name'],
 				'body' => $row['body'],
-				'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+				'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 			);
 		}
 		$smcFunc['db_free_result']($request);
@@ -2247,7 +2247,7 @@ function TPortalDLAdmin()
 				$itemid = $value;
 				// insert new one
 				$href = '?action=tportal;sa=download;dl=item'.$itemid;
-				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="dl_tag">' . $title[0] . '</span>';
+				$tg = '<span style="background: url('.$settings['tp_images_url'].'/glyph_download.png) no-repeat;" class="tp_dl_tag">' . $title[0] . '</span>';
 				if(!empty($tag))
 				{
 					$smcFunc['db_query']('INSERT',
@@ -3102,7 +3102,7 @@ function TPortalDLAdmin()
 					'filesize' => floor($row['filesize'] / 1024),
 					'views' => $row['views'],
 					'author_id' => $row['author_id'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+					'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 					'created' => timeformat($row['created']),
 					'last_access' => timeformat($row['last_access']),
 					'description' => $row['description'],
@@ -3209,7 +3209,7 @@ function TPortalDLAdmin()
 					'file' => $row['file'],
 					'filesize' => floor($row['filesize'] / 1024),
 					'href' => $scripturl.'?action=tportal;sa=download;dl=adminitem'.$row['id'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+					'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 					'date' => timeformat($row['created']),
 				);
 				$submitted[] = $row['id'];

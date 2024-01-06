@@ -23,6 +23,7 @@ $txt['tp-bytes'] = ' bytes';
 $txt['tp-kb'] = ' Kb';
 $txt['tp-mb'] = ' Mb';
 $txt['tp-gb'] = ' Gb';
+$txt['tp-dlscreenshot'] = 'Screenshot';
 $txt['tp-dlusescreenshot'] = 'Use screenshot instead of icon where available';
 $txt['tp-dlscreenshotsize1'] = 'Resize screenshot for thumbnail';
 $txt['tp-dlscreenshotsize2'] = 'Resize screenshot for featured';
@@ -49,7 +50,7 @@ $txt['tp-lowerbar'] = 'Show lower panel';
 $txt['tp-bottombar'] = 'Show bottom panel';
 $txt['tp-noneicon'] = 'None';
 
-//Admnin
+//Admin
 $txt['tp-helpdownload1'] = 'These are your main download categories with the number of files each category holds. Selecting a category will bring you to the list of files for that category. The actions icons allow you to view the category page or directly edit the category settings.';
 $txt['tp-helpdownload2'] = 'This page shows all list of all files in the chosen category. Selecting a download will bring you the the edit file page. If a category holds any sub-categories these will be listed first.';
 
