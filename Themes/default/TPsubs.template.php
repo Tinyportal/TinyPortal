@@ -796,10 +796,18 @@ function TPortal_module()
 				foreach($it as $item)
 				{
 					echo '
-					<img src="'.$item['icon'].'" style="margin-left: 4px;float:right" alt="" />
-						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
-						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
-						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
+					<div class="tp_flexbox">
+						<div class="tp_dlthumb"><img src="'.$item['icon'].'" alt="" /></div>
+						<div class="tp_dldetails">
+							<div class="tp_dltitle"><a href="'.$item['href'].'">'.$item['name'].'</a></div>
+							<div class="tp_dlinfo">
+								<div>'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b></div>
+								<div>'.$item['date'].'</div>
+								<div>'.$txt['tp-downloads'].': <b>'.$item['downloads'].'</b></div>
+								<div>'.$txt['tp-itemviews'].': <b>'.$item['views'].'</b></div>
+							</div>
+						</div>
+					</div>';
 				}
 			}
 			break;
@@ -811,10 +819,18 @@ function TPortal_module()
 				foreach($it as $item)
 				{
 					echo '
-					<img src="'.$item['icon'].'" style="margin-left: 4px;float:right" alt="" />
-						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
-						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
-						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
+					<div class="tp_flexbox">
+						<div class="tp_dlthumb"><img src="'.$item['icon'].'" alt="" /></div>
+						<div class="tp_dldetails">
+							<div class="tp_dltitle"><a href="'.$item['href'].'">'.$item['name'].'</a></div>
+							<div class="tp_dlinfo">
+								<div>'.$txt['tp-downloads'].': <b>'.$item['downloads'].'</b></div>
+								<div>'.$txt['tp-itemviews'].': <b>'.$item['views'].'</b></div>
+								<div>'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b></div>
+								<div>'.$item['date'].'</div>
+							</div>
+						</div>
+					</div>';
 				}
 			}
 			break;
@@ -826,10 +842,18 @@ function TPortal_module()
 				foreach($it as $item)
 				{
 					echo '
-					<img src="'.$item['icon'].'" style="margin-left: 4px;float:right" alt="" />
-						<a href="'.$item['href'].'"><b>'.$item['name'].'</b></a>
-						<p class="smalltext">'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b> <br>( '.$item['date'].')<br>
-						'.$txt['tp-downloads'].'/'.$txt['tp-itemviews'].': <b>'.$item['downloads'].' / '.$item['views'].'</b></p>';
+					<div class="tp_flexbox">
+						<div class="tp_dlthumb"><img src="'.$item['icon'].'" alt="" /></div>
+						<div class="tp_dldetails">
+							<div class="tp_dltitle"><a href="'.$item['href'].'">'.$item['name'].'</a></div>
+							<div class="tp_dlinfo">
+								<div>'.$txt['tp-itemviews'].': <b>'.$item['views'].'</b></div>
+								<div>'.$txt['tp-downloads'].': <b>'.$item['downloads'].'</b></div>
+								<div>'.$txt['tp-uploadedby'].' <b>'.$item['author'].'</b></div>
+								<div>'.$item['date'].'</div>
+							</div>
+						</div>
+					</div>';
 				}
 			}
 			break;
