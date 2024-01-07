@@ -110,11 +110,11 @@ function template_main() {
 						<div class="windowbg">
 							<div class="tp_flexbox">';
 							if(!empty($last['screenshot']))
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$last['screenshot'].'" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$last['screenshot'].'" alt="'.$last['name'].'" ></div>';
 							elseif(!empty($last['icon']) && strpos($last['icon'], 'blank.gif') == false)
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$last['icon'].'" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$last['icon'].'" alt="'.$last['name'].'" ></div>';
 							else
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$settings['tp_images_url'].'/TPnodl.png" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$settings['tp_images_url'].'/TPnodl.png" alt="TPnodl"></div>';
 							echo '
 								<div class="tp_dldetails">
 									<div class="tp_dltitle"><a href="'.$last['href'].'">'.$last['name'].'</a></div>
@@ -146,11 +146,11 @@ function template_main() {
 						<div class="windowbg">
 							<div class="tp_flexbox">';
 							if(!empty($wost['screenshot']))
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$wost['screenshot'].'" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$wost['screenshot'].'" alt="'.$wost['name'].'"  ></div>';
 							elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$wost['icon'].'" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$wost['icon'].'" alt="'.$wost['name'].'"  ></div>';
 							else
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$settings['tp_images_url'].'/TPnodl.png" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$settings['tp_images_url'].'/TPnodl.png" alt="'.$wost['name'].'"  ></div>';
 							echo '
 								<div class="tp_dldetails"><a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 									<div class="tp_dlinfo">
@@ -180,11 +180,11 @@ function template_main() {
 						<div class="windowbg">
 							<div class="tp_flexbox">';
 							if(!empty($wost['screenshot']))
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$wost['screenshot'].'" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$wost['screenshot'].'" alt="'.$wost['name'].'" ></div>';
 							elseif(!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false)
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$wost['icon'].'" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$wost['icon'].'" alt="'.$wost['name'].'" ></div>';
 							else
-								echo '<div class="tp_dlthumb"><img alt="" src="'.$settings['tp_images_url'].'/TPnodl.png" /></div>';
+								echo '<div class="tp_dlthumb"><img src="'.$settings['tp_images_url'].'/TPnodl.png" alt="'.$wost['name'].'" ></div>';
 							echo '
 								<div class="tp_dldetails"><a href="'.$wost['href'].'"><b>'.$count.'.&nbsp;'.$wost['name'].'</b></a>
 									<div class="tp_dlinfo">
@@ -251,7 +251,7 @@ function template_main() {
 						if($dlchild['parent']==$dlcat['id']) {
 							$content .= '
 						<li>
-							<img alt="" src="' .$settings['tp_images_url']. '/TPboard.png' . '" />
+							<img src="' .$settings['tp_images_url']. '/TPboard.png' . '" alt="TPboard">
 								<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
 								$content .= '' . ($dlchild['files']==1 ? '<span class="smalltext"><i> ('.$dlchild['files'].'&nbsp;'.$txt['tp-dl1file'].')</i></span>' : '<span class="smalltext"><i> ('.$dlchild['files'].' '.$txt['tp-dlfiles'].')</i></span>') .'';
 							$content .= '
@@ -263,10 +263,13 @@ function template_main() {
 				<div class="windowbg">
 					<div class="tp_flexbox">
 						<div class="tp_dlthumb">
-							<img src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="" />
+							<img src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'],0,4)=='http' ? $dlcat['icon'] :  $boardurl. '/' . $dlcat['icon']) : $settings['images_url'].'/board.gif' , '" alt="'.$dlcat['name'].'" />
 						</div>
 						<div class="tp_dldetails">
 							<div class="tp_dltitle"><a href="'. $dlcat['href'] .'">'.$dlcat['name'].'</a></div>
+							<div class="tp_dlinfo">
+								<div class="tp_dlshow-on-responsive"><i>', ($dlcat['files']==1 ? ''.$dlcat['files'].' '.$txt['tp-dl1file'].'' : ''.$dlcat['files'].' '.$txt['tp-dlfiles'].'') ,'</i></div>
+							</div>
 						</div>
 						<div class="tp_dlstatblock">
 							<div class="tp_dlstatblock_a">', ($dlcat['files']==1 ? '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dl1file'].'' : '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dlfiles'].'') ,'</div>
@@ -316,7 +319,7 @@ function template_main() {
 						<div class="tp_flexbox">
 							<div class="tp_dlthumb">';
 						echo '
-								' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '	
+								' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="'.$dlitem['name'].'"  />' , '	
 							</div>';
 						echo '
 							<div class="tp_dldetails">
@@ -333,7 +336,9 @@ function template_main() {
 					$details[] = $txt['tp-itemlastdownload'] . ' ' . timeformat($dlitem['date_last']);
 
 					echo '
-						<div class="tp_dlinfo"><div>' , implode('</div><div>', $details) , '</div></div>
+						<div class="tp_dlinfo">
+							<div class="tp_dlshow-on-responsive">'.$dlitem['downloads'].' '.$txt['tp-downloads'].'</div>
+							<div>' , implode('</div><div>', $details) , '</div></div>
 							</div>
 							<div class="tp_dlstatblock">
 								<div class="tp_dlstatblock_a"><div class="tp_dlstatnr">'.$dlitem['downloads'].'</div>'.$txt['tp-downloads'].'</div>
@@ -377,7 +382,7 @@ function template_main() {
 			<div class="windowbg">
 				<div class="tp_flexbox">
 					<div class="tp_dlicon">
-						' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="" />' , '
+						' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="'.$dlitem['name'].'"  />' , '
 					</div>
 					<div class="tp_dldetails">
 						<div class="tp_dltitle"><h3 class="h3dl">',$dlitem['file'] == '- empty item -' ? ''. $dlitem['name'] .'' : '<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h3></div>
@@ -455,15 +460,14 @@ function template_main() {
 			}
 		}
 		// any screenshot?
-		if(!empty($dlitem['sshot']))
-			 echo '
-				<div class="tp_underline"></div>
+		if(!empty($dlitem['screenshot'])) {
+			echo '
+					<div class="tp_underline"></div>
 					<div class="tp_dlpost">
 						<strong>'.$txt['tp-dlscreenshot'].'</strong>
-						<div class="windowbg">
-							<img src="'.$dlitem['bigshot'].'" alt="" />
-						</div>
+						'.(!empty($dlitem['sshot']) ? '<div class="windowbg"><img src="'.$dlitem['bigshot'].'" alt="'.$dlitem['name'].'"  /></div>' : '<div class="errorbox">'.$txt['tp-dlfileerror'].'. '.$txt['tp-dlerrorfile'].':'.$dlitem['screenshot'].'</div>').'
 					</div>';
+		}
 		echo '
 				</div>
 			</div>
@@ -587,7 +591,7 @@ function template_main() {
 
 		echo '
 						</select>
-						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="" />
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' .$settings['tp_images_url']. '/TPblank.png" alt="TPblank.png" />
 					</dd>
 					<dt>
 						<label for="tp_dluploadpic">'.$txt['tp-dluploadpic'].'</label>
@@ -709,7 +713,7 @@ function template_main() {
 		<div class="windowbg noup padding-div">
 			<div class="title_bar"><h3 class="titlebg">'.$maxcount.' '.$txt['tp-dlstatscats'].'</h3></div>
 			<div style="width:100%;">
-				<div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="" /></div>
+				<div class="float-items" style="width:5%;"><img src="' .$settings['tp_images_url']. '/TPboard.png" alt="TPboard.png" /></div>
 				<div class="float-items" style="width:91%;">';
 
 		// top categories
@@ -947,7 +951,7 @@ function template_main() {
 					</dt>
 					<dd>
 						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="'.$cat['sshot'].'" size="60"><br>
-						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '&nbsp;' , '</div>
+						<div style="overflow: auto;">' , $cat['sshot']!='' ? '<img src="' . (substr($cat['sshot'],0,4)=='http' ? $cat['sshot'] :  $boardurl. '/' . $cat['sshot']) . '" alt="" />' : '' , '</div>
 				   	</dd>
 					<dt>
 						'.$txt['tp-uploadnewpic'].'

@@ -646,15 +646,16 @@ function TPortalDLManager()
 					elseif($context['TPortal']['dl_fileprefix'] == 'G')
 						$fs = (ceil($row['filesize'] / 1000000) / 1024). $txt['tp-gb'];
 
+					$ico = '';
+					$thumb = '';
 					if($context['TPortal']['dl_usescreenshot'] == 1)
 					{
 						if(!empty($row['screenshot']))
+							if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/thumb/' . $row['screenshot'])) {
 							$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/'.$row['screenshot'];
-						else
-							$ico = '';
+							$thumb = $row['icon'];
+							}
 					}
-					else
-						$ico = '';
 
 					$context['TPortal']['dl_last_added'][] = array(
 						'id' => $row['id'],
@@ -900,10 +901,11 @@ function TPortalDLManager()
 					else
 						$rating_average = 0;
 
-					   $decideshot = !empty($row['screenshot']) ? $boardurl. '/' . $row['screenshot'] : '';
 						// does it exist?
 						if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
 							$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']). 'dlmanager/listing/' . $row['screenshot'];
+						else
+							$decideshot = '';
 
 						if($context['user']['is_logged'])
 							$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;
@@ -1417,8 +1419,12 @@ function TPortalDLManager()
 				// does it exist?
 				if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot']))
 					$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']). 'dlmanager/listing/' . $row['screenshot'];
+				else
+					$decideshot = '';
 				if(file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/' . $row['screenshot']) && !empty($row['screenshot']))
 					$bigshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']). 'dlmanager/' . $row['screenshot'];
+				else
+					$bigshot = '';
 
 				if($context['user']['is_logged'])
 					$can_rate = in_array($context['user']['id'], explode(',', $row['voters'])) ? false : true;

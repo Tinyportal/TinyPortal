@@ -1285,6 +1285,9 @@ dl.tp_title dd {
 	font-size: 14px;
 	font-weight: bold;
 }
+.tp_dlinfo .tp_dlshow-on-responsive {
+	display: none;
+}
 }
 /* Responsive CSS */
 /* Youtube embed */
@@ -1477,6 +1480,10 @@ ul.tp_dlsubcats li {
 .tp_dlstatblock {
 	display: none;
 }
+.tp_dlinfo .tp_dlshow-on-responsive {
+	display: inline-block;
+}
+
 /** Quick fixes Curve2 **/
 input[name="modify_reason"] {
 	width:100%;
