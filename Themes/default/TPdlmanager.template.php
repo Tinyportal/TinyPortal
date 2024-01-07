@@ -1056,7 +1056,7 @@ function template_main() {
 					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tportal;sa=download;dl=results" method="post">
 					<div class="tp_pad">
 						<b>'.$txt['tp-search'].':</b><br>
-						<input type="text" id="searchbox" value="'.$context['TPortal']['dlsearchterm'].'" name="dl_search" /><br>
+						<input type="text" id="searchbox" name="dl_search" value="'.$context['TPortal']['dlsearchterm'].'" required><br>
 						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '<br>
 						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
