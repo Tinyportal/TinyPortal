@@ -250,12 +250,12 @@ function template_main() {
 					foreach($context['TPortal']['dlcatchilds'] as $dlchild) {
 						if($dlchild['parent']==$dlcat['id']) {
 							$content .= '
-						<li>
+						<div class="tp_dlsubcat">
 							<img src="' .$settings['tp_images_url']. '/TPboard.png' . '" alt="TPboard">
 								<a href="'.$dlchild['href'].'">'.$dlchild['name'].'</a>';
 								$content .= '' . ($dlchild['files']==1 ? '<span class="smalltext"><i> ('.$dlchild['files'].'&nbsp;'.$txt['tp-dl1file'].')</i></span>' : '<span class="smalltext"><i> ('.$dlchild['files'].' '.$txt['tp-dlfiles'].')</i></span>') .'';
 							$content .= '
-						</li>';
+						</div>';
 						}
 					}
 				}
@@ -272,7 +272,7 @@ function template_main() {
 							</div>
 						</div>
 						<div class="tp_dlstatblock">
-							<div class="tp_dlstatblock_a">', ($dlcat['files']==1 ? '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dl1file'].'' : '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dlfiles'].'') ,'</div>
+							<div class="tp_dlstatblock_c">', ($dlcat['files']==1 ? '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dl1file'].'' : '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dlfiles'].'') ,'</div>
 						</div>
 					</div>';
 				if(!empty($dlcat['description'])) {
@@ -283,7 +283,7 @@ function template_main() {
 				if(!empty($content)) {
 					echo ' 
 						<div class="tp_underline"></div>
-						<div class="tp_dlsubcats"><ul class="tp_dlsubcats">'.$content.'</ul></div>';
+						<div class="tp_dlsubcats">'.$content.'</div>';
 				}
 				echo '
 				</div>';
