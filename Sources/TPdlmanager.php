@@ -2972,6 +2972,17 @@ function TPortalDLAdmin()
 	}
 	elseif(substr($admsub, 0, 3) == 'cat')
 	{
+		// check if sorting is specified
+		if(isset($_GET['dlsort']) && in_array($_GET['dlsort'], array('id', 'name', 'downloads', 'created', 'author_id')))
+			$context['TPortal']['dlsort'] = $dlsort = $_GET['dlsort'];
+		else
+			$context['TPortal']['dlsort'] = $dlsort = 'id';
+		
+		if(isset($_GET['asc']))
+			$context['TPortal']['dlsort_way'] = $dlsort_way = 'asc';
+		else
+			$context['TPortal']['dlsort_way'] = $dlsort_way = 'desc';
+
 		$cat = substr($admsub, 3);
 		// get the parent first
 		$request = $smcFunc['db_query']('', '
@@ -2993,16 +3004,36 @@ function TPortalDLAdmin()
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.*, dl.author_id as author_id,m.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dl
-			INNER JOIN {db_prefix}members AS m
+			LEFT JOIN {db_prefix}members AS m
 			ON dl.author_id = m.id_member
 			WHERE abs(dl.category) = {int:cat}
 			AND dl.type = {string:type}
 			AND dl.subitem = {int:sub}
-			ORDER BY dl.name ASC',
+			ORDER BY dl.'.$dlsort.' '. $dlsort_way .'',
 			array('cat' => $cat, 'type' => 'dlitem', 'sub' => 0)
 		);
 		if($smcFunc['db_num_rows']($request) > 0)
 		{
+
+				// set up the sorting links
+				$context['TPortal']['sortlinks'] = '<span class="smalltext">' . $txt['tp-sortby'] . ': ';
+				$what = array('id', 'name', 'downloads', 'created', 'author_id');
+				foreach($what as $v)
+				{
+					if($context['TPortal']['dlsort'] == $v)
+					{
+						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$cat.';dlsort='.$v.';';
+						if($context['TPortal']['dlsort_way'] == 'asc')
+							$context['TPortal']['sortlinks'] .= 'desc">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /></a> &nbsp;|&nbsp; ';
+						else
+							$context['TPortal']['sortlinks'] .= 'asc">'.$txt['tp-'.$v].' <img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /></a> &nbsp;|&nbsp; ';
+					}
+					else
+						$context['TPortal']['sortlinks'] .= '<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$cat.';dlsort='.$v.';desc">'.$txt['tp-'.$v].'</a> &nbsp;|&nbsp; ';
+				}
+				$context['TPortal']['sortlinks'] = substr($context['TPortal']['sortlinks'], 0, strlen($context['TPortal']['sortlinks']) - 15);
+				$context['TPortal']['sortlinks'] .= '</span>';
+
 			while($row = $smcFunc['db_fetch_assoc']($request))
 			{
 				$context['TPortal']['dl_admitems'][] = array(
@@ -3104,7 +3135,7 @@ function TPortalDLAdmin()
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.id, dl.name, dl.file, dl.created, dl.filesize, dl.author_id as author_id, m.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dl
-			INNER JOIN {db_prefix}members AS m
+			LEFT JOIN {db_prefix}members AS m
 				ON dl.author_id = m.id_member
 			WHERE dl.type = {string:type}
 				AND dl.category < 0',

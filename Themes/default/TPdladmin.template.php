@@ -344,7 +344,7 @@ function template_main()
 		if(isset($context['TPortal']['admcats']) && $ccount>0)
 		{
 		echo '
-			<b>'.$txt['tp-childcategories'].'</b>
+			<div class="padding-div"><b>'.$txt['tp-childcategories'].'</b></div>
 			<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg2">
@@ -405,16 +405,18 @@ function template_main()
 				</tbody>
 			</table>
 			<div class="padding-div"><input type="submit" class="button button_submit" name="dlsend" value="'.$txt['tp-submit'].'">
-			<div class="padding-div">&nbsp;</div>
 			</div>';
-
 		}
 // output any subcats files
-		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
-		{
 		echo '
-		<b>'.$txt['tp-dlfiles'].'</b>
-			<table class="table_grid tp_grid">
+		<div class="padding-div">
+			<b>'.$txt['tp-dlfiles'].'</b>';
+			if(!empty($context['TPortal']['sortlinks']))
+				echo '
+			<div class="tp_dlsortlinks floatright">' . $context['TPortal']['sortlinks'] . '</div>';
+		echo '
+		</div>
+		<table class="table_grid tp_grid">
 		<thead>
 			<tr class="title_bar titlebg2">
 			<th scope="col">
@@ -431,6 +433,8 @@ function template_main()
 			</tr>
 		</thead>
 		<tbody>';
+		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
+		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
 				echo '
