@@ -2993,7 +2993,7 @@ function TPortalDLAdmin()
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.*, dl.author_id as author_id,m.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dl
-			INNER JOIN {db_prefix}members AS m
+			LEFT JOIN {db_prefix}members AS m
 			ON dl.author_id = m.id_member
 			WHERE abs(dl.category) = {int:cat}
 			AND dl.type = {string:type}
@@ -3104,7 +3104,7 @@ function TPortalDLAdmin()
 		$request = $smcFunc['db_query']('', '
 			SELECT dl.id, dl.name, dl.file, dl.created, dl.filesize, dl.author_id as author_id, m.real_name as real_name
 			FROM {db_prefix}tp_dlmanager AS dl
-			INNER JOIN {db_prefix}members AS m
+			LEFT JOIN {db_prefix}members AS m
 				ON dl.author_id = m.id_member
 			WHERE dl.type = {string:type}
 				AND dl.category < 0',
