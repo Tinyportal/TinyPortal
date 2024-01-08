@@ -253,7 +253,6 @@ $txt['tp-expired-start2'] = ' until ';
 $txt['tp-from'] = 'From ';
 $txt['tp-fromcategory'] = 'Posted in ';
 $txt['tp-frontpage'] = 'Frontpage';
-$txt['tp-fullscreenshot'] = 'Show full picture';
 $txt['tp-generalsettings'] = 'General settings';
 $txt['tp-haverated'] = 'You have rated.';
 $txt['tp-hide'] = 'Hide';

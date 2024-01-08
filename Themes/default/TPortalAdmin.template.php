@@ -570,7 +570,7 @@ function template_categories()
 					<tr class="title_bar titlebg">
 					<th scope="col">
 						<div>
-							<div class="float-items" style="width:72%;"><strong>' , $txt['tp-artcat'] , '</strong></div>
+							<div class="float-items"><strong>' , $txt['tp-artcat'] , '</strong></div>
 							<div class="title-admin-area float-items tpcenter" style="width:150px;float:right;"><strong>' , $txt['tp-actions'] , '</strong></div>
 							<p class="clearthefloat"></p>
 						</div>
@@ -590,7 +590,7 @@ function template_categories()
 						<div>';
 
 				echo '
-							<div class="float-items' , '" style="width:72%;">
+							<div class="float-items' , '">
 								' , str_repeat("- ",$cat['indent']) , '
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '">' , $cat['name'] , '</a>
 								' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '(' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . ': '.$context['TPortal']['cats_count'][$cat['id']].')' : '' , '
@@ -1199,17 +1199,22 @@ function template_strays()
 
 		if(isset($context['TPortal']['allcats'])) {
 			echo '
-				<div class="padding-div">
-				<select name="tp_article_cat">
-					<option value="0">' . $txt['tp-createnew'] . '</option>';
-			foreach($context['TPortal']['allcats'] as $submg) {
-  					echo '
-						<option value="'.$submg['id'].'">',  ( isset($submg['indent']) && $submg['indent'] > 1 ) ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
-            }
-			echo '
-				</select>
-				<input name="tp_article_new" size="40" placeholder= "'.$txt['tp-createnewcategory'].'" value="">
-				</div>';
+				<hr>
+				<dl class="tp_title settings">
+					<dt>
+						<select name="tp_article_cat">
+							<option value="0">' . $txt['tp-createnew'] . '</option>';
+					foreach($context['TPortal']['allcats'] as $submg) {
+							echo '
+								<option value="'.$submg['id'].'">',  ( isset($submg['indent']) && $submg['indent'] > 1 ) ? str_repeat("-", ($submg['indent']-1)) : '' , ' '. $txt['tp-assignto'] . $submg['name'].'</option>';
+					}
+					echo '
+						</select>
+					</dt>
+					<dd>
+						<input name="tp_article_new" size="40" placeholder= "'.$txt['tp-createnewcategory'].'" value="">
+					</dd>
+				</dl>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -1327,7 +1332,9 @@ function template_submission()
 		if(isset($context['TPortal']['allcats']))
 		{
 			echo '
-				<div class="padding-div">
+				<hr>
+				<dl class="tp_title settings">
+					<dt>
 					<select name="tp_article_cat">
 						<option value="0">' . $txt['tp-createnew2'] . '</option>';
 			foreach($context['TPortal']['allcats'] as $submg)
@@ -1335,8 +1342,11 @@ function template_submission()
 						<option value="'.$submg['id'].'">'. $txt['tp-approveto'] . $submg['name'].'</option>';
 			echo '
 					</select>
+					</dt>
+					<dd>
 					<input name="tp_article_new" value="" size="40" placeholder= "'.$txt['tp-createnewcategory'].'">
-				</div>';
+					</dd>
+				</dl>';
 		}
 		echo '
 				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
@@ -1950,7 +1960,7 @@ function template_blocks()
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive"><strong>'.$txt['tp-editsave'].'</strong></div>
 							<a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id=' .$lblock['id']. ';' . $context['session_var'] . '=' . $context['session_id'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
-							<input type="image" class="tpbut" style="height:16px; vertical-align:top;" src="' .$settings['tp_images_url']. '/TPsave.png" title="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">
+							<input type="image" class="tpbut" style="height:18px;" src="' .$settings['tp_images_url']. '/TPsave.png" title="'.$txt['tp-send'].'" value="�" onClick="javascript: submit();">
 						</div>
 	                    <div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive"><strong>'.$txt['tp-delete'].'</strong></div>

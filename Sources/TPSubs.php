@@ -2290,7 +2290,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'href' => $scripturl.'?action=tportal;sa=download;dl=item'.$row['id'],
 					'downloads' => $row['downloads'],
 					'views' => $row['views'],
-					'author' => '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>',
+					'author' => (!empty($row['real_name']) ? '<a href="'.$scripturl.'?action=profile;u='.$row['author_id'].'">'.$row['real_name'].'</a>' : $txt['tp-guest']),
 					'author_id' => $row['author_id'],
 					'icon' => $row['icon'],
 					'date' => timeformat($row['created']),

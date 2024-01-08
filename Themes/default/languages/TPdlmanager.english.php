@@ -23,6 +23,7 @@ $txt['tp-bytes'] = ' bytes';
 $txt['tp-kb'] = ' Kb';
 $txt['tp-mb'] = ' Mb';
 $txt['tp-gb'] = ' Gb';
+$txt['tp-dlscreenshot'] = 'Screenshot';
 $txt['tp-dlusescreenshot'] = 'Use screenshot instead of icon where available';
 $txt['tp-dlscreenshotsize1'] = 'Resize screenshot for thumbnail';
 $txt['tp-dlscreenshotsize2'] = 'Resize screenshot for featured';
@@ -49,7 +50,7 @@ $txt['tp-lowerbar'] = 'Show lower panel';
 $txt['tp-bottombar'] = 'Show bottom panel';
 $txt['tp-noneicon'] = 'None';
 
-//Admnin
+//Admin
 $txt['tp-helpdownload1'] = 'These are your main download categories with the number of files each category holds. Selecting a category will bring you to the list of files for that category. The actions icons allow you to view the category page or directly edit the category settings.';
 $txt['tp-helpdownload2'] = 'This page shows all list of all files in the chosen category. Selecting a download will bring you the the edit file page. If a category holds any sub-categories these will be listed first.';
 
@@ -68,7 +69,7 @@ $txt['tp-dlviewcat'] = 'View files in this category';
 //Upload
 $txt['tp-dltabs3'] = 'Upload';
 $txt['tp-dlupload'] = 'Upload';
-$txt['tp-warnsubmission'] = 'Currently all uploaded files will need activation by an administrator.';
+$txt['tp-warnsubmission'] = 'All uploaded files will need activation by an administrator.';
 $txt['tp-maxuploadsize'] = 'Max upload size';
 $txt['tp-dluploadtitle'] = 'Title';
 $txt['tp-dlnotitle'] = '-no title-';
@@ -90,22 +91,21 @@ $txt['tp-adminonly'] = 'You are not allowed in this section.';
 
 $txt['tp-dluploadnotallowed'] = 'Sorry, uploading files is currently not allowed.';
 $txt['tp-dlnotuploaded'] = 'File was not uploaded. Error %s';
-$txt['tp-dluploadfailure'] = 'The upload was not able to complete. This might happen because it took too long to upload or the file is bigger than the server will allow.<br><br>Please consult your server administrator for more information. ';
-$txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is currently ';
-$txt['tp-dlmaxerror2'] = 'Your file was';
-$txt['tp-dlexterror'] = 'Currently you can only upload one of the following file formats';
-$txt['tp-dlexterror2'] = 'Your file was';
+$txt['tp-dluploadfailure'] = 'The upload was not able to complete: you may have forgotten to specify a file for the upload. It might also happen because the file you specified took too long to upload or is bigger than the server will allow.';
+$txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is ';
+$txt['tp-dlexterror'] = 'You can only upload one of the following file formats';
+$txt['tp-dlfileerror'] = 'The file no longer exists on the server';
+$txt['tp-dlerrorfile'] = 'Your file was';
 
 //Edit file
 $txt['tp-useredit'] = 'Edit file';
 $txt['tp-dlpreview'] = 'View download';
 $txt['tp-dlfilename'] = 'Filename:';
-$txt['tp-onlyftpstrays'] = 'Only showing files that do not have an entry in the downloads manager:';
 $txt['tp-dlfilesize'] = 'Filesize';
 $txt['tp-uploadnewfileexisting'] = 'Upload a new file <br><span class="smalltext"> (the existing file will be replaced.)</span>';
 $txt['tp-uploadnewpicexisting']='Existing screenshot/image';
 $txt['tp-uploadnewpic'] = 'Upload a new image<br><span class="smalltext">(supported extensions: jpg, gif or png. The existing image will be replaced.)</span>';
-$txt['tp-dlmorefiles2'] = 'Attach to another item:';
+$txt['tp-dlmorefiles2'] = 'Link to existing download';
 $txt['tp-sayno'] = 'No';
 $txt['tp-dlnotapprovedyet'] = 'The file is not approved yet.';
 $txt['tp-dlmorefiles'] = 'Download additional files:';
@@ -117,22 +117,26 @@ $txt['tp-dluploadattach'] = 'Attach to an existing file?';
 
 //Submissions
 $txt['tp-dlsubmissions'] = 'Submissions';
-$txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval.';
+$txt['tp-nosubmissions'] = 'There are no submissions awaiting approval.';
 $txt['tp-dlapprove'] = 'Approval?';
 
 //FTP
 $txt['tp-dlftp'] = 'FTP';
 $txt['tp-ftpstrays'] = 'Assign new files in the tp_dlmanager table';
-$txt['tp-assignftp'] = 'Using an FTP client you can upload multiple files to the tp-downloads folder on your server. Here you can add these files to TPdownloads: by using the links behind each file, you can select individual files for direct processing. If you wish to process multiple files at once you can use the ceckboxes. If you write something in the new-category-field, a new category will be created with that name. Otherwise the file(s) will be assigned to the category selected in the dropdown list. Note that this also acts as a parent category when using new-category option.';
-$txt['tp-noftpstrays'] = 'Currently there are no files that are not assigned in the tp_dlmanager table.';
+$txt['tp-ftpfolder'] = 'FTP folder';
+$txt['tp-ftpfolderdesc'] = 'Using an FTP client you can upload multiple files to the tp-downloads folder on your server. This is the folder used. If you write something in the "New category" field, a new category will be automatically created with that name. Otherwise the file(s) will be assigned to the category selected in the dropdown list. Note that this also acts as a parent category when using new-category option.';
+$txt['tp-assignftp'] = 'Here you can add unassigned files to TPdownloads: by using the links behind each file, you can select individual files to directly create a download item. If you wish to process multiple files at once you can use the checkboxes.';
+$txt['tp-noftpstrays'] = 'There are no files that are not assigned in the tp_dlmanager table.';
 
 $txt['tp-dlmakeitem'] = 'Process';
-$txt['tp-dlmakeitem2'] = 'Assigning the file:';
+$txt['tp-dlmakeitem2'] = 'Assigning the file';
 $txt['tp-newcatassign'] = 'New category';
 $txt['tp-assigncatparent'] = 'Assign to / Parent category -> ';
 $txt['tp-adminftp_nonewfiles'] = 'No files were added: no category specified.';
 $txt['tp-adminftp_newfiles'] = 'Files were added successfully. ';
 $txt['tp-adminftp_newfilescat'] = 'Check out the category they were inserted into.';
+$txt['tp-adminftp_newfile'] = 'File was added successfully. ';
+$txt['tp-adminftp_newfileview'] = 'Check out the new download.';
 $txt['tp-submitftp'] = 'Process selected';
 
 //Main
@@ -145,7 +149,7 @@ $txt['tp-childcategories'] = 'Child categories';
 $txt['tp-dlname'] = 'Name';
 $txt['tp-dl1file'] = 'File';
 $txt['tp-dlfiles'] = 'Files';
-$txt['tp-nofiles'] = 'Currently there are no files in this category.';
+$txt['tp-nofiles'] = 'There are no files in this category.';
 
 $txt['tp-sortby'] = 'Sort by';
 $txt['tp-id'] = 'ID';
