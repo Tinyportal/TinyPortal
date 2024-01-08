@@ -280,7 +280,7 @@ class Integrate
         }
 
         $tpversion = isset($context['TPortal']['version']) ? $context['TPortal']['version'] : ' ';
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $tpversion . '</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2023</a>';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $tpversion . '</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2024</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;
@@ -575,7 +575,7 @@ class Integrate
     {
         global $context, $scripturl, $boardurl;
 
-        $context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2023</a>';
+        $context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2024</a>';
     }
 
     public static function hookActions(&$actionArray)
