@@ -1558,7 +1558,7 @@ input[name="modify_reason"] {
 .lrs.leftpanelOn #tpleftbarHeader, .lrs.rightpanelOn #tprightbarHeader {
 	width: 100% !important;
 }
-#centerContainer {
+#tpcenterContainer {
 	flex: 1 1 auto;
 	order: 1;
 	width: 100% !important;
