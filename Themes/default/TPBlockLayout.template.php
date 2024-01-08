@@ -120,7 +120,7 @@ function template_tp_below()
 					' , TPortal_panel('lower') , '
 				</div>';
 	echo '
-			</div><!-- #centerContainer -->
+			</div><!-- #tpcenterContainer -->
 		</div><!-- #mainContainer -->';
 		// End #mainContainer
 
