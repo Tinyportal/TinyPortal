@@ -303,7 +303,7 @@ function template_main() {
 			// anything to show?
 			if($context['TPortal']['dlaction']=='cat' && sizeof($context['TPortal']['dlitem'])>0) {
 				echo '
-					<div class="tp_dlsortlinks padding-div">';
+					<div class="tp_dlsortlinks padding-div floatright">';
 				if(!empty($context['TPortal']['sortlinks']))
 					echo '
 					<div>' . $context['TPortal']['sortlinks'] . '</div>';
