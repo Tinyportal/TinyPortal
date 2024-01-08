@@ -344,7 +344,7 @@ function template_main()
 		if(isset($context['TPortal']['admcats']) && $ccount>0)
 		{
 		echo '
-			<b>'.$txt['tp-childcategories'].'</b>
+			<div class="padding-div"><b>'.$txt['tp-childcategories'].'</b></div>
 			<table class="table_grid tp_grid">
 				<thead>
 					<tr class="title_bar titlebg2">
@@ -408,8 +408,6 @@ function template_main()
 			</div>';
 		}
 // output any subcats files
-		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
-		{
 		echo '
 		<div class="padding-div">
 			<b>'.$txt['tp-dlfiles'].'</b>';
@@ -435,6 +433,8 @@ function template_main()
 			</tr>
 		</thead>
 		<tbody>';
+		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
+		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
 				echo '
