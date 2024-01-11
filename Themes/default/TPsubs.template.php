@@ -1115,41 +1115,19 @@ function template_TPsearch_above()
 {
 	global $context, $txt, $scripturl;
 
-	if($context['TPortal']['show_download']==0) {
-		echo '
-	<div style="padding: 0 5px;">
-		<div class="cat_bar">
-			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
-		</div>
-		<div class="windowbg2 noup">
-			<span class="topslice"><span></span></span>
-			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
-	}
-	else {
-        echo '
-	<div style="padding: 0 5px;">
-		<div class="cat_bar">
-			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
-		</div>
-		<div class="windowbg2 noup">
-			<span class="topslice"><span></span></span>
-			<p style="margin: 0; padding: 0 1em;">
-				<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a> |
-				<a href="' . $scripturl. '?action=tportal;sa=download;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
-    }
-
-	// any others?
-	if(!empty($context['TPortal']['searcharray']) && count($context['TPortal']['searcharray']) > 0) {
-		echo implode(' | ', $context['TPortal']['searcharray']);
-    }
-
 	echo '
-			</p>
-			<span class="botslice"><span></span></span>
+		<div class="cat_bar">
+			<h3 class="catbg">' , $txt['tp-searcharticles'] , '</h3>
 		</div>
-	</div>';
+		<div class="windowbg noup">
+			<a href="' . $scripturl. '?action=tportal;sa=searcharticle">' . $txt['tp-searcharticles2'] . '</a>';
 
+	if(!empty($context['TPortal']['show_download'])) {
+		echo '
+			| <a href="' . $scripturl. '?action=tportal;sa=download;dl=search">' . $txt['tp-searchdownloads'] . '</a>';
+	}
+	echo '
+		</div>';
 }
 
 function template_TPsearch_below()
@@ -1163,24 +1141,7 @@ function template_tperror_above()
 	global $context;
 
 	echo '
-	<div class="title_bar">
-		<h3 class="titlebg">'.$context['TPortal']['tperror'].'</h3>
-	</div>';
-
-}
-
-// Error article not published
-function template_notpublished()
-{
-	global $context;
-	echo '
-<div style="padding-bottom: 4px;">
-	<span class="clear upperframe"><span></span></span>
-	<div class="roundframe"><div class="innerframe">
-		<div style="line-height: 1.5em; text-align: center;">'.$context['TPortal']['tperror'].'</div>
-	</div></div>
-	<span class="lowerframe"><span></span></span>
-</div>';
+	<div class="errorbox">'.$context['TPortal']['tperror'].'</div>';
 
 }
 
@@ -1193,9 +1154,8 @@ function template_tpnotify_above()
 {
 	global $context;
 
-	echo '<div style="color: green; padding: 1em; background-color: #fdfffd; border: 2px solid; margin-bottom: 1em;">
-			<div style="padding: 1em;">'.$context['TPortal']['tpnotify'].'</div>
-		</div>';
+	echo '
+	<div class="infobox">'.$context['TPortal']['tpnotify'].'</div>';
 
 }
 
@@ -1650,12 +1610,10 @@ function article_renders($type = 1, $single = false, $first = false)
 			$code = '
 	<div class="render9">
 		<div class="windowbg" style="padding: 0;">
-			<span class="topslice"><span></span></span>
 			<div class="tp_article_padding align_right">
 				<strong>{article_title}</strong>
 				{article_date}
 			</div>
-			<span class="botslice"><span></span></span>
 		</div>
 	</div>';
 	}
@@ -2510,7 +2468,6 @@ function template_tpadm_above()
 		<div class="cat_bar">
 			<h3 class="catbg">' . $txt['tp-adminmenu'] .'</h3>
 		</div>
-		<span class="upperframe"><span></span></span>
 		<div class="roundframe noup">';
 
 
@@ -2542,7 +2499,6 @@ function template_tpadm_above()
 
 	echo '
 		</div>
-		<span class="lowerframe"><span></span></span>
 	</div>
 	<div class="tp_admin_content" style="margin-top: 0;">';
 }
@@ -2566,9 +2522,7 @@ function template_tp_fatal_error()
 			<h3 class="catbg">' , $txt['tp-error'], '</h3>
 		</div>
 		<div class="windowbg">
-			<span class="topslice"><span></span></span>
 			<div class="padding">', $context['TPortal']['errormessage'] , '</div>
-			<span class="botslice"><span></span></span>
 		</div>
 	</div>';
 

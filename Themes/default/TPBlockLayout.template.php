@@ -200,7 +200,7 @@ function template_editblock()
 						</dd>
 					</dl>
 					<hr>
-					<div class="windowbg2 padding-div">';
+					<div class="padding-div">';
 // Block types: 5 (BBC code), 10 (PHP Code) and 11 (HTML & Javascript code)
 			if($context['TPortal']['blockedit']['type']=='5' || $context['TPortal']['blockedit']['type']=='10' || $context['TPortal']['blockedit']['type']=='11')
 			{

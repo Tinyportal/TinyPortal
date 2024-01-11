@@ -407,7 +407,6 @@ function template_frontpage()
 
 			if(empty($context['TPortal']['frontpage_template']))
 				$context['TPortal']['frontpage_template'] = '
-<span class="upperframe"><span></span></span>
 <div class="roundframe">
 	<div class="title_bar">
 		<h3 class="titlebg"><span class="left"></span>{article_title} </h3>
@@ -430,8 +429,7 @@ function template_frontpage()
 			{article_morelinks}
 		</div>
 	</div>
-</div>
-<span class="lowerframe" style="margin-bottom: 5px;"></span>';
+</div>';
 			echo '<br style="clear: both;" />
 				</div>
 				<div>
@@ -725,8 +723,7 @@ function template_editcategory()
 	<div class="cat_bar">
 		<h3 class="catbg"><span class="left"></span>{article_title}</h3>
 	</div>
-	<div class="windowbg2">
-		<span class="topslice"><span></span></span>
+	<div class="windowbg">
 		<div class="tp_article_info">
 			{article_avatar}
 			{article_options}
@@ -741,7 +738,6 @@ function template_editcategory()
 		<div class="tp_article_padding">{article_moreauthor}</div>
 		<div class="tp_article_padding">{article_morelinks}</div>
 		<div class="tp_article_padding">{article_comments}</div>
-		<span class="botslice"><span></span></span>
 	</div>
 </div>';
 				echo '	</div>
@@ -1083,10 +1079,10 @@ function template_strays()
 		<input type="hidden" name="tpadmin_form" value="strays">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-uncategorised2'] . '</h3></div>
 		<div id="uncategorized" class="tp_admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-helpstrays'] , '</div><div></div>';
+			<div class="information smalltext">' , $txt['tp-helpstrays'] , '</div><div></div>
+			<div class="windowbg noup padding-div">';
 	if(isset($context['TPortal']['arts_nocat'])) {
 		echo '
-			<div class="windowbg noup padding-div">
 				<div>
 					<table class="table_grid tp_grid">
 					<thead>
@@ -1196,14 +1192,11 @@ function template_strays()
 				</dl>';
 		}
 		echo '
-				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>
-			</div>';
+				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'"></div>';
 	}
 	else {
 		echo '
-			<div class="windowbg2">
-				<div class="windowbg3"></div>
-			</div>';
+			<div class="padding-div">'.$txt['tp-noarticlesfound'].'</div>';
     }
 	echo '
 		</div>
@@ -1329,10 +1322,7 @@ function template_submission()
 	}
 	else
 		echo '
-			<div class="windowbg2">
-				<div class="padding-div">'.$txt['tp-nosubmissions'].'</div>
-				<div class="padding-div">&nbsp;</div>
-			</div>';
+			<div class="padding-div">'.$txt['tp-nosubmissions'].'</div>';
 
 		echo '
 		</div>
@@ -1752,15 +1742,15 @@ function template_blocks()
 		for($i=0 ; $i<7 ; $i++)
 		{
 			echo '
-				<div class="font_strong">
+				<div class="font_strong tp_pad">
 					<b>'.$txt['tp-'.$side[$i].'sideblocks'].'</b>
 					<a href="'.$scripturl.'?action=tpadmin;addblock=' . $side[$i] . ';' . $context['session_var'] . '=' . $context['session_id'].'">
 					<span style="float: right;"><strong>[' , $txt['tp-addblock'] , ']</strong></span></a>
 				</div>';
 			if(isset($context['TPortal']['admin' . $side[$i].'panel']) && $context['TPortal']['admin' . $side[$i].'panel']==0 && $side[$i]!='front')
 				echo '
-				<div class="windowbg2">
-					<div class="tborder error smalltext" style="padding: 2px;"><a style="color: red;" href="' . $scripturl.'?action=tpadmin;sa=panels">',$txt['tp-panelclosed'] , '</a></div>
+				<div class="errorbox">
+					<a style="color: red;" href="' . $scripturl.'?action=tpadmin;sa=panels">',$txt['tp-panelclosed'] , '</a>
 				</div>';
 
 			if(isset($context['TPortal']['admin_'.$side[$i].'block']['blocks']))
@@ -1802,7 +1792,7 @@ function template_blocks()
 						$newtitle = $lblock['title'];
 
 					if(!$lblock['loose'])
-						$class="windowbg3";
+						$class="windowbg sticky locked";
 					else{
 						$class='windowbg';
 					}
@@ -2116,8 +2106,8 @@ function template_addblock()
 		<input type="hidden" name="tpadmin_form" value="addblock">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-addblock'] . '</h3></div>
 		<div id="add-block" class="tp_admintable admin-area">
-			<div class="windowbg2">
-				<div class="tp_formtable padding-div">
+			<div class="windowbg">
+				<div class="tp_formtable">
 					<dl class="tp_title settings">
 						<dt><h3>' , $txt['tp-title'] , ':</h3>
 						</dt>

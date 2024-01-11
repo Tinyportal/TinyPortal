@@ -405,7 +405,7 @@ a.tp_avatar_author img {
 	width: 100%;
 }
 /* Render4 */
-.render4 .windowbg, .render4 .windowbg2, .render4 .roundframe {
+.render4 .windowbg, .render4 .roundframe {
 	margin-top: 0 !important;
 }
 .tp_article_header {
@@ -995,7 +995,7 @@ input,select {
 }
 /* SMF2.1 styles */
 /* Added these styles for 2.1 Curve to override new styles in admin sections */
-.tp_article .windowbg, .tp_article .windowbg2, .tp_article .roundframe, .tp_dlcontainer .windowbg, .tp_dlcontainer .windowbg2, .tp_dlcontainer .roundframe {
+.tp_article .windowbg, .tp_article .roundframe, .tp_dlcontainer .windowbg, .tp_dlcontainer .roundframe {
 	padding: 0;
 }
 #tpleftbarHeader.roundframe, #tprightbarHeader.roundframe {
@@ -1007,19 +1007,7 @@ input,select {
 	box-shadow: none;
 	margin: 0 0 0 0 !important;
 }
-.tp_admintable > .windowbg2 {
-	border: none;
-	border-radius: 0;
-	box-shadow: none;
-	margin: 0 0 0 0 !important;
-}
-.tp_admintable > .windowbg3 {
-	border: none;
-	border-radius: 0;
-	box-shadow: none;
-	margin: 0 0 0 0 !important;
-}
-.tp_article .windowbg, .tp_article .windowbg2, .tp_article .windowbg3, .tp_article .roundframe {
+.tp_article .windowbg, .tp_article .roundframe {
 	margin-bottom: .5em !important;
 }
 #tpfrontpanel_top .windowbg, #tpfrontpanel_bottom .windowbg {

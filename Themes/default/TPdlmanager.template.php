@@ -1024,24 +1024,29 @@ function template_main() {
 //Downloads search page
 	if($context['TPortal']['dlaction']=='search') {
 	   echo '
-		<form accept-charset="', $context['character_set'], '" id="dl_search_form" action="'.$scripturl.'?action=tportal;sa=download;dl=results" enctype="multipart/form-data" method="post">
-			<div class="tborder" id="dlfiles-search">
+			<div class="tborder">
 				<div class="cat_bar">
 					<h3 class="catbg">'.$txt['tp-downloadsection'].' - '.$txt['tp-dlsearch'].'</h3>
 				</div>
-				<div class="roundframe noup">
-					<div class="tp_pad">
-						<b>'.$txt['tp-search'].':</b><br>
-						<input type="text" id="searchbox" name="dl_search" value="" required><br>
-						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name"> '.$txt['tp-searcharea-name'].'</label><br>
-						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> '.$txt['tp-searcharea-descr'].'</label><br>
-						<input type="hidden" name="sc" value="'.$context['session_id'].'" /><br>
-						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'">
-					</div>
+				<form accept-charset="', $context['character_set'], '" id="searchform" action="'.$scripturl.'?action=tportal;sa=download;dl=results" enctype="multipart/form-data" method="post">
+				<div id="advanced_search" class="roundframe">
+					<dl class="settings" id="search_options">
+						<dt><b>'.$txt['tp-search'].':</b></dt>
+						<dd>
+							<input type="text" id="searchbox" name="dl_search" value="" required/><br>
+						</dd>
+						<dt></dt>
+						<dd>
+							<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name"> '.$txt['tp-searcharea-name'].'</label><br>
+							<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> '.$txt['tp-searcharea-descr'].'</label><br>
+							<input type="hidden" name="sc" value="'.$context['session_id'].'" />
+						</dd>
+					</dl>
+					<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-search'].'"></div>
 				</div>
 			</div>
-		</form>
-	</div>';
+			</form>
+		</div>';
 	}
 
 	if($context['TPortal']['dlaction']=='results') {
@@ -1051,20 +1056,23 @@ function template_main() {
 				<h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
 					' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['dlsearchterm'].'&quot;</h3>
 			</div>
-			<div class="roundframe noup">
-				<div class="padding-div">
-					<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '"  id="dl_search_form" action="'.$scripturl.'?action=tportal;sa=download;dl=results" method="post">
-					<div class="tp_pad">
-						<b>'.$txt['tp-search'].':</b><br>
-						<input type="text" id="searchbox" name="dl_search" value="'.$context['TPortal']['dlsearchterm'].'" required><br>
+			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '" id="searchform" action="'.$scripturl.'?action=tportal;sa=download;dl=results" method="post">
+			<div id="advanced_search" class="roundframe">
+				<dl class="settings" id="search_options">
+					<dt><b>'.$txt['tp-search'].':</b></dt>
+					<dd>
+						<input type="text" id="searchbox" name="dl_search" value="'.$context['TPortal']['dlsearchterm'].'" required>
+					</dd>
+					<dt></dt>
+					<dd>
 						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '<br>
 						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br>
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" /><br>
-						<input type="submit" class="button button_submit" value="'.$txt['tp-search'].'" />
-					</div>
-					</form>
-				</div>
+						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
+					</dd>
+				</dl>
+				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-search'].'" /></div>
 			</div>
+			</form>
 		</div>
 				';
 		$bb=1;
