@@ -1127,7 +1127,7 @@ ul.tp_dlpostdetails li {
 	margin: 0;
 	padding: 0;
 }
-.title-admin-area img, #blocksDiv img, .box img, .float-items img, .tp_dlsortlinks img{
+.title-admin-area img, .blocks img, .box img, .float-items img, .tp_dlsortlinks img{
 	display: inline-block;
 	vertical-align: middle;
 }

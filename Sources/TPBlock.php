@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -27,11 +27,11 @@ function TPBlockInit() {{{
 
 	if(loadLanguage('TPmodules') == false) {
 		loadLanguage('TPmodules', 'english');
-    }
+	}
 
 	if(loadLanguage('TPortalAdmin') == false) {
 		loadLanguage('TPortalAdmin', 'english');
-    }
+	}
 
 	// a switch to make it clear what is "forum" and not
 	$context['TPortal']['not_forum'] = true;
@@ -46,12 +46,12 @@ function TPBlockInit() {{{
 
 function TPBlockActions(&$subActions) {{{
 
-   $subActions = array_merge(
-        array (
-            'showblock'      => array('TPBlock.php', 'showBlock',   array()),
-        ),
-        $subActions
-    );
+	$subActions = array_merge(
+		array (
+			'showblock'      => array('TPBlock.php', 'showBlock',   array()),
+		),
+		$subActions
+	);
 
 }}}
 
@@ -59,7 +59,7 @@ function getBlocks() {{{
 
 	global $context, $scripturl, $user_info, $smcFunc, $modSettings;
 
-    $tpBlock    = TPBlock::getInstance();
+	$tpBlock    = TPBlock::getInstance();
 
 	$now = time();
 	// setup the containers
@@ -70,49 +70,49 @@ function getBlocks() {{{
 	$fetch_articles = array();
 	$fetch_article_titles = array();
 
-    $count  = array_flip($tpBlock->getBlockPanel());
-    foreach($count as $k => $v) {
-        $count[$k] = 0;
-    }
+	$count  = array_flip($tpBlock->getBlockPanel());
+	foreach($count as $k => $v) {
+		$count[$k] = 0;
+	}
 
 	$panels             = $tpBlock->getBlockBar();
-    $availableBlocks    = $tpBlock->getBlockPermissions();
+	$availableBlocks    = $tpBlock->getBlockPermissions();
 	if (is_array($availableBlocks) && count($availableBlocks)) {
-        foreach($availableBlocks as $row) {
+		foreach($availableBlocks as $row) {
 			// some tests to minimize sql calls
 			if($row['type'] == TP_BLOCK_THEMEBOX) {
 				$test_themebox = true;
-            }
+			}
 			elseif($row['type'] == TP_BLOCK_ARTICLEBOX) {
 				$test_articlebox = true;
 				if(is_numeric($row['body'])) {
 					$fetch_articles[] = $row['body'];
-                }
+				}
 			}
 			elseif($row['type'] == TP_BLOCK_CATMENU || $row['type'] == TP_BLOCK_SITEMAP  ) {
 				$test_menubox = true;
 			}
-            elseif($row['type'] == TP_BLOCK_CATEGORYBOX) {
+			elseif($row['type'] == TP_BLOCK_CATEGORYBOX) {
 				$test_catbox = true;
 				if(is_numeric($row['body'])) {
 					$fetch_article_titles[] = $row['body'];
-                }
+				}
 			}
-            elseif($row['type'] == TP_BLOCK_SHOUTBOX) {
-                call_integration_hook('integrate_tp_shoutbox', array(&$row));
-            }
+			elseif($row['type'] == TP_BLOCK_SHOUTBOX) {
+				call_integration_hook('integrate_tp_shoutbox', array(&$row));
+			}
 
-            // decode the block settings
-            $set        = json_decode($row['settings'], true) ?? [];
+			// decode the block settings
+			$set        = json_decode($row['settings'], true) ?? [];
 			$can_manage = allowedTo('tp_blocks');
 
 			$blocks[$panels[$row['bar']]][$count[$panels[$row['bar']]]] = $set + array(
 				'frame'     => $row['frame'],
 				'title'     => strip_tags($row['title'], '<center>'),
-                'type'      => $tpBlock->getBlockType($row['type']),
+				'type'      => $tpBlock->getBlockType($row['type']),
 				'body'      => $row['body'],
 				'visible'   => $row['visible'],
-                'settings'  => $row['settings'],
+				'settings'  => $row['settings'],
 				'id'        => $row['id'],
 				'lang'      => $row['lang'],
 				'display'   => $row['display'],
@@ -123,13 +123,13 @@ function getBlocks() {{{
 		}
 	}
 
-    // if a block displays an article
-    if(isset($test_articlebox)) {
+	// if a block displays an article
+	if(isset($test_articlebox)) {
 		$context['TPortal']['blockarticles'] = array();
-        $tpArticle  = new TPArticle();
-        $articles   = $tpArticle->getArticle($fetch_articles);
-        if(is_array($articles)) {
-            foreach($articles as $article) {
+		$tpArticle  = new TPArticle();
+		$articles   = $tpArticle->getArticle($fetch_articles);
+		if(is_array($articles)) {
+			foreach($articles as $article) {
 				// allowed and all is well, go on with it.
 				$context['TPortal']['blockarticles'][$article['id']] = $article;
 				// setup the avatar code
@@ -141,14 +141,14 @@ function getBlocks() {{{
 					$avatar_width = '';
 					$avatar_height = '';
 				}
-                $context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(
-                            'avatar' => $article['avatar'],
-                            'email' => $article['email_address'],
-                            'filename' => !empty($article['filename']) ? $article['filename'] : '',
-                            'id_attach' => $article['id_attach'],
-                            'attachment_type' => $article['attachment_type'],
-                        )
-                )['image'];
+				$context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data( array(
+							'avatar' => $article['avatar'],
+							'email' => $article['email_address'],
+							'filename' => !empty($article['filename']) ? $article['filename'] : '',
+							'id_attach' => $article['id_attach'],
+							'attachment_type' => $article['attachment_type'],
+						)
+				)['image'];
 				// sort out the options
 				$context['TPortal']['blockarticles'][$article['id']]['visual_options'] = array();
 				// since these are inside blocks, some stuff has to be left out
@@ -249,7 +249,7 @@ function adminBlocks() {{{
 
 	isAllowedTo('tp_blocks');
 
-    $tpBlock    = TPBlock::getInstance();
+	$tpBlock    = TPBlock::getInstance();
 
 	if(($context['TPortal']['subaction']=='blocks') && !isset($_GET['overview'])) {
 		TPadd_linktree($scripturl.'?action=tpadmin;sa=blocks', $txt['tp-blocks']);

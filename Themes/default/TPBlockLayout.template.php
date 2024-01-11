@@ -154,11 +154,11 @@ function template_editblock()
 				<div class="tp_formtable">
 					<dl class="tp_title settings">
 						<dt>
-							<b><label for="tp_block_off">', $txt['tp-status'], '<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></label></b>
+							<b>', $txt['tp-status'], '<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></b>
 						</dt>
 						<dd>
-							<input type="radio" value="0" name="tp_block_off" id="tp_block_off"',$context['TPortal']['blockedit']['off']==0 ? ' checked="checked"' : '' ,' />'.$txt['tp-on'].'
-							<input type="radio" value="1" name="tp_block_off"',$context['TPortal']['blockedit']['off']==1 ? ' checked="checked"' : '' ,' />'.$txt['tp-off'].'
+							<input type="radio" value="0" name="tp_block_off" id="tp_block_on"',$context['TPortal']['blockedit']['off']==0 ? ' checked="checked"' : '' ,' /><label for="tp_block_on">'.$txt['tp-on'].'</label>
+							<input type="radio" value="1" name="tp_block_off" id="tp_block_off"',$context['TPortal']['blockedit']['off']==1 ? ' checked="checked"' : '' ,' /><label for="tp_block_off">'.$txt['tp-off'].'</label>
 						</dd>
 					</dl>
 					<dl class="tp_title settings">

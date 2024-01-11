@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.0
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -110,20 +110,20 @@ class Block extends Base {
             '3'     => array( 'panelstyle' => 99 ),                                                                              // Stats
             '4'     => array( 'panelstyle' => 99 ),                                                                              // Search
             '5'     => array( 'panelstyle' => 99 ),                                                                              // HTML
-            '6'     => array( 'useavatar' => 0 , 'panelstyle' => 99 ),                                                           // Online
+            '6'     => array( 'panelstyle' => 99, 'useavatar' => 0 ),                                                            // Online
             '7'     => array( 'panelstyle' => 99 ),                                                                              // Theme
-            '8'     => array( 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'panelstyle' => 99, 'shoutbox_avatar' => 1, 'shoutbox_barposition' => 1, 'shoutbox_direction' => 0 ), // Shoutbox
-            '9'     => array( 'style' => 0, 'panelstyle' => 99),                                                                 // Menu
+            '8'     => array( 'panelstyle' => 99, 'shoutbox_id' => 1, 'shoutbox_layout' => 0, 'shoutbox_height' => 250, 'shoutbox_avatar' => 1, 'shoutbox_barposition' => 1, 'shoutbox_direction' => 0 ), // Shoutbox
+            '9'     => array( 'panelstyle' => 99, 'style' => 0 ),                                                                // Menu
             '10'    => array( 'panelstyle' => 99 ),                                                                              // PHP
             '11'    => array( 'panelstyle' => 99 ),                                                                              // Script
-            '12'    => array( 'useavatar' => 1, 'boards' => '', 'include' => 1, 'length' => 100, 'panelstyle' => 99 ),           // Recent Topics
+            '12'    => array( 'panelstyle' => 99, 'useavatar' => 1, 'boards' => '', 'include' => 1, 'length' => 100, 'minmessagetopics' => 350 ), // Recent Topics
             '13'    => array( 'panelstyle' => 99 ),                                                                              // SSI
             '14'    => array( 'panelstyle' => 99 ),                                                                              // Module: Downloads/stats
-            '15'    => array( 'utf' => 1, 'showtitle' => 1, 'maxwidth' => '100%', 'maxshown' => 20, 'panelstyle' => 99 ),        // RSS
+            '15'    => array( 'panelstyle' => 99, 'utf' => 1, 'showtitle' => 1, 'maxwidth' => '100%', 'maxshown' => 20 ),        // RSS
             '16'    => array( 'panelstyle' => 99 ),                                                                              // Site Map
             '17'    => array( 'panelstyle' => 99 ),                                                                              // Admin
             '18'    => array( 'panelstyle' => 99 ),                                                                              // Article
-            '19'    => array( 'block_height' => 15, 'block_author' => 0, 'panelstyle' => 99),                                    // Categories
+            '19'    => array( 'panelstyle' => 99, 'block_height' => 15, 'block_author' => 0 ),                                   // Categories
         );
 
         foreach($this->blockType as $k => $v) {
@@ -132,7 +132,6 @@ class Block extends Base {
                define($name, $k);
             }
         }
-
 
     }}}
 
@@ -409,16 +408,16 @@ class Block extends Base {
 
     }}}
 
-    public function getBlockDefault( $bar_id = null ) {{{
+    public function getBlockDefault( $default_id = null ) {{{
 
-        if(!is_null($bar_id) && array_key_exists($bar_id, $this->blockDefault)) {
-            $bars = $this->blockDefault[$bar_id];
+        if(!is_null($default_id) && array_key_exists($default_id, $this->blockDefault)) {
+            $defaults = $this->blockDefault[$default_id];
         }
         else {
-            $bars = $this->blockDefault;
+            $defaults = $this->blockDefault;
         }
 
-        return $bars;
+        return $defaults;
 
     }}}
 

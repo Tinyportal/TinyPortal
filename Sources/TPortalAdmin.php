@@ -2521,16 +2521,16 @@ function do_postchecks()
                         );
                     }
 					elseif($setting == 'type') {
-                        // Check to see if the type has changed.
+						// Check to see if the type has changed.
 						$request = $smcFunc['db_query']('', '
-                            SELECT type FROM {db_prefix}tp_blocks
-                            WHERE id = {int:id} LIMIT 1',
-                            array('id' => $where)
-                        );
+							SELECT type FROM {db_prefix}tp_blocks
+							WHERE id = {int:id} LIMIT 1',
+							array('id' => $where)
+						);
 						if($smcFunc['db_num_rows']($request) > 0) {
-                            $row    = $smcFunc['db_fetch_assoc']($request);
-                            $smcFunc['db_free_result']($request);
-                        	if($row['type'] != $value) {
+							$row    = $smcFunc['db_fetch_assoc']($request);
+							$smcFunc['db_free_result']($request);
+							if($row['type'] != $value) {
 								$typechange = TRUE;
 								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
 								$smcFunc['db_query']('', '
@@ -2539,8 +2539,8 @@ function do_postchecks()
 									WHERE id = {int:blockid}',
 									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
 								);
-                        	}
-                        }
+							}
+						}
 					}
 					else {
 						$smcFunc['db_query']('', '
@@ -2549,7 +2549,7 @@ function do_postchecks()
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
-                    }
+					}
 				}
 				elseif(substr($what, 0, 8) == 'tp_group')
 					$tpgroups[] = substr($what, 8);

@@ -250,9 +250,8 @@ function template_main()
 		echo '
 				<table class="table_grid tp_grid">
 					<thead>
-						<tr class="title_bar titlebg2">
-						<th scope="col">
-							<div class="catbg3">
+						<tr class="title_bar">
+							<th scope="col">
 								<div class="float-items pos" style="width:10%;"><strong>'.$txt['tp-pos'].'</strong></div>
 								<div class="float-items name" style="width:30%;"><strong>'.$txt['tp-dluploadcategory'].'</strong></div>
 								<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlicon'].'</strong></div>
@@ -260,8 +259,7 @@ function template_main()
 								<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlsubmitted'].'</strong></div>
 								<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dledit'].'</strong></div>
 								<p class="clearthefloat"></p>
-							</div>
-						</th>
+							</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -274,38 +272,36 @@ function template_main()
 					echo '
 						<tr class="windowbg">
 						<td>
-							<div>
-								<div class="adm-pos float-items" style="width:10%;">
-								  <input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
+							<div class="adm-pos float-items" style="width:10%;">
+								<input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
+							</div>
+							<div class="adm-name float-items" style="width:30%;">
+								<a href="'.$cat['href'].'">'.$cat['name'].'</a>
+							</div>
+							<a href="" class="clickme">'.$txt['tp-more'].'</a>
+							<div class="box tp_floatleft" style="width:60%;">
+								<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+									<div class="show-on-responsive"><strong>'.$txt['tp-dlicon'].'</strong></div>
+									', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 								</div>
-								<div class="adm-name float-items" style="width:30%;">
-									<a href="'.$cat['href'].'">'.$cat['name'].'</a>
+								<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+									<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
+									'.$cat['items'].'
 								</div>
-								<a href="" class="clickme">'.$txt['tp-more'].'</a>
-								<div class="box tp_floatleft" style="width:60%;">
-									<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-										<div class="show-on-responsive"><strong>'.$txt['tp-dlicon'].'</strong></div>
-										', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
-									</div>
-									<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-										<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
-										'.$cat['items'].'
-									</div>
-									<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-										<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
-										'.$cat['submitted'].'
-									</div>
-									<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-										<div class="show-on-responsive" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
-										<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
-										<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
-										<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
-									</div>
-									<p class="clearthefloat"></p>
+								<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+									<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
+									'.$cat['submitted'].'
 								</div>
+								<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+									<div class="show-on-responsive" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
+									<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
+									<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
+									<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 								</div>
 								<p class="clearthefloat"></p>
 							</div>
+							</div>
+							<p class="clearthefloat"></p>
 						</td>
 						</tr>';
 			}
@@ -347,9 +343,8 @@ function template_main()
 			<div class="padding-div"><b>'.$txt['tp-childcategories'].'</b></div>
 			<table class="table_grid tp_grid">
 				<thead>
-					<tr class="title_bar titlebg2">
-					<th scope="col">
-						<div class="catbg3">
+					<tr class="title_bar">
+						<th scope="col">
 							<div class="float-items pos" style="width:10%;"><strong>'.$txt['tp-pos'].'</strong></div>
 							<div class="float-items name" style="width:30%;"><strong>'.$txt['tp-dluploadcategory'].'</strong></div>
 							<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlicon'].'</strong></div>
@@ -357,8 +352,7 @@ function template_main()
 							<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dlsubmitted'].'</strong></div>
 							<div class="float-items title-admin-area tpcenter" style="width:15%"><strong>'.$txt['tp-dledit'].'</strong></div>
 							<p class="clearthefloat"></p>
-						</div>
-					</th>
+						</th>
 					</tr>';
 			foreach($context['TPortal']['admcats'] as $cat)
 			{
@@ -366,38 +360,36 @@ function template_main()
 					echo '
 			<tr class="windowbg">
 			<td>
-				<div>
-					<div class="adm-pos float-items" style="width:10%;">
-					  <input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
+				<div class="adm-pos float-items" style="width:10%;">
+					<input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
+				</div>
+				<div class="adm-name float-items" style="width:30%;">
+					<a href="'.$cat['href'].'">'.$cat['name'].'</a>
+				</div>
+				<a href="" class="clickme">'.$txt['tp-more'].'</a>
+				<div class="box tp_floatleft" style="width:60%;">
+					<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+						<div class="show-on-responsive"><strong>'.$txt['tp-dlicon'].'</strong></div>
+						', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 					</div>
-					<div class="adm-name float-items" style="width:30%;">
-						<a href="'.$cat['href'].'">'.$cat['name'].'</a>
+					<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+						<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
+						'.$cat['items'].'
 					</div>
-					<a href="" class="clickme">'.$txt['tp-more'].'</a>
-					<div class="box tp_floatleft" style="width:60%;">
-						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div class="show-on-responsive"><strong>'.$txt['tp-dlicon'].'</strong></div>
-							', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
-						</div>
-						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlfiles'].'</strong></div></div>
-							'.$cat['items'].'
-						</div>
-						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
-							'.$cat['submitted'].'
-						</div>
-						<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
-							<div class="show-on-responsive" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
-							<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
-							<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
-							<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
-						</div>
-						<p class="clearthefloat"></p>
+					<div class="fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+						<div class="show-on-responsive"><div class="smalltext"><strong>'.$txt['tp-dlsubmitted'].'</strong></div></div>
+						'.$cat['submitted'].'
 					</div>
+					<div class="smalltext fullwidth-on-res-layout float-items tpcenter" style="width:25%;">
+						<div class="show-on-responsive" style="word-break: break-all;"><strong>'.$txt['tp-dledit'].'</strong></div>
+						<a href="',$scripturl, '?action=tportal;sa=download;dl=cat',$cat['id'],'"><img title="'.$txt['tp-dlviewcat'].'" src="' .$settings['tp_images_url']. '/TPfilter.png" alt="" /></a>&nbsp;
+						<a href="'.$cat['href2'].'"><img title="'.$txt['tp-edit'].'" src="' .$settings['tp_images_url']. '/TPconfig_sm.png" alt="'.$txt['tp-edit'].'"  /></a>&nbsp;
+						<a href="'.$cat['href3'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmdelete'].'\')"><img title="' .$txt['tp-dldelete']. '" src="' .$settings['tp_images_url']. '/TPdelete2.png" alt=""  /></a>
 					</div>
 					<p class="clearthefloat"></p>
 				</div>
+				</div>
+				<p class="clearthefloat"></p>
 			</td>
 			</tr>';
 			}
@@ -418,18 +410,16 @@ function template_main()
 		</div>
 		<table class="table_grid tp_grid">
 		<thead>
-			<tr class="title_bar titlebg2">
-			<th scope="col">
-			<div class="catbg3">
-				<div style="width:25%;" class="float-items pos"><strong>'.$txt['tp-dlname'].'</strong></div>
-				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlicon'].'</strong></div>
-				<div style="width:21%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlviews'].'</strong></div>
-				<div style="width:26%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfile'].'</strong></div>
-				<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
-				<div style="width:8%" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dledit'].'</strong></div>
-				<p class="clearthefloat"></p>
-			</div>
-			</th>
+			<tr class="title_bar">
+				<th scope="col">
+					<div style="width:25%;" class="float-items pos"><strong>'.$txt['tp-dlname'].'</strong></div>
+					<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlicon'].'</strong></div>
+					<div style="width:21%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlviews'].'</strong></div>
+					<div style="width:26%;" class="float-items title-admin-area"><strong>'.$txt['tp-dlfile'].'</strong></div>
+					<div style="width:10%;" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
+					<div style="width:8%" class="float-items title-admin-area tpcenter"><strong>'.$txt['tp-dledit'].'</strong></div>
+					<p class="clearthefloat"></p>
+				</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -450,7 +440,7 @@ function template_main()
 					<div class="show-on-responsive">'.$txt['tp-dlicon'].'</div>
 				   ', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
 				</div>
-			    <div class="fullwidth-on-res-layout float-items" style="width:27%;">
+				<div class="fullwidth-on-res-layout float-items" style="width:27%;">
 					<div class="show-on-responsive">'.$txt['tp-dlviews'].'</div>
 					<div class="size-on-responsive">
 						<div style="width:49%;" class="float-items tpcenter">
@@ -721,17 +711,15 @@ function template_main()
 			<div class="windowbg noup padding-div">
 				<table class="table_grid tp_grid">
 				<thead>
-					<tr class="title_bar titlebg2">
-					<th scope="col" class="submissions">
-						<div>
+					<tr class="title_bar">
+						<th scope="col" class="submissions">
 							<div class="float-items pos" style="width:30%;"><strong>'.$txt['tp-dlname'].'</strong></div>
 							<div class="title-admin-area float-items" style="width:20%;"><strong>'.$txt['tp-dlfilename'].'</strong></div>
 							<div class="title-admin-area float-items" style="width:20%;"><strong>'.$txt['tp-created'].'</strong></div>
 							<div class="title-admin-area float-items" style="width:20%;"><strong>'.$txt['tp-uploadedby'].'</strong></div>
 							<div class="title-admin-area float-items tpcenter" style="width:10%;"><strong>'.$txt['tp-dlfilesize'].'</strong></div>
 							<p class="clearthefloat"></p>
-						</div>
-					</th>
+						</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -742,26 +730,24 @@ function template_main()
 				echo '
 				<tr class="windowbg">
 				<td>
-					<div>
-						<div class="fullwidth-on-res-layout  float-items" style="width:30%;"><a href="'.$cat['href'].'">'.$cat['name'].'</a></div>
-						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
-							<div class="show-on-responsive">'.$txt['tp-dlfilename'].'</div>
-							<div class="size-on-responsive" style="word-break:break-all;">'.$cat['file'].'</div>
-						</div>
-						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
-							<div class="show-on-responsive">'.$txt['tp-created'].'</div>
-							<div class="size-on-responsive">'.$cat['date'].'</div>
-						</div>
-						<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
-							<div class="show-on-responsive">'.$txt['tp-uploadedby'].'</div>
-							'.$cat['author'].'
-						</div>
-						<div class="fullwidth-on-res-layout float-items tpcenter" style="width:10%;">
-							<div class="show-on-responsive">'.$txt['tp-dlfilesize'].'</div>
-							'. $cat['filesize'].''.$txt['tp-kb'].'
-						</div>
-						<p class="clearthefloat"></p>
+					<div class="fullwidth-on-res-layout  float-items" style="width:30%;"><a href="'.$cat['href'].'">'.$cat['name'].'</a></div>
+					<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
+						<div class="show-on-responsive">'.$txt['tp-dlfilename'].'</div>
+						<div class="size-on-responsive" style="word-break:break-all;">'.$cat['file'].'</div>
 					</div>
+					<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
+						<div class="show-on-responsive">'.$txt['tp-created'].'</div>
+						<div class="size-on-responsive">'.$cat['date'].'</div>
+					</div>
+					<div class="fullwidth-on-res-layout  float-items" style="width:20%;">
+						<div class="show-on-responsive">'.$txt['tp-uploadedby'].'</div>
+						'.$cat['author'].'
+					</div>
+					<div class="fullwidth-on-res-layout float-items tpcenter" style="width:10%;">
+						<div class="show-on-responsive">'.$txt['tp-dlfilesize'].'</div>
+						'. $cat['filesize'].''.$txt['tp-kb'].'
+					</div>
+					<p class="clearthefloat"></p>
 				</td>
 				</tr>';
 			}
