@@ -1010,10 +1010,13 @@ function do_articles()
 			}
 			$smcFunc['db_free_result']($request);
 		}
+		else {
+			fatal_error($txt['tp-articlenotexist'], false);
+		}
 
-        if($context['TPortal']['editarticle']['articletype'] == 'html') {
-            TPwysiwyg_setup();
-        }
+		if($context['TPortal']['editarticle']['articletype'] == 'html') {
+			TPwysiwyg_setup();
+		}
 
 		// Add in BBC editor before we call in template so the headers are there
 		if($context['TPortal']['editarticle']['articletype'] == 'bbc') {
@@ -1108,9 +1111,14 @@ function do_articles()
 				'varid' => $where
 			)
 		);
-		$f = $smcFunc['db_fetch_assoc']($request);
-		$smcFunc['db_free_result']($request);
-		$context['TPortal']['categoryNAME'] = $f['value1'];
+		if($smcFunc['db_num_rows']($request) > 0) {
+			$f = $smcFunc['db_fetch_assoc']($request);
+			$smcFunc['db_free_result']($request);
+			$context['TPortal']['categoryNAME'] = $f['value1'];
+		}
+		else {
+			fatal_error($txt['tp-categorynotexist'], false);
+		}
 		// get the total first
 		$request = $smcFunc['db_query']('', '
 			SELECT	COUNT(*) as total
