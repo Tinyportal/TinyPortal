@@ -176,7 +176,7 @@ function template_tp_articles()
 
 		    if((!empty($context['TPortal']['allow_wysiwyg']) && ($user_info['id'] == $context['TPortal']['selected_member'])) || allowedTo('profile_view_any')) {
 			    echo '<div>
-					<dl class="settings">
+					<dl class="tp_title settings">
 						<dt><strong>'.$txt['tp-wysiwygchoice'].':</strong>
 						</dt>
 						<dd><fieldset>
