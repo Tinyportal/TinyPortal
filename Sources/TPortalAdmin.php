@@ -627,7 +627,7 @@ function do_articles()
 				);
 				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
-					$row['value1'] .= '__copy';
+					$row['value1'] .= $txt['tp-copystring'];
 					$smcFunc['db_free_result']($request);
 					$smcFunc['db_insert']('insert',
 						'{db_prefix}tp_variables',
@@ -644,16 +644,16 @@ function do_articles()
 							'subtype2'=> 'int'
 						),
 						array(
-							$row['value1'],
-							$row['value2'],
-							$row['value3'],
-							$row['type'],
-							$row['value4'],
-							$row['value5'],
-							$row['subtype'],
-							$row['value7'],
-							$row['value8'],
-							$row['subtype2']
+							(isset($row['value1']) ? $row['value1'] : ''),
+							(isset($row['id']) ? $row['id'] : ''),
+							(isset($row['value3']) ? $row['value3'] : ''),
+							(isset($row['type']) ? $row['type'] : ''),
+							(isset($row['value4']) ? $row['value4'] : ''),
+							(isset($row['value5']) ? $row['value5'] : ''),
+							(isset($row['subtype']) ? $row['subtype'] : ''),
+							(isset($row['value7']) ? $row['value7'] : ''),
+							(isset($row['value8']) ? $row['value8'] : ''),
+							(isset($row['subtype2']) ? $row['subtype2'] : '')
 						),
 						array('id')
 					);
@@ -668,7 +668,7 @@ function do_articles()
 				);
 				if($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
-					$row['value1'] .= '__copy';
+					$row['value1'] .= $txt['tp-copystring'];
 					$smcFunc['db_free_result']($request);
 					$smcFunc['db_insert']('INSERT',
 						'{db_prefix}tp_variables',
@@ -685,16 +685,16 @@ function do_articles()
 							'subtype2'=> 'int'
 						),
 						array(
-							$row['value1'],
-							$row['id'],
-							$row['value3'],
-							$row['type'],
-							$row['value4'],
-							$row['value5'],
-							$row['subtype'],
-							$row['value7'],
-							$row['value8'],
-							$row['subtype2']
+							(isset($row['value1']) ? $row['value1'] : ''),
+							(isset($row['id']) ? $row['id'] : ''),
+							(isset($row['value3']) ? $row['value3'] : ''),
+							(isset($row['type']) ? $row['type'] : ''),
+							(isset($row['value4']) ? $row['value4'] : ''),
+							(isset($row['value5']) ? $row['value5'] : ''),
+							(isset($row['subtype']) ? $row['subtype'] : ''),
+							(isset($row['value7']) ? $row['value7'] : ''),
+							(isset($row['value8']) ? $row['value8'] : ''),
+							(isset($row['subtype2']) ? $row['subtype2'] : '')
 						),
 						array('id')
 					);
@@ -1010,10 +1010,13 @@ function do_articles()
 			}
 			$smcFunc['db_free_result']($request);
 		}
+		else {
+			fatal_error($txt['tp-articlenotexist'], false);
+		}
 
-        if($context['TPortal']['editarticle']['articletype'] == 'html') {
-            TPwysiwyg_setup();
-        }
+		if($context['TPortal']['editarticle']['articletype'] == 'html') {
+			TPwysiwyg_setup();
+		}
 
 		// Add in BBC editor before we call in template so the headers are there
 		if($context['TPortal']['editarticle']['articletype'] == 'bbc') {
@@ -1108,9 +1111,14 @@ function do_articles()
 				'varid' => $where
 			)
 		);
-		$f = $smcFunc['db_fetch_assoc']($request);
-		$smcFunc['db_free_result']($request);
-		$context['TPortal']['categoryNAME'] = $f['value1'];
+		if($smcFunc['db_num_rows']($request) > 0) {
+			$f = $smcFunc['db_fetch_assoc']($request);
+			$smcFunc['db_free_result']($request);
+			$context['TPortal']['categoryNAME'] = $f['value1'];
+		}
+		else {
+			fatal_error($txt['tp-categorynotexist'], false);
+		}
 		// get the total first
 		$request = $smcFunc['db_query']('', '
 			SELECT	COUNT(*) as total
@@ -2030,7 +2038,7 @@ function do_postchecks()
 				elseif($what == 'tp_article_new')
 					$straynewcat = $value;
 			}
-			// update
+			// if new category create it first.
 			if(isset($straycat) && sizeof($ccats) > 0)
 			{
 				$category = $straycat;
@@ -2038,20 +2046,20 @@ function do_postchecks()
 				{
 					$request = $smcFunc['db_insert']('INSERT',
 						'{db_prefix}tp_variables',
-						array('value1' => 'string', 'value2' => 'string', 'type' => 'string'),
-						array(strip_tags($straynewcat), '0', 'category'),
+						array('value1' => 'string', 'value2' => 'string', 'value3' => 'string', 'type' => 'string', 'value4' => 'string', 'subtype' => 'string', 'value7' => 'string', 'value8' => 'string', 'value9' => 'string'),
+						array(strip_tags($straynewcat), '0', '', 'category', '', '', 'sort=date|sortorder=desc|articlecount=10|layout=1|catlayout=1|showchild=1|leftpanel=1|rightpanel=1|toppanel=1|centerpanel=1|lowerpanel=1|bottompanel=1', strip_tags($straynewcat), ''),
 						array('id')
 					);
 
 					$newcategory = $smcFunc['db_insert_id']('{db_prefix}tp_variables', 'id');
-					$smcFunc['db_free_result']($request);
 				}
+				// now go through each article and put it into the category.
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles
 					SET category = {int:cat}
 					WHERE id IN ({array_int:artid})',
 					array(
-						'cat' => !empty($newcategory) ? $newcategory : $category,
+						'cat' => (!empty($newcategory) ? $newcategory : $category),
 						'artid' => $ccats,
 					)
 				);
@@ -2172,6 +2180,7 @@ function do_postchecks()
 				$category = $straycat;
 				if($category == 0 && !empty($straynewcat))
 				{
+				// if new category create it first.
 					$request = $smcFunc['db_insert']('INSERT',
 						'{db_prefix}tp_variables',
 						array(
@@ -2182,10 +2191,9 @@ function do_postchecks()
 						array($straynewcat, '0', 'category'),
 						array('id')
 					);
-
 					$newcategory = $smcFunc['db_insert_id']('{db_prefix}tp_variables', 'id');
-					$smcFunc['db_free_result']($request);
 				}
+				// now go through each article and put it into the category.
 				$smcFunc['db_query']('', '
 					UPDATE {db_prefix}tp_articles
 					SET approved = {int:approved}, category = {int:cat}
@@ -2521,16 +2529,16 @@ function do_postchecks()
                         );
                     }
 					elseif($setting == 'type') {
-                        // Check to see if the type has changed.
+						// Check to see if the type has changed.
 						$request = $smcFunc['db_query']('', '
-                            SELECT type FROM {db_prefix}tp_blocks
-                            WHERE id = {int:id} LIMIT 1',
-                            array('id' => $where)
-                        );
+							SELECT type FROM {db_prefix}tp_blocks
+							WHERE id = {int:id} LIMIT 1',
+							array('id' => $where)
+						);
 						if($smcFunc['db_num_rows']($request) > 0) {
-                            $row    = $smcFunc['db_fetch_assoc']($request);
-                            $smcFunc['db_free_result']($request);
-                        	if($row['type'] != $value) {
+							$row    = $smcFunc['db_fetch_assoc']($request);
+							$smcFunc['db_free_result']($request);
+							if($row['type'] != $value) {
 								$typechange = TRUE;
 								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
 								$smcFunc['db_query']('', '
@@ -2539,8 +2547,8 @@ function do_postchecks()
 									WHERE id = {int:blockid}',
 									array('data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where)
 								);
-                        	}
-                        }
+							}
+						}
 					}
 					else {
 						$smcFunc['db_query']('', '
@@ -2549,7 +2557,7 @@ function do_postchecks()
 							WHERE id = {int:blockid}',
 							array('val' => $value, 'blockid' => $where)
 						);
-                    }
+					}
 				}
 				elseif(substr($what, 0, 8) == 'tp_group')
 					$tpgroups[] = substr($what, 8);

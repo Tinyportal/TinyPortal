@@ -1,9 +1,8 @@
 <?php
-// Version: 2.2.2; TParticle
+// Version: 3.0.0; TParticle
 
 global $scripturl;
 
-$txt['tp-addsuccess'] = 'Thanks for your contribution. <br><br>The article has been added.';
 $txt['tp-artbodytext'] ='Body text';
 $txt['tp-articlelocked'] = 'Sorry, this article has been locked for editing.';
 $txt['tp-articlenotallowed']='You are not allowed to edit this article.';

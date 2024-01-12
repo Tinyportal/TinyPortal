@@ -73,7 +73,7 @@ function template_tp_articles()
 
 	<table class="table_grid tp_grid">
 		<thead>
-			<tr class="title_bar titlebg2">
+			<tr class="title_bar">
 			<th scope="col">
 			<div class="font-strong" style="padding:0px;">
 				<div class="float-items pos tpleft" style="width:25%;">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
@@ -176,7 +176,7 @@ function template_tp_articles()
 
 		    if((!empty($context['TPortal']['allow_wysiwyg']) && ($user_info['id'] == $context['TPortal']['selected_member'])) || allowedTo('profile_view_any')) {
 			    echo '<div>
-					<dl class="settings">
+					<dl class="tp_title settings">
 						<dt><strong>'.$txt['tp-wysiwygchoice'].':</strong>
 						</dt>
 						<dd><fieldset>

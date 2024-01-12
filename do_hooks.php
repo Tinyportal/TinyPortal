@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.0
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -135,7 +135,6 @@ function template_install_script ()
 				Welcome to the install script of the mod: ' . $context['mod_name'] . '
 			</h3>
 		</div>
-		<span class="upperframe"><span></span></span>
 		<div class="roundframe centertext">';
 	if (!isset($context['installation_done']))
 		echo '
@@ -159,7 +158,6 @@ function template_install_script ()
 
 	echo '
 		</div>
-		<span class="lowerframe"><span></span></span>
 	</div>';
 }
 ?>

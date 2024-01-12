@@ -254,6 +254,7 @@ $txt['tp-editcategory'] = 'Edit';
 $txt['tp-viewcategory'] = 'View the category';
 $txt['tp-addsubcategory'] = 'Add a category under this one';
 $txt['tp-copycategory'] = 'Make a copy of this category';
+$txt['tp-copystring'] = ' - copy';
 $txt['tp-helpaddcategory'] = 'Add a new article category. Next screen will allow specifics about it.';
 $txt['tp-none2'] = '* not assigned *';
 $txt['tp-parent'] = 'Parent';
@@ -263,8 +264,8 @@ $txt['tp-articlecount'] = 'Articles per page';
 $txt['tp-catlayouts'] = 'Articles layout for the category';
 $txt['tp-showchilds'] = 'Display any child categories?';
 $txt['tp-allowedgroups'] = 'Membergroups that can see this category';
-$txt['tp-confirmcat1'] = 'Are you sure you want to delete this category ?';
-$txt['tp-confirmcat2'] = '(Note that all articles belonging to this category will NOT be deleted - they will instead end up in the \'stray articles\' section)';
+$txt['tp-confirmcat1'] = 'Are you sure you want to delete this category?';
+$txt['tp-confirmcat2'] = '(Note that all articles belonging to this category will NOT be deleted: they will instead end up in the -uncategorized- section)';
 
 // Cat list
 $txt['tp-clist'] = 'Which categories should appear in the category tabs?';

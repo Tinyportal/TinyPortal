@@ -645,27 +645,11 @@ function tp_renderbbc($message)
 
 	echo '
 			<tr>
-				<td class="windowbg2" colspan="2">';
+				<td class="windowbg" colspan="2">';
 
 		echo '
 				</td>
 			</tr>';
-}
-
-function get_snippets_xml()
-{
-	return;
-}
-
-if(!function_exists('htmlspecialchars_decode'))
-{
-    function htmlspecialchars_decode($string,$style = ENT_COMPAT)
-    {
-        $translation = array_flip(get_html_translation_table(HTML_SPECIALCHARS, $style));
-        if($style === ENT_QUOTES)
-			$translation['&#38;#38;#039;'] = '\'';
-		return strtr($string,$translation);
-    }
 }
 
 function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter = false)
@@ -931,7 +915,7 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use =
 		<br><div class="title_bar">
 			<h3 class="titlebg">', $txt['tp-quicklist'], '</h3>
 		</div>
-		<div class="windowbg2 smalltext tp_pad">', $txt['tp-quicklist2'], '</div>
+		<div class="information smalltext">', $txt['tp-quicklist2'], '</div>
 		<div class="windowbg tp_quicklist">
 			<div class="tp_thumb">';
 
@@ -1231,7 +1215,6 @@ function tp_collectArticleAttached($art)
 		$smcFunc['db_free_result']($request);
 	}
 }
-
 
 function TP_fetchprofile_areas() {{{
 	global $smcFunc;

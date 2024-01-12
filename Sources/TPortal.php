@@ -1904,7 +1904,7 @@ function TPortal_panel($side) {{{
 				break;
 			case 'recentbox':
 				$mp = '<a class="subject"  href="'.$scripturl.'?action=recent">'.$block['title'].'</a>';
-				$context['TPortal']['recentboxnum'] = $block['body'];
+				$context['TPortal']['recentboxnum'] = !empty($block['body']) ? $block['body']: '10';
 				$context['TPortal']['useavatar']	= $block['useavatar'];
 				$context['TPortal']['boardmode']	= $block['include'];
 				$context['TPortal']['recentlength'] = $block['length'];

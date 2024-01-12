@@ -509,10 +509,10 @@ function template_tpshout_profile()
 			</div><br>
 			<table class="table_grid tp_grid">
 				<thead>
-					<tr class="title_bar titlebg2">
+					<tr class="title_bar">
 					<th scope="col" class="shouts">
 						<div class="float-items" style="width:30%;text-align:left">'.$txt['date'].'</div>
-						<div class="smalltext float-items" style="width:70%;text-align:left">',$txt['tp-shout'],'</div>
+						<div class="float-items" style="width:70%;text-align:left">',$txt['tp-shout'],'</div>
 					</th>
 					</tr>
 				</thead>

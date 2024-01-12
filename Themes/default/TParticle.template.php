@@ -25,9 +25,9 @@ function template_submitarticle()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
 	$tpmonths=array(' ','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
-    if(!empty($context['TPortal']['editarticle'])) {
-	    $mg = $context['TPortal']['editarticle'];
-    }
+	if(!empty($context['TPortal']['editarticle'])) {
+		$mg = $context['TPortal']['editarticle'];
+	}
     else {
         // Set some defaults
         $mg = array( 'off' => 1, 'id' => '', 'body' => '', 'subject' => '', 'shortname' => '', 'useintro' => 0, 'date' => time(), 'intro' => '');
@@ -59,12 +59,12 @@ function template_submitarticle()
 	<form accept-charset="', $context['character_set'], '" name="TPadmin3" action="' . $scripturl . '?action='.$action.'" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />';
 
-    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
-	    echo '<input type="hidden" name="article" value="'. $mg['id'] . '">';
-	    echo '<input type="hidden" name="tpadmin_form" value="editarticle">';
-    }
+	if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
+		echo '<input type="hidden" name="article" value="'. $mg['id'] . '">';
+		echo '<input type="hidden" name="tpadmin_form" value="editarticle">';
+	}
 
-    echo'
+	echo'
 		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , '' , $mg['id']==0 ? '' : '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>';
 	echo '</h3></div>
 		<div id="edit-add-single-article" class="tp_admintable admin-area">
@@ -90,16 +90,16 @@ function template_submitarticle()
 				$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 				if($article_type == 'php') {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
-                }
+				}
 				elseif(($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
 					TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
-                }
+				}
 				elseif(($tp_use_wysiwyg == 0) && ($article_type == 'html')) {
 					echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
-                }
+				}
 				elseif($article_type == 'bbc') {
 					TP_bbcbox($context['TPortal']['editor_id']);
-                }
+				}
 				else {
 					echo '
 					<dl class="tp_title settings">
@@ -108,7 +108,7 @@ function template_submitarticle()
 							<input type="text" name="tp_article_fileimport" value="' , $mg['fileimport'] , '" size="50" style="max-width:97%;" >
 						</dd>
 					</dl>' ;
-                }
+				}
 				echo '
 			</div><br>
 			<dl class="tp_title settings">
@@ -126,25 +126,25 @@ function template_submitarticle()
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<span class="font-strong">'.$txt['tp-introtext'].'</span>';
 					if( ( $tp_use_wysiwyg > 0 ) && ( $article_type == 'html' ) ) {
 						TPwysiwyg('tp_article_intro',  $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
-                    }
+					}
 					else {
 						echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'.$mg['intro'].'</textarea>';
-                    }
+					}
 					echo '</div>';
 				}
 				elseif($article_type == 'bbc' || $article_type == 'import') {
 					echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' ,
-                    '<span class="font-strong">'.$txt['tp-introtext'].'</span>
+					'<span class="font-strong">'.$txt['tp-introtext'].'</span>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">'. $mg['intro'] .'</textarea>
 					</div>
-                    </div>';
+					</div>';
 				}
 
 				echo '
 					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
 
-                echo '<input type="hidden" name="tp_article_timestamp" value="'.$mg['date'].'">';
+				echo '<input type="hidden" name="tp_article_timestamp" value="'.$mg['date'].'">';
 
 			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 				echo '
@@ -161,45 +161,41 @@ function template_submitarticle()
 						<label for="field_name">', $txt['tp-created'], '</label>
 					</dt>
 					<dd>';
-
-                // day
+				// day
 				$day = date("j",$mg['date']);
 				$month = date("n",$mg['date']);
 				$year = date("Y",$mg['date']);
 				$hour = date("G",$mg['date']);
-                echo '<select size="1" name="tp_article_day">';
+				echo '<select size="1" name="tp_article_day">';
 				$minute = date("i",$mg['date']);
 				for($a=1; $a<32;$a++) {
 					echo '<option value="'.$a.'" ' , $day==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-                }
+				}
 				echo '</select>';
-
 				// month
 				echo '<select size="1" name="tp_article_month">';
 				for($a=1; $a<13; $a++) {
 					echo '<option value="'.$a.'" ' , $month==$a ? ' selected' : '' , '>'.$tpmonths[$a].'</option>  ';
-                }
+				}
 				echo '</select>';
 				// year
 				echo '<select size="1" name="tp_article_year">';
 				$now    = date("Y",time())+1;
 				for($a=2004; $a<$now; $a++) {
 					echo '<option value="'.$a.'" ' , $year==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-                }
+				}
 				echo '</select>';
-
 				// hours
 				echo ' - <select size="1" name="tp_article_hour">';
 				for($a=0; $a<24;$a++) {
 					echo '<option value="'.$a.'" ' , $hour==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-                }
+				}
 				echo '</select>';
-
 				// minutes
 				echo ' <b>:</b><select size="1" name="tp_article_minute">';
 				for($a=0; $a<60;$a++) {
 					echo '<option value="'.$a.'" ' , $minute==$a ? ' selected' : '' , '>'.$a.'</option>  ';
-                }
+				}
 				echo '</select><br><br>
 					</dd>
 					<dt>
@@ -393,7 +389,7 @@ function template_submitarticle()
 					</div>
 					</dd>
 				</dl>';
-                }
+				}
 			}
 
 			if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
@@ -580,13 +576,11 @@ function template_submitarticle()
 						<input type="hidden" name="tp_article_options_social" value="social">';
 			}
 
-            echo'
+			echo'
 				</div>
 			</div>
 		</div>
 	</form>';
-
-
 
     $context['insert_after_template'] =
         '<script>
@@ -625,7 +619,7 @@ function template_submitsuccess()
 function template_editcomment()
 {
     global $txt, $scripturl, $context;
-
+	
     if(isset($context['TPortal']['comment_edit'])){
         echo '
             <form accept-charset="', $context['character_set'], '"  name="tp_edit_comment" action="'.$scripturl.'?action=tportal;sa=editcomment" method="post" style="margin: 1ex;">
@@ -638,13 +632,12 @@ function template_editcomment()
             </form>
         ';
     }
-
-
 }
 
 function template_showcomments()
 {
     global $context, $txt, $scripturl;
+	
     if(!empty($context['TPortal']['showall'])) {
 		if(empty($context['TPortal']['artcomments']['new'])) {
 			echo '
@@ -657,7 +650,7 @@ function template_showcomments()
 			<div id="show-art-comm" class="windowbg padding-div">
 			<table class="table_grid tp_grid">
 				<thead>
-					<tr class="title_bar titlebg2">
+					<tr class="title_bar">
 					<th scope="col" class="tp_comments">
 					<div style="word-break:break-all;">
 						<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
@@ -704,7 +697,7 @@ function template_showcomments()
 				<div id="latest-art-comm" class="windowbg padding-div">
 				<table class="table_grid tp_grid">
 					<thead>
-						<tr class="title_bar titlebg2">
+						<tr class="title_bar">
 						<th scope="col" class="tp_comments">
 						<div>
 							<div class="float-items tpleft" style="width:30%;">' . $txt['tp-article'] . '</div>
@@ -740,17 +733,6 @@ function template_showcomments()
 		}
 }
 
-function template_addsuccess()
-{
-    global $txt;
-
-    echo '
-        <div class="tborder">
-            <div style="padding: 30px 10px 30px 10px;text-align:center;" class="windowbg">'.$txt['tp-addsuccess'].'</div>
-        </div>
-    ';
-
-}
 // My Articles
 function template_showarticle()
 {
@@ -763,7 +745,7 @@ function template_showarticle()
 		<div class="windowbg padding-div">
 	<table class="table_grid tp_grid";>
 		<thead>
-			<tr class="title_bar titlebg2">
+			<tr class="title_bar">
 			<th scope="col" class="myarticles">
 				<div class="font-strong" style="padding:0px;">
 					<div align="center" class="float-items">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
@@ -834,7 +816,6 @@ function template_showarticle()
 
 		echo '
 			</div>';
-
 }
 
 ?>
