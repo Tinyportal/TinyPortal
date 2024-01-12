@@ -254,6 +254,7 @@ $txt['tp-editcategory'] = 'Edit';
 $txt['tp-viewcategory'] = 'View the category';
 $txt['tp-addsubcategory'] = 'Add a category under this one';
 $txt['tp-copycategory'] = 'Make a copy of this category';
+$txt['tp-copystring'] = ' - copy';
 $txt['tp-helpaddcategory'] = 'Add a new article category. Next screen will allow specifics about it.';
 $txt['tp-none2'] = '* not assigned *';
 $txt['tp-parent'] = 'Parent';

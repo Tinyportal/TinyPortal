@@ -992,14 +992,18 @@ function template_articles()
 			</tr>
 		</thead>
 		<tbody> ';
-
 		foreach($context['TPortal']['arts'] as $a => $alink)
 		{
 			$alink['pos'] = $alink['pos']=='' ? 0 : $alink['pos'];
 			$catty = $alink['category'];
+				if($alink['approved'] == '1')
+					$class="windowbg";
+				else{
+					$class='windowbg sticky';
+				}
 
 			echo '
-			<tr class="windowbg">
+			<tr class="'.$class.'">
 			<td>
 				<div style="width:7%;" class="adm-pos float-items">
 					<a name="article'.$alink['id'].'"></a><input type="number" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" style="width: 5em" />
@@ -1104,9 +1108,13 @@ function template_strays()
 		foreach($context['TPortal']['arts_nocat'] as $a => $alink) {
 			$alink['pos'] = $alink['pos']=='' ? 0 : $alink['pos'];
 			$catty = $alink['category'];
-
+				if($alink['approved'] == '1')
+					$class="windowbg";
+				else{
+					$class='windowbg sticky';
+				}
 			echo '
-						<tr class="windowbg">
+						<tr class="'.$class.'">
 						<td>
 							<div style="width:7%;" class="adm-pos float-items">
 									<div class="smalltext float-items tpcenter">
@@ -1163,7 +1171,8 @@ function template_strays()
 		}
 			echo '
 					</tbody>
-					</table>';
+					</table>
+					<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_stray\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>';
 			if( !empty($context['TPortal']['pageindex'])) {
 				echo '
 					<div class="middletext padding-div">
@@ -1290,7 +1299,8 @@ function template_submission()
 		}
 			echo '
 					</tbody>
-				</table>';
+				</table>
+				<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_submission\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>';
 
 			if( !empty($context['TPortal']['pageindex']))
 				echo '
