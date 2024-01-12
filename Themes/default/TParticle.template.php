@@ -69,7 +69,7 @@ function template_submitarticle()
 	echo '</h3></div>
 		<div id="edit-add-single-article" class="tp_admintable admin-area">
 		<div class="windowbg noup">
-			<div class="tp_formtable padding-div">
+			<div class="tp_formtable">
 			<dl class="tp_title settings">
 				<dt>
 					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
