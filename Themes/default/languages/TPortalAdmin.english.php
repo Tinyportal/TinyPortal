@@ -263,8 +263,8 @@ $txt['tp-articlecount'] = 'Articles per page';
 $txt['tp-catlayouts'] = 'Articles layout for the category';
 $txt['tp-showchilds'] = 'Display any child categories?';
 $txt['tp-allowedgroups'] = 'Membergroups that can see this category';
-$txt['tp-confirmcat1'] = 'Are you sure you want to delete this category ?';
-$txt['tp-confirmcat2'] = '(Note that all articles belonging to this category will NOT be deleted - they will instead end up in the \'stray articles\' section)';
+$txt['tp-confirmcat1'] = 'Are you sure you want to delete this category?';
+$txt['tp-confirmcat2'] = '(Note that all articles belonging to this category will NOT be deleted: they will instead end up in the -uncategorized- section)';
 
 // Cat list
 $txt['tp-clist'] = 'Which categories should appear in the category tabs?';
