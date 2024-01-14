@@ -385,7 +385,7 @@ function template_main() {
 						' , ($dlitem['icon']!='' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="'. (substr($dlitem['icon'],0,4)=='http' ? $dlitem['icon'] :  $boardurl. '/' . $dlitem['icon']).'" alt="'.$dlitem['name'].'"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="'.$dlitem['name'].'"  />' , '
 					</div>
 					<div class="tp_dldetails">
-						<div class="tp_dltitle"><h3 class="h3dl">',$dlitem['file'] == '- empty item -' ? ''. $dlitem['name'] .'' : '<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a></h3></div>
+						<div class="tp_dltitle"><h3 class="h3dl">',$dlitem['file'] == '- empty item -' ? ''. $dlitem['name'] .'' : '<a href="'.$dlitem['href'].'">'. $dlitem['name'] .'</a>','</h3></div>
 						<div class="tp_dlinfo">
 							<div>'.$txt['tp-uploadedby'] .' ' . $dlitem['author'].'</div>
 						</div>
