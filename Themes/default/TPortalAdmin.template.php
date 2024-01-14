@@ -142,7 +142,7 @@ function template_settings()
 		<div id="settings" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpsettings'] , '</div><div></div>
 				<div class="windowbg noup">
-					<div class="tp_formtable padding-div">
+					<div class="tp_formtable">
 					<!-- START non responsive themes form -->
 					<dl class="settings">
 						<dt>
@@ -333,7 +333,7 @@ function template_frontpage()
 		<div id="frontpage-settings" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpfrontpage'] , '</div><div></div>
 			<div class="windowbg noup">
-				<div class="tp_formtable padding-div">
+				<div class="tp_formtable">
 					<dl class="settings">
 						<dt>
 							<label for="tp_front_type">', $txt['tp-whattoshow'], '</label>
@@ -623,7 +623,7 @@ function template_editcategory()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-editcategory'] . ' ' ,html_entity_decode($mg['value1']), '&nbsp;-&nbsp;<a href="'.$scripturl.'?cat='.$mg['id'].'">['.$txt['tp-viewcategory'].']</a></h3></div>
 		<div id="edit-art-category" class="tp_admintable admin-area">
 			<div class="windowbg noup">
-				<div class="tp_formtable padding-div">
+				<div class="tp_formtable">
 					<dl class="tp_title settings">
 						<dt>
 							<b><label for="tp_category_value1">', $txt['tp-name'], '</label></b>
@@ -843,7 +843,7 @@ function template_addcategory()
 		<div id="new-category" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpaddcategory'] , '</div><div></div>
 			<div class="windowbg noup ">
-				<div class="tp_formtable padding-div">
+				<div class="tp_formtable">
 					<dl class="tp_title settings">
 						<dt>
 							<b><label for="tp_cat_name">'.$txt['tp-name'].'</label></b>
@@ -1353,7 +1353,7 @@ function template_artsettings()
 		<div id="article-settings" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-helpartsettings'] , '</div><div></div>
 			<div class="windowbg noup">
-				<div class="tp_formtable padding-div">
+				<div class="tp_formtable">
 					<dl class="settings">
 						<dt>
 							<label for="tp_use_wysiwyg">', $txt['tp-usewysiwyg'], '</label>
@@ -1525,7 +1525,7 @@ function template_panels()
 			<div id="panels-admin" class="tp_admintable admin-area">
 			<div class="information smalltext">', $txt['tp-helppanels'] ,'</div><div></div>
 			<div class="windowbg noup">
-				<div class="tp_formtable padding-div">
+				<div class="tp_formtable">
 					<dl class="settings">
 						<dt>
 							<strong>', $txt['tp-hidebarsall'] ,'</strong>
@@ -1595,7 +1595,7 @@ function template_panels()
 
 	foreach($allpanels as $pa => $panl) {
 		echo '
-				<div class="padding-div">
+				<div class="tp_formtable">
 				<hr>
 				<dl class="settings">
 					<dt>
