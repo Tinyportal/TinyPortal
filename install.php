@@ -510,7 +510,7 @@ $settings_array = array(
     'boardnews_headerstyle' => 'catbg',
     'boardnews_divbody' => 'windowbg noup',
     // article settings
-    'use_wysiwyg' => '2',
+    'use_wysiwyg' => '0',
     'editorheight' => '400',
     'use_dragdrop' => '0',
     'hide_editarticle_link' => '1',

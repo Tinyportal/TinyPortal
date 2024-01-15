@@ -56,7 +56,7 @@ $calendar = '<table><caption ><a href="'.htmlspecialchars($month_href).'">'.$tit
 if($day_name_length){ #if the day names should be shown ($day_name_length > 0)
 	//if day_name_length is >3, the full name of the day will be printed
 	foreach($day_names as $d)
-		$calendar .= '<th class="smalltext" abbr="'.htmlentities($d).'" style="padding: 4px 2px;">'.htmlentities($day_name_length < 4 ? substr($d,0,$day_name_length) : $d).'</th>';
+		$calendar .= '<th class="smalltext" abbr="'.htmlentities($d).'" style="padding: 4px 2px;">'.htmlentities($day_name_length < 4 ? mb_substr($d,0,$day_name_length) : $d).'</th>';
 		
 	$calendar .= "</tr>\n<tr style=\"text-align:right;\">";
 }
