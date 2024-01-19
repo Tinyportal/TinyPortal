@@ -31,13 +31,13 @@ Please click on the appropriate release to see the [Changelog](https://github.co
 
 ## What you need to install TinyPortal
 1. In order to install TinyPortal, you need to have a working version of Simple Machines Forum. 
-SMF version must be SMF2.x. or SMF3.0. Note that SMF3.0 is under development, we cannot guarantee stable support for 3.0 untill a Final version is released.
+SMF version must be SMF2.1. or SMF3.0. Note that SMF3.0 is under development, we cannot guarantee stable support for 3.0 untill a Final version is released.
 2. Zip files are provided for install both on the 
 [Simple Machines Site](https://custom.simplemachines.org/index.php?mod=97) and the [TinyPortal Site](https://www.tinyportal.net/index.php?action=tportal;sa=download;dl=cat61) (the archive with old version packages is available in the download section).
 
 Note: It is recommended to uninstall any previous version of TinyPortal before you install TinyPortal. Make a backup of all your SMF and TinyPortal files before you uninstall.
 
-SMF2.x is supported by TinyPortal only up to TinyPortal version 2.3.1. Support for SMF2.x has been dropped starting TinyPortal version 3.0.0.
+SMF2.0 is supported by TinyPortal only up to TinyPortal version 2.3.1. Support for SMF2.0 has been dropped starting TinyPortal version 3.0.0.
 
 ## License Information:
 The contents of this file are subject to the Mozilla Public License Version 2.0 (the "License");
