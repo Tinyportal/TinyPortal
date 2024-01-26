@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -55,7 +55,7 @@ function template_tp_list_images_admin() {
     $users = TPMembers();
 
     echo '
-		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;list"  method="post" style="margin: 0px;">
+		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;list"  method="post">
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-listimage-settings'].'</h3></div>
 		<div id="tplistimages" class="tp_admintable admin-area">
 			<div class="information smalltext">' , $txt['tp-listimage-intro'] , '</div><div></div>
@@ -105,8 +105,7 @@ function TPListImageAdmin($user_id = 0) {{{
     }
 
     $html .='
-        <div class="roundframe tp_pad" style="max-height: 800px; overflow: auto;">
-            <div class="tp_thumb" style="overflow: auto;">';
+        <div class="tp_liimwrapper">';
 
     if(!empty($imgs)) {
         foreach($imgs as $im) {
@@ -124,23 +123,21 @@ function TPListImageAdmin($user_id = 0) {{{
                 $imageUrl       = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']).''.$image;
             }
 
-            $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post" style="margin: 0px;">
-                <div class="windowbg tp_floatleft;">
-                    <input type="hidden" name="sc" value="'.$context['session_id'].'" />
-                    <input type="hidden" name="id_member" value="'.$user_id.'" />
-                    <input type="hidden" name="image" value="'.$image.'" />
-                    <div class="tp_listimage"><img src="'.$imageUrl.'" alt="'.$image.'" title="'.$image.'" /><br>
-					'.$image.'
-					</div>
-                    <div style="text-align:center;"><input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"></div>
-				</div>
-            </form>';
+            $html .= '
+					<div class="tp_floatleft">
+						<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post">
+						<input type="hidden" name="sc" value="'.$context['session_id'].'" />
+						<input type="hidden" name="id_member" value="'.$user_id.'" />
+						<input type="hidden" name="image" value="'.$image.'" />
+						<div class="tp_liimtile"><img src="'.$imageUrl.'" alt="'.$image.'" title="'.$image.'" /><br>'.$image.'</div>
+						<div class="tpcenter"><input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"></div>
+						</form>
+					</div>';
         }
 
     }
 
     $html .= '
-			</div>
 		<div class="padding-div"></div>
 	</div>';
 

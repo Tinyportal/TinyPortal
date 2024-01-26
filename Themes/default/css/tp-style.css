@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -355,15 +355,10 @@ a.tp_avatar_author img {
 	height: auto;
 	max-width: 100%;
 }
-.tp_thumb img {
+.tp_thumb img, .tp_liimtile img {
 	max-height: 150px;
 	max-width: 150px;
 	padding: 5px;
-}
-.tp_thumb div {
-	margin-top: .3em;
-	overflow: hidden;
-	padding: .3em;
 }
 .tp_quicklist div {
 	margin-top: .3em;
@@ -471,8 +466,13 @@ ul.tp_category_children li {
 .tp_blockbody {
 	line-height: 1.3em;
 	min-height: 0;
+	overflow: auto;
 	overflow-wrap: anywhere;
 	padding: .3em;
+}
+img.tp_edit {
+	float:right;
+	margin: 2px 0 0 4px	;
 }
 /* Blocktype 1: User */
 .tp_userblock ul, .tp_statsblock ul {
@@ -612,6 +612,10 @@ ul.tp_recenttopics li {
 	overflow: hidden;
 	padding: .3em;
 }
+/* blocktype 13: SSI functions*/
+.tp_ssifunction, .tp_rssfunction {
+	padding: 5px;
+}
 /* Blocktype 14: Article / Download functions */
 ul.dl_recentitems {
 	margin: 0;
@@ -722,11 +726,22 @@ h4.tpresults {
 	font-weight: normal;
 	padding-bottom: 0;
 }
-.tp_listimage {
+.tp_liimwrapper {
+	max-height: 800px; 
+	overflow: auto;
+	padding: 1em;
+}
+.tp_liimwrapper div {
+	margin-top: .3em;
+	overflow: hidden;
+	padding: .3em;
+}
+.tp_liimtile {
 	font-size: 0.7em;
 	height: 220px;
 	text-align: center;
 	width: 200px;
+	overflow-wrap: anywhere;
 }
 .tp_admin_menu {
 	float: left;
@@ -917,10 +932,10 @@ input,select {
 .admin-area img {
 	max-width: 95%;
 }
-.addborder {
+.tp_addborder {
 	border-bottom: 1px solid var(--tp_border);
 }
-.addborderleft div {
+.tp_addborderleft div {
 	border-left: 1px solid var(--tp_border);
 }
 .tp_artlayoutfp {
@@ -1274,6 +1289,48 @@ dl.tp_title dd {
 .tp_dlinfo .tp_dlshow-on-responsive {
 	display: none;
 }
+/*New switch*/
+.switch-field {
+	display: flex;
+	margin-bottom: 1em;
+	overflow: hidden;
+}
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+.switch-field label {
+	background-color: var(--tp_boxshadow);
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid var(--tp_border);
+	box-shadow: 0 1px var(--tp_boxshadow);
+	transition: all 0.2s ease-in-out;
+	font-weight: 600;
+}
+.switch-field label:hover {
+	cursor: pointer;
+}
+.switch-field input:checked + label {
+	background-color: var(--tp_on);
+	box-shadow: none;
+}
+.switch-field input.switch-off:checked + label {
+	background-color: var(--tp_off);
+	box-shadow: none;
+}
+.switch-field label:first-of-type {
+	border-radius: 6px 0 0 6px;
+}
+.switch-field label:last-of-type {
+	border-radius: 0 6px 6px 0;
+}
 }
 /* Responsive CSS */
 /* Youtube embed */
@@ -1285,33 +1342,6 @@ dl.tp_title dd {
 	width: 59vw;
 }
 }
-@media all and (max-width: 768px) {
-.padding-div {
-	padding: calc(1% + 10px);
-}
-.youtubecontainer {
-	display: inline-block;
-	height: calc(80vw/1.77);
-	margin: 0 auto;
-	width: 80vw;
-}
-.youtubecontainer iframe {
-	display:block;
-	height:100%;
-	width:100%;
-}
-.tp_responsive .tp_admin_content {
-	min-width:200px;
-}
-dl.tp_title dt {
-	float: none;
-	width: 100%;
-}
-dl.tp_title dd {
-	float: none;
-	width: 100%;
-}
-}
 /** screen bigger then 900px **/
 @media all and (min-width: 900px) {
 .clickme {
@@ -1321,7 +1351,6 @@ dl.tp_title dd {
 	display:block!important;
 }
 }
-
 /** screen smaller then 900px **/
 @media all and (max-width: 900px) {
 .tp_responsive .clickme {
@@ -1435,6 +1464,33 @@ dl.tp_title dd {
 	flex: 0 0 50%;
 }
 }
+@media all and (max-width: 768px) {
+.padding-div {
+	padding: calc(1% + 10px);
+}
+.youtubecontainer {
+	display: inline-block;
+	height: calc(80vw/1.77);
+	margin: 0 auto;
+	width: 80vw;
+}
+.youtubecontainer iframe {
+	display:block;
+	height:100%;
+	width:100%;
+}
+.tp_responsive .tp_admin_content {
+	min-width:200px;
+}
+dl.tp_title dt {
+	float: none;
+	width: 100%;
+}
+dl.tp_title dd {
+	float: none;
+	width: 100%;
+}
+}
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
 .tp_responsive .tp_admin_menu{
@@ -1477,17 +1533,10 @@ input[name="modify_reason"] {
 	width: 80px;
 }
 }
-/** screen smaller then 400px **/
-@media all and (min-width: 0) and (max-width: 400px) {
-.tp_responsive .tp_panelstyles {
-	width: 95%!important; /* Panel Settings */
-}
-}
-/** screen smaller then 300px **/
-@media all and (max-width: 300px) {
-.tp_responsive .tp_admin_content {
-	font-size:11px;
-	word-break: break-all;
+/** screen from 400px to 600px **/
+@media all and (min-width: 400px) and (max-width: 600px) {
+.tp_responsive .tp_panelsColumns, .tp_responsive .tp_panelsColHoriz {
+	width:50%!important;
 }
 }
 /** screen smaller then 500px **/
@@ -1504,14 +1553,11 @@ input[name="modify_reason"] {
 	flex-direction: column;
 }
 }
-/** screen from 400px to 600px **/
-@media all and (min-width: 400px) and (max-width: 600px) {
-.tp_responsive .tp_panelsColumns, .tp_responsive .tp_panelsColHoriz {
-	width:50%!important;
-}
-}
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
+.tp_responsive .tp_panelstyles {
+	width: 95%!important; /* Panel Settings */
+}
 .tp_responsive .tp_panelsColumns, .tp_responsive .tp_panelsColHoriz {
 	width:100%!important;
 }
@@ -1521,6 +1567,14 @@ input[name="modify_reason"] {
 	/* width and float for left toggle menu from pages like profile page */
 }
 } 
+/** screen smaller then 300px **/
+@media all and (max-width: 300px) {
+.tp_responsive .tp_admin_content {
+	font-size:11px;
+	word-break: break-all;
+}
+}
+
 /* RESPONSIVE TP: Sidebar classes
  * ONLY right side bar is enabled:	.lrs.rightpanelOn
  * ONLY left side bar is enabled:	.lrs.leftpanelOn

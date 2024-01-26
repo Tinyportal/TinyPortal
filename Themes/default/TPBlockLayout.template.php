@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -153,15 +153,13 @@ function template_editblock()
 			<div class="windowbg noup padding-div">
 				<div class="tp_formtable">
 					<dl class="tp_title settings">
-						<dt>
-							<b>', $txt['tp-status'], '<img style="margin:0 1ex;" src="' . $settings['tp_images_url'] . '/TP' , $context['TPortal']['blockedit']['off']==0 ? 'green' : 'red' , '.png" alt="" /></b>
-						</dt>
+						<dt><b>', $txt['tp-status'], '</b></dt>
 						<dd>
-							<input type="radio" value="0" name="tp_block_off" id="tp_block_on"',$context['TPortal']['blockedit']['off']==0 ? ' checked="checked"' : '' ,' /><label for="tp_block_on">'.$txt['tp-on'].'</label>
-							<input type="radio" value="1" name="tp_block_off" id="tp_block_off"',$context['TPortal']['blockedit']['off']==1 ? ' checked="checked"' : '' ,' /><label for="tp_block_off">'.$txt['tp-off'].'</label>
+							<div class="switch-field">
+								<input type="radio" value="0" class="switch-on" name="tp_block_off" id="tp_block_on"',$context['TPortal']['blockedit']['off']==0 ? ' checked="checked"' : '' ,' /><label for="tp_block_on">'.$txt['tp-on'].'</label>
+								<input type="radio" value="1" class="switch-off" name="tp_block_off" id="tp_block_off"',$context['TPortal']['blockedit']['off']==1 ? ' checked="checked"' : '' ,' /><label for="tp_block_off">'.$txt['tp-off'].'</label>
+							</div>
 						</dd>
-					</dl>
-					<dl class="tp_title settings">
 						<dt><label for="tp_block_title"><b>'.$txt['tp-title'].'</b></label></dt>
 						<dd>
 							<input type="text" id="tp_block_title" name="tp_block_title" value="' .$newtitle. '" size="50" required><br><br>
@@ -345,7 +343,7 @@ function template_editblock()
 			elseif($context['TPortal']['blockedit']['type']=='8'){
                 if(isset($context['TPortal']['tpblocks']['blockrender'])) {
 					echo '
-						<dl class="settings">
+						<dl class="tp_title settings">
 						<input type="hidden" name="tp_block_body" value="1">
 						<dt>
 							<label for="tp_shoutbox_stitle">'.$txt['tp-shoutboxtitle'].'</label>

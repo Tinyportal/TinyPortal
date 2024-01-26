@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -88,12 +88,12 @@ function TPblock($block, $theme, $side, $double=false)
 			echo $types[$block['panelstyle']]['code_title_left'];
 
 			if($block['visible'] == '' || $block['visible'] == '1') {
-				echo '<a href="javascript:void(0);return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img id="blockcollapse'.$block['id'].'" style="margin: 2px 0 0 0;float:right" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
+				echo '<a href="javascript:void(0);return%20false" onclick="toggle(\''.$block['id'].'\'); return false"><img class="tp_edit" id="blockcollapse'.$block['id'].'" src="' .$settings['tp_images_url']. '/' , !in_array($block['id'],$context['TPortal']['upshrinkblocks'])  ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="'.$txt['block-upshrink_description'].'" /></a>';
 			}
 
 			// can you edit the block?
 			if($block['can_manage'] && !$context['TPortal']['blocks_edithide']) {
-				echo '<a href="',$scripturl,'?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
+				echo '<a href="',$scripturl,'?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'"><img class="tp_edit" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['edit_description'].'" /></a>';
 			}
 			echo $block['title'];
 			echo $types[$block['panelstyle']]['code_title_right'];
@@ -125,12 +125,12 @@ function TPblock($block, $theme, $side, $double=false)
 				elseif(substr($context['TPortal']['blockheight_'.$side],strlen($context['TPortal']['blockheight_'.$side])-1,1) == '%')
 					$nh = (substr($context['TPortal']['blockheight_'.$side],0,strlen($context['TPortal']['blockheight_'.$side])-1)*2).'%';
 			}
-			echo '<div class="tp_blockbody" style="overflow: auto;' , !empty($context['TPortal']['blockheight_'.$side]) ? 'height: '. ($double ? $nh : $context['TPortal']['blockheight_'.$side]) .';' : '' , '">';
+			echo '<div class="tp_blockbody" ' , !empty($context['TPortal']['blockheight_'.$side]) ? 'style="height: '. ($double ? $nh : $context['TPortal']['blockheight_'.$side]) .'";' : '' , '>';
 			$func($block['id']);
 			echo '</div>';
 		}
 		else
-			echo '<div class="tp_blockbody" style="overflow: auto;' , !empty($context['TPortal']['blockheight_'.$side]) ? 'height: '.$context['TPortal']['blockheight_'.$side].';' : '' , '">' , parse_bbc($block['body']) , '</div>';
+			echo '<div class="tp_blockbody" ' , !empty($context['TPortal']['blockheight_'.$side]) ? 'style="height: '.$context['TPortal']['blockheight_'.$side].'";' : '' , '>' , parse_bbc($block['body']) , '</div>';
 
 		if($theme || $block['frame'] == 'frame')
 			echo $types[$block['panelstyle']]['code_bottom'];
@@ -721,7 +721,7 @@ function TPortal_recentbox()
 function TPortal_ssi()
 {
 	global $context, $txt;
-	echo '<div style="padding: 5px;" class="smalltext">';
+	echo '<div class="tp_ssifunction smalltext">';
 	if($context['TPortal']['ssifunction'] == 'recenttopics')
 		ssi_recentTopics();
 	elseif($context['TPortal']['ssifunction'] == 'recentposts')
@@ -901,7 +901,7 @@ function TPortal_rss()
 {
 	global $context;
 
-	echo '<div style="padding: 5px; ' , !empty($context['TPortal']['rsswidth']) ? 'max-width: ' . $context['TPortal']['rsswidth'] .';' : '' , '" class="middletext">' , TPparseRSS('', $context['TPortal']['rss_utf8']) , '</div>';
+	echo '<div style="' , !empty($context['TPortal']['rsswidth']) ? 'max-width: ' . $context['TPortal']['rsswidth'] .';' : '' , '" class="tp_rssfunction middletext">' , TPparseRSS('', $context['TPortal']['rss_utf8']) , '</div>';
 }
 
 // blocktype 16: sitemap
@@ -1894,12 +1894,12 @@ function article_options($render = true)
 		// give 'em a edit link? :)
 		if(allowedTo('tp_articles') && ($context['TPortal']['hide_editarticle_link']==1)) {
 			$data .= '
-					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
+					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img class="tp_edit" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
         }
 		// their own article?
 		elseif(allowedTo('tp_editownarticle') && !allowedTo('tp_articles') && ($context['TPortal']['article']['author_id'] == $context['user']['id']) && $context['TPortal']['hide_editarticle_link']==1 && $context['TPortal']['article']['locked']!=1) {
 			$data .= '
-					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img style="margin: 2px 4px 0 0;float:right" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
+					<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $context['TPortal']['article']['id'] . '"><img class="tp_edit" src="' .$settings['tp_images_url']. '/TPedit2.png" alt="" title="'.$txt['tp-edit'].'" /></a>';
         }
 	}
 

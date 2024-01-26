@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1974,7 +1974,7 @@ function TPdownloadme()
 			}
 		}
 		else {
-			$error = $txt['tp-dlfileerror'].'.<br>'.$txt['tp-dlerrorfile'].': <b>'.$real_filename.'</b>';
+			$error = '<div class="errorbox">'.$txt['tp-dlfileerror'].'.</div><br>'.$txt['tp-dlerrorfile'].': <b>'.$real_filename.'</b>';
 			fatal_error($error, false);
 		}
 	}

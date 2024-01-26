@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -54,7 +54,7 @@ function template_tp_articles()
 	<div>
 		<div></div>
 		<div id="tp_profile_articles" class="roundframe" >
-			<div class="windowbg addborder tp_pad">';
+			<div class="windowbg tp_addborder tp_pad">';
 
 		echo $txt['tp-prof_allarticles']. ' <b>'.$context['TPortal']['all_articles'].'</b><br>';
 
@@ -210,7 +210,7 @@ function template_tp_download()
 		<div class="cat_bar"><h3 class="catbg">'.$txt['downloadsprofile'].'</h3></div>
 		<p class="information">'.$txt['downloadsprofile2'].'</p>
 		<div id="tp_profile_uploaded" class="roundframe">
-			<div class="windowbg addborder tp_pad">';
+			<div class="windowbg tp_addborder tp_pad">';
 
 	echo $txt['tp-prof_alldownloads'].' <b>'.$context['TPortal']['all_downloads'].'</b><br>';
 	if($context['TPortal']['approved_downloads']>0)

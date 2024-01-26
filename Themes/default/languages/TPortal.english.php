@@ -1,5 +1,5 @@
 <?php
-// Version: 3.0.0; TPortal
+// Version: 3.0.1; TPortal
 
 global $txt, $context, $scripturl;
 
@@ -212,6 +212,23 @@ $txt['tp-shout-refresh'] = 'Refresh';
 $txt['tpsummary_noshout'] = 'No shout messages found';
 $txt['alert_shout_mention'] = 'You have been mentioned by {user_mention} in a shoutbox message';
 $txt['alert_tp_comment_mention'] = 'You have been mentioned by {user_mention} in an article comment';
+
+// Color picker
+$txt['tp_change_color'] = 'Change color';
+$txt['tp_black'] = 'Black';
+$txt['tp_red'] = 'Red';
+$txt['tp_yellow'] = 'Yellow';
+$txt['tp_pink'] = 'Pink';
+$txt['tp_green'] = 'Green';
+$txt['tp_orange'] = 'Orange';
+$txt['tp_purple'] = 'Purple';
+$txt['tp_blue'] = 'Blue';
+$txt['tp_beige'] = 'Beige';
+$txt['tp_brown'] = 'Brown';
+$txt['tp_teal'] = 'Teal';
+$txt['tp_navy'] = 'Navy';
+$txt['tp_maroon'] = 'Maroon';
+$txt['tp_limegreen'] = 'Limegreen';
 
 // SCE Editor
 $txt['editor_tp_floatleft'] = 'Insert float left div';

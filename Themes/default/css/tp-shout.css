@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -57,20 +57,29 @@
 .tp_bigshout {
 	height: 100%;
 }
+textarea.tp_shoutbox_item {
+	height: auto;
+}
 .tp_shout_errors {
 	display: none;
 }
-.tp_shout_smileybox {
+.tp_shout_smileybox, .tp_shout_bbcbox {
 	display: inline-block;
 	vertical-align: top;
 	min-width:150px;
 	max-height: 150px;
 	overflow: auto;
+	text-align: left;
+	padding-top: 5px;
 }
-.tp_shout_bbcbox {
-	display: inline-block;
-	min-width:150px;
-	vertical-align: top;
+.tp_expand_smileybox, .tp_expand_bbcbox {
+	display: inline;
+	padding-top: 0.2em;
+}
+.tp_expand_shoutsmiley, .tp_expand_shoutbbc {
+	margin-right: 5px;
+	float: left;
+	padding-top: 0.2em;
 }
 span.tp_shoutbox_text {
 	color: var(--tp_shout-textcolor);
@@ -82,12 +91,10 @@ span.tp_shoutbox_time {
 .tp_shoutbody_layout0 {
 	padding-right: 5px;
 }
-.tp_shoutbox_editor0 {
+.tp_shoutbox_editor0, .tp_shoutbox_editor1 {
 	height: 80px;
-	margin: 0.25em 0 1em 0;
-	margin-top: 1em;
-	max-width: 95%;
-	width: 100%;
+	margin: .25em 0 .5em 0;
+	width: 95%;
 }
 .tp_bubble {
 	background: var(--tp_bubble-background);
@@ -129,13 +136,6 @@ span.tp_shoutbox_time {
 .tp_shoutbody_layout1 {
 	border-bottom: 2px solid var(--tp_border);
 	padding: 5px 5px 5px 0;
-}
-.tp_shoutbox_editor1 {
-	height: 80px;
-	margin: 0.25em 0 1em 0;
-	margin-top: 1em;
-	max-width: 95%;
-	width: 100%;
 }
 /* Layout option 3 and 4 */
 .tp_shout_date {

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -59,11 +59,15 @@ function template_main()
 			<div class="windowbg noup padding-div">
 					<dl class="tp_title settings">
 					<dt>
-						<label for="tp_show_download_on">',$txt['tp-showdownload'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $context['TPortal']['show_download']=='0' ? 'red' : 'green' , '.png" alt=""  /></label>
+						<label for="tp_show_download_on">',$txt['tp-showdownload'], '</label>
 					</dt>
 					<dd>
-						<input type="radio" id="tp_show_download_on" name="tp_show_download" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'><label for="tp_show_download_on"> '.$txt['tp-on'].'</label>
-						<input type="radio" id="tp_show_download_off" name="tp_show_download" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'><label for="tp_show_download_off"> '.$txt['tp-off'].'</label><br><br>
+						<div class="switch-field">
+							<input type="radio" class="switch-on" id="tp_show_download_on" name="tp_show_download" value="1" ', $context['TPortal']['show_download']=='1' ? 'checked' : '' ,'>
+							<label for="tp_show_download_on"> '.$txt['tp-on'].'</label>
+							<input type="radio" class="switch-off" id="tp_show_download_off" name="tp_show_download" value="0" ', $context['TPortal']['show_download']=='0' ? 'checked' : '' ,'>
+							<label for="tp_show_download_off"> '.$txt['tp-off'].'</label>
+						</div>
 					</dd>
 					<dt>
 						<label for="tp_dl_allowed_types">'.$txt['tp-dlallowedtypes'].'</label>
@@ -112,16 +116,16 @@ function template_main()
 						<label for="tp_dl_fileprefix">'.$txt['tp-dluseformat'].'</label>
 					</dt>
 					<dd>
-						<input type="radio" id="tp_dl_fileprefix1" name="tp_dl_fileprefix" value="K" ', $context['TPortal']['dl_fileprefix']=='K' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix1">'.$txt['tp-kb'].'</label><br>
-						<input type="radio" id="tp_dl_fileprefix2" name="tp_dl_fileprefix" value="M" ', $context['TPortal']['dl_fileprefix']=='M' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix2">'.$txt['tp-mb'].'</label><br>
-						<input type="radio" id="tp_dl_fileprefix3" name="tp_dl_fileprefix" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'> <label for="tp_dl_fileprefix3">'.$txt['tp-gb'].'</label><br><br>
+						<input type="radio" id="tp_dl_fileprefix1" name="tp_dl_fileprefix" value="K" ', $context['TPortal']['dl_fileprefix']=='K' ? 'checked' : '' ,'><label for="tp_dl_fileprefix1">'.$txt['tp-kb'].'</label>
+						<input type="radio" id="tp_dl_fileprefix2" name="tp_dl_fileprefix" value="M" ', $context['TPortal']['dl_fileprefix']=='M' ? 'checked' : '' ,'><label for="tp_dl_fileprefix2">'.$txt['tp-mb'].'</label>
+						<input type="radio" id="tp_dl_fileprefix3" name="tp_dl_fileprefix" value="G" ', $context['TPortal']['dl_fileprefix']=='G' ? 'checked' : '' ,'><label for="tp_dl_fileprefix3">'.$txt['tp-gb'].'</label><br><br>
 					</dd>
 					<dt>
 						<label for="fieldname">'.$txt['tp-dlusescreenshot'].'</label>
 					</dt>
 					<dd>
-						<input type="radio" name="tp_dl_usescreenshot" value="1" ', $context['TPortal']['dl_usescreenshot']=='1' ? 'checked' : '' ,'> '.$txt['tp-yes'].'&nbsp;&nbsp;
-						<input type="radio" name="tp_dl_usescreenshot" value="0" ', $context['TPortal']['dl_usescreenshot']=='0' ? 'checked' : '' ,'> '.$txt['tp-sayno'].'<br><br>
+						<input type="radio" id="tp_dl_usescreenshotyes" name="tp_dl_usescreenshot" value="1" ', $context['TPortal']['dl_usescreenshot']=='1' ? 'checked' : '' ,'><label for="tp_dl_usescreenshotyes">'.$txt['tp-yes'].'</label>
+						<input type="radio" id="tp_dl_usescreenshotno" name="tp_dl_usescreenshot" value="0" ', $context['TPortal']['dl_usescreenshot']=='0' ? 'checked' : '' ,'><label for="tp_dl_usescreenshotno">'.$txt['tp-sayno'].'</label><br><br>
 					</dd>
 					<dt>
 						<label for="fieldname">'.$txt['tp-dlscreenshotsize1'].'</label>

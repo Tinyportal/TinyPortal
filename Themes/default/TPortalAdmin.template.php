@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1631,8 +1631,10 @@ function template_panels()
 						'.$txt['tp-use'.$panl.'panel'].'
 					</dt>
 					<dd>
-						<input type="radio" id="tp_'.$panl.'panelon" name="tp_'.$panl.'panel" value="1" ' , $context['TPortal']['admin'.$panl.'panel']==1 ? 'checked' : '' , '><label for="tp_'.$panl.'panelon"> '.$txt['tp-on'].'</label>
-						<input type="radio" id="tp_'.$panl.'paneloff" name="tp_'.$panl.'panel" value="0" ' , $context['TPortal']['admin'.$panl.'panel']==0 ? 'checked' : '' , '><label for="tp_'.$panl.'paneloff"> '.$txt['tp-off'].'</label>
+						<div class="switch-field">
+							<input type="radio" class="switch-on" id="tp_'.$panl.'panelon" name="tp_'.$panl.'panel" value="1" ' , $context['TPortal']['admin'.$panl.'panel']==1 ? 'checked' : '' , '><label for="tp_'.$panl.'panelon"> '.$txt['tp-on'].'</label>
+							<input type="radio" class="switch-off" id="tp_'.$panl.'paneloff" name="tp_'.$panl.'panel" value="0" ' , $context['TPortal']['admin'.$panl.'panel']==0 ? 'checked' : '' , '><label for="tp_'.$panl.'paneloff"> '.$txt['tp-off'].'</label>
+						</div>
 					</dd>
 					<dt>
 						'.$txt['tp-hide_'.$panl.'bar_forum'].'

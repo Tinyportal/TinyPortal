@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -199,11 +199,13 @@ function template_submitarticle()
 				echo '</select><br><br>
 					</dd>
 					<dt>
-						<label for="tp_article_approved">', $txt['tp-approved'], '</label>
+						', $txt['tp-approved'], '
 					</dt>
 					<dd>
-						<input type="radio" id="tp_article_approved" name="tp_article_approved" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'>  '.$txt['tp-yes'].'
-						<input type="radio" name="tp_article_approved" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'>  '.$txt['tp-no'].'
+					<div class="switch-field">
+						<input type="radio" class="switch-on" id="tp_article_approvedyes" name="tp_article_approved" value="1" ', $mg['approved']=='1' ? 'checked' : '' ,'><label for="tp_article_approvedyes">'.$txt['tp-yes'].'</label>
+						<input type="radio" class="switch-off" id="tp_article_approvedno" name="tp_article_approved" value="0" ', $mg['approved']=='0' ? 'checked' : '' ,'><label for="tp_article_approvedno">'.$txt['tp-no'].'</label>
+					</div>
 					</dd>
 				</dl>
 				<hr>
@@ -218,11 +220,13 @@ function template_submitarticle()
 						<input type="radio" id="goimport" name="tp_article_type" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> '.$txt['tp-goimport'] .'</label><br><br>
 					</dd>
 					<dt>
-						<label for="tp_article_on">', $txt['tp-status'], ' <img style="margin:0 1ex;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  /></label>
+						', $txt['tp-status'], '
 					</dt>
 					<dd>
-						<input type="radio" id="tp_article_on" name="tp_article_off" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br>
-						<input type="radio" id="tp_article_off" name="tp_article_off" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label><br><br>
+					<div class="switch-field">
+						<input type="radio" class="switch-on" id="tp_article_on" name="tp_article_off" value="0" ' , $mg['off']=='0' ? 'checked' : '' , '><label for="tp_article_on"> '.$txt['tp-articleon'].'</label><br>
+						<input type="radio" class="switch-off" id="tp_article_off" name="tp_article_off" value="1" ' , $mg['off']=='1' ? 'checked' : '' , '><label for="tp_article_off"> '.$txt['tp-articleoff'].'</label>
+					</div>
 					</dd>';
 				if(!empty($mg['id'])) {
 					echo '
