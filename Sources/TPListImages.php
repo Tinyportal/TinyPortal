@@ -56,9 +56,10 @@ function template_tp_list_images_admin() {
 
     echo '
 		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;list"  method="post">
+		<div class="cat_bar"><h3 class="catbg">' . $txt['custom_modules'] . '</h3></div>
+		<p class="information">' , $txt['tp-listimage-intro'] , '</p>
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-listimage-settings'].'</h3></div>
-		<div id="tplistimages" class="tp_admintable admin-area">
-			<div class="information smalltext">' , $txt['tp-listimage-intro'] , '</div><div></div>
+		<div id="tplistimages">
 			<div class="windowbg noup">
 				<div class="padding-div">
 					<input type="hidden" name="sc" value="', $context['session_id'], '" />
@@ -70,12 +71,13 @@ function template_tp_list_images_admin() {
     echo '
 				</select>
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
-				</div>
-			</div>
-		</form>';
+				</div>';
 
     echo $ret;
 
+	echo '
+			</div>
+		</form>';
 }
 
 function TPListImageAdmin($user_id = 0) {{{
@@ -124,7 +126,7 @@ function TPListImageAdmin($user_id = 0) {{{
             }
 
             $html .= '
-					<div class="tp_floatleft">
+					<div>
 						<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post">
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" />
 						<input type="hidden" name="id_member" value="'.$user_id.'" />

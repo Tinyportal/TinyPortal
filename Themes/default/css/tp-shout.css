@@ -60,9 +60,9 @@
 textarea.tp_shoutbox_item {
 	height: auto;
 }
-.tp_shout_errors {
+/*.tp_shout_errors {
 	display: none;
-}
+}*/
 .tp_shout_smileybox, .tp_shout_bbcbox {
 	display: inline-block;
 	vertical-align: top;

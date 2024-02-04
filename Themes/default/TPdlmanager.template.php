@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -123,7 +123,7 @@ function template_main() {
 										<div>'.$txt['tp-uploadedby'] .' ' . $last['author'].'</div>
 									</div>
 								</div>
-								<div class="tp_dlstatblock"><div class="tp_dlstatblock_a"><div class="tp_dlstatnr">'.$last['downloads'].'</div>'.$txt['tp-downloads'].'</div></div>
+								<div class="tp_countblock tp_hidesmall"><div class="tp_countblock_a"><div class="tp_countnr">'.$last['downloads'].'</div>'.$txt['tp-downloads'].'</div></div>
 							</div>
 						</div>';
 					}
@@ -158,7 +158,7 @@ function template_main() {
 										<div>'.$txt['tp-uploadedby'] .' ' . $wost['author'].'</div>
 									</div>
 								</div>
-								<div class="tp_dlstatblock"><div class="tp_dlstatblock_a"><div class="tp_dlstatnr">'.$wost['downloads'].'</div>'.$txt['tp-downloads'].'</div></div>
+								<div class="tp_countblock tp_hidesmall"><div class="tp_countblock_a"><div class="tp_countnr">'.$wost['downloads'].'</div>'.$txt['tp-downloads'].'</div></div>
 							</div>
 						</div>';
 						$count++;
@@ -192,7 +192,7 @@ function template_main() {
 										<div>'.$txt['tp-uploadedby'] .' ' . $wost['author'].'</div>
 									</div>
 								</div>
-								<div class="tp_dlstatblock"><div class="tp_dlstatblock_a"><div class="tp_dlstatnr">'.$wost['downloads'].'</div>'.$txt['tp-downloads'].'</div></div>
+								<div class="tp_countblock tp_hidesmall"><div class="tp_countblock_a"><div class="tp_countnr">'.$wost['downloads'].'</div>'.$txt['tp-downloads'].'</div></div>
 							</div>
 						</div>';
 						$count++;
@@ -271,8 +271,8 @@ function template_main() {
 								<div class="tp_dlshow-on-responsive"><i>', ($dlcat['files']==1 ? ''.$dlcat['files'].' '.$txt['tp-dl1file'].'' : ''.$dlcat['files'].' '.$txt['tp-dlfiles'].'') ,'</i></div>
 							</div>
 						</div>
-						<div class="tp_dlstatblock">
-							<div class="tp_dlstatblock_c">', ($dlcat['files']==1 ? '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dl1file'].'' : '<div class="tp_dlstatnr">'.$dlcat['files'].'</div>'.$txt['tp-dlfiles'].'') ,'</div>
+						<div class="tp_countblock tp_hidesmall">
+							<div class="tp_countblock_c">', ($dlcat['files']==1 ? '<div class="tp_countnr">'.$dlcat['files'].'</div>'.$txt['tp-dl1file'].'' : '<div class="tp_countnr">'.$dlcat['files'].'</div>'.$txt['tp-dlfiles'].'') ,'</div>
 						</div>
 					</div>';
 				if(!empty($dlcat['description'])) {
@@ -340,9 +340,9 @@ function template_main() {
 							<div class="tp_dlshow-on-responsive">'.$dlitem['downloads'].' '.$txt['tp-downloads'].'</div>
 							<div>' , implode('</div><div>', $details) , '</div></div>
 							</div>
-							<div class="tp_dlstatblock">
-								<div class="tp_dlstatblock_a"><div class="tp_dlstatnr">'.$dlitem['downloads'].'</div>'.$txt['tp-downloads'].'</div>
-								<div class="tp_dlstatblock_b"><div class="tp_dlstatnr">'.$dlitem['views'].'</div>'.$txt['tp-views'].'</div>
+							<div class="tp_countblock tp_hidesmall">
+								<div class="tp_countblock_a"><div class="tp_countnr">'.$dlitem['downloads'].'</div>'.$txt['tp-downloads'].'</div>
+								<div class="tp_countblock_b"><div class="tp_countnr">'.$dlitem['views'].'</div>'.$txt['tp-views'].'</div>
 							</div>
 						</div>';
 					if(!empty($dlitem['description'])) {
@@ -355,7 +355,6 @@ function template_main() {
 				}
 				echo '
 				</div>
-
 				<p class="clearthefloat"></p>
 				<div class="padding-div">';
 					if($context['TPortal']['dlaction']!='item' && !empty($context['TPortal']['pageindex']))
@@ -483,38 +482,33 @@ function template_main() {
 		else
 			fatal_error($txt['tp-adminonly']);
 
-	   echo '
-	 <div id="tpUpload" class="tborder">
-		<div></div>
-        <div class="cat_bar">
-            <h3 class="catbg">'.$txt['tp-dlupload'].'</h3>
-        </div>
-		<div class="windowbg noup">
-			  <div>
-				<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tportal;sa=download;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">
-				';
+		echo '
+		<form accept-charset="', $context['character_set'], '" name="tp_dlupload" id="tp_dlupload" action="'.$scripturl.'?action=tportal;sa=download;dl=upload" method="post" enctype="multipart/form-data" onsubmit="submitonce(this);">	 <div id="tpUpload" class="tborder">
+			<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dlupload'].'</h3></div>
+			<div></div>
+			<div class="windowbg noup">';
 
 		if($context['TPortal']['dl_approve']=='1' && !allowedTo('tp_dlmanager'))
 			echo '<div class="padding-div tpcenter"><b>! '.$txt['tp-warnsubmission'].'</b></div>';
 
-		echo '<div class="smalltext padding-div tpcenter"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
-					<div class="tp_formtable padding-div">
-						<dl class="tp_title settings">
-							<dt>
-								<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
-							</dt>
-							<dd>
-								<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="'.(!empty($_GET['ftp']) ? $_GET['ftp'] : "").'" required>
-							</dd>
-							<dt>
-								<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
-							</dt>
-							<dd>
-								<select id="tp-dluploadcat" name="tp-dluploadcat">';
+		echo '
+				<div class="smalltext padding-div tpcenter"><b>'. $txt['tp-maxuploadsize'].': '. $context['TPortal']['dl_max_upload_size'].''.$txt['tp-kb'].'</b></div>
+				<dl class="tp_title settings">
+					<dt>
+						<label for="tp-dluploadtitle"><b>'.$txt['tp-dluploadtitle'].'</b></label>
+					</dt>
+					<dd>
+						<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="'.(!empty($_GET['ftp']) ? $_GET['ftp'] : "").'" required>
+					</dd>
+					<dt>
+						<label for="tp-dluploadcat"><b>'.$txt['tp-dluploadcategory'].'</b></label>
+					</dt>
+					<dd>
+						<select id="tp-dluploadcat" name="tp-dluploadcat">';
 
 		foreach($context['TPortal']['uploadcats'] as $ucats) {
 			echo '
-									<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("- ",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
+							<option value="'.$ucats['id'].'">', !empty($ucats['indent']) ? str_repeat("- ",$ucats['indent']) : '' ,' ' . $ucats['name'].'</option>';
 		}
 		echo '				</select><br>
 							</dd>
@@ -611,7 +605,7 @@ function template_main() {
 						<label for="tp_dluploadattach">'.$txt['tp-dluploadattach'].'</label>
 					</dt>
 					<dd>
-						 <select size="1" name="tp_dluploadattach" id="tp_dluploadattach">
+						<select size="1" name="tp_dluploadattach" id="tp_dluploadattach">
 						<option value="0" selected>'.$txt['tp-none'].'</option>';
 			foreach($context['TPortal']['attachitems'] as $att)
 				echo '
@@ -630,7 +624,7 @@ function template_main() {
 			<hr>
 				<dl class="settings">
 					<dt>
-						<label for="field_name">'.$txt['tp-dlcreatetopic'].'</filed>
+						'.$txt['tp-dlcreatetopic'].'
 					</dt>
 					<dd>
 						'.$txt['tp-dlmissingboards'].' <a href="' . $scripturl . '?action=tportal;sa=download;dl=adminsettings">'.$txt['tp-dlmissingboards2'].'</a>
@@ -690,10 +684,8 @@ function template_main() {
 					</div>
 				</div>
 			</div>
-		</form>
-			</div>
 		</div>
-	</div>
+	</form>
 	<script type="text/javascript">
 		function dlcheck(icon)
 		{

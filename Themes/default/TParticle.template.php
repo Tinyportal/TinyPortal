@@ -67,9 +67,8 @@ function template_submitarticle()
 	echo'
 		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" src="' .$settings['tp_images_url']. '/TP' , $mg['off']=='1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id']=='' ? $txt['tp-addarticle']. '' .$txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle']. ' ' .html_entity_decode($mg['subject']) , '' , $mg['id']==0 ? '' : '&nbsp;-&nbsp;<a href="'.$scripturl.'?page='.$mg['id'].'">['.$txt['tp-preview'].']</a>';
 	echo '</h3></div>
-		<div id="edit-add-single-article" class="tp_admintable admin-area">
+		<div id="edit-add-single-article">
 		<div class="windowbg noup">
-			<div class="tp_formtable">
 			<dl class="tp_title settings">
 				<dt>
 					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
@@ -142,7 +141,7 @@ function template_submitarticle()
 				}
 
 				echo '
-					<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
+					<input type="submit" class="button" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" >';
 
 				echo '<input type="hidden" name="tp_article_timestamp" value="'.$mg['date'].'">';
 
@@ -158,7 +157,7 @@ function template_submitarticle()
 						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" required><br><br>
 					</dd>
 					<dt>
-						<label for="field_name">', $txt['tp-created'], '</label>
+						', $txt['tp-created'], '
 					</dt>
 					<dd>';
 				// day
@@ -211,7 +210,7 @@ function template_submitarticle()
 				<hr>
 				<dl class="tp_title settings">
 					<dt>
-						<label for="field_name">', $txt['tp-switchmode'], '</label>
+						', $txt['tp-switchmode'], '
 					</dt>
 					<dd>
 						<input type="radio" id="gohtml" name="tp_article_type" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> '.$txt['tp-gohtml'] .'</label><br>
@@ -267,7 +266,7 @@ function template_submitarticle()
 					</dd>
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-statusdesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">', $txt['tp-status'], '</label>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['tp-status'], '
 					</dt>
 					<dd>';
 				if (!empty($context['TPortal']['editing_article'])) {
@@ -291,7 +290,7 @@ function template_submitarticle()
 			    if(allowedTo('admin_forum') || allowedTo('tp_articles')) {
 					echo '
 					<dt>
-						<label for="field_name">', $txt['tp-published'], '</label>
+						', $txt['tp-published'], '
 					</dt>
 					<dd><div class="description" style="line-height: 1.6em;">
 							<b>',$txt['tp-pub_start'],': </b><br>';
@@ -400,7 +399,7 @@ function template_submitarticle()
 				echo '
 					<dl class="tp_title settings">
 						<dt>
-							<label for="field_name">', $txt['tp-display'], '</label>
+							', $txt['tp-display'], '
 						</dt>
 						<dd>
 							<input type="radio" id="usetheme" name="tp_article_frame" value="theme" ' , $mg['frame']=='theme' ? 'checked' : '' , '><label for="usetheme"> '.$txt['tp-useframe'].'</label><br>
@@ -409,7 +408,7 @@ function template_submitarticle()
 							<input type="radio" id="noframe" name="tp_article_frame" value="none" ' , $mg['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
 						</dd>
 						<dt>
-							<label for="field_name">', $txt['tp-illustration'], '</label>
+							', $txt['tp-illustration'], '
 						</dt>
 						<dd>
 							<div class="tp_article_icon" style="width: '.$context['TPortal']['icon_width'].'px; max-height: '.$context['TPortal']['icon_width'].'px;"><img src="' , $boardurl , '/tp-files/tp-articles/illustrations/' , !empty($mg['illustration']) ? $mg['illustration'] : 'TPno_illustration.png' , '"></div><br>
@@ -430,13 +429,13 @@ function template_submitarticle()
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=tp-adminiconsinfo" onclick="return reqOverlayDiv(this.href);">
-							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="field_name">' . $txt['tp-uploadicon'] . '</label>
+							<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-uploadicon'] . '
 						</dt>
 						<dd>
 						<input type="file" name="tp_article_illupload">
 					</dd>
 				</dl>
-				<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
+				<input type="submit" class="button" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" >';
 				$opts = array('','date','title','author','linktree','top','cblock','rblock','lblock','bblock','tblock','lbblock','category','catlist','comments','commentallow','commentupshrink','views','rating','ratingallow','nolayer','avatar','inherit','social','nofrontsetting');
 				$tmp = explode(',',$mg['options']);
 				$options=array();
@@ -564,7 +563,7 @@ function template_submitarticle()
 						<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
 					</div>
 				</div><br>
-			<div class="padding-div"><input type="submit" class="button button_submit" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" ></div>';
+			<input type="submit" class="button" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'" >';
 			}
 			else {
 				echo '<input name="tp_article_type" type="hidden" value="'.$article_type.'">';
@@ -581,7 +580,6 @@ function template_submitarticle()
 			}
 
 			echo'
-				</div>
 			</div>
 		</div>
 	</form>';
@@ -610,14 +608,7 @@ function template_submitsuccess()
 	global $txt, $scripturl;
 
 	echo '
-		<div class="tborder">
-			<div class="cat_bar">
-				<h3 class="catbg">'.$txt['tp-submitsuccess2'].'</h3>
-			</div>
-			<div class="windowbg padding-div" style="text-align: center;">'.$txt['tp-submitsuccess'].'<a href="' . $scripturl . '?action=tportal;sa=myarticles">' .$txt['tp-myarticles']. '</a>
-				<div class="padding-div">&nbsp;</div>
-			</div>
-		</div>';
+		<div class="infobox tpcenter">'.$txt['tp-submitsuccess'].'<a href="' . $scripturl . '?action=tportal;sa=myarticles">' .$txt['tp-myarticles']. '</a></div>';
 }
 
 function template_editcomment()
@@ -651,8 +642,8 @@ function template_showcomments()
 			echo '
 			<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
 			<div></div>
-			<div id="show-art-comm" class="windowbg padding-div">
-			<table class="table_grid tp_grid">
+			<div id="show-art-comm" class="windowbg">
+			<table class="table_grid">
 				<thead>
 					<tr class="title_bar">
 					<th scope="col" class="tp_comments">
@@ -698,8 +689,8 @@ function template_showcomments()
 				echo '
 				<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '. <a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showallcomments'] . '</a></h3></div>
 				<div></div>
-				<div id="latest-art-comm" class="windowbg padding-div">
-				<table class="table_grid tp_grid">
+				<div id="latest-art-comm" class="windowbg">
+				<table class="table_grid">
 					<thead>
 						<tr class="title_bar">
 						<th scope="col" class="tp_comments">
@@ -743,28 +734,41 @@ function template_showarticle()
 	global $txt, $context, $settings, $scripturl;
 
 	echo '
-        <div class="cat_bar">
-            <h3 class="catbg">' .$txt['tp-myarticles'] . '</h3>
-        </div>
-		<div class="windowbg padding-div">
-	<table class="table_grid tp_grid";>
-		<thead>
-			<tr class="title_bar">
-			<th scope="col" class="myarticles">
-				<div class="font-strong" style="padding:0px;">
-					<div align="center" class="float-items">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
-				</div>
-			</th>
-			</tr>
-		</thead>
+		<div class="cat_bar"><h3 class="catbg">' .$txt['tp-myarticles'] . '</h3></div>
+		<div id="myarticles">
+		<table class="table_grid";>
+			<thead>
+				<tr class="title_bar">
+				<th scope="col" class="myarticles">
+					<div class="tp_admbox">
+						<div class="tp_admfirst">
+							<div class="tp_name tpleft">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
+						</div>
+					</div>
+				</th>
+				</tr>
+			</thead>
 		<tbody>';
 			if(count($context['TPortal']['myarticles']) > 0) {
 				foreach($context['TPortal']['myarticles'] as $art) {
 					echo '
-					<tr class="windowbg">
-					<td>
-						<div style="overflow: hidden; padding: 3px;">
-							<div style="float: right;">';
+			<tr class="windowbg">
+				<td>
+					<div class="tp_flexbox">
+						<div class="tp_catname">';
+						
+					if($art['off'] == 0 && $art['approved'] == 1) {
+						echo '
+						<a href="' . $scripturl . '?page='.$art['id'].'" title="'. $txt['tp-viewarticle'] .'">' . html_entity_decode($art['subject']) . '</a>';
+					}
+					else {
+						echo '
+					(<i>' . html_entity_decode($art['subject']). '</i>)';
+					}
+					
+					echo '
+						</div>
+						<div class="tp_articleopts80 tpright">';
 					if($art['approved'] == 0) {
 							echo '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt['tp-notapproved'] .'" alt="*" />&nbsp; ';
 					}
@@ -778,22 +782,14 @@ function template_showarticle()
 					else {
 							echo '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="'. $txt['tp-noton'] .'" alt="*" />&nbsp; ';
 					}
-                    echo '
-                        </div>';
+					echo '
+						</div>
+					</div>';
 
 					if($art['locked']==1) {
 						echo '
 						<img title="'.$txt['tp-islocked'].'" src="' .$settings['tp_images_url']. '/TPlock1.png" alt="'.$txt['tp-islocked'].'"  />&nbsp';
 					}
-
-                    if($art['off'] == 0 && $art['approved'] == 1) {
-                        echo '
-                        <a href="' . $scripturl . '?page='.$art['id'].'" title="'. $txt['tp-viewarticle'] .'">' . html_entity_decode($art['subject']) . '</a>';
-                    }
-                    else {
-                        echo '
-                    (<i>' . html_entity_decode($art['subject']). '</i>)';
-                    }
 					echo '
 						</div>
 					</td>
@@ -803,9 +799,9 @@ function template_showarticle()
 			else {
 				echo '
 					<tr class="windowbg">
-					<td>
-					'. $txt['tp-noarticlesfound'] .'
-					</td>
+						<td>
+							'. $txt['tp-noarticlesfound'] .'
+						</td>
 					</tr>';
 			}
 		echo '
@@ -814,8 +810,7 @@ function template_showarticle()
 
 		if(!empty($context['TPortal']['pageindex'])) {
 				echo '
-				<div class="middletext padding-div">' . $context['TPortal']['pageindex'] . '</div>
-				<div class="padding-div"></div>';
+				<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div><br>';
 		}
 
 		echo '
