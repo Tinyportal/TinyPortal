@@ -17,7 +17,7 @@
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-	die('Hacking attempt...');
+    die('Hacking attempt...');
 }
 
 class Integrate
@@ -29,10 +29,10 @@ class Integrate
 
         $paths = array (
             // Downloads
-			'~^action=tpmod;dl=item([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&amp;sa=download;dl=item%2$s',
-			'~^action=tpmod;dl=cat([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&amp;sa=download;dl=cat%2$s',
-			'~^action=tpmod;dl=get([0-9]+)[\/]?$~'			            => '%1$s/index.php?action=tportal&amp;sa=download;dl=get%2$s',
-		);
+            '~^action=tpmod;dl=item([0-9]+)[\/]?$~'                     => '%1$s/index.php?action=tportal&amp;sa=download;dl=item%2$s',
+            '~^action=tpmod;dl=cat([0-9]+)[\/]?$~'                      => '%1$s/index.php?action=tportal&amp;sa=download;dl=cat%2$s',
+            '~^action=tpmod;dl=get([0-9]+)[\/]?$~'                      => '%1$s/index.php?action=tportal&amp;sa=download;dl=get%2$s',
+        );
 
         if(is_array($_SERVER) && isset($_SERVER['QUERY_STRING'])) {
             foreach ($paths as $route => $destination) {
@@ -60,7 +60,7 @@ class Integrate
             'load_permissions'                  => 'TinyPortal\Integrate::hookPermissions',
             'load_illegal_guest_permissions'    => 'TinyPortal\Integrate::hookIllegalPermissions',
             'buffer'                            => 'TinyPortal\Integrate::hookBuffer',
-			'credits'                           => 'TinyPortal\Integrate::hookCredits',
+            'credits'                           => 'TinyPortal\Integrate::hookCredits',
             'menu_buttons'                      => 'TinyPortal\Integrate::hookMenuButtons',
             'display_buttons'                   => 'TinyPortal\Integrate::hookDisplayButton',
             'actions'                           => 'TinyPortal\Integrate::hookActions',
@@ -97,35 +97,35 @@ class Integrate
 
         );
 
-		$hooks['redirect']				= 'TinyPortal\Integrate::hookRedirect';
-		$hooks['pre_profile_areas']		= 'TinyPortal\Integrate::hookProfileArea';
-		$hooks['pre_load_theme']		= 'TinyPortal\Integrate::hookPreLoadTheme';
-		$hooks['load_theme']			= 'TinyPortal\Integrate::hookLoadTheme';
-		$hooks['helpadmin']				= 'TinyPortal\Integrate::hookHelpadmin';
-		if(!TP_SMF21) {
-			$hooks['admin_areas']		= 'TinyPortal\Integrate::hookAdminAreas';
-		}
+        $hooks['redirect']              = 'TinyPortal\Integrate::hookRedirect';
+        $hooks['pre_profile_areas']     = 'TinyPortal\Integrate::hookProfileArea';
+        $hooks['pre_load_theme']        = 'TinyPortal\Integrate::hookPreLoadTheme';
+        $hooks['load_theme']            = 'TinyPortal\Integrate::hookLoadTheme';
+        $hooks['helpadmin']             = 'TinyPortal\Integrate::hookHelpadmin';
+        if(!TP_SMF21) {
+            $hooks['admin_areas']       = 'TinyPortal\Integrate::hookAdminAreas';
+        }
 
-		// We can use a hook of sorts for the default actions now
-		updateSettings(array('integrate_default_action' => 'TinyPortal\Integrate::hookDefaultAction'));
+        // We can use a hook of sorts for the default actions now
+        updateSettings(array('integrate_default_action' => 'TinyPortal\Integrate::hookDefaultAction'));
 
-		foreach ($hooks as $hook => $callable) {
+        foreach ($hooks as $hook => $callable) {
             if(is_array($callable)) {
                 foreach($callable as $call ) {
-			        self::TPAddIntegrationFunction('integrate_' . $hook, $call, false);
+                    self::TPAddIntegrationFunction('integrate_' . $hook, $call, false);
                 }
             }
             else {
-			    self::TPAddIntegrationFunction('integrate_' . $hook, $callable, false);
+                self::TPAddIntegrationFunction('integrate_' . $hook, $callable, false);
             }
-		}
+        }
 
     }
 
     public static function TPAddIntegrationFunction($hook, $call, $perm)
     {
 
-	    add_integration_function($hook, $call, $perm);
+        add_integration_function($hook, $call, $perm);
 
     }
 
@@ -153,11 +153,11 @@ class Integrate
 
         if(defined('SMF_FULL_VERSION')) {
             // SMF 2.1 or SMF 3.0
-			if(substr(SMF_FULL_VERSION, 0, 7) === 'SMF 3.0') {
-				define('TP_SMF21', false);
+            if(substr(SMF_FULL_VERSION, 0, 7) === 'SMF 3.0') {
+                define('TP_SMF21', false);
             }
             else {
-				define('TP_SMF21', true);
+                define('TP_SMF21', true);
             }
         }
         else {
@@ -185,7 +185,7 @@ class Integrate
     }
 
     public static function hookPermissions(&$permissionGroups, &$permissionList, &$leftPermissionGroups, &$hiddenPermissions, &$relabelPermissions)
-	{
+    {
 
         $permissionList['membergroup'] = array_merge(
             array(
@@ -195,7 +195,7 @@ class Integrate
                 'tp_submithtml' => array(false, 'tp', 'tp'),
                 'tp_submitbbc' => array(false, 'tp', 'tp'),
                 'tp_editownarticle' => array(false, 'tp', 'tp'),
-				'tp_alwaysapproved' => array(false, 'tp', 'tp'),
+                'tp_alwaysapproved' => array(false, 'tp', 'tp'),
                 'tp_artcomment' => array(false, 'tp', 'tp'),
                 'tp_can_admin_shout' => array(false, 'tp', 'tp'),
                 'tp_can_shout' => array(false, 'tp', 'tp'),
@@ -279,8 +279,8 @@ class Integrate
             $bclass =  "tpcontainer";
         }
 
-		$tpversion = isset($context['TPortal']['version']) ? $context['TPortal']['version'] : ' ';
-        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $tpversion . '</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2023</a>';
+        $tpversion = isset($context['TPortal']['version']) ? $context['TPortal']['version'] : ' ';
+        $string = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $tpversion . '</a> &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="Credits">2005-2024</a>';
 
         if (SMF == 'SSI' || empty($context['template_layers']) || (defined('WIRELESS') && WIRELESS ) || strpos($buffer, $string) !== false)
             return $buffer;
@@ -306,11 +306,11 @@ class Integrate
             return $buffer;
         }
         else {
-			$tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
-			$find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
-			$replace= '<a href="https://www.tinyportal.net/docs/" target=_blank>'.$tmp.'</a>';
-			$buffer = str_replace($find, $replace.' | '.$find, $buffer);
-		}
+            $tmp    = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
+            $find   = '<a href="'.$scripturl.'?action=help">'.$txt['help'].'</a>';
+            $replace= '<a href="https://www.tinyportal.net/docs/" target=_blank>'.$tmp.'</a>';
+            $buffer = str_replace($find, $replace.' | '.$find, $buffer);
+        }
 
         if ($image_proxy_enabled && ( array_key_exists('TPortal', $context) && $context['TPortal']['imageproxycheck'] > 0 ) ) {
             if (!empty($buffer) && stripos($buffer, 'http://') !== false) {
@@ -352,7 +352,7 @@ class Integrate
             'tp_submithtml',
             'tp_submitbbc',
             'tp_editownarticle',
-			'tp_alwaysapproved',
+            'tp_alwaysapproved',
             'tp_artcomment',
             'tp_can_admin_shout',
             'tp_can_shout',
@@ -410,53 +410,53 @@ class Integrate
         );
 
         // Add the admin button
-		if(!$context['TPortal']['hideadminmenu']=='1') {
-			if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox') || allowedTo('tp_can_admin_shout') || allowedTo('tp_can_list_images')) {
-				$buttons = array_merge(
-						array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
-						array (
-							'tpadmin' => array (
-								'icon' => 'tinyportal/menu_tp.png',
-								'title' => $txt['tp-tphelp'],
-								'href' => $scripturl.'?action=tpadmin',
-								'show' =>  TPcheckAdminAreas(),
-								'sub_buttons' => tp_getbuttons(),
-							),
-						),
-						$buttons
-				);
-			}
-			else {
-				$buttons = array_merge(
-					array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
-					array (
-						'tpadmin' => array (
-							'icon' => 'tinyportal/menu_tp.png',
-							'title' => $txt['tp-tphelp'],
-							'href' => '#',
-							'show' =>  TPcheckAdminAreas(),
-							'sub_buttons' => tp_getbuttons(),
-							),
-						),
-					$buttons
-				);
-			}
-		}
-		if(allowedTo('tp_settings')) {
-			$buttons = array_merge(
-					array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
-					array (
-						'tpadmin' => array (
-							'icon' => 'tinyportal/menu_tp.png',
-							'title' => $txt['tp-tphelp'],
-							'href' => $scripturl.'?action=tpadmin',
-							'show' =>  TPcheckAdminAreas(),
-							'sub_buttons' => tp_getbuttons(),
-						),
-					),
-					$buttons
-			);
-		}
+        if(!$context['TPortal']['hideadminmenu']=='1') {
+            if(allowedTo('tp_settings') || allowedTo('tp_articles') || allowedTo('tp_blocks') || allowedTo('tp_dlmanager') || allowedTo('tp_shoutbox') || allowedTo('tp_can_admin_shout') || allowedTo('tp_can_list_images')) {
+                $buttons = array_merge(
+                        array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
+                        array (
+                            'tpadmin' => array (
+                                'icon' => 'tinyportal/menu_tp.png',
+                                'title' => $txt['tp-tphelp'],
+                                'href' => $scripturl.'?action=tpadmin',
+                                'show' =>  TPcheckAdminAreas(),
+                                'sub_buttons' => tp_getbuttons(),
+                            ),
+                        ),
+                        $buttons
+                );
+            }
+            else {
+                $buttons = array_merge(
+                    array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
+                    array (
+                        'tpadmin' => array (
+                            'icon' => 'tinyportal/menu_tp.png',
+                            'title' => $txt['tp-tphelp'],
+                            'href' => '#',
+                            'show' =>  TPcheckAdminAreas(),
+                            'sub_buttons' => tp_getbuttons(),
+                            ),
+                        ),
+                    $buttons
+                );
+            }
+        }
+        if(allowedTo('tp_settings')) {
+            $buttons = array_merge(
+                    array_slice($buttons, 0, array_search('calendar', array_keys($buttons), true) + 1),
+                    array (
+                        'tpadmin' => array (
+                            'icon' => 'tinyportal/menu_tp.png',
+                            'title' => $txt['tp-tphelp'],
+                            'href' => $scripturl.'?action=tpadmin',
+                            'show' =>  TPcheckAdminAreas(),
+                            'sub_buttons' => tp_getbuttons(),
+                        ),
+                    ),
+                    $buttons
+            );
+        }
 
         $dB = Database::getInstance();
 
@@ -504,92 +504,92 @@ class Integrate
             'areas' => array(),
         );
 
-		$profile_areas['tp']['areas']['tpsummary'] = array(
-			'label' => $txt['tpsummary'],
-			'file' => 'TPSubs.php',
-			'function' => 'tp_summary',
-			'icon' => 'menu_tp',
-			'permission' => array(
-				'own' => 'profile_view_own',
-				'any' => 'profile_view_any',
-			),
-		);
+        $profile_areas['tp']['areas']['tpsummary'] = array(
+            'label' => $txt['tpsummary'],
+            'file' => 'TPSubs.php',
+            'function' => 'tp_summary',
+            'icon' => 'menu_tp',
+            'permission' => array(
+                'own' => 'profile_view_own',
+                'any' => 'profile_view_any',
+            ),
+        );
 
-		if (!$context['TPortal']['use_wysiwyg']=='0') {
-			$profile_areas['tp']['areas']['tparticles'] = array(
-				'label' => $txt['articlesprofile'],
-				'file' => 'TPSubs.php',
-				'function' => 'tp_articles',
-				'icon' => 'menu_tparticle',
-				'permission' => array(
-					'own' => 'profile_view_own',
-					'any' => 'profile_view_any',
-				),
-				'subsections' => array(
-					'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
-					'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
-				),
-			);
-		}
-		else {
-			$profile_areas['tp']['areas']['tparticles'] = array(
-				'label' => $txt['articlesprofile'],
-				'file' => 'TPSubs.php',
-				'function' => 'tp_articles',
-				'icon' => 'menu_tparticle',
-				'permission' => array(
-					'own' => 'profile_view_own',
-					'any' => 'profile_view_any',
-				),
-			);
-		}
+        if (!$context['TPortal']['use_wysiwyg']=='0') {
+            $profile_areas['tp']['areas']['tparticles'] = array(
+                'label' => $txt['articlesprofile'],
+                'file' => 'TPSubs.php',
+                'function' => 'tp_articles',
+                'icon' => 'menu_tparticle',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+                'subsections' => array(
+                    'articles' => array($txt['tp-articles'], array('profile_view_own', 'profile_view_any')),
+                    'settings' => array($txt['tp-settings'], array('profile_view_own', 'profile_view_any')),
+                ),
+            );
+        }
+        else {
+            $profile_areas['tp']['areas']['tparticles'] = array(
+                'label' => $txt['articlesprofile'],
+                'file' => 'TPSubs.php',
+                'function' => 'tp_articles',
+                'icon' => 'menu_tparticle',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
 
-		if(!empty($context['TPortal']['show_download'])) {
-			$profile_areas['tp']['areas']['tpdownload'] = array(
-				'label' => $txt['downloadsprofile'],
-				'file' => 'TPSubs.php',
-				'function' => 'tp_download',
-				'icon' => 'menu_tpdownload',
-				'permission' => array(
-					'own' => 'profile_view_own' && !empty($context['TPortal']['show_download']),
-					'any' => 'profile_view_any' && !empty($context['TPortal']['show_download']),
-				),
-			);
-		}
+        if(!empty($context['TPortal']['show_download'])) {
+            $profile_areas['tp']['areas']['tpdownload'] = array(
+                'label' => $txt['downloadsprofile'],
+                'file' => 'TPSubs.php',
+                'function' => 'tp_download',
+                'icon' => 'menu_tpdownload',
+                'permission' => array(
+                    'own' => 'profile_view_own' && !empty($context['TPortal']['show_download']),
+                    'any' => 'profile_view_any' && !empty($context['TPortal']['show_download']),
+                ),
+            );
+        }
 
-		if(!$context['TPortal']['profile_shouts_hide']) {
-			$profile_areas['tp']['areas']['tpshoutbox'] = array(
-				'label' => $txt['shoutboxprofile'],
-				'file' => 'TPShout.php',
-				'function' => 'tp_shoutb',
-				'icon' => 'menu_tpshout',
-				'permission' => array(
-					'own' => 'profile_view_own',
-					'any' => 'profile_view_any',
-				),
-			);
-		}
+        if(!$context['TPortal']['profile_shouts_hide']) {
+            $profile_areas['tp']['areas']['tpshoutbox'] = array(
+                'label' => $txt['shoutboxprofile'],
+                'file' => 'TPShout.php',
+                'function' => 'tp_shoutb',
+                'icon' => 'menu_tpshout',
+                'permission' => array(
+                    'own' => 'profile_view_own',
+                    'any' => 'profile_view_any',
+                ),
+            );
+        }
     }
 
-	public static function hookCredits()
-	{
-		global $context, $scripturl, $boardurl;
+    public static function hookCredits()
+    {
+        global $context, $scripturl, $boardurl;
 
-		$context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2023</a>';
-	}
+        $context['copyrights']['mods'][] = '<a target="_blank" href="https://www.tinyportal.net" title="TinyPortal">TinyPortal ' . $context['TPortal']['version'] . '</a> by the TinyPortal team &copy; <a href="' . $scripturl . '?action=tportal;sa=credits" title="TinyPortal - Credits">2005-2024</a>';
+    }
 
     public static function hookActions(&$actionArray)
     {
-        $actionArray['tpadmin']		= array('TPortalAdmin.php',		'TPortalAdmin');
-        $actionArray['tportal']		= array('TPortal.php',			'TPortal');
-        $actionArray['tpshout']		= array('TPShout.php',			'TPShout');
-		
-		if(TP_SMF21) {
-			$actionArray['forum']	= array('BoardIndex.php', 'BoardIndex');
-		}
-		else {
-			$actionArray['forum']	= array('', 'SMF\\Actions\\BoardIndex::call');
-		}
+        $actionArray['tpadmin']     = array('TPortalAdmin.php',     'TPortalAdmin');
+        $actionArray['tportal']     = array('TPortal.php',          'TPortal');
+        $actionArray['tpshout']     = array('TPShout.php',          'TPShout');
+        
+        if(TP_SMF21) {
+            $actionArray['forum']   = array('BoardIndex.php', 'BoardIndex');
+        }
+        else {
+            $actionArray['forum']   = array('', 'SMF\\Actions\\BoardIndex::call');
+        }
     }
 
     public static function hookDefaultAction()
@@ -599,13 +599,13 @@ class Integrate
         $theAction = false;
         // first..if the action is set, but empty, don't go any further
         if (isset($_REQUEST['action']) && $_REQUEST['action']=='') {
-			if(TP_SMF21) {
-				require_once(SOURCEDIR . '/BoardIndex.php');
-				$theAction = 'BoardIndex';
-			}
-			else {
-				$theAction = 'SMF\\Actions\\BoardIndex::call';
-			}
+            if(TP_SMF21) {
+                require_once(SOURCEDIR . '/BoardIndex.php');
+                $theAction = 'BoardIndex';
+            }
+            else {
+                $theAction = 'SMF\\Actions\\BoardIndex::call';
+            }
         }
 
         // Action and board are both empty... maybe the portal page?
@@ -621,14 +621,14 @@ class Integrate
         }
         // Action and board are still both empty...and no portal startpage - BoardIndex!
         elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex') {
-			if(TP_SMF21) {
-				require_once(SOURCEDIR . '/BoardIndex.php');
-				$theAction = 'BoardIndex';
-			}
-			else {
-				$theAction = 'SMF\\Actions\\BoardIndex::call';
-			}
-		}
+            if(TP_SMF21) {
+                require_once(SOURCEDIR . '/BoardIndex.php');
+                $theAction = 'BoardIndex';
+            }
+            else {
+                $theAction = 'SMF\\Actions\\BoardIndex::call';
+            }
+        }
 
         // We need to manually call the action as this function was called be default
         call_user_func($theAction);
@@ -681,7 +681,7 @@ class Integrate
         if(isset($actions['cat'])) {
             if(is_numeric($actions['cat'])) {
                 $request = $dB->db_query('', '
-                    SELECT 	value1 FROM {db_prefix}tp_variables
+                    SELECT  value1 FROM {db_prefix}tp_variables
                     WHERE id = {int:id}
                     LIMIT 1',
                     array (
@@ -731,9 +731,9 @@ class Integrate
     public static function hookPreLogStats(&$no_stat_actions)
     {
         $no_stat_actions = array_merge($no_stat_actions, array('tpshout' => true));
-		if(TP_SMF21) {
-        	require_once(SOURCEDIR . '/TPortal.php');
-        	\TPortal_init();
+        if(TP_SMF21) {
+            require_once(SOURCEDIR . '/TPortal.php');
+            \TPortal_init();
         }
     }
 
@@ -774,9 +774,9 @@ class Integrate
 
     public static function hookLoadTheme()
     {
-		if(!TP_SMF21) {
-        	require_once(SOURCEDIR . '/TPortal.php');
-        	\TPortal_init();
+        if(!TP_SMF21) {
+            require_once(SOURCEDIR . '/TPortal.php');
+            \TPortal_init();
         }
     }
 
@@ -874,12 +874,12 @@ class Integrate
     public static function hookHelpadmin()
     {
         if (isset($_GET['help']))
-		{
+        {
             loadLanguage('TPortal');
             loadLanguage('TPortalAdmin');
             loadLanguage('TPdlmanager');
-		}
-	}
+        }
+    }
 
 }
 
