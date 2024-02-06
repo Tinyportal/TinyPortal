@@ -28,27 +28,27 @@ function template_main()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl;
 
 	echo '
-<div>
-	<script>
-		$(document).ready( function() {
-			var $clickme = $(".clickme"),
-				$box = $(".box");
-			if ($box) {
-				$box.hide();
-			}
-			if ($clickme) {
-				$clickme.click( function(e) {
-					$(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
-					e.preventDefault();
-				});
-			}
-		});
-	</script>
-</div>';
+	<div>
+		<script>
+			$(document).ready( function() {
+				var $clickme = $(".clickme"),
+					$box = $(".box");
+				if ($box) {
+					$box.hide();
+				}
+				if ($clickme) {
+					$clickme.click( function(e) {
+						$(this).text(($(this).text() === "'.$txt['tp-hide'].'" ? "'.$txt['tp-more'].'" : "'.$txt['tp-hide'].'")).next(".box").slideToggle();
+						e.preventDefault();
+					});
+				}
+			});
+		</script>
+	</div>';
 	// setup the screen
 	echo '
-<div id="tpadmin">
-	<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tportal;sa=download;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
+	<div id="tpadmin">
+		<form accept-charset="', $context['character_set'], '"  name="dl_admin" action="'.$scripturl.'?action=tportal;sa=download;dl=admin" enctype="multipart/form-data" method="post" onsubmit="submitonce(this);">	';
 
 // Settings page
 	if($context['TPortal']['dlsub']=='adminsettings')
@@ -101,7 +101,8 @@ function template_main()
 				</dl>
 			<hr>
 				<div>
-					<div><b>'.$txt['tp-dlintrotext'].'</b>
+					<div>
+						<b>'.$txt['tp-dlintrotext'].'</b>
 					</div>';
 					if($context['TPortal']['dl_wysiwyg'] == 'html')
 						TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true,'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
@@ -247,14 +248,14 @@ function template_main()
 	{
 		echo '
 		<div class="cat_bar"><h3 class="catbg">'.$txt['tp-dltabs4'].' - '.$txt['tp-categories'].'</h3></div>
-		<div id="user-download" class="tpadmin">
+		<div id="user-download">
 			<p class="information">' , $txt['tp-helpdownload1'] , '</p>';
 		echo '
 			<table class="table_grid">
 				<thead>
 					<tr class="title_bar">
 						<th scope="col">
-						<div class="tp_flexbox">
+						<div class="tp_admflexbox">
 							<div class="tp_pos">'.$txt['tp-pos'].'</div>
 							<div class="tp_name">'.$txt['tp-dluploadcategory'].'</div>
 							<div class="tp_articleopts80 title-admin-area">'.$txt['tp-dlicon'].'</div>
@@ -275,7 +276,7 @@ function template_main()
 					echo '
 					<tr class="windowbg">
 					<td>
-						<div class="tp_admbox">
+						<div class="tp_admflexbox">
 							<div class="tp_admfirst">
 								<div class="tp_pos">
 									<input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
@@ -351,7 +352,7 @@ function template_main()
 				<thead>
 					<tr class="title_bar">
 						<th scope="col">
-						<div class="tp_admbox">
+						<div class="tp_admflexbox">
 						<div class="tp_admfirst">
 							<div class="tp_pos">'.$txt['tp-pos'].'</div>
 							<div class="tp_name float-items">'.$txt['tp-dluploadcategory'].'</div>
@@ -369,7 +370,7 @@ function template_main()
 					echo '
 					<tr class="windowbg">
 					<td>
-						<div class="tp_admbox">
+						<div class="tp_admflexbox">
 							<div class="tp_admfirst">
 								<div class="tp_pos">
 									<input type="text" name="tp_dlcatpos'.$cat['id'].'" value="'.$cat['pos'].'" size="6">
@@ -425,7 +426,7 @@ function template_main()
 		<thead>
 			<tr class="title_bar">
 				<th scope="col">
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="float-items title-admin-area">'.$txt['tp-dlicon'].'</div>
 						<div class="tp_name float-items tpleft">'.$txt['tp-dlname'].'</div>
@@ -447,7 +448,7 @@ function template_main()
 				echo '
 			<tr class="windowbg">
 			<td>
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="float-items">
 							', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
@@ -714,8 +715,7 @@ function template_main()
 					</dd>
 				</dl>
 				<input type="submit" class="button" name="dlsend" value="'.$txt['tp-submit'].'">
-			</div>
-		</div>';
+			</div>';
 	}
 // Submissions page
 	elseif($context['TPortal']['dlsub']=='adminsubmission')
@@ -728,7 +728,7 @@ function template_main()
 			<thead>
 				<tr class="title_bar">
 					<th scope="col">
-					<div class="tp_admbox">
+					<div class="tp_admflexbox">
 						<div class="tp_name float-items tpleft">'.$txt['tp-dlname'].'</div>
 						<div class="tp_filename title-admin-area float-items tpleft">'.$txt['tp-dlfilename'].'</div>
 						<div class="tp_date title-admin-area float-items">'.$txt['tp-created'].'</div>
@@ -747,7 +747,7 @@ function template_main()
 				echo '
 				<tr class="windowbg">
 				<td>
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="tp_name float-items">
 							<a href="'.$cat['href'].'">'.$cat['name'].'</a>
@@ -772,8 +772,10 @@ function template_main()
 								<div class="show-on-responsive">'.$txt['tp-dlfilesize'].'</div>
 								'. $cat['filesize'].''.$txt['tp-kb'].'
 							</div>
-					<p class="clearthefloat"></p>
+						<p class="clearthefloat"></p>
+						</div>
 					</div>
+				</div>
 				</td>
 				</tr>';
 			}
@@ -815,39 +817,39 @@ function template_main()
 			// alert or information processsing multiple files
 			if($_GET['ftpcat'] ==='nocat')
 				echo '
-					<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
+				<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
 			else 
 				echo '
-					<div class="infobox">'.$txt['tp-adminftp_newfiles'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfilescat'].'</a></div>';
+				<div class="infobox">'.$txt['tp-adminftp_newfiles'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=admincat'.$_GET['ftpcat'].'">'.$txt['tp-adminftp_newfilescat'].'</a></div>';
 		}
 		if(!empty($_GET['ftpitem'])) {
 			// alert or information processing a single file
 			if($_GET['ftpitem'] ==='noitem')
 				echo '
-					<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
+				<div class="errorbox">'.$txt['tp-adminftp_nonewfiles'].'</div>';
 			else 
 				echo '
-					<div class="infobox">'.$txt['tp-adminftp_newfile'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=adminitem'.$_GET['ftpitem'].'">'.$txt['tp-adminftp_newfileview'].'</a></div>';
+				<div class="infobox">'.$txt['tp-adminftp_newfile'].'<a href="'.$scripturl.'?action=tportal;sa=download;dl=adminitem'.$_GET['ftpitem'].'">'.$txt['tp-adminftp_newfileview'].'</a></div>';
 		}
 			$ccount=0;
 			echo '
-					<div class="tp_largelist2">';
+				<div class="tp_largelist2">';
 			foreach($context['TPortal']['tp-downloads'] as $file){
 				if(!in_array($file['file'], $context['TPortal']['dl_allitems'])) {
 					echo '
-						<div><input type="checkbox" name="assign-ftp-checkbox'.$ccount.'" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;sa=download;dl=upload;ftp='.$file['file'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
+					<div><input type="checkbox" name="assign-ftp-checkbox'.$ccount.'" value="'.$file['file'].'"> '.substr($file['file'],0,40).'', strlen($file['file'])>40 ? '..' : '' , '  ['.$file['size'].' '.$txt['tp-kb'].']  - <b><a href="'.$scripturl.'?action=tportal;sa=download;dl=upload;ftp='.$file['file'].'">'.$txt['tp-dlmakeitem'].'</a></b></div>';
 					$ccount++;
 				}
 			}
 		if($ccount==0) {
 			echo '
-						<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>';
+					<div class="padding-div">'.$txt['tp-noftpstrays'].'</div>';
 		}
 			echo '
-						</div>';
+				</div>';
 		if($ccount>0) {
 			echo '
-					<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>
+				<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'assign-ftp-checkbox\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>
 				<hr>
 				<dl class="tp_title settings">
 					<dt>
@@ -895,8 +897,7 @@ function template_main()
 			</div>';
 		}
 			echo '
-		</div>
-	</div>';
+		</div>';
 	}
 // Edit category page
 	elseif(substr($context['TPortal']['dlsub'],0,12)=='admineditcat')
@@ -1135,8 +1136,8 @@ function template_main()
 		</div>';
 	}
 	echo '
-	</form>
-</div><p class="clearthefloat"></p>';
+		</form>
+	</div>';
 }
 
 ?>

@@ -469,7 +469,7 @@ function TPortal_themebox()
          }
 		 echo '
 			</select><br>' , $context['user']['is_logged'] ?
-			'<input type="checkbox" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
+			'<input type="checkbox" id="tp-permanent" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
 			<input type="button" class="button_submit" value="'.$txt['tp-changetheme'].'" onclick="jumpit()" /><br><br>
 			<input type="hidden" value="'.$smcFunc['htmlspecialchars']($scripturl . '?'.$tp_where.'theme='.$settings['theme_id']).'" name="jumpurl3" />
 			<div style="text-align: center; width: 95%; overflow: hidden;">
@@ -2464,7 +2464,8 @@ function template_tpadm_above()
 	global $context, $txt;
 
 	echo '
-	<div  class="tp_admin_menu">
+	<!-- #tp_admin_menu -->
+	<div class="tp_admin_menu">
 		<div class="cat_bar">
 			<h3 class="catbg">' . $txt['tp-adminmenu'] .'</h3>
 		</div>
@@ -2507,7 +2508,8 @@ function template_tpadm_below()
 {
 	echo '
 
-	</div>';
+	</div>
+	<div style="clear:both;"></div><!-- #tp_admin_menu -->';
 
 	return;
 }

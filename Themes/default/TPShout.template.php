@@ -232,37 +232,34 @@ function template_tpshout_admin()
 			<div class="windowbg noup">
 				<div class="tp_addborder">
 					<div class="tp_flexbox">
-						<div class="tp_name float-items"><strong>'.$txt['tp-shoutboxitems'].'</strong></div>
-						<div class="float-items">'.$context['TPortal']['shoutbox_pageindex'].'</div>
-						<p class="clearthefloat"></p>
+						<div class="tp_name"><b>'.$txt['tp-shoutboxitems'].'</b></div>
+						<div>'.$context['TPortal']['shoutbox_pageindex'].'</div>
 					</div>
 				</div>';
 
 	foreach($context['TPortal']['admin_shoutbox_items'] as $admin_shouts) {
 				echo '
-				<div class="tp_addborder">
-					<div class="fullwidth-on-res-layout float-items" style="width:40%;">
+				<div class="tp_flexbox tp_addborder">
+					<div class="tp_shoutip fullwidth-on-res-layout">
 						'.$admin_shouts['poster'].' ['.$admin_shouts['ip'].']<br>'.$admin_shouts['time'].'<br>
 						'.$admin_shouts['sort_shoutbox_id'].'&nbsp;('.$admin_shouts['shoutbox_id'].') <br> '. $admin_shouts['sort_member'].' <br> '.$admin_shouts['sort_ip'].'<br>'.$admin_shouts['single'].'
 					</div>
-					<div class="float-items">
+					<div>
 						<textarea name="tp_shoutbox_item'.$admin_shouts['id'].'" class="tp_shoutbox_item" rows="5" cols="40">' .html_entity_decode($admin_shouts['body']).'</textarea>
 					</div>
-					<div class="float-items">
+					<div>
 						<input type="hidden" name="tp_shoutbox_hidden'.$admin_shouts['id'].'" value="1">
-						<div><strong><input type="checkbox" name="tp_shoutbox_remove'.$admin_shouts['id'].'" value="ON"> '.$txt['tp-remove'].'</strong></div>
+						<div><b><input type="checkbox" name="tp_shoutbox_remove'.$admin_shouts['id'].'" value="ON"> '.$txt['tp-remove'].'</b></div>
 					</div>
-					<p class="clearthefloat"></p>
 				</div>';
 	}
 		echo '
-				<div class="tp_flexbox padding-div">
-					<div class="tp_name float-items"><input type="checkbox" name="tp_shoutsdelall" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong></div>
-					<div class="float-items">'.$context['TPortal']['shoutbox_pageindex'].'</div>
+				<div class="tpright">'.$context['TPortal']['shoutbox_pageindex'].'</div>
+				<div class="padding-div">
+					<input type="checkbox" name="tp_shoutsdelall" value="ON" onclick="javascript:return confirm(\''.$txt['tp-confirm'].'\')"> <strong>'.$txt['tp-deleteallshouts'].'</strong>
+					<input type="submit" class="button" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
 					<p class="clearthefloat"></p>
 				</div>
-				<input type="submit" class="button" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
-				<p class="clearthefloat"></p>
 			</div>
 		</div>
 	</form>';
@@ -521,9 +518,9 @@ function template_tpshout_profile()
 				<thead>
 					<tr class="title_bar">
 					<th scope="col">
-						<div class="tp_admbox">
-							<div class="tp_date fullwidth-on-res-layout float-items tpleft">'.$txt['date'].'</div>
-							<div class="tp_name fullwidth-on-res-layout float-items tpleft">',$txt['tp-shout'],'</div>
+						<div class="tp_flexrow">
+							<div class="tp_date tpleft">'.$txt['date'].'</div>
+							<div class="tp_name tpleft">',$txt['tp-shout'],'</div>
 						</div>
 					</th>
 					</tr>
@@ -534,9 +531,9 @@ function template_tpshout_profile()
 				echo '
 					<tr class="windowbg">
 					<td>
-						<div class="tp_admbox">
-							<div class="tp_date fullwidth-on-res-layout float-items">',$art['created'],'</div>
-							<div class="tp_name fullwidth-on-res-layout float-items">',$art['shout'],'</div>
+						<div class="tp_flexrow">
+							<div class="tp_date">',$art['created'],'</div>
+							<div class="tp_name">',$art['shout'],'</div>
 						</div>
 					</td>
 					</tr>';

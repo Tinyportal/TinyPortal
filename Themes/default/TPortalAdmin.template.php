@@ -566,10 +566,10 @@ function template_categories()
 			<thead>
 				<tr class="title_bar">
 					<th scope="col">
-						<div class="tp_flexbox">
-						<div class="tp_catname">' , $txt['tp-artcat'] , '</div>
+					<div class="tp_flexrow">
+						<div class="tp_catname tpleft">' , $txt['tp-artcat'] , '</div>
 						<div class="tp_catactions">' , $txt['tp-actions'] , '</div>
-						</div>
+					</div>
 					</th>
 				</tr>
 			</thead>
@@ -583,24 +583,24 @@ function template_categories()
 				echo '
 					<tr class="windowbg">
 					<td>
-					<div class="tp_flexbox">
-						<div class="tp_catname' , '">
-							<div>' , str_repeat("- ",$cat['indent']) , '
-							<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '"><b>' , $cat['name'] , '</b></a>
+						<div class="tp_flexrow">
+							<div class="tp_catname">
+								<div>' , str_repeat("- ",$cat['indent']) , '
+								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '">' , $cat['name'] , '</a>
+								</div>
+								<div class="tp_dlshow-on-responsive"><i>' , isset($context['TPortal']['cats_count'][$cat['id']]) ? ''.$context['TPortal']['cats_count'][$cat['id']].' ' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . '' : '' , '</i></div>
 							</div>
-							<div class="tp_dlshow-on-responsive"><i>' , isset($context['TPortal']['cats_count'][$cat['id']]) ? ''.$context['TPortal']['cats_count'][$cat['id']].' ' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . '' : '' , '</i></div>
+							<div class="tp_countblock tp_hidesmall">
+								<div class="tp_countblock_c"><div class="tp_countnr">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . '</div>
+							</div>
+							<div class="tp_catactions">
+								<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' . $txt['tp-viewcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
+								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="" /></a>&nbsp;
+								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>&nbsp;
+								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;copy;cu=' . $cat['id'] . '" title="' . $txt['tp-copycategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPcopy.png" alt="" /></a>&nbsp;
+								<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';catdelete='.$cat['id'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmcat1'].'  \n'.$txt['tp-confirmcat2'].'\')"><img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="'.$txt['tp-delete'].'" /></a>
+							</div>
 						</div>
-						<div class="tp_countblock tp_hidesmall">
-							<div class="tp_countblock_c"><div class="tp_countnr">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>' . ($context['TPortal']['cats_count'][$cat['id']]>1 ? $txt['tp-articles'] : $txt['tp-article']) . '</div>
-						</div>
-						<div class="tp_catactions">
-							<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' . $txt['tp-viewcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
-							<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu='.$cat['id'].'" title="' .$txt['tp-editcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="" /></a>&nbsp;
-							<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>&nbsp;
-							<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;copy;cu=' . $cat['id'] . '" title="' . $txt['tp-copycategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPcopy.png" alt="" /></a>&nbsp;
-							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';catdelete='.$cat['id'].'" onclick="javascript:return confirm(\''.$txt['tp-confirmcat1'].'  \n'.$txt['tp-confirmcat2'].'\')"><img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="'.$txt['tp-delete'].'" /></a>
-						</div>
-					</div>
 					</td>
 					</tr>';
 				$alt = !$alt;
@@ -934,10 +934,9 @@ function template_articles()
 		<thead>
 			<tr class="title_bar">
 				<th scope="col">
-				<div class="tp_flexbox">
+				<div class="tp_flexrow">
 					<div class="tp_catname tpleft">' , $txt['tp-artcat'] , '</div>
-					<div style="padding: 0 1em;">' , $txt['tp-actions'] , '</div>
-					<p class="clearthefloat"></p>
+					<div class="tp_artactions">' , $txt['tp-actions'] , '</div>
 				</div>
 				</th>
 			</tr>
@@ -949,7 +948,7 @@ function template_articles()
 				echo '
 					<tr class="windowbg">
 					<td>
-					<div class="tp_flexbox">
+					<div class="tp_flexrow">
 						<div class="tp_catname">
 							<div>' , (!empty($cat['indent']) ? str_repeat("- ",$cat['indent']) : '') , '
 							<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$cat['id'].'" title="' .$txt['tp-articleoptions12']. '">' , $cat['name'] , '</a></div>
@@ -958,11 +957,10 @@ function template_articles()
 							<div class="tp_countblock tp_hidesmall">
 								<div class="tp_countblock_c"><div class="tp_countnr">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>'.$txt['tp-articles'].'</div>
 							</div></a>
-						<div style="padding: 0 1em;">
+						<div class="tp_artactions">
 							<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' .$txt['tp-viewcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
 							<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu=' . $cat['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' .$txt['tp-editcategory']. '"><img src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="" /></a>
 						</div>
-						<p class="clearthefloat"></p>
 					</div>
 					</td>
 					</tr>';
@@ -980,7 +978,7 @@ function template_articles()
 		<thead>
 			<tr class="title_bar">
 				<th scope="col">
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 				<div class="tp_admfirst">
 					<div class="tp_pos">' , $context['TPortal']['sort']=='parse' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="'.$txt['tp-sort-on-position'].'" /> ' : '' , '<a title="'.$txt['tp-sort-on-position'].'" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=parse">' , $txt['tp-pos'] , '</a></div>
 					<div class="tp_name float-items">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="'.$txt['tp-sort-on-subject'].'" /> ' : '' , '<a title="'.$txt['tp-sort-on-subject'].'" href="' . $scripturl . '?action=tpadmin;sa=articles;cu='.$context['TPortal']['categoryID'].';sort=subject">' , $txt['tp-arttitle'] , '</a></div>
@@ -1013,7 +1011,7 @@ function template_articles()
 			echo '
 			<tr class="'.$class.'">
 			<td>
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="tp_pos">
 							<a name="article'.$alink['id'].'"></a><input type="number" value="'.$alink['pos'].'" name="tp_article_pos'.$alink['id'].'" style="width: 5em" />
@@ -1103,7 +1101,7 @@ function template_strays()
 					<thead>
 						<tr class="title_bar">
 							<th scope="col">
-							<div class="tp_admbox">
+							<div class="tp_admflexbox">
 								<div class="tp_admfirst">
 									<div class="tp_pos">'.$txt['tp-select'].'</div>
 									<div class="tp_name">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="'.$txt['tp-sort-on-subject'].'" /> ' : '' , '<a title="'.$txt['tp-sort-on-subject'].'" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=subject">' , $txt['tp-arttitle'] , '</a></div>
@@ -1130,7 +1128,7 @@ function template_strays()
 			echo '
 						<tr class="'.$class.'">
 						<td>
-							<div class="tp_admbox">
+							<div class="tp_admflexbox">
 								<div class="tp_admfirst">
 									<div class="tp_pos">
 										<input type="checkbox" name="tp_article_stray'.$alink['id'].'" value="1"  />&nbsp;&nbsp;
@@ -1247,7 +1245,7 @@ function template_submission()
 					<thead>
 						<tr class="title_bar">
 							<th scope="col">
-							<div class="tp_admbox">
+							<div class="tp_admflexbox">
 							<div class="tp_admfirst">
 								<div class="tp_pos">'.$txt['tp-select'].'</div>
 								<div class="tp_name">' , $context['TPortal']['sort']=='subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_up.png" alt="'.$txt['tp-sort-on-subject'].'" /> ' : '' , '<a title="'.$txt['tp-sort-on-subject'].'" href="' . $scripturl . '?action=tpadmin;sa=submission;sort=subject">' , $txt['tp-arttitle'] , '</a></div>
@@ -1270,7 +1268,7 @@ function template_submission()
 			echo '
 						<tr class="windowbg">
 						<td>
-							<div class="tp_admbox">
+							<div class="tp_admflexbox">
 								<div class="tp_admfirst">
 									<div class="tp_pos">
 										<input type="checkbox" name="tp_article_submission'.$alink['id'].'" value="1"  />
@@ -2231,7 +2229,7 @@ function template_blockoverview()
 		<input type="hidden" name="tpadmin_form" value="blockoverview">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blockoverview'] . '</h3></div><div></div>
 		<div id="block-access" class="windowbg noup">
-			<div class="content">';
+			<div class="tp_flexbox">';
 
 		$side=array('','left','right','center','front','bottom','top','lower');
 
@@ -2243,10 +2241,10 @@ function template_blockoverview()
 				foreach($context['TPortal']['blockoverview'] as $block)
 				{
 					echo '
-				<div class="tp_twocolumn">
+				<div class="tp_2columnflex">
 					<p><a href="' . $scripturl . '?action=tpadmin&amp;sa=editblock&amp;id='.$block['id'].';' . $context['session_var'] . '=' . $context['session_id'].'" title="'.$txt['tp-edit'].'"><b>' . $block['title'] . '</b></a> ( ' . $txt['tp-blocktype' . $block['type']] . ' | ' . $txt['tp-' .$side[$block['bar']]] . ')</p>
 					<hr>
-					<div id="tp'.$block['id'].'" style="overflow: hidden;">
+					<div id="tp'.$block['id'].'">
 						<input type="hidden" name="' . rand(10000,19999) .'tpblock'.$block['id'].'" value="control" />';
 
 					foreach($context['TPmembergroups'] as $grp)

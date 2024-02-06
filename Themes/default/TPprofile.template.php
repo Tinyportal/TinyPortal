@@ -69,7 +69,7 @@ function template_tp_articles()
 		<thead>
 			<tr class="title_bar">
 			<th scope="col">
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="tp_name tpleft">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
 						<div class="tp_date title-admin-area tpleft">', ($context['TPortal']['tpsort']=='date'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;u='.$context['TPortal']['memID'].';area=tparticles;tpsort=date">'.$txt['date'].'</a></div>
@@ -87,7 +87,7 @@ function template_tp_articles()
 				echo '
 			<tr class="windowbg">
 			<td>
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="tp_name">
 							', $art['off']==1 ? '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="'. $txt['tp-noton'] .'" alt="*" />&nbsp; ' : '' , '', $art['approved']==0 ? '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="'. $txt[	'tp-notapproved'] .'" alt="*" />&nbsp; ' : '' , '';
@@ -223,7 +223,7 @@ function template_tp_download()
 			<thead>
 				<tr class="title_bar">
 				<th scope="col">
-				<div class="tp_flexbox">
+				<div class="tp_admflexbox">
 					<div class="tp_name float-items tpleft">', $context['TPortal']['tpsort']=='name' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=name">'.$txt['subject'].'</a></div>
 					<div class="tp_date title-admin-area float-items tpleft">', ($context['TPortal']['tpsort']=='created'  || $context['TPortal']['tpsort']=='') ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=created">'.$txt['date'].'</a></div>
 					<div class="tp_counter title-admin-area float-items">', $context['TPortal']['tpsort']=='views' ? '<img src="' .$settings['tp_images_url']. '/TPsort_down.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=profile;area=tpdownload;u='.$context['TPortal']['memID'].';tpsort=views">'.$txt['views'].'</a></div>
@@ -239,7 +239,7 @@ function template_tp_download()
 			echo '
 				<tr class="windowbg">
 				<td>
-				<div class="tp_admbox">
+				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
 						<div class="tp_name fullwidth-on-res-layout float-items">
 						  <a href="'.$art['href'].'" target="_blank">', $art['approved']==0 ? '(' : '' , $art['name'], $art['approved'] == 0 ? ')' : '' ,  '</a>

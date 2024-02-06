@@ -740,7 +740,7 @@ function template_showarticle()
 			<thead>
 				<tr class="title_bar">
 				<th scope="col" class="myarticles">
-					<div class="tp_admbox">
+					<div class="tp_flexrow">
 						<div class="tp_admfirst">
 							<div class="tp_name tpleft">', $context['TPortal']['tpsort']=='subject' ? '<img src="' .$settings['tp_images_url']. '/TPsort_up.png" alt="" /> ' : '' ,'<a href="'.$scripturl.'?action=tportal;sa=myarticles;tpsort=subject">'.$txt['tp-arttitle'].'</a></div>
 						</div>
@@ -754,7 +754,8 @@ function template_showarticle()
 					echo '
 			<tr class="windowbg">
 				<td>
-					<div class="tp_flexbox">
+					<div class="tp_flexrow">
+					<div class="tp_admfirst">
 						<div class="tp_catname">';
 						
 					if($art['off'] == 0 && $art['approved'] == 1) {
@@ -792,6 +793,7 @@ function template_showarticle()
 					}
 					echo '
 						</div>
+						</div>
 					</td>
 					</tr>';
 				}
@@ -810,7 +812,7 @@ function template_showarticle()
 
 		if(!empty($context['TPortal']['pageindex'])) {
 				echo '
-				<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div><br>';
+				<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>';
 		}
 
 		echo '

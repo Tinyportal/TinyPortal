@@ -51,6 +51,9 @@
 	top: 1em;
 	opacity: 0.3;
 }
+.tp_2columnflex {
+	width:48%;
+}
 /* This will take care of dropping the old */
 /* clearthefloat <p> tags on main panels. */
 /* Can probably drop them everywhere later. */
@@ -656,7 +659,7 @@ ul.tp_sitemap li a.tp_sitemapheader {
 }
 .tp_overview {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, 100px);
+	grid-template-columns: repeat(auto-fill, 140px);
 	justify-content: space-between;
 	grid-gap: 20px;
 }
@@ -1004,8 +1007,13 @@ input,select {
 .tp_catname, .tp_name {
 	flex-grow: 1;
 }
+.tp_artactions {
+	width: 60px;
+	flex-shrink: 0;
+	text-align:center;
+}
 .tp_catactions {
-	width: 130px;
+	width: 140px;
 	flex-shrink: 0;
 	text-align:center;
 }
@@ -1055,6 +1063,10 @@ input,select {
 }
 .tp_filesize {
 	width: 100px;
+	flex-shrink: 0;
+}
+.tp_shoutip {
+	width: 300px;
 	flex-shrink: 0;
 }
 .tp_article .windowbg, .tp_article .roundframe {
@@ -1165,7 +1177,7 @@ ul.tp_dlpostdetails li {
 	margin: 0;
 	padding: 0;
 }
-.title-admin-area img, .blocks img, .box img, .float-items img, .tp_dlsortlinks img, .tp_flexbox img {
+.blocks img, .box img, .tp_dlsortlinks img, .tp_admflexbox img, .tp_flexbox img, .tp_flexrow img {
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -1231,7 +1243,21 @@ h4.h4dl {
 	margin: 0;
 	overflow: hidden;
 }
-.tp_flexbox, .tp_admbox {
+.tp_flexbox {
+	display: flex;
+	justify-content: normal;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: .5em .5em;
+}
+.tp_flexrow {
+	display: flex;
+	justify-content: normal;
+	align-items: center;
+	gap: .5em .5em;
+}
+/* use in responsive admin tables with .box*/
+.tp_admflexbox {
 	display: flex;
 	justify-content: normal;
 	align-items: center;
@@ -1240,12 +1266,17 @@ h4.h4dl {
 	display: flex;
 	justify-content: normal;
 	align-items: center;
+	column-gap: 0.5em;
 }
 .tp_admfirst {
 	flex-grow: 1;
 }
 .tp_admlast {
 	flex-shrink: 0;
+}
+.tp_dlsortlinks {
+	text-align: right;
+	padding: 1%;
 }
 .tp_dltablelist, .tpbottom {
 	margin-bottom: .5em;
@@ -1412,7 +1443,7 @@ dl.tp_title dd {
 	padding: .5em 2em;
 	text-decoration:none;
 }
-.tp_admbox, .tp_admlast {
+.tp_responsive .tp_admflexbox, .tp_responsive .tp_admlast {
 	display:block;
 }
 .tp_responsive .adm-pos {
@@ -1511,6 +1542,9 @@ dl.tp_title dd {
 .tp_dlsubcat {
 	flex: 0 0 50%;
 }
+.tp_2columnflex {
+	width:100%;
+}
 }
 @media all and (max-width: 768px) {
 .padding-div {
@@ -1559,9 +1593,6 @@ dl.tp_title dd {
 }
 .tp_responsive .tp_admin_content {
 	margin: 2px 0 0 0!important;
-}
-.tp_responsive .tp_overview ul li {
-	width: 50%!important;
 }
 ul.tp-subcategories li {
 	width: 98%;

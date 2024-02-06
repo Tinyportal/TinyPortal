@@ -454,7 +454,7 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
 		echo ' <p class="clearthefloat"></p> 
-				<select onchange="surroundShoutText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', \'', $context['tp_shout_post_box_name'], '\'); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin-top: 5px;">
+				<select id="tp_textcolor" onchange="surroundShoutText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', \'', $context['tp_shout_post_box_name'], '\'); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin-top: 5px;">
 					<option value="" selected="selected">'.$txt['tp_change_color'].'</option>
 					<option value="Black">'.$txt['tp_black'].'</option>
 					<option value="Red">'.$txt['tp_red'].'</option>
