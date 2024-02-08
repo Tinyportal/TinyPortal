@@ -408,12 +408,13 @@ function template_frontpage()
 
 			if(empty($context['TPortal']['frontpage_template']))
 				$context['TPortal']['frontpage_template'] = '
-<div class="roundframe">
-	<div class="title_bar">
-		<h3 class="titlebg"><span class="left"></span>{article_title} </h3>
+<div class="tp_article">
+	<div class="cat_bar">
+		<h3 class="catbg">{article_title}</h3>
 	</div>
-	<div style="padding: 0; overflow: hidden;">
+	<div class="windowbg">
 		<div class="tp_article_info">
+			{article_avatar}
 			{article_options}
 			{article_category}
 			{article_date}
@@ -421,14 +422,10 @@ function template_frontpage()
 			{article_views}
 			{article_rating}
 		</div>
-		<div class="tp_underline"></div>
-		<div class="tp_article_padding">
-			{article_text}
-			{article_bookmark}
-			{article_boardnews}
-			{article_moreauthor}
-			{article_morelinks}
-		</div>
+		{article_text}
+		{article_moreauthor}
+		{article_morelinks}
+		{article_comments}
 	</div>
 </div>';
 			echo '
@@ -725,7 +722,7 @@ function template_editcategory()
 				$mg['value9'] = '
 <div class="tp_article">
 	<div class="cat_bar">
-		<h3 class="catbg"><span class="left"></span>{article_title}</h3>
+		<h3 class="catbg">{article_title}</h3>
 	</div>
 	<div class="windowbg">
 		<div class="tp_article_info">
@@ -737,11 +734,10 @@ function template_editcategory()
 			{article_views}
 			{article_rating}
 		</div>
-		<div class="tp_underline"></div>
-		<div class="tp_article_padding">{article_text}</div>
-		<div class="tp_article_padding">{article_moreauthor}</div>
-		<div class="tp_article_padding">{article_morelinks}</div>
-		<div class="tp_article_padding">{article_comments}</div>
+		{article_text}
+		{article_moreauthor}
+		{article_morelinks}
+		{article_comments}
 	</div>
 </div>';
 				echo '

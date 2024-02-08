@@ -421,17 +421,23 @@ function template_main()
 				echo '
 			<div class="tp_dlsortlinks floatright">' . $context['TPortal']['sortlinks'] . '</div>';
 		echo '
-		</div>
+		</div>';
+
+		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
+		{
+		echo '
 		<table class="table_grid">
 		<thead>
 			<tr class="title_bar">
 				<th scope="col">
 				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
-						<div class="float-items title-admin-area">'.$txt['tp-dlicon'].'</div>
-						<div class="tp_name float-items tpleft">'.$txt['tp-dlname'].'</div>
+						<div class="tp_dlicon">'.$txt['tp-dlicon'].'</div>
+						<div class="tp_name tpleft">'.$txt['tp-dlname'].'</div>
+					</div>
+					<div>
 						<div class="tp_counter float-items title-admin-area">'.$txt['tp-dlviews'].'</div>
-						<div class="tp_filename float-items title-admin-area">'.$txt['tp-dlfile'].'</div>
+						<div class="tp_filename tpleft float-items title-admin-area">'.$txt['tp-dlfile'].'</div>
 						<div class="tp_filesize float-items title-admin-area">'.$txt['tp-dlfilesize'].'</div>
 						<div class="tp_pos float-items title-admin-area"></div>
 						<p class="clearthefloat"></p>
@@ -441,8 +447,6 @@ function template_main()
 			</tr>
 		</thead>
 		<tbody>';
-		if(isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems'])>0)
-		{
 			foreach($context['TPortal']['dl_admitems'] as $cat)
 			{
 				echo '
@@ -450,8 +454,8 @@ function template_main()
 			<td>
 				<div class="tp_admflexbox">
 					<div class="tp_admfirst">
-						<div class="float-items">
-							', !empty($cat['icon']) ? '<img src="'.$cat['icon'].'" alt="" />' : '' ,'
+						<div class="tp_dlicon">
+							' , ($cat['icon']!='' && strpos($cat['icon'], 'blank.gif') == false) ? '<img src="'.$cat['icon'].'" alt="'.$cat['name'].'" />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="'.$cat['name'].'"  />' , '
 						</div>
 						<div class="tp_name float-items">
 							<a href="'.$cat['href'].'">'.$cat['name'].'</a>
@@ -494,18 +498,15 @@ function template_main()
 			</td>
 			</tr>';
 			}
-		}
-		else {
-			echo '
-			<tr class="windowbg">
-			<td>
-				<div class="float-items">'.$txt['tp-nofiles'].'</div>
-			</td>
-			</tr>';
-		}
-			echo '
+		echo '
 		</tbody>
-	</table>
+		</table>';
+		}
+		else
+			echo '
+				<div class="noticebox">'.$txt['tp-nofiles'].'</div>';
+
+			echo '
 	</div>
 	<p class="clearthefloat"></p>';
 	}
