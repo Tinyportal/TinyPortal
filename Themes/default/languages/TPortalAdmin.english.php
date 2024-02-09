@@ -1,5 +1,5 @@
 <?php
-// Version: 3.0.0; TPortalAdmin
+// Version: 3.0.1; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
@@ -246,7 +246,7 @@ $txt['tp-nosubmissions'] = 'Currently there are no submissions awaiting approval
 
 // Icons
 $txt['tp-adminicons7'] = 'Article icons';
-$txt['tp-adminiconsinfo'] = 'PNG, JPG or GIF, max-size: %d KB. Images will be resized so the shortest side is %d px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
+$txt['tp-adminiconsinfo'] = 'Article icons may be uploaded as PNG, JPG or GIF files, max-size: %d KB. Images will be resized so the shortest side is %d px, while retaining aspect ratio. Note that the top area of the image will be used as article icon.';
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category
@@ -548,7 +548,8 @@ $txt['tp-shoutbox_showicons'] = 'Display BBC buttons';
 $txt['tp-shout-allow-links'] = 'Allow links to be posted';
 $txt['tp-shoutboxusescroll'] = 'Use scrolling';
 $txt['tp-shoutboxduration'] = 'Speed for the scrolling (1 - 5)';
-$txt['tp-shout-autorefresh'] = 'Auto refresh in seconds (0 = disabled)<br><span style="color:#CC0000">Setting this too low can eat server resources</span>';
+$txt['tp-shout-autorefresh'] = 'Auto refresh in seconds (0 = disabled)';
+$txt['tp-shout-autorefreshdesc'] = 'Setting this too low can eat server resources';
 $txt['shout_submit_returnkey'] = 'Choose how to submit shout messages';
 $txt['tp-yes-enter'] = 'with Enter';
 $txt['tp-yes-ctrl'] = 'with Ctrl/Cmd+Enter';
@@ -570,7 +571,7 @@ $txt['tp-shoutboxtimeformatdesc'] = 'Time Format: You have the ability to adjust
 $txt['tp-shoutboxcolors'] = 'Shoutbox color settings';
 $txt['tp-shoutboxcolorsdesc'] = 'Shoutbox color settings: Use hex color codes. An example of a hex color representation is \'hashtag\'123456. Here you can set a default color for the shoutbox, applicable to ALL themes. If you wish to maintain theme specific colors you can do so by maintaining the CSS variables in the tp-colors .ccs file. To use the CCS variables leave these fields blank.';
 $txt['tp-shoutbox_use_groupcolor'] = 'Use membergroup color for usernames';
-$txt['tp-shoutbox_use_groupcolordesc'] = '(The general TinyPortal setting takes preference over the shoutbox setting.)';
+$txt['tp-shoutbox_use_groupcolordesc'] = 'This will show the membernames with the group colors in the shoutbox. Note that when the general TinyPortal setting is activated this shoutbox setting is inactive.';
 $txt['tp-shoutboxtextcolor'] = 'Default shout text color';
 $txt['tp-shoutboxtimecolor'] = 'Time text color';
 $txt['tp-shoutboxlinecolor1'] = 'Layouts 3 and 4: background color odd lines';
