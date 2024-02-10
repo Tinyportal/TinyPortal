@@ -383,6 +383,17 @@ $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
 
 // Edit block
+$txt['tp-titledivclass'] = 'Class for title div';
+$txt['tp-titleheadclass'] = 'Class for title text';
+$txt['tp-frameclass'] = 'Class for frame';
+$txt['tp-showwidth'] = 'Set block behaviour';
+
+$txt['tp-always'] = 'Show always';
+$txt['tp-hideunder600'] = 'Hide when screen width under 600px';
+$txt['tp-hideunder900'] = 'Hide when screen width under 900px';
+$txt['tp-showunder600'] = 'Show only when screen width under 600px';
+$txt['tp-showunder900'] = 'Show only when screen width under 900px';
+
 $txt['tp-blockstylehelp'] = 'Choose style for the block';
 $txt['tp-blockstylehelpdesc'] = 'This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.';
 $txt['tp-adminshowblocks'] = 'Let admin show all blocks?';

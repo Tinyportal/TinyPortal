@@ -1325,6 +1325,7 @@ dl.tp_title dt {
 dl.tp_title dd {
 	float: right;
 	width: 60%;
+	margin-bottom: 10px;
 }
 #tp-dluploadtitle {
 	width: 92%;
@@ -1687,5 +1688,26 @@ input[name="modify_reason"] {
 }
 #tpleftbarHeader, #tprightbarHeader {
 	width: 100% !important;
+}
+}
+/* RESPONSIVE TP: blocks */
+@media (min-width: 900px) {
+.showunder900 {
+	display: none;
+}
+}
+@media (min-width: 600px) {
+.showunder600 {
+	display: none;
+}
+}
+@media (max-width: 900px) {
+.hideunder900 {
+	display: none;
+}
+}
+@media (max-width: 600px) {
+.hideunder600 {
+	display: none;
 }
 }

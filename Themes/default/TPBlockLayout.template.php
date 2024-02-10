@@ -633,6 +633,45 @@ function template_editblock()
 
 			echo '
 				<hr>
+				<dl class="tp_title settings">';
+/*					<dt>
+						<label for="tp-titledivclass">'.$txt['tp-titledivclass'].'</label>
+					</dt>
+					<dd>
+						<input type="text" id="tp-titledivclass" name="tp_block_set_titledivclass" value="' ,(empty($context['TPortal']['blockedit']['titledivclass']) ? '' : $context['TPortal']['blockedit']['titledivclass']), '" style="width: 15em" ><br>
+					</dd>
+					<dt>
+						<label for="tp-titleheadclass">'.$txt['tp-titleheadclass'].'</label>
+					</dt>
+					<dd>
+						<input type="text" id="tp-titleheadclass" name="tp_block_set_titleheadclass" value="' ,(empty($context['TPortal']['blockedit']['titleheadclass']) ? '' : $context['TPortal']['blockedit']['titleheadclass']), '" style="width: 15em" ><br>
+					</dd>
+					<dt>
+						<label for="tp-frameclass">'.$txt['tp-frameclass'].'</label>
+					</dt>
+					<dd>
+						<input type="text" id="tp-frameclass" name="tp_block_set_frameclass" value="' ,(empty($context['TPortal']['blockedit']['frameclass']) ? '' : $context['TPortal']['blockedit']['frameclass']), '" style="width: 15em" ><br>
+					</dd>
+				*/
+		echo '
+					<dt>
+						<label for="tp-showwidth">'.$txt['tp-showwidth'].'</label>
+					</dt>
+					<dd>
+						<select id="tp-showwidth" name="tp_block_set_showwidth">
+							<option value=""' , (empty($context['TPortal']['blockedit']['showwidth'])) ? ' selected="selected"' : '' , '>'.$txt['tp-always'].'</option>
+							<option value="hideunder600"' , !empty($context['TPortal']['blockedit']['showwidth'])=='hideunder600' ? ($context['TPortal']['blockedit']['showwidth']=='hideunder600' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-hideunder600'].'</option>
+							<option value="hideunder900"' , !empty($context['TPortal']['blockedit']['showwidth'])=='hideunder900' ? ($context['TPortal']['blockedit']['showwidth']=='hideunder900' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-hideunder900'].'</option>
+							<option value="showunder600"' , !empty($context['TPortal']['blockedit']['showwidth'])=='showunder600' ? ($context['TPortal']['blockedit']['showwidth']=='showunder600' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-showunder600'].'</option>
+							<option value="showunder900"' , !empty($context['TPortal']['blockedit']['showwidth'])=='showunder900' ? ($context['TPortal']['blockedit']['showwidth']=='showunder900' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-showunder900'].'</option>
+						</select>
+					</dd>
+					<dt>'.$txt['tp-allowupshrink'].' </dt>
+					<dd>
+						<input type="radio" id="allowupshrink" name="tp_block_visible" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '><label for="allowupshrink"> '.$txt['tp-allowupshrink'].'</label><br>
+						<input type="radio" id="notallowupshrink" name="tp_block_visible" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '><label for="notallowupshrink"> '.$txt['tp-notallowupshrink'].'</label>
+					</dd>
+				</dl>
 				<div>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-blockstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'<br>
@@ -662,12 +701,7 @@ function template_editblock()
 							<input type="radio" id="useframe" name="tp_block_frame" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '><label for="useframe"> '.$txt['tp-useframe'].'</label><br>
 							<input type="radio" id="useframe2" name="tp_block_frame" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '><label for="useframe2"> '.$txt['tp-useframe2'].' </label><br>
 							<input type="radio" id="usetitle" name="tp_block_frame" value="title" ' , $context['TPortal']['blockedit']['frame']=='title' ? 'checked' : '' , '><label for="usetitle"> '.$txt['tp-usetitle'].' </label></br>
-							<input type="radio" id="noframe" name="tp_block_frame" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br><br>
-						</dd>
-						<dt>'.$txt['tp-allowupshrink'].' </dt>
-						<dd>
-							<input type="radio" id="allowupshrink" name="tp_block_visible" value="1" ' , ($context['TPortal']['blockedit']['visible']=='' || $context['TPortal']['blockedit']['visible']=='1') ? 'checked' : '' , '><label for="allowupshrink"> '.$txt['tp-allowupshrink'].'</label><br>
-							<input type="radio" id="notallowupshrink" name="tp_block_visible" value="0" ' , ($context['TPortal']['blockedit']['visible']=='0') ? 'checked' : '' , '><label for="notallowupshrink"> '.$txt['tp-notallowupshrink'].'</label><br><br>
+							<input type="radio" id="noframe" name="tp_block_frame" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br>
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=tp-membergrouphelpdesc" onclick="return reqOverlayDiv(this.href);">
@@ -690,7 +724,7 @@ function template_editblock()
 			// if none is chosen, have a control value
 			echo '
 							</div>
-								<input type="checkbox" id="checkallmg" onclick="invertAll(this, this.form, \'tp_group\');" /><label for="checkallmg">'.$txt['tp-checkall'].'</label><br><br>
+								<input type="checkbox" id="checkallmg" onclick="invertAll(this, this.form, \'tp_group\');" /><label for="checkallmg">'.$txt['tp-checkall'].'</label>
 							</div>
 						</dd>
 						<dt>
