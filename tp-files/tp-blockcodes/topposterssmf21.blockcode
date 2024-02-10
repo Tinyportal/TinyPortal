@@ -89,5 +89,5 @@ $topPoster = 8;
 This block will show the avatar, username, and post count of the Top Posters on your site. Edit block to change the configuration.<br>
 <br>
 This is an updated version that can only be used in SMF2.1.x, it uses set_avatar_data function that is only available in SMF 2.1.<br>
-<strong>Do NOT use this blockcode with SMF2.0: use the old blockcode: Top Posters with Avatar
+<strong>Do NOT use this blockcode with SMF2.0: use the old blockcode: Top Posters with Avatar</strong>
 </description>

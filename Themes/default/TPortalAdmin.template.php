@@ -2122,7 +2122,7 @@ function template_addblock()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	$side = $_GET['addblock'];
-	$panels = array('','left','right','top','center','front','lower','bottom');
+	$panels = array('1'=>$txt['tp-leftpanel'],'2'=>$txt['tp-rightpanel'],'3'=>$txt['tp-centerpanel'],'4'=>$txt['tp-frontpanel'],'5'=>$txt['tp-bottompanel'],'6'=>$txt['tp-toppanel'],'7'=>$txt['tp-lowerpanel']);
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -2201,7 +2201,7 @@ function template_addblock()
 		foreach($context['TPortal']['copyblocks'] as $bc)
 			echo '
 					<div class="padding-div">
-						<input type="radio" id="tp_addblock_' . $bc['id']. '" name="tp_addblock" value="mb_' . $bc['id']. '"  /><label for="tp_addblock_' . $bc['id']. '">' . $bc['title'].' </label>[' . $panels[$bc['bar']] . ']
+						<input type="radio" id="tp_addblock_' . $bc['id']. '" name="tp_addblock" value="mb_' . $bc['id']. '"  /><label for="tp_addblock_' . $bc['id']. '"><b>' . $bc['title'].' </label></b> [' . $panels[$bc['bar']] . ']
 					</div>';
 
 		echo '

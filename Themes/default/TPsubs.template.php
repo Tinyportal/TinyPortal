@@ -321,28 +321,28 @@ function TPortal_userbox()
 		else {
 			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
 		}
-    echo '
-        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-            <input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
-            <select name="cookielength" style="max-width: 45%!important;">
-                <option value="-1" selected="selected">', $txt['forever'], '</option>
-                <option value="60">', $txt['one_hour'], '</option>
-                <option value="1440">', $txt['one_day'], '</option>
-                <option value="10080">', $txt['one_week'], '</option>
-                <option value="302400">', $txt['one_month'], '</option>
-            </select>
-            <input type="submit" class="button_submit" value="', $txt['login'], '" />
-            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
+	echo '
+		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+			<input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
+			<select name="cookielength" style="max-width: 45%!important;">
+				<option value="-1" selected="selected">', $txt['forever'], '</option>
+				<option value="60">', $txt['one_hour'], '</option>
+				<option value="1440">', $txt['one_day'], '</option>
+				<option value="10080">', $txt['one_week'], '</option>
+				<option value="302400">', $txt['one_month'], '</option>
+			</select>
+			<input type="submit" class="button_submit" value="', $txt['login'], '" />
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
 		if (TP_SMF21) {
 			echo '
 			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
 		}
 		echo '
-        </form>
-        <div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
+		</form>
+		<div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
 	}
 	echo '
-        </div>';
+		</div>';
 }
 
 // blocktype 2: News
@@ -462,14 +462,14 @@ function TPortal_themebox()
 	$tp_where=preg_replace("'theme=[^>]*?;'si", "", $tp_where);
 
 	 if(is_countable($temaid) && count($temaid) > 0){
-        echo '
+		echo '
 		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="#" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
-         for($a=0 ; $a<(count($temaid)); $a++)
+		for($a=0 ; $a<(count($temaid)); $a++)
 		 {
-                echo '
+				echo '
 				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,25).'</option>';
-         }
+		}
 		 echo '
 			</select><br>' , $context['user']['is_logged'] ?
 			'<input type="checkbox" id="tp-permanent" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
