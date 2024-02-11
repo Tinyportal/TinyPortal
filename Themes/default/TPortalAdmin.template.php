@@ -141,28 +141,6 @@ function template_settings()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings">
 			<div class="windowbg noup">
-				<!-- START non responsive themes form -->
-				<dl class="settings">
-					<dt>
-					   <label for="tp_resp">'.$txt['tp-formres'].'</label>
-					</dt>
-					<dd>';
-						   $tm=explode(",",$context['TPortal']['resp']);
-						foreach($context['TPallthem'] as $them) {
-							echo '
-								<img class="tp_theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
-								<input name="tp_resp'.$them['id'].'" id="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
-							if(in_array($them['id'],$tm)) {
-								echo ' checked="checked" ';
-							}
-							echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
-							}
-						echo '
-						<br><input type="checkbox" name="tp_resp" id="tp_resp" value="0"><label for="tp_resp">'.$txt['tp-deselectthemes'].'</label>
-					</dd>
-				</dl>
-				<!-- END non responsive themes form -->
-				<hr>
 			<dl class="settings">
 				<dt>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-frontpagetitle2" onclick="return reqOverlayDiv(this.href);">

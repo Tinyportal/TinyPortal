@@ -1555,62 +1555,42 @@ function do_postchecks()
 						}
 						// SSI boards
 						elseif(substr($what, 0, 11) == 'tp_ssiboard') {
-                            $data   = file_get_contents("php://input");
-                            $output = TPUtil::http_parse_query($data)['tp_ssiboard'];
-                            if(is_string($output)) {
-                                $ssi[] = $output;
-                            }
-                            else if(is_array($output)) {
-                                $ssi = $output;
-                            }
-                            else {
-                                $ssi = array();
-                            }
+							$data   = file_get_contents("php://input");
+							$output = TPUtil::http_parse_query($data)['tp_ssiboard'];
+							if(is_string($output)) {
+								$ssi[] = $output;
+							}
+							else if(is_array($output)) {
+								$ssi = $output;
+							}
+							else {
+								$ssi = array();
+							}
 						}
 					}
 					if($from == 'settings' && $what == 'tp_frontpage_title') {
 						$updateArray['frontpage_title'] = $clean;
-                    }
+					}
 					else {
 						if(isset($clean))
 							$updateArray[$where] = $clean;
 					}
-					// START non responsive themes form
-					if($from == 'settings') {
-						if(substr($what, 0, 7) == 'tp_resp') {
-
-							$postname = substr($what, 7);
-							if(!isset($themeschecked)) {
-								$themeschecked = array();
-							}
-							$themeschecked[] = $postname;
-							if(isset($themeschecked)) {
-								$smcFunc['db_query']('', '
-									UPDATE {db_prefix}tp_settings
-									SET value = {string:value}
-									WHERE name = {string:name}',
-									array('value' => implode(',', $themeschecked), 'name' => 'resp',)
-								);
+					if($what == 'tp_image_upload_path') {
+						unset($updateArray['image_upload_path']);
+						if(strcmp($context['TPortal']['image_upload_path'],$value) != 0) {
+							// Only allow if part of the boarddir
+							if(strncmp($value, $boarddir, strlen($boarddir)) == 0) {
+								// It cann't be part of the existing path
+								if(strncmp($value, $context['TPortal']['image_upload_path'], strlen($context['TPortal']['image_upload_path'])) != 0) {
+									if(tp_create_dir($value)) {
+										tp_recursive_copy($context['TPortal']['image_upload_path'], $value);
+										tp_delete_dir($context['TPortal']['image_upload_path']);
+										$updateArray['image_upload_path'] = $value;
+									}
+								}
 							}
 						}
 					}
-					// END  non responsive themes form
-                    if($what == 'tp_image_upload_path') {
-                        unset($updateArray['image_upload_path']);
-                        if(strcmp($context['TPortal']['image_upload_path'],$value) != 0) {
-                            // Only allow if part of the boarddir
-                            if(strncmp($value, $boarddir, strlen($boarddir)) == 0) {
-                                // It cann't be part of the existing path
-                                if(strncmp($value, $context['TPortal']['image_upload_path'], strlen($context['TPortal']['image_upload_path'])) != 0) {
-                                    if(tp_create_dir($value)) {
-                                        tp_recursive_copy($context['TPortal']['image_upload_path'], $value);
-                                        tp_delete_dir($context['TPortal']['image_upload_path']);
-                                        $updateArray['image_upload_path'] = $value;
-                                    }
-                                }
-                            }
-                        }
-                    }
 				}
 			}
 

@@ -21,26 +21,6 @@ function template_tp_above()
 {
 	global $context, $settings;
 
-    // Body responsive classes
-    $respClass = '';
-	if (isset($context['TPortal'])) {
-		$tm2 = '';
-		$tm2=explode(",",$context['TPortal']['resp']);
-		if (in_array($settings['theme_id'],$tm2)) {
-			$respClass = "tp_nonresponsive";
-			echo '
-			<style>
-				/** NON RESPONSIVE THEMES **/
-				/** screen smaller then 900px **/
-				@media all and (min-width: 0px) and (max-width: 900px) {
-					body {
-						min-width:900px!important;
-					}
-				}
-			</style>';
-		} else {$respClass = "tp_responsive";}
-	}
-
     // Sidebars classes
     $sideclass = '';
 	if (isset($context['TPortal']) && ($context['TPortal']['leftpanel']==0 && $context['TPortal']['rightpanel']==1)) {
