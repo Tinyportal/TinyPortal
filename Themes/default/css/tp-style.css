@@ -70,6 +70,27 @@
 #tpcenterContainer {
 	padding-bottom: .3em;
 }
+/* additional styles to make panels flex */
+.tp_panelrow {
+	display: flex;
+	flex-direction: row;
+	column-gap: 4px;
+}
+.tp_panelrow > div {
+	flex: 1 1 0px;
+}
+.tp_panelcolumn {
+	display: flex;
+	flex-direction: column;
+}
+.tp_panelwrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+.tp_panelgrid {
+	display: grid;
+	flex-wrap: wrap;
+}
 /* This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_topcontainer, .block_centercontainer, .block_lowercontainer, .block_bottomcontainer {
 	padding-bottom: .3em;
@@ -1569,6 +1590,12 @@ dl.tp_title dd {
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
+.tp_panelrow  {
+	display: block;
+}
+.tp_panelrow > div {
+	width: 100%;
+}
 .tp_hidesmall {
 	display: none;
 }
