@@ -1636,40 +1636,21 @@ function template_panels()
 			}
 				echo '
 					<dt>
-						<label for="tp_block_layout_'.$panl.'1">'.$txt['tp-vertical'].'</label>
+						'.$txt['tp-blockflow'].'
 					</dt>
 					<dd>
 						<input type="radio" id="tp_block_layout_'.$panl.'1" name="tp_block_layout_'.$panl.'" value="vert" ' , $context['TPortal']['block_layout_'.$panl]=='vert' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horisontal'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'1">'.$txt['tp-vertical'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'2" name="tp_block_layout_'.$panl.'" value="horiz" ' , $context['TPortal']['block_layout_'.$panl]=='horiz' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-horisontal2cols'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horizontal'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'3" name="tp_block_layout_'.$panl.'" value="horiz2" ' , $context['TPortal']['block_layout_'.$panl]=='horiz2' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-horisontal3cols'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-horisontal2cols'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'4" name="tp_block_layout_'.$panl.'" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-horisontal4cols'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-horisontal3cols'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'5" name="tp_block_layout_'.$panl.'" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'6">'.$txt['tp-grid'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-horisontal4cols'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'6" name="tp_block_layout_'.$panl.'" value="grid" ' , $context['TPortal']['block_layout_'.$panl]=='grid' ? 'checked' : '' , '>
+						<label for="tp_block_layout_'.$panl.'6">'.$txt['tp-grid'].'</label></br>
 					</dd>
 					<dt>&nbsp;</dt>
 					<dd>
@@ -1683,13 +1664,15 @@ function template_panels()
 						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].'</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5"><br>
+						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5">
+						<span class="smalltext">'.$txt['tp-pixelsorpercentage'].'</span>
 					</dd>
 					<dt>
 						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].'</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_blockheight_'.$panl.'" name="tp_blockheight_'.$panl.'" value="' ,$context['TPortal']['blockheight_'.$panl], '" size="5" maxlength="5">
+						<span class="smalltext">'.$txt['tp-pixelsorpercentage'].'</span>
 					</dd>
 				</dl>
 				<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">

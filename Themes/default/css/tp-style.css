@@ -1236,9 +1236,6 @@ h4.h4dl {
 	padding-top: .5em;
 	margin-top: 12px;
 }
-.tp_dlsubcat {
-	
-}
 .tp_dltablelist .windowbg {
 	border-top: none;
 	box-shadow: none;
@@ -1432,7 +1429,7 @@ dl.tp_title dd {
 }
 /** screen smaller then 900px **/
 @media all and (max-width: 900px) {
-.tp_responsive .clickme {
+.clickme {
 	background-image:url(../images/tinyportal/TPsort_down.png);
 	background-position:center left;
 	background-repeat:no-repeat;
@@ -1444,93 +1441,93 @@ dl.tp_title dd {
 	padding: .5em 2em;
 	text-decoration:none;
 }
-.tp_responsive .tp_admflexbox, .tp_responsive .tp_admlast {
+.tp_admflexbox, .tp_admlast {
 	display:block;
 }
-.tp_responsive .adm-pos {
+.adm-pos {
 	width:60px!important;;
 }
-.tp_responsive .adm-name {
+.adm-name {
 	width:calc(100% - 60px)!important;
 }
-.tp_responsive .fullwidth-on-res-layout {
+.fullwidth-on-res-layout {
 	box-sizing: border-box;
 	clear:both!important;
 	float:none!important;
 	text-align: left!important;
 	width:98%!important;
 }
-.tp_responsive .fullwidth-on-res-layout::after {
+.fullwidth-on-res-layout::after {
 	clear:both;
 	content: "";
 	display:block;
 }
-.tp_responsive .fullwidth-on-res-layout:after {
+.fullwidth-on-res-layout:after {
 	clear:both;
 	content: "";
 	display:block; /* after for older browsers*/
 }
-.tp_responsive .show-on-responsive {
+.show-on-responsive {
 	display:block;
 	float: left;
 	max-width: 150px;
 	width: 45%!important;
 	font-weight: 600;
 }
-.tp_responsive .size-on-responsive {
+.size-on-responsive {
 	float: left;
 }	
-.tp_responsive .title-admin-area {
+.title-admin-area {
 	display:none;
 }
-.tp_responsive .tp_admin .pos, .tp_responsive .tp_admin .name {
+.tp_admin .pos, .tp_admin .name {
 	box-sizing: border-box;
 	display:inline-block;
 }
-.tp_responsive .tp_admin .name {
+.tp_admin .name {
 	width:78%!important;
 }
-.tp_responsive .tp_admin .pos, .tp_responsive .tp_admin .adm-pos {
+.tp_admin .pos, .tp_admin .adm-pos {
 	box-sizing: border-box;
 	width:60px!important;
 }	
-.tp_responsive .tp_admin .adm-name {
+.tp_admin .adm-name {
 	box-sizing: border-box;
 	padding:1%!important;
 	width:calc(100% - 60px)!important;
 }	
-.tp_responsive #new-item .show-on-responsive {
+#new-item .show-on-responsive {
 	float:none;
 	padding: 0 0 1% 0!important;
 	width:100%!important;
 }
-.tp_responsive #any-subcats .size-on-responsive .float-items, .tp_responsive #up-file .size-on-responsive .float-items {
+#any-subcats .size-on-responsive .float-items, #up-file .size-on-responsive .float-items {
 	padding:0 1%;
 	text-align:left;
 }
-.tp_responsive #any-subcats .size-on-responsive, .tp_responsive #up-file .size-on-responsive {
+#any-subcats .size-on-responsive, #up-file .size-on-responsive {
 	text-align:left;
 }
-.tp_responsive #new-item .float-items {
+#new-item .float-items {
 	float: none;
 	width: 98%!important;
 }
-.tp_responsive .tp_admin_menu {
+.tp_admin_menu {
 	float: none!important;
 	width: 100%!important;
 }
-.tp_responsive .tp_admin_menu ul li {
+.tp_admin_menu ul li {
 	display: inline-block;
 	padding-left: 1%!important;
 	vertical-align: top;
 	width: 31%!important;
 }
-.tp_responsive .tp_admin_menu .roundframe::after {
+.tp_admin_menu .roundframe::after {
 	clear: both;
 	content: "";
 	display: table;
 }
-.tp_responsive .tp_admin_content {
+.tp_admin_content {
 	margin: 2px 0 0 0!important;
 }
 .tp_article_picture {
@@ -1558,7 +1555,7 @@ dl.tp_title dd {
 .padding-div {
 	padding: calc(1% + 10px);
 }
-.tp_responsive .tp_admin_content {
+.tp_admin_content {
 	min-width:200px;
 }
 dl.tp_title dt {
@@ -1575,20 +1572,20 @@ dl.tp_title dd {
 .tp_hidesmall {
 	display: none;
 }
-.tp_responsive .tp_admin_menu{
+.tp_admin_menu{
 	float: none!important;
 	width: 100%!important;
 }
-.tp_responsive .tp_admin_menu ul li {
+.tp_admin_menu ul li {
 	padding-left: 3%!important;
 	width: 45%!important;
 }
-.tp_responsive .tp_admin_menu .roundframe::after {
+.tp_admin_menu .roundframe::after {
 	clear: both;
 	content: "";
 	display: table;
 }
-.tp_responsive .tp_admin_content {
+.tp_admin_content {
 	margin: 2px 0 0 0!important;
 }
 ul.tp-subcategories li {
@@ -1611,13 +1608,13 @@ input[name="modify_reason"] {
 }
 /** screen from 400px to 600px **/
 @media all and (min-width: 400px) and (max-width: 600px) {
-.tp_responsive .tp_panelsColumns, .tp_responsive .tp_panelsColHoriz {
-	width:50%!important;
+.tp_panelsColumns, .tp_panelsColHoriz {
+	min-width:50%!important;
 }
 }
 /** screen smaller then 500px **/
 @media all and (min-width: 0) and (max-width: 500px) {
-.tp_responsive .tp_panelsColumns {
+.tp_panelsColumns {
 	padding-right:0!important;
 	width:100%!important;
 }
@@ -1631,13 +1628,13 @@ input[name="modify_reason"] {
 }
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
-.tp_responsive .tp_panelstyles {
+.tp_panelstyles {
 	width: 95%!important; /* Panel Settings */
 }
-.tp_responsive .tp_panelsColumns, .tp_responsive .tp_panelsColHoriz {
+.tp_panelsColumns, .tp_panelsColHoriz {
 	width:100%!important;
 }
-.tp_responsive #left_admsection {
+#left_admsection {
 	float: none;
 	width: 100%;
 	/* width and float for left toggle menu from pages like profile page */
@@ -1645,7 +1642,7 @@ input[name="modify_reason"] {
 } 
 /** screen smaller then 300px **/
 @media all and (max-width: 300px) {
-.tp_responsive .tp_admin_content {
+.tp_admin_content {
 	font-size:11px;
 	word-break: break-all;
 }
@@ -1693,21 +1690,21 @@ input[name="modify_reason"] {
 /* RESPONSIVE TP: blocks */
 @media (min-width: 900px) {
 .showunder900 {
-	display: none;
+	display: none!important;
 }
 }
 @media (min-width: 600px) {
 .showunder600 {
-	display: none;
+	display: none!important;
 }
 }
 @media (max-width: 900px) {
 .hideunder900 {
-	display: none;
+	display: none!important;
 }
 }
 @media (max-width: 600px) {
 .hideunder600 {
-	display: none;
+	display: none!important;
 }
 }

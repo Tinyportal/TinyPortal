@@ -298,14 +298,18 @@ $txt['tp-hide_topbar_forum'] = 'Hide top panel when in forum';
 $txt['tp-hide_centerbar_forum'] = 'Hide center panel when in forum';
 $txt['tp-hide_lowerbar_forum'] = 'Hide lower panel when in forum';
 $txt['tp-hide_bottombar_forum'] = 'Hide bottom panel when in forum';
-$txt['tp-vertical'] = 'Display the blocks vertically (default)';
-$txt['tp-horisontal'] = 'Display the blocks horizontally';
+$txt['tp-blockflow'] = 'Set the blockflow for the panel';
+$txt['tp-vertical'] = 'Blocks flow vertically (1 column)';
+$txt['tp-horizontal'] = 'Blocks flow horizontally (1 row)';
+$txt['tp-grid'] = 'Blocks flow in a grid';
+
 $txt['tp-horisontal2cols'] = 'Display the blocks in 2 columns';
 $txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
 $txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
-$txt['tp-grid'] = 'Display the blocks according to a grid';
-$txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
-$txt['tp-blockheight'] = '<b>Force</b> this height on each block (use 00px or 00%)';
+
+$txt['tp-blockwidth'] = '<b>Force</b> this width on each block';
+$txt['tp-blockheight'] = '<b>Force</b> this height on each block';
+$txt['tp-pixelsorpercentage'] = 'use px for pixels or % for percentage';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';
 $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
