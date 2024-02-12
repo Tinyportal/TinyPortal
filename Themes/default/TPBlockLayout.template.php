@@ -40,7 +40,7 @@ function template_tp_above()
 	}
 
 	echo '
-	<div class="'. $sideclass .' '. $respClass .'">';
+	<div class="'. $sideclass .'">';
 
 	if($context['TPortal']['toppanel']==1)
 		echo '
