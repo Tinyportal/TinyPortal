@@ -171,7 +171,7 @@ $txt['tp-sort-on-type'] = 'Sort on type';
 $txt['tp-preview'] = 'View article';
 $txt['tp-arttitle'] = 'Title';
 $txt['tp-shortname_article'] = 'Short name';
-$txt['tp-shortname_articledesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the url will be displayed as: .../index.php?page=20. if a value is added (for example \'Articles\') the url will show as: .../index.php?page=Articles';
+$txt['tp-shortname_articledesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the url will be displayed as: .../index.php?page=20. if a value is added (for example \'king\') the url will show as: .../index.php?page=king';
 $txt['tp-importarticle'] = 'Path to external article';
 $txt['tp-useintro'] = 'Use intro';
 $txt['tp-useintrodesc'] = 'Here you can specify if an intro text for the article is needed. This text can be displayed with a \'Read more...\' link on the category page. When you set this option to yes, you should also maintain an intro text. ';
@@ -641,6 +641,6 @@ $txt['tp-adminmenu'] = 'TinyPortal admin menu';
 $txt['tp-menus'] = 'Sections';
 $txt['tp-name'] = 'Name';
 $txt['tp-shortname'] = 'Short name';
-$txt['tp-shortnamedesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the URL will be displayed as: .../index.php?cat=20. if a value is added (for example \'Categoryname\') the url will show as: .../index.php?page=Categoryname';
+$txt['tp-shortnamedesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the URL will be displayed as: .../index.php?cat=20. if a value is added (for example \'books\') the url will show as: .../index.php?cat=books';
 
 ?>
