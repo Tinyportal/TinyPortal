@@ -1777,87 +1777,12 @@ function TPortal_panel($side) {{{
 		$context['TPortal']['blockwidth_'.$side] .= 'px';
     }
 
-	// for the cols, calculate numbers
-	if($flow == 'horiz2') {
-		$flowgrid = array(
-			'1' => array(1, 0),
-			'2' => array(1, 1),
-			'3' => array(2, 1),
-			'4' => array(2, 2),
-			'5' => array(3, 2),
-			'6' => array(3, 3),
-			'7' => array(4, 3),
-			'8' => array(4, 4),
-			'9' => array(5, 4),
-			'10' => array(5, 5),
-			'11' => array(6, 5),
-			'12' => array(6, 6),
-			'13' => array(7, 6),
-			'14' => array(7, 7),
-			'15' => array(8, 7),
-			'16' => array(8, 8),
-		);
-	}
-	elseif($flow == 'horiz3') {
-		$flowgrid = array(
-			'1' => array(1, 0, 0),
-			'2' => array(1, 1, 0),
-			'3' => array(1, 1, 1),
-			'4' => array(2, 1, 1),
-			'5' => array(2, 2, 1),
-			'6' => array(2, 2, 2),
-			'7' => array(3, 2, 2),
-			'8' => array(3, 3, 2),
-			'9' => array(3, 3, 3),
-			'10' => array(4, 3, 3),
-			'11' => array(4, 4, 3),
-			'12' => array(4, 4, 4),
-			'13' => array(5, 4, 4),
-			'14' => array(5, 5, 4),
-			'15' => array(5, 5, 5),
-			'16' => array(6, 5, 5),
-		);
-	}
-	elseif($flow == 'horiz4') {
-		$flowgrid = array(
-			'1' => array(1, 0, 0, 0),
-			'2' => array(1, 1, 0, 0),
-			'3' => array(1, 1, 1, 0),
-			'4' => array(1, 1, 1, 1),
-			'5' => array(2, 1, 1, 1),
-			'6' => array(2, 2, 1, 1),
-			'7' => array(2, 2, 2, 1),
-			'8' => array(2, 2, 2, 2),
-			'9' => array(3, 2, 2, 2),
-			'10' => array(3, 3, 2, 2),
-			'11' => array(3, 3, 3, 2),
-			'12' => array(3, 3, 3, 3),
-			'13' => array(4, 3, 3, 3),
-			'14' => array(4, 4, 3, 3),
-			'15' => array(4, 4, 4, 3),
-			'16' => array(4, 4, 4, 4),
-		);
-	}
-
-	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-		$pad = $context['TPortal']['padding'];
-        switch($flow) {
-            case 'horiz2':
-			    $wh = 50;
-                break;
-            case 'horiz3':
-			    $wh = 33;
-                break;
-            case 'horiz4':
-			    $wh = 25;
-                break;
-        }
-		echo '<div style="width:100%;"><div class="tp_panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;">';
-	}
 	$flowmain = 0;
 	$flowsub = 0;
 	$bcount = 0;
 	$flowcount = isset($context['TPortal'][$panelside][$side]) ? count($context['TPortal'][$panelside][$side]) : 0;
+
+
 	if(!isset($context['TPortal'][$panelside][$side])) {
 		$context['TPortal'][$panelside][$side] = array();
     }
@@ -1974,44 +1899,14 @@ function TPortal_panel($side) {{{
 		}
 
 		// render them horisontally
-		if($flow == 'horiz') {
+		if(in_array($flow, array('horiz', 'horiz2', 'horiz3', 'horiz4'))) {
 			$pad = $context['TPortal']['padding'];
 			if($i == ($flowcount-1)) {
 				$pad=0;
             }
-			echo '<div class="tp_panelsColHoriz tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
+//			echo '<div class="tp_panelsColHoriz tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
-			echo '</div></div>';
-		}
-		// render them horisontally
-		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-			$pad = $context['TPortal']['padding'];
-			if($flow == 'horiz2') {
-				$wh = 50;
-			}
-			elseif($flow == 'horiz3') {
-					$wh = 33;
-			}
-			elseif($flow == 'horiz4') {
-				$wh = 25;
-            }
-
-			if(isset($flowgrid) && $flowsub == $flowgrid[$flowcount][$flowmain]) {
-				$flowsub = 0;
-				$flowmain++;
-				if($flow == 'horiz2' && $flowmain == 1) {
-                    $pad = 0;
-                }
-				elseif($flow == 'horiz3' && $flowmain == 2) {
-                    $pad = 0;
-                    $wh = 34;
-                }
-                elseif($flow == 'horiz4' && $flowmain == 3) {
-                    $pad = 0;
-                }
-				echo '</div><div class="tp_panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;">';
-			}
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
+//			echo '</div></div>';
 		}
 		// according to a grid
 		elseif($flow == 'grid') {
@@ -2037,9 +1932,6 @@ function TPortal_panel($side) {{{
 		$bcount++;
 		$flowsub++;
 	}
-	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-		echo '</div><p class="clearthefloat"></p></div>';
-    }
 
 	// the upshrink routine for blocks
 	// echo '</div>

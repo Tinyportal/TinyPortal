@@ -1642,13 +1642,14 @@ function template_panels()
 						<input type="radio" id="tp_block_layout_'.$panl.'1" name="tp_block_layout_'.$panl.'" value="vert" ' , $context['TPortal']['block_layout_'.$panl]=='vert' ? 'checked' : '' , '>
 						<label for="tp_block_layout_'.$panl.'1">'.$txt['tp-vertical'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'2" name="tp_block_layout_'.$panl.'" value="horiz" ' , $context['TPortal']['block_layout_'.$panl]=='horiz' ? 'checked' : '' , '>
-						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horizontal'].'</label></br>
-						<input type="radio" id="tp_block_layout_'.$panl.'3" name="tp_block_layout_'.$panl.'" value="horiz2" ' , $context['TPortal']['block_layout_'.$panl]=='horiz2' ? 'checked' : '' , '>
-						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-horisontal2cols'].'</label></br>
-						<input type="radio" id="tp_block_layout_'.$panl.'4" name="tp_block_layout_'.$panl.'" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '>
-						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-horisontal3cols'].'</label></br>
-						<input type="radio" id="tp_block_layout_'.$panl.'5" name="tp_block_layout_'.$panl.'" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '>
-						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-horisontal4cols'].'</label></br>
+						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horizontal'].'</label></br>';
+//						<input type="radio" id="tp_block_layout_'.$panl.'3" name="tp_block_layout_'.$panl.'" value="horiz2" ' , $context['TPortal']['block_layout_'.$panl]=='horiz2' ? 'checked' : '' , '>
+//						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-horisontal2cols'].'</label></br>
+//						<input type="radio" id="tp_block_layout_'.$panl.'4" name="tp_block_layout_'.$panl.'" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '>
+//						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-horisontal3cols'].'</label></br>
+//						<input type="radio" id="tp_block_layout_'.$panl.'5" name="tp_block_layout_'.$panl.'" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '>
+//						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-horisontal4cols'].'</label></br>
+				echo '
 						<input type="radio" id="tp_block_layout_'.$panl.'6" name="tp_block_layout_'.$panl.'" value="grid" ' , $context['TPortal']['block_layout_'.$panl]=='grid' ? 'checked' : '' , '>
 						<label for="tp_block_layout_'.$panl.'6">'.$txt['tp-grid'].'</label></br>
 					</dd>
@@ -1765,7 +1766,7 @@ function template_blocks()
 			}
 			else
 			{
-				echo '<div class="tp_pad">' .$txt['tp-noblocks']. '</div><br>';
+				echo '<div class="noticebox">' .$txt['tp-noblocks']. '</div><br>';
 			}
 			$n=0;
 			if($tn>0)

@@ -129,13 +129,13 @@
 		<remove-file name="$themedir/css/tp-shout.css" />
 		<remove-file name="$themedir/css/tp-style.css" />
 		<remove-file name="$themedir/css/tp-colors.css" />
-		<remove-file name="$languagedir/TParticle.english.php" />
-		<remove-file name="$languagedir/TPdlmanager.english.php" />
-		<remove-file name="$languagedir/TPhelp.english.php" />
-		<remove-file name="$languagedir/TPListImages.english.php" />
-		<remove-file name="$languagedir/TPmodules.english.php" />
-		<remove-file name="$languagedir/TPortal.english.php" />
-		<remove-file name="$languagedir/TPortalAdmin.english.php" />
+		<remove-file name="$themedir/languages/TParticle.english.php" />
+		<remove-file name="$themedir/languages/TPdlmanager.english.php" />
+		<remove-file name="$themedir/languages/TPhelp.english.php" />
+		<remove-file name="$themedir/languages/TPListImages.english.php" />
+		<remove-file name="$themedir/languages/TPmodules.english.php" />
+		<remove-file name="$themedir/languages/TPortal.english.php" />
+		<remove-file name="$themedir/languages/TPortalAdmin.english.php" />
 		<code>do_hooks.php</code>
 	</uninstall>
 </package-info>
