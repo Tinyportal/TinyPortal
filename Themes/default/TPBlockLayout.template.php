@@ -716,7 +716,7 @@ function template_editblock()
 					echo '
 						<dt>'. $lang.'</dt>
 						<dd>
-							<input type="text" name="tp_lang_'.$lang.'" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$lang]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$lang], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'],ENT_QUOTES) , '" size="50">
+							<input type="text" name="tp_lang_'.$langlist.'" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
 						</dd>';
 			}
 			echo '
@@ -734,7 +734,7 @@ function template_editblock()
 				$a=1;
 				foreach($context['TPortal']['langfiles'] as $bb => $lang) {
 					echo '
-							<input type="checkbox" id="langtype' . $a . '" name="langtype' . $a . '" value="'.$lang.'" ' , in_array($lang, $context['TPortal']['blockedit']['display']['lang']) ? 'checked="checked"' : '' , '><label for="langtype' . $a . '"> '.$lang.'</label><br>';
+							<input type="checkbox" id="langtype' . $a . '" name="langtype' . $a . '" value="'.$bb.'" ' , in_array($bb, $context['TPortal']['blockedit']['display']['lang']) ? 'checked="checked"' : '' , '><label for="langtype' . $a . '"> '.$lang.'</label><br>';
 					$a++;
 				}
 				echo ' </dd>

@@ -1601,6 +1601,10 @@ function TPgetlangOption($langlist, $set)
 
 	$setlang = '';
 
+	if(empty($langlist)) {
+		return $setlang;
+	}
+
 	for($i=0; $i < $num ; $i = $i + 2){
 		if($lang[$i] == $set)
 			$setlang = $lang[$i+1];

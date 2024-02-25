@@ -2658,16 +2658,18 @@ function do_postchecks()
 
 function get_langfiles()
 {
-	global $context, $settings;
+	global $context;
 
 	// get all languages for blocktitles
-	$language_dir = $settings['default_theme_dir'] . '/languages';
 	$context['TPortal']['langfiles'] = array();
-	$dir = dir($language_dir);
-	while ($entry = $dir->read())
-		if (substr($entry, 0, 6) == 'index.' && substr($entry,(strlen($entry) - 4) ,4) == '.php' && strlen($entry) > 9)
-	$context['TPortal']['langfiles'][] = substr(substr($entry, 6), 0, -4);
-	$dir->close();
+	$languages = getLanguages();
+
+	if(is_array($languages)) {
+		foreach($languages as $l => $ln) {
+			$context['TPortal']['langfiles'][$l] = $ln['name'];
+		}
+	}
+
 }
 
 function get_catlayouts()

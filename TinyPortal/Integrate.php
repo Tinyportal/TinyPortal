@@ -149,7 +149,7 @@ class Integrate
 
     public static function setup_smf_backwards_compat()
     {
-        global $boarddir, $cachedir, $sourcedir, $db_type;
+        global $boarddir, $cachedir, $sourcedir, $db_type, $languagesdir;
 
         if(defined('SMF_FULL_VERSION')) {
             // SMF 2.1 or SMF 3.0
@@ -168,7 +168,7 @@ class Integrate
         define('BOARDDIR', $boarddir);
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
-        define('LANGUAGEDIR', $boarddir . '/Themes/default/languages');
+        define('TPLANGUAGEDIR', $languagesdir ?? $boarddir . '/Themes/default/languages');
         define('TPVERSION', 'v301');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);
@@ -580,15 +580,16 @@ class Integrate
 
     public static function hookActions(&$actionArray)
     {
-        $actionArray = array_merge(
-            array (
-                'tpadmin'   => array('TPortalAdmin.php',    'TPortalAdmin'),
-                'forum'     => array('BoardIndex.php',      'BoardIndex'),
-                'tportal'   => array('TPortal.php',         'TPortal'),
-                'tpshout'   => array('TPShout.php',         'TPShout'),
-            ),
-            $actionArray
-        );
+        $actionArray['tpadmin']     = array('TPortalAdmin.php',     'TPortalAdmin');
+        $actionArray['tportal']     = array('TPortal.php',          'TPortal');
+        $actionArray['tpshout']     = array('TPShout.php',          'TPShout');
+        
+        if(TP_SMF21) {
+            $actionArray['forum']   = array('BoardIndex.php', 'BoardIndex');
+        }
+        else {
+            $actionArray['forum']   = array('', 'SMF\\Actions\\BoardIndex::call');
+        }
     }
 
     public static function hookDefaultAction()
@@ -598,8 +599,13 @@ class Integrate
         $theAction = false;
         // first..if the action is set, but empty, don't go any further
         if (isset($_REQUEST['action']) && $_REQUEST['action']=='') {
-            require_once(SOURCEDIR . '/BoardIndex.php');
-            $theAction = 'BoardIndex';
+            if(TP_SMF21) {
+                require_once(SOURCEDIR . '/BoardIndex.php');
+                $theAction = 'BoardIndex';
+            }
+            else {
+                $theAction = 'SMF\\Actions\\BoardIndex::call';
+            }
         }
 
         // Action and board are both empty... maybe the portal page?
@@ -615,8 +621,13 @@ class Integrate
         }
         // Action and board are still both empty...and no portal startpage - BoardIndex!
         elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex') {
-            require_once(SOURCEDIR . '/BoardIndex.php');
-            $theAction = 'BoardIndex';
+            if(TP_SMF21) {
+                require_once(SOURCEDIR . '/BoardIndex.php');
+                $theAction = 'BoardIndex';
+            }
+            else {
+                $theAction = 'SMF\\Actions\\BoardIndex::call';
+            }
         }
 
         // We need to manually call the action as this function was called be default
