@@ -149,7 +149,7 @@ class Integrate
 
     public static function setup_smf_backwards_compat()
     {
-        global $boarddir, $cachedir, $sourcedir, $db_type;
+        global $boarddir, $cachedir, $sourcedir, $db_type, $languagesdir;
 
         if(defined('SMF_FULL_VERSION')) {
             // SMF 2.1 or SMF 3.0
@@ -168,7 +168,7 @@ class Integrate
         define('BOARDDIR', $boarddir);
         define('CACHEDIR', $cachedir);
         define('SOURCEDIR', $sourcedir);
-        define('LANGUAGEDIR', $boarddir . '/Themes/default/languages');
+        define('TPLANGUAGEDIR', $languagesdir ?? $boarddir . '/Themes/default/languages');
         define('TPVERSION', 'v300');
         if($db_type == 'postgresql') {
             define('TP_PGSQL', true);

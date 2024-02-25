@@ -137,7 +137,7 @@ function TPShoutPost( ) {{{
 		if(TP_SMF21) {
 			require_once($sourcedir . '/Subs-Post.php');
 		}
-
+		
 		$shout = $smcFunc['htmlspecialchars'](substr($_POST['tp_shout'], 0, $context['TPortal']['shoutbox_maxlength']));
 		preparsecode($shout);
 
@@ -162,6 +162,8 @@ function TPShoutPost( ) {{{
 			$shout_name .= ' style="color: '. $context['TPortal']['usercolor'] . '"';
         }
 		$shout_name .= ($user_info['id'] != 0) ? '>'.$context['user']['name'].'</a>' : '';
+
+		$shout_name	= urlencode($shout_name);
 
 		$shout_time = time();
 

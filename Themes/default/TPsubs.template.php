@@ -2593,7 +2593,7 @@ function tptimeformat($log_time, $show_today = true, $format = '%d %b %Y')
 		$str = str_replace('%e', ltrim(strftime('%d', $time), '0'), $str);
 
 	// Format any other characters..
-	return strftime($str, $time);
+	return TPUtil::strftime($str, $time);
 }
 
 // Generate a strip of buttons.
