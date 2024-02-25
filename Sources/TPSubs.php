@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2375,7 +2375,7 @@ function tp_getblockstyles21()
 			'class' => 'titlebg+windowbg',
 			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg tp_block21"><div>',
+			'code_top' => '<div><div class="windowbg tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'1' => array(

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1974,7 +1974,7 @@ function TPdownloadme()
 			}
 		}
 		else {
-			$error = $txt['tp-dlfileerror'].'.<br>'.$txt['tp-dlerrorfile'].': <b>'.$real_filename.'</b>';
+			$error = '<div class="errorbox">'.$txt['tp-dlfileerror'].'.</div><br>'.$txt['tp-dlerrorfile'].': <b>'.$real_filename.'</b>';
 			fatal_error($error, false);
 		}
 	}
@@ -2023,10 +2023,10 @@ function TPortalDLAdmin()
 
 	if($context['TPortal']['hidebars_admin_only'] == '1')
 		tp_hidebars();
-	if($context['TPortal']['hidebars_admin_only'] == '0') {
+	/*if($context['TPortal']['hidebars_admin_only'] == '0') {
 		tp_hidebars('left');
 		tp_hidebars('right');
-	}
+	}*/
 	// fetch membergroups so we can quickly set permissions
 	// dlmanager, dlupload, dlcreatetopic
 	$context['TPortal']['perm_all_groups'] = get_grps();

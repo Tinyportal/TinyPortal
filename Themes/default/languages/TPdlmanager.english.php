@@ -1,5 +1,5 @@
 <?php
-// Version: 3.0.0; TPdlmanager
+// Version: 3.0.1; TPdlmanager
 
 global $scripturl;
 
@@ -117,6 +117,7 @@ $txt['tp-dluploadattach'] = 'Attach to an existing file?';
 
 //Submissions
 $txt['tp-dlsubmissions'] = 'Submissions';
+$txt['tp-helpdlsubmissions'] = 'Downloads that have been submitted by members need to be approved by an administrator and assigned to a category.';
 $txt['tp-nosubmissions'] = 'There are no submissions awaiting approval.';
 $txt['tp-dlapprove'] = 'Approval?';
 

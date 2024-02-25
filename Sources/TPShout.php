@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -423,13 +423,9 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 	);
 
 	if($collapse) {
-		echo '  <div class="expand_bbc_parent" id="expand_bbc_parent_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderBBC(!current_header_bbc, \'' . $shoutbox_id . '\', ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
-		            <img class="expand_shout_bbc" id="expand_bbc_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left;padding-top: 0.5em;" />
-	            </div>
-                <div id="shoutbox_bbc_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">';
-    }
-	else {
-		echo '  <div>';
+		echo '  <div class="tp_expand_bbcbox" id="expand_bbc_parent_' . $shoutbox_id . '" onclick="expandHeaderBBC(!current_header_bbc, \'' . $shoutbox_id . '\', ' . ($context['user']['is_guest'] ? 'true' : 'false') . ', \'' . $context['session_id'] . '\'); return false;">
+		            <img class="tp_expand_shoutbbc" id="expand_bbc_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_bbc']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" />
+	            </div>';
     }
 
 	$found_button = false;
@@ -459,24 +455,24 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 
 	// Print a drop down list for all the colors we allow!
 	if (!isset($context['shout_disabled_tags']['color']))
-		echo ' <p class="clearthefloat"></p>
-				<select onchange="surroundShoutText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', \'', $context['tp_shout_post_box_name'], '\'); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin: 5px auto 10px auto;">
-						<option value="" selected="selected">'. $txt['change_color']. '</option>
-						<option value="Black">Black</option>
-						<option value="Red">Red</option>
-						<option value="Yellow">Yellow</option>
-						<option value="Pink">Pink</option>
-						<option value="Green">Green</option>
-						<option value="Orange">Orange</option>
-						<option value="Purple">Purple</option>
-						<option value="Blue">Blue</option>
-						<option value="Beige">Beige</option>
-						<option value="Brown">Brown</option>
-						<option value="Teal">Teal</option>
-						<option value="Navy">Navy</option>
-						<option value="Maroon">Maroon</option>
-						<option value="LimeGreen">LimeGreen</option>
-					</select>';
+		echo ' <p class="clearthefloat"></p> 
+				<select id="tp_textcolor" onchange="surroundShoutText(\'[color=\' + this.options[this.selectedIndex].value.toLowerCase() + \']\', \'[/color]\', \'', $context['tp_shout_post_box_name'], '\'); this.selectedIndex = 0; document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.focus(document.forms.', $context['tp_shoutbox_form'], '.', $context['tp_shout_post_box_name'], '.caretPos);" style="margin-top: 5px;">
+					<option value="" selected="selected">'.$txt['tp_change_color'].'</option>
+					<option value="Black">'.$txt['tp_black'].'</option>
+					<option value="Red">'.$txt['tp_red'].'</option>
+					<option value="Yellow">'.$txt['tp_yellow'].'</option>
+					<option value="Pink">'.$txt['tp_pink'].'</option>
+					<option value="Green">'.$txt['tp_green'].'</option>
+					<option value="Orange">'.$txt['tp_orange'].'</option>
+					<option value="Purple">'.$txt['tp_purple'].'</option>
+					<option value="Blue">'.$txt['tp_blue'].'</option>
+					<option value="Beige">'.$txt['tp_beige'].'</option>
+					<option value="Brown">'.$txt['tp_brown'].'</option>
+					<option value="Teal">'.$txt['tp_teal'].'</option>
+					<option value="Navy">'.$txt['tp_navy'].'</option>
+					<option value="Maroon">'.$txt['tp_maroon'].'</option>
+					<option value="LimeGreen">'.$txt['tp_limegreen'].'</option>
+				</select>';
 	echo '<br />';
 
 	$found_button2 = false;
@@ -511,7 +507,7 @@ function shout_bbc_code($shoutbox_id, $collapse = true) {{{
 			}
 		}
 	}
-	echo '</div>
+	echo '
 	</div>';
 
 }}}
@@ -599,19 +595,15 @@ function print_shout_smileys($shoutbox_id, $collapse = true) {{{
 
 	loadLanguage('Post');
 
-	if($collapse) {
-		echo '
-		<div class="expand_parent_smiley" id="expand_parent_smiley_' . $shoutbox_id . '" style="display: inline;padding-top: 0.2em;" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
-			<img class="expand_smiley" id="expand_smiley_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" style="margin-right: 5px;float:left" />
-		</div>
-		<div id="shoutbox_smiley_' . $shoutbox_id . '" style="text-align:left;padding-top: 0.2em;">		';
-    }
-	else {
-		echo '<div>';
-    }
-
-	// Now start printing all of the smileys.
 	if (!empty($context['tp_smileys']['postform'])) {
+		if($collapse) {
+			echo '
+			<div class="tp_expand_smileybox" id="expand_parent_smiley_' . $shoutbox_id . '" onclick="expandHeaderSmiley(!current_header_smiley, \'' . $shoutbox_id . '\', '. ($context['user']['is_guest'] ? 'true' : 'false') .', \''. $context['session_id'] .'\'); return false;">
+				<img class="tp_expand_shoutsmiley" id="expand_smiley_' . $shoutbox_id . '" src="', $settings['tp_images_url'], '/', empty($options['expand_header_smiley']) ? 'TPexpand.png' : 'TPcollapse.png', '" alt="*" title="', array_key_exists('upshrink_description', $txt) ? $txt['upshrink_description'] : '', '" />
+			</div>';
+		}
+
+		// Now start printing all of the smileys.
 		// counter...
 		$sm_counter = 0;
 		// Show each row of smileys ;).
@@ -619,18 +611,18 @@ function print_shout_smileys($shoutbox_id, $collapse = true) {{{
 			foreach ($smiley_row['smileys'] as $smiley) {
 				if($sm_counter == 5 && $collapse) {
 					echo '
-						<div id="expandHeaderSmiley_' . $shoutbox_id . '"', empty($options['expand_header_smiley']) ? ' style="display: none;"' : 'style="display: inline;padding-top: 0.2em;"' , '>';
+						<div class="tp_expand_smileybox" id="expandHeaderSmiley_' . $shoutbox_id . '" ', empty($options['expand_header_smiley']) ? ' style="display: none;"' : '' ,'>';
 				}
 					echo '
 						<div style="display: inline;" onclick="replaceShoutText(\' ', $smiley['code'], '\', \'', $context['tp_shout_post_box_name'], '\'); return false;"><img src="', $settings['smileys_url'], '/', $smiley['filename'], '" style="vertical-align:bottom" alt="', $smiley['description'], '" title="', $smiley['description'], '" /></div>';
 					$sm_counter++;
 			}
 		}
+		if ($sm_counter > 4) {
+		echo '
+			</div>'; 
+		}
 	}
-
-	echo '
-		</div>
-	</div>';
 }}}
 
 // show a dedicated frontpage
