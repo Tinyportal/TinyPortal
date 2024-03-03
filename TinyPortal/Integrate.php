@@ -372,42 +372,53 @@ class Integrate
         if(!isset($context['TPortal']) || isset($context['uninstalling'])) {
             return;
         }
+		
+		// If we have disabled the front page, this is not needed...
+		if($context['TPortal']['front_placement'] != 'disabled') {
 
-        // Set the forum button activated if needed.
-        if(isset($_GET['board']) || isset($_GET['topic'])) {
-            $context['current_action'] = 'forum';
-        }
+			// Set the forum button activated if needed.
+			if(isset($_GET['board']) || isset($_GET['topic'])) {
+				$context['current_action'] = 'forum';
+			}
 
-        // This removes a edit in Load.php
-        if( !empty($context['linktree']) ) {
-            if (!empty($_GET) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
-                array_splice($context['linktree'], 1, 0, array(
-                        array(
-                            'url'   => $scripturl . '?action=forum',
-                            'name'  => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum'
-                        )
-                    )
-                );
-            }
+			// Change the href of the 'home' button
+			if($context['TPortal']['front_placement'] == 'standalone')
+				$buttons['home']['href'] = $context['TPortal']['front_placement_url'];
 
-            if (!empty($context['linktree'][2]) && array_key_exists('url', $context['linktree'][2])) {
-                $context['linktree'][2]['url'] = str_replace('#', '?action=forum#', $context['linktree'][2]['url']);
-            }
-        }
+			// This removes a edit in Load.php
+			if( !empty($context['linktree']) ) {
+				if($context['TPortal']['front_placement'] == 'standalone')
+					$context['linktree'][0]['url'] = $context['TPortal']['front_placement_url'];
 
-        // Add the forum button
-        $buttons = array_merge(
-                array_slice($buttons, 0, array_search('home', array_keys($buttons), true) + 1),
-                array (
-                    'forum' => array (
-                        'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-                        'href' => $scripturl.'?action=forum',
-                        'show' => ($context['TPortal']['front_type'] != 'boardindex') ? true : false,
-                        'icon' => 'menu_tpforum',
-                    ),
-                ),
-                $buttons
-        );
+				if (!empty($_GET) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
+					array_splice($context['linktree'], 1, 0, array(
+							array(
+								'url'   => ($context['TPortal']['front_placement'] == 'boardindex') ? $scripturl.'?action=forum' : $scripturl,
+								'name'  => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum'
+							)
+						)
+					);
+				}
+
+				if (!empty($context['linktree'][2]) && array_key_exists('url', $context['linktree'][2]) && $context['TPortal']['front_placement'] == 'boardindex') {
+					$context['linktree'][2]['url'] = str_replace('#', '?action=forum#', $context['linktree'][2]['url']);
+				}
+			}
+
+			// Add the forum button
+			$buttons = array_merge(
+					array_slice($buttons, 0, array_search('home', array_keys($buttons), true) + 1),
+					array (
+						'forum' => array (
+							'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
+							'href' => ($context['TPortal']['front_placement'] == 'boardindex') ? $scripturl.'?action=forum' : $scripturl,
+							'show' => true,
+							'icon' => 'menu_tpforum',
+						),
+					),
+					$buttons
+			);
+		};
 
         // Add the admin button
         if(!$context['TPortal']['hideadminmenu']=='1') {
@@ -609,18 +620,18 @@ class Integrate
         }
 
         // Action and board are both empty... maybe the portal page?
-        if (empty($board) && empty($topic) && $context['TPortal']['front_type'] != 'boardindex') {
+        if (empty($board) && empty($topic) && $context['TPortal']['front_placement'] == 'boardindex') {
             require_once(SOURCEDIR . '/TPortal.php');
             $theAction = 'TPortalMain';
         }
 
         // If frontpage set to boardindex but it's an article or category
-        if (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex' && (isset($_GET['cat']) || isset($_GET['page']))) {
+        if (empty($board) && empty($topic) && $context['TPortal']['front_placement'] != 'boardindex' && (isset($_GET['cat']) || isset($_GET['page']))) {
             require_once(SOURCEDIR . '/TPortal.php');
             $theAction = 'TPortalMain';
         }
         // Action and board are still both empty...and no portal startpage - BoardIndex!
-        elseif (empty($board) && empty($topic) && $context['TPortal']['front_type'] == 'boardindex') {
+        elseif (empty($board) && empty($topic) && $context['TPortal']['front_placement'] != 'boardindex') {
             if(TP_SMF21) {
                 require_once(SOURCEDIR . '/BoardIndex.php');
                 $theAction = 'BoardIndex';

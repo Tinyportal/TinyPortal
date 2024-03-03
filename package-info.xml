@@ -14,6 +14,7 @@
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-downloads" destination="$boarddir" />
 		<require-dir name="tp-images" destination="$boarddir" />
+		<require-file name="TPStandalone.php" destination="$boarddir" />
 		<readme parsebbc="true">readme_install21.txt</readme>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
@@ -26,6 +27,7 @@
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-downloads" destination="$boarddir" />
 		<require-dir name="tp-images" destination="$boarddir" />
+		<require-file name="TPStandalone.php" destination="$boarddir" />
 		<readme parsebbc="true">readme_upgrade21.txt</readme>
 		<database>install.php</database>
 	</upgrade>
@@ -34,6 +36,7 @@
 		<remove-dir name="$boarddir/TinyPortal" />
 		<remove-dir name="$themedir/images/tinyportal" />
 		<remove-dir name="$themedir/scripts/tinyportal" />
+		<remove-file name="$boarddir/TPStandalone.php" />
 		<remove-file name="$sourcedir/TPArticle.php" />
 		<remove-file name="$sourcedir/TPBlock.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
@@ -80,6 +83,7 @@
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-downloads" destination="$boarddir" />
 		<require-dir name="tp-images" destination="$boarddir" />
+		<require-file name="TPStandalone.php" destination="$boarddir" />
 		<readme parsebbc="true">readme_install3.txt</readme>
 		<database>install.php</database>
 		<code>do_hooks.php</code>
@@ -92,6 +96,7 @@
 		<require-dir name="tp-files" destination="$boarddir" />
 		<require-dir name="tp-downloads" destination="$boarddir" />
 		<require-dir name="tp-images" destination="$boarddir" />
+		<require-file name="TPStandalone.php" destination="$boarddir" />
 		<readme parsebbc="true">readme_upgrade21.txt</readme>
 		<database>install.php</database>
 	</upgrade>
@@ -100,6 +105,7 @@
 		<remove-dir name="$boarddir/TinyPortal" />
 		<remove-dir name="$themedir/images/tinyportal" />
 		<remove-dir name="$themedir/scripts/tinyportal" />
+		<remove-file name="$boarddir/TPStandalone.php" />
 		<remove-file name="$sourcedir/TPArticle.php" />
 		<remove-file name="$sourcedir/TPBlock.php" />
 		<remove-file name="$sourcedir/TPcommon.php" />
