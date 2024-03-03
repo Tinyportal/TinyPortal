@@ -377,7 +377,7 @@ class Integrate
 		if($context['TPortal']['front_placement'] != 'disabled') {
 
 			// Set the forum button activated if needed.
-			if(isset($_GET['board']) || isset($_GET['topic'])) {
+			if(!isset($_GET['action']) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
 				$context['current_action'] = 'forum';
 			}
 
@@ -390,7 +390,7 @@ class Integrate
 				if($context['TPortal']['front_placement'] == 'standalone')
 					$context['linktree'][0]['url'] = $context['TPortal']['front_placement_url'];
 
-				if (!empty($_GET) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
+				if (array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
 					array_splice($context['linktree'], 1, 0, array(
 							array(
 								'url'   => ($context['TPortal']['front_placement'] == 'boardindex') ? $scripturl.'?action=forum' : $scripturl,
