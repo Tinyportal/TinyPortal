@@ -4,7 +4,7 @@
  *
  * @package TinyPortal
  * @version 3.0.1
- * @author Rupurudu! - https://elmaci.net
+ * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
  *
@@ -23,9 +23,9 @@
 $boarddir = dirname(__FILE__);
 
 # Note: You shouldn't touch anything after this.
-global $boarddir, $context, $mbname, $scripturl, $sourcedir;
+global $boarddir, $context, $mbname, $scripturl, $sourcedir, $txt;
 
-if (!file_exists($boarddir . '/index.php'))
+if (!file_exists($boarddir . '/SSI.php'))
 	die('<h2>TinyPortal Standalone Mode</h2><p>Wrong $boarddir value. Please make sure that the $boarddir variable points to your forum\'s directory.</p>');
 
 require_once($boarddir . '/SSI.php');
@@ -33,8 +33,10 @@ require_once($sourcedir . '/TPortal.php');
 
 TPortal_init();
 
-if ($context['TPortal']['front_placement'] != 'standalone')
-	die('<h1>' . $mbname . '</h1><h2>TinyPortal Standalone Mode</h2><p>Standalone Mode is not enabled. To enable standalone mode, visit the <a href="' . $scripturl . '?action=tpadmin;sa=frontpage">TinyPortal frontpage settings</a>.</p>');
+if ($context['TPortal']['front_placement'] != 'standalone') {
+	loadLanguage('TPortalAdmin');
+	die('<h1>' . $mbname . '</h1><h2>' . $txt['tp-frontpage_standalone_mode'] . '</h2><p>' . $txt['tp-frontpage_standalone_mode_text'] . '<a href="' . $scripturl . '?action=tpadmin;sa=frontpage">' . $txt['tp-frontpage_settings'] . '</a>.</p>');
+}
 
 doTPfrontpage();
 writeLog();

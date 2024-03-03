@@ -342,11 +342,11 @@ function template_frontpage()
 				</dl>
 				<dl class="settings">
 					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=tp-front_placement_standalone_url2" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="front_placement_url">', $txt['tp-front_placement_standalone_url'], '</label>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-front_placement_url2" onclick="return reqOverlayDiv(this.href);">
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_front_placement_url">', $txt['tp-front_placement_url'], '</label>
 					</dt>
 					<dd>
-						<input type="text" name="front_placement_url" id="front_placement_url" value="' , !empty($context['TPortal']['front_placement_url']) ? $context['TPortal']['front_placement_url'] : '' , '" size="50">
+						<input type="text" id="tp_front_placement_url" name="tp_front_placement_url" value="' , !empty($context['TPortal']['front_placement_url']) ? $context['TPortal']['front_placement_url'] : '' , '" size="50">
 					</dd>
 				</dl>
 				<dl class="settings">
