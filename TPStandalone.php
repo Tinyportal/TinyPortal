@@ -29,9 +29,6 @@ if (!file_exists($boarddir . '/SSI.php'))
 	die('<h2>TinyPortal Standalone Mode</h2><p>Wrong $boarddir value. Please make sure that the $boarddir variable points to your forum\'s directory.</p>');
 
 require_once($boarddir . '/SSI.php');
-require_once($sourcedir . '/TPortal.php');
-
-TPortal_init();
 
 if ($context['TPortal']['front_placement'] != 'standalone') {
 	loadLanguage('TPortalAdmin');

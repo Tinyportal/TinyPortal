@@ -742,10 +742,6 @@ class Integrate
     public static function hookPreLogStats(&$no_stat_actions)
     {
         $no_stat_actions = array_merge($no_stat_actions, array('tpshout' => true));
-        if(TP_SMF21) {
-            require_once(SOURCEDIR . '/TPortal.php');
-            \TPortal_init();
-        }
     }
 
     public static function hookRedirect(&$setLocation, &$refresh, &$permanent)
@@ -785,10 +781,8 @@ class Integrate
 
     public static function hookLoadTheme()
     {
-        if(!TP_SMF21) {
-            require_once(SOURCEDIR . '/TPortal.php');
-            \TPortal_init();
-        }
+        require_once(SOURCEDIR . '/TPortal.php');
+        \TPortal_init();
     }
 
     public static function hookPreLoadTheme(&$id_theme)
