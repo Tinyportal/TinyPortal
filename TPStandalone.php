@@ -5,6 +5,7 @@
  * @package TinyPortal
  * @version 3.0.1
  * @author tinoest - http://www.tinyportal.net
+ * @author Rupurudu! - https://elmaci.net
  * @founder Bloc
  * @license MPL 2.0
  *
