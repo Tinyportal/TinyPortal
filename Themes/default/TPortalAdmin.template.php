@@ -330,7 +330,25 @@ function template_frontpage()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-frontpage_settings'] . '</h3></div>
 		<div id="frontpage-settings">
 			<div class="windowbg noup">
-
+				<dl class="settings">
+					<dt>
+						<label for="tp_front_placement">', $txt['tp-front_placement'], '</label>
+					</dt>
+					<dd>
+						<input type="radio" id="tp_front_placement1" name="tp_front_placement" value="boardindex" ' , $context['TPortal']['front_placement']=='boardindex' ? 'checked' : '' , '><label for="tp_front_placement1"> '.$txt['tp-front_placement_boardindex'].'</label><br>
+						<input type="radio" id="tp_front_placement2" name="tp_front_placement" value="standalone" ' , $context['TPortal']['front_placement']=='standalone' ? 'checked' : '' , '><label for="tp_front_placement2"> '.$txt['tp-front_placement_standalone'].'</label><br>
+						<input type="radio" id="tp_front_placement3" name="tp_front_placement" value="disabled" ' , $context['TPortal']['front_placement']=='disabled' ? 'checked' : '' , '><label for="tp_front_placement3"> '.$txt['tp-front_placement_disabled'].'</label>
+					</dd>
+				</dl>
+				<dl class="settings">
+					<dt>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-front_placement_url2" onclick="return reqOverlayDiv(this.href);">
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_front_placement_url">', $txt['tp-front_placement_url'], '</label>
+					</dt>
+					<dd>
+						<input type="text" id="tp_front_placement_url" name="tp_front_placement_url" value="' , !empty($context['TPortal']['front_placement_url']) ? $context['TPortal']['front_placement_url'] : '' , '" size="50">
+					</dd>
+				</dl>
 				<dl class="settings">
 					<dt>
 						<label for="tp_front_type">', $txt['tp-whattoshow'], '</label>
@@ -342,8 +360,7 @@ function template_frontpage()
 						<input type="radio" id="tp_front_type4" name="tp_front_type" value="forum_articles" ' , $context['TPortal']['front_type']=='forum_articles' ? 'checked' : '' , '><label for="tp_front_type4"> '.$txt['tp-bothforum'].'</label><br>
 						<input type="radio" id="tp_front_type5" name="tp_front_type" value="articles_only" ' , $context['TPortal']['front_type']=='articles_only' ? 'checked' : '' , '><label for="tp_front_type5"> '.$txt['tp-onlyarticles'].'</label><br>
 						<input type="radio" id="tp_front_type6" name="tp_front_type" value="single_page"  ' , $context['TPortal']['front_type']=='single_page' ? 'checked' : '' , '><label for="tp_front_type6"> '.$txt['tp-singlepage'].'</label><br>
-						<input type="radio" id="tp_front_type7" name="tp_front_type" value="frontblock"  ' , $context['TPortal']['front_type']=='frontblock' ? 'checked' : '' , '><label for="tp_front_type7"> '.$txt['tp-frontblocks'].'</label><br>
-						<input type="radio" id="tp_front_type8" name="tp_front_type" value="boardindex"  ' , $context['TPortal']['front_type']=='boardindex' ? 'checked' : '' , '><label for="tp_front_type8"> '.$txt['tp-boardindex'].'</label>
+						<input type="radio" id="tp_front_type7" name="tp_front_type" value="frontblock"  ' , $context['TPortal']['front_type']=='frontblock' ? 'checked' : '' , '><label for="tp_front_type7"> '.$txt['tp-frontblocks'].'</label>
 					</dd>
 				</dl>
 				<dl class="settings">

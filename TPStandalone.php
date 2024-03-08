@@ -1,9 +1,9 @@
 <?php
 /**
- * TPStandalone.php
+ * TinyPortal Standalone Mode
  *
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.1
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -17,34 +17,26 @@
  *
  */
 
-$ssi_path 	    = '';
-$settings_path 	= '';
+########## Standalone Mode Setup ##########
+# For the standalone mode to function, we need to know where SMF is installed.
+# Write the absolute path to the SMF's installation directory. (not just '.'!)
+$boarddir = dirname(__FILE__);
 
-ob_start('tp_url_rewrite');
+# Note: You shouldn't touch anything after this.
+global $boarddir, $context, $mbname, $scripturl, $sourcedir, $txt;
 
-global $boardurl, $context;
-require_once($settings_path);
+if (!file_exists($boarddir . '/SSI.php'))
+	die('<h2>TinyPortal Standalone Mode</h2><p>Wrong $boarddir value. Please make sure that the $boarddir variable points to your forum\'s directory.</p>');
 
-$context['TPortal'] = array();
-$actual_boardurl    = $boardurl;
+require_once($boarddir . '/SSI.php');
 
-require_once($ssi_path);
+if ($context['TPortal']['front_placement'] != 'standalone') {
+	loadLanguage('TPortalAdmin');
+	die('<h1>' . $mbname . '</h1><h2>' . $txt['tp-frontpage_standalone_mode'] . '</h2><p>' . $txt['tp-frontpage_standalone_mode_text'] . '<a href="' . $scripturl . '?action=tpadmin;sa=frontpage">' . $txt['tp-frontpage_settings'] . '</a>.</p>');
+}
 
-TPortal_init();
-
+doTPfrontpage();
 writeLog();
-
 TPortalMain();
-
 obExit(true);
-
-function tp_url_rewrite($buffer) {{{
-    global $actual_boardurl, $boardurl;
-    if (!empty($buffer) && stripos($buffer, $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']) !== false) {
-        $buffer = str_replace($boardurl, $actual_boardurl, $buffer);
-    }
-
-    return $buffer;
-}}}
-
 ?>

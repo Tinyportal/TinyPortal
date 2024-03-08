@@ -328,11 +328,20 @@ function setupTPsettings() {{{
     // if not in forum start off empty
     $context['TPortal']['is_front'] = false;
     $context['TPortal']['is_frontpage'] = false;
-    if(!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+	
+	// a switch to make it clear what is "forum" and not
+	if($context['TPortal']['front_placement'] == 'boardindex' && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']))
+		$context['TPortal']['not_forum'] = true;
+
+	elseif($context['TPortal']['front_placement'] == 'standalone' && (isset($_GET['cat']) || isset($_GET['page']) || defined('TP_Standalone')))
+		$context['TPortal']['not_forum'] = true;
+	
+	else
+		$context['TPortal']['not_forum'] = false;
+	
+    if($context['TPortal']['not_forum']) {
 		require_once(SOURCEDIR.'/TPSubs.php');
         TPstrip_linktree();
-        // a switch to make it clear what is "forum" and not
-        $context['TPortal']['not_forum'] = true;
     }
     // are we actually on frontpage then?
     if(!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action'])) {
@@ -357,20 +366,8 @@ function setupTPsettings() {{{
     // save the action value
     $context['TPortal']['action'] = !empty($_GET['action']) ? TPUtil::filter('action', 'get', 'string') : '';
 
-    // save the frontapge setting for SMF
-    $settings['TPortal_front_type'] = $context['TPortal']['front_type'];
     if(empty($context['page_title'])) {
         $context['page_title'] = $context['forum_name'];
-    }
-
-    if(empty($context['TPortal']['standalone'])) {
-        $request = $smcFunc['db_query']('', '
-                SELECT value
-                FROM {db_prefix}tp_settings
-                WHERE name = \'standalone_mode\''
-                );
-        $context['TPortal']['standalone'] = isset($smcFunc['db_fetch_assoc']($request)['value']) ? $smcFunc['db_fetch_assoc']($request)['value'] : false;
-        $smcFunc['db_free_result']($request);
     }
 
 }}}
