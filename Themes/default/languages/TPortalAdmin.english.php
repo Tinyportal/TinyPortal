@@ -301,11 +301,11 @@ $txt['tp-hide_bottombar_forum'] = 'Hide bottom panel when in forum';
 $txt['tp-blockflow'] = 'Set the blockflow for the panel';
 $txt['tp-vertical'] = 'Blocks flow vertically (1 column)';
 $txt['tp-horizontal'] = 'Blocks flow horizontally (1 row)';
-$txt['tp-grid'] = 'Blocks flow in a grid';
+$txt['tp-flexgrid2cols'] = 'Blocks flow in 2 column grid';
+$txt['tp-flexgrid3cols'] = 'Blocks flow in 3 column grid';
+$txt['tp-flexgrid4cols'] = 'Blocks flow in 4 column grid';
+$txt['tp-grid'] = 'Blocks in a fixed grid';
 
-$txt['tp-horisontal2cols'] = 'Display the blocks in 2 columns';
-$txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
-$txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
 
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block';
 $txt['tp-blockheight'] = '<b>Force</b> this height on each block';

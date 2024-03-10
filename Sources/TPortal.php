@@ -1899,7 +1899,7 @@ function TPortal_panel($side) {{{
 		}
 
 		// render them horisontally
-		if(in_array($flow, array('horiz', 'horiz2', 'horiz3', 'horiz4'))) {
+		if(in_array($flow, array('horiz'))) {
 			$pad = $context['TPortal']['padding'];
 			if($i == ($flowcount-1)) {
 				$pad=0;
@@ -1907,6 +1907,12 @@ function TPortal_panel($side) {{{
 //			echo '<div class="tp_panelsColHoriz tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
 			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
 //			echo '</div></div>';
+		}
+		// render them into 2 columns
+		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
+			echo '<div class="tp_', $flow ,'">';
+			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
+			echo '</div>';
 		}
 		// according to a grid
 		elseif($flow == 'grid') {

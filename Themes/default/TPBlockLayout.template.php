@@ -63,9 +63,9 @@ function template_tp_above()
 		}
 		$toppanelclass= '';
 		if (isset($context['TPortal']['block_layout_top'])) {
-			if($context['TPortal']['block_layout_top'] == 'grid')
+			if(in_array($context['TPortal']['block_layout_top'], array('grid', 'horiz2', 'horiz3', 'horiz4')))
 				$toppanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_top'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
+			elseif(in_array($context['TPortal']['block_layout_top'], array('horiz')))
 				$toppanelclass = "tp_panelrow";
 			else
 				$toppanelclass = "tp_panelcolumn";
@@ -183,10 +183,7 @@ function template_editblock()
 {
 	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings;
 
-	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
-	if(empty($newtitle)) {
-		$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
-	}
+	$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
 
 	echo '
 	<div id="tpadmin">
@@ -243,7 +240,26 @@ function template_editblock()
 						</dd>
 					</dl>
 							<input type="submit" class="button floatnone" value="' . $txt['tp-send'] . '" />
-					<hr>';
+					<hr>
+					<dl class="tp_title settings">
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-langhelpdesc" onclick="return reqOverlayDiv(this.href);">
+							<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
+						<dd>';
+			foreach($context['TPortal']['langfiles'] as $langlist => $lang) {
+				echo '
+						<dt>'. $lang.'</dt>
+						<dd>
+							<input type="text" name="tp_lang_'.$langlist.'" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
+						</dd>';
+			}
+			echo '
+						</dd>
+					</dl>
+					<hr>
+					
+					
+					';
 // Block types: 5 (BBC code), 10 (PHP Code) and 11 (HTML & Javascript code)
 			if($context['TPortal']['blockedit']['type']=='5' || $context['TPortal']['blockedit']['type']=='10' || $context['TPortal']['blockedit']['type']=='11')
 			{
@@ -772,18 +788,6 @@ function template_editblock()
 								<input type="checkbox" id="checkallmg" onclick="invertAll(this, this.form, \'tp_group\');" /><label for="checkallmg">'.$txt['tp-checkall'].'</label>
 							</div>
 						</dd>
-						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=tp-langhelpdesc" onclick="return reqOverlayDiv(this.href);">
-							<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
-						<dd>';
-			foreach($context['TPortal']['langfiles'] as $langlist => $lang) {
-				echo '
-						<dt>'. $lang.'</dt>
-						<dd>
-							<input type="text" name="tp_lang_'.$langlist.'" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
-						</dd>';
-			}
-			echo '
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=tp-langdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . '
