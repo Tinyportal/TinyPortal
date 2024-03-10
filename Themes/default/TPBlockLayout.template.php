@@ -789,6 +789,20 @@ function template_editblock()
 							</div>
 						</dd>
 						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-langhelpdesc" onclick="return reqOverlayDiv(this.href);">
+							<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
+						<dd>';
+			foreach($context['TPortal']['langfiles'] as $langlist => $lang) {
+				if( (strtolower($lang) != $context['user']['language']) && $lang != '') {
+					echo '
+						<dt>'. $lang.'</dt>
+						<dd>
+							<input type="text" name="tp_lang_'.$langlist.'" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
+						</dd>';
+				}
+			}
+			echo '
+						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=tp-langdesc" onclick="return reqOverlayDiv(this.href);">
 							<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-lang'] . '
 						</dt>

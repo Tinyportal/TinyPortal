@@ -493,6 +493,8 @@ $settings_array = array(
     'download_upload_path'  => $boarddir.'/tp-downloads/',
     'blockcode_upload_path' => $boarddir.'/tp-files/tp-blockcodes/',
     // frontpage
+    'front_placement' => 'boardindex',
+	'front_placement_url' => $boardurl.'/TPStandalone.php',
     'front_type' => 'forum_articles',
     'frontblock_type' => 'first',
     'frontpage_visual' => 'left,right,center,top,bottom,lower,header',
