@@ -1754,21 +1754,6 @@ function TPortal_panel($side) {{{
 
 	$panelside = $paneltype = ($side == 'front' ? 'frontblocks' : 'blocks');
 
-	// set the grid type
-	if($flow == 'grid') {
-		$grid_selected = $context['TPortal']['blockgrid_' . $side];
-		if($grid_selected == 'colspan3') {
-			$grid_recycle = 4;
-        }
-		elseif($grid_selected == 'rowspan1') {
-			$grid_recycle = 5;
-        }
-
-		$grid_entry = 0;
-		// fetch the grids..
-		TP_blockgrids();
-	}
-
 	// check if we left out the px!!
 	if(is_numeric($context['TPortal']['blockwidth_'.$side])) {
 		$context['TPortal']['blockwidth_'.$side] .= 'px';
@@ -1895,41 +1880,13 @@ function TPortal_panel($side) {{{
 				break;
 		}
 
-		// render them horisontally
-		if(in_array($flow, array('horiz'))) {
-			$pad = $context['TPortal']['padding'];
-			if($i == ($flowcount-1)) {
-				$pad=0;
-            }
-//			echo '<div class="tp_panelsColHoriz tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
-//			echo '</div></div>';
-		}
-		// render them into 2 columns
-		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-			echo '<div class="tp_', $flow ,'">';
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
-			echo '</div>';
-		}
-		// according to a grid
-		elseif($flow == 'grid') {
-			echo TP_blockgrid($block, $theme, $grid_entry, $side, $grid_entry == ($grid_recycle - 1) ? true : false, $grid_selected);
-			$grid_entry++;
-			if($grid_recycle == $grid_entry) {
-				$grid_entry = 0;
-            }
-			// what if its the last block, but in the middle of the recycle?
-			if($i == $n - 1) {
-				if($grid_entry > 0) {
-					for($a = $grid_entry; $a < $grid_recycle; $a++) {
-						echo TP_blockgrid(0, 0, $a, $side, $a == ($grid_recycle-1) ? true : false, $grid_selected,true);
-                    }
-				}
-			}
+		// flow in one row or flexwrap columns
+		if(in_array($flow, array('horiz', 'horiz2', 'horiz3', 'horiz4', 'grid'))) {
+			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side, $flow);
 		}
 		// or just plain vertically
 		else {
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
+			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side, $flow);
         }
 
 		$bcount++;
@@ -2093,46 +2050,6 @@ function tpSetupUpshrinks() {{{
         }
 	}
 	return;
-
-}}}
-
-function TP_blockgrid($block, $theme, $pos, $side, $last, $gridtype, $none = false) {{{
-	global $context;
-
-	// first, set the table, equal in all grids
-	if($pos == 0) {
-		echo '<div class="tp_gridwrap">';
-    }
-
-	// render if its not empty
-	if($none == false) {
-		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] , call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side) , $context['TPortal']['grid'][$gridtype][$pos]['after'];
-    }
-	else {
-		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] . '' . $context['TPortal']['grid'][$gridtype][$pos]['after'];
-    }
-
-	// last..if its the last block,close the table
-	if($last) {
-		echo '</div>';
-    }
-
-}}}
-
-function TP_blockgrids() {{{
-	global $context;
-
-	$context['TPortal']['grid'] = array();
-	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="tp_grid1box1">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div class="tp_grid1box2">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="tp_grid1box3">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="tp_grid1box4">', 'after' => '</div>');
-
-	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="tp_grid2box1">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="tp_grid2box2">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="tp_grid2box3">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="tp_grid2box4">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="tp_grid2box5">', 'after' => '</div>');
 
 }}}
 

@@ -86,17 +86,22 @@
 	display: flex;
 	flex-direction: column;
 }
-.tp_panelwrap {
+.tp_panelwrap, .tp_panelftwrap2, .tp_panelftwrap3, .tp_panelftwrap4 {
 	display: flex;
 	flex-wrap: wrap;
+	gap: 4px;
 }
-.tp_panelgrid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, 200px);
-	justify-content: space-between;
-	grid-gap: 1em;
-	padding: 1em 0;
-	margin: 1em 0;
+.tp_panelwrap > div.horiz2, .tp_panelftwrap2 div.grid  {
+	flex: 1 1 45%;
+}
+.tp_panelwrap > div.horiz3, .tp_panelftwrap3 div.grid  {
+	flex: 1 1 30%;
+}
+.tp_panelwrap > div.horiz4, .tp_panelftwrap4 div.grid  {
+	flex: 1 1 20%;
+}
+.tp_panelftwrap2 div.grid:nth-child(1), .tp_panelftwrap3 div.grid:nth-child(1), .tp_panelftwrap4 div.grid:nth-child(1) {
+	flex: 1 1 100%;
 }
 
 /* This is where you set the distance between blocks, use padding and target each panel if you like */
@@ -1594,6 +1599,9 @@ dl.tp_title dt {
 dl.tp_title dd {
 	float: none;
 	width: 100%;
+}
+.tp_panelwrap > div.horiz2, .tp_panelwrap > div.horiz3, .tp_panelwrap > div.horiz4, .tp_panelftwrap2 div.grid, .tp_panelftwrap3 div.grid, .tp_panelftwrap4 div.grid {
+	flex: 1 1 100%;
 }
 }
 /** screen smaller then 600px **/

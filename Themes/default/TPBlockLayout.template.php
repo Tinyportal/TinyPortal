@@ -45,37 +45,85 @@ function template_tp_above()
 	// Panel classes
 		$leftpanelclass= '';
 		if (isset($context['TPortal']['block_layout_left'])) {
-			if($context['TPortal']['block_layout_left'] == 'grid')
-				$leftpanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_left'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
+			if($context['TPortal']['block_layout_left'] == 'horiz')
 				$leftpanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_left'], array('horiz2', 'horiz3', 'horiz4')))
+				$leftpanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_left'] == 'grid'){
+				$grid_selected = $context['TPortal']['blockgrid_left'];
+				if($grid_selected == 'colspan2') {
+					$leftpanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$leftpanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$leftpanelclass = "tp_panelftwrap4";
+				}
+			}
 			else
 				$leftpanelclass = "tp_panelcolumn";
 		}
 		$rightpanelclass= '';
 		if (isset($context['TPortal']['block_layout_right'])) {
-			if($context['TPortal']['block_layout_right'] == 'grid')
-				$rightpanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_right'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
+			if($context['TPortal']['block_layout_right'] =='horiz')
 				$rightpanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_right'], array('horiz2', 'horiz3', 'horiz4')))
+				$rightpanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_right'] == 'grid'){
+				$grid_selected = $context['TPortal']['blockgrid_right'];
+				if($grid_selected == 'colspan2') {
+					$rightpanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$rightpanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$rightpanelclass = "tp_panelftwrap4";
+				}
+			}
 			else
 				$rightpanelclass = "tp_panelcolumn";
 		}
 		$toppanelclass= '';
 		if (isset($context['TPortal']['block_layout_top'])) {
-			if(in_array($context['TPortal']['block_layout_top'], array('grid', 'horiz2', 'horiz3', 'horiz4')))
-				$toppanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_top'], array('horiz')))
+			if($context['TPortal']['block_layout_top'] == 'horiz')
 				$toppanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_top'], array('horiz2', 'horiz3', 'horiz4')))
+				$toppanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_top'] == 'grid') {
+				$grid_selected = $context['TPortal']['blockgrid_top'];
+				if($grid_selected == 'colspan2') {
+					$toppanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$toppanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$toppanelclass = "tp_panelftwrap4";
+				}
+			}
 			else
 				$toppanelclass = "tp_panelcolumn";
 		}
 		$centerpanelclass= '';
 		if (isset($context['TPortal']['block_layout_center'])) {
-			if($context['TPortal']['block_layout_center'] == 'grid')
-				$centerpanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_center'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
+			if($context['TPortal']['block_layout_center'] == 'horiz')
 				$centerpanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_center'], array('horiz2', 'horiz3', 'horiz4')))
+				$centerpanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_center'] == 'grid'){
+				$grid_selected = $context['TPortal']['blockgrid_center'];
+				if($grid_selected == 'colspan2') {
+					$centerpanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$centerpanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$centerpanelclass = "tp_panelftwrap4";
+				}
+			}
 			else
 				$centerpanelclass = "tp_panelcolumn";
 		}
@@ -113,7 +161,7 @@ function template_tp_above()
 
 	if($context['TPortal']['centerpanel']==1) {
 		echo '
-					<div id="tpcenterbarHeader class="'. $centerpanelclass .'"" style="' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
+					<div id="tpcenterbarHeader" class="'. $centerpanelclass .'" style="' , in_array('tpcenterbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 						' , TPortal_panel('center') , '
 					</div>';
     }
@@ -133,35 +181,49 @@ function template_tp_below()
 
 	// Panel classes
 		if (isset($context['TPortal']['block_layout_lower'])) {
-			if($context['TPortal']['block_layout_lower'] == 'grid')
-				$lowerpanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_lower'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
+			if($context['TPortal']['block_layout_lower'] == 'horiz')
 				$lowerpanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_lower'], array('horiz2', 'horiz3', 'horiz4')))
+				$lowerpanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_lower'] == 'grid'){
+				$grid_selected = $context['TPortal']['blockgrid_lower'];
+				if($grid_selected == 'colspan2') {
+					$lowerpanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$lowerpanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$lowerpanelclass = "tp_panelftwrap4";
+				}
+			}
 			else
 				$lowerpanelclass = "tp_panelcolumn";
-
 		}
 		if (isset($context['TPortal']['block_layout_bottom'])) {
-			if($context['TPortal']['block_layout_bottom'] == 'grid')
-				$bottompanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_top'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
+			if($context['TPortal']['block_layout_bottom'] == 'horiz')
 				$bottompanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_bottom'], array('horiz2', 'horiz3', 'horiz4')))
+				$bottompanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_bottom'] == 'grid'){
+				$grid_selected = $context['TPortal']['blockgrid_bottom'];
+				if($grid_selected == 'colspan2') {
+					$bottompanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$bottompanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$bottompanelclass = "tp_panelftwrap4";
+				}
+			}
 			else
 				$bottompanelclass = "tp_panelcolumn";
-
 		}
-		if (isset($context['TPortal']['block_layout_front'])) {
-			if($context['TPortal']['block_layout_front'] == 'grid')
-				$frontpanelclass = "tp_panelgrid";
-			elseif(in_array($context['TPortal']['block_layout_front'], array('horiz', 'horiz2', 'horiz3', 'horiz4')))
-				$frontpanelclass = "tp_panelrow";
-			else
-				$frontpanelclass = "tp_panelcolumn";
 
-		}
 	if($context['TPortal']['lowerpanel']==1)
 		echo '
-				<div id="tplowerbarHeader class="'. $lowerpanelclass .'"" style="' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
+				<div id="tplowerbarHeader" class="'. $lowerpanelclass .'" style="' , in_array('tplowerbarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 					' , TPortal_panel('lower') , '
 				</div>';
 	echo '
@@ -171,7 +233,7 @@ function template_tp_below()
 
 	if($context['TPortal']['bottompanel']==1)
 		echo '
-		<div id="tpbottombarHeader class="'. $bottompanelclass .'"" style="' , in_array('tpbottombarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
+		<div id="tpbottombarHeader" class="'. $bottompanelclass .'" style="' , in_array('tpbottombarHeader',$context['tp_panels']) && $context['TPortal']['showcollapse']==1 ? 'display: none;' : '' , '">
 			' , TPortal_panel('bottom') , '
 		</div>';
 	echo '
@@ -183,7 +245,10 @@ function template_editblock()
 {
 	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings;
 
-	$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
+	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
+	if(empty($newtitle)) {
+		$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
+	}
 
 	echo '
 	<div id="tpadmin">
@@ -240,26 +305,7 @@ function template_editblock()
 						</dd>
 					</dl>
 							<input type="submit" class="button floatnone" value="' . $txt['tp-send'] . '" />
-					<hr>
-					<dl class="tp_title settings">
-						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=tp-langhelpdesc" onclick="return reqOverlayDiv(this.href);">
-							<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
-						<dd>';
-			foreach($context['TPortal']['langfiles'] as $langlist => $lang) {
-				echo '
-						<dt>'. $lang.'</dt>
-						<dd>
-							<input type="text" name="tp_lang_'.$langlist.'" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
-						</dd>';
-			}
-			echo '
-						</dd>
-					</dl>
-					<hr>
-					
-					
-					';
+					<hr>';
 // Block types: 5 (BBC code), 10 (PHP Code) and 11 (HTML & Javascript code)
 			if($context['TPortal']['blockedit']['type']=='5' || $context['TPortal']['blockedit']['type']=='10' || $context['TPortal']['blockedit']['type']=='11')
 			{

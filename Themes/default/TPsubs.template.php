@@ -17,7 +17,7 @@
 use \TinyPortal\Util as TPUtil;
 
 // Block template
-function TPblock($block, $theme, $side, $double=false)
+function TPblock($block, $theme, $side, $flow, $double=false)
 {
 	global $context , $scripturl, $settings, $txt;
 
@@ -27,52 +27,52 @@ function TPblock($block, $theme, $side, $double=false)
 	// setup a container that can be massaged through css
 	if ($block['type']=='ssi') {
 		if ($block['body']=='toptopics') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssitoptopics">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitoptopics">';
 		} elseif ($block['body']=='topboards') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssitopboards">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopboards">';
 		} elseif ($block['body']=='topposters') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssitopposters">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopposters">';
 		} elseif ($block['body']=='topreplies') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssitopreplies">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopreplies">';
 		} elseif ($block['body']=='topviews') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssitopviews">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopviews">';
 		} elseif ($block['body']=='calendar') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssicalendar">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssicalendar">';
 		} else {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="ssiblock">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssiblock">';
 		}
 	} elseif ($block['type']=='module') {
 		if ($block['body']=='dl-stats') {
-			echo ' <div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats">';
+			echo ' <div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats">';
 		} elseif ($block['body']=='dl-stats2') {
-			echo ' <div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats2">';
+			echo ' <div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats2">';
 		} elseif ($block['body']=='dl-stats3') {
-			echo ' <div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats3">';
+			echo ' <div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats3">';
 		} elseif ($block['body']=='dl-stats4') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats4">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats4">';
 		} elseif ($block['body']=='dl-stats5') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats5">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats5">';
 		} elseif ($block['body']=='dl-stats6') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats6">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats6">';
 		} elseif ($block['body']=='dl-stats7') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats7">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats7">';
 		} elseif ($block['body']=='dl-stats8') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats8">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats8">';
 		} elseif ($block['body']=='dl-stats9') {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dl-stats9">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats9">';
 		} else {
-			echo '<div class="'.$showwidth.' block_' . $side . 'container" id="module_dlstats">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dlstats">';
 		}
 	} elseif ($block['type']=='shoutbox') {
-		echo '<div class="'.$showwidth.' block_' . $side . 'container" id="shoutbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="shoutbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='html') {
-		echo '<div class="'.$showwidth.' block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='phpbox') {
-		echo '<div class="'.$showwidth.' block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='scriptbox') {
-		echo '<div class="'.$showwidth.' block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} else {
-		echo '<div class="'.$showwidth.' block_' . $side . 'container" id="block_' . $block['type'] . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="block_' . $block['type'] . '">';
 	}
 
 	$types = tp_getblockstyles21();

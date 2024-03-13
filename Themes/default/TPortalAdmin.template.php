@@ -1672,10 +1672,12 @@ function template_panels()
 					<dt>&nbsp;</dt>
 					<dd>
 						<hr><p>
+						<input type="radio" id="tp_blockgrid_'.$panl.'2" name="tp_blockgrid_'.$panl.'" value="colspan2" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan2' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'2"><img src="' .$settings['tp_images_url']. '/TPcolspan2.png" alt="colspan" /></label>
 						<input type="radio" id="tp_blockgrid_'.$panl.'3" name="tp_blockgrid_'.$panl.'" value="colspan3" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan3' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_'.$panl.'3"><img src="' .$settings['tp_images_url']. '/TPgrid1.png" alt="colspan" /></label>
-						<input type="radio" id="tp_blockgrid_'.$panl.'1" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_'.$panl.'1"><img src="' .$settings['tp_images_url']. '/TPgrid2.png" alt="rowspan" /></label>
+						<label for="tp_blockgrid_'.$panl.'3"><img src="' .$settings['tp_images_url']. '/TPcolspan3.png" alt="colspan" /></label>
+						<input type="radio" id="tp_blockgrid_'.$panl.'4" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'4"><img src="' .$settings['tp_images_url']. '/TPcolspan4.png" alt="rowspan" /></label>
 						</p>
 					</dd>
 				</dl>

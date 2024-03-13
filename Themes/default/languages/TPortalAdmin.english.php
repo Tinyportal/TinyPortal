@@ -311,8 +311,7 @@ $txt['tp-horizontal'] = 'Blocks flow horizontally (1 row)';
 $txt['tp-flexgrid2cols'] = 'Blocks flow in 2 column grid';
 $txt['tp-flexgrid3cols'] = 'Blocks flow in 3 column grid';
 $txt['tp-flexgrid4cols'] = 'Blocks flow in 4 column grid';
-$txt['tp-grid'] = 'Blocks in a fixed grid';
-
+$txt['tp-grid'] = 'Grid with featured block';
 
 $txt['tp-blockwidth'] = '<b>Force</b> this width on each block';
 $txt['tp-blockheight'] = '<b>Force</b> this height on each block';
