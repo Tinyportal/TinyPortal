@@ -1959,7 +1959,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 								<option value="" ' , $lblock['body']=='' ? 'selected' : '' , '>' .$txt['tp-none-'].'</option>';
 					echo '
 								<option value="recenttopics" ' , $lblock['body']=='recenttopics' ? 'selected' : '' , '>'.$txt['tp-ssi-recenttopics'].'</option>';
@@ -2025,7 +2025,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 								<option value="dl-stats" ' , $lblock['body']=='dl-stats' ? 'selected' : '' , '>' .$txt['tp-module1'].'</option>
 								<option value="dl-stats2" ' , $lblock['body']=='dl-stats2' ? 'selected' : '' , '>' .$txt['tp-module2'].'</option>
 								<option value="dl-stats3" ' , $lblock['body']=='dl-stats3' ? 'selected' : '' , '>' .$txt['tp-module3'].'</option>
@@ -2048,7 +2048,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 							<option value="0">'.$txt['tp-none2'].'</option>';
 					foreach($context['TPortal']['edit_articles'] as $article){
 						echo '
@@ -2069,7 +2069,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 							<option value="0">'.$txt['tp-none2'].'</option>';
 					if(isset($context['TPortal']['catnames']) && count($context['TPortal']['catnames'])>0)
 					{

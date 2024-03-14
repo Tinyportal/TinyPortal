@@ -54,9 +54,6 @@
 .tp_2columnflex {
 	width:48%;
 }
-.tp_horiz2 {
-	width:48%;
-}
 /* This will take care of dropping the old */
 /* clearthefloat <p> tags on main panels. */
 /* Can probably drop them everywhere later. */
@@ -73,7 +70,7 @@
 #tpcenterContainer {
 	padding-bottom: .3em;
 }
-/* additional styles to make panels flex */
+/* styles to make panels flex */
 .tp_panelrow {
 	display: flex;
 	flex-direction: row;
@@ -107,59 +104,6 @@
 /* This is where you set the distance between blocks, use padding and target each panel if you like */
 .block_leftcontainer, .block_rightcontainer, .block_topcontainer, .block_centercontainer, .block_lowercontainer, .block_bottomcontainer {
 	padding-bottom: .3em;
-}
-.tp_panelsColHoriz {
-	padding-right: .15em;
-}
-/* Blocks in panels set to display in columns (the default is vertically)*/
-.tp_panelsColumns {
-	-webkit-box-sizing:border-box;
-	box-sizing:border-box;
-}
-/* Panel Grid options using CSS grid */
-.tp_gridwrap {
-	display: grid;
-	column-gap: .3em;
-	grid-template-columns: [col1-start] 33.1% [col2-start] 33.1% [col3-start] 33.1% [col3-end];
-	grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
-}
-/* Panel grid1 */
-.tp_grid1box1 {
-	grid-column: col1-start / col3-end;
-	grid-row: row1-start;
-}
-.tp_grid1box2 {
-	grid-column: col1-start;
-	grid-row: row2-start ;
-}
-.tp_grid1box3 {
-	grid-column: col2-start ;
-	grid-row: row2-start ;
-}
-.tp_grid1box4 {
-	grid-column: col3-start;
-	grid-row: row2-start ;
-}
-/* Panel grid2 */
-.tp_grid2box1 {
-	grid-column: col1-start ;
-	grid-row: row1-start / row2-end;
-}
-.tp_grid2box2 {
-	grid-column: col2-start;
-	grid-row: row1-start ;
-}
-.tp_grid2box3 {
-	grid-column: col3-start ;
-	grid-row: row1-start ;
-}
-.tp_grid2box4 {
-	grid-column: col2-start;
-	grid-row: row2-start ;
-}
-.tp_grid2box5 {
-	grid-column: col3-start ;
-	grid-row: row2-start ;
 }
 .tpbuttons > .button {
 	margin: 0 .3em .3em 0;
@@ -322,7 +266,7 @@ a.tp_avatar_author img {
 	margin: .3em .3em .3em 0;
 	padding: .1em;
 }
-/* Social */
+/* Social icons*/
 .tp_article_social {
 	text-align: center;
 	padding-top: 12px;
@@ -403,7 +347,7 @@ a.tp_avatar_author img {
 	padding: 0 10px;
 	text-transform: uppercase;
 }
-/* Images in articles content */
+/* Images in articles */
 .tp_article_inner img, .tp_article img, .bbc_img {
 	height: auto;
 	max-width: 100%;
@@ -675,7 +619,7 @@ ul.tp_recenttopics li {
 .tp_ssifunction, .tp_rssfunction {
 	padding: 5px;
 }
-/* Blocktype 14: Article / Download functions */
+/* Blocktype 14: Article/Download functions */
 ul.dl_recentitems {
 	margin: 0;
 	padding-inline-start: 1em;
@@ -1496,11 +1440,6 @@ dl.tp_title dd {
 	content: "";
 	display:block;
 }
-.fullwidth-on-res-layout:after {
-	clear:both;
-	content: "";
-	display:block; /* after for older browsers*/
-}
 .show-on-responsive {
 	display:block;
 	float: left;
@@ -1640,8 +1579,10 @@ ul.tp-subcategories li {
 .tp_dlinfo .tp_dlshow-on-responsive, .table_grid .tp_dlshow-on-responsive {
 	display: inline-block;
 }
-
-/** Quick fixes Curve2 **/
+select.tp_blockselect {
+	width:100%;
+}
+/** Fixes Curve2 **/
 input[name="modify_reason"] {
 	width:100%;
 }
@@ -1649,38 +1590,22 @@ input[name="modify_reason"] {
 	width: 80px;
 }
 }
-/** screen from 400px to 600px **/
-@media all and (min-width: 400px) and (max-width: 600px) {
-.tp_panelsColumns, .tp_panelsColHoriz {
-	min-width:50%!important;
-}
-}
 /** screen smaller then 500px **/
 @media all and (min-width: 0) and (max-width: 500px) {
-.tp_panelsColumns {
-	padding-right:0!important;
-	width:100%!important;
-}
 .tp_twocolumn {
 	width: 100%;
-}
-.tp_gridwrap {
-	display: flex;
-	flex-direction: column;
 }
 }
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
+/* Panel Settings */
 .tp_panelstyles {
-	width: 95%!important; /* Panel Settings */
+	width: 95%!important; 
 }
-.tp_panelsColumns, .tp_panelsColHoriz {
-	width:100%!important;
-}
+/* width and float for left toggle menu from pages like profile page */
 #left_admsection {
 	float: none;
 	width: 100%;
-	/* width and float for left toggle menu from pages like profile page */
 }
 } 
 /** screen smaller then 300px **/
