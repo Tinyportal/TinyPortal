@@ -2396,21 +2396,21 @@ function tp_getblockstyles21()
 			'class' => 'titletp+windowbg',
 			'code_title_left' => '<div class="tp_half21"><h3 class="titlebg" style="font-size: 1.1em; height:auto;">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg tp_block21"><div>',
+			'code_top' => '<div><div class="windowbg tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'4' => array(
 			'class' => 'cattp+windowbg',
 			'code_title_left' => '<div class="tp_half21"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg tp_block21"><div>',
+			'code_top' => '<div><div class="windowbg tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'5' => array(
 			'class' => 'titlebg+windowbg2',
 			'code_title_left' => '<div class="title_bar"><h3 class="titlebg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="windowbg noup tp_block21"><div>',
+			'code_top' => '<div><div class="windowbg noup tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'6' => array(
@@ -2425,7 +2425,7 @@ function tp_getblockstyles21()
 			'class' => 'catbg+roundframe2',
 			'code_title_left' => '<div class="cat_bar"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="roundframe noup tp_block21"><div>',
+			'code_top' => '<div><div class="roundframe noup tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 		'8' => array(
@@ -2439,7 +2439,7 @@ function tp_getblockstyles21()
 			'class' => 'cattp+roundframe2',
 			'code_title_left' => '<div class="tp_half21"><h3 class="catbg">',
 			'code_title_right' => '</h3></div>',
-			'code_top' => '<div class="roundframe noup tp_block21"><div>',
+			'code_top' => '<div><div class="roundframe noup tp_block21">',
 			'code_bottom' => '</div></div>',
 		),
 	);

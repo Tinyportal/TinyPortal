@@ -1197,14 +1197,14 @@ function article_renders($type = 1, $single = false, $first = false)
 	global $context;
 	$code = '';
 	// decide the header style, different for forumposts
-    $usetitlestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
-    $useframestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'frame'));
+	$usetitlestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
+	$useframestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'frame'));
 	$showtitle = in_array('title', $context['TPortal']['article']['visual_options']);
-	$divheader = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divheader'] : 'title_bar';
-	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_headerstyle'] : 'titlebg';
+	$divheader = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divheader'] : $context['TPortal']['articles_divheader'];
+	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_headerstyle'] : $context['TPortal']['articles_headerstyle'];
+	$divbody = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divbody'] : ($usetitlestyle ? $context['TPortal']['articles_divbody'] : 'windowbg');
 	$nodivheader = 'tp_nodivheader';
 	$noheaderstyle = 'tp_noheaderstyle';
-	$divbody = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divbody'] : ($usetitlestyle ? 'windowbg noup' : 'windowbg');
 	$nodivbody = 'tp_nodivbody';
 
 	if($type == 1)

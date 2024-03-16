@@ -769,8 +769,8 @@ function template_editblock()
 							<option value=""' , (empty($context['TPortal']['blockedit']['showwidth'])) ? ' selected="selected"' : '' , '>'.$txt['tp-always'].'</option>
 							<option value="hideunder600"' , !empty($context['TPortal']['blockedit']['showwidth'])=='hideunder600' ? ($context['TPortal']['blockedit']['showwidth']=='hideunder600' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-hideunder600'].'</option>
 							<option value="hideunder900"' , !empty($context['TPortal']['blockedit']['showwidth'])=='hideunder900' ? ($context['TPortal']['blockedit']['showwidth']=='hideunder900' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-hideunder900'].'</option>
-							<option value="showunder600"' , !empty($context['TPortal']['blockedit']['showwidth'])=='showunder600' ? ($context['TPortal']['blockedit']['showwidth']=='showunder600' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-showunder600'].'</option>
-							<option value="showunder900"' , !empty($context['TPortal']['blockedit']['showwidth'])=='showunder900' ? ($context['TPortal']['blockedit']['showwidth']=='showunder900' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-showunder900'].'</option>
+							<option value="hideover600"' , !empty($context['TPortal']['blockedit']['showwidth'])=='hideover600' ? ($context['TPortal']['blockedit']['showwidth']=='hideover600' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-hideover600'].'</option>
+							<option value="hideover900"' , !empty($context['TPortal']['blockedit']['showwidth'])=='hideover900' ? ($context['TPortal']['blockedit']['showwidth']=='hideover900' ? ' selected="selected"' : '') : ''  , '>'.$txt['tp-hideover900'].'</option>
 						</select>
 					</dd>
 					<dt>'.$txt['tp-allowupshrink'].' </dt>
@@ -791,7 +791,7 @@ function template_editblock()
 			foreach($types as $blo => $bl) {
 				echo '
 					<div class="tp_panelstyles">
-						<div>
+						<div class="smalltext">
 							<input type="radio" id="tp_block_panelstyle'.$blo.'" name="tp_block_set_panelstyle" value="'.$blo.'" ' , $context['TPortal']['blockedit']['panelstyle']==$blo ? 'checked' : '' , '><label for="tp_block_panelstyle'.$blo.'"><span' , $context['TPortal']['blockedit']['panelstyle']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
 						</div>
 						' . $bl['code_title_left'] . 'title'. $bl['code_title_right'].'

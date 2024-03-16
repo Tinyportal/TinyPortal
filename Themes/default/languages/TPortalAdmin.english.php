@@ -117,6 +117,9 @@ $txt['tp-forumposts_avatar'] = 'Show avatars in forum topics';
 $txt['tp-forumposts_avatardesc'] = 'This setting will make the member avatars show in forum topics on the Frontpage of your forum. This will only have an effect if you are using one of the following layouts for your frontpage: normal articles, 1st normal-avatars or normal-links.';
 $txt['tp-useattachment'] = 'Use first post attachment preview as icon';
 $txt['tp-useattachmentdesc'] = 'This setting will make the image of the first attachment of the forum topic be used as the icon for the post on the frontpage of your forum. This will only have an effect if you are using one of the following layouts for your frontpage: articles-icons or articles-icons2.';
+$txt['tp-articles_divheader'] = 'Header style for articles';
+$txt['tp-articles_headerstyle'] = 'Title style for articles';
+$txt['tp-articles_divbody'] = 'Frame style for articles';
 $txt['tp-boardnews_divheader'] = 'Header style for frontpage topics';
 $txt['tp-boardnews_headerstyle'] = 'Title style for frontpage topics';
 $txt['tp-boardnews_divbody'] = 'Frame style for frontpage topics';
@@ -399,10 +402,10 @@ $txt['tp-frameclass'] = 'Class for frame';
 $txt['tp-showwidth'] = 'Set block behaviour';
 
 $txt['tp-always'] = 'Show always';
-$txt['tp-hideunder600'] = 'Hide when screen width under 600px';
-$txt['tp-hideunder900'] = 'Hide when screen width under 900px';
-$txt['tp-showunder600'] = 'Show only when screen width under 600px';
-$txt['tp-showunder900'] = 'Show only when screen width under 900px';
+$txt['tp-hideunder600'] = 'Hide at screen width under 600px';
+$txt['tp-hideunder900'] = 'Hide at screen width under 900px';
+$txt['tp-hideover600'] = 'Hide at screen width 600px or more';
+$txt['tp-hideover900'] = 'Hide at screen width 900px or more';
 
 $txt['tp-blockstylehelp'] = 'Choose style for the block';
 $txt['tp-blockstylehelpdesc'] = 'This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.';

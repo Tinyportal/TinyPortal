@@ -511,6 +511,9 @@ $settings_array = array(
     'boardnews_divheader' => 'cat_bar',
     'boardnews_headerstyle' => 'catbg',
     'boardnews_divbody' => 'windowbg noup',
+    'articles_divheader' => 'title_bar',
+    'articles_headerstyle' => 'titlebg',
+    'articles_divbody' => 'windowbg noup',
     // article settings
     'use_wysiwyg' => '0',
     'editorheight' => '400',

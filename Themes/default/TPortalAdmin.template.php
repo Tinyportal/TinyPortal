@@ -1385,6 +1385,38 @@ function template_artsettings()
 				<hr>
 				<dl class="settings">
 					<dt>
+						<label for="tp_articles_divheader">'.$txt['tp-articles_divheader'].'</label>
+					</dt>
+					<dd>
+						<select id="tp_articles_divheader" name="tp_articles_divheader" value="' ,$context['TPortal']['articles_divheader'], '" >
+							<option value="title_bar"' , $context['TPortal']['articles_divheader']=='title_bar' ? ' selected="selected"' : '' , '>title_bar</option>
+							<option value="cat_bar"' , $context['TPortal']['articles_divheader']=='cat_bar' ? ' selected="selected"' : '' , '>cat_bar</option>
+							<option value="tp_half21"' , $context['TPortal']['articles_divheader']=='tp_half21' ? ' selected="selected"' : '' , '>tp_half21</option>
+						</select>
+					</dd>
+					<dt>
+						<label for="tp_articles_headerstyle">'.$txt['tp-articles_headerstyle'].'</label>
+					</dt>
+					<dd>
+						<select id="tp_articles_headerstyle" name="tp_articles_headerstyle" value="' ,$context['TPortal']['articles_headerstyle'], '">
+							<option value="titlebg"' , $context['TPortal']['articles_headerstyle']=='titlebg' ? ' selected="selected"' : '' , '>titlebg</option>
+							<option value="catbg"' , $context['TPortal']['articles_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>
+						</select>
+					</dd>
+					<dt>
+						<label for="tp_articles_divbody">'.$txt['tp-articles_divbody'].'</label>
+					</dt>
+					<dd>
+						<select id="tp_articles_divbody" name="tp_articles_divbody" value="' ,$context['TPortal']['articles_divbody'], '">
+							<option value="windowbg"' , $context['TPortal']['articles_divbody']=='windowbg' ? ' selected="selected"' : '' , '>windowbg</option>
+							<option value="windowbg noup"' , $context['TPortal']['articles_divbody']=='windowbg noup' ? ' selected="selected"' : '' , '>windowbg+noup</option>
+							<option value="roundframe"' , $context['TPortal']['articles_divbody']=='roundframe' ? ' selected="selected"' : '' , '>roundframe</option>
+						</select>
+					</dd>
+				</dl>
+				<hr>
+				<dl class="settings">
+					<dt>
 						<label for="tp_hide_editarticle_link">', $txt['tp-hidearticle-link'], '&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPedit2.png" alt="" /></label>
 					</dt>
 					<dd>
@@ -1672,12 +1704,12 @@ function template_panels()
 					<dt>&nbsp;</dt>
 					<dd>
 						<hr><p>
-						<input type="radio" id="tp_blockgrid_'.$panl.'2" name="tp_blockgrid_'.$panl.'" value="colspan2" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan2' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_'.$panl.'2"><img src="' .$settings['tp_images_url']. '/TPcolspan2.png" alt="colspan" /></label>
-						<input type="radio" id="tp_blockgrid_'.$panl.'3" name="tp_blockgrid_'.$panl.'" value="colspan3" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan3' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_'.$panl.'3"><img src="' .$settings['tp_images_url']. '/TPcolspan3.png" alt="colspan" /></label>
-						<input type="radio" id="tp_blockgrid_'.$panl.'4" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_'.$panl.'4"><img src="' .$settings['tp_images_url']. '/TPcolspan4.png" alt="rowspan" /></label>
+						<div class="floatleft"><input type="radio" id="tp_blockgrid_'.$panl.'2" name="tp_blockgrid_'.$panl.'" value="colspan2" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan2' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'2"><img src="' .$settings['tp_images_url']. '/TPcolspan2.png" alt="colspan" /></label></div>
+						<div class="floatleft"><input type="radio" id="tp_blockgrid_'.$panl.'3" name="tp_blockgrid_'.$panl.'" value="colspan3" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan3' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'3"><img src="' .$settings['tp_images_url']. '/TPcolspan3.png" alt="colspan" /></label></div>
+						<div class="floatleft"><input type="radio" id="tp_blockgrid_'.$panl.'4" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'4"><img src="' .$settings['tp_images_url']. '/TPcolspan4.png" alt="rowspan" /></label></div>
 						</p>
 					</dd>
 				</dl>
@@ -1704,7 +1736,7 @@ function template_panels()
 			foreach($types as $blo => $bl)
 				echo '
 					<div class="tp_panelstyles">
-						<div class="smalltext" style="padding: 4px 0;">
+						<div class="smalltext">
 							<input type="radio" id="tp_panelstyle_'.$panl.''.$blo.'" name="tp_panelstyle_'.$panl.'" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '><label for="tp_panelstyle_'.$panl.''.$blo.'">
 							<span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
 						</div>
