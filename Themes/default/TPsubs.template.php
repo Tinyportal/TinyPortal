@@ -17,59 +17,62 @@
 use \TinyPortal\Util as TPUtil;
 
 // Block template
-function TPblock($block, $theme, $side, $double=false)
+function TPblock($block, $theme, $side, $flow, $double=false)
 {
 	global $context , $scripturl, $settings, $txt;
+
+	// set class for responsive
+	$showwidth = (!empty($block['showwidth']) ? $block['showwidth'] : '');
 
 	// setup a container that can be massaged through css
 	if ($block['type']=='ssi') {
 		if ($block['body']=='toptopics') {
-			echo '<div class="block_' . $side . 'container" id="ssitoptopics">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitoptopics">';
 		} elseif ($block['body']=='topboards') {
-			echo '<div class="block_' . $side . 'container" id="ssitopboards">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopboards">';
 		} elseif ($block['body']=='topposters') {
-			echo '<div class="block_' . $side . 'container" id="ssitopposters">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopposters">';
 		} elseif ($block['body']=='topreplies') {
-			echo '<div class="block_' . $side . 'container" id="ssitopreplies">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopreplies">';
 		} elseif ($block['body']=='topviews') {
-			echo '<div class="block_' . $side . 'container" id="ssitopviews">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssitopviews">';
 		} elseif ($block['body']=='calendar') {
-			echo '<div class="block_' . $side . 'container" id="ssicalendar">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssicalendar">';
 		} else {
-			echo '<div class="block_' . $side . 'container" id="ssiblock">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="ssiblock">';
 		}
 	} elseif ($block['type']=='module') {
 		if ($block['body']=='dl-stats') {
-			echo ' <div class="block_' . $side . 'container" id="module_dl-stats">';
+			echo ' <div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats">';
 		} elseif ($block['body']=='dl-stats2') {
-			echo ' <div class="block_' . $side . 'container" id="module_dl-stats2">';
+			echo ' <div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats2">';
 		} elseif ($block['body']=='dl-stats3') {
-			echo ' <div class="block_' . $side . 'container" id="module_dl-stats3">';
+			echo ' <div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats3">';
 		} elseif ($block['body']=='dl-stats4') {
-			echo '<div class="block_' . $side . 'container" id="module_dl-stats4">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats4">';
 		} elseif ($block['body']=='dl-stats5') {
-			echo '<div class="block_' . $side . 'container" id="module_dl-stats5">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats5">';
 		} elseif ($block['body']=='dl-stats6') {
-			echo '<div class="block_' . $side . 'container" id="module_dl-stats6">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats6">';
 		} elseif ($block['body']=='dl-stats7') {
-			echo '<div class="block_' . $side . 'container" id="module_dl-stats7">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats7">';
 		} elseif ($block['body']=='dl-stats8') {
-			echo '<div class="block_' . $side . 'container" id="module_dl-stats8">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats8">';
 		} elseif ($block['body']=='dl-stats9') {
-			echo '<div class="block_' . $side . 'container" id="module_dl-stats9">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dl-stats9">';
 		} else {
-			echo '<div class="block_' . $side . 'container" id="module_dlstats">';
+			echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="module_dlstats">';
 		}
 	} elseif ($block['type']=='shoutbox') {
-		echo '<div class="block_' . $side . 'container" id="shoutbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="shoutbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='html') {
-		echo '<div class="block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container ' . $block['type'] . 'box" id="htmlbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='phpbox') {
-		echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container ' . $block['type'] . '" id="phpbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} elseif ($block['type']=='scriptbox') {
-		echo '<div class="block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container ' . $block['type'] . '" id="scriptbox_' . preg_replace("/[^a-zA-Z]/", "", strip_tags($block['title'])) . '">';
 	} else {
-		echo '<div class="block_' . $side . 'container" id="block_' . $block['type'] . '">';
+		echo '<div class="'.$flow.' '.$showwidth.' block_' . $side . 'container" id="block_' . $block['type'] . '">';
 	}
 
 	$types = tp_getblockstyles21();
@@ -318,28 +321,28 @@ function TPortal_userbox()
 		else {
 			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
 		}
-    echo '
-        <form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
-            <input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
-            <select name="cookielength" style="max-width: 45%!important;">
-                <option value="-1" selected="selected">', $txt['forever'], '</option>
-                <option value="60">', $txt['one_hour'], '</option>
-                <option value="1440">', $txt['one_day'], '</option>
-                <option value="10080">', $txt['one_week'], '</option>
-                <option value="302400">', $txt['one_month'], '</option>
-            </select>
-            <input type="submit" class="button_submit" value="', $txt['login'], '" />
-            <input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
+	echo '
+		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+			<input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
+			<select name="cookielength" style="max-width: 45%!important;">
+				<option value="-1" selected="selected">', $txt['forever'], '</option>
+				<option value="60">', $txt['one_hour'], '</option>
+				<option value="1440">', $txt['one_day'], '</option>
+				<option value="10080">', $txt['one_week'], '</option>
+				<option value="302400">', $txt['one_month'], '</option>
+			</select>
+			<input type="submit" class="button_submit" value="', $txt['login'], '" />
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
 		if (TP_SMF21) {
 			echo '
 			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
 		}
 		echo '
-        </form>
-        <div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
+		</form>
+		<div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
 	}
 	echo '
-        </div>';
+		</div>';
 }
 
 // blocktype 2: News
@@ -459,14 +462,14 @@ function TPortal_themebox()
 	$tp_where=preg_replace("'theme=[^>]*?;'si", "", $tp_where);
 
 	 if(is_countable($temaid) && count($temaid) > 0){
-        echo '
+		echo '
 		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="#" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
-         for($a=0 ; $a<(count($temaid)); $a++)
+		for($a=0 ; $a<(count($temaid)); $a++)
 		 {
-                echo '
+				echo '
 				<option value="'.$temaid[$a].'" ', $settings['theme_id'] == $temaid[$a] ? 'selected="selected"' : '' ,'>'.substr($temanavn[$a],0,25).'</option>';
-         }
+		}
 		 echo '
 			</select><br>' , $context['user']['is_logged'] ?
 			'<input type="checkbox" id="tp-permanent" value=";permanent" onclick="realtheme()" /> '. $txt['tp-permanent']. '<br>' : '' , '<br>
@@ -1194,14 +1197,14 @@ function article_renders($type = 1, $single = false, $first = false)
 	global $context;
 	$code = '';
 	// decide the header style, different for forumposts
-    $usetitlestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
-    $useframestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'frame'));
+	$usetitlestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'title'));
+	$useframestyle = in_array($context['TPortal']['article']['frame'], array('theme', 'frame'));
 	$showtitle = in_array('title', $context['TPortal']['article']['visual_options']);
-	$divheader = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divheader'] : 'title_bar';
-	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_headerstyle'] : 'titlebg';
+	$divheader = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divheader'] : $context['TPortal']['articles_divheader'];
+	$headerstyle = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_headerstyle'] : $context['TPortal']['articles_headerstyle'];
+	$divbody = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divbody'] : ($usetitlestyle ? $context['TPortal']['articles_divbody'] : 'windowbg');
 	$nodivheader = 'tp_nodivheader';
 	$noheaderstyle = 'tp_noheaderstyle';
-	$divbody = isset($context['TPortal']['article']['boardnews']) ? $context['TPortal']['boardnews_divbody'] : ($usetitlestyle ? 'windowbg noup' : 'windowbg');
 	$nodivbody = 'tp_nodivbody';
 
 	if($type == 1)

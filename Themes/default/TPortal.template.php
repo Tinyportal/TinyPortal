@@ -59,14 +59,36 @@ function template_frontpage()
 {
 	global $context;
 
+		$frontpanelclass= '';
+		if (isset($context['TPortal']['block_layout_front'])) {
+			if($context['TPortal']['block_layout_front'] == 'horiz')
+				$frontpanelclass = "tp_panelrow";
+			elseif(in_array($context['TPortal']['block_layout_front'], array('horiz2', 'horiz3', 'horiz4')))
+				$frontpanelclass = "tp_panelwrap";
+			elseif($context['TPortal']['block_layout_front'] == 'grid'){
+				$grid_selected = $context['TPortal']['blockgrid_front'];
+				if($grid_selected == 'colspan2') {
+					$frontpanelclass = "tp_panelftwrap2";
+				}
+				elseif($grid_selected == 'colspan3') {
+					$frontpanelclass = "tp_panelftwrap3";
+				}
+				elseif($grid_selected == 'rowspan1') {
+					$frontpanelclass = "tp_panelftwrap4";
+				}
+			}
+			else
+				$frontpanelclass = "tp_panelcolumn";
+		}
+
 	if($context['TPortal']['frontblock_type'] == 'first' || $context['TPortal']['front_type'] == 'frontblock')
-		echo '<div id="tpfrontpanel_top">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+		echo '<div id="tpfrontpanel_top" class="'. $frontpanelclass .'">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 
 	if(!isset($context['TPortal']['category']))
 	{
 		// check the frontblocks first
 		if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
-			echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+			echo '<div id="tpfrontpanel_bottom" class="'. $frontpanelclass .'">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 
 		return;
 	}
@@ -90,7 +112,7 @@ function template_frontpage()
 	<div class="tp_pageindex_lower">' , $context['TPortal']['pageindex'] , '</div>';
 
 	if($context['TPortal']['frontblock_type'] == 'last' && $context['TPortal']['front_type'] != 'frontblock')
-		echo '<div id="tpfrontpanel_bottom">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
+		echo '<div id="tpfrontpanel_bottom" class="'. $frontpanelclass .'">', TPortal_panel('front'), '<p class="clearthefloat"></p></div>';
 }
 
 // Single article template
