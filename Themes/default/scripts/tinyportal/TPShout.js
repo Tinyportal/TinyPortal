@@ -66,16 +66,16 @@ function TPupdateShouts(action, blockId, shoutId)
 			// If there's an error let's display it
 			if (error.length > 0) {
 				$("#shout_errors_" + blockId).html(error).show();
-				$(".tp_shoutframe.tp_shoutframe_" + blockId).fadeIn();
+				$("#tp_shoutframe_" + blockId).fadeIn();
 				$("#tp_shout_" + blockId).val(shout);
 			} else {
 				$("#shout_errors_" + blockId).hide();
-				$(".tp_shoutframe.tp_shoutframe_" + blockId).html(data).fadeIn();
+				$("#tp_shoutframe_" + blockId).html(data).fadeIn();
 				if(direction == "1") {
-					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop($(document).height() + $(window).height());
+					$("#tp_shoutframe_" + blockId).parent().scrollTop($(document).height() + $(window).height());
 				}
 				else {
-					$(".tp_shoutframe.tp_shoutframe_" + blockId).parent().scrollTop(0);
+					$("#tp_shoutframe_" + blockId).parent().scrollTop(0);
 				}
 				if (action === "save") {
 					$("#tp_shout_" + blockId).val("");

@@ -1127,7 +1127,7 @@ function TPShoutAdmin() {{{
 			$context['TPortal']['admin_shoutbox_items'][] = array(
 				'id' => $row['id'],
 				'body' => html_entity_decode($row['content'], ENT_QUOTES),
-				'poster' => $row['member_link'],
+				'poster' => urldecode($row['member_link']),
 				'timestamp' => $row['time'],
 				'time' => timeformat($row['time']),
 				'ip' => $row['member_ip'],

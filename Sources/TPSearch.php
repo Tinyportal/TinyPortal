@@ -218,8 +218,8 @@ function TPSearchArticle()
 				$row['body'] = strip_tags($row['body']);
 			}
 
-			$row['subject'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['subject']);
-			$row['body']    = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+			$row['subject'] = preg_replace('/'.preg_quote($what, '/').'/iu', '<mark class="highlight">$0</mark>', $row['subject']);
+			$row['body']    = preg_replace('/'.preg_quote($what, '/').'/iu', '<mark class="highlight">$0</mark>', $row['body']);
 			$context['TPortal']['searchresults'][]=array(
 				'id' 		=> $row['id'],
 				'date' 		=> $row['date'],

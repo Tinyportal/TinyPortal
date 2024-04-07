@@ -141,28 +141,6 @@ function template_settings()
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-generalsettings'] . '</h3></div>
 		<div id="settings">
 			<div class="windowbg noup">
-				<!-- START non responsive themes form -->
-				<dl class="settings">
-					<dt>
-					   <label for="tp_resp">'.$txt['tp-formres'].'</label>
-					</dt>
-					<dd>';
-						   $tm=explode(",",$context['TPortal']['resp']);
-						foreach($context['TPallthem'] as $them) {
-							echo '
-								<img class="tp_theme_icon" alt="*" src="'.$them['path'].'/thumbnail.png" />
-								<input name="tp_resp'.$them['id'].'" id="tp_resp'.$them['id'].'" type="checkbox" value="'.$them['id'].'" ';
-							if(in_array($them['id'],$tm)) {
-								echo ' checked="checked" ';
-							}
-							echo '><label for="tp_resp'.$them['id'].'">'.$them['name'].'</label><br>';
-							}
-						echo '
-						<br><input type="checkbox" name="tp_resp" id="tp_resp" value="0"><label for="tp_resp">'.$txt['tp-deselectthemes'].'</label>
-					</dd>
-				</dl>
-				<!-- END non responsive themes form -->
-				<hr>
 			<dl class="settings">
 				<dt>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-frontpagetitle2" onclick="return reqOverlayDiv(this.href);">
@@ -1407,6 +1385,38 @@ function template_artsettings()
 				<hr>
 				<dl class="settings">
 					<dt>
+						<label for="tp_articles_divheader">'.$txt['tp-articles_divheader'].'</label>
+					</dt>
+					<dd>
+						<select id="tp_articles_divheader" name="tp_articles_divheader" value="' ,$context['TPortal']['articles_divheader'], '" >
+							<option value="title_bar"' , $context['TPortal']['articles_divheader']=='title_bar' ? ' selected="selected"' : '' , '>title_bar</option>
+							<option value="cat_bar"' , $context['TPortal']['articles_divheader']=='cat_bar' ? ' selected="selected"' : '' , '>cat_bar</option>
+							<option value="tp_half21"' , $context['TPortal']['articles_divheader']=='tp_half21' ? ' selected="selected"' : '' , '>tp_half21</option>
+						</select>
+					</dd>
+					<dt>
+						<label for="tp_articles_headerstyle">'.$txt['tp-articles_headerstyle'].'</label>
+					</dt>
+					<dd>
+						<select id="tp_articles_headerstyle" name="tp_articles_headerstyle" value="' ,$context['TPortal']['articles_headerstyle'], '">
+							<option value="titlebg"' , $context['TPortal']['articles_headerstyle']=='titlebg' ? ' selected="selected"' : '' , '>titlebg</option>
+							<option value="catbg"' , $context['TPortal']['articles_headerstyle']=='catbg' ? ' selected="selected"' : '' , '>catbg</option>
+						</select>
+					</dd>
+					<dt>
+						<label for="tp_articles_divbody">'.$txt['tp-articles_divbody'].'</label>
+					</dt>
+					<dd>
+						<select id="tp_articles_divbody" name="tp_articles_divbody" value="' ,$context['TPortal']['articles_divbody'], '">
+							<option value="windowbg"' , $context['TPortal']['articles_divbody']=='windowbg' ? ' selected="selected"' : '' , '>windowbg</option>
+							<option value="windowbg noup"' , $context['TPortal']['articles_divbody']=='windowbg noup' ? ' selected="selected"' : '' , '>windowbg+noup</option>
+							<option value="roundframe"' , $context['TPortal']['articles_divbody']=='roundframe' ? ' selected="selected"' : '' , '>roundframe</option>
+						</select>
+					</dd>
+				</dl>
+				<hr>
+				<dl class="settings">
+					<dt>
 						<label for="tp_hide_editarticle_link">', $txt['tp-hidearticle-link'], '&nbsp;&nbsp;<img src="' . $settings['tp_images_url'] . '/TPedit2.png" alt="" /></label>
 					</dt>
 					<dd>
@@ -1675,46 +1685,32 @@ function template_panels()
 			}
 				echo '
 					<dt>
-						<label for="tp_block_layout_'.$panl.'1">'.$txt['tp-vertical'].'</label>
+						'.$txt['tp-blockflow'].'
 					</dt>
 					<dd>
 						<input type="radio" id="tp_block_layout_'.$panl.'1" name="tp_block_layout_'.$panl.'" value="vert" ' , $context['TPortal']['block_layout_'.$panl]=='vert' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horisontal'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'1">'.$txt['tp-vertical'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'2" name="tp_block_layout_'.$panl.'" value="horiz" ' , $context['TPortal']['block_layout_'.$panl]=='horiz' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-horisontal2cols'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'2">'.$txt['tp-horizontal'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'3" name="tp_block_layout_'.$panl.'" value="horiz2" ' , $context['TPortal']['block_layout_'.$panl]=='horiz2' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-horisontal3cols'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'3">'.$txt['tp-flexgrid2cols'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'4" name="tp_block_layout_'.$panl.'" value="horiz3" ' , $context['TPortal']['block_layout_'.$panl]=='horiz3' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-horisontal4cols'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'4">'.$txt['tp-flexgrid3cols'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'5" name="tp_block_layout_'.$panl.'" value="horiz4" ' , $context['TPortal']['block_layout_'.$panl]=='horiz4' ? 'checked' : '' , '>
-					</dd>
-					<dt>
-						<label for="tp_block_layout_'.$panl.'6">'.$txt['tp-grid'].'</label>
-					</dt>
-					<dd>
+						<label for="tp_block_layout_'.$panl.'5">'.$txt['tp-flexgrid4cols'].'</label></br>
 						<input type="radio" id="tp_block_layout_'.$panl.'6" name="tp_block_layout_'.$panl.'" value="grid" ' , $context['TPortal']['block_layout_'.$panl]=='grid' ? 'checked' : '' , '>
+						<label for="tp_block_layout_'.$panl.'6">'.$txt['tp-grid'].'</label></br>
 					</dd>
 					<dt>&nbsp;</dt>
 					<dd>
 						<hr><p>
-						<input type="radio" id="tp_blockgrid_'.$panl.'1" name="tp_blockgrid_'.$panl.'" value="colspan3" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan3' ? 'checked' : '' , ' /><label for="tp_blockgrid_'.$panl.'1"><img src="' .$settings['tp_images_url']. '/TPgrid1.png" alt="colspan3" /></label>
-						<input type="radio" id="tp_blockgrid_'.$panl.'2" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' /><label for="tp_blockgrid_'.$panl.'2"><img src="' .$settings['tp_images_url']. '/TPgrid2.png" alt="rowspan1" /></label></p>
+						<div class="floatleft"><input type="radio" id="tp_blockgrid_'.$panl.'2" name="tp_blockgrid_'.$panl.'" value="colspan2" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan2' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'2"><img src="' .$settings['tp_images_url']. '/TPcolspan2.png" alt="colspan" /></label></div>
+						<div class="floatleft"><input type="radio" id="tp_blockgrid_'.$panl.'3" name="tp_blockgrid_'.$panl.'" value="colspan3" ' , $context['TPortal']['blockgrid_'.$panl]=='colspan3' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'3"><img src="' .$settings['tp_images_url']. '/TPcolspan3.png" alt="colspan" /></label></div>
+						<div class="floatleft"><input type="radio" id="tp_blockgrid_'.$panl.'4" name="tp_blockgrid_'.$panl.'" value="rowspan1" ' , $context['TPortal']['blockgrid_'.$panl]=='rowspan1' ? 'checked' : '' , ' />
+						<label for="tp_blockgrid_'.$panl.'4"><img src="' .$settings['tp_images_url']. '/TPcolspan4.png" alt="rowspan" /></label></div>
+						</p>
 					</dd>
 				</dl>
 				<dl class="settings">
@@ -1722,13 +1718,15 @@ function template_panels()
 						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].'</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5"><br>
+						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5">
+						<span class="smalltext">'.$txt['tp-pixelsorpercentage'].'</span>
 					</dd>
 					<dt>
 						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].'</label>
 					</dt>
 					<dd>
 						<input type="text" id="tp_blockheight_'.$panl.'" name="tp_blockheight_'.$panl.'" value="' ,$context['TPortal']['blockheight_'.$panl], '" size="5" maxlength="5">
+						<span class="smalltext">'.$txt['tp-pixelsorpercentage'].'</span>
 					</dd>
 				</dl>
 				<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
@@ -1738,7 +1736,7 @@ function template_panels()
 			foreach($types as $blo => $bl)
 				echo '
 					<div class="tp_panelstyles">
-						<div class="smalltext" style="padding: 4px 0;">
+						<div class="smalltext">
 							<input type="radio" id="tp_panelstyle_'.$panl.''.$blo.'" name="tp_panelstyle_'.$panl.'" value="'.$blo.'" ' , $context['TPortal']['panelstyle_'.$panl]==$blo ? 'checked' : '' , '><label for="tp_panelstyle_'.$panl.''.$blo.'">
 							<span' , $context['TPortal']['panelstyle_'.$panl]==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
 						</div>
@@ -1821,7 +1819,7 @@ function template_blocks()
 			}
 			else
 			{
-				echo '<div class="tp_pad">' .$txt['tp-noblocks']. '</div><br>';
+				echo '<div class="noticebox">' .$txt['tp-noblocks']. '</div><br>';
 			}
 			$n=0;
 			if($tn>0)
@@ -1993,7 +1991,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 								<option value="" ' , $lblock['body']=='' ? 'selected' : '' , '>' .$txt['tp-none-'].'</option>';
 					echo '
 								<option value="recenttopics" ' , $lblock['body']=='recenttopics' ? 'selected' : '' , '>'.$txt['tp-ssi-recenttopics'].'</option>';
@@ -2059,7 +2057,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 								<option value="dl-stats" ' , $lblock['body']=='dl-stats' ? 'selected' : '' , '>' .$txt['tp-module1'].'</option>
 								<option value="dl-stats2" ' , $lblock['body']=='dl-stats2' ? 'selected' : '' , '>' .$txt['tp-module2'].'</option>
 								<option value="dl-stats3" ' , $lblock['body']=='dl-stats3' ? 'selected' : '' , '>' .$txt['tp-module3'].'</option>
@@ -2082,7 +2080,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 							<option value="0">'.$txt['tp-none2'].'</option>';
 					foreach($context['TPortal']['edit_articles'] as $article){
 						echo '
@@ -2103,7 +2101,7 @@ function template_blocks()
 					<tr class="windowbg">
 					<td class="blocks">
 						<div class="padding-div tpcenter">
-							<select name="blockbody' .$lblock['id']. '">
+							<select name="blockbody' .$lblock['id']. '" class="tp_blockselect">
 							<option value="0">'.$txt['tp-none2'].'</option>';
 					if(isset($context['TPortal']['catnames']) && count($context['TPortal']['catnames'])>0)
 					{
@@ -2139,7 +2137,7 @@ function template_addblock()
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
 
 	$side = $_GET['addblock'];
-	$panels = array('','left','right','top','center','front','lower','bottom');
+	$panels = array('1'=>$txt['tp-leftpanel'],'2'=>$txt['tp-rightpanel'],'3'=>$txt['tp-centerpanel'],'4'=>$txt['tp-frontpanel'],'5'=>$txt['tp-bottompanel'],'6'=>$txt['tp-toppanel'],'7'=>$txt['tp-lowerpanel']);
 
 	echo '
 	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" enctype="multipart/form-data" action="' . $scripturl . '?action=tpadmin" method="post">
@@ -2218,7 +2216,7 @@ function template_addblock()
 		foreach($context['TPortal']['copyblocks'] as $bc)
 			echo '
 					<div class="padding-div">
-						<input type="radio" id="tp_addblock_' . $bc['id']. '" name="tp_addblock" value="mb_' . $bc['id']. '"  /><label for="tp_addblock_' . $bc['id']. '">' . $bc['title'].' </label>[' . $panels[$bc['bar']] . ']
+						<input type="radio" id="tp_addblock_' . $bc['id']. '" name="tp_addblock" value="mb_' . $bc['id']. '"  /><label for="tp_addblock_' . $bc['id']. '"><b>' . $bc['title'].' </label></b> [' . $panels[$bc['bar']] . ']
 					</div>';
 
 		echo '

@@ -1754,107 +1754,17 @@ function TPortal_panel($side) {{{
 
 	$panelside = $paneltype = ($side == 'front' ? 'frontblocks' : 'blocks');
 
-	// set the grid type
-	if($flow == 'grid') {
-		$grid_selected = $context['TPortal']['blockgrid_' . $side];
-		if($grid_selected == 'colspan3') {
-			$grid_recycle = 4;
-        }
-		elseif($grid_selected == 'rowspan1') {
-			$grid_recycle = 5;
-        }
-
-		$grid_entry = 0;
-		// fetch the grids..
-		TP_blockgrids();
-	}
-
 	// check if we left out the px!!
 	if(is_numeric($context['TPortal']['blockwidth_'.$side])) {
 		$context['TPortal']['blockwidth_'.$side] .= 'px';
     }
 
-	// for the cols, calculate numbers
-	if($flow == 'horiz2') {
-		$flowgrid = array(
-			'1' => array(1, 0),
-			'2' => array(1, 1),
-			'3' => array(2, 1),
-			'4' => array(2, 2),
-			'5' => array(3, 2),
-			'6' => array(3, 3),
-			'7' => array(4, 3),
-			'8' => array(4, 4),
-			'9' => array(5, 4),
-			'10' => array(5, 5),
-			'11' => array(6, 5),
-			'12' => array(6, 6),
-			'13' => array(7, 6),
-			'14' => array(7, 7),
-			'15' => array(8, 7),
-			'16' => array(8, 8),
-		);
-	}
-	elseif($flow == 'horiz3') {
-		$flowgrid = array(
-			'1' => array(1, 0, 0),
-			'2' => array(1, 1, 0),
-			'3' => array(1, 1, 1),
-			'4' => array(2, 1, 1),
-			'5' => array(2, 2, 1),
-			'6' => array(2, 2, 2),
-			'7' => array(3, 2, 2),
-			'8' => array(3, 3, 2),
-			'9' => array(3, 3, 3),
-			'10' => array(4, 3, 3),
-			'11' => array(4, 4, 3),
-			'12' => array(4, 4, 4),
-			'13' => array(5, 4, 4),
-			'14' => array(5, 5, 4),
-			'15' => array(5, 5, 5),
-			'16' => array(6, 5, 5),
-		);
-	}
-	elseif($flow == 'horiz4') {
-		$flowgrid = array(
-			'1' => array(1, 0, 0, 0),
-			'2' => array(1, 1, 0, 0),
-			'3' => array(1, 1, 1, 0),
-			'4' => array(1, 1, 1, 1),
-			'5' => array(2, 1, 1, 1),
-			'6' => array(2, 2, 1, 1),
-			'7' => array(2, 2, 2, 1),
-			'8' => array(2, 2, 2, 2),
-			'9' => array(3, 2, 2, 2),
-			'10' => array(3, 3, 2, 2),
-			'11' => array(3, 3, 3, 2),
-			'12' => array(3, 3, 3, 3),
-			'13' => array(4, 3, 3, 3),
-			'14' => array(4, 4, 3, 3),
-			'15' => array(4, 4, 4, 3),
-			'16' => array(4, 4, 4, 4),
-		);
-	}
-
-	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-		$pad = $context['TPortal']['padding'];
-        switch($flow) {
-            case 'horiz2':
-			    $wh = 50;
-                break;
-            case 'horiz3':
-			    $wh = 33;
-                break;
-            case 'horiz4':
-			    $wh = 25;
-                break;
-        }
-		echo '<div style="width:100%;"><div class="tp_panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '.$wh.'%;' : '' ) . 'padding-right: '.$pad.'px;">';
-	}
 	$flowmain = 0;
 	$flowsub = 0;
 	$bcount = 0;
 	$flowcount = isset($context['TPortal'][$panelside][$side]) ? count($context['TPortal'][$panelside][$side]) : 0;
+
+
 	if(!isset($context['TPortal'][$panelside][$side])) {
 		$context['TPortal'][$panelside][$side] = array();
     }
@@ -1970,73 +1880,18 @@ function TPortal_panel($side) {{{
 				break;
 		}
 
-		// render them horisontally
-		if($flow == 'horiz') {
-			$pad = $context['TPortal']['padding'];
-			if($i == ($flowcount-1)) {
-				$pad=0;
-            }
-			echo '<div class="tp_panelsColHoriz tp_floatleft" style="width: ' . $context['TPortal']['blockwidth_'.$side].';"><div style="padding-right: ' . $pad . 'px;">';
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
-			echo '</div></div>';
-		}
-		// render them horisontally
-		elseif(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-			$pad = $context['TPortal']['padding'];
-			if($flow == 'horiz2') {
-				$wh = 50;
-			}
-			elseif($flow == 'horiz3') {
-					$wh = 33;
-			}
-			elseif($flow == 'horiz4') {
-				$wh = 25;
-            }
-
-			if(isset($flowgrid) && $flowsub == $flowgrid[$flowcount][$flowmain]) {
-				$flowsub = 0;
-				$flowmain++;
-				if($flow == 'horiz2' && $flowmain == 1) {
-                    $pad = 0;
-                }
-				elseif($flow == 'horiz3' && $flowmain == 2) {
-                    $pad = 0;
-                    $wh = 34;
-                }
-                elseif($flow == 'horiz4' && $flowmain == 3) {
-                    $pad = 0;
-                }
-				echo '</div><div class="tp_panelsColumns tp_floatleft" style="' . (isset($wh) ? 'width: '. $wh.'%;' : '') .  'padding-right: '.$pad.'px;">';
-			}
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
-		}
-		// according to a grid
-		elseif($flow == 'grid') {
-			echo TP_blockgrid($block, $theme, $grid_entry, $side, $grid_entry == ($grid_recycle - 1) ? true : false, $grid_selected);
-			$grid_entry++;
-			if($grid_recycle == $grid_entry) {
-				$grid_entry = 0;
-            }
-			// what if its the last block, but in the middle of the recycle?
-			if($i == $n - 1) {
-				if($grid_entry > 0) {
-					for($a = $grid_entry; $a < $grid_recycle; $a++) {
-						echo TP_blockgrid(0, 0, $a, $side, $a == ($grid_recycle-1) ? true : false, $grid_selected,true);
-                    }
-				}
-			}
+		// flow in one row or flexwrap columns
+		if(in_array($flow, array('horiz', 'horiz2', 'horiz3', 'horiz4', 'grid'))) {
+			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side, $flow);
 		}
 		// or just plain vertically
 		else {
-			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side);
+			call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side, $flow);
         }
 
 		$bcount++;
 		$flowsub++;
 	}
-	if(in_array($flow, array('horiz2', 'horiz3', 'horiz4'))) {
-		echo '</div><p class="clearthefloat"></p></div>';
-    }
 
 	// the upshrink routine for blocks
 	// echo '</div>
@@ -2195,46 +2050,6 @@ function tpSetupUpshrinks() {{{
         }
 	}
 	return;
-
-}}}
-
-function TP_blockgrid($block, $theme, $pos, $side, $last, $gridtype, $none = false) {{{
-	global $context;
-
-	// first, set the table, equal in all grids
-	if($pos == 0) {
-		echo '<div class="tp_gridwrap">';
-    }
-
-	// render if its not empty
-	if($none == false) {
-		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] , call_user_func($context['TPortal']['hooks']['tp_block'], $block, $theme, $side) , $context['TPortal']['grid'][$gridtype][$pos]['after'];
-    }
-	else {
-		echo $context['TPortal']['grid'][$gridtype][$pos]['before'] . '' . $context['TPortal']['grid'][$gridtype][$pos]['after'];
-    }
-
-	// last..if its the last block,close the table
-	if($last) {
-		echo '</div>';
-    }
-
-}}}
-
-function TP_blockgrids() {{{
-	global $context;
-
-	$context['TPortal']['grid'] = array();
-	$context['TPortal']['grid']['colspan3'][0] = array('before' => '<div class="tp_grid1box1">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][1] = array('before' => '<div class="tp_grid1box2">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][2] = array('before' => '<div class="tp_grid1box3">', 'after' => '</div>');
-	$context['TPortal']['grid']['colspan3'][3] = array('before' => '<div class="tp_grid1box4">', 'after' => '</div>');
-
-	$context['TPortal']['grid']['rowspan1'][0] = array('before' => '<div class="tp_grid2box1">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][1] = array('before' => '<div class="tp_grid2box2">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][2] = array('before' => '<div class="tp_grid2box3">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][3] = array('before' => '<div class="tp_grid2box4">', 'after' => '</div>');
-	$context['TPortal']['grid']['rowspan1'][4] = array('before' => '<div class="tp_grid2box5">', 'after' => '</div>');
 
 }}}
 

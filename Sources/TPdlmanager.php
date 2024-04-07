@@ -1624,8 +1624,8 @@ function TPdlresults()
 			TPUtil::shortenString($row['body'], 400);
 
 			$row['body'] = strip_tags($row['body']);
-			$row['name'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['name']);
-			$row['body'] = preg_replace('/'.preg_quote($what, '/').'/', '<span class="highlight">'.$what.'</span>', $row['body']);
+			$row['name'] = preg_replace('/'.preg_quote($what, '/').'/iu', '<mark class="highlight">$0</mark>', $row['name']);
+			$row['body'] = preg_replace('/'.preg_quote($what, '/').'/iu', '<mark class="highlight">$0</mark>', $row['body']);
 
 			$context['TPortal']['dlsearchresults'][] = array(
 				'id' => $row['id'],

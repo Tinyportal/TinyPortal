@@ -117,6 +117,9 @@ $txt['tp-forumposts_avatar'] = 'Show avatars in forum topics';
 $txt['tp-forumposts_avatardesc'] = 'This setting will make the member avatars show in forum topics on the Frontpage of your forum. This will only have an effect if you are using one of the following layouts for your frontpage: normal articles, 1st normal-avatars or normal-links.';
 $txt['tp-useattachment'] = 'Use first post attachment preview as icon';
 $txt['tp-useattachmentdesc'] = 'This setting will make the image of the first attachment of the forum topic be used as the icon for the post on the frontpage of your forum. This will only have an effect if you are using one of the following layouts for your frontpage: articles-icons or articles-icons2.';
+$txt['tp-articles_divheader'] = 'Header style for articles';
+$txt['tp-articles_headerstyle'] = 'Title style for articles';
+$txt['tp-articles_divbody'] = 'Frame style for articles';
 $txt['tp-boardnews_divheader'] = 'Header style for frontpage topics';
 $txt['tp-boardnews_headerstyle'] = 'Title style for frontpage topics';
 $txt['tp-boardnews_divbody'] = 'Frame style for frontpage topics';
@@ -305,14 +308,17 @@ $txt['tp-hide_topbar_forum'] = 'Hide top panel when in forum';
 $txt['tp-hide_centerbar_forum'] = 'Hide center panel when in forum';
 $txt['tp-hide_lowerbar_forum'] = 'Hide lower panel when in forum';
 $txt['tp-hide_bottombar_forum'] = 'Hide bottom panel when in forum';
-$txt['tp-vertical'] = 'Display the blocks vertically (default)';
-$txt['tp-horisontal'] = 'Display the blocks horizontally';
-$txt['tp-horisontal2cols'] = 'Display the blocks in 2 columns';
-$txt['tp-horisontal3cols'] = 'Display the blocks in 3 columns';
-$txt['tp-horisontal4cols'] = 'Display the blocks in 4 columns';
-$txt['tp-grid'] = 'Display the blocks according to a grid';
-$txt['tp-blockwidth'] = '<b>Force</b> this width on each block (use 00px or 00%)';
-$txt['tp-blockheight'] = '<b>Force</b> this height on each block (use 00px or 00%)';
+$txt['tp-blockflow'] = 'Set the blockflow for the panel';
+$txt['tp-vertical'] = 'Blocks flow vertically (1 column)';
+$txt['tp-horizontal'] = 'Blocks flow horizontally (1 row)';
+$txt['tp-flexgrid2cols'] = 'Blocks flow in 2 column grid';
+$txt['tp-flexgrid3cols'] = 'Blocks flow in 3 column grid';
+$txt['tp-flexgrid4cols'] = 'Blocks flow in 4 column grid';
+$txt['tp-grid'] = 'Grid with featured block';
+
+$txt['tp-blockwidth'] = '<b>Force</b> this width on each block';
+$txt['tp-blockheight'] = '<b>Force</b> this height on each block';
+$txt['tp-pixelsorpercentage'] = 'use px for pixels or % for percentage';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';
 $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used for displaying blocks in this panel. If a specific style is chosen for a block in the block settings, the block style will take priority over any panel style chosen here.';
 
@@ -390,6 +396,17 @@ $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
 
 // Edit block
+$txt['tp-titledivclass'] = 'Class for title div';
+$txt['tp-titleheadclass'] = 'Class for title text';
+$txt['tp-frameclass'] = 'Class for frame';
+$txt['tp-showwidth'] = 'Set block behaviour';
+
+$txt['tp-always'] = 'Show always';
+$txt['tp-hideunder600'] = 'Hide at screen width under 600px';
+$txt['tp-hideunder900'] = 'Hide at screen width under 900px';
+$txt['tp-hideover600'] = 'Hide at screen width 600px or more';
+$txt['tp-hideover900'] = 'Hide at screen width 900px or more';
+
 $txt['tp-blockstylehelp'] = 'Choose style for the block';
 $txt['tp-blockstylehelpdesc'] = 'This setting determines the style used for displaying the block. If a specific style is chosen for a block, the block style will take priority over the panel style.';
 $txt['tp-adminshowblocks'] = 'Let admin show all blocks?';
@@ -405,7 +422,7 @@ $txt['tp-membergrouphelp'] = 'Choose the membergroups that will able to see this
 $txt['tp-membergrouphelpdesc'] = 'Choose your membergroups that will able to see this block. Note that if none are chosen it will only display it to admin.';
 $txt['tp-membergrouptext'] = 'Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
 $txt['tp-langhelp'] = 'Block title per language';
-$txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language - except for default. ';
+$txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language.';
 $txt['tp-lang'] = 'Block visible for these languages';
 $txt['tp-langdesc'] = 'Upon installation of TinyPortal the Language visibility option will be switched OFF by default. When you access the block settings for a block you will see the language visibility option with a warning message, pointing out that the  language visibility setting is off. As long as the setting is off the blocks will show regardless of the user language. Language visibility is an additional setting for controlling when blocks are visible in the panels: the settings that choose where the block should appear will always be respected. If the settings do not allow the block to show, setting language visibility will also not make it show.';
 $txt['tp-displayhelp'] = 'Choose where the block should appear';
