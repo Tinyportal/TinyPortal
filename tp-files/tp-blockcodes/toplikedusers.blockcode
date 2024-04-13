@@ -1,0 +1,115 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Top Liked Users
+</name>
+
+<author>
+@rjen
+</author>
+
+<version>
+1.0
+</version>
+
+<date>
+13.April.2024
+</date>
+
+<code>
+global $scripturl, $smcFunc, $txt, $days, $modSettings;
+
+// Configuration
+// Specify number of days for likes and number of users to show
+	$days = '365';
+	$max = '10';
+// End Config
+
+	loadLanguage('Stats');
+
+	// Liked users top 10.
+	$max_liked_users = 1;
+	$request = $smcFunc['db_query']('', '
+		SELECT m.id_member AS liked_user, COUNT(l.content_id) AS count, mem.real_name
+		FROM {db_prefix}user_likes AS l
+			INNER JOIN {db_prefix}messages AS m ON (l.content_id = m.id_msg)
+			INNER JOIN {db_prefix}members AS mem ON (m.id_member = mem.id_member)
+		WHERE content_type = {literal:msg}
+			AND like_time > UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL {int:days} DAY))
+			AND m.id_member > {int:zero}
+		GROUP BY m.id_member, mem.real_name
+		ORDER BY count DESC
+		LIMIT {int:max}',
+		array(
+			'no_posts' => 0,
+			'zero' => 0,
+			'days' => $days,
+			'max' => $max,
+		)
+	);
+			
+	$messages = array();
+	
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+	{
+		$likedusers[] = array(
+			'id' => $row['liked_user'],
+			'num' => $row['count'],
+			'href' => $scripturl . '?action=profile;u=' . $row['liked_user'],
+			'name' => $row['real_name'],
+			'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['liked_user'] . '">' . $row['real_name'] . '</a>',
+		);
+
+		if ($max_liked_users < $row['count'])
+			$max_liked_users = $row['count'];
+	}
+	$smcFunc['db_free_result']($request);
+
+	foreach ($likedusers as $i => $request)
+		$likedusers[$i]['percent'] = round(($request['num'] * 100) / $max_liked_users);
+	
+// output the likes
+	echo '
+		<div class="content">
+			<div class="title_bar">
+				<h4 class="titlebg">
+					<span class="main_icons liked_users"></span> ',  $txt['top_liked_users'], ' - 
+					',$days,' ',$txt['days_word'],'
+				</h4>
+			</div>
+			<dl class="stats">';
+
+	foreach ($likedusers as $item)
+	{
+		echo '
+				<dt>
+					', $item['link'], '
+				</dt>
+				<dd class="statsbar generic_bar righttext">';
+
+		if (!empty($item['percent']))
+			echo '
+					<div class="bar" style="width: ', $item['percent'], '%;"></div>';
+		else
+			echo '
+					<div class="bar empty"></div>';
+
+		echo '
+					<span>', $item['num'], '</span>
+				</dd>';
+	}
+
+	echo '
+			</dl>
+		</div><!-- .content -->';
+
+</code>
+
+<description>
+This block will show the top X users with most likes for a variable history in days. The layout is similar to the one used in the Stats section.<br>
+<br>
+Edit the block to change the configuration for the number of days history or the number of users to show. Default values are 365 days and 10 users.<br>
+</description>

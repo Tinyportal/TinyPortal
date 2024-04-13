@@ -1,0 +1,120 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Top Liked Messages
+</name>
+
+<author>
+@rjen
+</author>
+
+<version>
+1.0
+</version>
+
+<date>
+11.April.2024
+</date>
+
+<code>
+global $scripturl, $smcFunc, $txt, $days, $modSettings;
+
+// Configuration
+// Specify number of days for likes and number of messages to show
+	$days = '365';
+	$max = '10';
+// End Config
+
+// get the likes
+	loadLanguage('Stats');
+
+	$max_liked = 1;
+	$request = $smcFunc['db_query']('', ' 
+		SELECT m.id_msg, m.subject, l.likes, m.total_likes, m.id_board, m.id_topic, t.approved
+		FROM (
+			SELECT n.id_msg, n.subject, n.likes AS total_likes, n.id_board, n.id_topic
+			FROM {db_prefix}messages as n
+			) AS m
+			INNER JOIN 
+				(SELECT content_id, content_type, count(*) AS likes FROM {db_prefix}user_likes where content_type = "msg" AND like_time > UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL {int:days} DAY)) group by content_id, content_type order by likes desc) AS l ON (l.content_id = m.id_msg)
+			INNER JOIN {db_prefix}topics AS t ON (m.id_topic = t.id_topic)
+			INNER JOIN {db_prefix}boards AS b ON (b.id_board = t.id_board' . (!empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] > 0 ? '
+				AND b.id_board != {int:recycle_board}' : '') . ')
+		WHERE {query_see_board}' . ($modSettings['postmod_active'] ? '
+			AND t.approved = {int:is_approved}' : '') . '
+		ORDER BY l.likes DESC
+		LIMIT {int:max}',
+		array(
+			'recycle_board' => $modSettings['recycle_board'],
+			'is_approved' => 1,
+			'days' => $days,
+			'max' => $max,
+		)
+	);
+			
+	$messages = array();
+	
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+	{
+		censorText($row_liked_message['subject']);
+		$messages[] = array(
+			'id' => $row['id_topic'],
+			'subject' => $row['subject'],
+			'num' => $row['likes'],
+			'href' => $scripturl . '?msg=' . $row['id_msg'],
+			'link' => '<a href="' . $scripturl . '?msg=' . $row['id_msg'] . '">' . $row['subject'] . '</a>'
+		);
+
+		if ($max_liked < $row['likes'])
+			$max_liked = $row['likes'];
+	}
+	$smcFunc['db_free_result']($request);
+
+	foreach ($messages as $i => $request)
+		$messages[$i]['percent'] = round(($request['num'] * 100) / $max_liked);
+	
+// output the likes
+	echo '
+		<div class="content">
+			<div class="title_bar">
+				<h4 class="titlebg">
+					<span class="main_icons liked_messages"></span> ',  $txt['top_liked_messages'], ' - 
+					',$days,' ',$txt['days_word'],'
+				</h4>
+			</div>
+			<dl class="stats">';
+
+	foreach ($messages as $item)
+	{
+		echo '
+				<dt>
+					', $item['link'], '
+				</dt>
+				<dd class="statsbar generic_bar righttext">';
+
+		if (!empty($item['percent']))
+			echo '
+					<div class="bar" style="width: ', $item['percent'], '%;"></div>';
+		else
+			echo '
+					<div class="bar empty"></div>';
+
+		echo '
+					<span>', $item['num'], '</span>
+				</dd>';
+	}
+
+	echo '
+			</dl>
+		</div><!-- .content -->';
+
+</code>
+
+<description>
+This block will show the top liked messages for a variable history in days. The layout is similar to the one used in the Stats section.<br>
+<br>
+Edit the block to change the configuration for the number of days history or the number of messages to show. Default values are 365 days and 10 messages.<br>
+</description>
