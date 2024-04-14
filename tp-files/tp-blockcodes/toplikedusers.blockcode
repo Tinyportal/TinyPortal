@@ -26,6 +26,7 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 // Specify number of days for likes and number of users to show
 	$days = '365';
 	$max = '10';
+	$showtitle = 'Y';
 // End Config
 
 	loadLanguage('Stats');
@@ -73,13 +74,16 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 	
 // output the likes
 	echo '
-		<div class="content">
+		<div class="content">';
+	if ($showtitle == 'Y') 
+		echo '
 			<div class="title_bar">
 				<h4 class="titlebg">
 					<span class="main_icons liked_users"></span> ',  $txt['top_liked_users'], ' - 
 					',$days,' ',$txt['days_word'],'
 				</h4>
-			</div>
+			</div>';
+		echo '
 			<dl class="stats">';
 
 	foreach ($likedusers as $item)
@@ -101,15 +105,17 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 					<span>', $item['num'], '</span>
 				</dd>';
 	}
-
 	echo '
 			</dl>
 		</div><!-- .content -->';
-
 </code>
 
 <description>
 This block will show the top X users with most likes for a variable history in days. The layout is similar to the one used in the Stats section.<br>
 <br>
-Edit the block to change the configuration for the number of days history or the number of users to show. Default values are 365 days and 10 users.<br>
+Edit the php code in // Configuration in the block code to change the number of days history or the number of users to show and to show the title in the block itself. <br>
+Default configuration values are:<br>
+- 365 days<br>
+- 10 users<br>
+- $showtitle=Y<br>
 </description>

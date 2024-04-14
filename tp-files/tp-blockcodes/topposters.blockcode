@@ -1,0 +1,114 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Top Posters
+</name>
+
+<author>
+@rjen
+</author>
+
+<version>
+1.0
+</version>
+
+<date>
+14.April.2024
+</date>
+
+<code>
+global $scripturl, $smcFunc, $txt, $modSettings;
+
+// Configuration
+// Specify number of users to show
+	$max = '10';
+	$showtitle = 'Y';
+// End Config
+
+	loadLanguage('Stats');
+
+	// Poster top 10.
+	$request = $smcFunc['db_query']('', '
+		SELECT id_member, real_name, posts
+		FROM {db_prefix}members
+		WHERE posts > {int:no_posts}
+		ORDER BY posts DESC
+		LIMIT {int:max}',
+		array(
+			'no_posts' => 0,
+			'max' => $max,
+		)
+	);
+	
+	$toposters = array();
+	$max_num_posts = 1;
+	while ($row = $smcFunc['db_fetch_assoc']($request))
+	{
+		$toposters[] = array(
+			'name' => $row['real_name'],
+			'id' => $row['id_member'],
+			'num' => $row['posts'],
+			'href' => $scripturl . '?action=profile;u=' . $row['id_member'],
+			'link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['real_name'] . '</a>'
+		);
+
+		if ($max_num_posts < $row['posts'])
+			$max_num_posts = $row['posts'];
+	}
+	$smcFunc['db_free_result']($request);
+
+	foreach ($toposters as $i => $request)
+	{
+		$toposters[$i]['percent'] = round(($request['num'] * 100) / $max_num_posts);
+		$toposters[$i]['num'] = comma_format($toposters[$i]['num']);
+	}
+	
+// output the toposters
+	echo '
+		<div class="content">';
+	
+	if ($showtitle == 'Y') 
+	echo '
+			<div class="title_bar">
+				<h4 class="titlebg">
+					<span class="main_icons posters"></span> ',  $txt['top_posters'], '
+				</h4>
+			</div>';
+	echo '
+			<dl class="stats">';
+
+	foreach ($toposters as $item)
+	{
+		echo '
+				<dt>
+					', $item['link'], '
+				</dt>
+				<dd class="statsbar generic_bar righttext">';
+
+		if (!empty($item['percent']))
+			echo '
+					<div class="bar" style="width: ', $item['percent'], '%;"></div>';
+		else
+			echo '
+					<div class="bar empty"></div>';
+
+		echo '
+					<span>', $item['num'], '</span>
+				</dd>';
+	}
+
+	echo '
+			</dl>
+		</div><!-- .content -->';
+</code>
+
+<description>
+This block will show the top X users with most posts in the forum. The layout is similar to the one used in the Stats section.<br>
+Edit the php code in // Configuration in the block code to change the number of users to show and to show the title in the block itself. <br>
+Default configuration values are:<br>
+- 10 users<br>
+- $showtitle=Y.<br>
+</description>

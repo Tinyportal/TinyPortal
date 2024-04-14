@@ -26,6 +26,7 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 // Specify number of days for likes and number of messages to show
 	$days = '365';
 	$max = '10';
+	$showtitle = 'Y';
 // End Config
 
 // get the likes
@@ -78,13 +79,16 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 	
 // output the likes
 	echo '
-		<div class="content">
+		<div class="content">';
+	if ($showtitle == 'Y') 
+		echo '
 			<div class="title_bar">
 				<h4 class="titlebg">
 					<span class="main_icons liked_messages"></span> ',  $txt['top_liked_messages'], ' - 
 					',$days,' ',$txt['days_word'],'
 				</h4>
-			</div>
+			</div>';
+		echo '
 			<dl class="stats">';
 
 	foreach ($messages as $item)
@@ -110,11 +114,14 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 	echo '
 			</dl>
 		</div><!-- .content -->';
-
 </code>
 
 <description>
 This block will show the top liked messages for a variable history in days. The layout is similar to the one used in the Stats section.<br>
 <br>
-Edit the block to change the configuration for the number of days history or the number of messages to show. Default values are 365 days and 10 messages.<br>
+Edit the php code in // Configuration in the block code to change the number of days history or the number of messages to show and to show the title in the block itself. <br>
+Default configuration values are:<br>
+- 365 days<br>
+- 10 messages<br>
+- $showtitle=Y<br>
 </description>
