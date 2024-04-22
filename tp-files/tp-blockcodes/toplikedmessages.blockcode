@@ -27,6 +27,7 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 	$days = '365';
 	$max = '10';
 	$showtitle = 'Y';
+	$showuser = 'Y';
 // End Config
 
 // get the likes
@@ -34,9 +35,9 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 
 	$max_liked = 1;
 	$request = $smcFunc['db_query']('', ' 
-		SELECT m.id_msg, m.subject, l.likes, m.total_likes, m.id_board, m.id_topic, t.approved
+		SELECT m.id_msg, m.subject, l.likes, m.total_likes, m.id_board, m.id_topic, t.approved, m.id_member, m.poster_name
 		FROM (
-			SELECT n.id_msg, n.subject, n.likes AS total_likes, n.id_board, n.id_topic
+			SELECT n.id_msg, n.subject, n.likes AS total_likes, n.id_board, n.id_topic, n.id_member, n.poster_name
 			FROM {db_prefix}messages as n
 			) AS m
 			INNER JOIN 
@@ -66,7 +67,8 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 			'subject' => $row['subject'],
 			'num' => $row['likes'],
 			'href' => $scripturl . '?msg=' . $row['id_msg'],
-			'link' => '<a href="' . $scripturl . '?msg=' . $row['id_msg'] . '">' . $row['subject'] . '</a>'
+			'link' => '<a href="' . $scripturl . '?msg=' . $row['id_msg'] . '">' . $row['subject'] . '</a>',
+			'user_link' => '<a href="' . $scripturl . '?action=profile;u=' . $row['id_member'] . '">' . $row['poster_name'] . '</a>'
 		);
 
 		if ($max_liked < $row['likes'])
@@ -95,7 +97,11 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 	{
 		echo '
 				<dt>
-					', $item['link'], '
+					', $item['link'], '';
+	if ($showuser == 'Y') 
+		echo '
+					 ', $txt['by'], ' ', $item['user_link'], '';
+		echo '
 				</dt>
 				<dd class="statsbar generic_bar righttext">';
 
@@ -119,9 +125,10 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 <description>
 This block will show the top liked messages for a variable history in days. The layout is similar to the one used in the Stats section.<br>
 <br>
-Edit the php code in // Configuration in the block code to change the number of days history or the number of messages to show and to show the title in the block itself. <br>
+Edit the php code in // Configuration in the block code to change the number of days history, the number of messages to show, to show the title in the block itself or to show the author of the message. <br>
 Default configuration values are:<br>
 - 365 days<br>
 - 10 messages<br>
 - $showtitle=Y<br>
+- $showuser=Y<br>
 </description>
