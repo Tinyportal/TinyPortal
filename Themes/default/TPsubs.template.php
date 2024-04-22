@@ -117,18 +117,8 @@ function TPblock($block, $theme, $side, $flow, $double=false)
 			echo $types[$block['panelstyle']]['code_top'];
 
 		$func = 'TPortal_' . $block['type'];
-		if (function_exists($func))
-		{
-			if($double)
-			{
-				// figure out the height
-				$h = $context['TPortal']['blockheight_'.$side];
-				if(substr($context['TPortal']['blockheight_'.$side],strlen($context['TPortal']['blockheight_'.$side])-2,2) == 'px')
-					$nh = ((substr($context['TPortal']['blockheight_'.$side],0,strlen($context['TPortal']['blockheight_'.$side])-2)*2) + 43).'px';
-				elseif(substr($context['TPortal']['blockheight_'.$side],strlen($context['TPortal']['blockheight_'.$side])-1,1) == '%')
-					$nh = (substr($context['TPortal']['blockheight_'.$side],0,strlen($context['TPortal']['blockheight_'.$side])-1)*2).'%';
-			}
-			echo '<div class="tp_blockbody" ' , !empty($context['TPortal']['blockheight_'.$side]) ? 'style="height: '. ($double ? $nh : $context['TPortal']['blockheight_'.$side]) .'";' : '' , '>';
+		if (function_exists($func))	{
+			echo '<div class="tp_blockbody" ' , !empty($context['TPortal']['blockheight_'.$side]) ? 'style="height: '.$context['TPortal']['blockheight_'.$side].'";' : '' , '>';
 			$func($block['id']);
 			echo '</div>';
 		}

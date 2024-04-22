@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -204,33 +204,33 @@ function tpLoadCSS() {{{
 
 	if(!empty($settings['default_theme_url']) && !empty($settings['theme_url']) && file_exists($settings['theme_dir'].'/css/tp-custom.css')) {
 		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['theme_url'] . '/css/tp-custom.css?'.TPVERSION.'" />';
-    }
+	}
 	else {
 		$context['html_headers'] .= '<link rel="stylesheet" type="text/css" href="' . $settings['default_theme_url'] . '/css/tp-custom.css?'.TPVERSION.'" />';
-    }
+	}
 
 	if(!empty($context['TPortal']['padding'])) {
 		$context['html_headers'] .= '
-            <style type="text/css">
-				.block_leftcontainer,
-				.block_rightcontainer,
-				.block_topcontainer,
-				.block_centercontainer,
-				.block_frontcontainer,
-				.block_lowercontainer,
-				.block_bottomcontainer {
-                    padding-bottom: ' . $context['TPortal']['padding'] . 'px;
-                }
+			<style type="text/css">
+				#tpleftbarHeader,
+				#tprightbarHeader,
+				#tptopbarHeader,
+				#tpcenterbarHeader,
+				#tpfrontbarHeader,
+				#tplowerbarHeader,
+				#tpbottombarHeader {
+					padding-bottom: ' . $context['TPortal']['padding'] . 'px;
+				}
 
-                #tpleftbarHeader {
-                    margin-right: ' . $context['TPortal']['padding'] . 'px;
-                }
+				#tpleftbarHeader {
+					margin-right: ' . $context['TPortal']['padding'] . 'px;
+				}
 
-                #tprightbarHeader {
-                    margin-left: ' . $context['TPortal']['padding'] . 'px;
-                }
+				#tprightbarHeader {
+					margin-left: ' . $context['TPortal']['padding'] . 'px;
+				}
 
-            </style>';
+			</style>';
     }
 
 }}}
