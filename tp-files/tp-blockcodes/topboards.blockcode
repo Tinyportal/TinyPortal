@@ -1,0 +1,117 @@
+<info>
+TinyPortal BlockCode file.
+format: Boardmod
+</info>
+
+<name>
+Top Boards
+</name>
+
+<author>
+@rjen
+</author>
+
+<version>
+1.0
+</version>
+
+<date>
+14.April.2024
+</date>
+
+<code>
+global $scripturl, $smcFunc, $txt, $modSettings;
+
+// Configuration
+// Specify number of boards to show
+	$max = '10';
+	$showtitle = 'Y';
+// End Config
+
+	loadLanguage('Stats');
+
+	// Board top 10.
+	$request = $smcFunc['db_query']('', '
+		SELECT id_board, name, num_posts
+		FROM {db_prefix}boards AS b
+		WHERE {query_see_board}' . (!empty($modSettings['recycle_enable']) && $modSettings['recycle_board'] > 0 ? '
+			AND b.id_board != {int:recycle_board}' : '') . '
+			AND b.redirect = {string:blank_redirect}
+		ORDER BY num_posts DESC
+		LIMIT {int:max}',
+		array(
+			'recycle_board' => $modSettings['recycle_board'],
+			'blank_redirect' => '',
+			'max' => $max,
+		)
+	);
+	$topboards = array();
+	$max_num_posts = 1;
+	while ($row_board = $smcFunc['db_fetch_assoc']($request))
+	{
+		$topboards[] = array(
+			'id' => $row_board['id_board'],
+			'name' => $row_board['name'],
+			'num' => $row_board['num_posts'],
+			'href' => $scripturl . '?board=' . $row_board['id_board'] . '.0',
+			'link' => '<a href="' . $scripturl . '?board=' . $row_board['id_board'] . '.0">' . $row_board['name'] . '</a>'
+		);
+
+		if ($max_num_posts < $row_board['num_posts'])
+			$max_num_posts = $row_board['num_posts'];
+	}
+	$smcFunc['db_free_result']($request);
+
+	foreach ($topboards as $i => $board)
+	{
+		$topboards[$i]['percent'] = round(($board['num'] * 100) / $max_num_posts);
+		$topboards[$i]['num'] = comma_format($topboards[$i]['num']);
+	}
+	
+// output the boards
+	echo '
+		<div class="content">';
+	
+	if ($showtitle == 'Y') 
+	echo '
+			<div class="title_bar">
+				<h4 class="titlebg">
+					<span class="main_icons boards"></span> ',  $txt['top_boards'], '
+				</h4>
+			</div>';
+	echo '
+			<dl class="stats">';
+
+	foreach ($topboards as $item)
+	{
+		echo '
+				<dt>
+					', $item['link'], '
+				</dt>
+				<dd class="statsbar generic_bar righttext">';
+
+		if (!empty($item['percent']))
+			echo '
+					<div class="bar" style="width: ', $item['percent'], '%;"></div>';
+		else
+			echo '
+					<div class="bar empty"></div>';
+
+		echo '
+					<span>', $item['num'], '</span>
+				</dd>';
+	}
+
+	echo '
+			</dl>
+		</div><!-- .content -->';
+</code>
+
+<description>
+This block will show the top X boards with the most posts the forum. The layout is similar to the one used in the Stats section.<br>
+<br>
+Edit the php code in // Configuration in the block code to change the configuration for the number of boards to show and to show the title in the block itself.<br>
+Default configuration values are:<br>
+- 10 boards<br>
+- $showtitle=Y.<br>
+</description>
