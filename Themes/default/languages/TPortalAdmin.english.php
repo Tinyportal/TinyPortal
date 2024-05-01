@@ -26,6 +26,8 @@ $txt['tp-redirectforum1'] = 'Redirect to forum';
 $txt['tp-redirectforum2'] = 'Redirect to frontpage';
 $txt['tp-hideadminmenu'] = 'Hide TinyPortal menu option';
 $txt['tp-hideadminmenudesc'] = 'By default a menu option for TinyPortal is added to the menu. This option will automatically show for admins, users that have the permission to submit articles or all users if the downloads module is set to active. This setting will remove the TinyPortal option from the menu for all users except admins.';
+$txt['tp-hideprofileoption'] = 'Hide TinyPortal in member profile';
+$txt['tp-hideprofileoptiondesc'] = 'By default a menu option for TinyPortal is added to the member profile section. This option will give access to a portal summary and links to the articles a member has written and shouts posted. This setting will remove the TinyPortal option from the profile section for all users.';
 $txt['tp-useroundframepanels'] = 'Use the roundframe style for left/right panels';
 $txt['tp-hidecollapse'] = 'Allow the panels to be collapsed';
 $txt['tp-hideediticon'] = 'Hide the block edit link';
@@ -316,7 +318,6 @@ $txt['tp-flexgrid3cols'] = 'Blocks flow in 3 column grid';
 $txt['tp-flexgrid4cols'] = 'Blocks flow in 4 column grid';
 $txt['tp-grid'] = 'Grid with featured block';
 
-$txt['tp-blockwidth'] = '<b>Force</b> this width on each block';
 $txt['tp-blockheight'] = '<b>Force</b> this height on each block';
 $txt['tp-pixelsorpercentage'] = 'use px for pixels or % for percentage';
 $txt['tp-panelstylehelp'] = 'Default style for the blocks in the panel';

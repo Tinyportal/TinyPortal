@@ -1754,11 +1754,6 @@ function TPortal_panel($side) {{{
 
 	$panelside = $paneltype = ($side == 'front' ? 'frontblocks' : 'blocks');
 
-	// check if we left out the px!!
-	if(is_numeric($context['TPortal']['blockwidth_'.$side])) {
-		$context['TPortal']['blockwidth_'.$side] .= 'px';
-    }
-
 	$flowmain = 0;
 	$flowsub = 0;
 	$bcount = 0;

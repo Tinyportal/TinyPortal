@@ -1502,7 +1502,7 @@ function do_postchecks()
 
             switch($from) {
                 case 'settings':
-                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
+                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
                     break;
 				case 'frontpage':
                     $checkboxes = array('allow_guestnews', 'forumposts_avatar', 'use_attachment');

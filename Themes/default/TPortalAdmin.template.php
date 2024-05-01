@@ -165,6 +165,13 @@ function template_settings()
 				<dd>
 					<input type="checkbox" id="tp_hideadminmenu" name="tp_hideadminmenu" value="1" ' , $context['TPortal']['hideadminmenu']=='1' ? 'checked' : '' , '>
 				</dd>
+				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-hideprofileoptiondesc" onclick="return reqOverlayDiv(this.href);">
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hideprofileoption">', $txt['tp-hideprofileoption'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_hideprofileoption" name="tp_hideprofileoption" value="1" ' , $context['TPortal']['hideprofileoption']=='1' ? 'checked' : '' , '>
+				</dd>
 			</dl>
 				<hr>
 			<dl class="settings">
@@ -1714,13 +1721,6 @@ function template_panels()
 					</dd>
 				</dl>
 				<dl class="settings">
-					<dt>
-						<label for="tp_blockwidth_'.$panl.'">'.$txt['tp-blockwidth'].'</label>
-					</dt>
-					<dd>
-						<input type="text" id="tp_blockwidth_'.$panl.'" name="tp_blockwidth_'.$panl.'" value="' ,$context['TPortal']['blockwidth_'.$panl], '" size="5" maxlength="5">
-						<span class="smalltext">'.$txt['tp-pixelsorpercentage'].'</span>
-					</dd>
 					<dt>
 						<label for="tp_blockheight_'.$panl.'">'.$txt['tp-blockheight'].'</label>
 					</dt>
