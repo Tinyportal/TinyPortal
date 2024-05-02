@@ -1492,7 +1492,7 @@ function do_postchecks()
 			}
 			return 'blocks;overview';
 		}
-		elseif(in_array($from, array('settings', 'frontpage', 'artsettings', 'panels')))
+		elseif(in_array($from, array('settings', 'frontpage', 'artsettings', 'panels', 'blocks')))
 		{
 			checkSession('post');
 			isAllowedTo('tp_settings');
@@ -1502,7 +1502,7 @@ function do_postchecks()
 
             switch($from) {
                 case 'settings':
-                    $checkboxes = array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars');
+                    $checkboxes = array('imageproxycheck', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'use_groupcolor', 'showstars');
                     break;
 				case 'frontpage':
                     $checkboxes = array('allow_guestnews', 'forumposts_avatar', 'use_attachment');
@@ -1511,7 +1511,10 @@ function do_postchecks()
                     $checkboxes = array('use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon');
                     break;
 				case 'panels':
-                    $checkboxes = array('hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar');
+                    $checkboxes = array('useroundframepanels', 'showcollapse', 'hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar');
+                    break;
+                case 'blocks':
+                    $checkboxes = array('admin_showblocks', 'blocks_edithide', 'uselangoption');
                     break;
                 default:
                     break;

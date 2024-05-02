@@ -476,6 +476,7 @@ $settings_array = array(
     'frontpage_title' => '',
     'showforumfirst' => '0',
     'hideadminmenu' => '0',
+    'hideprofileoption' => '0',
     'useroundframepanels' => '0',
     'showcollapse' => '1',
     'blocks_edithide' => '0',
@@ -570,13 +571,6 @@ $settings_array = array(
     'blockgrid_front' => 'colspan3',
     'blockgrid_lower' => 'colspan3',
     'blockgrid_bottom' => 'colspan3',
-    'blockwidth_left' => '200',
-    'blockwidth_right' => '150',
-    'blockwidth_top' => '150',
-    'blockwidth_center' => '150',
-    'blockwidth_front' => '150',
-    'blockwidth_lower' => '150',
-    'blockwidth_bottom' => '150',
     'blockheight_left' => '',
     'blockheight_right' => '',
     'blockheight_top' => '',
@@ -725,7 +719,7 @@ if($updates > 0) {
 
 // convert settings from "" to 0 for PHP8
 $checkboxes	= array();
-$checkboxes = array_merge($checkboxes, array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars'));
+$checkboxes = array_merge($checkboxes, array('imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_groupcolor', 'showstars'));
 $checkboxes = array_merge($checkboxes, array('allow_guestnews', 'forumposts_avatar', 'use_attachment'));
 $checkboxes = array_merge($checkboxes, array('use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon'));
 $checkboxes = array_merge($checkboxes, array('hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar'));
@@ -805,8 +799,15 @@ $delete_settings_array = array(
     'use_tpfrontpage',
     'use_tpgallery',
     'use_tpmainmenu',
-	'shoutbox_timeformat',
-	'panelstyle_upper',
+    'shoutbox_timeformat',
+    'panelstyle_upper',
+    'blockwidth_left',
+    'blockwidth_right',
+    'blockwidth_top',
+    'blockwidth_center',
+    'blockwidth_front',
+    'blockwidth_lower',
+    'blockwidth_bottom',
 );
 $deletes = 0;
 

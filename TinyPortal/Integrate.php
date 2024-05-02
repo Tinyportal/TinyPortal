@@ -510,6 +510,8 @@ class Integrate
     {
         global $txt, $context;
 
+		if(!$context['TPortal']['hideprofileoption']=='1') {
+
         $profile_areas['tp'] = array(
             'title' => 'TinyPortal',
             'areas' => array(),
@@ -580,7 +582,7 @@ class Integrate
                 ),
             );
         }
-    }
+    }}
 
     public static function hookCredits()
     {
