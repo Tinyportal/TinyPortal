@@ -158,6 +158,16 @@ function template_settings()
 				<dd>
 					<input type="radio" name="tp_redirectforum" id="tp_redirectforum2" value="0" ' , $context['TPortal']['redirectforum']=='0' ? 'checked' : '' , '><label for="tp_redirectforum2"> '.$txt['tp-redirectforum2'].'</label>
 				</dd>
+			</dl>
+				<hr>
+			<dl class="settings">
+				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-use_groupcolordesc" onclick="return reqOverlayDiv(this.href);">
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_use_groupcolor" name="tp_use_groupcolor" value="1" ' , $context['TPortal']['use_groupcolor']=='1' ? 'checked' : '' , '>
+				</dd>
 				<dt>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-hideadminmenudesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hideadminmenu">', $txt['tp-hideadminmenu'], '</label>
@@ -172,39 +182,11 @@ function template_settings()
 				<dd>
 					<input type="checkbox" id="tp_hideprofileoption" name="tp_hideprofileoption" value="1" ' , $context['TPortal']['hideprofileoption']=='1' ? 'checked' : '' , '>
 				</dd>
-			</dl>
-				<hr>
-			<dl class="settings">
 				<dt>
-					<label for="tp_useroundframepanels">', $txt['tp-useroundframepanels'], '</label>
+					<label for="tp_oldsidebar">', $txt['tp-useoldsidebar'], '</label>
 				</dt>
 				<dd>
-					<input type="checkbox" id="tp_useroundframepanels" name="tp_useroundframepanels" value="1" ' , $context['TPortal']['useroundframepanels']=='1' ? 'checked' : '' , '>
-				</dd>
-				<dt>
-					<label for="tp_showcollapse">', $txt['tp-hidecollapse'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_showcollapse" name="tp_showcollapse" value="1" ' , $context['TPortal']['showcollapse']=='1' ? 'checked' : '' , '>
-				</dd>
-				<dt>
-					<label for="tp_blocks_edithide">', $txt['tp-hideediticon'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_blocks_edithide" name="tp_blocks_edithide" value="1" ' , $context['TPortal']['blocks_edithide']=='1' ? 'checked' : '' , '>
-				</dd>
-				<dt>
-					<label for="tp_uselangoption">', $txt['tp-uselangoption'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_uselangoption" name="tp_uselangoption" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '>
-				</dd>
-				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=tp-use_groupcolordesc" onclick="return reqOverlayDiv(this.href);">
-					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_use_groupcolor" name="tp_use_groupcolor" value="1" ' , $context['TPortal']['use_groupcolor']=='1' ? 'checked' : '' , '>
+					<input type="checkbox" id="tp_oldsidebar" name="tp_oldsidebar" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '>
 				</dd>
 			</dl>
 				<hr>
@@ -223,27 +205,7 @@ function template_settings()
 				</dd>
 			</dl>
 				<hr>
-			<dl class="settings">
-				<dt>
-					<label for="tp_oldsidebar">', $txt['tp-useoldsidebar'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_oldsidebar" name="tp_oldsidebar" value="1" ' , $context['TPortal']['oldsidebar']=='1' ? 'checked' : '' , '>
-				</dd>
-				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=tp-admin_showblocksdesc" onclick="return reqOverlayDiv(this.href);">
-					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_admin_showblocks" name="tp_admin_showblocks" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '>
-				</dd>
-				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=tp-imageproxycheckdesc" onclick="return reqOverlayDiv(this.href);">
-					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label>
-				</dt>
-				<dd>
-					<input type="checkbox" id="tp_imageproxycheck" name="tp_imageproxycheck" value="1" ' , $context['TPortal']['imageproxycheck'] == '1' ? 'checked' : '' , '>
-				</dd>';
+			<dl class="settings">';
 				db_extend('extra');
 				if(version_compare($smcFunc['db_get_version'](), '5.6', '>=')) {
 					echo '
@@ -256,6 +218,13 @@ function template_settings()
 					</dd>';
 				}
 				echo '
+				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-imageproxycheckdesc" onclick="return reqOverlayDiv(this.href);">
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_imageproxycheck">', $txt['tp-imageproxycheck'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_imageproxycheck" name="tp_imageproxycheck" value="1" ' , $context['TPortal']['imageproxycheck'] == '1' ? 'checked' : '' , '>
+				</dd>
 				<dt>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-disabletemplateevaldesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_disable_template_eval">', $txt['tp-disabletemplateeval'], '</label>
@@ -287,6 +256,9 @@ function template_settings()
 				</dd>
 */
 			echo '
+			</dl>
+				<hr>
+			<dl class="settings">
 				<dt>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-copyrightremovaldesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_copyrightremoval">', $txt['tp-copyrightremoval'], '</label>
@@ -1572,6 +1544,27 @@ function template_panels()
 				<div>
 					<dl class="settings">
 						<dt>
+							<label for="tp_showcollapse">', $txt['tp-hidecollapse'], '</label>
+						</dt>
+						<dd>
+							<input type="checkbox" id="tp_showcollapse" name="tp_showcollapse" value="1" ' , $context['TPortal']['showcollapse']=='1' ? 'checked' : '' , '>
+						</dd>
+						<dt>
+							<label for="tp_padding">'.$txt['tp-padding_between'].'</label>
+						</dt>
+						<dd>
+							<input type="number" id="tp_padding" name="tp_padding" value="' ,$context['TPortal']['padding'], '" style="width: 6em" maxlength="5">
+							<span class="smalltext">'.$txt['tp-inpixels'].'</span>
+						</dd>
+						<dt>
+							<label for="tp_useroundframepanels">', $txt['tp-useroundframepanels'], '</label>
+						</dt>
+						<dd>
+							<input type="checkbox" id="tp_useroundframepanels" name="tp_useroundframepanels" value="1" ' , $context['TPortal']['useroundframepanels']=='1' ? 'checked' : '' , '>
+						</dd>
+					</dl>
+					<dl class="settings">
+						<dt>
 							<strong>', $txt['tp-hidebarsall'] ,'</strong>
 						</dt>
 						<dd></dd>
@@ -1619,15 +1612,6 @@ function template_panels()
 						</dt>
 						<dd>
 							<textarea cols="40" style="width: 94%; height: 100px;" name="tp_hidebars_custom" id="tp_hidebars_custom">' . $context['TPortal']['hidebars_custom'].'</textarea>
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt>
-							<label for="tp_padding">'.$txt['tp-padding_between'].'</label>
-						</dt>
-						<dd>
-							<input type="number" id="tp_padding" name="tp_padding" value="' ,$context['TPortal']['padding'], '" style="width: 6em" maxlength="5">
-							<span class="smalltext">'.$txt['tp-inpixels'].'</span>
 						</dd>
 					</dl>
 					<input type="submit" class="button floatnone" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
@@ -1773,7 +1757,30 @@ function template_blocks()
 		<input type="hidden" name="tpadmin_form" value="blocks">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-blocksettings'] . '</h3></div>
 		<div id="all-the-blocks">
-			<div class="windowbg noup">';
+			<div class="windowbg noup">
+			<dl class="settings">
+				<dt>
+					<label for="tp_uselangoption">', $txt['tp-uselangoption'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_uselangoption" name="tp_uselangoption" value="1" ' , $context['TPortal']['uselangoption']=='1' ? 'checked' : '' , '>
+				</dd>
+				<dt>
+					<label for="tp_blocks_edithide">', $txt['tp-hideediticon'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_blocks_edithide" name="tp_blocks_edithide" value="1" ' , $context['TPortal']['blocks_edithide']=='1' ? 'checked' : '' , '>
+				</dd>
+				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-admin_showblocksdesc" onclick="return reqOverlayDiv(this.href);">
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_admin_showblocks">', $txt['tp-admin_showblocks'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_admin_showblocks" name="tp_admin_showblocks" value="1" ' , $context['TPortal']['admin_showblocks']=='1' ? 'checked' : '' , '>
+				</dd>
+			</dl>
+			<input type="submit" class="button floatnone" name="'.$txt['tp-send'].'" value="'.$txt['tp-send'].'">
+			<hr>';
 
 		$side=array('left','right','top','center','front','lower','bottom');
 		$sd=array('lb','rb','tb','cb','fb','lob','bb');
