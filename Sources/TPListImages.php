@@ -71,13 +71,12 @@ function template_tp_list_images_admin() {
     echo '
 				</select>
 				<input type="submit" value="'.$txt['tp-listimage-list'].'" name="'.$txt['tp-listimage-list'].'">
-				</div>';
+				</div>
+			</div>
+		</form>';
 
     echo $ret;
 
-	echo '
-			</div>
-		</form>';
 }
 
 function TPListImageAdmin($user_id = 0) {{{
@@ -125,16 +124,15 @@ function TPListImageAdmin($user_id = 0) {{{
                 $imageUrl       = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']).''.$image;
             }
 
-            $html .= '
+            $html .= '<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post">
 					<div>
-						<form class="tborder" accept-charset="'.$context['character_set'].'" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post">
 						<input type="hidden" name="sc" value="'.$context['session_id'].'" />
 						<input type="hidden" name="id_member" value="'.$user_id.'" />
 						<input type="hidden" name="image" value="'.$image.'" />
 						<div class="tp_liimtile"><img src="'.$imageUrl.'" alt="'.$image.'" title="'.$image.'" /><br>'.$image.'</div>
 						<div class="tpcenter"><input type="submit" value="'.$txt['tp-listimage-remove'].'" name="'.$txt['tp-listimage-remove'].'"></div>
-						</form>
-					</div>';
+					</div>
+				</form>';
         }
 
     }
