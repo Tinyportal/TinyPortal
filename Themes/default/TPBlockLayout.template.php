@@ -856,7 +856,7 @@ function template_editblock()
 				// alert if the settings is off, supply link if allowed
 			if(empty($context['TPortal']['uselangoption'])) {
 				echo '
-						<div class="noticebox">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=settings#uselangoption">&nbsp;['. $txt['tp-settings'] .']&nbsp;</a>' : '' , '</div>';
+						<div class="noticebox">', $txt['tp-uselangoption2'] , ' ' , allowedTo('tp_settings') ? '<a href="'.$scripturl.'?action=tpadmin;sa=blocks#uselangoption">&nbsp;['. $txt['tp-settings'] .']&nbsp;</a>' : '' , '</div>';
 			}
 			else {
 				$a=1;
