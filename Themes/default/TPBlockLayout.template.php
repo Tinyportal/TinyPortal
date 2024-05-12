@@ -839,7 +839,7 @@ function template_editblock()
 							<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
 						<dd>';
 			foreach($context['TPortal']['langfiles'] as $langlist => $lang) {
-				if( (strtolower($lang) != $context['user']['language']) && $lang != '') {
+				if(strtolower($langlist) != $context['user']['language']) {
 					echo '
 						<dt>'. $lang.'</dt>
 						<dd>
