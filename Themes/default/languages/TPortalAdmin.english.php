@@ -401,6 +401,8 @@ $txt['tp-titledivclass'] = 'Class for title div';
 $txt['tp-titleheadclass'] = 'Class for title text';
 $txt['tp-frameclass'] = 'Class for frame';
 $txt['tp-showwidth'] = 'Set block behaviour';
+$txt['tp-custblockstyle'] = 'Set a custom block style';
+$txt['tp-custblockstyledesc'] = 'Here you can apply a custom style to the block. These styles will be applied as inline style which allows to set for example a custom height (height: 200px), padding (padding: 1em), or multiple styles (height: 200px; padding: 1em). Note that this may affect the flow of blocks in the panel. Use this setting with care.';
 
 $txt['tp-always'] = 'Show always';
 $txt['tp-hideunder600'] = 'Hide at screen width under 600px';
