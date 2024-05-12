@@ -19,32 +19,28 @@ function template_wap2_tp_frontpage()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['category']))
+	if (!isset($context['TPortal']['category'])) {
 		return;
+	}
 
-	echo '<p class="titlebg">' . $context['linktree'][0]['name']  . '</p>';
+	echo '<p class="titlebg">' . $context['linktree'][0]['name'] . '</p>';
 
 	unset($context['TPortal']['article']);
-	if(!empty($context['TPortal']['category']['featured']))
-	{
+	if (!empty($context['TPortal']['category']['featured'])) {
 		$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
 		render_frontp();
 	}
 	unset($context['TPortal']['article']);
 
-	if(isset($context['TPortal']['category']['col1']))
-	{
-		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col1'])) {
+		foreach ($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
 	}
 	unset($context['TPortal']['article']);
-	if(isset($context['TPortal']['category']['col2']))
-	{
-		foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col2'])) {
+		foreach ($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
@@ -59,34 +55,30 @@ function template_imode_tp_frontpage()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['category']))
+	if (!isset($context['TPortal']['category'])) {
 		return;
+	}
 
 	echo '
 	<div id="tpwap1" class="tpwap">
-	<div class="titlebg">' . $context['linktree'][0]['name']  . '</div>';
+	<div class="titlebg">' . $context['linktree'][0]['name'] . '</div>';
 
 	unset($context['TPortal']['article']);
-	if(!empty($context['TPortal']['category']['featured']))
-	{
+	if (!empty($context['TPortal']['category']['featured'])) {
 		$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
 		render_frontp();
 	}
 	unset($context['TPortal']['article']);
 
-	if(isset($context['TPortal']['category']['col1']))
-	{
-		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col1'])) {
+		foreach ($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
 	}
 	unset($context['TPortal']['article']);
-	if(isset($context['TPortal']['category']['col2']))
-	{
-		foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col2'])) {
+		foreach ($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
@@ -102,34 +94,30 @@ function template_wap_tp_frontpage()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['category']))
+	if (!isset($context['TPortal']['category'])) {
 		return;
+	}
 
 	echo '
 	<card id="main" title="', $context['page_title'], '">
-		<p>' . $context['linktree'][0]['name']  . '</p>';
+		<p>' . $context['linktree'][0]['name'] . '</p>';
 
 	unset($context['TPortal']['article']);
-	if(!empty($context['TPortal']['category']['featured']))
-	{
+	if (!empty($context['TPortal']['category']['featured'])) {
 		$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
 		render_frontp();
 	}
 	unset($context['TPortal']['article']);
 
-	if(isset($context['TPortal']['category']['col1']))
-	{
-		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col1'])) {
+		foreach ($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
 	}
 	unset($context['TPortal']['article']);
-	if(isset($context['TPortal']['category']['col2']))
-	{
-		foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col2'])) {
+		foreach ($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
@@ -148,12 +136,13 @@ function render_frontp($single = false)
 	echo '
 		<p class="' , isset($context['TPortal']['article']['boardnews']) || $single ? 'catbg' : 'titlebg' , '">';
 
-	if(in_array('title',$context['TPortal']['article']['visual_options']))
-	{
-		if(isset($context['TPortal']['article']['boardnews']))
+	if (in_array('title', $context['TPortal']['article']['visual_options'])) {
+		if (isset($context['TPortal']['article']['boardnews'])) {
 			echo $context['TPortal']['article']['subject'];
-		else
+		}
+		else {
 			echo $context['TPortal']['article']['subject'];
+		}
 	}
 	echo '
 		</p>';
@@ -166,32 +155,30 @@ function render_frontp($single = false)
 	echo '
 		<p>';
 
-	if(!$single)
-	{
-		if(isset($context['TPortal']['article']['boardnews']))
+	if (!$single) {
+		if (isset($context['TPortal']['article']['boardnews'])) {
 			echo '
 			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . ';wap2">' . $txt['tp-readmore'] . '</a>';
-		else
+		}
+		else {
 			echo '
 			<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . ';wap2">' . $txt['tp-readmore'] . '</a>';
+		}
 		echo '
 		</p>';
 	}
 
-	if($single && !empty($context['TPortal']['article']['comment_posts']) && sizeof($context['TPortal']['article']['comment_posts'])>0)
-	{
+	if ($single && !empty($context['TPortal']['article']['comment_posts']) && sizeof($context['TPortal']['article']['comment_posts']) > 0) {
 		$counter = 1;
 		echo '
-		<p class="titlebg">'.$txt['tp-comments'].'</p>';
-		foreach($context['TPortal']['article']['comment_posts'] as $post)
-		{
+		<p class="titlebg">' . $txt['tp-comments'] . '</p>';
+		foreach ($context['TPortal']['article']['comment_posts'] as $post) {
 			echo '
 		<p class="windowbg">
-		['.$counter.'] <b>'.$post['subject'].' ' . $txt['by'] .' '.$post['poster'].'</b>
+		[' . $counter . '] <b>' . $post['subject'] . ' ' . $txt['by'] . ' ' . $post['poster'] . '</b>
 		<br>
-		'.$post['text'].'
+		' . $post['text'] . '
 		</p>	';
-
 
 			$counter++;
 		}
@@ -199,42 +186,51 @@ function render_frontp($single = false)
 }
 function template_wap2_tp()
 {
-	if(isset($_GET['page']))
+	if (isset($_GET['page'])) {
 		template_wap2_tp_page();
-	elseif(isset($_GET['cat']))
+	}
+	elseif (isset($_GET['cat'])) {
 		template_wap2_tp_cat();
-	elseif(!isset($_GET['page']) && !isset($_GET['cat']))
+	}
+	elseif (!isset($_GET['page']) && !isset($_GET['cat'])) {
 		template_wap2_tp_frontpage();
-
+	}
 }
 function template_wap_tp()
 {
-	if(isset($_GET['page']))
+	if (isset($_GET['page'])) {
 		template_wap_tp_page();
-	elseif(isset($_GET['cat']))
+	}
+	elseif (isset($_GET['cat'])) {
 		template_wap_tp_cat();
-	elseif(!isset($_GET['page']) && !isset($_GET['cat']))
+	}
+	elseif (!isset($_GET['page']) && !isset($_GET['cat'])) {
 		template_wap_tp_frontpage();
+	}
 }
 function template_imode_tp()
 {
-	if(isset($_GET['page']))
+	if (isset($_GET['page'])) {
 		template_imode_tp_page();
-	elseif(isset($_GET['cat']))
+	}
+	elseif (isset($_GET['cat'])) {
 		template_imode_tp_cat();
-	elseif(!isset($_GET['page']) && !isset($_GET['cat']))
+	}
+	elseif (!isset($_GET['page']) && !isset($_GET['cat'])) {
 		template_imode_tp_frontpage();
-
+	}
 }
 function template_wap2_tp_page()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['article']))
+	if (!isset($context['TPortal']['article'])) {
 		return;
+	}
 
-	if (!empty($context['linktree']))
-		echo '<p class="titlebg">' . $context['linktree'][0]['name']  . '</p>';
+	if (!empty($context['linktree'])) {
+		echo '<p class="titlebg">' . $context['linktree'][0]['name'] . '</p>';
+	}
 
 	render_frontp(true);
 
@@ -248,12 +244,13 @@ function template_imode_tp_page()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['article']))
+	if (!isset($context['TPortal']['article'])) {
 		return;
+	}
 
 	echo '
 		<div id="tpwap2" class="tpwap">
-	     <div class="titlebg"> '. (!empty($context['linktree']) ? $context['linktree'][0]['name'] : '')  . '</div>';
+	     <div class="titlebg"> ' . (!empty($context['linktree']) ? $context['linktree'][0]['name'] : '') . '</div>';
 
 	render_frontp(true);
 
@@ -268,12 +265,13 @@ function template_wap_tp_page()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['article']))
+	if (!isset($context['TPortal']['article'])) {
 		return;
+	}
 
 	echo '
 	<card id="main" title="', $context['page_title'], '">
-		'. (!empty($context['linktree']) ? '<p>' . $context['linktree'][0]['name']  . '</p>' : '');
+		' . (!empty($context['linktree']) ? '<p>' . $context['linktree'][0]['name'] . '</p>' : '');
 
 	render_frontp(true);
 
@@ -288,33 +286,29 @@ function template_wap2_tp_cat()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['category']))
+	if (!isset($context['TPortal']['category'])) {
 		return;
+	}
 
 	echo '
 	<p class="titlebg">' . $context['TPortal']['category']['catname'] . ' > ' . $context['TPortal']['category']['value1'] . '</p>';
 
 	unset($context['TPortal']['article']);
-	if(!empty($context['TPortal']['category']['featured']))
-	{
+	if (!empty($context['TPortal']['category']['featured'])) {
 		$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
 		render_frontp();
 	}
 	unset($context['TPortal']['article']);
 
-	if(isset($context['TPortal']['category']['col1']))
-	{
-		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col1'])) {
+		foreach ($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
 	}
 	unset($context['TPortal']['article']);
-	if(isset($context['TPortal']['category']['col2']))
-	{
-		foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col2'])) {
+		foreach ($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
@@ -330,34 +324,30 @@ function template_imode_tp_cat()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['category']))
+	if (!isset($context['TPortal']['category'])) {
 		return;
+	}
 
 	echo '
 		<div id="tpwap3" class="tpwap">
 	     <div class="titlebg">' . $context['TPortal']['category']['catname'] . ' > ' . $context['TPortal']['category']['value1'] . '</div>';
 
 	unset($context['TPortal']['article']);
-	if(!empty($context['TPortal']['category']['featured']))
-	{
+	if (!empty($context['TPortal']['category']['featured'])) {
 		$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
 		render_frontp();
 	}
 	unset($context['TPortal']['article']);
 
-	if(isset($context['TPortal']['category']['col1']))
-	{
-		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col1'])) {
+		foreach ($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
 	}
 	unset($context['TPortal']['article']);
-	if(isset($context['TPortal']['category']['col2']))
-	{
-		foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col2'])) {
+		foreach ($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
@@ -374,34 +364,30 @@ function template_wap_tp_cat()
 {
 	global $context, $txt, $scripturl;
 
-	if(!isset($context['TPortal']['category']))
+	if (!isset($context['TPortal']['category'])) {
 		return;
+	}
 
 	echo '
 	<card id="main" title="', $context['page_title'], '">
 	<p>' . $context['TPortal']['category']['catname'] . ' > ' . $context['TPortal']['category']['value1'] . '</p>';
 
 	unset($context['TPortal']['article']);
-	if(!empty($context['TPortal']['category']['featured']))
-	{
+	if (!empty($context['TPortal']['category']['featured'])) {
 		$context['TPortal']['article'] = $context['TPortal']['category']['featured'];
 		render_frontp();
 	}
 	unset($context['TPortal']['article']);
 
-	if(isset($context['TPortal']['category']['col1']))
-	{
-		foreach($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col1'])) {
+		foreach ($context['TPortal']['category']['col1'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
 	}
 	unset($context['TPortal']['article']);
-	if(isset($context['TPortal']['category']['col2']))
-	{
-		foreach($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article'])
-		{
+	if (isset($context['TPortal']['category']['col2'])) {
+		foreach ($context['TPortal']['category']['col2'] as $article => $context['TPortal']['article']) {
 			render_frontp();
 			unset($context['TPortal']['article']);
 		}
@@ -414,17 +400,51 @@ function template_wap_tp_cat()
 	</card>';
 }
 
-function template_wap2_tp_dl_cat() { return; }
-function template_wap2_tp_dl_item() { return; }
-function template_wap2_tp_dl() { return; }
-function template_wap2_tp_dl_main() { return; }
-function template_imode_tp_dl() { return; }
-function template_imode_tp_dl_main() { return; }
-function template_imode_tp_dl_item() { return; }
-function template_imode_tp_dl_cat() { return; }
-function template_wap_tp_dl() { return; }
-function template_wap_tp_dl_main() { return; }
-function template_wap_tp_dl_item() { return; }
-function template_wap_tp_dl_cat() { return; }
-
-?>
+function template_wap2_tp_dl_cat()
+{
+	return;
+}
+function template_wap2_tp_dl_item()
+{
+	return;
+}
+function template_wap2_tp_dl()
+{
+	return;
+}
+function template_wap2_tp_dl_main()
+{
+	return;
+}
+function template_imode_tp_dl()
+{
+	return;
+}
+function template_imode_tp_dl_main()
+{
+	return;
+}
+function template_imode_tp_dl_item()
+{
+	return;
+}
+function template_imode_tp_dl_cat()
+{
+	return;
+}
+function template_wap_tp_dl()
+{
+	return;
+}
+function template_wap_tp_dl_main()
+{
+	return;
+}
+function template_wap_tp_dl_item()
+{
+	return;
+}
+function template_wap_tp_dl_cat()
+{
+	return;
+}

@@ -1,4 +1,5 @@
 <?php
+
 // Version: 2.2.0; TPhelp
 
 // Credits
@@ -25,4 +26,3 @@ $txt['tp-creditack2'] = 'Many thanks to Simple Machines Forum Team for creating 
 The TinyPortal project have had much help from the following people listed below. Thanks for giving support and feedback, as well as all your valuable ideas and solutions. TP would not have been the same without you!
  Thank you Bloc for allowing the TP Team to continue your work.';
 $txt['tp-credits'] = 'TinyPortal - Credits';
-?>

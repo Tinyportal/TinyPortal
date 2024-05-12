@@ -19,8 +19,9 @@ function template_main()
 {
 	global $context;
 
-	if ($context['TPortal']['subaction'] == 'credits')
+	if ($context['TPortal']['subaction'] == 'credits') {
 		template_tpcredits();
+	}
 }
 
 // Credits Page
@@ -36,10 +37,8 @@ function template_tpcredits()
 		<p class="information">' , $txt['tp-creditack2']  , '</p>
 		<div class="windowbg">
 			<div class="content">
-				'.$txt['tp-credit1'].'
+				' . $txt['tp-credit1'] . '
 			</div>
 		</div>
 	</div>';
 }
-
-?>

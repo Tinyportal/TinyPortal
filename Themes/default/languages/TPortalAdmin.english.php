@@ -1,4 +1,5 @@
 <?php
+
 // Version: 3.0.1; TPortalAdmin
 
 // Menu
@@ -667,5 +668,3 @@ $txt['tp-menus'] = 'Sections';
 $txt['tp-name'] = 'Name';
 $txt['tp-shortname'] = 'Short name';
 $txt['tp-shortnamedesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the URL will be displayed as: .../index.php?cat=20. if a value is added (for example \'books\') the url will show as: .../index.php?cat=books';
-
-?>

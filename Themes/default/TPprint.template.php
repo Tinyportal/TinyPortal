@@ -104,4 +104,3 @@ function template_tp_print_below()
 	</body>
 </html>';
 }
-?>

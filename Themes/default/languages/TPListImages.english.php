@@ -1,4 +1,5 @@
 <?php
+
 // Version: 2.2.2; TPlistimages
 
 $txt['cannot_tp_can_list_images'] = 'Sorry, you aren\'t allowed to manage article images.';

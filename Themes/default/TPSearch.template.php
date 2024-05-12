@@ -32,72 +32,70 @@ function template_article_search_form()
 			</div>
 			<div id="advanced_search" class="roundframe">
 				<dl class="settings" id="search_options">
-					<dt><b>'.$txt['tp-search'].':</b></dt>
+					<dt><b>' . $txt['tp-search'] . ':</b></dt>
 					<dd>
 						<input type="text" id="searchbox" name="tpsearch_what" required/><br>
-						<em class="smalltext"><em>'.$txt['tp-searcharticleshelp'].'</em></em>
+						<em class="smalltext"><em>' . $txt['tp-searcharticleshelp'] . '</em></em>
 					</dd>
 					<dt></dt>
 					<dd>
-						<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br>
-						<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
+						<input type="checkbox" name="tpsearch_title" checked="checked" /> ' . $txt['tp-searchintitle'] . '<br>
+						<input type="checkbox" name="tpsearch_body" checked="checked" /> ' . $txt['tp-searchinbody'],'<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
 					</dd>
 				</dl>
-				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-search'].'"></div>';
+				<div class="padding-div"><input type="submit" class="button button_submit" value="' . $txt['tp-search'] . '"></div>';
 
-			if ($context['TPortal']['fulltextsearch']==1) {
-			echo '
-				<div>'.$txt['tp-searcharticleshelp2'].'</div>';
-			}
-			echo '
+	if ($context['TPortal']['fulltextsearch'] == 1) {
+		echo '
+				<div>' . $txt['tp-searcharticleshelp2'] . '</div>';
+	}
+	echo '
 			</div>
 		</div>
 	</form>';
-
 }
 
 // Article search results Page
 function template_article_search_results()
 {
-
 	global $context, $settings, $txt, $scripturl;
 
 	echo '
 	<div class="tborder">
 		<div class="cat_bar">
 			<h3 class="catbg">' , $txt['tp-searchresults'] , '
-			' . $txt['tp-searchfor'] . '  &quot;'.$context['TPortal']['searchterm'].'&quot;</h3>
+			' . $txt['tp-searchfor'] . '  &quot;' . $context['TPortal']['searchterm'] . '&quot;</h3>
 		</div>
 
 		<div id="advanced_search" class="roundframe">
 			<form accept-charset="', $context['character_set'], '"  name="TPsearcharticle" id="searchform" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
 			<dl class="settings" id="search_options">
-				<dt><b>'.$txt['tp-search'].':</b></dt>
+				<dt><b>' . $txt['tp-search'] . ':</b></dt>
 				<dd>
-					<input type="text" id="searchbox" name="tpsearch_what" value="'.$context['TPortal']['searchterm'].'" required/><br>
-					<em class="smalltext"><em>'.$txt['tp-searcharticleshelp'].'</em></em>
+					<input type="text" id="searchbox" name="tpsearch_what" value="' . $context['TPortal']['searchterm'] . '" required/><br>
+					<em class="smalltext"><em>' . $txt['tp-searcharticleshelp'] . '</em></em>
 				</dd>
 				<dt></dt>
 				<dd>
-					<input type="checkbox" name="tpsearch_title" checked="checked" /> '.$txt['tp-searchintitle'].'<br>
-					<input type="checkbox" name="tpsearch_body" checked="checked" /> '.$txt['tp-searchinbody'],'<br>
+					<input type="checkbox" name="tpsearch_title" checked="checked" /> ' . $txt['tp-searchintitle'] . '<br>
+					<input type="checkbox" name="tpsearch_body" checked="checked" /> ' . $txt['tp-searchinbody'],'<br>
 					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
 				</dd>
 			</dl>
-				<div class="padding-div"><input type="submit" class="button button_submit" value="'.$txt['tp-search'].'"></div>';
+				<div class="padding-div"><input type="submit" class="button button_submit" value="' . $txt['tp-search'] . '"></div>';
 
-		if ($context['TPortal']['fulltextsearch']==1) {
+	if ($context['TPortal']['fulltextsearch'] == 1) {
 		echo '
-			<div>'.$txt['tp-searcharticleshelp2'].'</div>';
-		}
-		echo '
+			<div>' . $txt['tp-searcharticleshelp2'] . '</div>';
+	}
+	echo '
 			</form>
 		</div>
 	</div>
 	';
 	$bb = 1;
-	foreach($context['TPortal']['searchresults'] as $res) {
+	foreach ($context['TPortal']['searchresults'] as $res) {
 		echo '
 			<div class="windowbg padding-div" style="margin-bottom:3px;">
 				<h4 class="tpresults"><a href="' . $scripturl . '?page=' . $res['id'] . '">' . $res['subject'] . '</a></h4>
@@ -114,5 +112,3 @@ function template_article_search_results()
 		<span>', $context['page_index'], '</span>
 	</div>';
 }
-
-?>

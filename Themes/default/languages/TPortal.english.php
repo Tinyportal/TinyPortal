@@ -1,4 +1,5 @@
 <?php
+
 // Version: 3.0.1; TPortal
 
 global $txt, $context, $scripturl;
@@ -319,4 +320,3 @@ $txt['tp-bytes'] = ' bytes';
 $txt['tp-kb'] = ' Kb';
 $txt['tp-mb'] = ' Mb';
 $txt['tp-gb'] = ' Gb';
-?>
