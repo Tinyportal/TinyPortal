@@ -14,10 +14,10 @@
  * Copyright (C) - The TinyPortal Team
  *
  */
-use \TinyPortal\Util as TPUtil;
+use TinyPortal\Util as TPUtil;
 
 if (!defined('SMF')) {
-        die('Hacking attempt...');
+	die('Hacking attempt...');
 }
 
 // TinyPortal module entrance
@@ -26,9 +26,9 @@ function TPCredits()
 	tp_hidebars();
 	$context['TPortal']['not_forum'] = false;
 
-	if(loadLanguage('TPhelp') == false)
+	if (loadLanguage('TPhelp') == false) {
 		loadLanguage('TPhelp', 'english');
+	}
 
 	loadtemplate('TPhelp');
 }
-?>

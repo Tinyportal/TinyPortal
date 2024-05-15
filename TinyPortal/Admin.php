@@ -14,89 +14,87 @@
  * Copyright (C) - The TinyPortal Team
  *
  */
+
 namespace TinyPortal;
 
 if (!defined('SMF')) {
-    die('Hacking attempt...');
+	die('Hacking attempt...');
 }
 
-class Admin extends Base {
+class Admin extends Base
+{
+	private $dBStructure = [];
+	private $tpSettings = [];
 
-    private $dBStructure    = array();
-    private $tpSettings     = array();
+	public function __construct()
+	{
+		parent::__construct();
 
-    public function __construct() {{{
-        parent::__construct();
+		$this->dbStructure = [
+			'id' => 'mediumint',
+			'name' => 'text',
+			'value' => 'text',
+		];
 
-        $this->dbStructure = array (
-            'id'        => 'mediumint',
-            'name'      => 'text',
-            'value'     => 'text',
-        );
+		$this->tpSettings = $this->getSetting();
+	}
 
-        $this->tpSettings = $this->getSetting();
+	public function getSetting($setting_name = null, $refresh = false)
+	{
+		if ($refresh == false && !is_null($setting_name) && array_key_exists($setting_name, $this->tpSettings)) {
+			return $this->tpSettings[$setting_name];
+		}
 
-    }}}
+		$settings = [];
 
-    public function getSetting( $setting_name = null , $refresh = false ) {{{
-
-        if($refresh == false && !is_null($setting_name) && array_key_exists($setting_name, $this->tpSettings)) {
-            return $this->tpSettings[$setting_name];
-        }
-
-        $settings = array();
-
-        if(empty($setting_name)) {
-            $request =  $this->dB->db_query('', '
+		if (empty($setting_name)) {
+			$request = $this->dB->db_query(
+				'',
+				'
                 SELECT name, value
                 FROM {db_prefix}tp_settings
                 WHERE 1=1'
-            );
+			);
 
-            if($this->dB->db_num_rows($request) > 0) {
-                while($row = $this->dB->db_fetch_assoc($request)) {
-                    $settings[$row['name']] = $row['value'];
-                }
-            }
-        }
-        else {
-            $request =  $this->dB->db_query('', '
+			if ($this->dB->db_num_rows($request) > 0) {
+				while ($row = $this->dB->db_fetch_assoc($request)) {
+					$settings[$row['name']] = $row['value'];
+				}
+			}
+		}
+		else {
+			$request = $this->dB->db_query(
+				'',
+				'
                 SELECT value FROM {db_prefix}tp_settings
                 WHERE name = {string:setting_name} LIMIT 1',
-                array (
-                    'setting_name' => $setting_name
-                )
-            );
+				[
+					'setting_name' => $setting_name
+				]
+			);
 
-            if($this->dB->db_num_rows($request) > 0) {
-                $row                        = $this->dB->db_fetch_assoc($request);
-                $settings[$setting_name]    = $row['value'];
-                return $row['value'];
-            }
-        }
+			if ($this->dB->db_num_rows($request) > 0) {
+				$row = $this->dB->db_fetch_assoc($request);
+				$settings[$setting_name] = $row['value'];
+				return $row['value'];
+			}
+		}
 
-        return $settings;
+		return $settings;
+	}
 
-    }}}
+	public function insertSetting($settings_data)
+	{
+		return self::insertSQL($settings_data, $this->dBStructure, 'tp_settings');
+	}
 
-   public function insertSetting($settings_data) {{{
+	public function updateSetting($settings_id, $settings_data)
+	{
+		return self::updateSQL($settings_id, $settings_data, $this->dBStructure, 'tp_settings');
+	}
 
-        return self::insertSQL($settings_data, $this->dBStructure, 'tp_settings');
-
-    }}}
-
-     public function updateSetting($settings_id, $settings_data) {{{
-
-        return self::updateSQL($settings_id, $settings_data, $this->dBStructure, 'tp_settings');
-
-    }}}
-
-    public function deleteSetting( $settings_id ) {{{
-
-        return self::deleteSQL($settings_id, 'tp_settings');
-
-    }}}
-
+	public function deleteSetting($settings_id)
+	{
+		return self::deleteSQL($settings_id, 'tp_settings');
+	}
 }
-
-?>

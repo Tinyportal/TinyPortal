@@ -1,4 +1,5 @@
 <?php
+
 // Version: 3.0.1; TPdlmanager
 
 global $scripturl;
@@ -103,7 +104,7 @@ $txt['tp-dlpreview'] = 'View download';
 $txt['tp-dlfilename'] = 'Filename:';
 $txt['tp-dlfilesize'] = 'Filesize';
 $txt['tp-uploadnewfileexisting'] = 'Upload a new file <br><span class="smalltext"> (the existing file will be replaced.)</span>';
-$txt['tp-uploadnewpicexisting']='Existing screenshot/image';
+$txt['tp-uploadnewpicexisting'] = 'Existing screenshot/image';
 $txt['tp-uploadnewpic'] = 'Upload a new image<br><span class="smalltext">(supported extensions: jpg, gif or png. The existing image will be replaced.)</span>';
 $txt['tp-dlmorefiles2'] = 'Link to existing download';
 $txt['tp-sayno'] = 'No';
@@ -154,7 +155,7 @@ $txt['tp-nofiles'] = 'There are no files in this category.';
 
 $txt['tp-sortby'] = 'Sort by';
 $txt['tp-id'] = 'ID';
-$txt['tp-name']='Name';
+$txt['tp-name'] = 'Name';
 $txt['tp-itemdownloads'] = 'Downloads';
 $txt['tp-last_access'] = 'Last access';
 $txt['tp-created'] = 'Created';
@@ -197,5 +198,3 @@ $txt['tp-nodownload'] = 'No download';
 $txt['tp-downloads'] = 'Downloads';
 $txt['tp-downloadss2'] = 'Click here to download the file';
 $txt['tp-downloadss3'] = 'This is an empty item';
-
-?>

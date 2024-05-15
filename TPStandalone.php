@@ -18,18 +18,19 @@
  *
  */
 
-########## Standalone Mode Setup ##########
-# For the standalone mode to function, we need to know where SMF is installed.
-# Write the absolute path to the SMF's installation directory. (not just '.'!)
+//######### Standalone Mode Setup ##########
+// For the standalone mode to function, we need to know where SMF is installed.
+// Write the absolute path to the SMF's installation directory. (not just '.'!)
 $boarddir = dirname(__FILE__);
 
-# Note: You shouldn't touch anything after this.
+// Note: You shouldn't touch anything after this.
 global $boarddir, $context, $mbname, $scripturl, $sourcedir, $txt;
 
-if (!file_exists($boarddir . '/SSI.php'))
+if (!file_exists($boarddir . '/SSI.php')) {
 	die('<h2>TinyPortal Standalone Mode</h2><p>Wrong $boarddir value. Please make sure that the $boarddir variable points to your forum\'s directory.</p>');
+}
 
-require_once($boarddir . '/SSI.php');
+require_once $boarddir . '/SSI.php';
 
 if ($context['TPortal']['front_placement'] != 'standalone') {
 	loadLanguage('TPortalAdmin');
@@ -40,4 +41,3 @@ doTPfrontpage();
 writeLog();
 TPortalMain();
 obExit(true);
-?>
