@@ -347,23 +347,23 @@ function template_frontpage()
 				<div><strong>', $txt['tp-frontpage_layout'], '</strong></div>
 				<div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_frontpage_layout1" name="tp_frontpage_layout" value="1" ' ,
-					$context['TPortal']['frontpage_layout'] < 2 ? 'checked' : '' , '><label for="tp_frontpage_layout1"> A ' ,
-					$context['TPortal']['frontpage_layout'] < 2 ? '' : '' , '
+	$context['TPortal']['frontpage_layout'] < 2 ? 'checked' : '' , '><label for="tp_frontpage_layout1"> A ' ,
+	$context['TPortal']['frontpage_layout'] < 2 ? '' : '' , '
 							<br><img style="margin-top:5px" src="' . $settings['tp_images_url'] . '/edit_art_cat_a.png"/></label>
 					</div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_frontpage_layout2" name="tp_frontpage_layout" value="2" ' ,
-					$context['TPortal']['frontpage_layout'] == 2 ? 'checked' : '' , '><label for="tp_frontpage_layout2"> B ' ,
-					$context['TPortal']['frontpage_layout'] == 2 ? '' : '' , '
+	$context['TPortal']['frontpage_layout'] == 2 ? 'checked' : '' , '><label for="tp_frontpage_layout2"> B ' ,
+	$context['TPortal']['frontpage_layout'] == 2 ? '' : '' , '
 						<br><img style="margin-top:5px" src="' . $settings['tp_images_url'] . '/edit_art_cat_b.png"/></label>
 					</div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_frontpage_layout3" name="tp_frontpage_layout" value="3" ' ,
-					$context['TPortal']['frontpage_layout'] == 3 ? 'checked' : '' , '><label for="tp_frontpage_layout3"> C ' ,
-					$context['TPortal']['frontpage_layout'] == 3 ? '' : '' , '
+	$context['TPortal']['frontpage_layout'] == 3 ? 'checked' : '' , '><label for="tp_frontpage_layout3"> C ' ,
+	$context['TPortal']['frontpage_layout'] == 3 ? '' : '' , '
 						<br><img style="margin-top:5px" src="' . $settings['tp_images_url'] . '/edit_art_cat_c.png"/></label>
 					</div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_frontpage_layout4" name="tp_frontpage_layout" value="4" ' ,
-					$context['TPortal']['frontpage_layout'] == 4 ? 'checked' : '' , '><label for="tp_frontpage_layout4"> D ' ,
-					$context['TPortal']['frontpage_layout'] == 4 ? '' : '' , '
+	$context['TPortal']['frontpage_layout'] == 4 ? 'checked' : '' , '><label for="tp_frontpage_layout4"> D ' ,
+	$context['TPortal']['frontpage_layout'] == 4 ? '' : '' , '
 						<br><img style="margin-top:5px" src="' . $settings['tp_images_url'] . '/edit_art_cat_d.png"/></label>
 					</div>
 					<br style="clear: both;" /><br>
@@ -654,29 +654,29 @@ function template_editcategory()
 					<div><strong>', $txt['tp-catlayouts'], '</strong></div>
 
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_category_layout1" name="tp_category_layout" value="1" ' ,
-						$mg['layout'] == 1 ? 'checked' : '' , '> A ' ,
-						$mg['layout'] == 1 ? '' : '' , '
+	$mg['layout'] == 1 ? 'checked' : '' , '> A ' ,
+	$mg['layout'] == 1 ? '' : '' , '
 						<div class="tborder" style="margin-top: 5px;">
 							 <label for="tp_category_layout1"><img src="' . $settings['tp_images_url'] . '/edit_art_cat_a.png"/></label>
 						</div>
 					</div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_category_layout2" name="tp_category_layout" value="2" ' ,
-						$mg['layout'] == 2 ? 'checked' : '' , '> B ' ,
-						$mg['layout'] == 2 ? '' : '' , '
+	$mg['layout'] == 2 ? 'checked' : '' , '> B ' ,
+	$mg['layout'] == 2 ? '' : '' , '
 						<div class="tborder" style="margin-top: 5px;">
 							<label for="tp_category_layout2"><img src="' . $settings['tp_images_url'] . '/edit_art_cat_b.png"/></label>
 						</div>
 					</div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_category_layout3" name="tp_category_layout" value="3" ' ,
-						$mg['layout'] == 3 ? 'checked' : '' , '> C ' ,
-						$mg['layout'] == 3 ? '' : '' , '
+	$mg['layout'] == 3 ? 'checked' : '' , '> C ' ,
+	$mg['layout'] == 3 ? '' : '' , '
 						<div class="tborder" style="margin-top: 5px;">
 							<label for="tp_category_layout3"><img src="' . $settings['tp_images_url'] . '/edit_art_cat_c.png"/></label>
 						</div>
 					</div>
 					<div class="tp_artlayoutfp"><input type="radio" id="tp_category_layout4" name="tp_category_layout" value="4" ' ,
-						$mg['layout'] == 4 ? 'checked' : '' , '> D ' ,
-						$mg['layout'] == 4 ? '' : '' , '
+	$mg['layout'] == 4 ? 'checked' : '' , '> D ' ,
+	$mg['layout'] == 4 ? '' : '' , '
 						<div class="tborder" style="margin-top: 5px;">
 							<label for="tp_category_layout4"><img src="' . $settings['tp_images_url'] . '/edit_art_cat_d.png"/></label>
 						</div>
@@ -1834,10 +1834,7 @@ function template_blocks()
 		$n = 0;
 		if ($tn > 0) {
 			foreach ($context['TPortal']['admin_' . $side[$i] . 'block']['blocks'] as $lblock) {
-				$newtitle = TPgetlangOption($lblock['lang'], $context['user']['language']);
-				if (empty($newtitle)) {
-					$newtitle = $lblock['title'];
-				}
+				$newtitle = $lblock['title'];
 
 				if (!$lblock['loose']) {
 					$class = 'windowbg sticky locked';
@@ -1900,26 +1897,26 @@ function template_blocks()
 							<div class="show-on-responsive">' . $txt['tp-move'] . '</div>';
 
 				switch ($side[$i]) {
-						case 'left':
-							echo '
+					case 'left':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocktop=' . $lblock['id'] . '"><img title="' . $txt['tp-moveup'] . '" src="' . $settings['tp_images_url'] . '/TPselect_top.png" alt="' . $txt['tp-moveup'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockcenter=' . $lblock['id'] . '"><img title="' . $txt['tp-movecenter'] . '" src="' . $settings['tp_images_url'] . '/TPselect_center.png" alt="' . $txt['tp-movecenter'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockfront=' . $lblock['id'] . '"><img title="' . $txt['tp-movefront'] . '" src="' . $settings['tp_images_url'] . '/TPselect_front.png" alt="' . $txt['tp-movefront'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocklower=' . $lblock['id'] . '"><img title="' . $txt['tp-movelower'] . '" src="' . $settings['tp_images_url'] . '/TPselect_lower.png" alt="' . $txt['tp-movelower'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockbottom=' . $lblock['id'] . '"><img title="' . $txt['tp-movedown'] . '" src="' . $settings['tp_images_url'] . '/TPselect_bottom.png" alt="' . $txt['tp-movedown'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockright=' . $lblock['id'] . '"><img title="' . $txt['tp-moveright'] . '" src="' . $settings['tp_images_url'] . '/TPselect_right.png" alt="' . $txt['tp-moveright'] . '" /></a>';
-							break;
-						case 'right':
-							echo '
+						break;
+					case 'right':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockleft=' . $lblock['id'] . '"><img title="' . $txt['tp-moveleft'] . '" src="' . $settings['tp_images_url'] . '/TPselect_left.png" alt="' . $txt['tp-moveleft'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocktop=' . $lblock['id'] . '"><img title="' . $txt['tp-moveup'] . '" src="' . $settings['tp_images_url'] . '/TPselect_top.png" alt="' . $txt['tp-moveup'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockcenter=' . $lblock['id'] . '"><img title="' . $txt['tp-movecenter'] . '" src="' . $settings['tp_images_url'] . '/TPselect_center.png" alt="' . $txt['tp-movecenter'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockfront=' . $lblock['id'] . '"><img title="' . $txt['tp-movefront'] . '" src="' . $settings['tp_images_url'] . '/TPselect_front.png" alt="' . $txt['tp-movefront'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocklower=' . $lblock['id'] . '"><img title="' . $txt['tp-movelower'] . '" src="' . $settings['tp_images_url'] . '/TPselect_lower.png" alt="' . $txt['tp-movelower'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockbottom=' . $lblock['id'] . '"><img title="' . $txt['tp-movedown'] . '" src="' . $settings['tp_images_url'] . '/TPselect_bottom.png" alt="' . $txt['tp-movedown'] . '" /></a>';
-							break;
-						case 'center':
-							echo '
+						break;
+					case 'center':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockleft=' . $lblock['id'] . '"><img title="' . $txt['tp-moveleft'] . '" src="' . $settings['tp_images_url'] . '/TPselect_left.png" alt="' . $txt['tp-moveleft'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocktop=' . $lblock['id'] . '"><img title="' . $txt['tp-moveup'] . '" src="' . $settings['tp_images_url'] . '/TPselect_top.png" alt="' . $txt['tp-moveup'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockfront=' . $lblock['id'] . '"><img title="' . $txt['tp-movefront'] . '" src="' . $settings['tp_images_url'] . '/TPselect_front.png" alt="' . $txt['tp-movefront'] . '" /></a>
@@ -1927,9 +1924,9 @@ function template_blocks()
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockbottom=' . $lblock['id'] . '"><img title="' . $txt['tp-movedown'] . '" src="' . $settings['tp_images_url'] . '/TPselect_bottom.png" alt="' . $txt['tp-movedown'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockright=' . $lblock['id'] . '"><img title="' . $txt['tp-moveright'] . '" src="' . $settings['tp_images_url'] . '/TPselect_right.png" alt="' . $txt['tp-moveright'] . '" /></a>
 ';
-							break;
-						case 'front':
-							echo '
+						break;
+					case 'front':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockleft=' . $lblock['id'] . '"><img title="' . $txt['tp-moveleft'] . '" src="' . $settings['tp_images_url'] . '/TPselect_left.png" alt="' . $txt['tp-moveleft'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocktop=' . $lblock['id'] . '"><img title="' . $txt['tp-moveup'] . '" src="' . $settings['tp_images_url'] . '/TPselect_top.png" alt="' . $txt['tp-moveup'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockcenter=' . $lblock['id'] . '"><img title="' . $txt['tp-movecenter'] . '" src="' . $settings['tp_images_url'] . '/TPselect_center.png" alt="' . $txt['tp-movecenter'] . '" /></a>
@@ -1937,9 +1934,9 @@ function template_blocks()
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockbottom=' . $lblock['id'] . '"><img title="' . $txt['tp-movedown'] . '" src="' . $settings['tp_images_url'] . '/TPselect_bottom.png" alt="' . $txt['tp-movedown'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockright=' . $lblock['id'] . '"><img title="' . $txt['tp-moveright'] . '" src="' . $settings['tp_images_url'] . '/TPselect_right.png" alt="' . $txt['tp-moveright'] . '" /></a>
 ';
-							break;
-						case 'bottom':
-							echo '
+						break;
+					case 'bottom':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockleft=' . $lblock['id'] . '"><img title="' . $txt['tp-moveleft'] . '" src="' . $settings['tp_images_url'] . '/TPselect_left.png" alt="' . $txt['tp-moveleft'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocktop=' . $lblock['id'] . '"><img title="' . $txt['tp-moveup'] . '" src="' . $settings['tp_images_url'] . '/TPselect_top.png" alt="' . $txt['tp-moveup'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockcenter=' . $lblock['id'] . '"><img title="' . $txt['tp-movecenter'] . '" src="' . $settings['tp_images_url'] . '/TPselect_center.png" alt="' . $txt['tp-movecenter'] . '" /></a>
@@ -1947,26 +1944,26 @@ function template_blocks()
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocklower=' . $lblock['id'] . '"><img title="' . $txt['tp-movelower'] . '" src="' . $settings['tp_images_url'] . '/TPselect_lower.png" alt="' . $txt['tp-movelower'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockright=' . $lblock['id'] . '"><img title="' . $txt['tp-moveright'] . '" src="' . $settings['tp_images_url'] . '/TPselect_right.png" alt="' . $txt['tp-moveright'] . '" /></a>
 ';
-							break;
-						case 'top':
-							echo '
+						break;
+					case 'top':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockleft=' . $lblock['id'] . '"><img title="' . $txt['tp-moveleft'] . '" src="' . $settings['tp_images_url'] . '/TPselect_left.png" alt="' . $txt['tp-moveleft'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockcenter=' . $lblock['id'] . '"><img title="' . $txt['tp-movecenter'] . '" src="' . $settings['tp_images_url'] . '/TPselect_center.png" alt="' . $txt['tp-movecenter'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockfront=' . $lblock['id'] . '"><img title="' . $txt['tp-movefront'] . '" src="' . $settings['tp_images_url'] . '/TPselect_front.png" alt="' . $txt['tp-movefront'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocklower=' . $lblock['id'] . '"><img title="' . $txt['tp-movelower'] . '" src="' . $settings['tp_images_url'] . '/TPselect_lower.png" alt="' . $txt['tp-movelower'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockbottom=' . $lblock['id'] . '"><img title="' . $txt['tp-movedown'] . '" src="' . $settings['tp_images_url'] . '/TPselect_bottom.png" alt="' . $txt['tp-movedown'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockright=' . $lblock['id'] . '"><img title="' . $txt['tp-moveright'] . '" src="' . $settings['tp_images_url'] . '/TPselect_right.png" alt="' . $txt['tp-moveright'] . '" /></a>';
-							break;
-						case 'lower':
-							echo '
+						break;
+					case 'lower':
+						echo '
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockleft=' . $lblock['id'] . '"><img title="' . $txt['tp-moveleft'] . '" src="' . $settings['tp_images_url'] . '/TPselect_left.png" alt="' . $txt['tp-moveleft'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blocktop=' . $lblock['id'] . '"><img title="' . $txt['tp-moveup'] . '" src="' . $settings['tp_images_url'] . '/TPselect_top.png" alt="' . $txt['tp-moveup'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockcenter=' . $lblock['id'] . '"><img title="' . $txt['tp-movecenter'] . '" src="' . $settings['tp_images_url'] . '/TPselect_center.png" alt="' . $txt['tp-movecenter'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockfront=' . $lblock['id'] . '"><img title="' . $txt['tp-movefront'] . '" src="' . $settings['tp_images_url'] . '/TPselect_front.png" alt="' . $txt['tp-movefront'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockbottom=' . $lblock['id'] . '"><img title="' . $txt['tp-movedown'] . '" src="' . $settings['tp_images_url'] . '/TPselect_bottom.png" alt="' . $txt['tp-movedown'] . '" /></a>
 							<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';blockright=' . $lblock['id'] . '"><img title="' . $txt['tp-moveright'] . '" src="' . $settings['tp_images_url'] . '/TPselect_right.png" alt="' . $txt['tp-moveright'] . '" /></a>';
-							break;
-					}
+						break;
+				}
 				echo '
 						</div>
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">

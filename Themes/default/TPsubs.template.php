@@ -23,78 +23,78 @@ function TPblock($block, $theme, $side, $flow, $double = false)
 
 	// set class for responsive
 	$showwidth = (!empty($block['showwidth']) ? $block['showwidth'] : '');
-	$blockstyle = (!empty($block['custblockstyle']) ? ' style="'.$block['custblockstyle'].'"' : '');
+	$blockstyle = (!empty($block['custblockstyle']) ? ' style="' . $block['custblockstyle'] . '"' : '');
 
 	// setup a container that can be massaged through css
 	if ($block['type'] == 'ssi') {
 		if ($block['body'] == 'toptopics') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssitoptopics">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssitoptopics">';
 		}
 		elseif ($block['body'] == 'topboards') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssitopboards">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssitopboards">';
 		}
 		elseif ($block['body'] == 'topposters') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssitopposters">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssitopposters">';
 		}
 		elseif ($block['body'] == 'topreplies') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssitopreplies">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssitopreplies">';
 		}
 		elseif ($block['body'] == 'topviews') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssitopviews">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssitopviews">';
 		}
 		elseif ($block['body'] == 'calendar') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssicalendar">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssicalendar">';
 		}
 		else {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="ssiblock">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="ssiblock">';
 		}
 	}
 	elseif ($block['type'] == 'module') {
 		if ($block['body'] == 'dl-stats') {
-			echo ' <div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats">';
+			echo ' <div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats">';
 		}
 		elseif ($block['body'] == 'dl-stats2') {
-			echo ' <div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats2">';
+			echo ' <div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats2">';
 		}
 		elseif ($block['body'] == 'dl-stats3') {
-			echo ' <div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats3">';
+			echo ' <div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats3">';
 		}
 		elseif ($block['body'] == 'dl-stats4') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats4">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats4">';
 		}
 		elseif ($block['body'] == 'dl-stats5') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats5">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats5">';
 		}
 		elseif ($block['body'] == 'dl-stats6') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats6">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats6">';
 		}
 		elseif ($block['body'] == 'dl-stats7') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats7">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats7">';
 		}
 		elseif ($block['body'] == 'dl-stats8') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats8">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats8">';
 		}
 		elseif ($block['body'] == 'dl-stats9') {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dl-stats9">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dl-stats9">';
 		}
 		else {
-			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="module_dlstats">';
+			echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="module_dlstats">';
 		}
 	}
 	elseif ($block['type'] == 'shoutbox') {
-		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="shoutbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
+		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="shoutbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
 	}
 	elseif ($block['type'] == 'html') {
-		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container ' . $block['type'] . 'box" '.$blockstyle.' id="htmlbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
+		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container ' . $block['type'] . 'box" ' . $blockstyle . ' id="htmlbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
 	}
 	elseif ($block['type'] == 'phpbox') {
-		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container ' . $block['type'] . '" '.$blockstyle.' id="phpbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
+		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container ' . $block['type'] . '" ' . $blockstyle . ' id="phpbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
 	}
 	elseif ($block['type'] == 'scriptbox') {
-		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container ' . $block['type'] . '" '.$blockstyle.' id="scriptbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
+		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container ' . $block['type'] . '" ' . $blockstyle . ' id="scriptbox_' . preg_replace('/[^a-zA-Z]/', '', strip_tags($block['title'])) . '">';
 	}
 	else {
-		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" '.$blockstyle.' id="block_' . $block['type'] . '">';
+		echo '<div class="' . $flow . ' ' . $showwidth . ' block_' . $side . 'container" ' . $blockstyle . ' id="block_' . $block['type'] . '">';
 	}
 
 	$types = tp_getblockstyles21();
@@ -943,8 +943,8 @@ function TPortal_module()
 						(' . $item['comments'] . ')<br></span>';
 				}
 			}
-				break;
-	 }
+			break;
+	}
 }
 
 // blocktype 15: RSS block
@@ -1016,15 +1016,15 @@ function TPortal_sitemap()
 
 				if ($cn['sitemap'] == '1') {
 					switch ($cn['type']) {
-							case 'cats':
-								echo '<li><a class="' , $catclass ,'" href="' . $scripturl . '?cat=' . $cn['IDtype'] . '" ' , $cn['newlink'] == '1' ? 'target="_blank"' : '' , '><img src="' . $settings['tp_images_url'] . '/TPdivider.png" alt="" /> ' . $cn['name'] . '</a></li>';
-								break;
-							case 'arti':
-								echo '<li><a class="' , $catclass ,'" href="' . $scripturl . '?page=' . $cn['IDtype'] . '"' , $cn['newlink'] == '1' ? 'target="_blank"' : '' , '><img src="' . $settings['tp_images_url'] . '/TPdivider.png" alt="" /> ' . $cn['name'] . '</a></li>';
-								break;
-							case 'link':
-								echo '<li><a class="' , $catclass ,'" href="' . $cn['IDtype'] . '"' , $cn['newlink'] == '1' ? 'target="_blank"' : '' , '><img src="' . $settings['tp_images_url'] . '/TPdivider.png" alt="" /> ' . $cn['name'] . '</a></li>';
-								break;
+						case 'cats':
+							echo '<li><a class="' , $catclass ,'" href="' . $scripturl . '?cat=' . $cn['IDtype'] . '" ' , $cn['newlink'] == '1' ? 'target="_blank"' : '' , '><img src="' . $settings['tp_images_url'] . '/TPdivider.png" alt="" /> ' . $cn['name'] . '</a></li>';
+							break;
+						case 'arti':
+							echo '<li><a class="' , $catclass ,'" href="' . $scripturl . '?page=' . $cn['IDtype'] . '"' , $cn['newlink'] == '1' ? 'target="_blank"' : '' , '><img src="' . $settings['tp_images_url'] . '/TPdivider.png" alt="" /> ' . $cn['name'] . '</a></li>';
+							break;
+						case 'link':
+							echo '<li><a class="' , $catclass ,'" href="' . $cn['IDtype'] . '"' , $cn['newlink'] == '1' ? 'target="_blank"' : '' , '><img src="' . $settings['tp_images_url'] . '/TPdivider.png" alt="" /> ' . $cn['name'] . '</a></li>';
+							break;
 					}
 				}
 			}
@@ -2625,7 +2625,7 @@ function tp_template_button_strip($button_strip, $direction = 'top', $strip_opti
 
 	echo '
 		<div class="tpbuttons buttonlist', !empty($direction) ? ' align_' . $direction : '', '"', (empty($buttons) ? ' style="display: none;"' : ''), (!empty($strip_options['id']) ? ' id="' . $strip_options['id'] . '"' : ''), '>',
-				implode('', $buttons), '
+	implode('', $buttons), '
 			<p class="clearthefloat"></p>
 		</div>';
 }

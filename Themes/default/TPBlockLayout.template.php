@@ -264,12 +264,9 @@ function template_tp_below()
 // Edit Block Page (including settings per block type)
 function template_editblock()
 {
-	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings;
+	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings, $language;
 
-	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
-	if (empty($newtitle)) {
-		$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
-	}
+	$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
 
 	echo '
 	<div id="tpadmin">
@@ -835,10 +832,10 @@ function template_editblock()
 				<dl class="tp_title settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-blockstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-blockstylehelp'].'
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-blockstylehelp'] . '
 					</dt>
 					<dd>
-						<input type="radio" id="tp_block_panelstyle" name="tp_block_set_panelstyle" value="99" ' , $context['TPortal']['blockedit']['panelstyle']=='99' ? 'checked' : '' , '><label for="tp_block_panelstyle"><span' , $context['TPortal']['blockedit']['panelstyle']=='99' ? ' style="color: red;">' : '>' , $txt['tp-blocksusepaneltyle'] , '</label></span>
+						<input type="radio" id="tp_block_panelstyle" name="tp_block_set_panelstyle" value="99" ' , $context['TPortal']['blockedit']['panelstyle'] == '99' ? 'checked' : '' , '><label for="tp_block_panelstyle"><span' , $context['TPortal']['blockedit']['panelstyle'] == '99' ? ' style="color: red;">' : '>' , $txt['tp-blocksusepaneltyle'] , '</label></span>
 					</dd>
 				</dl>
 				<div>
@@ -848,9 +845,9 @@ function template_editblock()
 	foreach ($types as $blo => $bl) {
 		echo '
 					<div class="tp_panelstyles">
-						<label for="tp_block_panelstyle'.$blo.'">
+						<label for="tp_block_panelstyle' . $blo . '">
 						<div class="smalltext">
-							<input type="radio" id="tp_block_panelstyle' . $blo . '" name="tp_block_set_panelstyle" value="' . $blo . '" ' , $context['TPortal']['blockedit']['panelstyle'] == $blo ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panelstyle']==$blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
+							<input type="radio" id="tp_block_panelstyle' . $blo . '" name="tp_block_set_panelstyle" value="' . $blo . '" ' , $context['TPortal']['blockedit']['panelstyle'] == $blo ? 'checked' : '' , '><span' , $context['TPortal']['blockedit']['panelstyle'] == $blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span>
 						</div>
 						' . $bl['code_title_left'] . 'title' . $bl['code_title_right'] . '
 						' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
@@ -862,16 +859,16 @@ function template_editblock()
 					</div>
 				</div>
 				<dl class="tp_title settings">
-					<dt>'.$txt['tp-blockframehelp'].'</dt>
+					<dt>' . $txt['tp-blockframehelp'] . '</dt>
 					<dd>
-						<input type="radio" id="useframe" name="tp_block_frame" value="theme" ' , $context['TPortal']['blockedit']['frame']=='theme' ? 'checked' : '' , '><label for="useframe"> '.$txt['tp-useframe'].'</label><br>
-						<input type="radio" id="useframe2" name="tp_block_frame" value="frame" ' , $context['TPortal']['blockedit']['frame']=='frame' ? 'checked' : '' , '><label for="useframe2"> '.$txt['tp-useframe2'].' </label><br>
-						<input type="radio" id="usetitle" name="tp_block_frame" value="title" ' , $context['TPortal']['blockedit']['frame']=='title' ? 'checked' : '' , '><label for="usetitle"> '.$txt['tp-usetitle'].' </label></br>
-						<input type="radio" id="noframe" name="tp_block_frame" value="none" ' , $context['TPortal']['blockedit']['frame']=='none' ? 'checked' : '' , '><label for="noframe"> '.$txt['tp-noframe'].'</label><br>
+						<input type="radio" id="useframe" name="tp_block_frame" value="theme" ' , $context['TPortal']['blockedit']['frame'] == 'theme' ? 'checked' : '' , '><label for="useframe"> ' . $txt['tp-useframe'] . '</label><br>
+						<input type="radio" id="useframe2" name="tp_block_frame" value="frame" ' , $context['TPortal']['blockedit']['frame'] == 'frame' ? 'checked' : '' , '><label for="useframe2"> ' . $txt['tp-useframe2'] . ' </label><br>
+						<input type="radio" id="usetitle" name="tp_block_frame" value="title" ' , $context['TPortal']['blockedit']['frame'] == 'title' ? 'checked' : '' , '><label for="usetitle"> ' . $txt['tp-usetitle'] . ' </label></br>
+						<input type="radio" id="noframe" name="tp_block_frame" value="none" ' , $context['TPortal']['blockedit']['frame'] == 'none' ? 'checked' : '' , '><label for="noframe"> ' . $txt['tp-noframe'] . '</label><br>
 					</dd>
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-custblockstyledesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-custblockstyle'].'<br>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-custblockstyle'] . '<br>
 					</dt>
 					<dd>
 						<input type="text" id="tp_custblockstyle" name="tp_block_set_custblockstyle" value="' ,!empty($context['TPortal']['blockedit']['custblockstyle']) ? $context['TPortal']['blockedit']['custblockstyle'] : '', '" size="50" maxlength="150">
@@ -881,10 +878,10 @@ function template_editblock()
 				<dl class="tp_title settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-langhelpdesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-langhelp'] . '</dt>
 					<dd>';
 	foreach ($context['TPortal']['langfiles'] as $langlist => $lang) {
-		if (strtolower($langlist) != $context['user']['language']) {
+		if (strtolower($langlist) != $language) {
 			echo '
 						<dt>' . $lang . '</dt>
 						<dd>

@@ -133,7 +133,7 @@ function template_submitarticle()
 	}
 	elseif ($article_type == 'bbc' || $article_type == 'import') {
 		echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' ,
-					'<span class="font-strong">' . $txt['tp-introtext'] . '</span>
+		'<span class="font-strong">' . $txt['tp-introtext'] . '</span>
 					<div>
 						<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">' . $mg['intro'] . '</textarea>
 					</div>
