@@ -1834,10 +1834,7 @@ function template_blocks()
 		$n = 0;
 		if ($tn > 0) {
 			foreach ($context['TPortal']['admin_' . $side[$i] . 'block']['blocks'] as $lblock) {
-				$newtitle = TPgetlangOption($lblock['lang'], $context['user']['language']);
-				if (empty($newtitle)) {
-					$newtitle = $lblock['title'];
-				}
+				$newtitle = $lblock['title'];
 
 				if (!$lblock['loose']) {
 					$class = 'windowbg sticky locked';

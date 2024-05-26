@@ -264,12 +264,9 @@ function template_tp_below()
 // Edit Block Page (including settings per block type)
 function template_editblock()
 {
-	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings;
+	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings, $language;
 
-	$newtitle = html_entity_decode(TPgetlangOption($context['TPortal']['blockedit']['lang'], $context['user']['language']));
-	if (empty($newtitle)) {
-		$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
-	}
+	$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
 
 	echo '
 	<div id="tpadmin">
@@ -884,7 +881,7 @@ function template_editblock()
 						<span class="tptooltip" title="', $txt['help'], '"></span></a>'.$txt['tp-langhelp'].'</dt>
 					<dd>';
 	foreach ($context['TPortal']['langfiles'] as $langlist => $lang) {
-		if (strtolower($langlist) != $context['user']['language']) {
+		if (strtolower($langlist) != $language) {
 			echo '
 						<dt>' . $lang . '</dt>
 						<dd>
