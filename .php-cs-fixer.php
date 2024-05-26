@@ -96,6 +96,7 @@ return (new PhpCsFixer\Config())
         // 'return_type_declaration' => true,
         // 'self_accessor' => true,
         // 'short_scalar_cast' => true,
+        'blank_lines_before_namespace' => false,
         'single_blank_line_before_namespace' => true,
         // 'single_class_element_per_statement' => true,
         // 'space_after_semicolon' => true,
