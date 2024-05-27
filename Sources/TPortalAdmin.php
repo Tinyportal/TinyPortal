@@ -1548,7 +1548,7 @@ function do_postchecks()
 			}
 			return 'blocks;overview';
 		}
-		elseif (in_array($from, ['settings', 'frontpage', 'artsettings', 'panels', 'blocks'])) {
+		elseif (in_array($from, ['settings', 'frontpage', 'artsettings', 'panels'])) {
 			checkSession('post');
 			isAllowedTo('tp_settings');
 			$w = [];
@@ -1567,9 +1567,6 @@ function do_postchecks()
 					break;
 				case 'panels':
 					$checkboxes = ['useroundframepanels', 'showcollapse', 'hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar'];
-					break;
-				case 'blocks':
-					$checkboxes = ['admin_showblocks', 'blocks_edithide', 'uselangoption'];
 					break;
 				default:
 					break;
@@ -2314,105 +2311,120 @@ function do_postchecks()
 		// from blocks screen
 		elseif ($from == 'blocks') {
 			checkSession('post');
-			isAllowedTo('tp_blocks');
 
-			foreach ($_POST as $what => $value) {
-				if (substr($what, 0, 3) == 'pos') {
-					$where = substr($what, 3);
-					if (is_numeric($where)) {
-						$smcFunc['db_query'](
-							'',
-							'
-							UPDATE {db_prefix}tp_blocks
-							SET pos = {int:pos}
-							WHERE id = {int:blockid}',
-							[
-								'pos' => $value,
-								'blockid' => $where
-							]
-						);
+			if (allowedTo('tp_settings')) {
+				foreach (['admin_showblocks', 'blocks_edithide', 'uselangoption'] as $v) {
+					if (TPUtil::checkboxChecked('tp_' . $v)) {
+						$updateArray[$v] = 1;
 					}
-				}
-				elseif (substr($what, 0, 6) == 'addpos') {
-					$where = substr($what, 6);
-					if (is_numeric($where)) {
-						$smcFunc['db_query'](
-							'',
-							'
-							UPDATE {db_prefix}tp_blocks
-							SET pos = (pos + 11)
-							WHERE id = {int:blockid}',
-							[
-								'blockid' => $where
-							]
-						);
+					else {
+						$updateArray[$v] = 0;
 					}
+					// remove the variable so we don't process it twice before the old logic is removed
+					unset($_POST['tp_' . $v]);
 				}
-				elseif (substr($what, 0, 6) == 'subpos') {
-					$where = substr($what, 6);
-					if (is_numeric($where)) {
-						$smcFunc['db_query'](
-							'',
-							'
-							UPDATE {db_prefix}tp_blocks SET pos = (pos - 11)
-							WHERE id = {int:blockid}',
-							[
-								'blockid' => $where
-							]
-						);
-					}
-				}
-				elseif (substr($what, 0, 5) == 'title') {
-					$where = strip_tags(substr($what, 5));
-					$smcFunc['db_query'](
-						'',
-						'
-						UPDATE {db_prefix}tp_blocks
-						SET title = {string:title}
-						WHERE id = {int:blockid}',
-						[
-							'title' => $value,
-							'blockid' => $where,
-						]
-					);
-				}
-				elseif (substr($what, 0, 9) == 'blockbody') {
-					$where = substr($what, 9);
-					$smcFunc['db_query'](
-						'',
-						'
-						UPDATE {db_prefix}tp_blocks
-						SET body = {string:body}
-						WHERE id = {int:blockid}',
-						[
-							'body' => $value,
-							'blockid' => $where,
-						]
-					);
-				}
-				elseif (substr($what, 0, 4) == 'type') {
-					// Check to see if the type has changed.
-					$where = substr($what, 4);
-					$request = $smcFunc['db_query'](
-						'',
-						'
-                        SELECT type FROM {db_prefix}tp_blocks
-                        WHERE id = {int:id} LIMIT 1',
-						['id' => $where]
-					);
-					if ($smcFunc['db_num_rows']($request) > 0) {
-						$row = $smcFunc['db_fetch_assoc']($request);
-						$smcFunc['db_free_result']($request);
-						if ($row['type'] != $value) {
-							$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
+				updateTPSettings($updateArray);
+			}
+
+			if (allowedTo('tp_blocks')) {
+				foreach ($_POST as $what => $value) {
+					if (substr($what, 0, 3) == 'pos') {
+						$where = substr($what, 3);
+						if (is_numeric($where)) {
 							$smcFunc['db_query'](
 								'',
 								'
 								UPDATE {db_prefix}tp_blocks
-								SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
+								SET pos = {int:pos}
 								WHERE id = {int:blockid}',
-								['data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '']
+								[
+									'pos' => $value,
+									'blockid' => $where
+								]
 							);
+						}
+					}
+					elseif (substr($what, 0, 6) == 'addpos') {
+						$where = substr($what, 6);
+						if (is_numeric($where)) {
+							$smcFunc['db_query'](
+								'',
+								'
+								UPDATE {db_prefix}tp_blocks
+								SET pos = (pos + 11)
+								WHERE id = {int:blockid}',
+								[
+									'blockid' => $where
+								]
+							);
+						}
+					}
+					elseif (substr($what, 0, 6) == 'subpos') {
+						$where = substr($what, 6);
+						if (is_numeric($where)) {
+							$smcFunc['db_query'](
+								'',
+								'
+								UPDATE {db_prefix}tp_blocks SET pos = (pos - 11)
+								WHERE id = {int:blockid}',
+								[
+									'blockid' => $where
+								]
+							);
+						}
+					}
+					elseif (substr($what, 0, 5) == 'title') {
+						$where = strip_tags(substr($what, 5));
+						$smcFunc['db_query'](
+							'',
+							'
+							UPDATE {db_prefix}tp_blocks
+							SET title = {string:title}
+							WHERE id = {int:blockid}',
+							[
+								'title' => $value,
+								'blockid' => $where,
+							]
+						);
+					}
+					elseif (substr($what, 0, 9) == 'blockbody') {
+						$where = substr($what, 9);
+						$smcFunc['db_query'](
+							'',
+							'
+							UPDATE {db_prefix}tp_blocks
+							SET body = {string:body}
+							WHERE id = {int:blockid}',
+							[
+								'body' => $value,
+								'blockid' => $where,
+							]
+						);
+					}
+					elseif (substr($what, 0, 4) == 'type') {
+						// Check to see if the type has changed.
+						$where = substr($what, 4);
+						$request = $smcFunc['db_query'](
+							'',
+							'
+                        	SELECT type FROM {db_prefix}tp_blocks
+                        	WHERE id = {int:id} LIMIT 1',
+							['id' => $where]
+						);
+						if ($smcFunc['db_num_rows']($request) > 0) {
+							$row = $smcFunc['db_fetch_assoc']($request);
+							$smcFunc['db_free_result']($request);
+							if ($row['type'] != $value) {
+								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
+								$smcFunc['db_query'](
+									'',
+									'
+									UPDATE {db_prefix}tp_blocks
+									SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
+									WHERE id = {int:blockid}',
+									['data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '']
+								);
+							}
 						}
 					}
 				}
