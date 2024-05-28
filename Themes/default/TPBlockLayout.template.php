@@ -286,7 +286,10 @@ function template_editblock()
 								<input type="radio" value="1" class="switch-off" name="tp_block_off" id="tp_block_off"',$context['TPortal']['blockedit']['off'] == 1 ? ' checked="checked"' : '' ,' /><label for="tp_block_off">' . $txt['tp-off'] . '</label>
 							</div>
 						</dd>
-						<dt><label for="tp_block_title"><b>' . $txt['tp-title'] . '</b></label></dt>
+						<dt>
+							<a href="', $scripturl, '?action=helpadmin;help=tp-blocktitledesc" onclick="return reqOverlayDiv(this.href);">
+							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_block_title"><b>' . $txt['tp-title'] . '</b></label>
+						</dt>
 						<dd>
 							<input type="text" id="tp_block_title" name="tp_block_title" value="' . $newtitle . '" size="50" required>
 						</dd>

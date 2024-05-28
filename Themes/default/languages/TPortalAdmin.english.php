@@ -398,6 +398,7 @@ $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
 
 // Edit block
+$txt['tp-blocktitledesc'] = 'This is the block title in the default forum language.';
 $txt['tp-titledivclass'] = 'Class for title div';
 $txt['tp-titleheadclass'] = 'Class for title text';
 $txt['tp-frameclass'] = 'Class for frame';
@@ -425,8 +426,8 @@ $txt['tp-notallowupshrink'] = 'Do not allow block to collapse';
 $txt['tp-membergrouphelp'] = 'Choose the membergroups that will able to see this block';
 $txt['tp-membergrouphelpdesc'] = 'Choose your membergroups that will able to see this block. Note that if none are chosen it will only display it to admin.';
 $txt['tp-membergrouptext'] = 'Choose your membergroup access after the block is saved. Blocks are always set to OFF upon creation.';
-$txt['tp-langhelp'] = 'Block title per language';
-$txt['tp-langhelpdesc'] = 'Here you can add a custom block title for any installed language.';
+$txt['tp-langhelp'] = 'Language specific titles';
+$txt['tp-langhelpdesc'] = 'The block title is used in the default forum language. Here you can maintain the title for any additional installed language.';
 $txt['tp-lang'] = 'Block visible for these languages';
 $txt['tp-langdesc'] = 'Upon installation of TinyPortal the Language visibility option will be switched OFF by default. When you access the block settings for a block you will see the language visibility option with a warning message, pointing out that the  language visibility setting is off. As long as the setting is off the blocks will show regardless of the user language. Language visibility is an additional setting for controlling when blocks are visible in the panels: the settings that choose where the block should appear will always be respected. If the settings do not allow the block to show, setting language visibility will also not make it show.';
 $txt['tp-displayhelp'] = 'Choose where the block should appear';
