@@ -38,6 +38,7 @@ $txt['cannot_tp_alwaysapproved'] = 'Article submission or update needs to be app
 
 $txt['permissionname_tp_artcomment'] = $txt['group_perms_name_tp_artcomment'] = 'Can comment on articles';
 $txt['permissionhelp_tp_artcomment'] = 'Allows users to add comments to articles.';
+$txt['cannot_tp_artcomment'] = 'Sorry, you aren\'t allowed to add comments.';
 
 $txt['permissionname_tp_can_admin_shout'] = $txt['group_perms_name_tp_can_admin_shout'] = 'Manage TPshout';
 $txt['permissionhelp_tp_can_admin_shout'] = 'Allows users to manage shouts.';
@@ -45,6 +46,7 @@ $txt['cannot_tp_can_admin_shout'] = 'Sorry, you aren\'t allowed to manage the sh
 
 $txt['permissionname_tp_can_shout'] = $txt['group_perms_name_tp_can_shout'] = 'Can post shouts';
 $txt['permissionhelp_tp_can_shout'] = 'Allows users to post in the shoutbox.';
+$txt['cannot_tp_can_shout'] = 'Sorry, you aren\'t allowed to post shouts.';
 
 $txt['permissionname_tp_can_search'] = $txt['group_perms_name_tp_can_search'] = 'Can Search Articles and Downloads.';
 $txt['permissionhelp_tp_can_search'] = 'Allows users to search for Articles and Downloads.';
