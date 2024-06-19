@@ -97,6 +97,7 @@ $txt['tp-dlmaxerror'] = 'The maximum size for an uploaded file is ';
 $txt['tp-dlexterror'] = 'You can only upload one of the following file formats';
 $txt['tp-dlfileerror'] = 'The file no longer exists on the server';
 $txt['tp-dlerrorfile'] = 'Your file was';
+$txt['tp-dlnoninteger'] = 'Attempt to specify a non-integer value!';
 
 //Edit file
 $txt['tp-useredit'] = 'Edit file';
