@@ -1157,7 +1157,7 @@ function TPortalDLManager()
 		$context['TPortal']['dlitem'] = [];
 		$start = 0;
 		if (isset($_GET['p']) && !is_numeric($_GET['p'])) {
-			fatal_error('Attempt to specify a non-integer value!');
+			fatal_error($txt['tp-dlnoninteger'],false);
 		}
 		elseif (isset($_GET['p']) && is_numeric($_GET['p'])) {
 			$start = $_GET['p'];
