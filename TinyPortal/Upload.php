@@ -11,7 +11,7 @@
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause
  *
- * @version 2.2.0
+ * @version 3.0.1
  *
  */
 
@@ -233,9 +233,9 @@ class Upload
 			return false;
 		}
 
-		// Check mime type is allowed
+		// Check file size is allowed
 		if (!self::check_file_size($source)) {
-			self::set_error(104);
+			self::set_error(103);
 			return false;
 		}
 
