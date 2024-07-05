@@ -956,9 +956,15 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use =
 		echo '
 			</div>
 		</div>
-		<div class="tp_pad">', $txt['tp-uploadfile'], '
-			<input onchange="this.form.submit()" type="file" name="' . $uploadname . '">
-		</div>
+		<dl class="tp_title settings">
+			<dt>
+				', $txt['tp-uploadfile'], '<br>
+				<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['image_max_size'] ,' ' . $txt['tp-kb'] . '</span>
+			</dt>
+			<dd>
+				<input onchange="this.form.submit()" type="file" name="' . $uploadname . '">
+			</dd>
+		</dl>
 	</div>';
 	}
 }

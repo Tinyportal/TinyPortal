@@ -561,6 +561,7 @@ $settings_array = [
 	'icon_width' => '100',
 	'icon_height' => '100',
 	'icon_max_size' => '500',
+	'image_max_size' => '2048',
 	'art_imagesizes' => '80,40,400,200',
 	// Panels
 	'hidebars_admin_only' => '1',

@@ -1364,6 +1364,12 @@ function template_artsettings()
 					<dd>
 						<input type="checkbox" id="tp_use_dragdrop" name="tp_use_dragdrop" value="1" ' , $context['TPortal']['use_dragdrop'] == '1' ? 'checked' : '' , '>
 					</dd>
+					<dt>
+						<label for="tp_imagemaxsize">' . $txt['tp-imagemaxsize'] . '</label>
+					</dt>
+					<dd>
+						<input type="number" name="tp_image_max_size" id="tp_imagemaxsize" value="' . $context['TPortal']['image_max_size'] . '" style="width: 6em" maxlength="4"> ' . $txt['tp-kb'] . '
+					</dd>
 				</dl>
 				<hr>
 				<dl class="settings">
@@ -1496,7 +1502,8 @@ function template_articons()
 			<div class="windowbg noup">
 				<dl class="tp_title settings">
 					<dt>
-						', $txt['tp-adminicons6'], '
+						', $txt['tp-adminicons6'], '<br>
+						<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['icon_max_size'] ,' ' . $txt['tp-kb'] . '</span>
 					</dt>
 					<dd>
 						<input type="file" name="tp_article_newillustration" />
