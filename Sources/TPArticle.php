@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.1
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -547,9 +547,9 @@ function articleEdit()
 		);
 	}
 	unset($tpArticle);
-	// check if uploadad picture
+	// check if uploaded picture
 	if (isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'] . 'uid', null, null, $context['TPortal']['image_upload_path']);
+		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
 		tp_createthumb($context['TPortal']['image_upload_path'] . '/' . $name, 50, 50, $context['TPortal']['image_upload_path'] . '/thumbs/thumb_' . $name);
 	}
 	// if this was a new article
@@ -710,7 +710,7 @@ function articleUploadImage()
 	global $context, $boarddir, $boardurl;
 
 	require_once SOURCEDIR . '/TPcommon.php';
-	$name = TPuploadpicture('image', $context['user']['id'] . 'uid', null, null, $context['TPortal']['image_upload_path']);
+	$name = TPuploadpicture('image', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
 	tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 	$response['data'] = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $name;
 	$response['success'] = 'true';

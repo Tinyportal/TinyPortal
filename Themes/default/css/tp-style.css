@@ -930,10 +930,12 @@ input,select {
 #tp_article_body {
 	height: 300px;
 	width: 98%;
+	margin-bottom: 10px;
 }
 #tp_article_intro {
 	height: 140px;
 	width: 98%;
+	margin-bottom: 10px;
 }
 .tp_customlayout {
 	height: 200px;

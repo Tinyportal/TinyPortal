@@ -109,7 +109,7 @@ function template_submitarticle()
 					</dl>' ;
 	}
 	echo '
-			</div><br>
+			</div>
 			<dl class="tp_title settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-useintrodesc" onclick="return reqOverlayDiv(this.href);">
@@ -439,7 +439,8 @@ function template_submitarticle()
 						</dd>
 						<dt>
 							<a href="', $scripturl, '?action=helpadmin;help=tp-adminiconsinfo" onclick="return reqOverlayDiv(this.href);">
-							<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-uploadicon'] . '
+							<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-uploadicon'] . '<br>
+							<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['icon_max_size'] ,' ' . $txt['tp-kb'] . '</span>
 						</dt>
 						<dd>
 						<input type="file" name="tp_article_illupload">

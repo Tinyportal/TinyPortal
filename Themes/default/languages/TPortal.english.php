@@ -316,7 +316,7 @@ $txt['tp-submissions'] = 'Submissions';
 $txt['tp-toggle'] = 'Toggle panel';
 $txt['tp-ungroupedmembers'] = 'Ungrouped members';
 $txt['tp-unpublish'] = 'Remove from frontpage';
-$txt['tp-uploadfile'] = 'Upload a new image into the quick-list: ';
+$txt['tp-uploadfile'] = 'Upload a new image into the quick-list';
 
 $txt['tp-bytes'] = ' bytes';
 $txt['tp-kb'] = ' Kb';
