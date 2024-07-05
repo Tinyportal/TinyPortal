@@ -1533,14 +1533,6 @@ dl.tp_title dd {
 .tp_admin_content {
 	min-width:200px;
 }
-dl.tp_title dt {
-	float: none;
-	width: 100%;
-}
-dl.tp_title dd {
-	float: none;
-	width: 100%;
-}
 }
 /** screen smaller then 600px **/
 @media all and (max-width: 600px) {
@@ -1598,6 +1590,19 @@ input[name="modify_reason"] {
 	width: 100%;
 }
 }
+
+/** screen smaller then 480px **/
+@media all and (min-width: 0) and (max-width: 480px) {
+dl.tp_title dt {
+	float: none;
+	width: 100%;
+}
+dl.tp_title dd {
+	float: none;
+	width: 100%;
+}
+}
+
 /** screen smaller then 400px **/
 @media all and (min-width: 0) and (max-width: 400px) {
 /* Panel Settings */
