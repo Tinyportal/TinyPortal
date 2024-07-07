@@ -558,10 +558,10 @@ function template_categories()
 								<div>' , str_repeat('- ', $cat['indent']) , '
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu=' . $cat['id'] . '" title="' . $txt['tp-editcategory'] . '">' , $cat['name'] , '</a>
 								</div>
-								<div class="tp_dlshow-on-responsive"><i>' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '' . $context['TPortal']['cats_count'][$cat['id']] . ' ' . ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) . '' : '' , '</i></div>
+								<div class="tp_dlshow-on-responsive"><i>' , array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , ' ' . (array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) : $txt['tp-articles']) . '</i></div>
 							</div>
 							<div class="tp_countblock tp_hidesmall">
-								<div class="tp_countblock_c"><div class="tp_countnr">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>' . ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) . '</div>
+								<div class="tp_countblock_c"><div class="tp_countnr">' , array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>' . (array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) : $txt['tp-articles']) . '</div>
 							</div>
 							<div class="tp_catactions">
 								<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' . $txt['tp-viewcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
@@ -924,11 +924,13 @@ function template_articles()
 					<div class="tp_flexrow">
 						<div class="tp_catname">
 							<div>' , (!empty($cat['indent']) ? str_repeat('- ', $cat['indent']) : '') , '
-							<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu=' . $cat['id'] . '" title="' . $txt['tp-articleoptions12'] . '">' , $cat['name'] , '</a></div>
-							<div class="tp_dlshow-on-responsive"><i>' , isset($context['TPortal']['cats_count'][$cat['id']]) ? '' . $context['TPortal']['cats_count'][$cat['id']] . ' ' . ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) . '' : '' , '</i></div>
-						</div><a href="' . $scripturl . '?action=tpadmin;sa=articles;cu=' . $cat['id'] . '" title="' . $txt['tp-articleoptions12'] . '">
+								<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu=' . $cat['id'] . '" title="' . $txt['tp-articleoptions12'] . '">' , $cat['name'] , '</a>
+							</div>
+							<div class="tp_dlshow-on-responsive"><i>' , array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , ' ' . (array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) : $txt['tp-articles']) . '</i></div>
+						</div>
+						<a href="' . $scripturl . '?action=tpadmin;sa=articles;cu=' . $cat['id'] . '" title="' . $txt['tp-articleoptions12'] . '">
 							<div class="tp_countblock tp_hidesmall">
-								<div class="tp_countblock_c"><div class="tp_countnr">' , isset($context['TPortal']['cats_count'][$cat['id']]) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>' . $txt['tp-articles'] . '</div>
+								<div class="tp_countblock_c"><div class="tp_countnr">' , array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? $context['TPortal']['cats_count'][$cat['id']] : '0' , '</div>' . (array_key_exists($cat['id'],$context['TPortal']['cats_count']) ? ($context['TPortal']['cats_count'][$cat['id']] > 1 ? $txt['tp-articles'] : $txt['tp-article']) : $txt['tp-articles']) . '</div>
 							</div></a>
 						<div class="tp_artactions">
 							<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' . $txt['tp-viewcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
@@ -1048,6 +1050,11 @@ function template_articles()
 		echo '
 					<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '">
 						<input type="hidden" name="tpadmin_form_category" value="' . $catty . '">';
+	}
+	else 
+		if (!empty($context['TPortal']['categoryNAME'])) {
+		echo '
+			<div class="noticebox">' . $txt['tp-noarticlesfound'] . '</div>';
 	}
 	echo '
 		</div>
@@ -1193,7 +1200,7 @@ function template_strays()
 	}
 	else {
 		echo '
-			<div class="padding-div">' . $txt['tp-noarticlesfound'] . '</div>';
+			<div class="infobox">' . $txt['tp-noarticlesfound'] . '</div>';
 	}
 	echo '
 	</form>';
@@ -1324,7 +1331,7 @@ function template_submission()
 	}
 	else {
 		echo '
-			<div class="padding-div">' . $txt['tp-nosubmissions'] . '</div>';
+			<div class="infobox">' . $txt['tp-nosubmissions'] . '</div>';
 	}
 
 	echo '
