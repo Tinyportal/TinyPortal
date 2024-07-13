@@ -283,6 +283,7 @@ $txt['tp-confirmcat1'] = 'Are you sure you want to delete this category?';
 $txt['tp-confirmcat2'] = '(Note that all articles belonging to this category will NOT be deleted: they will instead end up in the -uncategorized- section)';
 
 // Cat list
+$txt['tp-helpclist'] = 'The category list is a button strip this will show above the articles and category pages, which allow easy navigation between categories. If no categories are selected the button strip will not be shown.';
 $txt['tp-clist'] = 'Which categories should appear in the category tabs?';
 
 // Panels admin

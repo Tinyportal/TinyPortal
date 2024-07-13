@@ -865,6 +865,7 @@ function template_clist()
 	<form  accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin" method="post">
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="clist">
+		<p class="information">' , $txt['tp-helpclist'] , '</p>
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-tabs11'] . '</h3></div>
 		<div id="clist">
 			<div class="windowbg noup">
