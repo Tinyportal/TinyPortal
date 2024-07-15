@@ -3607,15 +3607,15 @@ function TPortalDLAdmin()
 				'url' => $scripturl . '?action=tportal;sa=download;dl=adminaddcat',
 				'active' => $context['TPortal']['dlsub'] == 'adminaddcat',
 			],
-			'upload' => [
-				'text' => 'tp-dltabs3',
-				'url' => $scripturl . '?action=tportal;sa=download;dl=upload',
-				'active' => $context['TPortal']['dlsub'] == 'upload',
-			],
 			'submissions' => [
 				'text' => 'tp-dlsubmissions',
 				'url' => $scripturl . '?action=tportal;sa=download;dl=adminsubmission',
 				'active' => $context['TPortal']['dlsub'] == 'adminsubmission',
+			],
+			'upload' => [
+				'text' => 'tp-dltabs3',
+				'url' => $scripturl . '?action=tportal;sa=download;dl=upload',
+				'active' => $context['TPortal']['dlsub'] == 'upload',
 			],
 			'ftp' => [
 				'text' => 'tp-dlftp',

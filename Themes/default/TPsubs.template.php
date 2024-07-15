@@ -2434,18 +2434,9 @@ function template_subtab_above()
 	global $context, $txt;
 
 	if (isset($context['TPortal']['subtabs']) && (is_countable($context['TPortal']['subtabs']) && count($context['TPortal']['subtabs']) > 1)) {
-		echo '
-		<div class="tborder" style="margin-bottom: 0.5em;">
-			<div class="cat_bar">
-				<h3 class="catbg">' . $txt['tp-menus'] . '</h3>
-			</div>
-			<div style="padding: 2px; overflow: hidden;">';
 
 		tp_template_button_strip($context['TPortal']['subtabs']);
 
-		echo '
-			</div>
-		</div>';
 	}
 }
 

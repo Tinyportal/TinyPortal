@@ -227,7 +227,7 @@ function TPortalAdmin()
 			],
 		];
 	}
-	elseif (in_array($tpsub, ['addcategory', 'categories', 'clist']) && allowedTo('tp_articles')) {
+	elseif (in_array($tpsub, ['categories', 'addcategory', 'clist']) && allowedTo('tp_articles')) {
 		$context['TPortal']['subtabs'] = [
 			'categories' => [
 				'lang' => true,
@@ -249,25 +249,13 @@ function TPortalAdmin()
 			],
 		];
 	}
-	elseif (in_array($tpsub, ['blocks', 'panels', 'menubox', 'addmenu']) && allowedTo('tp_blocks')) {
+	elseif (in_array($tpsub, ['blocks']) && allowedTo('tp_blocks')) {
 		$context['TPortal']['subtabs'] = [
-			'panels' => [
-				'lang' => true,
-				'text' => 'tp-panels',
-				'url' => $scripturl . '?action=tpadmin;sa=panels',
-				'active' => $tpsub == 'panels',
-			],
 			'blocks' => [
 				'lang' => true,
 				'text' => 'tp-blocks',
 				'url' => $scripturl . '?action=tpadmin;sa=blocks',
-				'active' => $tpsub == 'blocks' && !isset($_GET['overview']),
-			],
-			'addblock' => [
-				'lang' => true,
-				'text' => 'tp-addblock',
-				'url' => $scripturl . '?action=tpadmin;addblock=;' . $context['session_var'] . '=' . $context['session_id'] . '',
-				'active' => $tpsub == 'addblock',
+				'active' => $tpsub == 'blocks' && !isset($_GET['overview']) && !isset($_GET['addblock']),
 			],
 			'blockoverview' => [
 				'lang' => true,
@@ -275,6 +263,16 @@ function TPortalAdmin()
 				'url' => $scripturl . '?action=tpadmin;sa=blocks;overview',
 				'active' => $tpsub == 'blocks' && isset($_GET['overview']),
 			],
+			'addblock' => [
+				'lang' => true,
+				'text' => 'tp-addblock',
+				'url' => $scripturl . '?action=tpadmin;addblock=;' . $context['session_var'] . '=' . $context['session_id'] . '',
+				'active' => $tpsub == 'blocks' && isset($_GET['addblock']),
+			],
+		];
+	}
+	elseif (in_array($tpsub, ['menubox', 'addmenu']) && allowedTo('tp_blocks')) {
+		$context['TPortal']['subtabs'] = [
 			'menumanager' => [
 				'lang' => true,
 				'text' => 'tp-menumanager',
