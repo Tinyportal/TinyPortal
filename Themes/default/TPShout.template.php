@@ -78,8 +78,9 @@ function template_tpshout_admin_settings()
 		<input type="hidden" name="TPadmin_blocks" value="set" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
-			<p class="information">' , $txt['tp-shoutboxsettingsinfo'] , '</p>
-			<div class="cat_bar"><h3 class="catbg">' . $txt['tp-shoutboxsettings'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-shoutboxsettings'] . '</h3></div>
+		<p class="information">' , $txt['tp-shoutboxsettingsinfo'] , '</p>
+			<div class="cat_bar"><h3 class="catbg">' . $txt['tp-settings'] . '</h3></div>
 			<div id="tpshout_admin_settings">
 				<div class="windowbg noup">
 					<dl class="settings">
@@ -228,8 +229,9 @@ function template_tpshout_admin()
 		<input type="hidden" name="TPadmin_blocks" value="set" />
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
-		<p class="information">' , $txt['tp-shoutboxadmininfo'] , '</p>
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-shoutboxadmin'] . '</h3></div>
+		<p class="information">' , $txt['tp-shoutboxadmininfo'] , '</p>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-shoutmessages'] . '</h3></div>
 		<div id="tpshout_admin">
 			<div class="windowbg noup">
 				<div class="tp_addborder">

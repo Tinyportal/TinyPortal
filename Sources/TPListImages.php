@@ -57,7 +57,7 @@ function template_tp_list_images_admin()
 
 	echo '
 		<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;list"  method="post">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['custom_modules'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-listimage'] . '</h3></div>
 		<p class="information">' , $txt['tp-listimage-intro'] , '</p>
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-listimage-settings'] . '</h3></div>
 		<div id="tplistimages">

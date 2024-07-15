@@ -61,7 +61,7 @@ $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPorta
 
 // Frontpage
 $txt['tp-frontpage_settings'] = 'Frontpage settings';
-$txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here.';
+$txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here. All settings here are only applicable to the frontpage and override similar article settings if set differently.';
 $txt['tp-front_placement'] = 'Where to display the frontpage?';
 $txt['tp-front_placement_boardindex'] = 'Display on the forum index';
 $txt['tp-front_placement_standalone'] = 'Display on the Standalone page';
@@ -246,7 +246,6 @@ $txt['tp-articledelete'] = 'Delete this article';
 $txt['tp-articledeletedesc'] = 'Once you delete an article, there is no going back. Please be certain.';
 
 // Uncategorized articles
-$txt['tp-uncategorised2'] = 'Uncategorized articles';
 $txt['tp-helpstrays'] = 'Articles that have not yet been assigned to a category. The article category determines what member groups may actually view the article: as long as no category is assigned the article will not be visible to any guest or member.';
 $txt['tp-createnew'] = 'Assign selected to a new category -> ';
 $txt['tp-createnew2'] = 'Approve and assign selected to a new category -> ';
@@ -287,8 +286,7 @@ $txt['tp-helpclist'] = 'The category list is a button strip this will show above
 $txt['tp-clist'] = 'Which categories should appear in the category tabs?';
 
 // Panels admin
-$txt['tp-panelsettings'] = 'Panel Settings';
-$txt['tp-helppanels'] = 'Blocks are located in panels and each panel has its own set of settings.';
+$txt['tp-helppanels'] = 'Panels are sections that hold all of your blocks. The panels are predefined area\'s on the page that can be switched on or off individually so that you can customize your pages as you like. Each panel has Panel settings that allow a certain amount of flexibility where and how the panels are displayed and how the content is organized.';
 $txt['tp-panel'] = 'Panel';
 $txt['tp-hidebarsall'] = 'Hide panels when in these sections';
 $txt['tp-hidebarsadminonly'] = 'Hide panels in admin section';
@@ -361,7 +359,7 @@ $txt['tp-helpmenuitems'] = 'Here you can create and change the menu items for th
 
 // Blocks admin
 $txt['tp-blocks'] = 'Blocks';
-$txt['tp-blocksettings'] = 'Block settings';
+$txt['tp-helpblocks'] = 'Blocks is a term for the rectangles of information you can use throughout the portal. These blocks can contain regular html, php code or special written functions that collect specific types of information. You can show them according to which permissions the visitor has, and even show them just in certain sections.';
 $txt['tp-addleftblock'] = 'Add left block';
 $txt['tp-addrightblock'] = 'Add right block';
 $txt['tp-addtopblock'] = 'Add top block';
@@ -573,6 +571,7 @@ $txt['tp-menu-icon2'] = 'Standard icon value for new buttons is \'tinyportal/men
 // Shoutbox settings
 $txt['tp_shout'] = 'Shoutbox';
 $txt['tp-shoutboxsettings'] = 'Shoutbox settings';
+$txt['tp-shoutmessages'] = 'Shout messages';
 $txt['tp-shoutboxsettingsinfo'] = 'The settings on this page apply to all shoutboxes in your forum. If you have multiple shoutbox blocks, these settings apply to all.';
 $txt['tp-shoutboxtitle'] = 'Place a fixed message or announcement at the top of the shoutbox (BBC allowed)';
 $txt['tp-shoutbox_showsmile'] = 'Display smilies buttons';

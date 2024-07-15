@@ -1184,12 +1184,12 @@ function TPShoutAdmin()
 	if (allowedTo('tp_can_admin_shout')) {
 		$context['TPortal']['subtabs'] = [
 			'shoutbox_settings' => [
-				'text' => 'tp-settings',
+				'text' => 'tp-shoutboxsettings',
 				'url' => $scripturl . '?action=tpshout;shout=admin;settings',
 				'active' => (isset($_GET['action']) && ($_GET['action'] == 'tpshout' || $_GET['action'] == 'tpadmin') && isset($_GET['shout']) && $_GET['shout'] == 'admin' && isset($_GET['settings'])) ? true : false,
 			],
 			'shoutbox' => [
-				'text' => 'tp-shoutbox',
+				'text' => 'tp-shoutboxadmin',
 				'url' => $scripturl . '?action=tpshout;shout=admin',
 				'active' => (isset($_GET['action']) && ($_GET['action'] == 'tpshout' || $_GET['action'] == 'tpadmin') && isset($_GET['shout']) && $_GET['shout'] == 'admin' && !isset($_GET['settings'])) ? true : false,
 			],

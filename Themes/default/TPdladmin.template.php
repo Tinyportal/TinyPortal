@@ -723,7 +723,9 @@ function template_main()
 		echo '
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-dlsubmissions'] . '</h3></div>
 		<p class="information">' , $txt['tp-helpdlsubmissions'] , '</p>
-		<div id="any-submitted">
+		<div id="any-submitted">';
+		if (isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems']) > 0) {
+			echo '
 			<table class="table_grid tp_admin">
 			<thead>
 				<tr class="title_bar">
@@ -740,7 +742,6 @@ function template_main()
 				</tr>
 			</thead>
 			<tbody>';
-		if (isset($context['TPortal']['dl_admitems']) && count($context['TPortal']['dl_admitems']) > 0) {
 			foreach ($context['TPortal']['dl_admitems'] as $cat) {
 				echo '
 				<tr class="windowbg">
@@ -777,37 +778,33 @@ function template_main()
 				</td>
 				</tr>';
 			}
+		echo '
+			</tbody>
+			</table>';
 		}
 		else {
 			echo '
-				<tr class="windowbg">
-				<td>
-					<div class="float-items">' . $txt['tp-nosubmissions'] . '</div>
-				</td>
-				</tr>';
+				<div class="infobox">' . $txt['tp-nosubmissions'] . '</div>';
 		}
 		echo '
-		</tbody>
-		</table>
-	</div>
-	<p class="clearthefloat"></p>';
+		</div>';
 	}
 	// FTP page
 	elseif ($context['TPortal']['dlsub'] == 'adminftp') {
 		echo '
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-ftpstrays'] . '</h3></div>
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-dlftp'] . '</h3></div>
 		<p class="information">' . $txt['tp-assignftp'] . '</p>
-		<div id="ftp-files">
-			<div class="windowbg">
-				<dl class="tp_title settings">
-					<dt>
-						<a href="', $scripturl, '?action=helpadmin;help=tp-ftpfolderdesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-ftpfolder'] . '
-					</dt>
-					<dd>
-						' . $context['TPortal']['download_upload_path'] . '
-					</dd>
-				</dl>';
+		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-ftpstrays'] . '</h3></div>
+		<div id="ftp-files" class="windowbg noup">
+			<dl class="tp_title settings">
+				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-ftpfolderdesc" onclick="return reqOverlayDiv(this.href);">
+					<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-ftpfolder'] . '
+				</dt>
+				<dd>
+					' . $context['TPortal']['download_upload_path'] . '
+				</dd>
+			</dl>';
 
 		if (!empty($_GET['ftpcat'])) {
 			// alert or information processsing multiple files
@@ -863,20 +860,20 @@ function template_main()
 			}
 			else {
 				echo '
-						<option value="0">' . $txt['tp-none-'] . '</option>';
+					<option value="0">' . $txt['tp-none-'] . '</option>';
 			}
 			echo '
-						</select>
-					</dt>
-					<dd>
-						<input type="text" name="assign-ftp-newcat" placeholder= "' . $txt['tp-newcatassign'] . '" value="" size="40">
-					</dd>
-					<dt>
-						<label for="dladmin_icon">' . $txt['tp-dluploadicon'] . '</label>
-					</dt>
-					<dd>
-						<select size="1" name="tp_newdladmin_icon" id="tp_newdladmin_icon" onchange="dlcheck(this.value)">
-						<option value="ftp.png">ftp.png</option>';
+					</select>
+				</dt>
+				<dd>
+					<input type="text" name="assign-ftp-newcat" placeholder= "' . $txt['tp-newcatassign'] . '" value="" size="40">
+				</dd>
+				<dt>
+					<label for="dladmin_icon">' . $txt['tp-dluploadicon'] . '</label>
+				</dt>
+				<dd>
+					<select size="1" name="tp_newdladmin_icon" id="tp_newdladmin_icon" onchange="dlcheck(this.value)">
+					<option value="ftp.png">ftp.png</option>';
 
 			// output the icons
 			$selicon = 'ftp.png';
@@ -885,21 +882,19 @@ function template_main()
 						<option ' , ($selicon == $value) ? 'selected="selected" ' : '', 'value="' . $value . '">' . $value . '</option>';
 			}
 			echo '
-						</select>
-						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' . $settings['tp_images_url'] . '/' . $selicon . '" alt="" />
-					<script type="text/javascript">
-					function dlcheck(icon) {
-							document.dlicon.src= "' . $boardurl . '/tp-downloads/icons/" + icon
-					}
-					</script><br>
-					</dd>
-				</dl>';
+					</select>
+					<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="' . $settings['tp_images_url'] . '/' . $selicon . '" alt="" />
+				<script type="text/javascript">
+				function dlcheck(icon) {
+						document.dlicon.src= "' . $boardurl . '/tp-downloads/icons/" + icon
+				}
+				</script><br>
+				</dd>
+			</dl>';
 			echo '
 				<input type="submit" class="button" name="ftpdlsend" value="' . $txt['tp-submitftp'] . '">
 			</div>';
 		}
-		echo '
-		</div>';
 	}
 	// Edit category page
 	elseif (substr($context['TPortal']['dlsub'], 0, 12) == 'admineditcat') {

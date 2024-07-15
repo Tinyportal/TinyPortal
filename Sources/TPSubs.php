@@ -1787,7 +1787,6 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	$context['admin_header']['tp_settings'] = $txt['tp-adminheader1'];
 	$context['admin_header']['tp_articles'] = $txt['tp-articles'];
 	$context['admin_header']['tp_blocks'] = $txt['tp-adminpanels'];
-	$context['admin_header']['tp_menubox'] = $txt['tp-menumanager'];
 	if (allowedTo('tp_can_admin_shout') || allowedTo('tp_dlmanager') || allowedTo('tp_can_list_images')) {
 		$context['admin_header']['custom_modules'] = $txt['custom_modules'];
 	}
@@ -1795,7 +1794,7 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 	if (allowedTo('tp_settings')) {
 		$context['admin_tabs']['tp_settings'] = [
 			'settings' => [
-				'title' => $txt['tp-settings'],
+				'title' => $txt['tp-generalsettings'],
 				'description' => $txt['tp-settingdesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=settings',
 				'is_selected' => $tpsub == 'settings',
@@ -1860,30 +1859,13 @@ function TPadminIndex($tpsub = '', $module_admin = false)
 				'title' => $txt['tp-allblocks'],
 				'description' => $txt['tp-blocksdesc1'],
 				'href' => $scripturl . '?action=tpadmin;sa=blocks',
-				'is_selected' => $tpsub == 'blocks' && !isset($_GET['latest']) && !isset($_GET['overview']),
+				'is_selected' => $tpsub == 'blocks',
 			],
-			'blockoverview' => [
-				'title' => $txt['tp-blockoverview'],
-				'description' => '',
-				'href' => $scripturl . '?action=tpadmin;sa=blocks;overview',
-				'is_selected' => ($tpsub == 'blocks' && isset($_GET['overview'])) || substr($tpsub, 0, 9) == 'editblock',
-			],
-		];
-	}
-
-	if (allowedTo('tp_blocks')) {
-		$context['admin_tabs']['tp_menubox'] = [
 			'menubox' => [
 				'title' => $txt['tp-menumanager'],
 				'description' => '',
 				'href' => $scripturl . '?action=tpadmin;sa=menubox',
 				'is_selected' => in_array($tpsub, ['menubox', 'linkmanager']),
-			],
-			'addmenu' => [
-				'title' => isset($_GET['mid']) ? $txt['tp-addmenuitem'] : $txt['tp-addmenu'],
-				'description' => '',
-				'href' => (isset($_GET['mid']) && is_numeric($_GET['mid'])) ? $scripturl . '?action=tpadmin;sa=addmenu;mid=' . $_GET['mid'] : $scripturl . '?action=tpadmin;sa=addmenu;fullmenu',
-				'is_selected' => in_array($tpsub, ['addmenu']),
 			],
 		];
 	}
