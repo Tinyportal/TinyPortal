@@ -1850,7 +1850,7 @@ function template_blocks()
 					<tbody>';
 		}
 		else {
-			echo '<div class="noticebox">' . $txt['tp-noblocks'] . '</div><br>';
+			echo '<div class="noticebox">' . $txt['tp-noblocks'] . '</div>';
 		}
 		$n = 0;
 		if ($tn > 0) {
