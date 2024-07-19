@@ -220,11 +220,10 @@ function getBlocks()
 			$context['TPortal'][$panel . 'panel'] = 0;
 		}
 		// check the hide setting
-		if (!isset($context['TPortal']['not_forum']) && $context['TPortal']['hide_' . $panel . 'bar_forum'] == 1) {
+		if (empty($context['TPortal']['not_forum']) && $context['TPortal']['hide_' . $panel . 'bar_forum'] == 1) {
 			tp_hidebars($panel);
 		}
 	}
-
 	$context['TPortal']['blocks'] = $blocks;
 }
 
