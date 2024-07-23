@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2564,7 +2564,7 @@ function tptimeformat($log_time, $show_today = true, $format = '%d %b %Y')
 	if (setlocale(LC_TIME, $txt['lang_locale'])) {
 		foreach (['%a', '%A', '%b', '%B'] as $token) {
 			if (strpos($str, $token) !== false) {
-				$str = str_replace($token, !empty($txt['lang_capitalize_dates']) ? $smcFunc['ucwords'](strftime($token, $time)) : strftime($token, $time), $str);
+				$str = str_replace($token, !empty($txt['lang_capitalize_dates']) ? $smcFunc['ucwords'](smf_strftime($token, $time)) : smf_strftime($token, $time), $str);
 			}
 		}
 	}
@@ -2572,21 +2572,21 @@ function tptimeformat($log_time, $show_today = true, $format = '%d %b %Y')
 		// Do-it-yourself time localization.  Fun.
 		foreach (['%a' => 'days_short', '%A' => 'days', '%b' => 'months_short', '%B' => 'months'] as $token => $text_label) {
 			if (strpos($str, $token) !== false) {
-				$str = str_replace($token, $txt[$text_label][(int) strftime($token === '%a' || $token === '%A' ? '%w' : '%m', $time)], $str);
+				$str = str_replace($token, $txt[$text_label][(int) smf_strftime($token === '%a' || $token === '%A' ? '%w' : '%m', $time)], $str);
 			}
 		}
 		if (strpos($str, '%p')) {
-			$str = str_replace('%p', (strftime('%H', $time) < 12 ? 'am' : 'pm'), $str);
+			$str = str_replace('%p', (smf_strftime('%H', $time) < 12 ? 'am' : 'pm'), $str);
 		}
 	}
 
-	// Windows doesn't support %e; on some versions, strftime fails altogether if used, so let's prevent that.
+	// Windows doesn't support %e; on some versions, smf_strftime fails altogether if used, so let's prevent that.
 	if ($context['server']['is_windows'] && strpos($str, '%e') !== false) {
-		$str = str_replace('%e', ltrim(strftime('%d', $time), '0'), $str);
+		$str = str_replace('%e', ltrim(smf_strftime('%d', $time), '0'), $str);
 	}
 
 	// Format any other characters..
-	return strftime($str, $time);
+	return smf_strftime($str, $time);
 }
 
 // Generate a strip of buttons.
