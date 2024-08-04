@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -466,6 +466,9 @@ ul.tp_category_children li {
 	clear: both;
 }
 /* Blocklayout */
+.tp_dummy_title {
+	padding: .3em;
+}
 .tp_blockbody {
 	line-height: 1.3em;
 	min-height: 0;
@@ -473,6 +476,10 @@ ul.tp_category_children li {
 	overflow-wrap: anywhere;
 	padding: .3em;
 }
+.tp_leftblock_noframe .tp_blockbody, .tp_rightblock_noframe .tp_blockbody, .tp_topblock_noframe .tp_blockbody, .tp_centerblock_noframe .tp_blockbody, .tp_lowerblock_noframe .tp_blockbody, .tp_bottomblock_noframe .tp_blockbody  {
+	padding: 0;
+}
+
 img.tp_edit {
 	float:right;
 	margin: 2px 0 0 4px	;
@@ -873,6 +880,9 @@ div.tp_half21 {
 .tp_article .cat_bar h3.titlebg2 {
 	background: none;
 	padding: .6em 0 .5em 0;
+}
+img.tp_article_on {
+	margin-right: .5em;
 }
 
 /* TP STYLES */

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.2
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -65,7 +65,7 @@ function template_submitarticle()
 	}
 
 	echo'
-		<div class="cat_bar"><h3 class="catbg"><img style="margin-right: 4px;" src="' . $settings['tp_images_url'] . '/TP' , $mg['off'] == '1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id'] == '' ? $txt['tp-addarticle'] . '' . $txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle'] . ' ' . html_entity_decode($mg['subject']) , '' , $mg['id'] == 0 ? '' : '&nbsp;-&nbsp;<a href="' . $scripturl . '?page=' . $mg['id'] . '">[' . $txt['tp-preview'] . ']</a>';
+		<div class="cat_bar"><h3 class="catbg"><img class="tp_article_on" src="' . $settings['tp_images_url'] . '/TP' , $mg['off'] == '1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id'] == '' ? $txt['tp-addarticle'] . '' . $txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle'] . ' ' . html_entity_decode($mg['subject']) , '' , $mg['id'] == 0 ? '' : '&nbsp;-&nbsp;<a href="' . $scripturl . '?page=' . $mg['id'] . '">[' . $txt['tp-preview'] . ']</a>';
 	echo '</h3></div>
 		<div id="edit-add-single-article">
 		<div class="windowbg noup">
