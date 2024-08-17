@@ -885,7 +885,7 @@ function doTPcat()
 					$context['TPortal']['category']['col2'] = [];
 					while ($row = $smcFunc['db_fetch_assoc']($request)) {
 						// Add the rating together
-						$row['rating'] = array_sum(explode(',', $row['rating'] ?? ''));
+						$row['rating'] = empty($row['rating']) ? 0 : array_sum(explode(',', $row['rating']));
 						// expand the vislaoptions
 						$row['visual_options'] = explode(',', $row['options']);
 
