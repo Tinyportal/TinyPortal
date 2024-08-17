@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -496,9 +496,9 @@ function doTPpage()
 				// shortname title
 				$article['shortname'] = un_htmlspecialchars($article['shortname']);
 				// Add ratings together
-				$article['rating'] = !is_null($article['rating']) ? array_sum(explode(',', $article['rating'])) : 0;
+				$article['rating'] = empty($article['rating']) ? 0 : array_sum(explode(',', $article['rating']));
 				// Make sure voters is set
-				$article['voters'] = !is_null($article['voters']) ? $article['voters'] : 0;
+				$article['voters'] = empty($article['voters']) ? 0 : $article['voters'];
 				// allowed and all is well, go on with it.
 				$context['TPortal']['article'] = $article;
 
@@ -1484,7 +1484,7 @@ function doTPfrontpage()
 				// expand the vislaoptions
 				$row['visual_options'] = explode(',', $row['options']);
 				$row['visual_options']['layout'] = $context['TPortal']['frontpage_layout'];
-				$row['rating'] = is_null($row['rating']) ? 0 : array_sum(explode(',', $row['rating']));
+				$row['rating'] = empty($row['rating']) ? 0 : array_sum(explode(',', $row['rating']));
 				$row['avatar'] = set_avatar_data(
 					[
 						'avatar' => $row['avatar'],

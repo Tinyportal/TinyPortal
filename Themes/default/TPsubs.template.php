@@ -127,7 +127,7 @@ function TPblock($block, $theme, $side, $flow, $double = false)
 		else {
 			if (($block['visible'] == '' || $block['visible'] == '1') && $block['frame'] != 'frame') {
 				echo '
-		<div style="padding: 4px;">';
+		<div class="tp_dummy_title">';
 				if ($block['visible'] == '' || $block['visible'] == '1') {
 					echo '<a href="javascript:void(0);return%20false" onclick="toggle(\'' . $block['id'] . '\'); return false"><img id="blockcollapse' . $block['id'] . '" style="margin: 0;float:right" src="' . $settings['tp_images_url'] . '/' , !in_array($block['id'], $context['TPortal']['upshrinkblocks']) ? 'TPcollapse' : 'TPexpand' , '.png" alt="" title="' . $txt['block-upshrink_description'] . '" /></a>';
 				}
