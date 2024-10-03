@@ -1552,6 +1552,7 @@ function do_postchecks()
 			$w = [];
 			$ssi = [];
 			$checkboxes = [];
+			$default_image_upload_path = $boarddir . "/tp-images/";
 
 			switch ($from) {
 				case 'settings':
@@ -1626,7 +1627,10 @@ function do_postchecks()
 					}
 					if ($what == 'tp_image_upload_path') {
 						unset($updateArray['image_upload_path']);
-						if (strcmp($context['TPortal']['image_upload_path'], $value) != 0) {
+						if (empty($value)) {
+							$updateArray['image_upload_path'] = $default_image_upload_path;
+						}
+						elseif (strcmp($context['TPortal']['image_upload_path'], $value) != 0) {
 							// Only allow if part of the boarddir
 							if (strncmp($value, $boarddir, strlen($boarddir)) == 0) {
 								// It cann't be part of the existing path
@@ -1639,6 +1643,7 @@ function do_postchecks()
 								}
 							}
 						}
+						
 					}
 				}
 			}
