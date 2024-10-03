@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.1; TPortalAdmin
+// Version: 3.0.2; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
