@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.1; TPortalAdmin
+// Version: 3.0.2; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
@@ -51,7 +51,7 @@ $txt['tp-fulltextsearchdesc'] = 'This setting will enable advanced search option
 $txt['tp-disabletemplateeval'] = 'Disable the PHP eval function for templates';
 $txt['tp-disabletemplateevaldesc'] = 'Disable the PHP eval function for rendering article templates';
 $txt['tp-imageuploadpath'] = 'Path where TinyPortal images are uploaded to on your server';
-$txt['tp-imageuploadpathdesc'] = 'File path where the images uploaded via TinyPortal are stored';
+$txt['tp-imageuploadpathdesc'] = 'File path where the images uploaded via TinyPortal are stored. This needs to be a folder that is in the SMF\'s installation directory. Default folder: /tp-images/<br><br> SMF\'s installation directory is: <b>'.$boarddir.'</b><br><br> Changing the file path will create a new folder en move the files from the old location to the new location. Make this field empty and save to reset to the default location';
 $txt['tp-blockcodeuploadpath'] = 'Path where TinyPortal blockcodes are uploaded to on your server';
 $txt['tp-blockcodeuploadpathdesc'] = 'File path where the blockcodes uploaded via TinyPortal are stored';
 $txt['tp-downloaduploadpath'] = 'Path where TinyPortal downloads are uploaded to on your server';

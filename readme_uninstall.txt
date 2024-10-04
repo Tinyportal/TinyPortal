@@ -1,4 +1,4 @@
-Uninstalling TinyPortal v3.0.1 for SMF
+Uninstalling TinyPortal v3.0.2 for SMF
 
 [size=14pt][b]Thanks for using TinyPortal![/b][/size]
 
