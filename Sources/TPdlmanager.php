@@ -2017,10 +2017,21 @@ function TPdownloadme()
 					header('Content-Encoding: none');
 				}
 
-				if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime(array_shift(explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']))) >= filemtime($filename)) {
-					ob_end_clean();
-					header('HTTP/1.1 304 Not Modified');
-					exit;
+//				if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime(array_shift(explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']))) >= filemtime($filename)) {
+//					ob_end_clean();
+//					header('HTTP/1.1 304 Not Modified');
+//					exit;
+//				}
+
+				// If it hasn't been modified since the last time this attachement was retrieved, there's no need to display it again.
+				if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+					list($modified_since) = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
+					if (strtotime($modified_since) >= filemtime($filename)) {
+						ob_end_clean();
+						// Answer the question - no, it hasn't been modified ;).
+						header('HTTP/1.1 304 Not Modified');
+						exit;
+					}
 				}
 
 				// Send the attachment headers.
