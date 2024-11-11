@@ -822,7 +822,7 @@ function TPShoutBlock(&$row)
 		$context['html_headers'] .= '
 		<script type="text/javascript"><!-- // --><![CDATA[
         $(document).ready(function() {
-            $(".tp_shoutframe.tp_shoutframe_' . $id . '").parent().scrollTop($(document).height() + $(window).height());
+            $("#tp_shoutframe_' . $id . '").parent().scrollTop($(document).height() + $(window).height());
         });
         // ]]></script>';
 	}
@@ -830,7 +830,7 @@ function TPShoutBlock(&$row)
 		$context['html_headers'] .= '
 		<script type="text/javascript"><!-- // --><![CDATA[
         $(document).ready(function() {
-            $(".tp_shoutframe.tp_shoutframe_' . $id . '").parent().scrollTop(0);
+            $("#tp_shoutframe_' . $id . '").parent().scrollTop(0);
         });
         // ]]></script>';
 	}
