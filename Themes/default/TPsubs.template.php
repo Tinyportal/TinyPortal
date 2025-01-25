@@ -2029,7 +2029,7 @@ function article_bookmark($render = true)
 			$data .= '<a href="http://www.facebook.com/sharer.php?u=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/facebook.png" alt="Share on Facebook!" title="Share on Facebook!" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_twitter'] == '1') {
-			$data .= '<a href="http://twitter.com/home/?status=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" title="Share on X!" src="' . $settings['tp_images_url'] . '/social/twitter-x.png" alt="Share on Twitter!" /></a>';
+			$data .= '<a href="https://x.com/intent/post?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" title="Share on X!" src="' . $settings['tp_images_url'] . '/social/twitter-x.png" alt="Share on Twitter!" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_reddit'] == '1') {
 			$data .= '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
