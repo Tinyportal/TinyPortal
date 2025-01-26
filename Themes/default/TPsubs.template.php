@@ -199,7 +199,7 @@ function TPblock($block, $theme, $side, $flow, $double = false)
 // blocktype 1: User
 function TPortal_userbox()
 {
-	global $context, $settings, $scripturl, $txt, $user_info;
+	global $context, $settings, $scripturl, $txt, $user_info, $modSettings;
 
 	echo '
 	<div class="tp_userblock">';
@@ -343,32 +343,64 @@ function TPortal_userbox()
 		</ul>';
 	}
 	// Otherwise they're a guest - so politely ask them to register or login.
+// 			<input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
+
 	else {
-		if (TP_SMF21) {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>', $context['current_time'], '</div>';
-		}
-		else {
-			echo '<div style="line-height: 1.4em;">', sprintf($txt['welcome_guest'], $txt['guest_title']), '<br><br>', $context['current_time'], '</div>';
-		}
 		echo '
-		<form style="margin-top: 5px;" action="', $scripturl, '?action=login2" method="post" >
+		<div style="line-height: 1.4em;">
+			', sprintf($txt[$context['can_register'] ? 'tp-welcome_guest_register' : 'tp-welcome_guest'], $context['forum_name_html_safe'], $scripturl . '?action=login', 'return reqOverlayDiv(this.href, ' . JavaScriptEscape($txt['login']) . ');', $scripturl . '?action=signup'), '<br><br>
+		</div>';
+
+		echo '
+		<form class="login" action="', $scripturl, '?action=login2" method="post" accept-charset="', $context['character_set'], '">';
+	if (isset($context['TPortal']['userbox']['loginform'])) {
+		echo '
+			<dl>
+				<dt>', $txt['username'], ':</dt>
+				<dd>
+					<input type="text" id="', !empty($context['from_ajax']) ? 'ajax_' : '', 'loginuser" name="user" size="20" required>
+				</dd>
+				<dt>', $txt['password'], ':</dt>
+				<dd>
+					<input type="password" id="', !empty($context['from_ajax']) ? 'ajax_' : '', 'loginpass" name="passwrd" size="20" required>
+				</dd>
+			</dl>
+			<dl>
+				<dt>', $txt['time_logged_in'], ':</dt>
+				<dd>
+					<select name="cookielength" id="cookielength">';
+
+	foreach ($context['login_cookie_times'] as $cookie_time => $cookie_txt)
+		echo '
+					<option value="', $cookie_time, '"', $modSettings['cookieTime'] == $cookie_time ? ' selected' : '', '>', $txt[$cookie_txt], '</option>';
+	echo '
+					</select>
+				</dd>
+			</dl>';
+	}
+	else {
+		echo '
 			<input type="text" class="input_text" name="user" size="10" style="max-width: 45%!important;"/> <input type="password" class="input_password" name="passwrd" size="10" style="max-width: 45%!important;"/><br>
-			<select name="cookielength" style="max-width: 45%!important;">
-				<option value="-1" selected="selected">', $txt['forever'], '</option>
-				<option value="60">', $txt['one_hour'], '</option>
-				<option value="1440">', $txt['one_day'], '</option>
-				<option value="10080">', $txt['one_week'], '</option>
-				<option value="302400">', $txt['one_month'], '</option>
-			</select>
-			<input type="submit" class="button_submit" value="', $txt['login'], '" />
-			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />';
-		if (TP_SMF21) {
+			<select name="cookielength" id="cookielength">';
+
+	foreach ($context['login_cookie_times'] as $cookie_time => $cookie_txt)
+		echo '
+				<option value="', $cookie_time, '"', $modSettings['cookieTime'] == $cookie_time ? ' selected' : '', '>', $txt[$cookie_txt], '</option>';
+	echo '
+			</select>';
+	}
+		if (!isset($context['TPortal']['userbox']['loginform'])) {
 			echo '
-			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
+				<div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
 		}
 		echo '
-		</form>
-		<div style="line-height: 1.4em;" class="middletext">', $txt['tp-quick_login_dec'], '</div>';
+			<p><input type="submit" value="', $txt['login'], '" class="button"></p>
+			<p class="smalltext"><a href="', $scripturl, '?action=reminder">', $txt['forgot_your_password'], '</a></p>
+			<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
+			<input type="hidden" name="', $context['login_token_var'], '" value="', $context['login_token'], '">';
+		echo '
+		</form>';
+
 	}
 	echo '
 		</div>';
