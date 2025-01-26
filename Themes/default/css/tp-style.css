@@ -485,6 +485,11 @@ img.tp_edit {
 	margin: 2px 0 0 4px	;
 }
 /* Blocktype 1: User */
+.tp_userblock .login dt, .tp_userblock .login dd {
+	float: none;
+	width: 100%;
+	text-align: left;
+}
 .tp_userblock ul, .tp_statsblock ul {
 	padding: 0;
 	left: .25em;

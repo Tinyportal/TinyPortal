@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -580,6 +580,9 @@ function template_editblock()
 							<input type="checkbox" id="tp_userbox_options2" name="tp_userbox_options2" value="time" ', (isset($context['TPortal']['userbox']['time']) && $context['TPortal']['userbox']['time']) ? 'checked' : '' , '><label for="tp_userbox_options2"> ' . $txt['tp-userbox3'] . '</label><br>
 							<input type="checkbox" id="tp_userbox_options3" name="tp_userbox_options3" value="unread" ', (isset($context['TPortal']['userbox']['unread']) && $context['TPortal']['userbox']['unread']) ? 'checked' : '' , '><label for="tp_userbox_options3"> ' . $txt['tp-userbox4'] . '</label><br>
 						</dd>
+						<dt>' . $txt['tp-showuserbox3'] . '</dt>
+						<dd>
+							<input type="checkbox" id="tp_userbox_options8" name="tp_userbox_options8" value="loginform" ', (isset($context['TPortal']['userbox']['loginform']) && $context['TPortal']['userbox']['loginform']) ? 'checked' : '' , '><label for="tp_userbox_options8"> ' . $txt['tp-userbox8'] . '</label><br>
 					</dl>';
 		if (isset($context['TPortal']['userbox']['stats']) && $context['TPortal']['userbox']['stats']) {
 			echo '<input type="hidden" name="tp_userbox_options4" value="stats">';
