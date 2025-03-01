@@ -355,7 +355,7 @@ function template_editblock()
 			echo '
 							</select>
 							<p style="padding: 10px 0 10px 0; margin: 0;"><input type="button" value="' , $txt['tp-insert'] , '" name="blockcode_save" onclick="submit();" />
-							<input type="checkbox" name="blockcode_overwrite" value="' . $context['TPortal']['blockedit']['id'] . '" /> ' , $txt['tp-blockcodes_overwrite'] , '</p>
+							<input type="checkbox" id="tp_blockcode_overwrite" name="blockcode_overwrite" value="' . $context['TPortal']['blockedit']['id'] . '" /><label for="tp_blockcode_overwrite"> ' , $txt['tp-blockcodes_overwrite'] , '</label></p>
 						</div>
 					<div id="blockcodeinfo" class="description" >&nbsp;</div>
 					<script type="text/javascript"><!-- // --><![CDATA[

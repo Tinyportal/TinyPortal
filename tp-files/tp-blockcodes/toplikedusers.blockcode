@@ -12,11 +12,11 @@ Top Liked Users
 </author>
 
 <version>
-1.0
+1.1
 </version>
 
 <date>
-13.April.2024
+28.February.2025
 </date>
 
 <code>
@@ -29,9 +29,10 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 	$showtitle = 'Y';
 // End Config
 
+// get the likes
 	loadLanguage('Stats');
 
-	// Liked users top 10.
+	// Liked users top X.
 	$max_liked_users = 1;
 	$request = $smcFunc['db_query']('', '
 		SELECT m.id_member AS liked_user, COUNT(l.content_id) AS count, mem.real_name
@@ -52,7 +53,7 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 		)
 	);
 			
-	$messages = array();
+	$likedusers = array();
 	
 	while ($row = $smcFunc['db_fetch_assoc']($request))
 	{
