@@ -2447,10 +2447,12 @@ function category_childs()
 {
 	global $context, $scripturl;
 
+	if (!empty($context['TPortal']['category']['options']['showchild']) == 1) {
+
 	echo '
-	<ul class="tp_category_children">';
-	foreach ($context['TPortal']['category']['children'] as $ch => $child) {
-		if (!empty($context['TPortal']['category']['options']['showchild']) == 1) {
+		<ul class="tp_category_children">';
+		foreach ($context['TPortal']['category']['children'] as $ch => $child) {	
+
 			echo '<li><a href="' , $scripturl , '?cat=' , $child['id'] , '">' , $child['value1'] ,' (' , $child['articlecount'] , ')</a></li>';
 		}
 	}

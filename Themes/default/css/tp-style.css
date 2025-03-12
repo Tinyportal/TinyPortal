@@ -435,7 +435,7 @@ a.tp_avatar_author img {
 ul.tp_category_children {
 	margin: 0;
 	overflow: hidden;
-	padding: 1em 0;
+	padding: .5em 0;
 }
 ul.tp_category_children li {
 	display: inline;
