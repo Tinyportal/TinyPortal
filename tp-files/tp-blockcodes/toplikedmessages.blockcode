@@ -12,11 +12,11 @@ Top Liked Messages
 </author>
 
 <version>
-1.0
+1.1
 </version>
 
 <date>
-11.April.2024
+28.February.2025
 </date>
 
 <code>
@@ -33,6 +33,7 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 // get the likes
 	loadLanguage('Stats');
 
+	// Liked users top X.   
 	$max_liked = 1;
 	$request = $smcFunc['db_query']('', ' 
 		SELECT m.id_msg, m.subject, l.likes, m.total_likes, m.id_board, m.id_topic, t.approved, m.id_member, m.poster_name
@@ -92,31 +93,33 @@ global $scripturl, $smcFunc, $txt, $days, $modSettings;
 			</div>';
 		echo '
 			<dl class="stats">';
-
-	foreach ($messages as $item)
-	{
-		echo '
-				<dt>
-					', $item['link'], '';
-	if ($showuser == 'Y') 
-		echo '
-					 ', $txt['by'], ' ', $item['user_link'], '';
-		echo '
-				</dt>
-				<dd class="statsbar generic_bar righttext">';
-
-		if (!empty($item['percent']))
+	if (!empty($messages)) {
+	
+		foreach ($messages as $item)
+		{
 			echo '
-					<div class="bar" style="width: ', $item['percent'], '%;"></div>';
-		else
+					<dt>
+						', $item['link'], '';
+		if ($showuser == 'Y') 
 			echo '
-					<div class="bar empty"></div>';
+						 ', $txt['by'], ' ', $item['user_link'], '';
+			echo '
+					</dt>
+					<dd class="statsbar generic_bar righttext">';
 
-		echo '
-					<span>', $item['num'], '</span>
-				</dd>';
+			if (!empty($item['percent']))
+				echo '
+						<div class="bar" style="width: ', $item['percent'], '%;"></div>';
+			else
+				echo '
+						<div class="bar empty"></div>';
+
+			echo '
+						<span>', $item['num'], '</span>
+					</dd>';
+		}
 	}
-
+	
 	echo '
 			</dl>
 		</div><!-- .content -->';

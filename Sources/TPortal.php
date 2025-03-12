@@ -919,10 +919,10 @@ function doTPcat()
 				$request = $smcFunc['db_query'](
 					'',
 					'
-					SELECT cat.id, cat.value1, cat.value2, COUNT(art.id) as articlecount
+					SELECT cat.id, cat.value1, cat.value2, cat.value8, COUNT(art.id) as articlecount
 					FROM {db_prefix}tp_variables AS cat
 					LEFT JOIN {db_prefix}tp_articles AS art ON (art.category = cat.id)
-					WHERE cat.type = {string:type} GROUP BY art.category, cat.id, cat.value1, cat.value2',
+					WHERE cat.type = {string:type} GROUP BY art.category, cat.id, cat.value1, cat.value2, cat.value8',
 					['type' => 'category']
 				);
 				if ($smcFunc['db_num_rows']($request) > 0) {
@@ -1013,6 +1013,7 @@ function doTPcat()
 						$context['TPortal']['clist'][] = [
 							'id' => $value,
 							'name' => $allcats[$value]['value1'],
+							'shortname' => $allcats[$value]['value8'],
 							'selected' => $value == $cat ? true : false,
 						];
 						$txt['catlist' . $value] = $allcats[$value]['value1'];

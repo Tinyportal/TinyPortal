@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.2
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -147,7 +147,7 @@ function template_category()
 			$buts[$cats['id']] = [
 				'text' => 'catlist' . $cats['id'],
 				'lang' => false,
-				'url' => $scripturl . '?cat=' . $cats['id'],
+				'url' => $scripturl . '?cat=' . (!empty($cats['shortname']) ? $cats['shortname'] : $cats['id']),
 				'active' => false,
 			];
 			if ($cats['selected']) {
