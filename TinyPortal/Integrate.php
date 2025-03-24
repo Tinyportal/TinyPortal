@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -429,7 +429,7 @@ class Integrate
 				[
 					'forum' => [
 						'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-						'href' => ($context['TPortal']['front_placement'] == 'boardindex') ? $scripturl . '?action=forum' : $scripturl,
+						'href' => ($context['TPortal']['front_placement'] == 'boardindex' || 'standalone') ? $scripturl . '?action=forum' : $scripturl,
 						'show' => true,
 						'icon' => 'menu_tpforum',
 					],
