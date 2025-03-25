@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -52,7 +52,7 @@ if ($manual) {
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v3.0.2 for SMF2.1 and SMF3.</title>
+		<title>TinyPortal - v3.0.3 for SMF2.1 and SMF3.</title>
 		 <link rel="stylesheet" type="text/css" href="' . $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 }
@@ -66,7 +66,7 @@ $render .= '<div id="hidemenow" style="z-index: 200; margin-bottom: 1em; positio
     document.getElementById("hidemenow").style.overflow = "hidden";
     }
 </script>
-<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v3.0.2 for SMF 2.1.x</h3></div>
+<div class="cat_bar" style="position:relative;"><a href="javascript:void(0)" style="position:absolute;top:5px;right:5px;font-weight:bold;color:red;" onclick="closeNav()"><img src="' . $boardurl . '/Themes/default/images/tinyportal/TPdelete2.png" alt="*" /></a><h3 class="catbg">Install/Upgrade TinyPortal v3.0.3 for SMF 2.1.x</h3></div>
 	<div class="windowbg" style="overflow: auto;">
 		<ul class="normallist" style="line-height: 1.7em;">';
 
@@ -502,7 +502,7 @@ if ($convertaccess) {
 // now we process all settings
 $settings_array = [
 	// KEEP TRACK OF INTERNAL VERSION HERE
-	'version' => '3.0.2',
+	'version' => '3.0.3',
 	'frontpage_title' => '',
 	'showforumfirst' => '0',
 	'hideadminmenu' => '0',
