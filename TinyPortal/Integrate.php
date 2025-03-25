@@ -411,7 +411,7 @@ class Integrate
 						0,
 						[
 							[
-								'url' => ($context['TPortal']['front_placement'] == 'boardindex') ? $scripturl . '?action=forum' : $scripturl,
+								'url' => ($context['TPortal']['front_placement'] == 'boardindex' || 'standalone') ? $scripturl . '?action=forum' : $scripturl,
 								'name' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum'
 							]
 						]

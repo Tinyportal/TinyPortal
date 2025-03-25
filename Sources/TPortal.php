@@ -335,7 +335,7 @@ function setupTPsettings()
 	$context['TPortal']['is_frontpage'] = false;
 
 	// a switch to make it clear what is "forum" and not
-	if ($context['TPortal']['front_placement'] == 'boardindex' || 'standalone' && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
+	if ($context['TPortal']['front_placement'] == 'boardindex' && !isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic'])) {
 		$context['TPortal']['not_forum'] = true;
 	}
 	elseif ($context['TPortal']['front_placement'] == 'standalone' && (isset($_GET['cat']) || isset($_GET['page']) || defined('TP_Standalone'))) {
