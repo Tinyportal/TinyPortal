@@ -385,11 +385,13 @@ class Integrate
 		if (!isset($context['TPortal']) || isset($context['uninstalling'])) {
 			return;
 		}
-
 		// If we have disabled the front page, this is not needed...
 		if ($context['TPortal']['front_placement'] != 'disabled') {
 			// Set the forum button activated if needed.
-			if (!isset($_GET['action']) && array_key_exists('TPortal', $context) && empty($context['TPortal']['not_forum'])) {
+			if (empty($_GET)) {
+				$context['current_action'] = 'home';
+			}
+			elseif (!isset($_GET['action']) && empty($context['TPortal']['not_forum'])) {
 				$context['current_action'] = 'forum';
 			}
 
@@ -398,7 +400,7 @@ class Integrate
 				$buttons['home']['href'] = $context['TPortal']['front_placement_url'];
 			}
 
-			// This removes a edit in Load.php
+			// Change the href in the linktree
 			if (!empty($context['linktree'])) {
 				if ($context['TPortal']['front_placement'] == 'standalone') {
 					$context['linktree'][0]['url'] = $context['TPortal']['front_placement_url'];
@@ -411,7 +413,7 @@ class Integrate
 						0,
 						[
 							[
-								'url' => ($context['TPortal']['front_placement'] == 'boardindex' || 'standalone') ? $scripturl . '?action=forum' : $scripturl,
+								'url' => $scripturl . '?action=forum',
 								'name' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum'
 							]
 						]
@@ -429,7 +431,7 @@ class Integrate
 				[
 					'forum' => [
 						'title' => isset($txt['tp-forum']) ? $txt['tp-forum'] : 'Forum',
-						'href' => ($context['TPortal']['front_placement'] == 'boardindex' || 'standalone') ? $scripturl . '?action=forum' : $scripturl,
+						'href' => $scripturl . '?action=forum',
 						'show' => true,
 						'icon' => 'menu_tpforum',
 					],

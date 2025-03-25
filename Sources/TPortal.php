@@ -331,7 +331,6 @@ function setupTPsettings()
 	}
 
 	// if not in forum start off empty
-	$context['TPortal']['is_front'] = false;
 	$context['TPortal']['is_frontpage'] = false;
 
 	// a switch to make it clear what is "forum" and not
@@ -351,12 +350,11 @@ function setupTPsettings()
 	}
 	// are we actually on frontpage then?
 	if (!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action'])) {
-		$context['TPortal']['is_front'] = true;
 		$context['TPortal']['is_frontpage'] = true;
 	}
 
 	// Set the page title.
-	if ($context['TPortal']['is_front'] && !empty($context['TPortal']['frontpage_title'])) {
+	if ($context['TPortal']['is_frontpage'] && !empty($context['TPortal']['frontpage_title'])) {
 		$context['page_title'] = $context['TPortal']['frontpage_title'];
 	}
 
