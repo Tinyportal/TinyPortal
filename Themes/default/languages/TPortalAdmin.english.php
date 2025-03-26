@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.2; TPortalAdmin
+// Version: 3.0.3; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
@@ -229,9 +229,7 @@ $txt['tp-articleoptions14'] = 'Display comments underneath article';
 
 $txt['tp-paneloff'] = '<i>The panel is switched off</i>';
 $txt['tp-articleoptions8'] = 'Display left panel';
-$txt['tp-articleoptions_lblockwidth'] = 'Width left panel (leave empty for default)';
 $txt['tp-articleoptions7'] = 'Display right panel';
-$txt['tp-articleoptions_rblockwidth'] = 'Width right panel (leave empty for default)';
 $txt['tp-articleoptions10'] = 'Display top panel';
 $txt['tp-articleoptions6'] = 'Display center panel';
 $txt['tp-articleoptions11'] = 'Display lower panel';

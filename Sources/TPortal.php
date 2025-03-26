@@ -566,15 +566,6 @@ function doTPpage()
 				// sort out the options
 				$context['TPortal']['article']['visual_options'] = explode(',', $article['options']);
 
-				// the custom widths
-				foreach ($context['TPortal']['article']['visual_options'] as $pt) {
-					if (substr($pt, 0, 11) == 'lblockwidth') {
-						$context['TPortal']['blockwidth_left'] = substr($pt, 11);
-					}
-					if (substr($pt, 0, 11) == 'rblockwidth') {
-						$context['TPortal']['blockwidth_right'] = substr($pt, 11);
-					}
-				}
 				// check if no theme is to be applied
 				if (in_array('nolayer', $context['TPortal']['article']['visual_options'])) {
 					$context['template_layers'] = ['nolayer'];
