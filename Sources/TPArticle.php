@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.3
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -341,12 +341,7 @@ function articleEdit()
 		if (substr($what, 0, 11) == 'tp_article_') {
 			$setting = substr($what, 11);
 			if (substr($setting, 0, 8) == 'options_') {
-				if (substr($setting, 0, 19) == 'options_lblockwidth' || substr($setting, 0, 19) == 'options_rblockwidth') {
-					$options[] = substr($setting, 8) . $value;
-				}
-				else {
 					$options[] = substr($setting, 8);
-				}
 			}
 			else {
 				switch ($setting) {

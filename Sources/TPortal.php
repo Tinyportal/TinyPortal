@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -331,7 +331,6 @@ function setupTPsettings()
 	}
 
 	// if not in forum start off empty
-	$context['TPortal']['is_front'] = false;
 	$context['TPortal']['is_frontpage'] = false;
 
 	// a switch to make it clear what is "forum" and not
@@ -351,12 +350,11 @@ function setupTPsettings()
 	}
 	// are we actually on frontpage then?
 	if (!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action'])) {
-		$context['TPortal']['is_front'] = true;
 		$context['TPortal']['is_frontpage'] = true;
 	}
 
 	// Set the page title.
-	if ($context['TPortal']['is_front'] && !empty($context['TPortal']['frontpage_title'])) {
+	if ($context['TPortal']['is_frontpage'] && !empty($context['TPortal']['frontpage_title'])) {
 		$context['page_title'] = $context['TPortal']['frontpage_title'];
 	}
 
@@ -568,15 +566,6 @@ function doTPpage()
 				// sort out the options
 				$context['TPortal']['article']['visual_options'] = explode(',', $article['options']);
 
-				// the custom widths
-				foreach ($context['TPortal']['article']['visual_options'] as $pt) {
-					if (substr($pt, 0, 11) == 'lblockwidth') {
-						$context['TPortal']['blockwidth_left'] = substr($pt, 11);
-					}
-					if (substr($pt, 0, 11) == 'rblockwidth') {
-						$context['TPortal']['blockwidth_right'] = substr($pt, 11);
-					}
-				}
 				// check if no theme is to be applied
 				if (in_array('nolayer', $context['TPortal']['article']['visual_options'])) {
 					$context['template_layers'] = ['nolayer'];

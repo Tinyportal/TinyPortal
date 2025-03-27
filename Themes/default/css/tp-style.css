@@ -126,8 +126,6 @@
 .tp_article_inner {
 	line-height: 1.4em;
 	overflow-wrap: anywhere;
-	border-top: 1px solid var(--tp_article-border);
-	padding: 1em 0 0 0;
 }
 .tp_article_inner a, .inner a {
 	-ms-hyphens: auto;
@@ -156,6 +154,8 @@
 	line-height: 1.4em;
 	overflow: hidden;
 	padding: 0 0 .5em 0;
+	border-bottom: 1px solid var(--tp_article-border);
+	margin-bottom: 1em;
 }
 .tp_dlinfo {
 	opacity: .8;

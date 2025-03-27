@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -451,15 +451,7 @@ function template_submitarticle()
 		$tmp = explode(',', $mg['options']);
 		$options = [];
 		foreach ($tmp as $tp => $val) {
-			if (substr($val, 0, 11) == 'rblockwidth') {
-				$options['rblockwidth'] = substr($val, 11);
-			}
-			elseif (substr($val, 0, 11) == 'lblockwidth') {
-				$options['lblockwidth'] = substr($val, 11);
-			}
-			else {
-				$options[$val] = 1;
-			}
+			$options[$val] = 1;
 		}
 		echo '
 				<hr>
@@ -499,22 +491,10 @@ function template_submitarticle()
 							' . (($context['TPortal']['adminleftpanel'] !== '1') ? ' ' . $txt['tp-paneloff'] . '' : '<input type="checkbox" id="tp_article_options_' . $opts[8] . '" name="tp_article_options_' . $opts[8] . '" value="' . $mg['id'] . '" ' . (isset($options[$opts[8]]) ? 'checked' : '') . '>') . '
 						</dd>
 						<dt>
-							<label for="tp_article_options_lblockwidth">', $txt['tp-articleoptions_lblockwidth'], '</label><br>
-						</dt>
-						<dd>
-							<input type="text" id="tp_article_options_lblockwidth" name="tp_article_options_lblockwidth" value="', !empty($options['lblockwidth']) ? $options['lblockwidth'] : '' ,'"><br>
-						</dd>
-						<dt>
 							<label for="tp_article_options_' . $opts[7] . '">', $txt['tp-articleoptions7'], '</label><br>
 						</dt>
 						<dd>
 							' . (($context['TPortal']['adminrightpanel'] !== '1') ? ' ' . $txt['tp-paneloff'] . '' : '<input type="checkbox" id="tp_article_options_' . $opts[7] . '" name="tp_article_options_' . $opts[7] . '" value="' . $mg['id'] . '" ' . (isset($options[$opts[7]]) ? 'checked' : '') . '>') . '
-						</dd>
-						<dt>
-							<label for="tp_article_options_rblockwidth">', $txt['tp-articleoptions_rblockwidth'], '</label><br>
-						</dt>
-						<dd>
-							<input type="text" id="tp_article_options_rblockwidth" name="tp_article_options_rblockwidth" value="', !empty($options['rblockwidth']) ? $options['rblockwidth'] : '' ,'"><br>
 						</dd>
 						<dt>
 							<label for="tp_article_options_' . $opts[10] . '">', $txt['tp-articleoptions10'], '</label><br>
