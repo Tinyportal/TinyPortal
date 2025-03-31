@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -947,7 +947,7 @@ input,select {
 	width: 98%;
 	margin-bottom: 10px;
 }
-#tp_article_intro {
+#tp_article_intro, #tp_article_headers {
 	height: 140px;
 	width: 98%;
 	margin-bottom: 10px;

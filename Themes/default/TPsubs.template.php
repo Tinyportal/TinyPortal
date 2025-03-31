@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2182,7 +2182,7 @@ function article_morelinks($render = true)
 	if (in_array('category', $context['TPortal']['article']['visual_options'])) {
 		if (in_array('category', $context['TPortal']['article']['visual_options']) && isset($context['TPortal']['article']['others'])) {
 			$data .= '
-	<h2 class="titlebg tp_article_extra"><a href="' . $scripturl . '?cat=' . (!empty($context['TPortal']['article']['category_shortname']) ? $context['TPortal']['article']['category_shortname'] : $context['TPortal']['article']['category']) . '">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['category_name'] . ' &#187;</span></a></h2>
+	<h2 class="titlebg tp_article_extra"><a href="' . $scripturl . '?cat=' . (!empty($context['TPortal']['article']['category_shortname']) ? $context['TPortal']['article']['category_shortname'] : $context['TPortal']['article']['category']) . '">' . $txt['tp-articles'] . ' ' . $txt['in'] . ' &#171; ' . $context['TPortal']['article']['category_name'] . ' &#187;</a></h2>
 
 	<div style="overflow: hidden;">
 		<ul class="disc">';

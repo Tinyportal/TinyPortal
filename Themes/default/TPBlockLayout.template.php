@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -153,7 +153,7 @@ function template_tp_above()
 	// Tiny Portal left side bar - floated left by default.
 	if ($context['TPortal']['leftpanel'] == 1) {
 		echo '
-			<div id="tpleftbarHeader"', ($context['TPortal']['useroundframepanels'] == 1) ? ' class="roundframe ' . $leftpanelclass . '"' : 'class="' . $leftpanelclass . '"', ' style="width:', ($context['TPortal']['leftbar_width']), 'px;', in_array('tpleftbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse'] == 1) ? 'display:none' : '', '" >
+			<div id="tpleftbarHeader"', ($context['TPortal']['useroundframepanels'] == 1) ? ' class="roundframe ' . $leftpanelclass . '"' : ' class="' . $leftpanelclass . '"', ' style="width:', ($context['TPortal']['leftbar_width']), 'px;', in_array('tpleftbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse'] == 1) ? 'display:none' : '', '" >
 				', TPortal_panel('left'), '
 			</div><!-- #tpleftbarHeader -->';
 	}
@@ -161,7 +161,7 @@ function template_tp_above()
 	// Tiny Portal right side bar - floated right by default.
 	if ($context['TPortal']['rightpanel'] == 1) {
 		echo '
-			<div id="tprightbarHeader"', ($context['TPortal']['useroundframepanels'] == 1) ? ' class="roundframe ' . $rightpanelclass . '"' : 'class="' . $rightpanelclass . '"', ' style="width:', ($context['TPortal']['rightbar_width']), 'px;', in_array('tprightbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse'] == 1) ? 'display:none' : '', '" >
+			<div id="tprightbarHeader"', ($context['TPortal']['useroundframepanels'] == 1) ? ' class="roundframe ' . $rightpanelclass . '"' : ' class="' . $rightpanelclass . '"', ' style="width:', ($context['TPortal']['rightbar_width']), 'px;', in_array('tprightbarHeader', $context['tp_panels']) && ($context['TPortal']['showcollapse'] == 1) ? 'display:none' : '', '" >
 				', TPortal_panel('right'), '
 			</div><!-- #tprightbarHeader -->';
 	}
