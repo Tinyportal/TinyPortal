@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -968,7 +968,7 @@ function template_main()
 				<hr>
 				<dl class="settings">
 					<dt>
-						<label for="dladmin_icon">' . $txt['tp-dluploadicon'] . '</label>
+						' . $txt['tp-dluploadicon'] . '
 					</dt>
 					<dd>
 						<select size="1" name="dladmin_icon' . $cat['id'] . '" id="dladmin_icon" onchange="dlcheck(this.value)">

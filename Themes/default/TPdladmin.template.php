@@ -869,7 +869,7 @@ function template_main()
 					<input type="text" name="assign-ftp-newcat" placeholder= "' . $txt['tp-newcatassign'] . '" value="" size="40">
 				</dd>
 				<dt>
-					<label for="dladmin_icon">' . $txt['tp-dluploadicon'] . '</label>
+					<label for="tp_newdladmin_icon">' . $txt['tp-dluploadicon'] . '</label>
 				</dt>
 				<dd>
 					<select size="1" name="tp_newdladmin_icon" id="tp_newdladmin_icon" onchange="dlcheck(this.value)">

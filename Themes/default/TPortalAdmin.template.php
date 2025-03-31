@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -149,7 +149,7 @@ function template_settings()
 					<input type="text" name="tp_frontpage_title" id="tp_frontpage_title" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '" size="50">
 				</dd>
 				<dt>
-					<label for="tp-redirectforum">', $txt['tp-redirectforum'], '</label>
+					', $txt['tp-redirectforum'], '
 				</dt>
 				<dd>
 					<input type="radio" name="tp_redirectforum" id="tp_redirectforum1" value="1" ' , $context['TPortal']['redirectforum'] == '1' ? 'checked' : '' , '><label for="tp_redirectforum1"> ' . $txt['tp-redirectforum1'] . '</label>
@@ -288,7 +288,7 @@ function template_frontpage()
 			<div class="windowbg noup">
 				<dl class="settings">
 					<dt>
-						<label for="tp_front_placement">', $txt['tp-front_placement'], '</label>
+						', $txt['tp-front_placement'], '
 					</dt>
 					<dd>
 						<input type="radio" id="tp_front_placement1" name="tp_front_placement" value="boardindex" ' , $context['TPortal']['front_placement'] == 'boardindex' ? 'checked' : '' , '><label for="tp_front_placement1"> ' . $txt['tp-front_placement_boardindex'] . '</label><br>
@@ -307,7 +307,7 @@ function template_frontpage()
 				</dl>
 				<dl class="settings">
 					<dt>
-						<label for="tp_front_type">', $txt['tp-whattoshow'], '</label>
+						', $txt['tp-whattoshow'], '
 					</dt>
 					<dd>
 						<input type="radio" id="tp_front_type1" name="tp_front_type" value="forum_selected" ' , $context['TPortal']['front_type'] == 'forum_selected' ? 'checked' : '' , '><label for="tp_front_type1"> ' . $txt['tp-selectedforum'] . '</label><br>
@@ -321,7 +321,7 @@ function template_frontpage()
 				</dl>
 				<dl class="settings">
 					<dt>
-						<label for="tp_frontblock">', $txt['tp-frontblockoption'], '</label>
+						', $txt['tp-frontblockoption'], '
 					</dt>
 					<dd>
 						<input type="radio" id="tp_frontblock_type1" name="tp_frontblock_type" value="single"  ' , $context['TPortal']['frontblock_type'] == 'single' ? 'checked' : '' , '><label for="tp_frontblock_type1"> ' . $txt['tp-frontblocksingle'] . '</label><br>
@@ -332,7 +332,7 @@ function template_frontpage()
 				<dl class="settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-frontpageoptionsdesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp-frontpageoptions">',$txt['tp-frontpageoptions'],'</label>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>',$txt['tp-frontpageoptions'],'
 					</dt>
 					<dd>
 						<input type="checkbox" id="tp_frontpage_visual_left" name="tp_frontpage_visual_left" value="1" ' , $context['TPortal']['frontpage_visualopts_admin']['left'] > 0 ? 'checked' : '' , '><label for="tp_frontpage_visual_left"> ',$txt['tp-displayleftpanel'],'</label><br>
@@ -885,7 +885,7 @@ function template_clist()
 		echo '>  ' . html_entity_decode($val) . '<br>';
 	}
 	echo '
-					<br><input type="checkbox" onclick="invertAll(this, this.form, \'tp_clist\');" />  ' . $txt['tp-checkall'] . '
+					<br><input type="checkbox" id="invertall" onclick="invertAll(this, this.form, \'tp_clist\');" />  ' . $txt['tp-checkall'] . '
 				<input type="submit" class="button" name="send" value="' . $txt['tp-send'] . '">
 			</div>
 		</div>
@@ -1531,7 +1531,7 @@ function template_articons()
 						<img src="' . $icon['background'] . '" alt="' . $icon['file'] . '" title="' . $icon['file'] . '">
 					</div>
 					<div class="tpcenter">
-						<input type="checkbox" id="artillustration' . $icon['id'] . '" name="artillustration' . $icon['id'] . '" style="vertical-align: top;" value="' . $icon['file'] . '"  /> <label style="vertical-align: top;"  for="artiillustration' . $icon['id'] . '">' . $txt['tp-remove'] . '</label>
+						<input type="checkbox" id="artillustration' . $icon['id'] . '" name="artillustration' . $icon['id'] . '" style="vertical-align: top;" value="' . $icon['file'] . '"  /> <label for="artillustration' . $icon['id'] . '">' . $txt['tp-remove'] . '</label>
 					</div>
 				</div>
 							';
@@ -2290,7 +2290,7 @@ function template_blockoverview()
 
 				foreach ($context['TPmembergroups'] as $grp) {
 					echo '
-						<input type="checkbox" id="tpb' . $block['id'] . '' . $grp['id'] . '" value="' . $grp['id'] . '" ' , in_array($grp['id'], $block['access']) ? 'checked="checked" ' : '' , ' name="' . rand(10000, 19999) . 'tpblock' . $block['id'] . '" /><label for="tpb' . $block['id'] . '' . $grp['id'] . '"> ' . $grp['name'] . '</label><br>';
+						<input type="checkbox" id="tpb_' . $block['id'] . '_' . $grp['id'] . '" value="' . $grp['id'] . '" ' , in_array($grp['id'], $block['access']) ? 'checked="checked" ' : '' , ' name="' . rand(10000, 19999) . 'tpblock' . $block['id'] . '" /><label for="tpb_' . $block['id'] . '_' . $grp['id'] . '"> ' . $grp['name'] . '</label><br>';
 				}
 
 				echo '

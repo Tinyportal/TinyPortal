@@ -113,11 +113,11 @@ function template_submitarticle()
 			<dl class="tp_title settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-useintrodesc" onclick="return reqOverlayDiv(this.href);">
-						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_useintro">', $txt['tp-useintro'], '</label>
+						<span class="tptooltip" title="', $txt['help'], '"></span></a>', $txt['tp-useintro'], '
 					</dt>
 					<dd>
-							<input type="radio" name="tp_article_useintro" value="1" ', $mg['useintro'] == '1' ? 'checked' : '' ,'> ' . $txt['tp-yes'] . '
-							<input type="radio" name="tp_article_useintro" value="0" ', !$mg['useintro'] == '1' ? 'checked' : '' ,'> ' . $txt['tp-no'] . '<br>
+							<input type="radio" name="tp_article_useintro" id="tp_article_useintroyes" value="1" ', $mg['useintro'] == '1' ? 'checked' : '' ,'><label for="tp_article_useintroyes"> ' . $txt['tp-yes'] . '</label>
+							<input type="radio" name="tp_article_useintro" id="tp_article_useintrono" value="0" ', !$mg['useintro'] == '1' ? 'checked' : '' ,'><label for="tp_article_useintrono"> ' . $txt['tp-no'] . '</label><br>
 					</dd>
 				</dl>
 					';
@@ -230,7 +230,7 @@ function template_submitarticle()
 		if (!empty($mg['id'])) {
 			echo '
 					<dt>
-						<label>', $txt['tp-articledelete'], '</label><br>
+						', $txt['tp-articledelete'], '<br>
 						<span class="smalltext">', $txt['tp-articledeletedesc'], '</span>
 					</dt>
 					<dd>
@@ -555,7 +555,7 @@ function template_submitarticle()
 					</dl>
 					<div>
 						' , $txt['tp-articleheaders'] , '<br>
-						<textarea id="tp_article_intro" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
+						<textarea id="tp_article_headers" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
 					</div>
 				</div><br>
 			<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '" >';
@@ -732,7 +732,7 @@ function template_showarticle()
 	echo '
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-myarticles'] . '</h3></div>
 		<div id="myarticles">
-		<table class="table_grid";>
+		<table class="table_grid">
 			<thead>
 				<tr class="title_bar">
 				<th scope="col" class="myarticles">
