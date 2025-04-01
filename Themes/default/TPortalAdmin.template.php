@@ -1734,7 +1734,7 @@ function template_panels()
 					</dd>
 				</dl>
 				<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
-				<span class="tptooltip" title="', $txt['help'], '"></span></a><label>' . $txt['tp-panelstylehelp'] . '</label>
+				<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-panelstylehelp'] . '
 				<div class="tp_panelstyles-bg">';
 
 		foreach ($types as $blo => $bl) {
@@ -2672,7 +2672,7 @@ function template_menucore()
 			<hr>
 			<dl class="tp_title settings">
 				<dt>
-					<label for="tp_item">' . $txt['tp-item'] . '</label>
+					<label for="tp_menu_category">' . $txt['tp-item'] . '</label>
 				</dt>
 				<dd>';
 	// (category)

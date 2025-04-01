@@ -960,7 +960,7 @@ function template_editblock()
 		foreach ($context['TPortal']['blockedit']['display']['action'] as $po => $p) {
 			if ($p !== '') {
 				if (!in_array($p, ['allpages', 'frontpage', 'forumall', 'forum', 'recent', 'unread', 'unreadreplies', 'profile', 'pm', 'calendar', 'admin', 'login', 'logout', 'register', 'post', 'stats', 'search', 'mlist'])) {
-					echo '<input type="checkbox" id="actiontype' . $count . '" name="actiontype' . $count . '" value="' . $p . '" checked="checked"><label for="name="actiontype' . $count . '">' . $p . '</label><br>';
+					echo '<input type="checkbox" id="actiontype' . $count . '" name="actiontype' . $count . '" value="' . $p . '" checked="checked"><label for="actiontype' . $count . '">' . $p . '</label><br>';
 					$count++;
 				}
 			}
