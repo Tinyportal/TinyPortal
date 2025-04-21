@@ -524,6 +524,7 @@ $settings_array = [
 	'download_upload_path' => $boarddir . '/tp-downloads/',
 	'blockcode_upload_path' => $boarddir . '/tp-files/tp-blockcodes/',
 	// frontpage
+	'front_active' => '1',
 	'front_placement' => 'boardindex',
 	'front_placement_url' => $boardurl . '/TPStandalone.php',
 	'front_type' => 'forum_articles',
@@ -793,6 +794,38 @@ foreach ($checkboxes as $check) {
 	}
 	$smcFunc['db_free_result']($request);
 }
+
+// convert front_placement disabled setting to front_active
+	$request = $smcFunc['db_query'](
+		'',
+		'
+		SELECT * FROM {db_prefix}tp_settings
+		WHERE name = {string:name} LIMIT 1',
+		['name' => 'front_placement']
+	);
+
+	$row = $smcFunc['db_fetch_assoc']($request);
+	if (isset($row['value']) && ($row['value'] == 'disabled')) {
+		$updates++;
+
+		$smcFunc['db_query'](
+			'',
+			'
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
+            WHERE name = {string:name}',
+			['val' => 'boardindex', 'name' => 'front_placement']
+		);
+		$smcFunc['db_query'](
+			'',
+			'
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
+            WHERE name = {string:name}',
+			['val' => 0, 'name' => 'front_active']
+		);
+	}
+	$smcFunc['db_free_result']($request);
 
 if ($updates > 0) {
 	$render .= 'Updated ' . $updates . ' setting(s)<br>';

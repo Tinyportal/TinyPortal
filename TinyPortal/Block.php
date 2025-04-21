@@ -245,9 +245,14 @@ class Block extends Base
 			$permissions[] = 'dlcat=' . substr($_GET['dl'], 3);
 		}
 
-		// frontpage
+		// frontpage or boardindex
 		if (!isset($_GET['action']) && !isset($_GET['board']) && !isset($_GET['topic']) && !isset($_GET['page']) && !isset($_GET['cat'])) {
-			$permissions[] = 'frontpage';
+			if ($context['TPortal']['front_active'] == '1') {
+				$permissions[] = 'frontpage';
+			}
+			else {
+				$permissions[] = 'forum';
+			}
 		}
 
 		$permissions[] = 'allpages';

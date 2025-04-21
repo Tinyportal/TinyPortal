@@ -142,13 +142,6 @@ function template_settings()
 			<div class="windowbg noup">
 			<dl class="settings">
 				<dt>
-					<a href="', $scripturl, '?action=helpadmin;help=tp-frontpagetitle2" onclick="return reqOverlayDiv(this.href);">
-					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_frontpage_title">', $txt['tp-frontpagetitle'], '</label>
-				</dt>
-				<dd>
-					<input type="text" name="tp_frontpage_title" id="tp_frontpage_title" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '" size="50">
-				</dd>
-				<dt>
 					', $txt['tp-redirectforum'], '
 				</dt>
 				<dd>
@@ -287,13 +280,35 @@ function template_frontpage()
 		<div id="frontpage-settings">
 			<div class="windowbg noup">
 				<dl class="settings">
+					<dt><b>', $txt['tp-status'], '</b></dt>
+					<dd>
+						<div class="switch-field">
+							<input type="radio" value="1" class="switch-on" name="tp_front_active" id="tp_frontpage_on"',$context['TPortal']['front_active'] == '1' ? ' checked="checked"' : '' ,' /><label for="tp_frontpage_on">' . $txt['tp-on'] . '</label>
+							<input type="radio" value="0" class="switch-off" name="tp_front_active" id="tp_frontpage_off"',$context['TPortal']['front_active'] == '0' ? ' checked="checked"' : '' ,' /><label for="tp_frontpage_off">' . $txt['tp-off'] . '</label>
+						</div>
+					</dd>';
+		if ($context['TPortal']['front_active'] == '0') {
+			echo '
+				</dl>
+					<div class="noticebox">' . $txt['tp-front_disabled'] . '</div>
+				<dl class="settings">';
+		}
+			echo '
+					<dt>
+						<a href="', $scripturl, '?action=helpadmin;help=tp-frontpagetitle2" onclick="return reqOverlayDiv(this.href);">
+						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_frontpage_title">', $txt['tp-frontpagetitle'], '</label>
+					</dt>
+					<dd>
+						<input type="text" name="tp_frontpage_title" id="tp_frontpage_title" value="' , !empty($context['TPortal']['frontpage_title']) ? $context['TPortal']['frontpage_title'] : '' , '" size="50">
+					</dd>
+				</dl>
+				<dl class="settings">
 					<dt>
 						', $txt['tp-front_placement'], '
 					</dt>
 					<dd>
 						<input type="radio" id="tp_front_placement1" name="tp_front_placement" value="boardindex" ' , $context['TPortal']['front_placement'] == 'boardindex' ? 'checked' : '' , '><label for="tp_front_placement1"> ' . $txt['tp-front_placement_boardindex'] . '</label><br>
 						<input type="radio" id="tp_front_placement2" name="tp_front_placement" value="standalone" ' , $context['TPortal']['front_placement'] == 'standalone' ? 'checked' : '' , '><label for="tp_front_placement2"> ' . $txt['tp-front_placement_standalone'] . '</label><br>
-						<input type="radio" id="tp_front_placement3" name="tp_front_placement" value="disabled" ' , $context['TPortal']['front_placement'] == 'disabled' ? 'checked' : '' , '><label for="tp_front_placement3"> ' . $txt['tp-front_placement_disabled'] . '</label>
 					</dd>
 				</dl>
 				<dl class="settings">
@@ -1684,6 +1699,15 @@ function template_panels()
 						<br><br>
 					</dd>';
 		}
+		else
+			if ($context['TPortal']['front_active'] == '0') {
+				echo '
+					<dt></dt>
+					<dd>
+						<div class="noticebox">' . $txt['tp-front_disabled'] . '</div>
+					</dd">';
+			}
+
 		if (in_array($panl, ['left', 'right'])) {
 			echo '
 					<dt>
