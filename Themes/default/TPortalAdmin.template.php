@@ -1856,9 +1856,11 @@ function template_blocks()
 				</div>';
 		if (isset($context['TPortal']['admin' . $side[$i] . 'panel']) && $context['TPortal']['admin' . $side[$i] . 'panel'] == 0 && $side[$i] != 'front') {
 			echo '
-				<div class="errorbox">
-					<a style="color: red;" href="' . $scripturl . '?action=tpadmin;sa=panels">',$txt['tp-panelclosed'] , '</a>
-				</div>';
+				<div class="noticebox"><a href="' . $scripturl . '?action=tpadmin;sa=panels">',$txt['tp-panelclosed'] , '</a></div>';
+		}
+		if ($context['TPortal']['front_active'] == '0' && $side[$i] == 'front') {
+			echo '
+				<div class="noticebox"><a href="' . $scripturl . '?action=tpadmin;sa=frontpage">' . $txt['tp-front_disabled'] . '</a></div>';
 		}
 
 		if (isset($context['TPortal']['admin_' . $side[$i] . 'block']['blocks'])) {
