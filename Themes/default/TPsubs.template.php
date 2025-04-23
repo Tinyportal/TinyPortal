@@ -1246,7 +1246,9 @@ function template_tpnotify_above()
 	global $context;
 
 	echo '
-	<div class="infobox">' . $context['TPortal']['tpnotify'] . '</div>';
+	<div class="infobox">
+		<p class="centertext">' . $context['TPortal']['tpnotify'] . '</p>
+	</div>';
 }
 
 function template_tpnotify_below()

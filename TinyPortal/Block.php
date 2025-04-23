@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.3
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -252,6 +252,7 @@ class Block extends Base
 			}
 			else {
 				$permissions[] = 'forum';
+				$permissions[] = 'forumall';
 			}
 		}
 

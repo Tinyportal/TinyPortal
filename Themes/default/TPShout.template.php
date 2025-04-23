@@ -542,8 +542,17 @@ function template_tpshout_profile()
 		}
 		echo '
 				</tbody>
-			</table>
-			<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>
+			</table>';
+			if (!empty($context['TPortal']['pageindex'])) {
+				echo '
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+							<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+							' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>';
+			}
+		echo '
 		</div>';
 	}
 }

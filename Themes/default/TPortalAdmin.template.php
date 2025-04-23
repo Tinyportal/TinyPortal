@@ -1063,17 +1063,22 @@ function template_articles()
 	</table>';
 		if (!empty($context['TPortal']['pageindex'])) {
 			echo '
-					<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>';
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+						<a href="#top" class="button floatnone" id="bot">', $txt['go_up'], '</a>
+						' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>';
 		}
 		echo '
-					<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '">
-						<input type="hidden" name="tpadmin_form_category" value="' . $catty . '">';
+			<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '">
+			<input type="hidden" name="tpadmin_form_category" value="' . $catty . '">';
 	}
 	else 
 		if (!empty($context['TPortal']['categoryNAME'])) {
-		echo '
-			<div class="noticebox">' . $txt['tp-noarticlesfound'] . '</div>';
-	}
+			echo '
+				<div class="noticebox">' . $txt['tp-noarticlesfound'] . '</div>';
+			}
 	echo '
 		</div>
 	</form>';
@@ -1089,31 +1094,30 @@ function template_strays()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="strays">
 		<div class="cat_bar"><h3 class="catbg">' , $txt['tp-articles'] , ' - ' . $txt['tp-uncategorised'] . '</h3></div>
-		<p class="information">' , $txt['tp-helpstrays'] , '</p>
-		<div id="uncategorized">';
+		<p class="information">' , $txt['tp-helpstrays'] , '</p>';
 
 	if (isset($context['TPortal']['arts_nocat'])) {
 		echo '
-				<div>
-					<table class="table_grid tp_admin">
-					<thead>
-						<tr class="title_bar">
-							<th scope="col">
-							<div class="tp_admflexbox">
-								<div class="tp_admfirst">
-									<div class="tp_pos">' . $txt['tp-select'] . '</div>
-									<div class="tp_name">' , $context['TPortal']['sort'] == 'subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-subject'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-subject'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=subject">' , $txt['tp-arttitle'] , '</a></div>
-									<div class="tp_author title-admin-area"> ' , $context['TPortal']['sort'] == 'author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-author'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-author'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id">' , $txt['tp-author'] , '</a></div>
-									<div class="tp_date title-admin-area"> ' , $context['TPortal']['sort'] == 'date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-date'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-date'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date">' , $txt['tp-date'] , '</a></div>
-									<div class="tp_articleopts title-admin-area">' . $txt['tp-actions'] . '</div>
-									<div class="tp_arttype title-admin-area float-items"> ' , $context['TPortal']['sort'] == 'type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-type'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-type'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type">' , $txt['tp-type'] , '</a></div>
-									<div class="tp_artdel title-admin-area"></div>
-								</div>
+			<div id="uncategorized">
+				<table class="table_grid tp_admin">
+				<thead>
+					<tr class="title_bar">
+						<th scope="col">
+						<div class="tp_admflexbox">
+							<div class="tp_admfirst">
+								<div class="tp_pos">' . $txt['tp-select'] . '</div>
+								<div class="tp_name">' , $context['TPortal']['sort'] == 'subject' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-subject'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-subject'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=subject">' , $txt['tp-arttitle'] , '</a></div>
+								<div class="tp_author title-admin-area"> ' , $context['TPortal']['sort'] == 'author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-author'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-author'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id">' , $txt['tp-author'] , '</a></div>
+								<div class="tp_date title-admin-area"> ' , $context['TPortal']['sort'] == 'date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-date'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-date'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date">' , $txt['tp-date'] , '</a></div>
+								<div class="tp_articleopts title-admin-area">' . $txt['tp-actions'] . '</div>
+								<div class="tp_arttype title-admin-area float-items"> ' , $context['TPortal']['sort'] == 'type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-type'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-type'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type">' , $txt['tp-type'] , '</a></div>
+								<div class="tp_artdel title-admin-area"></div>
 							</div>
-							</th>
-						</tr>
-					</thead>
-					<tbody>';
+						</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 		foreach ($context['TPortal']['arts_nocat'] as $a => $alink) {
 			$alink['pos'] = $alink['pos'] == '' ? 0 : $alink['pos'];
@@ -1125,72 +1129,77 @@ function template_strays()
 				$class = 'windowbg sticky';
 			}
 			echo '
-						<tr class="' . $class . '">
-						<td>
-							<div class="tp_admflexbox">
-								<div class="tp_admfirst">
-									<div class="tp_pos">
-										<input type="checkbox" name="tp_article_stray' . $alink['id'] . '" value="1"  />&nbsp;&nbsp;
-									</div>
-									<div class="tp_name">
-										' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
-									</div>
+					<tr class="' . $class . '">
+					<td>
+						<div class="tp_admflexbox">
+							<div class="tp_admfirst">
+								<div class="tp_pos">
+									<input type="checkbox" name="tp_article_stray' . $alink['id'] . '" value="1"  />&nbsp;&nbsp;
 								</div>
-								<div class="tp_admlast">
-									<a href="" class="clickme">' . $txt['tp-more'] . '</a>
-									<div class="box">
-										<div class="tp_author fullwidth-on-res-layout float-items">
-											<div class="show-on-responsive">
-												' , $context['TPortal']['sort'] == 'author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-author'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-author'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id">' , $txt['tp-author'] , '</a>
-											</div>
-											<div class="size-on-responsive">
-												<a href="' . $scripturl . '?action=profile;u=' , $alink['author_id'], '">' . $alink['author'] . '</a>
-											</div>
-										</div>
-										<div class="tp_date fullwidth-on-res-layout float-items">
-											<div class="show-on-responsive">
-												' , $context['TPortal']['sort'] == 'date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-date'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-date'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date">' , $txt['tp-date'] , '</a>
-											</div>
-											<div class="size-on-responsive">' , timeformat($alink['date']) , '</div>
-										</div>
-										<div class="tp_articleopts fullwidth-on-res-layout float-items">
-											<div class="show-on-responsive">' . $txt['tp-editarticleoptions2'] . '</div>
-											<div class="size-on-responsive">
-												<img style="cursor: pointer;" class="toggleActive" id="artActive' . $alink['id'] . '" title="' . $txt['tp-activate'] . '" src="' . $settings['tp_images_url'] . '/TPactive' , $alink['off'] == '1' ? '1' : '2' , '.png" alt="' . $txt['tp-activate'] . '"  />
-												<a href="',$scripturl, '?page=',$alink['id'],'"><img title="' . $txt['tp-preview'] . '" src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>
-												' , $alink['locked'] == 0 ?
-												'<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '"><img title="' . $txt['tp-edit'] . '" src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="' . $txt['tp-edit'] . '"  /></a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPconfig_sm2.png" alt="' . $txt['tp-islocked'] . '"  />' , '
-												<img style="cursor: pointer;" class="toggleSticky" id="artSticky' . $alink['id'] . '" title="' . $txt['tp-setsticky'] . '" src="' . $settings['tp_images_url'] . '/TPsticky' , $alink['sticky'] == '1' ? '1' : '2' , '.png" alt="' . $txt['tp-setsticky'] . '"  />
-												<img style="cursor: pointer;" class="toggleLock" id="artLock' . $alink['id'] . '" title="' . $txt['tp-setlock'] . '" src="' . $settings['tp_images_url'] . '/TPlock' , $alink['locked'] == '1' ? '1' : '2' , '.png" alt="' . $txt['tp-setlock'] . '"  />
-												<img style="cursor: pointer;" class="toggleFront" id="artFront' . $alink['id'] . '" title="' . $txt['tp-setfrontpage'] . '" src="' . $settings['tp_images_url'] . '/TPfront' , $alink['frontpage'] == '1' ? '' : '2' , '.png" alt="' . $txt['tp-setfrontpage'] . '"  />											<img style="cursor: pointer;" class="toggleFeatured" id="artFeatured' . $alink['id'] . '" title="' . $txt['tp-featured'] . '" src="' . $settings['tp_images_url'] . '/TPflag' , $alink['featured'] == '1' ? '' : '2' , '.png" alt="' . $txt['tp-featured'] . '"  />
-											</div>
-										</div>
-										<div class="tp_arttype fullwidth-on-res-layout float-items" >
-											<div class="show-on-responsive">
-											' , $context['TPortal']['sort'] == 'type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-type'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-type'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type"><strong>' , $txt['tp-type'] , '</strong></a>
-											</div>
-											<div style="text-transform:uppercase;">' , empty($alink['type']) ? 'html' : $alink['type'] , '</div>
-										</div>
-										<div class="tp_artdel fullwidth-on-res-layout float-items tpcenter">
-											<div class="show-on-responsive">' . $txt['tp-delete'] . '</div>
-											<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'] . ';artdelete=' . $alink['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-articleconfirmdelete'] . '\')">
-											<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>
-										</div>
-										<p class="clearthefloat"></p>
-									</div>
+								<div class="tp_name">
+									' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
 								</div>
 							</div>
-						</td>
-						</tr>';
+							<div class="tp_admlast">
+								<a href="" class="clickme">' . $txt['tp-more'] . '</a>
+								<div class="box">
+									<div class="tp_author fullwidth-on-res-layout float-items">
+										<div class="show-on-responsive">
+											' , $context['TPortal']['sort'] == 'author_id' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-author'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-author'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=author_id">' , $txt['tp-author'] , '</a>
+										</div>
+										<div class="size-on-responsive">
+											<a href="' . $scripturl . '?action=profile;u=' , $alink['author_id'], '">' . $alink['author'] . '</a>
+										</div>
+									</div>
+									<div class="tp_date fullwidth-on-res-layout float-items">
+										<div class="show-on-responsive">
+											' , $context['TPortal']['sort'] == 'date' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-date'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-date'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=date">' , $txt['tp-date'] , '</a>
+										</div>
+										<div class="size-on-responsive">' , timeformat($alink['date']) , '</div>
+									</div>
+									<div class="tp_articleopts fullwidth-on-res-layout float-items">
+										<div class="show-on-responsive">' . $txt['tp-editarticleoptions2'] . '</div>
+										<div class="size-on-responsive">
+											<img style="cursor: pointer;" class="toggleActive" id="artActive' . $alink['id'] . '" title="' . $txt['tp-activate'] . '" src="' . $settings['tp_images_url'] . '/TPactive' , $alink['off'] == '1' ? '1' : '2' , '.png" alt="' . $txt['tp-activate'] . '"  />
+											<a href="',$scripturl, '?page=',$alink['id'],'"><img title="' . $txt['tp-preview'] . '" src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>
+											' , $alink['locked'] == 0 ?
+											'<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '"><img title="' . $txt['tp-edit'] . '" src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="' . $txt['tp-edit'] . '"  /></a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPconfig_sm2.png" alt="' . $txt['tp-islocked'] . '"  />' , '
+											<img style="cursor: pointer;" class="toggleSticky" id="artSticky' . $alink['id'] . '" title="' . $txt['tp-setsticky'] . '" src="' . $settings['tp_images_url'] . '/TPsticky' , $alink['sticky'] == '1' ? '1' : '2' , '.png" alt="' . $txt['tp-setsticky'] . '"  />
+											<img style="cursor: pointer;" class="toggleLock" id="artLock' . $alink['id'] . '" title="' . $txt['tp-setlock'] . '" src="' . $settings['tp_images_url'] . '/TPlock' , $alink['locked'] == '1' ? '1' : '2' , '.png" alt="' . $txt['tp-setlock'] . '"  />
+											<img style="cursor: pointer;" class="toggleFront" id="artFront' . $alink['id'] . '" title="' . $txt['tp-setfrontpage'] . '" src="' . $settings['tp_images_url'] . '/TPfront' , $alink['frontpage'] == '1' ? '' : '2' , '.png" alt="' . $txt['tp-setfrontpage'] . '"  />											<img style="cursor: pointer;" class="toggleFeatured" id="artFeatured' . $alink['id'] . '" title="' . $txt['tp-featured'] . '" src="' . $settings['tp_images_url'] . '/TPflag' , $alink['featured'] == '1' ? '' : '2' , '.png" alt="' . $txt['tp-featured'] . '"  />
+										</div>
+									</div>
+									<div class="tp_arttype fullwidth-on-res-layout float-items" >
+										<div class="show-on-responsive">
+										' , $context['TPortal']['sort'] == 'type' ? '<img src="' . $settings['tp_images_url'] . '/TPsort_down.png" alt="' . $txt['tp-sort-on-type'] . '" /> ' : '' , '<a title="' . $txt['tp-sort-on-type'] . '" href="' . $scripturl . '?action=tpadmin;sa=strays;sort=type"><strong>' , $txt['tp-type'] , '</strong></a>
+										</div>
+										<div style="text-transform:uppercase;">' , empty($alink['type']) ? 'html' : $alink['type'] , '</div>
+									</div>
+									<div class="tp_artdel fullwidth-on-res-layout float-items tpcenter">
+										<div class="show-on-responsive">' . $txt['tp-delete'] . '</div>
+										<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'] . ';artdelete=' . $alink['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-articleconfirmdelete'] . '\')">
+										<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>
+									</div>
+									<p class="clearthefloat"></p>
+								</div>
+							</div>
+						</div>
+					</td>
+					</tr>';
 		}
 		echo '
 					</tbody>
 					</table>
 					<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_stray\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>';
-		if (!empty($context['TPortal']['pageindex'])) {
-			echo '
-					<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>';
-		}
+			if (!empty($context['TPortal']['pageindex'])) {
+				echo '
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+							<a href="#top" class="button floatnone" id="bot">', $txt['go_up'], '</a>
+							' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>';
+			}
 		echo '
 				</div>';
 
@@ -1234,11 +1243,11 @@ function template_submission()
 		<input type="hidden" name="sc" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="submission">
 		<div class="cat_bar"><h3 class="catbg">' , $txt['tp-articles'] , ' - ' . $txt['tp-submissionsettings'] . '</h3></div>
-		<p class="information">' , $txt['tp-helpsubmissions'] , '</p>
-		<div id="submissions">';
+		<p class="information">' , $txt['tp-helpsubmissions'] , '</p>';
 
 	if (isset($context['TPortal']['arts_submissions'])) {
 		echo '
+			<div id="submissions">
 				<table class="table_grid tp_admin">
 					<thead>
 						<tr class="title_bar">
@@ -1319,10 +1328,15 @@ function template_submission()
 				</table>
 				<div class="padding-div"><input type="checkbox" id="toggleoptions" onclick="invertAll(this, this.form, \'tp_article_submission\');" /><label for="toggleoptions">', $txt['tp-checkall'], '</label></div>';
 
-		if (!empty($context['TPortal']['pageindex'])) {
-			echo '
-				<div class="padding-div"><strong>' . $context['TPortal']['pageindex'] . '</strong></div>';
-		}
+			if (!empty($context['TPortal']['pageindex'])) {
+				echo '
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+							<a href="#top" class="button floatnone" id="bot">', $txt['go_up'], '</a>
+							' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>';
+			}
 
 		if (isset($context['TPortal']['allcats'])) {
 			echo '

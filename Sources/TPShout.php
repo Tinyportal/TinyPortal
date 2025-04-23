@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -674,6 +674,7 @@ function tpshout_profile($member_id)
 	}
 	$context['TPortal']['member_id'] = $member_id;
 	$sorting = 'time';
+	$shouts_per_page = 20;
 	$max = 0;
 	// get all shouts
 	$request = $smcFunc['db_query'](
@@ -694,8 +695,8 @@ function tpshout_profile($member_id)
         SELECT * FROM {db_prefix}tp_shoutbox
         WHERE member_id = {int:member_id}
         AND type = {string:type}
-        ORDER BY {raw:sort} DESC LIMIT 15 OFFSET {int:start}',
-		['member_id' => $member_id, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start]
+        ORDER BY {raw:sort} DESC LIMIT {int:limit} OFFSET {int:start}',
+		['member_id' => $member_id, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start, 'limit' => $shouts_per_page]
 	);
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
@@ -711,7 +712,7 @@ function tpshout_profile($member_id)
 	}
 	// construct pageindexes
 	if ($max > 0) {
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=profile;area=tpshoutbox;u=' . $member_id . ';tpsort=' . $sorting, $start, $max, '15', true);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=profile;area=tpshoutbox;u=' . $member_id . ';tpsort=' . $sorting, $start, $max, $shouts_per_page, true);
 	}
 	else {
 		$context['TPortal']['pageindex'] = '';
@@ -1050,8 +1051,10 @@ function TPShoutAdmin()
 	}
 
 	$context['TPortal']['admin_shoutbox_items'] = [];
+	$shouts_per_page = 10;
 
 	if (isset($member_id)) {
+	// shoutbox admin filter by member ID
 		$shouts = $smcFunc['db_query'](
 			'',
 			'
@@ -1064,18 +1067,19 @@ function TPShoutAdmin()
 		$smcFunc['db_free_result']($shouts);
 		$allshouts = $weh[0];
 		$context['TPortal']['admin_shoutbox_items_number'] = $allshouts;
-		$context['TPortal']['shoutbox_pageindex'] = '' . $txt['tp-member'] . '&nbsp;' . $member_id . ' ' . $txt['tp-filtered'] . ' (<a href="' . $scripturl . '?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />' . TPageIndex($scripturl . '?action=tpshout;shout=admin;u=' . $member_id, $tpstart, $allshouts, 10, true);
+		$context['TPortal']['shoutbox_pageindex'] = '' . $txt['tp-member'] . '&nbsp;' . $member_id . ' ' . $txt['tp-filtered'] . ' (<a href="' . $scripturl . '?action=tpshout;shout=admin">' . $txt['remove'] . '</a>) <br />' . TPageIndex($scripturl . '?action=tpshout;shout=admin;u=' . $member_id, $tpstart, $allshouts, $shouts_per_page, true);
 		$request = $smcFunc['db_query'](
 			'',
 			'
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
 			AND member_id = {int:val5}
-			ORDER BY time DESC LIMIT {int:start},10',
-			['type' => 'shoutbox', 'val5' => $member_id, 'start' => $tpstart]
+			ORDER BY time DESC LIMIT {int:start}, {int:limit}',
+			['type' => 'shoutbox', 'val5' => $member_id, 'start' => $tpstart, 'limit' => $shouts_per_page]
 		);
 	}
 	elseif (isset($ip)) {
+	// shoutbox admin filter by IP
 		$shouts = $smcFunc['db_query'](
 			'',
 			'
@@ -1095,11 +1099,12 @@ function TPShoutAdmin()
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
 			AND member_ip = {string:val4}
-			ORDER BY time DESC LIMIT {int:start}, 10',
-			['type' => 'shoutbox', 'val4' => $ip, 'start' => $tpstart]
+			ORDER BY time DESC LIMIT {int:start}, {int:limit}',
+			['type' => 'shoutbox', 'val4' => $ip, 'start' => $tpstart, 'limit' => $shouts_per_page]
 		);
 	}
 	elseif (isset($shoutbox_id)) {
+	// shoutbox admin filter by shoutbox ID
 		$shouts = $smcFunc['db_query'](
 			'',
 			'
@@ -1119,8 +1124,8 @@ function TPShoutAdmin()
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
 			AND shoutbox_id = {string:val4}
-			ORDER BY time DESC LIMIT {int:start}, 10',
-			['type' => 'shoutbox', 'val4' => $shoutbox_id, 'start' => $tpstart]
+			ORDER BY time DESC LIMIT {int:start}, {int:limit}',
+			['type' => 'shoutbox', 'val4' => $shoutbox_id, 'start' => $tpstart, 'limit' => $shouts_per_page]
 		);
 	}
 	elseif (isset($single)) {
@@ -1137,6 +1142,7 @@ function TPShoutAdmin()
 		);
 	}
 	else {
+	// shoutbox admin without filter
 		$shouts = $smcFunc['db_query'](
 			'',
 			'
@@ -1154,8 +1160,8 @@ function TPShoutAdmin()
 			'
 			SELECT * FROM {db_prefix}tp_shoutbox
 			WHERE type = {string:type}
-			ORDER BY time DESC LIMIT 10 OFFSET {int:start}',
-			['type' => 'shoutbox', 'start' => $tpstart]
+			ORDER BY time DESC LIMIT {int:limit} OFFSET {int:start}',
+			['type' => 'shoutbox', 'start' => $tpstart, 'limit' => $shouts_per_page]
 		);
 	}
 
