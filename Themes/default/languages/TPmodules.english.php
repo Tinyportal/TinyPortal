@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.0; TPmodules
+// Version: 3.0.3; TPmodules
 
 global $scripturl;
 
@@ -15,7 +15,7 @@ $txt['tp-commentall'] = 'All comments in articles';
 $txt['tp-commenter'] = 'Commenter';
 $txt['tp-commenter_time'] = 'Time';
 $txt['tp-commenter_title'] = 'Title';
-$txt['tp-commentnew'] = 'New article comments since last visit';
+$txt['tp-commentnew'] = 'Recent article comments';
 $txt['tp-commentreplies'] = 'Replies in article comments';
 $txt['tp-dlmanageroff'] = 'The TPdownloads module is not active.';
 $txt['tp-dlsubmitsuccess'] = 'Thanks for your submission. <br><br>The uploaded file will be reviewed by a moderator before appearing in the download section.';

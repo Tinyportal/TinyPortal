@@ -62,6 +62,7 @@ $txt['tp-copyrightremovaldesc'] = 'Enter your unique key to remove the TinyPorta
 // Frontpage
 $txt['tp-frontpage_settings'] = 'Frontpage settings';
 $txt['tp-helpfrontpage'] = 'The frontpage settings can be tweaked here. All settings here are only applicable to the frontpage and override similar article settings if set differently.';
+$txt['tp-front_disabled'] = 'The frontpage is not active, these settings will only have effect when the frontpage is activated.';
 $txt['tp-front_placement'] = 'Where to display the frontpage?';
 $txt['tp-front_placement_boardindex'] = 'Display on the forum index';
 $txt['tp-front_placement_standalone'] = 'Display on the Standalone page';

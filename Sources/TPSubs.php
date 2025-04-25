@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1438,7 +1438,7 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 			$pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
 		}
 	}
-	$pageindex = $txt['pages'] . ': ' . $pageindex;
+	$pageindex = '<span class="pages">' . $txt['pages'] . '</span>' . $pageindex;
 	return $pageindex;
 }
 
@@ -2755,6 +2755,7 @@ function tp_profile_articles($member_id)
 	$tpArticle = TPArticle::getInstance();
 	$start = 0;
 	$sorting = 'date';
+	$articles_per_page = 20;
 
 	if (isset($context['TPortal']['mystart'])) {
 		$start = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
@@ -2787,11 +2788,12 @@ function tp_profile_articles($member_id)
 			art.author_id as authorID, art.category, art.locked
 		FROM {db_prefix}tp_articles AS art
 		WHERE art.author_id = {int:auth}
-		ORDER BY art.{raw:sort} {raw:sorter} LIMIT 15 OFFSET {int:start}',
+		ORDER BY art.{raw:sort} {raw:sorter} LIMIT {int:limit} OFFSET {int:start}',
 		['auth' => $member_id,
 			'sort' => $sorting,
 			'sorter' => in_array($sorting, ['date', 'views', 'comments']) ? 'DESC' : 'ASC',
-			'start' => $start
+			'start' => $start,
+			'limit' => $articles_per_page
 		]
 	);
 
@@ -2846,7 +2848,7 @@ function tp_profile_articles($member_id)
 	// construct pageindexes
 	$context['TPortal']['pageindex'] = '';
 	if ($max > 0) {
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=profile;area=tparticles;u=' . $member_id . ';tpsort=' . $sorting, $start, $max, '15');
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=profile;area=tparticles;u=' . $member_id . ';tpsort=' . $sorting, $start, $max, $articles_per_page);
 	}
 
 	// setup subaction
@@ -2912,6 +2914,7 @@ function tp_profile_download($memID)
 	else {
 		$sorting = 'date';
 	}
+	$downloads_per_page = 20;
 	$max = 0;
 	// get all uploads
 	$request = $smcFunc['db_query'](
@@ -2950,12 +2953,13 @@ function tp_profile_download($memID)
 		FROM {db_prefix}tp_dlmanager
 		WHERE author_id = {int:auth}
 		AND type = {string:type}
-		ORDER BY {raw:sort} {raw:sorter} LIMIT 15 OFFSET {int:start}',
+		ORDER BY {raw:sort} {raw:sorter} LIMIT {int:limit} OFFSET {int:start}',
 		['auth' => $memID,
 			'type' => 'dlitem',
 			'sort' => $sorting,
 			'sorter' => in_array($sorting, ['created', 'views', 'downloads']) ? 'DESC' : 'ASC',
-			'start' => $start]
+			'start' => $start,
+			'limit' => $downloads_per_page]
 	);
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
@@ -3005,7 +3009,7 @@ function tp_profile_download($memID)
 	}
 	// construct pageindexes
 	if ($max > 0) {
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=profile;area=tpdownload;u=' . $memID . ';tpsort=' . $sorting, $start, $max, '15');
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=profile;area=tpdownload;u=' . $memID . ';tpsort=' . $sorting, $start, $max, $downloads_per_page);
 	}
 	else {
 		$context['TPortal']['pageindex'] = '';

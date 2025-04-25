@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -66,8 +66,20 @@ function template_tp_articles()
 			}
 		}
 		echo '
-			</div><br>
+		</div><br>';
 
+		if (isset($context['TPortal']['profile_articles']) && sizeof($context['TPortal']['profile_articles']) > 0) {
+
+		if (!empty($context['TPortal']['pageindex'])) {
+		echo '
+			<div class="pagesection">
+				<div class="pagelinks floatleft">
+					<a href="#bot" class="button">', $txt['go_down'], '</a>
+					' . $context['TPortal']['pageindex'] . '
+				</div>
+			</div>';
+		}
+		echo '
 	<table class="table_grid">
 		<thead>
 			<tr class="title_bar">
@@ -85,7 +97,6 @@ function template_tp_articles()
 			</tr>
 		</thead>
 		<tbody>';
-		if (isset($context['TPortal']['profile_articles']) && sizeof($context['TPortal']['profile_articles']) > 0) {
 			foreach ($context['TPortal']['profile_articles'] as $art) {
 				echo '
 			<tr class="windowbg">
@@ -133,23 +144,24 @@ function template_tp_articles()
 			</td>
 			</tr>';
 			}
-		}
-		else {
-			echo '
-					<tr class="windowbg">
-					<td class="tp_shout_date" colspan="6">
-						<div>',$txt['tp-noarticlesfound'],'</div>
-					</td>
-					</tr>';
-		}
 		echo '
 		</tbody>
 	</table>';
-
-		if (!empty($context['TPortal']['pageindex'])) {
-			echo '
-			<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>';
+			if (!empty($context['TPortal']['pageindex'])) {
+				echo '
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+							<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+							' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>';
+			}
 		}
+		else {
+			echo '
+				<div class="infobox">' . $txt['tp-noarticlesfound'] . '</div>';
+		}
+
 		echo '
 		</div>
 		<script>
@@ -281,8 +293,17 @@ function template_tp_download()
 		}
 		echo '
 			</tbody>
-		</table>
-		<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>
+		</table>';
+			if (!empty($context['TPortal']['pageindex'])) {
+				echo '
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+							<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+							' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>';
+			}
+		echo '
 		<script>
 			$(document).ready( function() {
 				var $clickme = $(".clickme"),

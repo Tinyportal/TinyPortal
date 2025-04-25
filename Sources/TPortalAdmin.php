@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -967,7 +967,8 @@ function do_articles()
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], ['date', 'id', 'author_id', 'type', 'subject', 'parse'])) ? $_GET['sort'] : 'date';
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=submission;sort=' . $sort, $start, $context['TPortal']['total_submissions'], 15);
+		$articles_per_page = 20;
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=submission;sort=' . $sort, $start, $context['TPortal']['total_submissions'], $articles_per_page);
 		$request = $smcFunc['db_query'](
 			'',
 			'
@@ -978,12 +979,13 @@ function do_articles()
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE art.approved = {int:approved}
 			ORDER BY art.{raw:col} {raw:sort}
-			LIMIT {int:start}, 15',
+			LIMIT {int:start}, {int:limit}',
 			[
 				'approved' => 0,
 				'col' => $sort,
 				'start' => $start,
 				'sort' => in_array($sort, ['sticky', 'locked', 'frontpage', 'date', 'active']) ? 'DESC' : 'ASC',
+				'limit' => $articles_per_page,
 			]
 		);
 
@@ -1001,7 +1003,8 @@ function do_articles()
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], ['off', 'date', 'id', 'author_id', 'locked', 'frontpage', 'sticky', 'featured', 'type', 'subject', 'parse'])) ? $_GET['sort'] : 'date';
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=articles;sort=' . $sort, $start, $context['TPortal']['total_nocategory'], 15);
+		$articles_per_page = 20;
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=articles;sort=' . $sort, $start, $context['TPortal']['total_nocategory'], $articles_per_page);
 		$request = $smcFunc['db_query'](
 			'',
 			'
@@ -1012,11 +1015,12 @@ function do_articles()
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE (art.category = 0 OR art.category = 9999)
 			ORDER BY art.{raw:col} {raw:sort}
-			LIMIT {int:start}, 15',
+			LIMIT {int:start}, {int:limit}',
 			[
 				'col' => $sort,
 				'sort' => in_array($sort, ['sticky', 'locked', 'frontpage', 'date', 'active']) ? 'DESC' : 'ASC',
 				'start' => $start,
+				'limit' => $articles_per_page,
 			]
 		);
 
@@ -1148,6 +1152,7 @@ function do_articles()
 		$start = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 		// sorting?
 		$sort = $context['TPortal']['sort'] = (!empty($_GET['sort']) && in_array($_GET['sort'], ['off', 'date', 'id', 'author_id', 'locked', 'frontpage', 'sticky', 'featured', 'type', 'subject', 'parse'])) ? $_GET['sort'] : 'date';
+		$articles_per_page = 20;
 		$context['TPortal']['categoryID'] = $where;
 		// get the name
 		$request = $smcFunc['db_query'](
@@ -1181,7 +1186,7 @@ function do_articles()
 		);
 
 		$row = $smcFunc['db_fetch_assoc']($request);
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=articles;sort=' . $sort . ';cu=' . $where, $start, $row['total'], 15);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tpadmin;sa=articles;sort=' . $sort . ';cu=' . $where, $start, $row['total'], $articles_per_page);
 		$smcFunc['db_free_result']($request);
 
 		$request = $smcFunc['db_query'](
@@ -1194,11 +1199,12 @@ function do_articles()
 			LEFT JOIN {db_prefix}members AS mem ON (art.author_id = mem.id_member)
 			WHERE art.category = {int:cat}
 			ORDER BY art.{raw:sort} {raw:sorter}
-			LIMIT 15 OFFSET {int:start}',
+			LIMIT {int:limit} OFFSET {int:start}',
 			['cat' => $where,
 				'sort' => $sort,
 				'sorter' => in_array($sort, ['sticky', 'locked', 'frontpage', 'date', 'active']) ? 'DESC' : 'ASC',
-				'start' => $start
+				'start' => $start,
+				'limit' => $articles_per_page
 			]
 		);
 		TPadd_linktree($scripturl . '?action=tpadmin;sa=articles;cu=' . $where, $txt['tp-blocktype19']);

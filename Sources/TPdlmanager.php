@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1162,6 +1162,7 @@ function TPortalDLManager()
 		elseif (isset($_GET['p']) && is_numeric($_GET['p'])) {
 			$start = $_GET['p'];
 		}
+		$downloads_per_page = 10;
 
 		// get total count
 		$request = $smcFunc['db_query'](
@@ -1187,8 +1188,8 @@ function TPortalDLManager()
 				WHERE dl.type = {string:type}
 				AND dl.category = {int:cat}
 				AND dl.subitem = {int:sub}
-				ORDER BY dl.' . $dlsort . ' ' . $dlsort_way . ' LIMIT 10 OFFSET {int:start}',
-			['type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0, 'start' => $start]
+				ORDER BY dl.' . $dlsort . ' ' . $dlsort_way . ' LIMIT {int:limit} OFFSET {int:start}',
+			['type' => 'dlitem', 'cat' => $currentcat, 'sub' => 0, 'start' => $start, 'limit' => $downloads_per_page]
 		);
 
 		if ($smcFunc['db_num_rows']($request) > 0) {
@@ -1283,7 +1284,7 @@ function TPortalDLManager()
 		}
 
 		// construct a pageindex
-		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=download;dl=cat' . $currentcat . $currsorting, $mystart, $rows2, 10);
+		$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=download;dl=cat' . $currentcat . $currsorting, $mystart, $rows2, $downloads_per_page);
 
 		// check backwards for parents
 		$done = 0;
@@ -1624,7 +1625,10 @@ function TPdlresults()
 	global $txt, $scripturl, $context, $user_info, $smcFunc;
 
 	$start = 0;
-
+	$max_results = 20;
+	$usebody = false;
+	$usetitle = false;
+	
 	if (isset($_GET['p']) && is_numeric($_GET['p'])) {
 		$start = $_GET['p'];
 	}
@@ -1712,8 +1716,13 @@ function TPdlresults()
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		WHERE ' . $query . '
 		AND type = {string:type}
-		ORDER BY d.created DESC LIMIT {int:start}, 15',
-		['type' => 'dlitem', 'what' => $what2, 'start' => $start]
+		ORDER BY d.created DESC LIMIT {int:start}, {int:limit}',
+		[
+			'type' => 'dlitem', 
+			'what' => $what2, 
+			'limit' => $max_results,
+			'start' => $start
+		]
 	);
 	// create pagelinks
 	if ($smcFunc['db_num_rows']($request) > 0) {
@@ -1737,6 +1746,13 @@ function TPdlresults()
 		$smcFunc['db_free_result']($request);
 	}
 	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=search', $txt['tp-dlsearch']);
+
+	$params = base64_encode(json_encode(['search' => $what, 'title' => $usetitle, 'body' => $usebody]));
+	
+	// Now that we know how many results to expect we can start calculating the page numbers.
+	$context['page_index'] = constructPageIndex($scripturl . '?sa=download;dl=search;params=' . $params, $start, $total, $max_results, false);
+//	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
+
 }
 // searched the files?
 function TPdlsearch()

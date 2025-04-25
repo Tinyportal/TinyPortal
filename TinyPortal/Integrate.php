@@ -385,8 +385,8 @@ class Integrate
 		if (!isset($context['TPortal']) || isset($context['uninstalling'])) {
 			return;
 		}
-		// If we have disabled the front page, this is not needed...
-		if ($context['TPortal']['front_placement'] != 'disabled') {
+		// This is only needed if the frontpage is activated...
+		if ($context['TPortal']['front_active'] == '1') {
 			// Set the forum button activated if needed.
 			if (empty($_GET)) {
 				$context['current_action'] = 'home';
@@ -642,26 +642,43 @@ class Integrate
 				$theAction = 'SMF\\Actions\\BoardIndex::call';
 			}
 		}
-
-		// Action and board are both empty... maybe the portal page?
-		if (empty($board) && empty($topic) && $context['TPortal']['front_placement'] == 'boardindex') {
-			require_once SOURCEDIR . '/TPortal.php';
-			$theAction = 'TPortalMain';
-		}
-
-		// If frontpage set to boardindex but it's an article or category
-		if (empty($board) && empty($topic) && $context['TPortal']['front_placement'] != 'boardindex' && (isset($_GET['cat']) || isset($_GET['page']))) {
-			require_once SOURCEDIR . '/TPortal.php';
-			$theAction = 'TPortalMain';
-		}
-		// Action and board are still both empty...and no portal startpage - BoardIndex!
-		elseif (empty($board) && empty($topic) && $context['TPortal']['front_placement'] != 'boardindex') {
-			if (TP_SMF21) {
-				require_once SOURCEDIR . '/BoardIndex.php';
-				$theAction = 'BoardIndex';
+		if ($context['TPortal']['front_active'] == '1')
+		{
+			// Action and board are both empty... maybe the portal page?
+			if (empty($board) && empty($topic) && $context['TPortal']['front_placement'] == 'boardindex') {
+				require_once SOURCEDIR . '/TPortal.php';
+				$theAction = 'TPortalMain';
 			}
-			else {
-				$theAction = 'SMF\\Actions\\BoardIndex::call';
+			// If frontpage set to boardindex but it's an article or category
+			if (empty($board) && empty($topic) && $context['TPortal']['front_placement'] != 'boardindex' && (isset($_GET['cat']) || isset($_GET['page']))) {
+				require_once SOURCEDIR . '/TPortal.php';
+				$theAction = 'TPortalMain';
+			}
+			// Action and board are still both empty...and no portal startpage - BoardIndex!
+			elseif (empty($board) && empty($topic) && $context['TPortal']['front_placement'] != 'boardindex') {
+				if (TP_SMF21) {
+					require_once SOURCEDIR . '/BoardIndex.php';
+					$theAction = 'BoardIndex';
+				}
+				else {
+					$theAction = 'SMF\\Actions\\BoardIndex::call';
+				}
+			}
+		}
+		else {
+			// If frontpage set to boardindex but it's an article or category
+			if (empty($board) && empty($topic) && (isset($_GET['cat']) || isset($_GET['page']))) {
+				require_once SOURCEDIR . '/TPortal.php';
+				$theAction = 'TPortalMain';
+			}
+			elseif (empty($board) && empty($topic)) {
+				if (TP_SMF21) {
+					require_once SOURCEDIR . '/BoardIndex.php';
+					$theAction = 'BoardIndex';
+				}
+				else {
+					$theAction = 'SMF\\Actions\\BoardIndex::call';
+				}
 			}
 		}
 

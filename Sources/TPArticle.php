@@ -116,15 +116,13 @@ function articleShowComments()
 {
 	global $smcFunc, $scripturl, $user_info, $txt, $context;
 
-	if (!empty($_GET['tpstart']) && is_numeric($_GET['tpstart'])) {
-		$tpstart = $_GET['tpstart'];
-	}
-	else {
-		$tpstart = 0;
+	if (isset($context['TPortal']['mystart'])) {
+		$tpstart = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
 	}
 
 	$mylast = 0;
 	$mylast = $user_info['last_login'];
+	$comments_per_page = 15;
 	$showall = false;
 	if (isset($_GET['showall'])) {
 		$showall = true;
@@ -156,8 +154,11 @@ function articleShowComments()
         WHERE var.item_type = {string:type}
         AND art.id = var.item_id
         ' . ((!$showall || $mylast == 0) ? 'AND var.datetime > {int:last}' : '') . '
-        ORDER BY var.datetime DESC LIMIT {int:start}, 15',
-		['type' => 'article_comment', 'last' => $mylast, 'start' => $tpstart]
+        ORDER BY var.datetime DESC LIMIT {int:limit} OFFSET {int:start}',
+		['type' => 'article_comment',
+			'last' => $mylast, 
+			'start' => $tpstart,
+			'limit' => $comments_per_page]
 	);
 
 	$context['TPortal']['artcomments']['new'] = [];
@@ -183,12 +184,12 @@ function articleShowComments()
 	}
 
 	// construct the pages
-	$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=showcomments', $tpstart, $check[0], 15);
+	$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=showcomments', $tpstart, $check[0], $comments_per_page);
 	$context['TPortal']['unreadcomments'] = true;
 	$context['TPortal']['showall'] = $showall;
 	TPadd_linktree($scripturl . '?action=tportal;sa=showcomments', $txt['tp-showcomments']);
 	($showall ? (TPadd_linktree($scripturl . '?action=tportal;sa=showcomments;showall', $txt['tp-showall'])) : '');
-	($showall ? ($context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=showcomments;showall', $tpstart, $check[0], 15)) : '');
+	($showall ? ($context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=showcomments;showall', $tpstart, $check[0], $comments_per_page)) : '');
 	loadTemplate('TParticle');
 	$context['sub_template'] = 'showcomments';
 	if (loadLanguage('TParticle') == false) {
@@ -570,6 +571,8 @@ function articleShow()
 		fatal_error($txt['tp-noarticlesfound'], false);
 	}
 
+	$articles_per_page = 20;
+
 	// get all articles
 	$request = $smcFunc['db_query'](
 		'',
@@ -584,7 +587,7 @@ function articleShow()
 	$mystart = (!empty($_GET['p']) && is_numeric($_GET['p'])) ? $_GET['p'] : 0;
 	// sorting?
 	$sort = $context['TPortal']['tpsort'] = (!empty($_GET['tpsort']) && in_array($_GET['tpsort'], ['date', 'id', 'subject'])) ? $_GET['tpsort'] : 'date';
-	$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=myarticles;tpsort=' . $sort, $mystart, $allmy, 15);
+	$context['TPortal']['pageindex'] = TPageIndex($scripturl . '?action=tportal;sa=myarticles;tpsort=' . $sort, $mystart, $allmy, $articles_per_page);
 
 	$context['TPortal']['subaction'] = 'myarticles';
 	$context['TPortal']['myarticles'] = [];
@@ -593,11 +596,12 @@ function articleShow()
 		'
         SELECT id, subject, date, locked, approved, off FROM {db_prefix}tp_articles
         WHERE author_id = {int:author}
-        ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, 15',
+        ORDER BY {raw:sort} {raw:sorter} LIMIT {int:start}, {int:limit}',
 		['author' => $context['user']['id'],
 			'sort' => $sort,
 			'sorter' => in_array($sort, ['subject']) ? ' ASC ' : ' DESC ',
-			'start' => $mystart
+			'start' => $mystart,
+			'limit' => $articles_per_page
 		]
 	);
 

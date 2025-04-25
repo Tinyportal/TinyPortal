@@ -603,7 +603,9 @@ function template_submitsuccess()
 	global $txt, $scripturl;
 
 	echo '
-		<div class="infobox tpcenter">' . $txt['tp-submitsuccess'] . '<a href="' . $scripturl . '?action=tportal;sa=myarticles">' . $txt['tp-myarticles'] . '</a></div>';
+		<div class="infobox">
+			<p class="centertext">' . $txt['tp-submitsuccess'] . '<a href="' . $scripturl . '?action=tportal;sa=myarticles">' . $txt['tp-myarticles'] . '</a></p>
+		</div>';
 }
 
 function template_editcomment()
@@ -629,15 +631,27 @@ function template_showcomments()
 	global $context, $txt, $scripturl;
 
 	if (!empty($context['TPortal']['showall'])) {
+
+		echo '
+		<div id="display_head" class="information">
+			<h2 class="display_title">', $txt['tp-commentall'] ,'</h2>
+		</div>';
+
 		if (empty($context['TPortal']['artcomments']['new'])) {
 			echo '
-			<div class="cat_bar centertext"><h3 class="catbg centertext">' . $txt['tp-nocomments2'] . '</h3></div>';
+			<div class="infobox">
+				<p class="centertext">' . $txt['tp-nocomments2'] . '</p>
+			</div>';
 		}
 		else {
 			echo '
-			<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentall'] . '</h3></div>
-			<div></div>
-			<div id="show-art-comm" class="windowbg">
+			<div id="show-art-comm">
+			<div class="pagesection">
+				<div class="pagelinks floatleft">
+					<a href="#bot" class="button">', $txt['go_down'], '</a>
+					' . $context['TPortal']['pageindex'] . '
+				</div>
+			</div>
 			<table class="table_grid">
 				<thead>
 					<tr class="title_bar">
@@ -673,19 +687,36 @@ function template_showcomments()
 		echo '
 				</tbody>
 			</table>
-			<div class="tp_pad">' . $context['TPortal']['pageindex'] . '</div>
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+						<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+						' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>
 			</div>';
 	}
 	else {
+		echo '
+		<div id="display_head" class="information">
+			<h2 class="display_title">', $txt['tp-commentnew'] ,'</h2>
+		</div>';
+
 		if (empty($context['TPortal']['artcomments']['new'])) {
 			echo '
-				<div class="cat_bar"><h3 class="catbg centertext">' . $txt['tp-nocomments3'] . '. <a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showallcomments'] . '</a></h3></div>';
+				<div class="infobox">
+					<p class="centertext">' . $txt['tp-nocomments3'] . '. <a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showallcomments'] . '</a></p>
+				</div>';
 		}
 		else {
 			echo '
 				<div class="cat_bar"><h3 class="catbg">' . $txt['tp-commentnew'] . '. <a href="' . $scripturl . '?action=tportal;sa=showcomments;showall">' . $txt['tp-showallcomments'] . '</a></h3></div>
-				<div></div>
-				<div id="latest-art-comm" class="windowbg">
+				<div id="latest-art-comm">
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+						<a href="#bot" class="button">', $txt['go_down'], '</a>
+						' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>
 				<table class="table_grid">
 					<thead>
 						<tr class="title_bar">
@@ -718,7 +749,12 @@ function template_showcomments()
 			echo '
 					</tbody>
 				</table>
-			<div class="tp_pad">' . $context['TPortal']['pageindex'] . '</div>
+				<div class="pagesection">
+					<div class="pagelinks floatleft">
+						<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+						' . $context['TPortal']['pageindex'] . '
+					</div>
+				</div>
 			</div>';
 		}
 	}
@@ -730,8 +766,19 @@ function template_showarticle()
 	global $txt, $context, $settings, $scripturl;
 
 	echo '
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-myarticles'] . '</h3></div>
-		<div id="myarticles">
+		<div id="display_head" class="information">
+			<h2 class="display_title">', $txt['tp-myarticles'] ,'</h2>
+		</div>
+		<div id="myarticles">';
+
+	if (count($context['TPortal']['myarticles']) > 0) {
+	echo '
+		<div class="pagesection">
+			<div class="pagelinks floatleft">
+				<a href="#bot" class="button">', $txt['go_down'], '</a>
+				' . $context['TPortal']['pageindex'] . '
+			</div>
+		</div>
 		<table class="table_grid">
 			<thead>
 				<tr class="title_bar">
@@ -744,8 +791,8 @@ function template_showarticle()
 				</th>
 				</tr>
 			</thead>
-		<tbody>';
-	if (count($context['TPortal']['myarticles']) > 0) {
+			<tbody>';
+
 		foreach ($context['TPortal']['myarticles'] as $art) {
 			echo '
 			<tr class="windowbg">
@@ -793,24 +840,25 @@ function template_showarticle()
 					</td>
 					</tr>';
 		}
-	}
-	else {
-		echo '
-					<tr class="windowbg">
-						<td>
-							' . $txt['tp-noarticlesfound'] . '
-						</td>
-					</tr>';
-	}
+
 	echo '
 			</tbody>
 		</table>';
 
-	if (!empty($context['TPortal']['pageindex'])) {
-		echo '
-				<div class="padding-div">' . $context['TPortal']['pageindex'] . '</div>';
-	}
-
-	echo '
+		if (!empty($context['TPortal']['pageindex'])) {
+			echo '
+			<div class="pagesection">
+				<div class="pagelinks floatleft">
+					<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+					' . $context['TPortal']['pageindex'] . '
+				</div>
 			</div>';
+		}
+	}
+	else {
+		echo '
+			<div class="infobox">' . $txt['tp-noarticlesfound'] . '</div>';
+	}
+	echo '
+		</div>';
 }

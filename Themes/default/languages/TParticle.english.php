@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.0; TParticle
+// Version: 3.0.3; TParticle
 
 global $scripturl;
 
@@ -15,8 +15,8 @@ $txt['tp-commentall'] = 'All article comments';
 $txt['tp-commenter'] = 'Commenter';
 $txt['tp-commenter_time'] = 'Time';
 $txt['tp-commenter_title'] = 'Title';
-$txt['tp-commentnew'] = 'New article comments since last visit';
-$txt['tp-commentreplies'] = 'Replies in article comments';
+$txt['tp-commentnew'] = 'Recent article comments';
+$txt['tp-commentreplies'] = 'Recent article comments';
 $txt['tp-noadmincomments'] = 'Sorry, you are not allowed to edit or delete comments';
 $txt['tp-nocomments'] = 'Sorry, you are not allowed to comment';
 $txt['tp-nocomments2'] = 'There are no comments to show.';

@@ -349,7 +349,7 @@ function setupTPsettings()
 		TPstrip_linktree();
 	}
 	// are we actually on frontpage then?
-	if (!isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action'])) {
+	if ($context['TPortal']['front_active'] == '1' && !isset($_GET['cat']) && !isset($_GET['page']) && !isset($_GET['action'])) {
 		$context['TPortal']['is_frontpage'] = true;
 	}
 

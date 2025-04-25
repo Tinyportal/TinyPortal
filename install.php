@@ -524,6 +524,7 @@ $settings_array = [
 	'download_upload_path' => $boarddir . '/tp-downloads/',
 	'blockcode_upload_path' => $boarddir . '/tp-files/tp-blockcodes/',
 	// frontpage
+	'front_active' => '1',
 	'front_placement' => 'boardindex',
 	'front_placement_url' => $boardurl . '/TPStandalone.php',
 	'front_type' => 'forum_articles',
@@ -794,6 +795,38 @@ foreach ($checkboxes as $check) {
 	$smcFunc['db_free_result']($request);
 }
 
+// convert front_placement disabled setting to front_active
+	$request = $smcFunc['db_query'](
+		'',
+		'
+		SELECT * FROM {db_prefix}tp_settings
+		WHERE name = {string:name} LIMIT 1',
+		['name' => 'front_placement']
+	);
+
+	$row = $smcFunc['db_fetch_assoc']($request);
+	if (isset($row['value']) && ($row['value'] == 'disabled')) {
+		$updates++;
+
+		$smcFunc['db_query'](
+			'',
+			'
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
+            WHERE name = {string:name}',
+			['val' => 'boardindex', 'name' => 'front_placement']
+		);
+		$smcFunc['db_query'](
+			'',
+			'
+            UPDATE {db_prefix}tp_settings
+            SET value = {string:val}
+            WHERE name = {string:name}',
+			['val' => 0, 'name' => 'front_active']
+		);
+	}
+	$smcFunc['db_free_result']($request);
+
 if ($updates > 0) {
 	$render .= 'Updated ' . $updates . ' setting(s)<br>';
 }
@@ -1055,6 +1088,56 @@ function updateBlocks()
 	}
 	$smcFunc['db_free_result']($request);
 	$smcFunc['db_remove_column']('{db_prefix}tp_blocks', 'editgroups');
+
+	// convert tp_blocks settings
+	$changes = [];
+	$columns = $smcFunc['db_list_columns']('{db_prefix}tp_blocks');
+	foreach ($columns as $id => $name) {
+		switch ($name) {
+			case 'var1':
+			case 'var2':
+			case 'var3':
+			case 'var4':
+			case 'var5':
+				$changes[] = $name;
+				break;
+			default:
+				break;
+		}
+	}
+
+	if (is_array($changes) && (count($changes) > 0)) {
+		$str = implode(', ', $changes);
+		// update the blocks table columns if needed.
+		$request = $smcFunc['db_query'](
+			'',
+			'
+            SELECT id, ' . $str . ' FROM {db_prefix}tp_blocks WHERE 1=1'
+		);
+		if ($smcFunc['db_num_rows']($request) != 0) {
+			while ($row = $smcFunc['db_fetch_assoc']($request)) {
+				$id = array_shift($row);
+				foreach (['var1', 'var2', 'var3', 'var4', 'var5'] as $key) {
+					if (!array_key_exists($key, $row)) {
+						$row[$key] = '0';
+					}
+				}
+				$data = json_encode($row);
+				$smcFunc['db_query'](
+					'',
+					'UPDATE {db_prefix}tp_blocks
+                        SET settings = {string:data}
+                        WHERE id = {int:id}',
+					['data' => $data, 'id' => $id]
+				);
+			}
+			$smcFunc['db_free_result']($request);
+		}
+
+		foreach ($changes as $column) {
+			$smcFunc['db_remove_column']('{db_prefix}tp_blocks', $column);
+		}
+	}
 
 	// update Shoutbox blocks to new settings for 2.1.x
 	$request = $smcFunc['db_query'](
@@ -1376,55 +1459,6 @@ function addDefaults()
 		);
 		$smcFunc['db_free_result']($request);
 		$render .= '<li>Added sample blocks</li>';
-	}
-
-	$changes = [];
-	$columns = $smcFunc['db_list_columns']('{db_prefix}tp_blocks');
-	foreach ($columns as $id => $name) {
-		switch ($name) {
-			case 'var1':
-			case 'var2':
-			case 'var3':
-			case 'var4':
-			case 'var5':
-				$changes[] = $name;
-				break;
-			default:
-				break;
-		}
-	}
-
-	if (is_array($changes) && (count($changes) > 0)) {
-		$str = implode(', ', $changes);
-		// update the blocks table columns if needed.
-		$request = $smcFunc['db_query'](
-			'',
-			'
-            SELECT id, ' . $str . ' FROM {db_prefix}tp_blocks WHERE 1=1'
-		);
-		if ($smcFunc['db_num_rows']($request) != 0) {
-			while ($row = $smcFunc['db_fetch_assoc']($request)) {
-				$id = array_shift($row);
-				foreach (['var1', 'var2', 'var3', 'var4', 'var5'] as $key) {
-					if (!array_key_exists($key, $row)) {
-						$row[$key] = '0';
-					}
-				}
-				$data = json_encode($row);
-				$smcFunc['db_query'](
-					'',
-					'UPDATE {db_prefix}tp_blocks
-                        SET settings = {string:data}
-                        WHERE id = {int:id}',
-					['data' => $data, 'id' => $id]
-				);
-			}
-			$smcFunc['db_free_result']($request);
-		}
-
-		foreach ($changes as $column) {
-			$smcFunc['db_remove_column']('{db_prefix}tp_blocks', $column);
-		}
 	}
 
 	// check for categories in downloads table, if none insert default.

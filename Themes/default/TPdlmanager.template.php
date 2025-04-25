@@ -388,13 +388,16 @@ function template_main()
 				}
 				echo '
 			</div>
-			<p class="clearthefloat"></p>
-			<div class="padding-div">';
+			<p class="clearthefloat"></p>';
 				if ($context['TPortal']['dlaction'] != 'item' && !empty($context['TPortal']['pageindex'])) {
-					echo $context['TPortal']['pageindex'];
+					echo '
+					<div class="pagesection">
+						<div class="pagelinks floatleft">
+							<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+							' . $context['TPortal']['pageindex'] . '
+						</div>
+					</div>';
 				}
-				echo '
-			</div>';
 			}
 			else {
 				echo '
@@ -1065,7 +1068,7 @@ function template_main()
 		</form>';
 	}
 
-	//Downloads search page
+	// Downloads search page
 	if ($context['TPortal']['dlaction'] == 'search') {
 		echo '
 		<div class="tborder">
@@ -1134,6 +1137,12 @@ function template_main()
 			$bb++;
 		}
 		echo '
+	</div>
+	<div class="pagesection">
+		<div class="pagelinks floatleft">
+			<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+			' . $context['page_index'] . '
+		</div>
 	</div>';
 	}
 	echo '

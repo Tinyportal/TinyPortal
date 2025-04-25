@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -93,6 +93,12 @@ function template_article_search_results()
 			</form>
 		</div>
 	</div>
+	<div class="pagesection">
+		<div class="pagelinks floatleft">
+			<a href="#bot" class="button">', $txt['go_down'], '</a>
+			' . $context['page_index'] . '
+		</div>
+	</div>
 	';
 	$bb = 1;
 	foreach ($context['TPortal']['searchresults'] as $res) {
@@ -109,6 +115,9 @@ function template_article_search_results()
 	}
 	echo '
 	<div class="pagesection">
-		<span>', $context['page_index'], '</span>
+		<div class="pagelinks floatleft">
+			<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
+			' . $context['page_index'] . '
+		</div>
 	</div>';
 }
