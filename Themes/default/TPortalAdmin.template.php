@@ -1852,7 +1852,7 @@ function template_blocks()
 				<div class="font_strong tp_pad">
 					<b>' . $txt['tp-' . $side[$i] . 'sideblocks'] . '</b>
 					<a href="' . $scripturl . '?action=tpadmin;addblock=' . $side[$i] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">
-					<span style="float: right;"><strong>[' , $txt['tp-addblock'] , ']</strong></span></a>
+					<div class="button">' , $txt['tp-addblock'] , '</div></a>
 				</div>';
 		if (isset($context['TPortal']['admin' . $side[$i] . 'panel']) && $context['TPortal']['admin' . $side[$i] . 'panel'] == 0 && $side[$i] != 'front') {
 			echo '

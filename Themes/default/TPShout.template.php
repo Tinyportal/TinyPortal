@@ -512,9 +512,20 @@ function template_tpshout_profile()
 		<div id="tpshout_profile">
 			<div class="windowbg">
 				' . $txt['tp-prof_allshouts'] . ' <b>', $context['TPortal']['all_shouts'] ,'</b>
-			</div><br>';
+			</div>';
 
 	if (isset($context['TPortal']['profile_shouts']) && sizeof($context['TPortal']['profile_shouts']) > 0) {
+
+		if (!empty($context['TPortal']['pageindex'])) {
+		echo '
+			<div class="pagesection">
+				<div class="pagelinks floatleft">
+					<a href="#bot" class="button">', $txt['go_down'], '</a>
+					' . $context['TPortal']['pageindex'] . '
+				</div>
+			</div>';
+		}
+
 		echo '
 			<table class="table_grid">
 				<thead>
