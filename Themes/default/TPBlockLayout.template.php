@@ -345,7 +345,7 @@ function template_editblock()
 						<textarea style="width: 94%; margin: 0px 0px 10px;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' ,  $context['TPortal']['blockedit']['body'] , '</textarea>
 						<p><div class="tborder" style=""><p style="padding: 0 0 5px 0; margin: 0;">' , $txt['tp-blockcodes'] , ':</p>
 							<select name="tp_blockcode" id="tp_blockcode" size="8" style="margin-bottom: 5px; width: 94%" onchange="changeSnippet(this.selectedIndex);">
-								<option value="0" selected="selected">' , $txt['tp-none-'] , '</option>';
+								<option value="0" selected="selected">' , $txt['tp-none'] , '</option>';
 			if (!empty($context['TPortal']['blockcodes'])) {
 				foreach ($context['TPortal']['blockcodes'] as $bc) {
 					echo '
@@ -438,7 +438,7 @@ function template_editblock()
 						<dt>' . $txt['tp-showssibox'] . '</dt>
 						<dd>
 						<div class="tp_largelist">
-							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none-'] . '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none'] . '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="recenttopics" ' , $context['TPortal']['blockedit']['body'] == 'recenttopics' ? 'checked' : '' , '><label for="tp_block_body1"> ' . $txt['tp-ssi-recenttopics'] . '</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="recentposts" ' , $context['TPortal']['blockedit']['body'] == 'recentposts' ? 'checked' : '' , '><label for="tp_block_body2"> ' . $txt['tp-ssi-recentposts'] . '</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="recentpoll" ' , $context['TPortal']['blockedit']['body'] == 'recentpoll' ? 'checked' : '' , '><label for="tp_block_body3"> ' . $txt['tp-ssi-recentpoll'] . '</label><br>
@@ -532,7 +532,7 @@ function template_editblock()
 						<dl class="tp_title settings">
 						<dt>' . $txt['tp-showstatsbox'] . '</dt>
 						<dd>
-							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none-'] . '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none'] . '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="dl-stats" ' , $context['TPortal']['blockedit']['body'] == 'dl-stats' ? 'checked' : '' , '><label for="tp_block_body1"> ' . $txt['tp-module1'] . '</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="dl-stats2" ' , $context['TPortal']['blockedit']['body'] == 'dl-stats2' ? 'checked' : '' , '><label for="tp_block_body2"> ' . $txt['tp-module2'] . '</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="dl-stats3" ' , $context['TPortal']['blockedit']['body'] == 'dl-stats3' ? 'checked' : '' , '><label for="tp_block_body3"> ' . $txt['tp-module3'] . '</label><br>
@@ -740,7 +740,7 @@ function template_editblock()
 						<dd>
 							<input type="radio" name="tp_block_set_style" value="0" ' , ($context['TPortal']['blockedit']['style'] == '' || $context['TPortal']['blockedit']['style'] == '0') ? ' checked' : '' ,' required> <img src="' . $settings['tp_images_url'] . '/TPdivider2.png" alt="" /><br>
 							<input type="radio" name="tp_block_set_style" value="1" ' , ($context['TPortal']['blockedit']['style'] == '1') ? ' checked' : '' ,' > <img src="' . $settings['tp_images_url'] . '/bullet3.png" alt="" /><br>
-							<input type="radio" name="tp_block_set_style" value="2" ' , ($context['TPortal']['blockedit']['style'] == '2') ? ' checked' : '' ,' > ' . $txt['tp-none-'] . '
+							<input type="radio" name="tp_block_set_style" value="2" ' , ($context['TPortal']['blockedit']['style'] == '2') ? ' checked' : '' ,' > ' . $txt['tp-none'] . '
 						</dd>
 					</dl>';
 	}

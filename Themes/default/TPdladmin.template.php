@@ -1,7 +1,7 @@
 	<?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.3
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -860,7 +860,7 @@ function template_main()
 			}
 			else {
 				echo '
-					<option value="0">' . $txt['tp-none-'] . '</option>';
+					<option value="0">' . $txt['tp-none'] . '</option>';
 			}
 			echo '
 					</select>
@@ -936,7 +936,7 @@ function template_main()
 				}
 				else {
 					echo '
-						<option value="0">' . $txt['tp-none-'] . '</option>';
+						<option value="0">' . $txt['tp-none'] . '</option>';
 				}
 			}
 			echo '
