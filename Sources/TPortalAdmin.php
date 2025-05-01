@@ -1562,7 +1562,7 @@ function do_postchecks()
 
 			switch ($from) {
 				case 'settings':
-					$checkboxes = ['imageproxycheck', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'use_groupcolor', 'showstars'];
+					$checkboxes = ['imageproxycheck', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'use_promote', 'use_groupcolor', 'showstars'];
 					break;
 				case 'frontpage':
 					$checkboxes = ['allow_guestnews', 'forumposts_avatar', 'use_attachment'];

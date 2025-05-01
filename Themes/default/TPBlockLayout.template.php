@@ -315,6 +315,7 @@ function template_editblock()
 								<option value="3"' ,$context['TPortal']['blockedit']['type'] == '3' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$context['TPortal']['blockedit']['type'] == '7' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$context['TPortal']['blockedit']['type'] == '1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
+								<option value="21"' ,$context['TPortal']['blockedit']['type'] == '21' ? ' selected' : '' , '>', $txt['tp-blocktype21'] , '</option>
 							</select>
 						</dd>
 						<dt>
@@ -345,7 +346,7 @@ function template_editblock()
 						<textarea style="width: 94%; margin: 0px 0px 10px;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' ,  $context['TPortal']['blockedit']['body'] , '</textarea>
 						<p><div class="tborder" style=""><p style="padding: 0 0 5px 0; margin: 0;">' , $txt['tp-blockcodes'] , ':</p>
 							<select name="tp_blockcode" id="tp_blockcode" size="8" style="margin-bottom: 5px; width: 94%" onchange="changeSnippet(this.selectedIndex);">
-								<option value="0" selected="selected">' , $txt['tp-none-'] , '</option>';
+								<option value="0" selected="selected">' , $txt['tp-none'] , '</option>';
 			if (!empty($context['TPortal']['blockcodes'])) {
 				foreach ($context['TPortal']['blockcodes'] as $bc) {
 					echo '
@@ -427,6 +428,47 @@ function template_editblock()
 			<span style="color: red;">' . $txt['tp-noguest_access'] . '</span>';
 		}
 	}
+	// Block types: Promoted Topics
+	elseif ($context['TPortal']['blockedit']['type'] == '21') {
+		if (!is_numeric($context['TPortal']['blockedit']['body'])) {
+			$context['TPortal']['blockedit']['body'] = 10;
+		}
+		echo '
+					<dl class="settings">
+						<dt>' . $txt['tp-rssblock-showavatar'] . '</dt>
+						<dd>
+							<input type="radio" id="tp_block_useavataryes" name="tp_block_set_useavatar" value="1" ' , !$context['TPortal']['blockedit']['useavatar'] == '0' ? ' checked' : '' ,' required><label for="tp_block_useavataryes">' . $txt['tp-yes'] . '</label>
+							<input type="radio" id="tp_block_useavatarno" name="tp_block_set_useavatar" value="0" ' , $context['TPortal']['blockedit']['useavatar'] == '0' ? ' checked' : '' ,'><label for="tp_block_useavatarno">' . $txt['tp-no'] . '</label>
+						</dd>
+						<dt>
+							<label for="tp-length">' . $txt['tp-lengthofrecenttopics'] . '</label>
+						</dt>
+						<dd>
+							<input type="number" id="tp-length" name="tp_block_set_length" value="' ,(empty($context['TPortal']['blockedit']['length']) ? '25' : $context['TPortal']['blockedit']['length']), '" style="width: 6em" min="1" max="255" required><br>
+						</dd>
+						<dt><label for="tp_block_body">' . $txt['tp-numberofrecenttopics'] . '</label></dt>
+						<dd>
+							<input type="number" id="tp_block_body" name="tp_block_body" value="' . $context['TPortal']['blockedit']['body'] . '" style="width: 6em" min="1" required>
+						</dd>';
+/*						<dt>' . $txt['tp-recentincexc'] . '</dt>
+						<dd>
+							<input type="radio" id="tp_block_include" name="tp_block_set_include" value="1" ' , !$context['TPortal']['blockedit']['include'] == '0' ? ' checked' : '' ,' required> <label for="tp_block_include">' . $txt['tp-recentinboard'] . '</label><br>
+							<input type="radio" id="tp_block_exclude" name="tp_block_set_include" value="0" ' , $context['TPortal']['blockedit']['include'] == '0' ? 'checked' : '' ,'> <label for="tp_block_exclude">' . $txt['tp-recentexboard'] . '</label>
+						</dd>
+						<dt><label for="tp_block_boards">' . $txt['tp-recentboards'] . '</label></dt>
+						<dd>
+							<input type="text" id="tp_block_boards" name="tp_block_set_boards" value="' , $context['TPortal']['blockedit']['boards'] ,'" size="20" pattern="[0-9,]+">
+						</dd>';
+*/
+echo '
+					</dl>';
+		if ($modSettings['allow_guestAccess'] == '0') {
+			echo '
+			<a href="', $scripturl, '?action=helpadmin;help=tp-noguest_accessdesc" onclick="return reqOverlayDiv(this.href);">
+			<span class="tptooltip" title="', $txt['help'], '"></span></a>
+			<span style="color: red;">' . $txt['tp-noguest_access'] . '</span>';
+		}
+	}
 	// Block type: SSI functions
 	elseif ($context['TPortal']['blockedit']['type'] == '13') {
 		if (!in_array($context['TPortal']['blockedit']['body'], ['recenttopics', 'recentposts', 'recentpoll', 'recentattachments', 'topboards', 'topreplies', 'topviews', 'toppoll', 'topposters', 'latestmember', 'randommember', 'online', 'welcome', 'calendar', 'birthday', 'holiday', 'event', 'recentevent', 'boardstats', 'news', 'boardnews', 'quicksearch'])) {
@@ -438,7 +480,7 @@ function template_editblock()
 						<dt>' . $txt['tp-showssibox'] . '</dt>
 						<dd>
 						<div class="tp_largelist">
-							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none-'] . '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none'] . '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="recenttopics" ' , $context['TPortal']['blockedit']['body'] == 'recenttopics' ? 'checked' : '' , '><label for="tp_block_body1"> ' . $txt['tp-ssi-recenttopics'] . '</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="recentposts" ' , $context['TPortal']['blockedit']['body'] == 'recentposts' ? 'checked' : '' , '><label for="tp_block_body2"> ' . $txt['tp-ssi-recentposts'] . '</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="recentpoll" ' , $context['TPortal']['blockedit']['body'] == 'recentpoll' ? 'checked' : '' , '><label for="tp_block_body3"> ' . $txt['tp-ssi-recentpoll'] . '</label><br>
@@ -532,7 +574,7 @@ function template_editblock()
 						<dl class="tp_title settings">
 						<dt>' . $txt['tp-showstatsbox'] . '</dt>
 						<dd>
-							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none-'] . '</label><br>
+							<input type="radio" id="tp_block_body0" name="tp_block_body" value="" ' , $context['TPortal']['blockedit']['body'] == '' ? 'checked' : '' , ' required><label for="tp_block_body0"> ' . $txt['tp-none'] . '</label><br>
 							<input type="radio" id="tp_block_body1" name="tp_block_body" value="dl-stats" ' , $context['TPortal']['blockedit']['body'] == 'dl-stats' ? 'checked' : '' , '><label for="tp_block_body1"> ' . $txt['tp-module1'] . '</label><br>
 							<input type="radio" id="tp_block_body2" name="tp_block_body" value="dl-stats2" ' , $context['TPortal']['blockedit']['body'] == 'dl-stats2' ? 'checked' : '' , '><label for="tp_block_body2"> ' . $txt['tp-module2'] . '</label><br>
 							<input type="radio" id="tp_block_body3" name="tp_block_body" value="dl-stats3" ' , $context['TPortal']['blockedit']['body'] == 'dl-stats3' ? 'checked' : '' , '><label for="tp_block_body3"> ' . $txt['tp-module3'] . '</label><br>
@@ -740,7 +782,7 @@ function template_editblock()
 						<dd>
 							<input type="radio" name="tp_block_set_style" value="0" ' , ($context['TPortal']['blockedit']['style'] == '' || $context['TPortal']['blockedit']['style'] == '0') ? ' checked' : '' ,' required> <img src="' . $settings['tp_images_url'] . '/TPdivider2.png" alt="" /><br>
 							<input type="radio" name="tp_block_set_style" value="1" ' , ($context['TPortal']['blockedit']['style'] == '1') ? ' checked' : '' ,' > <img src="' . $settings['tp_images_url'] . '/bullet3.png" alt="" /><br>
-							<input type="radio" name="tp_block_set_style" value="2" ' , ($context['TPortal']['blockedit']['style'] == '2') ? ' checked' : '' ,' > ' . $txt['tp-none-'] . '
+							<input type="radio" name="tp_block_set_style" value="2" ' , ($context['TPortal']['blockedit']['style'] == '2') ? ' checked' : '' ,' > ' . $txt['tp-none'] . '
 						</dd>
 					</dl>';
 	}

@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.1; TPortal
+// Version: 3.0.3; TPortal
 
 global $txt, $context, $scripturl;
 
@@ -285,7 +285,7 @@ $txt['tp-no-sa-list'] = 'This is not a valid subaction';
 $txt['tp-noadmin'] = 'Sorry, you are not allowed to access this TinyPortal admin page.';
 $txt['tp-noarticlesfound'] = 'No articles were found.';
 $txt['tp-nocategory'] = 'This article isn\'t assigned to a category yet.';
-$txt['tp-none'] = '-none-';
+$txt['tp-none'] = '- none -';
 $txt['tp-notallowed'] = 'Sorry, you are not allowed to view this article.';
 $txt['tp-notapproved'] = 'This article hasn\'t been approved yet.';
 $txt['tp-noton'] = 'This article isn\'t active.';
@@ -298,7 +298,7 @@ $txt['tp-poster4'] = ' posts in the boards since then. Last visit was  ';
 $txt['tp-poster5'] = ' is no longer a member with this community.';
 $txt['tp-poster6'] = 'The member has written ';
 $txt['tp-poster7'] = ' articles.';
-$txt['tp-publish'] = 'Promote to frontpage';
+$txt['tp-publish'] = 'Promote topic';
 $txt['tp-quicklist'] = 'My images quick-list';
 $txt['tp-quicklist2'] = 'The images below are small thumbnails of the original pictures. By dragging them into the editor the picture is inserted into the editor.';
 $txt['tp-rates'] = 'rates';
@@ -315,7 +315,7 @@ $txt['tp-strays'] = 'Uncategorized';
 $txt['tp-submissions'] = 'Submissions';
 $txt['tp-toggle'] = 'Toggle panel';
 $txt['tp-ungroupedmembers'] = 'Ungrouped members';
-$txt['tp-unpublish'] = 'Remove from frontpage';
+$txt['tp-unpublish'] = 'Remove promotion';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list';
 
 $txt['tp-bytes'] = ' bytes';
