@@ -395,7 +395,7 @@ $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype3'] = 'Stats';
 $txt['tp-blocktype7'] = 'Theme selector';
 $txt['tp-blocktype1'] = 'User';
-$txt['tp-blocktype20'] = 'Promoted topics';
+$txt['tp-blocktype21'] = 'Promoted topics';
 $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
 

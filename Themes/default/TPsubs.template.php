@@ -1093,7 +1093,7 @@ function TPortal_categorybox()
 	}
 }
 
-// blocktype 20: Promoted Topics
+// blocktype 21: Promoted Topics
 function TPortal_promotedbox()
 {
 	global $scripturl, $context, $settings, $txt, $modSettings, $user_info, $smcFunc;
@@ -1130,10 +1130,6 @@ function TPortal_promotedbox()
 		else {
 			$include_boards = null;
 		}
-
-//		$what = ssi_recentTopics($num_recent = $context['TPortal']['promotedboxnum'], $exclude_boards, $include_boards, $output_method = 'array');
-
-//' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 
     $request = $smcFunc['db_query'](
 	'', 
@@ -1222,8 +1218,6 @@ function TPortal_promotedbox()
 		}
 	}
 }
-
-https://test2.fjr-club.nl/index.php?board=37.0
 
 // dummy for old templates
 function TPortal_sidebar()

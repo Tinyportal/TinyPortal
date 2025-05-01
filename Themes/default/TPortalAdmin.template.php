@@ -1953,7 +1953,7 @@ function template_blocks()
 								<option value="3"' ,$lblock['type'] == 'statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$lblock['type'] == 'themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$lblock['type'] == 'userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="20"' ,$lblock['type'] == 'promotedbox' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>';
+								<option value="21"' ,$lblock['type'] == 'promotedbox' ? ' selected' : '' , '>', $txt['tp-blocktype21'] , '</option>';
 				echo '	</select>
 						</div>
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
@@ -2270,7 +2270,7 @@ function template_addblock()
 							<input type="radio" id="tp_addblock3" name="tp_addblock" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>
 							<input type="radio" id="tp_addblock7" name="tp_addblock" value="7" /><label for="tp_addblock7">' . $txt['tp-blocktype7'] . '</label><br>
 							<input type="radio" id="tp_addblock1" name="tp_addblock" value="1" /><label for="tp_addblock1">' . $txt['tp-blocktype1'] . '</label><br>
-							<input type="radio" id="tp_addblock20" name="tp_addblock" value="20" /><label for="tp_addblock20">' . $txt['tp-blocktype20'] . '</label><br>
+							<input type="radio" id="tp_addblock21" name="tp_addblock" value="21" /><label for="tp_addblock21">' . $txt['tp-blocktype21'] . '</label><br>
 						</div>
 					</dd>
 				</dl>

@@ -315,7 +315,7 @@ function template_editblock()
 								<option value="3"' ,$context['TPortal']['blockedit']['type'] == '3' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$context['TPortal']['blockedit']['type'] == '7' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
 								<option value="1"' ,$context['TPortal']['blockedit']['type'] == '1' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
-								<option value="20"' ,$context['TPortal']['blockedit']['type'] == '20' ? ' selected' : '' , '>', $txt['tp-blocktype20'] , '</option>
+								<option value="21"' ,$context['TPortal']['blockedit']['type'] == '21' ? ' selected' : '' , '>', $txt['tp-blocktype21'] , '</option>
 							</select>
 						</dd>
 						<dt>
@@ -429,7 +429,7 @@ function template_editblock()
 		}
 	}
 	// Block types: Promoted Topics
-	elseif ($context['TPortal']['blockedit']['type'] == '20') {
+	elseif ($context['TPortal']['blockedit']['type'] == '21') {
 		if (!is_numeric($context['TPortal']['blockedit']['body'])) {
 			$context['TPortal']['blockedit']['body'] = 10;
 		}
