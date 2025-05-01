@@ -85,6 +85,7 @@ class Block extends Base
 			17 => 'admin',
 			18 => 'articlebox',
 			19 => 'categorybox',
+			20 => 'promotedbox',
 		];
 
 		$this->blockPanel = [
@@ -127,6 +128,7 @@ class Block extends Base
 			'17' => ['panelstyle' => 99],                                                                              // Admin
 			'18' => ['panelstyle' => 99],                                                                              // Article
 			'19' => ['panelstyle' => 99, 'block_height' => 15, 'block_author' => 0],                                   // Categories
+			'20' => ['panelstyle' => 99, 'useavatar' => 1, 'boards' => '', 'include' => 1, 'length' => 100],           // Promoted Topics
 		];
 
 		foreach ($this->blockType as $k => $v) {

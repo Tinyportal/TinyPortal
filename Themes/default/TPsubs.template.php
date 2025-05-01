@@ -1093,6 +1093,138 @@ function TPortal_categorybox()
 	}
 }
 
+// blocktype 20: Promoted Topics
+function TPortal_promotedbox()
+{
+	global $scripturl, $context, $settings, $txt, $modSettings, $user_info, $smcFunc;
+
+	// if no guest access to forum, then no promoted topics
+	if (empty($modSettings['allow_guestAccess']) && $user_info['is_guest']) {
+		echo '' . $txt['tp-noguest_access'] . '';
+		return;
+	}
+	else {
+		// is it a number?
+		if (is_numeric($context['TPortal']['length'])) {
+			$length = $context['TPortal']['length'];
+		}
+		else {
+			$length = '25';
+		}
+		// exclude boards
+		if (isset($context['TPortal']['promotedboards']) && $context['TPortal']['boardmode'] == 0) {
+			$exclude_boards = $context['TPortal']['promotedboards'];
+		}
+		else {
+			// leave out the recycle board, if any
+			if (isset($modSettings['recycle_board']) && $modSettings['recycle_enable'] = 1) {
+				$bb = [$modSettings['recycle_board']];
+			}
+			$exclude_boards = $bb;
+		}
+
+		// include boards
+		if (isset($context['TPortal']['promotedboards']) && !$context['TPortal']['boardmode'] == 0) {
+			$include_boards = $context['TPortal']['promotedboards'];
+		}
+		else {
+			$include_boards = null;
+		}
+
+//		$what = ssi_recentTopics($num_recent = $context['TPortal']['promotedboxnum'], $exclude_boards, $include_boards, $output_method = 'array');
+
+//' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
+
+    $request = $smcFunc['db_query'](
+	'', 
+	'
+        SELECT t.id_topic, t.id_first_msg, m.subject, m.id_member, m.poster_name, m.poster_time, b.id_board, b.name
+        FROM {db_prefix}topics AS t
+        INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_first_msg)
+		INNER JOIN {db_prefix}boards AS b ON t.id_board = b.id_board
+        WHERE t.id_topic IN ({raw:topics})
+        ORDER BY m.poster_time DESC
+        LIMIT {int:limit}',
+        array(
+            'topics' => $context['TPortal']['frontpage_topics'],
+            'limit' => $context['TPortal']['promotedboxnum'],
+			'board' => $context['TPortal']['promotedboards'],
+        )
+    );
+
+    $what = array();
+
+    while ($row = $smcFunc['db_fetch_assoc']($request))
+    {
+        $what[] = $row;
+    }
+    $smcFunc['db_free_result']($request);
+
+		if ($context['TPortal']['useavatar'] == 0) {
+			// Output the topics
+			echo '
+		<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
+			$coun = 1;
+			foreach ($what as $wi => $w) {
+				$tpshortsubject = $w['subject'];
+				$w['readmore'] = '';
+				if (TPUtil::shortenString($tpshortsubject, $length)) {
+					$w['readmore'] = '...';
+				}
+				echo '
+			<li' , $coun < count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
+
+				echo '
+				<div style="font-weight: bold; margin-bottom: 5px;">
+					<a href="', $scripturl, '?topic=', $w['id_topic'], '.0" title="' . $w['subject'] . '">' . $tpshortsubject . '' . $w['readmore'] . '</a>
+				</div>
+				', $txt['tp-fromcategory'] ,' <a href="', $scripturl, '?board=', $w['id_board'], '.0">' . $w['name'] . '</a> ', $txt['by'], ' <b><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">', htmlspecialchars($w['poster_name']),'</a></b><br>
+				 <span class="smalltext">' . timeformat($w['poster_time']) . '</span>
+				</li>';
+				$coun++;
+			}
+			echo '
+		</ul>';
+		}
+		else {
+			$member_ids = [];
+			foreach ($what as $wi => $w) {
+				$member_ids[] = $w['id_member'];
+			}
+			empty($member_ids) ? $avatars = [] : $avatars = progetAvatars($member_ids);
+
+			// Output the topics
+			$coun = 1;
+			echo '
+		<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
+
+			foreach ($what as $wi => $w) {
+				$tpshortsubject = $w['subject'];
+				$w['readmore'] = '';
+				if (TPUtil::shortenString($tpshortsubject, $length)) {
+					$w['readmore'] = '...';
+				}
+				echo '
+			<li' , $coun < count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
+
+				echo '
+				<span class="tp_avatar"><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">' , empty($avatars[$w['id_member']]) ? '<img class="avatar" src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['id_member']] , '</a></span>
+				<div style="font-weight: bold; margin-bottom: 5px;">
+					<a href="', $scripturl, '?topic=', $w['id_topic'], '.0" title="' . $w['subject'] . '">' . $tpshortsubject . '' . $w['readmore'] . '</a>
+				</div>
+				', $txt['tp-fromcategory'] ,' <a href="', $scripturl, '?board=', $w['id_board'], '.0">' . $w['name'] . '</a> ', $txt['by'], ' <b><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">', htmlspecialchars($w['poster_name']),'</a></b><br>
+				<span class="smalltext">' . timeformat($w['poster_time']) . '</span>
+				</li>';
+				$coun++;
+			}
+			echo '
+		</ul>';
+		}
+	}
+}
+
+https://test2.fjr-club.nl/index.php?board=37.0
+
 // dummy for old templates
 function TPortal_sidebar()
 {

@@ -395,6 +395,7 @@ $txt['tp-blocktype13'] = 'SSI functions';
 $txt['tp-blocktype3'] = 'Stats';
 $txt['tp-blocktype7'] = 'Theme selector';
 $txt['tp-blocktype1'] = 'User';
+$txt['tp-blocktype20'] = 'Promoted topics';
 $txt['tp-chooseblocktype'] = '..or use existing blockcode';
 $txt['tp-chooseblockcopy'] = '..or copy from existing block.';
 
@@ -529,7 +530,7 @@ $txt['tp-newsdesc'] = 'The news block presents a random news item from the forum
 $txt['tp-sitemapmodules'] = 'Active modules';
 $txt['tp-showarticle'] = 'Display article';
 $txt['tp-showcategory'] = 'Display article listing from category';
-$txt['tp-numberofrecenttopics'] = 'Number of recent topics to display ';
+$txt['tp-numberofrecenttopics'] = 'Number of topics to display ';
 $txt['tp-lengthofrecenttopics'] = 'Characters to display in titles';
 $txt['tp-minmessagetopics'] = 'Minimum number of messages to read';
 $txt['tp-recentboards'] = 'Board Id\'s <span class="smalltext">(comma separated, blank will include all)</span>';
