@@ -546,6 +546,7 @@ $txt['tp-unreadreplies'] = 'Unread replies';
 $txt['tp-searchdesc'] = 'The search block presents the standard SMF search function in a block.';
 $txt['tp-ssiblockdesc'] = 'The SSI block offers you the option to use one of the many standard SMF SSI functions. Documentation of what these functions mean and can provide can be found here: ';
 $txt['tp-noblocktype'] = 'You have not specified a block type or the block type has no settings.';
+$txt['tp-makeselection'] = 'Select an option.';
 
 // Menu manager
 $txt['tp-helpmenus'] = 'The built in menu manager allows you to create multiple menu\'s. These menu\'s are typically displayed in a block. You get all the features of blocks to display these menu\'s in different places along with choosing who gets to see the blocks based on permissions. Here you can edit the \'internal\' menu of create and manage new menu\'s';

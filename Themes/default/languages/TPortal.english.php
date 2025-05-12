@@ -156,6 +156,7 @@ $txt['tp-welcome_guest'] = 'Welcome to <strong>%1$s</strong>. Please <a href="%2
 // argument(s): forum name, login URL, login JavaScript snippet, signup URL
 $txt['tp-welcome_guest_register'] = 'Welcome to <strong>%1$s</strong>. Please <a href="%2$s" onclick="%3$s">login</a> or <a href="%4$s">sign up</a>.';
 $txt['tp-noguest_access'] = 'Guests are not allowed to browse the forum.';
+$txt['tp-notopics'] = 'No topics found';
 
 // Search
 $txt['tp-nosearchentered'] = 'Nothing to search for!';

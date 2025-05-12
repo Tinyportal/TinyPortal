@@ -1149,73 +1149,78 @@ function TPortal_promotedbox()
     );
 
     $what = array();
+	if ($smcFunc['db_num_rows']($request) > 0) {
+ 	 while ($row = $smcFunc['db_fetch_assoc']($request))
+		{
+			$what[] = $row;
+		}
+		$smcFunc['db_free_result']($request);
 
-    while ($row = $smcFunc['db_fetch_assoc']($request))
-    {
-        $what[] = $row;
-    }
-    $smcFunc['db_free_result']($request);
+			if ($context['TPortal']['useavatar'] == 0) {
+				// Output the topics
+				echo '
+			<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
+				$coun = 1;
+				foreach ($what as $wi => $w) {
+					$tpshortsubject = $w['subject'];
+					$w['readmore'] = '';
+					if (TPUtil::shortenString($tpshortsubject, $length)) {
+						$w['readmore'] = '...';
+					}
+					echo '
+				<li' , $coun < count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 
-		if ($context['TPortal']['useavatar'] == 0) {
-			// Output the topics
-			echo '
-		<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
-			$coun = 1;
-			foreach ($what as $wi => $w) {
-				$tpshortsubject = $w['subject'];
-				$w['readmore'] = '';
-				if (TPUtil::shortenString($tpshortsubject, $length)) {
-					$w['readmore'] = '...';
+					echo '
+					<div style="font-weight: bold; margin-bottom: 5px;">
+						<a href="', $scripturl, '?topic=', $w['id_topic'], '.0" title="' . $w['subject'] . '">' . $tpshortsubject . '' . $w['readmore'] . '</a>
+					</div>
+					', $txt['tp-fromcategory'] ,' <a href="', $scripturl, '?board=', $w['id_board'], '.0">' . $w['name'] . '</a> ', $txt['by'], ' <b><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">', htmlspecialchars($w['poster_name']),'</a></b><br>
+					 <span class="smalltext">' . timeformat($w['poster_time']) . '</span>
+					</li>';
+					$coun++;
 				}
 				echo '
-			<li' , $coun < count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
+			</ul>';
+			}
+			else {
+				$member_ids = [];
+				foreach ($what as $wi => $w) {
+					$member_ids[] = $w['id_member'];
+				}
+				empty($member_ids) ? $avatars = [] : $avatars = progetAvatars($member_ids);
 
+				// Output the topics
+				$coun = 1;
 				echo '
-				<div style="font-weight: bold; margin-bottom: 5px;">
-					<a href="', $scripturl, '?topic=', $w['id_topic'], '.0" title="' . $w['subject'] . '">' . $tpshortsubject . '' . $w['readmore'] . '</a>
-				</div>
-				', $txt['tp-fromcategory'] ,' <a href="', $scripturl, '?board=', $w['id_board'], '.0">' . $w['name'] . '</a> ', $txt['by'], ' <b><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">', htmlspecialchars($w['poster_name']),'</a></b><br>
-				 <span class="smalltext">' . timeformat($w['poster_time']) . '</span>
-				</li>';
-				$coun++;
-			}
-			echo '
-		</ul>';
-		}
-		else {
-			$member_ids = [];
-			foreach ($what as $wi => $w) {
-				$member_ids[] = $w['id_member'];
-			}
-			empty($member_ids) ? $avatars = [] : $avatars = progetAvatars($member_ids);
+			<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
 
-			// Output the topics
-			$coun = 1;
-			echo '
-		<ul class="tp_recenttopics" style="margin: 0; padding: 0;">';
+				foreach ($what as $wi => $w) {
+					$tpshortsubject = $w['subject'];
+					$w['readmore'] = '';
+					if (TPUtil::shortenString($tpshortsubject, $length)) {
+						$w['readmore'] = '...';
+					}
+					echo '
+				<li' , $coun < count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
 
-			foreach ($what as $wi => $w) {
-				$tpshortsubject = $w['subject'];
-				$w['readmore'] = '';
-				if (TPUtil::shortenString($tpshortsubject, $length)) {
-					$w['readmore'] = '...';
+					echo '
+					<span class="tp_avatar"><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">' , empty($avatars[$w['id_member']]) ? '<img class="avatar" src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['id_member']] , '</a></span>
+					<div style="font-weight: bold; margin-bottom: 5px;">
+						<a href="', $scripturl, '?topic=', $w['id_topic'], '.0" title="' . $w['subject'] . '">' . $tpshortsubject . '' . $w['readmore'] . '</a>
+					</div>
+					', $txt['tp-fromcategory'] ,' <a href="', $scripturl, '?board=', $w['id_board'], '.0">' . $w['name'] . '</a> ', $txt['by'], ' <b><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">', htmlspecialchars($w['poster_name']),'</a></b><br>
+					<span class="smalltext">' . timeformat($w['poster_time']) . '</span>
+					</li>';
+					$coun++;
 				}
 				echo '
-			<li' , $coun < count($what) ? '' : ' style="border: none; margin-bottom: 0;padding-bottom: 0;"'  , '>';
-
-				echo '
-				<span class="tp_avatar"><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">' , empty($avatars[$w['id_member']]) ? '<img class="avatar" src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />' : $avatars[$w['id_member']] , '</a></span>
-				<div style="font-weight: bold; margin-bottom: 5px;">
-					<a href="', $scripturl, '?topic=', $w['id_topic'], '.0" title="' . $w['subject'] . '">' . $tpshortsubject . '' . $w['readmore'] . '</a>
-				</div>
-				', $txt['tp-fromcategory'] ,' <a href="', $scripturl, '?board=', $w['id_board'], '.0">' . $w['name'] . '</a> ', $txt['by'], ' <b><a href="' . $scripturl . '?action=profile;u=' . $w['id_member'] . '">', htmlspecialchars($w['poster_name']),'</a></b><br>
-				<span class="smalltext">' . timeformat($w['poster_time']) . '</span>
-				</li>';
-				$coun++;
+			</ul>';
 			}
-			echo '
-		</ul>';
 		}
+	else {
+		echo '
+			'. $txt['tp-notopics'] .'';
+	}
 	}
 }
 
