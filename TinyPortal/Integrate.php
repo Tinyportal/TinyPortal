@@ -814,7 +814,7 @@ class Integrate
 	{
 		global $context, $scripturl;
 
-		if (allowedTo(['tp_settings']) && (($context['TPortal']['front_type'] == 'forum_selected' || $context['TPortal']['front_type'] == 'forum_selected_articles'))) {
+		if (allowedTo(['tp_settings']) && ($context['TPortal']['use_promote'] == 1)) {
 			if (!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
 				$normal_buttons['publish'] = ['active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']];
 			}

@@ -66,7 +66,7 @@ function template_tp_articles()
 			}
 		}
 		echo '
-		</div><br>';
+		</div>';
 
 		if (isset($context['TPortal']['profile_articles']) && sizeof($context['TPortal']['profile_articles']) > 0) {
 
@@ -157,10 +157,6 @@ function template_tp_articles()
 				</div>';
 			}
 		}
-		else {
-			echo '
-				<div class="infobox">' . $txt['tp-noarticlesfound'] . '</div>';
-		}
 
 		echo '
 		</div>
@@ -232,9 +228,19 @@ function template_tp_download()
 				' . $txt['tp-prof_approvdownloads'] . ' <b>' . $context['TPortal']['approved_downloads'] . '</b><br>';
 	}
 	echo '
-			</div><br>';
+			</div>';
 
 	if (isset($context['TPortal']['profile_uploads']) && sizeof($context['TPortal']['profile_uploads']) > 0) {
+		
+		if (!empty($context['TPortal']['pageindex'])) {
+		echo '
+			<div class="pagesection">
+				<div class="pagelinks floatleft">
+					<a href="#bot" class="button">', $txt['go_down'], '</a>
+					' . $context['TPortal']['pageindex'] . '
+				</div>
+			</div>';
+		}
 		echo '
 		<table class="table_grid">
 			<thead>
