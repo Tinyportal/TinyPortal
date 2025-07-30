@@ -154,6 +154,13 @@ function template_settings()
 				<hr>
 			<dl class="settings">
 				<dt>
+					<a href="', $scripturl, '?action=helpadmin;help=tp-use_promotedesc" onclick="return reqOverlayDiv(this.href);">
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_promote">', $txt['tp-use_promote'], '</label>
+				</dt>
+				<dd>
+					<input type="checkbox" id="tp_use_promote" name="tp_use_promote" value="1" ' , $context['TPortal']['use_promote'] == '1' ? 'checked' : '' , '>
+				</dd>
+				<dt>
 					<a href="', $scripturl, '?action=helpadmin;help=tp-use_groupcolordesc" onclick="return reqOverlayDiv(this.href);">
 					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_use_groupcolor">', $txt['tp-use_groupcolor'], '</label>
 				</dt>
@@ -1852,7 +1859,7 @@ function template_blocks()
 				<div class="font_strong tp_pad">
 					<b>' . $txt['tp-' . $side[$i] . 'sideblocks'] . '</b>
 					<a href="' . $scripturl . '?action=tpadmin;addblock=' . $side[$i] . ';' . $context['session_var'] . '=' . $context['session_id'] . '">
-					<span style="float: right;"><strong>[' , $txt['tp-addblock'] , ']</strong></span></a>
+					<div class="button">' , $txt['tp-addblock'] , '</div></a>
 				</div>';
 		if (isset($context['TPortal']['admin' . $side[$i] . 'panel']) && $context['TPortal']['admin' . $side[$i] . 'panel'] == 0 && $side[$i] != 'front') {
 			echo '
@@ -1945,7 +1952,8 @@ function template_blocks()
 								<option value="13"' ,$lblock['type'] == 'ssi' ? ' selected' : '' , '>', $txt['tp-blocktype13'] , '</option>
 								<option value="3"' ,$lblock['type'] == 'statsbox' ? ' selected' : '' , '>', $txt['tp-blocktype3'] , '</option>
 								<option value="7"' ,$lblock['type'] == 'themebox' ? ' selected' : '' , '>', $txt['tp-blocktype7'] , '</option>
-								<option value="1"' ,$lblock['type'] == 'userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>';
+								<option value="1"' ,$lblock['type'] == 'userbox' ? ' selected' : '' , '>', $txt['tp-blocktype1'] , '</option>
+								<option value="21"' ,$lblock['type'] == 'promotedbox' ? ' selected' : '' , '>', $txt['tp-blocktype21'] , '</option>';
 				echo '	</select>
 						</div>
 						<div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
@@ -2063,7 +2071,7 @@ function template_blocks()
 					<td class="blocks">
 						<div class="padding-div tpcenter">
 							<select name="blockbody' . $lblock['id'] . '" class="tp_blockselect">
-								<option value="" ' , $lblock['body'] == '' ? 'selected' : '' , '>' . $txt['tp-none-'] . '</option>';
+								<option value="" ' , $lblock['body'] == '' ? 'selected' : '' , '>' . $txt['tp-none'] . '</option>';
 					echo '
 								<option value="recenttopics" ' , $lblock['body'] == 'recenttopics' ? 'selected' : '' , '>' . $txt['tp-ssi-recenttopics'] . '</option>';
 					echo '
@@ -2227,13 +2235,16 @@ function template_addblock()
 				<dl class="tp_title settings">
 					<dt><h3>' , $txt['tp-choosepanel'] , '</h3></dt>
 					<dd>
-						<input type="radio" id="tp_addblockpanel1" name="tp_addblockpanel" value="1" ' , $side == 'left' ? 'checked' : '' , ' required /><label for="tp_addblockpanel1"">' . $txt['tp-leftpanel'] . '</label><br>
-						<input type="radio" id="tp_addblockpanel2" name="tp_addblockpanel" value="2" ' , $side == 'right' ? 'checked' : '' , ' /><label for="tp_addblockpanel2"">' . $txt['tp-rightpanel'] . '</label><br>
-						<input type="radio" id="tp_addblockpanel6" name="tp_addblockpanel" value="6" ' , $side == 'top' ? 'checked' : '' , ' /><label for="tp_addblockpanel6"">' . $txt['tp-toppanel'] . '</label><br>
-						<input type="radio" id="tp_addblockpanel3" name="tp_addblockpanel" value="3" ' , $side == 'center' ? 'checked' : '' , ' /><label for="tp_addblockpanel3"">' . $txt['tp-centerpanel'] . '</label><br>
-						<input type="radio" id="tp_addblockpanel4" name="tp_addblockpanel" value="4" ' , $side == 'front' ? 'checked' : '' , ' /><label for="tp_addblockpanel4"">' . $txt['tp-frontpanel'] . '</label><br>
-						<input type="radio" id="tp_addblockpanel7" name="tp_addblockpanel" value="7" ' , $side == 'lower' ? 'checked' : '' , ' /><label for="tp_addblockpanel7"">' . $txt['tp-lowerpanel'] . '</label><br>
-						<input type="radio" id="tp_addblockpanel5" name="tp_addblockpanel" value="5" ' , $side == 'bottom' ? 'checked' : '' , ' /><label for="tp_addblockpanel5"">' . $txt['tp-bottompanel'] . '</label><br>
+						<select size="1" name="tp_addblockpanel" required>
+							<option value="" selected="selected">' , $txt['tp-makeselection'] , '</option>
+							<option value="1" ' , $side == 'left' ? 'selected' : '' , ' />' . $txt['tp-leftpanel'] . '</option>
+							<option value="2" ' , $side == 'right' ? 'selected' : '' , ' />' . $txt['tp-rightpanel'] . '</option>
+							<option value="6" ' , $side == 'top' ? 'selected' : '' , ' />' . $txt['tp-toppanel'] . '</option>
+							<option value="3" ' , $side == 'center' ? 'selected' : '' , ' />' . $txt['tp-centerpanel'] . '</option>
+							<option value="4" ' , $side == 'front' ? 'selected' : '' , ' />' . $txt['tp-frontpanel'] . '</option>
+							<option value="7" ' , $side == 'lower' ? 'selected' : '' , ' />' . $txt['tp-lowerpanel'] . '</option>
+							<option value="5" ' , $side == 'bottom' ? 'selected' : '' , ' />' . $txt['tp-bottompanel'] . '</option>
+						</select>
 					</dd>
 				</dl>
 				<hr>
@@ -2259,6 +2270,7 @@ function template_addblock()
 							<input type="radio" id="tp_addblock3" name="tp_addblock" value="3" /><label for="tp_addblock3">' . $txt['tp-blocktype3'] . '</label><br>
 							<input type="radio" id="tp_addblock7" name="tp_addblock" value="7" /><label for="tp_addblock7">' . $txt['tp-blocktype7'] . '</label><br>
 							<input type="radio" id="tp_addblock1" name="tp_addblock" value="1" /><label for="tp_addblock1">' . $txt['tp-blocktype1'] . '</label><br>
+							<input type="radio" id="tp_addblock21" name="tp_addblock" value="21" /><label for="tp_addblock21">' . $txt['tp-blocktype21'] . '</label><br>
 						</div>
 					</dd>
 				</dl>
@@ -2470,7 +2482,7 @@ function template_menubox()
 				else {
 					echo '
 									<div class="show-on-responsive">' . $txt['tp-sub_item'] . '</div>
-									' . $txt['tp-none-'] . '';
+									' . $txt['tp-none'] . '';
 				}
 				echo '
 								</div>
@@ -2778,7 +2790,7 @@ function template_menucore()
 					<span id="tp_menu_iconhlp" class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_menu_icon">' . $txt['tp-menu-icon'] . '</label>
 				</dt>
 				<dd>
-					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40" placeholder="' . $txt['tp-none-'] . '">
+					<input type="text" id="tp_menu_icon" name="tp_menu_icon" value="', isset($context['TPortal']['editmenuitem']['menuicon']) ? $context['TPortal']['editmenuitem']['menuicon'] : ''  ,'" size="40" placeholder="' . $txt['tp-none'] . '">
 				</dd>
 				<dt>
 					<label for="tp_menu_newlink">' . $txt['tp-windowopen'] . '</label>

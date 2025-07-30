@@ -1847,6 +1847,15 @@ function TPortal_panel($side)
 				$context['TPortal']['minmessagetopics'] = isset($block['minmessagetopics']) ? $block['minmessagetopics'] : '';
 				$context['TPortal']['recentboards'] = !empty($block['boards']) ? explode(',', $block['boards']) : [];
 				break;
+			case 'promotedbox':
+				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
+				$context['TPortal']['promotedboxnum'] = !empty($block['body']) ? $block['body'] : '10';
+				$context['TPortal']['useavatar'] = $block['useavatar'];
+				$context['TPortal']['boardmode'] = $block['include'];
+				$context['TPortal']['length'] = $block['length'];
+				$context['TPortal']['minmessagetopics'] = isset($block['minmessagetopics']) ? $block['minmessagetopics'] : '';
+				$context['TPortal']['promotedboards'] = !empty($block['boards']) ? explode(',', $block['boards']) : [];
+				break;
 			case 'scriptbox':
 				$block['title'] = '<span class="header">' . $block['title'] . '</span>';
 				$context['TPortal']['scriptboxbody'] = $block['body'];
