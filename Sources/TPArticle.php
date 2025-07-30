@@ -808,7 +808,7 @@ function articleAjax()
 	elseif (isset($_GET['artdelete'])) {
 		checksession('get');
 		$what = is_numeric($_GET['artdelete']) ? $_GET['artdelete'] : '0';
-		if (!empty($cu)) {
+		if (empty($cu)) {
 			$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
 			if ($cu == -1) {
 				$strays = true;
@@ -831,7 +831,7 @@ function articleAjax()
 				['artid' => $what]
 			);
 		}
-		redirectexit('action=tpadmin' . (!empty($cu) ? ';cu=' . $cu : '') . (isset($strays) ? ';sa=strays' . $cu : ';sa=articles'));
+		redirectexit('action=tpadmin' . (!empty($cu) ? ';sa=articles;cu=' . $cu : '') . (isset($strays) ? ';sa=strays' . $cu : ';sa=articles'));
 	}
 
 	unset($tpArticle);
