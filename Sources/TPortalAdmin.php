@@ -836,8 +836,8 @@ function do_articles()
 				['cats' => $alcats]
 			);
 
+			$context['TPortal']['cats_count'] = [];
 			if ($smcFunc['db_num_rows']($request) > 0) {
-				$context['TPortal']['cats_count'] = [];
 				while ($row = $smcFunc['db_fetch_assoc']($request)) {
 					$context['TPortal']['cats_count'][$row['id']] = $row['files'];
 				}
