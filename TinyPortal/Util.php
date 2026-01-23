@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.2.0
+ * @version 3.0.3
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -191,6 +191,7 @@ class Util
 					// Find all the bbc tags then loop through finding the closing one
 					if (preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0) {
 						foreach ($matches[1] as $key) {
+							$key = preg_quote($key);
 							// check we haven't cut any bbcode off
 							if (preg_match_all('/\[([' . $key . ']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0) {
 								// Search from the old cut off position to the next similar tag
