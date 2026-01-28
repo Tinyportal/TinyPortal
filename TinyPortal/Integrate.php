@@ -816,7 +816,7 @@ class Integrate
 
 		if (allowedTo(['tp_settings']) && ($context['TPortal']['use_promote'] == 1)) {
 			if (!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
-				$normal_buttons['publish'] = ['active' => true, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']];
+				$normal_buttons['publish'] = ['active' => false, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']];
 			}
 			else {
 				$normal_buttons['unpublish'] = ['active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']];
