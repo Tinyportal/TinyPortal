@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.4
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -229,7 +229,7 @@ function TPShoutDelete($shout_id = null)
 // fetch all the shouts for output
 function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest = false)
 {
-	global $context, $scripturl, $modSettings, $smcFunc;
+	global $context, $scripturl, $modSettings, $smcFunc, $settings;
 	global $image_proxy_enabled, $image_proxy_secret, $boardurl;
 
 	// Force this to reset each time
@@ -355,8 +355,8 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 		$counter = 1;
 		$ns = [];
 		foreach ($fetched as $b => $row) {
-			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? $memberdata[$row['member_id']]['avatar'] : '';
-			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : $row['member_link'];
+			$row['avatar'] = !empty($memberdata[$row['member_id']]['avatar']) ? '<a href="' . $scripturl . '?action=profile;u=' . $row['member_id'] . '">' .$memberdata[$row['member_id']]['avatar']. '</a>' : '<img class="avatar" src="' . $settings['tp_images_url'] . '/TPguest.png" alt="" />';
+			$row['real_name'] = !empty($memberdata[$row['member_id']]['real_name']) ? $memberdata[$row['member_id']]['real_name'] : urldecode($row['member_link']);
 			$row['content'] = parse_bbc(censorText($row['content']), true);
 			$row['online_color'] = !empty($memberdata[$row['member_id']]['mg_online_color']) ? $memberdata[$row['member_id']]['mg_online_color'] : (!empty($memberdata[$row['member_id']]['pg_online_color']) ? $memberdata[$row['member_id']]['pg_online_color'] : '');
 			$row['counter'] = ++$counter;
