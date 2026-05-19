@@ -56,15 +56,15 @@ class Integrate
 
 		$hooks = [
 			'SSI' => '$sourcedir/TPSSI.php|ssi_TPIntegrate',
-			'load_permissions' => 'TinyPortal\Integrate::hookPermissions',
-			'load_illegal_guest_permissions' => 'TinyPortal\Integrate::hookIllegalPermissions',
-			'buffer' => 'TinyPortal\Integrate::hookBuffer',
-			'credits' => 'TinyPortal\Integrate::hookCredits',
-			'menu_buttons' => 'TinyPortal\Integrate::hookMenuButtons',
-			'display_buttons' => 'TinyPortal\Integrate::hookDisplayButton',
-			'actions' => 'TinyPortal\Integrate::hookActions',
-			'whos_online' => 'TinyPortal\Integrate::hookWhosOnline',
-			'pre_log_stats' => 'TinyPortal\Integrate::hookPreLogStats',
+			'load_permissions' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookPermissions',
+			'load_illegal_guest_permissions' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookIllegalPermissions',
+			'buffer' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookBuffer',
+			'credits' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookCredits',
+			'menu_buttons' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookMenuButtons',
+			'display_buttons' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookDisplayButton',
+			'actions' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookActions',
+			'whos_online' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookWhosOnline',
+			'pre_log_stats' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookPreLogStats',
 			'tp_pre_subactions' => [
 				'$sourcedir/TPArticle.php|TPArticleActions',
 				'$sourcedir/TPSearch.php|TPSearchActions',
@@ -96,17 +96,17 @@ class Integrate
 
 		];
 
-		$hooks['redirect'] = 'TinyPortal\Integrate::hookRedirect';
-		$hooks['pre_profile_areas'] = 'TinyPortal\Integrate::hookProfileArea';
-		$hooks['pre_load_theme'] = 'TinyPortal\Integrate::hookPreLoadTheme';
-		$hooks['load_theme'] = 'TinyPortal\Integrate::hookLoadTheme';
-		$hooks['helpadmin'] = 'TinyPortal\Integrate::hookHelpadmin';
+		$hooks['redirect'] = '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookRedirect';
+		$hooks['pre_profile_areas'] = '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookProfileArea';
+		$hooks['pre_load_theme'] = '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookPreLoadTheme';
+		$hooks['load_theme'] = '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookLoadTheme';
+		$hooks['helpadmin'] = '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookHelpadmin';
 		if (!TP_SMF21) {
-			$hooks['admin_areas'] = 'TinyPortal\Integrate::hookAdminAreas';
+			$hooks['admin_areas'] = '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookAdminAreas';
 		}
 
 		// We can use a hook of sorts for the default actions now
-		updateSettings(['integrate_default_action' => 'TinyPortal\Integrate::hookDefaultAction']);
+		updateSettings(['integrate_default_action' => '$boarddir/TinyPortal/Integrate.php|TinyPortal\Integrate::hookDefaultAction']);
 
 		foreach ($hooks as $hook => $callable) {
 			if (is_array($callable)) {
