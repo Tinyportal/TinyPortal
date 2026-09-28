@@ -1,6 +1,6 @@
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.4
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -428,7 +428,7 @@ a.tp_avatar_author img {
 .render9 .windowbg {
 	margin: .5em 0 0 0 !important;
 }
-.tp_article_boardnews {
+.tp_article_boardnews, .tp_article_comments {
 	font-size: .9em;
 	padding-top: 2em;
 }

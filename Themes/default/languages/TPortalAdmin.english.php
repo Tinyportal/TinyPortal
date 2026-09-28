@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.3; TPortalAdmin
+// Version: 3.0.4; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
@@ -115,6 +115,7 @@ $txt['tp-sortoptions3'] = 'Sort by position';
 $txt['tp-sortoptions4'] = 'Sort by id number';
 $txt['tp-sortdirection1'] = 'Descending';
 $txt['tp-sortdirection2'] = 'Ascending';
+$txt['tp-boardnewsoptions'] = 'Viewing options forum-topics';
 $txt['tp-allowguests'] = 'Allow full display of forum topics on the frontpage';
 $txt['tp-allowguestsdesc'] = 'Allow guests and members to see forum topics on the frontpage, even if they are not allowed to see the boards themselves? [Yes]: users will get to see it, regardless of your SMF setting. [No]: users will \'not\' get to see it, regardless of your SMF setting.';
 $txt['tp-showforumposts'] = 'Display forum topics on frontpage from';
@@ -123,6 +124,7 @@ $txt['tp-forumposts_avatar'] = 'Show avatars in forum topics';
 $txt['tp-forumposts_avatardesc'] = 'This setting will make the member avatars show in forum topics on the Frontpage of your forum. This will only have an effect if you are using one of the following layouts for your frontpage: normal articles, 1st normal-avatars or normal-links.';
 $txt['tp-useattachment'] = 'Use first post attachment preview as icon';
 $txt['tp-useattachmentdesc'] = 'This setting will make the image of the first attachment of the forum topic be used as the icon for the post on the frontpage of your forum. This will only have an effect if you are using one of the following layouts for your frontpage: articles-icons or articles-icons2.';
+$txt['tp-forumposts_replies'] = 'Display replies link';
 $txt['tp-articles_divheader'] = 'Header style for articles';
 $txt['tp-articles_headerstyle'] = 'Title style for articles';
 $txt['tp-articles_divbody'] = 'Frame style for articles';

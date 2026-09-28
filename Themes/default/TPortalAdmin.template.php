@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.4
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -460,6 +460,7 @@ function template_frontpage()
 					</dd>
 				</dl>
 				<hr>
+				<span class="font-strong">' . $txt['tp-boardnewsoptions'] . '</span>
 				<dl class="settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-allowguestsdesc" onclick="return reqOverlayDiv(this.href);">
@@ -495,6 +496,9 @@ function template_frontpage()
 					<dd>
 					  <input type="number" id="tp_frontpage_limit_len" name="tp_frontpage_limit_len"value="' ,$context['TPortal']['frontpage_limit_len'], '" style="width: 6em" maxlength="5" >
 					</dd>
+				</dl>
+				<span class="font-strong">' . $txt['tp-details'] . '</span>
+				<dl class="tp_title settings">
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-forumposts_avatardesc" onclick="return reqOverlayDiv(this.href);">
 						<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_forumposts_avatar">', $txt['tp-forumposts_avatar'], '</label>
@@ -509,6 +513,33 @@ function template_frontpage()
 					<dd>
 						<input type="checkbox" id="tp_use_attachment" name="tp_use_attachment" value="1" ' , $context['TPortal']['use_attachment'] == '1' ? 'checked' : '' , '>
 					</dd>
+					<dt>
+						<label for="tp_forumposts_author">', $txt['tp-articleoptions3'], '</label>
+					</dt>
+					<dd>
+						<input type="checkbox" id="tp_forumposts_author" name="tp_forumposts_author" value="1" ' , $context['TPortal']['forumposts_author'] == '1' ? 'checked' : '' , '>
+					</dd>
+					<dt>
+						<label for="tp_forumposts_date">', $txt['tp-articleoptions1'], '</label>
+					</dt>
+					<dd>
+						<input type="checkbox" id="tp_forumposts_date" name="tp_forumposts_date" value="1" ' , $context['TPortal']['forumposts_date'] == '1' ? 'checked' : '' , '>
+					</dd>
+					<dt>
+						<label for="tp_forumposts_views">', $txt['tp-articleoptions17'], '</label>
+					</dt>
+					<dd>
+						<input type="checkbox" id="tp_forumposts_views" name="tp_forumposts_views" value="1" ' , $context['TPortal']['forumposts_views'] == '1' ? 'checked' : '' , '>
+					</dd>
+					<dt>
+						<label for="tp_forumposts_replies">', $txt['tp-forumposts_replies'], '</label>
+					</dt>
+					<dd>
+						<input type="checkbox" id="tp_forumposts_replies" name="tp_forumposts_replies" value="1" ' , $context['TPortal']['forumposts_replies'] == '1' ? 'checked' : '' , '>
+					</dd>
+				</dl>
+				<span class="font-strong">' . $txt['tp-others'] . '</span>
+				<dl class="tp_title settings">
 					<dt>
 						<label for="tp_boardnews_divheader">' . $txt['tp-boardnews_divheader'] . '</label>
 					</dt>

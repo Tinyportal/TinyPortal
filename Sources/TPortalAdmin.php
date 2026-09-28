@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.4
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1565,7 +1565,7 @@ function do_postchecks()
 					$checkboxes = ['imageproxycheck', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'use_promote', 'use_groupcolor', 'showstars'];
 					break;
 				case 'frontpage':
-					$checkboxes = ['allow_guestnews', 'forumposts_avatar', 'use_attachment'];
+					$checkboxes = ['allow_guestnews', 'forumposts_author', 'forumposts_date', 'forumposts_views', 'forumposts_replies', 'forumposts_avatar', 'use_attachment'];
 					break;
 				case 'artsettings':
 					$checkboxes = ['use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon'];

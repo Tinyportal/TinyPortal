@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.3; TPortal
+// Version: 3.0.4; TPortal
 
 global $txt, $context, $scripturl;
 
@@ -104,6 +104,9 @@ $txt['tp-categorynoarticles'] = 'This category doesn\'t have any articles assign
 $txt['tp-comments'] = 'Comments';
 $txt['tp-comment'] = 'Comment';
 $txt['tp-writecomment'] = 'Write comment';
+$txt['tp-numreplies'] = 'Replies';
+$txt['tp-onereply'] = 'Reply';
+$txt['tp-reply'] = 'Reply';
 $txt['tp-confirmcommentdelete'] = 'Are you sure you want to delete this comment?';
 $txt['tp-confirmdelete'] = 'Are you sure you want to delete this article?';
 $txt['tp-delete'] = 'Delete';

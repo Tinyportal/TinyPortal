@@ -1873,20 +1873,18 @@ function article_boardnews($render = true)
 {
 	global $context, $scripturl, $txt;
 
-	if (!isset($context['TPortal']['article']['replies'])) {
-		return;
-	}
+	$data = '';
 
-	$data = '
-		<div class="tp_article_boardnews">
-			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '.0">' . $context['TPortal']['article']['replies'] . ' ' . ($context['TPortal']['article']['replies'] == 1 ? $txt['tp-comment'] : $txt['tp-comments']) . '</a>';
-	if ($context['TPortal']['article']['locked'] == 0 && !$context['user']['is_guest']) {
-		$data .= '
-			&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?action=post;topic=' . $context['TPortal']['article']['id'] . '.' . $context['TPortal']['article']['replies'] . ';num_replies=' . $context['TPortal']['article']['replies'] . '">' . $txt['tp-writecomment'] . '</a>';
-	}
-
+	if (in_array('replies', $context['TPortal']['article']['visual_options'])) {
+		$data = '<div class="tp_article_boardnews">
+			<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '.0">' . $context['TPortal']['article']['replies'] . ' ' . ($context['TPortal']['article']['replies'] == 1 ? $txt['tp-onereply'] : $txt['tp-numreplies']) . '</a>';
+		if ($context['TPortal']['article']['locked'] == 0 && !$context['user']['is_guest']) {
+			$data .= '
+				&nbsp;|&nbsp;' . '<a href="' . $scripturl . '?action=post;topic=' . $context['TPortal']['article']['id'] . '.' . $context['TPortal']['article']['replies'] . ';num_replies=' . $context['TPortal']['article']['replies'] . '">' . $txt['tp-reply'] . '</a>';
+		}
 	$data .= '
 		</div>';
+	}
 
 	if ($render) {
 		echo $data;
@@ -1894,6 +1892,7 @@ function article_boardnews($render = true)
 	else {
 		return $data;
 	}
+
 }
 
 function article_author($render = true)
