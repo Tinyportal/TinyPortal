@@ -539,6 +539,10 @@ $settings_array = [
 	'frontpage_limit' => '5',
 	'frontpage_limit_len' => '300',
 	'frontpage_topics' => '',
+	'forumposts_author' => '1',
+	'forumposts_date' => '1',
+	'forumposts_views' => '1',
+	'forumposts_replies' => '1',
 	'forumposts_avatar' => '1',
 	'use_attachment' => '0',
 	'boardnews_divheader' => 'cat_bar',
@@ -765,7 +769,7 @@ if ($updates > 0) {
 // convert settings from "" to 0 for PHP8
 $checkboxes = [];
 $checkboxes = array_merge($checkboxes, ['imageproxycheck', 'admin_showblocks', 'oldsidebar', 'disable_template_eval', 'fulltextsearch', 'hideadminmenu', 'hideprofileoption', 'useroundframepanels', 'showcollapse', 'blocks_edithide', 'uselangoption', 'use_promote', 'use_groupcolor', 'showstars']);
-$checkboxes = array_merge($checkboxes, ['allow_guestnews', 'forumposts_avatar', 'use_attachment']);
+$checkboxes = array_merge($checkboxes, ['allow_guestnews', 'forumposts_author', 'forumposts_date', 'forumposts_views', 'forumposts_replies', 'forumposts_avatar', 'use_attachment']);
 $checkboxes = array_merge($checkboxes, ['use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon']);
 $checkboxes = array_merge($checkboxes, ['hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar']);
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.4
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -533,7 +533,7 @@ class Article extends Base
 				$row['boardnews'] = 1;
 
 				if (!isset($context['TPortal']['frontpage_visopts'])) {
-					$context['TPortal']['frontpage_visopts'] = 'date,title,author,views' . ($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
+					$context['TPortal']['frontpage_visopts'] = 'title' . ($context['TPortal']['forumposts_date'] == 1 ? ',date' : '').''.($context['TPortal']['forumposts_author'] == 1 ? ',author' : '').''.($context['TPortal']['forumposts_replies'] == 1 ? ',replies' : '').''.($context['TPortal']['forumposts_views'] == 1 ? ',views' : '').''.($context['TPortal']['forumposts_avatar'] == 1 ? ',avatar' : '');
 				}
 
 				$row['visual_options'] = explode(',', $context['TPortal']['frontpage_visopts']);
