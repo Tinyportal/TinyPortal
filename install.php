@@ -35,6 +35,9 @@ if ((!function_exists('version_compare') || version_compare(TP_MINIMUM_PHP_VERSI
 	die('<strong>Install Error:</strong> - please install a version of php greater than ' . TP_MINIMUM_PHP_VERSION);
 }
 
+// make sure we avoid timeouts
+@set_time_limit(0);
+
 // make sure we have all the $smcFunc stuff
 if (!array_key_exists('db_create_table', $smcFunc)) {
 	db_extend('packages');
@@ -350,7 +353,8 @@ foreach ($tables as $table => $col) {
 				'',
 				'
                 ALTER TABLE {db_prefix}{raw:table}
-                CONVERT TO CHARACTER SET utf8',
+                CONVERT TO CHARACTER SET utf8
+				COLLATE utf8mb3_general_ci',
 				['table' => $table]
 			);
 		}
@@ -366,7 +370,8 @@ foreach ($tables as $table => $col) {
 						'',
 						'
                         ALTER TABLE {db_prefix}{raw:table}
-                        CHANGE {raw:name} {raw:name} {raw:type} CHARACTER SET utf8',
+                        CHANGE {raw:name} {raw:name} {raw:type} CHARACTER SET utf8
+                        COLLATE utf8mb3_general_ci',
 						['table' => $table, 'name' => $column['name'], 'type' => $column['type']]
 					);
 				}
@@ -382,7 +387,8 @@ foreach ($tables as $table => $col) {
 				'',
 				'
                     ALTER TABLE {db_prefix}{raw:table}
-                    CONVERT TO CHARACTER SET utf8',
+                    CONVERT TO CHARACTER SET utf8
+					COLLATE utf8mb3_general_ci',
 				['table' => $table]
 			);
 
@@ -396,7 +402,7 @@ foreach ($tables as $table => $col) {
 					'
                         ALTER TABLE {db_prefix}{raw:table}
                         CHANGE {raw:name} {raw:name} {raw:type}
-                        CHARACTER SET utf8 COLLATE utf8_general_ci',
+                        CHARACTER SET utf8 COLLATE utf8mb3_general_ci',
 					['table' => $table, 'name' => $column['name'], 'type' => $column['type']]
 				);
 			}
