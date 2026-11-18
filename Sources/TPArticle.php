@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -708,6 +708,11 @@ function articleUploadImage()
 {
 	global $context, $boarddir, $boardurl;
 
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		fatal_error('POST required.', false);
+	}
+	checkSession('post');
+	isAllowedTo(['tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml']);
 	require_once SOURCEDIR . '/TPcommon.php';
 	$name = TPuploadpicture('image', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
 	tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);

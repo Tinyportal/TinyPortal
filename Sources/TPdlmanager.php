@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -219,10 +219,14 @@ function TPortalDLManager()
 	// any uploads being sent?
 	$context['TPortal']['uploads'] = [];
 	if (isset($_FILES['tp-dluploadfile']['tmp_name']) || isset($_POST['tp-dluploadnot']) || isset($_POST['tp-dlexternalfile'])) {
+		checkSession('post');
+		isAllowedTo('tp_dlupload');
 		// skip the upload checks etc. if just an empty item
 		if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
 			// check if uploaded quick-list picture
-			if (isset($_FILES['qup_tp_dluploadtext']) && file_exists($_FILES['qup_tp_dluploadtext']['tmp_name'])) {
+			if (isset($_FILES['qup_tp_dluploadtext']) && !empty($_FILES['qup_tp_dluploadtext']['tmp_name'])) {
+				checkSession('post');
+				isAllowedTo('tp_dlupload');
 				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
 				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'] . 'uid');
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
@@ -320,7 +324,8 @@ function TPortalDLManager()
 					$name = time() . $name;
 				}
 
-				$success = move_uploaded_file($_FILES['tp-dluploadfile']['tmp_name'], $context['TPortal']['download_upload_path'] . $name);
+				$name = TPsecureDownloadUpload('tp-dluploadfile', $context['TPortal']['download_upload_path'], $context['TPortal']['dl_max_upload_size'], $context['TPortal']['dl_allowed_types']);
+			$success = true;
 			}
 
 			if ($shot) {
@@ -2146,11 +2151,9 @@ function TPortalDLAdmin()
 	global $txt, $scripturl, $boarddir, $boardurl, $smcFunc, $context, $settings, $sourcedir;
 
 	// check permissions
-	if (isset($_POST['dl_useredit'])) {
+	isAllowedTo('tp_dlmanager');
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		checkSession('post');
-	}
-	else {
-		isAllowedTo('tp_dlmanager');
 	}
 	// set the linktree
 	TPadd_linktree($scripturl . '?action=tpadmin', $txt['tp-admin']);
@@ -2447,8 +2450,8 @@ function TPortalDLAdmin()
 			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'] . 'uid');
 			tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 		}
-		if (!empty($_FILES['qup_blockbody']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name']))) {
-			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'] . 'uid');
+		if (!empty($_FILES['qup_blockbody']['tmp_name']) && is_uploaded_file($_FILES['qup_blockbody']['tmp_name'])) {
+			$name = TPuploadpicture('qup_blockbody', $context['user']['id'] . 'uid');
 			tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 		}
 
@@ -2542,7 +2545,8 @@ function TPortalDLAdmin()
 				$error = $txt['tp-dlexterror'] . ':<b> <br />' . $context['TPortal']['dl_allowed_types'] . '</b><br /><br />' . $txt['tp-dlerrorfile'] . ': <b>' . $sname . '</b>';
 				fatal_error($error, false);
 			}
-			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'], $context['TPortal']['download_upload_path'] . $sname);
+			$sname = TPsecureDownloadUpload('tp_dluploadfile_edit', $context['TPortal']['download_upload_path'], $context['TPortal']['dl_max_upload_size'], $context['TPortal']['dl_allowed_types']);
+			$success2 = true;
 			$smcFunc['db_query'](
 				'',
 				'

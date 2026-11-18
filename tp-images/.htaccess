@@ -1,1 +1,15 @@
-RemoveHandler .php .php3 .phtml .cgi .fcgi .pl .fpl .shtml
+# TinyPortal upload directory protection
+
+Options -ExecCGI
+
+<FilesMatch "(?i)\.(php[0-9]*|phtml|phar|pht|phps|cgi|fcgi|pl|py|sh|shtml)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+RemoveHandler .php .php3 .php4 .php5 .php7 .php8 .phtml .phar .cgi .fcgi .pl .py .sh .shtml

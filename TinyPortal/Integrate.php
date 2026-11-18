@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -163,7 +163,7 @@ class Integrate
 		define('CACHEDIR', $cachedir);
 		define('SOURCEDIR', $sourcedir);
 		define('TPLANGUAGEDIR', $languagesdir ?? $boarddir . '/Themes/default/languages');
-		define('TPVERSION', 'v304');
+		define('TPVERSION', 'v305');
 		if ($db_type == 'postgresql') {
 			define('TP_PGSQL', true);
 		}
@@ -314,7 +314,7 @@ class Integrate
 		else {
 			$tmp = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
 			$find = '<a href="' . $scripturl . '?action=help">' . $txt['help'] . '</a>';
-			$replace = '<a href="https://www.tinyportal.net/docs/" target=_blank title="TinyPortal 3.0.4">' . $tmp . '</a>';
+			$replace = '<a href="https://www.tinyportal.net/docs/" target=_blank title="TinyPortal 3.0.5">' . $tmp . '</a>';
 			$buffer = str_replace($find, $replace . ' | ' . $find, $buffer);
 		}
 
