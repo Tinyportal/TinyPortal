@@ -19,12 +19,21 @@
 
 define('TP_MINIMUM_PHP_VERSION', '6.9.9');
 
-global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir, $render;
+global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir, $render, $context;
 $manual = false;
 $render = '';
 
 if (!defined('SMF') && file_exists('SSI.php')) {
 	require_once 'SSI.php';
+	isAllowedTo('admin_forum');
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		echo '<form method="post"><p>Install or update TinyPortal database tables?</p>'
+			. '<input type="hidden" name="' . htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8')
+			. '" value="' . htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8') . '">'
+			. '<button type="submit">Continue</button></form>';
+		return;
+	}
+	checkSession('post');
 	$manual = true;
 }
 elseif (!defined('SMF')) {

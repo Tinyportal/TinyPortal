@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.1; TPdlmanager
+// Version: 3.0.5; TPdlmanager
 
 global $scripturl;
 
@@ -199,3 +199,13 @@ $txt['tp-nodownload'] = 'No download';
 $txt['tp-downloads'] = 'Downloads';
 $txt['tp-downloadss2'] = 'Click here to download the file';
 $txt['tp-downloadss3'] = 'This is an empty item';
+
+//Secure upload
+$txt['tp-secuploadnotallowed'] = 'Download upload not permitted.';
+$txt['tp-secuploadinvalid'] = 'Invalid uploaded file..';
+$txt['tp-secuploadtoolarge'] = 'Download exceeds permitted size.';
+$txt['tp-secuploadtypenotallowed'] = 'This file type is not permitted for download uploads.';
+$txt['tp-secuploadnodir'] = 'Download directory is unavailable.';
+$txt['tp-secuploadnotsafe'] = 'Unsafe upload content.';
+$txt['tp-secuploadinvalidimage'] = 'Invalid image content.';
+$txt['tp-secuploadnotstored'] = 'Unable to store uploaded file.';

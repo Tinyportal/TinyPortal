@@ -231,19 +231,19 @@ function upshrink()
  */
 function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes)
 {
-    global $context;
+    global $txt, $context;
     if (!allowedTo('tp_dlupload') && !allowedTo('tp_dlmanager')) {
-        fatal_error('Download upload not permitted.', false);
+        fatal_error($txt['tp-secuploadnotallowed'], false);
     }
     if (empty($context['user']['id']) || !isset($_FILES[$field]) ||
         !is_array($_FILES[$field]) || ($_FILES[$field]['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK ||
         empty($_FILES[$field]['tmp_name']) || !is_uploaded_file($_FILES[$field]['tmp_name'])) {
-        fatal_error('Invalid uploaded file.', false);
+        fatal_error($txt['tp-secuploadinvalid'], false);
     }
     $tmp = $_FILES[$field]['tmp_name'];
     $size = filesize($tmp);
     if ($size === false || $size < 1 || $size > max(1, (int) $maxKb) * 1024) {
-        fatal_error('Download exceeds permitted size.', false);
+        fatal_error($txt['tp-secuploadtoolarge'], false);
     }
     $original = (string) ($_FILES[$field]['name'] ?? '');
     $ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
@@ -252,28 +252,28 @@ function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes)
         'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'rtf', 'mp3', 'mp4'];
     $configured = array_filter(array_map('trim', explode(',', strtolower((string) $configuredTypes))));
     if (!$ext || !in_array($ext, $safe, true) || !in_array($ext, $configured, true)) {
-        fatal_error('This file type is not permitted for download uploads.', false);
+        fatal_error($txt['tp-secuploadtypenotallowed'], false);
     }
     if (!is_dir($directory) || !is_writable($directory)) {
-        fatal_error('Download directory is unavailable.', false);
+        fatal_error($txt['tp-secuploadnodir'], false);
     }
     // Verify images really are images, and reject embedded PHP markers in any file.
     $head = file_get_contents($tmp, false, null, 0, 4096);
     if ($head === false || preg_match('/<\?(?:php|=)|<script\b/i', $head)) {
-        fatal_error('Unsafe upload content.', false);
+        fatal_error($txt['tp-secuploadnotsafe'], false);
     }
     if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'], true)) {
         $info = @getimagesize($tmp);
         $types = ['jpg' => IMAGETYPE_JPEG, 'jpeg' => IMAGETYPE_JPEG,
             'png' => IMAGETYPE_PNG, 'gif' => IMAGETYPE_GIF];
         if (!$info || $info[2] !== $types[$ext]) {
-            fatal_error('Invalid image content.', false);
+            fatal_error($txt['tp-secuploadinvalidimage'], false);
         }
     }
     $name = (int) $context['user']['id'] . 'uid' . bin2hex(random_bytes(16)) . '.' . $ext;
     $destination = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $name;
     if (file_exists($destination) || !move_uploaded_file($tmp, $destination)) {
-        fatal_error('Unable to store uploaded file.', false);
+        fatal_error($txt['tp-secuploadnotstored'], false);
     }
     @chmod($destination, 0644);
     return $name;
