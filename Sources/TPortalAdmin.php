@@ -604,7 +604,9 @@ function do_articles()
 	}
 
 	require_once SOURCEDIR . '/TPArticle.php';
-	articleAjax();
+	if (allowedTo('tp_articles')) {
+		articleAjax();
+	}
 
 	// for the non-category articles, do a count.
 	$request = $smcFunc['db_query'](

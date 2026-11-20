@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -50,6 +50,14 @@ function TPortal()
 		fatal_error($txt['tp-no-sa-list'], false);
 	}
 
+	// Defense in depth for the image upload endpoint.
+	if ($subAction === 'uploadimage') {
+		if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+			fatal_error('POST required.', false);
+		}
+		checkSession('post');
+		isAllowedTo(['tp_settings', 'tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml', 'tp_can_list_images', ]);
+	}
 	$context['TPortal']['subaction'] = $subAction;
 	// If it exists in our new subactions array load it
 	if (!empty($subAction) && array_key_exists($subAction, $subActions)) {

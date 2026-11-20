@@ -11,7 +11,7 @@
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause
  *
- * @version 3.0.1
+ * @version 3.0.5
  *
  */
 
@@ -32,7 +32,6 @@ class Upload
 		'txt' => 'text/plain',
 		'htm' => 'text/html',
 		'html' => 'text/html',
-		'php' => 'text/html',
 		'css' => 'text/css',
 		'js' => 'application/javascript',
 		'json' => 'application/json',
@@ -50,8 +49,6 @@ class Upload
 		'ico' => 'image/vnd.microsoft.icon',
 		'tiff' => 'image/tiff',
 		'tif' => 'image/tiff',
-		'svg' => 'image/svg+xml',
-		'svgz' => 'image/svg+xml',
 
 		// archives
 		'zip' => 'application/zip',
@@ -212,6 +209,169 @@ class Upload
 		}
 
 		return $generated_filename;
+	}
+
+	/**
+	 * Securely upload and re-encode an image.
+	 *
+	 * The client-supplied filename and extension are never used.
+	 * Only JPEG, PNG and GIF are accepted. The returned filename
+	 * consists of the trusted application prefix, random bytes and
+	 * an extension derived from the decoded image type.
+	 *
+	 * @param string $source Temporary uploaded file.
+	 * @param string $directory Destination directory.
+	 * @param string $prefix Trusted application-generated prefix.
+	 * @return string|false Generated filename, or false on failure.
+	 */
+	public function upload_image_file(string $source, string $directory, string $prefix = '')
+	{
+		if (!is_file($source)) {
+			$this->set_error(100);
+			return false;
+		}
+
+		if (!is_uploaded_file($source)) {
+			$this->set_error(101);
+			return false;
+		}
+
+		if (!is_dir($directory) || !is_writable($directory)) {
+			$this->set_error(201);
+			return false;
+		}
+
+		if (!$this->check_file_size($source)) {
+			$this->set_error(103);
+			return false;
+		}
+
+		// getimagesize identifies the encoded image type; the image
+		// must also successfully decode below before it is accepted.
+		$image_info = @getimagesize($source);
+
+		if ($image_info === false || empty($image_info[2])) {
+			$this->set_error(104);
+			return false;
+		}
+
+		$formats = [
+			IMAGETYPE_JPEG => 'jpg',
+			IMAGETYPE_PNG => 'png',
+			IMAGETYPE_GIF => 'gif',
+		];
+
+		if (!isset($formats[$image_info[2]])) {
+			$this->set_error(104);
+			return false;
+		}
+
+		$width = (int) $image_info[0];
+		$height = (int) $image_info[1];
+
+		// Bound image dimensions to limit excessive memory consumption.
+		if ($width < 1 || $height < 1 || $width > 10000 || $height > 10000 || ($width * $height) > 40000000) {
+			$this->set_error(104);
+			return false;
+		}
+
+		if (!extension_loaded('gd') || !function_exists('imagecreatefromstring')) {
+			$this->set_error(104);
+			return false;
+		}
+
+		$image_data = @file_get_contents($source);
+
+		if ($image_data === false) {
+			$this->set_error(104);
+			return false;
+		}
+
+		$image = @imagecreatefromstring($image_data);
+		unset($image_data);
+
+		if ($image === false) {
+			$this->set_error(104);
+			return false;
+		}
+
+		// Prefix is supplied by TPuploadpicture from the authenticated
+		// SMF user ID. Strip anything except filename-safe characters.
+		$prefix = preg_replace('/[^a-z0-9_-]/i', '', $prefix);
+
+		if ($prefix === null) {
+			imagedestroy($image);
+			$this->set_error(202);
+			return false;
+		}
+
+		$destination = '';
+		$filename = '';
+		$handle = false;
+
+		// Reserve a unique destination with exclusive creation before
+		// writing, so an existing file is never overwritten.
+		try {
+			for ($attempt = 0; $attempt < 5; $attempt++) {
+				$filename = $prefix . bin2hex(random_bytes(16)) . '.' . $formats[$image_info[2]];
+				$destination = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $filename;
+				$handle = @fopen($destination, 'x+b');
+
+				if ($handle !== false) {
+					fclose($handle);
+					$handle = true;
+					break;
+				}
+			}
+		}
+		catch (\Throwable $e) {
+			imagedestroy($image);
+			$this->set_error(202);
+			return false;
+		}
+
+		if ($handle !== true) {
+			imagedestroy($image);
+			$this->set_error(202);
+			return false;
+		}
+
+		// Re-encoding creates a fresh image file and discards data
+		// appended to the uploaded file. GD does not preserve animated
+		// GIF frames; GIF uploads become single-frame images.
+		switch ($image_info[2]) {
+			case IMAGETYPE_JPEG:
+				$success = @imagejpeg($image, $destination, 90);
+				break;
+
+			case IMAGETYPE_PNG:
+				imagesavealpha($image, true);
+				$success = @imagepng($image, $destination, 6);
+				break;
+
+			case IMAGETYPE_GIF:
+				$success = @imagegif($image, $destination);
+				break;
+
+			default:
+				$success = false;
+		}
+
+		imagedestroy($image);
+
+		// Verify that GD actually wrote a non-empty image of the
+		// expected type before returning its filename.
+		$written_info = $success ? @getimagesize($destination) : false;
+
+		if ($success !== true || $written_info === false || $written_info[2] !== $image_info[2] || @filesize($destination) < 1) {
+			@unlink($destination);
+			$this->set_error(105);
+			return false;
+		}
+
+		@chmod($destination, 0644);
+
+		return $filename;
 	}
 
 	public function upload_file(string $source, string $destination)
