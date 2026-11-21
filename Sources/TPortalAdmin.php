@@ -2167,7 +2167,7 @@ function do_postchecks()
 			isAllowedTo('tp_articles');
 
 			if (file_exists($_FILES['tp_article_newillustration']['tmp_name'])) {
-				$name = TPuploadpicture('tp_article_newillustration', '', $context['TPortal']['icon_max_size'], 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
+				$name = TPuploadpicture('tp_article_newillustration', $context['TPortal']['icon_max_size'], 'tp-files/tp-articles/illustrations', false, false);
 				tp_createthumb('tp-files/tp-articles/illustrations/' . $name, $context['TPortal']['icon_width'], $context['TPortal']['icon_height'], 'tp-files/tp-articles/illustrations/s_' . $name);
 				unlink('tp-files/tp-articles/illustrations/' . $name);
 			}
@@ -2811,7 +2811,7 @@ function do_postchecks()
 
 			// check if uploaded picture
 			if (isset($_FILES['qup_blockbody']) && file_exists($_FILES['qup_blockbody']['tmp_name'])) {
-				$name = TPuploadpicture('qup_blockbody', $context['user']['id'] . 'uid', null, null, $context['TPortal']['image_upload_path']);
+				$name = TPuploadpicture('qup_blockbody', null, $context['TPortal']['image_upload_path'], true, true);
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 			}
 

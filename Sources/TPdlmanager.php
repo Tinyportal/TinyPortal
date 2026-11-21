@@ -266,7 +266,7 @@ function TPortalDLManager()
 			// check if uploaded quick-list picture
 			if (isset($_FILES['qup_tp_dluploadtext']) && !empty($_FILES['qup_tp_dluploadtext']['tmp_name'])) {
 				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
-				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'] . 'uid');
+				$name = TPuploadpicture('qup_tp_dluploadtext', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'], true, true);
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 				redirectexit('action=tportal;sa=download;dl=' . $item_id);
 			}
@@ -378,11 +378,9 @@ function TPortalDLManager()
 
 			if ($shot) {
 				$sfile = 'tp_dluploadpic';
-				$uid = $context['user']['id'] . 'uid';
 				$dim = '1800';
-				$suf = 'jpg,gif,png';
 				$dest = $context['TPortal']['image_upload_path'] . 'dlmanager';
-				$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
+				$sname = TPuploadpicture($sfile, $dim, $dest, false, false);
 				$screenshot = $sname;
 				tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][0], $context['TPortal']['dl_screenshotsize'][1], $dest . '/thumb/' . $sname);
 				tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][2], $context['TPortal']['dl_screenshotsize'][3], $dest . '/listing/' . $sname);
@@ -2203,6 +2201,26 @@ function TPortalDLAdmin()
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		checkSession('post');
 	}
+	// The editor's file picker submits without a Save button value.
+	$adminImage = $_FILES['qup_tp_dladmintext'] ?? null;
+	if ($adminImage !== null && $adminImage['error'] !== UPLOAD_ERR_NO_FILE) {
+		$uploadPath = $context['TPortal']['image_upload_path'];
+		$imageName = TPuploadpicture('qup_tp_dladmintext', $context['TPortal']['image_max_size'], $uploadPath, true, true);
+		$imageDir = rtrim($uploadPath, '/\\') . '/';
+		tp_createthumb($imageDir . $imageName, 50, 50, $imageDir . 'thumbs/thumb_' . $imageName);
+
+		$returnTo = (string) ($_POST['tp_dladmin_return'] ?? '');
+		$userEditId = (int) ($_POST['dl_useredit'] ?? 0);
+		if ($userEditId > 0) {
+			$returnTo = 'useredit' . $userEditId;
+		}
+		elseif (!preg_match('/\A(?:adminsettings|adminaddcat|adminitem[0-9]+|admineditcat[0-9]+)\z/', $returnTo)) {
+			$returnTo = 'admin';
+		}
+
+		redirectexit('action=tportal;sa=download;dl=' . $returnTo);
+	}
+
 	// set the linktree
 	TPadd_linktree($scripturl . '?action=tpadmin', $txt['tp-admin']);
 	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=admin', 'TPdownloads');
@@ -2263,7 +2281,7 @@ function TPortalDLAdmin()
 	// add in BBC editor before we call in template so the headers are there
 	if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 		if ($context['TPortal']['dlsub'] == 'adminaddcat') {
-			$context['TPortal']['editor_id'] = 'newdladmin_text';
+			$context['TPortal']['editor_id'] = 'newtp_dladmintext';
 			TP_prebbcbox($context['TPortal']['editor_id']);
 		}
 		else {
@@ -2382,7 +2400,7 @@ function TPortalDLAdmin()
 		}
 
 		$link = $_POST['newdladmin_link'];
-		$text = $_POST['newdladmin_text'];
+		$text = $_POST['newtp_dladmintext'];
 		$parent = $_POST['newdladmin_parent'];
 		$icon = $boardurl . '/tp-downloads/icons/' . $_POST['newdladmin_icon'];
 		// special case, the access
@@ -2494,15 +2512,6 @@ function TPortalDLAdmin()
 
 		$go = 0;
 
-		if (!empty($_FILES['qup_dladmin_text']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name']))) {
-			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'] . 'uid');
-			tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
-		}
-		if (!empty($_FILES['qup_blockbody']['tmp_name']) && is_uploaded_file($_FILES['qup_blockbody']['tmp_name'])) {
-			$name = TPuploadpicture('qup_blockbody', $context['user']['id'] . 'uid');
-			tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
-		}
-
 		// a screenshot from edit item screen?
 		if (!empty($_FILES['tp_dluploadpic_edit']['tmp_name']) && (file_exists($_FILES['tp_dluploadpic_edit']['tmp_name']) || is_uploaded_file($_FILES['tp_dluploadpic_edit']['tmp_name']))) {
 			$shot = true;
@@ -2514,11 +2523,9 @@ function TPortalDLAdmin()
 		if ($shot) {
 			$sid = $_POST['tp_dluploadpic_editID'];
 			$sfile = 'tp_dluploadpic_edit';
-			$uid = $context['user']['id'] . 'uid';
 			$dim = '1800';
-			$suf = 'jpg,gif,png';
 			$dest = $context['TPortal']['image_upload_path'] . 'dlmanager';
-			$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
+			$sname = TPuploadpicture($sfile, $dim, $dest, false, false);
 			$screenshot = $sname;
 
 			tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][0], $context['TPortal']['dl_screenshotsize'][1], $dest . '/thumb/' . $sname);
@@ -2639,8 +2646,8 @@ function TPortalDLAdmin()
 					['name' => $value, 'item' => $id]
 				);
 			}
-			elseif (substr($what, 0, 12) == 'dladmin_icon') {
-				$id = substr($what, 12);
+			elseif (substr($what, 0, 14) == 'dladmin_icon') {
+				$id = substr($what, 14);
 				if ($value != '') {
 					$val = $boardurl . '/tp-downloads/icons/' . $value;
 					$smcFunc['db_query'](
@@ -2653,7 +2660,7 @@ function TPortalDLAdmin()
 					);
 				}
 			}
-			elseif (substr($what, 0, 12) == 'dladmin_text') {
+			elseif (substr($what, 0, 12) == 'tp_dladmintext') {
 				$id = substr($what, 12);
 				if (is_numeric($id)) {
 					// if we came from WYSIWYG then turn it back into BBC regardless.
@@ -2665,12 +2672,12 @@ function TPortalDLAdmin()
 						// we need this for everything else.
 						$value = $_POST[$what] = $_REQUEST[$what];
 					}
-					if (isset($_POST['dladmin_text' . $id . '_pure']) && isset($_POST['dladmin_text' . $id . '_choice'])) {
-						if ($_POST['dladmin_text' . $id . '_choice'] == 1) {
-							$value = $_POST['dladmin_text' . $id];
+					if (isset($_POST['tp_dladmintext' . $id . '_pure']) && isset($_POST['tp_dladmintext' . $id . '_choice'])) {
+						if ($_POST['tp_dladmintext' . $id . '_choice'] == 1) {
+							$value = $_POST['tp_dladmintext' . $id];
 						}
 						else {
-							$value = $_POST['dladmin_text' . $id . '_pure'];
+							$value = $_POST['tp_dladmintext' . $id . '_pure'];
 						}
 					}
 					$smcFunc['db_query'](
@@ -3448,7 +3455,7 @@ function TPortalDLAdmin()
 		}
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-			$context['TPortal']['editor_id'] = 'dladmin_text' . $context['TPortal']['admcats'][0]['id'];
+			$context['TPortal']['editor_id'] = 'tp_dladmintext' . $context['TPortal']['admcats'][0]['id'];
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['admcats'][0]['description']);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'html') {
@@ -3499,7 +3506,7 @@ function TPortalDLAdmin()
 
 			// add in BBC editor before we call in template so the headers are there
 			if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
+				$context['TPortal']['editor_id'] = 'tp_dladmintext' . $item;
 				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'html') {
@@ -3852,7 +3859,7 @@ function TPortalDLUser($item)
 		}
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-			$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
+			$context['TPortal']['editor_id'] = 'tp_dladmintext' . $item;
 			TP_prebbcbox($context['TPortal']['editor_id'], $description);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'html') {

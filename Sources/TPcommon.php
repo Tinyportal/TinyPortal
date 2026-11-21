@@ -91,7 +91,7 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	return $thumb;
 }
 
-function TPuploadpicture($widthhat, $prefix, $maxsize = '1800', $exts = 'jpg,gif,png', $destdir = 'tp-images')
+function TPuploadpicture($widthhat, $maxsize = '1800', $destdir = 'tp-images', bool $useHashedFilename = true, bool $useUserPrefix = true)
 {
 	global $context, $boarddir, $txt;
 
@@ -138,13 +138,14 @@ function TPuploadpicture($widthhat, $prefix, $maxsize = '1800', $exts = 'jpg,gif
 	}
 
 	// Keep the existing TinyPortal convention: user ID followed by uid.
-	// The random part and extension are generated inside Upload.php.
-	$user_prefix = (int) $context['user']['id'] . 'uid';
+	// Upload.php derives the extension from the decoded image.
+	$user_prefix = $useUserPrefix ? (int) $context['user']['id'] . 'uid' : '';
 
 	$name = $upload->upload_image_file(
 		$_FILES[$widthhat]['tmp_name'],
 		$directory,
-		$user_prefix
+		$user_prefix,
+		$useHashedFilename ? null : ($_FILES[$widthhat]['name'] ?? '')
 	);
 
 	if ($name === false) {

@@ -214,17 +214,17 @@ class Upload
 	/**
 	 * Securely upload and re-encode an image.
 	 *
-	 * The client-supplied filename and extension are never used.
-	 * Only JPEG, PNG and GIF are accepted. The returned filename
-	 * consists of the trusted application prefix, random bytes and
-	 * an extension derived from the decoded image type.
+	 * Only JPEG, PNG and GIF are accepted. The filename uses the trusted
+	 * prefix and either random bytes or a sanitized original name.
+	 * The extension is always derived from the decoded image type.
 	 *
 	 * @param string $source Temporary uploaded file.
 	 * @param string $directory Destination directory.
 	 * @param string $prefix Trusted application-generated prefix.
+	 * @param string|null $originalFilename Original filename, or null to use random bytes.
 	 * @return string|false Generated filename, or false on failure.
 	 */
-	public function upload_image_file(string $source, string $directory, string $prefix = '')
+	public function upload_image_file(string $source, string $directory, string $prefix = '', $originalFilename = null)
 	{
 		if (!is_file($source)) {
 			$this->set_error(100);
@@ -305,6 +305,16 @@ class Upload
 			return false;
 		}
 
+		if ($originalFilename !== null) {
+			$originalFilename = basename(str_replace('\\', '/', $originalFilename));
+			$stem = pathinfo($originalFilename, PATHINFO_FILENAME);
+			$stem = preg_replace('/[^a-z0-9_-]+/i', '_', $stem);
+			$stem = trim(substr($stem, 0, 160), '_-');
+			if ($stem === '') {
+				$stem = 'image';
+			}
+		}
+
 		$destination = '';
 		$filename = '';
 		$handle = false;
@@ -313,7 +323,13 @@ class Upload
 		// writing, so an existing file is never overwritten.
 		try {
 			for ($attempt = 0; $attempt < 5; $attempt++) {
-				$filename = $prefix . bin2hex(random_bytes(16)) . '.' . $formats[$image_info[2]];
+				if ($originalFilename === null) {
+					$filenameStem = bin2hex(random_bytes(16));
+				}
+				else {
+					$filenameStem = ($prefix === '' ? '' : '_') . $stem . ($attempt === 0 ? '' : '_' . ($attempt + 1));
+				}
+				$filename = $prefix . $filenameStem . '.' . $formats[$image_info[2]];
 				$destination = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $filename;
 				$handle = @fopen($destination, 'x+b');
 

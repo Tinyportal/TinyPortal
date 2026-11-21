@@ -499,7 +499,7 @@ function articleEdit()
 	$article_data['options'] = implode(',', $options);
 	// check if uploads are there
 	if (array_key_exists('tp_article_illupload', $_FILES) && file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
-		$name = TPuploadpicture('tp_article_illupload', '', $context['TPortal']['icon_max_size'], 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
+		$name = TPuploadpicture('tp_article_illupload', $context['TPortal']['icon_max_size'], 'tp-files/tp-articles/illustrations', false, false);
 		tp_createthumb('tp-files/tp-articles/illustrations/' . $name, $context['TPortal']['icon_width'], $context['TPortal']['icon_height'], 'tp-files/tp-articles/illustrations/s_' . $name);
 		$article_data['illustration'] = $name;
 	}
@@ -545,7 +545,7 @@ function articleEdit()
 	unset($tpArticle);
 	// check if uploaded picture
 	if (isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
+		$name = TPuploadpicture('qup_tp_article_body', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'], true, true);
 		tp_createthumb($context['TPortal']['image_upload_path'] . '/' . $name, 50, 50, $context['TPortal']['image_upload_path'] . '/thumbs/thumb_' . $name);
 	}
 	// if this was a new article
@@ -714,7 +714,7 @@ function articleUploadImage()
 	checkSession('post');
 	isAllowedTo(['tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml']);
 	require_once SOURCEDIR . '/TPcommon.php';
-	$name = TPuploadpicture('image', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
+	$name = TPuploadpicture('image', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'],true, true);
 	tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 	$response['data'] = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $name;
 	$response['success'] = 'true';

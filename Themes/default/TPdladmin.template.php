@@ -104,7 +104,7 @@ function template_main()
 						<b>' . $txt['tp-dlintrotext'] . '</b>
 					</div>';
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true, 'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+			TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);
@@ -558,13 +558,13 @@ function template_main()
 					<div><b>' . $txt['tp-dluploadtext'] . '</b></div>';
 
 				if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-					TPwysiwyg('dladmin_text' . $cat['id'], $cat['description'], true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+					TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				}
 				elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else {
-					echo '<textarea name="dladmin_text' . $cat['id'] . '" id="tp_article_body">' . $cat['description'] . '</textarea>';
+					echo '<textarea name="tp_dladmintext' . $cat['id'] . '" id="tp_article_body">' . $cat['description'] . '</textarea>';
 				}
 				echo '
 				</div>
@@ -975,13 +975,13 @@ function template_main()
 				<div class="padding-div"><b>' . $txt['tp-dluploadtext'] . ':</b><br>';
 
 			if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-				TPwysiwyg('dladmin_text' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 				TP_bbcbox($context['TPortal']['editor_id']);
 			}
 			else {
-				echo '<textarea name="dladmin_text' . $cat['id'] . '" id="tp_article_body">' . html_entity_decode($cat['description'], ENT_QUOTES) . '</textarea>';
+				echo '<textarea name="tp_dladmintext' . $cat['id'] . '" id="tp_article_body">' . html_entity_decode($cat['description'], ENT_QUOTES) . '</textarea>';
 			}
 
 			echo '
@@ -1088,13 +1088,13 @@ function template_main()
 				<b>' . $txt['tp-dluploadtext'] . ':</b><br>';
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('newdladmin_text', '', true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+			TPwysiwyg('tp_newdladmintext', '', true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);
 		}
 		else {
-			echo '<textarea name="newdladmin_text" id="tp_article_body"></textarea>';
+			echo '<textarea name="tp_newdladmintext" id="tp_article_body"></textarea>';
 		}
 		echo '
 			<hr>
@@ -1136,6 +1136,7 @@ function template_main()
 		</div>';
 	}
 	echo '
+		<input type="hidden" name="tp_dladmin_return" value="', htmlspecialchars($context['TPortal']['dlsub'], ENT_QUOTES, 'UTF-8'), '">
 		<input type="hidden" name="', htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8'), '" value="', htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8'), '">
 		</form>
 	</div>';

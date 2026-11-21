@@ -939,14 +939,14 @@ function template_main()
 				<div><b>' . $txt['tp-dluploadtext'] . '</b><br><br></div>';
 
 			if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-				TPwysiwyg('dladmin_text' . $cat['id'], $cat['description'], true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_dladmintext' . $cat['id'], $cat['description'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 				TP_bbcbox($context['TPortal']['editor_id']);
 			}
 			else {
 				echo '
-					<textarea name="dladmin_text' . $cat['id'] . '" id="tp_article_body" wrap="auto">' . $cat['description'] . '</textarea>';
+					<textarea name="tp_dladmintext' . $cat['id'] . '" id="tp_article_body" wrap="auto">' . $cat['description'] . '</textarea>';
 			}
 
 			echo '
