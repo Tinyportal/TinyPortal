@@ -1687,13 +1687,16 @@ function TPdlresults()
 	checkSession('post');
 
 	// nothing to search for?
-	if (empty($_POST['dl_search'])) {
+	if (!isset($_POST['dl_search']) || !is_string($_POST['dl_search']) || trim($_POST['dl_search']) === '') {
 		fatal_error($txt['tp-nosearchentered'], false);
 	}
 
 	// clean the search
-	$what2 = str_replace(' ', '%', strip_tags($_POST['dl_search']));
-	$what = strip_tags($_POST['dl_search']);
+	$what = trim(strip_tags($_POST['dl_search']));
+	if ($what === '') {
+		fatal_error($txt['tp-nosearchentered'], false);
+	}
+	$pattern = '%' . str_replace(' ', '%', $what) . '%';
 
 	if (!empty($_POST['dl_searcharea_name'])) {
 		$usetitle = true;
@@ -1709,16 +1712,16 @@ function TPdlresults()
 	}
 
 	if ($usetitle && !$usebody) {
-		$query = 'd.name LIKE \'%{raw:what}%\'';
+		$query = 'd.name LIKE {string:pattern}';
 	}
 	elseif (!$usetitle && $usebody) {
-		$query = 'd.description LIKE \'%{raw:what}%\'';
+		$query = 'd.description LIKE {string:pattern}';
 	}
 	elseif ($usetitle && $usebody) {
-		$query = 'd.name LIKE \'%{raw:what}%\' OR d.description LIKE \'%{raw:what}%\'';
+		$query = 'd.name LIKE {string:pattern} OR d.description LIKE {string:pattern}';
 	}
 	else {
-		$query = 'd.name LIKE \'%{raw:what}%\'';
+		$query = 'd.name LIKE {string:pattern}';
 	}
 
 	$dlquery = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
@@ -1752,9 +1755,9 @@ function TPdlresults()
 		'
 		SELECT COUNT(d.id)
 		FROM {db_prefix}tp_dlmanager AS d
-		WHERE ' . $query . '
-		AND type = {string:type}',
-		['type' => 'dlitem', 'what' => $what2]
+		WHERE (' . $query . ')
+		AND d.type = {string:type}',
+		['type' => 'dlitem', 'pattern' => $pattern]
 	);
 	$tt = $smcFunc['db_fetch_row']($check);
 	$total = $tt[0];
@@ -1765,12 +1768,12 @@ function TPdlresults()
 		SELECT d.id, d.created, d.type, d.downloads, d.name, d.description as body, d.author_id as author_id, m.real_name as real_name
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
-		WHERE ' . $query . '
-		AND type = {string:type}
+		WHERE (' . $query . ')
+		AND d.type = {string:type}
 		ORDER BY d.created DESC LIMIT {int:start}, {int:limit}',
 		[
 			'type' => 'dlitem', 
-			'what' => $what2, 
+			'pattern' => $pattern,
 			'limit' => $max_results,
 			'start' => $start
 		]

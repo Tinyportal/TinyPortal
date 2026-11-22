@@ -663,14 +663,11 @@ function doTPpage()
 					if ($article['type'] == 'php') {
 						$context['TPortal']['printbody'] = eval($pwhat);
 					}
-					elseif ($article['type'] == 'import') {
-						if (!file_exists($boarddir . '/' . $article['fileimport'])) {
-							echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-						}
-						else {
-							include $article['fileimport'];
-						}
-						$context['TPortal']['printbody'] = '';
+					elseif ($article['type'] === 'import') {
+						$html = tp_read_external_article($article['fileimport'] ?? '');
+						$context['TPortal']['printbody'] = $html === null
+							? '<em>' . $txt['tp-cannotfetchfile'] . '</em>'
+							: '<h2>' . htmlspecialchars($article['subject'], ENT_QUOTES, 'UTF-8') . '</h2>' . $html;
 					}
 					elseif ($article['type'] == 'bbc') {
 						$context['TPortal']['printbody'] = parse_bbc($what);

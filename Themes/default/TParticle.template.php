@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -99,14 +99,16 @@ function template_submitarticle()
 	elseif ($article_type == 'bbc') {
 		TP_bbcbox($context['TPortal']['editor_id']);
 	}
-	else {
+	if (allowedTo('admin_forum')) {
 		echo '
-					<dl class="tp_title settings">
-						<dt>' , $txt['tp-importarticle'] , '</dt>
-						<dd>
-							<input type="text" name="tp_article_fileimport" value="' , $mg['fileimport'] , '" size="50" style="max-width:97%;" >
-						</dd>
-					</dl>' ;
+			<dl class="tp_title settings">
+				<dt><label for="tp_article_fileimport">', $txt['tp-importarticle'], '</label></dt>
+				<dd>
+					<input type="text" id="tp_article_fileimport" name="tp_article_fileimport" value="',
+						htmlspecialchars($mg['fileimport'] ?? '', ENT_QUOTES, 'UTF-8'), '" size="50">
+					<div class="smalltext">', $txt['tp_article_import_hint'], '</div>
+				</dd>
+			</dl>';
 	}
 	echo '
 			</div>
@@ -214,9 +216,21 @@ function template_submitarticle()
 					</dt>
 					<dd>
 						<input type="radio" id="gohtml" name="tp_article_type" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> ' . $txt['tp-gohtml'] . '</label><br>
+';
+		if (allowedTo('admin_forum')) {
+			echo '
 						<input type="radio" id="gophp" name="tp_article_type" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> ' . $txt['tp-gophp'] . '</label><br>
+';
+		}
+		echo '
 						<input type="radio" id="gobbc" name="tp_article_type" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> ' . $txt['tp-gobbc'] . '</label><br>
+';
+		if (allowedTo('admin_forum')) {
+			echo '
 						<input type="radio" id="goimport" name="tp_article_type" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> ' . $txt['tp-goimport'] . '</label><br><br>
+';
+		}
+		echo '
 					</dd>
 					<dt>
 						', $txt['tp-status'], '

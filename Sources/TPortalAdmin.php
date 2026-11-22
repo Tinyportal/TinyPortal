@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -137,6 +137,9 @@ function TPortalAdmin()
 			$context['TPortal']['subaction'] = 'editarticle';
 		}
 		elseif (substr($_GET['sa'], 0, 11) == 'addarticle_') {
+			if (in_array($_GET['sa'], ['addarticle_php', 'addarticle_import'], true)) {
+				isAllowedTo('admin_forum');
+			}
 			loadTemplate('TParticle');
 			$context['sub_template'] = 'submitarticle';
 			$tpsub = 'articles';
@@ -226,6 +229,9 @@ function TPortalAdmin()
 				'active' => $context['TPortal']['subaction'] == 'addarticle_import',
 			],
 		];
+		if (!allowedTo('admin_forum')) {
+			unset($context['TPortal']['subtabs']['addarticle_php'], $context['TPortal']['subtabs']['article_import']);
+		}
 	}
 	elseif (in_array($tpsub, ['categories', 'addcategory', 'clist']) && allowedTo('tp_articles')) {
 		$context['TPortal']['subtabs'] = [
@@ -1051,6 +1057,10 @@ function do_articles()
 
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
+			$storedType = strtolower(trim((string) $context['TPortal']['editarticle']['type']));
+			if (in_array($storedType, ['php', 'import'], true)) {
+				isAllowedTo('admin_forum');
+			}
 			$context['TPortal']['editing_article'] = true;
 			if ($context['TPortal']['editarticle']['type'] != 'bbc') {
 				$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
@@ -2612,7 +2622,7 @@ function do_postchecks()
 							'',
 							'
 							UPDATE {db_prefix}tp_blocks
-							SET ' . $setting . ' = {string:value}
+							SET body = {string:value}
 							WHERE id = {int:blockid}',
 							['value' => $value, 'blockid' => $where]
 						);
@@ -2695,14 +2705,14 @@ function do_postchecks()
 							}
 						}
 					}
-					else {
+					elseif (in_array($setting, ['off', 'visible'], true) && in_array($value, ['0', '1'], true)) {
 						$smcFunc['db_query'](
 							'',
 							'
 							UPDATE {db_prefix}tp_blocks
-							SET ' . $setting . ' = {raw:val}
+							SET ' . $setting . ' = {int:val}
 							WHERE id = {int:blockid}',
-							['val' => $value, 'blockid' => $where]
+							['val' => (int) $value, 'blockid' => $where]
 						);
 					}
 				}

@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.3; TParticle
+// Version: 3.0.5; TParticle
 
 global $scripturl;
 
@@ -30,3 +30,6 @@ $txt['tp-submitarticle'] = 'Write HTML article';
 $txt['tp-submitnotallowed'] = 'Sorry, but you are not allowed to submit an article.';
 $txt['tp-submitsuccess'] = 'Your article submission or update has been completed. <br><br>A new article will need to be assigned to a category by an article administrator before it will be visible. Updates and new articles may require approval before publication. <br><br>You can check the status of your articles here: ';
 $txt['tp-submitsuccess2'] = 'The submission was successful.';
+
+$txt['tp_article_type_invalid'] = 'Choose HTML, BBC, PHP, or an external article.';
+$txt['tp_article_import_invalid'] = 'Choose a readable .html or .htm file in tp-files/tp-articles/imported.';

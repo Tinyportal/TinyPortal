@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1442,6 +1442,42 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 	return $pageindex;
 }
 
+/**
+ * Resolve an administrator-managed static article inside TinyPortal's import directory.
+ */
+function tp_external_article_path($name)
+{
+	global $boarddir;
+
+	if (!is_string($name) || !preg_match('~\A(?:tp-files/tp-articles/imported/)?([a-z0-9_][a-z0-9_. -]*\.html?)\z~i', $name, $matches)) {
+		return null;
+	}
+
+	$directory = realpath($boarddir . '/tp-files/tp-articles/imported');
+	if ($directory === false) {
+		return null;
+	}
+
+	$path = realpath($directory . DIRECTORY_SEPARATOR . $matches[1]);
+	if ($path === false || dirname($path) !== $directory || basename($path) !== $matches[1] || !is_file($path) || !is_readable($path)) {
+		return null;
+	}
+
+	return $path;
+}
+
+function tp_read_external_article($name)
+{
+	$path = tp_external_article_path($name);
+	if ($path === null) {
+		return null;
+	}
+
+	$limit = 2 * 1024 * 1024;
+	$content = @file_get_contents($path, false, null, 0, $limit + 1);
+	return $content !== false && strlen($content) <= $limit ? $content : null;
+}
+
 function tp_renderarticle($intro = '')
 {
 	global $context, $txt, $scripturl, $boarddir, $smcFunc;
@@ -1494,13 +1530,9 @@ function tp_renderarticle($intro = '')
 				$data .= $context['TPortal']['article']['readmore'];
 			}
 		}
-		elseif ($context['TPortal']['article']['rendertype'] == 'import') {
-			if (!file_exists($boarddir . '/' . $context['TPortal']['article']['fileimport'])) {
-				$data .= '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
-			}
-			else {
-				include $context['TPortal']['article']['fileimport'];
-			}
+		elseif ($context['TPortal']['article']['rendertype'] === 'import') {
+			$data .= tp_read_external_article($context['TPortal']['article']['fileimport'] ?? '')
+				?? '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
 		}
 		else {
 			$post = $context['TPortal']['article']['body'];
@@ -1539,7 +1571,8 @@ function tp_renderblockarticle()
 	global $context, $txt, $boarddir;
 
 	// just return if data is missing
-	if (!isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']])) {
+	$blockArticle = $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']] ?? null;
+	if ($blockArticle === null) {
 		return;
 	}
 
@@ -1548,13 +1581,9 @@ function tp_renderblockarticle()
 	if ($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'php') {
 		eval($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['body']);
 	}
-	elseif ($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'import') {
-		if (!file_exists($boarddir . '/' . $context['TPortal']['blockarticles'][$context['TPortals']['blockarticle']]['fileimport'])) {
-			echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-		}
-		else {
-			include $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['fileimport'];
-		}
+	elseif ($blockArticle['rendertype'] === 'import') {
+		echo tp_read_external_article($blockArticle['fileimport'] ?? '')
+			?? '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
 	}
 	elseif ($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'bbc') {
 		echo parse_bbc($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['body']);
