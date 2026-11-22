@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -173,8 +173,61 @@ class Util
 		return self::filter($checkbox, 'post', 'string');
 	}
 
-	public static function shortenString(&$string, $length)
+	public static function shortenString(&$string, $length, $renderedHtml = false)
 	{
+		if ((int) $length <= 0) {
+			return false;
+		}
+
+		if ($renderedHtml || self::isHTML($string)) {
+			if (class_exists('\DOMDocument')) {
+				$dom = new \DOMDocument('1.0', 'UTF-8');
+				$loaded = $dom->loadHTML(
+					'<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>'
+					. $string . '</body></html>',
+					LIBXML_NONET | LIBXML_NOERROR | LIBXML_NOWARNING
+				);
+				$body = $loaded ? $dom->getElementsByTagName('body')->item(0) : null;
+
+				if ($body !== null) {
+					if (mb_strlen($body->textContent, 'UTF-8') <= $length) {
+						return false;
+					}
+
+					$reachedLimit = false;
+					$totalLen = 0;
+					$toRemove = [];
+					self::walkHTML($body, $length, $reachedLimit, $totalLen, $toRemove);
+					foreach ($toRemove as $child) {
+						$child->parentNode->removeChild($child);
+					}
+
+					$string = '';
+					foreach ($body->childNodes as $child) {
+						$string .= $dom->saveHTML($child);
+					}
+					return true;
+				}
+			}
+
+			// Preserve line breaks in a plain-text excerpt if DOM is unavailable.
+			$text = html_entity_decode(
+				strip_tags(preg_replace('~<br\s*/?>~i', "\n", $string)),
+				ENT_QUOTES | ENT_HTML5,
+				'UTF-8'
+			);
+			if (mb_strlen($text, 'UTF-8') <= $length) {
+				return false;
+			}
+
+			$string = nl2br(htmlspecialchars(
+				rtrim(mb_substr($text, 0, $length, 'UTF-8')),
+				ENT_QUOTES | ENT_SUBSTITUTE,
+				'UTF-8'
+			));
+			return true;
+		}
+
 		$shorten = false;
 
 		if (!empty($length)) {
@@ -203,46 +256,6 @@ class Util
 						}
 					}
 
-					// check that no html has been cut off
-					if (self::isHTML($string)) {
-						// Change all the new lines to <br>
-						// $string         = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
-						$string = str_ireplace(['<br />', '<br>', '<br/>', '<br />', '&lt;br /&gt;', '&lt;br/&gt;', '&lt;br&gt;'], '<br>', $string);
-						$string = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
-
-						$reachedLimit = false;
-						$totalLen = 0;
-						$toRemove = [];
-
-						$dom = new \DomDocument('1.0', 'UTF-8');
-
-						// set error level
-						$internalErrors = libxml_use_internal_errors(true);
-
-						$dom->loadHTML($string);
-
-						// Restore error level
-						libxml_use_internal_errors($internalErrors);
-
-						self::walkHTML($dom, $length, $reachedLimit, $totalLen, $toRemove);
-
-						foreach ($toRemove as $child) {
-							$child->parentNode->removeChild($child);
-						}
-
-						$tmpString = $dom->saveHTML();
-
-						// Strip out the doctype and html body
-						if (($pos = mb_strpos($tmpString, '<html><body>')) !== false) {
-							$tmpString = self::substr($tmpString, $pos + 12);
-						}
-
-						// Remove the html body from the end
-						if (($pos = mb_strpos($tmpString, '</body></html>')) != false) {
-							$tmpString = self::substr($tmpString, 0, $pos);
-						}
-					}
-
 					// Assign it back to the string
 					$string = $tmpString;
 				}
@@ -259,13 +272,16 @@ class Util
 		}
 		else {
 			if ($node instanceof \DomText) {
-				$nodeLen = mb_strlen($node->nodeValue);
-				$totalLen += $nodeLen;
+				$text = $node->nodeValue;
+				$remaining = $length - $totalLen;
+				$nodeLen = mb_strlen($text, 'UTF-8');
 
-				if ($totalLen > $length) {
-					$node->nodeValue = self::substr($node->nodeValue, 0, mb_strpos($node->nodeValue, ' ', ($nodeLen - ($totalLen - $length))));
-					$reachedLimit = true;
+				if ($nodeLen > $remaining) {
+					$node->nodeValue = rtrim(mb_substr($text, 0, $remaining, 'UTF-8'));
 				}
+
+				$totalLen += $nodeLen;
+				$reachedLimit = $totalLen >= $length;
 			}
 
 			if (isset($node->childNodes)) {

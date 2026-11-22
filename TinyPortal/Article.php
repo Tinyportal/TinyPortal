@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -471,10 +471,7 @@ class Article extends Base
 
 		// insert the forumposts into $posts
 		if (is_array($forumPosts) && count($forumPosts) > 0) {
-			// Needed for html_to_bbc
-			require_once SOURCEDIR . '/Subs-Editor.php';
-
-			$length = $context['TPortal']['frontpage_limit_len'];
+			$length = (int) ($context['TPortal']['frontpage_limit_len'] ?? 0);
 			foreach ($forumPosts as $k => $row) {
 				$row['date'] = $row['timestamp'];
 				$row['real_name'] = $row['poster']['name'];
@@ -523,7 +520,7 @@ class Article extends Base
 					$row['avatar'] = '';
 				}
 
-				if (Util::shortenString($row['body'], $context['TPortal']['frontpage_limit_len'])) {
+				if (Util::shortenString($row['body'], $length, true)) {
 					$row['readmore'] = '... <p class="tp_readmore"><strong><a href="' . $scripturl . '?topic=' . $row['id'] . '">' . $txt['tp-readmore'] . '</a></strong></p>';
 				}
 
