@@ -209,15 +209,13 @@ function TPSearchArticle()
 	);
 	if (TPDatabase::getInstance()->db_num_rows($request) > 0) {
 		while ($row = TPDatabase::getInstance()->db_fetch_assoc($request)) {
-			TPUtil::shortenString($row['body'], 400);
-			if ($row['type'] == 'bbc') {
-				$row['body'] = parse_bbc($row['body']);
-			}
-			elseif ($row['type'] == 'php') {
+			$articleType = strtolower(trim((string) $row['type']));
+			if ($articleType === 'php') {
 				$row['body'] = '[PHP]';
 			}
 			else {
-				$row['body'] = strip_tags($row['body']);
+				TPUtil::shortenString($row['body'], 400, $articleType === 'html');
+				$row['body'] = $articleType === 'bbc' ? parse_bbc($row['body']) : strip_tags($row['body']);
 			}
 
 			$row['subject'] = preg_replace('/' . preg_quote($what, '/') . '/iu', '<mark class="highlight">$0</mark>', $row['subject']);
