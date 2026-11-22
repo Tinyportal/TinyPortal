@@ -1673,7 +1673,7 @@ function TPortalDLManager()
 // searched the files?
 function TPdlresults()
 {
-	global $txt, $scripturl, $context, $user_info, $smcFunc;
+	global $txt, $scripturl, $context, $smcFunc;
 
 	$start = 0;
 	$max_results = 20;
@@ -1724,27 +1724,38 @@ function TPdlresults()
 		$query = 'd.name LIKE {string:pattern}';
 	}
 
-	$dlquery = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
-
-	// find out which categories you have access to
+	// Use the same category permission check as a direct download.
 	$request = $smcFunc['db_query'](
 		'',
-		'
-		SELECT id FROM {db_prefix}tp_dlmanager
-		WHERE type = {string:type}
-		AND ' . $dlquery,
+		'SELECT id, access FROM {db_prefix}tp_dlmanager WHERE type = {string:type}',
 		['type' => 'dlcat']
 	);
-	$allowedcats = [];
-	if ($smcFunc['db_num_rows']($request) > 0) {
-		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			$allowedcats[] = $row['id'];
+	$allowedCategories = [];
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		if ((int) $row['id'] > 0 && get_perm((string) $row['access'], 'tp_dlmanager')) {
+			$allowedCategories[] = (int) $row['id'];
 		}
-		$smcFunc['db_free_result']($request);
 	}
-	else {
-		$allowedcats[0] = -1;
-	}
+	$smcFunc['db_free_result']($request);
+
+	// Attached downloads follow the parent item's category. Pending rows
+	// have a negative category and are excluded even when attached.
+	$visibility = '
+        LEFT JOIN {db_prefix}tp_dlmanager AS parent
+            ON (parent.id = d.subitem AND parent.type = {string:type})
+        WHERE (' . $query . ')
+        AND d.type = {string:type}
+        AND d.category >= 0
+        AND (
+            (d.subitem = 0 AND d.category > 0 AND d.category IN ({array_int:categories}))
+            OR
+            (d.subitem > 0 AND parent.category > 0 AND parent.category IN ({array_int:categories}))
+        )';
+	$params = [
+		'type' => 'dlitem',
+		'pattern' => $pattern,
+		'categories' => $allowedCategories ?: [0],
+	];
 
 	$context['TPortal']['dlsearchresults'] = [];
 	$context['TPortal']['dlsearchterm'] = $what;
@@ -1755,9 +1766,8 @@ function TPdlresults()
 		'
 		SELECT COUNT(d.id)
 		FROM {db_prefix}tp_dlmanager AS d
-		WHERE (' . $query . ')
-		AND d.type = {string:type}',
-		['type' => 'dlitem', 'pattern' => $pattern]
+		' . $visibility,
+		$params
 	);
 	$tt = $smcFunc['db_fetch_row']($check);
 	$total = $tt[0];
@@ -1768,15 +1778,9 @@ function TPdlresults()
 		SELECT d.id, d.created, d.type, d.downloads, d.name, d.description as body, d.author_id as author_id, m.real_name as real_name
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
-		WHERE (' . $query . ')
-		AND d.type = {string:type}
+		' . $visibility . '
 		ORDER BY d.created DESC LIMIT {int:start}, {int:limit}',
-		[
-			'type' => 'dlitem', 
-			'pattern' => $pattern,
-			'limit' => $max_results,
-			'start' => $start
-		]
+		$params + ['limit' => $max_results, 'start' => $start]
 	);
 	// create pagelinks
 	if ($smcFunc['db_num_rows']($request) > 0) {

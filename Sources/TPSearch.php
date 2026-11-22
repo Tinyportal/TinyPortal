@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.3.0
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -180,6 +180,8 @@ function TPSearchArticle()
 	$context['TPortal']['searchresults'] = [];
 	$context['TPortal']['searchterm'] = $what;
 	$context['TPortal']['searchpage'] = $start;
+	require_once SOURCEDIR . '/TPSubs.php';
+	$allowedCategories = tp_searchable_article_categories();
 	$now = forum_time();
 	$request = TPDatabase::getInstance()->db_query(
 		'',
@@ -187,16 +189,18 @@ function TPSearchArticle()
         SELECT a.id, a.date, a.views, a.subject, a.body AS body, a.author_id AS author_id, a.type, m.real_name AS real_name {raw:select}
         FROM {db_prefix}tp_articles AS a
         LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
-        WHERE {raw:query}
-        AND ((a.pub_start = 0 AND a.pub_end = 0)
-            OR (a.pub_start != 0 AND a.pub_start < {int:now} AND a.pub_end = 0)
-            OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > {int:now} )
-            OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > {int:now} AND a.pub_start < {int:now}))
+        WHERE ({raw:query})
+        AND a.category > 0
+        AND a.category IN ({array_int:categories})
+        AND a.approved = 1
         AND a.off = 0
+        AND (a.pub_start = 0 OR a.pub_start < {int:now})
+        AND (a.pub_end = 0 OR a.pub_end > {int:now})
         ORDER BY {raw:order_by} a.date DESC LIMIT {int:limit} OFFSET {int:start}',
 		[
 			'select' => $select,
 			'query' => $query,
+			'categories' => $allowedCategories,
 			'limit' => $max_results,
 			'start' => $start,
 			'now' => $now,
@@ -233,17 +237,19 @@ function TPSearchArticle()
 	$request = TPDatabase::getInstance()->db_query(
 		'',
 		'
-        SELECT COUNT(id) AS num_results
+        SELECT COUNT(a.id) AS num_results
         FROM {db_prefix}tp_articles AS a
         LEFT JOIN {db_prefix}members as m ON a.author_id = m.id_member
-        WHERE {raw:query}
-        AND ((a.pub_start = 0 AND a.pub_end = 0)
-            OR (a.pub_start != 0 AND a.pub_start < {int:now} AND a.pub_end = 0)
-            OR (a.pub_start = 0 AND a.pub_end != 0 AND a.pub_end > {int:now} )
-            OR (a.pub_start != 0 AND a.pub_end != 0 AND a.pub_end > {int:now} AND a.pub_start < {int:now}))
-        AND a.off = 0',
+        WHERE ({raw:query})
+        AND a.category > 0
+        AND a.category IN ({array_int:categories})
+        AND a.approved = 1
+        AND a.off = 0
+        AND (a.pub_start = 0 OR a.pub_start < {int:now})
+        AND (a.pub_end = 0 OR a.pub_end > {int:now})',
 		[
 			'query' => $query,
+			'categories' => $allowedCategories,
 			'now' => $now,
 		]
 	);

@@ -1310,6 +1310,31 @@ function get_perm($perm, $moderate = '')
 	return $show;
 }
 
+/**
+ * Return categories the current user can see in public article listings.
+ */
+function tp_searchable_article_categories()
+{
+	global $smcFunc;
+
+	$request = $smcFunc['db_query'](
+		'',
+		'SELECT id, value3 FROM {db_prefix}tp_variables WHERE type = {string:type}',
+		['type' => 'category']
+	);
+	$categories = [];
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		$id = (int) $row['id'];
+		if ($id > 0 && $id <= 9999 && get_perm((string) $row['value3'])) {
+			$categories[] = $id;
+		}
+	}
+	$smcFunc['db_free_result']($request);
+
+	// No real article category has this ID. Keep the SQL array non-empty.
+	return $categories ?: [0];
+}
+
 function tpsort($a, $b)
 {
 	return strnatcasecmp($b['timestamp'], $a['timestamp']);

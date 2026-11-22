@@ -116,27 +116,38 @@ function articleShowComments()
 {
 	global $smcFunc, $scripturl, $user_info, $txt, $context;
 
-	if (isset($context['TPortal']['mystart'])) {
-		$tpstart = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
-	}
+	require_once SOURCEDIR . '/TPSubs.php';
 
-	$mylast = 0;
-	$mylast = $user_info['last_login'];
+	$tpstart = max(0, (int) ($context['TPortal']['mystart'] ?? 0));
+	$mylast = (int) ($user_info['last_login'] ?? 0);
 	$comments_per_page = 15;
-	$showall = false;
-	if (isset($_GET['showall'])) {
-		$showall = true;
+	$showall = isset($_GET['showall']);
+	$filter = '
+        WHERE var.item_type = {string:type}
+        AND art.category > 0
+        AND art.category IN ({array_int:categories})
+        AND art.approved = 1
+        AND art.off = 0
+        AND (art.pub_start = 0 OR art.pub_start < {int:now})
+        AND (art.pub_end = 0 OR art.pub_end > {int:now})';
+	$params = [
+		'type' => 'article_comment',
+		'categories' => tp_searchable_article_categories(),
+		'now' => forum_time(),
+	];
+	if (!$showall || $mylast === 0) {
+		$filter .= ' AND var.datetime > {int:last}';
+		$params['last'] = $mylast;
 	}
 
 	$request = $smcFunc['db_query'](
 		'',
 		'
-        SELECT COUNT(var.subject)
-        FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
-        WHERE var.item_type = {string:type}
-        ' . ((!$showall || $mylast == 0) ? 'AND var.datetime > ' . $mylast : '') . '
-        AND art.id = var.item_id',
-		['type' => 'article_comment']
+        SELECT COUNT(var.id)
+        FROM {db_prefix}tp_comments AS var
+        INNER JOIN {db_prefix}tp_articles AS art ON (art.id = var.item_id)
+        ' . $filter,
+		$params
 	);
 	$check = $smcFunc['db_fetch_row']($request);
 	$smcFunc['db_free_result']($request);
@@ -144,21 +155,17 @@ function articleShowComments()
 	$request = $smcFunc['db_query'](
 		'',
 		'
-        SELECT art.subject AS pagename, memb.real_name AS author, art.author_id AS author_id, var.subject, var.comment, var.member_id,
+        SELECT art.subject AS pagename, memb.real_name AS author, art.author_id, var.subject, var.comment, var.member_id,
         var.item_id, var.datetime, mem.real_name AS real_name,
         ' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.datetime)') . ' AS isRead
-        FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
+        FROM {db_prefix}tp_comments AS var
+        INNER JOIN {db_prefix}tp_articles AS art ON (art.id = var.item_id)
         LEFT JOIN {db_prefix}members AS memb ON (art.author_id = memb.id_member)
         LEFT JOIN {db_prefix}members AS mem ON (var.member_id = mem.id_member)
-        LEFT JOIN {db_prefix}tp_data AS log ON (log.value = art.id AND log.type = 1 AND log.id_member = ' . $context['user']['id'] . ')
-        WHERE var.item_type = {string:type}
-        AND art.id = var.item_id
-        ' . ((!$showall || $mylast == 0) ? 'AND var.datetime > {int:last}' : '') . '
+        LEFT JOIN {db_prefix}tp_data AS log ON (log.value = art.id AND log.type = 1 AND log.id_member = {int:viewer})
+        ' . $filter . '
         ORDER BY var.datetime DESC LIMIT {int:limit} OFFSET {int:start}',
-		['type' => 'article_comment',
-			'last' => $mylast, 
-			'start' => $tpstart,
-			'limit' => $comments_per_page]
+		$params + ['viewer' => (int) $context['user']['id'], 'limit' => $comments_per_page, 'start' => $tpstart]
 	);
 
 	$context['TPortal']['artcomments']['new'] = [];
