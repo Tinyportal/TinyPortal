@@ -1004,7 +1004,7 @@ function template_main()
 					</dt>
 					<dd>
 						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . htmlspecialchars($cat['sshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" size="60"><br>
-						<div style="overflow: auto;">' , $cat['sshot'] != '' ? '<img src="' . htmlspecialchars(substr($cat['sshot'], 0, 4) == 'http' ? $cat['sshot'] : $boardurl . '/' . $cat['sshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="" />' : '' , '</div>
+						<div style="overflow: auto;">' , $cat['screenshot_url'] !== '' ? '<img src="' . htmlspecialchars($cat['screenshot_url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="" />' : '' , '</div>
 					</dd>
 					<dt>
 						' . $txt['tp-uploadnewpic'] . '

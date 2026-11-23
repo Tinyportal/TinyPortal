@@ -285,7 +285,7 @@ function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes, bo
     }
 
     $directory = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR;
-    for ($attempt = 0; $attempt < 5; $attempt++) {
+    for ($attempt = 0; $attempt < 99; $attempt++) {
         $filenameStem = $useHashedFilename ? bin2hex(random_bytes(16)) : $stem . ($attempt === 0 ? '' : '_' . ($attempt + 1));
         $name = $filenameStem . '.' . $ext;
         $destination = $directory . $name;

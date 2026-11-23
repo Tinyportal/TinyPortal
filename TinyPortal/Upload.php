@@ -322,7 +322,7 @@ class Upload
 		// Reserve a unique destination with exclusive creation before
 		// writing, so an existing file is never overwritten.
 		try {
-			for ($attempt = 0; $attempt < 5; $attempt++) {
+			for ($attempt = 0; $attempt < 99; $attempt++) {
 				if ($originalFilename === null) {
 					$filenameStem = bin2hex(random_bytes(16));
 				}

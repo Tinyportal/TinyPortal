@@ -210,6 +210,20 @@ function TPdlHttpUrl($value)
 	return in_array($scheme, ['http', 'https'], true) ? $value : null;
 }
 
+function TPdlScreenshotUrl($screenshot)
+{
+	global $boarddir, $boardurl, $context;
+
+	$url = TPdlHttpUrl($screenshot);
+	if ($url !== null || empty($screenshot)) {
+		return $url ?? '';
+	}
+
+	$path = $context['TPortal']['image_upload_path'];
+	$file = strpos($screenshot, 'tp-images/') === 0 ? $screenshot : 'dlmanager/' . $screenshot;
+	return TPdlLocalFile($path, $file) !== null ? str_replace($boarddir, $boardurl, $path) . $file : '';
+}
+
 // TinyPortal DLmanager
 function TPortalDLManager()
 {
@@ -353,7 +367,7 @@ function TPortalDLManager()
 				$sfile = 'tp_dluploadpic';
 				$dim = '1800';
 				$dest = $context['TPortal']['image_upload_path'] . 'dlmanager';
-				$sname = TPuploadpicture($sfile, $dim, $dest, false, false);
+				$sname = TPuploadpicture($sfile, $dim, $dest, true, false);
 				$screenshot = $sname;
 				tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][0], $context['TPortal']['dl_screenshotsize'][1], $dest . '/thumb/' . $sname);
 				tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][2], $context['TPortal']['dl_screenshotsize'][3], $dest . '/listing/' . $sname);
@@ -1504,19 +1518,10 @@ function TPortalDLManager()
 					$rating_average = 0;
 				}
 
-				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl . '/' . $row['screenshot'] : '';
+				$bigshot = $decideshot = TPdlScreenshotUrl($row['screenshot']);
 				// does it exist?
 				if (file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot'])) {
 					$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/listing/' . $row['screenshot'];
-				}
-				else {
-					$decideshot = '';
-				}
-				if (file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/' . $row['screenshot']) && !empty($row['screenshot'])) {
-					$bigshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/' . $row['screenshot'];
-				}
-				else {
-					$bigshot = '';
 				}
 
 				if ($context['user']['is_logged']) {
@@ -2261,7 +2266,7 @@ function TPortalDLAdmin()
 	// add in BBC editor before we call in template so the headers are there
 	if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 		if ($context['TPortal']['dlsub'] == 'adminaddcat') {
-			$context['TPortal']['editor_id'] = 'newtp_dladmintext';
+			$context['TPortal']['editor_id'] = 'tp_newdladmintext';
 			TP_prebbcbox($context['TPortal']['editor_id']);
 		}
 		else {
@@ -2380,7 +2385,7 @@ function TPortalDLAdmin()
 		}
 
 		$link = $_POST['newdladmin_link'];
-		$text = $_POST['newtp_dladmintext'];
+		$text = $_POST['tp_newdladmintext'] ?? $_POST['newtp_dladmintext'] ?? '';
 		$parent = $_POST['newdladmin_parent'];
 		$icon = $boardurl . '/tp-downloads/icons/' . $_POST['newdladmin_icon'];
 		// special case, the access
@@ -2505,7 +2510,7 @@ function TPortalDLAdmin()
 			$sfile = 'tp_dluploadpic_edit';
 			$dim = '1800';
 			$dest = $context['TPortal']['image_upload_path'] . 'dlmanager';
-			$sname = TPuploadpicture($sfile, $dim, $dest, false, false);
+			$sname = TPuploadpicture($sfile, $dim, $dest, true, false);
 			$screenshot = $sname;
 
 			tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][0], $context['TPortal']['dl_screenshotsize'][1], $dest . '/thumb/' . $sname);
@@ -2527,19 +2532,19 @@ function TPortalDLAdmin()
 		}
 
 		if (isset($_POST['tp_dluploadpic_link']) && !$uploaded) {
-			$sid = $_POST['tp_dluploadpic_editID'];
-			$screenshot = TPdlHttpUrl($_POST['tp_dluploadpic_link']) ?? '';
-			$smcFunc['db_query'](
-				'',
-				'
-				UPDATE {db_prefix}tp_dlmanager
-				SET screenshot = {string:ss}
-				WHERE id = {int:item}',
-				['ss' => $screenshot, 'item' => $sid]
-			);
-		}
-		else {
-			$screenshot = '';
+			$link = $_POST['tp_dluploadpic_link'];
+			$screenshot = $link === '' ? '' : TPdlHttpUrl($link);
+			// An existing local screenshot is posted as a filename.
+			if ($screenshot !== null) {
+				$smcFunc['db_query'](
+					'',
+					'
+					UPDATE {db_prefix}tp_dlmanager
+					SET screenshot = {string:ss}
+					WHERE id = {int:item}',
+					['ss' => $screenshot, 'item' => $_POST['tp_dluploadpic_editID']]
+				);
+			}
 		}
 
 		// a new file uploaded?
@@ -2606,8 +2611,8 @@ function TPortalDLAdmin()
 					['name' => $value, 'item' => $id]
 				);
 			}
-			elseif (substr($what, 0, 14) == 'dladmin_icon') {
-				$id = substr($what, 14);
+			elseif (substr($what, 0, 12) === 'dladmin_icon') {
+				$id = substr($what, 12);
 				if ($value != '') {
 					$val = $boardurl . '/tp-downloads/icons/' . $value;
 					$smcFunc['db_query'](
@@ -3530,14 +3535,7 @@ function TPortalDLAdmin()
 				}
 				$smcFunc['db_free_result']($fetch);
 			}
-			if (!empty($row['screenshot'])) {
-				if (substr($row['screenshot'], 0, 10) == 'tp-images/') {
-					$sshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
-				}
-				else {
-					$sshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/listing/' . $row['screenshot'];
-				}
-			}
+			$sshot = TPdlScreenshotUrl($row['screenshot']);
 
 			$file_size = floor(max(0, (int) $row['filesize']) / 1024);
 			$localFile = TPdlLocalFile($context['TPortal']['download_upload_path'], $row['file']);
@@ -3774,6 +3772,7 @@ function TPortalDLUser($item)
 			'filesize' => (substr($row['file'], 14) != '- empty item -') ? floor(filesize($context['TPortal']['download_upload_path'] . $row['file']) / 1024) : '0',
 			'downloads' => $row['downloads'],
 			'sshot' => $row['screenshot'],
+			'screenshot_url' => TPdlScreenshotUrl($row['screenshot']),
 			'link' => $row['link'],
 			'href' => $scripturl . '?action=tportal;sa=download;dl=adminitem' . $row['id'],
 			'approved' => $row['category'] < 0 ? '0' : '1',

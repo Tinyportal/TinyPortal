@@ -642,10 +642,10 @@ function template_main()
 						<label for="tp_dluploadpic_link">' . $txt['tp-uploadnewpicexisting'] . '</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . $cat['screenshot'] . '" size="50">
+						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . htmlspecialchars($cat['screenshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" size="50">
 					</dd>
 					<dd>
-						<div class="padding-div">' , $cat['sshot'] != '' ? '<img style="max-width:95%;" src="' . $cat['sshot'] . '" alt="" />' : '' , '</div>
+						<div class="padding-div">' , $cat['sshot'] != '' ? '<img style="max-width:95%;" src="' . htmlspecialchars($cat['sshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="" />' : '' , '</div>
 					</dd>
 				</dl>
 				<dl class="settings">
