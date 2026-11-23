@@ -457,7 +457,7 @@ function template_submitarticle()
 							<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['icon_max_size'] ,' ' . $txt['tp-kb'] . '</span>
 						</dt>
 						<dd>
-						<input type="file" name="tp_article_illupload">
+						<input type="file" name="tp_article_illupload" ' . template_tp_image_upload_attributes() . '>
 					</dd>
 				</dl>
 				<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '" >';

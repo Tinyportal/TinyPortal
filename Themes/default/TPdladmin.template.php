@@ -604,7 +604,7 @@ function template_main()
 					<label for="tp_dluploadfile_edit">' . $txt['tp-uploadnewfileexisting'] . '</label>
 				</dt>
 				<dd>
-					<input type="file" id="tp_dluploadfile_edit" name="tp_dluploadfile_edit" value="">
+					<input type="file" id="tp_dluploadfile_edit" name="tp_dluploadfile_edit" accept="' . $context['TPortal']['download_upload_accept'] . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-secuploadtypenotallowed'], ENT_QUOTES) . '">
 					<input type="hidden" name="tp_dluploadfile_editID" value="' . $cat['id'] . '"><br>
 				</dd>
 			</dl>
@@ -653,7 +653,7 @@ function template_main()
 						<label for="tp_dluploadpic_edit">' . $txt['tp-uploadnewpic'] . '</label>
 					</dt>
 					<dd>
-						<input type="file" id="tp_dluploadpic_edit" name="tp_dluploadpic_edit" value="">
+						<input type="file" id="tp_dluploadpic_edit" name="tp_dluploadpic_edit" ' . template_tp_image_upload_attributes() . '>
 						<input type="hidden" name="tp_dluploadpic_editID" value="' . $cat['id'] . '"><br>
 					</dd>
 				</dl>

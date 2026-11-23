@@ -161,6 +161,7 @@ function TPortal_init()
 
 	// Load the stylesheet stuff
 	tpLoadCSS();
+	$context['html_headers'] .= '<script defer src="' . $settings['default_theme_url'] . '/scripts/tinyportal/TPUpload.js?' . TPVERSION . '"></script>';
 
 	// if we are in permissions admin section, load all permissions
 	if ((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions')) {

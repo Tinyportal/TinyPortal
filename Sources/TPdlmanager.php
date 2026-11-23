@@ -145,6 +145,10 @@ function TPdlmanager_init()
 	$context['can_tp_dlupload'] = allowedTo('tp_dlupload');
 
 	require_once $sourcedir . '/TPcommon.php';
+	$context['TPortal']['download_upload_accept'] = implode(',', array_map(
+		static function ($extension) { return '.' . $extension; },
+		TPdownloadUploadExtensions($context['TPortal']['dl_allowed_types'] ?? '')
+	));
 	// get subaction
 	if (isset($context['TPortal']['dlsub'])) {
 		// a switch to make it clear what is "forum" and not
@@ -298,14 +302,7 @@ function TPortalDLManager()
 
 		$icon = !empty($_POST['tp_dluploadicon']) ? $boardurl . '/tp-downloads/icons/' . $_POST['tp_dluploadicon'] : '';
 
-		if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
-			// process the file
-			$filename = $_FILES['tp-dluploadfile']['name'];
-			$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$name = strtr($name, ['Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u']);
-			$name = preg_replace(['/\s/', '/[^\w_\.\-]/'], ['_', ''], $name);
-		}
-		elseif (!empty($_POST['tp-dlexternalfile'])) {
+		if (!empty($_POST['tp-dlexternalfile'])) {
 			$name = TPdlHttpUrl($_POST['tp-dlexternalfile']);
 			if ($name === null) {
 				fatal_error($txt['tp-dluploadfailure'], false);
@@ -345,33 +342,9 @@ function TPortalDLManager()
 			$dlfilesize = filesize($context['TPortal']['download_upload_path'] . $name);
 		}
 
-		if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
-			// check the extension
-			$allowed = explode(',', $context['TPortal']['dl_allowed_types']);
-			$match = false;
-			foreach ($allowed as $extension => $value) {
-				$ext = '.' . $value;
-				$extlen = strlen($ext);
-				if (substr($name, strlen($name) - $extlen, $extlen) == $ext) {
-					$match = true;
-				}
-			}
-			if (!$match) {
-				$status = 'wrongtype';
-				unlink($_FILES['tp-dluploadfile']['tmp_name']);
-				$error = $txt['tp-dlexterror'] . ':<b> <br />' . $context['TPortal']['dl_allowed_types'] . '</b><br /><br />' . $txt['tp-dlerrorfile'] . ': <b>' . $name . '</b>';
-				fatal_error($error, false);
-			}
-		}
-
 		// ok, go ahead
 		if ($status == 'normal') {
 			if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
-				// check that no other file exists with same name
-				if (file_exists($context['TPortal']['download_upload_path'] . $name)) {
-					$name = time() . $name;
-				}
-
 				$name = TPsecureDownloadUpload('tp-dluploadfile', $context['TPortal']['download_upload_path'], $context['TPortal']['dl_max_upload_size'], $context['TPortal']['dl_allowed_types']);
 				$success = true;
 			}
@@ -2579,11 +2552,6 @@ function TPortalDLAdmin()
 
 		if ($shot) {
 			$sid = $_POST['tp_dluploadfile_editID'];
-			$shotname = $_FILES['tp_dluploadfile_edit']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, ['Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u']);
-			$sname = preg_replace(['/\s/', '/[^\w_\.\-]/'], ['_', ''], $sname);
-			$sname = time() . $sname;
 			// check the size
 			$dlfilesize = filesize($_FILES['tp_dluploadfile_edit']['tmp_name']);
 			if ($dlfilesize > (1024 * $context['TPortal']['dl_max_upload_size'])) {
@@ -2592,21 +2560,6 @@ function TPortalDLAdmin()
 				fatal_error($error, false);
 			}
 
-			// check the extension
-			$allowed = explode(',', $context['TPortal']['dl_allowed_types']);
-			$match = false;
-			foreach ($allowed as $extension => $value) {
-				$ext = '.' . $value;
-				$extlen = strlen($ext);
-				if (substr($sname, strlen($sname) - $extlen, $extlen) == $ext) {
-					$match = true;
-				}
-			}
-			if (!$match) {
-				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
-				$error = $txt['tp-dlexterror'] . ':<b> <br />' . $context['TPortal']['dl_allowed_types'] . '</b><br /><br />' . $txt['tp-dlerrorfile'] . ': <b>' . $sname . '</b>';
-				fatal_error($error, false);
-			}
 			$sname = TPsecureDownloadUpload('tp_dluploadfile_edit', $context['TPortal']['download_upload_path'], $context['TPortal']['dl_max_upload_size'], $context['TPortal']['dl_allowed_types']);
 			$success2 = true;
 			$smcFunc['db_query'](

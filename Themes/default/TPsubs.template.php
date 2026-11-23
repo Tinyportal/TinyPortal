@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -2820,4 +2820,126 @@ function template_updatelog()
 	global $context;
 
 	echo '<div class="tborder">' . $context['TPortal']['updatelog'] , '<hr /></div>';
+}
+
+function template_tp_image_upload_accept()
+{
+	$extensions = array_merge(...array_values(\TinyPortal\Upload::IMAGE_EXTENSIONS));
+	return '.' . implode(',.', $extensions);
+}
+
+function template_tp_image_upload_attributes()
+{
+	global $txt;
+
+	return 'accept="' . template_tp_image_upload_accept() . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-image-upload-type-error'], ENT_QUOTES) . '"';
+}
+
+function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use = 1, $showchoice = true)
+{
+	global $boardurl, $settings, $context, $txt, $scripturl;
+
+	echo '
+	<div style="padding-top: 10px;">
+		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="' . $textarea . '" id="' . $textarea . '">' . $body . '</textarea>';
+
+	if ($context['TPortal']['use_dragdrop']) {
+		echo '
+		<script type="text/javascript">
+			function tpImageUpload(file) {
+				var form = new FormData();
+				form.append("image", file);
+				return fetch("' . $scripturl . '?action=tportal;sa=uploadimage", {
+					method: "post",
+					credentials: "same-origin",
+					body: form,
+					dataType : "json",
+				}).then(function (res) {
+					return res.json();
+				}).then(function(result) {
+					if (result.success) {
+						return result.data;
+					}
+					throw "Upload error";
+				});
+			}
+
+			var dragdropOptions = {
+				isAllowed: function (file) {
+					var allowedMimeTypes = ' . json_encode(array_map('image_type_to_mime_type', array_keys(\TinyPortal\Upload::IMAGE_EXTENSIONS))) . ';
+					var allowed = file.name
+						? (!file.type || file.type === "application/x-moz-file" || allowedMimeTypes.includes(file.type))
+							&& tpUploadHasAllowedExtension(file.name, ' . json_encode(template_tp_image_upload_accept()) . ')
+						: allowedMimeTypes.includes(file.type);
+					if (!allowed) {
+						alert(' . json_encode($txt['tp-image-upload-type-error'], JSON_HEX_TAG | JSON_INVALID_UTF8_SUBSTITUTE) . ');
+					}
+					return allowed;
+				},
+			    handleFile: function (file, createPlaceholder) {
+					var placeholder = createPlaceholder();
+					tpImageUpload(file).then(function (url) {
+						// Replace the placeholder with the image HTML
+						placeholder.insert(\'<img src="\' + url + \'" alt="" />\');
+					}).catch(function () {
+						// Error so remove the placeholder
+						placeholder.cancel();
+						alert(' . json_encode($txt['tp-image-upload-failed'], JSON_HEX_TAG | JSON_INVALID_UTF8_SUBSTITUTE) . ');
+					});
+				}
+			};
+		</script>';
+	}
+
+	echo '
+		<script type="text/javascript">
+			var textarea = document.getElementById("' . $textarea . '");
+			sceditor.create(textarea, {';
+
+	if ($context['TPortal']['use_dragdrop']) {
+		echo '
+				// Enable the drag and drop plugin
+				plugins: "dragdrop",
+				// Set the drag and drop plugin options
+				dragdrop: dragdropOptions,';
+	}
+
+	echo '
+				toolbar: "bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright",
+				format: "xhtml",
+				locale: "' . $txt['lang_dictionary'] . '",
+				style: "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/themes/content/default.min.css",
+				emoticonsRoot: "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/"
+			});
+		</script>';
+
+	if ($upload && isset($context['TPortal']['editor_image_quicklist'])) {
+		echo '
+		<br><div class="title_bar">
+			<h3 class="titlebg">', $txt['tp-quicklist'], '</h3>
+		</div>
+		<div class="information smalltext">', $txt['tp-quicklist2'], '</div>
+		<div class="windowbg tp_quicklist">
+			<div class="tp_thumb">';
+
+		foreach ($context['TPortal']['editor_image_quicklist'] as $image) {
+			$filename = htmlspecialchars($image, ENT_QUOTES);
+			echo '
+				<img src="' . $boardurl . '/tp-images/' . $filename . '"  alt="' . $filename . '" title="' . $filename . '" />';
+		}
+
+		echo '
+			</div>
+		</div>
+		<dl class="tp_title settings">
+			<dt>
+				', $txt['tp-uploadfile'], '<br>
+				<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['image_max_size'] ,' ' . $txt['tp-kb'] . '</span>
+			</dt>
+			<dd>
+				<input type="file" name="' . $uploadname . '" ' . template_tp_image_upload_attributes() . ' data-tp-upload-auto-submit>
+			</dd>
+		</dl>
+	</div>';
+	}
 }

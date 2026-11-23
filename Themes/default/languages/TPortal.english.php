@@ -321,6 +321,8 @@ $txt['tp-toggle'] = 'Toggle panel';
 $txt['tp-ungroupedmembers'] = 'Ungrouped members';
 $txt['tp-unpublish'] = 'Remove promotion';
 $txt['tp-uploadfile'] = 'Upload a new image into the quick-list';
+$txt['tp-image-upload-type-error'] = 'Choose a JPEG, PNG, or GIF image.';
+$txt['tp-image-upload-failed'] = 'The image could not be uploaded.';
 
 $txt['tp-bytes'] = ' bytes';
 $txt['tp-kb'] = ' Kb';

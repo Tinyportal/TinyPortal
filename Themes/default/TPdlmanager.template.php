@@ -576,10 +576,10 @@ function template_main()
 			echo '
 					<dt>
 						<label for="tp-dluploadfile">' . $txt['tp-dluploadfile'] . '</label><br>
-						 (' . $context['TPortal']['dl_allowed_types'] . ')
+						 (' . $context['TPortal']['download_upload_accept'] . ')
 					</dt>
 					<dd>
-						<input type="file" id="tp-dluploadfile" name="tp-dluploadfile">
+						<input type="file" id="tp-dluploadfile" name="tp-dluploadfile" accept="' . $context['TPortal']['download_upload_accept'] . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-secuploadtypenotallowed'], ENT_QUOTES) . '">
 					</dd>
 					<dt>
 						<label for="tp-dlexternalfile">' . $txt['tp-dlexternalfile'] . '</label>
@@ -636,7 +636,7 @@ function template_main()
 						<label for="tp_dluploadpic">' . $txt['tp-dluploadpic'] . '</label>
 					</dt>
 					<dd>
-						<input type="file" id="tp_dluploadpic" name="tp_dluploadpic" size="60">
+						<input type="file" id="tp_dluploadpic" name="tp_dluploadpic" ' . template_tp_image_upload_attributes() . ' size="60">
 						<input type="hidden" name="tp-uploadcat" value="' . $context['TPortal']['dlitem'] . '">
 						<input type="hidden" name="tp-uploaduser" value="' . $context['user']['id'] . '">
 					</dd>
@@ -969,7 +969,7 @@ function template_main()
 					<dt>
 						' . $txt['tp-uploadnewfileexisting'] . ':</dt>
 					<dd>
-						<input type="file" name="tp_dluploadfile_edit" value="" style="width: 90%;">
+						<input type="file" name="tp_dluploadfile_edit" accept="' . $context['TPortal']['download_upload_accept'] . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-secuploadtypenotallowed'], ENT_QUOTES) . '" style="width: 90%;">
 						<input type="hidden" name="tp_dluploadfile_editID" value="' . $cat['id'] . '">
 					</dd>
 				</dl>
@@ -1010,7 +1010,7 @@ function template_main()
 						' . $txt['tp-uploadnewpic'] . '
 					</dt>
 					<dd>
-						<input type="file" name="tp_dluploadpic_edit" value="" style="width: 90%;">
+						<input type="file" name="tp_dluploadpic_edit" ' . template_tp_image_upload_attributes() . ' style="width: 90%;">
 						<input type="hidden" name="tp_dluploadpic_editID" value="' . $cat['id'] . '">
 					</dd>
 				</dl>

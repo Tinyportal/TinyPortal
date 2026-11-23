@@ -723,7 +723,24 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter = 
 
 function TPwysiwyg_setup()
 {
-	global $context, $settings, $txt;
+	global $context, $settings, $txt, $user_info;
+
+	$context['TPortal']['editor_image_quicklist'] = null;
+	if (allowedTo('tp_editownarticle')) {
+		$images = [];
+		$directory = $context['TPortal']['image_upload_path'] . 'thumbs';
+		$prefix = 'thumb_' . $user_info['id'] . 'uid';
+		if (is_dir($directory) && is_readable($directory) && ($handle = opendir($directory))) {
+			while (false !== ($file = readdir($handle))) {
+				if (strncmp($file, $prefix, strlen($prefix)) === 0) {
+					$images[] = substr($file, strlen('thumb_'));
+				}
+			}
+			closedir($handle);
+			sort($images, SORT_STRING);
+		}
+		$context['TPortal']['editor_image_quicklist'] = $images;
+	}
 
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/themes/default.min.css" />
@@ -851,121 +868,6 @@ function TPwysiwyg_setup()
 			<script type="text/javascript">
 				setTimeout(function() {if (typeof fetch === "function"){console.log("fetch polyfill loaded");}}, 300);
 			</script>';
-	}
-}
-
-function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use = 1, $showchoice = true)
-{
-	global $user_info, $boardurl, $settings, $boarddir, $context, $txt, $scripturl;
-
-	echo '
-	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="' . $textarea . '" id="' . $textarea . '">' . $body . '</textarea>';
-
-	if ($context['TPortal']['use_dragdrop']) {
-		echo '
-		<script type="text/javascript">
-			function tpImageUpload(file) {
-				var form = new FormData();
-				form.append("image", file);
-				return fetch("' . $scripturl . '?action=tportal;sa=uploadimage", {
-					method: "post",
-					credentials: "same-origin",
-					body: form,
-					dataType : "json",
-				}).then(function (res) {
-					return res.json();
-				}).then(function(result) {
-					if (result.success) {
-						return result.data;
-					}
-					throw "Upload error";
-				});
-			}
-
-			var dragdropOptions = {
-			    // The allowed mime types that can be dropped on the editor
-			    allowedTypes: ["image/gif", "image/jpeg", "image/png"],
-			    handleFile: function (file, createPlaceholder) {
-					var placeholder = createPlaceholder();
-					tpImageUpload(file).then(function (url) {
-						// Replace the placeholder with the image HTML
-						placeholder.insert(\'<img src="\' + url + \'" alt="" />\');
-					}).catch(function () {
-						// Error so remove the placeholder
-						placeholder.cancel();
-						alert("Problem uploading image.");
-					});
-				}
-			};
-		</script>';
-	}
-
-	echo '
-		<script type="text/javascript">
-			var textarea = document.getElementById("' . $textarea . '");
-			sceditor.create(textarea, {';
-
-	if ($context['TPortal']['use_dragdrop']) {
-		echo '
-				// Enable the drag and drop plugin
-				plugins: "dragdrop",
-				// Set the drag and drop plugin options
-				dragdrop: dragdropOptions,';
-	}
-
-	echo '
-				toolbar: "bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright",
-				format: "xhtml",
-				locale: "' . $txt['lang_dictionary'] . '",
-				style: "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/themes/content/default.min.css",
-				emoticonsRoot: "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/"
-			});
-		</script>';
-
-	// only if you can edit your own articles
-	if ($upload && allowedTo('tp_editownarticle')) {
-		// fetch all images you have uploaded
-		$imgfiles = [];
-		if ($handle = opendir($context['TPortal']['image_upload_path'] . 'thumbs')) {
-			while (false !== ($file = readdir($handle))) {
-				if ($file != '.' && $file != '..' && $file != '.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_' . $user_info['id'] . 'uid') {
-					$imgfiles[($context['TPortal']['image_upload_path'] . 'thumbs/' . $file)] = $file;
-				}
-			}
-			closedir($handle);
-			ksort($imgfiles);
-			$imgs = $imgfiles;
-		}
-
-		echo '
-		<br><div class="title_bar">
-			<h3 class="titlebg">', $txt['tp-quicklist'], '</h3>
-		</div>
-		<div class="information smalltext">', $txt['tp-quicklist2'], '</div>
-		<div class="windowbg tp_quicklist">
-			<div class="tp_thumb">';
-
-		if (isset($imgs)) {
-			foreach ($imgs as $im) {
-				echo '
-				<img src="' . $boardurl . '/tp-images/', substr($im, 6) , '"  alt="' . substr($im, 6) . '" title="' . substr($im, 6) . '" />';
-			}
-		}
-
-		echo '
-			</div>
-		</div>
-		<dl class="tp_title settings">
-			<dt>
-				', $txt['tp-uploadfile'], '<br>
-				<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['image_max_size'] ,' ' . $txt['tp-kb'] . '</span>
-			</dt>
-			<dd>
-				<input onchange="this.form.submit()" type="file" name="' . $uploadname . '">
-			</dd>
-		</dl>
-	</div>';
 	}
 }
 

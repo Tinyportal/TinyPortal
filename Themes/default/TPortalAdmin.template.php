@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -1583,7 +1583,7 @@ function template_articons()
 						<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['icon_max_size'] ,' ' . $txt['tp-kb'] . '</span>
 					</dt>
 					<dd>
-						<input type="file" name="tp_article_newillustration" />
+						<input type="file" name="tp_article_newillustration" ', template_tp_image_upload_attributes(), ' />
 					</dd>
 				</dl>
 				<input type="submit" class="button floatnone" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '"><br>

@@ -230,7 +230,16 @@ function upshrink()
  * Store a download under an unpredictable server-generated name.
  * Downloads must also be served as attachments, with execution disabled at the web server.
  */
-function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes)
+function TPdownloadUploadExtensions($configuredTypes)
+{
+    // Only inert file types; never accept script, HTML, SVG, or server configuration formats.
+    $safe = ['pdf', 'txt', 'csv', 'zip', 'jpg', 'jpeg', 'png', 'gif',
+        'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'rtf', 'mp3', 'mp4'];
+    $configured = array_map('trim', explode(',', strtolower((string) $configuredTypes)));
+    return array_values(array_intersect($safe, $configured));
+}
+
+function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes, bool $useHashedFilename = false)
 {
     global $txt, $context;
     if (!allowedTo('tp_dlupload') && !allowedTo('tp_dlmanager')) {
@@ -246,13 +255,9 @@ function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes)
     if ($size === false || $size < 1 || $size > max(1, (int) $maxKb) * 1024) {
         fatal_error($txt['tp-secuploadtoolarge'], false);
     }
-    $original = (string) ($_FILES[$field]['name'] ?? '');
+    $original = basename(str_replace('\\', '/', (string) ($_FILES[$field]['name'] ?? '')));
     $ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
-    // Only inert file types; never accept script, HTML, SVG, or server configuration formats.
-    $safe = ['pdf', 'txt', 'csv', 'zip', 'jpg', 'jpeg', 'png', 'gif',
-        'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'rtf', 'mp3', 'mp4'];
-    $configured = array_filter(array_map('trim', explode(',', strtolower((string) $configuredTypes))));
-    if (!$ext || !in_array($ext, $safe, true) || !in_array($ext, $configured, true)) {
+    if (!in_array($ext, TPdownloadUploadExtensions($configuredTypes), true)) {
         fatal_error($txt['tp-secuploadtypenotallowed'], false);
     }
     if (!is_dir($directory) || !is_writable($directory)) {
@@ -271,11 +276,34 @@ function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes)
             fatal_error($txt['tp-secuploadinvalidimage'], false);
         }
     }
-    $name = (int) $context['user']['id'] . 'uid' . bin2hex(random_bytes(16)) . '.' . $ext;
-    $destination = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $name;
-    if (file_exists($destination) || !move_uploaded_file($tmp, $destination)) {
-        fatal_error($txt['tp-secuploadnotstored'], false);
+    if (!$useHashedFilename) {
+        $stem = preg_replace('/[^a-z0-9_-]+/i', '_', pathinfo($original, PATHINFO_FILENAME));
+        $stem = trim(substr($stem, 0, 160), '_-');
+        if ($stem === '' || preg_match('/^(?:con|prn|aux|nul|com[0-9]|lpt[0-9])$/i', $stem)) {
+            $stem = 'download' . ($stem === '' ? '' : '_' . $stem);
+        }
     }
-    @chmod($destination, 0644);
-    return $name;
+
+    $directory = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR;
+    for ($attempt = 0; $attempt < 5; $attempt++) {
+        $filenameStem = $useHashedFilename ? bin2hex(random_bytes(16)) : $stem . ($attempt === 0 ? '' : '_' . ($attempt + 1));
+        $name = $filenameStem . '.' . $ext;
+        $destination = $directory . $name;
+
+        // Reserve the destination so concurrent uploads cannot overwrite it.
+        $reservation = @fopen($destination, 'xb');
+        if ($reservation === false) {
+            continue;
+        }
+        fclose($reservation);
+
+        if (!move_uploaded_file($tmp, $destination)) {
+            @unlink($destination);
+            break;
+        }
+
+        @chmod($destination, 0644);
+        return $name;
+    }
+    fatal_error($txt['tp-secuploadnotstored'], false);
 }

@@ -23,6 +23,12 @@ if (!defined('SMF')) {
 
 class Upload
 {
+	public const IMAGE_EXTENSIONS = [
+		IMAGETYPE_JPEG => ['jpg', 'jpeg', 'jpe'],
+		IMAGETYPE_PNG => ['png'],
+		IMAGETYPE_GIF => ['gif'],
+	];
+
 	private static $_instance = null;
 	private $allowed_mime_types = [];
 	private $errors = [];
@@ -255,13 +261,7 @@ class Upload
 			return false;
 		}
 
-		$formats = [
-			IMAGETYPE_JPEG => 'jpg',
-			IMAGETYPE_PNG => 'png',
-			IMAGETYPE_GIF => 'gif',
-		];
-
-		if (!isset($formats[$image_info[2]])) {
+		if (!isset(self::IMAGE_EXTENSIONS[$image_info[2]])) {
 			$this->set_error(104);
 			return false;
 		}
@@ -329,7 +329,7 @@ class Upload
 				else {
 					$filenameStem = ($prefix === '' ? '' : '_') . $stem . ($attempt === 0 ? '' : '_' . ($attempt + 1));
 				}
-				$filename = $prefix . $filenameStem . '.' . $formats[$image_info[2]];
+				$filename = $prefix . $filenameStem . '.' . self::IMAGE_EXTENSIONS[$image_info[2]][0];
 				$destination = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $filename;
 				$handle = @fopen($destination, 'x+b');
 
