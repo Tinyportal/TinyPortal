@@ -1,7 +1,7 @@
 	<?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -104,7 +104,7 @@ function template_main()
 						<b>' . $txt['tp-dlintrotext'] . '</b>
 					</div>';
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true, 'qup_tp_dl_introtext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+			TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);
@@ -243,6 +243,7 @@ function template_main()
 				</dl>
 				<input type="hidden" name="dlsettings" value="1" />
 				<input type="submit" class="button" name="dlsend" value="' . $txt['tp-submit'] . '">
+				<input type="hidden" name="', htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8'), '" value="', htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8'), '">
 			</div>
 		</div>';
 	}
@@ -557,13 +558,13 @@ function template_main()
 					<div><b>' . $txt['tp-dluploadtext'] . '</b></div>';
 
 				if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-					TPwysiwyg('dladmin_text' . $cat['id'], $cat['description'], true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+					TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 				}
 				elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 					TP_bbcbox($context['TPortal']['editor_id']);
 				}
 				else {
-					echo '<textarea name="dladmin_text' . $cat['id'] . '" id="tp_article_body">' . $cat['description'] . '</textarea>';
+					echo '<textarea name="tp_dladmintext' . $cat['id'] . '" id="tp_article_body">' . $cat['description'] . '</textarea>';
 				}
 				echo '
 				</div>
@@ -603,7 +604,7 @@ function template_main()
 					<label for="tp_dluploadfile_edit">' . $txt['tp-uploadnewfileexisting'] . '</label>
 				</dt>
 				<dd>
-					<input type="file" id="tp_dluploadfile_edit" name="tp_dluploadfile_edit" value="">
+					<input type="file" id="tp_dluploadfile_edit" name="tp_dluploadfile_edit" accept="' . $context['TPortal']['download_upload_accept'] . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-secuploadtypenotallowed'], ENT_QUOTES) . '">
 					<input type="hidden" name="tp_dluploadfile_editID" value="' . $cat['id'] . '"><br>
 				</dd>
 			</dl>
@@ -641,10 +642,10 @@ function template_main()
 						<label for="tp_dluploadpic_link">' . $txt['tp-uploadnewpicexisting'] . '</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . $cat['screenshot'] . '" size="50">
+						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . htmlspecialchars($cat['screenshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" size="50">
 					</dd>
 					<dd>
-						<div class="padding-div">' , $cat['sshot'] != '' ? '<img style="max-width:95%;" src="' . $cat['sshot'] . '" alt="" />' : '' , '</div>
+						<div class="padding-div">' , $cat['sshot'] != '' ? '<img style="max-width:95%;" src="' . htmlspecialchars($cat['sshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="" />' : '' , '</div>
 					</dd>
 				</dl>
 				<dl class="settings">
@@ -652,7 +653,7 @@ function template_main()
 						<label for="tp_dluploadpic_edit">' . $txt['tp-uploadnewpic'] . '</label>
 					</dt>
 					<dd>
-						<input type="file" id="tp_dluploadpic_edit" name="tp_dluploadpic_edit" value="">
+						<input type="file" id="tp_dluploadpic_edit" name="tp_dluploadpic_edit" ' . template_tp_image_upload_attributes() . '>
 						<input type="hidden" name="tp_dluploadpic_editID" value="' . $cat['id'] . '"><br>
 					</dd>
 				</dl>
@@ -974,13 +975,13 @@ function template_main()
 				<div class="padding-div"><b>' . $txt['tp-dluploadtext'] . ':</b><br>';
 
 			if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-				TPwysiwyg('dladmin_text' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 				TP_bbcbox($context['TPortal']['editor_id']);
 			}
 			else {
-				echo '<textarea name="dladmin_text' . $cat['id'] . '" id="tp_article_body">' . html_entity_decode($cat['description'], ENT_QUOTES) . '</textarea>';
+				echo '<textarea name="tp_dladmintext' . $cat['id'] . '" id="tp_article_body">' . html_entity_decode($cat['description'], ENT_QUOTES) . '</textarea>';
 			}
 
 			echo '
@@ -1087,13 +1088,13 @@ function template_main()
 				<b>' . $txt['tp-dluploadtext'] . ':</b><br>';
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('newdladmin_text', '', true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+			TPwysiwyg('tp_newdladmintext', '', true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);
 		}
 		else {
-			echo '<textarea name="newdladmin_text" id="tp_article_body"></textarea>';
+			echo '<textarea name="tp_newdladmintext" id="tp_article_body"></textarea>';
 		}
 		echo '
 			<hr>
@@ -1135,6 +1136,8 @@ function template_main()
 		</div>';
 	}
 	echo '
+		<input type="hidden" name="tp_dladmin_return" value="', htmlspecialchars($context['TPortal']['dlsub'], ENT_QUOTES, 'UTF-8'), '">
+		<input type="hidden" name="', htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8'), '" value="', htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8'), '">
 		</form>
 	</div>';
 }

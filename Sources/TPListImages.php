@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.1
+ * @version 3.0.5
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -44,7 +44,17 @@ function template_tp_list_images_admin()
 	}
 
 	if (array_key_exists('remove', $_GET)) {
-		TPRemoveImage($_POST['image']);
+		if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+			fatal_lang_error('no_access', false);
+		}
+
+		checkSession('post');
+		$image = $_POST['image'] ?? null;
+		if (!is_string($image) || $image === '') {
+			fatal_lang_error('no_access', false);
+		}
+
+		TPRemoveImage($image);
 	}
 
 	$ret = '';
@@ -128,7 +138,7 @@ function TPListImageAdmin($user_id = 0)
 
 			$html .= '<form class="tborder" accept-charset="' . $context['character_set'] . '" name="TPadmin" action="' . $scripturl . '?action=tpadmin;sa=listimage;remove"  method="post">
 					<div>
-						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
+						<input type="hidden" name="' . htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8') . '" value="' . htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8') . '" />
 						<input type="hidden" name="id_member" value="' . $user_id . '" />
 						<input type="hidden" name="image" value="' . $image . '" />
 						<div class="tp_liimtile"><img src="' . $imageUrl . '" alt="' . $image . '" title="' . $image . '" /><br>' . $image . '</div>

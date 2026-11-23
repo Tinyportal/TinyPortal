@@ -1,6 +1,6 @@
 <?php
 
-// Version: 3.0.4; TPortalAdmin
+// Version: 3.0.5; TPortalAdmin
 
 // Menu
 $txt['tp-adminheader1'] = 'Settings & frontpage';
@@ -680,3 +680,5 @@ $txt['tp-menus'] = 'Sections';
 $txt['tp-name'] = 'Name';
 $txt['tp-shortname'] = 'Short name';
 $txt['tp-shortnamedesc'] = 'Here you can create \'meaningful URLs\': specify a short text to be used in the page URL display. Without a value the URL will be displayed as: .../index.php?cat=20. if a value is added (for example \'books\') the url will show as: .../index.php?cat=books';
+
+$txt['tp_article_import_hint'] = 'Use the name of an HTML file in tp-files/tp-articles/imported.';

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -73,7 +73,7 @@ function template_main()
 				<div class="tp_dlinfo">';
 			if (!empty($context['TPortal']['featured']['sshot'])) {
 				echo '
-					<div class="tp_dlfeatureshot windowbg" style="width: ' . $context['TPortal']['dl_screenshotsize'][2] . 'px;"><img alt="" src="' . $context['TPortal']['featured']['sshot'] . '" /></div>';
+					<div class="tp_dlfeatureshot windowbg" style="width: ' . $context['TPortal']['dl_screenshotsize'][2] . 'px;"><img alt="" src="' . htmlspecialchars($context['TPortal']['featured']['sshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" /></div>';
 			}
 			echo '				
 					<p>' . $context['TPortal']['featured']['description'] , '</p>
@@ -115,7 +115,7 @@ function template_main()
 						<div class="tp_flexrow">';
 						if (!empty($last['screenshot'])) {
 							echo '
-							<div class="tp_dlthumb"><img src="' . $last['screenshot'] . '" alt="' . $last['name'] . '" ></div>';
+							<div class="tp_dlthumb"><img src="' . htmlspecialchars($last['screenshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="' . $last['name'] . '" ></div>';
 						}
 						elseif (!empty($last['icon']) && strpos($last['icon'], 'blank.gif') == false) {
 							echo '
@@ -163,7 +163,7 @@ function template_main()
 						<div class="tp_flexrow">';
 						if (!empty($wost['screenshot'])) {
 							echo '
-							<div class="tp_dlthumb"><img src="' . $wost['screenshot'] . '" alt="' . $wost['name'] . '"  ></div>';
+							<div class="tp_dlthumb"><img src="' . htmlspecialchars($wost['screenshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="' . $wost['name'] . '"  ></div>';
 						}
 						elseif (!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false) {
 							echo '
@@ -209,7 +209,7 @@ function template_main()
 						<div class="tp_flexrow">';
 						if (!empty($wost['screenshot'])) {
 							echo '
-							<div class="tp_dlthumb"><img src="' . $wost['screenshot'] . '" alt="' . $wost['name'] . '" ></div>';
+							<div class="tp_dlthumb"><img src="' . htmlspecialchars($wost['screenshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="' . $wost['name'] . '" ></div>';
 						}
 						elseif (!empty($wost['icon']) && strpos($wost['icon'], 'blank.gif') == false) {
 							echo '
@@ -496,7 +496,7 @@ function template_main()
 			echo '
 			<div class="tp_dlpost">
 				<strong>' . $txt['tp-dlscreenshot'] . '</strong>
-				' . (!empty($dlitem['sshot']) ? '<div class="windowbg"><img src="' . $dlitem['bigshot'] . '" alt="' . $dlitem['name'] . '" /></div>' : '<div class="errorbox">' . $txt['tp-dlfileerror'] . '. ' . $txt['tp-dlerrorfile'] . ': ' . $dlitem['screenshot'] . '</div>') . '
+				' . (!empty($dlitem['sshot']) ? '<div class="windowbg"><img src="' . htmlspecialchars($dlitem['bigshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="' . $dlitem['name'] . '" /></div>' : '<div class="errorbox">' . $txt['tp-dlfileerror'] . '. ' . $txt['tp-dlerrorfile'] . ': ' . htmlspecialchars($dlitem['screenshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '</div>') . '
 			</div>';
 		}
 		echo '
@@ -505,6 +505,10 @@ function template_main()
 	}
 	//Upload page
 	elseif ($context['TPortal']['dlaction'] == 'upload') {
+		$ftpFile = $_GET['ftp'] ?? '';
+		$ftpFile = is_string($ftpFile) ? $ftpFile : '';
+		$ftpValue = htmlspecialchars($ftpFile, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
 		// check that you can upload
 		if (allowedTo('tp_dlmanager') || allowedTo('tp_dlupload')) {
 			$show = true;
@@ -532,7 +536,7 @@ function template_main()
 							<label for="tp-dluploadtitle"><b>' . $txt['tp-dluploadtitle'] . '</b></label>
 						</dt>
 						<dd>
-							<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="' . (!empty($_GET['ftp']) ? $_GET['ftp'] : '') . '" required>
+							<input type="text" id="tp-dluploadtitle" name="tp-dluploadtitle" value="' . $ftpValue . '" required>
 						</dd>
 						<dt>
 							<label for="tp-dluploadcat"><b>' . $txt['tp-dluploadcategory'] . '</b></label>
@@ -567,15 +571,15 @@ function template_main()
 				</div>
 				<hr>
 				<dl class="settings">';
-		if ((allowedTo('tp_dlmanager') && empty($_GET['ftp'])) || !allowedTo('tp_dlmanager')) {
+		if ((allowedTo('tp_dlmanager') && empty($ftpFile)) || !allowedTo('tp_dlmanager')) {
 			// file upload or external url
 			echo '
 					<dt>
 						<label for="tp-dluploadfile">' . $txt['tp-dluploadfile'] . '</label><br>
-						 (' . $context['TPortal']['dl_allowed_types'] . ')
+						 (' . $context['TPortal']['download_upload_accept'] . ')
 					</dt>
 					<dd>
-						<input type="file" id="tp-dluploadfile" name="tp-dluploadfile">
+						<input type="file" id="tp-dluploadfile" name="tp-dluploadfile" accept="' . $context['TPortal']['download_upload_accept'] . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-secuploadtypenotallowed'], ENT_QUOTES) . '">
 					</dd>
 					<dt>
 						<label for="tp-dlexternalfile">' . $txt['tp-dlexternalfile'] . '</label>
@@ -590,15 +594,15 @@ function template_main()
 						<input type="checkbox" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><br>
 					</dd>';
 		}
-		elseif (allowedTo('tp_dlmanager') && !empty($_GET['ftp'])) {
+		elseif (allowedTo('tp_dlmanager') && !empty($ftpFile)) {
 			// link to ftp file
 			echo '
 					<dt>
 						' . $txt['tp-dlmakeitem2'] . '
 					</dt>
 					<dd>
-						<input type="hidden" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><input type="hidden" name="tp-dlupload_ftpstray" value="' . $_GET['ftp'] . '">
-						<input type="text" id="tp-dluploadfile" name="tp-dluploadfile" value="' . $_GET['ftp'] . '" readonly>
+						<input type="hidden" id="tp-dluploadnot" name="tp-dluploadnot" value="ON"><input type="hidden" name="tp-dlupload_ftpstray" value="' . $ftpValue . '">
+						<input type="text" id="tp-dluploadfile" name="tp-dluploadfile" value="' . $ftpValue . '" readonly>
 					</dd>';
 		}
 		echo '	</dl>';
@@ -610,7 +614,7 @@ function template_main()
 					</dt>
 					<dd>
 						<select size="1" name="tp_dluploadicon" id="tp_dluploadicon" onchange="dlcheck(this.value)">';
-		if (!empty($_GET['ftp'])) {
+		if (!empty($ftpFile)) {
 			echo '
 						<option value="ftp.png" selected>ftp.png</option>';
 		}
@@ -632,13 +636,13 @@ function template_main()
 						<label for="tp_dluploadpic">' . $txt['tp-dluploadpic'] . '</label>
 					</dt>
 					<dd>
-						<input type="file" id="tp_dluploadpic" name="tp_dluploadpic" size="60">
+						<input type="file" id="tp_dluploadpic" name="tp_dluploadpic" ' . template_tp_image_upload_attributes() . ' size="60">
 						<input type="hidden" name="tp-uploadcat" value="' . $context['TPortal']['dlitem'] . '">
 						<input type="hidden" name="tp-uploaduser" value="' . $context['user']['id'] . '">
 					</dd>
 				</dl>';
 		// can you attach it?
-		if (!empty($context['TPortal']['attachitems']) && empty($_GET['ftp'])) {
+		if (!empty($context['TPortal']['attachitems']) && empty($ftpFile)) {
 			echo '
 				<hr>
 				<dl class="settings">
@@ -730,6 +734,7 @@ function template_main()
 			</div>
 		</div>
 		<div style="clear:both;"></div>
+		<input type="hidden" name="', htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8'), '" value="', htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8'), '">
 		</form>
 	<script type="text/javascript">
 		function dlcheck(icon)
@@ -934,14 +939,14 @@ function template_main()
 				<div><b>' . $txt['tp-dluploadtext'] . '</b><br><br></div>';
 
 			if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-				TPwysiwyg('dladmin_text' . $cat['id'], $cat['description'], true, 'qup_dladmin_text', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_dladmintext' . $cat['id'], $cat['description'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 				TP_bbcbox($context['TPortal']['editor_id']);
 			}
 			else {
 				echo '
-					<textarea name="dladmin_text' . $cat['id'] . '" id="tp_article_body" wrap="auto">' . $cat['description'] . '</textarea>';
+					<textarea name="tp_dladmintext' . $cat['id'] . '" id="tp_article_body" wrap="auto">' . $cat['description'] . '</textarea>';
 			}
 
 			echo '
@@ -964,7 +969,7 @@ function template_main()
 					<dt>
 						' . $txt['tp-uploadnewfileexisting'] . ':</dt>
 					<dd>
-						<input type="file" name="tp_dluploadfile_edit" value="" style="width: 90%;">
+						<input type="file" name="tp_dluploadfile_edit" accept="' . $context['TPortal']['download_upload_accept'] . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-secuploadtypenotallowed'], ENT_QUOTES) . '" style="width: 90%;">
 						<input type="hidden" name="tp_dluploadfile_editID" value="' . $cat['id'] . '">
 					</dd>
 				</dl>
@@ -998,14 +1003,14 @@ function template_main()
 						<label for="tp_dluploadpic_link">' . $txt['tp-uploadnewpicexisting'] . '</label>
 					</dt>
 					<dd>
-						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . $cat['sshot'] . '" size="60"><br>
-						<div style="overflow: auto;">' , $cat['sshot'] != '' ? '<img src="' . (substr($cat['sshot'], 0, 4) == 'http' ? $cat['sshot'] : $boardurl . '/' . $cat['sshot']) . '" alt="" />' : '' , '</div>
+						<input type="text" id="tp_dluploadpic_link" name="tp_dluploadpic_link" value="' . htmlspecialchars($cat['sshot'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" size="60"><br>
+						<div style="overflow: auto;">' , $cat['screenshot_url'] !== '' ? '<img src="' . htmlspecialchars($cat['screenshot_url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '" alt="" />' : '' , '</div>
 					</dd>
 					<dt>
 						' . $txt['tp-uploadnewpic'] . '
 					</dt>
 					<dd>
-						<input type="file" name="tp_dluploadpic_edit" value="" style="width: 90%;">
+						<input type="file" name="tp_dluploadpic_edit" ' . template_tp_image_upload_attributes() . ' style="width: 90%;">
 						<input type="hidden" name="tp_dluploadpic_editID" value="' . $cat['id'] . '">
 					</dd>
 				</dl>
@@ -1063,6 +1068,7 @@ function template_main()
 			<div class="padding-div"><input type="submit" class="button button_submit" name="dlsend" value="' . $txt['tp-submit'] . '">
 				<input type="hidden" name="sc" value="' . $context['session_id'] . '">
 				<input type="hidden" name="dl_useredit" value="' . $cat['id'] . '">
+				<input type="hidden" name="', htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8'), '" value="', htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8'), '">
 			</div>
 		</div>
 		</form>';

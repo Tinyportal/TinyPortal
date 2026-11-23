@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -116,27 +116,38 @@ function articleShowComments()
 {
 	global $smcFunc, $scripturl, $user_info, $txt, $context;
 
-	if (isset($context['TPortal']['mystart'])) {
-		$tpstart = is_numeric($context['TPortal']['mystart']) ? $context['TPortal']['mystart'] : 0;
-	}
+	require_once SOURCEDIR . '/TPSubs.php';
 
-	$mylast = 0;
-	$mylast = $user_info['last_login'];
+	$tpstart = max(0, (int) ($context['TPortal']['mystart'] ?? 0));
+	$mylast = (int) ($user_info['last_login'] ?? 0);
 	$comments_per_page = 15;
-	$showall = false;
-	if (isset($_GET['showall'])) {
-		$showall = true;
+	$showall = isset($_GET['showall']);
+	$filter = '
+        WHERE var.item_type = {string:type}
+        AND art.category > 0
+        AND art.category IN ({array_int:categories})
+        AND art.approved = 1
+        AND art.off = 0
+        AND (art.pub_start = 0 OR art.pub_start < {int:now})
+        AND (art.pub_end = 0 OR art.pub_end > {int:now})';
+	$params = [
+		'type' => 'article_comment',
+		'categories' => tp_searchable_article_categories(),
+		'now' => forum_time(),
+	];
+	if (!$showall || $mylast === 0) {
+		$filter .= ' AND var.datetime > {int:last}';
+		$params['last'] = $mylast;
 	}
 
 	$request = $smcFunc['db_query'](
 		'',
 		'
-        SELECT COUNT(var.subject)
-        FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
-        WHERE var.item_type = {string:type}
-        ' . ((!$showall || $mylast == 0) ? 'AND var.datetime > ' . $mylast : '') . '
-        AND art.id = var.item_id',
-		['type' => 'article_comment']
+        SELECT COUNT(var.id)
+        FROM {db_prefix}tp_comments AS var
+        INNER JOIN {db_prefix}tp_articles AS art ON (art.id = var.item_id)
+        ' . $filter,
+		$params
 	);
 	$check = $smcFunc['db_fetch_row']($request);
 	$smcFunc['db_free_result']($request);
@@ -144,21 +155,17 @@ function articleShowComments()
 	$request = $smcFunc['db_query'](
 		'',
 		'
-        SELECT art.subject AS pagename, memb.real_name AS author, art.author_id AS author_id, var.subject, var.comment, var.member_id,
+        SELECT art.subject AS pagename, memb.real_name AS author, art.author_id, var.subject, var.comment, var.member_id,
         var.item_id, var.datetime, mem.real_name AS real_name,
         ' . ($user_info['is_guest'] ? '1' : '(COALESCE(log.item, 0) >= var.datetime)') . ' AS isRead
-        FROM ({db_prefix}tp_comments AS var, {db_prefix}tp_articles AS art)
+        FROM {db_prefix}tp_comments AS var
+        INNER JOIN {db_prefix}tp_articles AS art ON (art.id = var.item_id)
         LEFT JOIN {db_prefix}members AS memb ON (art.author_id = memb.id_member)
         LEFT JOIN {db_prefix}members AS mem ON (var.member_id = mem.id_member)
-        LEFT JOIN {db_prefix}tp_data AS log ON (log.value = art.id AND log.type = 1 AND log.id_member = ' . $context['user']['id'] . ')
-        WHERE var.item_type = {string:type}
-        AND art.id = var.item_id
-        ' . ((!$showall || $mylast == 0) ? 'AND var.datetime > {int:last}' : '') . '
+        LEFT JOIN {db_prefix}tp_data AS log ON (log.value = art.id AND log.type = 1 AND log.id_member = {int:viewer})
+        ' . $filter . '
         ORDER BY var.datetime DESC LIMIT {int:limit} OFFSET {int:start}',
-		['type' => 'article_comment',
-			'last' => $mylast, 
-			'start' => $tpstart,
-			'limit' => $comments_per_page]
+		$params + ['viewer' => (int) $context['user']['id'], 'limit' => $comments_per_page, 'start' => $tpstart]
 	);
 
 	$context['TPortal']['artcomments']['new'] = [];
@@ -327,10 +334,67 @@ function articleEdit()
 	global $context, $smcFunc;
 
 	checkSession('post');
-	isAllowedTo(['tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml']);
+	isAllowedTo(['admin_forum', 'tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml']);
+
+	$canManagePhp = allowedTo('admin_forum');
+	$canManageArticles = $canManagePhp || allowedTo('tp_articles');
+	$articleId = $_POST['article'] ?? $_GET['article'] ?? '';
+	$where = 0;
+	$storedType = null;
+
+	if ($articleId !== '') {
+		if ((!is_string($articleId) && !is_int($articleId)) || !ctype_digit((string) $articleId) || (int) $articleId < 1) {
+			fatal_lang_error('no_access', false);
+		}
+
+		$where = (int) $articleId;
+		$request = $smcFunc['db_query'](
+			'',
+			'SELECT author_id, type FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
+			['article_id' => $where]
+		);
+		$existing = $smcFunc['db_fetch_assoc']($request);
+		$smcFunc['db_free_result']($request);
+		if (!$existing) {
+			fatal_lang_error('no_access', false);
+		}
+
+		$storedType = strtolower(trim((string) $existing['type'])) ?: 'html';
+		if (in_array($storedType, ['php', 'import'], true) && !$canManagePhp) {
+			fatal_lang_error('no_access', false);
+		}
+		if (!$canManageArticles
+			&& (!allowedTo('tp_editownarticle') || (int) $existing['author_id'] !== (int) $context['user']['id'])) {
+			fatal_lang_error('no_access', false);
+		}
+	}
+
+	$articleType = array_key_exists('tp_article_type', $_POST)
+		? $_POST['tp_article_type']
+		: ($storedType ?? (allowedTo('tp_submithtml') ? 'html' : 'bbc'));
+	if (!in_array($articleType, ['html', 'bbc', 'php', 'import'], true)) {
+		loadLanguage('TParticle');
+		fatal_lang_error('tp_article_type_invalid', false);
+	}
+	if (in_array($articleType, ['php', 'import'], true) && !$canManagePhp) {
+		fatal_lang_error('no_access', false);
+	}
+	if (!$canManageArticles && ($where === 0 || $articleType !== $storedType)) {
+		isAllowedTo($articleType === 'bbc' ? 'tp_submitbbc' : 'tp_submithtml');
+	}
 
 	$options = [];
-	$article_data = [];
+	$article_data = ['type' => $articleType, 'fileimport' => ''];
+	if ($articleType === 'import') {
+		require_once SOURCEDIR . '/TPSubs.php';
+
+		$importName = $_POST['tp_article_fileimport'] ?? '';
+		if (tp_external_article_path($importName) === null) {
+			loadLanguage('TParticle');
+			fatal_lang_error('tp_article_import_invalid', false);
+		}
+		$article_data['fileimport'] = basename($importName);
+	}
 	if (allowedTo('tp_alwaysapproved')) {
 		$article_data['approved'] = 1;
 	} // No approval needed
@@ -346,6 +410,8 @@ function articleEdit()
 			}
 			else {
 				switch ($setting) {
+					case 'type':
+					case 'fileimport':
 					case 'body_mode':
 					case 'intro_mode':
 					case 'illupload':
@@ -358,7 +424,9 @@ function articleEdit()
 						$article_data['subject'] = $value;
 						break;
 					case 'authorid':
-						$article_data['author_id'] = $value;
+						if ($canManageArticles) {
+							$article_data['author_id'] = (int) $value;
+						}
 						break;
 					case 'idtheme':
 						$article_data['id_theme'] = $value;
@@ -441,7 +509,7 @@ function articleEdit()
 							}
 						}
 						// BBC we need to encode quotes
-						if (($_REQUEST['tp_article_type'] == 'bbc') && ($setting == 'body')) {
+						if ($articleType === 'bbc' && $setting === 'body') {
 							$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
 						}
 						$article_data[$setting] = $value;
@@ -489,22 +557,41 @@ function articleEdit()
 							$article_data['pub_end'] = $timestamp;
 						}
 						break;
-					default:
+					case 'approved':
+					case 'off':
+					case 'frontpage':
+					case 'sticky':
+					case 'locked':
+					case 'featured':
+					case 'headers':
+						if ($canManageArticles) {
+							$article_data[$setting] = $value;
+						}
+						break;
+					case 'useintro':
+					case 'subject':
+					case 'frame':
+					case 'parse':
+					case 'comments':
+					case 'topic':
+					case 'illustration':
 						$article_data[$setting] = $value;
 						break;
 				}
 			}
 		}
 	}
+	if ($where === 0 && !isset($article_data['author_id'])) {
+		$article_data['author_id'] = (int) $context['user']['id'];
+	}
 	$article_data['options'] = implode(',', $options);
 	// check if uploads are there
 	if (array_key_exists('tp_article_illupload', $_FILES) && file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
-		$name = TPuploadpicture('tp_article_illupload', '', $context['TPortal']['icon_max_size'], 'jpg,gif,png', 'tp-files/tp-articles/illustrations');
+		$name = TPuploadpicture('tp_article_illupload', $context['TPortal']['icon_max_size'], 'tp-files/tp-articles/illustrations', false, false);
 		tp_createthumb('tp-files/tp-articles/illustrations/' . $name, $context['TPortal']['icon_width'], $context['TPortal']['icon_height'], 'tp-files/tp-articles/illustrations/s_' . $name);
 		$article_data['illustration'] = $name;
 	}
 
-	$where = TPUtil::filter('article', 'request', 'string');
 	$tpArticle = TPArticle::getInstance();
 	if (empty($where)) {
 		// We are inserting
@@ -545,7 +632,7 @@ function articleEdit()
 	unset($tpArticle);
 	// check if uploaded picture
 	if (isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
-		$name = TPuploadpicture('qup_tp_article_body', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
+		$name = TPuploadpicture('qup_tp_article_body', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'], true, true);
 		tp_createthumb($context['TPortal']['image_upload_path'] . '/' . $name, 50, 50, $context['TPortal']['image_upload_path'] . '/thumbs/thumb_' . $name);
 	}
 	// if this was a new article
@@ -708,8 +795,13 @@ function articleUploadImage()
 {
 	global $context, $boarddir, $boardurl;
 
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		fatal_error('POST required.', false);
+	}
+	checkSession('post');
+	isAllowedTo(['tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml']);
 	require_once SOURCEDIR . '/TPcommon.php';
-	$name = TPuploadpicture('image', $context['user']['id'] . 'uid', $context['TPortal']['image_max_size'], null, $context['TPortal']['image_upload_path']);
+	$name = TPuploadpicture('image', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'],true, true);
 	tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 	$response['data'] = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $name;
 	$response['success'] = 'true';

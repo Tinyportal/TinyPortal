@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -50,6 +50,14 @@ function TPortal()
 		fatal_error($txt['tp-no-sa-list'], false);
 	}
 
+	// Defense in depth for the image upload endpoint.
+	if ($subAction === 'uploadimage') {
+		if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+			fatal_error('POST required.', false);
+		}
+		checkSession('post');
+		isAllowedTo(['tp_settings', 'tp_articles', 'tp_editownarticle', 'tp_submitbbc', 'tp_submithtml', 'tp_can_list_images', ]);
+	}
 	$context['TPortal']['subaction'] = $subAction;
 	// If it exists in our new subactions array load it
 	if (!empty($subAction) && array_key_exists($subAction, $subActions)) {
@@ -153,6 +161,7 @@ function TPortal_init()
 
 	// Load the stylesheet stuff
 	tpLoadCSS();
+	$context['html_headers'] .= '<script defer src="' . $settings['default_theme_url'] . '/scripts/tinyportal/TPUpload.js?' . TPVERSION . '"></script>';
 
 	// if we are in permissions admin section, load all permissions
 	if ((isset($_GET['action']) && $_GET['action'] == 'permissions') || (isset($_GET['area']) && $_GET['area'] == 'permissions')) {
@@ -655,14 +664,11 @@ function doTPpage()
 					if ($article['type'] == 'php') {
 						$context['TPortal']['printbody'] = eval($pwhat);
 					}
-					elseif ($article['type'] == 'import') {
-						if (!file_exists($boarddir . '/' . $article['fileimport'])) {
-							echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-						}
-						else {
-							include $article['fileimport'];
-						}
-						$context['TPortal']['printbody'] = '';
+					elseif ($article['type'] === 'import') {
+						$html = tp_read_external_article($article['fileimport'] ?? '');
+						$context['TPortal']['printbody'] = $html === null
+							? '<em>' . $txt['tp-cannotfetchfile'] . '</em>'
+							: '<h2>' . htmlspecialchars($article['subject'], ENT_QUOTES, 'UTF-8') . '</h2>' . $html;
 					}
 					elseif ($article['type'] == 'bbc') {
 						$context['TPortal']['printbody'] = parse_bbc($what);

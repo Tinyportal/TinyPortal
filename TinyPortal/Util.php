@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - https://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -173,83 +173,125 @@ class Util
 		return self::filter($checkbox, 'post', 'string');
 	}
 
-	public static function shortenString(&$string, $length)
+	public static function shortenString(&$string, $length, $renderedHtml = false)
 	{
-		$shorten = false;
+		if ((int) $length <= 0) {
+			return false;
+		}
 
-		if (!empty($length)) {
-			// Remove all the entities and change them to a space..
-			$string = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
+		if ($renderedHtml || self::isHTML($string)) {
+			if (class_exists('\DOMDocument')) {
+				$dom = new \DOMDocument('1.0', 'UTF-8');
+				$loaded = $dom->loadHTML(
+					'<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>'
+					. $string . '</body></html>',
+					LIBXML_NONET | LIBXML_NOERROR | LIBXML_NOWARNING
+				);
+				$body = $loaded ? $dom->getElementsByTagName('body')->item(0) : null;
 
-			if (self::strlen($string) > $length) {
-				$shorten = true;
-				// Now we can find the closest space character
-				$cutOffPos = max(mb_strpos($string, ' ', $length), mb_strpos($string, '>', $length));
-				if ($cutOffPos !== false) {
-					$tmpString = self::substr($string, 0, $cutOffPos);
-
-					// Find all the bbc tags then loop through finding the closing one
-					if (preg_match_all('/\[([a-zA-Z0-9_\-]+?)\]/', $tmpString, $matches) > 0) {
-						foreach ($matches[1] as $key) {
-							$key = preg_quote($key);
-							// check we haven't cut any bbcode off
-							if (preg_match_all('/\[([' . $key . ']+?)\](.+?)\[\/\1\]/', $tmpString, $match, PREG_SET_ORDER) == 0) {
-								// Search from the old cut off position to the next similar tag
-								$cutOffPos = mb_strpos($string, '[/' . $key . ']', $cutOffPos);
-								if ($cutOffPos !== false) {
-									$tmpString = self::substr($string, 0, $cutOffPos);
-								}
-							}
-						}
+				if ($body !== null) {
+					$cutOffPos = self::wordCutoff($body->textContent, $length);
+					if ($cutOffPos === false) {
+						return false;
 					}
 
-					// check that no html has been cut off
-					if (self::isHTML($string)) {
-						// Change all the new lines to <br>
-						// $string         = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
-						$string = str_ireplace(['<br />', '<br>', '<br/>', '<br />', '&lt;br /&gt;', '&lt;br/&gt;', '&lt;br&gt;'], '<br>', $string);
-						$string = mb_convert_encoding($string, 'HTML-ENTITIES', 'UTF-8');
-
-						$reachedLimit = false;
-						$totalLen = 0;
-						$toRemove = [];
-
-						$dom = new \DomDocument('1.0', 'UTF-8');
-
-						// set error level
-						$internalErrors = libxml_use_internal_errors(true);
-
-						$dom->loadHTML($string);
-
-						// Restore error level
-						libxml_use_internal_errors($internalErrors);
-
-						self::walkHTML($dom, $length, $reachedLimit, $totalLen, $toRemove);
-
-						foreach ($toRemove as $child) {
-							$child->parentNode->removeChild($child);
-						}
-
-						$tmpString = $dom->saveHTML();
-
-						// Strip out the doctype and html body
-						if (($pos = mb_strpos($tmpString, '<html><body>')) !== false) {
-							$tmpString = self::substr($tmpString, $pos + 12);
-						}
-
-						// Remove the html body from the end
-						if (($pos = mb_strpos($tmpString, '</body></html>')) != false) {
-							$tmpString = self::substr($tmpString, 0, $pos);
-						}
+					$reachedLimit = false;
+					$totalLen = 0;
+					$toRemove = [];
+					self::walkHTML($body, $cutOffPos, $reachedLimit, $totalLen, $toRemove);
+					foreach ($toRemove as $child) {
+						$child->parentNode->removeChild($child);
 					}
 
-					// Assign it back to the string
-					$string = $tmpString;
+					$string = '';
+					foreach ($body->childNodes as $child) {
+						$string .= $dom->saveHTML($child);
+					}
+					return true;
 				}
+			}
+
+			// Preserve line breaks in a plain-text excerpt if DOM is unavailable.
+			$text = html_entity_decode(
+				strip_tags(preg_replace('~<br\s*/?>~i', "\n", $string)),
+				ENT_QUOTES | ENT_HTML5,
+				'UTF-8'
+			);
+			$cutOffPos = self::wordCutoff($text, $length);
+			if ($cutOffPos === false) {
+				return false;
+			}
+
+			$string = nl2br(htmlspecialchars(
+				mb_substr($text, 0, $cutOffPos, 'UTF-8'),
+				ENT_QUOTES | ENT_SUBSTITUTE,
+				'UTF-8'
+			));
+			return true;
+		}
+
+		// Normalize the same entities as before looking for a space.
+		$string = preg_replace('/&nbsp;|&zwnj;|&raquo;|&laquo;|&gt;/', ' ', $string);
+
+		// Spaces inside BBCode tag attributes are part of the markup.
+		$boundaryText = preg_replace_callback(
+			'~\[/?[a-zA-Z0-9_-]+(?:[= ][^\]]*)?\]~',
+			static function ($match) {
+				return str_replace(' ', '_', $match[0]);
+			},
+			$string
+		);
+		$cutOffPos = self::wordCutoff($boundaryText, $length);
+		if ($cutOffPos === false) {
+			return false;
+		}
+
+		// Keep complete BBCode spans that cross the cutoff.
+		$prefix = mb_substr($string, 0, $cutOffPos, 'UTF-8');
+		if (preg_match_all('~\[(/?)([a-zA-Z0-9_-]+)(?:[= ][^\]]*)?\]~', $prefix, $tags, PREG_SET_ORDER)) {
+			$openTags = [];
+			foreach ($tags as $tag) {
+				$name = strtolower($tag[2]);
+				$openTags[$name] = ($openTags[$name] ?? 0) + ($tag[1] === '/' ? -1 : 1);
+			}
+			foreach ($openTags as $name => $count) {
+				$tagEnd = $cutOffPos;
+				while ($count-- > 0) {
+					$closingTag = '[/' . $name . ']';
+					$closingPos = mb_stripos($string, $closingTag, $tagEnd, 'UTF-8');
+					if ($closingPos === false) {
+						break;
+					}
+					$tagEnd = $closingPos + strlen($closingTag);
+				}
+				$cutOffPos = max($cutOffPos, $tagEnd);
+			}
+
+			$cutOffPos = mb_strpos($boundaryText, ' ', $cutOffPos, 'UTF-8');
+			if ($cutOffPos === false) {
+				return false;
 			}
 		}
 
-		return $shorten;
+		$string = mb_substr($string, 0, $cutOffPos, 'UTF-8');
+		return true;
+	}
+
+	private static function wordCutoff($text, $length)
+	{
+		if (mb_strlen($text, 'UTF-8') <= $length) {
+			return false;
+		}
+
+		$prefix = mb_substr($text, 0, (int) $length + 1, 'UTF-8');
+		$space = mb_strrpos($prefix, ' ', 0, 'UTF-8');
+		if ($space !== false && trim(mb_substr($prefix, 0, $space, 'UTF-8')) !== '') {
+			return $space;
+		}
+
+		// Let a first word longer than the limit run to its next space.
+		$firstWordEnd = mb_strpos(ltrim($text, ' '), ' ', 0, 'UTF-8');
+		return $firstWordEnd === false ? false : strlen($text) - strlen(ltrim($text, ' ')) + $firstWordEnd;
 	}
 
 	public static function walkHTML(\DomNode $node, $length, &$reachedLimit, &$totalLen, &$toRemove)
@@ -259,13 +301,16 @@ class Util
 		}
 		else {
 			if ($node instanceof \DomText) {
-				$nodeLen = mb_strlen($node->nodeValue);
-				$totalLen += $nodeLen;
+				$text = $node->nodeValue;
+				$remaining = $length - $totalLen;
+				$nodeLen = mb_strlen($text, 'UTF-8');
 
-				if ($totalLen > $length) {
-					$node->nodeValue = self::substr($node->nodeValue, 0, mb_strpos($node->nodeValue, ' ', ($nodeLen - ($totalLen - $length))));
-					$reachedLimit = true;
+				if ($nodeLen > $remaining) {
+					$node->nodeValue = mb_substr($text, 0, $remaining, 'UTF-8');
 				}
+
+				$totalLen += $nodeLen;
+				$reachedLimit = $totalLen >= $length;
 			}
 
 			if (isset($node->childNodes)) {

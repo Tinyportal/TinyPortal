@@ -3,7 +3,7 @@
  * install.php
  *
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -19,12 +19,21 @@
 
 define('TP_MINIMUM_PHP_VERSION', '6.9.9');
 
-global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir, $render;
+global $smcFunc, $db_prefix, $modSettings, $existing_tables, $boardurl, $db_type, $boarddir, $render, $context;
 $manual = false;
 $render = '';
 
 if (!defined('SMF') && file_exists('SSI.php')) {
 	require_once 'SSI.php';
+	isAllowedTo('admin_forum');
+	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+		echo '<form method="post"><p>Install or update TinyPortal database tables?</p>'
+			. '<input type="hidden" name="' . htmlspecialchars($context['session_var'], ENT_QUOTES, 'UTF-8')
+			. '" value="' . htmlspecialchars($context['session_id'], ENT_QUOTES, 'UTF-8') . '">'
+			. '<button type="submit">Continue</button></form>';
+		return;
+	}
+	checkSession('post');
 	$manual = true;
 }
 elseif (!defined('SMF')) {
@@ -55,7 +64,7 @@ if ($manual) {
 	$render .= '
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml"><head>
-		<title>TinyPortal - v3.0.4 for SMF2.1 and SMF3.</title>
+		<title>TinyPortal - v3.0.5 for SMF2.1 and SMF3.</title>
 		 <link rel="stylesheet" type="text/css" href="' . $boardurl . '/Themes/default/css/index.css" />
 	</head><body>';
 }
@@ -508,7 +517,7 @@ if ($convertaccess) {
 // now we process all settings
 $settings_array = [
 	// KEEP TRACK OF INTERNAL VERSION HERE
-	'version' => '3.0.4',
+	'version' => '3.0.5',
 	'frontpage_title' => '',
 	'showforumfirst' => '0',
 	'hideadminmenu' => '0',

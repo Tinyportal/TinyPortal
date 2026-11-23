@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -723,7 +723,24 @@ function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter = 
 
 function TPwysiwyg_setup()
 {
-	global $context, $settings, $txt;
+	global $context, $settings, $txt, $user_info;
+
+	$context['TPortal']['editor_image_quicklist'] = null;
+	if (allowedTo('tp_editownarticle')) {
+		$images = [];
+		$directory = $context['TPortal']['image_upload_path'] . 'thumbs';
+		$prefix = 'thumb_' . $user_info['id'] . 'uid';
+		if (is_dir($directory) && is_readable($directory) && ($handle = opendir($directory))) {
+			while (false !== ($file = readdir($handle))) {
+				if (strncmp($file, $prefix, strlen($prefix)) === 0) {
+					$images[] = substr($file, strlen('thumb_'));
+				}
+			}
+			closedir($handle);
+			sort($images, SORT_STRING);
+		}
+		$context['TPortal']['editor_image_quicklist'] = $images;
+	}
 
 	$context['html_headers'] .= '
 		<link rel="stylesheet" href="' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/themes/default.min.css" />
@@ -851,121 +868,6 @@ function TPwysiwyg_setup()
 			<script type="text/javascript">
 				setTimeout(function() {if (typeof fetch === "function"){console.log("fetch polyfill loaded");}}, 300);
 			</script>';
-	}
-}
-
-function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use = 1, $showchoice = true)
-{
-	global $user_info, $boardurl, $settings, $boarddir, $context, $txt, $scripturl;
-
-	echo '
-	<div style="padding-top: 10px;">
-		<textarea style="width: 100%; height: ' . $context['TPortal']['editorheight'] . 'px;" name="' . $textarea . '" id="' . $textarea . '">' . $body . '</textarea>';
-
-	if ($context['TPortal']['use_dragdrop']) {
-		echo '
-		<script type="text/javascript">
-			function tpImageUpload(file) {
-				var form = new FormData();
-				form.append("image", file);
-				return fetch("' . $scripturl . '?action=tportal;sa=uploadimage", {
-					method: "post",
-					credentials: "same-origin",
-					body: form,
-					dataType : "json",
-				}).then(function (res) {
-					return res.json();
-				}).then(function(result) {
-					if (result.success) {
-						return result.data;
-					}
-					throw "Upload error";
-				});
-			}
-
-			var dragdropOptions = {
-			    // The allowed mime types that can be dropped on the editor
-			    allowedTypes: ["image/gif", "image/jpeg", "image/png"],
-			    handleFile: function (file, createPlaceholder) {
-					var placeholder = createPlaceholder();
-					tpImageUpload(file).then(function (url) {
-						// Replace the placeholder with the image HTML
-						placeholder.insert(\'<img src="\' + url + \'" alt="" />\');
-					}).catch(function () {
-						// Error so remove the placeholder
-						placeholder.cancel();
-						alert("Problem uploading image.");
-					});
-				}
-			};
-		</script>';
-	}
-
-	echo '
-		<script type="text/javascript">
-			var textarea = document.getElementById("' . $textarea . '");
-			sceditor.create(textarea, {';
-
-	if ($context['TPortal']['use_dragdrop']) {
-		echo '
-				// Enable the drag and drop plugin
-				plugins: "dragdrop",
-				// Set the drag and drop plugin options
-				dragdrop: dragdropOptions,';
-	}
-
-	echo '
-				toolbar: "bold,italic,underline,strike,subscript,superscript|left,center,right,justify|font,size,color,removeformat|cut,copy,paste|bulletlist,orderedlist,indent,outdent|table|code,quote|horizontalrule,image,email,link,unlink|emoticon,youtube,date,time|ltr,rtl|print,maximize,source|floatleft,floatright",
-				format: "xhtml",
-				locale: "' . $txt['lang_dictionary'] . '",
-				style: "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/minified/themes/content/default.min.css",
-				emoticonsRoot: "' . $settings['default_theme_url'] . '/scripts/tinyportal/sceditor/"
-			});
-		</script>';
-
-	// only if you can edit your own articles
-	if ($upload && allowedTo('tp_editownarticle')) {
-		// fetch all images you have uploaded
-		$imgfiles = [];
-		if ($handle = opendir($context['TPortal']['image_upload_path'] . 'thumbs')) {
-			while (false !== ($file = readdir($handle))) {
-				if ($file != '.' && $file != '..' && $file != '.htaccess' && substr($file, 0, strlen($user_info['id']) + 9) == 'thumb_' . $user_info['id'] . 'uid') {
-					$imgfiles[($context['TPortal']['image_upload_path'] . 'thumbs/' . $file)] = $file;
-				}
-			}
-			closedir($handle);
-			ksort($imgfiles);
-			$imgs = $imgfiles;
-		}
-
-		echo '
-		<br><div class="title_bar">
-			<h3 class="titlebg">', $txt['tp-quicklist'], '</h3>
-		</div>
-		<div class="information smalltext">', $txt['tp-quicklist2'], '</div>
-		<div class="windowbg tp_quicklist">
-			<div class="tp_thumb">';
-
-		if (isset($imgs)) {
-			foreach ($imgs as $im) {
-				echo '
-				<img src="' . $boardurl . '/tp-images/', substr($im, 6) , '"  alt="' . substr($im, 6) . '" title="' . substr($im, 6) . '" />';
-			}
-		}
-
-		echo '
-			</div>
-		</div>
-		<dl class="tp_title settings">
-			<dt>
-				', $txt['tp-uploadfile'], '<br>
-				<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['image_max_size'] ,' ' . $txt['tp-kb'] . '</span>
-			</dt>
-			<dd>
-				<input onchange="this.form.submit()" type="file" name="' . $uploadname . '">
-			</dd>
-		</dl>
-	</div>';
 	}
 }
 
@@ -1310,6 +1212,31 @@ function get_perm($perm, $moderate = '')
 	return $show;
 }
 
+/**
+ * Return categories the current user can see in public article listings.
+ */
+function tp_searchable_article_categories()
+{
+	global $smcFunc;
+
+	$request = $smcFunc['db_query'](
+		'',
+		'SELECT id, value3 FROM {db_prefix}tp_variables WHERE type = {string:type}',
+		['type' => 'category']
+	);
+	$categories = [];
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		$id = (int) $row['id'];
+		if ($id > 0 && $id <= 9999 && get_perm((string) $row['value3'])) {
+			$categories[] = $id;
+		}
+	}
+	$smcFunc['db_free_result']($request);
+
+	// No real article category has this ID. Keep the SQL array non-empty.
+	return $categories ?: [0];
+}
+
 function tpsort($a, $b)
 {
 	return strnatcasecmp($b['timestamp'], $a['timestamp']);
@@ -1442,6 +1369,42 @@ function TPageIndex($base_url, &$start, $max_value, $num_per_page)
 	return $pageindex;
 }
 
+/**
+ * Resolve an administrator-managed static article inside TinyPortal's import directory.
+ */
+function tp_external_article_path($name)
+{
+	global $boarddir;
+
+	if (!is_string($name) || !preg_match('~\A(?:tp-files/tp-articles/imported/)?([a-z0-9_][a-z0-9_. -]*\.html?)\z~i', $name, $matches)) {
+		return null;
+	}
+
+	$directory = realpath($boarddir . '/tp-files/tp-articles/imported');
+	if ($directory === false) {
+		return null;
+	}
+
+	$path = realpath($directory . DIRECTORY_SEPARATOR . $matches[1]);
+	if ($path === false || dirname($path) !== $directory || basename($path) !== $matches[1] || !is_file($path) || !is_readable($path)) {
+		return null;
+	}
+
+	return $path;
+}
+
+function tp_read_external_article($name)
+{
+	$path = tp_external_article_path($name);
+	if ($path === null) {
+		return null;
+	}
+
+	$limit = 2 * 1024 * 1024;
+	$content = @file_get_contents($path, false, null, 0, $limit + 1);
+	return $content !== false && strlen($content) <= $limit ? $content : null;
+}
+
 function tp_renderarticle($intro = '')
 {
 	global $context, $txt, $scripturl, $boarddir, $smcFunc;
@@ -1494,13 +1457,9 @@ function tp_renderarticle($intro = '')
 				$data .= $context['TPortal']['article']['readmore'];
 			}
 		}
-		elseif ($context['TPortal']['article']['rendertype'] == 'import') {
-			if (!file_exists($boarddir . '/' . $context['TPortal']['article']['fileimport'])) {
-				$data .= '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
-			}
-			else {
-				include $context['TPortal']['article']['fileimport'];
-			}
+		elseif ($context['TPortal']['article']['rendertype'] === 'import') {
+			$data .= tp_read_external_article($context['TPortal']['article']['fileimport'] ?? '')
+				?? '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
 		}
 		else {
 			$post = $context['TPortal']['article']['body'];
@@ -1539,7 +1498,8 @@ function tp_renderblockarticle()
 	global $context, $txt, $boarddir;
 
 	// just return if data is missing
-	if (!isset($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']])) {
+	$blockArticle = $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']] ?? null;
+	if ($blockArticle === null) {
 		return;
 	}
 
@@ -1548,13 +1508,9 @@ function tp_renderblockarticle()
 	if ($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'php') {
 		eval($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['body']);
 	}
-	elseif ($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'import') {
-		if (!file_exists($boarddir . '/' . $context['TPortal']['blockarticles'][$context['TPortals']['blockarticle']]['fileimport'])) {
-			echo '<em>' , $txt['tp-cannotfetchfile'] , '</em>';
-		}
-		else {
-			include $context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['fileimport'];
-		}
+	elseif ($blockArticle['rendertype'] === 'import') {
+		echo tp_read_external_article($blockArticle['fileimport'] ?? '')
+			?? '<em>' . $txt['tp-cannotfetchfile'] . '</em>';
 	}
 	elseif ($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['rendertype'] == 'bbc') {
 		echo parse_bbc($context['TPortal']['blockarticles'][$context['TPortal']['blockarticle']]['body']);

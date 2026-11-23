@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -91,51 +91,72 @@ function tp_createthumb($picture, $width, $height, $thumb)
 	return $thumb;
 }
 
-function TPuploadpicture($widthhat, $prefix, $maxsize = '1800', $exts = 'jpg,gif,png', $destdir = 'tp-images')
+function TPuploadpicture($widthhat, $maxsize = '1800', $destdir = 'tp-images', bool $useHashedFilename = true, bool $useUserPrefix = true)
 {
-	global $boarddir, $txt;
+	global $context, $boarddir, $txt;
 
 	loadLanguage('TPdlmanager');
 
 	$upload = TPUpload::getInstance();
+	$upload->clear_error();
+
+	// Validate the PHP upload before accessing its temporary file.
+	if (
+		!isset($_FILES[$widthhat]) ||
+		!isset($_FILES[$widthhat]['tmp_name']) ||
+		!isset($_FILES[$widthhat]['error']) ||
+		$_FILES[$widthhat]['error'] !== UPLOAD_ERR_OK ||
+		!is_uploaded_file($_FILES[$widthhat]['tmp_name'])
+	) {
+		fatal_error(sprintf($txt['tp-dlnotuploaded'], 101), false);
+		return false;
+	}
+
+	// Image uploads require an authenticated SMF account. The caller's
+	// $prefix argument is retained for API compatibility, but is not
+	// trusted for the stored filename.
+	if (empty($context['user']['id']) || (int) $context['user']['id'] < 1) {
+		fatal_error(sprintf($txt['tp-dlnotuploaded'], 101), false);
+		return false;
+	}
 
 	if (!is_null($maxsize)) {
-		$upload->set_max_file_size($maxsize);
+		$upload->set_max_file_size((int) $maxsize);
 	}
 
-	if (is_null($exts)) {
-		$exts = ['jpg', 'gif', 'png'];
-	}
-	elseif (is_string($exts)) {
-		$exts = explode(',', $exts);
-	}
-	$upload->set_mime_types($exts);
-
-	// add prefix
-	$name = $_FILES[$widthhat]['name'];
-	$name = $upload->check_filename($name);
-	$sname = $prefix . $name;
-
+	// Resolve the destination using TinyPortal's existing path rules.
 	if (is_dir($destdir)) {
-		$dstPath = $destdir . '/' . $sname;
+		$directory = $destdir;
 	}
 	else {
-		$dstPath = $boarddir . '/' . $destdir . '/' . $sname;
+		$directory = $boarddir . '/' . $destdir;
 	}
 
-	if ($upload->check_file_exists($dstPath)) {
-		$dstPath = dirname($dstPath) . '/' . $prefix . $upload->generate_filename(dirname($dstPath)) . $sname;
+	if (!is_dir($directory) || !is_writable($directory)) {
+		fatal_error(sprintf($txt['tp-dlnotuploaded'], 201), false);
+		return false;
 	}
 
-	if ($upload->upload_file($_FILES[$widthhat]['tmp_name'], $dstPath) === false) {
-		unlink($_FILES[$widthhat]['tmp_name']);
+	// Keep the existing TinyPortal convention: user ID followed by uid.
+	// Upload.php derives the extension from the decoded image.
+	$user_prefix = $useUserPrefix ? (int) $context['user']['id'] . 'uid' : '';
+
+	$name = $upload->upload_image_file(
+		$_FILES[$widthhat]['tmp_name'],
+		$directory,
+		$user_prefix,
+		$useHashedFilename ? null : ($_FILES[$widthhat]['name'] ?? '')
+	);
+
+	if ($name === false) {
+		@unlink($_FILES[$widthhat]['tmp_name']);
 		$error_string = sprintf($txt['tp-dlnotuploaded'], $upload->get_error(true));
 		fatal_error($error_string, false);
+		return false;
 	}
 
-	return basename($dstPath);
+	return $name;
 }
-
 function tp_groups()
 {
 	global $txt, $smcFunc;
@@ -202,4 +223,87 @@ function upshrink()
 	else {
 		redirectexit();
 	}
+}
+
+
+/**
+ * Store a download under an unpredictable server-generated name.
+ * Downloads must also be served as attachments, with execution disabled at the web server.
+ */
+function TPdownloadUploadExtensions($configuredTypes)
+{
+    // Only inert file types; never accept script, HTML, SVG, or server configuration formats.
+    $safe = ['pdf', 'txt', 'csv', 'zip', 'jpg', 'jpeg', 'png', 'gif',
+        'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'rtf', 'mp3', 'mp4'];
+    $configured = array_map('trim', explode(',', strtolower((string) $configuredTypes)));
+    return array_values(array_intersect($safe, $configured));
+}
+
+function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes, bool $useHashedFilename = false)
+{
+    global $txt, $context;
+    if (!allowedTo('tp_dlupload') && !allowedTo('tp_dlmanager')) {
+        fatal_error($txt['tp-secuploadnotallowed'], false);
+    }
+    if (empty($context['user']['id']) || !isset($_FILES[$field]) ||
+        !is_array($_FILES[$field]) || ($_FILES[$field]['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK ||
+        empty($_FILES[$field]['tmp_name']) || !is_uploaded_file($_FILES[$field]['tmp_name'])) {
+        fatal_error($txt['tp-secuploadinvalid'], false);
+    }
+    $tmp = $_FILES[$field]['tmp_name'];
+    $size = filesize($tmp);
+    if ($size === false || $size < 1 || $size > max(1, (int) $maxKb) * 1024) {
+        fatal_error($txt['tp-secuploadtoolarge'], false);
+    }
+    $original = basename(str_replace('\\', '/', (string) ($_FILES[$field]['name'] ?? '')));
+    $ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
+    if (!in_array($ext, TPdownloadUploadExtensions($configuredTypes), true)) {
+        fatal_error($txt['tp-secuploadtypenotallowed'], false);
+    }
+    if (!is_dir($directory) || !is_writable($directory)) {
+        fatal_error($txt['tp-secuploadnodir'], false);
+    }
+    // Verify images really are images, and reject embedded PHP markers in any file.
+    $head = file_get_contents($tmp, false, null, 0, 4096);
+    if ($head === false || preg_match('/<\?(?:php|=)|<script\b/i', $head)) {
+        fatal_error($txt['tp-secuploadnotsafe'], false);
+    }
+    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'], true)) {
+        $info = @getimagesize($tmp);
+        $types = ['jpg' => IMAGETYPE_JPEG, 'jpeg' => IMAGETYPE_JPEG,
+            'png' => IMAGETYPE_PNG, 'gif' => IMAGETYPE_GIF];
+        if (!$info || $info[2] !== $types[$ext]) {
+            fatal_error($txt['tp-secuploadinvalidimage'], false);
+        }
+    }
+    if (!$useHashedFilename) {
+        $stem = preg_replace('/[^a-z0-9_-]+/i', '_', pathinfo($original, PATHINFO_FILENAME));
+        $stem = trim(substr($stem, 0, 160), '_-');
+        if ($stem === '' || preg_match('/^(?:con|prn|aux|nul|com[0-9]|lpt[0-9])$/i', $stem)) {
+            $stem = 'download' . ($stem === '' ? '' : '_' . $stem);
+        }
+    }
+
+    $directory = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR;
+    for ($attempt = 0; $attempt < 99; $attempt++) {
+        $filenameStem = $useHashedFilename ? bin2hex(random_bytes(16)) : $stem . ($attempt === 0 ? '' : '_' . ($attempt + 1));
+        $name = $filenameStem . '.' . $ext;
+        $destination = $directory . $name;
+
+        // Reserve the destination so concurrent uploads cannot overwrite it.
+        $reservation = @fopen($destination, 'xb');
+        if ($reservation === false) {
+            continue;
+        }
+        fclose($reservation);
+
+        if (!move_uploaded_file($tmp, $destination)) {
+            @unlink($destination);
+            break;
+        }
+
+        @chmod($destination, 0644);
+        return $name;
+    }
+    fatal_error($txt['tp-secuploadnotstored'], false);
 }

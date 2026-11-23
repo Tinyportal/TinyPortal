@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -145,6 +145,10 @@ function TPdlmanager_init()
 	$context['can_tp_dlupload'] = allowedTo('tp_dlupload');
 
 	require_once $sourcedir . '/TPcommon.php';
+	$context['TPortal']['download_upload_accept'] = implode(',', array_map(
+		static function ($extension) { return '.' . $extension; },
+		TPdownloadUploadExtensions($context['TPortal']['dl_allowed_types'] ?? '')
+	));
 	// get subaction
 	if (isset($context['TPortal']['dlsub'])) {
 		// a switch to make it clear what is "forum" and not
@@ -164,6 +168,60 @@ function TPdlmanager_init()
 			TPortalDLManager();
 		}
 	}
+}
+
+/**
+ * Resolve an existing regular file within a configured storage directory.
+ */
+function TPdlLocalFile($directory, $name)
+{
+	if (!is_string($name) || $name === '' || strpos($name, "\0") !== false
+		|| in_array('..', explode('/', str_replace('\\', '/', $name)), true)) {
+		return null;
+	}
+
+	$root = realpath($directory);
+	if ($root === false || !is_dir($root)) {
+		return null;
+	}
+
+	$prefix = rtrim($root, '/\\') . DIRECTORY_SEPARATOR;
+	$candidate = $prefix . $name;
+	if (is_link($candidate)) {
+		return null;
+	}
+
+	$path = realpath($candidate);
+	return $path !== false && strpos($path, $prefix) === 0 && is_file($path)
+		? $candidate
+		: null;
+}
+
+/**
+ * Accept only absolute HTTP(S) URLs for external downloads and screenshots.
+ */
+function TPdlHttpUrl($value)
+{
+	if (!is_string($value) || filter_var($value, FILTER_VALIDATE_URL) === false) {
+		return null;
+	}
+
+	$scheme = strtolower((string) parse_url($value, PHP_URL_SCHEME));
+	return in_array($scheme, ['http', 'https'], true) ? $value : null;
+}
+
+function TPdlScreenshotUrl($screenshot)
+{
+	global $boarddir, $boardurl, $context;
+
+	$url = TPdlHttpUrl($screenshot);
+	if ($url !== null || empty($screenshot)) {
+		return $url ?? '';
+	}
+
+	$path = $context['TPortal']['image_upload_path'];
+	$file = strpos($screenshot, 'tp-images/') === 0 ? $screenshot : 'dlmanager/' . $screenshot;
+	return TPdlLocalFile($path, $file) !== null ? str_replace($boarddir, $boardurl, $path) . $file : '';
 }
 
 // TinyPortal DLmanager
@@ -219,12 +277,14 @@ function TPortalDLManager()
 	// any uploads being sent?
 	$context['TPortal']['uploads'] = [];
 	if (isset($_FILES['tp-dluploadfile']['tmp_name']) || isset($_POST['tp-dluploadnot']) || isset($_POST['tp-dlexternalfile'])) {
+		checkSession('post');
+		isAllowedTo(['tp_dlmanager', 'tp_dlupload']);
 		// skip the upload checks etc. if just an empty item
 		if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
 			// check if uploaded quick-list picture
-			if (isset($_FILES['qup_tp_dluploadtext']) && file_exists($_FILES['qup_tp_dluploadtext']['tmp_name'])) {
+			if (isset($_FILES['qup_tp_dluploadtext']) && !empty($_FILES['qup_tp_dluploadtext']['tmp_name'])) {
 				$item_id = isset($_GET['dl']) ? $_GET['dl'] : 'upload';
-				$name = TPuploadpicture('qup_tp_dluploadtext', $context['user']['id'] . 'uid');
+				$name = TPuploadpicture('qup_tp_dluploadtext', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'], true, true);
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 				redirectexit('action=tportal;sa=download;dl=' . $item_id);
 			}
@@ -256,22 +316,25 @@ function TPortalDLManager()
 
 		$icon = !empty($_POST['tp_dluploadicon']) ? $boardurl . '/tp-downloads/icons/' . $_POST['tp_dluploadicon'] : '';
 
-		if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
-			// process the file
-			$filename = $_FILES['tp-dluploadfile']['name'];
-			$name = strtr($filename, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$name = strtr($name, ['Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u']);
-			$name = preg_replace(['/\s/', '/[^\w_\.\-]/'], ['_', ''], $name);
-		}
-		elseif (!empty($_POST['tp-dlexternalfile'])) {
-			$name = $_POST['tp-dlexternalfile'];
+		if (!empty($_POST['tp-dlexternalfile'])) {
+			$name = TPdlHttpUrl($_POST['tp-dlexternalfile']);
+			if ($name === null) {
+				fatal_error($txt['tp-dluploadfailure'], false);
+			}
 		}
 		else {
 			$name = '- empty item -';
 		}
 
 		if (isset($_POST['tp-dlupload_ftpstray'])) {
-			$name = $_POST['tp-dlupload_ftpstray'];
+			isAllowedTo('tp_dlmanager');
+			$ftpFile = $_POST['tp-dlupload_ftpstray'];
+			if (!isset($_POST['tp-dluploadnot']) || !is_string($ftpFile)
+				|| strpbrk($ftpFile, '/\\') !== false
+				|| TPdlLocalFile($context['TPortal']['download_upload_path'], $ftpFile) === null) {
+				fatal_error($txt['tp-dluploadfailure'], false);
+			}
+			$name = $ftpFile;
 		}
 
 		$status = 'normal';
@@ -293,50 +356,25 @@ function TPortalDLManager()
 			$dlfilesize = filesize($context['TPortal']['download_upload_path'] . $name);
 		}
 
-		if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
-			// check the extension
-			$allowed = explode(',', $context['TPortal']['dl_allowed_types']);
-			$match = false;
-			foreach ($allowed as $extension => $value) {
-				$ext = '.' . $value;
-				$extlen = strlen($ext);
-				if (substr($name, strlen($name) - $extlen, $extlen) == $ext) {
-					$match = true;
-				}
-			}
-			if (!$match) {
-				$status = 'wrongtype';
-				unlink($_FILES['tp-dluploadfile']['tmp_name']);
-				$error = $txt['tp-dlexterror'] . ':<b> <br />' . $context['TPortal']['dl_allowed_types'] . '</b><br /><br />' . $txt['tp-dlerrorfile'] . ': <b>' . $name . '</b>';
-				fatal_error($error, false);
-			}
-		}
-
 		// ok, go ahead
 		if ($status == 'normal') {
 			if (!isset($_POST['tp-dluploadnot']) && empty($_POST['tp-dlexternalfile'])) {
-				// check that no other file exists with same name
-				if (file_exists($context['TPortal']['download_upload_path'] . $name)) {
-					$name = time() . $name;
-				}
-
-				$success = move_uploaded_file($_FILES['tp-dluploadfile']['tmp_name'], $context['TPortal']['download_upload_path'] . $name);
+				$name = TPsecureDownloadUpload('tp-dluploadfile', $context['TPortal']['download_upload_path'], $context['TPortal']['dl_max_upload_size'], $context['TPortal']['dl_allowed_types']);
+				$success = true;
 			}
 
 			if ($shot) {
 				$sfile = 'tp_dluploadpic';
-				$uid = $context['user']['id'] . 'uid';
 				$dim = '1800';
-				$suf = 'jpg,gif,png';
 				$dest = $context['TPortal']['image_upload_path'] . 'dlmanager';
-				$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
+				$sname = TPuploadpicture($sfile, $dim, $dest, true, false);
 				$screenshot = $sname;
 				tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][0], $context['TPortal']['dl_screenshotsize'][1], $dest . '/thumb/' . $sname);
 				tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][2], $context['TPortal']['dl_screenshotsize'][3], $dest . '/listing/' . $sname);
 			}
 			else {
 				if (isset($_POST['tp_dluploadpic_link'])) {
-					$screenshot = $_POST['tp_dluploadpic_link'];
+					$screenshot = TPdlHttpUrl($_POST['tp_dluploadpic_link']) ?? '';
 				}
 				else {
 					$screenshot = '';
@@ -1480,19 +1518,10 @@ function TPortalDLManager()
 					$rating_average = 0;
 				}
 
-				$bigshot = $decideshot = !empty($row['screenshot']) ? $boardurl . '/' . $row['screenshot'] : '';
+				$bigshot = $decideshot = TPdlScreenshotUrl($row['screenshot']);
 				// does it exist?
 				if (file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/listing/' . $row['screenshot']) && !empty($row['screenshot'])) {
 					$decideshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/listing/' . $row['screenshot'];
-				}
-				else {
-					$decideshot = '';
-				}
-				if (file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/' . $row['screenshot']) && !empty($row['screenshot'])) {
-					$bigshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/' . $row['screenshot'];
-				}
-				else {
-					$bigshot = '';
 				}
 
 				if ($context['user']['is_logged']) {
@@ -1622,7 +1651,7 @@ function TPortalDLManager()
 // searched the files?
 function TPdlresults()
 {
-	global $txt, $scripturl, $context, $user_info, $smcFunc;
+	global $txt, $scripturl, $context, $smcFunc;
 
 	$start = 0;
 	$max_results = 20;
@@ -1636,13 +1665,16 @@ function TPdlresults()
 	checkSession('post');
 
 	// nothing to search for?
-	if (empty($_POST['dl_search'])) {
+	if (!isset($_POST['dl_search']) || !is_string($_POST['dl_search']) || trim($_POST['dl_search']) === '') {
 		fatal_error($txt['tp-nosearchentered'], false);
 	}
 
 	// clean the search
-	$what2 = str_replace(' ', '%', strip_tags($_POST['dl_search']));
-	$what = strip_tags($_POST['dl_search']);
+	$what = trim(strip_tags($_POST['dl_search']));
+	if ($what === '') {
+		fatal_error($txt['tp-nosearchentered'], false);
+	}
+	$pattern = '%' . str_replace(' ', '%', $what) . '%';
 
 	if (!empty($_POST['dl_searcharea_name'])) {
 		$usetitle = true;
@@ -1658,39 +1690,50 @@ function TPdlresults()
 	}
 
 	if ($usetitle && !$usebody) {
-		$query = 'd.name LIKE \'%{raw:what}%\'';
+		$query = 'd.name LIKE {string:pattern}';
 	}
 	elseif (!$usetitle && $usebody) {
-		$query = 'd.description LIKE \'%{raw:what}%\'';
+		$query = 'd.description LIKE {string:pattern}';
 	}
 	elseif ($usetitle && $usebody) {
-		$query = 'd.name LIKE \'%{raw:what}%\' OR d.description LIKE \'%{raw:what}%\'';
+		$query = 'd.name LIKE {string:pattern} OR d.description LIKE {string:pattern}';
 	}
 	else {
-		$query = 'd.name LIKE \'%{raw:what}%\'';
+		$query = 'd.name LIKE {string:pattern}';
 	}
 
-	$dlquery = '(FIND_IN_SET(' . implode(', access) OR FIND_IN_SET(', $user_info['groups']) . ', access))';
-
-	// find out which categories you have access to
+	// Use the same category permission check as a direct download.
 	$request = $smcFunc['db_query'](
 		'',
-		'
-		SELECT id FROM {db_prefix}tp_dlmanager
-		WHERE type = {string:type}
-		AND ' . $dlquery,
+		'SELECT id, access FROM {db_prefix}tp_dlmanager WHERE type = {string:type}',
 		['type' => 'dlcat']
 	);
-	$allowedcats = [];
-	if ($smcFunc['db_num_rows']($request) > 0) {
-		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			$allowedcats[] = $row['id'];
+	$allowedCategories = [];
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		if ((int) $row['id'] > 0 && get_perm((string) $row['access'], 'tp_dlmanager')) {
+			$allowedCategories[] = (int) $row['id'];
 		}
-		$smcFunc['db_free_result']($request);
 	}
-	else {
-		$allowedcats[0] = -1;
-	}
+	$smcFunc['db_free_result']($request);
+
+	// Attached downloads follow the parent item's category. Pending rows
+	// have a negative category and are excluded even when attached.
+	$visibility = '
+        LEFT JOIN {db_prefix}tp_dlmanager AS parent
+            ON (parent.id = d.subitem AND parent.type = {string:type})
+        WHERE (' . $query . ')
+        AND d.type = {string:type}
+        AND d.category >= 0
+        AND (
+            (d.subitem = 0 AND d.category > 0 AND d.category IN ({array_int:categories}))
+            OR
+            (d.subitem > 0 AND parent.category > 0 AND parent.category IN ({array_int:categories}))
+        )';
+	$params = [
+		'type' => 'dlitem',
+		'pattern' => $pattern,
+		'categories' => $allowedCategories ?: [0],
+	];
 
 	$context['TPortal']['dlsearchresults'] = [];
 	$context['TPortal']['dlsearchterm'] = $what;
@@ -1701,9 +1744,8 @@ function TPdlresults()
 		'
 		SELECT COUNT(d.id)
 		FROM {db_prefix}tp_dlmanager AS d
-		WHERE ' . $query . '
-		AND type = {string:type}',
-		['type' => 'dlitem', 'what' => $what2]
+		' . $visibility,
+		$params
 	);
 	$tt = $smcFunc['db_fetch_row']($check);
 	$total = $tt[0];
@@ -1714,15 +1756,9 @@ function TPdlresults()
 		SELECT d.id, d.created, d.type, d.downloads, d.name, d.description as body, d.author_id as author_id, m.real_name as real_name
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
-		WHERE ' . $query . '
-		AND type = {string:type}
+		' . $visibility . '
 		ORDER BY d.created DESC LIMIT {int:start}, {int:limit}',
-		[
-			'type' => 'dlitem', 
-			'what' => $what2, 
-			'limit' => $max_results,
-			'start' => $start
-		]
+		$params + ['limit' => $max_results, 'start' => $start]
 	);
 	// create pagelinks
 	if ($smcFunc['db_num_rows']($request) > 0) {
@@ -1956,18 +1992,18 @@ function TPdownloadme()
 			}
 		}
 
-		$external = false;
-		if (TPUtil::hasLinks($real_filename)) {
-			$filename = $real_filename;
-			$external = true;
-		}
-		else {
-			$filename = $context['TPortal']['download_upload_path'] . $real_filename;
+		$filename = TPdlHttpUrl($real_filename);
+		$external = $filename !== null;
+		if (!$external) {
+			$filename = TPdlLocalFile($context['TPortal']['download_upload_path'], $real_filename);
 		}
 		$smcFunc['db_free_result']($request);
+		if ($filename === null) {
+			redirectexit('action=tportal;sa=download;dl');
+		}
 	}
 	else {
-		$show = false;
+		redirectexit('action=tportal;sa=download;dl');
 	}
 
 	// can we actually download?
@@ -2146,12 +2182,30 @@ function TPortalDLAdmin()
 	global $txt, $scripturl, $boarddir, $boardurl, $smcFunc, $context, $settings, $sourcedir;
 
 	// check permissions
-	if (isset($_POST['dl_useredit'])) {
+	isAllowedTo('tp_dlmanager');
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		checkSession('post');
 	}
-	else {
-		isAllowedTo('tp_dlmanager');
+	// The editor's file picker submits without a Save button value.
+	$adminImage = $_FILES['qup_tp_dladmintext'] ?? null;
+	if ($adminImage !== null && $adminImage['error'] !== UPLOAD_ERR_NO_FILE) {
+		$uploadPath = $context['TPortal']['image_upload_path'];
+		$imageName = TPuploadpicture('qup_tp_dladmintext', $context['TPortal']['image_max_size'], $uploadPath, true, true);
+		$imageDir = rtrim($uploadPath, '/\\') . '/';
+		tp_createthumb($imageDir . $imageName, 50, 50, $imageDir . 'thumbs/thumb_' . $imageName);
+
+		$returnTo = (string) ($_POST['tp_dladmin_return'] ?? '');
+		$userEditId = (int) ($_POST['dl_useredit'] ?? 0);
+		if ($userEditId > 0) {
+			$returnTo = 'useredit' . $userEditId;
+		}
+		elseif (!preg_match('/\A(?:adminsettings|adminaddcat|adminitem[0-9]+|admineditcat[0-9]+)\z/', $returnTo)) {
+			$returnTo = 'admin';
+		}
+
+		redirectexit('action=tportal;sa=download;dl=' . $returnTo);
 	}
+
 	// set the linktree
 	TPadd_linktree($scripturl . '?action=tpadmin', $txt['tp-admin']);
 	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=admin', 'TPdownloads');
@@ -2212,7 +2266,7 @@ function TPortalDLAdmin()
 	// add in BBC editor before we call in template so the headers are there
 	if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 		if ($context['TPortal']['dlsub'] == 'adminaddcat') {
-			$context['TPortal']['editor_id'] = 'newdladmin_text';
+			$context['TPortal']['editor_id'] = 'tp_newdladmintext';
 			TP_prebbcbox($context['TPortal']['editor_id']);
 		}
 		else {
@@ -2331,7 +2385,7 @@ function TPortalDLAdmin()
 		}
 
 		$link = $_POST['newdladmin_link'];
-		$text = $_POST['newdladmin_text'];
+		$text = $_POST['tp_newdladmintext'] ?? $_POST['newtp_dladmintext'] ?? '';
 		$parent = $_POST['newdladmin_parent'];
 		$icon = $boardurl . '/tp-downloads/icons/' . $_POST['newdladmin_icon'];
 		// special case, the access
@@ -2443,15 +2497,6 @@ function TPortalDLAdmin()
 
 		$go = 0;
 
-		if (!empty($_FILES['qup_dladmin_text']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name']))) {
-			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'] . 'uid');
-			tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
-		}
-		if (!empty($_FILES['qup_blockbody']['tmp_name']) && (file_exists($_FILES['qup_dladmin_text']['tmp_name']) || is_uploaded_file($_FILES['qup_dladmin_text']['tmp_name']))) {
-			$name = TPuploadpicture('qup_dladmin_text', $context['user']['id'] . 'uid');
-			tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
-		}
-
 		// a screenshot from edit item screen?
 		if (!empty($_FILES['tp_dluploadpic_edit']['tmp_name']) && (file_exists($_FILES['tp_dluploadpic_edit']['tmp_name']) || is_uploaded_file($_FILES['tp_dluploadpic_edit']['tmp_name']))) {
 			$shot = true;
@@ -2463,11 +2508,9 @@ function TPortalDLAdmin()
 		if ($shot) {
 			$sid = $_POST['tp_dluploadpic_editID'];
 			$sfile = 'tp_dluploadpic_edit';
-			$uid = $context['user']['id'] . 'uid';
 			$dim = '1800';
-			$suf = 'jpg,gif,png';
 			$dest = $context['TPortal']['image_upload_path'] . 'dlmanager';
-			$sname = TPuploadpicture($sfile, $uid, $dim, $suf, $dest);
+			$sname = TPuploadpicture($sfile, $dim, $dest, true, false);
 			$screenshot = $sname;
 
 			tp_createthumb($dest . '/' . $sname, $context['TPortal']['dl_screenshotsize'][0], $context['TPortal']['dl_screenshotsize'][1], $dest . '/thumb/' . $sname);
@@ -2489,19 +2532,19 @@ function TPortalDLAdmin()
 		}
 
 		if (isset($_POST['tp_dluploadpic_link']) && !$uploaded) {
-			$sid = $_POST['tp_dluploadpic_editID'];
-			$screenshot = $_POST['tp_dluploadpic_link'];
-			$smcFunc['db_query'](
-				'',
-				'
-				UPDATE {db_prefix}tp_dlmanager
-				SET screenshot = {string:ss}
-				WHERE id = {int:item}',
-				['ss' => $screenshot, 'item' => $sid]
-			);
-		}
-		else {
-			$screenshot = '';
+			$link = $_POST['tp_dluploadpic_link'];
+			$screenshot = $link === '' ? '' : TPdlHttpUrl($link);
+			// An existing local screenshot is posted as a filename.
+			if ($screenshot !== null) {
+				$smcFunc['db_query'](
+					'',
+					'
+					UPDATE {db_prefix}tp_dlmanager
+					SET screenshot = {string:ss}
+					WHERE id = {int:item}',
+					['ss' => $screenshot, 'item' => $_POST['tp_dluploadpic_editID']]
+				);
+			}
 		}
 
 		// a new file uploaded?
@@ -2514,11 +2557,6 @@ function TPortalDLAdmin()
 
 		if ($shot) {
 			$sid = $_POST['tp_dluploadfile_editID'];
-			$shotname = $_FILES['tp_dluploadfile_edit']['name'];
-			$sname = strtr($shotname, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
-			$sname = strtr($sname, ['Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u']);
-			$sname = preg_replace(['/\s/', '/[^\w_\.\-]/'], ['_', ''], $sname);
-			$sname = time() . $sname;
 			// check the size
 			$dlfilesize = filesize($_FILES['tp_dluploadfile_edit']['tmp_name']);
 			if ($dlfilesize > (1024 * $context['TPortal']['dl_max_upload_size'])) {
@@ -2527,22 +2565,8 @@ function TPortalDLAdmin()
 				fatal_error($error, false);
 			}
 
-			// check the extension
-			$allowed = explode(',', $context['TPortal']['dl_allowed_types']);
-			$match = false;
-			foreach ($allowed as $extension => $value) {
-				$ext = '.' . $value;
-				$extlen = strlen($ext);
-				if (substr($sname, strlen($sname) - $extlen, $extlen) == $ext) {
-					$match = true;
-				}
-			}
-			if (!$match) {
-				unlink($_FILES['tp_dluploadfile_edit']['tmp_name']);
-				$error = $txt['tp-dlexterror'] . ':<b> <br />' . $context['TPortal']['dl_allowed_types'] . '</b><br /><br />' . $txt['tp-dlerrorfile'] . ': <b>' . $sname . '</b>';
-				fatal_error($error, false);
-			}
-			$success2 = move_uploaded_file($_FILES['tp_dluploadfile_edit']['tmp_name'], $context['TPortal']['download_upload_path'] . $sname);
+			$sname = TPsecureDownloadUpload('tp_dluploadfile_edit', $context['TPortal']['download_upload_path'], $context['TPortal']['dl_max_upload_size'], $context['TPortal']['dl_allowed_types']);
+			$success2 = true;
 			$smcFunc['db_query'](
 				'',
 				'
@@ -2587,7 +2611,7 @@ function TPortalDLAdmin()
 					['name' => $value, 'item' => $id]
 				);
 			}
-			elseif (substr($what, 0, 12) == 'dladmin_icon') {
+			elseif (substr($what, 0, 12) === 'dladmin_icon') {
 				$id = substr($what, 12);
 				if ($value != '') {
 					$val = $boardurl . '/tp-downloads/icons/' . $value;
@@ -2601,7 +2625,7 @@ function TPortalDLAdmin()
 					);
 				}
 			}
-			elseif (substr($what, 0, 12) == 'dladmin_text') {
+			elseif (substr($what, 0, 12) == 'tp_dladmintext') {
 				$id = substr($what, 12);
 				if (is_numeric($id)) {
 					// if we came from WYSIWYG then turn it back into BBC regardless.
@@ -2613,12 +2637,12 @@ function TPortalDLAdmin()
 						// we need this for everything else.
 						$value = $_POST[$what] = $_REQUEST[$what];
 					}
-					if (isset($_POST['dladmin_text' . $id . '_pure']) && isset($_POST['dladmin_text' . $id . '_choice'])) {
-						if ($_POST['dladmin_text' . $id . '_choice'] == 1) {
-							$value = $_POST['dladmin_text' . $id];
+					if (isset($_POST['tp_dladmintext' . $id . '_pure']) && isset($_POST['tp_dladmintext' . $id . '_choice'])) {
+						if ($_POST['tp_dladmintext' . $id . '_choice'] == 1) {
+							$value = $_POST['tp_dladmintext' . $id];
 						}
 						else {
-							$value = $_POST['dladmin_text' . $id . '_pure'];
+							$value = $_POST['tp_dladmintext' . $id . '_pure'];
 						}
 					}
 					$smcFunc['db_query'](
@@ -2655,14 +2679,20 @@ function TPortalDLAdmin()
 							);
 						}
 						// delete both screenshot and file
-						if (!empty($row['file']) && file_exists($context['TPortal']['download_upload_path'] . $row['file'])) {
-							$succ = unlink($context['TPortal']['download_upload_path'] . $row['file']);
+						$file = TPdlLocalFile($context['TPortal']['download_upload_path'], $row['file']);
+						if ($file !== null) {
+							$succ = unlink($file);
 							if (!$succ) {
 								$err = $txt['tp-dlfilenotdel'] . ' (' . $row['file'] . ')';
 							}
 						}
-						if (!empty($row['screenshot']) && file_exists($boarddir . '/' . $row['screenshot'])) {
-							$succ2 = unlink($boarddir . '/' . $row['screenshot']);
+						$screenshot = $row['screenshot'];
+						$imageRoot = $context['TPortal']['image_upload_path'];
+						$image = strpos($screenshot, 'tp-images/') === 0
+							? TPdlLocalFile($imageRoot, substr($screenshot, strlen('tp-images/')))
+							: TPdlLocalFile($imageRoot . 'dlmanager', $screenshot);
+						if ($image !== null) {
+							$succ2 = unlink($image);
 							if (!$succ2) {
 								$err .= '<br />' . $txt['tp-dlssnotdel'] . ' (' . $row['screenshot'] . ')';
 							}
@@ -3390,7 +3420,7 @@ function TPortalDLAdmin()
 		}
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-			$context['TPortal']['editor_id'] = 'dladmin_text' . $context['TPortal']['admcats'][0]['id'];
+			$context['TPortal']['editor_id'] = 'tp_dladmintext' . $context['TPortal']['admcats'][0]['id'];
 			TP_prebbcbox($context['TPortal']['editor_id'], $context['TPortal']['admcats'][0]['description']);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'html') {
@@ -3441,7 +3471,7 @@ function TPortalDLAdmin()
 
 			// add in BBC editor before we call in template so the headers are there
 			if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-				$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
+				$context['TPortal']['editor_id'] = 'tp_dladmintext' . $item;
 				TP_prebbcbox($context['TPortal']['editor_id'], $row['description']);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'html') {
@@ -3505,28 +3535,15 @@ function TPortalDLAdmin()
 				}
 				$smcFunc['db_free_result']($fetch);
 			}
-			if (!empty($row['screenshot'])) {
-				if (substr($row['screenshot'], 0, 10) == 'tp-images/') {
-					$sshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . $row['screenshot'];
-				}
-				else {
-					$sshot = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/listing/' . $row['screenshot'];
-				}
-			}
+			$sshot = TPdlScreenshotUrl($row['screenshot']);
 
-			if (TPUtil::hasLinks($row['file'])) {
-				$headers = get_headers($row['file'], 1);
-				$headers = array_change_key_case($headers);
-				$file_size = 0;
-				if (isset($headers['content-length']) && isset($headers['content-length'][1])) {
-					$file_size = floor((int)$headers['content-length'][1] / 1024);
+			$file_size = floor(max(0, (int) $row['filesize']) / 1024);
+			$localFile = TPdlLocalFile($context['TPortal']['download_upload_path'], $row['file']);
+			if ($localFile !== null) {
+				$localSize = filesize($localFile);
+				if ($localSize !== false) {
+					$file_size = floor($localSize / 1024);
 				}
-			}
-			elseif ((substr($row['file'], 0, 14) != '- empty item -') && (file_exists($context['TPortal']['download_upload_path'] . $row['file']))) {
-				$file_size = floor(filesize($context['TPortal']['download_upload_path'] . $row['file']) / 1024);
-			}
-			else {
-				$file_size = 0;
 			}
 
 			$context['TPortal']['dl_admitems'][] = [
@@ -3755,6 +3772,7 @@ function TPortalDLUser($item)
 			'filesize' => (substr($row['file'], 14) != '- empty item -') ? floor(filesize($context['TPortal']['download_upload_path'] . $row['file']) / 1024) : '0',
 			'downloads' => $row['downloads'],
 			'sshot' => $row['screenshot'],
+			'screenshot_url' => TPdlScreenshotUrl($row['screenshot']),
 			'link' => $row['link'],
 			'href' => $scripturl . '?action=tportal;sa=download;dl=adminitem' . $row['id'],
 			'approved' => $row['category'] < 0 ? '0' : '1',
@@ -3800,7 +3818,7 @@ function TPortalDLUser($item)
 		}
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
-			$context['TPortal']['editor_id'] = 'dladmin_text' . $item;
+			$context['TPortal']['editor_id'] = 'tp_dladmintext' . $item;
 			TP_prebbcbox($context['TPortal']['editor_id'], $description);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'html') {

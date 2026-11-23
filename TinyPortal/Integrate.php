@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -163,7 +163,7 @@ class Integrate
 		define('CACHEDIR', $cachedir);
 		define('SOURCEDIR', $sourcedir);
 		define('TPLANGUAGEDIR', $languagesdir ?? $boarddir . '/Themes/default/languages');
-		define('TPVERSION', 'v304');
+		define('TPVERSION', 'v305');
 		if ($db_type == 'postgresql') {
 			define('TP_PGSQL', true);
 		}
@@ -314,7 +314,7 @@ class Integrate
 		else {
 			$tmp = isset($txt['tp-tphelp']) ? $txt['tp-tphelp'] : 'Help';
 			$find = '<a href="' . $scripturl . '?action=help">' . $txt['help'] . '</a>';
-			$replace = '<a href="https://www.tinyportal.net/docs/" target=_blank title="TinyPortal 3.0.4">' . $tmp . '</a>';
+			$replace = '<a href="https://www.tinyportal.net/docs/" target=_blank title="TinyPortal 3.0.5">' . $tmp . '</a>';
 			$buffer = str_replace($find, $replace . ' | ' . $find, $buffer);
 		}
 
@@ -619,11 +619,24 @@ class Integrate
 		$actionArray['tportal'] = ['TPortal.php',          'TPortal'];
 		$actionArray['tpshout'] = ['TPShout.php',          'TPShout'];
 
+		$actionArray['forum'] = ['', self::class . '::forumIndex'];
+	}
+
+	public static function forumIndex()
+	{
+		global $context, $scripturl;
+
 		if (TP_SMF21) {
-			$actionArray['forum'] = ['BoardIndex.php', 'BoardIndex'];
+			require_once SOURCEDIR . '/BoardIndex.php';
+			\BoardIndex();
 		}
 		else {
-			$actionArray['forum'] = ['', 'SMF\\Actions\\BoardIndex::call'];
+			\SMF\Actions\BoardIndex::call();
+		}
+
+		// The main URL serves the portal when the front page replaces the board index.
+		if ($context['TPortal']['front_active'] == '1' && $context['TPortal']['front_placement'] == 'boardindex') {
+			$context['canonical_url'] = $scripturl . '?action=forum';
 		}
 	}
 
@@ -816,10 +829,10 @@ class Integrate
 
 		if (allowedTo(['tp_settings']) && ($context['TPortal']['use_promote'] == 1)) {
 			if (!in_array($context['current_topic'], explode(',', $context['TPortal']['frontpage_topics']))) {
-				$normal_buttons['publish'] = ['active' => false, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']];
+				$normal_buttons['publish'] = ['active' => false, 'text' => 'tp-publish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']];
 			}
 			else {
-				$normal_buttons['unpublish'] = ['active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic']];
+				$normal_buttons['unpublish'] = ['active' => true, 'text' => 'tp-unpublish', 'lang' => true, 'url' => $scripturl . '?action=tportal;sa=publish;t=' . $context['current_topic'] . ';' . $context['session_var'] . '=' . $context['session_id']];
 			}
 		}
 	}
