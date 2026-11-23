@@ -619,11 +619,24 @@ class Integrate
 		$actionArray['tportal'] = ['TPortal.php',          'TPortal'];
 		$actionArray['tpshout'] = ['TPShout.php',          'TPShout'];
 
+		$actionArray['forum'] = ['', self::class . '::forumIndex'];
+	}
+
+	public static function forumIndex()
+	{
+		global $context, $scripturl;
+
 		if (TP_SMF21) {
-			$actionArray['forum'] = ['BoardIndex.php', 'BoardIndex'];
+			require_once SOURCEDIR . '/BoardIndex.php';
+			\BoardIndex();
 		}
 		else {
-			$actionArray['forum'] = ['', 'SMF\\Actions\\BoardIndex::call'];
+			\SMF\Actions\BoardIndex::call();
+		}
+
+		// The main URL serves the portal when the front page replaces the board index.
+		if ($context['TPortal']['front_active'] == '1' && $context['TPortal']['front_placement'] == 'boardindex') {
+			$context['canonical_url'] = $scripturl . '?action=forum';
 		}
 	}
 
