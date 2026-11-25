@@ -1849,6 +1849,36 @@ function tp_fatal_error($error)
 }
 
 // Recent topic list:   [board] Subject by Poster	Date
+function tp_getPromotedTopics($topicIds, $limit): array
+{
+	global $smcFunc;
+
+	$ids = TPUtil::positiveIds($topicIds);
+	if (!$ids) {
+		return [];
+	}
+
+	$request = $smcFunc['db_query'](
+		'',
+		'
+		SELECT t.id_topic, t.id_first_msg, m.subject, m.id_member, m.poster_name, m.poster_time, b.id_board, b.name
+		FROM {db_prefix}topics AS t
+		INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_first_msg)
+		INNER JOIN {db_prefix}boards AS b ON (t.id_board = b.id_board)
+		WHERE t.id_topic IN ({array_int:topics})
+		ORDER BY m.poster_time DESC
+		LIMIT {int:limit}',
+		['topics' => $ids, 'limit' => $limit]
+	);
+	$topics = [];
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		$topics[] = $row;
+	}
+	$smcFunc['db_free_result']($request);
+
+	return $topics;
+}
+
 function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_boards = null, $output_method = 'echo')
 {
 	return ssi_recentTopics($num_recent, $exclude_boards, $include_boards, $output_method);
@@ -1857,86 +1887,80 @@ function tp_recentTopics($num_recent = 8, $exclude_boards = null, $include_board
 // Download an attachment.
 function tpattach()
 {
-	global $txt, $modSettings, $context, $smcFunc;
+	global $context, $smcFunc;
 
-	// Some defaults that we need.
-	$context['character_set'] = empty($modSettings['global_character_set']) ? (empty($txt['lang_character_set']) ? 'ISO-8859-1' : $txt['lang_character_set']) : $modSettings['global_character_set'];
-	$context['utf8'] = $context['character_set'] === 'UTF-8' && (strpos(strtolower(PHP_OS), 'win') === false || @version_compare(PHP_VERSION, '4.2.3') != -1);
-	$context['no_last_modified'] = true;
-
-	// Make sure some attachment was requested!
-	if (!isset($_REQUEST['attach']) && !isset($_REQUEST['id'])) {
+	$attachment = filter_var($_REQUEST['attach'] ?? $_REQUEST['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+	if ($attachment === false) {
 		fatal_lang_error('no_access', false);
 	}
 
-	$_REQUEST['attach'] = isset($_REQUEST['attach']) ? (int) $_REQUEST['attach'] : (int) $_REQUEST['id'];
+	if (($_REQUEST['type'] ?? '') !== 'avatar') {
+		if (isset($_REQUEST['image']) || isset($_REQUEST['thumb'])) {
+			// Older TinyPortal links pass the thumbnail ID instead of its parent.
+			$request = $smcFunc['db_query'](
+				'',
+				'
+				SELECT id_attach
+				FROM {db_prefix}attachments
+				WHERE id_thumb = {int:id} AND id_msg > 0
+				LIMIT 1',
+				['id' => $attachment]
+			);
+			$parent = $smcFunc['db_fetch_assoc']($request);
+			$smcFunc['db_free_result']($request);
+			if ($parent) {
+				redirectexit('action=dlattach;attach=' . (int) $parent['id_attach'] . ';thumb;image');
+			}
+		}
 
-	if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'avatar') {
-		$request = $smcFunc['db_query'](
-			'',
-			'
-			SELECT id_folder, filename, file_hash, fileext, id_attach, attachment_type, mime_type, approved
-			FROM {db_prefix}attachments
-			WHERE id_attach = {int:id_attach}
-				AND id_member > {int:blank_id_member}
-			LIMIT 1',
-			[
-				'id_attach' => $_REQUEST['attach'],
-				'blank_id_member' => 0,
-			]
-		);
-		$_REQUEST['image'] = true;
+		$url = 'action=dlattach;attach=' . $attachment;
+		if (isset($_REQUEST['thumb'])) {
+			$url .= ';thumb';
+		}
+		if (isset($_REQUEST['image'])) {
+			$url .= ';image';
+		}
+		redirectexit($url);
 	}
-	// This is just a regular attachment...
-	else {
-		$request = $smcFunc['db_query'](
-			'',
-			'
-			SELECT a.id_folder, a.filename, a.file_hash, a.fileext, a.id_attach,
-				a.attachment_type, a.mime_type, a.approved
-			FROM {db_prefix}attachments AS a
-			WHERE a.id_attach = {int:attach}
-			LIMIT 1',
-			[
-				'attach' => $_REQUEST['attach'],
-			]
-		);
-	}
-	if ($smcFunc['db_num_rows']($request) == 0) {
-		fatal_lang_error('no_access', false);
-	}
-	list($id_folder, $real_filename, $file_hash, $file_ext, $id_attach, $attachment_type, $mime_type, $is_approved) = $smcFunc['db_fetch_row']($request);
+
+	$request = $smcFunc['db_query'](
+		'',
+		'
+		SELECT a.id_folder, a.filename, a.file_hash
+		FROM {db_prefix}attachments AS a
+		INNER JOIN {db_prefix}members AS m ON (m.id_member = a.id_member)
+		WHERE a.id_attach = {int:id}
+			AND a.id_member > 0
+			AND a.id_msg = 0
+			AND a.attachment_type = 0
+		LIMIT 1',
+		['id' => $attachment]
+	);
+	$avatar = $smcFunc['db_fetch_assoc']($request);
 	$smcFunc['db_free_result']($request);
-
-	$filename = getAttachmentFilename($real_filename, $_REQUEST['attach'], $id_folder, false, $file_hash);
-
-	// This is done to clear any output that was made before now. (would use ob_clean(), but that's PHP 4.2.0+...)
-	ob_end_clean();
-	if (!empty($modSettings['enableCompressedOutput']) && @version_compare(PHP_VERSION, '4.2.0') >= 0 && @filesize($filename) <= 4194304 && in_array($file_ext, ['txt', 'html', 'htm', 'js', 'doc', 'pdf', 'docx', 'rtf', 'css', 'php', 'log', 'xml', 'sql', 'c', 'java'])) {
-		@ob_start('ob_gzhandler');
-	}
-	else {
-		ob_start();
-		header('Content-Encoding: none');
+	if (!$avatar) {
+		fatal_lang_error('no_access', false);
 	}
 
-	// No point in a nicer message, because this is supposed to be an attachment anyway...
-	if (!file_exists($filename)) {
-		loadLanguage('Errors');
+	$filename = getAttachmentFilename($avatar['filename'], $attachment, $avatar['id_folder'], false, $avatar['file_hash']);
+	$image = is_string($filename) && is_file($filename) ? @getimagesize($filename) : false;
+	if (!$image || !in_array($image['mime'], ['image/gif', 'image/jpeg', 'image/png', 'image/webp', 'image/bmp', 'image/x-ms-bmp', 'image/avif'], true)) {
+		fatal_lang_error('attachment_not_found', false);
+	}
 
-		header('HTTP/1.0 404 ' . $txt['attachment_not_found']);
-		header('Content-Type: text/plain; charset=' . (empty($context['character_set']) ? 'ISO-8859-1' : $context['character_set']));
+	$stream = @fopen($filename, 'rb');
+	if ($stream === false) {
+		fatal_lang_error('attachment_not_found', false);
+	}
 
-		// We need to die like this *before* we send any anti-caching headers as below.
-		die('404 - ' . $txt['attachment_not_found']);
+	$context['no_last_modified'] = true;
+	while (ob_get_level() > 0 && @ob_end_clean()) {
 	}
 
 	// If it hasn't been modified since the last time this attachement was retrieved, there's no need to display it again.
 	if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
 		list($modified_since) = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
 		if (strtotime($modified_since) >= filemtime($filename)) {
-			ob_end_clean();
-
 			// Answer the question - no, it hasn't been modified ;).
 			header('HTTP/1.1 304 Not Modified');
 			exit;
@@ -1944,10 +1968,8 @@ function tpattach()
 	}
 
 	// Check whether the ETag was sent back, and cache based on that...
-	$eTag = '"' . substr($_REQUEST['attach'] . $real_filename . filemtime($filename), 0, 64) . '"';
+	$eTag = '"' . sha1($attachment . ':' . filemtime($filename) . ':' . filesize($filename)) . '"';
 	if (!empty($_SERVER['HTTP_IF_NONE_MATCH']) && strpos($_SERVER['HTTP_IF_NONE_MATCH'], $eTag) !== false) {
-		ob_end_clean();
-
 		header('HTTP/1.1 304 Not Modified');
 		exit;
 	}
@@ -1955,105 +1977,24 @@ function tpattach()
 	// Send the attachment headers.
 	header('Pragma: ');
 
-	if (!$context['browser']['is_gecko']) {
+	if (empty($context['browser']['is_gecko'])) {
 		header('Content-Transfer-Encoding: binary');
 	}
 	header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 525600 * 60) . ' GMT');
 	header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
-	header('Accept-Ranges: bytes');
 	header('Set-Cookie:');
 	header('Connection: close');
 	header('ETag: ' . $eTag);
 
-	// IE 6 just doesn't play nice. As dirty as this seems, it works.
-	if ($context['browser']['is_ie6'] && isset($_REQUEST['image'])) {
-		unset($_REQUEST['image']);
-	}
-	elseif (filesize($filename) != 0) {
-		$size = @getimagesize($filename);
-		if (!empty($size)) {
-			// What headers are valid?
-			$validTypes = [
-				1 => 'gif',
-				2 => 'jpeg',
-				3 => 'png',
-				5 => 'psd',
-				6 => 'x-ms-bmp',
-				7 => 'tiff',
-				8 => 'tiff',
-				9 => 'jpeg',
-				14 => 'iff',
-			];
+	header('Content-Type: ' . $image['mime']);
+	header('Content-Disposition: inline');
+	header('X-Content-Type-Options: nosniff');
+	header('Cache-Control: max-age=' . (525600 * 60) . ', private');
 
-			// Do we have a mime type we can simpy use?
-			if (!empty($size['mime']) && !in_array($size[2], [4, 13])) {
-				header('Content-Type: ' . strtr($size['mime'], ['image/bmp' => 'image/x-ms-bmp']));
-			}
-			elseif (isset($validTypes[$size[2]])) {
-				header('Content-Type: image/' . $validTypes[$size[2]]);
-			}
-			// Otherwise - let's think safety first... it might not be an image...
-			elseif (isset($_REQUEST['image'])) {
-				unset($_REQUEST['image']);
-			}
-		}
-		// Once again - safe!
-		elseif (isset($_REQUEST['image'])) {
-			unset($_REQUEST['image']);
-		}
-	}
+	header('Content-Length: ' . filesize($filename));
 
-	header('Content-Disposition: ' . (isset($_REQUEST['image']) ? 'inline' : 'attachment') . '; filename="' . $real_filename . '"');
-	if (!isset($_REQUEST['image'])) {
-		header('Content-Type: application/octet-stream');
-	}
-
-	// If this has an "image extension" - but isn't actually an image - then ensure it isn't cached cause of silly IE.
-	if (!isset($_REQUEST['image']) && in_array($file_ext, ['gif', 'jpg', 'bmp', 'png', 'jpeg', 'tiff'])) {
-		header('Cache-Control: no-cache');
-	}
-	else {
-		header('Cache-Control: max-age=' . (525600 * 60) . ', private');
-	}
-
-	if (empty($modSettings['enableCompressedOutput']) || filesize($filename) > 4194304) {
-		header('Content-Length: ' . filesize($filename));
-	}
-
-	// Try to buy some time...
-	@set_time_limit(0);
-
-	// Since we don't do output compression for files this large...
-	if (filesize($filename) > 4194304) {
-		// Forcibly end any output buffering going on.
-		if (function_exists('ob_get_level')) {
-			while (@ob_get_level() > 0) {
-				@ob_end_clean();
-			}
-		}
-		else {
-			@ob_end_clean();
-			@ob_end_clean();
-			@ob_end_clean();
-		}
-
-		$fp = fopen($filename, 'rb');
-		while (!feof($fp)) {
-			if (isset($callback)) {
-				echo $callback(fread($fp, 8192));
-			}
-			else {
-				echo fread($fp, 8192);
-			}
-			flush();
-		}
-		fclose($fp);
-	}
-	// On some of the less-bright hosts, readfile() is disabled.  It's just a faster, more byte safe, version of what's in the if.
-	elseif (isset($callback) || @readfile($filename) == null) {
-		echo isset($callback) ? $callback(file_get_contents($filename)) : file_get_contents($filename);
-	}
-
+	fpassthru($stream);
+	fclose($stream);
 	obExit(false);
 }
 
@@ -2119,6 +2060,7 @@ function art_recentitems($max = 5, $type = 'date')
 			$data[] = [
 				'id' => $row['id'],
 				'subject' => $row['subject'],
+				'subject_html' => TPArticle::escapeDisplayTitle((string) $row['subject']),
 				'views' => $row['views'],
 				'date' => timeformat($row['date']),
 				'rating' => $rating_average,
@@ -2714,6 +2656,7 @@ function tp_profile_articles($member_id)
 				$context['TPortal']['profile_articles'][] = [
 					'id' => $row['id'],
 					'subject' => $row['subject'],
+					'subject_html' => TPArticle::escapeDisplayTitle((string) $row['subject']),
 					'date' => timeformat($row['date']),
 					'timestamp' => $row['date'],
 					'href' => '' . $scripturl . '?page=' . $row['id'],

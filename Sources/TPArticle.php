@@ -175,6 +175,7 @@ function articleShowComments()
 			$context['TPortal']['artcomments']['new'][] = [
 				'page' => $row['item_id'],
 				'pagename' => $row['pagename'],
+				'pagename_html' => TPArticle::escapeDisplayTitle((string) $row['pagename']),
 				'subject' => $row['subject'],
 				'title' => $row['subject'],
 				'comment' => $row['comment'],
@@ -207,6 +208,8 @@ function articleShowComments()
 function articleDeleteComment()
 {
 	global $context, $txt;
+
+	checkSession('get');
 
 	if (!allowedTo('tp_artcomment')) {
 		fatal_error($txt['tp-nocomments'], false);
@@ -694,7 +697,7 @@ function articleShow()
 	if ($smcFunc['db_num_rows']($request2) > 0) {
 		$context['TPortal']['myarticles'] = [];
 		while ($row = $smcFunc['db_fetch_assoc']($request2)) {
-			$context['TPortal']['myarticles'][] = $row;
+			$context['TPortal']['myarticles'][] = TPArticle::withDisplayTitle($row);
 		}
 		$smcFunc['db_free_result']($request2);
 	}
@@ -765,27 +768,24 @@ function articlePublish()
 		redirectexit('action=forum');
 	}
 
-	$t = is_numeric($_GET['t']) ? $_GET['t'] : 0;
+	$t = filter_var($_GET['t'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-	if (empty($t)) {
+	if ($t === false) {
 		redirectexit('action=forum');
 	}
 
 	isAllowedTo('tp_settings');
-	$existing = explode(',', $context['TPortal']['frontpage_topics']);
-	if (in_array($t, $existing)) {
-		unset($existing[array_search($t, $existing)]);
+	checkSession('get');
+	$existing = TPUtil::positiveIds($context['TPortal']['frontpage_topics']);
+	$index = array_search($t, $existing, true);
+	if ($index !== false) {
+		unset($existing[$index]);
 	}
 	else {
 		$existing[] = $t;
 	}
 
-	$newstring = implode(',', $existing);
-	if (substr($newstring, 0, 1) == ',') {
-		$newstring = substr($newstring, 1);
-	}
-
-	updateTPSettings(['frontpage_topics' => $newstring]);
+	updateTPSettings(['frontpage_topics' => implode(',', $existing)]);
 
 	redirectexit('topic=' . $t . '.0');
 }

@@ -144,7 +144,8 @@ function TPortal_init()
 	loadTemplate('TPBlockLayout');
 
 	// is the permanent theme option set?
-	if (isset($_GET['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged']) {
+	if (isset($_POST['permanent']) && !empty($_GET['theme']) && $context['user']['is_logged']) {
+		checkSession('post');
 		TP_permaTheme($_GET['theme']);
 	}
 
@@ -645,7 +646,7 @@ function doTPpage()
 								$row['selected'] = 1;
 							}
 
-							$context['TPortal']['article']['others'][] = $row;
+							$context['TPortal']['article']['others'][] = TPArticle::withDisplayTitle($row);
 						}
 						$smcFunc['db_free_result']($request);
 					}
@@ -659,8 +660,9 @@ function doTPpage()
 					if (!isset($article['id'])) {
 						redirectexit();
 					}
-					$what = '<h2>' . $article['subject'] . ' </h2>' . $article['body'];
-					$pwhat = 'echo \'<h2>\' . $article[\'subject\'] . \'</h2>\';' . $article['body'];
+					$printHeading = '<h2>' . $article['subject_html'] . '</h2>';
+					$what = $printHeading . $article['body'];
+					$pwhat = 'echo $printHeading;' . $article['body'];
 					if ($article['type'] == 'php') {
 						$context['TPortal']['printbody'] = eval($pwhat);
 					}
@@ -668,7 +670,7 @@ function doTPpage()
 						$html = tp_read_external_article($article['fileimport'] ?? '');
 						$context['TPortal']['printbody'] = $html === null
 							? '<em>' . $txt['tp-cannotfetchfile'] . '</em>'
-							: '<h2>' . htmlspecialchars($article['subject'], ENT_QUOTES, 'UTF-8') . '</h2>' . $html;
+							: '<h2>' . $article['subject_html'] . '</h2>' . $html;
 					}
 					elseif ($article['type'] == 'bbc') {
 						$context['TPortal']['printbody'] = parse_bbc($what);
@@ -729,10 +731,10 @@ function doTPpage()
 						TPadd_linktree($scripturl . '?cat=' . $parent['shortname'], $parent['name']);
 					}
 
-					TPadd_linktree($scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']), $context['TPortal']['article']['subject']);
+					TPadd_linktree($scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']), $context['TPortal']['article']['subject_html']);
 				}
 
-				$context['page_title'] = $context['TPortal']['article']['subject'];
+				$context['page_title'] = $context['TPortal']['article']['subject_html'];
 
 				if (defined('WIRELESS') && WIRELESS) {
 					$context['TPortal']['single_article'] = true;
@@ -809,7 +811,10 @@ function doTPcat()
 					$catsort = 'author_id';
 				}
 
-				$catsort_order = isset($options['sortorder']) ? $options['sortorder'] : 'desc';
+				if (!in_array($catsort, ['date', 'author_id', 'id', 'parse'], true)) {
+					$catsort = 'date';
+				}
+				$catsort_order = strtolower($options['sortorder'] ?? '') === 'asc' ? 'ASC' : 'DESC';
 				$max = empty($options['articlecount']) ? $context['TPortal']['frontpage_limit'] : $options['articlecount'];
 				$start = $context['TPortal']['mystart'];
 
@@ -881,6 +886,7 @@ function doTPcat()
 					while ($row = $smcFunc['db_fetch_assoc']($request)) {
 						// Add the rating together
 						$row['rating'] = empty($row['rating']) ? 0 : array_sum(explode(',', $row['rating']));
+						$row = TPArticle::withDisplayTitle($row);
 						// expand the vislaoptions
 						$row['visual_options'] = explode(',', $row['options']);
 
@@ -1071,7 +1077,7 @@ function doTPfrontpage()
 		}
 
 		if (substr($vo, 0, 10) == 'sortorder_') {
-			$catsort_order = substr($vo, 10);
+			$catsort_order = strtolower(substr($vo, 10)) === 'asc' ? 'ASC' : 'DESC';
 		}
 		else {
 			$catsort_order = 'desc';
@@ -1144,6 +1150,7 @@ function doTPfrontpage()
 				];
 
 				while ($row = $smcFunc['db_fetch_assoc']($request)) {
+					$row = TPArticle::withDisplayTitle($row);
 					// expand the vislaoptions
 					$row['visual_options'] = explode(',', $row['options']);
 
@@ -1207,6 +1214,7 @@ function doTPfrontpage()
 			];
 
 			$row = $smcFunc['db_fetch_assoc']($request);
+			$row = TPArticle::withDisplayTitle($row);
 			// expand the vislaoptions
 			$row['visual_options'] = explode(',', $row['options']);
 
@@ -1241,12 +1249,12 @@ function doTPfrontpage()
 				FROM {db_prefix}topics AS t
                 INNER JOIN {db_prefix}boards AS b
                     ON t.id_board = b.id_board
-				WHERE t.id_board IN({raw:board})
+				WHERE t.id_board IN ({array_int:boards})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
 			    LIMIT {int:max} OFFSET {int:offset}',
 				[
-					'board' => $context['TPortal']['SSI_board'],
+					'boards' => TPUtil::positiveIds($context['TPortal']['SSI_board']) ?: [0],
 					'max' => $totalmax,
 					'offset' => $start,
 				]
@@ -1260,12 +1268,12 @@ function doTPfrontpage()
 				FROM {db_prefix}topics AS t
                 INNER JOIN {db_prefix}boards AS b
                     ON t.id_board = b.id_board
-				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? 0 : '{raw:topics}') . ')
+				WHERE t.id_topic IN ({array_int:topics})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY t.id_first_msg DESC
 			    LIMIT {int:max} OFFSET {int:offset}',
 				[
-					'topics' => $context['TPortal']['frontpage_topics'],
+					'topics' => TPUtil::positiveIds($context['TPortal']['frontpage_topics']) ?: [0],
 					'max' => $totalmax,
 					'offset' => $start,
 				]
@@ -1379,12 +1387,12 @@ function doTPfrontpage()
 					ON t.id_board = b.id_board
                 INNER JOIN {db_prefix}messages AS m
 					ON t.id_first_msg = m.id_msg
-				WHERE t.id_board IN({raw:board})
+				WHERE t.id_board IN ({array_int:boards})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
 				ORDER BY date DESC
 				LIMIT {int:max}',
 				[
-					'board' => $context['TPortal']['SSI_board'],
+					'boards' => TPUtil::positiveIds($context['TPortal']['SSI_board']) ?: [0],
 					'max' => $totalmax]
 			);
 		}
@@ -1398,9 +1406,10 @@ function doTPfrontpage()
 					ON t.id_board = b.id_board
                 INNER JOIN {db_prefix}messages AS m
 					ON t.id_first_msg = m.id_msg
-				WHERE t.id_topic IN(' . (empty($context['TPortal']['frontpage_topics']) ? '0' : $context['TPortal']['frontpage_topics']) . ')
+				WHERE t.id_topic IN ({array_int:topics})
 				' . ($context['TPortal']['allow_guestnews'] == 0 ? 'AND {query_see_board}' : '') . '
-				ORDER BY date DESC'
+				ORDER BY date DESC',
+				['topics' => TPUtil::positiveIds($context['TPortal']['frontpage_topics']) ?: [0]]
 			);
 		}
 
@@ -1651,7 +1660,7 @@ function doTPfrontpage()
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			while ($article = $smcFunc['db_fetch_assoc']($request)) {
 				// allowed and all is well, go on with it.
-				$context['TPortal']['blockarticles'][$article['id']] = $article;
+				$context['TPortal']['blockarticles'][$article['id']] = TPArticle::withDisplayTitle($article);
 				$context['TPortal']['blockarticles'][$article['id']]['avatar'] = set_avatar_data(
 					[
 						'avatar' => isset($row['avatar']) ? $row['avatar'] : '',
@@ -1698,6 +1707,7 @@ function doTPfrontpage()
 				$context['TPortal']['blockarticle_titles'][$row['category']][$row['date'] . '_' . $row['id']] = [
 					'id' => $row['id'],
 					'subject' => $row['subject'],
+					'subject_html' => TPArticle::escapeDisplayTitle((string) $row['subject']),
 					'shortname' => $row['shortname'] != '' ? $row['shortname'] : $row['id'],
 					'category' => $row['category'],
 					'poster' => '<a href="' . $scripturl . '?action=profile;u=' . $row['author_id'] . '">' . $row['real_name'] . '</a>',
@@ -2193,7 +2203,7 @@ if (!function_exists('set_avatar_data')) {
 			$tmp = '<img src="' . $boardurl . '/proxy.php?request=' . urlencode($data['avatar']) . '&hash=' . md5($data['avatar'] . $image_proxy_secret) . '" alt="&nbsp;" />';
 		}
 		else {
-			$tmp = $data['avatar'] == '' ? ($data['id_attach'] > 0 ? '<img src="' . (empty($data['attachment_type']) ? $scripturl . '?action=dlattach;attach=' . $data['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $data['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($data['avatar'], 'https://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : (stristr($data['avatar'], 'http://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($data['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />'));
+			$tmp = $data['avatar'] == '' ? ($data['id_attach'] > 0 ? '<img src="' . (empty($data['attachment_type']) ? $scripturl . '?action=tportal;sa=tpattach;attach=' . $data['id_attach'] . ';type=avatar' : $modSettings['custom_avatar_url'] . '/' . $data['filename']) . '" alt="&nbsp;"  />' : '') : (stristr($data['avatar'], 'https://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : (stristr($data['avatar'], 'http://') ? '<img src="' . $data['avatar'] . '" alt="&nbsp;" />' : '<img src="' . $modSettings['avatar_url'] . '/' . $smcFunc['htmlspecialchars']($data['avatar'], ENT_QUOTES) . '" alt="&nbsp;" />'));
 		}
 
 		$avatar = [];

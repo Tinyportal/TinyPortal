@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.0
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -178,6 +178,7 @@ function getBlocks()
 				$context['TPortal']['blockarticle_titles'][$row['category']][$row['date'] . '_' . $row['id']] = [
 					'id' => $row['id'],
 					'subject' => $row['subject'],
+					'subject_html' => TPArticle::escapeDisplayTitle((string) $row['subject']),
 					'shortname' => $row['shortname'] != '' ? $row['shortname'] : $row['id'],
 					'category' => $row['category'],
 					'poster' => '<a href="' . $scripturl . '?action=profile;u=' . $row['author_id'] . '">' . $row['real_name'] . '</a>',
@@ -288,9 +289,12 @@ function adminBlocks()
 	if (isset($_GET['blockon'])) {
 		checksession('get');
 		$id = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
-		$current = $tpBlock->getBlockData(['off'], ['id' => $id]);
-		if (is_array($current)) {
-			if ($current[0]['off'] == 1) {
+		$current = $tpBlock->getBlock($id);
+		if ($current) {
+			if (TPBlock::isExecutableBlockType((int) $current['type'])) {
+				isAllowedTo('admin_forum');
+			}
+			if ($current['off'] == 1) {
 				$tpBlock->updateBlock($id, ['off' => '0']);
 			}
 			else {
@@ -460,6 +464,9 @@ function editBlock($block_id = 0)
 
 	$row = $tpBlock->getBlock($block_id);
 	if (is_array($row)) {
+		if (TPBlock::isExecutableBlockType((int) $row['type'])) {
+			isAllowedTo('admin_forum');
+		}
 		$acc2 = explode(',', $row['display']);
 		$set = json_decode($row['settings'], true) ?? [];
 		$context['TPortal']['blockedit'] = $row + $set;
@@ -615,6 +622,9 @@ function editBlock($block_id = 0)
 function saveBlock($block_id = 0)
 {
 	global $settings, $context, $scripturl, $txt, $boarddir, $smcFunc;
+
+	checkSession('post');
+	isAllowedTo('admin_forum');
 
 	if (empty($block_id)) {
 		$block_id = TPUtil::filter('id', 'get', 'int');

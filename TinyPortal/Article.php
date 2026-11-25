@@ -80,6 +80,20 @@ class Article extends Base
 		];
 	}
 
+	public static function escapeDisplayTitle(string $title): string
+	{
+		return htmlspecialchars($title, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+	}
+
+	public static function withDisplayTitle(array $article): array
+	{
+		$title = (string) $article['subject'];
+		$article['subject_html'] = self::escapeDisplayTitle($title);
+		$article['subject_url'] = rawurlencode(html_entity_decode($title, ENT_QUOTES, 'UTF-8'));
+
+		return $article;
+	}
+
 	public function getArticle($article)
 	{
 		if (empty($article)) {
@@ -125,7 +139,7 @@ class Article extends Base
 
 		if ($this->dB->db_num_rows($request) > 0) {
 			while ($row = $this->dB->db_fetch_assoc($request)) {
-				$articles[] = $row;
+				$articles[] = self::withDisplayTitle($row);
 			}
 			$this->dB->db_free_result($request);
 		}
@@ -451,7 +465,7 @@ class Article extends Base
 				if (empty($row['shortname'])) {
 					$row['shortname'] = $row['id'];
 				}
-				$articles[] = $row;
+				$articles[] = self::withDisplayTitle($row);
 			}
 		}
 		$this->dB->db_free_result($request);
@@ -537,10 +551,10 @@ class Article extends Base
 				$row['useintro'] = '0';
 
 				if (!empty($row['thumb_id'])) {
-					$row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;topic=' . $row['id'] . '.0;attach=' . $row['thumb_id'] . ';image';
+					$row['illustration'] = $scripturl . '?action=tportal;sa=tpattach;attach=' . $row['thumb_id'] . ';image';
 				}
 
-				$posts[$row['timestamp'] . '0' . sprintf('%06s', $row['id'])] = $row;
+				$posts[$row['timestamp'] . '0' . sprintf('%06s', $row['id'])] = self::withDisplayTitle($row);
 			}
 		}
 

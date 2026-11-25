@@ -653,6 +653,7 @@ function do_articles()
 		if (isset($_GET['cu']) && is_numeric($_GET['cu'])) {
 			$ccat = $_GET['cu'];
 			if (isset($_GET['copy'])) {
+				checkSession('get');
 				$request = $smcFunc['db_query'](
 					'',
 					'
@@ -697,6 +698,7 @@ function do_articles()
 				redirectexit('action=tpadmin;sa=categories');
 			}
 			elseif (isset($_GET['child'])) {
+				checkSession('get');
 				$request = $smcFunc['db_query'](
 					'',
 					'
@@ -1006,7 +1008,7 @@ function do_articles()
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['arts_submissions'] = [];
 			while ($row = $smcFunc['db_fetch_assoc']($request)) {
-				$context['TPortal']['arts_submissions'][] = $row;
+				$context['TPortal']['arts_submissions'][] = TPArticle::withDisplayTitle($row);
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1041,7 +1043,7 @@ function do_articles()
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['arts_nocat'] = [];
 			while ($row = $smcFunc['db_fetch_assoc']($request)) {
-				$context['TPortal']['arts_nocat'][] = $row;
+				$context['TPortal']['arts_nocat'][] = TPArticle::withDisplayTitle($row);
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1062,7 +1064,8 @@ function do_articles()
 		);
 
 		if ($smcFunc['db_num_rows']($request) > 0) {
-			$context['TPortal']['editarticle'] = $smcFunc['db_fetch_assoc']($request);
+			$context['TPortal']['editarticle'] = TPArticle::withDisplayTitle($smcFunc['db_fetch_assoc']($request));
+			$context['TPortal']['editarticle']['subject_input'] = htmlentities($context['TPortal']['editarticle']['subject'], ENT_QUOTES, $context['character_set']);
 			$storedType = strtolower(trim((string) $context['TPortal']['editarticle']['type']));
 			if (in_array($storedType, ['php', 'import'], true)) {
 				isAllowedTo('admin_forum');
@@ -1230,7 +1233,7 @@ function do_articles()
 		if ($smcFunc['db_num_rows']($request) > 0) {
 			$context['TPortal']['arts'] = [];
 			while ($row = $smcFunc['db_fetch_assoc']($request)) {
-				$context['TPortal']['arts'][] = $row;
+				$context['TPortal']['arts'][] = TPArticle::withDisplayTitle($row);
 			}
 			$smcFunc['db_free_result']($request);
 		}
@@ -1572,13 +1575,16 @@ function do_postchecks()
 				$request = $smcFunc['db_query'](
 					'',
 					'
-					SELECT access FROM {db_prefix}tp_blocks
+					SELECT access, type FROM {db_prefix}tp_blocks
 					WHERE id = {int:blockid}',
 					['blockid' => $bl]
 				);
 				if ($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$smcFunc['db_free_result']($request);
+					if (TPBlock::isExecutableBlockType((int) $row['type']) && !allowedTo('admin_forum')) {
+						continue;
+					}
 					$request = $smcFunc['db_query'](
 						'',
 						'
@@ -1713,7 +1719,13 @@ function do_postchecks()
 			// check the frontpage visual setting..
 			if ($from == 'frontpage') {
 				$updateArray['frontpage_visual'] = implode(',', $w);
-				$updateArray['SSI_board'] = implode(',', $ssi);
+				$updateArray['SSI_board'] = $ssi;
+			}
+			foreach (['SSI_board', 'frontpage_topics'] as $setting) {
+				if (isset($updateArray[$setting])) {
+					$ids = TPUtil::positiveIds($updateArray[$setting]);
+					$updateArray[$setting] = $setting === 'SSI_board' && !$ids ? '0' : implode(',', $ids);
+				}
 			}
 			updateTPSettings($updateArray);
 			return $panelTab === null ? $from : 'panels;panel_tab=' . $panelTab;
@@ -2392,7 +2404,11 @@ function do_postchecks()
 			}
 
 			if (allowedTo('tp_blocks')) {
+				$typeCondition = allowedTo('admin_forum') ? '' : ' AND type NOT IN (10, 11)';
 				foreach ($_POST as $what => $value) {
+					if (substr($what, 0, 4) === 'type' && TPBlock::isExecutableBlockType((int) $value)) {
+						isAllowedTo('admin_forum');
+					}
 					if (substr($what, 0, 3) == 'pos') {
 						$where = substr($what, 3);
 						if (is_numeric($where)) {
@@ -2401,7 +2417,7 @@ function do_postchecks()
 								'
 								UPDATE {db_prefix}tp_blocks
 								SET pos = {int:pos}
-								WHERE id = {int:blockid}',
+								WHERE id = {int:blockid}' . $typeCondition,
 								[
 									'pos' => $value,
 									'blockid' => $where
@@ -2417,7 +2433,7 @@ function do_postchecks()
 								'
 								UPDATE {db_prefix}tp_blocks
 								SET pos = (pos + 11)
-								WHERE id = {int:blockid}',
+								WHERE id = {int:blockid}' . $typeCondition,
 								[
 									'blockid' => $where
 								]
@@ -2431,7 +2447,7 @@ function do_postchecks()
 								'',
 								'
 								UPDATE {db_prefix}tp_blocks SET pos = (pos - 11)
-								WHERE id = {int:blockid}',
+								WHERE id = {int:blockid}' . $typeCondition,
 								[
 									'blockid' => $where
 								]
@@ -2445,7 +2461,7 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET title = {string:title}
-							WHERE id = {int:blockid}',
+							WHERE id = {int:blockid}' . $typeCondition,
 							[
 								'title' => $value,
 								'blockid' => $where,
@@ -2459,7 +2475,7 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET body = {string:body}
-							WHERE id = {int:blockid}',
+							WHERE id = {int:blockid}' . $typeCondition,
 							[
 								'body' => $value,
 								'blockid' => $where,
@@ -2486,7 +2502,7 @@ function do_postchecks()
 									'
 									UPDATE {db_prefix}tp_blocks
 									SET settings = {string:data}, type = {int:blocktype}, body = {string:defaultbody}
-									WHERE id = {int:blockid}',
+									WHERE id = {int:blockid}' . $typeCondition,
 									['data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where, 'defaultbody' => '']
 								);
 							}
@@ -2521,12 +2537,16 @@ function do_postchecks()
 					}
 				}
 				else {
+					isAllowedTo('admin_forum');
 					$od = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $type . '.blockcode'), ['code']);
 				}
 			}
 			if (isset($od['code'])) {
 				$body = tp_convertphp($od['code']);
 				$type = 10;
+			}
+			if (TPBlock::isExecutableBlockType((int) ($cp['type'] ?? $type))) {
+				isAllowedTo('admin_forum');
 			}
 			$defblocks = ['18', '19'];
 			if (in_array($type, $defblocks)) {
@@ -2636,6 +2656,12 @@ function do_postchecks()
 			}
 
 			$blockType = (int) $block['type'];
+			if (TPBlock::isExecutableBlockType($blockType)
+				|| TPBlock::isExecutableBlockType((int) ($_POST['tp_block_type'] ?? $blockType))
+				|| isset($_POST['blockcode_overwrite'])) {
+				isAllowedTo('admin_forum');
+			}
+			$typeCondition = allowedTo('admin_forum') ? '' : ' AND type NOT IN (10, 11)';
 			$blockSettings = json_decode($block['settings'], true);
 			$publication = [];
 			try {
@@ -2692,7 +2718,7 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET body = {string:value}
-							WHERE id = {int:blockid}',
+							WHERE id = {int:blockid}' . $typeCondition,
 							['value' => $value, 'blockid' => $where]
 						);
 					}
@@ -2702,7 +2728,7 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET title = {string:title}
-							WHERE id = {int:blockid}',
+							WHERE id = {int:blockid}' . $typeCondition,
 							['title' => $value, 'blockid' => $where]
 						);
 					}
@@ -2715,7 +2741,7 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET frame = {string:val}
-							WHERE id = {int:blockid}',
+							WHERE id = {int:blockid}' . $typeCondition,
 							['val' => $value, 'blockid' => $where]
 						);
 					}
@@ -2733,7 +2759,7 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET ' . $setting . ' = {int:val}
-							WHERE id = {int:blockid}',
+							WHERE id = {int:blockid}' . $typeCondition,
 							['val' => (int) $value, 'blockid' => $where]
 						);
 					}
@@ -2804,8 +2830,8 @@ function do_postchecks()
 					access = {string:acc},
 					lang = {string:lang},
 					type = {int:blocktype},
-					settings = {string:settings}
-				WHERE id = {int:blockid}',
+					settings = {string:settings}' . ($typechange ? ', body = {string:defaultbody}' : '') . '
+				WHERE id = {int:blockid}' . $typeCondition,
 				[
 					'acc2' => implode(',', $access),
 					'acc' => implode(',', $tpgroups),
@@ -2813,26 +2839,26 @@ function do_postchecks()
 					'blocktype' => $blockType,
 					'settings' => json_encode($publication + $blockSettings),
 					'blockid' => $where,
-				]
+				] + ($typechange ? ['defaultbody' => ''] : [])
 			);
 
 			if (isset($userbox)) {
 				$updateArray['userbox_options'] = implode(',', $userbox);
 			}
 
-			if (isset($themebox)) {
+			if (!$typechange && isset($themebox)) {
 				$smcFunc['db_query'](
 					'',
 					'
 					UPDATE {db_prefix}tp_blocks
 					SET body = {string:body}
-					WHERE id = {int:blockid}',
+					WHERE id = {int:blockid}' . $typeCondition,
 					['body' => implode(',', $themebox), 'blockid' => $where, ]
 				);
 			}
 
 			// anything from PHP block?
-			if (isset($_POST['blockcode_overwrite'])) {
+			if (!$typechange && isset($_POST['blockcode_overwrite'])) {
 				// get the blockcode
 				$newval = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $_POST['tp_blockcode'] . '.blockcode'), ['code']);
 				$smcFunc['db_query'](
@@ -2840,7 +2866,7 @@ function do_postchecks()
 					'
 					UPDATE {db_prefix}tp_blocks
 					SET body = {string:body}
-					WHERE id = {int:blockid}',
+					WHERE id = {int:blockid}' . $typeCondition,
 					['body' => $newval['code'], 'blockid' => $where]
 				);
 			}
@@ -2851,17 +2877,6 @@ function do_postchecks()
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 			}
 
-			// if type changed, we wipe the body
-			if ($typechange == true) {
-				$smcFunc['db_query'](
-					'',
-					'
-					UPDATE {db_prefix}tp_blocks
-					SET body = {string:defaultbody}
-					WHERE id = {int:blockid}',
-					['blockid' => $where, 'defaultbody' => '']
-				);
-			}
 			updateTPSettings($updateArray);
 
 			redirectexit('action=tpadmin&amp;sa=editblock&amp;id=' . $where . ';' . $context['session_var'] . '=' . $context['session_id']);
@@ -2946,7 +2961,7 @@ function get_articles()
 
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			$context['TPortal']['edit_articles'][] = $row;
+			$context['TPortal']['edit_articles'][] = TPArticle::withDisplayTitle($row);
 		}
 
 		$smcFunc['db_free_result']($request);

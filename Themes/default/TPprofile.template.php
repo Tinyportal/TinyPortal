@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -107,11 +107,11 @@ function template_tp_articles()
 							', $art['off'] == 1 ? '<img src="' . $settings['tp_images_url'] . '/TPactive1.png" title="' . $txt['tp-noton'] . '" alt="*" />&nbsp; ' : '' , '', $art['approved'] == 0 ? '<img src="' . $settings['tp_images_url'] . '/TPthumbdown.png" title="' . $txt['tp-notapproved'] . '" alt="*" />&nbsp; ' : '' , '';
 				if (($art['approved'] == 0) || ($art['off'] == 1)) {
 					echo '
-						' ,$art['subject'], '';
+						' ,$art['subject_html'], '';
 				}
 				else {
 					echo '
-						<a href="' . $art['href'] . '" target="_blank">' ,$art['subject'], '</a>';
+						<a href="' . $art['href'] . '" target="_blank">' ,$art['subject_html'], '</a>';
 				}
 				echo '
 						</div>

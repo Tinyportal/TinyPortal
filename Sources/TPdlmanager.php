@@ -3318,7 +3318,7 @@ function TPortalDLAdmin()
 					'total' => ($items + $sitems),
 					'href' => $scripturl . '?action=tportal;sa=download;dl=admincat' . $brow['id'],
 					'href2' => $scripturl . '?action=tportal;sa=download;dl=admineditcat' . $brow['id'],
-					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $brow['id'],
+					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $brow['id'] . ';' . $context['session_var'] . '=' . $context['session_id'],
 					'pos' => $brow['downloads'],
 				];
 			}
@@ -3457,7 +3457,7 @@ function TPortalDLAdmin()
 					'total' => ($items + $sitems),
 					'href' => $scripturl . '?action=tportal;sa=download;dl=admincat' . $row['id'],
 					'href2' => $scripturl . '?action=tportal;sa=download;dl=admineditcat' . $row['id'],
-					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $row['id'],
+					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'],
 				];
 			}
 			$smcFunc['db_free_result']($request);
@@ -3578,6 +3578,7 @@ function TPortalDLAdmin()
 		}
 	}
 	elseif (substr($admsub, 0, 6) == 'delcat') {
+		checkSession('get');
 		$context['TPortal']['dl_title'] = '<a href="' . $scripturl . '?action=tportal;sa=download;dl=admin">' . $txt['tp-dladmin'] . '</a>';
 		$cat = substr($admsub, 6);
 		// delete category and all item it's in

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -76,7 +76,7 @@ function template_tpshout_admin_settings()
 	echo '
 	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpshout;shout=admin"  method="post">
 		<input type="hidden" name="TPadmin_blocks" value="set" />
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-shoutboxsettings'] . '</h3></div>
 		<p class="information">' , $txt['tp-shoutboxsettingsinfo'] , '</p>
@@ -227,7 +227,7 @@ function template_tpshout_admin()
 	echo '
 	<form class="tborder" accept-charset="', $context['character_set'], '" name="TPadmin" action="' . $scripturl . '?action=tpshout;shout=admin"  method="post">
 		<input type="hidden" name="TPadmin_blocks" value="set" />
-		<input type="hidden" name="sc" value="', $context['session_id'], '" />
+		<input type="hidden" name="', $context['session_var'], '" value="', $context['session_id'], '" />
 		<input type="hidden" name="tpadmin_form" value="singlemenuedit">
 		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-shoutboxadmin'] . '</h3></div>
 		<p class="information">' , $txt['tp-shoutboxadmininfo'] , '</p>

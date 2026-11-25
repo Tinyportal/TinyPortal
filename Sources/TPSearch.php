@@ -218,6 +218,7 @@ function TPSearchArticle()
 				$row['body'] = $articleType === 'bbc' ? parse_bbc($row['body']) : strip_tags($row['body']);
 			}
 
+			$row['subject'] = TPArticle::escapeDisplayTitle((string) $row['subject']);
 			$row['subject'] = preg_replace('/' . preg_quote($what, '/') . '/iu', '<mark class="highlight">$0</mark>', $row['subject']);
 			$row['body'] = preg_replace('/' . preg_quote($what, '/') . '/iu', '<mark class="highlight">$0</mark>', $row['body']);
 			$context['TPortal']['searchresults'][] = [

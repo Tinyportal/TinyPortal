@@ -527,7 +527,7 @@ function TPortal_themebox()
 
 	if (is_countable($temaid) && count($temaid) > 0) {
 		echo '
-		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="#" style="padding: 0; margin: 0; text-align: center;">
+		<form name="jumpurl1" onsubmit="return jumpit()" class="middletext" action="#" method="post" style="padding: 0; margin: 0; text-align: center;">
 			<select style="width: 100%; margin: 5px 0px 5px 0px;" size="1" name="jumpurl2" onchange="check(this.value)">';
 		for ($a = 0 ; $a < (count($temaid)); $a++) {
 			echo '
@@ -535,7 +535,8 @@ function TPortal_themebox()
 		}
 		echo '
 			</select><br>' , $context['user']['is_logged'] ?
-			'<input type="checkbox" id="tp-permanent" value=";permanent" onclick="realtheme()" /> ' . $txt['tp-permanent'] . '<br>' : '' , '<br>
+			'<input type="hidden" name="' . $context['session_var'] . '" value="' . $context['session_id'] . '" />
+			<input type="checkbox" id="tp-permanent" name="permanent" value="1" /> ' . $txt['tp-permanent'] . '<br>' : '' , '<br>
 			<input type="button" class="button_submit" value="' . $txt['tp-changetheme'] . '" onclick="jumpit()" /><br><br>
 			<input type="hidden" value="' . $smcFunc['htmlspecialchars']($scripturl . '?' . $tp_where . 'theme=' . $settings['theme_id']) . '" name="jumpurl3" />
 			<div style="text-align: center; width: 95%; overflow: hidden;">
@@ -543,7 +544,6 @@ function TPortal_themebox()
 			</div>
 		</form>
 		<script type="text/javascript"><!-- // --><![CDATA[
-			var extra = \'\';
 			var themepath = new Array();';
 		for ($a = 0 ; $a < (count($temaid)); $a++) {
 			echo '
@@ -554,15 +554,18 @@ function TPortal_themebox()
 		echo '
 			function jumpit()
 			{
-				window.location = document.jumpurl1.jumpurl3.value + extra;
-				return false;
-			}
-			function realtheme()
-			{
-				if (extra === ";permanent")
-					extra = "";
+				var form = document.jumpurl1;
+				var permanent = document.getElementById("tp-permanent");
+				if (permanent && permanent.checked)
+				{
+					form.action = form.jumpurl3.value;
+					form.submit();
+				}
 				else
-					extra = ";permanent";
+				{
+					window.location = form.jumpurl3.value;
+				}
+				return false;
 			}
 			function check(icon)
 			{
@@ -951,7 +954,7 @@ function TPortal_module()
 			$it = art_recentitems('5', 'date');
 			if (is_countable($it) && count($it) > 0) {
 				foreach ($it as $item) {
-					echo '<span class="smalltext"><a title="' . $item['date'] . '" href="' . $scripturl . '?page=' . $item['id'] . '">' . $item['subject'] . '</a>
+					echo '<span class="smalltext"><a title="' . $item['date'] . '" href="' . $scripturl . '?page=' . $item['id'] . '">' . $item['subject_html'] . '</a>
 						</span><br>';
 				}
 			}
@@ -961,7 +964,7 @@ function TPortal_module()
 			$it = art_recentitems('5', 'views');
 			if (is_countable($it) && count($it) > 0) {
 				foreach ($it as $item) {
-					echo '<span class="smalltext"><a title="' . $txt['tp-views'] . ': ' . $item['views'] . '" href="' . $scripturl . '?page=' . $item['id'] . '">' . $item['subject'] . '</a>
+					echo '<span class="smalltext"><a title="' . $txt['tp-views'] . ': ' . $item['views'] . '" href="' . $scripturl . '?page=' . $item['id'] . '">' . $item['subject_html'] . '</a>
 						</span><br>';
 				}
 			}
@@ -971,7 +974,7 @@ function TPortal_module()
 			$it = art_recentitems('5', 'comments');
 			if (is_countable($it) && count($it) > 0) {
 				foreach ($it as $item) {
-					echo '<span class="smalltext"><a title="' . $item['comments'] . '" href="' . $scripturl . '?page=' . $item['id'] . '">' . $item['subject'] . '</a>
+					echo '<span class="smalltext"><a title="' . $item['comments'] . '" href="' . $scripturl . '?page=' . $item['id'] . '">' . $item['subject_html'] . '</a>
 						(' . $item['comments'] . ')<br></span>';
 				}
 			}
@@ -1086,7 +1089,7 @@ function TPortal_categorybox()
 		echo '<div class="middletext" ', (count($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']]) > $context['TPortal']['blocklisting_height'] && $context['TPortal']['blocklisting_height'] != '0') ? ' style="overflow: auto; width: 100%; height: ' . $context['TPortal']['blocklisting_height'] . 'em;"' : '' ,'>';
 		foreach ($context['TPortal']['blockarticle_titles'][$context['TPortal']['blocklisting']] as $listing) {
 			if ($listing['category'] == $context['TPortal']['blocklisting']) {
-				echo '<b><a href="' . $scripturl . '?page=' . $listing['shortname'] . '">' . $listing['subject'] . '</a></b> ' , $context['TPortal']['blocklisting_author'] == '1' ? $txt['by'] . ' ' . $listing['poster'] : '' , '<br>';
+				echo '<b><a href="' . $scripturl . '?page=' . $listing['shortname'] . '">' . $listing['subject_html'] . '</a></b> ' , $context['TPortal']['blocklisting_author'] == '1' ? $txt['by'] . ' ' . $listing['poster'] : '' , '<br>';
 			}
 		}
 		echo '</div>';
@@ -1131,30 +1134,8 @@ function TPortal_promotedbox()
 			$include_boards = null;
 		}
 
-    $request = $smcFunc['db_query'](
-	'', 
-	'
-        SELECT t.id_topic, t.id_first_msg, m.subject, m.id_member, m.poster_name, m.poster_time, b.id_board, b.name
-        FROM {db_prefix}topics AS t
-        INNER JOIN {db_prefix}messages AS m ON (m.id_msg = t.id_first_msg)
-		INNER JOIN {db_prefix}boards AS b ON t.id_board = b.id_board
-        WHERE t.id_topic IN ({raw:topics})
-        ORDER BY m.poster_time DESC
-        LIMIT {int:limit}',
-        array(
-            'topics' => $context['TPortal']['frontpage_topics'],
-            'limit' => $context['TPortal']['promotedboxnum'],
-			'board' => $context['TPortal']['promotedboards'],
-        )
-    );
-
-    $what = array();
-	if ($smcFunc['db_num_rows']($request) > 0) {
- 	 while ($row = $smcFunc['db_fetch_assoc']($request))
-		{
-			$what[] = $row;
-		}
-		$smcFunc['db_free_result']($request);
+		$what = tp_getPromotedTopics($context['TPortal']['frontpage_topics'], $context['TPortal']['promotedboxnum']);
+		if ($what) {
 
 			if ($context['TPortal']['useavatar'] == 0) {
 				// Output the topics
@@ -2004,11 +1985,11 @@ function article_title($render = true)
 	if (in_array('title', $context['TPortal']['article']['visual_options'])) {
 		if (isset($context['TPortal']['article']['boardnews'])) {
 			$data = '
-		<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '">' . $context['TPortal']['article']['subject'] . '</a>';
+		<a href="' . $scripturl . '?topic=' . $context['TPortal']['article']['id'] . '">' . $context['TPortal']['article']['subject_html'] . '</a>';
 		}
 		else {
 			$data = '
-		<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' . $context['TPortal']['article']['subject'] . '</a>';
+		<a href="' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '">' . $context['TPortal']['article']['subject_html'] . '</a>';
 		}
 	}
 
@@ -2227,10 +2208,10 @@ function article_bookmark($render = true)
 			$data .= '<a href="http://www.reddit.com/submit?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/reddit.png" alt="Reddit" title="Reddit" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_digg'] == '1') {
-			$data .= '<a href="http://digg.com/submit?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img class="tp_social" title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
+			$data .= '<a href="http://digg.com/submit?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '&amp;title=' . $context['TPortal']['article']['subject_url'] . '" target="_blank"><img class="tp_social" title="Digg this story!" src="' . $settings['tp_images_url'] . '/social/digg.png" alt="Digg this story!" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_delicious'] == '1') {
-			$data .= '<a href="http://del.icio.us/post?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '&title=' . $context['TPortal']['article']['subject'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>';
+			$data .= '<a href="http://del.icio.us/post?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '&amp;title=' . $context['TPortal']['article']['subject_url'] . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/delicious.png" alt="Del.icio.us" title="Del.icio.us" /></a>';
 		}
 		if (!$context['TPortal']['hide_article_stumbleupon'] == '1') {
 			$data .= '<a href="http://www.stumbleupon.com/submit?url=' . $scripturl . '?page=' . (!empty($context['TPortal']['article']['shortname']) ? $context['TPortal']['article']['shortname'] : $context['TPortal']['article']['id']) . '" target="_blank"><img class="tp_social" src="' . $settings['tp_images_url'] . '/social/stumbleupon.png" alt="StumbleUpon" title="Stumbleupon" /></a>';
@@ -2272,7 +2253,7 @@ function article_comments($render = true)
 					<a id="comment' . $comment['id'] . '"></a>';
 				// can we edit the comment or are the owner of it?
 				if (allowedTo('tp_articles') || $comment['poster_id'] == $context['user']['id'] && !$context['user']['is_guest']) {
-					$data .= '<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tportal;sa=killcomment;comment=' . $comment['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
+					$data .= '<div class="floatright"><i><a class="active" href="' . $scripturl . '?action=tportal;sa=killcomment;comment=' . $comment['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcommentdelete'] . '\')"><span>' . $txt['tp-delete'] . '</span></a></i></div>';
 				}
 				// not a guest
 				if ($comment['poster_id'] > 0) {
@@ -2305,7 +2286,7 @@ function article_comments($render = true)
 		$data .= '
 			<div class="tp_pad">
 				<form accept-charset="' . $context['character_set'] . '"  name="tp_article_comment" action="' . $scripturl . '?action=tportal;sa=comment" method="post" style="margin: 0; padding: 0;">
-						<input type="text" name="tp_article_comment_title" style="width: 99%;" value="Re: ' . strip_tags($context['TPortal']['article']['subject']) . '">
+						<input type="text" name="tp_article_comment_title" style="width: 99%;" value="Re: ' . $context['TPortal']['article']['subject_html'] . '">
 						<textarea style="width: 99%; height: 8em;" name="tp_article_bodytext"></textarea><br>';
 
 		if (!empty($context['TPortal']['allow_links_article_comments']) == 0) {
@@ -2347,7 +2328,7 @@ function article_morelinks($render = true)
 	<div style="overflow: hidden;">
 		<ul class="disc">';
 			foreach ($context['TPortal']['article']['others'] as $art) {
-				$data .= '<li' . (isset($art['selected']) ? ' class="selected"' : '') . '><a href="' . $scripturl . '?page=' . (!empty($art['shortname']) ? $art['shortname'] : $art['id']) . '">' . html_entity_decode($art['subject']) . '</a></li>';
+				$data .= '<li' . (isset($art['selected']) ? ' class="selected"' : '') . '><a href="' . $scripturl . '?page=' . (!empty($art['shortname']) ? $art['shortname'] : $art['id']) . '">' . $art['subject_html'] . '</a></li>';
 			}
 			$data .= '
 		</ul>

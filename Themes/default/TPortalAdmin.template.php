@@ -619,8 +619,8 @@ function template_categories()
 							<div class="tp_catactions">
 								<a href="' . $scripturl . '?cat=' . $cat['id'] . '" title="' . $txt['tp-viewcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPfilter.png" alt="" /></a>&nbsp;
 								<a href="' . $scripturl . '?action=tpadmin;sa=categories;cu=' . $cat['id'] . '" title="' . $txt['tp-editcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPconfig_sm.png" alt="" /></a>&nbsp;
-								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>&nbsp;
-								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;copy;cu=' . $cat['id'] . '" title="' . $txt['tp-copycategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPcopy.png" alt="" /></a>&nbsp;
+								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;child;cu=' . $cat['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' . $txt['tp-addsubcategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPadd.png" alt="" /></a>&nbsp;
+								<a href="' . $scripturl . '?action=tpadmin;sa=addcategory;copy;cu=' . $cat['id'] . ';' . $context['session_var'] . '=' . $context['session_id'] . '" title="' . $txt['tp-copycategory'] . '"><img src="' . $settings['tp_images_url'] . '/TPcopy.png" alt="" /></a>&nbsp;
 								<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';catdelete=' . $cat['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-confirmcat1'] . '  \n' . $txt['tp-confirmcat2'] . '\')"><img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '" /></a>
 							</div>
 						</div>
@@ -1047,7 +1047,7 @@ function template_articles()
 							<a name="article' . $alink['id'] . '"></a><input type="number" value="' . $alink['pos'] . '" name="tp_article_pos' . $alink['id'] . '" style="width: 5em" />
 						</div>
 						<div class="tp_name float-items">
-							' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . $alink['subject'] . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . $alink['subject'] , '
+							' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . $alink['subject_html'] . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . $alink['subject_html'] , '
 						</div>
 					</div>
 					<div class="tp_admlast">
@@ -1175,7 +1175,7 @@ function template_strays()
 									<input type="checkbox" name="tp_article_stray' . $alink['id'] . '" value="1"  />&nbsp;&nbsp;
 								</div>
 								<div class="tp_name">
-									' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
+									' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '">' . (!empty($alink['subject_html']) ? $alink['subject_html'] : $txt['tp-noname']) . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . (!empty($alink['subject_html']) ? $alink['subject_html'] : $txt['tp-noname']) , '
 								</div>
 							</div>
 							<div class="tp_admlast">
@@ -1318,7 +1318,7 @@ function template_submission()
 										<input type="checkbox" name="tp_article_submission' . $alink['id'] . '" value="1"  />
 									</div>
 									<div class="tp_name">
-										' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '"> ' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . (!empty($alink['subject']) ? $alink['subject'] : $txt['tp-noname']) , '
+										' , $alink['locked'] == 0 ? '<a href="' . $scripturl . '?action=tpadmin;sa=editarticle;article=' . $alink['id'] . '"> ' . (!empty($alink['subject_html']) ? $alink['subject_html'] : $txt['tp-noname']) . '</a>' : '<img title="' . $txt['tp-islocked'] . '" src="' . $settings['tp_images_url'] . '/TPlock1.png" alt="' . $txt['tp-islocked'] . '"  />&nbsp;' . (!empty($alink['subject_html']) ? $alink['subject_html'] : $txt['tp-noname']) , '
 									</div>
 								</div>
 								<div class="tp_admlast">
@@ -2214,7 +2214,7 @@ function template_blocks()
 							<option value="0">' . $txt['tp-none2'] . '</option>';
 					foreach ($context['TPortal']['edit_articles'] as $article) {
 						echo '
-							<option value="' . $article['id'] . '" ' ,$lblock['body'] == $article['id'] ? ' selected' : '' ,' >' . html_entity_decode($article['subject'], ENT_QUOTES) . '</option>';
+							<option value="' . $article['id'] . '" ' ,$lblock['body'] == $article['id'] ? ' selected' : '' ,' >' . $article['subject_html'] . '</option>';
 					}
 					echo '
 							</select>
@@ -2498,7 +2498,7 @@ function template_menubox()
 					// or a arti (article)?
 					foreach ($context['TPortal']['edit_articles'] as $bmg) {
 						if ($lbox['IDtype'] == $bmg['id']) {
-							echo html_entity_decode($bmg['subject']);
+							echo $bmg['subject_html'];
 						}
 					}
 				}
@@ -2800,7 +2800,7 @@ function template_menucore()
 	if (count($context['TPortal']['edit_articles']) > 0) {
 		foreach ($context['TPortal']['edit_articles'] as $bmg) {
 			echo '
-						<option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] == 'arti' && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,'> ' . html_entity_decode($bmg['subject']) . '</option>';
+						<option value="', $bmg['id']  ,'"' , $context['TPortal']['editmenuitem']['type'] == 'arti' && $context['TPortal']['editmenuitem']['IDtype'] == $bmg['id'] ? ' selected' : ''  ,'> ' . $bmg['subject_html'] . '</option>';
 		}
 	}
 	else {

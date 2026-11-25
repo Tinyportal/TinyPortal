@@ -167,30 +167,33 @@ class Block extends Base
 		throw new \InvalidArgumentException();
 	}
 
-	public function getBlockPermissions()
+	public static function isExecutableBlockType(int $type): bool
+	{
+		return in_array($type, [10, 11], true);
+	}
+
+	public function canAccessBlock(array $block): bool
 	{
 		global $context, $user_info;
 
-		$blocks = [];
-		$user = $user_info['groups'];
-		$activeBlocks = $this->getActiveBlocks();
-		$now = time();
-		foreach ($activeBlocks as $block) {
-			$settings = (array) json_decode($block['settings'], true);
-			if (!self::isPublished($settings, $now)) {
-				continue;
-			}
+		if (!isset($block['off']) || (int) $block['off'] !== 0
+			|| !self::isPublished((array) json_decode($block['settings'], true), time())) {
+			return false;
+		}
 
-			// Check group access
-			if (allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
-			}
-			elseif (!isset($block['access'])) {
-				continue;
-			}
-			elseif (isset($block['access']) && (strpos($block['access'], ',') === false) && (empty(array_intersect([$block['access']], $user)))) {
-				continue;
-			}
-			elseif (empty(array_intersect($user, explode(',', $block['access'])))) {
+		if (allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
+			return true;
+		}
+
+		return isset($block['access'])
+			&& array_intersect($user_info['groups'], explode(',', $block['access'])) !== [];
+	}
+
+	public function getBlockPermissions()
+	{
+		$blocks = [];
+		foreach ($this->getActiveBlocks() as $block) {
+			if (!$this->canAccessBlock($block)) {
 				continue;
 			}
 

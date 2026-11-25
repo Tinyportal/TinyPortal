@@ -64,7 +64,7 @@ function template_submitarticle()
 	}
 
 	echo'
-		<div class="cat_bar"><h3 class="catbg"><img class="tp_article_on" src="' . $settings['tp_images_url'] . '/TP' , $mg['off'] == '1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id'] == '' ? $txt['tp-addarticle'] . '' . $txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle'] . ' ' . html_entity_decode($mg['subject']) , '' , $mg['id'] == 0 ? '' : '&nbsp;-&nbsp;<a href="' . $scripturl . '?page=' . $mg['id'] . '">[' . $txt['tp-preview'] . ']</a>';
+		<div class="cat_bar"><h3 class="catbg"><img class="tp_article_on" src="' . $settings['tp_images_url'] . '/TP' , $mg['off'] == '1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id'] == '' ? $txt['tp-addarticle'] . '' . $txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle'] . ' ' . $mg['subject_html'] , '' , $mg['id'] == 0 ? '' : '&nbsp;-&nbsp;<a href="' . $scripturl . '?page=' . $mg['id'] . '">[' . $txt['tp-preview'] . ']</a>';
 	echo '</h3></div>
 		<div id="edit-add-single-article">
 		<div class="windowbg noup">
@@ -73,7 +73,7 @@ function template_submitarticle()
 					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
 				</dt>
 				<dd>
-					<input type="text" id="tp_article_subject" name="tp_article_subject" value="' . htmlentities($mg['subject'], ENT_QUOTES, $context['character_set']) . '" style="width: 92%;" required>
+					<input type="text" id="tp_article_subject" name="tp_article_subject" value="' . ($mg['subject_input'] ?? '') . '" style="width: 92%;" required>
 				</dd>
 				<dt>
 					<span class="font-strong">
@@ -548,7 +548,7 @@ function template_showcomments()
 					<tr class="windowbg">
 						<td class="tp_comments">
 						<div>
-							<div class="float-items" style="width:30%;"><a href="' . $scripturl . '?page=' . $mes['page'] . '#tp-comment">' . $mes['pagename'] . '</a></div>
+							<div class="float-items" style="width:30%;"><a href="' . $scripturl . '?page=' . $mes['page'] . '#tp-comment">' . $mes['pagename_html'] . '</a></div>
 							<div class="float-items" style="width:15%;"><a href="' . $scripturl . '?action=profile;u=' . $mes['author_id'] . '">' . $mes['author'] . '</a></div>
 							<div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'], 0, 150) , '...</div></div>
 							<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="' . $scripturl . '?action=profile;u=' . $mes['member_id'] . '">' . $mes['membername'] . '</a> ' : $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
@@ -677,11 +677,11 @@ function template_showarticle()
 
 			if ($art['off'] == 0 && $art['approved'] == 1) {
 				echo '
-						<a href="' . $scripturl . '?page=' . $art['id'] . '" title="' . $txt['tp-viewarticle'] . '">' . html_entity_decode($art['subject']) . '</a>';
+						<a href="' . $scripturl . '?page=' . $art['id'] . '" title="' . $txt['tp-viewarticle'] . '">' . $art['subject_html'] . '</a>';
 			}
 			else {
 				echo '
-					(<i>' . html_entity_decode($art['subject']) . '</i>)';
+					(<i>' . $art['subject_html'] . '</i>)';
 			}
 
 			echo '

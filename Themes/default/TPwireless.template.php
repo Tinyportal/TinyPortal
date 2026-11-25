@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -138,10 +138,10 @@ function render_frontp($single = false)
 
 	if (in_array('title', $context['TPortal']['article']['visual_options'])) {
 		if (isset($context['TPortal']['article']['boardnews'])) {
-			echo $context['TPortal']['article']['subject'];
+			echo $context['TPortal']['article']['subject_html'];
 		}
 		else {
-			echo $context['TPortal']['article']['subject'];
+			echo $context['TPortal']['article']['subject_html'];
 		}
 	}
 	echo '

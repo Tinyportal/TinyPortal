@@ -70,6 +70,29 @@ class Util
 		return false;
 	}
 
+	public static function positiveIds($values): array
+	{
+		if (is_string($values)) {
+			$values = explode(',', $values);
+		}
+		if (!is_array($values)) {
+			return [];
+		}
+
+		$ids = [];
+		foreach ($values as $value) {
+			if (!is_int($value) && !is_string($value)) {
+				continue;
+			}
+			$id = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+			if ($id !== false) {
+				$ids[$id] = $id;
+			}
+		}
+
+		return array_values($ids);
+	}
+
 	public static function find_in_set($data, $field, $arg = 'OR')
 	{
 		$dB = Database::getInstance();

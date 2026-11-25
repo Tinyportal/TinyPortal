@@ -702,7 +702,7 @@ echo '
 							<select name="tp_block_body">
 							<option value="0">' . $txt['tp-none2'] . '</option>';
 		foreach ($context['TPortal']['edit_articles'] as $art => $article) {
-			echo '<option value="' . $article['id'] . '" ' , $context['TPortal']['blockedit']['body'] == $article['id'] ? ' selected="selected"' : '' ,' >' . html_entity_decode($article['subject']) . '</option>';
+			echo '<option value="' . $article['id'] . '" ' , $context['TPortal']['blockedit']['body'] == $article['id'] ? ' selected="selected"' : '' ,' >' . $article['subject_html'] . '</option>';
 		}
 		echo '</select>
 						</dd>
@@ -1049,7 +1049,7 @@ echo '
 		$a = 1;
 		foreach ($context['TPortal']['edit_articles'] as $bb) {
 			echo '
-								<input type="checkbox" id="articletype' , $a , '" name="articletype' , $a , '" value="' . $bb['id'] . '" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['display']['page']) ? 'checked="checked"' : '' , '><label for="articletype' , $a , '"> ' . html_entity_decode($bb['subject'], ENT_QUOTES) . '</label><br>';
+								<input type="checkbox" id="articletype' , $a , '" name="articletype' , $a , '" value="' . $bb['id'] . '" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['display']['page']) ? 'checked="checked"' : '' , '><label for="articletype' , $a , '"> ' . $bb['subject_html'] . '</label><br>';
 			$a++;
 		}
 		// if none is chosen, have a control value
