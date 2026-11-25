@@ -1565,8 +1565,10 @@ function doTPfrontpage()
 
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			// decode the block settings
-			$set = json_decode($row['settings'], true);
+			$set = (array) json_decode($row['settings'], true);
+			if (!TPBlock::isPublished($set, $now)) {
+				continue;
+			}
 
 			// some tests to minimize sql calls
 			if ($row['type'] == 7) {

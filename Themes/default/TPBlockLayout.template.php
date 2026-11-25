@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -266,7 +266,9 @@ function template_editblock()
 {
 	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings, $language;
 
-	$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
+	$block = $context['TPortal']['blockedit'];
+	$newtitle = html_entity_decode($block['title']);
+	$publicationFormat = \TinyPortal\Block::PUBLICATION_DATE_FORMAT;
 
 	echo '
 	<div id="tpadmin">
@@ -292,6 +294,15 @@ function template_editblock()
 						</dt>
 						<dd>
 							<input type="text" id="tp_block_title" name="tp_block_title" value="' . $newtitle . '" size="50" required>
+						</dd>
+						<dt><label for="tp_block_pub_start"><b>', $txt['tp-block-publication-start'], '</b></label></dt>
+						<dd>
+							<input type="datetime-local" id="tp_block_pub_start" name="tp_block_pub_start" value="', isset($block['pub_start']) ? date($publicationFormat, $block['pub_start']) : '', '">
+						</dd>
+						<dt><label for="tp_block_pub_end"><b>', $txt['tp-block-publication-end'], '</b></label></dt>
+						<dd>
+							<input type="datetime-local" id="tp_block_pub_end" name="tp_block_pub_end" value="', isset($block['pub_end']) ? date($publicationFormat, $block['pub_end']) : '', '">
+							<div class="smalltext">', $txt['tp-block-publication-help'], '</div>
 						</dd>
 						<dt><label for="tp_block_type"><b>',$txt['tp-type'] . '</b></label></dt>
 						<dd>

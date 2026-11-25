@@ -300,7 +300,7 @@ function template_main()
 				<div class="windowbg">
 					<div class="tp_flexrow">
 						<div class="tp_dlthumb">
-							<img src="' , !empty($dlcat['icon']) ? (substr($dlcat['icon'], 0, 4) == 'http' ? $dlcat['icon'] : $boardurl . '/' . $dlcat['icon']) : $settings['images_url'] . '/board.gif' , '" alt="' . $dlcat['name'] . '" />
+							<img src="' , !empty($dlcat['icon']) ? $dlcat['icon'] : $settings['images_url'] . '/board.gif' , '" alt="' . $dlcat['name'] . '" />
 						</div>
 						<div class="tp_dldetails">
 							<div class="tp_dltitle"><a href="' . $dlcat['href'] . '">' . $dlcat['name'] . '</a></div>
@@ -351,7 +351,7 @@ function template_main()
 					<div class="tp_flexrow">
 						<div class="tp_dlthumb">';
 					echo '
-					' , ($dlitem['icon'] != '' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="' . (substr($dlitem['icon'], 0, 4) == 'http' ? $dlitem['icon'] : $boardurl . '/' . $dlitem['icon']) . '" alt="' . $dlitem['name'] . '"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="' . $dlitem['name'] . '"  />' , '	
+					' , ($dlitem['icon'] != '' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="' . $dlitem['icon'] . '" alt="' . $dlitem['name'] . '"  />' : '<img src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="' . $dlitem['name'] . '"  />' , '
 						</div>';
 					echo '
 						<div class="tp_dldetails">
@@ -415,7 +415,7 @@ function template_main()
 			<div class="windowbg">
 				<div class="tp_flexrow">
 					<div class="tp_dlicon">
-						' , ($dlitem['icon'] != '' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="' . (substr($dlitem['icon'], 0, 4) == 'http' ? $dlitem['icon'] : $boardurl . '/' . $dlitem['icon']) . '" alt="' . $dlitem['name'] . '"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="' . $dlitem['name'] . '"  />' , '
+						' , ($dlitem['icon'] != '' && strpos($dlitem['icon'], 'blank.gif') == false) ? '<img src="' . $dlitem['icon'] . '" alt="' . $dlitem['name'] . '"  />' : '<img class="dl_icon" src="' . $settings['tp_images_url'] . '/TPnodl.png" alt="' . $dlitem['name'] . '"  />' , '
 					</div>
 					<div class="tp_dldetails">
 						<div class="tp_dltitle"><h3 class="h3dl">',$dlitem['file'] == '- empty item -' ? '' . $dlitem['name'] . '' : '<a href="' . $dlitem['href'] . '">' . $dlitem['name'] . '</a>','</h3></div>
@@ -557,7 +557,7 @@ function template_main()
 				<div>';
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('tp_dluploadtext', '', true, 'qup_tp_dluploadtext', $context['TPortal']['show_wysiwyg'], false);
+			TPwysiwyg('tp_dluploadtext', '', true, 'qup_tp_dluploadtext', $context['TPortal']['show_wysiwyg'], true);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);
@@ -939,7 +939,7 @@ function template_main()
 				<div><b>' . $txt['tp-dluploadtext'] . '</b><br><br></div>';
 
 			if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-				TPwysiwyg('tp_dladmintext' . $cat['id'], $cat['description'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_dladmintext' . $cat['id'], $cat['description'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : true);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 				TP_bbcbox($context['TPortal']['editor_id']);
@@ -991,7 +991,7 @@ function template_main()
 
 			echo '
 						</select>
-						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="', substr($cat['icon'], 0, 4) == 'http' ? $cat['icon'] : $boardurl . '/' . $cat['icon'] , '" alt="" />
+						<img style="margin-left: 2ex;vertical-align:top" name="dlicon" src="', $cat['icon'] , '" alt="" />
 						<script type="text/javascript">
 						function dlcheck(icon)
 							{

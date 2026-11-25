@@ -55,6 +55,7 @@
 		<remove-file name="$themedir/TPdladmin.template.php" />
 		<remove-file name="$themedir/TPdlmanager.template.php" />
 		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPListImages.template.php" />
 		<remove-file name="$themedir/TPortal.template.php" />
 		<remove-file name="$themedir/TPortalAdmin.template.php" />
 		<remove-file name="$themedir/TPprint.template.php" />
@@ -124,6 +125,7 @@
 		<remove-file name="$themedir/TPdladmin.template.php" />
 		<remove-file name="$themedir/TPdlmanager.template.php" />
 		<remove-file name="$themedir/TPhelp.template.php" />
+		<remove-file name="$themedir/TPListImages.template.php" />
 		<remove-file name="$themedir/TPortal.template.php" />
 		<remove-file name="$themedir/TPortalAdmin.template.php" />
 		<remove-file name="$themedir/TPprint.template.php" />

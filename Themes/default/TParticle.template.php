@@ -24,7 +24,6 @@ function template_submitarticle()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
-	$tpmonths = [' ', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	if (!empty($context['TPortal']['editarticle'])) {
 		$mg = $context['TPortal']['editarticle'];
 	}
@@ -91,7 +90,7 @@ function template_submitarticle()
 		echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
 	}
 	elseif (($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
-		TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
+		TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg, true);
 	}
 	elseif (($tp_use_wysiwyg == 0) && ($article_type == 'html')) {
 		echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
@@ -126,7 +125,7 @@ function template_submitarticle()
 	if ($article_type == 'php' || $article_type == 'html') {
 		echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<span class="font-strong">' . $txt['tp-introtext'] . '</span>';
 		if (($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
-			TPwysiwyg('tp_article_intro', $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
+			TPwysiwyg('tp_article_intro', $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, true);
 		}
 		else {
 			echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">' . $mg['intro'] . '</textarea>';
@@ -145,8 +144,6 @@ function template_submitarticle()
 	echo '
 					<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '" >';
 
-	echo '<input type="hidden" name="tp_article_timestamp" value="' . $mg['date'] . '">';
-
 	if (allowedTo('admin_forum') || allowedTo('tp_articles')) {
 		echo '
 				<hr>
@@ -159,45 +156,10 @@ function template_submitarticle()
 						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" required><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-created'], '
+						<label for="tp_article_created_at">', $txt['tp-created'], '</label>
 					</dt>
-					<dd>';
-		// day
-		$day = date('j', $mg['date']);
-		$month = date('n', $mg['date']);
-		$year = date('Y', $mg['date']);
-		$hour = date('G', $mg['date']);
-		echo '<select size="1" name="tp_article_day">';
-		$minute = date('i', $mg['date']);
-		for ($a = 1; $a < 32; $a++) {
-			echo '<option value="' . $a . '" ' , $day == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select>';
-		// month
-		echo '<select size="1" name="tp_article_month">';
-		for ($a = 1; $a < 13; $a++) {
-			echo '<option value="' . $a . '" ' , $month == $a ? ' selected' : '' , '>' . $tpmonths[$a] . '</option>  ';
-		}
-		echo '</select>';
-		// year
-		echo '<select size="1" name="tp_article_year">';
-		$now = date('Y', time()) + 1;
-		for ($a = 2004; $a < $now; $a++) {
-			echo '<option value="' . $a . '" ' , $year == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select>';
-		// hours
-		echo ' - <select size="1" name="tp_article_hour">';
-		for ($a = 0; $a < 24; $a++) {
-			echo '<option value="' . $a . '" ' , $hour == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select>';
-		// minutes
-		echo ' <b>:</b><select size="1" name="tp_article_minute">';
-		for ($a = 0; $a < 60; $a++) {
-			echo '<option value="' . $a . '" ' , $minute == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select><br><br>
+					<dd>
+						<input type="datetime-local" id="tp_article_created_at" name="tp_article_created_at" value="', date('Y-m-d\TH:i', $mg['date']), '" required><br><br>
 					</dd>
 					<dt>
 						', $txt['tp-approved'], '
@@ -307,112 +269,10 @@ function template_submitarticle()
 						', $txt['tp-published'], '
 					</dt>
 					<dd><div class="description" style="line-height: 1.6em;">
-							<b>',$txt['tp-pub_start'],': </b><br>';
-			// day
-			echo '
-						<input type="hidden" name="tp_article_pub_start" value="' . $mg['pub_start'] . '">
-						<select size="1" name="tp_article_pubstartday">
-							<option value="0">' . $txt['tp-notset'] . '</option>';
-			$day = !empty($mg['pub_start']) ? date('j', $mg['pub_start']) : 0;
-			$month = !empty($mg['pub_start']) ? date('n', $mg['pub_start']) : 0;
-			$year = !empty($mg['pub_start']) ? date('Y', $mg['pub_start']) : 0;
-			$hour = !empty($mg['pub_start']) ? date('G', $mg['pub_start']) : 0;
-			$minute = !empty($mg['pub_start']) ? date('i', $mg['pub_start']) : 0;
-			for ($a = 1; $a < 32; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $day == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// month
-			echo '
-						<select size="1" name="tp_article_pubstartmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-			for ($a = 1; $a < 13; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $month == $a ? ' selected' : '' , '>' . $tpmonths[$a] . '</option>  ';
-			}
-			echo '
-						</select>';
-			// year
-			echo '
-						<select size="1" name="tp_article_pubstartyear"><option value="0">' . $txt['tp-notset'] . '</option>';
-			$now = date('Y', time()) + 1;
-			for ($a = 2004; $a < $now + 2; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $year == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// hours
-			echo ' -
-						<select size="1" name="tp_article_pubstarthour">';
-			for ($a = 0; $a < 24; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $hour == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// minutes
-			echo ' <b>:</b>
-						<select size="1" name="tp_article_pubstartminute">';
-			for ($a = 0; $a < 60; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $minute == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select><br>';
-			// day
-			echo '
-						<input type="hidden" name="tp_article_pub_end" value="' . $mg['pub_end'] . '">
-						<b>',$txt['tp-pub_end'],':</b><br><select size="1" name="tp_article_pubendday"><option value="0">' . $txt['tp-notset'] . '</option>';
-			$day = !empty($mg['pub_end']) ? date('j', $mg['pub_end']) : 0;
-			$month = !empty($mg['pub_end']) ? date('n', $mg['pub_end']) : 0;
-			$year = !empty($mg['pub_end']) ? date('Y', $mg['pub_end']) : 0;
-			$hour = !empty($mg['pub_end']) ? date('G', $mg['pub_end']) : 0;
-			$minute = !empty($mg['pub_end']) ? date('i', $mg['pub_end']) : 0;
-			for ($a = 1; $a < 32; $a++) {
-				echo '
-									<option value="' . $a . '" ' , $day == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// month
-			echo '
-						<select size="1" name="tp_article_pubendmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-			for ($a = 1; $a < 13; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $month == $a ? ' selected' : '' , '>' . $tpmonths[$a] . '</option>  ';
-			}
-			echo '
-						</select>';
-			// year
-			echo '
-						<select size="1" name="tp_article_pubendyear"><option value="0">' . $txt['tp-notset'] . '</option>';
-			$now = date('Y', time()) + 1;
-			for ($a = 2004; $a < $now + 2; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $year == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// hours
-			echo ' -
-						<select size="1" name="tp_article_pubendhour">';
-			for ($a = 0; $a < 24; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $hour == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// minutes
-			echo ' <b>:</b>
-						<select size="1" name="tp_article_pubendminute">';
-			for ($a = 0; $a < 60; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $minute == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>
+						<label for="tp_article_publish_from">', $txt['tp-pub_start'], '</label><br>
+						<input type="datetime-local" id="tp_article_publish_from" name="tp_article_publish_from" value="', empty($mg['pub_start']) ? '' : date('Y-m-d\TH:i', $mg['pub_start']), '"><br>
+						<label for="tp_article_publish_until">', $txt['tp-pub_end'], '</label><br>
+						<input type="datetime-local" id="tp_article_publish_until" name="tp_article_publish_until" value="', empty($mg['pub_end']) ? '' : date('Y-m-d\TH:i', $mg['pub_end']), '">
 					</div>
 					</dd>
 				</dl>';

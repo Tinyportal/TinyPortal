@@ -33,3 +33,4 @@ $txt['tp-submitsuccess2'] = 'The submission was successful.';
 
 $txt['tp_article_type_invalid'] = 'Choose HTML, BBC, PHP, or an external article.';
 $txt['tp_article_import_invalid'] = 'Choose a readable .html or .htm file in tp-files/tp-articles/imported.';
+$txt['tp_article_datetime_invalid'] = 'Enter a valid article date and time.';

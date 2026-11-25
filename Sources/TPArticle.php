@@ -341,6 +341,7 @@ function articleEdit()
 	$articleId = $_POST['article'] ?? $_GET['article'] ?? '';
 	$where = 0;
 	$storedType = null;
+	$existing = [];
 
 	if ($articleId !== '') {
 		if ((!is_string($articleId) && !is_int($articleId)) || !ctype_digit((string) $articleId) || (int) $articleId < 1) {
@@ -350,7 +351,7 @@ function articleEdit()
 		$where = (int) $articleId;
 		$request = $smcFunc['db_query'](
 			'',
-			'SELECT author_id, type FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
+			'SELECT author_id, type, date, pub_start, pub_end FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
 			['article_id' => $where]
 		);
 		$existing = $smcFunc['db_fetch_assoc']($request);
@@ -385,6 +386,24 @@ function articleEdit()
 
 	$options = [];
 	$article_data = ['type' => $articleType, 'fileimport' => ''];
+
+	if ($where === 0) {
+		$article_data['date'] = time();
+	}
+
+	if ($canManageArticles) {
+		foreach ([
+			'tp_article_created_at' => 'date',
+			'tp_article_publish_from' => 'pub_start',
+			'tp_article_publish_until' => 'pub_end',
+		] as $field => $column) {
+			if (array_key_exists($field, $_POST)) {
+				$storedTimestamp = isset($existing[$column]) ? (int) $existing[$column] : null;
+				$article_data[$column] = articleDateTimestamp($_POST[$field], $storedTimestamp, $column !== 'date');
+			}
+		}
+	}
+
 	if ($articleType === 'import') {
 		require_once SOURCEDIR . '/TPSubs.php';
 
@@ -514,49 +533,6 @@ function articleEdit()
 						}
 						$article_data[$setting] = $value;
 						break;
-					case 'day':
-					case 'month':
-					case 'year':
-					case 'minute':
-					case 'hour':
-						$timestamp = mktime($_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year']);
-						if (!isset($savedtime)) {
-							$article_data['date'] = $timestamp;
-						}
-						break;
-					case 'timestamp':
-						if (!isset($savedtime)) {
-							$article_data['date'] = empty($_POST['tp_article_timestamp']) ? time() : $_POST['tp_article_timestamp'];
-						}
-						break;
-					case 'pubstartday':
-					case 'pubstartmonth':
-					case 'pubstartyear':
-					case 'pubstartminute':
-					case 'pubstarthour':
-					case 'pub_start':
-						if (empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear'])) {
-							$article_data['pub_start'] = 0;
-						}
-						else {
-							$timestamp = mktime($_POST['tp_article_pubstarthour'], $_POST['tp_article_pubstartminute'], 0, $_POST['tp_article_pubstartmonth'], $_POST['tp_article_pubstartday'], $_POST['tp_article_pubstartyear']);
-							$article_data['pub_start'] = $timestamp;
-						}
-					break;
-					case 'pubendday':
-					case 'pubendmonth':
-					case 'pubendyear':
-					case 'pubendminute':
-					case 'pubendhour':
-					case 'pub_end':
-						if (empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear'])) {
-							$article_data['pub_end'] = 0;
-						}
-						else {
-							$timestamp = mktime($_POST['tp_article_pubendhour'], $_POST['tp_article_pubendminute'], 0, $_POST['tp_article_pubendmonth'], $_POST['tp_article_pubendday'], $_POST['tp_article_pubendyear']);
-							$article_data['pub_end'] = $timestamp;
-						}
-						break;
 					case 'approved':
 					case 'off':
 					case 'frontpage':
@@ -637,7 +613,7 @@ function articleEdit()
 	}
 	// if this was a new article
 	if (array_key_exists('tp_article_approved', $_POST) && $_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
-		tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0), $where);
+		tp_recordevent($article_data['date'] ?? (int) $existing['date'], $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0), $where);
 	}
 
 	if (array_key_exists('tpadmin_form', $_POST)) {
@@ -646,6 +622,29 @@ function articleEdit()
 	else {
 		redirectexit('action=tportal;sa=submitsuccess');
 	}
+}
+
+function articleDateTimestamp($value, ?int $storedTimestamp, bool $optional): int
+{
+	if ($optional && $value === '') {
+		return 0;
+	}
+
+	$format = 'Y-m-d\TH:i';
+	if (is_string($value) && preg_match('/\A(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}\z/', $value)) {
+		// Keep the original instant and seconds when the displayed minute has not changed.
+		if ($storedTimestamp !== null && (!$optional || $storedTimestamp !== 0) && date($format, $storedTimestamp) === $value) {
+			return $storedTimestamp;
+		}
+
+		$date = DateTimeImmutable::createFromFormat('!' . $format, $value);
+		if ($date !== false && $date->format($format) === $value) {
+			return $date->getTimestamp();
+		}
+	}
+
+	loadLanguage('TParticle');
+	fatal_lang_error('tp_article_datetime_invalid', false);
 }
 
 function articleShow()

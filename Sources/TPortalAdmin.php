@@ -316,6 +316,12 @@ function do_subaction($tpsub)
 		do_articles();
 	}
 	elseif (in_array($tpsub, ['blocks', 'panels']) && (allowedTo('tp_blocks'))) {
+		if ($tpsub === 'panels') {
+			$tabs = panelAdminSettings();
+			$tab = $_GET['panel_tab'] ?? 'general';
+			$context['TPortal']['panel_tabs'] = array_keys($tabs);
+			$context['TPortal']['panel_tab'] = is_string($tab) && isset($tabs[$tab]) ? $tab : 'general';
+		}
 		do_blocks();
 	}
 	elseif (in_array($tpsub, ['menubox', 'addmenu']) && (allowedTo('tp_blocks'))) {
@@ -1482,6 +1488,29 @@ function do_admin($tpsub = 'overview')
 	}
 }
 
+function panelAdminSettings()
+{
+	$tabs = [
+		'general' => [
+			'padding', 'hidebars_custom', 'useroundframepanels', 'showcollapse',
+			'hidebars_admin_only', 'hidebars_profile', 'hidebars_pm',
+			'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar',
+		],
+	];
+	foreach (['left', 'right', 'top', 'center', 'front', 'lower', 'bottom'] as $panel) {
+		$tabs[$panel] = ['block_layout_' . $panel, 'blockgrid_' . $panel, 'blockheight_' . $panel, 'panelstyle_' . $panel];
+		if ($panel !== 'front') {
+			$tabs[$panel][] = $panel . 'panel';
+			$tabs[$panel][] = 'hide_' . $panel . 'bar_forum';
+		}
+		if ($panel === 'left' || $panel === 'right') {
+			$tabs[$panel][] = $panel . 'bar_width';
+		}
+	}
+
+	return $tabs;
+}
+
 function do_postchecks()
 {
 	global $context, $txt, $settings, $boarddir, $smcFunc, $sourcedir;
@@ -1571,6 +1600,16 @@ function do_postchecks()
 			$ssi = [];
 			$checkboxes = [];
 			$default_image_upload_path = $boarddir . "/tp-images/";
+			$panelTab = null;
+			$panelFields = null;
+			if ($from === 'panels' && array_key_exists('panel_tab', $_POST)) {
+				$tabs = panelAdminSettings();
+				$panelTab = $_POST['panel_tab'];
+				if (!is_string($panelTab) || !isset($tabs[$panelTab])) {
+					return 'panels';
+				}
+				$panelFields = $tabs[$panelTab];
+			}
 
 			switch ($from) {
 				case 'settings':
@@ -1583,7 +1622,9 @@ function do_postchecks()
 					$checkboxes = ['use_wysiwyg', 'use_dragdrop', 'hide_editarticle_link', 'print_articles', 'allow_links_article_comments', 'hide_article_facebook', 'hide_article_twitter', 'hide_article_reddit', 'hide_article_digg', 'hide_article_delicious', 'hide_article_stumbleupon'];
 					break;
 				case 'panels':
-					$checkboxes = ['useroundframepanels', 'showcollapse', 'hidebars_admin_only', 'hidebars_profile', 'hidebars_pm', 'hidebars_memberlist', 'hidebars_search', 'hidebars_calendar'];
+					if ($panelTab === null || $panelTab === 'general') {
+						$checkboxes = array_diff(panelAdminSettings()['general'], ['padding', 'hidebars_custom']);
+					}
 					break;
 				default:
 					break;
@@ -1605,6 +1646,9 @@ function do_postchecks()
 			foreach ($_POST as $what => $value) {
 				if (substr($what, 0, 3) == 'tp_') {
 					$where = substr($what, 3);
+					if ($panelFields !== null && (!in_array($where, $panelFields, true) || !is_string($value))) {
+						continue;
+					}
 					$clean = $value;
 					// for frontpage, do some extra
 					if ($from == 'frontpage') {
@@ -1672,7 +1716,7 @@ function do_postchecks()
 				$updateArray['SSI_board'] = implode(',', $ssi);
 			}
 			updateTPSettings($updateArray);
-			return $from;
+			return $panelTab === null ? $from : 'panels;panel_tab=' . $panelTab;
 		}
 		// categories
 		elseif ($from == 'categories') {
@@ -2584,7 +2628,32 @@ function do_postchecks()
 			checkSession('post');
 			isAllowedTo('tp_blocks');
 
-			$where = is_numeric($_POST['tpadmin_form_id']) ? $_POST['tpadmin_form_id'] : 0;
+			$where = is_numeric($_POST['tpadmin_form_id']) ? (int) $_POST['tpadmin_form_id'] : 0;
+			$tpBlock = TPBlock::getInstance();
+			$block = $tpBlock->getBlock($where);
+			if (empty($block)) {
+				fatal_lang_error('tp-notablock', false);
+			}
+
+			$blockType = (int) $block['type'];
+			$blockSettings = json_decode($block['settings'], true);
+			$publication = [];
+			try {
+				foreach (['pub_start', 'pub_end'] as $setting) {
+					$stored = $blockSettings[$setting] ?? null;
+					$field = 'tp_block_' . $setting;
+					$publication[$setting] = array_key_exists($field, $_POST)
+						? TPBlock::parsePublicationDate($_POST[$field], $stored)
+						: $stored;
+				}
+			}
+			catch (InvalidArgumentException $e) {
+				fatal_lang_error('tp-block-publication-invalid', false);
+			}
+			if (isset($publication['pub_start'], $publication['pub_end']) && $publication['pub_start'] >= $publication['pub_end']) {
+				fatal_lang_error('tp-block-publication-order', false);
+			}
+
 			$tpgroups = [];
 			$access = [];
 			$lang = [];
@@ -2651,59 +2720,12 @@ function do_postchecks()
 						);
 					}
 					elseif (substr($setting, 0, 4) == 'set_') {
-						// Replace set_ as we don't want it anymore
-						$setting = str_replace('set_', '', $setting);
-
-						// Check for blocks in table, if none insert default blocks.
-						$request = $smcFunc['db_query'](
-							'',
-							'
-                            SELECT settings FROM {db_prefix}tp_blocks
-                            WHERE id = {int:varid} LIMIT 1',
-							['varid' => $where]
-						);
-
-						$data = [];
-						if ($smcFunc['db_num_rows']($request) > 0) {
-							$row = $smcFunc['db_fetch_assoc']($request);
-							$data = json_decode($row['settings'], true);
-							$smcFunc['db_free_result']($request);
-						}
-						$data[$setting] = $value;
-						$smcFunc['db_query'](
-							'',
-							'
-                            UPDATE {db_prefix}tp_blocks
-                            SET settings = {string:data}
-                            WHERE id = {int:blockid}',
-							['data' => json_encode($data), 'blockid' => $where]
-						);
+						$blockSettings[substr($setting, 4)] = $value;
 					}
-					elseif ($setting == 'type') {
-						// Check to see if the type has changed.
-						$request = $smcFunc['db_query'](
-							'',
-							'
-							SELECT type FROM {db_prefix}tp_blocks
-							WHERE id = {int:id} LIMIT 1',
-							['id' => $where]
-						);
-						if ($smcFunc['db_num_rows']($request) > 0) {
-							$row = $smcFunc['db_fetch_assoc']($request);
-							$smcFunc['db_free_result']($request);
-							if ($row['type'] != $value) {
-								$typechange = true;
-								$defaultSetting = TPBlock::getInstance()->getBlockDefault($value) ?? '';
-								$smcFunc['db_query'](
-									'',
-									'
-									UPDATE {db_prefix}tp_blocks
-									SET settings = {string:data}, type = {int:blocktype}
-									WHERE id = {int:blockid}',
-									['data' => json_encode($defaultSetting), 'blocktype' => $value, 'blockid' => $where]
-								);
-							}
-						}
+					elseif ($setting == 'type' && $blockType != $value) {
+						$typechange = true;
+						$blockType = (int) $value;
+						$blockSettings = $tpBlock->getBlockDefault()[$blockType] ?? [];
 					}
 					elseif (in_array($setting, ['off', 'visible'], true) && in_array($value, ['0', '1'], true)) {
 						$smcFunc['db_query'](
@@ -2780,12 +2802,16 @@ function do_postchecks()
 				UPDATE {db_prefix}tp_blocks
 				SET	display = {string:acc2},
 					access = {string:acc},
-					lang = {string:lang}
+					lang = {string:lang},
+					type = {int:blocktype},
+					settings = {string:settings}
 				WHERE id = {int:blockid}',
 				[
 					'acc2' => implode(',', $access),
 					'acc' => implode(',', $tpgroups),
 					'lang' => implode('|', $lang),
+					'blocktype' => $blockType,
+					'settings' => json_encode($publication + $blockSettings),
 					'blockid' => $where,
 				]
 			);

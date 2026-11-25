@@ -678,49 +678,6 @@ function tp_renderbbc($message)
 			</tr>';
 }
 
-function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter = false)
-{
-	global $user_info, $board_info, $sourcedir;
-
-	require_once $sourcedir . '/Subs-Post.php';
-
-	$body = str_replace(['<', '>', "\n", '	'], ['&lt;', '&gt;', '<br>', '&nbsp;'], $text);
-	preparsecode($body);
-
-	// Collect all parameters for the creation or modification of a post.
-	$msgOptions = [
-		'id' => empty($_REQUEST['msg']) ? 0 : (int) $_REQUEST['msg'],
-		'subject' => $title,
-		'body' => $body,
-		'icon' => $icon,
-		'smileys_enabled' => '1',
-		'attachments' => [],
-	];
-	$topicOptions = [
-		'id' => empty($topic) ? 0 : $topic,
-		'board' => $board,
-		'poll' => null,
-		'lock_mode' => null,
-		'sticky_mode' => $sticky,
-		'mark_as_read' => true,
-	];
-	$posterOptions = [
-		'id' => $submitter,
-		'name' => '',
-		'email' => '',
-		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && isset($board_info['posts_count']),
-	];
-
-	if (createPost($msgOptions, $topicOptions, $posterOptions)) {
-		$topi = $topicOptions['id'];
-	}
-	else {
-		$topi = 0;
-	}
-
-	return $topi;
-}
-
 function TPwysiwyg_setup()
 {
 	global $context, $settings, $txt, $user_info;
@@ -1040,31 +997,6 @@ function tp_fetchpermissions($perms)
 		}
 		return $names;
 	}
-}
-
-function tp_fetchboards()
-{
-	global $smcFunc;
-
-	// get all boards for board-spesific news
-	$request = $smcFunc['db_query'](
-		'',
-		'
-		SELECT id_board, name, board_order
-		FROM {db_prefix}boards
-		WHERE  1=1
-		ORDER BY board_order ASC',
-		[]
-	);
-	$boards = [];
-	if ($smcFunc['db_num_rows']($request) > 0) {
-		while ($row = $smcFunc['db_fetch_assoc']($request)) {
-			$boards[] = ['id' => $row['id_board'], 'name' => $row['name']];
-		}
-
-		$smcFunc['db_free_result']($request);
-	}
-	return $boards;
 }
 
 function tp_hidepanel($id, $inline = false, $string = false, $margin = '')
@@ -2308,7 +2240,7 @@ function dl_recentitems($number = 8, $sort = 'date', $type = 'array', $cat = 0)
 					'views' => $row['views'],
 					'author' => (!empty($row['real_name']) ? '<a href="' . $scripturl . '?action=profile;u=' . $row['author_id'] . '">' . $row['real_name'] . '</a>' : $txt['tp-guest']),
 					'author_id' => $row['author_id'],
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'date' => timeformat($row['created']),
 					'screenshot' => $ico,
 					'catname' => $row['catname'],

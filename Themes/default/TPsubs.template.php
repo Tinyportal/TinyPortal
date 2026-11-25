@@ -2835,7 +2835,7 @@ function template_tp_image_upload_attributes()
 	return 'accept="' . template_tp_image_upload_accept() . '" data-tp-upload-type-error="' . htmlspecialchars($txt['tp-image-upload-type-error'], ENT_QUOTES) . '"';
 }
 
-function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use = 1, $showchoice = true)
+function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use = 1, $uploadInPlace = false)
 {
 	global $boardurl, $settings, $context, $txt, $scripturl;
 
@@ -2937,7 +2937,12 @@ function TPwysiwyg($textarea, $body, $upload = true, $uploadname = false, $use =
 				<span class="smalltext">', $txt['tp-maxsize'] ,' ', $context['TPortal']['image_max_size'] ,' ' . $txt['tp-kb'] . '</span>
 			</dt>
 			<dd>
-				<input type="file" name="' . $uploadname . '" ' . template_tp_image_upload_attributes() . ' data-tp-upload-auto-submit>
+				<input type="file" name="' . $uploadname . '" ' . template_tp_image_upload_attributes() . ($uploadInPlace
+					? ' data-tp-quicklist-url="' . htmlspecialchars($scripturl . '?action=tportal;sa=uploadimage', ENT_QUOTES) . '"
+						data-tp-session-var="' . htmlspecialchars($context['session_var'], ENT_QUOTES) . '"
+						data-tp-session-id="' . htmlspecialchars($context['session_id'], ENT_QUOTES) . '"
+						data-tp-upload-failed="' . htmlspecialchars($txt['tp-image-upload-failed'], ENT_QUOTES) . '"'
+					: ' data-tp-upload-auto-submit') . '>
 			</dd>
 		</dl>
 	</div>';

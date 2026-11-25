@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -23,6 +23,7 @@ if (!defined('SMF')) {
 
 class Block extends Base
 {
+	public const PUBLICATION_DATE_FORMAT = 'Y-m-d\TH:i';
 	private $dBStructure = [];
 	private $blockType = [];
 	private $blockBar = [];
@@ -139,6 +140,33 @@ class Block extends Base
 		}
 	}
 
+	public static function isPublished(array $settings, int $now): bool
+	{
+		return (!isset($settings['pub_start']) || $settings['pub_start'] < $now)
+			&& (!isset($settings['pub_end']) || $now < $settings['pub_end']);
+	}
+
+	public static function parsePublicationDate($value, ?int $storedTimestamp): ?int
+	{
+		if ($value === '') {
+			return null;
+		}
+
+		$format = self::PUBLICATION_DATE_FORMAT;
+		if (is_string($value) && preg_match('/\A(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}\z/', $value)) {
+			$date = \DateTimeImmutable::createFromFormat('!' . $format, $value);
+			if ($date !== false && $date->format($format) === $value) {
+				if ($storedTimestamp !== null && date($format, $storedTimestamp) === $value) {
+					return $storedTimestamp;
+				}
+
+				return $date->getTimestamp();
+			}
+		}
+
+		throw new \InvalidArgumentException();
+	}
+
 	public function getBlockPermissions()
 	{
 		global $context, $user_info;
@@ -146,7 +174,13 @@ class Block extends Base
 		$blocks = [];
 		$user = $user_info['groups'];
 		$activeBlocks = $this->getActiveBlocks();
+		$now = time();
 		foreach ($activeBlocks as $block) {
+			$settings = (array) json_decode($block['settings'], true);
+			if (!self::isPublished($settings, $now)) {
+				continue;
+			}
+
 			// Check group access
 			if (allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
 			}

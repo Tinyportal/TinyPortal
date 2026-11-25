@@ -104,7 +104,7 @@ function template_main()
 						<b>' . $txt['tp-dlintrotext'] . '</b>
 					</div>';
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+			TPwysiwyg('tp_dl_introtext', $context['TPortal']['dl_introtext'], true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, true);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);
@@ -558,7 +558,7 @@ function template_main()
 					<div><b>' . $txt['tp-dluploadtext'] . '</b></div>';
 
 				if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-					TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+					TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, true);
 				}
 				elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 					TP_bbcbox($context['TPortal']['editor_id']);
@@ -975,7 +975,7 @@ function template_main()
 				<div class="padding-div"><b>' . $txt['tp-dluploadtext'] . ':</b><br>';
 
 			if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-				TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+				TPwysiwyg('tp_dladmintext' . $cat['id'], html_entity_decode($cat['description'], ENT_QUOTES), true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, true);
 			}
 			elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 				TP_bbcbox($context['TPortal']['editor_id']);
@@ -1088,7 +1088,7 @@ function template_main()
 				<b>' . $txt['tp-dluploadtext'] . ':</b><br>';
 
 		if ($context['TPortal']['dl_wysiwyg'] == 'html') {
-			TPwysiwyg('tp_newdladmintext', '', true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0);
+			TPwysiwyg('tp_newdladmintext', '', true, 'qup_tp_dladmintext', isset($context['TPortal']['usersettings']['wysiwyg']) ? $context['TPortal']['usersettings']['wysiwyg'] : 0, true);
 		}
 		elseif ($context['TPortal']['dl_wysiwyg'] == 'bbc') {
 			TP_bbcbox($context['TPortal']['editor_id']);

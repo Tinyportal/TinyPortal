@@ -422,6 +422,8 @@ foreach ($tables as $table => $col) {
 	checkTextColumnNull($table);
 }
 
+updateDownloadIcons();
+
 // remove unused database tables
 $smcFunc['db_drop_table']('{db_prefix}tp_modules');
 $smcFunc['db_drop_table']('{db_prefix}tp_rates');
@@ -453,8 +455,7 @@ if (isset($row['value'])) {
 $smcFunc['db_free_result']($request);
 
 if ($convertblocks) {
-	$smcFunc['db_query'](
-		'',
+	$categoriesUpdated = countInstallerChanges(
 		'
 		UPDATE {db_prefix}tp_variables
 		SET value3 = {string:val3}
@@ -462,10 +463,13 @@ if ($convertblocks) {
 		AND type = {string:cat}',
 		['val3' => '-1,0', 'cat' => 'category']
 	);
-	$render .= '<li>Updated old categories</li>';
+	if ($categoriesUpdated > 0) {
+		$render .= '<li>Updated old categories</li>';
+	}
 }
 
 if ($convertaccess) {
+	$blocksUpdated = 0;
 	$request = $smcFunc['db_query'](
 		'',
 		'
@@ -497,21 +501,22 @@ if ($convertaccess) {
 				$new[] = $row['display'];
 			}
 
-			$smcFunc['db_query'](
-				'',
+			$blocksUpdated += countInstallerChanges(
 				'
 				UPDATE {db_prefix}tp_blocks
 				SET display = {string:display}
-				WHERE id = {int:blockid}',
+				WHERE id = {int:blockid} AND display <> {string:display}',
 				[
 					'blockid' => $row['id'],
 					'display' => count($new) > 1 ? implode(',', $new) : $new[0],
 				]
 			);
 		}
-		$render .= '<li>Updated old blocks</li>';
 	}
 	$smcFunc['db_free_result']($request);
+	if ($blocksUpdated > 0) {
+		$render .= '<li>Updated old blocks</li>';
+	}
 }
 
 // now we process all settings
@@ -719,15 +724,16 @@ foreach ($settings_array as $what => $val) {
 		$updates++;
 	}
 	elseif ($smcFunc['db_num_rows']($request) > 0 && $what == 'version') {
-		$smcFunc['db_query'](
-			'',
+		$versionUpdated = countInstallerChanges(
 			'
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
-            WHERE name = {string:name}',
+            WHERE name = {string:name} AND (value <> {string:val} OR value IS NULL)',
 			['val' => $val, 'name' => $what]
 		);
-		$render .= 'Updated internal version number to ' . $val . '<br>';
+		if ($versionUpdated > 0) {
+			$render .= 'Updated internal version number to ' . $val . '<br>';
+		}
 		$smcFunc['db_free_result']($request);
 	}
 	elseif ($smcFunc['db_num_rows']($request) > 0 && in_array($what, $updateSettings)) {
@@ -801,15 +807,12 @@ foreach ($checkboxes as $check) {
 
 	$row = $smcFunc['db_fetch_assoc']($request);
 	if (isset($row['value']) && ($row['value'] == '')) {
-		$updates++;
-
-		$smcFunc['db_query'](
-			'',
+		$updates += countInstallerChanges(
 			'
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
-            WHERE name = {string:name}',
-			['val' => 0, 'name' => $check]
+            WHERE name = {string:name} AND value = {string:old}',
+			['val' => 0, 'name' => $check, 'old' => '']
 		);
 	}
 	$smcFunc['db_free_result']($request);
@@ -826,22 +829,18 @@ foreach ($checkboxes as $check) {
 
 	$row = $smcFunc['db_fetch_assoc']($request);
 	if (isset($row['value']) && ($row['value'] == 'disabled')) {
-		$updates++;
-
-		$smcFunc['db_query'](
-			'',
+		$updates += countInstallerChanges(
 			'
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
-            WHERE name = {string:name}',
-			['val' => 'boardindex', 'name' => 'front_placement']
+            WHERE name = {string:name} AND value = {string:old}',
+			['val' => 'boardindex', 'name' => 'front_placement', 'old' => 'disabled']
 		);
-		$smcFunc['db_query'](
-			'',
+		$updates += countInstallerChanges(
 			'
             UPDATE {db_prefix}tp_settings
             SET value = {string:val}
-            WHERE name = {string:name}',
+            WHERE name = {string:name} AND (value <> {string:val} OR value IS NULL)',
 			['val' => 0, 'name' => 'front_active']
 		);
 	}
@@ -920,18 +919,14 @@ foreach ($delete_settings_array as $what) {
 		['name' => $what]
 	);
 	if ($smcFunc['db_num_rows']($request) > 0) {
-		$smcFunc['db_query'](
-			'',
+		$deletes += countInstallerChanges(
 			'
         DELETE FROM {db_prefix}tp_settings
         WHERE name = {string:name}',
 			['name' => $what]
 		);
-		$deletes++;
 	}
-	else {
-		$smcFunc['db_free_result']($request);
-	}
+	$smcFunc['db_free_result']($request);
 }
 if ($deletes > 0) {
 	$render .= 'Removed ' . $deletes . ' old setting(s)<br>';
@@ -966,14 +961,27 @@ else {
 	echo $render;
 }
 
+function countInstallerChanges($query, $params = [])
+{
+	global $smcFunc;
+
+	$result = $smcFunc['db_query']('', $query, $params);
+
+	return $result === false ? 0 : (int) $smcFunc['db_affected_rows']();
+}
+
 function articleChanges()
 {
 	global $smcFunc, $render, $db_type;
+
+	$columnsBefore = $smcFunc['db_list_columns']('{db_prefix}tp_articles', true);
 	$smcFunc['db_change_column']('{db_prefix}tp_articles', 'parse', ['name' => 'parse', 'type' => 'smallint', 'size' => 6, 'default' => '0']);
 	$smcFunc['db_change_column']('{db_prefix}tp_articles', 'ID_THEME', ['name' => 'id_theme', 'type' => 'smallint', 'size' => 6, 'default' => '0']);
 	$smcFunc['db_change_column']('{db_prefix}tp_articles', 'authorID', ['name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => '0']);
 	$smcFunc['db_change_column']('{db_prefix}tp_articles', 'body', ['name' => 'body', 'type' => ($db_type == 'mysql' ? 'longtext' : 'text'), 'default' => ($db_type == 'mysql' ? null : '')]);
-	$render .= 'Processed column definitions articles table<br>';
+	if ($columnsBefore != $smcFunc['db_list_columns']('{db_prefix}tp_articles', true)) {
+		$render .= 'Processed column definitions articles table<br>';
+	}
 }
 
 function articleUpdates()
@@ -1033,10 +1041,12 @@ function updateBlocks()
 {
 	global $smcFunc, $render, $db_type;
 
+	$columnsBefore = $smcFunc['db_list_columns']('{db_prefix}tp_blocks');
+	$blocksUpdated = 0;
+
 	$smcFunc['db_change_column']('{db_prefix}tp_blocks', 'access2', ['name' => 'display', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')]);
 
-	$smcFunc['db_query'](
-		'',
+	$blocksUpdated += countInstallerChanges(
 		'
 		UPDATE {db_prefix}tp_blocks
 		SET display = {string:display}
@@ -1045,21 +1055,19 @@ function updateBlocks()
 	);
 
 	// make sure display is comma separated, change | to , in display field
-	$smcFunc['db_query'](
-		'',
+	$blocksUpdated += countInstallerChanges(
 		'
         UPDATE {db_prefix}tp_blocks
         SET display = REPLACE(display, \'|\', \',\')
-        WHERE 1=1'
+        WHERE display LIKE \'%|%\''
 	);
 
 	// remove action= from display field of blocks<
-	$smcFunc['db_query'](
-		'',
+	$blocksUpdated += countInstallerChanges(
 		'
         UPDATE {db_prefix}tp_blocks
         SET display = REPLACE(display, \'actio=\', \'\')
-        WHERE 1=1'
+        WHERE REPLACE(display, \'actio=\', \'\') <> display'
 	);
 
 	// update block order
@@ -1093,12 +1101,11 @@ function updateBlocks()
 				$newPos = 0;
 				$oldBar = $row['bar'];
 			}
-			$smcFunc['db_query'](
-				'',
+			$blocksUpdated += countInstallerChanges(
 				'
                 UPDATE {db_prefix}tp_blocks
                 SET pos = {int:pos}
-                WHERE id = {int:id}',
+                WHERE id = {int:id} AND (pos <> {int:pos} OR pos IS NULL)',
 				[
 					'id' => $row['id'],
 					'pos' => $newPos++,
@@ -1143,11 +1150,10 @@ function updateBlocks()
 					}
 				}
 				$data = json_encode($row);
-				$smcFunc['db_query'](
-					'',
+				$blocksUpdated += countInstallerChanges(
 					'UPDATE {db_prefix}tp_blocks
                         SET settings = {string:data}
-                        WHERE id = {int:id}',
+                        WHERE id = {int:id} AND (settings <> {string:data} OR settings IS NULL)',
 					['data' => $data, 'id' => $id]
 				);
 			}
@@ -1184,8 +1190,7 @@ function updateBlocks()
 		$shoutbox_layout = $row['value'];
 	}
 
-	$smcFunc['db_query'](
-		'',
+	$blocksUpdated += countInstallerChanges(
 		'
 		UPDATE {db_prefix}tp_blocks
 		SET type = {string:type}, body = {int:body}, settings = {string:settings}
@@ -1239,12 +1244,11 @@ function updateBlocks()
 						$updated['shoutbox_barposition'] = 1;
 						$updated['shoutbox_direction'] = 0;
 					}
-					$smcFunc['db_query'](
-						'',
+					$blocksUpdated += countInstallerChanges(
 						'
 						UPDATE {db_prefix}tp_blocks
 						SET settings = {string:settings}
-						WHERE id = {int:id}',
+						WHERE id = {int:id} AND (settings <> {string:settings} OR settings IS NULL)',
 						['id' => $row['id'], 'settings' => json_encode($updated)]
 					);
 				}
@@ -1252,7 +1256,9 @@ function updateBlocks()
 		}
 	}
 
-	$render .= 'Processed existing blocks<br>';
+	if ($blocksUpdated > 0 || $columnsBefore != $smcFunc['db_list_columns']('{db_prefix}tp_blocks')) {
+		$render .= 'Processed existing blocks<br>';
+	}
 }
 
 function updateComments()
@@ -1297,8 +1303,7 @@ function updateComments()
 		}
 
 		// remove article comments from variables table
-		$request = $smcFunc['db_query'](
-			'',
+		$commentsMoved = countInstallerChanges(
 			'
 			DELETE FROM {db_prefix}tp_variables
 			WHERE type = {string:type}',
@@ -1306,29 +1311,86 @@ function updateComments()
 				'type' => 'article_comment',
 			]
 		);
-		$render .= 'Processed comments table<br>';
+		if ($commentsMoved > 0) {
+			$render .= 'Processed comments table<br>';
+		}
 	}
 }
 
 function dataTableChanges()
 {
 	global $smcFunc, $render;
+
+	$columnsBefore = $smcFunc['db_list_columns']('{db_prefix}tp_data', true);
 	// update column names tp_data
 	$smcFunc['db_change_column']('{db_prefix}tp_data', 'ID_MEMBER', ['name' => 'id_member', 'type' => 'int', 'size' => 11, 'default' => '0']);
-	$render .= 'Processed column names data table<br>';
+	if ($columnsBefore != $smcFunc['db_list_columns']('{db_prefix}tp_data', true)) {
+		$render .= 'Processed column names data table<br>';
+	}
 }
 
 function updateDownLoads()
 {
 	global $smcFunc, $render;
+
+	$columnsBefore = $smcFunc['db_list_columns']('{db_prefix}tp_dlmanager', true);
 	// update column names tp_dlmanager
 	$smcFunc['db_change_column']('{db_prefix}tp_dlmanager', 'authorID', ['name' => 'author_id', 'type' => 'int', 'size' => 11, 'default' => '0']);
-	$render .= 'Processed column names downloads table<br>';
+	if ($columnsBefore != $smcFunc['db_list_columns']('{db_prefix}tp_dlmanager', true)) {
+		$render .= 'Processed column names downloads table<br>';
+	}
+}
+
+function updateDownloadIcons()
+{
+	global $smcFunc, $render;
+
+	$updated = 0;
+
+	$request = $smcFunc['db_query'](
+		'',
+		'
+		SELECT id, icon
+		FROM {db_prefix}tp_dlmanager
+		WHERE icon <> {string:empty}',
+		['empty' => '']
+	);
+
+	while ($row = $smcFunc['db_fetch_assoc']($request)) {
+		$url = parse_url(trim($row['icon']));
+		if (empty($url['host']) || !in_array(strtolower($url['scheme'] ?? ''), ['http', 'https'], true)) {
+			continue;
+		}
+
+		$filename = rawurldecode(substr(strrchr($url['path'] ?? '', '/') ?: '/', 1));
+		if ($filename === '' || $filename === '.' || $filename === '..' || strpbrk($filename, "/\\\0") !== false) {
+			continue;
+		}
+
+		$updated += countInstallerChanges(
+			'
+			UPDATE {db_prefix}tp_dlmanager
+			SET icon = {string:filename}
+			WHERE id = {int:id} AND icon = {string:original}',
+			['filename' => $filename, 'id' => $row['id'], 'original' => $row['icon']]
+		);
+
+	}
+
+	$smcFunc['db_free_result']($request);
+
+	if ($updated > 0) {
+		$render .= $updated === 1
+			? 'Corrected 1 download icon URL.<br>'
+			: 'Corrected ' . $updated . ' download icon URLs.<br>';
+	}
 }
 
 function updateShoutbox()
 {
 	global $smcFunc, $render, $db_type;
+
+	$columnsBefore = $smcFunc['db_list_columns']('{db_prefix}tp_shoutbox', true);
 
 	$smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value1', ['name' => 'content', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')]);
 	$smcFunc['db_change_column']('{db_prefix}tp_shoutbox', 'value2', ['name' => 'time', 'type' => 'text', 'default' => ($db_type == 'mysql' ? null : '')]);
@@ -1344,7 +1406,9 @@ function updateShoutbox()
 	$smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sitcky');
 	$smcFunc['db_remove_column']('{db_prefix}tp_shoutbox', 'sitcky_layout');
 
-	$render .= 'Processed column names shoutbox table<br>';
+	if ($columnsBefore != $smcFunc['db_list_columns']('{db_prefix}tp_shoutbox', true)) {
+		$render .= 'Processed column names shoutbox table<br>';
+	}
 }
 
 function addDefaults()
@@ -1492,7 +1556,7 @@ function addDefaults()
 			'INSERT',
 			'{db_prefix}tp_dlmanager',
 			['name' => 'string', 'icon' => 'string', 'access' => 'string', 'type' => 'string'],
-			['General', '' . $boardurl . '/tp-downloads/icons/folder.png', '-1,0,1', 'dlcat'],
+			['General', 'folder.png', '-1,0,1', 'dlcat'],
 			['id']
 		);
 		$smcFunc['db_free_result']($request);

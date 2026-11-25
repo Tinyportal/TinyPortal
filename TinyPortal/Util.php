@@ -30,6 +30,17 @@ if (!defined('SMF')) {
 // Static method to call smcFunc calls which are not database related.
 class Util
 {
+	public static function downloadIconUrl($path)
+	{
+		global $boardurl;
+
+		if ($path === null || $path === '' || preg_match('~^(?:https?:)?//~i', $path)) {
+			return $path ?? '';
+		}
+
+		return rtrim($boardurl, '/') . '/tp-downloads/icons/' . $path;
+	}
+
 	public static function __callStatic($call, $vars)
 	{
 		global $smcFunc;
@@ -88,15 +99,13 @@ class Util
 			}
 		}
 		else {
-			if ($arg == 'OR') {
-				foreach ($data as $k => $v) {
-					$str .= ' ' . $v . ' = ANY (string_to_array(' . $field . ', \',\' ) ) ' . $arg . ' ';
-				}
-				$str = rtrim($str, ' ' . $arg . ' ');
+			$comparisons = [];
+			foreach ($data as $value) {
+				$comparisons[] = $value . " = ANY (string_to_array(" . $field . ", ','))";
 			}
-			else {
-				$str = 'AND ( ' . implode('\' = ANY (string_to_array( ' . $field . ', \',\' )) OR \'', $data) . ' = ANY (string_to_array(' . $field . ', \',\')))';
-			}
+
+			$condition = empty($comparisons) ? 'FALSE' : implode(' OR ', $comparisons);
+			$str = ($arg === 'AND' ? 'AND ' : '') . '(' . $condition . ')';
 		}
 
 		return $str;

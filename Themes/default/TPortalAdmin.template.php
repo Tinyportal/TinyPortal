@@ -1617,224 +1617,243 @@ function template_articons()
 // Panel Settings Page
 function template_panels()
 {
-	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language;
+	global $context, $txt, $scripturl;
 
-	echo '
-	<form accept-charset="', $context['character_set'], '" name="tpadmin_news" action="' . $scripturl . '?action=tpadmin" method="post">
-		<input type="hidden" name="sc" value="', $context['session_id'] ,'" />
-		<input type="hidden" name="tpadmin_form" value="panels">
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-allpanels'] . '</h3></div>
-		<p class="information">', $txt['tp-helppanels'] ,'</p>
-		<div class="cat_bar"><h3 class="catbg">' . $txt['tp-settings'] . '</h3></div>
-			<div id="panels-admin">
-			<div class="windowbg noup">
-				<div>
-					<dl class="settings">
-						<dt>
-							<label for="tp_showcollapse">', $txt['tp-hidecollapse'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_showcollapse" name="tp_showcollapse" value="1" ' , $context['TPortal']['showcollapse'] == '1' ? 'checked' : '' , '>
-						</dd>
-						<dt>
-							<label for="tp_padding">' . $txt['tp-padding_between'] . '</label>
-						</dt>
-						<dd>
-							<input type="number" id="tp_padding" name="tp_padding" value="' ,$context['TPortal']['padding'], '" style="width: 6em" maxlength="5">
-							<span class="smalltext">' . $txt['tp-inpixels'] . '</span>
-						</dd>
-						<dt>
-							<label for="tp_useroundframepanels">', $txt['tp-useroundframepanels'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_useroundframepanels" name="tp_useroundframepanels" value="1" ' , $context['TPortal']['useroundframepanels'] == '1' ? 'checked' : '' , '>
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt>
-							<strong>', $txt['tp-hidebarsall'] ,'</strong>
-						</dt>
-						<dd></dd>
-						<dt>
-							<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'] ,'</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" value="1" ', $context['TPortal']['hidebars_admin_only'] == '1' ? 'checked' : '' ,'>
-						</dd>
-						<dt>
-							<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'] ,'</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_hidebars_profile" name="tp_hidebars_profile" value="1" ' , $context['TPortal']['hidebars_profile'] == '1' ? 'checked' : '' , '>
-						</dd>
-						<dt>
-							<label for="tp_hidebars_pm">', $txt['tp-hidebarspm'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_hidebars_pm" name="tp_hidebars_pm" value="1" ' , $context['TPortal']['hidebars_pm'] == '1' ? 'checked' : '' , '>
-						</dd>
-						<dt>
-							<label for="tp_hidebars_memberlist">', $txt['tp-hidebarsmemberlist'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_hidebars_memberlist" name="tp_hidebars_memberlist" value="1" ' , $context['TPortal']['hidebars_memberlist'] == '1' ? 'checked' : '' , '>
-						</dd>
-						<dt>
-							<label for="tp_hidebars_search">', $txt['tp-hidebarssearch'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_hidebars_search" name="tp_hidebars_search" value="1" ' , $context['TPortal']['hidebars_search'] == '1' ? 'checked' : '' , '>
-						</dd>
-						<dt>
-							<label for="tp_hidebars_calendar">', $txt['tp-hidebarscalendar'], '</label>
-						</dt>
-						<dd>
-							<input type="checkbox" id="tp_hidebars_calendar" name="tp_hidebars_calendar" value="1" ' , $context['TPortal']['hidebars_calendar'] == '1' ? 'checked' : '' , '>
-						</dd>
-					</dl>
-					<dl class="settings">
-						<dt>
-							<a href="', $scripturl, '?action=helpadmin;help=tp-hidebarscustomdesc" onclick="return reqOverlayDiv(this.href);">
-							<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hidebars_custom">' . $txt['tp-hidebarscustom'] . '</label>
-						</dt>
-						<dd>
-							<textarea cols="40" style="width: 94%; height: 100px;" name="tp_hidebars_custom" id="tp_hidebars_custom">' . $context['TPortal']['hidebars_custom'] . '</textarea>
-						</dd>
-					</dl>
-					<input type="submit" class="button floatnone" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '">
-				</div>';
-
-	$allpanels = ['left', 'right', 'top', 'center', 'front', 'lower', 'bottom'];
-	$alternate = true;
-	$types = tp_getblockstyles21();
-
-	foreach ($allpanels as $pa => $panl) {
-		echo '
-				<div id="' . $panl . '_panel">
-				<hr>
-				<dl class="settings">
-					<dt>
-						<span class="font-strong">
-						' . $txt['tp-' . $panl . 'panel'] . '</span>
-					</dt>
-					<dd>
-					';
-		if ($panl != 'front') {
-			echo '
-				<a name="' . $panl . '"></a><img src="' . $settings['tp_images_url'] . '/TPpanel_' . $panl . '' , $context['TPortal']['admin' . $panl . 'panel'] ? '' : '_off' , '.png" alt="" />';
-		}
-		else {
-			echo '
-				<a name="' . $panl . '"></a><img src="' . $settings['tp_images_url'] . '/TPpanel_' . $panl . '.png" alt="" />';
-		}
-		echo '
-					</dd>
-				</dl>
-				<dl class="settings">';
-		if ($panl != 'front') {
-			echo '
-					<dt>
-						' . $txt['tp-use' . $panl . 'panel'] . '
-					</dt>
-					<dd>
-						<div class="switch-field">
-							<input type="radio" class="switch-on" id="tp_' . $panl . 'panelon" name="tp_' . $panl . 'panel" value="1" ' , $context['TPortal']['admin' . $panl . 'panel'] == 1 ? 'checked' : '' , '><label for="tp_' . $panl . 'panelon"> ' . $txt['tp-on'] . '</label>
-							<input type="radio" class="switch-off" id="tp_' . $panl . 'paneloff" name="tp_' . $panl . 'panel" value="0" ' , $context['TPortal']['admin' . $panl . 'panel'] == 0 ? 'checked' : '' , '><label for="tp_' . $panl . 'paneloff"> ' . $txt['tp-off'] . '</label>
-						</div>
-					</dd>
-					<dt>
-						' . $txt['tp-hide_' . $panl . 'bar_forum'] . '
-					</dt>
-					<dd>
-						<input type="radio" id="tp_hide_' . $panl . 'bar_forumon" name="tp_hide_' . $panl . 'bar_forum" value="1" ' , $context['TPortal']['hide_' . $panl . 'bar_forum'] == 1 ? 'checked' : '' , '><label for="tp_hide_' . $panl . 'bar_forumon"> ' . $txt['tp-yes'] . '</label>
-						<input type="radio" id="tp_hide_' . $panl . 'bar_forumoff" name="tp_hide_' . $panl . 'bar_forum" value="0" ' , $context['TPortal']['hide_' . $panl . 'bar_forum'] == 0 ? 'checked' : '' , '><label for="tp_hide_' . $panl . 'bar_forumoff"> ' . $txt['tp-no'] . '</label>
-						<br><br>
-					</dd>';
-		}
-		else
-			if ($context['TPortal']['front_active'] == '0') {
-				echo '
-					<dt></dt>
-					<dd>
-						<div class="noticebox">' . $txt['tp-front_disabled'] . '</div>
-					</dd">';
-			}
-
-		if (in_array($panl, ['left', 'right'])) {
-			echo '
-					<dt>
-						<label for="tp_' . $panl . 'bar_width">' . $txt['tp-panelwidth'] . '</label>
-					</dt>
-					<dd>
-						<input type="number" id="tp_' . $panl . 'bar_width" name="tp_' . $panl . 'bar_width" value="' , $context['TPortal'][$panl . 'bar_width'] , '" min="1" style="width: 6em" maxlength="5">
-						<span class="smalltext">' . $txt['tp-inpixels'] . '</span>
-					</dd>';
-		}
-		echo '
-					<dt>
-						' . $txt['tp-blockflow'] . '
-					</dt>
-					<dd>
-						<input type="radio" id="tp_block_layout_' . $panl . '1" name="tp_block_layout_' . $panl . '" value="vert" ' , $context['TPortal']['block_layout_' . $panl] == 'vert' ? 'checked' : '' , '>
-						<label for="tp_block_layout_' . $panl . '1">' . $txt['tp-vertical'] . '</label></br>
-						<input type="radio" id="tp_block_layout_' . $panl . '2" name="tp_block_layout_' . $panl . '" value="horiz" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz' ? 'checked' : '' , '>
-						<label for="tp_block_layout_' . $panl . '2">' . $txt['tp-horizontal'] . '</label></br>
-						<input type="radio" id="tp_block_layout_' . $panl . '3" name="tp_block_layout_' . $panl . '" value="horiz2" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz2' ? 'checked' : '' , '>
-						<label for="tp_block_layout_' . $panl . '3">' . $txt['tp-flexgrid2cols'] . '</label></br>
-						<input type="radio" id="tp_block_layout_' . $panl . '4" name="tp_block_layout_' . $panl . '" value="horiz3" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz3' ? 'checked' : '' , '>
-						<label for="tp_block_layout_' . $panl . '4">' . $txt['tp-flexgrid3cols'] . '</label></br>
-						<input type="radio" id="tp_block_layout_' . $panl . '5" name="tp_block_layout_' . $panl . '" value="horiz4" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz4' ? 'checked' : '' , '>
-						<label for="tp_block_layout_' . $panl . '5">' . $txt['tp-flexgrid4cols'] . '</label></br>
-						<input type="radio" id="tp_block_layout_' . $panl . '6" name="tp_block_layout_' . $panl . '" value="grid" ' , $context['TPortal']['block_layout_' . $panl] == 'grid' ? 'checked' : '' , '>
-						<label for="tp_block_layout_' . $panl . '6">' . $txt['tp-grid'] . '</label></br>
-					</dd>
-					<dt>&nbsp;</dt>
-					<dd>
-						<hr><p>
-						<div class="floatleft"><input type="radio" id="tp_blockgrid_' . $panl . '2" name="tp_blockgrid_' . $panl . '" value="colspan2" ' , $context['TPortal']['blockgrid_' . $panl] == 'colspan2' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_' . $panl . '2"><img src="' . $settings['tp_images_url'] . '/TPcolspan2.png" alt="colspan" /></label></div>
-						<div class="floatleft"><input type="radio" id="tp_blockgrid_' . $panl . '3" name="tp_blockgrid_' . $panl . '" value="colspan3" ' , $context['TPortal']['blockgrid_' . $panl] == 'colspan3' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_' . $panl . '3"><img src="' . $settings['tp_images_url'] . '/TPcolspan3.png" alt="colspan" /></label></div>
-						<div class="floatleft"><input type="radio" id="tp_blockgrid_' . $panl . '4" name="tp_blockgrid_' . $panl . '" value="rowspan1" ' , $context['TPortal']['blockgrid_' . $panl] == 'rowspan1' ? 'checked' : '' , ' />
-						<label for="tp_blockgrid_' . $panl . '4"><img src="' . $settings['tp_images_url'] . '/TPcolspan4.png" alt="rowspan" /></label></div>
-						</p>
-					</dd>
-				</dl>
-				<dl class="settings">
-					<dt>
-						<label for="tp_blockheight_' . $panl . '">' . $txt['tp-blockheight'] . '</label>
-					</dt>
-					<dd>
-						<input type="text" id="tp_blockheight_' . $panl . '" name="tp_blockheight_' . $panl . '" value="' ,$context['TPortal']['blockheight_' . $panl], '" size="5" maxlength="5">
-						<span class="smalltext">' . $txt['tp-pixelsorpercentage'] . '</span>
-					</dd>
-				</dl>
-				<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
-				<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-panelstylehelp'] . '
-				<div class="tp_panelstyles-bg">';
-
-		foreach ($types as $blo => $bl) {
-			echo '
-					<div class="tp_panelstyles">
-						<div class="smalltext">
-							<input type="radio" id="tp_panelstyle_' . $panl . '' . $blo . '" name="tp_panelstyle_' . $panl . '" value="' . $blo . '" ' , $context['TPortal']['panelstyle_' . $panl] == $blo ? 'checked' : '' , '><label for="tp_panelstyle_' . $panl . '' . $blo . '">
-							<span' , $context['TPortal']['panelstyle_' . $panl] == $blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
-						</div>
-						' . $bl['code_title_left'] . 'title' . $bl['code_title_right'] . '
-						' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
-					</div>';
-		}
-		echo '
-				</div>
-				<input type="submit" class="button floatnone" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '">
-		</div>';
-		$alternate = !$alternate;
+	$activeTab = $context['TPortal']['panel_tab'];
+	$tabs = [];
+	foreach ($context['TPortal']['panel_tabs'] as $tab) {
+		$tabs[$tab] = [
+			'text' => $tab === 'general' ? 'tp-generalsettings' : 'tp-' . $tab . 'panel',
+			'url' => $scripturl . '?action=tpadmin;sa=panels;panel_tab=' . $tab,
+			'active' => $tab === $activeTab,
+			'custom' => $tab === $activeTab ? 'aria-current="page"' : '',
+		];
 	}
 
 	echo '
-			</div>
-		</div>
-	</form>';
+		<div class="cat_bar"><h3 class="catbg">', $txt['tp-allpanels'], '</h3></div>
+		<p class="information">', $txt['tp-helppanels'], '</p>';
+	tp_template_button_strip($tabs, 'left', ['id' => 'panel-admin-tabs']);
+
+	echo '
+		<div id="panels-admin" class="windowbg noup">
+			<form accept-charset="', $context['character_set'], '" action="', $scripturl, '?action=tpadmin" method="post">
+				<input type="hidden" name="sc" value="', $context['session_id'], '">
+				<input type="hidden" name="tpadmin_form" value="panels">
+				<input type="hidden" name="panel_tab" value="', $activeTab, '">';
+
+	if ($activeTab === 'general') {
+		template_panels_general();
+	}
+	else {
+		template_panels_panel($activeTab);
+	}
+
+	echo '
+				<input type="submit" class="button floatnone" value="', $txt['tp-send'], '">
+			</form>
+		</div>';
+}
+
+function template_panels_general()
+{
+	global $context, $txt, $scripturl;
+
+	echo '
+		<dl class="settings">
+			<dt>
+				<label for="tp_showcollapse">', $txt['tp-hidecollapse'], '</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_showcollapse" name="tp_showcollapse" value="1" ' , $context['TPortal']['showcollapse'] == '1' ? 'checked' : '' , '>
+			</dd>
+			<dt>
+				<label for="tp_padding">' . $txt['tp-padding_between'] . '</label>
+			</dt>
+			<dd>
+				<input type="number" id="tp_padding" name="tp_padding" value="' ,$context['TPortal']['padding'], '" style="width: 6em" maxlength="5">
+				<span class="smalltext">' . $txt['tp-inpixels'] . '</span>
+			</dd>
+			<dt>
+				<label for="tp_useroundframepanels">', $txt['tp-useroundframepanels'], '</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_useroundframepanels" name="tp_useroundframepanels" value="1" ' , $context['TPortal']['useroundframepanels'] == '1' ? 'checked' : '' , '>
+			</dd>
+		</dl>
+		<dl class="settings">
+			<dt>
+				<strong>', $txt['tp-hidebarsall'] ,'</strong>
+			</dt>
+			<dd></dd>
+			<dt>
+				<label for="tp_hidebars_admin_only">', $txt['tp-hidebarsadminonly'] ,'</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_hidebars_admin_only" name="tp_hidebars_admin_only" value="1" ', $context['TPortal']['hidebars_admin_only'] == '1' ? 'checked' : '' ,'>
+			</dd>
+			<dt>
+				<label for="tp_hidebars_profile">', $txt['tp-hidebarsprofile'] ,'</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_hidebars_profile" name="tp_hidebars_profile" value="1" ' , $context['TPortal']['hidebars_profile'] == '1' ? 'checked' : '' , '>
+			</dd>
+			<dt>
+				<label for="tp_hidebars_pm">', $txt['tp-hidebarspm'], '</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_hidebars_pm" name="tp_hidebars_pm" value="1" ' , $context['TPortal']['hidebars_pm'] == '1' ? 'checked' : '' , '>
+			</dd>
+			<dt>
+				<label for="tp_hidebars_memberlist">', $txt['tp-hidebarsmemberlist'], '</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_hidebars_memberlist" name="tp_hidebars_memberlist" value="1" ' , $context['TPortal']['hidebars_memberlist'] == '1' ? 'checked' : '' , '>
+			</dd>
+			<dt>
+				<label for="tp_hidebars_search">', $txt['tp-hidebarssearch'], '</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_hidebars_search" name="tp_hidebars_search" value="1" ' , $context['TPortal']['hidebars_search'] == '1' ? 'checked' : '' , '>
+			</dd>
+			<dt>
+				<label for="tp_hidebars_calendar">', $txt['tp-hidebarscalendar'], '</label>
+			</dt>
+			<dd>
+				<input type="checkbox" id="tp_hidebars_calendar" name="tp_hidebars_calendar" value="1" ' , $context['TPortal']['hidebars_calendar'] == '1' ? 'checked' : '' , '>
+			</dd>
+		</dl>
+		<dl class="settings">
+			<dt>
+				<a href="', $scripturl, '?action=helpadmin;help=tp-hidebarscustomdesc" onclick="return reqOverlayDiv(this.href);">
+				<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_hidebars_custom">' . $txt['tp-hidebarscustom'] . '</label>
+			</dt>
+			<dd>
+				<textarea cols="40" style="width: 94%; height: 100px;" name="tp_hidebars_custom" id="tp_hidebars_custom">' . $context['TPortal']['hidebars_custom'] . '</textarea>
+			</dd>
+		</dl>';
+}
+
+function template_panels_panel($panl)
+{
+	global $context, $settings, $txt, $scripturl;
+
+	$types = tp_getblockstyles21();
+
+	echo '
+		<dl class="settings">
+				<dt>
+					<span class="font-strong">
+					' . $txt['tp-' . $panl . 'panel'] . '</span>
+				</dt>
+				<dd>
+				';
+	if ($panl != 'front') {
+		echo '
+			<a name="' . $panl . '"></a><img src="' . $settings['tp_images_url'] . '/TPpanel_' . $panl . '' , $context['TPortal']['admin' . $panl . 'panel'] ? '' : '_off' , '.png" alt="" />';
+	}
+	else {
+		echo '
+			<a name="' . $panl . '"></a><img src="' . $settings['tp_images_url'] . '/TPpanel_' . $panl . '.png" alt="" />';
+	}
+	echo '
+				</dd>
+			</dl>
+			<dl class="settings">';
+	if ($panl != 'front') {
+		echo '
+				<dt>
+					' . $txt['tp-use' . $panl . 'panel'] . '
+				</dt>
+				<dd>
+					<div class="switch-field">
+						<input type="radio" class="switch-on" id="tp_' . $panl . 'panelon" name="tp_' . $panl . 'panel" value="1" ' , $context['TPortal']['admin' . $panl . 'panel'] == 1 ? 'checked' : '' , '><label for="tp_' . $panl . 'panelon"> ' . $txt['tp-on'] . '</label>
+						<input type="radio" class="switch-off" id="tp_' . $panl . 'paneloff" name="tp_' . $panl . 'panel" value="0" ' , $context['TPortal']['admin' . $panl . 'panel'] == 0 ? 'checked' : '' , '><label for="tp_' . $panl . 'paneloff"> ' . $txt['tp-off'] . '</label>
+					</div>
+				</dd>
+				<dt>
+					' . $txt['tp-hide_' . $panl . 'bar_forum'] . '
+				</dt>
+				<dd>
+					<input type="radio" id="tp_hide_' . $panl . 'bar_forumon" name="tp_hide_' . $panl . 'bar_forum" value="1" ' , $context['TPortal']['hide_' . $panl . 'bar_forum'] == 1 ? 'checked' : '' , '><label for="tp_hide_' . $panl . 'bar_forumon"> ' . $txt['tp-yes'] . '</label>
+					<input type="radio" id="tp_hide_' . $panl . 'bar_forumoff" name="tp_hide_' . $panl . 'bar_forum" value="0" ' , $context['TPortal']['hide_' . $panl . 'bar_forum'] == 0 ? 'checked' : '' , '><label for="tp_hide_' . $panl . 'bar_forumoff"> ' . $txt['tp-no'] . '</label>
+					<br><br>
+				</dd>';
+	}
+	else
+		if ($context['TPortal']['front_active'] == '0') {
+			echo '
+				<dt></dt>
+				<dd>
+					<div class="noticebox">' . $txt['tp-front_disabled'] . '</div>
+				</dd>';
+		}
+
+	if (in_array($panl, ['left', 'right'])) {
+		echo '
+				<dt>
+					<label for="tp_' . $panl . 'bar_width">' . $txt['tp-panelwidth'] . '</label>
+				</dt>
+				<dd>
+					<input type="number" id="tp_' . $panl . 'bar_width" name="tp_' . $panl . 'bar_width" value="' , $context['TPortal'][$panl . 'bar_width'] , '" min="1" style="width: 6em" maxlength="5">
+					<span class="smalltext">' . $txt['tp-inpixels'] . '</span>
+				</dd>';
+	}
+	echo '
+				<dt>
+					' . $txt['tp-blockflow'] . '
+				</dt>
+				<dd>
+					<input type="radio" id="tp_block_layout_' . $panl . '1" name="tp_block_layout_' . $panl . '" value="vert" ' , $context['TPortal']['block_layout_' . $panl] == 'vert' ? 'checked' : '' , '>
+					<label for="tp_block_layout_' . $panl . '1">' . $txt['tp-vertical'] . '</label></br>
+					<input type="radio" id="tp_block_layout_' . $panl . '2" name="tp_block_layout_' . $panl . '" value="horiz" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz' ? 'checked' : '' , '>
+					<label for="tp_block_layout_' . $panl . '2">' . $txt['tp-horizontal'] . '</label></br>
+					<input type="radio" id="tp_block_layout_' . $panl . '3" name="tp_block_layout_' . $panl . '" value="horiz2" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz2' ? 'checked' : '' , '>
+					<label for="tp_block_layout_' . $panl . '3">' . $txt['tp-flexgrid2cols'] . '</label></br>
+					<input type="radio" id="tp_block_layout_' . $panl . '4" name="tp_block_layout_' . $panl . '" value="horiz3" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz3' ? 'checked' : '' , '>
+					<label for="tp_block_layout_' . $panl . '4">' . $txt['tp-flexgrid3cols'] . '</label></br>
+					<input type="radio" id="tp_block_layout_' . $panl . '5" name="tp_block_layout_' . $panl . '" value="horiz4" ' , $context['TPortal']['block_layout_' . $panl] == 'horiz4' ? 'checked' : '' , '>
+					<label for="tp_block_layout_' . $panl . '5">' . $txt['tp-flexgrid4cols'] . '</label></br>
+					<input type="radio" id="tp_block_layout_' . $panl . '6" name="tp_block_layout_' . $panl . '" value="grid" ' , $context['TPortal']['block_layout_' . $panl] == 'grid' ? 'checked' : '' , '>
+					<label for="tp_block_layout_' . $panl . '6">' . $txt['tp-grid'] . '</label></br>
+				</dd>
+				<dt>&nbsp;</dt>
+				<dd>
+					<hr><p>
+					<div class="floatleft"><input type="radio" id="tp_blockgrid_' . $panl . '2" name="tp_blockgrid_' . $panl . '" value="colspan2" ' , $context['TPortal']['blockgrid_' . $panl] == 'colspan2' ? 'checked' : '' , ' />
+					<label for="tp_blockgrid_' . $panl . '2"><img src="' . $settings['tp_images_url'] . '/TPcolspan2.png" alt="colspan" /></label></div>
+					<div class="floatleft"><input type="radio" id="tp_blockgrid_' . $panl . '3" name="tp_blockgrid_' . $panl . '" value="colspan3" ' , $context['TPortal']['blockgrid_' . $panl] == 'colspan3' ? 'checked' : '' , ' />
+					<label for="tp_blockgrid_' . $panl . '3"><img src="' . $settings['tp_images_url'] . '/TPcolspan3.png" alt="colspan" /></label></div>
+					<div class="floatleft"><input type="radio" id="tp_blockgrid_' . $panl . '4" name="tp_blockgrid_' . $panl . '" value="rowspan1" ' , $context['TPortal']['blockgrid_' . $panl] == 'rowspan1' ? 'checked' : '' , ' />
+					<label for="tp_blockgrid_' . $panl . '4"><img src="' . $settings['tp_images_url'] . '/TPcolspan4.png" alt="rowspan" /></label></div>
+					</p>
+				</dd>
+			</dl>
+			<dl class="settings">
+				<dt>
+					<label for="tp_blockheight_' . $panl . '">' . $txt['tp-blockheight'] . '</label>
+				</dt>
+				<dd>
+					<input type="text" id="tp_blockheight_' . $panl . '" name="tp_blockheight_' . $panl . '" value="' ,$context['TPortal']['blockheight_' . $panl], '" size="5" maxlength="5">
+					<span class="smalltext">' . $txt['tp-pixelsorpercentage'] . '</span>
+				</dd>
+			</dl>
+			<a href="', $scripturl, '?action=helpadmin;help=tp-panelstylehelpdesc" onclick="return reqOverlayDiv(this.href);">
+			<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-panelstylehelp'] . '
+			<div class="tp_panelstyles-bg">';
+
+	foreach ($types as $blo => $bl) {
+		echo '
+				<div class="tp_panelstyles">
+					<div class="smalltext">
+						<input type="radio" id="tp_panelstyle_' . $panl . '' . $blo . '" name="tp_panelstyle_' . $panl . '" value="' . $blo . '" ' , $context['TPortal']['panelstyle_' . $panl] == $blo ? 'checked' : '' , '><label for="tp_panelstyle_' . $panl . '' . $blo . '">
+						<span' , $context['TPortal']['panelstyle_' . $panl] == $blo ? ' style="color: red;">' : '>' , $bl['class'] , '</span></label>
+					</div>
+					' . $bl['code_title_left'] . 'title' . $bl['code_title_right'] . '
+					' . $bl['code_top'] . 'body' . $bl['code_bottom'] . '
+				</div>';
+	}
+	echo '</div>';
 }
 
 // All the blocks (is this still used?)
