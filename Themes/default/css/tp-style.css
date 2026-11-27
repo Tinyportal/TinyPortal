@@ -923,10 +923,10 @@ input,select {
 #tpadmin .button:not(.floatnone), #tpshout_admin_settings .button:not(.floatnone), #tpshout_admin .button:not(.floatnone) {
 	float: right;
 }
-#panel-admin-tabs {
+#panel-admin-tabs, #block-admin-tabs {
 	text-align: left;
 }
-#tpadmin #panel-admin-tabs > .button {
+#tpadmin #panel-admin-tabs > .button, #tpadmin #block-admin-tabs > .button {
 	float: none;
 }
 .tp_admin img {

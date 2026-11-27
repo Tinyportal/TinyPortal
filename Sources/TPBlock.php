@@ -241,6 +241,11 @@ function TPBlockAdminActions(&$subActions)
 	);
 }
 
+function blockAdminTabs(): array
+{
+	return ['settings', 'left', 'right', 'top', 'center', 'front', 'lower', 'bottom'];
+}
+
 function adminBlocks()
 {
 	global $context, $smcFunc, $txt, $settings, $scripturl;
@@ -248,9 +253,15 @@ function adminBlocks()
 	isAllowedTo('tp_blocks');
 
 	$tpBlock = TPBlock::getInstance();
+	$tabs = blockAdminTabs();
+	$requestedTab = $_GET['block_tab'] ?? 'settings';
+	$activeTab = in_array($requestedTab, $tabs, true) ? $requestedTab : 'settings';
+	$context['TPortal']['block_tabs'] = $tabs;
+	$context['TPortal']['block_tab'] = $activeTab;
+	$blocksUrl = 'action=tpadmin;sa=blocks;block_tab=' . $activeTab;
 
 	if (($context['TPortal']['subaction'] == 'blocks') && !isset($_GET['overview'])) {
-		TPadd_linktree($scripturl . '?action=tpadmin;sa=blocks', $txt['tp-blocks']);
+		TPadd_linktree($scripturl . '?' . $blocksUrl, $txt['tp-blocks']);
 	}
 
 	if (isset($_GET['addblock'])) {
@@ -282,7 +293,7 @@ function adminBlocks()
 			}
 		}
 		$tpBlock->updateBlock($id, ['pos' => $new]);
-		redirectexit('action=tpadmin;sa=blocks');
+		redirectexit($blocksUrl);
 	}
 
 	// change the on/off
@@ -301,7 +312,7 @@ function adminBlocks()
 				$tpBlock->updateBlock($id, ['off' => '1']);
 			}
 		}
-		redirectexit('action=tpadmin;sa=blocks');
+		redirectexit($blocksUrl);
 	}
 
 	// remove it?
@@ -309,7 +320,7 @@ function adminBlocks()
 		checksession('get');
 		$id = is_numeric($_GET['blockdelete']) ? $_GET['blockdelete'] : 0;
 		$tpBlock->deleteBlock($id);
-		redirectexit('action=tpadmin;sa=blocks');
+		redirectexit($blocksUrl);
 	}
 
 	foreach (['blockright', 'blockleft', 'blockcenter', 'blockfront', 'blockbottom', 'blocktop', 'blocklower'] as $block_location) {
@@ -318,7 +329,7 @@ function adminBlocks()
 			$id = is_numeric($_GET[$block_location]) ? $_GET[$block_location] : 0;
 			$loc = $tpBlock->getBlockBarId(str_replace('block', '', $block_location));
 			$tpBlock->updateBlock($id, ['bar' => $loc]);
-			redirectexit('action=tpadmin;sa=blocks');
+			redirectexit($blocksUrl);
 		}
 	}
 
@@ -459,10 +470,15 @@ function editBlock($block_id = 0)
 
 	require_once SOURCEDIR . '/TPortalAdmin.php';
 
-	TPadd_linktree($scripturl . '?action=tpadmin;sa=blocks', $txt['tp-blocks']);
+	$row = $tpBlock->getBlock($block_id);
+	$blockTab = is_array($row) ? $tpBlock->getBlockBar($row['bar']) : null;
+	$blocksUrl = $scripturl . '?action=tpadmin;sa=blocks';
+	if (in_array($blockTab, blockAdminTabs(), true)) {
+		$blocksUrl .= ';block_tab=' . $blockTab;
+	}
+	TPadd_linktree($blocksUrl, $txt['tp-blocks']);
 	TPadd_linktree($scripturl . '?action=tpadmin&amp;sa=editblock&amp;id=' . $block_id . ';' . $context['session_var'] . '=' . $context['session_id'], $txt['tp-editblock']);
 
-	$row = $tpBlock->getBlock($block_id);
 	if (is_array($row)) {
 		if (TPBlock::isExecutableBlockType((int) $row['type'])) {
 			isAllowedTo('admin_forum');

@@ -325,13 +325,6 @@ $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used 
 
 // Navigation links called from source files
 $txt['tp-admin'] = 'TP admin';
-$txt['tp-left'] = 'Left';
-$txt['tp-right'] = 'Right';
-$txt['tp-top'] = 'Top';
-$txt['tp-center'] = 'Center';
-$txt['tp-front'] = 'Front';
-$txt['tp-bottom'] = 'Bottom';
-$txt['tp-lower'] = 'Lower';
 $txt['tp-allpanels'] = 'Panels';
 $txt['tp-allblocks'] = 'Blocks';
 $txt['tp-addarticle'] = 'Add article';

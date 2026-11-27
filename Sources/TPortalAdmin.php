@@ -2389,7 +2389,13 @@ function do_postchecks()
 		elseif ($from == 'blocks') {
 			checkSession('post');
 
-			if (allowedTo('tp_settings')) {
+			require_once SOURCEDIR . '/TPBlock.php';
+			$blockTab = $_POST['block_tab'] ?? null;
+			if ($blockTab !== null && !in_array($blockTab, blockAdminTabs(), true)) {
+				return 'blocks';
+			}
+
+			if (($blockTab === null || $blockTab === 'settings') && allowedTo('tp_settings')) {
 				foreach (['admin_showblocks', 'blocks_edithide', 'uselangoption'] as $v) {
 					if (TPUtil::checkboxChecked('tp_' . $v)) {
 						$updateArray[$v] = 1;
@@ -2403,7 +2409,7 @@ function do_postchecks()
 				updateTPSettings($updateArray);
 			}
 
-			if (allowedTo('tp_blocks')) {
+			if ($blockTab !== 'settings' && allowedTo('tp_blocks')) {
 				$typeCondition = allowedTo('admin_forum') ? '' : ' AND type NOT IN (10, 11)';
 				foreach ($_POST as $what => $value) {
 					if (substr($what, 0, 4) === 'type' && TPBlock::isExecutableBlockType((int) $value)) {
@@ -2510,7 +2516,7 @@ function do_postchecks()
 					}
 				}
 			}
-			redirectexit('action=tpadmin;sa=blocks');
+			return $blockTab === null ? 'blocks' : 'blocks;block_tab=' . $blockTab;
 		}
 		// from editing block
 		elseif ($from == 'addblock') {
