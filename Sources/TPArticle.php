@@ -395,14 +395,36 @@ function articleEdit()
 	}
 
 	if ($canManageArticles) {
-		foreach ([
-			'tp_article_created_at' => 'date',
-			'tp_article_publish_from' => 'pub_start',
-			'tp_article_publish_until' => 'pub_end',
-		] as $field => $column) {
-			if (array_key_exists($field, $_POST)) {
-				$storedTimestamp = isset($existing[$column]) ? (int) $existing[$column] : null;
-				$article_data[$column] = articleDateTimestamp($_POST[$field], $storedTimestamp, $column !== 'date');
+		if (array_key_exists('tp_article_created_at', $_POST)) {
+			try {
+				$article_data['date'] = TPUtil::parsePublicationDate($_POST['tp_article_created_at'], isset($existing['date']) ? (int) $existing['date'] : null, false);
+			}
+			catch (InvalidArgumentException $e) {
+				loadLanguage('TParticle');
+				fatal_lang_error('tp_article_datetime_invalid', false);
+			}
+		}
+
+		$fields = [
+			'pub_start' => 'tp_article_publish_from',
+			'pub_end' => 'tp_article_publish_until',
+		];
+		$submitted = array_intersect_key($_POST, array_flip($fields));
+		if ($submitted !== []) {
+			try {
+				$publication = TPUtil::parsePublicationPeriod($submitted, $fields, $existing ?? [], 0);
+			}
+			catch (InvalidArgumentException $e) {
+				if (loadLanguage('TPortalAdmin') == false) {
+					loadLanguage('TPortalAdmin', 'english');
+				}
+				fatal_lang_error($e->getMessage(), false);
+			}
+
+			foreach ($fields as $column => $field) {
+				if (array_key_exists($field, $submitted)) {
+					$article_data[$column] = $publication[$column] ?? 0;
+				}
 			}
 		}
 	}
@@ -625,29 +647,6 @@ function articleEdit()
 	else {
 		redirectexit('action=tportal;sa=submitsuccess');
 	}
-}
-
-function articleDateTimestamp($value, ?int $storedTimestamp, bool $optional): int
-{
-	if ($optional && $value === '') {
-		return 0;
-	}
-
-	$format = 'Y-m-d\TH:i';
-	if (is_string($value) && preg_match('/\A(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}\z/', $value)) {
-		// Keep the original instant and seconds when the displayed minute has not changed.
-		if ($storedTimestamp !== null && (!$optional || $storedTimestamp !== 0) && date($format, $storedTimestamp) === $value) {
-			return $storedTimestamp;
-		}
-
-		$date = DateTimeImmutable::createFromFormat('!' . $format, $value);
-		if ($date !== false && $date->format($format) === $value) {
-			return $date->getTimestamp();
-		}
-	}
-
-	loadLanguage('TParticle');
-	fatal_lang_error('tp_article_datetime_invalid', false);
 }
 
 function articleShow()

@@ -29,6 +29,7 @@ $txt['tp-notanarticle'] = 'The article ID is not valid.';
 $txt['tp-notanarticlefound'] = 'The article was not found.';
 $txt['tp-searchfor'] = 'for ';
 $txt['tp-searchresults'] = 'Article search results';
+$txt['tp-search-no-results'] = 'Sorry, no matches were found';
 $txt['tp-showall'] = 'Show all comments';
 $txt['tp-submitarticle'] = 'Write HTML article';
 $txt['tp-submitnotallowed'] = 'Sorry, but you are not allowed to submit an article.';

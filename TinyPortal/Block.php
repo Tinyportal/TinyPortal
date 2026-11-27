@@ -23,7 +23,6 @@ if (!defined('SMF')) {
 
 class Block extends Base
 {
-	public const PUBLICATION_DATE_FORMAT = 'Y-m-d\TH:i';
 	private $dBStructure = [];
 	private $blockType = [];
 	private $blockBar = [];
@@ -144,27 +143,6 @@ class Block extends Base
 	{
 		return (!isset($settings['pub_start']) || $settings['pub_start'] < $now)
 			&& (!isset($settings['pub_end']) || $now < $settings['pub_end']);
-	}
-
-	public static function parsePublicationDate($value, ?int $storedTimestamp): ?int
-	{
-		if ($value === '') {
-			return null;
-		}
-
-		$format = self::PUBLICATION_DATE_FORMAT;
-		if (is_string($value) && preg_match('/\A(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}\z/', $value)) {
-			$date = \DateTimeImmutable::createFromFormat('!' . $format, $value);
-			if ($date !== false && $date->format($format) === $value) {
-				if ($storedTimestamp !== null && date($format, $storedTimestamp) === $value) {
-					return $storedTimestamp;
-				}
-
-				return $date->getTimestamp();
-			}
-		}
-
-		throw new \InvalidArgumentException();
 	}
 
 	public static function isExecutableBlockType(int $type): bool

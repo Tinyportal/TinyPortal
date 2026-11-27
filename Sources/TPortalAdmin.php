@@ -2663,21 +2663,14 @@ function do_postchecks()
 			}
 			$typeCondition = allowedTo('admin_forum') ? '' : ' AND type NOT IN (10, 11)';
 			$blockSettings = json_decode($block['settings'], true);
-			$publication = [];
 			try {
-				foreach (['pub_start', 'pub_end'] as $setting) {
-					$stored = $blockSettings[$setting] ?? null;
-					$field = 'tp_block_' . $setting;
-					$publication[$setting] = array_key_exists($field, $_POST)
-						? TPBlock::parsePublicationDate($_POST[$field], $stored)
-						: $stored;
-				}
+				$publication = TPUtil::parsePublicationPeriod($_POST, [
+					'pub_start' => 'tp_block_pub_start',
+					'pub_end' => 'tp_block_pub_end',
+				], $blockSettings ?? []);
 			}
 			catch (InvalidArgumentException $e) {
-				fatal_lang_error('tp-block-publication-invalid', false);
-			}
-			if (isset($publication['pub_start'], $publication['pub_end']) && $publication['pub_start'] >= $publication['pub_end']) {
-				fatal_lang_error('tp-block-publication-order', false);
+				fatal_lang_error($e->getMessage(), false);
 			}
 
 			$tpgroups = [];

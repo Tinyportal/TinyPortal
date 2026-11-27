@@ -30,6 +30,51 @@ if (!defined('SMF')) {
 // Static method to call smcFunc calls which are not database related.
 class Util
 {
+	public const PUBLICATION_DATE_FORMAT = 'Y-m-d\TH:i';
+
+	public static function parsePublicationDate($value, ?int $storedTimestamp, bool $optional = true): ?int
+	{
+		if ($optional && $value === '') {
+			return null;
+		}
+
+		$format = self::PUBLICATION_DATE_FORMAT;
+		if (is_string($value) && preg_match('/\A(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}\z/', $value)) {
+			// Preserve the original instant, including seconds, when the displayed minute is unchanged.
+			if ($storedTimestamp !== null && date($format, $storedTimestamp) === $value) {
+				return $storedTimestamp;
+			}
+
+			$date = \DateTimeImmutable::createFromFormat('!' . $format, $value);
+			if ($date !== false && $date->format($format) === $value) {
+				return $date->getTimestamp();
+			}
+		}
+
+		throw new \InvalidArgumentException('tp-publication-invalid');
+	}
+
+	public static function parsePublicationPeriod(array $input, array $fields, array $stored, ?int $unsetValue = null): array
+	{
+		$period = [];
+		foreach ($fields as $setting => $field) {
+			$timestamp = isset($stored[$setting]) ? (int) $stored[$setting] : null;
+			if ($timestamp === $unsetValue) {
+				$timestamp = null;
+			}
+
+			$period[$setting] = array_key_exists($field, $input)
+				? self::parsePublicationDate($input[$field], $timestamp)
+				: $timestamp;
+		}
+
+		if (isset($period['pub_start'], $period['pub_end']) && $period['pub_start'] >= $period['pub_end']) {
+			throw new \InvalidArgumentException('tp-publication-order');
+		}
+
+		return $period;
+	}
+
 	public static function downloadIconUrl($path)
 	{
 		global $boardurl;

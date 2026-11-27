@@ -14,6 +14,7 @@
  * Copyright (C) - The TinyPortal Team
  *
  */
+use TinyPortal\Article as TPArticle;
 use TinyPortal\Util as TPUtil;
 use TinyPortal\Database as TPDatabase;
 

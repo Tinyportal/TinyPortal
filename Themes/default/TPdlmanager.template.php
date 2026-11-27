@@ -1127,6 +1127,11 @@ function template_main()
 			</form>
 		</div>
 				';
+		if (empty($context['TPortal']['dlsearchresults'])) {
+			echo '
+		<div class="information">', $txt['tp-dlsearch-no-results'], '</div>';
+		}
+
 		$bb = 1;
 		foreach ($context['TPortal']['dlsearchresults'] as $res) {
 			echo '

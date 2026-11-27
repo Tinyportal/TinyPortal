@@ -268,7 +268,7 @@ function template_editblock()
 
 	$block = $context['TPortal']['blockedit'];
 	$newtitle = html_entity_decode($block['title']);
-	$publicationFormat = \TinyPortal\Block::PUBLICATION_DATE_FORMAT;
+	$publicationFormat = \TinyPortal\Util::PUBLICATION_DATE_FORMAT;
 
 	echo '
 	<div id="tpadmin">
@@ -294,15 +294,6 @@ function template_editblock()
 						</dt>
 						<dd>
 							<input type="text" id="tp_block_title" name="tp_block_title" value="' . $newtitle . '" size="50" required>
-						</dd>
-						<dt><label for="tp_block_pub_start"><b>', $txt['tp-block-publication-start'], '</b></label></dt>
-						<dd>
-							<input type="datetime-local" id="tp_block_pub_start" name="tp_block_pub_start" value="', isset($block['pub_start']) ? date($publicationFormat, $block['pub_start']) : '', '">
-						</dd>
-						<dt><label for="tp_block_pub_end"><b>', $txt['tp-block-publication-end'], '</b></label></dt>
-						<dd>
-							<input type="datetime-local" id="tp_block_pub_end" name="tp_block_pub_end" value="', isset($block['pub_end']) ? date($publicationFormat, $block['pub_end']) : '', '">
-							<div class="smalltext">', $txt['tp-block-publication-help'], '</div>
 						</dd>
 						<dt><label for="tp_block_type"><b>',$txt['tp-type'] . '</b></label></dt>
 						<dd>
@@ -824,26 +815,16 @@ echo '
 
 	echo '
 				<hr>
-				<dl class="tp_title settings">';
-	/*					<dt>
-							<label for="tp-titledivclass">'.$txt['tp-titledivclass'].'</label>
-						</dt>
-						<dd>
-							<input type="text" id="tp-titledivclass" name="tp_block_set_titledivclass" value="' ,(empty($context['TPortal']['blockedit']['titledivclass']) ? '' : $context['TPortal']['blockedit']['titledivclass']), '" style="width: 15em" ><br>
-						</dd>
-						<dt>
-							<label for="tp-titleheadclass">'.$txt['tp-titleheadclass'].'</label>
-						</dt>
-						<dd>
-							<input type="text" id="tp-titleheadclass" name="tp_block_set_titleheadclass" value="' ,(empty($context['TPortal']['blockedit']['titleheadclass']) ? '' : $context['TPortal']['blockedit']['titleheadclass']), '" style="width: 15em" ><br>
-						</dd>
-						<dt>
-							<label for="tp-frameclass">'.$txt['tp-frameclass'].'</label>
-						</dt>
-						<dd>
-							<input type="text" id="tp-frameclass" name="tp_block_set_frameclass" value="' ,(empty($context['TPortal']['blockedit']['frameclass']) ? '' : $context['TPortal']['blockedit']['frameclass']), '" style="width: 15em" ><br>
-						</dd>
-					*/
+				<dl class="tp_title settings">
+					<dt><label for="tp_block_pub_start">', $txt['tp-publication-start'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_block_pub_start" name="tp_block_pub_start" value="', isset($block['pub_start']) ? date($publicationFormat, $block['pub_start']) : '', '">
+					</dd>
+					<dt><label for="tp_block_pub_end">', $txt['tp-publication-end'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_block_pub_end" name="tp_block_pub_end" value="', isset($block['pub_end']) ? date($publicationFormat, $block['pub_end']) : '', '">
+						<div class="smalltext">', $txt['tp-publication-help'], '</div>
+					</dd>';
 	echo '
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-membergrouphelpdesc" onclick="return reqOverlayDiv(this.href);">

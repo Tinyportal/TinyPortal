@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -92,7 +92,15 @@ function template_article_search_results()
 	echo '
 			</form>
 		</div>
-	</div>
+	</div>';
+
+	if (empty($context['TPortal']['searchresults'])) {
+		echo '
+	<div class="information">', $txt['tp-search-no-results'], '</div>';
+		return;
+	}
+
+	echo '
 	<div class="pagesection">
 		<div class="pagelinks floatleft">
 			<a href="#bot" class="button">', $txt['go_down'], '</a>

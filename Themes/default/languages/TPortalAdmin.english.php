@@ -200,9 +200,6 @@ $txt['tp-addcategory'] = 'Add category';
 $txt['tp-author'] = 'Author';
 $txt['tp-assignnewauthor'] = 'Author ID(change to re-assign to another)';
 $txt['tp-created'] = 'Created at';
-$txt['tp-published'] = 'Publish';
-$txt['tp-pub_start'] = 'from';
-$txt['tp-pub_end'] = 'until';
 $txt['tp-notset'] = '- not set -';
 $txt['tp-category'] = 'Category';
 $txt['tp-switchmode'] = 'Type of article';
@@ -476,11 +473,11 @@ $txt['tp-text'] = '-text-';
 $txt['tp-recent'] = 'Recent';
 $txt['tp-no_title'] = '-no title-';
 $txt['tp-blocknotice'] = 'NB! The type of block has changed.<br>Please save first to see the new options!';
-$txt['tp-block-publication-start'] = 'Publish from';
-$txt['tp-block-publication-end'] = 'Publish until';
-$txt['tp-block-publication-help'] = 'Times use the forum time zone. Leave either field blank to set no limit on that side of the period.';
-$txt['tp-block-publication-invalid'] = 'Enter a valid publication date and time in the forum time zone.';
-$txt['tp-block-publication-order'] = 'The publication end must be after the start.';
+$txt['tp-publication-start'] = 'Publish from';
+$txt['tp-publication-end'] = 'Publish until';
+$txt['tp-publication-help'] = 'Times use the forum time zone. Leave either field blank to set no limit on that side of the period.';
+$txt['tp-publication-invalid'] = 'Enter a valid publication date and time in the forum time zone.';
+$txt['tp-publication-order'] = 'The publication end must be after the start.';
 
 // Block Types
 $txt['tp-userbox1'] = 'Avatar (if any)';

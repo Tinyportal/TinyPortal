@@ -265,16 +265,14 @@ function template_submitarticle()
 		}
 		if (allowedTo('admin_forum') || allowedTo('tp_articles')) {
 			echo '
-					<dt>
-						', $txt['tp-published'], '
-					</dt>
-					<dd><div class="description" style="line-height: 1.6em;">
-						<label for="tp_article_publish_from">', $txt['tp-pub_start'], '</label><br>
-						<input type="datetime-local" id="tp_article_publish_from" name="tp_article_publish_from" value="', empty($mg['pub_start']) ? '' : date('Y-m-d\TH:i', $mg['pub_start']), '"><br>
-						<label for="tp_article_publish_until">', $txt['tp-pub_end'], '</label><br>
-						<input type="datetime-local" id="tp_article_publish_until" name="tp_article_publish_until" value="', empty($mg['pub_end']) ? '' : date('Y-m-d\TH:i', $mg['pub_end']), '">
-					</div>
+					<dt><label for="tp_article_publish_from">', $txt['tp-publication-start'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_article_publish_from" name="tp_article_publish_from" value="', empty($mg['pub_start']) ? '' : date(\TinyPortal\Util::PUBLICATION_DATE_FORMAT, $mg['pub_start']), '">
 					</dd>
+					<dt><label for="tp_article_publish_until">', $txt['tp-publication-end'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_article_publish_until" name="tp_article_publish_until" value="', empty($mg['pub_end']) ? '' : date(\TinyPortal\Util::PUBLICATION_DATE_FORMAT, $mg['pub_end']), '">
+						<div class="smalltext">', $txt['tp-publication-help'], '</div>
 				</dl>';
 		}
 	}
