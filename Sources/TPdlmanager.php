@@ -1798,46 +1798,49 @@ function TPortalDLManager()
 	}
 }
 
-// searched the files?
+function TPDownloadSearchParams(): ?array
+{
+	$encoded = $_GET['params'] ?? null;
+	$json = is_string($encoded) ? base64_decode($encoded, true) : false;
+	$params = $json !== false ? json_decode($json, true) : null;
+
+	if (!is_array($params) || !is_string($params['search'] ?? null) || trim($params['search']) === '') {
+		return null;
+	}
+
+	return ['search' => $params['search'], 'title' => !empty($params['title']), 'body' => !empty($params['body'])];
+}
+
 function TPdlresults()
 {
 	global $txt, $scripturl, $context, $smcFunc;
 
-	$start = 0;
+	loadLanguage('Search');
+	$start = max(0, (int) (TPUtil::filter('start', 'get', 'int') ?: TPUtil::filter('p', 'get', 'int')));
 	$max_results = 20;
-	$usebody = false;
-	$usetitle = false;
-	
-	if (isset($_GET['p']) && is_numeric($_GET['p'])) {
-		$start = $_GET['p'];
+	if (array_key_exists('dl_search', $_POST)) {
+		checkSession('post');
+		$search = TPUtil::filter('dl_search', 'post', 'string');
+		$searchParams = [
+			'search' => is_string($search) ? trim(strip_tags($search)) : '',
+			'title' => !empty($_POST['dl_searcharea_name']),
+			'body' => !empty($_POST['dl_searcharea_desc']),
+		];
+	}
+	else {
+		$searchParams = TPDownloadSearchParams();
 	}
 
-	checkSession('post');
-
-	// nothing to search for?
-	if (!isset($_POST['dl_search']) || !is_string($_POST['dl_search']) || trim($_POST['dl_search']) === '') {
+	if (!is_string($searchParams['search'] ?? null) || trim($searchParams['search']) === '') {
 		fatal_error($txt['tp-nosearchentered'], false);
 	}
 
-	// clean the search
-	$what = trim(strip_tags($_POST['dl_search']));
-	if ($what === '') {
-		fatal_error($txt['tp-nosearchentered'], false);
-	}
+	$what = $searchParams['search'];
+	$usetitle = $searchParams['title'];
+	$usebody = $searchParams['body'];
+	$encoded = rawurlencode(base64_encode(json_encode($searchParams)));
+
 	$pattern = '%' . str_replace(' ', '%', $what) . '%';
-
-	if (!empty($_POST['dl_searcharea_name'])) {
-		$usetitle = true;
-	}
-	else {
-		$usetitle = false;
-	}
-	if (!empty($_POST['dl_searcharea_desc'])) {
-		$usebody = true;
-	}
-	else {
-		$usebody = false;
-	}
 
 	if ($usetitle && !$usebody) {
 		$query = 'd.name LIKE {string:pattern}';
@@ -1887,6 +1890,7 @@ function TPdlresults()
 
 	$context['TPortal']['dlsearchresults'] = [];
 	$context['TPortal']['dlsearchterm'] = $what;
+	$context['TPortal']['dl_search_params'] = $searchParams;
 
 	// find how many first
 	$check = $smcFunc['db_query'](
@@ -1899,6 +1903,7 @@ function TPdlresults()
 	);
 	$tt = $smcFunc['db_fetch_row']($check);
 	$total = $tt[0];
+	$smcFunc['db_free_result']($check);
 
 	$request = $smcFunc['db_query'](
 		'substring',
@@ -1907,7 +1912,7 @@ function TPdlresults()
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		' . $visibility . '
-		ORDER BY d.created DESC LIMIT {int:start}, {int:limit}',
+		ORDER BY d.created DESC LIMIT {int:limit} OFFSET {int:start}',
 		$params + ['limit' => $max_results, 'start' => $start]
 	);
 	// create pagelinks
@@ -1931,20 +1936,17 @@ function TPdlresults()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=search', $txt['tp-dlsearch']);
+	$context['TPortal']['dl_search_edit_url'] = $scripturl . '?action=tportal;sa=download;dl=search;params=' . $encoded;
+	TPadd_linktree($context['TPortal']['dl_search_edit_url'], $txt['tp-dlsearch']);
 
-	$params = base64_encode(json_encode(['search' => $what, 'title' => $usetitle, 'body' => $usebody]));
-	
-	// Now that we know how many results to expect we can start calculating the page numbers.
-	$context['page_index'] = constructPageIndex($scripturl . '?sa=download;dl=search;params=' . $params, $start, $total, $max_results, false);
-//	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
-
+	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=download;dl=results;params=' . $encoded, $start, $total, $max_results, false);
 }
-// searched the files?
+
 function TPdlsearch()
 {
-	global $txt, $scripturl;
+	global $txt, $scripturl, $context;
 
+	$context['TPortal']['dl_search_params'] = TPDownloadSearchParams() ?? ['search' => '', 'title' => true, 'body' => true];
 	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=search', $txt['tp-dlsearch']);
 }
 

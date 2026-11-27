@@ -28,10 +28,13 @@ function template_main()
 		fatal_error($txt['tp-dlmanageroff'], false);
 	}
 
+	if ($context['TPortal']['dlaction'] !== 'results') {
+		echo '
+			<div id="display_head" class="information">
+				<h2 class="display_title tp_wrapanywhere">', ($context['TPortal']['dlaction'] == 'item' || $context['TPortal']['dlaction'] == 'cat') ? $txt['tp-downloads'] . ':&nbsp;' . $context['TPortal']['dlheader'] : $txt['tp-downloads'] ,'</h2>
+			</div>';
+	}
 	echo '
-		<div id="display_head" class="information">
-			<h2 class="display_title tp_wrapanywhere">', ($context['TPortal']['dlaction'] == 'item' || $context['TPortal']['dlaction'] == 'cat') ? $txt['tp-downloads'] . ':&nbsp;' . $context['TPortal']['dlheader'] : $txt['tp-downloads'] ,'</h2>
-		</div>
 		<div class="tp_dlcontainer">';
 
 	$dlbuttons = [
@@ -1076,6 +1079,8 @@ function template_main()
 
 	// Downloads search page
 	if ($context['TPortal']['dlaction'] == 'search') {
+		$params = $context['TPortal']['dl_search_params'];
+
 		echo '
 		<div class="tborder">
 		<form accept-charset="', $context['character_set'], '" id="searchform" action="' . $scripturl . '?action=tportal;sa=download;dl=results" enctype="multipart/form-data" method="post">
@@ -1086,12 +1091,12 @@ function template_main()
 				<dl class="settings" id="search_options">
 					<dt><b>' . $txt['tp-search'] . ':</b></dt>
 					<dd>
-						<input type="text" id="searchbox" name="dl_search" value="" required/><br>
+						<input type="text" id="searchbox" name="dl_search" value="', htmlspecialchars($params['search'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '" required/><br>
 					</dd>
 					<dt></dt>
 					<dd>
-						<input type="checkbox" id="tp-searcharea-name" checked="checked"/><label for="tp-searcharea-name"> ' . $txt['tp-searcharea-name'] . '</label><br>
-						<input type="checkbox" id="dl_searcharea_desc" checked="checked"/><label for="dl_searcharea_desc"> ' . $txt['tp-searcharea-descr'] . '</label><br>
+						<input type="checkbox" id="tp-searcharea-name" name="dl_searcharea_name"', $params['title'] ? ' checked' : '', '/><label for="tp-searcharea-name"> ' . $txt['tp-searcharea-name'] . '</label><br>
+						<input type="checkbox" id="dl_searcharea_desc" name="dl_searcharea_desc"', $params['body'] ? ' checked' : '', '/><label for="dl_searcharea_desc"> ' . $txt['tp-searcharea-descr'] . '</label><br>
 						<input type="hidden" name="sc" value="' . $context['session_id'] . '" />
 					</dd>
 				</dl>
@@ -1103,58 +1108,55 @@ function template_main()
 
 	if ($context['TPortal']['dlaction'] == 'results') {
 		echo '
-		<div class="tborder">
+		<div id="search_results">
 			<div class="cat_bar">
-				<h3 class="catbg">' , $txt['tp-dlsearchresults'] , '
-					' . $txt['tp-searchfor'] . '  &quot;' . $context['TPortal']['dlsearchterm'] . '&quot;</h3>
+				<h3 class="catbg">', $txt['search_adjust_query'], '</h3>
 			</div>
-			<form style="margin: 0; padding: 0;" accept-charset="', $context['character_set'], '" id="searchform" action="' . $scripturl . '?action=tportal;sa=download;dl=results" method="post">
-			<div id="advanced_search" class="roundframe">
-				<dl class="settings" id="search_options">
-					<dt><b>' . $txt['tp-search'] . ':</b></dt>
-					<dd>
-						<input type="text" id="searchbox" name="dl_search" value="' . $context['TPortal']['dlsearchterm'] . '" required>
-					</dd>
-					<dt></dt>
-					<dd>
-						<input type="checkbox" name="dl_searcharea_name" checked="checked" /> ' , $txt['tp-searcharea-name'] , '<br>
-						<input type="checkbox" name="dl_searcharea_desc" checked="checked" /> ' , $txt['tp-searcharea-descr'] , '<br>
-						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-					</dd>
-				</dl>
-				<div class="padding-div"><input type="submit" class="button button_submit" value="' . $txt['tp-search'] . '" /></div>
+			<div class="roundframe">
+				<form action="', $scripturl, '?action=tportal;sa=download;dl=results" method="post" accept-charset="', $context['character_set'], '">
+					<label for="tp_search_again"><strong>', $txt['search_for'], ':</strong></label>
+					<input type="text" size="40" id="tp_search_again" name="dl_search" value="', htmlspecialchars($context['TPortal']['dlsearchterm'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '" required>
+					<input type="hidden" name="dl_searcharea_name" value="', (int) $context['TPortal']['dl_search_params']['title'], '">
+					<input type="hidden" name="dl_searcharea_desc" value="', (int) $context['TPortal']['dl_search_params']['body'], '">
+					<input type="hidden" name="sc" value="', $context['session_id'], '">
+					<input type="submit" class="button" value="', $txt['search_adjust_submit'], '">
+				</form>
 			</div>
-			</form>
 		</div>
-				';
+		<div id="display_head" class="information">
+			<h2 class="display_title">
+				<span>', $txt['mlist_search_results'], ': ', htmlspecialchars($context['TPortal']['dlsearchterm'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</span>
+			</h2>
+			<div class="floatleft">
+				<a class="button" href="', $context['TPortal']['dl_search_edit_url'], '">', $txt['search_adjust_query'], '</a>
+			</div>
+		</div>';
 		if (empty($context['TPortal']['dlsearchresults'])) {
 			echo '
-		<div class="information">', $txt['tp-dlsearch-no-results'], '</div>';
+			<div class="roundframe noup">', $txt['tp-dlsearch-no-results'], '</div>';
 		}
-
-		$bb = 1;
-		foreach ($context['TPortal']['dlsearchresults'] as $res) {
+		else {
 			echo '
-				<div class="windowbg tpbottom">
-					<div class="padding-div">
-						<h4 class="tpresults"><a href="' . $scripturl . '?action=tportal;sa=download;dl=item' . $res['id'] . '">' . $res['name'] . '</a></h4>
-						<hr>
-						<div class="tpresults">
-							<div>' , $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($res['body']) : $res['body'] , '</div>
-							<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
-						</div>
-					</div>
-				</div>';
-			$bb++;
+			<div class="pagesection">
+				<div class="pagelinks">', $context['page_index'], '</div>
+			</div>';
+
+			foreach ($context['TPortal']['dlsearchresults'] as $res) {
+				echo '
+			<div class="windowbg">
+				<div class="topic_details">
+					<h5><a href="', $scripturl, '?action=tportal;sa=download;dl=item', $res['id'], '">', $res['name'], '</a></h5>
+					<span class="smalltext">', $txt['tp-by'], ' ', $res['author'], ' - ', timeformat($res['date']), '</span>
+				</div>
+				<div class="list_posts">', $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($res['body']) : $res['body'], '</div>
+			</div>';
+			}
+
+			echo '
+			<div class="pagesection">
+				<div class="pagelinks">', $context['page_index'], '</div>
+			</div>';
 		}
-		echo '
-	</div>
-	<div class="pagesection">
-		<div class="pagelinks floatleft">
-			<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
-			' . $context['page_index'] . '
-		</div>
-	</div>';
 	}
 	echo '
 	</div>';

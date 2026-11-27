@@ -24,8 +24,10 @@ function template_article_search_form()
 {
 	global $context, $settings, $txt, $scripturl;
 
+	$params = $context['TPortal']['article_search_params'];
+
 	echo '
-	<form accept-charset="', $context['character_set'], '" name="TPsearcharticle" id="searchform" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
+	<form accept-charset="', $context['character_set'], '" name="TPsearcharticle" id="searchform" action="' . $scripturl . '?action=tportal;sa=searcharticle2" method="post">
 		<div class="tborder">
 			<div class="cat_bar">
 				<h3 class="catbg">' , $txt['tp-searcharticles2'] , '</h3>
@@ -34,13 +36,13 @@ function template_article_search_form()
 				<dl class="settings" id="search_options">
 					<dt><b>' . $txt['tp-search'] . ':</b></dt>
 					<dd>
-						<input type="text" id="searchbox" name="tpsearch_what" required/><br>
+						<input type="text" id="searchbox" name="tpsearch_what" value="', htmlspecialchars($params['search'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '" required/><br>
 						<em class="smalltext"><em>' . $txt['tp-searcharticleshelp'] . '</em></em>
 					</dd>
 					<dt></dt>
 					<dd>
-						<input type="checkbox" name="tpsearch_title" checked="checked" /> ' . $txt['tp-searchintitle'] . '<br>
-						<input type="checkbox" name="tpsearch_body" checked="checked" /> ' . $txt['tp-searchinbody'],'<br>
+						<input type="checkbox" name="tpsearch_title"', $params['title'] ? ' checked' : '', ' /> ' . $txt['tp-searchintitle'] . '<br>
+						<input type="checkbox" name="tpsearch_body"', $params['body'] ? ' checked' : '', ' /> ' . $txt['tp-searchinbody'],'<br>
 						<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
 					</dd>
 				</dl>
@@ -62,70 +64,54 @@ function template_article_search_results()
 	global $context, $settings, $txt, $scripturl;
 
 	echo '
-	<div class="tborder">
+	<div id="search_results">
 		<div class="cat_bar">
-			<h3 class="catbg">' , $txt['tp-searchresults'] , '
-			' . $txt['tp-searchfor'] . '  &quot;' . $context['TPortal']['searchterm'] . '&quot;</h3>
+			<h3 class="catbg">', $txt['search_adjust_query'], '</h3>
 		</div>
-
-		<div id="advanced_search" class="roundframe">
-			<form accept-charset="', $context['character_set'], '"  name="TPsearcharticle" id="searchform" action="' . $scripturl . '?action=tportal;sa=searcharticle" method="post">
-			<dl class="settings" id="search_options">
-				<dt><b>' . $txt['tp-search'] . ':</b></dt>
-				<dd>
-					<input type="text" id="searchbox" name="tpsearch_what" value="' . $context['TPortal']['searchterm'] . '" required/><br>
-					<em class="smalltext"><em>' . $txt['tp-searcharticleshelp'] . '</em></em>
-				</dd>
-				<dt></dt>
-				<dd>
-					<input type="checkbox" name="tpsearch_title" checked="checked" /> ' . $txt['tp-searchintitle'] . '<br>
-					<input type="checkbox" name="tpsearch_body" checked="checked" /> ' . $txt['tp-searchinbody'],'<br>
-					<input type="hidden" name="sc" value="' , $context['session_id'] , '" />
-				</dd>
-			</dl>
-				<div class="padding-div"><input type="submit" class="button button_submit" value="' . $txt['tp-search'] . '"></div>';
-
-	if ($context['TPortal']['fulltextsearch'] == 1) {
-		echo '
-			<div>' . $txt['tp-searcharticleshelp2'] . '</div>';
-	}
-	echo '
+		<div class="roundframe">
+			<form action="', $scripturl, '?action=tportal;sa=searcharticle2" method="post" accept-charset="', $context['character_set'], '">
+				<label for="tp_search_again"><strong>', $txt['search_for'], ':</strong></label>
+				<input type="text" size="40" id="tp_search_again" name="tpsearch_what" value="', htmlspecialchars($context['TPortal']['searchterm'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '" required>
+				<input type="hidden" name="tpsearch_title" value="', (int) $context['TPortal']['article_search_params']['title'], '">
+				<input type="hidden" name="tpsearch_body" value="', (int) $context['TPortal']['article_search_params']['body'], '">
+				<input type="hidden" name="sc" value="', $context['session_id'], '">
+				<input type="submit" class="button" value="', $txt['search_adjust_submit'], '">
 			</form>
+		</div>
+	</div>
+	<div id="display_head" class="information">
+		<h2 class="display_title">
+			<span>', $txt['mlist_search_results'], ': ', htmlspecialchars($context['TPortal']['searchterm'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</span>
+		</h2>
+		<div class="floatleft">
+			<a class="button" href="', $context['TPortal']['search_edit_url'], '">', $txt['search_adjust_query'], '</a>
 		</div>
 	</div>';
 
 	if (empty($context['TPortal']['searchresults'])) {
 		echo '
-	<div class="information">', $txt['tp-search-no-results'], '</div>';
+	<div class="roundframe noup">', $txt['tp-search-no-results'], '</div>';
 		return;
 	}
 
 	echo '
 	<div class="pagesection">
-		<div class="pagelinks floatleft">
-			<a href="#bot" class="button">', $txt['go_down'], '</a>
-			' . $context['page_index'] . '
-		</div>
-	</div>
-	';
-	$bb = 1;
+		<div class="pagelinks">', $context['page_index'], '</div>
+	</div>';
+
 	foreach ($context['TPortal']['searchresults'] as $res) {
 		echo '
-			<div class="windowbg padding-div" style="margin-bottom:3px;">
-				<h4 class="tpresults"><a href="' . $scripturl . '?page=' . $res['id'] . '">' . $res['subject'] . '</a></h4>
-				<hr>
-				<div class="tpresults">
-					<div class="middletext">' , $res['body'] . '</div>
-					<div class="smalltext" style="padding-top: 0.4em;">' , $txt['tp-by'] . ' ' . $res['author'] . ' - ', timeformat($res['date']) , '</div>
-				</div>
-			</div>';
-		$bb++;
+	<div class="windowbg">
+		<div class="topic_details">
+			<h5><a href="', $scripturl, '?page=', $res['id'], '">', $res['subject'], '</a></h5>
+			<span class="smalltext">', $txt['tp-by'], ' ', $res['author'], ' - ', timeformat($res['date']), '</span>
+		</div>
+		<div class="list_posts">', $res['body'], '</div>
+	</div>';
 	}
+
 	echo '
 	<div class="pagesection">
-		<div class="pagelinks floatleft">
-			<a href="#top" class="button" id="bot">', $txt['go_up'], '</a>
-			' . $context['page_index'] . '
-		</div>
+		<div class="pagelinks">', $context['page_index'], '</div>
 	</div>';
 }
