@@ -374,6 +374,7 @@ $txt['tp-blocktype14'] = 'Article/download stats functions';
 $txt['tp-blocktype5'] = 'Code: BBC';
 $txt['tp-blocktype11'] = 'Code: HTML/Javascript';
 $txt['tp-blocktype10'] = 'Code: PHP';
+$txt['tp-blockbody-readonly'] = 'Only forum administrators can edit the code of this block.';
 $txt['tp-blocktype9'] = 'Menu';
 $txt['tp-blocktype2'] = 'News';
 $txt['tp-blocktype8'] = 'Shoutbox';

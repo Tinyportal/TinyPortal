@@ -78,16 +78,21 @@ function template_submitarticle()
 				<dt>
 					<span class="font-strong">
 					<a href="', $scripturl, '?action=helpadmin;help=tp-shortname_articledesc" onclick="return reqOverlayDiv(this.href);">
-					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">' . $txt['tp-shortname_article'] . '</label></span></span>
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">' . $txt['tp-shortname_article'] . '</label></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="' . $mg['shortname'] . '" size=20 pattern="[^\'\x22;:]+" >
 				</dd>
 			</dl>
 			<div>';
+	$codeReadOnly = !empty($context['TPortal']['article_code_read_only']);
 	$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 	if ($article_type == 'php') {
-		echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
+		if ($codeReadOnly) {
+			echo '<p class="noticebox">', $txt['tp_article_code_readonly'], '</p>';
+		}
+		echo '<textarea id="tp_article_body" wrap="auto"', $codeReadOnly ? ' readonly' : ' name="tp_article_body"', '>',
+			htmlspecialchars((string) $mg['body'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea><br>';
 	}
 	elseif (($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
 		TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg, true);
@@ -126,6 +131,10 @@ function template_submitarticle()
 		echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<span class="font-strong">' . $txt['tp-introtext'] . '</span>';
 		if (($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
 			TPwysiwyg('tp_article_intro', $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, true);
+		}
+		elseif ($article_type === 'php') {
+			echo '<textarea id="tp_article_intro" rows="5" cols="20" wrap="soft"', $codeReadOnly ? ' readonly' : ' name="tp_article_intro"', '>',
+				htmlspecialchars((string) $mg['intro'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea>';
 		}
 		else {
 			echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">' . $mg['intro'] . '</textarea>';
@@ -177,20 +186,27 @@ function template_submitarticle()
 						', $txt['tp-switchmode'], '
 					</dt>
 					<dd>
+';
+		if ($codeReadOnly) {
+			echo $txt['tp-gophp'];
+		}
+		else {
+			echo '
 						<input type="radio" id="gohtml" name="tp_article_type" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> ' . $txt['tp-gohtml'] . '</label><br>
 ';
-		if (allowedTo('admin_forum')) {
-			echo '
+			if (allowedTo('admin_forum')) {
+				echo '
 						<input type="radio" id="gophp" name="tp_article_type" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> ' . $txt['tp-gophp'] . '</label><br>
 ';
-		}
-		echo '
+			}
+			echo '
 						<input type="radio" id="gobbc" name="tp_article_type" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> ' . $txt['tp-gobbc'] . '</label><br>
 ';
-		if (allowedTo('admin_forum')) {
-			echo '
+			if (allowedTo('admin_forum')) {
+				echo '
 						<input type="radio" id="goimport" name="tp_article_type" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> ' . $txt['tp-goimport'] . '</label><br><br>
 ';
+			}
 		}
 		echo '
 					</dd>
@@ -203,7 +219,7 @@ function template_submitarticle()
 						<input type="radio" class="switch-off" id="tp_article_off" name="tp_article_off" value="1" ' , $mg['off'] == '1' ? 'checked' : '' , '><label for="tp_article_off"> ' . $txt['tp-articleoff'] . '</label>
 					</div>
 					</dd>';
-		if (!empty($mg['id'])) {
+		if (!empty($mg['id']) && !$codeReadOnly) {
 			echo '
 					<dt>
 						', $txt['tp-articledelete'], '<br>
@@ -427,12 +443,12 @@ function template_submitarticle()
 					</dl>
 					<div>
 						' , $txt['tp-articleheaders'] , '<br>
-						<textarea id="tp_article_headers" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
+						<textarea id="tp_article_headers" rows="5" cols="40"', $codeReadOnly ? ' readonly' : ' name="tp_article_headers"', '>', htmlspecialchars((string) $mg['headers'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea>
 					</div>
 				</div><br>
 			<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '" >';
 	}
-	else {
+	elseif (!$codeReadOnly) {
 		echo '<input name="tp_article_type" type="hidden" value="' . $article_type . '">';
 		// set defaults for submissions?
 		echo '	<input type="hidden" name="tp_article_authorid" value="' . $context['user']['id'] . '">

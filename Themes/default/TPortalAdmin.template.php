@@ -1085,8 +1085,13 @@ function template_articles()
 							</div>
 							<div class="tp_artdel fullwidth-on-res-layout float-items tpcenter">
 								<div class="show-on-responsive"><strong>' . $txt['tp-delete'] . '</strong></div>
+								';
+								if (strtolower(trim((string) $alink['type'])) !== 'php' || allowedTo('admin_forum')) {
+									echo '
 								<a href="' . $scripturl . '?action=tpadmin;' . $context['session_var'] . '=' . $context['session_id'] . ';artdelete=' . $alink['id'] , !empty($_GET['cu']) ? ';cu=' . $_GET['cu'] : '' , '" onclick="javascript:return confirm(\'' . $txt['tp-articleconfirmdelete'] . '\')">
-								<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>
+								<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>';
+								}
+								echo '
 							</div>
 							<p class="clearthefloat"></p>
 						</div>
@@ -1215,8 +1220,13 @@ function template_strays()
 									</div>
 									<div class="tp_artdel fullwidth-on-res-layout float-items tpcenter">
 										<div class="show-on-responsive">' . $txt['tp-delete'] . '</div>
+										';
+										if (strtolower(trim((string) $alink['type'])) !== 'php' || allowedTo('admin_forum')) {
+											echo '
 										<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'] . ';artdelete=' . $alink['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-articleconfirmdelete'] . '\')">
-										<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>
+										<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>';
+										}
+										echo '
 									</div>
 									<p class="clearthefloat"></p>
 								</div>
@@ -1351,8 +1361,13 @@ function template_submission()
 										</div>
 										<div class="tp_artdel fullwidth-on-res-layout float-items">
 											<div class="show-on-responsive">' . $txt['tp-delete'] . '</div>
+											';
+											if (strtolower(trim((string) $alink['type'])) !== 'php' || allowedTo('admin_forum')) {
+												echo '
 											<a href="' . $scripturl . '?action=tpadmin;cu=-1;' . $context['session_var'] . '=' . $context['session_id'] . ';artdelete=' . $alink['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-articleconfirmdelete'] . '\')">
-											<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>
+											<img title="' . $txt['tp-delete'] . '" src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>';
+											}
+											echo '
 										</div>
 										<p class="clearthefloat"></p>
 									</div>
@@ -1915,6 +1930,7 @@ function template_blocks()
 			</dl>';
 	}
 	else {
+		$canManageCodeBlocks = $context['TPortal']['can_manage_code_blocks'];
 		$blockActionUrl = $scripturl . '?action=tpadmin;block_tab=' . $activeTab . ';' . $context['session_var'] . '=' . $context['session_id'];
 		echo '
 				<div class="font_strong tp_pad">
@@ -1988,21 +2004,22 @@ function template_blocks()
 				echo '
 							</div>
 						<div style="width:20%;max-width:100%;" class="adm-name float-items">
-						     <input type="text" name="title' . $lblock['id'] . '" value="' . html_entity_decode($newtitle) . '" size="25" required>
+						     <input type="text" name="title' . $lblock['id'] . '" value="' . htmlspecialchars($newtitle, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false) . '" size="25" required>
 						</div>
 						<div style="width:20%;" class="fullwidth-on-res-layout block-opt float-items">
 						    <div class="show-on-responsive">
 								<div class="smalltext">' . $txt['tp-type'] . '</div>
 							</div>
-							<select size="1" name="type' . $lblock['id'] . '">
+							<select size="1" name="type', $lblock['id'], '"', $lblock['code_read_only'] ? ' disabled' : '', '>
 								<option value="0"' ,$lblock['type'] == 'no' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
 								<option value="8"' ,$lblock['type'] == 'shoutbox' ? ' selected' : '' , '>', $txt['tp-blocktype8'] , '</option>
 								<option value="18"' ,$lblock['type'] == 'articlebox' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$lblock['type'] == 'categorybox' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
 								<option value="14"' ,$lblock['type'] == 'module' ? ' selected' : '' , '>', $txt['tp-blocktype14'] , '</option>
 								<option value="5"' ,$lblock['type'] == 'html' ? ' selected' : '' , '>', $txt['tp-blocktype5'] , '</option>
-								<option value="11"' ,$lblock['type'] == 'scriptbox' ? ' selected' : '' , '>', $txt['tp-blocktype11'] , '</option>
-								<option value="10"' ,$lblock['type'] == 'phpbox' ? ' selected' : '' , '>', $txt['tp-blocktype10'] , '</option>
+								', ($canManageCodeBlocks || $lblock['code_read_only']) ? '
+								<option value="11"' . ($lblock['type'] === 'scriptbox' ? ' selected' : '') . '>' . $txt['tp-blocktype11'] . '</option>
+								<option value="10"' . ($lblock['type'] === 'phpbox' ? ' selected' : '') . '>' . $txt['tp-blocktype10'] . '</option>' : '', '
 								<option value="9"' ,$lblock['type'] == 'catmenu' ? ' selected' : '' , '>', $txt['tp-blocktype9'] , '</option>
 								<option value="2"' ,$lblock['type'] == 'newsbox' ? ' selected' : '' , '>', $txt['tp-blocktype2'] , '</option>
 								<option value="6"' ,$lblock['type'] == 'onlinebox' ? ' selected' : '' , '>', $txt['tp-blocktype6'] , '</option>
@@ -2103,7 +2120,7 @@ function template_blocks()
 						</div>
 	                    <div style="width:10%;" class="smalltext fullwidth-on-res-layout float-items tpcenter">
 						    <div class="show-on-responsive">' . $txt['tp-delete'] . '</div>
-							<a href="' . $blockActionUrl . ';blockdelete=' . $lblock['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-blockconfirmdelete'] . '\')"><img title="' . $txt['tp-delete'] . '"  src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>
+							', $lblock['code_read_only'] ? '' : '<a href="' . $blockActionUrl . ';blockdelete=' . $lblock['id'] . '" onclick="javascript:return confirm(\'' . $txt['tp-blockconfirmdelete'] . '\')"><img title="' . $txt['tp-delete'] . '"  src="' . $settings['tp_images_url'] . '/TPdelete2.png" alt="' . $txt['tp-delete'] . '"  /></a>', '
 						</div>
 						<p class="clearthefloat"></p>
 					</td>

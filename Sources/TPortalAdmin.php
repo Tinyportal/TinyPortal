@@ -556,14 +556,14 @@ function do_articles()
 	global $context, $txt, $settings, $boardurl, $scripturl, $smcFunc;
 
 	if (allowedTo('tp_articles') == false) {
-		if (isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle') {
+		if (allowedTo('tp_editownarticle') && isset($_GET['sa']) && substr($_GET['sa'], 0, 11) == 'editarticle') {
 			$article = TPUtil::filter('article', 'get', 'string');
 			$request = $smcFunc['db_query'](
 				'',
 				'
 		        SELECT id FROM {db_prefix}tp_articles
 		        WHERE id = {int:article_id}
-                AND author_id = {int:member_id}',
+                AND author_id = {int:member_id} AND locked = 0',
 				[
 					'article_id' => $article,
 					'member_id' => $context['user']['id']
@@ -1067,11 +1067,16 @@ function do_articles()
 			$context['TPortal']['editarticle'] = TPArticle::withDisplayTitle($smcFunc['db_fetch_assoc']($request));
 			$context['TPortal']['editarticle']['subject_input'] = htmlentities($context['TPortal']['editarticle']['subject'], ENT_QUOTES, $context['character_set']);
 			$storedType = strtolower(trim((string) $context['TPortal']['editarticle']['type']));
-			if (in_array($storedType, ['php', 'import'], true)) {
+			if ($storedType === 'import') {
 				isAllowedTo('admin_forum');
 			}
+			$context['TPortal']['article_code_read_only'] = $storedType === 'php' && !allowedTo('admin_forum');
+			if ($context['TPortal']['article_code_read_only'] && loadLanguage('TParticle') == false) {
+				loadLanguage('TParticle', 'english');
+			}
+			$context['TPortal']['editarticle']['articletype'] = $storedType;
 			$context['TPortal']['editing_article'] = true;
-			if ($context['TPortal']['editarticle']['type'] != 'bbc') {
+			if (!in_array($storedType, ['bbc', 'php'], true)) {
 				$context['TPortal']['editarticle']['body'] = $smcFunc['htmlspecialchars']($context['TPortal']['editarticle']['body'], ENT_QUOTES);
 			}
 			$smcFunc['db_free_result']($request);
@@ -1582,9 +1587,6 @@ function do_postchecks()
 				if ($smcFunc['db_num_rows']($request) > 0) {
 					$row = $smcFunc['db_fetch_assoc']($request);
 					$smcFunc['db_free_result']($request);
-					if (TPBlock::isExecutableBlockType((int) $row['type']) && !allowedTo('admin_forum')) {
-						continue;
-					}
 					$request = $smcFunc['db_query'](
 						'',
 						'
@@ -2410,10 +2412,11 @@ function do_postchecks()
 			}
 
 			if ($blockTab !== 'settings' && allowedTo('tp_blocks')) {
-				$typeCondition = allowedTo('admin_forum') ? '' : ' AND type NOT IN (10, 11)';
+				$canManageCodeBlocks = allowedTo('admin_forum');
+				$typeCondition = $canManageCodeBlocks ? '' : ' AND type NOT IN (10, 11)';
 				foreach ($_POST as $what => $value) {
-					if (substr($what, 0, 4) === 'type' && TPBlock::isExecutableBlockType((int) $value)) {
-						isAllowedTo('admin_forum');
+					if (!$canManageCodeBlocks && substr($what, 0, 4) === 'type' && TPBlock::isExecutableBlockType((int) $value)) {
+						continue;
 					}
 					if (substr($what, 0, 3) == 'pos') {
 						$where = substr($what, 3);
@@ -2423,7 +2426,7 @@ function do_postchecks()
 								'
 								UPDATE {db_prefix}tp_blocks
 								SET pos = {int:pos}
-								WHERE id = {int:blockid}' . $typeCondition,
+								WHERE id = {int:blockid}',
 								[
 									'pos' => $value,
 									'blockid' => $where
@@ -2439,7 +2442,7 @@ function do_postchecks()
 								'
 								UPDATE {db_prefix}tp_blocks
 								SET pos = (pos + 11)
-								WHERE id = {int:blockid}' . $typeCondition,
+								WHERE id = {int:blockid}',
 								[
 									'blockid' => $where
 								]
@@ -2453,7 +2456,7 @@ function do_postchecks()
 								'',
 								'
 								UPDATE {db_prefix}tp_blocks SET pos = (pos - 11)
-								WHERE id = {int:blockid}' . $typeCondition,
+								WHERE id = {int:blockid}',
 								[
 									'blockid' => $where
 								]
@@ -2467,9 +2470,9 @@ function do_postchecks()
 							'
 							UPDATE {db_prefix}tp_blocks
 							SET title = {string:title}
-							WHERE id = {int:blockid}' . $typeCondition,
+							WHERE id = {int:blockid}',
 							[
-								'title' => $value,
+								'title' => $canManageCodeBlocks ? $value : htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false),
 								'blockid' => $where,
 							]
 						);
@@ -2662,13 +2665,14 @@ function do_postchecks()
 			}
 
 			$blockType = (int) $block['type'];
-			if (TPBlock::isExecutableBlockType($blockType)
-				|| TPBlock::isExecutableBlockType((int) ($_POST['tp_block_type'] ?? $blockType))
-				|| isset($_POST['blockcode_overwrite'])) {
+			$canManageCodeBlocks = allowedTo('admin_forum');
+			$codeReadOnly = !$canManageCodeBlocks && TPBlock::isExecutableBlockType($blockType);
+			$requestedType = (int) ($_POST['tp_block_type'] ?? $blockType);
+			if (!$canManageCodeBlocks && !$codeReadOnly && TPBlock::isExecutableBlockType($requestedType)) {
 				isAllowedTo('admin_forum');
 			}
-			$typeCondition = allowedTo('admin_forum') ? '' : ' AND type NOT IN (10, 11)';
-			$blockSettings = json_decode($block['settings'], true);
+			$typeCondition = $canManageCodeBlocks ? '' : ' AND type = ' . $blockType;
+			$blockSettings = json_decode($block['settings'], true) ?? [];
 			try {
 				$publication = TPUtil::parsePublicationPeriod($_POST, [
 					'pub_start' => 'tp_block_pub_start',
@@ -2692,7 +2696,7 @@ function do_postchecks()
 				if (substr($what, 0, 9) == 'tp_block_') {
 					$setting = substr($what, 9);
 
-					if ($setting == 'body') {
+					if ($setting == 'body' && !$codeReadOnly) {
 						// If we came from WYSIWYG then turn it back into BBC regardless.
 						if (!empty($_REQUEST['tp_block_body_mode']) && isset($_REQUEST['tp_block_body'])) {
 							require_once $sourcedir . '/Subs-Editor.php';
@@ -2703,12 +2707,12 @@ function do_postchecks()
 							$value = $_POST['tp_block_body'] = $_REQUEST['tp_block_body'];
 						}
 
-						if ($_POST['tp_block_type'] == 5) {
+						if ($requestedType == 5) {
 							$value = $smcFunc['htmlspecialchars']($value, ENT_QUOTES);
 						}
 
 						// PHP block?
-						if ($_POST['tp_block_type'] == 10) {
+						if ($requestedType == 10) {
 							$value = tp_convertphp($value);
 						}
 
@@ -2728,13 +2732,13 @@ function do_postchecks()
 							UPDATE {db_prefix}tp_blocks
 							SET title = {string:title}
 							WHERE id = {int:blockid}' . $typeCondition,
-							['title' => $value, 'blockid' => $where]
+							['title' => $canManageCodeBlocks ? $value : htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false), 'blockid' => $where]
 						);
 					}
 					elseif ($setting == 'body_mode' || $setting == 'body_choice' || $setting == 'body_pure') {
 						$go = '';
 					}
-					elseif ($setting == 'frame') {
+					elseif ($setting == 'frame' && (!$codeReadOnly || in_array($value, ['theme', 'frame', 'title', 'none'], true))) {
 						$smcFunc['db_query'](
 							'',
 							'
@@ -2745,11 +2749,25 @@ function do_postchecks()
 						);
 					}
 					elseif (substr($setting, 0, 4) == 'set_') {
-						$blockSettings[substr($setting, 4)] = $value;
+						$name = substr($setting, 4);
+						if (!$codeReadOnly) {
+							$blockSettings[$name] = $value;
+						}
+						elseif (is_string($value)) {
+							if ($name === 'panelstyle' && ctype_digit($value)) {
+								$blockSettings[$name] = $value;
+							}
+							elseif ($name === 'showwidth' && in_array($value, ['', 'hideunder600', 'hideunder900', 'hideover600', 'hideover900'], true)) {
+								$blockSettings[$name] = $value;
+							}
+							elseif ($name === 'custblockstyle') {
+								$blockSettings[$name] = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+							}
+						}
 					}
-					elseif ($setting == 'type' && $blockType != $value) {
+					elseif ($setting == 'type' && !$codeReadOnly && $blockType !== $requestedType) {
 						$typechange = true;
-						$blockType = (int) $value;
+						$blockType = $requestedType;
 						$blockSettings = $tpBlock->getBlockDefault()[$blockType] ?? [];
 					}
 					elseif (in_array($setting, ['off', 'visible'], true) && in_array($value, ['0', '1'], true)) {
@@ -2795,7 +2813,7 @@ function do_postchecks()
 				}
 				elseif (substr($what, 0, 8) == 'tp_lang_') {
 					if (substr($what, 8) != '') {
-						$lang[] = substr($what, 8) . '|' . $value;
+						$lang[] = substr($what, 8) . '|' . ($canManageCodeBlocks ? $value : htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false));
 					}
 				}
 				elseif (substr($what, 0, 18) == 'tp_userbox_options') {
@@ -2845,7 +2863,7 @@ function do_postchecks()
 				$updateArray['userbox_options'] = implode(',', $userbox);
 			}
 
-			if (!$typechange && isset($themebox)) {
+			if (!$codeReadOnly && !$typechange && isset($themebox)) {
 				$smcFunc['db_query'](
 					'',
 					'
@@ -2857,7 +2875,7 @@ function do_postchecks()
 			}
 
 			// anything from PHP block?
-			if (!$typechange && isset($_POST['blockcode_overwrite'])) {
+			if ($canManageCodeBlocks && !$typechange && isset($_POST['blockcode_overwrite'])) {
 				// get the blockcode
 				$newval = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $_POST['tp_blockcode'] . '.blockcode'), ['code']);
 				$smcFunc['db_query'](
@@ -2871,7 +2889,7 @@ function do_postchecks()
 			}
 
 			// check if uploaded picture
-			if (isset($_FILES['qup_blockbody']) && file_exists($_FILES['qup_blockbody']['tmp_name'])) {
+			if (!$codeReadOnly && isset($_FILES['qup_blockbody']) && file_exists($_FILES['qup_blockbody']['tmp_name'])) {
 				$name = TPuploadpicture('qup_blockbody', null, $context['TPortal']['image_upload_path'], true, true);
 				tp_createthumb($context['TPortal']['image_upload_path'] . $name, 50, 50, $context['TPortal']['image_upload_path'] . 'thumbs/thumb_' . $name);
 			}

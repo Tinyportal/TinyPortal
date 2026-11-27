@@ -2714,7 +2714,7 @@ function tp_profile_articles($member_id)
 		$smcFunc['db_free_result']($result);
 	}
 	else {
-		$context['TPortal']['selected_member_choice'] = 0;
+		$context['TPortal']['selected_member_choice'] = (int) $context['TPortal']['use_wysiwyg'] > 0 ? 2 : 0;
 		$context['TPortal']['selected_member_choice_id'] = 0;
 	}
 

@@ -326,9 +326,9 @@ class Article extends Base
 		return self::insertSQL($article_data, $this->dBStructure, 'tp_articles');
 	}
 
-	public function updateArticle($article_id, $article_data)
+	public function updateArticle($article_id, $article_data, array $conditions = [])
 	{
-		return self::updateSQL($article_id, $article_data, $this->dBStructure, 'tp_articles');
+		return self::updateSQL($article_id, $article_data, $this->dBStructure, 'tp_articles', $conditions);
 	}
 
 	public function deleteArticle($article_id)

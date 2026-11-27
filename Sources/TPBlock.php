@@ -258,6 +258,8 @@ function adminBlocks()
 	$activeTab = in_array($requestedTab, $tabs, true) ? $requestedTab : 'settings';
 	$context['TPortal']['block_tabs'] = $tabs;
 	$context['TPortal']['block_tab'] = $activeTab;
+	$canManageCodeBlocks = allowedTo('admin_forum');
+	$context['TPortal']['can_manage_code_blocks'] = $canManageCodeBlocks;
 	$blocksUrl = 'action=tpadmin;sa=blocks;block_tab=' . $activeTab;
 
 	if (($context['TPortal']['subaction'] == 'blocks') && !isset($_GET['overview'])) {
@@ -274,23 +276,18 @@ function adminBlocks()
 	// Move the block up or down in the panel list of blocks
 	if (isset($_GET['addpos']) || isset($_GET['subpos'])) {
 		checksession('get');
-		if (isset($_GET['addpos'])) {
-			$id = is_numeric($_GET['addpos']) ? $_GET['addpos'] : 0;
-			$current = $tpBlock->getBlockData(['pos', 'bar'], ['id' => $id]);
-			$new = $current[0]['pos'] + 1;
-			$existing = $tpBlock->getBlockData('id', ['bar' => $current[0]['bar'], 'pos' => $new]);
-			if (is_array($existing)) {
-				$tpBlock->updateBlock($existing[0]['id'], ['pos' => $current[0]['pos']]);
-			}
+		$positionChange = $_GET['addpos'] ?? $_GET['subpos'];
+		$id = is_numeric($positionChange) ? $positionChange : 0;
+		$current = $tpBlock->getBlockData(['pos', 'bar'], ['id' => $id])[0] ?? null;
+
+		if ($current === null) {
+			redirectexit($blocksUrl);
 		}
-		else {
-			$id = is_numeric($_GET['subpos']) ? $_GET['subpos'] : 0;
-			$current = $tpBlock->getBlockData(['pos', 'bar'], ['id' => $id]);
-			$new = $current[0]['pos'] - 1;
-			$existing = $tpBlock->getBlockData('id', ['bar' => $current[0]['bar'], 'pos' => $new]);
-			if (is_array($existing)) {
-				$tpBlock->updateBlock($existing[0]['id'], ['pos' => $current[0]['pos']]);
-			}
+
+		$new = $current['pos'] + (isset($_GET['addpos']) ? 1 : -1);
+		$existing = $tpBlock->getBlockData('id', ['bar' => $current['bar'], 'pos' => $new])[0] ?? null;
+		if ($existing !== null) {
+			$tpBlock->updateBlock($existing['id'], ['pos' => $current['pos']]);
 		}
 		$tpBlock->updateBlock($id, ['pos' => $new]);
 		redirectexit($blocksUrl);
@@ -302,9 +299,6 @@ function adminBlocks()
 		$id = is_numeric($_GET['blockon']) ? $_GET['blockon'] : 0;
 		$current = $tpBlock->getBlock($id);
 		if ($current) {
-			if (TPBlock::isExecutableBlockType((int) $current['type'])) {
-				isAllowedTo('admin_forum');
-			}
 			if ($current['off'] == 1) {
 				$tpBlock->updateBlock($id, ['off' => '0']);
 			}
@@ -319,7 +313,10 @@ function adminBlocks()
 	if (isset($_GET['blockdelete'])) {
 		checksession('get');
 		$id = is_numeric($_GET['blockdelete']) ? $_GET['blockdelete'] : 0;
-		$tpBlock->deleteBlock($id);
+		$block = $tpBlock->getBlock($id);
+		if ($block && ($canManageCodeBlocks || !TPBlock::isExecutableBlockType((int) $block['type']))) {
+			$tpBlock->deleteBlock($id);
+		}
 		redirectexit($blocksUrl);
 	}
 
@@ -379,7 +376,9 @@ function adminBlocks()
 				foreach ($blocks as $row) {
 					// decode the block settings
 					$set = json_decode($row['settings'], true) ?? [];
-					$context['TPortal']['admin_' . $bars[$row['bar']] . 'block']['blocks'][] = $set + [
+					$context['TPortal']['admin_' . $bars[$row['bar']] . 'block']['blocks'][] = [
+						'code_read_only' => !$canManageCodeBlocks && TPBlock::isExecutableBlockType((int) $row['type']),
+					] + $set + [
 						'frame' => $row['frame'],
 						'title' => $row['title'],
 						'type' => $tpBlock->getBlockType($row['type']),
@@ -452,6 +451,7 @@ function editBlock($block_id = 0)
 {
 	global $settings, $context, $scripturl, $txt, $boarddir, $smcFunc;
 
+	isAllowedTo('tp_blocks');
 	$tpBlock = TPBlock::getInstance();
 
 	if (empty($block_id)) {
@@ -480,9 +480,7 @@ function editBlock($block_id = 0)
 	TPadd_linktree($scripturl . '?action=tpadmin&amp;sa=editblock&amp;id=' . $block_id . ';' . $context['session_var'] . '=' . $context['session_id'], $txt['tp-editblock']);
 
 	if (is_array($row)) {
-		if (TPBlock::isExecutableBlockType((int) $row['type'])) {
-			isAllowedTo('admin_forum');
-		}
+		$context['TPortal']['block_code_read_only'] = !allowedTo('admin_forum') && TPBlock::isExecutableBlockType((int) $row['type']);
 		$acc2 = explode(',', $row['display']);
 		$set = json_decode($row['settings'], true) ?? [];
 		$context['TPortal']['blockedit'] = $row + $set;

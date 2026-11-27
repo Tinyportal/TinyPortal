@@ -267,7 +267,8 @@ function template_editblock()
 	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings, $language;
 
 	$block = $context['TPortal']['blockedit'];
-	$newtitle = html_entity_decode($block['title']);
+	$codeReadOnly = !empty($context['TPortal']['block_code_read_only']);
+	$newtitle = htmlspecialchars($block['title'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
 	$publicationFormat = \TinyPortal\Util::PUBLICATION_DATE_FORMAT;
 
 	echo '
@@ -297,7 +298,7 @@ function template_editblock()
 						</dd>
 						<dt><label for="tp_block_type"><b>',$txt['tp-type'] . '</b></label></dt>
 						<dd>
-							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type">
+							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type"', $codeReadOnly ? ' disabled' : '', '>
 								<option value="0"' ,$context['TPortal']['blockedit']['type'] == '0' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
 								<option value="18"' ,$context['TPortal']['blockedit']['type'] == '18' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$context['TPortal']['blockedit']['type'] == '19' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
@@ -331,7 +332,13 @@ function template_editblock()
 							<input type="submit" class="button floatnone" value="' . $txt['tp-send'] . '" />
 					<hr>';
 	// Block types: 5 (BBC code), 10 (PHP Code) and 11 (HTML & Javascript code)
-	if ($context['TPortal']['blockedit']['type'] == '5' || $context['TPortal']['blockedit']['type'] == '10' || $context['TPortal']['blockedit']['type'] == '11') {
+	if ($codeReadOnly) {
+		echo '
+			<p class="noticebox">', $txt['tp-blockbody-readonly'], '</p>
+			<label for="tp_block_code"><b>', $txt['tp-body'], '</b></label>
+			<textarea id="tp_block_code" style="width: 94%;" rows="15" cols="40" readonly>', htmlspecialchars($block['body'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea>';
+	}
+	elseif ($context['TPortal']['blockedit']['type'] == '5' || $context['TPortal']['blockedit']['type'] == '10' || $context['TPortal']['blockedit']['type'] == '11') {
 		if ($context['TPortal']['blockedit']['type'] == '11') {
 			echo '<b>',$txt['tp-body'],'</b><br><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
 		}
@@ -911,7 +918,7 @@ echo '
 						<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-custblockstyle'] . '<br>
 					</dt>
 					<dd>
-						<input type="text" id="tp_custblockstyle" name="tp_block_set_custblockstyle" value="' ,!empty($context['TPortal']['blockedit']['custblockstyle']) ? $context['TPortal']['blockedit']['custblockstyle'] : '', '" size="50" maxlength="150">
+						<input type="text" id="tp_custblockstyle" name="tp_block_set_custblockstyle" value="' ,htmlspecialchars($block['custblockstyle'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false), '" size="50" maxlength="150">
 					</dd>
 				</dl>
 				<hr>
@@ -925,7 +932,7 @@ echo '
 			echo '
 						<dt>' . $lang . '</dt>
 						<dd>
-							<input type="text" name="tp_lang_' . $langlist . '" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
+							<input type="text" name="tp_lang_' . $langlist . '" value="' , htmlspecialchars($context['TPortal']['blockedit']['langfiles'][$langlist] ?? $block['title'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false) , '" size="50">
 						</dd>';
 		}
 	}

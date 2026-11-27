@@ -2087,7 +2087,7 @@ function tpSetupUpshrinks()
 		if ($context['TPortal']['use_wysiwyg'] > 0) {
 			$context['TPortal']['allow_wysiwyg'] = true;
 			if (isset($context['TPortal']['usersettings']['wysiwyg'])) {
-				$context['TPortal']['show_wysiwyg'] = (int) $context['TPortal']['usersettings']['wysiwyg'];
+				$context['TPortal']['show_wysiwyg'] = (int) $context['TPortal']['usersettings']['wysiwyg'] === 2 ? 2 : 0;
 			}
 		}
 		else {

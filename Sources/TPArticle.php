@@ -354,7 +354,7 @@ function articleEdit()
 		$where = (int) $articleId;
 		$request = $smcFunc['db_query'](
 			'',
-			'SELECT author_id, type, date, pub_start, pub_end FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
+			'SELECT author_id, type, locked, date, pub_start, pub_end FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
 			['article_id' => $where]
 		);
 		$existing = $smcFunc['db_fetch_assoc']($request);
@@ -364,23 +364,22 @@ function articleEdit()
 		}
 
 		$storedType = strtolower(trim((string) $existing['type'])) ?: 'html';
-		if (in_array($storedType, ['php', 'import'], true) && !$canManagePhp) {
+		if ($storedType === 'import' && !$canManagePhp) {
 			fatal_lang_error('no_access', false);
 		}
 		if (!$canManageArticles
-			&& (!allowedTo('tp_editownarticle') || (int) $existing['author_id'] !== (int) $context['user']['id'])) {
+			&& (!allowedTo('tp_editownarticle') || (int) $existing['author_id'] !== (int) $context['user']['id'] || !empty($existing['locked']))) {
 			fatal_lang_error('no_access', false);
 		}
 	}
 
-	$articleType = array_key_exists('tp_article_type', $_POST)
-		? $_POST['tp_article_type']
-		: ($storedType ?? (allowedTo('tp_submithtml') ? 'html' : 'bbc'));
+	$codeReadOnly = $storedType === 'php' && !$canManagePhp;
+	$articleType = $codeReadOnly ? $storedType : ($_POST['tp_article_type'] ?? $storedType ?? (allowedTo('tp_submithtml') ? 'html' : 'bbc'));
 	if (!in_array($articleType, ['html', 'bbc', 'php', 'import'], true)) {
 		loadLanguage('TParticle');
 		fatal_lang_error('tp_article_type_invalid', false);
 	}
-	if (in_array($articleType, ['php', 'import'], true) && !$canManagePhp) {
+	if (in_array($articleType, ['php', 'import'], true) && !$canManagePhp && !$codeReadOnly) {
 		fatal_lang_error('no_access', false);
 	}
 	if (!$canManageArticles && ($where === 0 || $articleType !== $storedType)) {
@@ -388,7 +387,7 @@ function articleEdit()
 	}
 
 	$options = [];
-	$article_data = ['type' => $articleType, 'fileimport' => ''];
+	$article_data = $codeReadOnly ? [] : ['type' => $articleType, 'fileimport' => ''];
 
 	if ($where === 0) {
 		$article_data['date'] = time();
@@ -439,16 +438,19 @@ function articleEdit()
 		}
 		$article_data['fileimport'] = basename($importName);
 	}
-	if (allowedTo('tp_alwaysapproved')) {
+	if (!$codeReadOnly && allowedTo('tp_alwaysapproved')) {
 		$article_data['approved'] = 1;
 	} // No approval needed
-	else {
+	elseif (!$codeReadOnly) {
 		$article_data['approved'] = 0;
 	} // Preset to false
 
 	foreach ($_POST as $what => $value) {
 		if (substr($what, 0, 11) == 'tp_article_') {
 			$setting = substr($what, 11);
+			if ($codeReadOnly && !$canManageArticles && !in_array($setting, ['title', 'subject', 'shortname', 'useintro'], true)) {
+				continue;
+			}
 			if (substr($setting, 0, 8) == 'options_') {
 					$options[] = substr($setting, 8);
 			}
@@ -496,6 +498,9 @@ function articleEdit()
 						break;
 					case 'intro':
 					case 'body':
+						if ($codeReadOnly) {
+							break;
+						}
 						// If we came from WYSIWYG then turn it back into BBC regardless.
 						if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body'])) {
 							require_once SOURCEDIR . '/Subs-Editor.php';
@@ -558,13 +563,17 @@ function articleEdit()
 						}
 						$article_data[$setting] = $value;
 						break;
+					case 'headers':
+						if ($codeReadOnly) {
+							break;
+						}
+						// Fall through to the other article management settings.
 					case 'approved':
 					case 'off':
 					case 'frontpage':
 					case 'sticky':
 					case 'locked':
 					case 'featured':
-					case 'headers':
 						if ($canManageArticles) {
 							$article_data[$setting] = $value;
 						}
@@ -585,7 +594,9 @@ function articleEdit()
 	if ($where === 0 && !isset($article_data['author_id'])) {
 		$article_data['author_id'] = (int) $context['user']['id'];
 	}
-	$article_data['options'] = implode(',', $options);
+	if (!$codeReadOnly || $canManageArticles) {
+		$article_data['options'] = implode(',', $options);
+	}
 	// check if uploads are there
 	if (array_key_exists('tp_article_illupload', $_FILES) && file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
 		$name = TPuploadpicture('tp_article_illupload', $context['TPortal']['icon_max_size'], 'tp-files/tp-articles/illustrations', false, false);
@@ -600,10 +611,17 @@ function articleEdit()
 	}
 	else {
 		// We are updating
-		$tpArticle->updateArticle((int)$where, $article_data);
+		if ($article_data !== []) {
+			$conditions = !$canManagePhp ? ['type' => $existing['type']] : [];
+			if (!$canManageArticles) {
+				$conditions['author_id'] = (int) $context['user']['id'];
+				$conditions['locked'] = 0;
+			}
+			$tpArticle->updateArticle($where, $article_data, $conditions);
+		}
 	}
 	// Update the approved status
-	if ($article_data['approved'] == 1) {
+	if (($article_data['approved'] ?? 0) == 1) {
 		$smcFunc['db_query'](
 			'',
 			'
@@ -632,12 +650,12 @@ function articleEdit()
 	}
 	unset($tpArticle);
 	// check if uploaded picture
-	if (isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+	if (!$codeReadOnly && isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
 		$name = TPuploadpicture('qup_tp_article_body', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'], true, true);
 		tp_createthumb($context['TPortal']['image_upload_path'] . '/' . $name, 50, 50, $context['TPortal']['image_upload_path'] . '/thumbs/thumb_' . $name);
 	}
 	// if this was a new article
-	if (array_key_exists('tp_article_approved', $_POST) && $_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
+	if ($canManageArticles && ($article_data['approved'] ?? 0) == 1 && ($article_data['off'] ?? 1) == 0 && isset($_POST['tp_article_approved'], $_POST['tp_article_authorid'])) {
 		tp_recordevent($article_data['date'] ?? (int) $existing['date'], $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0), $where);
 	}
 
@@ -899,13 +917,25 @@ function articleAjax()
 		checksession('get');
 		$what = is_numeric($_GET['artdelete']) ? $_GET['artdelete'] : '0';
 		if (empty($cu)) {
-			$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
+			$cu = isset($_GET['cu']) && is_numeric($_GET['cu']) ? $_GET['cu'] : '';
 			if ($cu == -1) {
 				$strays = true;
 				$cu = '';
 			}
 		}
 		if ($what > 0) {
+			if (!allowedTo('admin_forum')) {
+				$request = $smcFunc['db_query'](
+					'',
+					'SELECT type FROM {db_prefix}tp_articles WHERE id = {int:artid}',
+					['artid' => $what]
+				);
+				$article = $smcFunc['db_fetch_assoc']($request);
+				$smcFunc['db_free_result']($request);
+				if (strtolower(trim((string) ($article['type'] ?? ''))) === 'php') {
+					fatal_lang_error('no_access', false);
+				}
+			}
 			$smcFunc['db_query'](
 				'',
 				'
