@@ -2550,19 +2550,19 @@ function do_postchecks()
 					$od = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $type . '.blockcode'), ['code']);
 				}
 			}
-			if (isset($od['code'])) {
-				$body = tp_convertphp($od['code']);
-				$type = 10;
-			}
-			if (TPBlock::isExecutableBlockType((int) ($cp['type'] ?? $type))) {
-				isAllowedTo('admin_forum');
-			}
 			$defblocks = ['18', '19'];
 			if (in_array($type, $defblocks)) {
 				$body = '0';
 			}
 			else {
 				$body = '';
+			}
+			if (isset($od['code'])) {
+				$body = tp_convertphp($od['code']);
+				$type = 10;
+			}
+			if (TPBlock::isExecutableBlockType((int) ($cp['type'] ?? $type))) {
+				isAllowedTo('admin_forum');
 			}
 
 			$request = $smcFunc['db_query'](
@@ -2713,6 +2713,22 @@ function do_postchecks()
 
 						// PHP block?
 						if ($requestedType == 10) {
+							$snippet = $_POST['tp_blockcode'] ?? '0';
+							if ($canManageCodeBlocks && (int) $block['type'] === 10 && isset($_POST['blockcode_save'])
+								&& is_string($snippet) && $snippet !== '' && $snippet !== '0' && strpbrk($snippet, "/\\\0") === false) {
+								$path = $context['TPortal']['blockcode_upload_path'] . $snippet . '.blockcode';
+								$file = @file_get_contents($path);
+								$code = $file === false ? [] : TPparseModfile($file, ['code']);
+								if (isset($code['code']) && $code['code'] !== '') {
+									if (isset($_POST['blockcode_overwrite'])) {
+										$value = $code['code'];
+									}
+									else {
+										$separator = $value === '' || str_ends_with($value, "\n") ? '' : "\n";
+										$value .= $separator . $code['code'];
+									}
+								}
+							}
 							$value = tp_convertphp($value);
 						}
 
@@ -2871,20 +2887,6 @@ function do_postchecks()
 					SET body = {string:body}
 					WHERE id = {int:blockid}' . $typeCondition,
 					['body' => implode(',', $themebox), 'blockid' => $where, ]
-				);
-			}
-
-			// anything from PHP block?
-			if ($canManageCodeBlocks && !$typechange && isset($_POST['blockcode_overwrite'])) {
-				// get the blockcode
-				$newval = TPparseModfile(file_get_contents($context['TPortal']['blockcode_upload_path'] . $_POST['tp_blockcode'] . '.blockcode'), ['code']);
-				$smcFunc['db_query'](
-					'',
-					'
-					UPDATE {db_prefix}tp_blocks
-					SET body = {string:body}
-					WHERE id = {int:blockid}' . $typeCondition,
-					['body' => $newval['code'], 'blockid' => $where]
 				);
 			}
 

@@ -2334,8 +2334,9 @@ function template_addblock()
 							<input type="radio" id="tp_addblock19" name="tp_addblock" value="19" /><label for="tp_addblock19">' . $txt['tp-blocktype19'] . '</label><br>
 							<input type="radio" id="tp_addblock14" name="tp_addblock" value="14" /><label for="tp_addblock14">' . $txt['tp-blocktype14'] . '</label><br>
 							<input type="radio" id="tp_addblock5" name="tp_addblock" value="5" /><label for="tp_addblock5">' . $txt['tp-blocktype5'] . '</label><br>
+							' , $context['TPortal']['can_manage_code_blocks'] ? '
 							<input type="radio" id="tp_addblock11" name="tp_addblock" value="11" /><label for="tp_addblock11">' . $txt['tp-blocktype11'] . '</label><br>
-							<input type="radio" id="tp_addblock10" name="tp_addblock" value="10" /><label for="tp_addblock10">' . $txt['tp-blocktype10'] . '</label><br>
+							<input type="radio" id="tp_addblock10" name="tp_addblock" value="10" /><label for="tp_addblock10">' . $txt['tp-blocktype10'] . '</label><br>' : '' , '
 							<input type="radio" id="tp_addblock9" name="tp_addblock" value="9" /><label for="tp_addblock9">' . $txt['tp-blocktype9'] . '</label><br>
 							<input type="radio" id="tp_addblock2" name="tp_addblock" value="2" /><label for="tp_addblock2">' . $txt['tp-blocktype2'] . '</label><br>
 							<input type="radio" id="tp_addblock6" name="tp_addblock" value="6" /><label for="tp_addblock6">' . $txt['tp-blocktype6'] . '</label><br>
@@ -2351,25 +2352,31 @@ function template_addblock()
 							<input type="radio" id="tp_addblock21" name="tp_addblock" value="21" /><label for="tp_addblock21">' . $txt['tp-blocktype21'] . '</label><br>
 						</div>
 					</dd>
-				</dl>
+				</dl>';
+
+	if (!empty($context['TPortal']['blockcodes'])) {
+		echo '
 				<dl class="tp_title settings">
 					<dt><h3>' , $txt['tp-chooseblocktype'] , '</h3></dt>
 					<dd>
 						<div class="tp_largelist2">';
 
-	foreach ($context['TPortal']['blockcodes'] as $bc) {
-		echo '
+		foreach ($context['TPortal']['blockcodes'] as $bc) {
+			echo '
 						<div class="padding-div">
 							<input type="radio" id="tp_addblock' . $bc['name'] . '" name="tp_addblock" value="' . $bc['file'] . '"  />
 							<label for="tp_addblock' . $bc['name'] . '"><b>' . $bc['name'] . '</b> ' . $txt['tp-by'] . ' ' . $bc['author'] . '</b></label>
 							<div style="margin: 4px 0; padding-left: 24px;" class="smalltext">' , $bc['text'] , '</div>
 						</div>';
+		}
+
+		echo '
+						</div>
+					</dd>
+				</dl>';
 	}
 
 	echo '
-						</div>
-					</dd>
-				</dl>
 				<dl class="tp_title settings">
 					<dt><h3 class="padding-div">' , $txt['tp-chooseblockcopy'] , '</h3></dt>
 					<dd>

@@ -352,7 +352,7 @@ function template_editblock()
 		}
 		if ($context['TPortal']['blockedit']['type'] == '10') {
 			echo '
-						<textarea style="width: 94%; margin: 0px 0px 10px;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' ,  $context['TPortal']['blockedit']['body'] , '</textarea>
+						<textarea style="width: 94%; margin: 0px 0px 10px;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , htmlspecialchars($context['TPortal']['blockedit']['body'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') , '</textarea>
 						<p><div class="tborder" style=""><p style="padding: 0 0 5px 0; margin: 0;">' , $txt['tp-blockcodes'] , ':</p>
 							<select name="tp_blockcode" id="tp_blockcode" size="8" style="margin-bottom: 5px; width: 94%" onchange="changeSnippet(this.selectedIndex);">
 								<option value="0" selected="selected">' , $txt['tp-none'] , '</option>';
@@ -364,7 +364,8 @@ function template_editblock()
 			}
 			echo '
 							</select>
-							<p style="padding: 10px 0 10px 0; margin: 0;"><input type="button" value="' , $txt['tp-insert'] , '" name="blockcode_save" onclick="submit();" />
+							<p style="padding: 10px 0 10px 0; margin: 0;"><input type="button" value="' , $txt['tp-insert'] , '" onclick="this.form.elements.blockcode_save.disabled = false; this.form.submit();" />
+							<input type="hidden" name="blockcode_save" value="1" disabled>
 							<input type="checkbox" id="tp_blockcode_overwrite" name="blockcode_overwrite" value="' . $context['TPortal']['blockedit']['id'] . '" /><label for="tp_blockcode_overwrite"> ' , $txt['tp-blockcodes_overwrite'] , '</label></p>
 						</div>
 					<div id="blockcodeinfo" class="description" >&nbsp;</div>

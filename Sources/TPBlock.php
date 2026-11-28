@@ -268,9 +268,12 @@ function adminBlocks()
 
 	if (isset($_GET['addblock'])) {
 		TPadd_linktree($scripturl . '?action=tpadmin;sa=addblock', $txt['tp-addblock']);
-		// collect all available PHP block snippets
-		$context['TPortal']['blockcodes'] = TPcollectSnippets();
-		$context['TPortal']['copyblocks'] = $tpBlock->getBlocks();
+		$context['TPortal']['blockcodes'] = $canManageCodeBlocks ? TPcollectSnippets() : [];
+		$blocks = $tpBlock->getBlocks();
+		$context['TPortal']['copyblocks'] = $canManageCodeBlocks ? $blocks : array_filter(
+			$blocks,
+			static fn (array $block): bool => !TPBlock::isExecutableBlockType((int) $block['type'])
+		);
 	}
 
 	// Move the block up or down in the panel list of blocks
