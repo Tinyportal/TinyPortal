@@ -14,6 +14,7 @@
  * Copyright (C) - The TinyPortal Team
  *
  */
+use TinyPortal\Article as TPArticle;
 use TinyPortal\Util as TPUtil;
 use TinyPortal\Database as TPDatabase;
 
@@ -21,7 +22,7 @@ if (!defined('SMF')) {
 	die('Hacking attempt...');
 }
 
-function TPSearch()
+function TPSearch($results = false)
 {
 	global $scripturl, $txt, $context;
 
@@ -31,17 +32,21 @@ function TPSearch()
 		loadLanguage('TPmodules', 'english');
 	}
 
-	if ((is_array($_POST) && count($_POST) > 0) || (!empty($_REQUEST['params']))) {
+	loadLanguage('Search');
+	loadTemplate('TPSearch');
+
+	$searchUrl = $scripturl . '?action=tportal;sa=searcharticle';
+	if ($results || array_key_exists('tpsearch_what', $_POST)) {
 		TPSearchArticle();
-		TPadd_linktree($scripturl . '?action=tportal;sa=searcharticle', $txt['tp-searcharticles2']);
-		loadtemplate('TPSearch');
+		$searchUrl = $context['TPortal']['search_edit_url'];
 		$context['sub_template'] = 'article_search_results';
 	}
 	else {
-		TPadd_linktree($scripturl . '?action=tportal;sa=searcharticle', $txt['tp-searcharticles2']);
-		loadtemplate('TPSearch');
+		$context['TPortal']['article_search_params'] = TPArticleSearchParams() ?? ['search' => '', 'title' => true, 'body' => true];
 		$context['sub_template'] = 'article_search_form';
 	}
+
+	TPadd_linktree($searchUrl, $txt['tp-searcharticles2']);
 }
 
 function TPSearchActions(&$subActions)
@@ -49,10 +54,23 @@ function TPSearchActions(&$subActions)
 	$subActions = array_merge(
 		[
 			'searcharticle' => ['TPSearch.php', 'TPSearch', []],
-			'searcharticle2' => ['TPSearch.php', 'TPSearch', []],
+			'searcharticle2' => ['TPSearch.php', 'TPSearch', [true]],
 		],
 		$subActions
 	);
+}
+
+function TPArticleSearchParams(): ?array
+{
+	$encoded = $_GET['params'] ?? null;
+	$json = is_string($encoded) ? base64_decode($encoded, true) : false;
+	$params = $json !== false ? json_decode($json, true) : null;
+
+	if (!is_array($params) || !is_string($params['search'] ?? null) || trim($params['search']) === '') {
+		return null;
+	}
+
+	return ['search' => $params['search'], 'title' => !empty($params['title']), 'body' => !empty($params['body'])];
 }
 
 function TPSearchArticle()
@@ -61,44 +79,33 @@ function TPSearchArticle()
 
 	isAllowedTo('tp_can_search');
 
-	$start = 0;
+	$start = max(0, (int) TPUtil::filter('start', 'get', 'int'));
 	$max_results = 20;
-	$usebody = false;
-	$usetitle = false;
-
-	if (empty($_REQUEST['start'])) {
-		$start = 0;
+	if (array_key_exists('tpsearch_what', $_POST)) {
+		checkSession('post');
+		$search = TPUtil::filter('tpsearch_what', 'post', 'string');
+		$searchParams = [
+			'search' => $search,
+			'title' => !empty($_POST['tpsearch_title']),
+			'body' => !empty($_POST['tpsearch_body']),
+		];
 	}
 	else {
-		$start = TPUtil::filter('start', 'request', 'int');
+		$searchParams = TPArticleSearchParams();
 	}
 
-	if (!empty($_REQUEST['params'])) {
-		$params = TPUtil::filter('params', 'request', 'string');
-		if (!empty($params)) {
-			$params = json_decode(base64_decode($params), true);
-			$usebody = $params['body'];
-			$usetitle = $params['title'];
-			$what = $params['search'];
-		}
-		else {
-			fatal_error($txt['tp-nosearchentered'], false);
-		}
-	}
-	elseif (empty($_POST['tpsearch_what'])) {
+	if (!is_string($searchParams['search'] ?? null) || trim($searchParams['search']) === '') {
 		fatal_error($txt['tp-nosearchentered'], false);
 	}
-	else {
-		checkSession('post');
-		// clean the search
-		$what = TPUtil::filter('tpsearch_what', 'post', 'string');
-		if (!empty($_POST['tpsearch_title'])) {
-			$usetitle = true;
-		}
-		if (!empty($_POST['tpsearch_body'])) {
-			$usebody = true;
-		}
-	}
+
+	$what = $searchParams['search'];
+	$usetitle = $searchParams['title'];
+	$usebody = $searchParams['body'];
+	$encoded = rawurlencode(base64_encode(json_encode($searchParams)));
+
+	$context['TPortal']['searchterm'] = $what;
+	$context['TPortal']['article_search_params'] = $searchParams;
+	$context['TPortal']['search_edit_url'] = $scripturl . '?action=tportal;sa=searcharticle;params=' . $encoded;
 
 	$select = '';
 	$query = '';
@@ -178,7 +185,6 @@ function TPSearchArticle()
 	}
 	$num_results = 0;
 	$context['TPortal']['searchresults'] = [];
-	$context['TPortal']['searchterm'] = $what;
 	$context['TPortal']['searchpage'] = $start;
 	require_once SOURCEDIR . '/TPSubs.php';
 	$allowedCategories = tp_searchable_article_categories();
@@ -218,6 +224,7 @@ function TPSearchArticle()
 				$row['body'] = $articleType === 'bbc' ? parse_bbc($row['body']) : strip_tags($row['body']);
 			}
 
+			$row['subject'] = TPArticle::escapeDisplayTitle((string) $row['subject']);
 			$row['subject'] = preg_replace('/' . preg_quote($what, '/') . '/iu', '<mark class="highlight">$0</mark>', $row['subject']);
 			$row['body'] = preg_replace('/' . preg_quote($what, '/') . '/iu', '<mark class="highlight">$0</mark>', $row['body']);
 			$context['TPortal']['searchresults'][] = [
@@ -255,8 +262,6 @@ function TPSearchArticle()
 	$num_results = TPDatabase::getInstance()->db_fetch_assoc($request)['num_results'];
 	TPDatabase::getInstance()->db_free_result($request);
 
-	$params = base64_encode(json_encode(['search' => $what, 'title' => $usetitle, 'body' => $usebody]));
-
 	// Now that we know how many results to expect we can start calculating the page numbers.
-	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
+	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $encoded, $start, $num_results, $max_results, false);
 }

@@ -30,6 +30,62 @@ if (!defined('SMF')) {
 // Static method to call smcFunc calls which are not database related.
 class Util
 {
+	public const PUBLICATION_DATE_FORMAT = 'Y-m-d\TH:i';
+
+	public static function parsePublicationDate($value, ?int $storedTimestamp, bool $optional = true): ?int
+	{
+		if ($optional && $value === '') {
+			return null;
+		}
+
+		$format = self::PUBLICATION_DATE_FORMAT;
+		if (is_string($value) && preg_match('/\A(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}\z/', $value)) {
+			// Preserve the original instant, including seconds, when the displayed minute is unchanged.
+			if ($storedTimestamp !== null && date($format, $storedTimestamp) === $value) {
+				return $storedTimestamp;
+			}
+
+			$date = \DateTimeImmutable::createFromFormat('!' . $format, $value);
+			if ($date !== false && $date->format($format) === $value) {
+				return $date->getTimestamp();
+			}
+		}
+
+		throw new \InvalidArgumentException('tp-publication-invalid');
+	}
+
+	public static function parsePublicationPeriod(array $input, array $fields, array $stored, ?int $unsetValue = null): array
+	{
+		$period = [];
+		foreach ($fields as $setting => $field) {
+			$timestamp = isset($stored[$setting]) ? (int) $stored[$setting] : null;
+			if ($timestamp === $unsetValue) {
+				$timestamp = null;
+			}
+
+			$period[$setting] = array_key_exists($field, $input)
+				? self::parsePublicationDate($input[$field], $timestamp)
+				: $timestamp;
+		}
+
+		if (isset($period['pub_start'], $period['pub_end']) && $period['pub_start'] >= $period['pub_end']) {
+			throw new \InvalidArgumentException('tp-publication-order');
+		}
+
+		return $period;
+	}
+
+	public static function downloadIconUrl($path)
+	{
+		global $boardurl;
+
+		if ($path === null || $path === '' || preg_match('~^(?:https?:)?//~i', $path)) {
+			return $path ?? '';
+		}
+
+		return rtrim($boardurl, '/') . '/tp-downloads/icons/' . $path;
+	}
+
 	public static function __callStatic($call, $vars)
 	{
 		global $smcFunc;
@@ -57,6 +113,29 @@ class Util
 			}
 		}
 		return false;
+	}
+
+	public static function positiveIds($values): array
+	{
+		if (is_string($values)) {
+			$values = explode(',', $values);
+		}
+		if (!is_array($values)) {
+			return [];
+		}
+
+		$ids = [];
+		foreach ($values as $value) {
+			if (!is_int($value) && !is_string($value)) {
+				continue;
+			}
+			$id = filter_var($value, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+			if ($id !== false) {
+				$ids[$id] = $id;
+			}
+		}
+
+		return array_values($ids);
 	}
 
 	public static function find_in_set($data, $field, $arg = 'OR')
@@ -88,15 +167,13 @@ class Util
 			}
 		}
 		else {
-			if ($arg == 'OR') {
-				foreach ($data as $k => $v) {
-					$str .= ' ' . $v . ' = ANY (string_to_array(' . $field . ', \',\' ) ) ' . $arg . ' ';
-				}
-				$str = rtrim($str, ' ' . $arg . ' ');
+			$comparisons = [];
+			foreach ($data as $value) {
+				$comparisons[] = $value . " = ANY (string_to_array(" . $field . ", ','))";
 			}
-			else {
-				$str = 'AND ( ' . implode('\' = ANY (string_to_array( ' . $field . ', \',\' )) OR \'', $data) . ' = ANY (string_to_array(' . $field . ', \',\')))';
-			}
+
+			$condition = empty($comparisons) ? 'FALSE' : implode(' OR ', $comparisons);
+			$str = ($arg === 'AND' ? 'AND ' : '') . '(' . $condition . ')';
 		}
 
 		return $str;

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author tinoest - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -139,24 +139,39 @@ class Block extends Base
 		}
 	}
 
-	public function getBlockPermissions()
+	public static function isPublished(array $settings, int $now): bool
+	{
+		return (!isset($settings['pub_start']) || $settings['pub_start'] < $now)
+			&& (!isset($settings['pub_end']) || $now < $settings['pub_end']);
+	}
+
+	public static function isExecutableBlockType(int $type): bool
+	{
+		return in_array($type, [10, 11], true);
+	}
+
+	public function canAccessBlock(array $block): bool
 	{
 		global $context, $user_info;
 
+		if (!isset($block['off']) || (int) $block['off'] !== 0
+			|| !self::isPublished((array) json_decode($block['settings'], true), time())) {
+			return false;
+		}
+
+		if (allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
+			return true;
+		}
+
+		return isset($block['access'])
+			&& array_intersect($user_info['groups'], explode(',', $block['access'])) !== [];
+	}
+
+	public function getBlockPermissions()
+	{
 		$blocks = [];
-		$user = $user_info['groups'];
-		$activeBlocks = $this->getActiveBlocks();
-		foreach ($activeBlocks as $block) {
-			// Check group access
-			if (allowedTo('tp_blocks') && (!empty($context['TPortal']['admin_showblocks']) || !isset($context['TPortal']['admin_showblocks']))) {
-			}
-			elseif (!isset($block['access'])) {
-				continue;
-			}
-			elseif (isset($block['access']) && (strpos($block['access'], ',') === false) && (empty(array_intersect([$block['access']], $user)))) {
-				continue;
-			}
-			elseif (empty(array_intersect($user, explode(',', $block['access'])))) {
+		foreach ($this->getActiveBlocks() as $block) {
+			if (!$this->canAccessBlock($block)) {
 				continue;
 			}
 

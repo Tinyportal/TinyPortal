@@ -49,11 +49,11 @@ while ($row = $smcFunc['db_fetch_assoc']($request))
 {
 if (!empty($row['shortname']))
 	{
-     echo '<li><a href="', $scripturl, '?page=', $row['shortname'], '">', $row['subject'], '</a></li>';
+     echo '<li><a href="', $scripturl, '?page=', $row['shortname'], '">', htmlspecialchars((string) $row['subject'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false), '</a></li>';
 	}
 else
 	{
-     echo '<li><a href="', $scripturl, '?page=', $row['id'], '">', $row['subject'], '</a></li>';
+     echo '<li><a href="', $scripturl, '?page=', $row['id'], '">', htmlspecialchars((string) $row['subject'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false), '</a></li>';
 	}
 } 
 echo '</ul>';

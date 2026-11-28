@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.3
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -266,7 +266,10 @@ function template_editblock()
 {
 	global $context, $settings, $txt, $scripturl, $boardurl, $modSettings, $language;
 
-	$newtitle = html_entity_decode($context['TPortal']['blockedit']['title']);
+	$block = $context['TPortal']['blockedit'];
+	$codeReadOnly = !empty($context['TPortal']['block_code_read_only']);
+	$newtitle = htmlspecialchars($block['title'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+	$publicationFormat = \TinyPortal\Util::PUBLICATION_DATE_FORMAT;
 
 	echo '
 	<div id="tpadmin">
@@ -295,7 +298,7 @@ function template_editblock()
 						</dd>
 						<dt><label for="tp_block_type"><b>',$txt['tp-type'] . '</b></label></dt>
 						<dd>
-							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type">
+							<select size="1" onchange="document.getElementById(\'blocknotice\').style.display=\'\';" name="tp_block_type" id="tp_block_type"', $codeReadOnly ? ' disabled' : '', '>
 								<option value="0"' ,$context['TPortal']['blockedit']['type'] == '0' ? ' selected' : '' , '>', $txt['tp-blocktype0'] , '</option>
 								<option value="18"' ,$context['TPortal']['blockedit']['type'] == '18' ? ' selected' : '' , '>', $txt['tp-blocktype18'] , '</option>
 								<option value="19"' ,$context['TPortal']['blockedit']['type'] == '19' ? ' selected' : '' , '>', $txt['tp-blocktype19'] , '</option>
@@ -329,7 +332,13 @@ function template_editblock()
 							<input type="submit" class="button floatnone" value="' . $txt['tp-send'] . '" />
 					<hr>';
 	// Block types: 5 (BBC code), 10 (PHP Code) and 11 (HTML & Javascript code)
-	if ($context['TPortal']['blockedit']['type'] == '5' || $context['TPortal']['blockedit']['type'] == '10' || $context['TPortal']['blockedit']['type'] == '11') {
+	if ($codeReadOnly) {
+		echo '
+			<p class="noticebox">', $txt['tp-blockbody-readonly'], '</p>
+			<label for="tp_block_code"><b>', $txt['tp-body'], '</b></label>
+			<textarea id="tp_block_code" style="width: 94%;" rows="15" cols="40" readonly>', htmlspecialchars($block['body'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea>';
+	}
+	elseif ($context['TPortal']['blockedit']['type'] == '5' || $context['TPortal']['blockedit']['type'] == '10' || $context['TPortal']['blockedit']['type'] == '11') {
 		if ($context['TPortal']['blockedit']['type'] == '11') {
 			echo '<b>',$txt['tp-body'],'</b><br><textarea style="width: 94%;" name="tp_block_body" id="tp_block_body" rows="15" cols="40" wrap="auto">' , $context['TPortal']['blockedit']['body'], '</textarea>';
 		}
@@ -691,7 +700,7 @@ echo '
 							<select name="tp_block_body">
 							<option value="0">' . $txt['tp-none2'] . '</option>';
 		foreach ($context['TPortal']['edit_articles'] as $art => $article) {
-			echo '<option value="' . $article['id'] . '" ' , $context['TPortal']['blockedit']['body'] == $article['id'] ? ' selected="selected"' : '' ,' >' . html_entity_decode($article['subject']) . '</option>';
+			echo '<option value="' . $article['id'] . '" ' , $context['TPortal']['blockedit']['body'] == $article['id'] ? ' selected="selected"' : '' ,' >' . $article['subject_html'] . '</option>';
 		}
 		echo '</select>
 						</dd>
@@ -813,26 +822,16 @@ echo '
 
 	echo '
 				<hr>
-				<dl class="tp_title settings">';
-	/*					<dt>
-							<label for="tp-titledivclass">'.$txt['tp-titledivclass'].'</label>
-						</dt>
-						<dd>
-							<input type="text" id="tp-titledivclass" name="tp_block_set_titledivclass" value="' ,(empty($context['TPortal']['blockedit']['titledivclass']) ? '' : $context['TPortal']['blockedit']['titledivclass']), '" style="width: 15em" ><br>
-						</dd>
-						<dt>
-							<label for="tp-titleheadclass">'.$txt['tp-titleheadclass'].'</label>
-						</dt>
-						<dd>
-							<input type="text" id="tp-titleheadclass" name="tp_block_set_titleheadclass" value="' ,(empty($context['TPortal']['blockedit']['titleheadclass']) ? '' : $context['TPortal']['blockedit']['titleheadclass']), '" style="width: 15em" ><br>
-						</dd>
-						<dt>
-							<label for="tp-frameclass">'.$txt['tp-frameclass'].'</label>
-						</dt>
-						<dd>
-							<input type="text" id="tp-frameclass" name="tp_block_set_frameclass" value="' ,(empty($context['TPortal']['blockedit']['frameclass']) ? '' : $context['TPortal']['blockedit']['frameclass']), '" style="width: 15em" ><br>
-						</dd>
-					*/
+				<dl class="tp_title settings">
+					<dt><label for="tp_block_pub_start">', $txt['tp-publication-start'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_block_pub_start" name="tp_block_pub_start" value="', isset($block['pub_start']) ? date($publicationFormat, $block['pub_start']) : '', '">
+					</dd>
+					<dt><label for="tp_block_pub_end">', $txt['tp-publication-end'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_block_pub_end" name="tp_block_pub_end" value="', isset($block['pub_end']) ? date($publicationFormat, $block['pub_end']) : '', '">
+						<div class="smalltext">', $txt['tp-publication-help'], '</div>
+					</dd>';
 	echo '
 					<dt>
 						<a href="', $scripturl, '?action=helpadmin;help=tp-membergrouphelpdesc" onclick="return reqOverlayDiv(this.href);">
@@ -919,7 +918,7 @@ echo '
 						<span class="tptooltip" title="', $txt['help'], '"></span></a>' . $txt['tp-custblockstyle'] . '<br>
 					</dt>
 					<dd>
-						<input type="text" id="tp_custblockstyle" name="tp_block_set_custblockstyle" value="' ,!empty($context['TPortal']['blockedit']['custblockstyle']) ? $context['TPortal']['blockedit']['custblockstyle'] : '', '" size="50" maxlength="150">
+						<input type="text" id="tp_custblockstyle" name="tp_block_set_custblockstyle" value="' ,htmlspecialchars($block['custblockstyle'] ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false), '" size="50" maxlength="150">
 					</dd>
 				</dl>
 				<hr>
@@ -933,7 +932,7 @@ echo '
 			echo '
 						<dt>' . $lang . '</dt>
 						<dd>
-							<input type="text" name="tp_lang_' . $langlist . '" value="' , !empty($context['TPortal']['blockedit']['langfiles'][$langlist]) ? html_entity_decode($context['TPortal']['blockedit']['langfiles'][$langlist], ENT_QUOTES) : html_entity_decode($context['TPortal']['blockedit']['title'], ENT_QUOTES) , '" size="50">
+							<input type="text" name="tp_lang_' . $langlist . '" value="' , htmlspecialchars($context['TPortal']['blockedit']['langfiles'][$langlist] ?? $block['title'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false) , '" size="50">
 						</dd>';
 		}
 	}
@@ -1038,7 +1037,7 @@ echo '
 		$a = 1;
 		foreach ($context['TPortal']['edit_articles'] as $bb) {
 			echo '
-								<input type="checkbox" id="articletype' , $a , '" name="articletype' , $a , '" value="' . $bb['id'] . '" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['display']['page']) ? 'checked="checked"' : '' , '><label for="articletype' , $a , '"> ' . html_entity_decode($bb['subject'], ENT_QUOTES) . '</label><br>';
+								<input type="checkbox" id="articletype' , $a , '" name="articletype' , $a , '" value="' . $bb['id'] . '" ' ,in_array($bb['id'], $context['TPortal']['blockedit']['display']['page']) ? 'checked="checked"' : '' , '><label for="articletype' , $a , '"> ' . $bb['subject_html'] . '</label><br>';
 			$a++;
 		}
 		// if none is chosen, have a control value

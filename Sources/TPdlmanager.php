@@ -225,6 +225,156 @@ function TPdlScreenshotUrl($screenshot)
 }
 
 // TinyPortal DLmanager
+/**
+ * Store a download under an unpredictable server-generated name.
+ * Downloads must also be served as attachments, with execution disabled at the web server.
+ */
+function TPdownloadUploadExtensions($configuredTypes)
+{
+    // Only inert file types; never accept script, HTML, SVG, or server configuration formats.
+    $safe = ['pdf', 'txt', 'csv', 'zip', 'jpg', 'jpeg', 'png', 'gif',
+        'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'odt', 'ods', 'rtf', 'mp3', 'mp4'];
+    $configured = array_map('trim', explode(',', strtolower((string) $configuredTypes)));
+    return array_values(array_intersect($safe, $configured));
+}
+
+function TPsecureDownloadUpload($field, $directory, $maxKb, $configuredTypes, bool $useHashedFilename = false)
+{
+    global $txt, $context;
+    if (!allowedTo('tp_dlupload') && !allowedTo('tp_dlmanager')) {
+        fatal_error($txt['tp-secuploadnotallowed'], false);
+    }
+    if (empty($context['user']['id']) || !isset($_FILES[$field]) ||
+        !is_array($_FILES[$field]) || ($_FILES[$field]['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK ||
+        empty($_FILES[$field]['tmp_name']) || !is_uploaded_file($_FILES[$field]['tmp_name'])) {
+        fatal_error($txt['tp-secuploadinvalid'], false);
+    }
+    $tmp = $_FILES[$field]['tmp_name'];
+    $size = filesize($tmp);
+    if ($size === false || $size < 1 || $size > max(1, (int) $maxKb) * 1024) {
+        fatal_error($txt['tp-secuploadtoolarge'], false);
+    }
+    $original = basename(str_replace('\\', '/', (string) ($_FILES[$field]['name'] ?? '')));
+    $ext = strtolower(pathinfo($original, PATHINFO_EXTENSION));
+    if (!in_array($ext, TPdownloadUploadExtensions($configuredTypes), true)) {
+        fatal_error($txt['tp-secuploadtypenotallowed'], false);
+    }
+    if (!is_dir($directory) || !is_writable($directory)) {
+        fatal_error($txt['tp-secuploadnodir'], false);
+    }
+    // Verify images really are images, and reject embedded PHP markers in any file.
+    $head = file_get_contents($tmp, false, null, 0, 4096);
+    if ($head === false || preg_match('/<\?(?:php|=)|<script\b/i', $head)) {
+        fatal_error($txt['tp-secuploadnotsafe'], false);
+    }
+    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'], true)) {
+        $info = @getimagesize($tmp);
+        $types = ['jpg' => IMAGETYPE_JPEG, 'jpeg' => IMAGETYPE_JPEG,
+            'png' => IMAGETYPE_PNG, 'gif' => IMAGETYPE_GIF];
+        if (!$info || $info[2] !== $types[$ext]) {
+            fatal_error($txt['tp-secuploadinvalidimage'], false);
+        }
+    }
+    if (!$useHashedFilename) {
+        $stem = preg_replace('/[^a-z0-9_-]+/i', '_', pathinfo($original, PATHINFO_FILENAME));
+        $stem = trim(substr($stem, 0, 160), '_-');
+        if ($stem === '' || preg_match('/^(?:con|prn|aux|nul|com[0-9]|lpt[0-9])$/i', $stem)) {
+            $stem = 'download' . ($stem === '' ? '' : '_' . $stem);
+        }
+    }
+
+    $directory = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR;
+    for ($attempt = 0; $attempt < 99; $attempt++) {
+        $filenameStem = $useHashedFilename ? bin2hex(random_bytes(16)) : $stem . ($attempt === 0 ? '' : '_' . ($attempt + 1));
+        $name = $filenameStem . '.' . $ext;
+        $destination = $directory . $name;
+
+        // Reserve the destination so concurrent uploads cannot overwrite it.
+        $reservation = @fopen($destination, 'xb');
+        if ($reservation === false) {
+            continue;
+        }
+        fclose($reservation);
+
+        if (!move_uploaded_file($tmp, $destination)) {
+            @unlink($destination);
+            break;
+        }
+
+        @chmod($destination, 0644);
+        return $name;
+    }
+    fatal_error($txt['tp-secuploadnotstored'], false);
+}
+
+function TP_createtopic($title, $text, $icon, $board, $sticky = 0, $submitter = false)
+{
+	global $user_info, $board_info, $sourcedir;
+
+	require_once $sourcedir . '/Subs-Post.php';
+
+	$body = str_replace(['<', '>', "\n", '	'], ['&lt;', '&gt;', '<br>', '&nbsp;'], $text);
+	preparsecode($body);
+
+	// Collect all parameters for the creation or modification of a post.
+	$msgOptions = [
+		'id' => empty($_REQUEST['msg']) ? 0 : (int) $_REQUEST['msg'],
+		'subject' => $title,
+		'body' => $body,
+		'icon' => $icon,
+		'smileys_enabled' => '1',
+		'attachments' => [],
+	];
+	$topicOptions = [
+		'id' => empty($topic) ? 0 : $topic,
+		'board' => $board,
+		'poll' => null,
+		'lock_mode' => null,
+		'sticky_mode' => $sticky,
+		'mark_as_read' => true,
+	];
+	$posterOptions = [
+		'id' => $submitter,
+		'name' => '',
+		'email' => '',
+		'update_post_count' => !$user_info['is_guest'] && !isset($_REQUEST['msg']) && isset($board_info['posts_count']),
+	];
+
+	if (createPost($msgOptions, $topicOptions, $posterOptions)) {
+		$topi = $topicOptions['id'];
+	}
+	else {
+		$topi = 0;
+	}
+
+	return $topi;
+}
+
+function tp_fetchboards()
+{
+	global $smcFunc;
+
+	// get all boards for board-spesific news
+	$request = $smcFunc['db_query'](
+		'',
+		'
+		SELECT id_board, name, board_order
+		FROM {db_prefix}boards
+		WHERE  1=1
+		ORDER BY board_order ASC',
+		[]
+	);
+	$boards = [];
+	if ($smcFunc['db_num_rows']($request) > 0) {
+		while ($row = $smcFunc['db_fetch_assoc']($request)) {
+			$boards[] = ['id' => $row['id_board'], 'name' => $row['name']];
+		}
+
+		$smcFunc['db_free_result']($request);
+	}
+	return $boards;
+}
+
 function TPortalDLManager()
 {
 	global $txt, $scripturl, $boarddir, $boardurl, $context, $settings, $smcFunc;
@@ -314,7 +464,7 @@ function TPortalDLManager()
 			$shot = false;
 		}
 
-		$icon = !empty($_POST['tp_dluploadicon']) ? $boardurl . '/tp-downloads/icons/' . $_POST['tp_dluploadicon'] : '';
+		$icon = !empty($_POST['tp_dluploadicon']) ? basename($_POST['tp_dluploadicon']) : '';
 
 		if (!empty($_POST['tp-dlexternalfile'])) {
 			$name = TPdlHttpUrl($_POST['tp-dlexternalfile']);
@@ -709,7 +859,7 @@ function TPortalDLManager()
 						if (!empty($row['screenshot'])) {
 							if (file_exists($context['TPortal']['image_upload_path'] . 'dlmanager/thumb/' . $row['screenshot'])) {
 								$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/' . $row['screenshot'];
-								$thumb = $row['icon'];
+								$thumb = TPUtil::downloadIconUrl($row['icon']);
 							}
 						}
 					}
@@ -717,7 +867,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_last_added'][] = [
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'icon' => $row['icon'],
+						'icon' => TPUtil::downloadIconUrl($row['icon']),
 						'category' => $row['category'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'file' => $row['file'],
@@ -780,7 +930,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_most_downloaded'][] = [
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'icon' => $row['icon'],
+						'icon' => TPUtil::downloadIconUrl($row['icon']),
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl . '?action=tportal;sa=download;dl=item' . $row['id'],
@@ -851,7 +1001,7 @@ function TPortalDLManager()
 					$context['TPortal']['dl_week_downloaded'][] = [
 						'id' => $row['id'],
 						'name' => $row['name'],
-						'icon' => $row['icon'],
+						'icon' => TPUtil::downloadIconUrl($row['icon']),
 						'category' => $row['category'],
 						'file' => $row['file'],
 						'href' => $scripturl . '?action=tportal;sa=download;dl=item' . $row['id'],
@@ -896,7 +1046,7 @@ function TPortalDLManager()
 						'parent' => $row['parent'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'access' => $row['access'],
-						'icon' => $row['icon'],
+						'icon' => TPUtil::downloadIconUrl($row['icon']),
 						'href' => !empty($row['shortname']) ? $scripturl . '?action=tportal;sa=download;dl=' . $row['shortname'] : $scripturl . '?action=tportal;sa=download;dl=cat' . $row['id'],
 						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
 						'files' => $row['files'],
@@ -908,7 +1058,7 @@ function TPortalDLManager()
 						'id' => $row['id'],
 						'name' => $row['name'],
 						'parent' => $row['parent'],
-						'icon' => $row['icon'],
+						'icon' => TPUtil::downloadIconUrl($row['icon']),
 						'href' => $scripturl . '?action=tportal;sa=download;dl=cat' . $row['id'],
 						'files' => $row['files'],
 					];
@@ -1002,7 +1152,7 @@ function TPortalDLManager()
 					'author_id' => $row['author_id'],
 					'screenshot' => $row['screenshot'],
 					'sshot' => $decideshot,
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'created' => $row['created'],
 					'filesize' => $fs,
 					'subitem' => isset($fdata) ? $fdata : '',
@@ -1090,7 +1240,7 @@ function TPortalDLManager()
 				$context['TPortal']['dl_week_downloaded'][] = [
 					'id' => $row['id'],
 					'name' => $row['name'],
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'category' => $row['category'],
 					'file' => $row['file'],
 					'href' => $scripturl . '?action=tportal;sa=download;dl=item' . $row['id'],
@@ -1170,7 +1320,7 @@ function TPortalDLManager()
 						'parent' => $row['parent'],
 						'description' => $context['TPortal']['dl_wysiwyg'] == 'bbc' ? parse_bbc($row['description']) : $row['description'],
 						'access' => $row['access'],
-						'icon' => $row['icon'],
+						'icon' => TPUtil::downloadIconUrl($row['icon']),
 						'href' => !empty($row['shortname']) ? $scripturl . '?action=tportal;sa=download;dl=' . $row['shortname'] : $scripturl . '?action=tportal;sa=download;dl=cat' . $row['id'],
 						'shortname' => !empty($row['shortname']) ? $row['shortname'] : $row['id'],
 						'files' => $row['files'],
@@ -1277,11 +1427,11 @@ function TPortalDLManager()
 						$ico = str_replace($boarddir, $boardurl, $context['TPortal']['image_upload_path']) . 'dlmanager/thumb/' . $row['screenshot'];
 					}
 					else {
-						$ico = $row['icon'];
+						$ico = TPUtil::downloadIconUrl($row['icon']);
 					}
 				}
 				else {
-					$ico = $row['icon'];
+					$ico = TPUtil::downloadIconUrl($row['icon']);
 				}
 
 				$context['TPortal']['dlitem'][] = [
@@ -1547,7 +1697,7 @@ function TPortalDLManager()
 					'screenshot' => $row['screenshot'],
 					'sshot' => $decideshot,
 					'bigshot' => $bigshot,
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'created' => $row['created'],
 					'filesize' => $fs,
 					'subitem' => isset($fdata) ? $fdata : '',
@@ -1648,46 +1798,49 @@ function TPortalDLManager()
 	}
 }
 
-// searched the files?
+function TPDownloadSearchParams(): ?array
+{
+	$encoded = $_GET['params'] ?? null;
+	$json = is_string($encoded) ? base64_decode($encoded, true) : false;
+	$params = $json !== false ? json_decode($json, true) : null;
+
+	if (!is_array($params) || !is_string($params['search'] ?? null) || trim($params['search']) === '') {
+		return null;
+	}
+
+	return ['search' => $params['search'], 'title' => !empty($params['title']), 'body' => !empty($params['body'])];
+}
+
 function TPdlresults()
 {
 	global $txt, $scripturl, $context, $smcFunc;
 
-	$start = 0;
+	loadLanguage('Search');
+	$start = max(0, (int) (TPUtil::filter('start', 'get', 'int') ?: TPUtil::filter('p', 'get', 'int')));
 	$max_results = 20;
-	$usebody = false;
-	$usetitle = false;
-	
-	if (isset($_GET['p']) && is_numeric($_GET['p'])) {
-		$start = $_GET['p'];
+	if (array_key_exists('dl_search', $_POST)) {
+		checkSession('post');
+		$search = TPUtil::filter('dl_search', 'post', 'string');
+		$searchParams = [
+			'search' => is_string($search) ? trim(strip_tags($search)) : '',
+			'title' => !empty($_POST['dl_searcharea_name']),
+			'body' => !empty($_POST['dl_searcharea_desc']),
+		];
+	}
+	else {
+		$searchParams = TPDownloadSearchParams();
 	}
 
-	checkSession('post');
-
-	// nothing to search for?
-	if (!isset($_POST['dl_search']) || !is_string($_POST['dl_search']) || trim($_POST['dl_search']) === '') {
+	if (!is_string($searchParams['search'] ?? null) || trim($searchParams['search']) === '') {
 		fatal_error($txt['tp-nosearchentered'], false);
 	}
 
-	// clean the search
-	$what = trim(strip_tags($_POST['dl_search']));
-	if ($what === '') {
-		fatal_error($txt['tp-nosearchentered'], false);
-	}
+	$what = $searchParams['search'];
+	$usetitle = $searchParams['title'];
+	$usebody = $searchParams['body'];
+	$encoded = rawurlencode(base64_encode(json_encode($searchParams)));
+
 	$pattern = '%' . str_replace(' ', '%', $what) . '%';
-
-	if (!empty($_POST['dl_searcharea_name'])) {
-		$usetitle = true;
-	}
-	else {
-		$usetitle = false;
-	}
-	if (!empty($_POST['dl_searcharea_desc'])) {
-		$usebody = true;
-	}
-	else {
-		$usebody = false;
-	}
 
 	if ($usetitle && !$usebody) {
 		$query = 'd.name LIKE {string:pattern}';
@@ -1737,6 +1890,7 @@ function TPdlresults()
 
 	$context['TPortal']['dlsearchresults'] = [];
 	$context['TPortal']['dlsearchterm'] = $what;
+	$context['TPortal']['dl_search_params'] = $searchParams;
 
 	// find how many first
 	$check = $smcFunc['db_query'](
@@ -1749,6 +1903,7 @@ function TPdlresults()
 	);
 	$tt = $smcFunc['db_fetch_row']($check);
 	$total = $tt[0];
+	$smcFunc['db_free_result']($check);
 
 	$request = $smcFunc['db_query'](
 		'substring',
@@ -1757,7 +1912,7 @@ function TPdlresults()
 		FROM {db_prefix}tp_dlmanager AS d
 		LEFT JOIN {db_prefix}members as m ON d.author_id = m.id_member
 		' . $visibility . '
-		ORDER BY d.created DESC LIMIT {int:start}, {int:limit}',
+		ORDER BY d.created DESC LIMIT {int:limit} OFFSET {int:start}',
 		$params + ['limit' => $max_results, 'start' => $start]
 	);
 	// create pagelinks
@@ -1781,20 +1936,17 @@ function TPdlresults()
 		}
 		$smcFunc['db_free_result']($request);
 	}
-	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=search', $txt['tp-dlsearch']);
+	$context['TPortal']['dl_search_edit_url'] = $scripturl . '?action=tportal;sa=download;dl=search;params=' . $encoded;
+	TPadd_linktree($context['TPortal']['dl_search_edit_url'], $txt['tp-dlsearch']);
 
-	$params = base64_encode(json_encode(['search' => $what, 'title' => $usetitle, 'body' => $usebody]));
-	
-	// Now that we know how many results to expect we can start calculating the page numbers.
-	$context['page_index'] = constructPageIndex($scripturl . '?sa=download;dl=search;params=' . $params, $start, $total, $max_results, false);
-//	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=searcharticle2;params=' . $params, $start, $num_results, $max_results, false);
-
+	$context['page_index'] = constructPageIndex($scripturl . '?action=tportal;sa=download;dl=results;params=' . $encoded, $start, $total, $max_results, false);
 }
-// searched the files?
+
 function TPdlsearch()
 {
-	global $txt, $scripturl;
+	global $txt, $scripturl, $context;
 
+	$context['TPortal']['dl_search_params'] = TPDownloadSearchParams() ?? ['search' => '', 'title' => true, 'body' => true];
 	TPadd_linktree($scripturl . '?action=tportal;sa=download;dl=search', $txt['tp-dlsearch']);
 }
 
@@ -2293,7 +2445,7 @@ function TPortalDLAdmin()
 			if ($newcatname == '') {
 				$newcatname = '-no name-';
 			}
-			$icon = $boardurl . '/tp-downloads/icons/' . $_POST['tp_newdladmin_icon'];
+			$icon = basename($_POST['tp_newdladmin_icon']);
 		}
 		else {
 			$newcat = false;
@@ -2340,7 +2492,7 @@ function TPortalDLAdmin()
 		foreach ($_POST as $what => $value) {
 			if (substr($what, 0, 19) == 'assign-ftp-checkbox') {
 				$name = $value;
-				$icon = $boardurl . '/tp-downloads/icons/' . $_POST['tp_newdladmin_icon'];
+				$icon = basename($_POST['tp_newdladmin_icon']);
 				$now = time();
 				$fsize = filesize($context['TPortal']['download_upload_path'] . $value);
 				$smcFunc['db_insert'](
@@ -2387,7 +2539,7 @@ function TPortalDLAdmin()
 		$link = $_POST['newdladmin_link'];
 		$text = $_POST['tp_newdladmintext'] ?? $_POST['newtp_dladmintext'] ?? '';
 		$parent = $_POST['newdladmin_parent'];
-		$icon = $boardurl . '/tp-downloads/icons/' . $_POST['newdladmin_icon'];
+		$icon = basename($_POST['newdladmin_icon']);
 		// special case, the access
 		$dlgrp = [];
 		foreach ($_POST as $what => $value) {
@@ -2614,7 +2766,7 @@ function TPortalDLAdmin()
 			elseif (substr($what, 0, 12) === 'dladmin_icon') {
 				$id = substr($what, 12);
 				if ($value != '') {
-					$val = $boardurl . '/tp-downloads/icons/' . $value;
+					$val = basename($value);
 					$smcFunc['db_query'](
 						'',
 						'
@@ -3075,7 +3227,7 @@ function TPortalDLAdmin()
 				'parent' => $row['parent'],
 				'name' => $row['name'],
 				'text' => $row['description'],
-				'icon' => $row['icon'],
+				'icon' => TPUtil::downloadIconUrl($row['icon']),
 			];
 		}
 		$smcFunc['db_free_result']($srequest);
@@ -3158,7 +3310,7 @@ function TPortalDLAdmin()
 				$context['TPortal']['admcats'][] = [
 					'id' => $brow['id'],
 					'name' => $brow['name'],
-					'icon' => $brow['icon'],
+					'icon' => TPUtil::downloadIconUrl($brow['icon']),
 					'access' => $brow['access'],
 					'parent' => $brow['parent'],
 					'description' => $brow['description'],
@@ -3168,7 +3320,7 @@ function TPortalDLAdmin()
 					'total' => ($items + $sitems),
 					'href' => $scripturl . '?action=tportal;sa=download;dl=admincat' . $brow['id'],
 					'href2' => $scripturl . '?action=tportal;sa=download;dl=admineditcat' . $brow['id'],
-					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $brow['id'],
+					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $brow['id'] . ';' . $context['session_var'] . '=' . $context['session_id'],
 					'pos' => $brow['downloads'],
 				];
 			}
@@ -3248,7 +3400,7 @@ function TPortalDLAdmin()
 				$context['TPortal']['dl_admitems'][] = [
 					'id' => $row['id'],
 					'name' => $row['name'],
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'category' => abs($row['category']),
 					'file' => $row['file'],
 					'filesize' => floor($row['filesize'] / 1024),
@@ -3297,7 +3449,7 @@ function TPortalDLAdmin()
 					'id' => $row['id'],
 					'name' => $row['name'],
 					'pos' => $row['downloads'],
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'shortname' => $row['link'],
 					'access' => $row['access'],
 					'parent' => $row['parent'],
@@ -3307,7 +3459,7 @@ function TPortalDLAdmin()
 					'total' => ($items + $sitems),
 					'href' => $scripturl . '?action=tportal;sa=download;dl=admincat' . $row['id'],
 					'href2' => $scripturl . '?action=tportal;sa=download;dl=admineditcat' . $row['id'],
-					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $row['id'],
+					'href3' => $scripturl . '?action=tportal;sa=download;dl=admindelcat' . $row['id'] . ';' . $context['session_var'] . '=' . $context['session_id'],
 				];
 			}
 			$smcFunc['db_free_result']($request);
@@ -3412,7 +3564,7 @@ function TPortalDLAdmin()
 					'access' => $row['access'],
 					'shortname' => $row['link'],
 					'description' => $row['description'],
-					'icon' => $row['icon'],
+					'icon' => TPUtil::downloadIconUrl($row['icon']),
 					'parent' => $row['parent'],
 				];
 			}
@@ -3428,6 +3580,7 @@ function TPortalDLAdmin()
 		}
 	}
 	elseif (substr($admsub, 0, 6) == 'delcat') {
+		checkSession('get');
 		$context['TPortal']['dl_title'] = '<a href="' . $scripturl . '?action=tportal;sa=download;dl=admin">' . $txt['tp-dladmin'] . '</a>';
 		$cat = substr($admsub, 6);
 		// delete category and all item it's in
@@ -3549,7 +3702,7 @@ function TPortalDLAdmin()
 			$context['TPortal']['dl_admitems'][] = [
 				'id' => $row['id'],
 				'name' => $row['name'],
-				'icon' => $row['icon'],
+				'icon' => TPUtil::downloadIconUrl($row['icon']),
 				'category' => $row['category'],
 				'file' => $row['file'],
 				'views' => $row['views'],
@@ -3761,7 +3914,7 @@ function TPortalDLUser($item)
 		$context['TPortal']['dl_useredit'][] = [
 			'id' => $row['id'],
 			'name' => $row['name'],
-			'icon' => $row['icon'],
+			'icon' => TPUtil::downloadIconUrl($row['icon']),
 			'category' => $row['category'],
 			'file' => $row['file'],
 			'views' => $row['views'],

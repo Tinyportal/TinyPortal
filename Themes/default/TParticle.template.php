@@ -24,7 +24,6 @@ function template_submitarticle()
 {
 	global $context, $settings, $options, $txt, $scripturl, $modSettings, $boarddir, $boardurl, $language, $smcFunc;
 
-	$tpmonths = [' ', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	if (!empty($context['TPortal']['editarticle'])) {
 		$mg = $context['TPortal']['editarticle'];
 	}
@@ -65,7 +64,7 @@ function template_submitarticle()
 	}
 
 	echo'
-		<div class="cat_bar"><h3 class="catbg"><img class="tp_article_on" src="' . $settings['tp_images_url'] . '/TP' , $mg['off'] == '1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id'] == '' ? $txt['tp-addarticle'] . '' . $txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle'] . ' ' . html_entity_decode($mg['subject']) , '' , $mg['id'] == 0 ? '' : '&nbsp;-&nbsp;<a href="' . $scripturl . '?page=' . $mg['id'] . '">[' . $txt['tp-preview'] . ']</a>';
+		<div class="cat_bar"><h3 class="catbg"><img class="tp_article_on" src="' . $settings['tp_images_url'] . '/TP' , $mg['off'] == '1' ? 'red' : 'green' , '.png" alt=""  />' , $mg['id'] == '' ? $txt['tp-addarticle'] . '' . $txt['tp-incategory'] . (html_entity_decode($context['TPortal']['category_name'])) : $txt['tp-editarticle'] . ' ' . $mg['subject_html'] , '' , $mg['id'] == 0 ? '' : '&nbsp;-&nbsp;<a href="' . $scripturl . '?page=' . $mg['id'] . '">[' . $txt['tp-preview'] . ']</a>';
 	echo '</h3></div>
 		<div id="edit-add-single-article">
 		<div class="windowbg noup">
@@ -74,24 +73,29 @@ function template_submitarticle()
 					<span class="font-strong"><label for="tp_article_subject">' , $txt['tp-arttitle'] , '</label></span>
 				</dt>
 				<dd>
-					<input type="text" id="tp_article_subject" name="tp_article_subject" value="' . htmlentities($mg['subject'], ENT_QUOTES, $context['character_set']) . '" style="width: 92%;" required>
+					<input type="text" id="tp_article_subject" name="tp_article_subject" value="' . ($mg['subject_input'] ?? '') . '" style="width: 92%;" required>
 				</dd>
 				<dt>
 					<span class="font-strong">
 					<a href="', $scripturl, '?action=helpadmin;help=tp-shortname_articledesc" onclick="return reqOverlayDiv(this.href);">
-					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">' . $txt['tp-shortname_article'] . '</label></span></span>
+					<span class="tptooltip" title="', $txt['help'], '"></span></a><label for="tp_article_shortname">' . $txt['tp-shortname_article'] . '</label></span>
 				</dt>
 				<dd>
 					<input type="text" id="tp_article_shortname" name="tp_article_shortname" value="' . $mg['shortname'] . '" size=20 pattern="[^\'\x22;:]+" >
 				</dd>
 			</dl>
 			<div>';
+	$codeReadOnly = !empty($context['TPortal']['article_code_read_only']);
 	$tp_use_wysiwyg = $context['TPortal']['show_wysiwyg'];
 	if ($article_type == 'php') {
-		echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' ,  $mg['body'] , '</textarea><br>';
+		if ($codeReadOnly) {
+			echo '<p class="noticebox">', $txt['tp_article_code_readonly'], '</p>';
+		}
+		echo '<textarea id="tp_article_body" wrap="auto"', $codeReadOnly ? ' readonly' : ' name="tp_article_body"', '>',
+			htmlspecialchars((string) $mg['body'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea><br>';
 	}
 	elseif (($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
-		TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg);
+		TPwysiwyg('tp_article_body', $mg['body'], true, 'qup_tp_article_body', $tp_use_wysiwyg, true);
 	}
 	elseif (($tp_use_wysiwyg == 0) && ($article_type == 'html')) {
 		echo '<textarea name="tp_article_body" id="tp_article_body" wrap="auto">' , $mg['body'], '</textarea><br>';
@@ -126,7 +130,11 @@ function template_submitarticle()
 	if ($article_type == 'php' || $article_type == 'html') {
 		echo '<div id="tp_article_show_intro"', ($mg['useintro'] == 0) ? ' style="display: none;">' : '>' , '<span class="font-strong">' . $txt['tp-introtext'] . '</span>';
 		if (($tp_use_wysiwyg > 0) && ($article_type == 'html')) {
-			TPwysiwyg('tp_article_intro', $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, false);
+			TPwysiwyg('tp_article_intro', $mg['intro'], true, 'qup_tp_article_intro', $tp_use_wysiwyg, true);
+		}
+		elseif ($article_type === 'php') {
+			echo '<textarea id="tp_article_intro" rows="5" cols="20" wrap="soft"', $codeReadOnly ? ' readonly' : ' name="tp_article_intro"', '>',
+				htmlspecialchars((string) $mg['intro'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea>';
 		}
 		else {
 			echo '<textarea name="tp_article_intro" id="tp_article_intro" rows=5 cols=20 wrap="soft">' . $mg['intro'] . '</textarea>';
@@ -145,8 +153,6 @@ function template_submitarticle()
 	echo '
 					<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '" >';
 
-	echo '<input type="hidden" name="tp_article_timestamp" value="' . $mg['date'] . '">';
-
 	if (allowedTo('admin_forum') || allowedTo('tp_articles')) {
 		echo '
 				<hr>
@@ -159,45 +165,10 @@ function template_submitarticle()
 						&nbsp;' . $txt['tp-assignnewauthor'] . ' <input type="number" id="tp_article_authorid" name="tp_article_authorid" value="' . $mg['author_id'] . '" size="10" maxlength="12" required><br><br>
 					</dd>
 					<dt>
-						', $txt['tp-created'], '
+						<label for="tp_article_created_at">', $txt['tp-created'], '</label>
 					</dt>
-					<dd>';
-		// day
-		$day = date('j', $mg['date']);
-		$month = date('n', $mg['date']);
-		$year = date('Y', $mg['date']);
-		$hour = date('G', $mg['date']);
-		echo '<select size="1" name="tp_article_day">';
-		$minute = date('i', $mg['date']);
-		for ($a = 1; $a < 32; $a++) {
-			echo '<option value="' . $a . '" ' , $day == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select>';
-		// month
-		echo '<select size="1" name="tp_article_month">';
-		for ($a = 1; $a < 13; $a++) {
-			echo '<option value="' . $a . '" ' , $month == $a ? ' selected' : '' , '>' . $tpmonths[$a] . '</option>  ';
-		}
-		echo '</select>';
-		// year
-		echo '<select size="1" name="tp_article_year">';
-		$now = date('Y', time()) + 1;
-		for ($a = 2004; $a < $now; $a++) {
-			echo '<option value="' . $a . '" ' , $year == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select>';
-		// hours
-		echo ' - <select size="1" name="tp_article_hour">';
-		for ($a = 0; $a < 24; $a++) {
-			echo '<option value="' . $a . '" ' , $hour == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select>';
-		// minutes
-		echo ' <b>:</b><select size="1" name="tp_article_minute">';
-		for ($a = 0; $a < 60; $a++) {
-			echo '<option value="' . $a . '" ' , $minute == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-		}
-		echo '</select><br><br>
+					<dd>
+						<input type="datetime-local" id="tp_article_created_at" name="tp_article_created_at" value="', date('Y-m-d\TH:i', $mg['date']), '" required><br><br>
 					</dd>
 					<dt>
 						', $txt['tp-approved'], '
@@ -215,20 +186,27 @@ function template_submitarticle()
 						', $txt['tp-switchmode'], '
 					</dt>
 					<dd>
+';
+		if ($codeReadOnly) {
+			echo $txt['tp-gophp'];
+		}
+		else {
+			echo '
 						<input type="radio" id="gohtml" name="tp_article_type" value="html"' , $article_type == 'html' ? ' checked="checked"' : '' ,'><label for="gohtml"> ' . $txt['tp-gohtml'] . '</label><br>
 ';
-		if (allowedTo('admin_forum')) {
-			echo '
+			if (allowedTo('admin_forum')) {
+				echo '
 						<input type="radio" id="gophp" name="tp_article_type" value="php"' , $article_type == 'php' ? ' checked="checked"' : '' ,'><label for="gophp"> ' . $txt['tp-gophp'] . '</label><br>
 ';
-		}
-		echo '
+			}
+			echo '
 						<input type="radio" id="gobbc" name="tp_article_type" value="bbc"' , $article_type == 'bbc' ? ' checked="checked"' : '' ,'><label for="gobbc"> ' . $txt['tp-gobbc'] . '</label><br>
 ';
-		if (allowedTo('admin_forum')) {
-			echo '
+			if (allowedTo('admin_forum')) {
+				echo '
 						<input type="radio" id="goimport" name="tp_article_type" value="import"' , $article_type == 'import' ? ' checked="checked"' : '' ,'><label for="goimport"> ' . $txt['tp-goimport'] . '</label><br><br>
 ';
+			}
 		}
 		echo '
 					</dd>
@@ -241,7 +219,7 @@ function template_submitarticle()
 						<input type="radio" class="switch-off" id="tp_article_off" name="tp_article_off" value="1" ' , $mg['off'] == '1' ? 'checked' : '' , '><label for="tp_article_off"> ' . $txt['tp-articleoff'] . '</label>
 					</div>
 					</dd>';
-		if (!empty($mg['id'])) {
+		if (!empty($mg['id']) && !$codeReadOnly) {
 			echo '
 					<dt>
 						', $txt['tp-articledelete'], '<br>
@@ -303,118 +281,14 @@ function template_submitarticle()
 		}
 		if (allowedTo('admin_forum') || allowedTo('tp_articles')) {
 			echo '
-					<dt>
-						', $txt['tp-published'], '
-					</dt>
-					<dd><div class="description" style="line-height: 1.6em;">
-							<b>',$txt['tp-pub_start'],': </b><br>';
-			// day
-			echo '
-						<input type="hidden" name="tp_article_pub_start" value="' . $mg['pub_start'] . '">
-						<select size="1" name="tp_article_pubstartday">
-							<option value="0">' . $txt['tp-notset'] . '</option>';
-			$day = !empty($mg['pub_start']) ? date('j', $mg['pub_start']) : 0;
-			$month = !empty($mg['pub_start']) ? date('n', $mg['pub_start']) : 0;
-			$year = !empty($mg['pub_start']) ? date('Y', $mg['pub_start']) : 0;
-			$hour = !empty($mg['pub_start']) ? date('G', $mg['pub_start']) : 0;
-			$minute = !empty($mg['pub_start']) ? date('i', $mg['pub_start']) : 0;
-			for ($a = 1; $a < 32; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $day == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// month
-			echo '
-						<select size="1" name="tp_article_pubstartmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-			for ($a = 1; $a < 13; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $month == $a ? ' selected' : '' , '>' . $tpmonths[$a] . '</option>  ';
-			}
-			echo '
-						</select>';
-			// year
-			echo '
-						<select size="1" name="tp_article_pubstartyear"><option value="0">' . $txt['tp-notset'] . '</option>';
-			$now = date('Y', time()) + 1;
-			for ($a = 2004; $a < $now + 2; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $year == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// hours
-			echo ' -
-						<select size="1" name="tp_article_pubstarthour">';
-			for ($a = 0; $a < 24; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $hour == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// minutes
-			echo ' <b>:</b>
-						<select size="1" name="tp_article_pubstartminute">';
-			for ($a = 0; $a < 60; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $minute == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select><br>';
-			// day
-			echo '
-						<input type="hidden" name="tp_article_pub_end" value="' . $mg['pub_end'] . '">
-						<b>',$txt['tp-pub_end'],':</b><br><select size="1" name="tp_article_pubendday"><option value="0">' . $txt['tp-notset'] . '</option>';
-			$day = !empty($mg['pub_end']) ? date('j', $mg['pub_end']) : 0;
-			$month = !empty($mg['pub_end']) ? date('n', $mg['pub_end']) : 0;
-			$year = !empty($mg['pub_end']) ? date('Y', $mg['pub_end']) : 0;
-			$hour = !empty($mg['pub_end']) ? date('G', $mg['pub_end']) : 0;
-			$minute = !empty($mg['pub_end']) ? date('i', $mg['pub_end']) : 0;
-			for ($a = 1; $a < 32; $a++) {
-				echo '
-									<option value="' . $a . '" ' , $day == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// month
-			echo '
-						<select size="1" name="tp_article_pubendmonth"><option value="0">' . $txt['tp-notset'] . '</option>';
-			for ($a = 1; $a < 13; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $month == $a ? ' selected' : '' , '>' . $tpmonths[$a] . '</option>  ';
-			}
-			echo '
-						</select>';
-			// year
-			echo '
-						<select size="1" name="tp_article_pubendyear"><option value="0">' . $txt['tp-notset'] . '</option>';
-			$now = date('Y', time()) + 1;
-			for ($a = 2004; $a < $now + 2; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $year == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// hours
-			echo ' -
-						<select size="1" name="tp_article_pubendhour">';
-			for ($a = 0; $a < 24; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $hour == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>';
-			// minutes
-			echo ' <b>:</b>
-						<select size="1" name="tp_article_pubendminute">';
-			for ($a = 0; $a < 60; $a++) {
-				echo '
-							<option value="' . $a . '" ' , $minute == $a ? ' selected' : '' , '>' . $a . '</option>  ';
-			}
-			echo '
-						</select>
-					</div>
+					<dt><label for="tp_article_publish_from">', $txt['tp-publication-start'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_article_publish_from" name="tp_article_publish_from" value="', empty($mg['pub_start']) ? '' : date(\TinyPortal\Util::PUBLICATION_DATE_FORMAT, $mg['pub_start']), '">
 					</dd>
+					<dt><label for="tp_article_publish_until">', $txt['tp-publication-end'], '</label></dt>
+					<dd>
+						<input type="datetime-local" id="tp_article_publish_until" name="tp_article_publish_until" value="', empty($mg['pub_end']) ? '' : date(\TinyPortal\Util::PUBLICATION_DATE_FORMAT, $mg['pub_end']), '">
+						<div class="smalltext">', $txt['tp-publication-help'], '</div>
 				</dl>';
 		}
 	}
@@ -569,12 +443,12 @@ function template_submitarticle()
 					</dl>
 					<div>
 						' , $txt['tp-articleheaders'] , '<br>
-						<textarea id="tp_article_headers" name="tp_article_headers" rows="5" cols="40">' , $mg['headers'] , '</textarea>
+						<textarea id="tp_article_headers" rows="5" cols="40"', $codeReadOnly ? ' readonly' : ' name="tp_article_headers"', '>', htmlspecialchars((string) $mg['headers'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), '</textarea>
 					</div>
 				</div><br>
 			<input type="submit" class="button" name="' . $txt['tp-send'] . '" value="' . $txt['tp-send'] . '" >';
 	}
-	else {
+	elseif (!$codeReadOnly) {
 		echo '<input name="tp_article_type" type="hidden" value="' . $article_type . '">';
 		// set defaults for submissions?
 		echo '	<input type="hidden" name="tp_article_authorid" value="' . $context['user']['id'] . '">
@@ -688,7 +562,7 @@ function template_showcomments()
 					<tr class="windowbg">
 						<td class="tp_comments">
 						<div>
-							<div class="float-items" style="width:30%;"><a href="' . $scripturl . '?page=' . $mes['page'] . '#tp-comment">' . $mes['pagename'] . '</a></div>
+							<div class="float-items" style="width:30%;"><a href="' . $scripturl . '?page=' . $mes['page'] . '#tp-comment">' . $mes['pagename_html'] . '</a></div>
 							<div class="float-items" style="width:15%;"><a href="' . $scripturl . '?action=profile;u=' . $mes['author_id'] . '">' . $mes['author'] . '</a></div>
 							<div class="float-items" style="width:30%;"><div class="smalltext">' , $mes['title'] , '<br> ' , substr($mes['comment'], 0, 150) , '...</div></div>
 							<div class="float-items" style="width:25%;">' , !empty($mes['member_id']) ? ' <a href="' . $scripturl . '?action=profile;u=' . $mes['member_id'] . '">' . $mes['membername'] . '</a> ' : $txt['tp-guest'] , '<div class="smalltext">' . $mes['time'] . '</div>
@@ -817,11 +691,11 @@ function template_showarticle()
 
 			if ($art['off'] == 0 && $art['approved'] == 1) {
 				echo '
-						<a href="' . $scripturl . '?page=' . $art['id'] . '" title="' . $txt['tp-viewarticle'] . '">' . html_entity_decode($art['subject']) . '</a>';
+						<a href="' . $scripturl . '?page=' . $art['id'] . '" title="' . $txt['tp-viewarticle'] . '">' . $art['subject_html'] . '</a>';
 			}
 			else {
 				echo '
-					(<i>' . html_entity_decode($art['subject']) . '</i>)';
+					(<i>' . $art['subject_html'] . '</i>)';
 			}
 
 			echo '

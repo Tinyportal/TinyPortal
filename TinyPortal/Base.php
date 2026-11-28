@@ -11,7 +11,7 @@
  * author: tinoest - https://tinoest.co.uk
  * license: BSD-3-Clause
  *
- * @version 2.2.0
+ * @version 3.0.5
  *
  */
 
@@ -285,7 +285,7 @@ class Base
 		return $this->dB->db_insert_id('{db_prefix}' . $table, 'id');
 	}
 
-	protected function updateSQL(int $id, array $data, array $dBStructure, string $table)
+	protected function updateSQL(int $id, array $data, array $dBStructure, string $table, array $conditions = [])
 	{
 		$update_data = $data;
 		array_walk(
@@ -297,12 +297,25 @@ class Base
 		$update_query = implode(', ', array_values($update_data));
 
 		$data['id'] = (int)$id;
+		$where = 'id = {int:id}';
+		foreach ($conditions as $column => $value) {
+			if (!isset($dBStructure[$column])) {
+				throw new \InvalidArgumentException('Unknown update condition: ' . $column);
+			}
+			if ($value === null) {
+				$where .= ' AND ' . $column . ' IS NULL';
+				continue;
+			}
+			$parameter = 'expected_' . $column;
+			$where .= ' AND ' . $column . ' = {' . $dBStructure[$column] . ':' . $parameter . '}';
+			$data[$parameter] = $value;
+		}
 		return $this->dB->db_query(
 			'',
 			'
             UPDATE {db_prefix}' . $table . '
             SET ' . $update_query . '
-            WHERE id = {int:id}',
+            WHERE ' . $where,
 			$data
 		);
 	}

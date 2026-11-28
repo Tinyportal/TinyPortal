@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.4
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -175,13 +175,8 @@ function TPShoutPost()
 		$shout = str_ireplace(['<br />', '<br>', '<br/>'], "\r\n", $shout);
 
 		$block_id = TPUtil::filter('b', 'post', 'int');
-		$row = TPBlock::getInstance()->getBlock($block_id);
-		$set = json_decode($row['settings'], true);
+		$set = TPShoutboxSettings($block_id);
 		$shoutbox_id = $set['shoutbox_id'];
-
-		if (empty($shoutbox_id)) {
-			$shoutbox_id = 0;
-		}
 
 		if ($shout != '') {
 			$tpShout = TPShout::getInstance();
@@ -226,6 +221,24 @@ function TPShoutDelete($shout_id = null)
 	}
 }
 
+function TPShoutboxSettings($block_id): array
+{
+	$tpBlock = TPBlock::getInstance();
+	$block = (int) $block_id > 0 ? $tpBlock->getBlock((int) $block_id) : null;
+	if (!$block || (int) $block['type'] !== TP_BLOCK_SHOUTBOX || !$tpBlock->canAccessBlock($block)) {
+		fatal_lang_error('no_access', false);
+	}
+
+	$settings = json_decode($block['settings'], true);
+	$shoutboxId = filter_var($settings['shoutbox_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+	if ($shoutboxId === false) {
+		fatal_lang_error('no_access', false);
+	}
+
+	$settings['shoutbox_id'] = $shoutboxId;
+	return $settings;
+}
+
 // fetch all the shouts for output
 function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest = false)
 {
@@ -235,15 +248,7 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 	// Force this to reset each time
 	$context['TPortal']['shoutbox'] = null;
 
-	if (is_null($block_id) || $block_id === false) {
-		redirectexit();
-	}
-
-	$row = TPBlock::getInstance()->getBlock($block_id);
-	if (!is_array($row) || (isset($row['type']) && ((int)$row['type'] != TP_BLOCK_SHOUTBOX))) {
-		redirectexit();
-	}
-	$set = json_decode($row['settings'], true);
+	$set = TPShoutboxSettings($block_id);
 	$shoutbox_id = $set['shoutbox_id'];
 	$shoutbox_layout = $set['shoutbox_layout'];
 	$shoutbox_height = $set['shoutbox_height'];
@@ -284,22 +289,13 @@ function TPShoutFetch($block_id = null, $render = true, $limit = 1, $ajaxRequest
 
 	loadTemplate('TPShout');
 
-	$block_shout = ' 1 = 1';
-	if (!empty($shoutbox_id)) {
-		$block_shout = ' s.shoutbox_id = {int:shoutbox_id} ';
-	}
-	else {
-		redirectexit();
-	}
-
 	$members = [];
 	$request = $smcFunc['db_query'](
 		'',
 		'
 		SELECT s.*
 			FROM {db_prefix}tp_shoutbox AS s
-		WHERE
-        ' . $block_shout . '
+		WHERE s.shoutbox_id = {int:shoutbox_id}
 		ORDER BY s.time DESC LIMIT {int:limit}',
 		[
 			'limit' => $limit,
@@ -675,14 +671,28 @@ function tpshout_profile($member_id)
 	$context['TPortal']['member_id'] = $member_id;
 	$sorting = 'time';
 	$shouts_per_page = 20;
-	$max = 0;
-	// get all shouts
+	$allowedShoutboxes = [];
+	$tpBlock = TPBlock::getInstance();
+	foreach ($tpBlock->getActiveBlocks() as $block) {
+		if ((int) $block['type'] !== TP_BLOCK_SHOUTBOX || !$tpBlock->canAccessBlock($block)) {
+			continue;
+		}
+		$settings = json_decode($block['settings'], true);
+		$shoutboxId = (int) ($settings['shoutbox_id'] ?? 0);
+		if ($shoutboxId > 0) {
+			$allowedShoutboxes[$shoutboxId] = $shoutboxId;
+		}
+	}
+	$queryParams = ['member_id' => $member_id, 'type' => 'shoutbox', 'shoutboxes' => array_values($allowedShoutboxes) ?: [-1]];
+
+	// Get only shouts from shoutboxes the viewer can access.
 	$request = $smcFunc['db_query'](
 		'',
 		'
         SELECT COUNT(*) FROM {db_prefix}tp_shoutbox
-        WHERE member_id = {int:member_id} AND type = {string:type}',
-		['member_id' => $member_id, 'type' => 'shoutbox']
+        WHERE member_id = {int:member_id} AND type = {string:type}
+        AND shoutbox_id IN ({array_int:shoutboxes})',
+		$queryParams
 	);
 	$result = $smcFunc['db_fetch_row']($request);
 	$max = $result[0];
@@ -695,8 +705,9 @@ function tpshout_profile($member_id)
         SELECT * FROM {db_prefix}tp_shoutbox
         WHERE member_id = {int:member_id}
         AND type = {string:type}
+        AND shoutbox_id IN ({array_int:shoutboxes})
         ORDER BY {raw:sort} DESC LIMIT {int:limit} OFFSET {int:start}',
-		['member_id' => $member_id, 'type' => 'shoutbox', 'sort' => $sorting, 'start' => $start, 'limit' => $shouts_per_page]
+		$queryParams + ['sort' => $sorting, 'start' => $start, 'limit' => $shouts_per_page]
 	);
 	if ($smcFunc['db_num_rows']($request) > 0) {
 		while ($row = $smcFunc['db_fetch_assoc']($request)) {
@@ -888,7 +899,8 @@ function TPShoutAdmin()
 	// Set the linktree
 	TPadd_linktree($scripturl . '?action=tpshout', 'TPshout');
 
-	if (isset($_REQUEST['send']) || isset($_REQUEST[$txt['tp-send']]) || isset($_REQUEST['tp_preview']) || isset($_REQUEST['TPadmin_blocks'])) {
+	if (isset($_POST['send']) || isset($_POST[$txt['tp-send']]) || isset($_POST['tp_preview']) || isset($_POST['TPadmin_blocks'])) {
+		checkSession('post');
 		$go = 0;
 		$changeArray = [];
 		foreach ($_POST as $what => $value) {

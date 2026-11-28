@@ -200,12 +200,8 @@ $txt['tp-addcategory'] = 'Add category';
 $txt['tp-author'] = 'Author';
 $txt['tp-assignnewauthor'] = 'Author ID(change to re-assign to another)';
 $txt['tp-created'] = 'Created at';
-$txt['tp-published'] = 'Publish';
-$txt['tp-pub_start'] = 'from';
-$txt['tp-pub_end'] = 'until';
 $txt['tp-notset'] = '- not set -';
 $txt['tp-category'] = 'Category';
-$txt['tp-editcategory'] = 'Edit article category';
 $txt['tp-switchmode'] = 'Type of article';
 $txt['tp-gohtml'] = 'HTML article';
 $txt['tp-gophp'] = 'PHP article';
@@ -267,7 +263,7 @@ $txt['tp-adminiconsinfo'] = 'Article icons may be uploaded as PNG, JPG or GIF fi
 $txt['tp-adminicons6'] = 'Upload a new article icon';
 
 // Add-Edit Article Category
-$txt['tp-editcategory'] = 'Edit';
+$txt['tp-editcategory'] = 'Edit article category';
 $txt['tp-viewcategory'] = 'View the category';
 $txt['tp-addsubcategory'] = 'Add a category under this one';
 $txt['tp-copycategory'] = 'Make a copy of this category';
@@ -329,13 +325,6 @@ $txt['tp-panelstylehelpdesc'] = 'This setting determines the default style used 
 
 // Navigation links called from source files
 $txt['tp-admin'] = 'TP admin';
-$txt['tp-left'] = 'Left';
-$txt['tp-right'] = 'Right';
-$txt['tp-top'] = 'Top';
-$txt['tp-center'] = 'Center';
-$txt['tp-front'] = 'Front';
-$txt['tp-bottom'] = 'Bottom';
-$txt['tp-lower'] = 'Lower';
 $txt['tp-allpanels'] = 'Panels';
 $txt['tp-allblocks'] = 'Blocks';
 $txt['tp-addarticle'] = 'Add article';
@@ -385,6 +374,7 @@ $txt['tp-blocktype14'] = 'Article/download stats functions';
 $txt['tp-blocktype5'] = 'Code: BBC';
 $txt['tp-blocktype11'] = 'Code: HTML/Javascript';
 $txt['tp-blocktype10'] = 'Code: PHP';
+$txt['tp-blockbody-readonly'] = 'Only forum administrators can edit the code of this block.';
 $txt['tp-blocktype9'] = 'Menu';
 $txt['tp-blocktype2'] = 'News';
 $txt['tp-blocktype8'] = 'Shoutbox';
@@ -477,6 +467,11 @@ $txt['tp-text'] = '-text-';
 $txt['tp-recent'] = 'Recent';
 $txt['tp-no_title'] = '-no title-';
 $txt['tp-blocknotice'] = 'NB! The type of block has changed.<br>Please save first to see the new options!';
+$txt['tp-publication-start'] = 'Publish from';
+$txt['tp-publication-end'] = 'Publish until';
+$txt['tp-publication-help'] = 'Times use the forum time zone. Leave either field blank to set no limit on that side of the period.';
+$txt['tp-publication-invalid'] = 'Enter a valid publication date and time in the forum time zone.';
+$txt['tp-publication-order'] = 'The publication end must be after the start.';
 
 // Block Types
 $txt['tp-userbox1'] = 'Avatar (if any)';
@@ -591,7 +586,6 @@ $txt['shout_submit_returnkey'] = 'Choose how to submit shout messages';
 $txt['tp-yes-enter'] = 'with Enter';
 $txt['tp-yes-ctrl'] = 'with Ctrl/Cmd+Enter';
 $txt['tp-yes-shout'] = 'with Shout button only';
-$txt['tp-shoutbox_id'] = 'Choose the shoutbox id for this block';
 $txt['tp-shoutbox_iddesc'] = 'You can choose different shoutbox id\'s to be used in different shoutbox blocks. Note that if more shoutbox blocks use the same id, these blocks will display the same shoutbox content.';
 $txt['tp-shoutbox_barposition'] = 'Position of the post bar';
 $txt['tp-shoutbox_barpositiontop'] = 'Top';

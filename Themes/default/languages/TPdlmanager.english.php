@@ -179,6 +179,7 @@ $txt['tp-search'] = 'Search';
 $txt['tp-searcharea-descr'] = 'Search descriptions';
 $txt['tp-searcharea-name'] = 'Search titles';
 $txt['tp-dlsearchresults'] = 'Downloads search results';
+$txt['tp-dlsearch-no-results'] = 'Sorry, no matches were found';
 
 //Strings called from source files
 $txt['tp-dladmin'] = 'Administration';

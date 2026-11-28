@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 2.0.0
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -44,12 +44,13 @@ function ssi_TPCategoryArticles($category = 0, $current = '-1', $output = 'echo'
 		if ($current == $article['id'] || strtolower($current) == $article['shortname']) {
 			$render .= ' class="current_art"';
 		}
-		$render .= '><a href="' . $scripturl . '?page=' . $article['shortname'] . '">' . $article['subject'] . '</a></li>';
+		$render .= '><a href="' . $scripturl . '?page=' . $article['shortname'] . '">' . $article['subject_html'] . '</a></li>';
 		$articles[] = [
 			'id' => $article['id'],
 			'subject' => $article['subject'],
+			'subject_html' => $article['subject_html'],
 			'href' => $scripturl . '?page=' . $article['shortname'],
-			'link' => '<a href="' . $scripturl . '?page=' . $article['shortname'] . '">' . $article['subject'] . '</a>',
+			'link' => '<a href="' . $scripturl . '?page=' . $article['shortname'] . '">' . $article['subject_html'] . '</a>',
 			'selected' => ($current == $article['id'] || strtolower($current) == $article['shortname']) ? true : false,
 		];
 	}
@@ -67,7 +68,7 @@ function ssi_TPCategoryArticles($category = 0, $current = '-1', $output = 'echo'
 		$i = 0;
 		$curr = 0;
 		foreach ($articles as $rt) {
-			$art[$i] = '<a href="' . $rt['href'] . '">' . $rt['subject'] . '</a>';
+			$art[$i] = '<a href="' . $rt['href'] . '">' . $rt['subject_html'] . '</a>';
 			if ($rt['selected']) {
 				$curr = $i;
 			}
@@ -92,7 +93,7 @@ function ssi_TPCategoryArticles($category = 0, $current = '-1', $output = 'echo'
             &#171; ' . $art_previous , '
             <select name="articlejump_menu" onchange="javascript:location=document.articlejump.articlejump_menu.options[document.articlejump.articlejump_menu.selectedIndex].value;">';
 		foreach ($articles as $art) {
-			echo '<option value="' . $art['href'] . '"' , $art['selected'] ? ' selected="selected"' : '' , '>' . $art['subject'] . '</option>';
+			echo '<option value="' . $art['href'] . '"' , $art['selected'] ? ' selected="selected"' : '' , '>' . $art['subject_html'] . '</option>';
 		}
 		echo '
             </select>  &nbsp;

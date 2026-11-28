@@ -175,6 +175,7 @@ function articleShowComments()
 			$context['TPortal']['artcomments']['new'][] = [
 				'page' => $row['item_id'],
 				'pagename' => $row['pagename'],
+				'pagename_html' => TPArticle::escapeDisplayTitle((string) $row['pagename']),
 				'subject' => $row['subject'],
 				'title' => $row['subject'],
 				'comment' => $row['comment'],
@@ -207,6 +208,8 @@ function articleShowComments()
 function articleDeleteComment()
 {
 	global $context, $txt;
+
+	checkSession('get');
 
 	if (!allowedTo('tp_artcomment')) {
 		fatal_error($txt['tp-nocomments'], false);
@@ -341,6 +344,7 @@ function articleEdit()
 	$articleId = $_POST['article'] ?? $_GET['article'] ?? '';
 	$where = 0;
 	$storedType = null;
+	$existing = [];
 
 	if ($articleId !== '') {
 		if ((!is_string($articleId) && !is_int($articleId)) || !ctype_digit((string) $articleId) || (int) $articleId < 1) {
@@ -350,7 +354,7 @@ function articleEdit()
 		$where = (int) $articleId;
 		$request = $smcFunc['db_query'](
 			'',
-			'SELECT author_id, type FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
+			'SELECT author_id, type, locked, date, pub_start, pub_end FROM {db_prefix}tp_articles WHERE id = {int:article_id} LIMIT 1',
 			['article_id' => $where]
 		);
 		$existing = $smcFunc['db_fetch_assoc']($request);
@@ -360,23 +364,22 @@ function articleEdit()
 		}
 
 		$storedType = strtolower(trim((string) $existing['type'])) ?: 'html';
-		if (in_array($storedType, ['php', 'import'], true) && !$canManagePhp) {
+		if ($storedType === 'import' && !$canManagePhp) {
 			fatal_lang_error('no_access', false);
 		}
 		if (!$canManageArticles
-			&& (!allowedTo('tp_editownarticle') || (int) $existing['author_id'] !== (int) $context['user']['id'])) {
+			&& (!allowedTo('tp_editownarticle') || (int) $existing['author_id'] !== (int) $context['user']['id'] || !empty($existing['locked']))) {
 			fatal_lang_error('no_access', false);
 		}
 	}
 
-	$articleType = array_key_exists('tp_article_type', $_POST)
-		? $_POST['tp_article_type']
-		: ($storedType ?? (allowedTo('tp_submithtml') ? 'html' : 'bbc'));
+	$codeReadOnly = $storedType === 'php' && !$canManagePhp;
+	$articleType = $codeReadOnly ? $storedType : ($_POST['tp_article_type'] ?? $storedType ?? (allowedTo('tp_submithtml') ? 'html' : 'bbc'));
 	if (!in_array($articleType, ['html', 'bbc', 'php', 'import'], true)) {
 		loadLanguage('TParticle');
 		fatal_lang_error('tp_article_type_invalid', false);
 	}
-	if (in_array($articleType, ['php', 'import'], true) && !$canManagePhp) {
+	if (in_array($articleType, ['php', 'import'], true) && !$canManagePhp && !$codeReadOnly) {
 		fatal_lang_error('no_access', false);
 	}
 	if (!$canManageArticles && ($where === 0 || $articleType !== $storedType)) {
@@ -384,7 +387,47 @@ function articleEdit()
 	}
 
 	$options = [];
-	$article_data = ['type' => $articleType, 'fileimport' => ''];
+	$article_data = $codeReadOnly ? [] : ['type' => $articleType, 'fileimport' => ''];
+
+	if ($where === 0) {
+		$article_data['date'] = time();
+	}
+
+	if ($canManageArticles) {
+		if (array_key_exists('tp_article_created_at', $_POST)) {
+			try {
+				$article_data['date'] = TPUtil::parsePublicationDate($_POST['tp_article_created_at'], isset($existing['date']) ? (int) $existing['date'] : null, false);
+			}
+			catch (InvalidArgumentException $e) {
+				loadLanguage('TParticle');
+				fatal_lang_error('tp_article_datetime_invalid', false);
+			}
+		}
+
+		$fields = [
+			'pub_start' => 'tp_article_publish_from',
+			'pub_end' => 'tp_article_publish_until',
+		];
+		$submitted = array_intersect_key($_POST, array_flip($fields));
+		if ($submitted !== []) {
+			try {
+				$publication = TPUtil::parsePublicationPeriod($submitted, $fields, $existing ?? [], 0);
+			}
+			catch (InvalidArgumentException $e) {
+				if (loadLanguage('TPortalAdmin') == false) {
+					loadLanguage('TPortalAdmin', 'english');
+				}
+				fatal_lang_error($e->getMessage(), false);
+			}
+
+			foreach ($fields as $column => $field) {
+				if (array_key_exists($field, $submitted)) {
+					$article_data[$column] = $publication[$column] ?? 0;
+				}
+			}
+		}
+	}
+
 	if ($articleType === 'import') {
 		require_once SOURCEDIR . '/TPSubs.php';
 
@@ -395,16 +438,19 @@ function articleEdit()
 		}
 		$article_data['fileimport'] = basename($importName);
 	}
-	if (allowedTo('tp_alwaysapproved')) {
+	if (!$codeReadOnly && allowedTo('tp_alwaysapproved')) {
 		$article_data['approved'] = 1;
 	} // No approval needed
-	else {
+	elseif (!$codeReadOnly) {
 		$article_data['approved'] = 0;
 	} // Preset to false
 
 	foreach ($_POST as $what => $value) {
 		if (substr($what, 0, 11) == 'tp_article_') {
 			$setting = substr($what, 11);
+			if ($codeReadOnly && !$canManageArticles && !in_array($setting, ['title', 'subject', 'shortname', 'useintro'], true)) {
+				continue;
+			}
 			if (substr($setting, 0, 8) == 'options_') {
 					$options[] = substr($setting, 8);
 			}
@@ -452,6 +498,9 @@ function articleEdit()
 						break;
 					case 'intro':
 					case 'body':
+						if ($codeReadOnly) {
+							break;
+						}
 						// If we came from WYSIWYG then turn it back into BBC regardless.
 						if (!empty($_REQUEST['tp_article_body_mode']) && isset($_REQUEST['tp_article_body'])) {
 							require_once SOURCEDIR . '/Subs-Editor.php';
@@ -514,56 +563,17 @@ function articleEdit()
 						}
 						$article_data[$setting] = $value;
 						break;
-					case 'day':
-					case 'month':
-					case 'year':
-					case 'minute':
-					case 'hour':
-						$timestamp = mktime($_POST['tp_article_hour'], $_POST['tp_article_minute'], 0, $_POST['tp_article_month'], $_POST['tp_article_day'], $_POST['tp_article_year']);
-						if (!isset($savedtime)) {
-							$article_data['date'] = $timestamp;
+					case 'headers':
+						if ($codeReadOnly) {
+							break;
 						}
-						break;
-					case 'timestamp':
-						if (!isset($savedtime)) {
-							$article_data['date'] = empty($_POST['tp_article_timestamp']) ? time() : $_POST['tp_article_timestamp'];
-						}
-						break;
-					case 'pubstartday':
-					case 'pubstartmonth':
-					case 'pubstartyear':
-					case 'pubstartminute':
-					case 'pubstarthour':
-					case 'pub_start':
-						if (empty($_POST['tp_article_pubstarthour']) && empty($_POST['tp_article_pubstartminute']) && empty($_POST['tp_article_pubstartmonth']) && empty($_POST['tp_article_pubstartday']) && empty($_POST['tp_article_pubstartyear'])) {
-							$article_data['pub_start'] = 0;
-						}
-						else {
-							$timestamp = mktime($_POST['tp_article_pubstarthour'], $_POST['tp_article_pubstartminute'], 0, $_POST['tp_article_pubstartmonth'], $_POST['tp_article_pubstartday'], $_POST['tp_article_pubstartyear']);
-							$article_data['pub_start'] = $timestamp;
-						}
-					break;
-					case 'pubendday':
-					case 'pubendmonth':
-					case 'pubendyear':
-					case 'pubendminute':
-					case 'pubendhour':
-					case 'pub_end':
-						if (empty($_POST['tp_article_pubendhour']) && empty($_POST['tp_article_pubendminute']) && empty($_POST['tp_article_pubendmonth']) && empty($_POST['tp_article_pubendday']) && empty($_POST['tp_article_pubendyear'])) {
-							$article_data['pub_end'] = 0;
-						}
-						else {
-							$timestamp = mktime($_POST['tp_article_pubendhour'], $_POST['tp_article_pubendminute'], 0, $_POST['tp_article_pubendmonth'], $_POST['tp_article_pubendday'], $_POST['tp_article_pubendyear']);
-							$article_data['pub_end'] = $timestamp;
-						}
-						break;
+						// Fall through to the other article management settings.
 					case 'approved':
 					case 'off':
 					case 'frontpage':
 					case 'sticky':
 					case 'locked':
 					case 'featured':
-					case 'headers':
 						if ($canManageArticles) {
 							$article_data[$setting] = $value;
 						}
@@ -584,7 +594,9 @@ function articleEdit()
 	if ($where === 0 && !isset($article_data['author_id'])) {
 		$article_data['author_id'] = (int) $context['user']['id'];
 	}
-	$article_data['options'] = implode(',', $options);
+	if (!$codeReadOnly || $canManageArticles) {
+		$article_data['options'] = implode(',', $options);
+	}
 	// check if uploads are there
 	if (array_key_exists('tp_article_illupload', $_FILES) && file_exists($_FILES['tp_article_illupload']['tmp_name'])) {
 		$name = TPuploadpicture('tp_article_illupload', $context['TPortal']['icon_max_size'], 'tp-files/tp-articles/illustrations', false, false);
@@ -599,10 +611,17 @@ function articleEdit()
 	}
 	else {
 		// We are updating
-		$tpArticle->updateArticle((int)$where, $article_data);
+		if ($article_data !== []) {
+			$conditions = !$canManagePhp ? ['type' => $existing['type']] : [];
+			if (!$canManageArticles) {
+				$conditions['author_id'] = (int) $context['user']['id'];
+				$conditions['locked'] = 0;
+			}
+			$tpArticle->updateArticle($where, $article_data, $conditions);
+		}
 	}
 	// Update the approved status
-	if ($article_data['approved'] == 1) {
+	if (($article_data['approved'] ?? 0) == 1) {
 		$smcFunc['db_query'](
 			'',
 			'
@@ -631,13 +650,13 @@ function articleEdit()
 	}
 	unset($tpArticle);
 	// check if uploaded picture
-	if (isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
+	if (!$codeReadOnly && isset($_FILES['qup_tp_article_body']) && file_exists($_FILES['qup_tp_article_body']['tmp_name'])) {
 		$name = TPuploadpicture('qup_tp_article_body', $context['TPortal']['image_max_size'], $context['TPortal']['image_upload_path'], true, true);
 		tp_createthumb($context['TPortal']['image_upload_path'] . '/' . $name, 50, 50, $context['TPortal']['image_upload_path'] . '/thumbs/thumb_' . $name);
 	}
 	// if this was a new article
-	if (array_key_exists('tp_article_approved', $_POST) && $_POST['tp_article_approved'] == 1 && $_POST['tp_article_off'] == 0) {
-		tp_recordevent($timestamp, $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0), $where);
+	if ($canManageArticles && ($article_data['approved'] ?? 0) == 1 && ($article_data['off'] ?? 1) == 0 && isset($_POST['tp_article_approved'], $_POST['tp_article_authorid'])) {
+		tp_recordevent($article_data['date'] ?? (int) $existing['date'], $_POST['tp_article_authorid'], 'tp-createdarticle', 'page=' . $where, 'Creation of new article.', (isset($allowed) ? $allowed : 0), $where);
 	}
 
 	if (array_key_exists('tpadmin_form', $_POST)) {
@@ -695,7 +714,7 @@ function articleShow()
 	if ($smcFunc['db_num_rows']($request2) > 0) {
 		$context['TPortal']['myarticles'] = [];
 		while ($row = $smcFunc['db_fetch_assoc']($request2)) {
-			$context['TPortal']['myarticles'][] = $row;
+			$context['TPortal']['myarticles'][] = TPArticle::withDisplayTitle($row);
 		}
 		$smcFunc['db_free_result']($request2);
 	}
@@ -766,27 +785,24 @@ function articlePublish()
 		redirectexit('action=forum');
 	}
 
-	$t = is_numeric($_GET['t']) ? $_GET['t'] : 0;
+	$t = filter_var($_GET['t'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
 
-	if (empty($t)) {
+	if ($t === false) {
 		redirectexit('action=forum');
 	}
 
 	isAllowedTo('tp_settings');
-	$existing = explode(',', $context['TPortal']['frontpage_topics']);
-	if (in_array($t, $existing)) {
-		unset($existing[array_search($t, $existing)]);
+	checkSession('get');
+	$existing = TPUtil::positiveIds($context['TPortal']['frontpage_topics']);
+	$index = array_search($t, $existing, true);
+	if ($index !== false) {
+		unset($existing[$index]);
 	}
 	else {
 		$existing[] = $t;
 	}
 
-	$newstring = implode(',', $existing);
-	if (substr($newstring, 0, 1) == ',') {
-		$newstring = substr($newstring, 1);
-	}
-
-	updateTPSettings(['frontpage_topics' => $newstring]);
+	updateTPSettings(['frontpage_topics' => implode(',', $existing)]);
 
 	redirectexit('topic=' . $t . '.0');
 }
@@ -901,13 +917,25 @@ function articleAjax()
 		checksession('get');
 		$what = is_numeric($_GET['artdelete']) ? $_GET['artdelete'] : '0';
 		if (empty($cu)) {
-			$cu = is_numeric($_GET['cu']) ? $_GET['cu'] : '';
+			$cu = isset($_GET['cu']) && is_numeric($_GET['cu']) ? $_GET['cu'] : '';
 			if ($cu == -1) {
 				$strays = true;
 				$cu = '';
 			}
 		}
 		if ($what > 0) {
+			if (!allowedTo('admin_forum')) {
+				$request = $smcFunc['db_query'](
+					'',
+					'SELECT type FROM {db_prefix}tp_articles WHERE id = {int:artid}',
+					['artid' => $what]
+				);
+				$article = $smcFunc['db_fetch_assoc']($request);
+				$smcFunc['db_free_result']($request);
+				if (strtolower(trim((string) ($article['type'] ?? ''))) === 'php') {
+					fatal_lang_error('no_access', false);
+				}
+			}
 			$smcFunc['db_query'](
 				'',
 				'

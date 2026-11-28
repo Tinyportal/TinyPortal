@@ -1,7 +1,7 @@
 <?php
 /**
  * @package TinyPortal
- * @version 3.0.2
+ * @version 3.0.5
  * @author IchBin - http://www.tinyportal.net
  * @founder Bloc
  * @license MPL 2.0
@@ -130,7 +130,7 @@ function template_article($article, $single = false)
 	global $context;
 
 	if (isset($context['tportal']['article_expired'])) {
-		template_notpublished();
+		template_tperror_above();
 	}
 
 	render_template(article_renders((!empty($article['category_opts']['catlayout']) ? $article['category_opts']['catlayout'] : 1), true, true));
